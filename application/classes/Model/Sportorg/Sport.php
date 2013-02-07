@@ -5,7 +5,7 @@
  * Time: 1:21 PM
  */
 
-class Model_Sport extends ORM
+class Model_Sportorg_Sport extends ORM
 {
 
 	protected $_table_name = 'sports';

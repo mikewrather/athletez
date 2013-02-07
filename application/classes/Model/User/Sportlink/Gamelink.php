@@ -36,9 +36,9 @@ class Model_User_Sportlink_Gamelink extends ORM
 		)
 	);
 */
-	public function __construct()
-	{
-		parent::__construct();
-	}
+public function __construct()
+{
+	parent::__construct();
+}
 
 }

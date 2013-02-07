@@ -5,10 +5,10 @@
  * Time: 12:21 AM
  */
 
-class Model_Govbody extends ORM
+class Model_Sportorg_Govbody extends ORM
 {
 	
-	//protected $_table_name = '';
+	protected $_table_name = 'gov_bodies';
 	
 /*
 	protected $_belongs_to = array(

@@ -5,9 +5,10 @@
  * Time: 1:30 PM
  */
 
-class Model_Org extends ORM
+class Model_Sportorg_Org extends ORM
 {
 
+	protected $_table_name = "orgs";
 	/*
 	protected $_belongs_to = array(
 		'[alias name]' => array(
