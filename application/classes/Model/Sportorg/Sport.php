@@ -2,11 +2,14 @@
 /**
  * User: mike
  * Date: 2/4/13
- * Time: 1:30 PM
+ * Time: 1:21 PM
  */
 
-class Model_Org extends ORM
+class Model_Sport extends ORM
 {
+
+	protected $_table_name = 'sports';
+	/*
 	protected $_belongs_to = array(
 		'[alias name]' => array(
 			'model' => '[model name]', 
@@ -31,7 +34,8 @@ class Model_Org extends ORM
 			'foreign_key' => '[column]'
 		)
 	);
-	
+*/
+
 	public function __construct()
 	{
 		parent::__construct();

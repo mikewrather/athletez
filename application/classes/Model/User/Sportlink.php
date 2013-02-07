@@ -1,12 +1,16 @@
 <?php defined('SYSPATH') or die('No direct script access.');
 /**
  * User: mike
- * Date: 2/4/13
- * Time: 1:21 PM
+ * Date: 2/6/13
+ * Time: 12:59 PM
  */
 
-class Model_Sport extends ORM
+class Model_User_Sportlink extends ORM
 {
+	
+	protected $_table_name = 'user_sport_link';
+	
+/*
 	protected $_belongs_to = array(
 		'[alias name]' => array(
 			'model' => '[model name]', 
@@ -31,7 +35,7 @@ class Model_Sport extends ORM
 			'foreign_key' => '[column]'
 		)
 	);
-	
+*/
 	public function __construct()
 	{
 		parent::__construct();
