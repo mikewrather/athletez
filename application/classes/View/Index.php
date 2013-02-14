@@ -1,21 +1,6 @@
 <?php
 
-class View_Test
+class View_Index
 {
-	public $name  = "mustache template test";
-
-	public function taxed_value() {
-		return $this->value - ($this->value * 0.4);
-	}
-
-	public function sports(){
-		$sports = ORM::factory('Sportorg_Sport')->find_all();
-		return $sports->as_array();
-	}
-
-	public function orgs(){
-		$sports = ORM::factory('Sportorg_Org')->find_all();
-		return $sports->as_array();
-	}
-
+	public $title = "Title";
 }

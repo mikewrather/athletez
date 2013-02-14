@@ -36,9 +36,5 @@ class Model_User_Teamslink extends ORM
 		)
 	);
 */
-	public function __construct()
-	{
-		parent::__construct();
-	}
 
 }

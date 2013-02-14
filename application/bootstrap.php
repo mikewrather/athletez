@@ -75,6 +75,23 @@ if (isset($_SERVER['KOHANA_ENV']))
 	Kohana::$environment = constant('Kohana::' . strtoupper($_SERVER['KOHANA_ENV']));
 }
 
+if (strpos($_SERVER['HTTP_HOST'], 'newsite') !== FALSE)
+{
+	// Localhost
+	Kohana::$environment = Kohana::LOCALHOST;
+
+	// Turn off notices and strict errors
+	error_reporting(E_ALL ^ E_NOTICE ^ E_STRICT);
+}
+else
+{
+	// Localhost
+	Kohana::$environment = Kohana::DEVELOPMENT;
+
+	// Turn off notices and strict errors
+	error_reporting(E_ALL ^ E_NOTICE ^ E_STRICT);
+}
+
 /**
  * Initialize Kohana, setting the default options.
  *
@@ -118,6 +135,7 @@ Kohana::modules(array(
 	// 'unittest'   => MODPATH.'unittest',   // Unit testing
 	// 'userguide'  => MODPATH.'userguide',  // User guide and API documentation
 	'KOstache'  => MODPATH . 'kostache',
+	'Simplehtmldom' => MODPATH . 'domparse',
 ));
 
 /**
@@ -126,6 +144,6 @@ Kohana::modules(array(
  */
 Route::set('default', '(<controller>(/<action>(/<id>)))')
 	->defaults(array(
-	'controller' => 'welcome',
+	'controller' => 'Home',
 	'action' => 'index',
 ));

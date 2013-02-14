@@ -5,37 +5,11 @@
  * Time: 12:24 AM
  */
 
-class Model_Base extends ORM
+class Ent_Base extends ORM
 {
 	
-	//protected $_table_name = '';
-	
-/*
-	protected $_belongs_to = array(
-		'[alias name]' => array(
-			'model' => '[model name]', 
-			'foreign_key' => '[column]'
-		)
-	);
-	
-	protected $_has_many = array(
-		'[alias name]' => array(
-			'model' => '[model name]', 
-			'foreign_key' => '[column]'
-		),
-		'[alias name]' => array(
-			'model' => '[model name]', 
-			'through' => '[model name of pivot table]'
-		)
-	);
-	
-	protected $_has_one = array(
-		'[alias name]' => array(
-			'model' => '[model name]', 
-			'foreign_key' => '[column]'
-		)
-	);
-*/
+	protected $_table_name = 'enttypes';
+
 	public function __construct()
 	{
 		parent::__construct();

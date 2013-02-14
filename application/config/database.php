@@ -1,6 +1,6 @@
 <?php defined('SYSPATH') OR die('No direct access allowed.');
 
-return array
+$dbconfig = array
 (
 	'default' => array
 	(
@@ -28,29 +28,28 @@ return array
 		'charset'      => 'utf8',
 		'caching'      => FALSE,
 	),
-	'alternate' => array(
-		'type'       => 'PDO',
+	'scraping' => array
+	(
+		'type'       => 'MySQL',
 		'connection' => array(
-			/**
-			 * The following options are available for PDO:
-			 *
-			 * string   dsn         Data Source Name
-			 * string   username    database username
-			 * string   password    database password
-			 * boolean  persistent  use persistent connections?
-			 */
-			'dsn'        => 'mysql:host=localhost;dbname=kohana',
+			'hostname'   => 'localhost',
+			'database'   => 'sportsdata',
 			'username'   => 'root',
-			'password'   => 'r00tdb',
+			'password'   => 'R370ad3d',
 			'persistent' => FALSE,
 		),
-		/**
-		 * The following extra options are available for PDO:
-		 *
-		 * string   identifier  set the escaping identifier
-		 */
 		'table_prefix' => '',
 		'charset'      => 'utf8',
 		'caching'      => FALSE,
 	),
+
 );
+
+//SET UP CASE FOR ENV
+if(Kohana::$environment == Kohana::LOCALHOST)
+{
+	$dbconfig['default']['connection']['password'] = '  qmi!#j';
+	$dbconfig['scraping']['connection']['password'] = '  qmi!#j';
+}
+
+return $dbconfig;
