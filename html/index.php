@@ -1,19 +1,20 @@
 <?php
 
+header('Access-Control-Allow-Origin: *');
 /**
  * The directory in which your application specific resources are located.
  * The application directory must contain the bootstrap.php file.
  *
  * @link http://kohanaframework.org/guide/about.install#application
  */
-$application = 'application';
+$application = '../application';
 
 /**
  * The directory in which your modules are located.
  *
  * @link http://kohanaframework.org/guide/about.install#modules
  */
-$modules = 'modules';
+$modules = '../modules';
 
 /**
  * The directory in which the Kohana resources are located. The system
@@ -21,7 +22,7 @@ $modules = 'modules';
  *
  * @link http://kohanaframework.org/guide/about.install#system
  */
-$system = 'system';
+$system = '../system';
 
 /**
  * The default extension of resource files. If you change this, all resources

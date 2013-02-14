@@ -16,3 +16,6 @@
 [submodule "modules/kostache"]
 	path = modules/kostache
 	url = git://github.com/zombor/KOstache.git
+[submodule "modules/domparse"]
+	path = modules/domparse
+	url = git://github.com/madeinnordeste/kohana-simple-html-dom.git

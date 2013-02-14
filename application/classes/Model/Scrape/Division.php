@@ -1,14 +1,15 @@
 <?php defined('SYSPATH') or die('No direct script access.');
 /**
  * User: mike
- * Date: 2/5/13
- * Time: 10:54 PM
+ * Date: 2/8/13
+ * Time: 4:13 PM
  */
 
-class Model_Sportorg_Complevel_Profilelink extends ORM
+class Model_Scrape_Division extends ORM
 {
-	
-	protected $_table_name = 'complevel_profile_link';
+
+	protected $db = 'sportsdata';
+	protected $_table_name = 'division';
 	
 /*
 	protected $_belongs_to = array(
