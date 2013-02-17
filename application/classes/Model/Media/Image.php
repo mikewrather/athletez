@@ -10,35 +10,19 @@ class Model_Media_Image extends Media_Base
 	
 	protected $_table_name = 'images';
 	
-/*
+
 	protected $_belongs_to = array(
-		'[alias name]' => array(
-			'model' => '[model name]', 
-			'foreign_key' => '[column]'
+		'media' => array(
+			'model' => 'Media_Base',
+			'foreign_key' => 'media_id'
 		)
 	);
 	
 	protected $_has_many = array(
-		'[alias name]' => array(
-			'model' => '[model name]', 
-			'foreign_key' => '[column]'
+		'metadata' => array(
+			'model' => 'Media_Imagesmeta',
+			'foreign_key' => 'images_id'
 		),
-		'[alias name]' => array(
-			'model' => '[model name]', 
-			'through' => '[model name of pivot table]'
-		)
 	);
-	
-	protected $_has_one = array(
-		'[alias name]' => array(
-			'model' => '[model name]', 
-			'foreign_key' => '[column]'
-		)
-	);
-*/
-	public function __construct()
-	{
-		parent::__construct();
-	}
 
 }

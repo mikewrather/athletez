@@ -9,36 +9,27 @@ class Model_Media_Base extends ORM
 {
 	
 	protected $_table_name = 'media';
-	
-/*
+
 	protected $_belongs_to = array(
-		'[alias name]' => array(
-			'model' => '[model name]', 
-			'foreign_key' => '[column]'
-		)
-	);
-	
-	protected $_has_many = array(
-		'[alias name]' => array(
-			'model' => '[model name]', 
-			'foreign_key' => '[column]'
+		'sport' => array(
+			'model' => 'Sportorg_Sport',
+			'foreign_key' => 'sports_id'
 		),
-		'[alias name]' => array(
-			'model' => '[model name]', 
-			'through' => '[model name of pivot table]'
+		'user' => array(
+			'model' => 'User_Base',
+			'foreign_key' => 'users_id'
 		)
 	);
-	
+
 	protected $_has_one = array(
-		'[alias name]' => array(
-			'model' => '[model name]', 
-			'foreign_key' => '[column]'
+		'image' => array(
+			'model' => 'Media_Image',
+			'foreign_key' => 'media_id'
+		),
+		'video' => array(
+			'model' => 'Media_Video',
+			'foreign_key' => 'media_id'
 		)
 	);
-*/
-	public function __construct()
-	{
-		parent::__construct();
-	}
 
 }

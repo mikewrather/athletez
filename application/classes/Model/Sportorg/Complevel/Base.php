@@ -24,17 +24,4 @@ class Model_Sportorg_Complevel_Base extends ORM
 			'foreign_key' => 'complevels_id'
 		),
 	);
-	/*
-	protected $_has_one = array(
-		'[alias name]' => array(
-			'model' => '[model name]', 
-			'foreign_key' => '[column]'
-		)
-	);
-*/
-	public function __construct()
-	{
-		parent::__construct();
-	}
-
 }

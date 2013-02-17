@@ -135,7 +135,6 @@ Kohana::modules(array(
 	// 'unittest'   => MODPATH.'unittest',   // Unit testing
 	// 'userguide'  => MODPATH.'userguide',  // User guide and API documentation
 	'KOstache'  => MODPATH . 'kostache',
-	'Simplehtmldom' => MODPATH . 'domparse',
 ));
 
 /**

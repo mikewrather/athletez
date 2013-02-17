@@ -9,36 +9,23 @@ class Model_Sportorg_Position extends ORM
 {
 	
 	protected $_table_name = 'positions';
-	
-/*
+
 	protected $_belongs_to = array(
-		'[alias name]' => array(
-			'model' => '[model name]', 
-			'foreign_key' => '[column]'
+		'sport' => array(
+			'model' => 'Sportorg_Sport',
+			'foreign_key' => 'sports_id'
+		),
+		'stattab' => array(
+			'model' => 'Stats_Tab',
+			'foreign_key' => 'stattab_id'
 		)
 	);
 	
 	protected $_has_many = array(
-		'[alias name]' => array(
-			'model' => '[model name]', 
-			'foreign_key' => '[column]'
-		),
-		'[alias name]' => array(
-			'model' => '[model name]', 
-			'through' => '[model name of pivot table]'
+		'utlposlink' => array(
+			'model' => 'User_Teamslink_Positionslink',
+			'foreign_key' => 'positions_id'
 		)
 	);
-	
-	protected $_has_one = array(
-		'[alias name]' => array(
-			'model' => '[model name]', 
-			'foreign_key' => '[column]'
-		)
-	);
-*/
-	public function __construct()
-	{
-		parent::__construct();
-	}
 
 }

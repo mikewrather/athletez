@@ -10,35 +10,20 @@ class Model_Sportorg_Games_Match extends ORM
 	
 	protected $_table_name = 'game_matches';
 	
-/*
+
 	protected $_belongs_to = array(
-		'[alias name]' => array(
-			'model' => '[model name]', 
-			'foreign_key' => '[column]'
+		'game' => array(
+			'model' => 'Sportorg_Games_Base',
+			'foreign_key' => 'games_id'
 		)
 	);
-	
+
 	protected $_has_many = array(
-		'[alias name]' => array(
-			'model' => '[model name]', 
-			'foreign_key' => '[column]'
+		'players' => array(
+			'model' => 'Sportorg_Games_Matchplayer',
+			'foreign_key' => 'game_matches_id'
 		),
-		'[alias name]' => array(
-			'model' => '[model name]', 
-			'through' => '[model name of pivot table]'
-		)
 	);
-	
-	protected $_has_one = array(
-		'[alias name]' => array(
-			'model' => '[model name]', 
-			'foreign_key' => '[column]'
-		)
-	);
-*/
-	public function __construct()
-	{
-		parent::__construct();
-	}
+
 
 }

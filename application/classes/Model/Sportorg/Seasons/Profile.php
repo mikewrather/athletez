@@ -9,36 +9,18 @@ class Model_Sportorg_Seasons_Profile extends ORM
 {
 	
 	protected $_table_name = 'season_profiles';
-	
-/*
-	protected $_belongs_to = array(
-		'[alias name]' => array(
-			'model' => '[model name]', 
-			'foreign_key' => '[column]'
-		)
-	);
-	
+
 	protected $_has_many = array(
-		'[alias name]' => array(
-			'model' => '[model name]', 
-			'foreign_key' => '[column]'
+		'seasons' => array(
+			'model' => '[model name]',
+			'through' => 'season_profile_linke',
+			'foreign_key' => 'season_profiles_id',
+			'far_key' => 'seasons_id'
 		),
-		'[alias name]' => array(
-			'model' => '[model name]', 
-			'through' => '[model name of pivot table]'
+		'govbodies' => array(
+			'model' => 'Sportorg_Govbody',
+			'foreign_key' => 'season_profiles_id'
 		)
 	);
-	
-	protected $_has_one = array(
-		'[alias name]' => array(
-			'model' => '[model name]', 
-			'foreign_key' => '[column]'
-		)
-	);
-*/
-	public function __construct()
-	{
-		parent::__construct();
-	}
 
 }

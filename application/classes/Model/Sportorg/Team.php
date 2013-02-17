@@ -7,9 +7,8 @@
 
 class Model_Sportorg_Team extends ORM
 {
-	
+
 	protected $_table_name = 'teams';
-	
 
 	protected $_belongs_to = array(
 		'orggbslink' => array(
@@ -27,26 +26,22 @@ class Model_Sportorg_Team extends ORM
 	);
 
 	protected $_has_many = array(
-		'gameslink' => array(
+		// To get the games without any of the data in the linking table use this
+		'games' => array(
+			'model' => 'Sportorg_Games_Base',
+			'through' => 'games_teams_link',
+			'foreign_key' => 'teams_id',
+			'far_key' => 'games_id'
+		),
+		// This is the link object where the score is kept
+		'teamgames' => array(
 			'model' => 'Sportorg_Games_Teamslink',
-			'foreign_key' => 'teams_id'
+			'foreign_key' => 'teams_id',
 		),
 		'athletes' => array(
 			'model' => 'Users',
 			'through' => 'users_teams_link'
 		)
 	);
-/*
-	protected $_has_one = array(
-		'[alias name]' => array(
-			'model' => '[model name]', 
-			'foreign_key' => '[column]'
-		)
-	);
-*/
-	public function __construct()
-	{
-		parent::__construct();
-	}
 
 }

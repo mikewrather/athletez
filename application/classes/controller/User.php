@@ -11,6 +11,7 @@ class Controller_User extends Controller_Template
 
 	function action_index()
 	{
+
 		$this->template->content = View::factory('user/info')->bind('user',$user);
 
 		$user = Auth::instance()->get_user();

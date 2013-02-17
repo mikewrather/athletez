@@ -36,9 +36,5 @@ class Model_Location_State extends ORM
 		)
 	);
 */
-	public function __construct()
-	{
-		parent::__construct();
-	}
 
 }

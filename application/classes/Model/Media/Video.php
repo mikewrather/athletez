@@ -9,36 +9,29 @@ class Model_Media_Video extends Media_Base
 {
 	
 	protected $_table_name = 'videos';
-	
-/*
+
 	protected $_belongs_to = array(
-		'[alias name]' => array(
-			'model' => '[model name]', 
-			'foreign_key' => '[column]'
-		)
-	);
-	
-	protected $_has_many = array(
-		'[alias name]' => array(
-			'model' => '[model name]', 
-			'foreign_key' => '[column]'
+		'media' => array(
+			'model' => 'Media_Base',
+			'foreign_key' => 'media_id'
 		),
-		'[alias name]' => array(
-			'model' => '[model name]', 
-			'through' => '[model name of pivot table]'
+		'videoservice' => array(
+			'model' => 'Media_Videoservice',
+			'foreign_key' => 'video_services_id'
 		)
 	);
-	
-	protected $_has_one = array(
-		'[alias name]' => array(
-			'model' => '[model name]', 
-			'foreign_key' => '[column]'
-		)
+
+	protected $_has_many = array(
+		'metadata' => array(
+			'model' => 'Media_Videometa',
+			'foreign_key' => 'videos_id'
+		),
+		'types' => array(
+			'model' => 'Media_Videotype',
+			'through' => 'video_type_link',
+			'far_key' => 'video_types_id',
+			'foreign_key' => 'videos_id'
+		),
 	);
-*/
-	public function __construct()
-	{
-		parent::__construct();
-	}
 
 }

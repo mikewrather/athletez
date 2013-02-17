@@ -9,36 +9,36 @@ class Model_Sportorg_Division extends ORM
 {
 	
 	protected $_table_name = 'divisions';
-	
-/*
+
 	protected $_belongs_to = array(
-		'[alias name]' => array(
-			'model' => '[model name]', 
-			'foreign_key' => '[column]'
+		'state' => array(
+			'model' => 'Location_State',
+			'foreign_key' => 'states_id'
 		)
 	);
 	
 	protected $_has_many = array(
-		'[alias name]' => array(
-			'model' => '[model name]', 
-			'foreign_key' => '[column]'
+		'orggbslink' => array(
+			'model' => 'Sportorg_Orggbslink',
+			'foreign_key' => 'divisions_id'
 		),
-		'[alias name]' => array(
-			'model' => '[model name]', 
-			'through' => '[model name of pivot table]'
+		'leagues' => array(
+			'model' => 'Sportorg_League',
+			'foreign_key' => 'divisions_id',
+			'far_key' => 'leagues_id',
+			'through' => 'org_gbs_link'
+		),
+		'orgs' => array(
+			'model' => 'Sportorg_org',
+			'foreign_key' => 'divisions_id',
+			'far_key' => 'orgs_id',
+			'through' => 'org_gbs_link'
+		),
+		'gbslinks' => array(
+			'model' => 'Sportorg_Gbslink',
+			'foreign_key' => 'divisions_id',
+			'far_key' => 'gbs_link_id',
+			'through' => 'org_gbs_link'
 		)
 	);
-	
-	protected $_has_one = array(
-		'[alias name]' => array(
-			'model' => '[model name]', 
-			'foreign_key' => '[column]'
-		)
-	);
-*/
-	public function __construct()
-	{
-		parent::__construct();
-	}
-
 }

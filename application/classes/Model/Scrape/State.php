@@ -28,14 +28,5 @@ class Model_Scrape_State extends ORM
 			'through' => '[model name of pivot table]'
 		)
 	);
-	
-	protected $_has_one = array(
-		'[alias name]' => array(
-			'model' => '[model name]', 
-			'foreign_key' => '[column]'
-		)
-	);
 */
-
-
 }

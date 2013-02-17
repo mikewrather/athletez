@@ -9,36 +9,36 @@ class Model_Sportorg_Orggbslink extends ORM
 {
 	
 	protected $_table_name = 'org_gbs_link';
-	
-/*
+
 	protected $_belongs_to = array(
-		'[alias name]' => array(
-			'model' => '[model name]', 
-			'foreign_key' => '[column]'
-		)
+		'org' => array(
+			'model' => 'Sportorg_Org',
+			'foreign_key' => 'orgs_id'
+		),
+		'league' => array(
+			'model' => 'Sportorg_League',
+			'foreign_key' => 'leagues_id'
+		),
+		'division' => array(
+			'model' => 'Sportorg_Division',
+			'foreign_key' => 'divisions_id'
+		),
+		'gbslink' => array(
+			'model' => 'Sportorg_Gbslink',
+			'foreign_key' => 'gbs_link_id'
+		),
 	);
 	
 	protected $_has_many = array(
-		'[alias name]' => array(
-			'model' => '[model name]', 
-			'foreign_key' => '[column]'
-		),
-		'[alias name]' => array(
-			'model' => '[model name]', 
-			'through' => '[model name of pivot table]'
+		'teams' => array(
+			'model' => 'Sportorg_Team',
+			'foreign_key' => 'org_gbs_link_id'
 		)
 	);
-	
-	protected $_has_one = array(
-		'[alias name]' => array(
-			'model' => '[model name]', 
-			'foreign_key' => '[column]'
-		)
-	);
-*/
-	public function __construct()
+
+	public function __construct($id=NULL)
 	{
-		parent::__construct();
+		parent::__construct($id);
 	}
 
 }

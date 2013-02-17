@@ -10,35 +10,29 @@ class Model_Sportorg_Govbody extends ORM
 	
 	protected $_table_name = 'gov_bodies';
 	
-/*
+
 	protected $_belongs_to = array(
-		'[alias name]' => array(
-			'model' => '[model name]', 
-			'foreign_key' => '[column]'
+		'seasonprofile' => array(
+			'model' => 'Sportorg_Seasons_Profile',
+			'foreign_key' => 'season_profiles_id'
+		),
+		'complevelprofile' => array(
+			'model' => 'Sportorg_Complevel_Profile',
+			'foreign_key' => 'complevel_profiles_id'
 		)
 	);
 	
 	protected $_has_many = array(
-		'[alias name]' => array(
-			'model' => '[model name]', 
-			'foreign_key' => '[column]'
+		'sports' => array(
+			'model' => 'Sportorg_Sport',
+			'foreign_key' => 'gov_bodies_id',
+			'far_key' => 'sports_id',
+			'through' => 'gov_body_sport_link'
 		),
-		'[alias name]' => array(
-			'model' => '[model name]', 
-			'through' => '[model name of pivot table]'
+		'gbslinks' => array(
+			'model' => 'Sportorg_Gbslink',
+			'foreign_key' => 'gov_bodies_id'
 		)
 	);
-	
-	protected $_has_one = array(
-		'[alias name]' => array(
-			'model' => '[model name]', 
-			'foreign_key' => '[column]'
-		)
-	);
-*/
-	public function __construct()
-	{
-		parent::__construct();
-	}
 
 }
