@@ -1,8 +1,12 @@
 <?php defined('SYSPATH') or die('No direct script access.');
 /**
- * User: mike
- * Date: 2/6/13
- * Time: 1:05 PM
+ * $description
+ *
+ * Date: 2/17/13
+ * Time: 2:22 PM
+ *
+ * @author: Mike Wrather
+ *
  */
 
 class Model_User_Sportlink_Gamelink extends ORM
@@ -12,33 +16,35 @@ class Model_User_Sportlink_Gamelink extends ORM
 	
 /*
 	protected $_belongs_to = array(
-		'[alias name]' => array(
-			'model' => '[model name]', 
-			'foreign_key' => '[column]'
+		'_alias_' => array(
+			'model' => '_model_name_', 
+			'foreign_key' => '_column_'
 		)
 	);
 	
 	protected $_has_many = array(
-		'[alias name]' => array(
-			'model' => '[model name]', 
-			'foreign_key' => '[column]'
+		'_alias_' => array(
+			'model' => '_model_name_', 
+			'foreign_key' => '_column_'
 		),
-		'[alias name]' => array(
-			'model' => '[model name]', 
-			'through' => '[model name of pivot table]'
+		'_alias_' => array(
+			'model' => '_model_name_', 
+			'through' => '_pivot_table_',
+			'foreign_key' => '_column_',
+			'far_key' => '_column_'
 		)
 	);
 	
 	protected $_has_one = array(
-		'[alias name]' => array(
-			'model' => '[model name]', 
-			'foreign_key' => '[column]'
+		'_alias_' => array(
+			'model' => '_model_name_', 
+			'foreign_key' => '_column_'
 		)
 	);
 */
-public function __construct()
-{
-	parent::__construct();
-}
+	public function __construct($id=NULL)
+	{
+		parent::__construct($id);
+	}
 
 }
