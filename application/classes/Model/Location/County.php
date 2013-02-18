@@ -10,18 +10,18 @@ class Model_Location_County extends ORM
 	
 	protected $_table_name = 'counties';
 	
-/*
+
 	protected $_belongs_to = array(
-		'[alias name]' => array(
-			'model' => '[model name]', 
-			'foreign_key' => '[column]'
+		'state' => array(
+			'model' => 'Location_State',
+			'foreign_key' => 'states_id'
 		)
 	);
 	
 	protected $_has_many = array(
-		'[alias name]' => array(
-			'model' => '[model name]', 
-			'foreign_key' => '[column]'
+		'cities' => array(
+			'model' => 'Location_City',
+			'foreign_key' => 'counties_id'
 		),
 		'[alias name]' => array(
 			'model' => '[model name]', 
@@ -35,10 +35,5 @@ class Model_Location_County extends ORM
 			'foreign_key' => '[column]'
 		)
 	);
-*/
-	public function __construct()
-	{
-		parent::__construct();
-	}
 
 }

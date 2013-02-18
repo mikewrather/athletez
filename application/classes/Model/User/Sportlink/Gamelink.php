@@ -1,6 +1,6 @@
 <?php defined('SYSPATH') or die('No direct script access.');
 /**
- * $description
+ * USL Game Link links the user/sport link to specific game events
  *
  * Date: 2/17/13
  * Time: 2:22 PM
@@ -14,34 +14,19 @@ class Model_User_Sportlink_Gamelink extends ORM
 	
 	protected $_table_name = 'usl_game_link';
 	
-/*
+
 	protected $_belongs_to = array(
-		'_alias_' => array(
-			'model' => '_model_name_', 
-			'foreign_key' => '_column_'
-		)
-	);
-	
-	protected $_has_many = array(
-		'_alias_' => array(
-			'model' => '_model_name_', 
-			'foreign_key' => '_column_'
+		'usl' => array(
+			'model' => 'User_Sportlink',
+			'foreign_key' => 'user_sport_link_id'
 		),
-		'_alias_' => array(
-			'model' => '_model_name_', 
-			'through' => '_pivot_table_',
-			'foreign_key' => '_column_',
-			'far_key' => '_column_'
+		'game' => array(
+			'model' => 'Sportorg_Game_Base',
+			'foreign_key' => 'games_id'
 		)
 	);
-	
-	protected $_has_one = array(
-		'_alias_' => array(
-			'model' => '_model_name_', 
-			'foreign_key' => '_column_'
-		)
-	);
-*/
+
+
 	public function __construct($id=NULL)
 	{
 		parent::__construct($id);

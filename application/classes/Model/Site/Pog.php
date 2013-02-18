@@ -1,41 +1,31 @@
 <?php defined('SYSPATH') or die('No direct script access.');
 /**
- * User: mike
- * Date: 2/17/13
- * Time: 1:13 AM
+ * POG is Player of the Game
+ *
+ * @author Mike Wrather
  */
 
 class Model_Site_Pog extends ORM
 {
 	
 	protected $_table_name = 'player_of_game';
-	
-/*
+
 	protected $_belongs_to = array(
-		'[alias name]' => array(
-			'model' => '[model name]', 
-			'foreign_key' => '[column]'
-		)
-	);
-	
-	protected $_has_many = array(
-		'[alias name]' => array(
-			'model' => '[model name]', 
-			'foreign_key' => '[column]'
+		'player' => array(
+			'model' => 'User_Base',
+			'foreign_key' => 'player_users_id'
 		),
-		'[alias name]' => array(
-			'model' => '[model name]', 
-			'through' => '[model name of pivot table]'
+		'voter' => array(
+			'model' => 'User_Base',
+			'foreign_key' => 'voter_users_id'
+		),
+		'game' => array(
+			'model' => 'Sportorg_Game_Base',
+			'foreign_key' => 'games_id'
 		)
 	);
-	
-	protected $_has_one = array(
-		'[alias name]' => array(
-			'model' => '[model name]', 
-			'foreign_key' => '[column]'
-		)
-	);
-*/
+
+
 	public function __construct($id=NULL)
 	{
 		parent::__construct($id);

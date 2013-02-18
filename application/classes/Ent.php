@@ -1,6 +1,3 @@
-<?php
-/**
- * User: mike
- * Date: 2/17/13
- * Time: 1:31 AM
- */
+<?php defined('SYSPATH') or die('No direct script access.');
+
+class Ent extends Model_Site_Enttype{}

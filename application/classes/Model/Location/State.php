@@ -10,31 +10,29 @@ class Model_Location_State extends ORM
 	
 	protected $_table_name = 'states';
 	
-/*
+
 	protected $_belongs_to = array(
-		'[alias name]' => array(
-			'model' => '[model name]', 
-			'foreign_key' => '[column]'
+		'country' => array(
+			'model' => 'Location_Country',
+			'foreign_key' => 'countries_id'
 		)
 	);
 	
 	protected $_has_many = array(
-		'[alias name]' => array(
-			'model' => '[model name]', 
-			'foreign_key' => '[column]'
+		'divisions' => array(
+			'model' => 'Sportorg_Division',
+			'foreign_key' => 'states_id'
 		),
-		'[alias name]' => array(
-			'model' => '[model name]', 
-			'through' => '[model name of pivot table]'
+		'sections' => array(
+			'model' => 'Sportorg_Section',
+			'foreign_key' => 'states_id'
+		),
+		'counties' => array(
+			'model' => 'Location_County',
+			'foreign_key' => 'states_id'
 		)
 	);
-	
-	protected $_has_one = array(
-		'[alias name]' => array(
-			'model' => '[model name]', 
-			'foreign_key' => '[column]'
-		)
-	);
-*/
+
+
 
 }

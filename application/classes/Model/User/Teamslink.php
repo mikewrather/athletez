@@ -7,34 +7,23 @@
 
 class Model_User_Teamslink extends ORM
 {
-	
 	protected $_table_name = 'users_teams_link';
-	
-/*
-	protected $_belongs_to = array(
-		'[alias name]' => array(
-			'model' => '[model name]', 
-			'foreign_key' => '[column]'
-		)
-	);
-	
-	protected $_has_many = array(
-		'[alias name]' => array(
-			'model' => '[model name]', 
-			'foreign_key' => '[column]'
-		),
-		'[alias name]' => array(
-			'model' => '[model name]', 
-			'through' => '[model name of pivot table]'
-		)
-	);
-	
-	protected $_has_one = array(
-		'[alias name]' => array(
-			'model' => '[model name]', 
-			'foreign_key' => '[column]'
-		)
-	);
-*/
 
+	protected $_belongs_to = array(
+		'user' => array(
+			'model' => 'User_Base',
+			'foreign_key' => 'users_id'
+		),
+		'team' => array(
+			'model' => 'Sportorg_Team',
+			'foreign_key' => 'teams_id'
+		)
+	);
+
+	protected $_has_many = array(
+		'positions' => array(
+			'model' => 'User_Teamslink_Positionlink',
+			'foreign_key' => 'users_teams_link_id'
+		)
+	);
 }

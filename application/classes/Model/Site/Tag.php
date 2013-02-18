@@ -5,37 +5,22 @@
  * Time: 1:12 AM
  */
 
-class Model_Site_Tag extends ORM
+class Model_Site_Tag extends Model_Site_Entdir
 {
 	
 	protected $_table_name = 'tags';
-	
-/*
+
 	protected $_belongs_to = array(
-		'[alias name]' => array(
-			'model' => '[model name]', 
-			'foreign_key' => '[column]'
-		)
-	);
-	
-	protected $_has_many = array(
-		'[alias name]' => array(
-			'model' => '[model name]', 
-			'foreign_key' => '[column]'
+		'tagger' => array(
+			'model' => 'User_Base',
+			'foreign_key' => 'voter_users_id'
 		),
-		'[alias name]' => array(
-			'model' => '[model name]', 
-			'through' => '[model name of pivot table]'
+		'enttype' => array(
+			'model' => 'Site_Enttype',
+			'foreign_key' => 'subject_enttypes_id'
 		)
 	);
-	
-	protected $_has_one = array(
-		'[alias name]' => array(
-			'model' => '[model name]', 
-			'foreign_key' => '[column]'
-		)
-	);
-*/
+
 	public function __construct($id=NULL)
 	{
 		parent::__construct($id);

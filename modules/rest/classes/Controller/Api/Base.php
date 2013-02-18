@@ -10,30 +10,39 @@ class Controller_Api_Base extends Controller
 {
 
 
-
 	public function execute()
 	{
 		// Execute the "before action" method
 		$this->before();
 
 		// Determine the action to use
-		$action = 'action_'.strtolower($this->request->method()).'_'.$this->request->action();
+		$action = 'action_' . strtolower($this->request->method()) . '_' . $this->request->action();
 
 		// If the action doesn't exist, it's a 404
-		if ( ! method_exists($this, $action))
+		if (!method_exists($this, $action))
 		{
-			throw HTTP_Exception::factory(404,
-				'The requested URL :uri was not found on this server.',
-				array(':uri' => $this->request->uri())
-			)->request($this->request);
+			$action_no_verb = 'action_' . $this->request->action();
+			if (!method_exists($this, $action_no_verb))
+			{
+				throw HTTP_Exception::factory(404,'The requested URL :uri was not found on this server.',
+					array(':uri' => $this->request->uri())
+				)->request($this->request);
+			}
+			else
+			{
+				$action = $action_no_verb;
+			}
 		}
 
 		// Execute the action itself
-		$this->{$action}();
+		$result = $this->{$action}();
 
 		// Execute the "after action" method
 		$this->after();
 
+		$this->response->headers('Content-Type','application/json');
+
+		echo json_encode($result);
 		// Return the response
 		return $this->response;
 	}

@@ -1,28 +1,31 @@
 <?php defined('SYSPATH') or die('No direct script access.');
 /**
- * User: mike
- * Date: 2/17/13
- * Time: 12:28 AM
+ * $description
+ *
+ * Date: 2/18/13
+ * Time: 4:03 AM
+ *
+ * @author: Mike Wrather
+ *
  */
 
-class Model_Site_Comment extends Model_Site_Entdir
+class Model_Site_View extends Model_Site_Entdir
 {
 	
-	protected $_table_name = 'comments';
+	protected $_table_name = 'views';
 
 	protected $_belongs_to = array(
-		'poster' => array(
+		'user' => array(
 			'model' => 'User_Base',
 			'foreign_key' => 'users_id'
-		),
-		'enttype' => array(
-			'model' => 'Site_Enttype'
 		)
 	);
+
 
 	public function __construct($id=NULL)
 	{
 		parent::__construct($id);
 	}
+
 
 }
