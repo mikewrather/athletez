@@ -9,8 +9,15 @@
 class Controller_Api_Base extends Controller
 {
 
-	protected function getDataFromView($obj)
+	protected $mainModel;
+
+	protected function getDataFromView($obj=NULL)
 	{
+		if($obj==NULL && !isset($this->mainModel)){ return false; }
+		elseif($obj==NULL)
+		{
+			$obj = $this->mainModel;
+		}
 		$ext = $this->request->controller();
 		$method = $this->request->action();
 
@@ -55,4 +62,8 @@ class Controller_Api_Base extends Controller
 		return $this->response;
 	}
 
+	protected function setMainModel($model)
+	{
+		$this->mainModel = $model;
+	}
 }

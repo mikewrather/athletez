@@ -19,9 +19,9 @@ class Model_Sportorg_Team extends ORM
 			'model' => 'Sportorg_Complevel_Base',
 			'foreign_key' => 'complevels_id'
 		),
-		'complevel' => array(
-			'model' => 'Sportorg_Complevel_Base',
-			'foreign_key' => 'complevels_id'
+		'season' => array(
+			'model' => 'Sportorg_Seasons_Base',
+			'foreign_key' => 'seasons_id'
 		)
 	);
 
@@ -43,5 +43,15 @@ class Model_Sportorg_Team extends ORM
 			'through' => 'users_teams_link'
 		)
 	);
+
+	public function getOrg()
+	{
+		return $this->orggbslink->org;
+	}
+
+	public function getSport()
+	{
+		return $this->orggbslink->gbslink->sport;
+	}
 
 }

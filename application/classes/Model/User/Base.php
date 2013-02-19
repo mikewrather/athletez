@@ -10,7 +10,7 @@ class Model_User_Base extends Model_Auth_User
 
 	protected $_table_name = 'users';
 
-	protected $_has_may = array(
+	protected $_has_many = array(
 		//From Auth
 		'user_tokens' => array('model' => 'User_Token'),
 		'roles'       => array('model' => 'Role', 'through' => 'roles_users'),

@@ -12,14 +12,13 @@ class Controller_Home extends Controller
 
 	public function action_index()
 	{
-		print_r($this->request);
-		echo "VERB NOT SPECIFIED";
-	}
-	public function action_get_index()
-	{
-		print_r($this->request);
 		$renderer = Kostache::factory();
 		$this->response->body($renderer->render(new View_Index));
+	}
+
+	public function action_get_index()
+	{
+
 	}
 
 	public function action_post_index()
