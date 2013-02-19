@@ -138,6 +138,12 @@ Kohana::modules(array(
 	'REST' => MODPATH. 'rest',
 ));
 
+Route::set('API', '<directory>/<controller>(/<action>(/<id>(/<id2>)))',
+	array(
+		'directory' => 'api'
+	))->defaults(array());
+
+
 /**
  * Set the routes. Each route must have a minimum of a name, a URI and a set of
  * defaults for the URI.

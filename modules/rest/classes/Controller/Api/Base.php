@@ -9,6 +9,14 @@
 class Controller_Api_Base extends Controller
 {
 
+	protected function getDataFromView($obj)
+	{
+		$ext = $this->request->controller();
+		$method = $this->request->action();
+
+		$vc = Viewclass::factory($ext,$obj);
+		return $vc->$method();
+	}
 
 	public function execute()
 	{
