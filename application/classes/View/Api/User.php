@@ -66,6 +66,10 @@ class View_Api_User extends Viewclass
 		return $retArr;
 	}
 
+	public function related()
+	{
+
+	}
 
 	public function videos()
 	{
@@ -75,12 +79,11 @@ class View_Api_User extends Viewclass
 	public function images()
 	{
 
-}
+	}
 
-public function comments()
-{
+	public function comments()
+	{
 
-
-}
+	}
 
 }

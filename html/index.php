@@ -1,5 +1,5 @@
 <?php
-
+set_time_limit(500);
 header('Access-Control-Allow-Origin: *');
 /**
  * The directory in which your application specific resources are located.

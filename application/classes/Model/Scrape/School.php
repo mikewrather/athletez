@@ -9,6 +9,8 @@ class Model_Scrape_School extends ORM
 {
 	protected $_db_group = 'scraping';
 	protected $_table_name = 'schools';
+
+	protected $_primary_key = 'mp_school_id';
 	
 /*
 	protected $_belongs_to = array(

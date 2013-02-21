@@ -10,20 +10,21 @@ class Controller_Api_Base extends Controller
 {
 
 	protected $mainModel;
+	protected $resultArr;
 
-	protected function getDataFromView($obj=NULL)
+	/**
+	 * @var $starttime is used to calculate the total execution time for the controller script
+	 */
+	protected $starttime;
+
+	protected $execError = false;
+
+	public function __construct(Request $request, Response $response)
 	{
-		if($obj==NULL && !isset($this->mainModel)){ return false; }
-		elseif($obj==NULL)
-		{
-			$obj = $this->mainModel;
-		}
-		$ext = $this->request->controller();
-		$method = $this->request->action();
-
-		$vc = Viewclass::factory($ext,$obj);
-		return $vc->$method();
+		$this->starttime = microtime();
+		parent::__construct($request,$response);
 	}
+
 
 	public function execute()
 	{
@@ -52,14 +53,42 @@ class Controller_Api_Base extends Controller
 		// Execute the action itself
 		$result = $this->{$action}();
 
+		$this->resultArr['payload'] = $result;
+
+
 		// Execute the "after action" method
 		$this->after();
 
 		$this->response->headers('Content-Type','application/json');
 
-		echo json_encode($result);
+		echo json_encode($this->resultArr);
 		// Return the response
 		return $this->response;
+	}
+
+
+
+	public function after()
+	{
+		parent::after();
+		$this->resultArr['exec_data'] = array(
+			"exec_time" => microtime() - $this->starttime,
+			"exec_error" => $this->execError
+		);
+	}
+
+	protected function getDataFromView($obj=NULL)
+	{
+		if($obj==NULL && !isset($this->mainModel)){ return false; }
+		elseif($obj==NULL)
+		{
+			$obj = $this->mainModel;
+		}
+		$ext = $this->request->controller();
+		$method = $this->request->action();
+
+		$vc = Viewclass::factory($ext,$obj);
+		return $vc->$method();
 	}
 
 	protected function setMainModel($model)
