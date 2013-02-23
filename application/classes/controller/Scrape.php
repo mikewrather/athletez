@@ -39,7 +39,7 @@ class Controller_Scrape extends Controller
 		$vobj = new View_Scrape_Sports(array('sport'=>$this->request->param('id')));
 		$this->response->body($this->renderer->render($vobj,'scrape'));
 	}
-	/*
+
 
 	public function action_getSchedules()
 	{
@@ -48,7 +48,11 @@ class Controller_Scrape extends Controller
 		$baseurl = "http://www.maxpreps.com/local/team/schedule.aspx?";
 
 		$jsonarr = array();
-		$schools = ORM::factory('Scrape_School')->limit(0)->offset(0)->find_all();
+
+		$limit = isset($_GET['limit']) ? $_GET['limit'] : 10;
+		$offset = isset($_GET['offset']) ? $_GET['offset'] : 0;
+
+		$schools = ORM::factory('Scrape_Schoolteams')->where('schedule_scraped','=',0)->limit($limit)->offset($offset)->find_all();
 		foreach($schools as $school)
 		{
 			$jsonarr[$school->id] = array(
@@ -58,6 +62,8 @@ class Controller_Scrape extends Controller
 				'ssid'=>$school->mp_ssid,
 				'state'=>$school->state
 			);
+			$school->schedule_scraped = 1;
+			$school->save();
 		}
 		$this->request->headers('Content-type: application/json');
 		echo json_encode($jsonarr);
@@ -85,6 +91,10 @@ class Controller_Scrape extends Controller
 			{
 				echo $e->getMessage();
 			}
+		}
+		else
+		{
+			//return;
 		}
 
 		//check for home team entry
@@ -127,5 +137,5 @@ class Controller_Scrape extends Controller
 		}
 
 	}
-	*/
+
 }

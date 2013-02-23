@@ -68,7 +68,8 @@ class View_Api_User extends Viewclass
 
 	public function related()
 	{
-
+		$s = ORM::factory('Scrape_Schedule','15cf10d5-aa29-4fb5-92f6-24e7d8845bab');
+		$s->checkForTeam('bcd82a53-757e-48d5-917b-3bf5e4a9cda1','f08b3304-5ef3-45f3-8019-075e42a9d158');
 	}
 
 	public function videos()

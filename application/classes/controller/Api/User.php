@@ -29,7 +29,7 @@ class Controller_Api_User extends Controller_Api_Base
 
 	}
 
-//GET methods
+	//GET methods
 	public function action_get_basics()
 	{
 		return $this->getDataFromView();
@@ -70,10 +70,10 @@ class Controller_Api_User extends Controller_Api_Base
 		return $this->getDataFromView();
 	}
 
-//POST METHODS
+	//POST METHODS
 	public function action_post_teams()
 	{
-
+		return $this->request->post();
 	}
 
 }

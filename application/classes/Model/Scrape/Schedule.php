@@ -42,8 +42,8 @@ class Model_Scrape_Schedule extends ORM
 
 	public function checkForTeam($school_id,$ssid)
 	{
-		$team = $this->teams->where('mp_school_id','=',$school_id)->where('mp_ssid','=',$ssid)->find();
-
+		$team = $this->teams->where('mp_school_id','=',$school_id)->and_where('mp_ssid','=',$ssid)->find();
+		//print_r($team);
 		if(!$team->loaded()) {
 			return false;
 		}

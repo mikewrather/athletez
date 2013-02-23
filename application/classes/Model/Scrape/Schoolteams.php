@@ -19,6 +19,10 @@ class Model_Scrape_Schoolteams extends ORM
 		'sport' => array(
 			'model' => 'Scrape_Sport',
 			'foreign_key' => 'mp_ssid'
+		),
+		'school' => array(
+			'model' => 'Scrape_School',
+			'foreign_key' => 'mp_school_id'
 		)
 	);
 /*
