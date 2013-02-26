@@ -10,7 +10,6 @@ class Controller_Scrape extends Controller
 {
 
 	//protected $renderer;
-
 	public function __construct(Request $request, Response $response)
 	{
 		$this->renderer = Kostache::factory();
@@ -39,7 +38,6 @@ class Controller_Scrape extends Controller
 		$vobj = new View_Scrape_Sports(array('sport'=>$this->request->param('id')));
 		$this->response->body($this->renderer->render($vobj,'scrape'));
 	}
-
 
 	public function action_getSchedules()
 	{
@@ -71,7 +69,6 @@ class Controller_Scrape extends Controller
 
 	public function action_saveGame()
 	{
-	//	print_r($_POST);
 		$p = $_POST;
 		if(!isset($p['contestid']) || $p['contestid']==0) return;
 
@@ -115,7 +112,6 @@ class Controller_Scrape extends Controller
 
 			$sc_team->save();
 		}
-	//	print_r($sc_team);
 
 		//check for home team entry
 		if(!$sc->checkForTeam($p['opponent']['schoolid'],$p['opponent']['ssid']))
@@ -135,6 +131,8 @@ class Controller_Scrape extends Controller
 			$sc_team2->schedule_id = $sc->id;
 			$sc_team2->save();
 		}
+
+	//	print_r($sc);
 
 	}
 

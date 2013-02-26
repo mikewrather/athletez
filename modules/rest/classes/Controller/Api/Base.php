@@ -10,7 +10,13 @@ class Controller_Api_Base extends Controller
 {
 
 	protected $mainModel;
+
+	protected $myID;
+	protected $myID2;
+
 	protected $resultArr;
+
+	protected $payloadDesc = "Contains User-Related Data";
 
 	/**
 	 * @var $starttime is used to calculate the total execution time for the controller script
@@ -21,13 +27,20 @@ class Controller_Api_Base extends Controller
 
 	public function __construct(Request $request, Response $response)
 	{
+
 		$this->starttime = microtime();
 		parent::__construct($request,$response);
+
+		$this->myID = (int)$this->request->param('id') > 0 ? (int)$this->request->param('id') : 0;
+		$this->myID2 = (int)$this->request->param('id2') > 0 ? (int)$this->request->param('id2') : 0;
 	}
 
 
 	public function execute()
 	{
+		//print_r(debug_backtrace());
+		$this->response->body = array();
+
 		// Execute the "before action" method
 		$this->before();
 
@@ -53,17 +66,32 @@ class Controller_Api_Base extends Controller
 		// Execute the action itself
 		$result = $this->{$action}();
 
-		$this->resultArr['payload'] = $result;
+		$this->response->headers('Content-Type','application/json');
 
+		// Initial Request set-up
+		if($this->request->is_initial())
+		{
+			$this->response->body['payload'] = $result;
+			$this->response->body['payloadDesc'] = $this->payloadDesc;
+		}
+		// All Internal Sub Requests Set up
+		else
+		{
+			$this->response->body = $result;
+		}
 
 		// Execute the "after action" method
 		$this->after();
 
-		$this->response->headers('Content-Type','application/json');
+		if($this->request->is_initial())
+		{
+			$this->response->body = json_encode($this->response->body);
+			echo $this->response->body;
+		}
 
-		echo json_encode($this->resultArr);
 		// Return the response
 		return $this->response;
+
 	}
 
 
@@ -71,10 +99,13 @@ class Controller_Api_Base extends Controller
 	public function after()
 	{
 		parent::after();
-		$this->resultArr['exec_data'] = array(
-			"exec_time" => microtime() - $this->starttime,
-			"exec_error" => $this->execError
-		);
+		if($this->request->is_initial() or 1)
+		{
+			$this->response->body['exec_data'] = array(
+				"exec_time" => microtime() - $this->starttime,
+				"exec_error" => $this->execError
+			);
+		}
 	}
 
 	protected function getDataFromView($obj=NULL)
@@ -94,5 +125,17 @@ class Controller_Api_Base extends Controller
 	protected function setMainModel($model)
 	{
 		$this->mainModel = $model;
+	}
+
+	/**
+	 * popMainModel sets the ID of the main model and then checks to see if it loaded correctly
+	 */
+	protected function popMainModel()
+	{
+		if($this->myID)
+		{
+			$this->mainModel->where('id','=',$this->myID)->find();
+			if(!$this->mainModel->loaded())	unset($this->mainModel);
+		}
 	}
 }

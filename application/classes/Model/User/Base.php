@@ -103,4 +103,15 @@ class Model_User_Base extends Model_Auth_User
 	{
 		//loop through teams and get positions for each.
 	}
+
+	public function getVideos()
+	{
+		return $this->media->where('media_type','=','video')->find_all();
+	}
+
+	public function getImages()
+	{
+		return $this->media->where('media_type','=','image')->find_all();
+	}
+
 }

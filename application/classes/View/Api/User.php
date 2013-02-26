@@ -61,7 +61,11 @@ class View_Api_User extends Viewclass
 		$teams = $this->obj->teams->group_by('org_gbs_link_id')->find_all();
 		foreach($teams as $team)
 		{
-			$retArr[$team->getOrg()->id] = $team->getOrg()->as_array();
+			$org = $team->getOrg();
+			$retArr[$team->getOrg()->id] = array(
+				'name' => $org->name,
+				'single_sport' => $org->single_sport
+			);
 		}
 		return $retArr;
 	}
@@ -74,12 +78,34 @@ class View_Api_User extends Viewclass
 
 	public function videos()
 	{
-
+		$retArr = array();
+		$videos = $this->obj->getVideos();
+		foreach($videos as $video)
+		{
+			$retArr[$video->id] = array(
+				'name' => $video->name
+			);
+			if($video->video->video_services_id > 0)
+			{
+				// Example of using subrequest to call api
+				$response = Request::factory('/api/videoservice/basics/'.$video->video->video_services_id)->execute();
+				$retArr[$video->id]['video_service'] = $response->body;
+			}
+		}
+		return $retArr;
 	}
 
 	public function images()
 	{
-
+		$retArr = array();
+		$images = $this->obj->getImages();
+		foreach($images as $image)
+		{
+			$retArr[$image->id] = array(
+				'name' => $image->name
+			);
+		}
+		return $retArr;
 	}
 
 	public function comments()

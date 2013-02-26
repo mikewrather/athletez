@@ -5,7 +5,7 @@
  * Time: 12:48 PM
  */
 
-class Model_Media_Video extends Media_Base
+class Model_Media_Video extends ORM
 {
 	
 	protected $_table_name = 'videos';

@@ -13,15 +13,13 @@
 class Controller_Api_User extends Controller_Api_Base
 {
 
+
 	public function __construct($request,$response)
 	{
 		parent::__construct($request,$response);
 
-		//set main model to user
-		if((int)$this->request->param('id') > 0)
-		{
-			$this->mainModel = ORM::factory('User_Base',$this->request->param('id'));
-		}
+		$this->mainModel = ORM::factory('User_Base');
+		$this->popMainModel();
 	}
 
 	public function action_index()
@@ -32,43 +30,58 @@ class Controller_Api_User extends Controller_Api_Base
 	//GET methods
 	public function action_get_basics()
 	{
+		$this->payloadDesc = "Basic information about the user.";
 		return $this->getDataFromView();
 	}
 
 	public function action_get_teams()
 	{
+		$this->payloadDesc = "List of teams associated with the user.";
 		return $this->getDataFromView();
 	}
 
 	public function action_get_sports()
 	{
+		$this->payloadDesc = "List of sports associated with the user.";
 		return $this->getDataFromView();
 	}
 
 	public function action_get_orgs()
 	{
+		$this->payloadDesc = "List of organizations associated with the user.";
 		return $this->getDataFromView();
 	}
 
 	public function action_get_related()
 	{
+		$this->payloadDesc = "List of related athletes and teams associated with the user.";
 		return $this->getDataFromView();
 	}
 
 	public function action_get_videos()
 	{
+		$this->payloadDesc = "List of videos associated with the user.";
 		return $this->getDataFromView();
 	}
 
 	public function action_get_images()
 	{
+		$this->payloadDesc = "List of images associated with the user.";
 		return $this->getDataFromView();
 	}
 
-	public function action_get_comments()
+	public function action_get_commentsof()
 	{
+		$this->payloadDesc = "List of comments made by the user.";
 		return $this->getDataFromView();
 	}
+
+	public function action_get_commentson()
+	{
+		$this->payloadDesc = "List of comments made ABOUT the the user on his/her profile.";
+		return $this->getDataFromView();
+	}
+
 
 	//POST METHODS
 	public function action_post_teams()
