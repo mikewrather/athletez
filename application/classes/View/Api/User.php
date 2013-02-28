@@ -10,7 +10,7 @@
 	 *
 	 */
 
-class View_Api_User extends Viewclass
+class View_Api_User extends Api_Viewclass
 {
 
 	public function basics()
@@ -29,13 +29,8 @@ class View_Api_User extends Viewclass
 		$retArr = array();
 		foreach($this->obj->teams->find_all() as $team)
 		{
-			$retArr[$team->id] = array(
-				'org' => $team->orggbslink->org->name,
-				'complevel' => $team->complevel->name,
-				'season' => $team->season->name,
-				'sport' => $team->orggbslink->gbslink->sport->name,
-				'mascot' => $team->mascot
-			);
+			$response = Request::factory('/api/team/basics/'.$team->id.'?users_id='.$this->obj->id)->execute();
+			$retArr[$team->id] = $response->body;
 		}
 		return $retArr;
 	}
@@ -62,18 +57,15 @@ class View_Api_User extends Viewclass
 		foreach($teams as $team)
 		{
 			$org = $team->getOrg();
-			$retArr[$team->getOrg()->id] = array(
-				'name' => $org->name,
-				'single_sport' => $org->single_sport
-			);
+			$response = Request::factory('/api/org/basics/'.$org->id.'?users_id='.$this->obj->id)->execute();
+			$retArr[$org->id] = $response->body;
 		}
 		return $retArr;
 	}
 
 	public function related()
 	{
-		$s = ORM::factory('Scrape_Schedule','15cf10d5-aa29-4fb5-92f6-24e7d8845bab');
-		$s->checkForTeam('bcd82a53-757e-48d5-917b-3bf5e4a9cda1','f08b3304-5ef3-45f3-8019-075e42a9d158');
+
 	}
 
 	public function videos()

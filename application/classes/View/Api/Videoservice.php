@@ -10,7 +10,7 @@
 	 *
 	 */
 
-class View_Api_Videoservice extends Viewclass
+class View_Api_Videoservice extends Api_Viewclass
 {
 
 	public function basics()

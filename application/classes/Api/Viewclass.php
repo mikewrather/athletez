@@ -10,10 +10,12 @@
  *
  */
 
-class Viewclass
+class Api_Viewclass
 {
 
 	protected $obj;
+
+	protected $queryParams;
 
 	static function factory($extention,$obj)
 	{
@@ -34,4 +36,8 @@ class Viewclass
 		$this->obj = $obj;
 	}
 
+	public function setQueryParams($paramsArr)
+	{
+		$this->queryParams = $paramsArr;
+	}
 }

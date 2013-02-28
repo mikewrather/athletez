@@ -16,7 +16,7 @@ class Controller_Api_Base extends Controller
 
 	protected $resultArr;
 
-	protected $payloadDesc = "Contains User-Related Data";
+	protected $payloadDesc;
 
 	/**
 	 * @var $starttime is used to calculate the total execution time for the controller script
@@ -38,6 +38,7 @@ class Controller_Api_Base extends Controller
 
 	public function execute()
 	{
+
 		//print_r(debug_backtrace());
 		$this->response->body = array();
 
@@ -64,7 +65,8 @@ class Controller_Api_Base extends Controller
 		}
 
 		// Execute the action itself
-		$result = $this->{$action}();
+		$retObj = $this->{$action}();
+		$result = is_object($retObj) ? $this->getDataFromView($retObj) : $this->getDataFromView();
 
 		$this->response->headers('Content-Type','application/json');
 
@@ -72,7 +74,7 @@ class Controller_Api_Base extends Controller
 		if($this->request->is_initial())
 		{
 			$this->response->body['payload'] = $result;
-			$this->response->body['payloadDesc'] = $this->payloadDesc;
+			$this->response->body['desc'] = $this->payloadDesc;
 		}
 		// All Internal Sub Requests Set up
 		else
@@ -99,6 +101,7 @@ class Controller_Api_Base extends Controller
 	public function after()
 	{
 		parent::after();
+		//right now I'm keeping this here so that I can see the execution time on all subrequests
 		if($this->request->is_initial() or 1)
 		{
 			$this->response->body['exec_data'] = array(
@@ -108,22 +111,15 @@ class Controller_Api_Base extends Controller
 		}
 	}
 
-	protected function getDataFromView($obj=NULL)
-	{
-		if($obj==NULL && !isset($this->mainModel)){ return false; }
-		elseif($obj==NULL)
-		{
-			$obj = $this->mainModel;
-		}
-		$ext = $this->request->controller();
-		$method = $this->request->action();
 
-		$vc = Viewclass::factory($ext,$obj);
-		return $vc->$method();
-	}
 
 	protected function setMainModel($model)
 	{
+		if(!is_object($model))
+		{
+			$this->execError = "The model provided is not a valid object.";
+			return false;
+		}
 		$this->mainModel = $model;
 	}
 
@@ -137,5 +133,31 @@ class Controller_Api_Base extends Controller
 			$this->mainModel->where('id','=',$this->myID)->find();
 			if(!$this->mainModel->loaded())	unset($this->mainModel);
 		}
+	}
+
+
+ /**
+ * function getDataFromView uses the controller and action called to generate the name of the class and method to call
+ * and then returns the data that that function returns
+ *
+ * @param null $obj
+ * @return array
+ */
+	protected function getDataFromView($obj=NULL)
+	{
+		if($obj==NULL && !isset($this->mainModel)){ return false; }
+		elseif($obj==NULL)
+		{
+			$obj = $this->mainModel;
+		}
+		$ext = $this->request->controller();
+		$method = $this->request->action();
+
+		$vc = Api_Viewclass::factory($ext,$obj);
+
+	//	print_r($this->request->query());
+
+		if(sizeof($this->request->query()) > 0) $vc->setQueryParams($this->request->query());
+		return $vc->$method();
 	}
 }

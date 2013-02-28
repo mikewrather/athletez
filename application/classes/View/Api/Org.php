@@ -10,14 +10,28 @@
  *
  */
 
-class View_Api_Org extends Viewclass
+class View_Api_Org extends Api_Viewclass
 {
 
 	public function basics()
 	{
 		$retArr = array(
-			'name' => $this->obj->name
+			'name' => $this->obj->main->name,
+			'single_sport' => $this->obj->main->single_sport,
+			'teams' => $this->teams()
 		);
+		return $retArr;
+	}
+
+	public function teams()
+	{
+		$retArr = array();
+		foreach($this->obj->teams as $team)
+		{
+			$response = Request::factory('/api/team/basics/'.$team->id)->execute();
+			$retArr[$team->id] = $response->body;
+		}
+
 		return $retArr;
 	}
 

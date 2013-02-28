@@ -10,7 +10,7 @@
  *
  */
 
-class View_Api_Schools extends Viewclass
+class View_Api_Schools extends Api_Viewclass
 {
 
 	public function fulllist(){

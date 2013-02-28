@@ -10,13 +10,17 @@
  *
  */
 
-class View_Api_Team extends Viewclass
+class View_Api_Team extends Api_Viewclass
 {
 
 	public function basics()
 	{
 		$retArr = array(
-			'name' => $this->obj->name
+			'org' => $this->obj->orggbslink->org->name,
+			'complevel' => $this->obj->complevel->name,
+			'season' => $this->obj->season->name,
+			'sport' => $this->obj->orggbslink->gbslink->sport->name,
+			'mascot' => $this->obj->mascot
 		);
 		return $retArr;
 	}

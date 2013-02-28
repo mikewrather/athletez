@@ -20,12 +20,14 @@ class Controller_Api_Schools extends Controller_Api_Base
 		//set main model to user
 		if((int)$this->request->param('id') > 0)
 		{
-			$this->mainModel = ORM::factory('Highschool',$this->request->param('id'));
+			$mm = ORM::factory('Highschool',$this->request->param('id'));
 		}
 		else
 		{
-			$this->mainModel = ORM::factory('Highschool');
+			$mm = ORM::factory('Highschool');
 		}
+
+		$this->setMainModel($mm);
 	}
 
 	public function action_index()

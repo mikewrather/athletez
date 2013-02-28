@@ -16,7 +16,7 @@ class Controller_Api_Ent extends Controller_Api_Base
 	public function __construct($request, $response)
 	{
 		parent::__construct($request, $response);
-		$this->mainModel = Ent::eFact($this->myID,$this->myID2);
+		$this->SetMainModel(Ent::eFact($this->myID,$this->myID2));
 	}
 
 	public function action_index()
@@ -37,14 +37,49 @@ class Controller_Api_Ent extends Controller_Api_Base
 
 	}
 
+	public function action_post_comment()
+	{
+
+	}
+
+	public function action_post_follow()
+	{
+
+	}
+
 	//PUT Methods
-	public function action_put_basics()
+	public function action_put_vote()
+	{
+
+	}
+
+	public function action_put_comment()
+	{
+
+	}
+
+	public function action_put_follow()
 	{
 
 	}
 
 	//DELETE Methods
-	public function action_delete()
+	public function action_delete_ent()
+	{
+
+	}
+
+	public function action_delete_vote()
+	{
+
+	}
+
+	public function action_delete_comment()
+	{
+
+	}
+
+	public function action_delete_follow()
 	{
 
 	}

@@ -16,7 +16,7 @@ class Controller_Api_Team extends Controller_Api_Base
 	public function __construct($request, $response)
 	{
 		parent::__construct($request, $response);
-		$this->mainModel = ORM::factory('Sportorg_Team');
+		$this->setMainModel(ORM::factory('Sportorg_Team'));
 		$this->popMainModel();
 	}
 
@@ -25,4 +25,8 @@ class Controller_Api_Team extends Controller_Api_Base
 
 	}
 
+	public function action_get_basics()
+	{
+		print_r($this->request->query('users_id'));
+	}
 }

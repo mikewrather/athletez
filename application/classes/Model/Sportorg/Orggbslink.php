@@ -7,7 +7,7 @@
 
 class Model_Sportorg_Orggbslink extends ORM
 {
-	
+
 	protected $_table_name = 'org_gbs_link';
 
 	protected $_belongs_to = array(
@@ -15,20 +15,12 @@ class Model_Sportorg_Orggbslink extends ORM
 			'model' => 'Sportorg_Org',
 			'foreign_key' => 'orgs_id'
 		),
-		'league' => array(
-			'model' => 'Sportorg_League',
-			'foreign_key' => 'leagues_id'
-		),
-		'division' => array(
-			'model' => 'Sportorg_Division',
-			'foreign_key' => 'divisions_id'
-		),
 		'gbslink' => array(
 			'model' => 'Sportorg_Gbslink',
 			'foreign_key' => 'gbs_link_id'
 		),
 	);
-	
+
 	protected $_has_many = array(
 		'teams' => array(
 			'model' => 'Sportorg_Team',
