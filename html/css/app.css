@@ -1,0 +1,21 @@
+
+.left  { float:left; }
+.right { float:right; }
+.clear { float:none; clear:both; }
+.clearfix:after { display:block; content:"."; clear:both; font-size:0; line-height:0; height:0; overflow:hidden; }
+
+.textleft { text-align:left; }
+.textright { text-align:right; }
+.textcenter { text-align:center; }
+
+header { padding:10px !important; border-bottom:1px solid #ccc; padding:10px 20px; }
+header .logo { float:left; margin:6px 15px 6px 0; }
+header .searchform { float:left; margin:6px 15px 6px 0; }
+header .searchform form { margin-bottom:0; }
+header .account { float:right; }
+header .photo { float:left; margin-right:10px; }
+header .userlinks { float:left; margin-top:5px; }
+header .userlinks .dropdown-toggle { min-width:200px; }
+header .userlinks .dropdown-menu { left:auto; right:0; }
+header .signup-facebook,
+header .signup-email { margin:0 5px; }

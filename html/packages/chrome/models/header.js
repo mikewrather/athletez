@@ -10,31 +10,31 @@ define( ["models/base"], function (BaseModel) {
     HeaderModel = BaseModel.extend({
 
         defaults: {
-
+            
             branding: {
-                alt: "Pixelhandler",
-                src: "/images/pixelhandler-logo.png"
+                alt: "NewSite",
+                src: "/images/logo.png"
+            },            
+            
+            search: {
+                placeholder: "Search"
             },
-
-            nav: [
-                {
-                    page: "Todos",
-                    link: "/"
-                },
-                {
-                    page: "Products",
-                    link: "/products"
-                },
-                {
-                    page: "About",
-                    link: "/about"
-                },
-                {
-                    page: "Hello World",
-                    link: "/hello/world"
-                }
-            ]
-        }
+            
+            login_url: "/login",
+            login_label: "Log In",
+            
+            logout_url: "/logout",
+            logout_label: "Log Out",
+            
+            signup_social_label: "Sign up for Free",
+            signup_facebook_label: "Facebook",
+            signup_email_label: "Email",
+            signup_facebook_link: "/",
+            signup_email_link: '/'
+            
+        },
+        
+        url: '/test/chrome/login_status.js'
 
     });
 

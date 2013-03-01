@@ -4,8 +4,8 @@
 // this module is used with the r.js optimizer tool during build  
 // See http://requirejs.org/docs/faq-optimization.html
 
-define(['jquery', 'underscore', 'backbone', 'modernizr', 'mustache'], 
-function (jQuery,  _,            Backbone,   Modernizr,   Mustache) {
+define(['jquery', 'underscore', 'backbone', 'modernizr', 'mustache', 'bootstrap'], 
+function (jQuery,  _,            Backbone,   Modernizr,   Mustache,   Bootstrap) {
 
     jQuery.noConflict();
     _.noConflict();
@@ -20,7 +20,8 @@ function (jQuery,  _,            Backbone,   Modernizr,   Mustache) {
         '_': _,
         'Backbone': Backbone,
         'Modernizr': Modernizr, 
-        'Mustache': Mustache
+        'Mustache': Mustache,
+        'Bootstrap': Bootstrap
     };
 
 });

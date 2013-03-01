@@ -19,25 +19,36 @@ function (
     var HeaderView,
         BaseView = views.BaseView,
         $ = vendor.$,
+        _ = vendor._,
         Mustache = vendor.Mustache;
 
       HeaderView = BaseView.extend({
 
-          tagName: 'header',
+        tagName: 'header',
 
-          className: 'container-fluid',
+        className: 'container-fluid clearfix',
 
-          initialize: function (options) {
-              this.template = headerTemplate;
-          },
+        initialize: function (options) {
+            this.template = headerTemplate;
+        },
 
-          model: new HeaderModel(),
+        model: new HeaderModel(),
 
-          render: function () {
-              var markup = Mustache.to_html(this.template, this.model.toJSON());
-              this.$el.html(markup);
-              return this;
-          }
+        render: function () {
+            var self = this;
+            this.model.fetch( {
+                success: function(res) {
+                    var markup = Mustache.to_html(self.template, res.toJSON());
+                    self.$el.html(markup);
+                },
+                
+                error: function(res) {
+                    var markup = Mustache.to_html(self.template, res.toJSON());
+                    self.$el.html(markup);
+                }
+            });
+            return this;
+        }
 
       });
 

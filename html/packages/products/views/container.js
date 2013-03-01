@@ -21,10 +21,10 @@ function (
 
       ProductContainerView = BaseView.extend({
 
-          className: 'container-fluid',
+          className: 'content',
 
           initialize: function (options) {
-              this.render().$el.appendTo('body');
+              this.render().$el.appendTo('#main');
           },
 
           render: function () {

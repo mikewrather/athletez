@@ -18,7 +18,7 @@ function (facade, utils, collections, chromeBootstrap, Controller, productsBoots
 
         routes: {
             '': 'defaultRoute',
-            'products': 'showProducts',
+            'profile': 'showProfile',
             'about': 'showHello',
             'about/': 'showHello',
             'hello/:name': 'showHello',
@@ -32,7 +32,16 @@ function (facade, utils, collections, chromeBootstrap, Controller, productsBoots
         },
 
         defaultRoute: function () {
-            this.initTodos();
+            this.initApp();
+        },
+        
+        initApp: function () {
+            // load style sheets
+            this.loadStyles();
+            
+            $('body').empty();
+            chromeBootstrap();
+            productsBootstrap();
         },
 
         showHello: function (name) {
@@ -48,13 +57,19 @@ function (facade, utils, collections, chromeBootstrap, Controller, productsBoots
                 "route": "todos"
             });
         },
-
-        showProducts: function () {
+        
+        showProfile: function () {
             // load style sheets
-            Channel('load:css').publish(["css/bootstrap.css", "css/bootstrap-responsive.css"]);
+            this.loadStyles();
+            
             $('body').empty();
             chromeBootstrap();
             productsBootstrap();
+        },
+
+        // load style sheets
+        loadStyles: function () {
+            Channel('load:css').publish(["css/bootstrap.css", "css/bootstrap-responsive.css", "css/app.css"]);
         },
 
         // Pub / Sub
