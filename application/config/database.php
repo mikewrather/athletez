@@ -19,7 +19,7 @@ $dbconfig = array
 			 * Ports and sockets may be appended to the hostname.
 			 */
 			'hostname'   => 'localhost',
-			'database'   => 'boxscore',
+			'database'   => 'athletesup_main',
 			'username'   => 'root',
 			'password'   => 'R370ad3d',
 			'persistent' => FALSE,

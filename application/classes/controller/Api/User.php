@@ -74,6 +74,17 @@ class Controller_Api_User extends Controller_Api_Base
 		$this->payloadDesc = "List of comments made ABOUT the the user on his/her profile.";
 	}
 
+	public function action_get_fitnessbasics()
+	{
+		$this->payloadDesc = "The basic fintness information to display for a user.";
+	}
+
+	public function action_get_primaryvideo()
+	{
+		$this->payloadDesc = "This is the primary video for the user's profile page";
+	}
+
+
 
 	//POST METHODS
 	public function action_post_teams()

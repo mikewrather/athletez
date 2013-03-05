@@ -38,7 +38,7 @@ class View_Api_User extends Api_Viewclass
 	public function sports()
 	{
 		$retArr = array();
-		$teams = $this->obj->teams->group_by('org_gbs_link_id')->find_all();
+		$teams = $this->obj->teams->group_by('org_sport_link_id')->find_all();
 		foreach($teams as $team)
 		{
 			$sport = $team->getSport();
@@ -53,7 +53,7 @@ class View_Api_User extends Api_Viewclass
 	public function orgs()
 	{
 		$retArr = array();
-		$teams = $this->obj->teams->group_by('org_gbs_link_id')->find_all();
+		$teams = $this->obj->teams->group_by('org_sport_link_id')->find_all();
 		foreach($teams as $team)
 		{
 			$org = $team->getOrg();
@@ -100,7 +100,17 @@ class View_Api_User extends Api_Viewclass
 		return $retArr;
 	}
 
-	public function comments()
+	public function commentsof()
+	{
+
+	}
+
+	public function commentson()
+	{
+
+	}
+
+	public function fitnessbasics()
 	{
 
 	}

@@ -15,16 +15,16 @@ class Model_Sportorg_Orggbslink extends ORM
 			'model' => 'Sportorg_Org',
 			'foreign_key' => 'orgs_id'
 		),
-		'gbslink' => array(
-			'model' => 'Sportorg_Gbslink',
-			'foreign_key' => 'gbs_link_id'
+		'sport' => array(
+			'model' => 'Sportorg_Sport',
+			'foreign_key' => 'sports_id'
 		),
 	);
 
 	protected $_has_many = array(
 		'teams' => array(
 			'model' => 'Sportorg_Team',
-			'foreign_key' => 'org_gbs_link_id'
+			'foreign_key' => 'org_sport_link_id'
 		)
 	);
 

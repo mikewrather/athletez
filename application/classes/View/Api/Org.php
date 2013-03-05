@@ -31,8 +31,6 @@ class View_Api_Org extends Api_Viewclass
 			$response = Request::factory('/api/team/basics/'.$team->id)->execute();
 			$retArr[$team->id] = $response->body;
 		}
-
 		return $retArr;
 	}
-
 }

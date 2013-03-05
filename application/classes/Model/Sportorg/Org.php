@@ -11,8 +11,8 @@ class Model_Sportorg_Org extends ORM
 	protected $_table_name = "orgs";
 	
 	protected $_has_many = array(
-		'orggbslinks' => array(
-			'model' => 'Sportorg_Orggbslink',
+		'orgsports' => array(
+			'model' => 'Sportorg_Orgsportlink',
 			'foreign_key' => 'orgs_id'
 		),
 		'divisions' => array(
@@ -22,22 +22,16 @@ class Model_Sportorg_Org extends ORM
 		'leagues' => array(
 			'model' => 'Sportorg_League',
 			'foreign_key' => 'leagues_id',
-		),
-		'gbslinks' => array(
-			'model' => 'Sportorg_Gbslink',
-			'foreign_key' => 'orgs_id',
-			'far_key' => 'gbs_link_id',
-			'through' => 'org_gbs_link'
 		)
 	);
 
 	public function getTeams()
 	{
-		$orggbslinks = $this->orggbslinks->find_all();
+		$sports = $this->orgsports->find_all();
 		$teams = array();
-		foreach($orggbslinks as $orggbslink)
+		foreach($sports as $orgsport)
 		{
-			$ts = $orggbslink->teams->find_all();
+			$ts = $orgsport->teams->find_all();
 			foreach($ts as $t)
 			{
 				$teams[$t->id] = $t;
