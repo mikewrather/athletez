@@ -19,6 +19,7 @@ require.config({
         'backbone'     : '/vendor/backbone',
 
         // Plugins
+        'bootstrap'    : '/vendor/plugins/bootstrap',
 
         // RequireJS
         'domready'     : '/vendor/plugins/domReady',
