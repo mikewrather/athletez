@@ -3,8 +3,8 @@
 // Requires define
 // Return {Object} App
 
-define( ["facade", "utils", "collections", "chrome", "controller", "products", "hello", "todos"], 
-function (facade, utils, collections, chromeBootstrap, Controller, productsBootstrap, HelloController, TodosController) {
+define( ["facade", "utils", "collections", "chrome", "controller", "products", "profile"], 
+function (facade, utils, collections, chromeBootstrap, Controller, productsBootstrap, ProfileController) {
 
     var App,
         ApplicationStates = collections.ApplicationStates,
@@ -18,11 +18,7 @@ function (facade, utils, collections, chromeBootstrap, Controller, productsBoots
 
         routes: {
             '': 'defaultRoute',
-            'profile': 'showProfile',
-            'about': 'showHello',
-            'about/': 'showHello',
-            'hello/:name': 'showHello',
-            'todos': 'initTodos'
+            'profile': 'showProfile'
         },
 
         initialize: function (options) {
@@ -36,26 +32,7 @@ function (facade, utils, collections, chromeBootstrap, Controller, productsBoots
         },
         
         initApp: function () {
-            // load style sheets
-            this.loadStyles();
-            
-            $('body').empty();
-            chromeBootstrap();
-            productsBootstrap();
-        },
-
-        showHello: function (name) {
-            var controller = new HelloController({
-                "params": { "name": name },
-                "route": (name) ? "/hello/" + name : "/hello",
-                "useFixtures" : true
-            });
-        },
-
-        initTodos: function () {
-            var controller = new TodosController({
-                "route": "todos"
-            });
+            this.showProfile();
         },
         
         showProfile: function () {
@@ -64,7 +41,9 @@ function (facade, utils, collections, chromeBootstrap, Controller, productsBoots
             
             $('body').empty();
             chromeBootstrap();
-            productsBootstrap();
+            var profileController = new ProfileController({
+                "route": "resume"
+            });
         },
 
         // load style sheets

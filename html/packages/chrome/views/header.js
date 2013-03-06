@@ -36,17 +36,12 @@ function (
 
         render: function () {
             var self = this;
-            this.model.fetch( {
-                success: function(res) {
+            this.model.fetchSuccess = this.model.fetchError = function(res) {
                     var markup = Mustache.to_html(self.template, res.toJSON());
                     self.$el.html(markup);
-                },
+            };
                 
-                error: function(res) {
-                    var markup = Mustache.to_html(self.template, res.toJSON());
-                    self.$el.html(markup);
-                }
-            });
+            this.model.fetch();
             return this;
         }
 

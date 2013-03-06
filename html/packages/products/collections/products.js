@@ -15,7 +15,7 @@ function (facade, BaseCollection,     ProductModel,              utils) {
 
         model: ProductModel,
 
-        url: '/test/fixtures/products.js',
+        url: '/api/fixtures/products.js',
 
         initialize: function () {
             this.deferred = new $.Deferred();

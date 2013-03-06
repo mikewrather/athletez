@@ -34,7 +34,7 @@ define( ["models/base"], function (BaseModel) {
             
         },
         
-        url: '/test/chrome/login_status.js'
+        url: '/api/chrome/login_status.js'
 
     });
 

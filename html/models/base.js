@@ -18,6 +18,10 @@ define(['facade', 'utils'], function (facade, utils) {
     // object literal argument to extend is the prototype for the BaseModel constructor
     BaseModel = Backbone.Model.extend({
 
+        defaults: {
+            "id": 101
+        },
+
         // Param {Object} `attributes` set on model when creating an instance  
         // Param {Object} `options`  
         initialize: function (attributes, options) {

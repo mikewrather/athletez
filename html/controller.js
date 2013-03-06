@@ -386,13 +386,13 @@ function(facade, collections, models, utils) {
     };
 
     Controller.prototype.useFixturesForWebServices = function () {
-        var _webServices = {};
+        /*var _webServices = {};
 
         _.extend(_webServices, Controller.prototype.webServices, { 
             // hello: "/test/fixtures/hello"
             hello: "/api/hello"
         });
-        this.webServices = _webServices;
+        this.webServices = _webServices;*/
     };
 
     return Controller;
