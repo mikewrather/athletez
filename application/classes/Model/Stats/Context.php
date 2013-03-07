@@ -17,18 +17,15 @@ class Model_Stats_Context extends ORM
 			'foreign_key' => '[column]'
 		)
 	);
-	
+	*/
+
 	protected $_has_many = array(
-		'[alias name]' => array(
-			'model' => '[model name]', 
-			'foreign_key' => '[column]'
-		),
-		'[alias name]' => array(
-			'model' => '[model name]', 
-			'through' => '[model name of pivot table]'
+		'statvals' => array(
+			'model' => 'Stats_Val',
+			'foreign_key' => 'stat_contexts_id'
 		)
 	);
-	
+	/*
 	protected $_has_one = array(
 		'[alias name]' => array(
 			'model' => '[model name]', 
@@ -36,9 +33,9 @@ class Model_Stats_Context extends ORM
 		)
 	);
 */
-	public function __construct()
+	public function __construct($id)
 	{
-		parent::__construct();
+		parent::__construct($id);
 	}
 
 }

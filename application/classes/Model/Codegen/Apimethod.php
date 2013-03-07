@@ -3,35 +3,25 @@
  * $description
  *
  * Date: 3/7/13
- * Time: 2:04 AM
+ * Time: 12:57 AM
  *
  * @author: Mike Wrather
  *
  */
 
-class Model_Stats_Base extends ORM
+class Model_Codegen_Apimethod extends ORM
 {
 	
-	protected $_table_name = 'stats';
+	protected $_table_name = 'apiaccess';
 	
 
 	protected $_belongs_to = array(
-		'sport' => array(
-			'model' => 'Sportorg_Sport',
-			'foreign_key' => 'sports_id'
-		),
-		'secondsport' => array(
-			'model' => 'Sportorg_Sport',
-			'foreign_key' => 'sports_id2'
-		),
-		'stattab' => array(
-			'model' => 'Stats_Tab',
-			'foreign_key' => 'stattabs_id'
+		'entlist' => array(
+			'model' => 'Codegen_Entlist',
+			'foreign_key' => 'entlist_id'
 		)
 	);
-
-	//TODO: add has many relationships
-	/*
+/*
 	protected $_has_many = array(
 		'_alias_' => array(
 			'model' => '_model_name_', 

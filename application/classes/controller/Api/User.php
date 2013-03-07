@@ -13,7 +13,6 @@
 class Controller_Api_User extends Controller_Api_Base
 {
 
-
 	public function __construct($request,$response)
 	{
 		parent::__construct($request,$response);
@@ -83,8 +82,6 @@ class Controller_Api_User extends Controller_Api_Base
 	{
 		$this->payloadDesc = "This is the primary video for the user's profile page";
 	}
-
-
 
 	//POST METHODS
 	public function action_post_teams()
