@@ -1,8 +1,12 @@
 <?php defined('SYSPATH') or die('No direct script access.');
 /**
- * User: mike
- * Date: 2/6/13
- * Time: 12:54 PM
+ * $description
+ *
+ * Date: 3/7/13
+ * Time: 5:31 PM
+ *
+ * @author: Mike Wrather
+ *
  */
 
 class Model_Stats_Vals extends ORM
@@ -10,35 +14,30 @@ class Model_Stats_Vals extends ORM
 	
 	protected $_table_name = 'statvals';
 	
-/*
+
 	protected $_belongs_to = array(
-		'[alias name]' => array(
-			'model' => '[model name]', 
-			'foreign_key' => '[column]'
-		)
-	);
-	
-	protected $_has_many = array(
-		'[alias name]' => array(
-			'model' => '[model name]', 
-			'foreign_key' => '[column]'
+		'user' => array(
+			'model' => 'User_Base',
+			'foreign_key' => 'users_id'
 		),
-		'[alias name]' => array(
-			'model' => '[model name]', 
-			'through' => '[model name of pivot table]'
+		'team' => array(
+			'model' => 'Sportorg_Team',
+			'foreign_key' => 'teams_id'
+		),
+		'game' => array(
+			'model' => 'Sportorg_Games_Base',
+			'foreign_key' => 'games_id'
+		),
+		'context' => array(
+			'model' => 'Stats_Context',
+			'foreign_key' => 'stat_contexts_id'
 		)
 	);
-	
-	protected $_has_one = array(
-		'[alias name]' => array(
-			'model' => '[model name]', 
-			'foreign_key' => '[column]'
-		)
-	);
-*/
-	public function __construct()
+
+
+	public function __construct($id=NULL)
 	{
-		parent::__construct();
+		parent::__construct($id);
 	}
 
 }

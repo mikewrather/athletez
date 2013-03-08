@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50525
 File Encoding         : 65001
 
-Date: 2013-03-07 03:37:35
+Date: 2013-03-08 03:40:42
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -41,7 +41,7 @@ CREATE TABLE `apiaccess` (
   `description` varchar(255) DEFAULT NULL,
   `done` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=57 DEFAULT CHARSET=utf16;
+) ENGINE=InnoDB AUTO_INCREMENT=124 DEFAULT CHARSET=utf16;
 
 -- ----------------------------
 -- Records of apiaccess
@@ -65,7 +65,7 @@ INSERT INTO `apiaccess` VALUES ('16', '2', 'GET', 'sports', 'All sports associat
 INSERT INTO `apiaccess` VALUES ('17', '2', 'GET', 'complevels', 'List of possible competition levels for this organization', '0');
 INSERT INTO `apiaccess` VALUES ('18', '2', 'GET', 'seasons', 'List of all seasons this organization plays', '0');
 INSERT INTO `apiaccess` VALUES ('19', '2', 'GET', 'section', 'If applicable, returns the section that the organization exists in.', '0');
-INSERT INTO `apiaccess` VALUES ('20', '3', 'GET', 'listall', 'Lists available positions for a given sport', '0');
+INSERT INTO `apiaccess` VALUES ('20', '3', 'GET', 'listall', 'Lists available positions.', '0');
 INSERT INTO `apiaccess` VALUES ('21', '3', 'GET', 'players', 'Retrives all players for a given position narrowed by other optional criteria', '0');
 INSERT INTO `apiaccess` VALUES ('22', '3', 'GET', 'defaultstattab', 'Gets the default statistics tab to select for a given position', '0');
 INSERT INTO `apiaccess` VALUES ('23', '3', 'GET', 'sport', 'Gets the sport associated with a given position', '0');
@@ -102,6 +102,153 @@ INSERT INTO `apiaccess` VALUES ('53', '11', 'GET', 'teams', 'List of teams for a
 INSERT INTO `apiaccess` VALUES ('54', '11', 'GET', 'listall', 'List of competition levels narrowed by criteria', '0');
 INSERT INTO `apiaccess` VALUES ('55', '12', 'GET', 'basics', 'Basic information about the competition level profile', '0');
 INSERT INTO `apiaccess` VALUES ('56', '12', 'GET', 'complevels', 'List the competition levels for this profile', '0');
+INSERT INTO `apiaccess` VALUES ('57', '14', 'GET', 'basics', 'Basic info on a specific comment', '0');
+INSERT INTO `apiaccess` VALUES ('58', '14', 'GET', 'subject', 'Returns the subject with which the comment is associated.', '0');
+INSERT INTO `apiaccess` VALUES ('60', '14', 'GET', 'user', 'Return the user responsible for a comment', '0');
+INSERT INTO `apiaccess` VALUES ('61', '16', 'GET', 'basics', 'Basic information on a given tag', '0');
+INSERT INTO `apiaccess` VALUES ('63', '16', 'GET', 'user', 'Gets the user being tagged', '0');
+INSERT INTO `apiaccess` VALUES ('64', '18', 'GET', 'basics', 'Basic information on a given vote', '0');
+INSERT INTO `apiaccess` VALUES ('65', '18', 'GET', 'subject', 'Returns the subject for a given vote', '0');
+INSERT INTO `apiaccess` VALUES ('67', '18', 'GET', 'user', 'Returns the user who voted', '0');
+INSERT INTO `apiaccess` VALUES ('68', '19', 'GET', 'basics', 'Basic information about some media', '0');
+INSERT INTO `apiaccess` VALUES ('69', '21', 'GET', 'basics', 'Basic info about a given image', '0');
+INSERT INTO `apiaccess` VALUES ('70', '23', 'GET', 'basics', 'Basic information about a video', '0');
+INSERT INTO `apiaccess` VALUES ('71', '23', 'GET', 'types', 'Return all formats this video is available in', '0');
+INSERT INTO `apiaccess` VALUES ('72', '23', 'GET', 'meta', 'Retrives all metadata for a certain video.', '0');
+INSERT INTO `apiaccess` VALUES ('73', '24', 'GET', 'basics', 'Basic info about a given video service.', '0');
+INSERT INTO `apiaccess` VALUES ('74', '24', 'GET', 'videos', 'Returns a list of videos produced by a video service', '0');
+INSERT INTO `apiaccess` VALUES ('75', '25', 'GET', 'basics', 'Return the basics about a given peice of resume data', '0');
+INSERT INTO `apiaccess` VALUES ('76', '25', 'GET', 'listall', 'Return a list of all resume data narrowed by supplied parameters', '0');
+INSERT INTO `apiaccess` VALUES ('77', '25', 'GET', 'vals', 'Retrieves the values for a peice of resume data narrowed by supplied parameters, most noteably userID', '0');
+INSERT INTO `apiaccess` VALUES ('78', '26', 'GET', 'basics', 'Retrives basic information for a resume data group', '0');
+INSERT INTO `apiaccess` VALUES ('79', '26', 'GET', 'resumedata', 'Returns a list of the resume data for a given group', '0');
+INSERT INTO `apiaccess` VALUES ('80', '26', 'GET', 'profiles', 'Returns all Resume Data Profiles for which this Resume Data Group exists', '0');
+INSERT INTO `apiaccess` VALUES ('81', '27', 'GET', 'basics', 'Returns basic info for a given Resume Data Profile', '0');
+INSERT INTO `apiaccess` VALUES ('82', '27', 'GET', 'datagroups', 'Returns all Resume Data Groups for a given Resume Data Profile', '0');
+INSERT INTO `apiaccess` VALUES ('83', '27', 'GET', 'sports', 'Returns all sports for a given Resume Data Profile', '0');
+INSERT INTO `apiaccess` VALUES ('84', '28', 'GET', 'basics', 'Basic information about a given data value for resume data', '0');
+INSERT INTO `apiaccess` VALUES ('85', '29', 'GET', 'basics', 'Basic information about a Section', '0');
+INSERT INTO `apiaccess` VALUES ('86', '29', 'GET', 'leagues', 'Returns all leagues within a given section', '0');
+INSERT INTO `apiaccess` VALUES ('87', '29', 'GET', 'divisions', 'Returns all divisions within a given section', '0');
+INSERT INTO `apiaccess` VALUES ('88', '30', 'GET', 'basics', 'Basics on the Statistics Tab', '0');
+INSERT INTO `apiaccess` VALUES ('89', '30', 'GET', 'childtabs', 'Returns all child tabs within a given statistics tab', '0');
+INSERT INTO `apiaccess` VALUES ('90', '30', 'GET', 'stats', 'Returns all stats within a given stattab', '0');
+INSERT INTO `apiaccess` VALUES ('91', '30', 'GET', 'positions', 'Returns positions for which this is the default tab', '0');
+INSERT INTO `apiaccess` VALUES ('92', '31', 'GET', 'basics', 'Basic information for a given stat', '0');
+INSERT INTO `apiaccess` VALUES ('93', '31', 'GET', 'listall', 'Lists all statistics (apply filters)', '0');
+INSERT INTO `apiaccess` VALUES ('94', '45', 'GET', 'basics', 'Basic info for a given stat value field', '0');
+INSERT INTO `apiaccess` VALUES ('95', '32', 'GET', 'basics', 'Basic info about this queued video', '0');
+INSERT INTO `apiaccess` VALUES ('96', '33', 'GET', 'basics', 'Returns basic info about this location', '0');
+INSERT INTO `apiaccess` VALUES ('97', '33', 'GET', 'games', 'Returns all games that have taken place at a certain location', '0');
+INSERT INTO `apiaccess` VALUES ('98', '34', 'GET', 'basics', 'Basic information about a city', '0');
+INSERT INTO `apiaccess` VALUES ('99', '34', 'GET', 'locations', 'All locations within a given city', '0');
+INSERT INTO `apiaccess` VALUES ('100', '34', 'GET', 'orgs', 'All organizations within a given city', '0');
+INSERT INTO `apiaccess` VALUES ('101', '34', 'GET', 'games', 'All games that take place within a city', '0');
+INSERT INTO `apiaccess` VALUES ('102', '35', 'GET', 'basics', 'Basic info on a county', '0');
+INSERT INTO `apiaccess` VALUES ('103', '35', 'GET', 'cities', 'All cities within a given county', '0');
+INSERT INTO `apiaccess` VALUES ('104', '35', 'GET', 'orgs', 'All organizations within a given county', '0');
+INSERT INTO `apiaccess` VALUES ('105', '35', 'GET', 'games', 'All games that take place within a county', '0');
+INSERT INTO `apiaccess` VALUES ('106', '36', 'GET', 'basics', 'Basic info on a given state', '0');
+INSERT INTO `apiaccess` VALUES ('107', '36', 'GET', 'counties', 'All counties within the state', '0');
+INSERT INTO `apiaccess` VALUES ('108', '36', 'GET', 'divisions', 'All divisions within a state', '0');
+INSERT INTO `apiaccess` VALUES ('109', '36', 'GET', 'sections', 'All sections within a state', '0');
+INSERT INTO `apiaccess` VALUES ('110', '36', 'GET', 'leagues', 'All leagues within a given state', '0');
+INSERT INTO `apiaccess` VALUES ('111', '37', 'GET', 'basics', 'Player of the Game basics', '0');
+INSERT INTO `apiaccess` VALUES ('112', '40', 'GET', 'basics', 'Basic information about a division', '0');
+INSERT INTO `apiaccess` VALUES ('113', '40', 'GET', 'orgs', 'Returns all organizations within with a certain division', '0');
+INSERT INTO `apiaccess` VALUES ('114', '41', 'GET', 'basics', 'Basics on a League', '0');
+INSERT INTO `apiaccess` VALUES ('115', '41', 'GET', 'orgs', 'All organizations within a League', '0');
+INSERT INTO `apiaccess` VALUES ('116', '43', 'GET', 'basics', 'Basic information  about a sport type', '0');
+INSERT INTO `apiaccess` VALUES ('117', '43', 'GET', 'sports', 'All sports of this type', '0');
+INSERT INTO `apiaccess` VALUES ('118', '44', 'GET', 'basics', 'Basic info on a Statistics Context', '0');
+INSERT INTO `apiaccess` VALUES ('119', '46', 'GET', 'basics', 'Basic info on an entity', '0');
+INSERT INTO `apiaccess` VALUES ('120', '46', 'GET', 'comments', 'Get comments on a specific subject', '0');
+INSERT INTO `apiaccess` VALUES ('121', '46', 'GET', 'votes', 'Get votes on a specific subject', '0');
+INSERT INTO `apiaccess` VALUES ('122', '46', 'GET', 'followers', 'Get followers on a specific subject', '0');
+INSERT INTO `apiaccess` VALUES ('123', '46', 'GET', 'tags', 'Get tags for a specific subject', '0');
+
+-- ----------------------------
+-- Table structure for `apiparams`
+-- ----------------------------
+DROP TABLE IF EXISTS `apiparams`;
+CREATE TABLE `apiparams` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `apiaccess_id` int(10) NOT NULL,
+  `param_name` varchar(25) NOT NULL,
+  `param_type` enum('int','string','datetime') NOT NULL DEFAULT 'int',
+  `param_req` tinyint(1) NOT NULL DEFAULT '0',
+  `description` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=71 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of apiparams
+-- ----------------------------
+INSERT INTO `apiparams` VALUES ('1', '13', 'sports_id', 'int', '0', 'Will filter the list of teams to a given sport');
+INSERT INTO `apiparams` VALUES ('2', '13', 'complevels_id', 'int', '0', 'Filter the teams list to a given competition level');
+INSERT INTO `apiparams` VALUES ('3', '20', 'sports_id', 'int', '0', 'Filter list of positions to a given sport.');
+INSERT INTO `apiparams` VALUES ('4', '20', 'users_id', 'int', '0', 'Filter positions to a list of all positions for a given user');
+INSERT INTO `apiparams` VALUES ('5', '21', 'orgs_id', 'int', '0', 'Filter the players for a given position to a specific organization');
+INSERT INTO `apiparams` VALUES ('6', '21', 'cities_id', 'int', '0', 'Filter the players for a given position to players within a certain city');
+INSERT INTO `apiparams` VALUES ('7', '24', 'orgs_id', 'int', '0', 'Filter images to those for players who play a certain position within a specific organization.');
+INSERT INTO `apiparams` VALUES ('8', '24', 'cities_id', 'int', '0', 'Filter images to players of a certain position within a certain city.');
+INSERT INTO `apiparams` VALUES ('9', '25', 'orgs_id', 'int', '0', 'Filter videos to those for players who play a certain position within a specific organization.');
+INSERT INTO `apiparams` VALUES ('10', '25', 'cities_id', 'int', '0', 'Filter videos to players of a certain position within a certain city.');
+INSERT INTO `apiparams` VALUES ('11', '30', 'users_id', 'int', '0', 'Filter videos associated with a sport to a certain user');
+INSERT INTO `apiparams` VALUES ('12', '30', 'seasons_id', 'int', '0', 'Filter videos associated with a sport to a specific season');
+INSERT INTO `apiparams` VALUES ('13', '30', 'complevels_id', 'int', '0', 'Filter videos associated with a sport to a specific competition level');
+INSERT INTO `apiparams` VALUES ('14', '31', 'users_id', 'int', '0', 'Filter images associated with a sport to a certain user');
+INSERT INTO `apiparams` VALUES ('15', '31', 'seasons_id', 'int', '0', 'Filter images associated with a sport to a specific season');
+INSERT INTO `apiparams` VALUES ('16', '31', 'complevels_id', 'int', '0', 'Filter images associated with a sport to a specific competition level');
+INSERT INTO `apiparams` VALUES ('17', '32', 'users_id', 'int', '0', 'Filter resume data associated with a given sport to a specific user');
+INSERT INTO `apiparams` VALUES ('18', '35', 'orgs_id', 'int', '0', 'Filter users associated with a given sport to a specific organization');
+INSERT INTO `apiparams` VALUES ('19', '35', 'teams_id', 'int', '0', 'Filter users associated with a given sport to a specific team');
+INSERT INTO `apiparams` VALUES ('20', '35', 'seasons_id', 'int', '0', 'Filter users associated with a given sport to a specific season');
+INSERT INTO `apiparams` VALUES ('21', '35', 'positions_id', 'int', '0', 'Filter users associated with a given sport to a specific position');
+INSERT INTO `apiparams` VALUES ('22', '35', 'complevels_id', 'int', '0', 'Filter users associated with a given sport to a specific competition level');
+INSERT INTO `apiparams` VALUES ('23', '37', 'games_before', 'datetime', '0', 'Filter games associated with a given team to only show those before a given date');
+INSERT INTO `apiparams` VALUES ('24', '37', 'games_after', 'datetime', '0', 'Filter games associated with a given team to only show those before a given date');
+INSERT INTO `apiparams` VALUES ('25', '37', 'is_winner', 'int', '0', 'Filter games associated with a given team to only show those where the team either won or lost the game');
+INSERT INTO `apiparams` VALUES ('26', '38', 'positions_id', 'int', '0', 'Filter the roster of a given team to only show those players for a certain position');
+INSERT INTO `apiparams` VALUES ('27', '39', 'complevels_id', 'int', '0', 'Filter teams for a certain season to only show those for a specific competition level');
+INSERT INTO `apiparams` VALUES ('28', '39', 'orgs_id', 'int', '0', 'Filter teams for a certain season to only show those for a specific organization');
+INSERT INTO `apiparams` VALUES ('29', '39', 'sports_id', 'int', '0', 'Filter teams for a certain season to only show those for a specific sport');
+INSERT INTO `apiparams` VALUES ('30', '39', 'divisions_id', 'int', '0', 'Filter teams for a certain season to only show those for a specific division');
+INSERT INTO `apiparams` VALUES ('31', '39', 'leagues_id', 'int', '0', 'Filter teams for a certain season to only show those for a specific league');
+INSERT INTO `apiparams` VALUES ('32', '39', 'sections_id', 'int', '0', 'Filter teams for a certain season to only show those for a specific section');
+INSERT INTO `apiparams` VALUES ('33', '39', 'states_id', 'int', '0', 'Filter teams for a certain season to only show those for a specific state');
+INSERT INTO `apiparams` VALUES ('34', '50', 'positions_id', 'int', '0', 'Filter players for a certain game match to only show those for a specific position');
+INSERT INTO `apiparams` VALUES ('35', '53', 'seasons_id', 'int', '0', 'Filter teams for a certain competition level to only show those for a specific season');
+INSERT INTO `apiparams` VALUES ('36', '53', 'orgs_id', 'int', '0', 'Filter teams for a certain competition level to only show those for a specific organization');
+INSERT INTO `apiparams` VALUES ('37', '53', 'sports_id', 'int', '0', 'Filter teams for a certain competition level to only show those for a specific sport');
+INSERT INTO `apiparams` VALUES ('38', '53', 'divisions_id', 'int', '0', 'Filter teams for a certain competition level to only show those for a specific division');
+INSERT INTO `apiparams` VALUES ('39', '53', 'leagues_id', 'int', '0', 'Filter teams for a certain competition level to only show those for a specific league');
+INSERT INTO `apiparams` VALUES ('40', '53', 'sections_id', 'int', '0', 'Filter teams for a certain competition level to only show those for a specific section');
+INSERT INTO `apiparams` VALUES ('41', '53', 'states_id', 'int', '0', 'Filter teams for a certain competition level to only show those for a specific state');
+INSERT INTO `apiparams` VALUES ('42', '54', 'complevel_profiles_id', 'int', '0', 'Narrow list of competition levels to those in a specific profile');
+INSERT INTO `apiparams` VALUES ('48', '71', 'is_high_def', 'int', '0', 'Show either high def or non-HD video types');
+INSERT INTO `apiparams` VALUES ('49', '72', 'video_types_id', 'int', '0', 'Get only video metadata for a specific video type');
+INSERT INTO `apiparams` VALUES ('50', '74', 'sports_id', 'int', '0', 'Narrow video service video list to only those of a certain sport');
+INSERT INTO `apiparams` VALUES ('51', '76', 'resume_data_groups_id', 'int', '0', 'Filter resume data list to show only those entries for a certain data group');
+INSERT INTO `apiparams` VALUES ('52', '76', 'resume_data_profiles', 'int', '0', 'Filter resume data list to show only those entries for a certain data profile');
+INSERT INTO `apiparams` VALUES ('53', '93', 'get_top', 'int', '0', 'This will get the number of stats specified by the parameter');
+INSERT INTO `apiparams` VALUES ('54', '93', 'sports_id', 'int', '0', 'Narrow to show the stats for a specific sport');
+INSERT INTO `apiparams` VALUES ('55', '97', 'games_before', 'datetime', '0', 'Filter games associated with a given location to only show those before a given date');
+INSERT INTO `apiparams` VALUES ('56', '97', 'games_after', 'datetime', '0', 'Filter games associated with a given location to only show those before a given date');
+INSERT INTO `apiparams` VALUES ('57', '97', 'sports_id', 'int', '0', 'Filter games associated with a given location to only show those for a specific sport');
+INSERT INTO `apiparams` VALUES ('58', '97', 'complevels_id', 'int', '0', 'Filter games associated with a given location to only show those of a specific competition level');
+INSERT INTO `apiparams` VALUES ('59', '97', 'teams_id', 'int', '0', 'Filter games associated with a given location to only show those for a specific team');
+INSERT INTO `apiparams` VALUES ('60', '99', 'loc_type', 'int', '0', 'Only return locations of a certain type within the given city');
+INSERT INTO `apiparams` VALUES ('61', '101', 'games_before', 'datetime', '0', 'Filter games associated with a given city to only show those before a given date');
+INSERT INTO `apiparams` VALUES ('62', '101', 'games_after', 'datetime', '0', 'Filter games associated with a given city to only show those before a given date');
+INSERT INTO `apiparams` VALUES ('63', '101', 'sports_id', 'int', '0', 'Filter games associated with a given city to only show those for a specific sport');
+INSERT INTO `apiparams` VALUES ('64', '101', 'complevels_id', 'int', '0', 'Filter games associated with a given city to only show those of a specific competition level');
+INSERT INTO `apiparams` VALUES ('65', '101', 'teams_id', 'int', '0', 'Filter games associated with a given city to only show those for a specific team');
+INSERT INTO `apiparams` VALUES ('66', '105', 'games_before', 'datetime', '0', 'Filter games associated with a given county to only show those before a given date');
+INSERT INTO `apiparams` VALUES ('67', '105', 'games_after', 'datetime', '0', 'Filter games associated with a given county to only show those before a given date');
+INSERT INTO `apiparams` VALUES ('68', '105', 'sports_id', 'int', '0', 'Filter games associated with a given county to only show those for a specific sport');
+INSERT INTO `apiparams` VALUES ('69', '105', 'complevels_id', 'int', '0', 'Filter games associated with a given county to only show those of a specific competition level');
+INSERT INTO `apiparams` VALUES ('70', '105', 'teams_id', 'int', '0', 'Filter games associated with a given county to only show those for a specific team');
 
 -- ----------------------------
 -- Table structure for `cities`
@@ -30965,7 +31112,7 @@ CREATE TABLE `entlist` (
   `primary_class` varchar(255) DEFAULT NULL,
   `page_exists` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=utf16;
+) ENGINE=InnoDB AUTO_INCREMENT=47 DEFAULT CHARSET=utf16;
 
 -- ----------------------------
 -- Records of entlist
@@ -30996,6 +31143,20 @@ INSERT INTO `entlist` VALUES ('28', 'resumedataval', 'User_Resume_Data_Vals', '0
 INSERT INTO `entlist` VALUES ('29', 'section', 'Sportorg_Section', '0');
 INSERT INTO `entlist` VALUES ('30', 'stattab', 'Stats_Tab', '0');
 INSERT INTO `entlist` VALUES ('31', 'stat', 'Stats_Base', '0');
+INSERT INTO `entlist` VALUES ('32', 'queuedvideo', 'Media_Queuedvideo', '0');
+INSERT INTO `entlist` VALUES ('33', 'location', 'Location_Base', '0');
+INSERT INTO `entlist` VALUES ('34', 'city', 'Location_City', '0');
+INSERT INTO `entlist` VALUES ('35', 'county', 'Location_County', '0');
+INSERT INTO `entlist` VALUES ('36', 'state', 'Location_State', '0');
+INSERT INTO `entlist` VALUES ('37', 'pog', 'Site_Pog', '0');
+INSERT INTO `entlist` VALUES ('38', 'highschool', 'Sportorg_Orgs_Highschool', '0');
+INSERT INTO `entlist` VALUES ('39', 'club', 'Sportorg_Orgs_Club', '0');
+INSERT INTO `entlist` VALUES ('40', 'division', 'Sportorg_Division', '0');
+INSERT INTO `entlist` VALUES ('41', 'league', 'Sportorg_League', '0');
+INSERT INTO `entlist` VALUES ('43', 'sporttype', 'Sportorg_Type', '0');
+INSERT INTO `entlist` VALUES ('44', 'statcontext', 'Stats_Context', '0');
+INSERT INTO `entlist` VALUES ('45', 'statval', 'Stats_Val', '0');
+INSERT INTO `entlist` VALUES ('46', 'ent', 'Site_Entdir', '0');
 
 -- ----------------------------
 -- Table structure for `enttypes`
@@ -31003,14 +31164,56 @@ INSERT INTO `entlist` VALUES ('31', 'stat', 'Stats_Base', '0');
 DROP TABLE IF EXISTS `enttypes`;
 CREATE TABLE `enttypes` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
+  `api_name` varchar(40) DEFAULT NULL,
   `class_name` varchar(255) DEFAULT NULL,
   `db_table` varchar(255) DEFAULT NULL,
+  `description` varchar(1000) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=41 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of enttypes
 -- ----------------------------
+INSERT INTO `enttypes` VALUES ('1', 'user', 'User_Base', 'users', null);
+INSERT INTO `enttypes` VALUES ('2', 'org', 'Sportorg_Org', 'orgs', null);
+INSERT INTO `enttypes` VALUES ('3', 'position', 'Sportorg_Position', 'positions', null);
+INSERT INTO `enttypes` VALUES ('4', 'sport', 'Sportorg_Sport', 'sports', null);
+INSERT INTO `enttypes` VALUES ('5', 'team', 'Sportorg_Team', 'teams', null);
+INSERT INTO `enttypes` VALUES ('6', 'season', 'Sportorg_Season_Base', 'seasons', null);
+INSERT INTO `enttypes` VALUES ('7', 'seasonprofile', 'Sportorg_Season_Profile', 'season_profiles', null);
+INSERT INTO `enttypes` VALUES ('8', 'game', 'Sportorg_Games_Base', 'games', null);
+INSERT INTO `enttypes` VALUES ('9', 'gamematch', 'Sportorg_Games_Match', 'game_matches', null);
+INSERT INTO `enttypes` VALUES ('10', 'gamematchplayer', 'Sportorg_Games_Matchplayer', 'game_match_players', null);
+INSERT INTO `enttypes` VALUES ('11', 'complevel', 'Sportorg_Complevel_Base', 'complevels', null);
+INSERT INTO `enttypes` VALUES ('12', 'complevelprofile', 'Sportorg_Complevel_Profile', 'complevel_profiles', null);
+INSERT INTO `enttypes` VALUES ('13', 'comment', 'Site_Comment', 'comments', null);
+INSERT INTO `enttypes` VALUES ('14', 'tag', 'Site_Tag', 'tags', null);
+INSERT INTO `enttypes` VALUES ('15', 'vote', 'Site_Vote', 'votes', null);
+INSERT INTO `enttypes` VALUES ('16', 'media', 'Media_Base', 'media', null);
+INSERT INTO `enttypes` VALUES ('17', 'image', 'Media_Image', 'images', null);
+INSERT INTO `enttypes` VALUES ('18', 'video', 'Media_Video', 'videos', null);
+INSERT INTO `enttypes` VALUES ('19', 'videoservice', 'Media_Videoservice', 'video_services', null);
+INSERT INTO `enttypes` VALUES ('20', 'resumedata', 'User_Resume_Data', 'resume_data', null);
+INSERT INTO `enttypes` VALUES ('21', 'resumedatagroup', 'User_Resume_Data_Group', 'resume_data_groups', null);
+INSERT INTO `enttypes` VALUES ('22', 'resumedataprofile', 'User_Resume_Data_Profile', 'resume_data_profiles', null);
+INSERT INTO `enttypes` VALUES ('23', 'resumedataval', 'User_Resume_Data_Vals', 'resume_data_vals', null);
+INSERT INTO `enttypes` VALUES ('24', 'section', 'Sportorg_Section', 'sections', null);
+INSERT INTO `enttypes` VALUES ('25', 'stattab', 'Stats_Tab', 'stattabs', null);
+INSERT INTO `enttypes` VALUES ('26', 'stat', 'Stats_Base', 'stats', null);
+INSERT INTO `enttypes` VALUES ('27', 'queuedvideo', 'Media_Queuedvideo', 'queuedvideos', null);
+INSERT INTO `enttypes` VALUES ('28', 'location', 'Location_Base', 'locations', null);
+INSERT INTO `enttypes` VALUES ('29', 'city', 'Location_City', 'cities', null);
+INSERT INTO `enttypes` VALUES ('30', 'county', 'Location_County', 'counties', null);
+INSERT INTO `enttypes` VALUES ('31', 'state', 'Location_State', 'states', null);
+INSERT INTO `enttypes` VALUES ('32', 'pog', 'Site_Pog', 'player_of_game', null);
+INSERT INTO `enttypes` VALUES ('33', 'highschool', 'Sportorg_Orgs_Highschool', 'high_schools', null);
+INSERT INTO `enttypes` VALUES ('34', 'club', 'Sportorg_Orgs_Club', 'clubs', null);
+INSERT INTO `enttypes` VALUES ('35', 'division', 'Sportorg_Division', 'divisions', null);
+INSERT INTO `enttypes` VALUES ('36', 'league', 'Sportorg_League', 'leagues', null);
+INSERT INTO `enttypes` VALUES ('37', 'section', 'Sportorg_Section', 'sections', null);
+INSERT INTO `enttypes` VALUES ('38', 'sporttype', 'Sportorg_Type', 'sport_types', null);
+INSERT INTO `enttypes` VALUES ('39', 'statcontext', 'Stats_Context', 'stat_contexts', null);
+INSERT INTO `enttypes` VALUES ('40', 'ent', 'Site_Entdir', 'enttypes', null);
 
 -- ----------------------------
 -- Table structure for `followers`
@@ -31766,9 +31969,8 @@ DROP TABLE IF EXISTS `statvals`;
 CREATE TABLE `statvals` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `stats_id` int(11) NOT NULL,
-  `users_id` varchar(200) CHARACTER SET utf8 NOT NULL,
-  `seasons_id` int(11) NOT NULL,
-  `complevels_id` int(10) unsigned NOT NULL,
+  `users_id` int(10) NOT NULL,
+  `teams_id` int(11) NOT NULL,
   `statval` varchar(25) NOT NULL,
   `statdate` date DEFAULT NULL,
   `event_id` int(11) DEFAULT NULL,

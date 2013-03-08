@@ -68,6 +68,7 @@ class Controller_Api_Base extends Controller
 		$retObj = $this->{$action}();
 		$result = is_object($retObj) ? $this->getDataFromView($retObj) : $this->getDataFromView();
 
+
 		$this->response->headers('Content-Type','application/json');
 
 		// Initial Request set-up

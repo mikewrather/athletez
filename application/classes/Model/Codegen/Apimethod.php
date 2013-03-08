@@ -21,20 +21,14 @@ class Model_Codegen_Apimethod extends ORM
 			'foreign_key' => 'entlist_id'
 		)
 	);
-/*
+
 	protected $_has_many = array(
-		'_alias_' => array(
-			'model' => '_model_name_', 
-			'foreign_key' => '_column_'
+		'params' => array(
+			'model' => 'Codegen_Apiparams',
+			'foreign_key' => 'apiaccess_id'
 		),
-		'_alias_' => array(
-			'model' => '_model_name_', 
-			'through' => '_pivot_table_',
-			'foreign_key' => '_column_',
-			'far_key' => '_column_'
-		)
 	);
-	
+/*
 	protected $_has_one = array(
 		'_alias_' => array(
 			'model' => '_model_name_', 

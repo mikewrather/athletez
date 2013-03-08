@@ -21,6 +21,7 @@ class Model_Media_Video extends ORM
 		)
 	);
 
+	//TODO: update videos_meta to go through video_type_link because there's metadata per video type, not per video
 	protected $_has_many = array(
 		'metadata' => array(
 			'model' => 'Media_Videometa',

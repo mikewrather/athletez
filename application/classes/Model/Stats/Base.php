@@ -30,28 +30,13 @@ class Model_Stats_Base extends ORM
 		)
 	);
 
-	//TODO: add has many relationships
-	/*
 	protected $_has_many = array(
-		'_alias_' => array(
-			'model' => '_model_name_', 
-			'foreign_key' => '_column_'
+		'vals' => array(
+			'model' => 'Stats_Vals',
+			'foreign_key' => 'stats_id'
 		),
-		'_alias_' => array(
-			'model' => '_model_name_', 
-			'through' => '_pivot_table_',
-			'foreign_key' => '_column_',
-			'far_key' => '_column_'
-		)
 	);
-	
-	protected $_has_one = array(
-		'_alias_' => array(
-			'model' => '_model_name_', 
-			'foreign_key' => '_column_'
-		)
-	);
-*/
+
 	public function __construct($id=NULL)
 	{
 		parent::__construct($id);
