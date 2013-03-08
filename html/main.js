@@ -51,8 +51,6 @@ require.config({
         'packages'     : '/packages',
         'chrome'       : '/packages/chrome',
         'profile'      : '/packages/profile',
-        'products'     : '/packages/products',
-
         
         'user'         : '/packages/user',
         

@@ -3,8 +3,8 @@
 // Requires define
 // Return {Object} App
 
-define( ["facade", "utils", "collections", "chrome", "controller", "products", "profile"], 
-function (facade, utils, collections, chromeBootstrap, Controller, productsBootstrap, ProfileController) {
+define( ["facade", "utils", "collections", "chrome", "controller", "profile"], 
+function (facade, utils, collections, chromeBootstrap, Controller, ProfileController) {
 
     var App,
         ApplicationStates = collections.ApplicationStates,

@@ -1,0 +1,66 @@
+[
+{            
+    "payload": {
+        "user_id": 1,
+        "user_name": "Montel Legget",
+        "user_picture": "images/photo_medium.png",
+        "teams": [{
+            "sport": "Football",
+            "position": "Position",
+            "org": "Blair Academy",
+            "season": "Winter",
+            "year": "'12/'13"
+        }, {
+            "sport": "Basketball",
+            "position": "Position",
+            "org": "Blair Academy",
+            "season": "Winter",
+            "year": "'12/'13"
+        }],
+        "num_votes": 13,
+        "num_fans": 232            
+    },
+    "exec_data": {
+        "exec_time": 0.024134,
+        "exec_error": false
+    }
+}, {
+    "payload": {
+        "user_id": 2,
+        "user_name": "Montel Legget",
+        "user_picture": "images/photo_medium.png",
+        "teams": [{
+            "sport": "Basketball",
+            "position": "Position",
+            "org": "Blair Academy",
+            "season": "Winter",
+            "year": "'12/'13"
+        }],
+        "num_votes": 123,
+        "num_fans": 22            
+    },
+    "exec_data": {
+        "exec_time": 0.024134,
+        "exec_error": false
+    }
+}, {
+    "payload": {
+        "user_id": 3,
+        "user_name": "Montel Legget",
+        "user_picture": "images/photo_medium.png",
+        "teams": [{
+            "sport": "Tennis",
+            "position": "Position",
+            "org": "Blair Academy",
+            "season": "Winter",
+            "year": "'12/'13"
+        }],
+        "num_votes": 1113,
+        "num_fans": 22            
+    },
+    "exec_data": {
+        "exec_time": 0.024134,
+        "exec_error": false
+    }
+}]
+

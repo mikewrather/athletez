@@ -1,0 +1,45 @@
+
+{{#payload}}
+<div class="org-name">{{org_name}}</div>
+<div class="select-team">
+    <select name="team" id="select-team">
+    {{#teams}}
+        <option value="{{team_id}}">{{complevel}} - {{season}} {{year}}</option>
+    {{/teams}}
+    </select>
+    <div class="teams-info">
+    {{#teams}}
+        <div class="team-info team-info-{{team_id}}" style="display:none">
+            <table class="table team-schedule">
+            {{#schedules}}
+                <tr>
+                    <td>{{schedule_date}}</td>
+                    <td>{{other_team}}</td>
+                    <td>{{schedule_summary}}</td>
+                </tr>
+            {{/schedules}}
+            </table>
+            <a href="team/schedule/{{team_id}}">View full schedule</a>
+            <table class="table team-stats">
+                <tr>
+                    <td></td>
+                    {{#stats}}
+                        <td>{{name}}</td>
+                    {{/stats}}        
+                </tr>
+                <tr>
+                    <td>{{statval}}</td>
+                    {{#stats}}
+                        <td>{{value}}</td>
+                    {{/stats}}        
+                </tr>
+            </table>
+            <a href="team/stats/{{team_id}}">View complete stats</a>
+        </div>                    
+    {{/teams}}
+    </div>
+</div>
+
+{{/payload}}
+
+<br/>

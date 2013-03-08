@@ -12,7 +12,13 @@ define([
     "views",
     "utils",
     "profile/models/header",
-    "profile/views/header"
+    "profile/collections/orgs",
+    "profile/collections/relateds",
+    "profile/collections/videos",
+    "profile/views/header",
+    "profile/views/org-list",
+    "profile/views/related-list",
+    "profile/views/video-list"
     ], function (require, profileLayoutTemplate) {
 
     var ProfileController,
@@ -22,7 +28,13 @@ define([
         views = require("views"),
         utils = require("utils"),
         ProfileHeaderModel = require("profile/models/header"),
+        ProfileOrgList = require("profile/collections/orgs"),
+        ProfileRelatedList = require("profile/collections/relateds"),
+        ProfileVideoList = require("profile/collections/videos"),
         ProfileHeaderView = require("profile/views/header"),
+        ProfileOrgListView = require("profile/views/org-list"),
+        ProfileRelatedListView = require("profile/views/related-list"),
+        ProfileVideoListView = require("profile/views/video-list"),
         LayoutView = views.LayoutView,
         $ = facade.$,
         _ = facade._,
@@ -48,13 +60,26 @@ define([
         
         initProfile: function() {
             this.createProfileData();
-            this.handleDeferreds();            
             this.setupLayout().render();
+            this.handleDeferreds();            
         },
         
         createProfileData: function () {
             this.header = new ProfileHeaderModel();
             this.header.fetch();
+            this.id = this.header.id;
+            
+            this.orgs = new ProfileOrgList();
+            this.orgs.id = this.id;
+            this.orgs.fetch();            
+            
+            this.relateds = new ProfileRelatedList();
+            this.relateds.id = this.id;
+            this.relateds.fetch();
+            
+            this.videos = new ProfileVideoList();
+            this.videos.id = this.id;
+            this.videos.fetch();
         },
         
         handleDeferreds: function() {
@@ -63,11 +88,23 @@ define([
             $.when(this.header.request).done(function () {
                 controller.setupHeaderView();                                
             });
+            
+            $.when(this.orgs.request).done(function() {
+                controller.setupOrgListView();
+            });
+            
+            $.when(this.relateds.request).done(function() {
+                controller.setupRelatedListView();
+            });
+            
+            $.when(this.videos.request).done(function() {
+                controller.setupVideoListView();
+            });
         },
         
         setupHeaderView: function() {
             var headerView;
-
+            
             headerView = new ProfileHeaderView({
                 model: this.header,
                 name: "Header",
@@ -75,6 +112,42 @@ define([
             });
 
             this.scheme.push(headerView);            
+            this.layout.render();
+        },
+        
+        setupOrgListView: function() {
+            var orgListView;
+            
+            orgListView = new ProfileOrgListView({
+                collection: this.orgs,
+                destination: "#profile-sidebar .org-wrap"
+            });
+            
+            this.scheme.push(orgListView);
+            this.layout.render();
+        },
+        
+        setupRelatedListView: function() {
+            var relatedListView;
+            
+            relatedListView = new ProfileRelatedListView({
+                collection: this.relateds,
+                destination: "#profile-sidebar .related-wrap"
+            });
+            
+            this.scheme.push(relatedListView);
+            this.layout.render();
+        },
+        
+        setupVideoListView: function() {
+            var videoListView;
+            
+            videoListView = new ProfileVideoListView({
+                collection: this.videos,
+                destination: "#profile-content .video-wrap"
+            });
+            
+            this.scheme.push(videoListView);
             this.layout.render();
         },
         
@@ -91,115 +164,6 @@ define([
 
             return this.layout;
         },
-
-        
-        
-        
-        
-        
-
-        initProfileResume: function() {
-            this.createTodosList();
-            this.handleDeferreds();
-            this.addSubscribers();
-        },
-        
-        initSections: function () {
-            this.setupHeaderView();
-            this.setupControlsView();
-            this.setupTodosListView();
-            this.setupLayout().render();
-        },
-
-        createTodosList: function () {
-            // var data = this.fetchData();
-            // this.collection = (data)? new TodosList(data) : new TodosList();
-            this.collection = new TodosList();
-            this.collection.fetch();
-        },
-
-        setupTodosListView: function() {
-            var todosListView;
-
-            todosListView = new TodosListView({
-                collection: this.collection,
-                destination: "#todos-section"
-            });
-
-            this.scheme.push(todosListView);
-        },
-
-        setupControlsView: function() {
-            var controlsView;
-
-            controlsView = new ControlsView({
-                collection: this.collection,
-                name: "Controls",
-                destination: "#controls"
-            });
-
-            this.scheme.push(controlsView);
-        },
-
-        // Using Application States Collection / localStorage for persistance of todos data
-
-        saveData: function () {
-            if (this.appStates) {
-                this.appStates.add({
-                    name: 'todosData',
-                    data: this.collection.toJSON(),
-                    storage: 'localStorage',
-                    expires: new Date(Date.now() + 1000 * (/*secs*/60 * /*mins*/7 * /*hrs*/24 * /*days*/365))
-                });
-                this.appStates.save('todosData');
-            }
-        },
-
-        destroyOrUpdateData: function (models) {
-            if (this.appStates) {
-                if (models && _.isArray(models)) {
-                    if (this.collection.models.length === models.length) {
-                        this.appStates.destroy('todosData');
-                    } else {
-                        this.saveData();
-                    }
-                }
-            }
-        },
-
-        fetchData: function (callback) {
-            var model, data;
-            if (this.appStates) {
-                model = this.appStates.findInCollectionOrStorage('todosData');
-            }
-            if (model && model.data) {
-                data = model.data;
-            }
-            if (callback && _.isFunction(callback)) {
-                callback(data);
-            }
-            return data;
-        },
-
-        addSubscribers: function () {
-            this.collection.on('add remove reset toggleAllComplete', this.saveData);
-            this.collection.on('clearCompleted', this.destroyOrUpdateData);
-            // Channel('todos:clearCompleted').subscribe(this.destroyOrUpdateData);
-            Channel('todo:toggleDone').subscribe(this.saveData);
-            Channel('todo:clear').subscribe(this.saveData);
-            Channel('todo:save').subscribe(this.saveData);
-            Channel('todos:fetch').subscribe(this.fetchData);
-        },
-
-        removeSubscribers: function () {
-            this.collection.off('add remove reset toggleAllComplete', this.saveData);
-            this.collection.on('clearCompleted', this.destroyOrUpdateData);
-            // Channel('todos:clearCompleted').unsubscribe(this.destroyData);
-            Channel('todo:toggleDone').unsubscribe(this.saveData);
-            Channel('todo:clear').unsubscribe(this.saveData);
-            Channel('todo:save').unsubscribe(this.saveData);
-            Channel('todos:fetch').unsubscribe(this.fetchData);
-        }
 
     });
 

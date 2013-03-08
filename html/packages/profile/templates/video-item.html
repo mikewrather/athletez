@@ -1,0 +1,31 @@
+
+{{#payload}}
+<div class="row-fluid">
+    <div class="span6">
+        <img src="{{video_thumb}}" alt="{{video_title}}"/>
+    </div>
+    <div class="span6">
+        {{video_title}}<br/>
+        Teams: 
+        {{#teams}}
+            {{.}}&nbsp;
+        {{/teams}}
+        <br/>
+        Games: 
+        {{#games}}
+            {{.}}&nbsp; 
+        {{/games}}
+        <br/>
+        Posted by {{user_name}}, {{post_date}}<br/>
+        {{num_votes}} Votes, {{num_views}} Views, {{num_comments}} Comments<br/>
+        <p>{{video_desc}}</p>
+        {{#tags_count}}
+            {{tags_count}} Tagged<br/>
+            {{#tags}}
+                <img src="{{.}}"/>
+            {{/tags}}
+        {{/tags_count}}
+    </div>
+</div>
+{{/payload}}
+

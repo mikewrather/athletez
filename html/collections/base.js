@@ -65,7 +65,7 @@ define(['facade', 'utils'], function (facade, utils) {
 
         // **Method:** `fetchSuccess` - resolve the deferred here in success
         fetchSuccess: function (collection, response) {
-            this.deferred.resolve(response);
+            collection.deferred.resolve(response);
             debug.log(response);
         },
 

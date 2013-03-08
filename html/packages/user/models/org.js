@@ -3,60 +3,46 @@
 // Requires define
 // Return {UserOrgModel} object as constructor  
 
-define(['models/base'], function (BaseModel) {
+define(["facade", "models/base"], function (facade, BaseModel) {
 
-    var ProfileOrgModel;
+    var UserOrgModel,
+        _ = facade._;
 
-    ProfileOrgModel = BaseModel.extend({  
+    UserOrgModel = BaseModel.extend({  
 
         defaults: _.extend({}, (new BaseModel).attributes, {
             
             "payload": {
-                "user_name": null,
-                "user_picture": null,
-                "user_height": null,
-                "user_weight": null,
-                
-                "num_followers": 0,
-                "num_votes": 0,
-                
-                "sports": [{
-                    "sport_name": null,
-                    "sport_id": 0,
-                    "teams": [{
-                        "team_name": null,
-                        "team_location": null
+                "org_id": 0,
+                "org_name": null,
+                "teams": [{
+                    "team_id": 0,
+                    "complevel": null,
+                    "season": null,
+                    "year": null,
+                    "schedules": [{
+                        "schedule_id": 0,
+                        "schedule_date": null,
+                        "other_team": null,
+                        "schedule_summary": null
                     }],
-                    "primary_position": null,
-                    "social_links": [{
-                        "class": null,
-                        "title": null,
-                        "link": null
+                    "statval": null,
+                    "stats": [{
+                        "name": null,
+                        "value": 0
                     }]
-                }]
+                }
+                ]
             },
-            "desc": "Basic information about the user"
-            
-            "orgID": 0,
-            "teams": [{
-                "teamName": null,
-                "compLevel": null,
-                "season": null,
-                "year": null,
-                "schedules": [{
-                    "scheduleID": 0,
-                    "scheduleDate": null,
-                    "otherTeam": null,
-                    "scheduleSummary": null
-                }],
-                "stats": [{
-                    "name": null,
-                    "value": null
-                }]
-            }
-            ]
-        }  
+            "desc": "Org information about the user"
+        }),
+        
+        initialize: function (attributes, options) {
+            BaseModel.prototype.initialize.call(this, arguments);
+            this.id = Math.ceil(Math.random() * 100000);
+        },
+        
     });
 
-    return ProfileOrgModel;
+    return UserOrgModel;
 });
