@@ -11,7 +11,7 @@ define([
     "models",
     "views",
     "utils",
-    "profile/models/user",
+    "profile/models/header",
     "profile/views/header"
     ], function (require, profileLayoutTemplate) {
 
@@ -21,7 +21,7 @@ define([
         models = require("models"),
         views = require("views"),
         utils = require("utils"),
-        ProfileUserModel = require("profile/models/user"),
+        ProfileHeaderModel = require("profile/models/header"),
         ProfileHeaderView = require("profile/views/header"),
         LayoutView = views.LayoutView,
         $ = facade.$,
@@ -53,14 +53,14 @@ define([
         },
         
         createProfileData: function () {
-            this.user = new ProfileUserModel();            
-            this.user.fetch();
+            this.header = new ProfileHeaderModel();
+            this.header.fetch();
         },
         
         handleDeferreds: function() {
             var controller = this;
 
-            $.when(this.user.request).done(function () {
+            $.when(this.header.request).done(function () {
                 controller.setupHeaderView();                                
             });
         },
@@ -69,7 +69,7 @@ define([
             var headerView;
 
             headerView = new ProfileHeaderView({
-                model: this.user,
+                model: this.header,
                 name: "Header",
                 destination: "#profile-header"
             });

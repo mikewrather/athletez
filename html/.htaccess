@@ -11,7 +11,7 @@ RewriteBase /
 </Files>
 
 # Protect application and system files from being viewed
-#RewriteCond %{REQUEST_URI} !^/(collections|css|docs|images|models|packages|syncs|test|utils|vendor|views)/
+#RewriteCond %{REQUEST_URI} !^/(api|collections|css|docs|images|models|packages|syncs|test|utils|vendor|views)/
 
 # Allow any files or directories that exist to be displayed directly
 RewriteCond %{REQUEST_FILENAME} !-f
@@ -19,4 +19,4 @@ RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME} !-l
 
 # Rewrite all other URLs to index.php/URL
-RewriteRule .* index.php/$0 [L]
+RewriteRule .* index.php/#$0 [L]

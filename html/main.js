@@ -53,6 +53,9 @@ require.config({
         'profile'      : '/packages/profile',
         'products'     : '/packages/products',
 
+        
+        'user'         : '/packages/user',
+        
         // Application - bootstrap for frontend app 
         'application'  : '/application'
 

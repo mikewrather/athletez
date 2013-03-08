@@ -17,11 +17,21 @@ define(['facade', 'utils'], function (facade, utils) {
     // Constructor `{BaseModel}` extends Backbone.Model.prototype
     // object literal argument to extend is the prototype for the BaseModel constructor
     BaseModel = Backbone.Model.extend({
-
+        
         defaults: {
-            "id": 101
+            
+            "id": "101",
+            
+            "payload": {
+                
+            },
+            "desc": null,
+            "exec_data": {
+                "exec_time": 0,
+                "exec_error": false
+            }
         },
-
+        
         // Param {Object} `attributes` set on model when creating an instance  
         // Param {Object} `options`  
         initialize: function (attributes, options) {
@@ -60,7 +70,7 @@ define(['facade', 'utils'], function (facade, utils) {
                 if (!model.request) {
                     model.request = model.deferred.promise();
                 }
-                model.deferred.resolve();
+                model.deferred.resolve();                
             }
             debug.log(response);
         },
