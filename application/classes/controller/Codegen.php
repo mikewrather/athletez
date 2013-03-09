@@ -234,14 +234,17 @@ class Controller_Codegen extends Controller
 	public function action_gendocs()
 	{
 
-
-
-
+		$index = array();
+		$docconts = "";
 		$el = ORM::factory('Codegen_Entlist')->find_all();
 		foreach($el as $ent)
 		{
-			echo $this->generatedocs($ent);
+			$index[] = array("id"=>$ent->id,"name"=>$ent->entity_type);
+			$docconts .= $this->generatedocs($ent);
 		}
+		$renderer = Kostache::factory();
+		echo $renderer->render(array("index"=>$index,"cont"=>$docconts),'/docs');
+
 	}
 
 	/**
@@ -252,39 +255,49 @@ class Controller_Codegen extends Controller
 	 */
 	private function generateDocs($ent)
 	{
-		$docstr = '
 
-***********************************************************************
-Model Code:     '.$ent->entity_type.'
-Primary Class:  '.$ent->primary_class;
+		$renderer = Kostache::factory();
 
+		$templateArr = array(
+			"ent_id" => $ent->id,
+			"entity_type" => $ent->entity_type,
+			"primary_class" => $ent->primary_class,
+		);
 
 		$methods = $ent->apimethods->find_all();
 
 		foreach($methods as $method)
 		{
-			$docstr.= '
 
-		HTTP:           '.$method->api_method.'
-		Name:           '.$method->shortname.'
-		Usage:          /api/'.$ent->entity_type.'/'.$method->shortname.'/{id}
-		Description:    '.$method->description;
-
+			$paramArr = array();
 			$params = $method->params->find_all();
-				if($params->count()) $docstr.= "
-		Parameters:";
 			foreach($params as $param)
 			{
-
-				$docstr.= '
-
-			'.$param->param_name.' ('.$param->param_type.')
-			'.$param->description;
-
+				$paramArr[] = array(
+					"name" => $param->param_name,
+					"type" => $param->param_type,
+					"desc" => $param->description
+				);
 			}
+
+			$usage = '/api/'.$ent->entity_type.'/'.$method->shortname.'/{'.$ent->id1.'}';
+			$usage.= $ent->id2 != NULL ? '/{'.$ent->id2.'}' : '';
+
+			$templateArr["method"][] = array(
+				"api_method" => $method->api_method,
+				"shortname" => $method->shortname,
+				"description" => $method->description,
+				"usage" => $usage,
+				"hasparams" => sizeof($params),
+				"params" => $paramArr
+			);
+
+
+
 
 		}
 
+		$docstr = $renderer->render($templateArr,'/api');
 		return $docstr;
 
 

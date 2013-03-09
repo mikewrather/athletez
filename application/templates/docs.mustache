@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+<head>
+	<meta charset="utf-8">
+	<title>{{title}}</title>
+	<meta name="viewport" content="width=device-width">
+	<meta name="description" content="Todos application built with Backbone.js and RequireJS using the Vertebrae framework by HauteLook">
+	<link rel="shortcut icon" href="images/favicon.ico">
+	<link rel="apple-touch-icon" href="images/apple-touch-icon-iphone.png" />
+	<link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-ipad.png" />
+	<link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-iphone4.png" />
+	<link rel="stylesheet" href="css/normalize.css">
+	<script data-main="main" src="vendor/require.js"></script>
+	<script>
+		require(['facade', 'application', 'utils'], function (facade, App, utils) {
+			var $ = facade.$,
+					Backbone = facade.Backbone,
+					debug = utils.debug;
+
+			$(function () { // doc ready
+				var app;
+
+				// run the application, it all starts here.
+				app = new App();
+				Backbone.history.start({pushState: true});
+				debug.log("app initialized.");
+			});
+		});
+	</script>
+	<style>
+
+		a{ font-family: "Courier New"; color: #333; text-decoration: none; }
+		li{
+			list-style: none;
+		}
+		li.apientry *{
+			font-family: "Courier New";
+			font-size: 14px;
+		}
+		li.apientry{
+			margin:5px;
+			padding:10px;
+			border: 1px solid #EFEFEF;
+			-webkit-border-radius: 10px;
+			border-radius: 10px;
+			-webkit-box-shadow: 1px 1px 1px 1px rgba(90, 90, 90, .5);
+			box-shadow: 1px 1px 1px 1px rgba(90, 90, 90, .5);
+		}
+		li.apientry:hover{ background-color: rgba(234, 234, 234, 0.29);}
+		div.api_basics div span{
+			font-size: 16px;
+		}
+
+		span.val{ font-weight: bold; font-size: 16px; }
+
+		.methods{
+			-webkit-box-shadow: inset 1px 1px 1px rgba(90, 90, 90, .1);
+			box-shadow: inset 1px 1px 1px 1px rgba(90, 90, 90, .1);
+			-webkit-border-radius: 5px;
+			border-radius: 5px;
+			margin:15px;
+			padding:10px;
+			background-color: rgba(171, 76, 81, 0.10);
+
+		}
+		ul.methods{ margin-top: 10px; }
+		li.firstmethod{ font-weight: bold;  }
+		.description{  font-style: italic; font-weight: lighter;  }
+		li.params{ margin:5px; margin-left: 15px; background-color: rgba(147, 148, 148, 0.18); padding:10px;  }
+		li.params span {display: block;}
+		span.paramname { font-weight: bold;}
+	</style>
+</head>
+<body>
+<ul>
+	{{#index}}
+		<li>- <a href="#{{id}}">{{name}}</a></li>
+	{{/index}}
+</ul>
+<ul>
+{{& cont}}
+</ul>
+</body>
+</html>

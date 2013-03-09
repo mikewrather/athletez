@@ -15,6 +15,7 @@ class View_Api_User extends Api_Viewclass
 
 	public function basics()
 	{
+		//print_r($_GET);
 		return array(
 			'username' => $this->obj->username,
 			'email' => $this->obj->email,

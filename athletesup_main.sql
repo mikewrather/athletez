@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50525
 File Encoding         : 65001
 
-Date: 2013-03-08 03:40:42
+Date: 2013-03-09 02:51:29
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -31110,53 +31110,54 @@ CREATE TABLE `entlist` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `entity_type` varchar(255) DEFAULT NULL,
   `primary_class` varchar(255) DEFAULT NULL,
-  `page_exists` tinyint(1) NOT NULL DEFAULT '0',
+  `id1` varchar(25) CHARACTER SET latin1 COLLATE latin1_german1_ci NOT NULL DEFAULT 'id',
+  `id2` varchar(25) CHARACTER SET latin1 COLLATE latin1_german1_ci DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=47 DEFAULT CHARSET=utf16;
 
 -- ----------------------------
 -- Records of entlist
 -- ----------------------------
-INSERT INTO `entlist` VALUES ('1', 'user', 'User_Base', '0');
-INSERT INTO `entlist` VALUES ('2', 'org', 'Sportorg_Org', '0');
-INSERT INTO `entlist` VALUES ('3', 'position', 'Sportorg_Position', '0');
-INSERT INTO `entlist` VALUES ('4', 'sport', 'Sportorg_Sport', '0');
-INSERT INTO `entlist` VALUES ('5', 'team', 'Sportorg_Team', '0');
-INSERT INTO `entlist` VALUES ('6', 'season', 'Sportorg_Season_Base', '0');
-INSERT INTO `entlist` VALUES ('7', 'seasonprofile', 'Sportorg_Season_Profile', '0');
-INSERT INTO `entlist` VALUES ('8', 'game', 'Sportorg_Games_Base', '0');
-INSERT INTO `entlist` VALUES ('9', 'gamematch', 'Sportorg_Games_Match', '0');
-INSERT INTO `entlist` VALUES ('10', 'gamematchplayer', 'Sportorg_Games_Matchplayer', '0');
-INSERT INTO `entlist` VALUES ('11', 'complevel', 'Sportorg_Complevel_Base', '0');
-INSERT INTO `entlist` VALUES ('12', 'complevelprofile', 'Sportorg_Complevel_Profile', '0');
-INSERT INTO `entlist` VALUES ('14', 'comment', 'Site_Comment', '0');
-INSERT INTO `entlist` VALUES ('16', 'tag', 'Site_Tag', '0');
-INSERT INTO `entlist` VALUES ('18', 'vote', 'Site_Vote', '0');
-INSERT INTO `entlist` VALUES ('19', 'media', 'Media_Base', '0');
-INSERT INTO `entlist` VALUES ('21', 'image', 'Media_Image', '0');
-INSERT INTO `entlist` VALUES ('23', 'video', 'Media_Video', '0');
-INSERT INTO `entlist` VALUES ('24', 'videoservice', 'Media_Videoservice', '0');
-INSERT INTO `entlist` VALUES ('25', 'resumedata', 'User_Resume_Data', '0');
-INSERT INTO `entlist` VALUES ('26', 'resumedatagroup', 'User_Resume_Data_Group', '0');
-INSERT INTO `entlist` VALUES ('27', 'resumedataprofile', 'User_Resume_Data_Profile', '0');
-INSERT INTO `entlist` VALUES ('28', 'resumedataval', 'User_Resume_Data_Vals', '0');
-INSERT INTO `entlist` VALUES ('29', 'section', 'Sportorg_Section', '0');
-INSERT INTO `entlist` VALUES ('30', 'stattab', 'Stats_Tab', '0');
-INSERT INTO `entlist` VALUES ('31', 'stat', 'Stats_Base', '0');
-INSERT INTO `entlist` VALUES ('32', 'queuedvideo', 'Media_Queuedvideo', '0');
-INSERT INTO `entlist` VALUES ('33', 'location', 'Location_Base', '0');
-INSERT INTO `entlist` VALUES ('34', 'city', 'Location_City', '0');
-INSERT INTO `entlist` VALUES ('35', 'county', 'Location_County', '0');
-INSERT INTO `entlist` VALUES ('36', 'state', 'Location_State', '0');
-INSERT INTO `entlist` VALUES ('37', 'pog', 'Site_Pog', '0');
-INSERT INTO `entlist` VALUES ('38', 'highschool', 'Sportorg_Orgs_Highschool', '0');
-INSERT INTO `entlist` VALUES ('39', 'club', 'Sportorg_Orgs_Club', '0');
-INSERT INTO `entlist` VALUES ('40', 'division', 'Sportorg_Division', '0');
-INSERT INTO `entlist` VALUES ('41', 'league', 'Sportorg_League', '0');
-INSERT INTO `entlist` VALUES ('43', 'sporttype', 'Sportorg_Type', '0');
-INSERT INTO `entlist` VALUES ('44', 'statcontext', 'Stats_Context', '0');
-INSERT INTO `entlist` VALUES ('45', 'statval', 'Stats_Val', '0');
-INSERT INTO `entlist` VALUES ('46', 'ent', 'Site_Entdir', '0');
+INSERT INTO `entlist` VALUES ('1', 'user', 'User_Base', 'users_id', null);
+INSERT INTO `entlist` VALUES ('2', 'org', 'Sportorg_Org', 'orgs_id', null);
+INSERT INTO `entlist` VALUES ('3', 'position', 'Sportorg_Position', 'positions_id', null);
+INSERT INTO `entlist` VALUES ('4', 'sport', 'Sportorg_Sport', 'sports_id', null);
+INSERT INTO `entlist` VALUES ('5', 'team', 'Sportorg_Team', 'teams_id', null);
+INSERT INTO `entlist` VALUES ('6', 'season', 'Sportorg_Season_Base', 'seasons_id', null);
+INSERT INTO `entlist` VALUES ('7', 'seasonprofile', 'Sportorg_Season_Profile', 'season_profiles_id', null);
+INSERT INTO `entlist` VALUES ('8', 'game', 'Sportorg_Games_Base', 'games_id', null);
+INSERT INTO `entlist` VALUES ('9', 'gamematch', 'Sportorg_Games_Match', 'game_matches_id', null);
+INSERT INTO `entlist` VALUES ('10', 'gamematchplayer', 'Sportorg_Games_Matchplayer', 'game_match_players_id', null);
+INSERT INTO `entlist` VALUES ('11', 'complevel', 'Sportorg_Complevel_Base', 'complevels_id', null);
+INSERT INTO `entlist` VALUES ('12', 'complevelprofile', 'Sportorg_Complevel_Profile', 'complevel_profiles_id', null);
+INSERT INTO `entlist` VALUES ('14', 'comment', 'Site_Comment', 'comments_id', null);
+INSERT INTO `entlist` VALUES ('16', 'tag', 'Site_Tag', 'tags_id', null);
+INSERT INTO `entlist` VALUES ('18', 'vote', 'Site_Vote', 'votes_id', null);
+INSERT INTO `entlist` VALUES ('19', 'media', 'Media_Base', 'media_id', null);
+INSERT INTO `entlist` VALUES ('21', 'image', 'Media_Image', 'images_id', null);
+INSERT INTO `entlist` VALUES ('23', 'video', 'Media_Video', 'videos_id', null);
+INSERT INTO `entlist` VALUES ('24', 'videoservice', 'Media_Videoservice', 'video_services_id', null);
+INSERT INTO `entlist` VALUES ('25', 'resumedata', 'User_Resume_Data', 'resume_data_id', null);
+INSERT INTO `entlist` VALUES ('26', 'resumedatagroup', 'User_Resume_Data_Group', 'resume_data_groups_id', null);
+INSERT INTO `entlist` VALUES ('27', 'resumedataprofile', 'User_Resume_Data_Profile', 'resume_data_profiles_id', null);
+INSERT INTO `entlist` VALUES ('28', 'resumedataval', 'User_Resume_Data_Vals', 'resume_data_vals_id', null);
+INSERT INTO `entlist` VALUES ('29', 'section', 'Sportorg_Section', 'sections_id', null);
+INSERT INTO `entlist` VALUES ('30', 'stattab', 'Stats_Tab', 'stattabs_id', null);
+INSERT INTO `entlist` VALUES ('31', 'stat', 'Stats_Base', 'stats_id', null);
+INSERT INTO `entlist` VALUES ('32', 'queuedvideo', 'Media_Queuedvideo', 'queuedvideos_id', null);
+INSERT INTO `entlist` VALUES ('33', 'location', 'Location_Base', 'locations_id', null);
+INSERT INTO `entlist` VALUES ('34', 'city', 'Location_City', 'cities_id', null);
+INSERT INTO `entlist` VALUES ('35', 'county', 'Location_County', 'counties_id', null);
+INSERT INTO `entlist` VALUES ('36', 'state', 'Location_State', 'states_id', null);
+INSERT INTO `entlist` VALUES ('37', 'pog', 'Site_Pog', 'player_of_game_id', null);
+INSERT INTO `entlist` VALUES ('38', 'highschool', 'Sportorg_Orgs_Highschool', 'highschools_id', null);
+INSERT INTO `entlist` VALUES ('39', 'club', 'Sportorg_Orgs_Club', 'clubs_id', null);
+INSERT INTO `entlist` VALUES ('40', 'division', 'Sportorg_Division', 'divisions_id', null);
+INSERT INTO `entlist` VALUES ('41', 'league', 'Sportorg_League', 'leagues_id', null);
+INSERT INTO `entlist` VALUES ('43', 'sporttype', 'Sportorg_Type', 'sport_types_id', null);
+INSERT INTO `entlist` VALUES ('44', 'statcontext', 'Stats_Context', 'stat_contexts_id', null);
+INSERT INTO `entlist` VALUES ('45', 'statval', 'Stats_Val', 'statvals_id', null);
+INSERT INTO `entlist` VALUES ('46', 'ent', 'Site_Entdir', 'subject_type_id', 'subject_id');
 
 -- ----------------------------
 -- Table structure for `enttypes`
@@ -32051,7 +32052,7 @@ CREATE TABLE `users` (
 -- ----------------------------
 -- Records of users
 -- ----------------------------
-INSERT INTO `users` VALUES ('1', 'mike.wrather@gmail.com', 'mike', '896850b3f3929cbeff81d0ff8c98bee1931d42505d782915974c015472fca4cc', '1', '1362134055');
+INSERT INTO `users` VALUES ('1', 'mike.wrather@gmail.com', 'mike', '896850b3f3929cbeff81d0ff8c98bee1931d42505d782915974c015472fca4cc', '2', '1362780207');
 
 -- ----------------------------
 -- Table structure for `users_teams_link`
@@ -32115,12 +32116,12 @@ CREATE TABLE `user_tokens` (
   KEY `fk_user_id` (`user_id`),
   KEY `expires` (`expires`),
   CONSTRAINT `user_tokens_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of user_tokens
 -- ----------------------------
-INSERT INTO `user_tokens` VALUES ('1', '1', '32e9c33404e62a2c8403363e31076038feff7ee3', 'e37c128a97f64bb8d4c3a80a3e091ceed8fddb97', '1362134055', '1363343655');
+INSERT INTO `user_tokens` VALUES ('2', '1', '32e9c33404e62a2c8403363e31076038feff7ee3', 'a12a8a892f4c7b4108d4dc44bef70cdae034c9b0', '1362780207', '1363989807');
 
 -- ----------------------------
 -- Table structure for `usl_game_link`

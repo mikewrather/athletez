@@ -1,0 +1,33 @@
+<li id="{{ent_id}}" class="apientry"><a name="{{ent_id}}"></a>
+	<div style="width:100%" class="api_basics">
+		<div style="display:block; margin-right:50px; float:left;">
+			<span>Entity Type:</span><br/>
+			<span>Primary Class:</span>
+		</div>
+		<div style="display: block;">
+			<span class="enttype"> <span class="val">{{entity_type}}</span> </span><br/>
+			<span class="classname"><span class="val">{{primary_class}}</span></span>
+		</div>
+	</div>
+	{{#method}}
+	<ul class="methods">
+
+		<li class="firstmethod">{{shortname}} ({{api_method}})</li>
+		<li>{{usage}}</li>
+		<li class="description">{{description}}</li>
+		{{#hasparams}}
+		<li class="params">
+			<div style="border-bottom:1px solid #cecece;">Parameters:</div><br>
+		{{/hasparams}}
+		{{#params}}
+			<span class="paramname">{{name}} ({{type}})</span>
+			<span class="description">{{desc}}</span><br />
+		{{/params}}
+		{{#hasparams}}
+		</li>
+		{{/hasparams}}
+
+	</ul>
+	{{/method}}
+
+</li>
