@@ -1,6 +1,5 @@
-[
 {            
-    "payload": {
+    "payload": [{
         "user_id": 1,
         "user_name": "Montel Legget",
         "user_picture": "images/photo_medium.png",
@@ -19,13 +18,7 @@
         }],
         "num_votes": 13,
         "num_fans": 232            
-    },
-    "exec_data": {
-        "exec_time": 0.024134,
-        "exec_error": false
-    }
-}, {
-    "payload": {
+    }, {
         "user_id": 2,
         "user_name": "Montel Legget",
         "user_picture": "images/photo_medium.png",
@@ -38,13 +31,7 @@
         }],
         "num_votes": 123,
         "num_fans": 22            
-    },
-    "exec_data": {
-        "exec_time": 0.024134,
-        "exec_error": false
-    }
-}, {
-    "payload": {
+    }, {
         "user_id": 3,
         "user_name": "Montel Legget",
         "user_picture": "images/photo_medium.png",
@@ -57,10 +44,11 @@
         }],
         "num_votes": 1113,
         "num_fans": 22            
-    },
+    }],
+    "desc": "Related user information about the user",
     "exec_data": {
         "exec_time": 0.024134,
         "exec_error": false
     }
-}]
+}
 

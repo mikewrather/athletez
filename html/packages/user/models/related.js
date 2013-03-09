@@ -26,13 +26,19 @@ define(["facade", "models/base"], function (facade, BaseModel) {
                 "num_votes": 0,
                 "num_fans": 0
             },
-            "desc": "Related user information about the user"
+            "desc": "Related user information about the user",
+            "exec_data": {
+                "exec_time": 0,
+                "exec_error": false
+            }
         }),
         
         initialize: function (attributes, options) {
             BaseModel.prototype.initialize.call(this, arguments);
             this.id = Math.ceil(Math.random() * 100000);
         },
+        
+        
         
     });
 

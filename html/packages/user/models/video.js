@@ -31,13 +31,18 @@ define(["facade", "models/base"], function (facade, BaseModel) {
                 "num_views": 0,
                 "num_comments": 0
             },
-            "desc": "Video information about the user"
+            "desc": "Video information about the user",
+            "exec_data": {
+                "exec_time": 0,
+                "exec_error": false
+            }
         }),
         
         initialize: function (attributes, options) {
             BaseModel.prototype.initialize.call(this, arguments);
             this.id = Math.ceil(Math.random() * 100000);
         },
+        
         
     });
 

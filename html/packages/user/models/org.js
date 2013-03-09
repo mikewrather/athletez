@@ -34,7 +34,11 @@ define(["facade", "models/base"], function (facade, BaseModel) {
                 }
                 ]
             },
-            "desc": "Org information about the user"
+            "desc": "Org information about the user",
+            "exec_data": {
+                "exec_time": 0,
+                "exec_error": false
+            }
         }),
         
         initialize: function (attributes, options) {

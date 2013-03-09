@@ -36,7 +36,11 @@ define( ["facade", "models/base"], function (facade, BaseModel) {
                     }]
                 }]
             },
-            "desc": "Basic information about the user"
+            "desc": "Basic information about the user",
+            "exec_data": {
+                "exec_time": 0,
+                "exec_error": false
+            }
         }),
         
         urlRoot: '/api/user/basics/'

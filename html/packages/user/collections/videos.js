@@ -21,6 +21,21 @@ function(facade, collections, UserVideoModel, utils) {
         url: function() {
             return '/api/user/videos/' + this.id;
         },
+        
+        // **Method:** `fetchSuccess` - resolve the deferred here in success
+        fetchSuccess: function (collection, response) {
+            collection.reset();
+            var payload = response.payload;
+            for (i = 0; i < payload.length; i++) {
+                var userVideo = new UserVideoModel();
+                userVideo.set('payload', payload[i]);
+                userVideo.set('desc', response.desc);
+                userVideo.set('exec_data', response.exec_data);
+                collection.push(userVideo);
+            }
+            collection.deferred.resolve(response);
+            debug.log(response);
+        }
 
     });
 

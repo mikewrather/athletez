@@ -1,6 +1,5 @@
-[
 {            
-    "payload": {
+    "payload": [{
         "org_id": 1,
         "org_name": "Blair Academy Org1",            
         "teams": [{
@@ -127,13 +126,7 @@
                 "value": 2
             }]
         }]
-    },
-    "exec_data": {
-        "exec_time": 0.024134,
-        "exec_error": false
-    }
-}, {
-    "payload": {
+    },{
         "org_id": 2,
         "org_name": "Blair Academy Org2",            
         "teams": [{
@@ -219,10 +212,11 @@
                 "value": 2
             }]
         }]
-    },
+    }],
+    "desc": "Org list information about the user",
     "exec_data": {
         "exec_time": 0.024134,
         "exec_error": false
     }
-}]
+}
 
