@@ -239,7 +239,7 @@ class Controller_Codegen extends Controller
 		$el = ORM::factory('Codegen_Entlist')->find_all();
 		foreach($el as $ent)
 		{
-			$index[] = array("id"=>$ent->id,"name"=>$ent->entity_type);
+			$index[] = array("id"=>$ent->id,"name"=>$ent->name,"api"=>$ent->api_name);
 			$docconts .= $this->generatedocs($ent);
 		}
 		$renderer = Kostache::factory();
@@ -260,8 +260,9 @@ class Controller_Codegen extends Controller
 
 		$templateArr = array(
 			"ent_id" => $ent->id,
-			"entity_type" => $ent->entity_type,
-			"primary_class" => $ent->primary_class,
+			"entity_type" => $ent->name,
+			"primary_class" => $ent->class_name,
+			"desc" => $ent->description
 		);
 
 		$methods = $ent->apimethods->find_all();
@@ -280,7 +281,7 @@ class Controller_Codegen extends Controller
 				);
 			}
 
-			$usage = '/api/'.$ent->entity_type.'/'.$method->shortname.'/{'.$ent->id1.'}';
+			$usage = '/api/'.$ent->api_name.'/'.$method->shortname.'/{'.$ent->id1.'}';
 			$usage.= $ent->id2 != NULL ? '/{'.$ent->id2.'}' : '';
 
 			$templateArr["method"][] = array(

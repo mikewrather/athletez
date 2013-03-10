@@ -12,7 +12,7 @@
 class Model_Codegen_Entlist extends ORM
 {
 	
-	protected $_table_name = 'entlist';
+	protected $_table_name = 'enttypes';
 	
 /*
 	protected $_belongs_to = array(
