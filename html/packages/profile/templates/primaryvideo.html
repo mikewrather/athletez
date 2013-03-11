@@ -1,0 +1,15 @@
+
+{{#payload}}
+    <strong>Introduction</strong>
+    <p>{{video_desc}}</p>
+    <div class="textcenter"><img src="{{video_image}}" alt="{{video_title}}"/></div>
+    <h3>{{video_title}}</h3>
+    {{#team}} 
+        {{org_name}} - {{complevel}} - {{season}} - {{year}} <br/>
+        {{#schedule}}
+            {{schedule_date}} vs {{other_team}} {{schedule_summary}}<br/>
+        {{/schedule}}
+    {{/team}}    
+    Votes: {{num_votes}}, Views: {{num_views}}, Comments: {{num_comments}}<br/>
+{{/payload}}
+

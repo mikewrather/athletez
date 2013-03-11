@@ -41,9 +41,9 @@ define(['facade','views/base','utils'], function (facade, BaseView, utils) {
             if (!this._tagName) {
                 throw new Error("CollectionView initialize: no tag name provided.");
             }
-            this._className = this.options.className;
-            this._decorator = this.options.decorator;
-            this._id = this.options.id;
+            this._className = this.options.className || this._className;
+            this._decorator = this.options.decorator || this._decorator;
+            this._id = this.options.id || this._id;
             this._views = [];
             _(this).bindAll('add', 'remove');
             this.setupCollection();

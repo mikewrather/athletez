@@ -11,14 +11,23 @@ define([
     "models",
     "views",
     "utils",
+    
     "profile/models/header",
     "profile/collections/orgs",
     "profile/collections/relateds",
     "profile/collections/videos",
+    "profile/collections/images",
+    "profile/models/primaryvideo",
+    "profile/collections/comments",
+    
     "profile/views/header",
     "profile/views/org-list",
     "profile/views/related-list",
-    "profile/views/video-list"
+    "profile/views/video-list",
+    "profile/views/image-list",
+    "profile/views/primaryvideo",
+    "profile/views/comment-list"
+    
     ], function (require, profileLayoutTemplate) {
 
     var ProfileController,
@@ -27,14 +36,23 @@ define([
         models = require("models"),
         views = require("views"),
         utils = require("utils"),
+        
         ProfileHeaderModel = require("profile/models/header"),
         ProfileOrgList = require("profile/collections/orgs"),
         ProfileRelatedList = require("profile/collections/relateds"),
         ProfileVideoList = require("profile/collections/videos"),
+        ProfileImageList = require("profile/collections/images"),
+        ProfilePrimaryVideoModel = require("profile/models/primaryvideo"),
+        ProfileCommentList = require("profile/collections/comments"),
+        
         ProfileHeaderView = require("profile/views/header"),
         ProfileOrgListView = require("profile/views/org-list"),
         ProfileRelatedListView = require("profile/views/related-list"),
         ProfileVideoListView = require("profile/views/video-list"),
+        ProfileImageListView = require("profile/views/image-list"),
+        ProfilePrimaryVideoView = require("profile/views/primaryvideo"),
+        ProfileCommentListView = require("profile/views/comment-list"),
+        
         LayoutView = views.LayoutView,
         $ = facade.$,
         _ = facade._,
@@ -80,6 +98,18 @@ define([
             this.videos = new ProfileVideoList();
             this.videos.id = this.id;
             this.videos.fetch();
+            
+            this.images = new ProfileImageList();
+            this.images.id = this.id;
+            this.images.fetch();
+            
+            this.primaryvideo = new ProfilePrimaryVideoModel();
+            this.primaryvideo.fetch();
+            
+            this.comments = new ProfileCommentList();
+            this.comments.id = this.id;
+            this.comments.fetch();
+            
         },
         
         handleDeferreds: function() {
@@ -99,6 +129,18 @@ define([
             
             $.when(this.videos.request).done(function() {
                 controller.setupVideoListView();
+            });
+            
+            $.when(this.images.request).done(function() {
+                controller.setupImageListView();
+            });
+            
+            $.when(this.primaryvideo.request).done(function() {
+                controller.setupPrimaryVideoView();
+            });
+            
+            $.when(this.comments.request).done(function() {
+                controller.setupCommentListView();
             });
         },
         
@@ -120,7 +162,7 @@ define([
             
             orgListView = new ProfileOrgListView({
                 collection: this.orgs,
-                destination: "#profile-sidebar .org-wrap"
+                destination: "#profile-sidebar #org-wrap"
             });
             
             this.scheme.push(orgListView);
@@ -132,7 +174,7 @@ define([
             
             relatedListView = new ProfileRelatedListView({
                 collection: this.relateds,
-                destination: "#profile-sidebar .related-wrap"
+                destination: "#profile-sidebar #related-wrap"
             });
             
             this.scheme.push(relatedListView);
@@ -144,10 +186,47 @@ define([
             
             videoListView = new ProfileVideoListView({
                 collection: this.videos,
-                destination: "#profile-content .video-wrap"
+                destination: "#profile-content #video-wrap"
             });
             
             this.scheme.push(videoListView);
+            this.layout.render();
+        },
+        
+        setupImageListView: function() {
+            var imageListView;
+            
+            imageListView = new ProfileImageListView({
+                collection: this.images,
+                destination: "#profile-content #image-wrap"
+            });
+            
+            this.scheme.push(imageListView);
+            this.layout.render();
+        },
+        
+        setupPrimaryVideoView: function() {
+            var primaryVideoView;
+            
+            primaryVideoView = new ProfilePrimaryVideoView({
+                model: this.primaryvideo,
+                name: "Primary Video",
+                destination: "#profile-primaryvideo"
+            });
+
+            this.scheme.push(primaryVideoView);            
+            this.layout.render();
+        },
+        
+        setupCommentListView: function() {
+            var commentListView;
+            
+            commentListView = new ProfileCommentListView({
+                collection: this.comments,
+                destination: "#profile-content #comment-wrap"
+            });
+            
+            this.scheme.push(commentListView);
             this.layout.render();
         },
         

@@ -26,6 +26,7 @@ function(facade,  views,   utils,   ProfileOrgItemView) {
 
         // Tag for the child views
         _tagName: "li",
+        _className: "profile-org",
 
         // Store constructor for the child views
         _view: ProfileOrgItemView,

@@ -1,35 +1,31 @@
-// Profile Header View
+// Profile Primary Video View
 // ---------
 // Package Profile
 // Requires `define`, `require`
-// Returns {ProfileHeaderView} constructor
+// Returns {ProfilePrimaryVideoView} constructor
 
 define([
         'require', 
-        'text!profile/templates/header.html', 
-        'profile/models/header',
+        'text!profile/templates/primaryvideo.html', 
+        'profile/models/primaryvideo',
         'facade', 
         'views'
         ], 
-function(require, headerTemplate) {
+function(require, primaryVideoTemplate) {
 
-    var ProfileHeaderView,
+    var ProfilePrimaryVideoView,
         facade = require('facade'),
         views = require('views'),
         ProfileHeaderModel = require('profile/models/header'),
         SectionView = views.SectionView,
         _ = facade._;
 
-    ProfileHeaderView = SectionView.extend({
+    ProfilePrimaryVideoView = SectionView.extend({
 
-        id: 'profile-header',
+        id: 'profile-primaryvideo',
 
-        template: headerTemplate,
+        template: primaryVideoTemplate,
         
-        events: {
-            "change #select-sport": "selectSport"
-        },
-
         initialize: function (options) {
             SectionView.prototype.initialize.call(this, options);            
         },
@@ -37,7 +33,7 @@ function(require, headerTemplate) {
         // **Method** `setOptions` - called by BaseView's initialize method
         setOptions: function (options) {
             if (!this.model) {
-                throw new Error("ProfileHeaderView expects option with model property.");
+                throw new Error("ProfilePrimaryVideoView expects option with model property.");
             }            
         },
         
@@ -46,18 +42,11 @@ function(require, headerTemplate) {
         
         render: function (domInsertion, dataDecorator, partials) {
             SectionView.prototype.render.call(this, domInsertion, dataDecorator, partials);            
-            this.select_sport = this.$('#select-sport');
-            this.selectSport();
         },
         
-        selectSport: function(event) {
-            var sport_id = this.select_sport.val();
-            this.$('.sport-info').stop().slideUp();
-            this.$('.sport-info-' + sport_id).stop().slideDown();
-        }
         
                 
     });
 
-    return ProfileHeaderView;
+    return ProfilePrimaryVideoView;
 });

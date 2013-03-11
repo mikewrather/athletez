@@ -1,10 +1,10 @@
-// The Profile Video List
+// The Profile Image List
 // --------------
 
-define(['facade','views', 'utils', 'profile/views/video-item'], 
-function(facade,  views,   utils,   ProfileVideoItemView) {
+define(['facade','views', 'utils', 'profile/views/image-item'], 
+function(facade,  views,   utils,   ProfileImageItemView) {
 
-    var ProfileVideoListView, 
+    var ProfileImageListView, 
         ProfileOrgListAbstract,
         $ = facade.$,
         _ = facade._,
@@ -12,29 +12,29 @@ function(facade,  views,   utils,   ProfileVideoItemView) {
         CollectionView = views.CollectionView,
         SectionView = views.SectionView;
 
-    ProfileVideoListAbstract = CollectionView.extend(SectionView.prototype);
+    ProfileImageListAbstract = CollectionView.extend(SectionView.prototype);
 
-    ProfileVideoListView = ProfileVideoListAbstract.extend({
+    ProfileImageListView = ProfileImageListAbstract.extend({
 
         __super__: CollectionView.prototype,
 
-        id: "profile-video-list",
+        id: "profile-image-list",
 
-        name: "Profile Video List",
+        name: "Profile Image List",
 
         tagName: "ul",
 
         // Tag for the child views
         _tagName: "li",
-        _className: "profile-video",
+        _className: "profile-image",
 
         // Store constructor for the child views
-        _view: ProfileVideoItemView,
+        _view: ProfileImageItemView,
 
         initialize: function(options) {
             CollectionView.prototype.initialize.call(this, options);
             if (!this.collection) {
-                throw new Error("ProfileVideoListView expected options.collection.");
+                throw new Error("ProfileImageListView expected options.collection.");
             }
             _.bindAll(this);
             this.addSubscribers();
@@ -71,5 +71,5 @@ function(facade,  views,   utils,   ProfileVideoItemView) {
 
     });
 
-    return ProfileVideoListView;
+    return ProfileImageListView;
 });

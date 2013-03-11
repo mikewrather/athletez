@@ -26,6 +26,7 @@ function(facade,  views,   utils,   ProfileRelatedItemView) {
 
         // Tag for the child views
         _tagName: "li",
+        _className: "profile-related",
 
         // Store constructor for the child views
         _view: ProfileRelatedItemView,
