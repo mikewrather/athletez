@@ -76,7 +76,12 @@ class Controller_Api_User extends Controller_Api_Base
 	public function action_get_fitnessbasics()
 	{
 		$this->payloadDesc = "The basic fintness information to display for a user.";
+		if($this->request->query('sports_id') > 0)
+		{
+			$this->mainModel->setSingleSport($this->request->query('sports_id'));
+		}
 	}
+
 
 	public function action_get_primaryvideo()
 	{

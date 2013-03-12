@@ -48,6 +48,10 @@ class Model_User_Base extends Model_Auth_User
 			'model' => 'User_Resume_Datavals',
 			'foreign_key' => 'users_id'
 		),
+		'fitnessdatavals' => array(
+			'model' => 'User_Fitness_Dataval',
+			'foreign_key' => 'users_id'
+		),
 
 		//Site Data
 		'comments' => array(
@@ -99,6 +103,12 @@ class Model_User_Base extends Model_Auth_User
 
 	);
 
+	/**
+	 * protected $singlesport, if set, will be used to filter queries where a sport is relevant.
+	 * @var null
+	 */
+	protected $singlesport = false;
+
 	public function getPositions()
 	{
 		//loop through teams and get positions for each.
@@ -114,4 +124,73 @@ class Model_User_Base extends Model_Auth_User
 		return $this->media->where('media_type','=','image')->find_all();
 	}
 
+	public function getResumeData()
+	{
+		$retArr = array();
+		$usersFitnessData = DB::select('*')
+			->from('resume_data_vals')
+
+			->join('resume_data')
+			->on('resume_data_vals.resume_data_id','=','resume_data.id')
+
+			->join('resume_data_groups','LEFT')
+			->on('resume_data.resume_data_groups_id','=','resume_data_groups.id')
+
+			->join('rdg_rdp_link')
+			->on('resume_data_groups.id','=','rdg_rdp_link.resume_data_groups_id')
+
+			->join('resume_data_profiles')
+			->on('rdg_rdp_link.resume_data_profiles_id','=','resume_data_profiles.id')
+
+			->join('rdp_sports_link')
+			->on('rdp_sports_link.resume_data_profiles_id','=','resume_data_profiles.id')
+
+			->where('resume_data_vals.users_id','=',$this->id);
+
+		if($this->singlesport)
+		{
+			$usersFitnessData->where('rdp_sports_link.sports_id','=',$this->singlesport);
+		}
+
+		$res = $usersFitnessData->execute();
+
+		print_r($res);
+
+		foreach($res as $data)
+		{
+			$retArr[$data['id']] = $data;
+		}
+
+		return $retArr;
+
+	}
+
+	public function getFitnessBasics()
+	{
+		$retArr = array();
+		$usersFitnessData = DB::select('*')
+			->from('fitness_data_vals')
+			->join('fitness_data','LEFT')
+			->on('fitness_data_vals.fitness_data_id','=','fitness_data.id')
+			->where('fitness_data_vals.users_id','=',$this->id);
+
+		if($this->singlesport)
+		{
+			$usersFitnessData->where('fitness_data.sports_id','=',$this->singlesport);
+		}
+
+		$res = $usersFitnessData->execute();
+		foreach($res as $data)
+		{
+			$retArr[$data['id']] = $data;
+		}
+
+		return $retArr;
+
+	}
+
+	public function setSingleSport($sports_id)
+	{
+		$this->singlesport = $sports_id;
+	}
 }

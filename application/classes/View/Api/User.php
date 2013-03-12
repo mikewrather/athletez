@@ -113,7 +113,7 @@ class View_Api_User extends Api_Viewclass
 
 	public function fitnessbasics()
 	{
-
+		return $this->obj->getResumeData();
 	}
 
 }
