@@ -64,7 +64,7 @@ require.config({
             exports: '_'
         },
         'backbone': {
-            deps: ['underscore', 'jquery', 'json2', 'modernizr', 'html5'],
+            deps: ['underscore', 'jquery', 'json2', 'html5'],
             exports: 'Backbone'
         }
     },

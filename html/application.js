@@ -18,6 +18,9 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
 
         routes: {
             '': 'defaultRoute',
+            'home': 'initApp',
+            'home/': 'initApp',
+            'home/:action': 'initApp',
             'profile': 'showProfile'
         },
 
@@ -31,7 +34,7 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
             this.initApp();
         },
         
-        initApp: function () {
+        initApp: function (action) {
             this.showProfile();
         },
         
@@ -48,7 +51,9 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
 
         // load style sheets
         loadStyles: function () {
-            Channel('load:css').publish(["css/bootstrap.css", "css/bootstrap-responsive.css", "css/app.css"]);
+            Channel('load:css').publish([base_url + "css/bootstrap.css", 
+                base_url + "css/bootstrap-responsive.css", 
+                base_url + "css/app.css"]);
         },
 
         // Pub / Sub

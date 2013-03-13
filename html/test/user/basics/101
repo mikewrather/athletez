@@ -1,7 +1,7 @@
 {
     "payload": {
         "user_name": "Maxwell Doyle'13",
-        "user_picture": "images/photo_large.png",
+        "user_picture": "http://localhost/images/photo_large.png",
         "user_height": "5' 7\"",
         "user_weight": "185 lbs",
         

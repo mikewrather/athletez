@@ -1,12 +1,12 @@
 {            
     "payload": [{
         "image_id": 1,
-        "image_path": "images/user_image.png",
+        "image_path": "http://localhost/images/user_image.png",
         "image_title": "Image1",
         "num_votes": 123
     },{
         "image_id": 2,
-        "image_path": "images/user_image.png",            
+        "image_path": "http://localhost/images/user_image.png",            
         "image_title": "Image2",
         "num_votes": 12
     }],

@@ -2,7 +2,7 @@
     "payload": [{
         "user_id": 1,
         "user_name": "Montel Legget",
-        "user_picture": "images/photo_medium.png",
+        "user_picture": "http://localhost/images/photo_medium.png",
         "teams": [{
             "sport": "Football",
             "position": "Position",
@@ -21,7 +21,7 @@
     }, {
         "user_id": 2,
         "user_name": "Montel Legget",
-        "user_picture": "images/photo_medium.png",
+        "user_picture": "http://localhost/images/photo_medium.png",
         "teams": [{
             "sport": "Basketball",
             "position": "Position",
@@ -34,7 +34,7 @@
     }, {
         "user_id": 3,
         "user_name": "Montel Legget",
-        "user_picture": "images/photo_medium.png",
+        "user_picture": "http://localhost/images/photo_medium.png",
         "teams": [{
             "sport": "Tennis",
             "position": "Position",
