@@ -28,7 +28,7 @@ define(["facade", "models/base"], function (facade, BaseModel) {
         initialize: function (attributes, options) {
             BaseModel.prototype.initialize.call(this, arguments);
             this.id = Math.ceil(Math.random() * 100000);
-        },
+        }
         
         
     });

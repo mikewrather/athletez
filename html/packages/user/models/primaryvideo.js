@@ -40,7 +40,7 @@ define(["facade", "models/base"], function (facade, BaseModel) {
             }
         }),
         
-        urlRoot: '/api/user/primaryvideo/',
+        urlRoot: '/api/user/primaryvideo/'
         
         
     });

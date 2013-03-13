@@ -62,11 +62,15 @@ define([
         createOnEnter: function(e) {
             var comment = this.input.val();
             if (comment != '') {                
-                
                 date = new Date();
                 
-                this.model.set('comment', this.input.val());
-                this.model.set('comment_date', date.toDateString());
+                var payload = this.model.get('payload');
+                payload['comment'] = this.input.val();
+                payload['comment_date'] = date.toDateString();
+                this.model.set('payload', payload);
+                
+                this.model.save();
+                
                 this.collection.add(this.model.toJSON());
                 this.input.val('');
             }

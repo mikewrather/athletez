@@ -1,25 +1,22 @@
-// User Comment Model
-// -----------
+// team.js Model
+// ------------
 // Requires define
-// Return {UserCommentModel} object as constructor  
+// Return {UserTeamModel} model constructor object
 
-define(["facade", "models/base"], function (facade, BaseModel) {
+define( ["facade", "models/base"], function (facade, BaseModel) {
 
-    var UserCommentModel,
+    var UserTeamModel,
         _ = facade._;
 
-    UserCommentModel = BaseModel.extend({  
-
+    UserTeamModel = BaseModel.extend({
+        
         defaults: _.extend({}, (new BaseModel).attributes, {
             
             "payload": {
-                "comment_id": 0,
-                "comment_author": null,
-                "comment_author_picture": null,
-                "comment_date": null,
-                "comment": 0
+                "team_name": null,
+                "team_location": null
             },
-            "desc": "Comment information about the user",
+            "desc": "Team information about the user",
             "exec_data": {
                 "exec_time": 0,
                 "exec_error": false
@@ -34,5 +31,6 @@ define(["facade", "models/base"], function (facade, BaseModel) {
         
     });
 
-    return UserCommentModel;
+    return UserTeamModel;
 });
+

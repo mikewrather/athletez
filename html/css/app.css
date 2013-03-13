@@ -8,6 +8,8 @@
 .textright { text-align:right; }
 .textcenter { text-align:center; }
 
+ul { list-style:none; }
+
 header { border-bottom:1px solid #ccc; padding-top:10px; padding-bottom:10px; }
 header .logo { float:left; margin:6px 0; }
 header .searchform { float:left; margin:6px 15px; }

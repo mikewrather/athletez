@@ -1,34 +1,34 @@
-// image-item.js  
+// fitnessbasic-item.js  
 // -------  
 // Requires `define`
-// Return {ProfileImageItemView} object as constructor
+// Return {ProfileFitnessBasicItemView} object as constructor
 
 define([ 
         'vendor', 
         'views',
         'utils', 
-        'text!packages/profile/templates/image-item.html'
+        'text!packages/profile/templates/fitnessbasic-item.html'
         ], 
 function (
         vendor,
         views,
         utils,
-        profileImageItemTemplate
+        profileFitnessBasicItemTemplate
         ) {
 
-    var ProfileImageItemView
+    var ProfileFitnessBasicItemView
       , $ = vendor.$
       , BaseView = views.BaseView
       , Mustache = vendor.Mustache;
 
-      ProfileImageItemView = BaseView.extend({
+      ProfileFitnessBasicItemView = BaseView.extend({
 
         tagName: "li",
 
-        className: "profile-image",
-        
+        className: "profile-fitnessbasic",
+          
         initialize: function (options) {
-            this.template = profileImageItemTemplate;
+            this.template = profileFitnessBasicItemTemplate;
         },
 
         render: function () {
@@ -39,5 +39,5 @@ function (
         
       });
 
-    return ProfileImageItemView;
+    return ProfileFitnessBasicItemView;
 });

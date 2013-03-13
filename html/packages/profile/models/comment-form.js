@@ -23,7 +23,7 @@ define( ["facade", "user/models/comment-form", "utils"], function (facade, UserC
         fetchSuccess: function (model, response) {
             UserCommentFormModel.prototype.fetchSuccess.call(model, response);
             Channel('profilecommentform:fetch').publish(model);
-        },
+        }
         
     });
 

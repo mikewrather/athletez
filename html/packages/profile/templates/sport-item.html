@@ -1,0 +1,20 @@
+
+{{#payload}}
+<div class="row-fluid sport-info sport-info-{{sport_id}}" style="display:none">
+    <div class="span5 teams">
+    Teams:
+    <div class="teams-info"></div>
+    {{#teams}}
+        {{team_name}}, {{team_location}} <br/>
+    {{/teams}}
+    <div class="span3 position">
+    Primary Position: {{primary_position}}
+    </div>
+    <div class="span4 social-links">
+    {{#social_links}}
+        <a class="{{class}}" href="{{link}}" title="{{title}}">{{title}}</a>
+    {{/social_links}}
+    </div>
+</div>            
+{{/payload}}
+

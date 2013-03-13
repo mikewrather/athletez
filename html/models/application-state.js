@@ -27,8 +27,8 @@ define(['facade', 'utils', 'syncs'], function (facade, utils, syncs) {
         defaults: {
             name: null,
             data: null,
-            storage: 'sessionStorage',
-            expires: new Date(Date.now() + 1000 * (/*secs*/60 * /*mins*/7 /*hrs*/ /*days*/))
+            storage: 'sessionStorage'//,
+            //expires: new Date(Date.now() + 1000 * (/*secs*/60 * /*mins*/7 /*hrs*/ /*days*/))            
         },
 
         // Param {Object} `attributes` set on model when creating an instance  
@@ -38,6 +38,8 @@ define(['facade', 'utils', 'syncs'], function (facade, utils, syncs) {
             this.storage = new Store(attributes.name, attributes.storage);
             this.sync = applicationStateSync;
             this.id = this.id || this.cid;
+            var expires = new Date(Date.now() + 1000 * (/*secs*/60 * /*mins*/7 /*hrs*/ /*days*/));
+            this.set('expires', expires);
             // When extending call this with: `Backbone.Model.prototype.initialize.call(this, arguments);`
         },
 

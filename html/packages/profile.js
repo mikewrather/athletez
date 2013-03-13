@@ -15,6 +15,7 @@ define([
     "profile/models/header",
     "profile/collections/orgs",
     "profile/collections/relateds",
+    "profile/collections/fitnessbasics",
     "profile/collections/videos",
     "profile/collections/images",
     "profile/models/primaryvideo",
@@ -23,6 +24,7 @@ define([
     "profile/views/header",
     "profile/views/org-list",
     "profile/views/related-list",
+    "profile/views/fitnessbasic-list",
     "profile/views/video-list",
     "profile/views/image-list",
     "profile/views/primaryvideo",
@@ -40,6 +42,7 @@ define([
         ProfileHeaderModel = require("profile/models/header"),
         ProfileOrgList = require("profile/collections/orgs"),
         ProfileRelatedList = require("profile/collections/relateds"),
+        ProfileFitnessBasicList = require("profile/collections/fitnessbasics"),
         ProfileVideoList = require("profile/collections/videos"),
         ProfileImageList = require("profile/collections/images"),
         ProfilePrimaryVideoModel = require("profile/models/primaryvideo"),
@@ -48,6 +51,7 @@ define([
         ProfileHeaderView = require("profile/views/header"),
         ProfileOrgListView = require("profile/views/org-list"),
         ProfileRelatedListView = require("profile/views/related-list"),
+        ProfileFitnessBasicListView = require("profile/views/fitnessbasic-list"),
         ProfileVideoListView = require("profile/views/video-list"),
         ProfileImageListView = require("profile/views/image-list"),
         ProfilePrimaryVideoView = require("profile/views/primaryvideo"),
@@ -95,6 +99,10 @@ define([
             this.relateds.id = this.id;
             this.relateds.fetch();
             
+            this.fitnessbasics = new ProfileFitnessBasicList();
+            this.fitnessbasics.id = this.id;
+            this.fitnessbasics.fetch();
+            
             this.videos = new ProfileVideoList();
             this.videos.id = this.id;
             this.videos.fetch();
@@ -125,6 +133,10 @@ define([
             
             $.when(this.relateds.request).done(function() {
                 controller.setupRelatedListView();
+            });
+            
+            $.when(this.fitnessbasics.request).done(function() {
+                controller.setupFitnessBasicListView();
             });
             
             $.when(this.videos.request).done(function() {
@@ -178,6 +190,18 @@ define([
             });
             
             this.scheme.push(relatedListView);
+            this.layout.render();
+        },
+        
+        setupFitnessBasicListView: function() {
+            var fitnessBasicListView;
+            
+            fitnessBasicListView = new ProfileFitnessBasicListView({
+                collection: this.fitnessbasics,
+                destination: "#profile-sidebar #fitnessbasic-wrap"
+            });
+            
+            this.scheme.push(fitnessBasicListView);
             this.layout.render();
         },
         
@@ -242,7 +266,7 @@ define([
             this.layout = profileLayout;
 
             return this.layout;
-        },
+        }
 
     });
 

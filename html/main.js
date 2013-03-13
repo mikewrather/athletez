@@ -12,6 +12,7 @@ require.config({
 
         'json2'        : '/vendor/json2',
         'modernizr'    : '/vendor/modernizr-2.6.2.min',
+        'html5'        : '/vendor/html5',
         'jquery'       : '/vendor/jquery-1.9.0.min',
         'zepto'        : '/vendor/zepto',
         'underscore'   : '/vendor/underscore',
@@ -63,7 +64,7 @@ require.config({
             exports: '_'
         },
         'backbone': {
-            deps: ['underscore', 'jquery'],
+            deps: ['underscore', 'jquery', 'json2', 'modernizr', 'html5'],
             exports: 'Backbone'
         }
     },

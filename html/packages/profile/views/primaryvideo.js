@@ -42,7 +42,7 @@ function(require, primaryVideoTemplate) {
         
         render: function (domInsertion, dataDecorator, partials) {
             SectionView.prototype.render.call(this, domInsertion, dataDecorator, partials);            
-        },
+        }
         
         
                 

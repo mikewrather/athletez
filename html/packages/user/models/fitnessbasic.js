@@ -1,25 +1,23 @@
-// User Comment Model
-// -----------
+// fitnessbasics.js Model
+// ------------
 // Requires define
-// Return {UserCommentModel} object as constructor  
+// Return {UserFitnessBasicModel} model constructor object
 
-define(["facade", "models/base"], function (facade, BaseModel) {
+define( ["facade", "models/base"], function (facade, BaseModel) {
 
-    var UserCommentModel,
+    var UserFitnessBasicModel,
         _ = facade._;
 
-    UserCommentModel = BaseModel.extend({  
-
+    UserFitnessBasicModel = BaseModel.extend({
+        
         defaults: _.extend({}, (new BaseModel).attributes, {
             
             "payload": {
-                "comment_id": 0,
-                "comment_author": null,
-                "comment_author_picture": null,
-                "comment_date": null,
-                "comment": 0
+                "name": null,
+                "val": null,
+                "units": null
             },
-            "desc": "Comment information about the user",
+            "desc": "Fitness Basic information about the user",
             "exec_data": {
                 "exec_time": 0,
                 "exec_error": false
@@ -34,5 +32,6 @@ define(["facade", "models/base"], function (facade, BaseModel) {
         
     });
 
-    return UserCommentModel;
+    return UserFitnessBasicModel;
 });
+

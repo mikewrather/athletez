@@ -7,41 +7,13 @@
         {{/user_picture}}
     </div>
     <div class="span8">
-        <div class="row-fluid">
-            <div class="span8">
-                <h3 class="username">{{user_name}}</h3>
-                <div class="running">Running Back <span class="userheight">{{user_height}}</span> <span class="userweight">{{user_weight}}</span> </div>
-                <div class="votes">Votes: {{num_votes}}</div>
-                <div class="followers">Followers: {{num_followers}}</div>
-            </div>
-            <div class="span4">
-            <select name="sport" id="select-sport">
-            {{#sports}}
-                <option value="{{sport_id}}">{{sport_name}}</option>
-            {{/sports}}
-            </select>
-            </div>
+        <div>
+            <h3 class="username">{{user_name}}</h3>
+            <div class="running">Running Back <span class="userheight">{{user_height}}</span> <span class="userweight">{{user_weight}}</span> </div>
+            <div class="votes">Votes: {{num_votes}}</div>
+            <div class="followers">Followers: {{num_followers}}</div>
         </div>
-        <div class="sports-info">
-        {{#sports}}
-            <div class="row-fluid sport-info sport-info-{{sport_id}}" style="display:none">
-                <div class="span5 teams">
-                Teams:
-                {{#teams}}
-                    {{team_name}}, {{team_location}} <br/>
-                {{/teams}}
-                </div>
-                <div class="span3 position">
-                Primary Position: {{primary_position}}
-                </div>
-                <div class="span4 social-links">
-                {{#social_links}}
-                    <a class="{{class}}" href="{{link}}" title="{{title}}">{{title}}</a>
-                {{/social_links}}
-                </div>
-            </div>            
-        {{/sports}}
-        </div>            
+        <div id="sports-info"></div>
     </div>
 </div>
 {{/payload}}

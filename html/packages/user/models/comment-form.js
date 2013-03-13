@@ -27,7 +27,7 @@ define(["facade", "models/base"], function (facade, BaseModel) {
             }
         }),
         
-        urlRoot: '/api/user/commentson/',
+        urlRoot: '/api/user/commentson/'
         
     });
 

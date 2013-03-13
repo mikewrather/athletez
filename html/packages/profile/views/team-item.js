@@ -1,34 +1,34 @@
-// image-item.js  
+// team-item.js  
 // -------  
 // Requires `define`
-// Return {ProfileImageItemView} object as constructor
+// Return {ProfileTeamItemView} object as constructor
 
 define([ 
         'vendor', 
         'views',
         'utils', 
-        'text!packages/profile/templates/image-item.html'
+        'text!packages/profile/templates/team-item.html'
         ], 
 function (
         vendor,
         views,
         utils,
-        profileImageItemTemplate
+        profileTeamItemTemplate
         ) {
 
-    var ProfileImageItemView
+    var ProfileTeamItemView
       , $ = vendor.$
       , BaseView = views.BaseView
       , Mustache = vendor.Mustache;
 
-      ProfileImageItemView = BaseView.extend({
+      ProfileTeamItemView = BaseView.extend({
 
         tagName: "li",
 
-        className: "profile-image",
-        
+        className: "profile-team",
+          
         initialize: function (options) {
-            this.template = profileImageItemTemplate;
+            this.template = profileTeamItemTemplate;
         },
 
         render: function () {
@@ -39,5 +39,5 @@ function (
         
       });
 
-    return ProfileImageItemView;
+    return ProfileTeamItemView;
 });

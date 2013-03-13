@@ -1,0 +1,66 @@
+{            
+    "payload": [{
+        "sport_name": "football",
+        "sport_id": 1,
+        "primary_position": "position1",
+        "social_links": [{
+            "class": "facebook",
+            "title": "Facebook",
+            "link": "http://www.facebook.com"
+        },
+        {
+            "class": "twitter",
+            "title": "Twitter",
+            "link": "http://www.twitter.com"
+        },
+        {
+            "class": "email",
+            "title": "Email",
+            "link": "mailto:example@site.com"
+        }]
+    },{
+        "sport_name": "basketball",
+        "sport_id": 2,
+        "primary_position": "position2",
+        "social_links": [{
+            "class": "facebook",
+            "title": "Facebook1",
+            "link": "http://www.facebook.com"
+        },
+        {
+            "class": "twitter",
+            "title": "Twitter2",
+            "link": "http://www.twitter.com"
+        },
+        {
+            "class": "email",
+            "title": "Email3",
+            "link": "mailto:example@site.com"
+        }]
+    },{
+        "sport_name": "sport2",
+        "sport_id": 3,
+        "primary_position": "position2",
+        "social_links": [{
+            "class": "facebook",
+            "title": "Facebook1",
+            "link": "http://www.facebook.com"
+        },
+        {
+            "class": "twitter",
+            "title": "Twitter2",
+            "link": "http://www.twitter.com"
+        },
+        {
+            "class": "email",
+            "title": "Email3",
+            "link": "mailto:example@site.com"
+        }]
+    }],
+    "desc": "Sports information about the user",
+    "exec_data": {
+        "exec_time": 0.024134,
+        "exec_error": false
+    }
+}
+
