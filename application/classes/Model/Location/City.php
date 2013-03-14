@@ -9,36 +9,16 @@ class Model_Location_City extends ORM
 {
 	
 	protected $_table_name = 'cities';
-	
-/*
-	protected $_belongs_to = array(
-		'[alias name]' => array(
-			'model' => '[model name]', 
-			'foreign_key' => '[column]'
-		)
-	);
-	
-	protected $_has_many = array(
-		'[alias name]' => array(
-			'model' => '[model name]', 
-			'foreign_key' => '[column]'
-		),
-		'[alias name]' => array(
-			'model' => '[model name]', 
-			'through' => '[model name of pivot table]'
-		)
-	);
-	
-	protected $_has_one = array(
-		'[alias name]' => array(
-			'model' => '[model name]', 
-			'foreign_key' => '[column]'
-		)
-	);
-*/
-	public function __construct()
-	{
-		parent::__construct();
-	}
 
+
+	protected $_belongs_to = array(
+		'county' => array(
+			'model' => 'Location_County',
+			'foreign_key' => 'counties_id'
+		),
+		'state' => array(
+			'model' => 'Location_State',
+			'foreign_key' => 'states_id'
+		)
+	);
 }

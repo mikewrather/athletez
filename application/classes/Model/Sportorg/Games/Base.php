@@ -35,4 +35,13 @@ class Model_Sportorg_Games_Base extends ORM
 			'foreign_key' => 'games_id'
 		)
 	);
+
+	public function getBasics()
+	{
+		return array(
+			"gameDay" => $this->gameDay,
+			"gameTime" => $this->gameTime,
+			"location" => $this->location->getBasics()
+		);
+	}
 }

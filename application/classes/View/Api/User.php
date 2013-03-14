@@ -16,12 +16,7 @@ class View_Api_User extends Api_Viewclass
 	public function basics()
 	{
 		//print_r($_GET);
-		return array(
-			'username' => $this->obj->username,
-			'email' => $this->obj->email,
-			'logins' => $this->obj->logins,
-			'last_login' => date('M jS, g:i a',$this->obj->last_login)
-		);
+		return $this->obj->getBasics();
 	}
 
 
@@ -103,12 +98,48 @@ class View_Api_User extends Api_Viewclass
 
 	public function commentsof()
 	{
+		$retArr = array();
+		$user_id = $this->obj->id;
+		$comments = ORM::factory('Site_Comment')
+			->where('users_id','=',$user_id)
+			->find_all();
 
+		foreach($comments as $comment)
+		{
+			$subject = Ent::eFact($comment->subject_enttypes_id,$comment->subject_id);
+
+			$subjectData = array();
+			if(method_exists($subject,'getBasics'))
+			{
+				$subjectData = $subject->getBasics();
+			}
+
+			$ent = new Ent($comment->subject_enttypes_id);
+			$retArr[$comment->id] = array(
+				"comment" => $comment->comment,
+				"enttypes_id" => $comment->subject_enttypes_id,
+				"ent_id" => $comment->subject_id,
+				"subject_type" => $ent->name,
+				"subject_data" => $subjectData
+			);
+		}
+		return $retArr;
 	}
 
 	public function commentson()
 	{
 
+	}
+
+	public function listall()
+	{
+		$retArr = array();
+		$users = $this->obj->find_all();
+		foreach($users as $user)
+		{
+			$retArr[$user->id] = $user->getBasics();
+		}
+		return $retArr;
 	}
 
 	public function fitnessbasics()

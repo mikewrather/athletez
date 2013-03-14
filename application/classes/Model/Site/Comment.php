@@ -25,4 +25,8 @@ class Model_Site_Comment extends Model_Site_Entdir
 		parent::__construct($id);
 	}
 
+	public function getBasics()
+	{
+
+	}
 }

@@ -23,7 +23,7 @@ class Model_Site_Enttype extends ORM
 
 	static function eFact($enttypeID,$objID=NULL)
 	{
-		$classname = self::getMyClass($enttypeID);
+		$classname = "Model_".self::getMyClass($enttypeID);
 		return new $classname($objID);
 	}
 

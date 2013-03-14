@@ -10,14 +10,14 @@ class Model_Location_Base extends ORM
 	
 	protected $_table_name = 'locations';
 	
-/*
+
 	protected $_belongs_to = array(
-		'[alias name]' => array(
-			'model' => '[model name]', 
-			'foreign_key' => '[column]'
+		'city' => array(
+			'model' => 'Location_City',
+			'foreign_key' => 'cities_id'
 		)
 	);
-	
+/*
 	protected $_has_many = array(
 		'[alias name]' => array(
 			'model' => '[model name]', 
@@ -36,9 +36,15 @@ class Model_Location_Base extends ORM
 		)
 	);
 */
-	public function __construct()
+
+	public function getBasics()
 	{
-		parent::__construct();
+		return array(
+			"address" => $this->address,
+			"city" => $this->city->name,
+			"county" => $this->city->county->name,
+			"state" => $this->city->state->name
+		);
 	}
 
 }

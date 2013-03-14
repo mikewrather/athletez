@@ -155,8 +155,6 @@ class Controller_Api_Base extends Controller
 
 		$vc = Api_Viewclass::factory($ext,$obj);
 
-	//	print_r($this->request->query());
-
 		if(sizeof($this->request->query()) > 0) $vc->setQueryParams($this->request->query());
 		return $vc->$method();
 	}

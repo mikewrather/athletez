@@ -124,6 +124,24 @@ class Model_User_Base extends Model_Auth_User
 		return $this->media->where('media_type','=','image')->find_all();
 	}
 
+	public function getBasics()
+	{
+		//stuff for public
+		$retArr["name"] = ucfirst($this->first_name.' '.$this->lastName());
+		$retArr['username'] = $this->username;
+		$retArr['email'] = $this->email;
+		$retArr['logins'] = $this->logins;
+		$retArr['last_login']= date('M jS, g:i a',$this->last_login);
+
+		//stuff for logged in
+
+		//stuff for coaches
+
+		//stuff for admin
+
+		return $retArr;
+	}
+
 	public function getResumeData()
 	{
 		$retArr = array();
@@ -147,6 +165,7 @@ class Model_User_Base extends Model_Auth_User
 
 			->where('resume_data_vals.users_id','=',$this->id);
 
+
 		if($this->singlesport)
 		{
 			$usersFitnessData->where('rdp_sports_link.sports_id','=',$this->singlesport);
@@ -154,15 +173,12 @@ class Model_User_Base extends Model_Auth_User
 
 		$res = $usersFitnessData->execute();
 
-		print_r($res);
-
 		foreach($res as $data)
 		{
 			$retArr[$data['id']] = $data;
 		}
 
 		return $retArr;
-
 	}
 
 	public function getFitnessBasics()
@@ -192,5 +208,16 @@ class Model_User_Base extends Model_Auth_User
 	public function setSingleSport($sports_id)
 	{
 		$this->singlesport = $sports_id;
+	}
+
+	public function lastName()
+	{
+		//not logged in
+		$last_name = substr($this->last_name,0,1).'.';
+
+		//logged in
+		$last_name = $this->last_name;
+
+		return $last_name;
 	}
 }

@@ -21,9 +21,9 @@ class Controller_Api_User extends Controller_Api_Base
 		$this->popMainModel();
 	}
 
-	public function action_index()
+	public function action_get_index()
 	{
-
+		$this->action_get_listall();
 	}
 
 	//GET methods
@@ -80,6 +80,11 @@ class Controller_Api_User extends Controller_Api_Base
 		{
 			$this->mainModel->setSingleSport($this->request->query('sports_id'));
 		}
+	}
+
+	public function action_get_listall()
+	{
+
 	}
 
 
