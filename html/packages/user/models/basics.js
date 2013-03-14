@@ -43,7 +43,11 @@ define( ["facade", "models/base"], function (facade, BaseModel) {
             }
         }),
         
-        urlRoot: '/api/user/basics/'
+        url: function() {
+            if (live)
+                return '/api/user/basics?user_id=' + this.id;
+            return '/test/user/basics/' + this.id;
+        }
         
         
     });

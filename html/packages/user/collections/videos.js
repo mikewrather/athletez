@@ -19,7 +19,9 @@ function(facade, collections, UserVideoModel, utils) {
         model: UserVideoModel,
         
         url: function() {
-            return '/api/user/videos/' + this.id;
+            if (live)
+                return '/api/user/videos?user_id=' + this.id;
+            return '/test/user/videos/' + this.id;
         },
         
         // **Method:** `fetchSuccess` - resolve the deferred here in success

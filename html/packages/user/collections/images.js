@@ -19,7 +19,9 @@ function(facade, collections, UserImageModel, utils) {
         model: UserImageModel,
         
         url: function() {
-            return '/api/user/images/' + this.id;
+            if (live)
+                return '/api/user/images?user_id=' + this.id;
+            return '/test/user/images/' + this.id;
         },
         
         // **Method:** `fetchSuccess` - resolve the deferred here in success

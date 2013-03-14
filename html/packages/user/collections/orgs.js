@@ -19,7 +19,9 @@ function(facade, collections, UserOrgModel, utils) {
         model: UserOrgModel,
         
         url: function() {
-            return '/api/user/orgs/' + this.id;            
+            if (live)
+                return '/api/user/orgs?user_id=' + this.id;
+            return '/test/user/orgs/' + this.id;
         },
         
         // **Method:** `fetchSuccess` - resolve the deferred here in success

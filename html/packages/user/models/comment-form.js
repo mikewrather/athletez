@@ -27,7 +27,11 @@ define(["facade", "models/base"], function (facade, BaseModel) {
             }
         }),
         
-        urlRoot: '/api/user/commentson/'
+        url: function() {
+            if (live)
+                return '/api/user/commentson?user_id=' + this.id;
+            return '/test/user/commentson/' + this.id;
+        }
         
     });
 

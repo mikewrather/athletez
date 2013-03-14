@@ -62,6 +62,10 @@ define([
         createOnEnter: function(e) {
             var comment = this.input.val();
             if (comment != '') {                
+                
+                // test
+                this.model.url = '/api/user/commentson?user_id=' + this.model.id;
+                            
                 date = new Date();
                 
                 var payload = this.model.get('payload');
@@ -69,7 +73,9 @@ define([
                 payload['comment_date'] = date.toDateString();
                 this.model.set('payload', payload);
                 
+                // test
                 this.model.save();
+                this.model.destroy();
                 
                 this.collection.add(this.model.toJSON());
                 this.input.val('');

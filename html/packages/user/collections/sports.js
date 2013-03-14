@@ -19,7 +19,9 @@ function(facade, collections, UserSportModel, utils) {
         model: UserSportModel,
         
         url: function() {
-            return '/api/user/sports/' + this.id;
+            if (live)
+                return '/api/user/sports?user_id=' + this.id;
+            return '/test/user/sports/' + this.id;
         },
         
         // **Method:** `fetchSuccess` - resolve the deferred here in success

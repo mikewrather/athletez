@@ -40,9 +40,11 @@ define(["facade", "models/base"], function (facade, BaseModel) {
             }
         }),
         
-        urlRoot: '/api/user/primaryvideo/'
-        
-        
+        url: function() {
+            if (live)
+                return '/api/user/primaryvideo?user_id=' + this.id;
+            return '/test/user/primaryvideo/' + this.id;
+        }
     });
 
     return UserPrimaryVideoModel;

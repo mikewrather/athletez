@@ -16,6 +16,7 @@
     <script data-main="{{site_url}}main" src="{{site_url}}vendor/require.js"></script>
     <script>
         var base_url = '{{base_url}}';
+        var live = {{#live}}true{{/live}}{{^live}}false{{/live}};
         require(['facade', 'application', 'utils'], function (facade, App, utils) {
             var $ = facade.$,
                 Backbone = facade.Backbone,

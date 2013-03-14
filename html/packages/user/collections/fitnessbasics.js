@@ -19,7 +19,9 @@ function(facade, collections, UserFitnessBasicModel, utils) {
         model: UserFitnessBasicModel,
         
         url: function() {
-            return '/api/user/fitnessbasics/' + this.id;            
+            if (live)
+                return '/api/user/fitnessbasics?user_id=' + this.id;            
+            return '/test/user/fitnessbasics/' + this.id;            
         },
         
         // **Method:** `fetchSuccess` - resolve the deferred here in success

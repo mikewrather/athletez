@@ -34,7 +34,11 @@ define( ["models/base"], function (BaseModel) {
             
         },
         
-        url: '/api/chrome/login_status.js'
+        url: function() {
+            if (live)
+                return '/api/chrome/login_status';
+            return '/test/chrome/login_status';
+        }
 
     });
 

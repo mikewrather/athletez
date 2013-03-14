@@ -19,7 +19,9 @@ function(facade, collections, UserRelatedModel, utils) {
         model: UserRelatedModel,
         
         url: function() {
-            return '/api/user/related/' + this.id;
+            if (live)
+                return '/api/user/related?user_id=' + this.id;
+            return '/test/user/related/' + this.id;
         },
         
         // **Method:** `fetchSuccess` - resolve the deferred here in success
