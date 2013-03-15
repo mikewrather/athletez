@@ -151,7 +151,7 @@ class Controller_Api_Base extends Controller
 			$obj = $this->mainModel;
 		}
 		$ext = $this->request->controller();
-		$method = $this->request->action();
+		$method = strtolower($this->request->method())."_".$this->request->action();
 
 		$vc = Api_Viewclass::factory($ext,$obj);
 

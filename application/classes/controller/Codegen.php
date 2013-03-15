@@ -28,7 +28,7 @@ class Controller_Codegen extends Controller
 		$el = ORM::factory('Codegen_Entlist')->find_all();
 		foreach($el as $ent)
 		{
-			echo $ctr_fn = $baseDir."Controller/Api/".ucwords($ent->entity_type).".php";
+			echo $ctr_fn = $baseDir."Controller/Api/".ucwords($ent->api_name).".php";
 
 			if(file_exists($ctr_fn)) echo " FILE EXISTS!!!\n\n";
 			else
@@ -40,7 +40,7 @@ class Controller_Codegen extends Controller
 
 			echo "\n";
 
-			echo $view_fn = $baseDir."View/Api/".ucwords($ent->entity_type).".php";
+			echo $view_fn = $baseDir."View/Api/".ucwords($ent->api_name).".php";
 			if(file_exists($view_fn)) echo " FILE EXISTS!!!\n\n";
 			else
 			{
@@ -64,7 +64,7 @@ class Controller_Codegen extends Controller
 		$filecontents = '<?php defined(\'SYSPATH\') or die(\'No direct script access.\');
 
 /**
- * '.ucfirst($ent->entity_type).' API controller class
+ * '.ucfirst($ent->api_name).' API controller class
  *
  * Date: Auto-generated on '.date('M jS, Y g:i a').'
  *
@@ -72,14 +72,14 @@ class Controller_Codegen extends Controller
  *
  */
 
-	class Controller_Api_'.ucfirst($ent->entity_type).' extends Controller_Api_Base
+	class Controller_Api_'.ucfirst($ent->api_name).' extends Controller_Api_Base
 	{
 
 		public function __construct($request,$response)
 		{
 			parent::__construct($request,$response);
 
-			$this->setMainModel(ORM::factory(\''.$ent->primary_class.'\'));
+			$this->setMainModel(ORM::factory(\''.$ent->class_name.'\'));
 			$this->popMainModel();
 		}
 
@@ -89,55 +89,14 @@ class Controller_Codegen extends Controller
 		}
 	';
 
+		$methods = $ent->apimethods->where('api_method','=','GET')->find_all();
 		$filecontents.= '
 		############################################################################
 		###########################    GET METHODS    ##############################
 		############################################################################
 
 		';
-
-		$methods = $ent->apimethods->where('api_method','=','GET')->find_all();
-		foreach($methods as $method)
-		{
-
-			$filecontents.= '
-		/**
-		 * action_'.strtolower($method->api_method).'_'.$method->shortname.'() '.$method->description.'
-		 *
-		 */
-		public function action_'.strtolower($method->api_method).'_'.$method->shortname.'()
-		{
-			$this->payloadDesc = "'.$method->description.'";
-		';
-
-			$params = $method->params->find_all();
-			foreach($params as $param)
-			{
-
-				if($param->param_type=='int')
-				{
-					$existence_check = " > 0";
-				}
-				else
-				{
-					$existence_check = ' != ""';
-				}
-				if($param->param_req){ $filecontents.= '        //Required Param'; }
-
-					$filecontents.= '
-			if($this->request->query(\''.$param->param_name.'\')'.$existence_check.')
-			{
-
-			}
-';
-
-			}
-
-			$filecontents.='
-		}
-		';
-
-		}
+		$filecontents .= $this->getHTTPVerbMethods($methods,'post');
 
 		$methods = $ent->apimethods->where('api_method','=','POST')->find_all();
 		$filecontents.= '
@@ -146,22 +105,27 @@ class Controller_Codegen extends Controller
 		############################################################################
 
 		';
+		$filecontents .= $this->getHTTPVerbMethods($methods,'post');
 
-		foreach($methods as $method)
-		{
-			$filecontents.= '
-		/**
-		 * action_'.strtolower($method->api_method).'_'.$method->shortname.'() '.$method->description.'
-		 *
-		 */
-		public function action_'.strtolower($method->api_method).'_'.$method->shortname.'()
-		{
-			$this->payloadDesc = "'.$method->description.'";
-		}
+		$methods = $ent->apimethods->where('api_method','=','PUT')->find_all();
+		$filecontents.= '
+		############################################################################
+		############################    PUT METHODS    #############################
+		############################################################################
+
 		';
+		$filecontents .= $this->getHTTPVerbMethods($methods,'put');
 
-		}
+		$methods = $ent->apimethods->where('api_method','=','DELETE')->find_all();
+		$filecontents.= '
+		############################################################################
+		###########################    DELETE METHODS    ###########################
+		############################################################################
 
+		';
+		$filecontents .= $this->getHTTPVerbMethods($methods,'delete');
+
+		//End the generated function
 		$filecontents .= '
 	}';
 
@@ -181,7 +145,7 @@ class Controller_Codegen extends Controller
 		$filecontents = '<?php defined(\'SYSPATH\') or die(\'No direct script access.\');
 
 /**
- * '.ucfirst($ent->entity_type).' API View class
+ * '.ucfirst($ent->api_name).' API View class
  *
  * Date: Auto-generated on '.date('M jS, Y g:i a').'
  *
@@ -189,7 +153,7 @@ class Controller_Codegen extends Controller
  *
  */
 
-	class View_Api_'.ucfirst($ent->entity_type).' extends Api_Viewclass
+	class View_Api_'.ucfirst($ent->api_name).' extends Api_Viewclass
 	{
 
 		public function __construct()
@@ -199,17 +163,19 @@ class Controller_Codegen extends Controller
 
 	';
 
-		$methods = $ent->apimethods->group_by('shortname')->find_all();
+
+
+		$methods = $ent->apimethods->find_all();
 		foreach($methods as $method)
 		{
 
 			$filecontents.= '
 		/**
-		 * '.$method->shortname.'() '.$method->description.'
+		 * '.strtolower($method->api_method).'_'.$method->shortname.'() '.$method->description.'
 		 *
 		 * @retun array
 		 */
-		public function '.$method->shortname.'()
+		public function '.strtolower($method->api_method).'_'.$method->shortname.'()
 		{
 			$retArr = array(
 
@@ -228,6 +194,143 @@ class Controller_Codegen extends Controller
 		return $filecontents;
 
 
+	}
+
+	public function getHTTPVerbMethods($methods,$httpverb)
+	{
+
+		switch($httpverb){
+			case 'get':
+				$data_source = '$this->request->query';
+				break;
+			case 'post':
+				$data_source = '$this->request->post';
+				break;
+			case 'put':
+				$data_source = '$this->request->body';
+				break;
+			case 'delete':
+				$data_source = '$this->request->body';
+				break;
+			default:
+				return false;
+			break;
+		}
+
+		$filecontents = "";
+		foreach($methods as $method)
+		{
+
+
+			$filecontents.= '
+		/**
+		 * action_'.strtolower($method->api_method).'_'.$method->shortname.'() '.$method->description.'
+		 * via /api/'.strtolower($method->entlist->api_name).'/'.strtolower($method->shortname).'/{'.strtolower($method->getID1()).'}';
+
+			if($method->getID2() != NULL) { $filecontents .= '/'.$method->getID2(); }
+			$filecontents .= '
+		 *
+		 */
+		public function action_'.strtolower($method->api_method).'_'.$method->shortname.'()
+		{
+			$this->payloadDesc = "'.$method->description.'";
+
+		';
+
+			$params = $method->params->find_all();
+
+			if($params->count() > 0) $filecontents .= '         // CHECK FOR PARAMETERS:';
+
+			foreach($params as $param)
+			{
+				$required_string = $param->param_req ? '(REQUIRED)' : '';
+				$filecontents.= '
+			// '.$param->param_name.' '.$required_string.'
+			// '.$param->description.'
+				';
+				if($param->param_type=='int')
+				{
+					$existence_check = " > 0";
+					$filecontents.= '
+			if((int)trim('.$data_source.'(\''.$param->param_name.'\'))'.$existence_check.')
+			{
+				$'.$param->param_name.' = (int)trim('.$data_source.'(\''.$param->param_name.'\'));
+			}
+';
+				}
+				elseif($param->param_type=='string')
+				{
+					$existence_check = ' != ""';
+					$filecontents.= '
+			if(trim('.$data_source.'(\''.$param->param_name.'\'))'.$existence_check.')
+			{
+				$'.$param->param_name.' = trim('.$data_source.'(\''.$param->param_name.'\'));
+			}
+';
+				}
+				elseif($param->param_type=='datetime')
+				{
+					$existence_check = ' != ""';
+					$filecontents.= '
+			if('.$data_source.'(\''.$param->param_name.'\')'.$existence_check.')
+			{
+				// Format as date
+				$'.$param->param_name.' = date("Y-m-d H:i:s",strtotime('.$data_source.'(\''.$param->param_name.'\')));
+			}
+';
+				}
+				elseif($param->param_type=='bool')
+				{
+					$existence_check = ' != ""';
+					$filecontents.= '
+			if('.$data_source.'(\''.$param->param_name.'\')'.$existence_check.')
+			{
+				//convert '.$param->param_name.' to a boolean
+				$'.$param->param_name.' = (bool)'.$data_source.'(\''.$param->param_name.'\');
+			}
+';
+				}
+				elseif($param->param_type=='array')
+				{
+					$filecontents.= '
+			if(isset('.$data_source.'(\''.$param->param_name.'\')))
+			{
+				$'.$param->param_name.'_array = '.$data_source.'(\''.$param->param_name.'\');
+				foreach($'.$param->param_name.'_array as $'.$param->param_name.'_key =>$'.$param->param_name.'_val)
+				{
+					// Access each item in the array through the $'.$param->param_name.'_val variable
+				}
+			}
+';
+				}
+				else
+				{
+					$existence_check = ' != ""';
+					$filecontents.= '
+			if('.$data_source.'(\''.$param->param_name.'\')'.$existence_check.')
+			{
+				$'.$param->param_name.' = '.$data_source.'(\''.$param->param_name.'\');
+			}
+';
+				}
+
+				if($param->param_req){ $filecontents.= '
+			else // THIS WAS A REQUIRED PARAMETER
+			{
+				// RETURN AN ERROR FOR THIS REQUEST
+			}
+			'; }
+
+
+
+			}
+
+			$filecontents.='
+		}
+		';
+
+		}
+		return $filecontents;
 	}
 
 

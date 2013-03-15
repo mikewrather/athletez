@@ -96,7 +96,19 @@ class Controller_Api_User extends Controller_Api_Base
 	//POST METHODS
 	public function action_post_teams()
 	{
-		return $this->request->post();
+
+		$date = Arr::get($this->request->post(),'date',date('Y-m-d'));
+
+		/*
+		if($date = Arr::get($_POST, 'date', ))
+		{
+
+		}
+		else
+		{
+
+		}
+		*/
 	}
 
 }

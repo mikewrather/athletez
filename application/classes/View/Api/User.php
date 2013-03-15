@@ -13,14 +13,14 @@
 class View_Api_User extends Api_Viewclass
 {
 
-	public function basics()
+	public function get_basics()
 	{
 		//print_r($_GET);
 		return $this->obj->getBasics();
 	}
 
 
-	public function teams()
+	public function get_teams()
 	{
 		$retArr = array();
 		foreach($this->obj->teams->find_all() as $team)
@@ -31,7 +31,7 @@ class View_Api_User extends Api_Viewclass
 		return $retArr;
 	}
 
-	public function sports()
+	public function get_sports()
 	{
 		$retArr = array();
 		$teams = $this->obj->teams->group_by('org_sport_link_id')->find_all();
@@ -46,7 +46,7 @@ class View_Api_User extends Api_Viewclass
 		return $retArr;
 	}
 
-	public function orgs()
+	public function get_orgs()
 	{
 		$retArr = array();
 		$teams = $this->obj->teams->group_by('org_sport_link_id')->find_all();
@@ -59,12 +59,12 @@ class View_Api_User extends Api_Viewclass
 		return $retArr;
 	}
 
-	public function related()
+	public function get_related()
 	{
 
 	}
 
-	public function videos()
+	public function get_videos()
 	{
 		$retArr = array();
 		$videos = $this->obj->getVideos();
@@ -83,7 +83,7 @@ class View_Api_User extends Api_Viewclass
 		return $retArr;
 	}
 
-	public function images()
+	public function get_images()
 	{
 		$retArr = array();
 		$images = $this->obj->getImages();
@@ -96,7 +96,7 @@ class View_Api_User extends Api_Viewclass
 		return $retArr;
 	}
 
-	public function commentsof()
+	public function get_commentsof()
 	{
 		$retArr = array();
 		$user_id = $this->obj->id;
@@ -126,12 +126,12 @@ class View_Api_User extends Api_Viewclass
 		return $retArr;
 	}
 
-	public function commentson()
+	public function get_commentson()
 	{
 
 	}
 
-	public function listall()
+	public function get_listall()
 	{
 		$retArr = array();
 		$users = $this->obj->find_all();
@@ -142,9 +142,13 @@ class View_Api_User extends Api_Viewclass
 		return $retArr;
 	}
 
-	public function fitnessbasics()
+	public function get_fitnessbasics()
 	{
 		return $this->obj->getResumeData();
 	}
 
+	public function post_teams()
+	{
+		return Request::current()->post();
+	}
 }

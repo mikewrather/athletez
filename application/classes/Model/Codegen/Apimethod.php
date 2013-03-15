@@ -41,4 +41,22 @@ class Model_Codegen_Apimethod extends ORM
 		parent::__construct($id);
 	}
 
+	public function getID1()
+	{
+		if($this->id1 != NULL)
+		{
+			return $this->id1;
+		}
+		return $this->entlist->id1;
+	}
+
+	public function getID2()
+	{
+		if($this->id2 != NULL)
+		{
+			return $this->id2;
+		}
+		return $this->entlist->id2;
+	}
+
 }
