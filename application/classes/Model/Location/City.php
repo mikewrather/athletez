@@ -21,4 +21,18 @@ class Model_Location_City extends ORM
 			'foreign_key' => 'states_id'
 		)
 	);
+	public function __construct()
+	{
+		parent::__construct();
+	}
+	
+	public function getBasics()
+	{
+		return array(		
+		 
+			"name" => $this->name,
+			"county" => $this->county->getBasics(),
+			"state" => $this->state->getBasics(),
+		);
+	}
 }
