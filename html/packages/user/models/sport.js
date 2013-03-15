@@ -22,8 +22,8 @@ define( ["facade", "models/base"], function (facade, BaseModel) {
                     "link": null
                 }]
             },
-            "desc": "Sport information about the user",
-            "exec_data": {
+            "desc": "List of sports associated with the user.",
+            "exec_data": { 
                 "exec_time": 0,
                 "exec_error": false
             }

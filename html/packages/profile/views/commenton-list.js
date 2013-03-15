@@ -1,10 +1,10 @@
-// The Profile Comment List
+// The Profile CommentOn List
 // --------------
 
-define(['facade','views', 'utils', 'profile/views/comment-item', 'profile/views/comment-form'], 
-function(facade,  views,   utils,   ProfileCommentItemView,       ProfileCommentFormView) {
+define(['facade','views', 'utils', 'profile/views/commenton-item', 'profile/views/commenton-form'], 
+function(facade,  views,   utils,   ProfileCommentOnItemView,       ProfileCommentOnFormView) {
 
-    var ProfileCommentListView, 
+    var ProfileCommentOnListView, 
         ProfileOrgListAbstract,
         $ = facade.$,
         _ = facade._,
@@ -12,29 +12,29 @@ function(facade,  views,   utils,   ProfileCommentItemView,       ProfileComment
         CollectionView = views.CollectionView,
         SectionView = views.SectionView;
 
-    ProfileCommentListAbstract = CollectionView.extend(SectionView.prototype);
+    ProfileCommentOnListAbstract = CollectionView.extend(SectionView.prototype);
 
-    ProfileCommentListView = ProfileCommentListAbstract.extend({
+    ProfileCommentOnListView = ProfileCommentOnListAbstract.extend({
 
         __super__: CollectionView.prototype,
 
-        id: "profile-comment-list",
+        id: "profile-commenton-list",
 
-        name: "Profile Comment List",
+        name: "Profile CommentOn List",
 
         tagName: "ul",
 
         // Tag for the child views
         _tagName: "li",
-        _className: "profile-comment",
+        _className: "profile-commenton",
 
         // Store constructor for the child views
-        _view: ProfileCommentItemView,
+        _view: ProfileCommentOnItemView,
 
         initialize: function(options) {
             CollectionView.prototype.initialize.call(this, options);
             if (!this.collection) {
-                throw new Error("ProfileCommentListView expected options.collection.");
+                throw new Error("ProfileCommentOnListView expected options.collection.");
             }
             _.bindAll(this);
             this.addSubscribers();
@@ -71,25 +71,24 @@ function(facade,  views,   utils,   ProfileCommentItemView,       ProfileComment
         },
         
         setupFormView: function () {
-            var commentListView = this,
-                profileCommentFormView = new ProfileCommentFormView({collection: this.collection}),
+            var commentOnListView = this,
+                profileCommentFormView = new ProfileCommentOnFormView({collection: this.collection}),
                 renderCommentFormView = this.addChildView(profileCommentFormView);
 
             this.childViews.form = profileCommentFormView;            
             this.callbacks.add(function () {
-                renderCommentFormView();
-                //commentListView.$el.prepend(profileCommentFormView.el);
+                renderCommentFormView();                
             });            
             
             function callback (data) {
                 profileCommentFormView.model = data;
                 profileCommentFormView.render();
-                commentListView.$el.prepend(profileCommentFormView.el);                
+                commentOnListView.$el.prepend(profileCommentFormView.el);                
             }
-            Channel('profilecommentform:fetch').subscribe(callback);                
+            Channel('profilecommentonform:fetch').subscribe(callback);                
         }
 
     });
 
-    return ProfileCommentListView;
+    return ProfileCommentOnListView;
 });

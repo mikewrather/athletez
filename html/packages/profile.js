@@ -19,7 +19,8 @@ define([
     "profile/collections/videos",
     "profile/collections/images",
     "profile/models/primaryvideo",
-    "profile/collections/comments",
+    "profile/collections/commentsof",
+    "profile/collections/commentson",
     
     "profile/views/header",
     "profile/views/org-list",
@@ -28,7 +29,8 @@ define([
     "profile/views/video-list",
     "profile/views/image-list",
     "profile/views/primaryvideo",
-    "profile/views/comment-list"
+    "profile/views/commentof-list",
+    "profile/views/commenton-list"
     
     ], function (require, profileLayoutTemplate) {
 
@@ -46,7 +48,8 @@ define([
         ProfileVideoList = require("profile/collections/videos"),
         ProfileImageList = require("profile/collections/images"),
         ProfilePrimaryVideoModel = require("profile/models/primaryvideo"),
-        ProfileCommentList = require("profile/collections/comments"),
+        ProfileCommentOfList = require("profile/collections/commentsof"),
+        ProfileCommentOnList = require("profile/collections/commentson"),
         
         ProfileHeaderView = require("profile/views/header"),
         ProfileOrgListView = require("profile/views/org-list"),
@@ -55,7 +58,8 @@ define([
         ProfileVideoListView = require("profile/views/video-list"),
         ProfileImageListView = require("profile/views/image-list"),
         ProfilePrimaryVideoView = require("profile/views/primaryvideo"),
-        ProfileCommentListView = require("profile/views/comment-list"),
+        ProfileCommentOfListView = require("profile/views/commentof-list"),
+        ProfileCommentOnListView = require("profile/views/commenton-list"),
         
         LayoutView = views.LayoutView,
         $ = facade.$,
@@ -114,9 +118,13 @@ define([
             this.primaryvideo = new ProfilePrimaryVideoModel();
             this.primaryvideo.fetch();
             
-            this.comments = new ProfileCommentList();
-            this.comments.id = this.id;
-            this.comments.fetch();
+            this.commentsof = new ProfileCommentOfList();
+            this.commentsof.id = this.id;
+            this.commentsof.fetch();
+            
+            this.commentson = new ProfileCommentOnList();
+            this.commentson.id = this.id;
+            this.commentson.fetch();
             
         },
         
@@ -151,8 +159,12 @@ define([
                 controller.setupPrimaryVideoView();
             });
             
-            $.when(this.comments.request).done(function() {
-                controller.setupCommentListView();
+            $.when(this.commentsof.request).done(function() {
+                controller.setupCommentOfListView();
+            });
+            
+            $.when(this.commentson.request).done(function() {
+                controller.setupCommentOnListView();
             });
         },
         
@@ -242,15 +254,27 @@ define([
             this.layout.render();
         },
         
-        setupCommentListView: function() {
-            var commentListView;
+        setupCommentOfListView: function() {
+            var commentOfListView;
             
-            commentListView = new ProfileCommentListView({
-                collection: this.comments,
-                destination: "#profile-content #comment-wrap"
+            commentOfListView = new ProfileCommentOfListView({
+                collection: this.commentsof,
+                destination: "#profile-content #commentof-wrap"
             });
             
-            this.scheme.push(commentListView);
+            this.scheme.push(commentOfListView);
+            this.layout.render();
+        },
+        
+        setupCommentOnListView: function() {
+            var commentOnListView;
+            
+            commentOnListView = new ProfileCommentOnListView({
+                collection: this.commentson,
+                destination: "#profile-content #commenton-wrap"
+            });
+            
+            this.scheme.push(commentOnListView);
             this.layout.render();
         },
         

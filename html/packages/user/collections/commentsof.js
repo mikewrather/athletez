@@ -1,22 +1,22 @@
-// User Comments Data
+// User CommentsOf Data
 // ----------
 
 // Package User
 // Requires define
-// Returns {UserCommentList} constructor
+// Returns {UserCommentsOfList} constructor
 
-define(['facade', 'collections', 'user/models/comment', 'utils'], 
-function(facade, collections, UserCommentModel, utils) {
+define(['facade', 'collections', 'user/models/commentof', 'utils'], 
+function(facade, collections, UserCommentOfModel, utils) {
 
-    var UserCommentList,
+    var UserCommentOfList,
         BaseCollection = collections.BaseCollection,
         _ = facade._,
         Channel = utils.lib.Channel;
 
-    UserCommentList = BaseCollection.extend({
+    UserCommentOfList = BaseCollection.extend({
 
         // Reference to this collection's model.
-        model: UserCommentModel,
+        model: UserCommentOfModel,
         
         url: function() {
             if (testpath)
@@ -29,7 +29,7 @@ function(facade, collections, UserCommentModel, utils) {
             collection.reset();
             var payload = response.payload;
             for (i = 0; i < payload.length; i++) {
-                var userComment = new UserCommentModel();
+                var userComment = new UserCommentOfModel();
                 userComment.set('payload', payload[i]);
                 userComment.set('desc', response.desc);
                 userComment.set('exec_data', response.exec_data);
@@ -41,5 +41,5 @@ function(facade, collections, UserCommentModel, utils) {
 
     });
 
-    return UserCommentList;
+    return UserCommentOfList;
 });

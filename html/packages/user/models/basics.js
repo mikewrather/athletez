@@ -19,24 +19,9 @@ define( ["facade", "models/base"], function (facade, BaseModel) {
                 "user_weight": null,
                 
                 "num_followers": 0,
-                "num_votes": 0,
-                
-                "sports": [{
-                    "sport_name": null,
-                    "sport_id": 0,
-                    "teams": [{
-                        "team_name": null,
-                        "team_location": null
-                    }],
-                    "primary_position": null,
-                    "social_links": [{
-                        "class": null,
-                        "title": null,
-                        "link": null
-                    }]
-                }]
+                "num_votes": 0
             },
-            "desc": "Basic information about the user",
+            "desc": "Basic information about the user.",
             "exec_data": {
                 "exec_time": 0,
                 "exec_error": false

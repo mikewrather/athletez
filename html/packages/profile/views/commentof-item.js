@@ -1,34 +1,34 @@
-// comment-item.js  
+// commentof-item.js  
 // -------  
 // Requires `define`
-// Return {ProfileCommentItemView} object as constructor
+// Return {ProfileCommentOfItemView} object as constructor
 
 define([ 
         'vendor', 
         'views',
         'utils', 
-        'text!packages/profile/templates/comment-item.html'
+        'text!packages/profile/templates/commentof-item.html'
         ], 
 function (
         vendor,
         views,
         utils,
-        profileCommentItemTemplate
+        profileCommentOfItemTemplate
         ) {
 
-    var ProfileCommentItemView
+    var ProfileCommentOfItemView
       , $ = vendor.$
       , BaseView = views.BaseView
       , Mustache = vendor.Mustache;
 
-      ProfileCommentItemView = BaseView.extend({
+      ProfileCommentOfItemView = BaseView.extend({
 
         tagName: "li",
 
-        className: "profile-comment",
+        className: "profile-commentof",
           
         initialize: function (options) {
-            this.template = profileCommentItemTemplate;
+            this.template = profileCommentOfItemTemplate;
         },
 
         render: function () {
@@ -39,5 +39,5 @@ function (
         
       });
 
-    return ProfileCommentItemView;
+    return ProfileCommentOfItemView;
 });

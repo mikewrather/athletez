@@ -1,31 +1,31 @@
-// Comment Form View
+// CommentOn Form View
 // ---------
 // Input form to create Profile comments
 
 // Package Profile
 // Requires define
-// Returns {ProfileCommentFormView} constructor
+// Returns {ProfileCommentOnFormView} constructor
 
 define([
         'require', 
-        'text!profile/templates/comment-form.html', 
+        'text!profile/templates/commenton-form.html', 
         'facade', 
         'views', 
-        'profile/models/comment-form'
-        ], function(require, profileCommentFormTemplate) {
+        'profile/models/commentonform'
+        ], function(require, profileCommentOnFormTemplate) {
 
-    var ProfileCommentFormView,
+    var ProfileCommentOnFormView,
         facade = require('facade'),
         views = require('views'),
-        ProfileCommentFormModel = require('profile/models/comment-form'),
+        ProfileCommentOnFormModel = require('profile/models/commentonform'),
         BaseView = views.BaseView,
         _ = facade._;
 
-    ProfileCommentFormView = BaseView.extend({
+    ProfileCommentOnFormView = BaseView.extend({
 
         tagName: "li",
 
-        template: profileCommentFormTemplate,
+        template: profileCommentOnFormTemplate,
 
         // Delegated events for creating new items, and clearing completed ones.
         events: {
@@ -35,10 +35,10 @@ define([
         // **Method** `setOptions` - called by BaseView's initialize method
         setOptions: function (options) {
             if (!this.collection) {
-                throw new Error("ProfileCommentFormView expected options.collection.");
+                throw new Error("ProfileCommentOnFormView expected options.collection.");
             }
             if (!this.model) {
-                this.model = new ProfileCommentFormModel();
+                this.model = new ProfileCommentOnFormModel();
             }            
         },
 
@@ -57,15 +57,12 @@ define([
             this.createOnEnter(e);
         },
 
-        // If you hit return in the main input field, create new **ProfileComment** model,
+        // If you hit return in the main input field, create new **ProfileCommentOn** model,
         // persisting it to *localStorage*.
         createOnEnter: function(e) {
             var comment = this.input.val();
             if (comment != '') {                
                 
-                // test
-                this.model.url = '/api/user/commentson?user_id=' + this.model.id;
-                            
                 date = new Date();
                 
                 var payload = this.model.get('payload');
@@ -73,9 +70,7 @@ define([
                 payload['comment_date'] = date.toDateString();
                 this.model.set('payload', payload);
                 
-                // test
                 this.model.save();
-                this.model.destroy();
                 
                 this.collection.add(this.model.toJSON());
                 this.input.val('');
@@ -84,5 +79,5 @@ define([
 
     });
 
-    return ProfileCommentFormView;
+    return ProfileCommentOnFormView;
 });
