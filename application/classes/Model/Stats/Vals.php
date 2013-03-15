@@ -40,4 +40,15 @@ class Model_Stats_Vals extends ORM
 		parent::__construct($id);
 	}
 
+	public function getBasics()
+	{
+		return array(
+			"user" => $this->user->getBasics(),
+			"team" => $this->team->getBasics(),	
+			"game" => $this->game->getBasics(),
+			"context" => $this->context->getBasics(),
+			"statdate" => $this->statedate,
+			"statval" => $this->statval,
+		);
+	}
 }

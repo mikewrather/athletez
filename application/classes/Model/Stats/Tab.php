@@ -41,4 +41,17 @@ class Model_Stats_Tab extends ORM
 		parent::__construct();
 	}
 
+	public function getBasics()
+	{
+		return array(
+			"stattab_id" => $this->stattab_id,
+			"sport_id" => $this->sport_id,
+			"sport_id2" => $this->sport_id2,
+			"name" => $this->name,
+			"classname" => $this->classname,
+			"is_root" => $this->is_root,
+			"defaultChild" => $this->defaultChild,
+			"orderNum" => $this->orderNum,
+		);
+	}
 }

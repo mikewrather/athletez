@@ -42,4 +42,19 @@ class Model_Stats_Base extends ORM
 		parent::__construct($id);
 	}
 
+	public function getBasics()
+	{
+		return array(
+			"name" => $this->name,
+			"sport" => $this->sport->getBasics(),
+			"secondsport" => $this->sport->getBasics(),
+			"stattab" => $this->stattab->getBasics(),
+			"description" => $this->description,
+			"datatype" => $this->datatype,
+			"orderNum" => $this->orderNumb,
+			"field_size" => $this->field_size,
+			"calc_formula" => $this -> calc_formula,
+			"is_calc" => $this -> is_calc						
+		);
+	}
 }
