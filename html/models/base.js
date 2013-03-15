@@ -22,6 +22,8 @@ define(['facade', 'utils'], function (facade, utils) {
             
             "id": "101",
             
+            "base_url": base_url,
+            
             "payload": {
                 
             },

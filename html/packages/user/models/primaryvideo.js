@@ -41,9 +41,9 @@ define(["facade", "models/base"], function (facade, BaseModel) {
         }),
         
         url: function() {
-            if (live)
-                return '/api/user/primaryvideo?user_id=' + this.id;
-            return '/test/user/primaryvideo/' + this.id;
+            if (testpath)
+                return '/test/user/primaryvideo/' + this.id;
+            return '/api/user/primaryvideo?user_id=' + this.id;
         }
     });
 

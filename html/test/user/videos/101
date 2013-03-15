@@ -3,7 +3,7 @@
         "video_id": 1,
         "video_title": "Blair vs Peddie Highlights",
         "video_quality": 0.9,
-        "video_thumb": "http://localhost/images/video_thumb.png",
+        "video_thumb": "images/video_thumb.png",
         "teams": [                
             "Blair Academy", "Peddie Academy"
         ],
@@ -27,7 +27,7 @@
         "video_id": 2,
         "video_title": "Blair vs Peddie Highlights",
         "video_quality": 0.9,
-        "video_thumb": "http://localhost/images/video_thumb.png",
+        "video_thumb": "images/video_thumb.png",
         "teams": [                
             "Blair Academy", "Peddie Academy"
         ],
@@ -48,7 +48,7 @@
         "video_id": 3,
         "video_title": "Blair vs Peddie Highlights",
         "video_quality": 0.9,
-        "video_thumb": "http://localhost/images/video_thumb.png",
+        "video_thumb": "images/video_thumb.png",
         "teams": [                
             "Blair Academy", "Peddie Academy"
         ],

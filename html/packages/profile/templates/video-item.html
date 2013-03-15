@@ -2,7 +2,7 @@
 {{#payload}}
 <div class="row-fluid">
     <div class="span6">
-        <img src="{{video_thumb}}" alt="{{video_title}}"/>
+        <img src="{{base_url}}{{video_thumb}}" alt="{{video_title}}"/>
     </div>
     <div class="span6">
         {{video_title}}<br/>
@@ -22,7 +22,7 @@
         {{#tags_count}}
             {{tags_count}} Tagged<br/>
             {{#tags}}
-                <img src="{{.}}"/>
+                <img src="{{base_url}}{{.}}"/>
             {{/tags}}
         {{/tags_count}}
     </div>

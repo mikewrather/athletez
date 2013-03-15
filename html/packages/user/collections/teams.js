@@ -19,9 +19,9 @@ function(facade, collections, UserTeamModel, utils) {
         model: UserTeamModel,
         
         url: function() {
-            if (live)
-                return '/api/user/teams?user_id=' + this.id + '&sport_id=' + this.sport_id;
-            return '/test/user/teams/' + this.id + '/' + this.sport_id;
+            if (testpath)
+                return '/test/user/teams/' + this.id + '/' + this.sport_id;
+            return '/api/user/teams?user_id=' + this.id + '&sport_id=' + this.sport_id;            
         },
         
         // **Method:** `fetchSuccess` - resolve the deferred here in success

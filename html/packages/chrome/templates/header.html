@@ -3,7 +3,7 @@
     <div class="logo">
     {{#branding}}
     <a class="brand" href="/">
-        <img src="{{src}}" alt="{{alt}}" />
+        <img src="{{base_url}}{{src}}" alt="{{alt}}" />
     </a>
     {{/branding}}
     </div>
@@ -18,7 +18,7 @@
 
     <div class="account clearfix">
         {{#authorized}}
-            <div class="photo"><img src="{{user_photo}}" alt="{{user_name}}"/></div>
+            <div class="photo"><img src="{{base_url}}{{user_photo}}" alt="{{user_name}}"/></div>
             <div class="userlinks dropdown">
                 <a class="dropdown-toggle" data-toggle="dropdown" href="/">{{user_name}} <b class="caret"></b></a>
                 <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">

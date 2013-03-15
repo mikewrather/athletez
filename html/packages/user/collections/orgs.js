@@ -19,9 +19,9 @@ function(facade, collections, UserOrgModel, utils) {
         model: UserOrgModel,
         
         url: function() {
-            if (live)
-                return '/api/user/orgs?user_id=' + this.id;
-            return '/test/user/orgs/' + this.id;
+            if (testpath)
+                return '/test/user/orgs/' + this.id;
+            return '/api/user/orgs?user_id=' + this.id;            
         },
         
         // **Method:** `fetchSuccess` - resolve the deferred here in success

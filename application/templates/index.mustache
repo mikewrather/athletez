@@ -13,10 +13,10 @@
     <link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-ipad.png" />
     <link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-iphone4.png" />
     <link rel="stylesheet" href="css/normalize.css">
-    <script data-main="{{site_url}}main" src="{{site_url}}vendor/require.js"></script>
+    <script data-main="{{base_url}}main" src="{{base_url}}vendor/require.js"></script>
     <script>
         var base_url = '{{base_url}}';
-        var live = {{#live}}true{{/live}}{{^live}}false{{/live}};
+        var testpath = '{{testpath}}';
         require(['facade', 'application', 'utils'], function (facade, App, utils) {
             var $ = facade.$,
                 Backbone = facade.Backbone,

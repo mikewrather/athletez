@@ -19,9 +19,9 @@ function(facade, collections, UserCommentModel, utils) {
         model: UserCommentModel,
         
         url: function() {
-            if (live)
-                return '/api/user/commentsof?user_id=' + this.id;
-            return '/test/user/commentsof/' + this.id;
+            if (testpath)
+                return '/test/user/commentsof/' + this.id;
+            return '/api/user/commentsof?user_id=' + this.id;            
         },
         
         // **Method:** `fetchSuccess` - resolve the deferred here in success
