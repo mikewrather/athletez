@@ -29,5 +29,13 @@ class Model_User_Resume_Data_Vals extends ORM
 	{
 		parent::__construct($id);
 	}
-
+	
+	public function getBasics()
+	{
+		return array(
+			"user" => $this->user->getBasics(),
+			"resdata" => $this->resdata->getBasics(),
+			"user_value" => $this->user_value,
+		);
+	}
 }

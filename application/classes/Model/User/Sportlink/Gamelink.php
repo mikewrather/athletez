@@ -31,5 +31,12 @@ class Model_User_Sportlink_Gamelink extends ORM
 	{
 		parent::__construct($id);
 	}
+	public function getBasics()
+	{
+		return array(
+			"usl" => $this->usl->getBasics(),
+			"game" => $this->game->getBasics(),	
+		);
+	}
 
 }

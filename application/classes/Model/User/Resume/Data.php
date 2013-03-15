@@ -32,5 +32,13 @@ class Model_User_Resume_Data extends ORM
 	{
 		parent::__construct($id);
 	}
-
+	
+	public function getBasics()
+	{
+		return array(
+			"datagroup" => $this->datagroup->getBasics(),
+			"name" => $this->name,
+			"resume_data_type" => $this->resume_data_type
+		);
+	}
 }

@@ -26,4 +26,11 @@ class Model_User_Teamslink extends ORM
 			'foreign_key' => 'users_teams_link_id'
 		)
 	);
+	public function getBasics()
+	{
+		return array(
+			"user" => $this->user->getBasics(),
+			"team" => $this->team->getBasics(),	
+		);
+	}
 }
