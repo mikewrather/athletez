@@ -50,5 +50,13 @@ class Model_User_Fitness_Dataval extends ORM
 	{
 		parent::__construct($id);
 	}
+	public function getBasics()
+	{
+		return array(
+			"fitnessdata" => $this->fitnessdata->getBasics(),
+			"user" => $this->user->getBasics(),
+			"user_value" => $this->user_value	
+		);
+	}
 
 }

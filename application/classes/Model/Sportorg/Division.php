@@ -27,4 +27,12 @@ class Model_Sportorg_Division extends ORM
 			'foreign_key' => 'divisions_id'
 		)
 	);
+	public function getBasics()
+	{
+		return array(
+			"state" => $this->state->getBasics(),			 
+			"name" => $this->name,			
+			"section_id" => $this->section_id
+		);
+	}
 }

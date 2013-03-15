@@ -32,4 +32,12 @@ class Model_Sportorg_Seasons_Base extends ORM
 
 	}
 
+	public function getBasics()
+	{
+		return array(
+			"seasonprofile" => $this->seasonprofile->getBasics(),			 
+			"name" => $this->name
+		);
+	}
+	
 }

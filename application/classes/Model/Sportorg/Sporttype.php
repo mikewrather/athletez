@@ -21,5 +21,11 @@ class Model_Sportorg_Sporttype extends ORM
 	{
 		parent::__construct($id);
 	}
-
+	
+	public function getBasics()
+	{
+		return array(
+			"name" => $this->name	
+		);
+	}
 }

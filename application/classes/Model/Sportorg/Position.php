@@ -27,5 +27,13 @@ class Model_Sportorg_Position extends ORM
 			'foreign_key' => 'positions_id'
 		)
 	);
+	public function getBasics()
+	{
+		return array(
+			"name" => $this->name,
+			"sport_id" => $this->sport_id,
+			"stattab" => $this->stattab->getBasics()
+		);
+	}
 
 }

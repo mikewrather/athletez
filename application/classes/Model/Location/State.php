@@ -33,6 +33,12 @@ class Model_Location_State extends ORM
 		)
 	);
 
-
+	public function getBasics()
+	{
+		return array(
+			"name" => $this->name,			 
+			"country" => $this->country->getBasics()
+		);
+	}
 
 }

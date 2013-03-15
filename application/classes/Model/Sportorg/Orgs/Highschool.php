@@ -39,5 +39,13 @@ class Model_Sportorg_Orgs_Highschool extends ORM
 		$org = $this->org;
 		return $org->getTeams();
 	}
+	public function getBasics()
+	{
+		return array(					 
+			"name" => $this->name,
+			"county" => $this->county->getBasics(),
+			"org" => $this->org->getBasics()
+		);
+	}
 
 }

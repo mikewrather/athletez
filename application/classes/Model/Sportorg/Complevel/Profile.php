@@ -41,4 +41,11 @@ class Model_Sportorg_Complevel_Profile extends ORM
 		parent::__construct();
 	}
 
+	public function getBasics()
+	{
+		return array(		
+		 
+			"name" => $this->name			
+		);
+	}
 }

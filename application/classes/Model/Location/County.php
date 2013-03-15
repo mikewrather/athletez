@@ -36,4 +36,11 @@ class Model_Location_County extends ORM
 		)
 	);
 
+	public function getBasics()
+	{
+		return array(
+			"state" => $this->state->getBasics(),
+			"name" => $this->name,
+		);
+	}
 }

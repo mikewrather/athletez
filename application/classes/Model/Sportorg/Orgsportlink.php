@@ -32,5 +32,11 @@ class Model_Sportorg_Orgsportlink extends ORM
 	{
 		parent::__construct($id);
 	}
-
+	public function getBasics()
+	{
+		return array(
+			"org" => $this->org->getBasics(),			 
+			"sport" => $this->sport->getBasics(),			
+		);
+	}
 }

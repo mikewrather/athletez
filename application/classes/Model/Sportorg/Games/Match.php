@@ -25,5 +25,12 @@ class Model_Sportorg_Games_Match extends ORM
 		),
 	);
 
+	public function getBasics()
+	{
+		return array(		
+		 
+			"game" => $this->game->getBasics()			
+		);
+	}
 
 }

@@ -41,4 +41,11 @@ class Model_Location_Country extends ORM
 		parent::__construct();
 	}
 
+	public function getBasics()
+	{
+		return array(
+			"name" => $this->name,
+			"states_id" => $this->states_id,
+		);
+	}
 }

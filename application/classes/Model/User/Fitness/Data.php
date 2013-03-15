@@ -35,4 +35,12 @@ class Model_User_Fitness_Data extends ORM
 		parent::__construct($id);
 	}
 
+	public function getBasics()
+	{
+		return array(			
+			"sport" => $this->sport->getBasics(),
+			"unit_type" => $this->unit_type,
+			"fitness_test" => $this->fitness_test	
+		);
+	}
 }

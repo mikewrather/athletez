@@ -23,4 +23,10 @@ class Model_Sportorg_Seasons_Profile extends ORM
 		)
 	);
 
+	public function getBasics()
+	{
+		return array(					 
+			"name" => $this->name
+		);
+	}
 }

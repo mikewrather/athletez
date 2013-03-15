@@ -24,4 +24,14 @@ class Model_Sportorg_Complevel_Base extends ORM
 			'foreign_key' => 'complevels_id'
 		),
 	);
+	public function getBasics()
+	{
+		return array(		
+		 
+			"complevelprofile" => $this->complevelprofile->getBasics(),
+			"name" => $this->name,
+			"min_age" => $this->min_age,		
+			"max_age" => $this->max_age
+		);
+	}
 }

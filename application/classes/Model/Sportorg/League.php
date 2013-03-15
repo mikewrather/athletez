@@ -25,4 +25,12 @@ class Model_Sportorg_League extends ORM
 		)
 	);
 
+	public function getBasics()
+	{
+		return array(
+			"section" => $this->section->getBasics(),			 
+			"name" => $this->name,			
+			"states_id" => $this->states_id
+		);
+	}
 }
