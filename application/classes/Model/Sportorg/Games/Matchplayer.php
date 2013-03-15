@@ -21,4 +21,13 @@ class Model_Sportorg_Games_Matchplayer extends ORM
 		)
 	);
 
+	public function getBasics()
+	{
+		return array(		
+			"points_awarded" => $this->points_awarded,			
+			"result_time" => $this->result_time,
+			"gamematch" => $this->team->getBasics(),
+			"user" => $this->user->gamematch()			
+		);
+	}
 }

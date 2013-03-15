@@ -41,4 +41,12 @@ class Model_Sportorg_Division extends ORM
 			'through' => 'org_gbs_link'
 		)
 	);
+	public function getBasics()
+	{
+		return array(
+			"state" => $this->state->getBasics(),			 
+			"name" => $this->name,			
+			"section_id" => $this->section_id
+		);
+	}
 }

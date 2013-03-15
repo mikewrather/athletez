@@ -33,5 +33,14 @@ class Model_Sportorg_Section extends ORM
 	{
 		parent::__construct($id);
 	}
+	
+	public function getBasics()
+	{
+		return array(
+			"name" => $this->name,
+			"sports" => $this->sport->getBasics(),
+			"states" => $this->state->getBasics()
+		);
+	}
 
 }

@@ -53,5 +53,16 @@ class Model_Sportorg_Team extends ORM
 	{
 		return $this->orggbslink->gbslink->sport;
 	}
-
+		
+	public function getBasics()
+	{
+		return array(
+			"orggbslink" => $this->orggbslink->getBasics(),			 
+			"complevel" => $this->complevel->getBasics(),
+			"season" => $this->season->getBasics(),
+			"year" => $this->year,
+			"mascot" => $this->mascot,
+			"unique_ident" => $this->unique_ident,
+		);
+	}
 }

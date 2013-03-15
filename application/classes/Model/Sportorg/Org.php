@@ -40,4 +40,15 @@ class Model_Sportorg_Org extends ORM
 		}
 		return $teams;
 	}
+	
+	public function getBasics()
+	{
+		return array(
+			"divisions" => $this->divisions->getBasics(),			 
+			"leagues" => $this->leagues->getBasics(),
+			"orgsports" => $this->orgsports->getBasics(),
+			"name" => $this->name,
+			"single_sport" => $this->single_sport						
+		);
+	}
 }
