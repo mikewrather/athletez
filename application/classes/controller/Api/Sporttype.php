@@ -16,7 +16,7 @@
 		{
 			parent::__construct($request,$response);
 
-			$this->setMainModel(ORM::factory('Sportorg_Type'));
+			$this->setMainModel(ORM::factory('Sportorg_Sporttype'));
 			$this->popMainModel();
 		}
 

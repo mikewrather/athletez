@@ -11,9 +11,9 @@ class Model_Sportorg_Team extends ORM
 	protected $_table_name = 'teams';
 
 	protected $_belongs_to = array(
-		'orggbslink' => array(
-			'model' => 'Sportorg_Orggbslink',
-			'foreign_key' => 'org_gbs_link_id'
+		'org_sport_link' => array(
+			'model' => 'Sportorg_Orgsportlink',
+			'foreign_key' => 'org_sport_link_id'
 		),
 		'complevel' => array(
 			'model' => 'Sportorg_Complevel_Base',
@@ -46,12 +46,12 @@ class Model_Sportorg_Team extends ORM
 
 	public function getOrg()
 	{
-		return $this->orggbslink->org;
+		return $this->orgsportlink->org;
 	}
 
 	public function getSport()
 	{
-		return $this->orggbslink->gbslink->sport;
+		return $this->orgsportlink->sport;
 	}
 
 }

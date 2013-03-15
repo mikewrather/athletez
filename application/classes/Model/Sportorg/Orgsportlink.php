@@ -5,10 +5,10 @@
  * Time: 10:51 PM
  */
 
-class Model_Sportorg_Orggbslink extends ORM
+class Model_Sportorg_Orgsportlink extends ORM
 {
 
-	protected $_table_name = 'org_gbs_link';
+	protected $_table_name = 'org_sport_link';
 
 	protected $_belongs_to = array(
 		'org' => array(

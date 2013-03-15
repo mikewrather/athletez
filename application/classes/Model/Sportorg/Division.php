@@ -14,31 +14,17 @@ class Model_Sportorg_Division extends ORM
 		'state' => array(
 			'model' => 'Location_State',
 			'foreign_key' => 'states_id'
+		),
+		'section' => array(
+			'model' => 'Sportorg_Section',
+			'foreign_key' => 'sections_id'
 		)
 	);
 	
 	protected $_has_many = array(
-		'orggbslink' => array(
-			'model' => 'Sportorg_Orggbslink',
-			'foreign_key' => 'divisions_id'
-		),
-		'leagues' => array(
-			'model' => 'Sportorg_League',
-			'foreign_key' => 'divisions_id',
-			'far_key' => 'leagues_id',
-			'through' => 'org_gbs_link'
-		),
 		'orgs' => array(
 			'model' => 'Sportorg_org',
-			'foreign_key' => 'divisions_id',
-			'far_key' => 'orgs_id',
-			'through' => 'org_gbs_link'
-		),
-		'gbslinks' => array(
-			'model' => 'Sportorg_Gbslink',
-			'foreign_key' => 'divisions_id',
-			'far_key' => 'gbs_link_id',
-			'through' => 'org_gbs_link'
+			'foreign_key' => 'divisions_id'
 		)
 	);
 }
