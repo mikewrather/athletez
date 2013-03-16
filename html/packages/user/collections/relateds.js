@@ -20,8 +20,8 @@ function(facade, collections, UserRelatedModel, utils) {
         
         url: function() {
             if (testpath)
-                return testpath + '/user/related/' + this.id;
-            return '/api/user/related?user_id=' + this.id;            
+                return testpath + '/user/relateds/' + this.id;
+            return base_url + '/api/user/relateds?user_id=' + this.id;
         },
         
         // **Method:** `fetchSuccess` - resolve the deferred here in success
@@ -29,14 +29,14 @@ function(facade, collections, UserRelatedModel, utils) {
             collection.reset();
             var payload = response.payload;
             for (i = 0; i < payload.length; i++) {
-                var userRelated = new UserRelatedModel();
-                userRelated.set('payload', payload[i]);
-                userRelated.set('desc', response.desc);
-                userRelated.set('exec_data', response.exec_data);
-                collection.push(userRelated);
+                var item = new UserRelatedModel();
+                item.id = Math.ceil(Math.random() * 100000);
+                item.set('payload', payload[i]);
+                item.set('desc', response.desc);
+                item.set('exec_data', response.exec_data);
+                collection.push(item);
             }
             collection.deferred.resolve(response);
-            debug.log(response);
         }
 
     });

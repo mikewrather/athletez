@@ -1,27 +1,27 @@
-// User Sports Data
+// SiteData CommentsOf Data
 // ----------
 
-// Package User
+// Package SiteData
 // Requires define
-// Returns {UserSportList} constructor
+// Returns {SitedataCommentsOfList} constructor
 
-define(['facade', 'collections', 'user/models/sport', 'utils'], 
-function(facade, collections, UserSportModel, utils) {
+define(['facade', 'collections', 'sitedata/models/commentof', 'utils'], 
+function(facade, collections, SitedataCommentOfModel, utils) {
 
-    var UserSportList,
+    var SitedataCommentOfList,
         BaseCollection = collections.BaseCollection,
         _ = facade._,
         Channel = utils.lib.Channel;
 
-    UserSportList = BaseCollection.extend({
+    SitedataCommentOfList = BaseCollection.extend({
 
         // Reference to this collection's model.
-        model: UserSportModel,
+        model: SitedataCommentOfModel,
         
         url: function() {
             if (testpath)
-                return testpath + '/user/sports/' + this.id;
-            return base_url + '/api/user/sports?user_id=' + this.id;
+                return testpath + '/user/commentsof/' + this.id;
+            return base_url + '/api/user/commentsof?user_id=' + this.id;
         },
         
         // **Method:** `fetchSuccess` - resolve the deferred here in success
@@ -29,17 +29,17 @@ function(facade, collections, UserSportModel, utils) {
             collection.reset();
             var payload = response.payload;
             for (i = 0; i < payload.length; i++) {
-                var item = new UserSportModel();
+                var item = new SitedataCommentOfModel();
                 item.id = Math.ceil(Math.random() * 100000);
                 item.set('payload', payload[i]);
                 item.set('desc', response.desc);
                 item.set('exec_data', response.exec_data);
                 collection.push(item);
             }
-            collection.deferred.resolve(response);
+            collection.deferred.resolve(response);            
         }
 
     });
 
-    return UserSportList;
+    return SitedataCommentOfList;
 });

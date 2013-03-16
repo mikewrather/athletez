@@ -1,27 +1,27 @@
-// User Sports Data
+// Media Images Data
 // ----------
 
-// Package User
+// Package Media
 // Requires define
-// Returns {UserSportList} constructor
+// Returns {MediaImageList} constructor
 
-define(['facade', 'collections', 'user/models/sport', 'utils'], 
-function(facade, collections, UserSportModel, utils) {
+define(['facade', 'collections', 'media/models/image', 'utils'], 
+function(facade, collections, MediaImageModel, utils) {
 
-    var UserSportList,
+    var MediaImageList,
         BaseCollection = collections.BaseCollection,
         _ = facade._,
         Channel = utils.lib.Channel;
 
-    UserSportList = BaseCollection.extend({
+    MediaImageList = BaseCollection.extend({
 
         // Reference to this collection's model.
-        model: UserSportModel,
+        model: MediaImageModel,
         
         url: function() {
             if (testpath)
-                return testpath + '/user/sports/' + this.id;
-            return base_url + '/api/user/sports?user_id=' + this.id;
+                return testpath + '/media/images/' + this.id;
+            return base_url + '/api/media/images?user_id=' + this.id;
         },
         
         // **Method:** `fetchSuccess` - resolve the deferred here in success
@@ -29,17 +29,17 @@ function(facade, collections, UserSportModel, utils) {
             collection.reset();
             var payload = response.payload;
             for (i = 0; i < payload.length; i++) {
-                var item = new UserSportModel();
+                var item = new MediaImageModel();
                 item.id = Math.ceil(Math.random() * 100000);
                 item.set('payload', payload[i]);
                 item.set('desc', response.desc);
                 item.set('exec_data', response.exec_data);
                 collection.push(item);
             }
-            collection.deferred.resolve(response);
+            collection.deferred.resolve(response);            
         }
 
     });
 
-    return UserSportList;
+    return MediaImageList;
 });

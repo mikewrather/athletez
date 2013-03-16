@@ -21,7 +21,7 @@ function(facade, collections, UserOrgModel, utils) {
         url: function() {
             if (testpath)
                 return testpath + '/user/orgs/' + this.id;
-            return '/api/user/orgs?user_id=' + this.id;            
+            return base_url + '/api/user/orgs?user_id=' + this.id;
         },
         
         // **Method:** `fetchSuccess` - resolve the deferred here in success
@@ -29,14 +29,14 @@ function(facade, collections, UserOrgModel, utils) {
             collection.reset();
             var payload = response.payload;
             for (i = 0; i < payload.length; i++) {
-                var userOrg = new UserOrgModel();
-                userOrg.set('payload', payload[i]);
-                userOrg.set('desc', response.desc);
-                userOrg.set('exec_data', response.exec_data);
-                collection.push(userOrg);
+                var item = new UserOrgModel();
+                item.id = Math.ceil(Math.random() * 100000);
+                item.set('payload', payload[i]);
+                item.set('desc', response.desc);
+                item.set('exec_data', response.exec_data);
+                collection.push(item);
             }
             collection.deferred.resolve(response);
-            debug.log(response);
         }
 
     });

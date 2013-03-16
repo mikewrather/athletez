@@ -20,8 +20,8 @@ function(facade, collections, UserFitnessBasicModel, utils) {
         
         url: function() {
             if (testpath)
-                return testpath + '/user/fitnessbasics/' + this.id;            
-            return '/api/user/fitnessbasics?user_id=' + this.id;                        
+                return testpath + '/user/fitnessbasics/' + this.id;
+            return base_url + '/api/user/fitnessbasics?user_id=' + this.id;
         },
         
         // **Method:** `fetchSuccess` - resolve the deferred here in success
@@ -29,14 +29,14 @@ function(facade, collections, UserFitnessBasicModel, utils) {
             collection.reset();
             var payload = response.payload;
             for (i = 0; i < payload.length; i++) {
-                var userFitnessBasic = new UserFitnessBasicModel();
-                userFitnessBasic.set('payload', payload[i]);
-                userFitnessBasic.set('desc', response.desc);
-                userFitnessBasic.set('exec_data', response.exec_data);
-                collection.push(userFitnessBasic);
+                var item = new UserFitnessBasicModel();
+                item.id = Math.ceil(Math.random() * 100000);
+                item.set('payload', payload[i]);
+                item.set('desc', response.desc);
+                item.set('exec_data', response.exec_data);
+                collection.push(item);
             }
             collection.deferred.resolve(response);
-            debug.log(response);
         }
 
     });

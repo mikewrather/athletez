@@ -21,7 +21,7 @@ function(facade, collections, UserTeamModel, utils) {
         url: function() {
             if (testpath)
                 return testpath + '/user/teams/' + this.id + '/' + this.sport_id;
-            return '/api/user/teams?user_id=' + this.id + '&sport_id=' + this.sport_id;            
+            return base_url + '/api/user/teams?user_id=' + this.id + '&sport_id=' + this.sport_id;            
         },
         
         // **Method:** `fetchSuccess` - resolve the deferred here in success
@@ -29,14 +29,14 @@ function(facade, collections, UserTeamModel, utils) {
             collection.reset();
             var payload = response.payload;
             for (i = 0; i < payload.length; i++) {
-                var userTeam = new UserTeamModel();
-                userTeam.set('payload', payload[i]);
-                userTeam.set('desc', response.desc);
-                userTeam.set('exec_data', response.exec_data);
-                collection.push(userTeam);
+                var item = new UserTeamModel();
+                item.id = Math.ceil(Math.random() * 100000);
+                item.set('payload', payload[i]);
+                item.set('desc', response.desc);
+                item.set('exec_data', response.exec_data);
+                collection.push(item);
             }
             collection.deferred.resolve(response);
-            debug.log(response);
         }
 
     });

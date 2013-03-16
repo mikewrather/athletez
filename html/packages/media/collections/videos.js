@@ -1,35 +1,35 @@
-// User Sports Data
+// Media Videos Data
 // ----------
 
-// Package User
+// Package Media
 // Requires define
-// Returns {UserSportList} constructor
+// Returns {MediaVideoList} constructor
 
-define(['facade', 'collections', 'user/models/sport', 'utils'], 
-function(facade, collections, UserSportModel, utils) {
+define(['facade', 'collections', 'media/models/video', 'utils'], 
+function(facade, collections, MediaVideoModel, utils) {
 
-    var UserSportList,
+    var MediaVideoList,
         BaseCollection = collections.BaseCollection,
         _ = facade._,
         Channel = utils.lib.Channel;
 
-    UserSportList = BaseCollection.extend({
+    MediaVideoList = BaseCollection.extend({
 
         // Reference to this collection's model.
-        model: UserSportModel,
+        model: MediaVideoModel,
         
         url: function() {
             if (testpath)
-                return testpath + '/user/sports/' + this.id;
-            return base_url + '/api/user/sports?user_id=' + this.id;
-        },
+                return testpath + '/media/videos/' + this.id;
+            return base_url + '/api/media/videos?user_id=' + this.id;
+        },        
         
         // **Method:** `fetchSuccess` - resolve the deferred here in success
         fetchSuccess: function (collection, response) {
             collection.reset();
             var payload = response.payload;
             for (i = 0; i < payload.length; i++) {
-                var item = new UserSportModel();
+                var item = new MediaVideoModel();
                 item.id = Math.ceil(Math.random() * 100000);
                 item.set('payload', payload[i]);
                 item.set('desc', response.desc);
@@ -41,5 +41,5 @@ function(facade, collections, UserSportModel, utils) {
 
     });
 
-    return UserSportList;
+    return MediaVideoList;
 });

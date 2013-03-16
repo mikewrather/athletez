@@ -31,7 +31,7 @@ define( ["facade", "models/base"], function (facade, BaseModel) {
         url: function() {
             if (testpath)
                 return testpath + '/user/basics/' + this.id;
-            return '/api/user/basics?user_id=' + this.id;
+            return base_url + '/api/user/basics?user_id=' + this.id;
         }
         
         

@@ -48,12 +48,16 @@ require.config({
         'controller'   : '/controller',
 
         // Packages
-
         'packages'     : '/packages',
-        'chrome'       : '/packages/chrome',
-        'profile'      : '/packages/profile',
-        
         'user'         : '/packages/user',
+        'media'        : '/packages/media',
+        'sitedata'     : '/packages/sitedata',
+        
+        // Pages
+
+        'pages'        : '/pages',
+        'chrome'       : '/pages/chrome',
+        'profile'      : '/pages/profile',
         
         // Application - bootstrap for frontend app 
         'application'  : '/application'
@@ -66,6 +70,9 @@ require.config({
         'backbone': {
             deps: ['underscore', 'jquery', 'json2', 'html5'],
             exports: 'Backbone'
+        },
+        'bootstrap': {
+            deps: ['jquery']
         }
     },
     priority: ['text', 'modernizr', 'json2', 'vendor', 'utils', 'facade', 'syncs', 'models', 'views', 'collections', 'controller'],
