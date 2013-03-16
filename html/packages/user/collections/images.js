@@ -20,7 +20,7 @@ function(facade, collections, UserImageModel, utils) {
         
         url: function() {
             if (testpath)
-                return '/test/user/images/' + this.id;
+                return testpath + '/user/images/' + this.id;
             return '/api/user/images?user_id=' + this.id;            
         },
         

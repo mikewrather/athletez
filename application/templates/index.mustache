@@ -5,7 +5,7 @@
 <!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
 <head>
     <meta charset="utf-8">
-	<title>{{title}}</title>
+    <title>{{title}}</title>
     <meta name="viewport" content="width=device-width">
     <meta name="description" content="Todos application built with Backbone.js and RequireJS using the Vertebrae framework by HauteLook">
     <link rel="shortcut icon" href="images/favicon.ico">
@@ -16,7 +16,7 @@
     <script data-main="{{base_url}}main" src="{{base_url}}vendor/require.js"></script>
     <script>
         var base_url = '{{base_url}}';
-        var testpath = '{{testpath}}';
+        var testpath = '{{base_url}}{{testpath}}';
         require(['facade', 'application', 'utils'], function (facade, App, utils) {
             var $ = facade.$,
                 Backbone = facade.Backbone,

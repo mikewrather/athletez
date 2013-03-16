@@ -20,7 +20,7 @@ function(facade, collections, UserVideoModel, utils) {
         
         url: function() {
             if (testpath)
-                return '/test/user/videos/' + this.id;
+                return testpath + '/user/videos/' + this.id;
             return '/api/user/videos?user_id=' + this.id;            
         },
         

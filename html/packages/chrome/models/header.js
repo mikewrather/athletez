@@ -36,7 +36,7 @@ define( ["models/base"], function (BaseModel) {
         
         url: function() {
             if (testpath)
-                return '/test/chrome/login_status';
+                return testpath + '/chrome/login_status';
             return '/api/chrome/login_status';            
         }
 

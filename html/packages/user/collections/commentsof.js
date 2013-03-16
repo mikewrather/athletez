@@ -20,7 +20,7 @@ function(facade, collections, UserCommentOfModel, utils) {
         
         url: function() {
             if (testpath)
-                return '/test/user/commentsof/' + this.id;
+                return testpath + '/user/commentsof/' + this.id;
             return '/api/user/commentsof?user_id=' + this.id;            
         },
         

@@ -20,7 +20,7 @@ function(facade, collections, UserOrgModel, utils) {
         
         url: function() {
             if (testpath)
-                return '/test/user/orgs/' + this.id;
+                return testpath + '/user/orgs/' + this.id;
             return '/api/user/orgs?user_id=' + this.id;            
         },
         
