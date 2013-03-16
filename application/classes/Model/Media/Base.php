@@ -32,4 +32,16 @@ class Model_Media_Base extends ORM
 		)
 	);
 
+	public function getBasics()
+	{
+		return array(
+			"id" => $this->id,
+			"name" => $this->name,
+			"media_type" => $this->media_type,
+			"subject_type_id" => $this->subject_type_id,
+			"subject_id" => $this->subject_id,
+			"sport" => $this->sport->getBasics(),
+			"user" => $this->user->getBasics(),
+		);
+	}
 }

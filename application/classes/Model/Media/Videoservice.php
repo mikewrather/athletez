@@ -21,4 +21,12 @@ class Model_Media_Videoservice extends ORM
 		)
 	);
 
+	public function getBasics()
+	{
+		return array(
+			"id" => $this->id,
+			"name" => $this->name,
+			"website" => $this->website	 
+		);
+	}
 }

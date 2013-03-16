@@ -17,5 +17,15 @@ class Model_Media_Videometa extends ORM
 		)
 	);
 
-
+	public function getBasics()
+	{
+		return array(
+			"id" => $this->id,
+			"name" => $this->name,
+			"vid_ver" => $this->vid_ver,
+			"vid_prop" => $this->vid_prop,
+			"vid_val" => $this->vid_val,
+			"video" => $this->video->getBasics()	 
+		);
+	}
 }

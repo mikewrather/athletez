@@ -25,5 +25,23 @@ class Model_Media_Queuedvidio extends ORM
 			'foreign_key' => 'users_id'
 		)
 	);
+	public function getBasics()
+	{
+		return array(
+			"id" => $this->id,			
+			"title" => $this->title,
+			"url" => $this->url,
+			"jobID" => $this->jobID,
+			"videos" => $this->video->getBasics(),
+			"video_services" => $this->videoservice->getBasics(),
+			"user" => $this->user->getBasics(),
+			"complete" => $this->complete,
+			"duration" => $this->duration,
+			"mm_id" => $this->mm_id,
+			"mm_encode" => $this->mm_encode,			
+			"user_sess" => $this->user_sess,
+			"sports_id" => $this->sports_id,			
+		);
+	}
 
 }

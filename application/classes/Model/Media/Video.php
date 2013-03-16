@@ -34,5 +34,14 @@ class Model_Media_Video extends ORM
 			'foreign_key' => 'videos_id'
 		),
 	);
+	
+	public function getBasics()
+	{
+		return array(
+			"id" => $this->id,			
+			"media" => $this->media->getBasics(),	 
+			"video_services" => $this->videoservice->getBasics(),
+		);
+	}
 
 }

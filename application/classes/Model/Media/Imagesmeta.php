@@ -15,4 +15,13 @@ class Model_Media_Imagesmeta extends ORM
 			'foreign_key' => 'images_id'
 		)
 	);
+	public function getBasics()
+	{
+		return array(
+			"id" => $this->id,
+			"media" => $this->media->getBasics(),			
+			"image_prop" => $this->image_prop,
+			"image_val" => $this->image_val
+		);
+	}
 }
