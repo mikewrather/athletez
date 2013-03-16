@@ -42,7 +42,7 @@ define(["facade", "models/base"], function (facade, BaseModel) {
         
         url: function() {
             if (testpath)
-                return '/test/user/primaryvideo/' + this.id;
+                return testpath + '/user/primaryvideo/' + this.id;
             return '/api/user/primaryvideo?user_id=' + this.id;
         }
     });

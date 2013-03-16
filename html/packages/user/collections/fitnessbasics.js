@@ -20,7 +20,7 @@ function(facade, collections, UserFitnessBasicModel, utils) {
         
         url: function() {
             if (testpath)
-                return '/test/user/fitnessbasics/' + this.id;            
+                return testpath + '/user/fitnessbasics/' + this.id;            
             return '/api/user/fitnessbasics?user_id=' + this.id;                        
         },
         

@@ -29,7 +29,7 @@ define(["facade", "models/base"], function (facade, BaseModel) {
         
         url: function() {
             if (testpath)
-                return '/test/user/commentonform/' + this.id;
+                return testpath + '/user/commentonform/' + this.id;
             return '/api/user/commentonform?user_id=' + this.id;
         }
         

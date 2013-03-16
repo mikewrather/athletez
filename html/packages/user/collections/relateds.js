@@ -20,7 +20,7 @@ function(facade, collections, UserRelatedModel, utils) {
         
         url: function() {
             if (testpath)
-                return '/test/user/related/' + this.id;
+                return testpath + '/user/related/' + this.id;
             return '/api/user/related?user_id=' + this.id;            
         },
         

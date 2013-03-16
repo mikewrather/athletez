@@ -20,7 +20,7 @@ function(facade, collections, UserTeamModel, utils) {
         
         url: function() {
             if (testpath)
-                return '/test/user/teams/' + this.id + '/' + this.sport_id;
+                return testpath + '/user/teams/' + this.id + '/' + this.sport_id;
             return '/api/user/teams?user_id=' + this.id + '&sport_id=' + this.sport_id;            
         },
         
