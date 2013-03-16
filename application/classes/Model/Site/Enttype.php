@@ -27,4 +27,14 @@ class Model_Site_Enttype extends ORM
 		return new $classname($objID);
 	}
 
+	public function getBasics()
+	{
+		return array(
+			"id" => $this->id,			
+			"api_name" => $this->api_name,
+			"class_name" => $this->class_name,
+			"db_table" => $this->db_table,
+			"description" => $this->description
+		);
+	}
 }

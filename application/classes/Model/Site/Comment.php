@@ -27,6 +27,12 @@ class Model_Site_Comment extends Model_Site_Entdir
 
 	public function getBasics()
 	{
-
+		return array(
+			"id" => $this->id,			
+			"poster" => $this->poster->getBasics(),
+			"enttype" => $this->enttype->getBasics(),
+			"subject_id" => $this->subject_id,	
+			"comment" => $this->comment,
+		);
 	}
 }

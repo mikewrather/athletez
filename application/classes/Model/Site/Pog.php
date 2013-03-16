@@ -31,4 +31,14 @@ class Model_Site_Pog extends ORM
 		parent::__construct($id);
 	}
 
+	public function getBasics()
+	{
+		return array(
+			"id" => $this->id,			
+			"timePosted" => $this->timePosted,
+			"player" => $this->player->getBasics(),
+			"voter" => $this->voter->getBasics(),
+			"game" => $this->game->getBasics(),
+		);
+	}
 }

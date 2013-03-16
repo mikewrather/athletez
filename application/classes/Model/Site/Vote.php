@@ -26,5 +26,14 @@ class Model_Site_Vote extends Model_Site_Entdir
 	{
 		parent::__construct($id);
 	}
-
+	
+	public function getBasics()
+	{
+		return array(
+			"id" => $this->id,
+			"subject_id" => $this->subject_id,
+			"voter" => $this->voter->getBasics(),
+			"enttype" => $this->enttype->getBasics(),	
+		);
+	}
 }

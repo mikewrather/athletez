@@ -26,4 +26,13 @@ class Model_Site_Tag extends Model_Site_Entdir
 		parent::__construct($id);
 	}
 
+	public function getBasics()
+	{
+		return array(
+			"id" => $this->id,			
+			"voter" => $this->voter->getBasics(),
+			"enttype" => $this->enttype->getBasics(),
+			"subject_id" => $this->subject_id,	
+		);
+	}
 }
