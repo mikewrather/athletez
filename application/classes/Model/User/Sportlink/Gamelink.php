@@ -34,8 +34,11 @@ class Model_User_Sportlink_Gamelink extends ORM
 	public function getBasics()
 	{
 		return array(
+			"id" => $this->id,
 			"usl" => $this->usl->getBasics(),
-			"game" => $this->game->getBasics(),	
+			"game" => $this->game->getBasics(),
+			"result_time" => $this->result_time,
+			"isWinner" => $this->isWinner,
 		);
 	}
 

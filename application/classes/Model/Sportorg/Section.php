@@ -27,6 +27,10 @@ class Model_Sportorg_Section extends ORM
 			'model' => 'Sportorg_League',
 			'foreign_key' => 'sections_id'
 		),
+		'divisions' => array(
+			'model' => 'Sportorg_Divisions',
+			'foreign_key' => 'sections_id'
+		),
 	);
 
 	public function __construct($id=NULL)
@@ -37,6 +41,7 @@ class Model_Sportorg_Section extends ORM
 	public function getBasics()
 	{
 		return array(
+			"id" => $this->id,
 			"name" => $this->name,
 			"sports" => $this->sport->getBasics(),
 			"states" => $this->state->getBasics()

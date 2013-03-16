@@ -22,13 +22,16 @@ class Model_User_Teamslink extends ORM
 
 	protected $_has_many = array(
 		'positions' => array(
-			'model' => 'User_Teamslink_Positionlink',
-			'foreign_key' => 'users_teams_link_id'
+			'model' => 'Sportorg_Position',
+			'through' => 'utl_position_link',
+			'foreign_key' => 'users_teams_link_id',
+			'far_key' => 'positions_id'
 		)
 	);
 	public function getBasics()
 	{
 		return array(
+			"id" => $this->id,
 			"user" => $this->user->getBasics(),
 			"team" => $this->team->getBasics(),	
 		);

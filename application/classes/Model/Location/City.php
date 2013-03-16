@@ -15,10 +15,6 @@ class Model_Location_City extends ORM
 		'county' => array(
 			'model' => 'Location_County',
 			'foreign_key' => 'counties_id'
-		),
-		'state' => array(
-			'model' => 'Location_State',
-			'foreign_key' => 'states_id'
 		)
 	);
 	public function __construct()
@@ -28,11 +24,10 @@ class Model_Location_City extends ORM
 	
 	public function getBasics()
 	{
-		return array(		
-		 
+		return array(
+			"id" => $this->id,
 			"name" => $this->name,
 			"county" => $this->county->getBasics(),
-			"state" => $this->state->getBasics(),
 		);
 	}
 }

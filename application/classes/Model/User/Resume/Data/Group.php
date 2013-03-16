@@ -35,6 +35,7 @@ class Model_User_Resume_Data_Group extends ORM
 	public function getBasics()
 	{
 		return array(
+			"id" => $this->id,
 			"name" => $this->name,
 			"description" => $this->description,
 		);

@@ -23,11 +23,13 @@ class Model_Sportorg_Games_Matchplayer extends ORM
 
 	public function getBasics()
 	{
-		return array(		
+		return array(
+			"id" => $this->id,
 			"points_awarded" => $this->points_awarded,			
 			"result_time" => $this->result_time,
 			"gamematch" => $this->team->getBasics(),
-			"user" => $this->user->gamematch()			
+			"user" => $this->user->gamematch(),
+			"match_winnder" => $this->match_winner
 		);
 	}
 }

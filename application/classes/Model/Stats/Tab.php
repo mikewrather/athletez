@@ -10,41 +10,40 @@ class Model_Stats_Tab extends ORM
 	
 	protected $_table_name = 'stattabs';
 	
-/*
+
 	protected $_belongs_to = array(
-		'[alias name]' => array(
-			'model' => '[model name]', 
-			'foreign_key' => '[column]'
+		'sport' => array(
+			'model' => 'Sportorg_Sport',
+			'foreign_key' => 'sports_id'
+		),
+		'sport2' => array(
+			'model' => 'Sportorg_Sport',
+			'foreign_key' => 'sports_id'
+		),
+		'stattab' => array(
+			'model' => 'Stats_Tab',
+			'foreign_key' => 'stattab_id'
 		)
 	);
 	
 	protected $_has_many = array(
-		'[alias name]' => array(
-			'model' => '[model name]', 
-			'foreign_key' => '[column]'
+		'stattabs' => array(
+			'model' => 'Stats_Tab',
+			'foreign_key' => 'stattab_id'
 		),
-		'[alias name]' => array(
-			'model' => '[model name]', 
-			'through' => '[model name of pivot table]'
+		'stats' => array(
+			'model' => 'Stats_Base',
+			'foreign_key' => 'stattabs_id'
 		)
 	);
-	
-	protected $_has_one = array(
-		'[alias name]' => array(
-			'model' => '[model name]', 
-			'foreign_key' => '[column]'
-		)
-	);
-*/
-	public function __construct()
-	{
-		parent::__construct();
-	}
+
+
 
 	public function getBasics()
 	{
 		return array(
-			"stattab_id" => $this->stattab_id,
+			"id" => $this->id,
+			"stattab_id" => $this->stattab->getBasics(),
 			"sport_id" => $this->sport_id,
 			"sport_id2" => $this->sport_id2,
 			"name" => $this->name,

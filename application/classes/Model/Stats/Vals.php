@@ -31,6 +31,10 @@ class Model_Stats_Vals extends ORM
 		'context' => array(
 			'model' => 'Stats_Context',
 			'foreign_key' => 'stat_contexts_id'
+		),
+		'stat' => array(
+			'model' => 'Stats_Base',
+			'foreign_key' => 'stats_id'
 		)
 	);
 
@@ -43,6 +47,8 @@ class Model_Stats_Vals extends ORM
 	public function getBasics()
 	{
 		return array(
+			"id" => $this->id,
+			"stat" => $this->stat->getBasics(),
 			"user" => $this->user->getBasics(),
 			"team" => $this->team->getBasics(),	
 			"game" => $this->game->getBasics(),

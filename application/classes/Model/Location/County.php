@@ -22,23 +22,15 @@ class Model_Location_County extends ORM
 		'cities' => array(
 			'model' => 'Location_City',
 			'foreign_key' => 'counties_id'
-		),
-		'[alias name]' => array(
-			'model' => '[model name]', 
-			'through' => '[model name of pivot table]'
 		)
 	);
 	
-	protected $_has_one = array(
-		'[alias name]' => array(
-			'model' => '[model name]', 
-			'foreign_key' => '[column]'
-		)
-	);
+
 
 	public function getBasics()
 	{
 		return array(
+			"id" => $this->id,
 			"state" => $this->state->getBasics(),
 			"name" => $this->name,
 		);

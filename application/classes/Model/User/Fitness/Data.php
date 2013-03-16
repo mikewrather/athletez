@@ -37,7 +37,8 @@ class Model_User_Fitness_Data extends ORM
 
 	public function getBasics()
 	{
-		return array(			
+		return array(
+			"id" => $this->id,
 			"sport" => $this->sport->getBasics(),
 			"unit_type" => $this->unit_type,
 			"fitness_test" => $this->fitness_test	

@@ -126,6 +126,21 @@ class Model_User_Base extends Model_Auth_User
 
 	public function getBasics()
 	{
+		return array(
+			"id" => $this->id,
+			"email" => $this->email,
+		//	"password" => $this->password,
+			"date_created" => $this->date_created,
+			"login_count" => $this->login_count,
+			"last_login" => $this->last_login,
+			"first_name" => $this->first_name,
+			"last_name" => $this->last_name,
+			"city" => $this->city->getBasics()
+		);
+
+		//This logic will be added later to return appropriate data for the user's permissions
+		/*
+
 		//stuff for public
 		$retArr["name"] = ucfirst($this->first_name.' '.$this->lastName());
 		$retArr['username'] = $this->username;
@@ -140,6 +155,7 @@ class Model_User_Base extends Model_Auth_User
 		//stuff for admin
 
 		return $retArr;
+	*/
 	}
 
 	public function getResumeData()

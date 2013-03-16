@@ -53,6 +53,7 @@ class Model_User_Fitness_Dataval extends ORM
 	public function getBasics()
 	{
 		return array(
+			"id" => $this->id,
 			"fitnessdata" => $this->fitnessdata->getBasics(),
 			"user" => $this->user->getBasics(),
 			"user_value" => $this->user_value	

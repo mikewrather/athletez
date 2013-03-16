@@ -9,7 +9,18 @@ class Model_Sportorg_Org extends ORM
 {
 
 	protected $_table_name = "orgs";
-	
+
+	protected $_belongs_to = array(
+		"complevel_profile" => array(
+			"model" => "Sportorg_Complevel_Profile",
+			"foreign_key" => "complevel_profiles_id"
+		),
+		"season_profile" => array(
+			"model" => "Sportorg_Season_Profile",
+			"foreign_key" => "season_profiles_id"
+		)
+	);
+
 	protected $_has_many = array(
 		'orgsports' => array(
 			'model' => 'Sportorg_Orgsportlink',
@@ -44,11 +55,14 @@ class Model_Sportorg_Org extends ORM
 	public function getBasics()
 	{
 		return array(
+			"id" => $this->id,
 			"divisions" => $this->divisions->getBasics(),			 
 			"leagues" => $this->leagues->getBasics(),
-			"orgsports" => $this->orgsports->getBasics(),
 			"name" => $this->name,
-			"single_sport" => $this->single_sport						
+			"single_sport" => $this->single_sport,
+			"location" => $this->location->getBasics(),
+			"season_profile" => $this->season_profile->getBascis(),
+			"complevel_profile" => $this->complevel_profile->getBascis(),
 		);
 	}
 }

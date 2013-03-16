@@ -12,20 +12,19 @@ class Model_Sportorg_Seasons_Profile extends ORM
 
 	protected $_has_many = array(
 		'seasons' => array(
-			'model' => '[model name]',
-			'through' => 'season_profile_linke',
+			'model' => 'Sportorg_Seasons',
 			'foreign_key' => 'season_profiles_id',
-			'far_key' => 'seasons_id'
 		),
-		'govbodies' => array(
-			'model' => 'Sportorg_Govbody',
+		'orgs' => array(
+			'model' => 'Sportorg_Orgs',
 			'foreign_key' => 'season_profiles_id'
 		)
 	);
 
 	public function getBasics()
 	{
-		return array(					 
+		return array(
+			"id" => $this->id,
 			"name" => $this->name
 		);
 	}

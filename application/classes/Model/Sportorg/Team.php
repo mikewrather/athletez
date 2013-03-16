@@ -57,7 +57,8 @@ class Model_Sportorg_Team extends ORM
 	public function getBasics()
 	{
 		return array(
-			"orggbslink" => $this->orggbslink->getBasics(),			 
+			"id" => $this->id,
+			"org_sport_link" => $this->org_sport_link->getBasics(),
 			"complevel" => $this->complevel->getBasics(),
 			"season" => $this->season->getBasics(),
 			"year" => $this->year,

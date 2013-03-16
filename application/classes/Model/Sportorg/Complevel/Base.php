@@ -26,8 +26,8 @@ class Model_Sportorg_Complevel_Base extends ORM
 	);
 	public function getBasics()
 	{
-		return array(		
-		 
+		return array(
+			"id" => $this->id,
 			"complevelprofile" => $this->complevelprofile->getBasics(),
 			"name" => $this->name,
 			"min_age" => $this->min_age,		

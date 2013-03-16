@@ -23,12 +23,11 @@ class Model_Sportorg_Games_Teamslink extends ORM
 
 	public function getBasics()
 	{
-		return array(					 
+		return array(
 			"points_scored" => $this->points_scored,
 			"points_against" => $this->points_against,
 			"isWinner" => $this->isWinner,
 			"is_home_team" => $this->is_home_team,
-			"tournaments_id" => $this->tournaments_id,
 			"team" => $this->team->getBasics(),
 			"game" => $this->game->getBasics()			
 		);

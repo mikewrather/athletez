@@ -41,6 +41,7 @@ class Model_Stats_Context extends ORM
 	public function getBasics()
 	{
 		return array(
+			"id" => $this->id,
 			"name" => $this->name,			
 		);
 	}

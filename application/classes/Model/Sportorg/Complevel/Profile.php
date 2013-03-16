@@ -10,42 +10,25 @@ class Model_Sportorg_Complevel_Profile extends ORM
 	
 	protected $_table_name = 'complevel_profiles';
 	
-/*
-	protected $_belongs_to = array(
-		'[alias name]' => array(
-			'model' => '[model name]', 
-			'foreign_key' => '[column]'
-		)
-	);
+
 	
 	protected $_has_many = array(
-		'[alias name]' => array(
-			'model' => '[model name]', 
-			'foreign_key' => '[column]'
+		'orgs' => array(
+			'model' => 'Sportorg_Org',
+			'foreign_key' => 'complevel_profiles_id'
 		),
-		'[alias name]' => array(
-			'model' => '[model name]', 
-			'through' => '[model name of pivot table]'
+		'complevels' => array(
+			'model' => 'Sportorg_Complevel_Base',
+			'foreign_key' => 'complevel_profiles_id'
 		)
 	);
-	
-	protected $_has_one = array(
-		'[alias name]' => array(
-			'model' => '[model name]', 
-			'foreign_key' => '[column]'
-		)
-	);
-*/
-	public function __construct()
-	{
-		parent::__construct();
-	}
 
 	public function getBasics()
 	{
-		return array(		
-		 
-			"name" => $this->name			
+		return array(
+			"id" => $this->id,
+			"name" => $this->name,
 		);
 	}
+
 }

@@ -51,8 +51,10 @@ class Model_Sportorg_Sport extends ORM
 	public function getBasics()
 	{
 		return array(
+			"id" => $this->id,
 			"name" => $this->name,
-			"gender" => $this->gender,
+			"male" => $this->male,
+			"female" => $this->female,
 			"sport_type" => $this->type->getBasics()
 		);
 	}

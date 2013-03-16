@@ -25,6 +25,7 @@ class Model_Sportorg_Sporttype extends ORM
 	public function getBasics()
 	{
 		return array(
+			"id" => $this->id,
 			"name" => $this->name	
 		);
 	}

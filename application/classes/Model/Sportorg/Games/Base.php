@@ -38,8 +38,8 @@ class Model_Sportorg_Games_Base extends ORM
 
 	public function getBasics()
 	{
-		return array(		
-		 
+		return array(
+			"id" => $this->id,
 			"location" => $this->location->getBasics(),
 			"gameDay" => $this->gameDay,
 			"gameTime" => $this->gameTime,						

@@ -13,14 +13,13 @@ class Model_Stats_Base extends ORM
 {
 	
 	protected $_table_name = 'stats';
-	
 
 	protected $_belongs_to = array(
 		'sport' => array(
 			'model' => 'Sportorg_Sport',
 			'foreign_key' => 'sports_id'
 		),
-		'secondsport' => array(
+		'sport2' => array(
 			'model' => 'Sportorg_Sport',
 			'foreign_key' => 'sports_id2'
 		),
@@ -45,9 +44,10 @@ class Model_Stats_Base extends ORM
 	public function getBasics()
 	{
 		return array(
+			"id" => $this->id,
 			"name" => $this->name,
-			"sport" => $this->sport->getBasics(),
-			"secondsport" => $this->sport->getBasics(),
+			"sports_id" => $this->sport->getBasics(),
+			"sports_id2" => $this->sport->getBasics(),
 			"stattab" => $this->stattab->getBasics(),
 			"description" => $this->description,
 			"datatype" => $this->datatype,

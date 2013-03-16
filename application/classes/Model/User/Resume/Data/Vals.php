@@ -19,7 +19,7 @@ class Model_User_Resume_Data_Vals extends ORM
 			'model' => 'User_Base',
 			'foreign_key' => 'users_id'
 		),
-		'resdata' => array(
+		'resume_data' => array(
 			'model' => 'User_Resume_Data',
 			'foreign_key' => 'resume_data_id'
 		)
@@ -33,8 +33,9 @@ class Model_User_Resume_Data_Vals extends ORM
 	public function getBasics()
 	{
 		return array(
+			"id" => $this->id,
 			"user" => $this->user->getBasics(),
-			"resdata" => $this->resdata->getBasics(),
+			"resume_data" => $this->resdata->getBasics(),
 			"user_value" => $this->user_value,
 		);
 	}

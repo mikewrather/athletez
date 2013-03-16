@@ -30,6 +30,7 @@ class Model_Sportorg_Division extends ORM
 	public function getBasics()
 	{
 		return array(
+			"id" => $this->id,
 			"state" => $this->state->getBasics(),			 
 			"name" => $this->name,			
 			"section_id" => $this->section_id

@@ -40,10 +40,13 @@ class Model_Location_Base extends ORM
 	public function getBasics()
 	{
 		return array(
+			"id" => $this->id,
 			"address" => $this->address,
-			"city" => $this->city->name,
-			"county" => $this->city->county->name,
-			"state" => $this->city->state->name
+			"city" => $this->city->getBasics(),
+			"lon" => $this->lon,
+			"lat" => $this->lat,
+			"location_type" => $this->location_type
+			// put point here
 		);
 	}
 
