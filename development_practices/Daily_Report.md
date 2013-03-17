@@ -1,8 +1,17 @@
 ## Daily Dev Report
 
-```This report should be copied and pasted into the Standup Report section of Assembla.  When you click on “StandUp” and then “Add / Edit your report”, 3 boxes will pop up.  Please paste this report in the box marked “What I did in the last day / week”.  The other 2 boxes do not need to be filled out.```
+```This report should be copied and pasted into the Standup Report section of Assembla.  
 
-```You need to fill this report out every day that you work on the project.  If you don’t work on the project, there is no need to submit a report. ```
+When you click on “StandUp” and then “Add / Edit your report”, 3 boxes will pop up.  
+
+Please paste this report in the box marked “What I did in the last day / week”.  
+
+The other 2 boxes do not need to be filled out.```
+
+```You need to fill this report out every day that you work on the project.  
+
+If you don’t work on the project, there is no need to submit a report. ```
+
 
 *-------------------------- Only Paste Content Below This Line ----------------------*
 
