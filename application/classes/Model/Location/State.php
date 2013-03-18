@@ -38,6 +38,7 @@ class Model_Location_State extends ORM
 		return array(
 			"id" => $this->id,
 			"name" => $this->name,			 
+			"countries_id" => $this->countries_id,
 			"country" => $this->country->getBasics()
 		);
 	}

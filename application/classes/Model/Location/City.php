@@ -27,6 +27,7 @@ class Model_Location_City extends ORM
 		return array(
 			"id" => $this->id,
 			"name" => $this->name,
+			"counties_id" => $this->counties_id,
 			"county" => $this->county->getBasics(),
 		);
 	}

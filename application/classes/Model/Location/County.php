@@ -33,6 +33,7 @@ class Model_Location_County extends ORM
 			"id" => $this->id,
 			"state" => $this->state->getBasics(),
 			"name" => $this->name,
+			"states_id" => $this->states_id,
 		);
 	}
 }

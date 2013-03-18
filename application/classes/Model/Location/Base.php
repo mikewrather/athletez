@@ -43,9 +43,11 @@ class Model_Location_Base extends ORM
 			"id" => $this->id,
 			"address" => $this->address,
 			"city" => $this->city->getBasics(),
+			"cities_id" => $this->cities_id,
 			"lon" => $this->lon,
 			"lat" => $this->lat,
-			"location_type" => $this->location_type
+			"location_type" => $this->location_type,
+			"loc_point" => $this->loc_point
 			// put point here
 		);
 	}
