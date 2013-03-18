@@ -3,7 +3,7 @@
 /**
  * Section API controller class
  *
- * Date: Mar 8th, 2013 2:57 am
+ * Date: Auto-generated on Mar 18th, 2013 2:21 am
  *
  * @author: Mike Wrather
  *
@@ -31,32 +31,26 @@
 
 		
 		/**
-		 * action_get_basics() Basic information about a Section
+		 * action_get_basics() Basic information  about a sport type
+		 * via /api/section/basics/{sport_types_id}
 		 *
 		 */
 		public function action_get_basics()
 		{
-			$this->payloadDesc = "Basic information about a Section";
+			$this->payloadDesc = "Basic information  about a sport type";
+
 		
 		}
 		
 		/**
-		 * action_get_leagues() Returns all leagues within a given section
+		 * action_get_sports() All sports of this type
+		 * via /api/section/sports/{sport_types_id}
 		 *
 		 */
-		public function action_get_leagues()
+		public function action_get_sports()
 		{
-			$this->payloadDesc = "Returns all leagues within a given section";
-		
-		}
-		
-		/**
-		 * action_get_divisions() Returns all divisions within a given section
-		 *
-		 */
-		public function action_get_divisions()
-		{
-			$this->payloadDesc = "Returns all divisions within a given section";
+			$this->payloadDesc = "All sports of this type";
+
 		
 		}
 		
@@ -64,5 +58,63 @@
 		###########################    POST METHODS    #############################
 		############################################################################
 
+		
+		############################################################################
+		############################    PUT METHODS    #############################
+		############################################################################
+
+		
+		/**
+		 * action_put_basics() Update basic information  about a sport type
+		 * via /api/section/basics/{sport_types_id}
+		 *
+		 */
+		public function action_put_basics()
+		{
+			$this->payloadDesc = "Update basic information  about a sport type";
+
+		     // CHECK FOR PARAMETERS:
+			// name 
+			// Update the name of the section
+				
+			if(trim($this->request->body('name')) != "")
+			{
+				$name = trim($this->request->body('name'));
+			}
+
+			// states_id 
+			// Change the state of this section
+				
+			if((int)trim($this->request->body('states_id')) > 0)
+			{
+				$states_id = (int)trim($this->request->body('states_id'));
+			}
+
+			// states_id 
+			// Change this section's state
+				
+			if((int)trim($this->request->body('states_id')) > 0)
+			{
+				$states_id = (int)trim($this->request->body('states_id'));
+			}
+
+		}
+		
+		############################################################################
+		###########################    DELETE METHODS    ###########################
+		############################################################################
+
+		
+		/**
+		 * action_delete_base() Delete  sport type
+		 * via /api/section/base/{sport_types_id}
+		 *
+		 */
+		public function action_delete_base()
+		{
+			$this->payloadDesc = "Delete  sport type";
+
+		
+		}
 		
 	}

@@ -3,7 +3,7 @@
 /**
  * Season API controller class
  *
- * Date: Auto-generated on Mar 15th, 2013 4:00 am
+ * Date: Auto-generated on Mar 18th, 2013 2:21 am
  *
  * @author: Mike Wrather
  *
@@ -39,61 +39,61 @@
 		{
 			$this->payloadDesc = "Gets all the teams for a given season narrowed by passed in parameters";
 
-		         // CHECK FOR PARAMETERS:
+		     // CHECK FOR PARAMETERS:
 			// complevels_id 
 			// Filter teams for a certain season to only show those for a specific competition level
 				
-			if((int)trim($this->request->post('complevels_id')) > 0)
+			if((int)trim($this->request->query('complevels_id')) > 0)
 			{
-				$complevels_id = (int)trim($this->request->post('complevels_id'));
+				$complevels_id = (int)trim($this->request->query('complevels_id'));
 			}
 
 			// orgs_id 
 			// Filter teams for a certain season to only show those for a specific organization
 				
-			if((int)trim($this->request->post('orgs_id')) > 0)
+			if((int)trim($this->request->query('orgs_id')) > 0)
 			{
-				$orgs_id = (int)trim($this->request->post('orgs_id'));
+				$orgs_id = (int)trim($this->request->query('orgs_id'));
 			}
 
 			// sports_id 
 			// Filter teams for a certain season to only show those for a specific sport
 				
-			if((int)trim($this->request->post('sports_id')) > 0)
+			if((int)trim($this->request->query('sports_id')) > 0)
 			{
-				$sports_id = (int)trim($this->request->post('sports_id'));
+				$sports_id = (int)trim($this->request->query('sports_id'));
 			}
 
 			// divisions_id 
 			// Filter teams for a certain season to only show those for a specific division
 				
-			if((int)trim($this->request->post('divisions_id')) > 0)
+			if((int)trim($this->request->query('divisions_id')) > 0)
 			{
-				$divisions_id = (int)trim($this->request->post('divisions_id'));
+				$divisions_id = (int)trim($this->request->query('divisions_id'));
 			}
 
 			// leagues_id 
 			// Filter teams for a certain season to only show those for a specific league
 				
-			if((int)trim($this->request->post('leagues_id')) > 0)
+			if((int)trim($this->request->query('leagues_id')) > 0)
 			{
-				$leagues_id = (int)trim($this->request->post('leagues_id'));
+				$leagues_id = (int)trim($this->request->query('leagues_id'));
 			}
 
 			// sections_id 
 			// Filter teams for a certain season to only show those for a specific section
 				
-			if((int)trim($this->request->post('sections_id')) > 0)
+			if((int)trim($this->request->query('sections_id')) > 0)
 			{
-				$sections_id = (int)trim($this->request->post('sections_id'));
+				$sections_id = (int)trim($this->request->query('sections_id'));
 			}
 
 			// states_id 
 			// Filter teams for a certain season to only show those for a specific state
 				
-			if((int)trim($this->request->post('states_id')) > 0)
+			if((int)trim($this->request->query('states_id')) > 0)
 			{
-				$states_id = (int)trim($this->request->post('states_id'));
+				$states_id = (int)trim($this->request->query('states_id'));
 			}
 
 		}
@@ -124,7 +124,7 @@
 		{
 			$this->payloadDesc = "Add a new season";
 
-		         // CHECK FOR PARAMETERS:
+		     // CHECK FOR PARAMETERS:
 			// name 
 			// Name of the season to add
 				
@@ -157,7 +157,7 @@
 		{
 			$this->payloadDesc = "Update the basic information about a season";
 
-		         // CHECK FOR PARAMETERS:
+		     // CHECK FOR PARAMETERS:
 			// name 
 			// Change the name of the Season
 				

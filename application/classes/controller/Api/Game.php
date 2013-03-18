@@ -3,7 +3,7 @@
 /**
  * Game API controller class
  *
- * Date: Auto-generated on Mar 15th, 2013 4:00 am
+ * Date: Auto-generated on Mar 18th, 2013 2:21 am
  *
  * @author: Mike Wrather
  *
@@ -116,7 +116,7 @@
 		{
 			$this->payloadDesc = "Add a new game";
 
-		         // CHECK FOR PARAMETERS:
+		     // CHECK FOR PARAMETERS:
 			// game_datetime 
 			// The date / time of the Game
 				
@@ -153,7 +153,7 @@
 		{
 			$this->payloadDesc = "Add a new team to this game";
 
-		         // CHECK FOR PARAMETERS:
+		     // CHECK FOR PARAMETERS:
 			// teams_id 
 			// ID of the team to add
 				
@@ -207,7 +207,7 @@
 		{
 			$this->payloadDesc = "Add a new match to this game";
 
-		         // CHECK FOR PARAMETERS:
+		     // CHECK FOR PARAMETERS:
 			// match_num 
 			// A number or unique identifier for the match (can be 1st, Last, or any string)
 				
@@ -227,7 +227,7 @@
 		{
 			$this->payloadDesc = "Post a new video for this game";
 
-		         // CHECK FOR PARAMETERS:
+		     // CHECK FOR PARAMETERS:
 			// name 
 			// Video Title
 				
@@ -247,7 +247,7 @@
 		{
 			$this->payloadDesc = "Post a new image for this game";
 
-		         // CHECK FOR PARAMETERS:
+		     // CHECK FOR PARAMETERS:
 			// name 
 			// Image Tiutle
 				
@@ -272,7 +272,7 @@
 		{
 			$this->payloadDesc = "Update Basic information about the game";
 
-		         // CHECK FOR PARAMETERS:
+		     // CHECK FOR PARAMETERS:
 			// game_datetime 
 			// Change the date / time this game takes place
 				

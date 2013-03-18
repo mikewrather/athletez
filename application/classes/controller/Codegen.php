@@ -96,7 +96,7 @@ class Controller_Codegen extends Controller
 		############################################################################
 
 		';
-		$filecontents .= $this->getHTTPVerbMethods($methods,'post');
+		$filecontents .= $this->getHTTPVerbMethods($methods,'get');
 
 		$methods = $ent->apimethods->where('api_method','=','POST')->find_all();
 		$filecontents.= '
@@ -177,9 +177,17 @@ class Controller_Codegen extends Controller
 		 */
 		public function '.strtolower($method->api_method).'_'.$method->shortname.'()
 		{
-			$retArr = array(
+			$retArr = array();
 
-			);
+			// Scaffolding Code For Array:
+			$objs = $this->obj->find_all();
+			foreach($objs as $obj)
+			{
+				$retArr[$obj->id] = $obj->getBasics();
+			}
+
+			// Scaffolding Code For Single:
+			$retArr = $this->obj->getBasics();
 
 			return $retArr;
 		}
@@ -233,13 +241,13 @@ class Controller_Codegen extends Controller
 		 */
 		public function action_'.strtolower($method->api_method).'_'.$method->shortname.'()
 		{
-			$this->payloadDesc = "'.$method->description.'";
+			$this->payloadDesc = "'.addslashes($method->description).'";
 
 		';
 
 			$params = $method->params->find_all();
 
-			if($params->count() > 0) $filecontents .= '         // CHECK FOR PARAMETERS:';
+			if($params->count() > 0) $filecontents .= '     // CHECK FOR PARAMETERS:';
 
 			foreach($params as $param)
 			{
@@ -317,7 +325,19 @@ class Controller_Codegen extends Controller
 				if($param->param_req){ $filecontents.= '
 			else // THIS WAS A REQUIRED PARAMETER
 			{
-				// RETURN AN ERROR FOR THIS REQUEST
+				// Create Array for Error Data
+				$error_array = array(
+					"error" => "Required Parameter Missing",
+					"param_name" => "'.$param->param_name.'",
+					"param_desc" => "'.$param->description.'"
+				);
+
+				// Set whether it is a fatal error
+				$is_fatal = true;
+
+				// Call method to throw an error
+				$this->addError($error_array,$is_fatal);
+
 			}
 			'; }
 

@@ -3,7 +3,7 @@
 /**
  * Video API controller class
  *
- * Date: Auto-generated on Mar 15th, 2013 4:00 am
+ * Date: Auto-generated on Mar 18th, 2013 2:21 am
  *
  * @author: Mike Wrather
  *
@@ -51,13 +51,13 @@
 		{
 			$this->payloadDesc = "Return all formats this video is available in";
 
-		         // CHECK FOR PARAMETERS:
+		     // CHECK FOR PARAMETERS:
 			// is_high_def 
 			// Show either high def or non-HD video types
 				
-			if((int)trim($this->request->post('is_high_def')) > 0)
+			if((int)trim($this->request->query('is_high_def')) > 0)
 			{
-				$is_high_def = (int)trim($this->request->post('is_high_def'));
+				$is_high_def = (int)trim($this->request->query('is_high_def'));
 			}
 
 		}
@@ -71,13 +71,13 @@
 		{
 			$this->payloadDesc = "Retrives all metadata for a certain video.";
 
-		         // CHECK FOR PARAMETERS:
+		     // CHECK FOR PARAMETERS:
 			// video_types_id 
 			// Get only video metadata for a specific video type
 				
-			if((int)trim($this->request->post('video_types_id')) > 0)
+			if((int)trim($this->request->query('video_types_id')) > 0)
 			{
-				$video_types_id = (int)trim($this->request->post('video_types_id'));
+				$video_types_id = (int)trim($this->request->query('video_types_id'));
 			}
 
 		}
@@ -96,7 +96,7 @@
 		{
 			$this->payloadDesc = "Post a new Video";
 
-		         // CHECK FOR PARAMETERS:
+		     // CHECK FOR PARAMETERS:
 			// name (REQUIRED)
 			// The name of the video clip
 				
@@ -107,7 +107,19 @@
 
 			else // THIS WAS A REQUIRED PARAMETER
 			{
-				// RETURN AN ERROR FOR THIS REQUEST
+				// Create Array for Error Data
+				$error_array = array(
+					"error" => "Required Parameter Missing",
+					"param_name" => "name",
+					"param_desc" => "The name of the video clip"
+				);
+
+				// Set whether it is a fatal error
+				$is_fatal = true;
+
+				// Call method to throw an error
+				$this->addError($error_array,$is_fatal);
+
 			}
 			
 			// sports_id 
@@ -142,7 +154,7 @@
 		{
 			$this->payloadDesc = "Update basic information about a video";
 
-		         // CHECK FOR PARAMETERS:
+		     // CHECK FOR PARAMETERS:
 			// video_services_id 
 			// Change the video service this video belongs to
 				

@@ -3,7 +3,7 @@
 /**
  * League API controller class
  *
- * Date: Auto-generated on Mar 15th, 2013 4:00 am
+ * Date: Auto-generated on Mar 18th, 2013 2:21 am
  *
  * @author: Mike Wrather
  *
@@ -68,7 +68,7 @@
 		{
 			$this->payloadDesc = "Add a new League";
 
-		         // CHECK FOR PARAMETERS:
+		     // CHECK FOR PARAMETERS:
 			// name (REQUIRED)
 			// Name of the League to add
 				
@@ -79,7 +79,19 @@
 
 			else // THIS WAS A REQUIRED PARAMETER
 			{
-				// RETURN AN ERROR FOR THIS REQUEST
+				// Create Array for Error Data
+				$error_array = array(
+					"error" => "Required Parameter Missing",
+					"param_name" => "name",
+					"param_desc" => "Name of the League to add"
+				);
+
+				// Set whether it is a fatal error
+				$is_fatal = true;
+
+				// Call method to throw an error
+				$this->addError($error_array,$is_fatal);
+
 			}
 			
 			// sections_id 
@@ -100,7 +112,19 @@
 
 			else // THIS WAS A REQUIRED PARAMETER
 			{
-				// RETURN AN ERROR FOR THIS REQUEST
+				// Create Array for Error Data
+				$error_array = array(
+					"error" => "Required Parameter Missing",
+					"param_name" => "states_id",
+					"param_desc" => "The ID of the state the League belongs to"
+				);
+
+				// Set whether it is a fatal error
+				$is_fatal = true;
+
+				// Call method to throw an error
+				$this->addError($error_array,$is_fatal);
+
 			}
 			
 		}
@@ -119,7 +143,7 @@
 		{
 			$this->payloadDesc = "Update basics on a League";
 
-		         // CHECK FOR PARAMETERS:
+		     // CHECK FOR PARAMETERS:
 			// name 
 			// Update the name of the league
 				

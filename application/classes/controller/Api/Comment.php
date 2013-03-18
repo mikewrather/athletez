@@ -3,7 +3,7 @@
 /**
  * Comment API controller class
  *
- * Date: Auto-generated on Mar 15th, 2013 4:00 am
+ * Date: Auto-generated on Mar 18th, 2013 2:21 am
  *
  * @author: Mike Wrather
  *
@@ -80,7 +80,7 @@
 		{
 			$this->payloadDesc = "Add a new comment";
 
-		         // CHECK FOR PARAMETERS:
+		     // CHECK FOR PARAMETERS:
 			// comment (REQUIRED)
 			// The text of the comment
 				
@@ -91,7 +91,19 @@
 
 			else // THIS WAS A REQUIRED PARAMETER
 			{
-				// RETURN AN ERROR FOR THIS REQUEST
+				// Create Array for Error Data
+				$error_array = array(
+					"error" => "Required Parameter Missing",
+					"param_name" => "comment",
+					"param_desc" => "The text of the comment"
+				);
+
+				// Set whether it is a fatal error
+				$is_fatal = true;
+
+				// Call method to throw an error
+				$this->addError($error_array,$is_fatal);
+
 			}
 			
 			// subject_type_id (REQUIRED)
@@ -104,7 +116,19 @@
 
 			else // THIS WAS A REQUIRED PARAMETER
 			{
-				// RETURN AN ERROR FOR THIS REQUEST
+				// Create Array for Error Data
+				$error_array = array(
+					"error" => "Required Parameter Missing",
+					"param_name" => "subject_type_id",
+					"param_desc" => "The ID of the subject type / entity type of the comment's subject (this is a row from the enttypes table) "
+				);
+
+				// Set whether it is a fatal error
+				$is_fatal = true;
+
+				// Call method to throw an error
+				$this->addError($error_array,$is_fatal);
+
 			}
 			
 			// subject_id (REQUIRED)
@@ -117,7 +141,19 @@
 
 			else // THIS WAS A REQUIRED PARAMETER
 			{
-				// RETURN AN ERROR FOR THIS REQUEST
+				// Create Array for Error Data
+				$error_array = array(
+					"error" => "Required Parameter Missing",
+					"param_name" => "subject_id",
+					"param_desc" => "This is the ID of the subject whos type is specified in the enttypes table"
+				);
+
+				// Set whether it is a fatal error
+				$is_fatal = true;
+
+				// Call method to throw an error
+				$this->addError($error_array,$is_fatal);
+
 			}
 			
 		}
@@ -136,7 +172,7 @@
 		{
 			$this->payloadDesc = "Update basic info on a specific comment";
 
-		         // CHECK FOR PARAMETERS:
+		     // CHECK FOR PARAMETERS:
 			// comment 
 			// Update the comment
 				

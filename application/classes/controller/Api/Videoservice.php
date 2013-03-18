@@ -3,7 +3,7 @@
 /**
  * Videoservice API controller class
  *
- * Date: Auto-generated on Mar 15th, 2013 4:00 am
+ * Date: Auto-generated on Mar 18th, 2013 2:21 am
  *
  * @author: Mike Wrather
  *
@@ -51,13 +51,13 @@
 		{
 			$this->payloadDesc = "Returns a list of videos produced by a video service";
 
-		         // CHECK FOR PARAMETERS:
+		     // CHECK FOR PARAMETERS:
 			// sports_id 
 			// Narrow video service video list to only those of a certain sport
 				
-			if((int)trim($this->request->post('sports_id')) > 0)
+			if((int)trim($this->request->query('sports_id')) > 0)
 			{
-				$sports_id = (int)trim($this->request->post('sports_id'));
+				$sports_id = (int)trim($this->request->query('sports_id'));
 			}
 
 		}
@@ -76,7 +76,7 @@
 		{
 			$this->payloadDesc = "Add a new video service";
 
-		         // CHECK FOR PARAMETERS:
+		     // CHECK FOR PARAMETERS:
 			// name (REQUIRED)
 			// Name of the video service
 				
@@ -87,7 +87,19 @@
 
 			else // THIS WAS A REQUIRED PARAMETER
 			{
-				// RETURN AN ERROR FOR THIS REQUEST
+				// Create Array for Error Data
+				$error_array = array(
+					"error" => "Required Parameter Missing",
+					"param_name" => "name",
+					"param_desc" => "Name of the video service"
+				);
+
+				// Set whether it is a fatal error
+				$is_fatal = true;
+
+				// Call method to throw an error
+				$this->addError($error_array,$is_fatal);
+
 			}
 			
 		}
@@ -106,7 +118,7 @@
 		{
 			$this->payloadDesc = "Basic info about a given video service.";
 
-		         // CHECK FOR PARAMETERS:
+		     // CHECK FOR PARAMETERS:
 			// name 
 			// Update the name of the Video Service
 				

@@ -3,7 +3,7 @@
 /**
  * City API controller class
  *
- * Date: Auto-generated on Mar 15th, 2013 4:00 am
+ * Date: Auto-generated on Mar 18th, 2013 2:21 am
  *
  * @author: Mike Wrather
  *
@@ -51,15 +51,34 @@
 		{
 			$this->payloadDesc = "All locations within a given city";
 
-		         // CHECK FOR PARAMETERS:
-			// loc_type 
+			$locations = ORM::factory('Location_Base')->where('cities_id','=',$this->myID);
+
+			// CHECK FOR PARAMETERS:
+			// loc_type (REQUIRED)
 			// Only return locations of a certain type within the given city
-				
-			if((int)trim($this->request->post('loc_type')) > 0)
+
+			if(trim($this->request->query('loc_type')) != "")
 			{
-				$loc_type = (int)trim($this->request->post('loc_type'));
+				$loc_type = trim($this->request->query('loc_type'));
+				$locations->where('location_type','=',$loc_type);
+			}
+			else // THIS WAS A REQUIRED PARAMETER
+			{
+				// Create Array for Error Data
+				$error_array = array(
+					"error" => "Required Parameter Missing",
+					"param_name" => "loc_type",
+					"param_desc" => "Only return locations of a certain type within the given city"
+				);
+
+				// Set whether it is a fatal error
+				$is_fatal = true;
+
+				// Call method to throw an error
+				$this->addError($error_array,$is_fatal);
 			}
 
+			return $locations;
 		}
 		
 		/**
@@ -83,47 +102,47 @@
 		{
 			$this->payloadDesc = "All games that take place within a city";
 
-		         // CHECK FOR PARAMETERS:
+		     // CHECK FOR PARAMETERS:
 			// games_before 
 			// Filter games associated with a given city to only show those before a given date
 				
-			if($this->request->post('games_before') != "")
+			if($this->request->query('games_before') != "")
 			{
 				// Format as date
-				$games_before = date("Y-m-d H:i:s",strtotime($this->request->post('games_before')));
+				$games_before = date("Y-m-d H:i:s",strtotime($this->request->query('games_before')));
 			}
 
 			// games_after 
 			// Filter games associated with a given city to only show those before a given date
 				
-			if($this->request->post('games_after') != "")
+			if($this->request->query('games_after') != "")
 			{
 				// Format as date
-				$games_after = date("Y-m-d H:i:s",strtotime($this->request->post('games_after')));
+				$games_after = date("Y-m-d H:i:s",strtotime($this->request->query('games_after')));
 			}
 
 			// sports_id 
 			// Filter games associated with a given city to only show those for a specific sport
 				
-			if((int)trim($this->request->post('sports_id')) > 0)
+			if((int)trim($this->request->query('sports_id')) > 0)
 			{
-				$sports_id = (int)trim($this->request->post('sports_id'));
+				$sports_id = (int)trim($this->request->query('sports_id'));
 			}
 
 			// complevels_id 
 			// Filter games associated with a given city to only show those of a specific competition level
 				
-			if((int)trim($this->request->post('complevels_id')) > 0)
+			if((int)trim($this->request->query('complevels_id')) > 0)
 			{
-				$complevels_id = (int)trim($this->request->post('complevels_id'));
+				$complevels_id = (int)trim($this->request->query('complevels_id'));
 			}
 
 			// teams_id 
 			// Filter games associated with a given city to only show those for a specific team
 				
-			if((int)trim($this->request->post('teams_id')) > 0)
+			if((int)trim($this->request->query('teams_id')) > 0)
 			{
-				$teams_id = (int)trim($this->request->post('teams_id'));
+				$teams_id = (int)trim($this->request->query('teams_id'));
 			}
 
 		}
@@ -142,7 +161,7 @@
 		{
 			$this->payloadDesc = "Add a new city";
 
-		         // CHECK FOR PARAMETERS:
+		     // CHECK FOR PARAMETERS:
 			// name (REQUIRED)
 			// Name of the city to add
 				
@@ -153,7 +172,19 @@
 
 			else // THIS WAS A REQUIRED PARAMETER
 			{
-				// RETURN AN ERROR FOR THIS REQUEST
+				// Create Array for Error Data
+				$error_array = array(
+					"error" => "Required Parameter Missing",
+					"param_name" => "name",
+					"param_desc" => "Name of the city to add"
+				);
+
+				// Set whether it is a fatal error
+				$is_fatal = true;
+
+				// Call method to throw an error
+				$this->addError($error_array,$is_fatal);
+
 			}
 			
 			// states_id 
@@ -174,7 +205,19 @@
 
 			else // THIS WAS A REQUIRED PARAMETER
 			{
-				// RETURN AN ERROR FOR THIS REQUEST
+				// Create Array for Error Data
+				$error_array = array(
+					"error" => "Required Parameter Missing",
+					"param_name" => "counties_id",
+					"param_desc" => "The county the city belongs to"
+				);
+
+				// Set whether it is a fatal error
+				$is_fatal = true;
+
+				// Call method to throw an error
+				$this->addError($error_array,$is_fatal);
+
 			}
 			
 		}

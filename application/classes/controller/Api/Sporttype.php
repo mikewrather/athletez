@@ -3,7 +3,7 @@
 /**
  * Sporttype API controller class
  *
- * Date: Auto-generated on Mar 15th, 2013 4:00 am
+ * Date: Auto-generated on Mar 18th, 2013 2:21 am
  *
  * @author: Mike Wrather
  *
@@ -16,7 +16,7 @@
 		{
 			parent::__construct($request,$response);
 
-			$this->setMainModel(ORM::factory('Sportorg_Sporttype'));
+			$this->setMainModel(ORM::factory('Sportorg_Type'));
 			$this->popMainModel();
 		}
 
@@ -61,7 +61,7 @@
 		{
 			$this->payloadDesc = "Update basic info on a Statistics Context";
 
-		         // CHECK FOR PARAMETERS:
+		     // CHECK FOR PARAMETERS:
 			// name 
 			// Change the name of the sport type
 				

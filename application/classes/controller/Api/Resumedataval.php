@@ -3,7 +3,7 @@
 /**
  * Resumedataval API controller class
  *
- * Date: Auto-generated on Mar 15th, 2013 4:00 am
+ * Date: Auto-generated on Mar 18th, 2013 2:21 am
  *
  * @author: Mike Wrather
  *
@@ -54,9 +54,9 @@
 		 */
 		public function action_post_add()
 		{
-			$this->payloadDesc = "Add a new Resume Data Value for a User's Resume";
+			$this->payloadDesc = "Add a new Resume Data Value for a User\'s Resume";
 
-		         // CHECK FOR PARAMETERS:
+		     // CHECK FOR PARAMETERS:
 			// resume_data_id (REQUIRED)
 			// The ID of the resume data you are adding
 				
@@ -67,7 +67,19 @@
 
 			else // THIS WAS A REQUIRED PARAMETER
 			{
-				// RETURN AN ERROR FOR THIS REQUEST
+				// Create Array for Error Data
+				$error_array = array(
+					"error" => "Required Parameter Missing",
+					"param_name" => "resume_data_id",
+					"param_desc" => "The ID of the resume data you are adding"
+				);
+
+				// Set whether it is a fatal error
+				$is_fatal = true;
+
+				// Call method to throw an error
+				$this->addError($error_array,$is_fatal);
+
 			}
 			
 			// user_value (REQUIRED)
@@ -80,7 +92,19 @@
 
 			else // THIS WAS A REQUIRED PARAMETER
 			{
-				// RETURN AN ERROR FOR THIS REQUEST
+				// Create Array for Error Data
+				$error_array = array(
+					"error" => "Required Parameter Missing",
+					"param_name" => "user_value",
+					"param_desc" => "The Value the user entered for this resume data"
+				);
+
+				// Set whether it is a fatal error
+				$is_fatal = true;
+
+				// Call method to throw an error
+				$this->addError($error_array,$is_fatal);
+
 			}
 			
 			// users_id 
@@ -107,7 +131,7 @@
 		{
 			$this->payloadDesc = "Update basic information about a given data value for resume data";
 
-		         // CHECK FOR PARAMETERS:
+		     // CHECK FOR PARAMETERS:
 			// user_value 
 			// Update the user's entered value for this peice of resume data
 				

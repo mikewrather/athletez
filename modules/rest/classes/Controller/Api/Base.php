@@ -23,7 +23,7 @@ class Controller_Api_Base extends Controller
 	 */
 	protected $starttime;
 
-	protected $execError = false;
+	protected $execErrors = NULL;
 
 	public function __construct(Request $request, Response $response)
 	{
@@ -104,9 +104,11 @@ class Controller_Api_Base extends Controller
 		//right now I'm keeping this here so that I can see the execution time on all subrequests
 		if($this->request->is_initial() or 1)
 		{
+			$req_error = sizeof($this->execErrors) > 0 ? true : false;
 			$this->response->body['exec_data'] = array(
 				"exec_time" => microtime() - $this->starttime,
-				"exec_error" => $this->execError
+				"exec_error" => $req_error,
+				"error_array" => $this->execErrors
 			);
 		}
 	}
@@ -136,13 +138,13 @@ class Controller_Api_Base extends Controller
 	}
 
 
- /**
- * function getDataFromView uses the controller and action called to generate the name of the class and method to call
- * and then returns the data that that function returns
- *
- * @param null $obj
- * @return array
- */
+	 /**
+	 * function getDataFromView uses the controller and action called to generate the name of the class and method to call
+	 * and then returns the data that that function returns
+	 *
+	 * @param null $obj
+	 * @return array
+	 */
 	protected function getDataFromView($obj=NULL)
 	{
 		if($obj==NULL && !isset($this->mainModel)){ return false; }
@@ -151,11 +153,24 @@ class Controller_Api_Base extends Controller
 			$obj = $this->mainModel;
 		}
 		$ext = $this->request->controller();
-		$method = strtolower($this->request->method())."_".$this->request->action();
 
 		$vc = Api_Viewclass::factory($ext,$obj);
+		$method = strtolower($this->request->method())."_".$this->request->action();
 
+		// Passes an parameters accessible to this request to the view class
 		if(sizeof($this->request->query()) > 0) $vc->setQueryParams($this->request->query());
+		if(sizeof($this->request->post()) > 0) $vc->setPostParams($this->request->post());
+		if(sizeof($this->request->body()) > 0) $vc->setPutParams($this->request->body());
+
 		return $vc->$method();
+	}
+
+	protected function addError($error_array,$is_fatal=FALSE)
+	{
+		$this->execErrors[] = $error_array;
+		if($is_fatal)
+		{
+			//TODO: Kill The request and return error data
+		}
 	}
 }

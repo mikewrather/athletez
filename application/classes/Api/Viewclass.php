@@ -16,6 +16,8 @@ class Api_Viewclass
 	protected $obj;
 
 	protected $queryParams;
+	protected $postParams;
+	protected $putParams;
 
 	static function factory($extention,$obj)
 	{
@@ -39,5 +41,15 @@ class Api_Viewclass
 	public function setQueryParams($paramsArr)
 	{
 		$this->queryParams = $paramsArr;
+	}
+
+	public function setPostParams($paramsArr)
+	{
+		$this->postParams = $paramsArr;
+	}
+
+	public function setPutParams($paramsArr)
+	{
+		$this->putParams = $paramsArr;
 	}
 }

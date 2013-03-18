@@ -3,7 +3,7 @@
 /**
  * Media API controller class
  *
- * Date: Auto-generated on Mar 15th, 2013 4:00 am
+ * Date: Auto-generated on Mar 18th, 2013 2:21 am
  *
  * @author: Mike Wrather
  *
@@ -61,7 +61,7 @@
 		{
 			$this->payloadDesc = "Update basic information about some media";
 
-		         // CHECK FOR PARAMETERS:
+		     // CHECK FOR PARAMETERS:
 			// name 
 			// Change the name of Media
 				

@@ -3,7 +3,7 @@
 /**
  * Resumedata API controller class
  *
- * Date: Auto-generated on Mar 15th, 2013 4:00 am
+ * Date: Auto-generated on Mar 18th, 2013 2:21 am
  *
  * @author: Mike Wrather
  *
@@ -51,21 +51,21 @@
 		{
 			$this->payloadDesc = "Return a list of all resume data narrowed by supplied parameters";
 
-		         // CHECK FOR PARAMETERS:
+		     // CHECK FOR PARAMETERS:
 			// resume_data_groups_id 
 			// Filter resume data list to show only those entries for a certain data group
 				
-			if((int)trim($this->request->post('resume_data_groups_id')) > 0)
+			if((int)trim($this->request->query('resume_data_groups_id')) > 0)
 			{
-				$resume_data_groups_id = (int)trim($this->request->post('resume_data_groups_id'));
+				$resume_data_groups_id = (int)trim($this->request->query('resume_data_groups_id'));
 			}
 
 			// resume_data_profiles 
 			// Filter resume data list to show only those entries for a certain data profile
 				
-			if((int)trim($this->request->post('resume_data_profiles')) > 0)
+			if((int)trim($this->request->query('resume_data_profiles')) > 0)
 			{
-				$resume_data_profiles = (int)trim($this->request->post('resume_data_profiles'));
+				$resume_data_profiles = (int)trim($this->request->query('resume_data_profiles'));
 			}
 
 		}
@@ -96,7 +96,7 @@
 		{
 			$this->payloadDesc = "Add a new Resume Data Value for a given Resume Data field";
 
-		         // CHECK FOR PARAMETERS:
+		     // CHECK FOR PARAMETERS:
 			// users_id 
 			// The user this data is for
 				
@@ -129,7 +129,7 @@
 		{
 			$this->payloadDesc = "Update the basics about a given peice of resume data";
 
-		         // CHECK FOR PARAMETERS:
+		     // CHECK FOR PARAMETERS:
 			// name 
 			// Change the name of the Resume Data
 				

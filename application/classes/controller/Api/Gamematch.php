@@ -3,7 +3,7 @@
 /**
  * Gamematch API controller class
  *
- * Date: Auto-generated on Mar 15th, 2013 4:00 am
+ * Date: Auto-generated on Mar 18th, 2013 2:21 am
  *
  * @author: Mike Wrather
  *
@@ -51,13 +51,13 @@
 		{
 			$this->payloadDesc = "All players within a given match";
 
-		         // CHECK FOR PARAMETERS:
+		     // CHECK FOR PARAMETERS:
 			// positions_id 
 			// Filter players for a certain game match to only show those for a specific position
 				
-			if((int)trim($this->request->post('positions_id')) > 0)
+			if((int)trim($this->request->query('positions_id')) > 0)
 			{
-				$positions_id = (int)trim($this->request->post('positions_id'));
+				$positions_id = (int)trim($this->request->query('positions_id'));
 			}
 
 		}
@@ -76,7 +76,7 @@
 		{
 			$this->payloadDesc = "Add a new Game Match";
 
-		         // CHECK FOR PARAMETERS:
+		     // CHECK FOR PARAMETERS:
 			// games_id 
 			// ID of the game we're adding the match for
 				
@@ -104,7 +104,7 @@
 		{
 			$this->payloadDesc = "Add a new player to this match";
 
-		         // CHECK FOR PARAMETERS:
+		     // CHECK FOR PARAMETERS:
 			// users_id (REQUIRED)
 			// ID of the player to add
 				
@@ -115,7 +115,19 @@
 
 			else // THIS WAS A REQUIRED PARAMETER
 			{
-				// RETURN AN ERROR FOR THIS REQUEST
+				// Create Array for Error Data
+				$error_array = array(
+					"error" => "Required Parameter Missing",
+					"param_name" => "users_id",
+					"param_desc" => "ID of the player to add"
+				);
+
+				// Set whether it is a fatal error
+				$is_fatal = true;
+
+				// Call method to throw an error
+				$this->addError($error_array,$is_fatal);
+
 			}
 			
 			// points_awarded 
@@ -159,7 +171,7 @@
 		{
 			$this->payloadDesc = "Update Basic info for a game match";
 
-		         // CHECK FOR PARAMETERS:
+		     // CHECK FOR PARAMETERS:
 			// match_num 
 			// Change the Match Num for this match
 				

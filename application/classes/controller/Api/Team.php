@@ -3,7 +3,7 @@
 /**
  * Team API controller class
  *
- * Date: Auto-generated on Mar 15th, 2013 4:00 am
+ * Date: Auto-generated on Mar 18th, 2013 2:21 am
  *
  * @author: Mike Wrather
  *
@@ -51,31 +51,31 @@
 		{
 			$this->payloadDesc = "Get all games for a given team";
 
-		         // CHECK FOR PARAMETERS:
+		     // CHECK FOR PARAMETERS:
 			// games_before 
 			// Filter games associated with a given team to only show those before a given date
 				
-			if($this->request->post('games_before') != "")
+			if($this->request->query('games_before') != "")
 			{
 				// Format as date
-				$games_before = date("Y-m-d H:i:s",strtotime($this->request->post('games_before')));
+				$games_before = date("Y-m-d H:i:s",strtotime($this->request->query('games_before')));
 			}
 
 			// games_after 
 			// Filter games associated with a given team to only show those before a given date
 				
-			if($this->request->post('games_after') != "")
+			if($this->request->query('games_after') != "")
 			{
 				// Format as date
-				$games_after = date("Y-m-d H:i:s",strtotime($this->request->post('games_after')));
+				$games_after = date("Y-m-d H:i:s",strtotime($this->request->query('games_after')));
 			}
 
 			// is_winner 
 			// Filter games associated with a given team to only show those where the team either won or lost the game
 				
-			if((int)trim($this->request->post('is_winner')) > 0)
+			if((int)trim($this->request->query('is_winner')) > 0)
 			{
-				$is_winner = (int)trim($this->request->post('is_winner'));
+				$is_winner = (int)trim($this->request->query('is_winner'));
 			}
 
 		}
@@ -89,13 +89,13 @@
 		{
 			$this->payloadDesc = "Get the players for a given team";
 
-		         // CHECK FOR PARAMETERS:
+		     // CHECK FOR PARAMETERS:
 			// positions_id 
 			// Filter the roster of a given team to only show those players for a certain position
 				
-			if((int)trim($this->request->post('positions_id')) > 0)
+			if((int)trim($this->request->query('positions_id')) > 0)
 			{
-				$positions_id = (int)trim($this->request->post('positions_id'));
+				$positions_id = (int)trim($this->request->query('positions_id'));
 			}
 
 		}
@@ -114,7 +114,7 @@
 		{
 			$this->payloadDesc = "Add a new team";
 
-		         // CHECK FOR PARAMETERS:
+		     // CHECK FOR PARAMETERS:
 			// org_sport_link_id 
 			// ID of the linking row for Organization / Sport (Optional alternative to providing sport / org separately)
 				
@@ -188,9 +188,9 @@
 		 */
 		public function action_post_game()
 		{
-			$this->payloadDesc = "Add a new game to a team's schedule";
+			$this->payloadDesc = "Add a new game to a team\'s schedule";
 
-		         // CHECK FOR PARAMETERS:
+		     // CHECK FOR PARAMETERS:
 			// games_id 
 			// If this is provided, the system will assume the game already exists and simply create the linking row.  If not provided the game will be created.
 				
@@ -244,7 +244,7 @@
 		{
 			$this->payloadDesc = "Add a new player to the roster";
 
-		         // CHECK FOR PARAMETERS:
+		     // CHECK FOR PARAMETERS:
 			// users_id 
 			// Adds a Link between this user and this team
 				
@@ -269,7 +269,7 @@
 		{
 			$this->payloadDesc = "Update Basic info on a given team";
 
-		         // CHECK FOR PARAMETERS:
+		     // CHECK FOR PARAMETERS:
 			// complevels_id 
 			// Competition Level ID
 				
@@ -321,7 +321,7 @@
 		{
 			$this->payloadDesc = "Update the link between teams and games which contains score information";
 
-		         // CHECK FOR PARAMETERS:
+		     // CHECK FOR PARAMETERS:
 			// points_scored 
 			// Change the number of points scored for this team in this game
 				

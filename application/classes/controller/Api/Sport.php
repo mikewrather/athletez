@@ -3,7 +3,7 @@
 /**
  * Sport API controller class
  *
- * Date: Auto-generated on Mar 15th, 2013 4:00 am
+ * Date: Auto-generated on Mar 18th, 2013 2:21 am
  *
  * @author: Mike Wrather
  *
@@ -87,29 +87,29 @@
 		{
 			$this->payloadDesc = "Videos associated with a given sport";
 
-		         // CHECK FOR PARAMETERS:
+		     // CHECK FOR PARAMETERS:
 			// users_id 
 			// Filter videos associated with a sport to a certain user
 				
-			if((int)trim($this->request->post('users_id')) > 0)
+			if((int)trim($this->request->query('users_id')) > 0)
 			{
-				$users_id = (int)trim($this->request->post('users_id'));
+				$users_id = (int)trim($this->request->query('users_id'));
 			}
 
 			// seasons_id 
 			// Filter videos associated with a sport to a specific season
 				
-			if((int)trim($this->request->post('seasons_id')) > 0)
+			if((int)trim($this->request->query('seasons_id')) > 0)
 			{
-				$seasons_id = (int)trim($this->request->post('seasons_id'));
+				$seasons_id = (int)trim($this->request->query('seasons_id'));
 			}
 
 			// complevels_id 
 			// Filter videos associated with a sport to a specific competition level
 				
-			if((int)trim($this->request->post('complevels_id')) > 0)
+			if((int)trim($this->request->query('complevels_id')) > 0)
 			{
-				$complevels_id = (int)trim($this->request->post('complevels_id'));
+				$complevels_id = (int)trim($this->request->query('complevels_id'));
 			}
 
 		}
@@ -123,29 +123,29 @@
 		{
 			$this->payloadDesc = "Images associated with a given sport";
 
-		         // CHECK FOR PARAMETERS:
+		     // CHECK FOR PARAMETERS:
 			// users_id 
 			// Filter images associated with a sport to a certain user
 				
-			if((int)trim($this->request->post('users_id')) > 0)
+			if((int)trim($this->request->query('users_id')) > 0)
 			{
-				$users_id = (int)trim($this->request->post('users_id'));
+				$users_id = (int)trim($this->request->query('users_id'));
 			}
 
 			// seasons_id 
 			// Filter images associated with a sport to a specific season
 				
-			if((int)trim($this->request->post('seasons_id')) > 0)
+			if((int)trim($this->request->query('seasons_id')) > 0)
 			{
-				$seasons_id = (int)trim($this->request->post('seasons_id'));
+				$seasons_id = (int)trim($this->request->query('seasons_id'));
 			}
 
 			// complevels_id 
 			// Filter images associated with a sport to a specific competition level
 				
-			if((int)trim($this->request->post('complevels_id')) > 0)
+			if((int)trim($this->request->query('complevels_id')) > 0)
 			{
-				$complevels_id = (int)trim($this->request->post('complevels_id'));
+				$complevels_id = (int)trim($this->request->query('complevels_id'));
 			}
 
 		}
@@ -159,13 +159,13 @@
 		{
 			$this->payloadDesc = "Retrieves resume data related to the sport";
 
-		         // CHECK FOR PARAMETERS:
+		     // CHECK FOR PARAMETERS:
 			// users_id 
 			// Filter resume data associated with a given sport to a specific user
 				
-			if((int)trim($this->request->post('users_id')) > 0)
+			if((int)trim($this->request->query('users_id')) > 0)
 			{
-				$users_id = (int)trim($this->request->post('users_id'));
+				$users_id = (int)trim($this->request->query('users_id'));
 			}
 
 		}
@@ -203,45 +203,45 @@
 		{
 			$this->payloadDesc = "Gets all users for a given sport";
 
-		         // CHECK FOR PARAMETERS:
+		     // CHECK FOR PARAMETERS:
 			// orgs_id 
 			// Filter users associated with a given sport to a specific organization
 				
-			if((int)trim($this->request->post('orgs_id')) > 0)
+			if((int)trim($this->request->query('orgs_id')) > 0)
 			{
-				$orgs_id = (int)trim($this->request->post('orgs_id'));
+				$orgs_id = (int)trim($this->request->query('orgs_id'));
 			}
 
 			// teams_id 
 			// Filter users associated with a given sport to a specific team
 				
-			if((int)trim($this->request->post('teams_id')) > 0)
+			if((int)trim($this->request->query('teams_id')) > 0)
 			{
-				$teams_id = (int)trim($this->request->post('teams_id'));
+				$teams_id = (int)trim($this->request->query('teams_id'));
 			}
 
 			// seasons_id 
 			// Filter users associated with a given sport to a specific season
 				
-			if((int)trim($this->request->post('seasons_id')) > 0)
+			if((int)trim($this->request->query('seasons_id')) > 0)
 			{
-				$seasons_id = (int)trim($this->request->post('seasons_id'));
+				$seasons_id = (int)trim($this->request->query('seasons_id'));
 			}
 
 			// positions_id 
 			// Filter users associated with a given sport to a specific position
 				
-			if((int)trim($this->request->post('positions_id')) > 0)
+			if((int)trim($this->request->query('positions_id')) > 0)
 			{
-				$positions_id = (int)trim($this->request->post('positions_id'));
+				$positions_id = (int)trim($this->request->query('positions_id'));
 			}
 
 			// complevels_id 
 			// Filter users associated with a given sport to a specific competition level
 				
-			if((int)trim($this->request->post('complevels_id')) > 0)
+			if((int)trim($this->request->query('complevels_id')) > 0)
 			{
-				$complevels_id = (int)trim($this->request->post('complevels_id'));
+				$complevels_id = (int)trim($this->request->query('complevels_id'));
 			}
 
 		}
@@ -260,7 +260,7 @@
 		{
 			$this->payloadDesc = "Add a new Sport";
 
-		         // CHECK FOR PARAMETERS:
+		     // CHECK FOR PARAMETERS:
 			// name (REQUIRED)
 			// Name of the Sport to add
 				
@@ -271,7 +271,19 @@
 
 			else // THIS WAS A REQUIRED PARAMETER
 			{
-				// RETURN AN ERROR FOR THIS REQUEST
+				// Create Array for Error Data
+				$error_array = array(
+					"error" => "Required Parameter Missing",
+					"param_name" => "name",
+					"param_desc" => "Name of the Sport to add"
+				);
+
+				// Set whether it is a fatal error
+				$is_fatal = true;
+
+				// Call method to throw an error
+				$this->addError($error_array,$is_fatal);
+
 			}
 			
 			// male 
@@ -311,7 +323,7 @@
 		{
 			$this->payloadDesc = "Add a new position for a given sport";
 
-		         // CHECK FOR PARAMETERS:
+		     // CHECK FOR PARAMETERS:
 			// name 
 			// Name of the position to add
 				
@@ -344,7 +356,7 @@
 		{
 			$this->payloadDesc = "Update basic information about a sport";
 
-		         // CHECK FOR PARAMETERS:
+		     // CHECK FOR PARAMETERS:
 			// name 
 			// Update the name of this sport
 				
@@ -390,7 +402,7 @@
 		{
 			$this->payloadDesc = "Update the type of sport";
 
-		         // CHECK FOR PARAMETERS:
+		     // CHECK FOR PARAMETERS:
 			// sport_type_id 
 			// Change the sport type ID
 				

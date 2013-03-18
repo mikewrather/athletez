@@ -3,7 +3,7 @@
 /**
  * Section API View class
  *
- * Date: Mar 8th, 2013 2:57 am
+ * Date: Auto-generated on Mar 18th, 2013 2:33 am
  *
  * @author: Mike Wrather
  *
@@ -19,43 +19,89 @@
 
 	
 		/**
-		 * basics() Basic information about a Section
+		 * get_basics() Basic information  about a sport type
 		 *
 		 * @retun array
 		 */
-		public function basics()
+		public function get_basics()
 		{
-			$retArr = array(
+			$retArr = array();
 
-			);
+			// Scaffolding Code For Array:
+			$objs = $this->obj->find_all();
+			foreach($objs as $obj)
+			{
+				$retArr[$obj->id] = $obj->getBasics();
+			}
+
+			// Scaffolding Code For Single:
+			$retArr = $this->obj->getBasics();
 
 			return $retArr;
 		}
 		
 		/**
-		 * divisions() Returns all divisions within a given section
+		 * get_sports() All sports of this type
 		 *
 		 * @retun array
 		 */
-		public function divisions()
+		public function get_sports()
 		{
-			$retArr = array(
+			$retArr = array();
 
-			);
+			// Scaffolding Code For Array:
+			$objs = $this->obj->find_all();
+			foreach($objs as $obj)
+			{
+				$retArr[$obj->id] = $obj->getBasics();
+			}
+
+			// Scaffolding Code For Single:
+			$retArr = $this->obj->getBasics();
 
 			return $retArr;
 		}
 		
 		/**
-		 * leagues() Returns all leagues within a given section
+		 * put_basics() Update basic information  about a sport type
 		 *
 		 * @retun array
 		 */
-		public function leagues()
+		public function put_basics()
 		{
-			$retArr = array(
+			$retArr = array();
 
-			);
+			// Scaffolding Code For Array:
+			$objs = $this->obj->find_all();
+			foreach($objs as $obj)
+			{
+				$retArr[$obj->id] = $obj->getBasics();
+			}
+
+			// Scaffolding Code For Single:
+			$retArr = $this->obj->getBasics();
+
+			return $retArr;
+		}
+		
+		/**
+		 * delete_base() Delete  sport type
+		 *
+		 * @retun array
+		 */
+		public function delete_base()
+		{
+			$retArr = array();
+
+			// Scaffolding Code For Array:
+			$objs = $this->obj->find_all();
+			foreach($objs as $obj)
+			{
+				$retArr[$obj->id] = $obj->getBasics();
+			}
+
+			// Scaffolding Code For Single:
+			$retArr = $this->obj->getBasics();
 
 			return $retArr;
 		}

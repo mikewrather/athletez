@@ -3,7 +3,7 @@
 /**
  * Ent API View class
  *
- * Date: Auto-generated on Mar 15th, 2013 4:00 am
+ * Date: Auto-generated on Mar 18th, 2013 2:33 am
  *
  * @author: Mike Wrather
  *
@@ -25,9 +25,17 @@
 		 */
 		public function get_basics()
 		{
-			$retArr = array(
+			$retArr = array();
 
-			);
+			// Scaffolding Code For Array:
+			$objs = $this->obj->find_all();
+			foreach($objs as $obj)
+			{
+				$retArr[$obj->id] = $obj->getBasics();
+			}
+
+			// Scaffolding Code For Single:
+			$retArr = $this->obj->getBasics();
 
 			return $retArr;
 		}
@@ -39,9 +47,17 @@
 		 */
 		public function get_comments()
 		{
-			$retArr = array(
+			$retArr = array();
 
-			);
+			// Scaffolding Code For Array:
+			$objs = $this->obj->find_all();
+			foreach($objs as $obj)
+			{
+				$retArr[$obj->id] = $obj->getBasics();
+			}
+
+			// Scaffolding Code For Single:
+			$retArr = $this->obj->getBasics();
 
 			return $retArr;
 		}
@@ -53,9 +69,17 @@
 		 */
 		public function get_votes()
 		{
-			$retArr = array(
+			$retArr = array();
 
-			);
+			// Scaffolding Code For Array:
+			$objs = $this->obj->find_all();
+			foreach($objs as $obj)
+			{
+				$retArr[$obj->id] = $obj->getBasics();
+			}
+
+			// Scaffolding Code For Single:
+			$retArr = $this->obj->getBasics();
 
 			return $retArr;
 		}
@@ -67,9 +91,17 @@
 		 */
 		public function get_followers()
 		{
-			$retArr = array(
+			$retArr = array();
 
-			);
+			// Scaffolding Code For Array:
+			$objs = $this->obj->find_all();
+			foreach($objs as $obj)
+			{
+				$retArr[$obj->id] = $obj->getBasics();
+			}
+
+			// Scaffolding Code For Single:
+			$retArr = $this->obj->getBasics();
 
 			return $retArr;
 		}
@@ -81,9 +113,17 @@
 		 */
 		public function get_tags()
 		{
-			$retArr = array(
+			$retArr = array();
 
-			);
+			// Scaffolding Code For Array:
+			$objs = $this->obj->find_all();
+			foreach($objs as $obj)
+			{
+				$retArr[$obj->id] = $obj->getBasics();
+			}
+
+			// Scaffolding Code For Single:
+			$retArr = $this->obj->getBasics();
 
 			return $retArr;
 		}
@@ -95,9 +135,17 @@
 		 */
 		public function post_comment()
 		{
-			$retArr = array(
+			$retArr = array();
 
-			);
+			// Scaffolding Code For Array:
+			$objs = $this->obj->find_all();
+			foreach($objs as $obj)
+			{
+				$retArr[$obj->id] = $obj->getBasics();
+			}
+
+			// Scaffolding Code For Single:
+			$retArr = $this->obj->getBasics();
 
 			return $retArr;
 		}
@@ -109,9 +157,17 @@
 		 */
 		public function post_vote()
 		{
-			$retArr = array(
+			$retArr = array();
 
-			);
+			// Scaffolding Code For Array:
+			$objs = $this->obj->find_all();
+			foreach($objs as $obj)
+			{
+				$retArr[$obj->id] = $obj->getBasics();
+			}
+
+			// Scaffolding Code For Single:
+			$retArr = $this->obj->getBasics();
 
 			return $retArr;
 		}
@@ -123,9 +179,17 @@
 		 */
 		public function post_follow()
 		{
-			$retArr = array(
+			$retArr = array();
 
-			);
+			// Scaffolding Code For Array:
+			$objs = $this->obj->find_all();
+			foreach($objs as $obj)
+			{
+				$retArr[$obj->id] = $obj->getBasics();
+			}
+
+			// Scaffolding Code For Single:
+			$retArr = $this->obj->getBasics();
 
 			return $retArr;
 		}
@@ -137,9 +201,17 @@
 		 */
 		public function post_tag()
 		{
-			$retArr = array(
+			$retArr = array();
 
-			);
+			// Scaffolding Code For Array:
+			$objs = $this->obj->find_all();
+			foreach($objs as $obj)
+			{
+				$retArr[$obj->id] = $obj->getBasics();
+			}
+
+			// Scaffolding Code For Single:
+			$retArr = $this->obj->getBasics();
 
 			return $retArr;
 		}

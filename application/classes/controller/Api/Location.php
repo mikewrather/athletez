@@ -3,7 +3,7 @@
 /**
  * Location API controller class
  *
- * Date: Auto-generated on Mar 15th, 2013 4:00 am
+ * Date: Auto-generated on Mar 18th, 2013 2:21 am
  *
  * @author: Mike Wrather
  *
@@ -51,47 +51,47 @@
 		{
 			$this->payloadDesc = "Returns all games that have taken place at a certain location";
 
-		         // CHECK FOR PARAMETERS:
+		     // CHECK FOR PARAMETERS:
 			// games_before 
 			// Filter games associated with a given location to only show those before a given date
 				
-			if($this->request->post('games_before') != "")
+			if($this->request->query('games_before') != "")
 			{
 				// Format as date
-				$games_before = date("Y-m-d H:i:s",strtotime($this->request->post('games_before')));
+				$games_before = date("Y-m-d H:i:s",strtotime($this->request->query('games_before')));
 			}
 
 			// games_after 
 			// Filter games associated with a given location to only show those before a given date
 				
-			if($this->request->post('games_after') != "")
+			if($this->request->query('games_after') != "")
 			{
 				// Format as date
-				$games_after = date("Y-m-d H:i:s",strtotime($this->request->post('games_after')));
+				$games_after = date("Y-m-d H:i:s",strtotime($this->request->query('games_after')));
 			}
 
 			// sports_id 
 			// Filter games associated with a given location to only show those for a specific sport
 				
-			if((int)trim($this->request->post('sports_id')) > 0)
+			if((int)trim($this->request->query('sports_id')) > 0)
 			{
-				$sports_id = (int)trim($this->request->post('sports_id'));
+				$sports_id = (int)trim($this->request->query('sports_id'));
 			}
 
 			// complevels_id 
 			// Filter games associated with a given location to only show those of a specific competition level
 				
-			if((int)trim($this->request->post('complevels_id')) > 0)
+			if((int)trim($this->request->query('complevels_id')) > 0)
 			{
-				$complevels_id = (int)trim($this->request->post('complevels_id'));
+				$complevels_id = (int)trim($this->request->query('complevels_id'));
 			}
 
 			// teams_id 
 			// Filter games associated with a given location to only show those for a specific team
 				
-			if((int)trim($this->request->post('teams_id')) > 0)
+			if((int)trim($this->request->query('teams_id')) > 0)
 			{
-				$teams_id = (int)trim($this->request->post('teams_id'));
+				$teams_id = (int)trim($this->request->query('teams_id'));
 			}
 
 		}
@@ -110,7 +110,7 @@
 		{
 			$this->payloadDesc = "Add a new location";
 
-		         // CHECK FOR PARAMETERS:
+		     // CHECK FOR PARAMETERS:
 			// address 
 			// Street Address of the location
 				
@@ -175,7 +175,7 @@
 		{
 			$this->payloadDesc = "Updates basic info about this location";
 
-		         // CHECK FOR PARAMETERS:
+		     // CHECK FOR PARAMETERS:
 			// address 
 			// Change the address of this location
 				

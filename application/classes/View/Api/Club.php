@@ -3,7 +3,7 @@
 /**
  * Club API View class
  *
- * Date: Auto-generated on Mar 15th, 2013 4:00 am
+ * Date: Auto-generated on Mar 18th, 2013 2:33 am
  *
  * @author: Mike Wrather
  *

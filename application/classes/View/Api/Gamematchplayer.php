@@ -3,7 +3,7 @@
 /**
  * Gamematchplayer API View class
  *
- * Date: Auto-generated on Mar 15th, 2013 4:00 am
+ * Date: Auto-generated on Mar 18th, 2013 2:33 am
  *
  * @author: Mike Wrather
  *
@@ -25,9 +25,17 @@
 		 */
 		public function get_basics()
 		{
-			$retArr = array(
+			$retArr = array();
 
-			);
+			// Scaffolding Code For Array:
+			$objs = $this->obj->find_all();
+			foreach($objs as $obj)
+			{
+				$retArr[$obj->id] = $obj->getBasics();
+			}
+
+			// Scaffolding Code For Single:
+			$retArr = $this->obj->getBasics();
 
 			return $retArr;
 		}
@@ -39,9 +47,17 @@
 		 */
 		public function post_add()
 		{
-			$retArr = array(
+			$retArr = array();
 
-			);
+			// Scaffolding Code For Array:
+			$objs = $this->obj->find_all();
+			foreach($objs as $obj)
+			{
+				$retArr[$obj->id] = $obj->getBasics();
+			}
+
+			// Scaffolding Code For Single:
+			$retArr = $this->obj->getBasics();
 
 			return $retArr;
 		}
@@ -53,9 +69,17 @@
 		 */
 		public function put_basics()
 		{
-			$retArr = array(
+			$retArr = array();
 
-			);
+			// Scaffolding Code For Array:
+			$objs = $this->obj->find_all();
+			foreach($objs as $obj)
+			{
+				$retArr[$obj->id] = $obj->getBasics();
+			}
+
+			// Scaffolding Code For Single:
+			$retArr = $this->obj->getBasics();
 
 			return $retArr;
 		}

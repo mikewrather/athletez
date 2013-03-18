@@ -3,7 +3,7 @@
 /**
  * Gamematchplayer API controller class
  *
- * Date: Auto-generated on Mar 15th, 2013 4:00 am
+ * Date: Auto-generated on Mar 18th, 2013 2:21 am
  *
  * @author: Mike Wrather
  *
@@ -56,7 +56,7 @@
 		{
 			$this->payloadDesc = "Add a player to a Game Match";
 
-		         // CHECK FOR PARAMETERS:
+		     // CHECK FOR PARAMETERS:
 			// users_id 
 			// The ID of the player to add
 				
@@ -75,7 +75,19 @@
 
 			else // THIS WAS A REQUIRED PARAMETER
 			{
-				// RETURN AN ERROR FOR THIS REQUEST
+				// Create Array for Error Data
+				$error_array = array(
+					"error" => "Required Parameter Missing",
+					"param_name" => "game_matches_id",
+					"param_desc" => "The Game Match ID"
+				);
+
+				// Set whether it is a fatal error
+				$is_fatal = true;
+
+				// Call method to throw an error
+				$this->addError($error_array,$is_fatal);
+
 			}
 			
 			// points_awarded (REQUIRED)
@@ -88,7 +100,19 @@
 
 			else // THIS WAS A REQUIRED PARAMETER
 			{
-				// RETURN AN ERROR FOR THIS REQUEST
+				// Create Array for Error Data
+				$error_array = array(
+					"error" => "Required Parameter Missing",
+					"param_name" => "points_awarded",
+					"param_desc" => "Number of Points earned (if applicable)"
+				);
+
+				// Set whether it is a fatal error
+				$is_fatal = true;
+
+				// Call method to throw an error
+				$this->addError($error_array,$is_fatal);
+
 			}
 			
 			// match_won 
@@ -124,7 +148,7 @@
 		{
 			$this->payloadDesc = "Update basic information about a player in a match";
 
-		         // CHECK FOR PARAMETERS:
+		     // CHECK FOR PARAMETERS:
 			// points_awarded 
 			// Update the number of points awarded to this player during this match
 				

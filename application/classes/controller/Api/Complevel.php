@@ -3,7 +3,7 @@
 /**
  * Complevel API controller class
  *
- * Date: Auto-generated on Mar 15th, 2013 4:00 am
+ * Date: Auto-generated on Mar 18th, 2013 2:21 am
  *
  * @author: Mike Wrather
  *
@@ -51,61 +51,61 @@
 		{
 			$this->payloadDesc = "List of teams for a given complevel narrowed by additional criteria";
 
-		         // CHECK FOR PARAMETERS:
+		     // CHECK FOR PARAMETERS:
 			// seasons_id 
 			// Filter teams for a certain competition level to only show those for a specific season
 				
-			if((int)trim($this->request->post('seasons_id')) > 0)
+			if((int)trim($this->request->query('seasons_id')) > 0)
 			{
-				$seasons_id = (int)trim($this->request->post('seasons_id'));
+				$seasons_id = (int)trim($this->request->query('seasons_id'));
 			}
 
 			// orgs_id 
 			// Filter teams for a certain competition level to only show those for a specific organization
 				
-			if((int)trim($this->request->post('orgs_id')) > 0)
+			if((int)trim($this->request->query('orgs_id')) > 0)
 			{
-				$orgs_id = (int)trim($this->request->post('orgs_id'));
+				$orgs_id = (int)trim($this->request->query('orgs_id'));
 			}
 
 			// sports_id 
 			// Filter teams for a certain competition level to only show those for a specific sport
 				
-			if((int)trim($this->request->post('sports_id')) > 0)
+			if((int)trim($this->request->query('sports_id')) > 0)
 			{
-				$sports_id = (int)trim($this->request->post('sports_id'));
+				$sports_id = (int)trim($this->request->query('sports_id'));
 			}
 
 			// divisions_id 
 			// Filter teams for a certain competition level to only show those for a specific division
 				
-			if((int)trim($this->request->post('divisions_id')) > 0)
+			if((int)trim($this->request->query('divisions_id')) > 0)
 			{
-				$divisions_id = (int)trim($this->request->post('divisions_id'));
+				$divisions_id = (int)trim($this->request->query('divisions_id'));
 			}
 
 			// leagues_id 
 			// Filter teams for a certain competition level to only show those for a specific league
 				
-			if((int)trim($this->request->post('leagues_id')) > 0)
+			if((int)trim($this->request->query('leagues_id')) > 0)
 			{
-				$leagues_id = (int)trim($this->request->post('leagues_id'));
+				$leagues_id = (int)trim($this->request->query('leagues_id'));
 			}
 
 			// sections_id 
 			// Filter teams for a certain competition level to only show those for a specific section
 				
-			if((int)trim($this->request->post('sections_id')) > 0)
+			if((int)trim($this->request->query('sections_id')) > 0)
 			{
-				$sections_id = (int)trim($this->request->post('sections_id'));
+				$sections_id = (int)trim($this->request->query('sections_id'));
 			}
 
 			// states_id 
 			// Filter teams for a certain competition level to only show those for a specific state
 				
-			if((int)trim($this->request->post('states_id')) > 0)
+			if((int)trim($this->request->query('states_id')) > 0)
 			{
-				$states_id = (int)trim($this->request->post('states_id'));
+				$states_id = (int)trim($this->request->query('states_id'));
 			}
 
 		}
@@ -119,13 +119,13 @@
 		{
 			$this->payloadDesc = "List of competition levels narrowed by criteria";
 
-		         // CHECK FOR PARAMETERS:
+		     // CHECK FOR PARAMETERS:
 			// complevel_profiles_id 
 			// Narrow list of competition levels to those in a specific profile
 				
-			if((int)trim($this->request->post('complevel_profiles_id')) > 0)
+			if((int)trim($this->request->query('complevel_profiles_id')) > 0)
 			{
-				$complevel_profiles_id = (int)trim($this->request->post('complevel_profiles_id'));
+				$complevel_profiles_id = (int)trim($this->request->query('complevel_profiles_id'));
 			}
 
 		}
@@ -144,7 +144,7 @@
 		{
 			$this->payloadDesc = "Add a new Competition Level";
 
-		         // CHECK FOR PARAMETERS:
+		     // CHECK FOR PARAMETERS:
 			// name (REQUIRED)
 			// Name of the new Competition Level
 				
@@ -155,7 +155,19 @@
 
 			else // THIS WAS A REQUIRED PARAMETER
 			{
-				// RETURN AN ERROR FOR THIS REQUEST
+				// Create Array for Error Data
+				$error_array = array(
+					"error" => "Required Parameter Missing",
+					"param_name" => "name",
+					"param_desc" => "Name of the new Competition Level"
+				);
+
+				// Set whether it is a fatal error
+				$is_fatal = true;
+
+				// Call method to throw an error
+				$this->addError($error_array,$is_fatal);
+
 			}
 			
 			// complevel_profiles_id (REQUIRED)
@@ -168,7 +180,19 @@
 
 			else // THIS WAS A REQUIRED PARAMETER
 			{
-				// RETURN AN ERROR FOR THIS REQUEST
+				// Create Array for Error Data
+				$error_array = array(
+					"error" => "Required Parameter Missing",
+					"param_name" => "complevel_profiles_id",
+					"param_desc" => "The Competition Level Profile the Complevel belongs to"
+				);
+
+				// Set whether it is a fatal error
+				$is_fatal = true;
+
+				// Call method to throw an error
+				$this->addError($error_array,$is_fatal);
+
 			}
 			
 		}
@@ -187,7 +211,7 @@
 		{
 			$this->payloadDesc = "Update basic info on competion level";
 
-		         // CHECK FOR PARAMETERS:
+		     // CHECK FOR PARAMETERS:
 			// name 
 			// Change the name of the Competition Level
 				

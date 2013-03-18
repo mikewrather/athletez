@@ -3,7 +3,7 @@
 /**
  * Resumedataprofile API controller class
  *
- * Date: Auto-generated on Mar 15th, 2013 4:00 am
+ * Date: Auto-generated on Mar 18th, 2013 2:21 am
  *
  * @author: Mike Wrather
  *
@@ -80,7 +80,7 @@
 		{
 			$this->payloadDesc = "Link this RDP to a Sport";
 
-		         // CHECK FOR PARAMETERS:
+		     // CHECK FOR PARAMETERS:
 			// sports_id (REQUIRED)
 			// The sport to link the Resume Data Profile to
 				
@@ -91,7 +91,19 @@
 
 			else // THIS WAS A REQUIRED PARAMETER
 			{
-				// RETURN AN ERROR FOR THIS REQUEST
+				// Create Array for Error Data
+				$error_array = array(
+					"error" => "Required Parameter Missing",
+					"param_name" => "sports_id",
+					"param_desc" => "The sport to link the Resume Data Profile to"
+				);
+
+				// Set whether it is a fatal error
+				$is_fatal = true;
+
+				// Call method to throw an error
+				$this->addError($error_array,$is_fatal);
+
 			}
 			
 		}
@@ -105,7 +117,7 @@
 		{
 			$this->payloadDesc = "Link to a Resume Data Group";
 
-		         // CHECK FOR PARAMETERS:
+		     // CHECK FOR PARAMETERS:
 			// resume_data_groups_id (REQUIRED)
 			// The Resume Data Group to link to this Profile
 				
@@ -116,7 +128,19 @@
 
 			else // THIS WAS A REQUIRED PARAMETER
 			{
-				// RETURN AN ERROR FOR THIS REQUEST
+				// Create Array for Error Data
+				$error_array = array(
+					"error" => "Required Parameter Missing",
+					"param_name" => "resume_data_groups_id",
+					"param_desc" => "The Resume Data Group to link to this Profile"
+				);
+
+				// Set whether it is a fatal error
+				$is_fatal = true;
+
+				// Call method to throw an error
+				$this->addError($error_array,$is_fatal);
+
 			}
 			
 		}
@@ -130,7 +154,7 @@
 		{
 			$this->payloadDesc = "Add a new Resume Data Profile";
 
-		         // CHECK FOR PARAMETERS:
+		     // CHECK FOR PARAMETERS:
 			// name (REQUIRED)
 			// The name of the Resume Data Profile to add
 				
@@ -141,7 +165,19 @@
 
 			else // THIS WAS A REQUIRED PARAMETER
 			{
-				// RETURN AN ERROR FOR THIS REQUEST
+				// Create Array for Error Data
+				$error_array = array(
+					"error" => "Required Parameter Missing",
+					"param_name" => "name",
+					"param_desc" => "The name of the Resume Data Profile to add"
+				);
+
+				// Set whether it is a fatal error
+				$is_fatal = true;
+
+				// Call method to throw an error
+				$this->addError($error_array,$is_fatal);
+
 			}
 			
 			// sports (REQUIRED)
@@ -158,7 +194,19 @@
 
 			else // THIS WAS A REQUIRED PARAMETER
 			{
-				// RETURN AN ERROR FOR THIS REQUEST
+				// Create Array for Error Data
+				$error_array = array(
+					"error" => "Required Parameter Missing",
+					"param_name" => "sports",
+					"param_desc" => "An array of sports_id's in the form "sports" : [1,2,4,7]"
+				);
+
+				// Set whether it is a fatal error
+				$is_fatal = true;
+
+				// Call method to throw an error
+				$this->addError($error_array,$is_fatal);
+
 			}
 			
 		}
@@ -177,7 +225,7 @@
 		{
 			$this->payloadDesc = "Updates basic info for a given Resume Data Profile";
 
-		         // CHECK FOR PARAMETERS:
+		     // CHECK FOR PARAMETERS:
 			// name 
 			// Change the name of the Resume Data Group
 				

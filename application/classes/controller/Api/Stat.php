@@ -3,7 +3,7 @@
 /**
  * Stat API controller class
  *
- * Date: Auto-generated on Mar 15th, 2013 4:00 am
+ * Date: Auto-generated on Mar 18th, 2013 2:21 am
  *
  * @author: Mike Wrather
  *
@@ -51,21 +51,21 @@
 		{
 			$this->payloadDesc = "Lists all statistics (apply filters)";
 
-		         // CHECK FOR PARAMETERS:
+		     // CHECK FOR PARAMETERS:
 			// get_top 
 			// This will get the number of stats specified by the parameter
 				
-			if((int)trim($this->request->post('get_top')) > 0)
+			if((int)trim($this->request->query('get_top')) > 0)
 			{
-				$get_top = (int)trim($this->request->post('get_top'));
+				$get_top = (int)trim($this->request->query('get_top'));
 			}
 
 			// sports_id 
 			// Narrow to show the stats for a specific sport
 				
-			if((int)trim($this->request->post('sports_id')) > 0)
+			if((int)trim($this->request->query('sports_id')) > 0)
 			{
-				$sports_id = (int)trim($this->request->post('sports_id'));
+				$sports_id = (int)trim($this->request->query('sports_id'));
 			}
 
 		}
@@ -84,7 +84,7 @@
 		{
 			$this->payloadDesc = "Add a Stat value for a given statistic";
 
-		         // CHECK FOR PARAMETERS:
+		     // CHECK FOR PARAMETERS:
 			// users_id (REQUIRED)
 			// The ID of the user we are adding the value for
 				
@@ -95,7 +95,19 @@
 
 			else // THIS WAS A REQUIRED PARAMETER
 			{
-				// RETURN AN ERROR FOR THIS REQUEST
+				// Create Array for Error Data
+				$error_array = array(
+					"error" => "Required Parameter Missing",
+					"param_name" => "users_id",
+					"param_desc" => "The ID of the user we are adding the value for"
+				);
+
+				// Set whether it is a fatal error
+				$is_fatal = true;
+
+				// Call method to throw an error
+				$this->addError($error_array,$is_fatal);
+
 			}
 			
 			// teams_id 
@@ -155,7 +167,7 @@
 		{
 			$this->payloadDesc = "Update basic information for a given stat";
 
-		         // CHECK FOR PARAMETERS:
+		     // CHECK FOR PARAMETERS:
 			// name 
 			// Change the name of this Statistic
 				

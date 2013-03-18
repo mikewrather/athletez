@@ -3,7 +3,7 @@
 /**
  * Position API controller class
  *
- * Date: Auto-generated on Mar 15th, 2013 4:00 am
+ * Date: Auto-generated on Mar 18th, 2013 2:21 am
  *
  * @author: Mike Wrather
  *
@@ -39,21 +39,21 @@
 		{
 			$this->payloadDesc = "Lists available positions.";
 
-		         // CHECK FOR PARAMETERS:
+		     // CHECK FOR PARAMETERS:
 			// sports_id 
 			// Filter list of positions to a given sport.
 				
-			if((int)trim($this->request->post('sports_id')) > 0)
+			if((int)trim($this->request->query('sports_id')) > 0)
 			{
-				$sports_id = (int)trim($this->request->post('sports_id'));
+				$sports_id = (int)trim($this->request->query('sports_id'));
 			}
 
 			// users_id 
 			// Filter positions to a list of all positions for a given user
 				
-			if((int)trim($this->request->post('users_id')) > 0)
+			if((int)trim($this->request->query('users_id')) > 0)
 			{
-				$users_id = (int)trim($this->request->post('users_id'));
+				$users_id = (int)trim($this->request->query('users_id'));
 			}
 
 		}
@@ -67,21 +67,21 @@
 		{
 			$this->payloadDesc = "Retrives all players for a given position narrowed by other optional criteria";
 
-		         // CHECK FOR PARAMETERS:
+		     // CHECK FOR PARAMETERS:
 			// orgs_id 
 			// Filter the players for a given position to a specific organization
 				
-			if((int)trim($this->request->post('orgs_id')) > 0)
+			if((int)trim($this->request->query('orgs_id')) > 0)
 			{
-				$orgs_id = (int)trim($this->request->post('orgs_id'));
+				$orgs_id = (int)trim($this->request->query('orgs_id'));
 			}
 
 			// cities_id 
 			// Filter the players for a given position to players within a certain city
 				
-			if((int)trim($this->request->post('cities_id')) > 0)
+			if((int)trim($this->request->query('cities_id')) > 0)
 			{
-				$cities_id = (int)trim($this->request->post('cities_id'));
+				$cities_id = (int)trim($this->request->query('cities_id'));
 			}
 
 		}
@@ -119,21 +119,21 @@
 		{
 			$this->payloadDesc = "Gets images for players of a given position";
 
-		         // CHECK FOR PARAMETERS:
+		     // CHECK FOR PARAMETERS:
 			// orgs_id 
 			// Filter images to those for players who play a certain position within a specific organization.
 				
-			if((int)trim($this->request->post('orgs_id')) > 0)
+			if((int)trim($this->request->query('orgs_id')) > 0)
 			{
-				$orgs_id = (int)trim($this->request->post('orgs_id'));
+				$orgs_id = (int)trim($this->request->query('orgs_id'));
 			}
 
 			// cities_id 
 			// Filter images to players of a certain position within a certain city.
 				
-			if((int)trim($this->request->post('cities_id')) > 0)
+			if((int)trim($this->request->query('cities_id')) > 0)
 			{
-				$cities_id = (int)trim($this->request->post('cities_id'));
+				$cities_id = (int)trim($this->request->query('cities_id'));
 			}
 
 		}
@@ -147,21 +147,21 @@
 		{
 			$this->payloadDesc = "Gets videos for players of a given position";
 
-		         // CHECK FOR PARAMETERS:
+		     // CHECK FOR PARAMETERS:
 			// orgs_id 
 			// Filter videos to those for players who play a certain position within a specific organization.
 				
-			if((int)trim($this->request->post('orgs_id')) > 0)
+			if((int)trim($this->request->query('orgs_id')) > 0)
 			{
-				$orgs_id = (int)trim($this->request->post('orgs_id'));
+				$orgs_id = (int)trim($this->request->query('orgs_id'));
 			}
 
 			// cities_id 
 			// Filter videos to players of a certain position within a certain city.
 				
-			if((int)trim($this->request->post('cities_id')) > 0)
+			if((int)trim($this->request->query('cities_id')) > 0)
 			{
-				$cities_id = (int)trim($this->request->post('cities_id'));
+				$cities_id = (int)trim($this->request->query('cities_id'));
 			}
 
 		}
@@ -180,7 +180,7 @@
 		{
 			$this->payloadDesc = "Add a new position";
 
-		         // CHECK FOR PARAMETERS:
+		     // CHECK FOR PARAMETERS:
 			// name (REQUIRED)
 			// Name of the Posititon to be added
 				
@@ -191,7 +191,19 @@
 
 			else // THIS WAS A REQUIRED PARAMETER
 			{
-				// RETURN AN ERROR FOR THIS REQUEST
+				// Create Array for Error Data
+				$error_array = array(
+					"error" => "Required Parameter Missing",
+					"param_name" => "name",
+					"param_desc" => "Name of the Posititon to be added"
+				);
+
+				// Set whether it is a fatal error
+				$is_fatal = true;
+
+				// Call method to throw an error
+				$this->addError($error_array,$is_fatal);
+
 			}
 			
 			// sports_id 
@@ -226,7 +238,7 @@
 		{
 			$this->payloadDesc = "Update Basics properties of the position";
 
-		         // CHECK FOR PARAMETERS:
+		     // CHECK FOR PARAMETERS:
 			// name 
 			// Change the name of the Sports Position
 				
