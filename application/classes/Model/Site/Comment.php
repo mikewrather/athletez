@@ -11,7 +11,7 @@ class Model_Site_Comment extends Model_Site_Entdir
 	protected $_table_name = 'comments';
 
 	protected $_belongs_to = array(
-		'poster' => array(
+		'user' => array(
 			'model' => 'User_Base',
 			'foreign_key' => 'users_id'
 		),
@@ -27,11 +27,14 @@ class Model_Site_Comment extends Model_Site_Entdir
 
 	public function getBasics()
 	{
+		//This gets the subject of the vote.  It will be used to pull basic information
+		$subject = $this->getSubject();
+
 		return array(
-			"id" => $this->id,			
-			"poster" => $this->poster->getBasics(),
-			"enttype" => $this->enttype->getBasics(),
-			"subject_id" => $this->subject_id,	
+			"id" => $this->id,
+			"users_id" => $this->users_id,
+			"user" => $this->user->getBasics(),
+			"subject" => $subject->getBascis(),
 			"comment" => $this->comment,
 		);
 	}

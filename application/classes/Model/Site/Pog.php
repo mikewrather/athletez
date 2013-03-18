@@ -36,7 +36,9 @@ class Model_Site_Pog extends ORM
 		return array(
 			"id" => $this->id,			
 			"timePosted" => $this->timePosted,
+			"player_users_id" => $this->player_users_id,
 			"player" => $this->player->getBasics(),
+			"voter_user_id" => $this->voter_user_id,
 			"voter" => $this->voter->getBasics(),
 			"game" => $this->game->getBasics(),
 		);

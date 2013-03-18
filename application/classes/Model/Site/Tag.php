@@ -28,11 +28,14 @@ class Model_Site_Tag extends Model_Site_Entdir
 
 	public function getBasics()
 	{
+		//This gets the subject of the vote.  It will be used to pull basic information
+		$subject = $this->getSubject();
+
 		return array(
-			"id" => $this->id,			
+			"id" => $this->id,
+			"voter_users_id" => $this->voter_users_id,
 			"voter" => $this->voter->getBasics(),
-			"enttype" => $this->enttype->getBasics(),
-			"subject_id" => $this->subject_id,	
+			"subject" => $subject->getBasics(),
 		);
 	}
 }
