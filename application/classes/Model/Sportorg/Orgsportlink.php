@@ -36,6 +36,8 @@ class Model_Sportorg_Orgsportlink extends ORM
 	{
 		return array(
 			"id" => $this->id,
+			"orgs_id" => $this->orgs_id,
+			"sports_id" => $this->sports_id,
 			"org" => $this->org->getBasics(),			 
 			"sport" => $this->sport->getBasics(),			
 		);

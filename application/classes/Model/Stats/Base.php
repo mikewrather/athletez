@@ -46,8 +46,11 @@ class Model_Stats_Base extends ORM
 		return array(
 			"id" => $this->id,
 			"name" => $this->name,
-			"sports_id" => $this->sport->getBasics(),
-			"sports_id2" => $this->sport->getBasics(),
+			"sports_id" => $this->sports_id,
+			"sports_id2" => $this->sports_id2,
+			"stattabs_id" => $this->stattabs_id,
+			"sport" => $this->sport->getBasics(),
+			"sport2" => $this->sport2->getBasics(),
 			"stattab" => $this->stattab->getBasics(),
 			"description" => $this->description,
 			"datatype" => $this->datatype,

@@ -33,7 +33,9 @@ class Model_Sportorg_Position extends ORM
 			"id" => $this->id,
 			"name" => $this->name,
 			"sport_id" => $this->sport_id,
-			"stattab" => $this->stattab->getBasics()
+			"stattab_id" => $this->stattab_id,
+			"stattab" => $this->stattab->getBasics(),
+			"sport" => $this->sport->getBasics()
 		);
 	}
 

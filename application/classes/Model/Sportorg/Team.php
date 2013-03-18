@@ -59,8 +59,11 @@ class Model_Sportorg_Team extends ORM
 		return array(
 			"id" => $this->id,
 			"org_sport_link" => $this->org_sport_link->getBasics(),
+			"org_sport_link_id" => $this->org_sport_link_id,
 			"complevel" => $this->complevel->getBasics(),
+			"complevels_id" => $this->complevels_id,
 			"season" => $this->season->getBasics(),
+			"seasons_id" => $this->seasons_id,
 			"year" => $this->year,
 			"mascot" => $this->mascot,
 			"unique_ident" => $this->unique_ident,

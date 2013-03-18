@@ -55,6 +55,7 @@ class Model_Sportorg_Sport extends ORM
 			"name" => $this->name,
 			"male" => $this->male,
 			"female" => $this->female,
+			"sport_type_id" => $this->sport_type_id,
 			"sport_type" => $this->type->getBasics()
 		);
 	}

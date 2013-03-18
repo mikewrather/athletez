@@ -31,7 +31,8 @@ class Model_Sportorg_Complevel_Base extends ORM
 			"complevelprofile" => $this->complevelprofile->getBasics(),
 			"name" => $this->name,
 			"min_age" => $this->min_age,		
-			"max_age" => $this->max_age
+			"max_age" => $this->max_age,
+			"complevel_profiles_id" => $this->complevel_profiles_id
 		);
 	}
 }

@@ -42,10 +42,12 @@ class Model_Stats_Tab extends ORM
 	public function getBasics()
 	{
 		return array(
-			"id" => $this->id,
-			"stattab_id" => $this->stattab->getBasics(),
+			"id" => $this->id,			
+			"stattab_id" => $this->stattab_id,
 			"sport_id" => $this->sport_id,
 			"sport_id2" => $this->sport_id2,
+			"sport" => $this->sport->getBasics(),
+			"sport2" => $this->sport2->getBasics(),
 			"name" => $this->name,
 			"classname" => $this->classname,
 			"is_root" => $this->is_root,

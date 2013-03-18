@@ -29,6 +29,7 @@ class Model_Sportorg_Games_Match extends ORM
 	{
 		return array(
 			"id" => $this->id,
+			"games_id" => $this->games_id,
 			"match_num" => $this->match_num,
 			"game" => $this->game->getBasics()			
 		);

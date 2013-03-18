@@ -27,6 +27,8 @@ class Model_Sportorg_Games_Teamslink extends ORM
 			"points_scored" => $this->points_scored,
 			"points_against" => $this->points_against,
 			"isWinner" => $this->isWinner,
+			"teams_id" => $this->teams_id,
+			"games_id" => $this->games_id,
 			"is_home_team" => $this->is_home_team,
 			"team" => $this->team->getBasics(),
 			"game" => $this->game->getBasics()			

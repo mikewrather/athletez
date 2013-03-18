@@ -15,7 +15,7 @@ class Model_Sportorg_Games_Matchplayer extends ORM
 			'model' => 'User',
 			'foreign_key' => 'users_id'
 		),
-		'gamematch' => array(
+		'game_matches' => array(
 			'model' => 'Sportorg_Game_Match',
 			'foreign_key' => 'game_matches_id'
 		)
@@ -25,10 +25,12 @@ class Model_Sportorg_Games_Matchplayer extends ORM
 	{
 		return array(
 			"id" => $this->id,
+			"users_id" => $this->users_id,
+			"game_matches_id" => $this->game_matches_id,
 			"points_awarded" => $this->points_awarded,			
 			"result_time" => $this->result_time,
-			"gamematch" => $this->team->getBasics(),
-			"user" => $this->user->gamematch(),
+			"game_matches" => $this->game_matches->getBasics(),
+			"user" => $this->user->getBasics(),
 			"match_winnder" => $this->match_winner
 		);
 	}

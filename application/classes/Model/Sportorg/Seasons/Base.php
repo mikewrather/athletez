@@ -37,7 +37,8 @@ class Model_Sportorg_Seasons_Base extends ORM
 		return array(
 			"id" => $this->id,
 			"seasonprofile" => $this->seasonprofile->getBasics(),			 
-			"name" => $this->name
+			"name" => $this->name,
+			"season_profiles_id" => $this->season_profiles_id,
 		);
 	}
 	

@@ -43,6 +43,8 @@ class Model_Sportorg_Section extends ORM
 		return array(
 			"id" => $this->id,
 			"name" => $this->name,
+			"sports_id" => $this->sports_id,
+			"states_id" => $this->states_id,
 			"sports" => $this->sport->getBasics(),
 			"states" => $this->state->getBasics()
 		);

@@ -56,12 +56,15 @@ class Model_Sportorg_Org extends ORM
 	{
 		return array(
 			"id" => $this->id,
-			"divisions" => $this->divisions->getBasics(),			 
-			"leagues" => $this->leagues->getBasics(),
+			"divisions_id" => $this->divisions_id,
+			"leagues_id" => $this->leagues_id,
+			"locations_id" => $this->locations_id,
+			"complevel_profiles_id" => $this->complevel_profiles_id,
 			"name" => $this->name,
+			"season_profiles_id" => $this->season_profiles_id,
 			"single_sport" => $this->single_sport,
-			"location" => $this->location->getBasics(),
-			"season_profile" => $this->season_profile->getBascis(),
+			
+			"season_profile" => $this->season_profile->getBascis(),			
 			"complevel_profile" => $this->complevel_profile->getBascis(),
 		);
 	}
