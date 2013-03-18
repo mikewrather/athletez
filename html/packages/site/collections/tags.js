@@ -1,27 +1,27 @@
-// Sitedata CommentsOn Data
+// Site Tags Data
 // ----------
 
-// Package Sitedata
+// Package Site
 // Requires define
-// Returns {SitedataCommentsOnList} constructor
+// Returns {SiteTagList} constructor
 
-define(['facade', 'collections', 'sitedata/models/commenton', 'utils'], 
-function(facade, collections, SitedataCommentOnModel, utils) {
+define(['facade', 'collections', 'site/models/tag', 'utils'], 
+function(facade, collections, SiteTagModel, utils) {
 
-    var SitedataCommentOnList,
+    var SiteTagList,
         BaseCollection = collections.BaseCollection,
         _ = facade._,
         Channel = utils.lib.Channel;
 
-    SitedataCommentOnList = BaseCollection.extend({
+    SiteTagList = BaseCollection.extend({
 
         // Reference to this collection's model.
-        model: SitedataCommentOnModel,
+        model: SiteTagModel,
         
         url: function() {
             if (testpath)
-                return testpath + '/sitedata/commentson/' + this.id;
-            return base_url + '/api/sitedata/commentson?user_id=' + this.id;
+                return testpath + '/site/tags/' + this.id;
+            return base_url + '/api/site/tags?user_id=' + this.id;
         },
         
         // **Method:** `fetchSuccess` - resolve the deferred here in success
@@ -29,7 +29,7 @@ function(facade, collections, SitedataCommentOnModel, utils) {
             collection.reset();
             var payload = response.payload;
             for (i = 0; i < payload.length; i++) {
-                var item = new SitedataCommentOnModel();
+                var item = new SiteTagModel();
                 item.id = Math.ceil(Math.random() * 100000);
                 item.set('payload', payload[i]);
                 item.set('desc', response.desc);
@@ -41,5 +41,5 @@ function(facade, collections, SitedataCommentOnModel, utils) {
 
     });
 
-    return SitedataCommentOnList;
+    return SiteTagList;
 });

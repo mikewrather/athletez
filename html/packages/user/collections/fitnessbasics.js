@@ -18,12 +18,6 @@ function(facade, collections, UserFitnessBasicModel, utils) {
         // Reference to this collection's model.
         model: UserFitnessBasicModel,
         
-        url: function() {
-            if (testpath)
-                return testpath + '/user/fitnessbasics/' + this.id;
-            return base_url + '/api/user/fitnessbasics?user_id=' + this.id;
-        },
-        
         // **Method:** `fetchSuccess` - resolve the deferred here in success
         fetchSuccess: function (collection, response) {
             collection.reset();

@@ -13,28 +13,31 @@ define(["facade", "models/base"], function (facade, BaseModel) {
         defaults: _.extend({}, (new BaseModel).attributes, {
             
             "payload": {
-                "org_id": 0,
-                "org_name": null,
+                "id": 0,
+                "name": null,
+                "sport": null,
+                "leagues": null,
+                "division": null,
+                "season_profile": null,
+                "complevel_profile": null,
+                "location": null,
                 "teams": [{
                     "team_id": 0,
                     "complevel": null,
                     "season": null,
                     "year": null,
-                    "schedules": [{
-                        "schedule_id": 0,
-                        "schedule_date": null,
-                        "other_team": null,
-                        "schedule_summary": null
-                    }],
-                    "statval": null,
-                    "stats": [{
-                        "name": null,
-                        "value": 0
+                    "mascot": null,
+                    "unique_ident": null,
+                    "statvals": [{
+                        "statval": null,
+                        "statdate": null,
+                        "statteam": null,
+                        "stat_context": null
                     }]
                 }
                 ]
             },
-            "desc": "Org information about the user",
+            "desc": "Org information",
             "exec_data": {
                 "exec_time": 0,
                 "exec_error": false

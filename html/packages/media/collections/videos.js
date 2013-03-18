@@ -18,12 +18,6 @@ function(facade, collections, MediaVideoModel, utils) {
         // Reference to this collection's model.
         model: MediaVideoModel,
         
-        url: function() {
-            if (testpath)
-                return testpath + '/media/videos/' + this.id;
-            return base_url + '/api/media/videos?user_id=' + this.id;
-        },        
-        
         // **Method:** `fetchSuccess` - resolve the deferred here in success
         fetchSuccess: function (collection, response) {
             collection.reset();

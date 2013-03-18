@@ -1,0 +1,71 @@
+{            
+    "payload": [{
+        "video_id": 1,
+        "video_title": "Blair vs Peddie Highlights",
+        "video_quality": 0.9,
+        "video_thumb": "images/video_thumb.png",
+        "teams": [                
+            "Blair Academy", "Peddie Academy"
+        ],
+        "games": [
+            "Varsity Football", "Varsity Ball"
+        ],
+        "video_desc": "This is the description of the highlight. The user can include whatever they want here. I think no character limit is neccessary. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut...",
+        "user_name": "You",
+        "post_date": "September 9, 2012",
+        "tags_count": 4,
+        "tags": [
+            "images/tag.png", 
+            "images/tag.png",
+            "images/tag.png",
+            "images/tag.png"
+        ],
+        "num_votes": 13,
+        "num_views": 33,
+        "num_comments": 11                
+    }, {
+        "video_id": 2,
+        "video_title": "Blair vs Peddie Highlights",
+        "video_quality": 0.9,
+        "video_thumb": "images/video_thumb.png",
+        "teams": [                
+            "Blair Academy", "Peddie Academy"
+        ],
+        "games": [
+            "Varsity Football", "Varsity Ball"
+        ],
+        "video_desc": "This is the description of the highlight. The user can include whatever they want here. I think no character limit is neccessary. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut...",
+        "user_name": "You",
+        "post_date": "September 9, 2012",
+        "tags_count": 1,
+        "tags": [
+            "images/tag.png"
+        ],
+        "num_votes": 10,
+        "num_views": 20,
+        "num_comments": 20
+    }, {
+        "video_id": 3,
+        "video_title": "Blair vs Peddie Highlights",
+        "video_quality": 0.9,
+        "video_thumb": "images/video_thumb.png",
+        "teams": [                
+            "Blair Academy", "Peddie Academy"
+        ],
+        "games": [
+            "Varsity Football", "Varsity Ball"
+        ],
+        "video_desc": "This is the description of the highlight. The user can include whatever they want here. I think no character limit is neccessary. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut...",
+        "user_name": "You",
+        "post_date": "September 9, 2012",
+        "num_votes": 12,
+        "num_views": 2,
+        "num_comments": 23
+    }],
+    "desc": "Videos information about the user",
+    "exec_data": {
+        "exec_time": 0.024134,
+        "exec_error": false
+    }
+}
+

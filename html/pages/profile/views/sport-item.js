@@ -8,7 +8,7 @@ define([
         'views',
         'utils', 
         'text!profile/templates/sport-item.html',
-        'user/collections/teams',
+        'profile/collections/teams',
         'profile/views/team-list'
         ], 
 function (
@@ -24,7 +24,7 @@ function (
       , Mustache = vendor.Mustache,
       Channel = utils.lib.Channel,
       ProfileTeamListView = require('profile/views/team-list'),
-      ProfileTeamList = require('user/collections/teams');
+      ProfileTeamList = require('profile/collections/teams');
 
       ProfileSportItemView = BaseView.extend({
 

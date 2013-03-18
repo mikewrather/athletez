@@ -18,12 +18,6 @@ function(facade, collections, UserOrgModel, utils) {
         // Reference to this collection's model.
         model: UserOrgModel,
         
-        url: function() {
-            if (testpath)
-                return testpath + '/user/orgs/' + this.id;
-            return base_url + '/api/user/orgs?user_id=' + this.id;
-        },
-        
         // **Method:** `fetchSuccess` - resolve the deferred here in success
         fetchSuccess: function (collection, response) {
             collection.reset();

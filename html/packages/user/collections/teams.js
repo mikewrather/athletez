@@ -21,7 +21,7 @@ function(facade, collections, UserTeamModel, utils) {
         url: function() {
             if (testpath)
                 return testpath + '/user/teams/' + this.id + '/' + this.sport_id;
-            return base_url + '/api/user/teams?user_id=' + this.id + '&sport_id=' + this.sport_id;            
+            return '/api/user/teams?user_id=' + this.id + '&sport_id=' + this.sport_id;            
         },
         
         // **Method:** `fetchSuccess` - resolve the deferred here in success

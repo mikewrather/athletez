@@ -14,6 +14,7 @@ define( ["facade", "models/base"], function (facade, BaseModel) {
             
             "payload": {
                 "user_name": null,
+                "grad_year": 0,
                 "user_picture": null,
                 "user_height": null,
                 "user_weight": null,
@@ -26,13 +27,7 @@ define( ["facade", "models/base"], function (facade, BaseModel) {
                 "exec_time": 0,
                 "exec_error": false
             }
-        }),
-        
-        url: function() {
-            if (testpath)
-                return testpath + '/user/basics/' + this.id;
-            return base_url + '/api/user/basics?user_id=' + this.id;
-        }
+        })
         
         
     });

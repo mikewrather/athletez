@@ -11,13 +11,13 @@ define([
         'text!profile/templates/commenton-form.html', 
         'facade', 
         'views', 
-        'sitedata/models/commentonform'
+        'profile/models/commentonform'
         ], function(require, profileCommentOnFormTemplate) {
 
     var ProfileCommentOnFormView,
         facade = require('facade'),
         views = require('views'),
-        ProfileCommentOnFormModel = require('sitedata/models/commentonform'),
+        ProfileCommentOnFormModel = require('profile/models/commentonform'),
         BaseView = views.BaseView,
         _ = facade._;
 

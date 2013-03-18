@@ -17,8 +17,18 @@ define(["facade", "models/base"], function (facade, BaseModel) {
                 "video_title": null,
                 "video_quality": 0,
                 "video_thumb": null,
-                "teams": [                
-                ],
+                "video_image": null,
+                "org_name": null,
+                "team": [{
+                    "complevel": "Varsity",
+                    "season": "Winter",
+                    "year": "'12",
+                    "schedule": {
+                        "schedule_date": "Dec 14",
+                        "other_team": "Mercersberg Academy",
+                        "schedule_summary": "w 88- 72"
+                    }
+                }],
                 "games": [
                 ],
                 "video_desc": null,

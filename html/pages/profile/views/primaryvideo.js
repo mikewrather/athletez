@@ -7,7 +7,7 @@
 define([
         'require', 
         'text!profile/templates/primaryvideo.html', 
-        'media/models/primaryvideo',
+        'profile/models/primaryvideo',
         'facade', 
         'views'
         ], 

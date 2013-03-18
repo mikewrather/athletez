@@ -18,12 +18,6 @@ function(facade, collections, UserRelatedModel, utils) {
         // Reference to this collection's model.
         model: UserRelatedModel,
         
-        url: function() {
-            if (testpath)
-                return testpath + '/user/relateds/' + this.id;
-            return base_url + '/api/user/relateds?user_id=' + this.id;
-        },
-        
         // **Method:** `fetchSuccess` - resolve the deferred here in success
         fetchSuccess: function (collection, response) {
             collection.reset();

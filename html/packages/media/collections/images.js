@@ -18,12 +18,6 @@ function(facade, collections, MediaImageModel, utils) {
         // Reference to this collection's model.
         model: MediaImageModel,
         
-        url: function() {
-            if (testpath)
-                return testpath + '/media/images/' + this.id;
-            return base_url + '/api/media/images?user_id=' + this.id;
-        },
-        
         // **Method:** `fetchSuccess` - resolve the deferred here in success
         fetchSuccess: function (collection, response) {
             collection.reset();
