@@ -33,7 +33,9 @@ class Model_User_Teamslink extends ORM
 		return array(
 			"id" => $this->id,
 			"user" => $this->user->getBasics(),
-			"team" => $this->team->getBasics(),	
+			"team" => $this->team->getBasics(),
+			"teams_id" => $this->teams_id,
+			"users_id" => $this->users_id
 		);
 	}
 }

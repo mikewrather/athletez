@@ -15,7 +15,7 @@ class Model_User_Resume_Data extends ORM
 	protected $_table_name = 'resume_data';
 
 	protected $_belongs_to = array(
-		'datagroup' => array(
+		'resume_data_group' => array(
 			'model' => 'User_Resume_Data_Group',
 			'foreign_key' => 'resume_data_groups_id'
 		)
@@ -37,9 +37,10 @@ class Model_User_Resume_Data extends ORM
 	{
 		return array(
 			"id" => $this->id,
-			"datagroup" => $this->datagroup->getBasics(),
+			"resume_data_group" => $this->resume_data_group->getBasics(),
 			"name" => $this->name,
-			"resume_data_type" => $this->resume_data_type
+			"resume_data_type" => $this->resume_data_type,
+			"resume_data_groups_id" => $this->resume_data_groups_id
 		);
 	}
 }

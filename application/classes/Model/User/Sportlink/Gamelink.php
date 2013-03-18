@@ -39,6 +39,8 @@ class Model_User_Sportlink_Gamelink extends ORM
 			"game" => $this->game->getBasics(),
 			"result_time" => $this->result_time,
 			"isWinner" => $this->isWinner,
+			"games_id" => $this->games_id,
+			"user_sport_link_id" => $this->user_sport_link_id
 		);
 	}
 

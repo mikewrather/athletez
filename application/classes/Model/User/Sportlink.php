@@ -41,7 +41,9 @@ class Model_User_Sportlink extends ORM
 		return array(
 			"id" => $this->id,
 			"user" => $this->user->getBasics(),
-			"sport" => $this->sport->getBasics(),	
+			"sport" => $this->sport->getBasics(),
+			"sports_id" => $this->sports_id,
+			"users_id" => $this->users_id,				
 		);
 	}
 

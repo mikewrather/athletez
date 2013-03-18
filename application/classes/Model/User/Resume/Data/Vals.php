@@ -37,6 +37,8 @@ class Model_User_Resume_Data_Vals extends ORM
 			"user" => $this->user->getBasics(),
 			"resume_data" => $this->resdata->getBasics(),
 			"user_value" => $this->user_value,
+			"user_id" => $this->user_id,
+			"resume_data_id" => $this->resume_data_id
 		);
 	}
 }

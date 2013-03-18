@@ -41,7 +41,8 @@ class Model_User_Fitness_Data extends ORM
 			"id" => $this->id,
 			"sport" => $this->sport->getBasics(),
 			"unit_type" => $this->unit_type,
-			"fitness_test" => $this->fitness_test	
+			"fitness_test" => $this->fitness_test,
+			"sports_id" => $this->sports_id	
 		);
 	}
 }

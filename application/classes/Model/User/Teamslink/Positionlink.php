@@ -34,7 +34,9 @@ class Model_User_Teamslink_Positionlink extends ORM
 		return array(
 			"id" => $this->id,
 			"utl" => $this->utl->getBasics(),
-			"position" => $this->position->getBasics(),	
+			"position" => $this->position->getBasics(),
+			"users_teams_link_id" => $this->users_teams_link_id,
+			"positions_id" => $this->positions_id
 		);
 	}
 

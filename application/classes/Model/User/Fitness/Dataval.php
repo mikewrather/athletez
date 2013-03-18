@@ -12,11 +12,10 @@
 class Model_User_Fitness_Dataval extends ORM
 {
 	
-	protected $_table_name = 'fitness_data_vals';
+	protected $_table_name = 'fitness_data_values';
 	
-
 	protected $_belongs_to = array(
-		'fitnessdata' => array(
+		'fitness_data' => array(
 			'model' => 'User_Fitness_Data',
 			'foreign_key' => 'fitness_data_id'
 		),
@@ -54,9 +53,11 @@ class Model_User_Fitness_Dataval extends ORM
 	{
 		return array(
 			"id" => $this->id,
-			"fitnessdata" => $this->fitnessdata->getBasics(),
+			"fitness_data" => $this->fitness_data->getBasics(),
 			"user" => $this->user->getBasics(),
-			"user_value" => $this->user_value	
+			"user_value" => $this->user_value,
+			"fitness_data_id" => $this->fitness_data_id,
+			"users_id" => $this->users_id
 		);
 	}
 
