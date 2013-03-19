@@ -12,11 +12,6 @@
 	class View_Api_User extends Api_Viewclass
 	{
 
-		public function __construct()
-		{
-			parent::__construct();
-		}
-
 	
 		/**
 		 * get_basics() Basic information about the user.
