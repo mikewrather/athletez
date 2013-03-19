@@ -104,15 +104,24 @@
 		{
 			$this->payloadDesc = "Post a new comment about a given subject";
 
-		     // CHECK FOR PARAMETERS:
+			$user = Auth::instance()->get_user();
+
+			$comment_obj = ORM::factory('Site_Comment');
+			$comment_obj->subject_enttypes_id = $this->myID;
+			$comment_obj->subject_id = $this->myID2;
+
+			// This is temporary and for testing in fiddler
+			$comment_obj->users_id = $user->id > 0 ? $user->id : 1;
+
+		    // CHECK FOR PARAMETERS:
 			// comment (REQUIRED)
 			// The comment to post about the specified subject
 				
 			if(trim($this->request->post('comment')) != "")
 			{
 				$comment = trim($this->request->post('comment'));
+				$comment_obj->comment = $comment;
 			}
-
 			else // THIS WAS A REQUIRED PARAMETER
 			{
 				// Create Array for Error Data
@@ -127,9 +136,28 @@
 
 				// Call method to throw an error
 				$this->addError($error_array,$is_fatal);
-
 			}
-			
+
+			// Error Checking on save()
+			try
+			{
+				$comment_obj->save();
+			}
+			catch(ErrorException $e)
+			{
+				// Create Array for Error Data
+				$error_array = array(
+					"error" => "Unable to save comment",
+					"desc" => $e->getMessage()
+				);
+
+				// Set whether it is a fatal error
+				$is_fatal = true;
+
+				// Call method to throw an error
+				$this->addError($error_array,$is_fatal);
+			}
+
 		}
 		
 		/**

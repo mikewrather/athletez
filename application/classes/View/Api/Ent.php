@@ -12,11 +12,6 @@
 	class View_Api_Ent extends Api_Viewclass
 	{
 
-		public function __construct()
-		{
-			parent::__construct();
-		}
-
 	
 		/**
 		 * get_basics() Basic info on an entity
@@ -135,6 +130,7 @@
 		 */
 		public function post_comment()
 		{
+			/*
 			$retArr = array();
 
 			// Scaffolding Code For Array:
@@ -148,6 +144,7 @@
 			$retArr = $this->obj->getBasics();
 
 			return $retArr;
+			*/
 		}
 		
 		/**

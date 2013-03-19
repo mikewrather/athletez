@@ -12,11 +12,6 @@
 	class View_Api_City extends Api_Viewclass
 	{
 
-		public function __construct()
-		{
-			parent::__construct();
-		}
-
 	
 		/**
 		 * get_basics() Basic information about a city

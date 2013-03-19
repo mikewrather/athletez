@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50525
 File Encoding         : 65001
 
-Date: 2013-03-15 04:03:50
+Date: 2013-03-18 03:39:33
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -378,7 +378,7 @@ INSERT INTO `apiparams` VALUES ('56', '97', 'games_after', 'datetime', '0', 'Fil
 INSERT INTO `apiparams` VALUES ('57', '97', 'sports_id', 'int', '0', 'Filter games associated with a given location to only show those for a specific sport');
 INSERT INTO `apiparams` VALUES ('58', '97', 'complevels_id', 'int', '0', 'Filter games associated with a given location to only show those of a specific competition level');
 INSERT INTO `apiparams` VALUES ('59', '97', 'teams_id', 'int', '0', 'Filter games associated with a given location to only show those for a specific team');
-INSERT INTO `apiparams` VALUES ('60', '99', 'loc_type', 'int', '0', 'Only return locations of a certain type within the given city');
+INSERT INTO `apiparams` VALUES ('60', '99', 'loc_type', 'string', '1', 'Only return locations of a certain type within the given city');
 INSERT INTO `apiparams` VALUES ('61', '101', 'games_before', 'datetime', '0', 'Filter games associated with a given city to only show those before a given date');
 INSERT INTO `apiparams` VALUES ('62', '101', 'games_after', 'datetime', '0', 'Filter games associated with a given city to only show those before a given date');
 INSERT INTO `apiparams` VALUES ('63', '101', 'sports_id', 'int', '0', 'Filter games associated with a given city to only show those for a specific sport');
@@ -31720,11 +31720,12 @@ CREATE TABLE `locations` (
   `location_type` enum('High School','Park','Other') DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `point_index` (`loc_point`(25))
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of locations
 -- ----------------------------
+INSERT INTO `locations` VALUES ('1', '2317 Hill St.', '4884', '0', '0', null, 'High School');
 
 -- ----------------------------
 -- Table structure for `media`

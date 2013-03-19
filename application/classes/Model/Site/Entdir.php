@@ -17,6 +17,7 @@ class Model_Site_Entdir extends ORM
 	 */
 	public $subject;
 
+	protected $_table_name = "enttypes";
 
 	public function __construct($id=NULL)
 	{
