@@ -5,14 +5,14 @@
 // Requires define
 // Returns {ProfileOrgList} constructor
 
-define(['facade', 'user/collections/orgs', 'utils'], 
-function(facade, UserOrgList, utils) {
+define(['facade', 'sportorg/collections/orgs', 'utils'], 
+function(facade, SportorgOrgList, utils) {
 
     var ProfileOrgList,
         _ = facade._,
         Channel = utils.lib.Channel;
 
-    ProfileOrgList = UserOrgList.extend({
+    ProfileOrgList = SportorgOrgList.extend({
         
         url: function() {
             if (testpath)

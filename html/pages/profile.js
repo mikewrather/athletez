@@ -13,6 +13,7 @@ define([
     "utils",
     
     "profile/models/basics",
+    "profile/models/addmedia",
     "profile/collections/orgs",
     "profile/collections/relateds",
     "profile/collections/fitnessbasics",
@@ -23,6 +24,7 @@ define([
     "profile/collections/commentson",
     
     "profile/views/header",
+    "profile/views/add-media",
     "profile/views/org-list",
     "profile/views/related-list",
     "profile/views/fitnessbasic-list",
@@ -42,6 +44,7 @@ define([
         utils = require("utils"),
         
         ProfileBasicsModel = require("profile/models/basics"),
+        ProfileAddMediaModel = require("profile/models/addmedia"),
         ProfileOrgList = require("profile/collections/orgs"),
         ProfileRelatedList = require("profile/collections/relateds"),
         ProfileFitnessBasicList = require("profile/collections/fitnessbasics"),
@@ -52,6 +55,7 @@ define([
         ProfileCommentOnList = require("profile/collections/commentson"),
         
         ProfileHeaderView = require("profile/views/header"),
+        ProfileAddMediaView = require("profile/views/add-media"),
         ProfileOrgListView = require("profile/views/org-list"),
         ProfileRelatedListView = require("profile/views/related-list"),
         ProfileFitnessBasicListView = require("profile/views/fitnessbasic-list"),
@@ -85,8 +89,8 @@ define([
         },
         
         initProfile: function() {
-            this.createProfileData();
             this.setupLayout().render();
+            this.createProfileData();
             this.handleDeferreds();            
         },
         
@@ -94,6 +98,10 @@ define([
             this.basics = new ProfileBasicsModel();
             this.basics.fetch();
             this.id = this.basics.id;
+            
+            this.addmedia = new ProfileAddMediaModel();
+            this.addmedia.id = this.id;
+            this.setupAddMediaView();
             
             this.orgs = new ProfileOrgList();
             this.orgs.id = this.id;
@@ -178,6 +186,19 @@ define([
             });
 
             this.scheme.push(headerView);            
+            this.layout.render();
+        },
+        
+        setupAddMediaView: function() {
+            var addMediaView;
+            
+            addMediaView = new ProfileAddMediaView({
+                model: this.addmedia,
+                name: "Add Media",
+                destination: "#add-media"
+            });
+            
+            this.scheme.push(addMediaView);
             this.layout.render();
         },
         

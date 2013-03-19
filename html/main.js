@@ -52,6 +52,7 @@ require.config({
         'user'         : '/packages/user',
         'media'        : '/packages/media',
         'site'         : '/packages/site',
+        'sportorg'     : '/packages/sportorg',
         
         // Pages
 

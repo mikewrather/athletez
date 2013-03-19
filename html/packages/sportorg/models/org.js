@@ -5,7 +5,7 @@
 
 define(["facade", "models/base"], function (facade, BaseModel) {
 
-    var UserOrgModel,
+    var SportorgOrgModel,
         _ = facade._;
 
     SportorgOrgModel = BaseModel.extend({  
@@ -22,7 +22,7 @@ define(["facade", "models/base"], function (facade, BaseModel) {
                 "complevel_profile": null,
                 "location": null,
                 "teams": [{
-                    "team_id": 0,
+                    "id": 0,
                     "complevel": null,
                     "season": null,
                     "year": null,

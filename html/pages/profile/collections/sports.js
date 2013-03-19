@@ -5,16 +5,20 @@
 // Requires define
 // Returns {ProfileSportList} constructor
 
-define(['facade', 'user/collections/sports', 'utils'], 
-function(facade, UserSportList, utils) {
+define(['facade', 'sportorg/collections/sports', 'utils'], 
+function(facade, SportorgSportList, utils) {
 
     var ProfileSportList,
         _ = facade._,
         Channel = utils.lib.Channel;
 
-    ProfileSportList = UserSportList.extend({
+    ProfileSportList = SportorgSportList.extend({
         
-        
+        url: function() {
+            if (testpath)
+                return testpath + '/user/sports/' + this.id;
+            return '/api/user/sports?user_id=' + this.id;
+        }
 
     });
 

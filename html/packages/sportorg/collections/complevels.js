@@ -1,45 +1,39 @@
-// User Teams Data
+// Sportorg Complevel Profile Data
 // ----------
 
-// Package User
+// Package Sportorg
 // Requires define
-// Returns {UserTeamList} constructor
+// Returns {SportorgComplevelList} constructor
 
-define(['facade', 'collections', 'user/models/team', 'utils'], 
-function(facade, collections, UserTeamModel, utils) {
+define(['facade', 'collections', 'sportorg/models/complevel', 'utils'], 
+function(facade, collections, SportorgComplevelModel, utils) {
 
-    var UserTeamList,
+    var SportorgComplevelList,
         BaseCollection = collections.BaseCollection,
         _ = facade._,
         Channel = utils.lib.Channel;
 
-    UserTeamList = BaseCollection.extend({
+    SportorgComplevelList = BaseCollection.extend({
 
         // Reference to this collection's model.
-        model: UserTeamModel,
-        
-        url: function() {
-            if (testpath)
-                return testpath + '/user/teams/' + this.id + '/' + this.sport_id;
-            return '/api/user/teams?user_id=' + this.id + '&sport_id=' + this.sport_id;            
-        },
+        model: SportorgComplevelModel,
         
         // **Method:** `fetchSuccess` - resolve the deferred here in success
         fetchSuccess: function (collection, response) {
             collection.reset();
             var payload = response.payload;
             for (i = 0; i < payload.length; i++) {
-                var item = new UserTeamModel();
+                var item = new SportorgComplevelModel();
                 item.id = Math.ceil(Math.random() * 100000);
                 item.set('payload', payload[i]);
                 item.set('desc', response.desc);
                 item.set('exec_data', response.exec_data);
                 collection.push(item);
             }
-            collection.deferred.resolve(response);
+            collection.deferred.resolve(response);            
         }
 
     });
 
-    return UserTeamList;
+    return SportorgComplevelList;
 });

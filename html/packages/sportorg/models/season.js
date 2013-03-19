@@ -1,31 +1,29 @@
-// Sportorg Complevel Model
+// Sportorg Season Model
 // -----------
 // Requires define
-// Return {SportorgComplevelModel} object as constructor  
+// Return {SportorgSeasonModel} object as constructor  
 
 define(["facade", "models/base"], function (facade, BaseModel) {
 
-    var SportorgComplevelModel,
+    var SportorgSeasonModel,
         _ = facade._;
 
-    SportorgComplevelModel = BaseModel.extend({  
+    SportorgSeasonModel = BaseModel.extend({  
 
         defaults: _.extend({}, (new BaseModel).attributes, {
             
             "payload": {
                 "id": 0,
-                "name": null,
-                "min_age": 0,
-                "max_age": 0
+                "season_name": null
             },
-            "desc": "Complevel information",
+            "desc": "Season information",
             "exec_data": {
                 "exec_time": 0,
                 "exec_error": false
             }
-        })        
+        })
         
     });
 
-    return SportorgComplevelModel;
+    return SportorgSeasonModel;
 });

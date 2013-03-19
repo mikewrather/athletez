@@ -1,39 +1,39 @@
-// User Orgs Data
+// Sportorg Matches Data
 // ----------
 
-// Package User
+// Package Sportorg
 // Requires define
-// Returns {UserOrgList} constructor
+// Returns {SportorgMatchList} constructor
 
-define(['facade', 'collections', 'user/models/org', 'utils'], 
-function(facade, collections, UserOrgModel, utils) {
+define(['facade', 'collections', 'sportorg/models/match', 'utils'], 
+function(facade, collections, SportorgMatchModel, utils) {
 
-    var UserOrgList,
+    var SportorgMatchList,
         BaseCollection = collections.BaseCollection,
         _ = facade._,
         Channel = utils.lib.Channel;
 
-    UserOrgList = BaseCollection.extend({
+    SportorgMatchList = BaseCollection.extend({
 
         // Reference to this collection's model.
-        model: UserOrgModel,
+        model: SportorgMatchModel,
         
         // **Method:** `fetchSuccess` - resolve the deferred here in success
         fetchSuccess: function (collection, response) {
             collection.reset();
             var payload = response.payload;
             for (i = 0; i < payload.length; i++) {
-                var item = new UserOrgModel();
+                var item = new SportorgMatchModel();
                 item.id = Math.ceil(Math.random() * 100000);
                 item.set('payload', payload[i]);
                 item.set('desc', response.desc);
                 item.set('exec_data', response.exec_data);
                 collection.push(item);
             }
-            collection.deferred.resolve(response);
+            collection.deferred.resolve(response);            
         }
 
     });
 
-    return UserOrgList;
+    return SportorgMatchList;
 });

@@ -1,31 +1,31 @@
-// Sportorg Complevel Model
+// Sportorg Game Model
 // -----------
 // Requires define
-// Return {SportorgComplevelModel} object as constructor  
+// Return {SportorgGameModel} object as constructor  
 
 define(["facade", "models/base"], function (facade, BaseModel) {
 
-    var SportorgComplevelModel,
+    var SportorgGameModel,
         _ = facade._;
 
-    SportorgComplevelModel = BaseModel.extend({  
+    SportorgGameModel = BaseModel.extend({  
 
         defaults: _.extend({}, (new BaseModel).attributes, {
             
             "payload": {
                 "id": 0,
-                "name": null,
-                "min_age": 0,
-                "max_age": 0
+                "game_day": null,
+                "game_time": null,
+                "locations": null
             },
-            "desc": "Complevel information",
+            "desc": "Game information",
             "exec_data": {
                 "exec_time": 0,
                 "exec_error": false
             }
-        })        
+        })
         
     });
 
-    return SportorgComplevelModel;
+    return SportorgGameModel;
 });
