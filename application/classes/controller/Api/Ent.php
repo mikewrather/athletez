@@ -104,14 +104,24 @@
 		{
 			$this->payloadDesc = "Post a new comment about a given subject";
 
-			$user = Auth::instance()->get_user();
+			if(!$this->user)
+			{
+				// Create Array for Error Data
+				$error_array = array(
+					"error" => "This action requires authentication"
+				);
+
+				// Set whether it is a fatal error
+				$is_fatal = true;
+
+				// Call method to throw an error
+				$this->addError($error_array,$is_fatal);
+			}
 
 			$comment_obj = ORM::factory('Site_Comment');
 			$comment_obj->subject_enttypes_id = $this->myID;
 			$comment_obj->subject_id = $this->myID2;
-
-			// This is temporary and for testing in fiddler
-			$comment_obj->users_id = $user->id > 0 ? $user->id : 1;
+			$comment_obj->users_id = $this->user->id;
 
 		    // CHECK FOR PARAMETERS:
 			// comment (REQUIRED)
