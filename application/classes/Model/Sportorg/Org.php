@@ -16,7 +16,7 @@ class Model_Sportorg_Org extends ORM
 			"foreign_key" => "complevel_profiles_id"
 		),
 		"season_profile" => array(
-			"model" => "Sportorg_Season_Profile",
+			"model" => "Sportorg_Seasons_Profile",
 			"foreign_key" => "season_profiles_id"
 		)
 	);
@@ -64,8 +64,8 @@ class Model_Sportorg_Org extends ORM
 			"season_profiles_id" => $this->season_profiles_id,
 			"single_sport" => $this->single_sport,
 			
-			"season_profile" => $this->season_profile->getBascis(),			
-			"complevel_profile" => $this->complevel_profile->getBascis(),
+			"season_profile" => $this->season_profile->getBasics(),			
+			"complevel_profile" => $this->complevel_profile->getBasics(),
 		);
 	}
 }

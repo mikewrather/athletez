@@ -37,9 +37,9 @@
 		 */
 		public function action_get_basics()
 		{
-			$this->payloadDesc = "Basic information about the user.";
-
-		
+			$this->payloadDesc = "Basic information about the user.";			
+			$users = ORM::factory('User_Base')->where('id','=',$this->myID);			  
+			return $users;
 		}
 		
 		/**
@@ -50,8 +50,8 @@
 		public function action_get_teams()
 		{
 			$this->payloadDesc = "List of teams the user is associated with";
-
-		
+			$user_teams = ORM::factory("User_Teamslink")->where('users_id', '=', $this->myID );
+			return $user_teams;
 		}
 		
 		/**
@@ -62,8 +62,10 @@
 		public function action_get_sports()
 		{
 			$this->payloadDesc = "List of sports that the user is associated with";
-
-		
+			
+			$sports = ORM::factory('User_Sportlink')->where('users_id', '=', $this->myID );
+			 
+			return $sports; 
 		}
 		
 		/**
@@ -74,8 +76,8 @@
 		public function action_get_orgs()
 		{
 			$this->payloadDesc = "List of organizations the user is associated with";
-
-		
+			$teams_link = ORM::factory('User_Teamslink')->where('users_id', '=', $this->myID ); 
+			return $teams_link;
 		}
 		
 		/**
@@ -86,8 +88,8 @@
 		public function action_get_related()
 		{
 			$this->payloadDesc = "Content related to this user to be displayed on the \"related content\" pane";
-
-		
+			$teams_link = ORM::factory('User_Teamslink')->where('users_id', '=', $this->myID ); 
+			return $teams_link; 
 		}
 		
 		/**
@@ -146,7 +148,8 @@
 		public function action_get_fitnessbasics()
 		{
 			$this->payloadDesc = "Get the basic fitness data for the user";
-
+			$fitnessbasic = ORM::factory('User_Fitness_Dataval')->where('users_id', '=', $this->myID ); 
+			return $fitnessbasic;
 		
 		}
 		

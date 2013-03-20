@@ -41,14 +41,24 @@ class Model_Sportorg_Team extends ORM
 		'athletes' => array(
 			'model' => 'Users',
 			'through' => 'users_teams_link'
-		)
+		),
+		
+		// StatVals
+		'statvals' => array(
+			'model' => 'Stats_Vals',
+			'foreign_key' => 'teams_id',
+		),
 	);
 
 	public function getOrg()
-	{
+	{		
 		return $this->orgsportlink->org;
 	}
-
+	
+	public function getSeason()
+	{
+		return $this->season;
+	}
 	public function getSport()
 	{
 		return $this->orgsportlink->sport;
