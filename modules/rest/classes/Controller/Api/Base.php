@@ -6,7 +6,7 @@
  * Time: 11:13 PM
  */
 
-class Controller_Api_Base extends Controller
+class Controller_Api_Base extends AuthController
 {
 
 	protected $mainModel;
@@ -18,11 +18,7 @@ class Controller_Api_Base extends Controller
 
 	protected $payloadDesc;
 
-	// Variables having to do with authentication
-	protected $is_logged_in = false;
-	protected $user;
-	protected $user_roles = array();
-	protected $is_admin = false;
+
 
 	/**
 	 * @var $starttime is used to calculate the total execution time for the controller script
@@ -41,31 +37,6 @@ class Controller_Api_Base extends Controller
 		$this->myID2 = (int)$this->request->param('id2') > 0 ? (int)$this->request->param('id2') : 0;
 
 		$this->populateAuthVars();
-	}
-
-	/**
-	 *  populateAuthVars() method will put data from the logged in user to this class's properties
-	 */
-	protected function populateAuthVars()
-	{
-		// Check for Logged in User
-		$user = Auth::instance()->get_user();
-
-		// FOR TESTING ONLY
-		if(!$user) $user = ORM::factory('User',425983);
-
-		if(isset($user))
-		{
-			$this->is_logged_in = true;
-			$this->user = $user;
-
-			foreach($user->roles->find_all() as $role)
-			{
-				$this->user_roles[] = $role->name;
-			}
-
-			if(in_array("admin",$this->user_roles)) $this->is_admin = true;
-		}
 	}
 
 	public function execute()

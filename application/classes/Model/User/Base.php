@@ -10,6 +10,12 @@ class Model_User_Base extends Model_Auth_User
 
 	protected $_table_name = 'users';
 
+	protected $_belongs_to = array(
+		"city" => array(
+			"model" => "Location_City",
+			"foreign_key" => "cities_id"
+		)
+	);
 	protected $_has_many = array(
 		//From Auth
 		'user_tokens' => array('model' => 'User_Token'),

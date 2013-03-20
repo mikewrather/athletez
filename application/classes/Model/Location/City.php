@@ -14,7 +14,7 @@ class Model_Location_City extends ORM
 	protected $_belongs_to = array(
 		'county' => array(
 			'model' => 'Location_County',
-			'foreign_key' => 'counties_id'
+			'foreign_key' => 'county_id'
 		)
 	);
 	public function __construct()
@@ -27,7 +27,7 @@ class Model_Location_City extends ORM
 		return array(
 			"id" => $this->id,
 			"name" => $this->name,
-			"counties_id" => $this->counties_id,
+			"county_id" => $this->county_id,
 			"county" => $this->county->getBasics(),
 		);
 	}

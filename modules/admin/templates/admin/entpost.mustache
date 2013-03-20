@@ -1,0 +1,23 @@
+{{#methods}}
+<ul class="methods">
+	<form method="post">
+		<li class="firstmethod">{{shortname}} ({{api_method}})</li>
+		<li>{{usage}}</li>
+		<li class="description">{{description}}</li>
+		{{#hasparams}}
+		<li class="params">
+			<div style="border-bottom:1px solid #cecece;">Parameters:</div><br>
+
+			{{/hasparams}}
+			{{#params}}
+			<span class="paramname">{{name}} ({{type}})</span><span class="description">{{desc}}</span>
+			<input type="text" /><br /><br />
+
+			{{/params}}
+			{{#hasparams}}
+			<input type="submit">
+		</li>
+		{{/hasparams}}
+	</form>
+</ul>
+{{/methods}}
