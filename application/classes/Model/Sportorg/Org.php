@@ -68,4 +68,5 @@ class Model_Sportorg_Org extends ORM
 			"complevel_profile" => $this->complevel_profile->getBasics(),
 		);
 	}
+
 }

@@ -12,7 +12,7 @@
 class Model_User_Fitness_Dataval extends ORM
 {
 	
-	protected $_table_name = 'fitness_data_values';
+	protected $_table_name = 'fitness_data_vals';
 	
 	protected $_belongs_to = array(
 		'fitness_data' => array(

@@ -1,23 +1,50 @@
-{{#methods}}
-<ul class="methods">
-	<form method="post">
+{{#methods}}<form id="form_{{id}}">
+<ul class="methods" style="margin-bottom: 30px; border: 1px solid #333; padding: 10px;">
+
 		<li class="firstmethod">{{shortname}} ({{api_method}})</li>
 		<li>{{usage}}</li>
 		<li class="description">{{description}}</li>
 		{{#hasparams}}
 		<li class="params">
-			<div style="border-bottom:1px solid #cecece;">Parameters:</div><br>
+			<div style="border-bottom:1px solid #cecece;"></div><br>
 
 			{{/hasparams}}
 			{{#params}}
-			<span class="paramname">{{name}} ({{type}})</span><span class="description">{{desc}}</span>
-			<input type="text" /><br /><br />
+			<span class="paramname">{{name}} ({{type}})</span><span class="description">{{desc}}</span><br />
+			{{#hasobjs}}
+				<select  name="{{name}}" id="{{name}}">
+					{{#objs}}<option value="{{id}}">{{name}}</option>{{/objs}}
+				</select>
+			{{/hasobjs}}
+			{{^hasobjs}}
+				<input type="text" name="{{name}}" id="{{name}}" />
+			{{/hasobjs}}
+			<br /><br />
 
 			{{/params}}
 			{{#hasparams}}
 			<input type="submit">
 		</li>
 		{{/hasparams}}
-	</form>
-</ul>
+
+</ul></form>
+<script type="text/javascript">
+	$(document).ready(function(){
+		$('form#form_{{id}}').submit(function(){
+
+			console.log($(this).serialize());
+
+			$.ajax({
+				type : '{{api_method}}',
+				url : '{{usage}}',
+				data : $(this).serialize(),
+				success : function(data)
+				{
+					console.log(data);
+				}
+			});
+			return false;
+		});
+	});
+</script>
 {{/methods}}

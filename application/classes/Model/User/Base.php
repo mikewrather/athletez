@@ -106,6 +106,12 @@ class Model_User_Base extends Model_Auth_User
 			'model' => 'Media_Queuedvideo',
 			'foreign_key' => 'users_id'
 		),
+		'social_links' => array(
+			'model' => 'Social_Type',
+			'through' => 'social_-links',
+			'foreign_key' => 'users_id',
+			'far_key' => 'social_types_id'
+		),
 
 	);
 

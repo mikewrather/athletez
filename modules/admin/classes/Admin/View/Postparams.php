@@ -37,17 +37,33 @@ class Admin_View_Postparams
 			$params = $method->params->find_all();
 			foreach($params as $param)
 			{
+				$param_list_arr = array();
+				if($param->enttypes_id > 0)
+				{
+
+					$list = Ent::getObjectList($param->enttypes_id)->find_all();
+					foreach($list as $obj)
+					{
+						$param_list_arr[] = array(
+							"id" => $obj->id,
+							"name" => method_exists($obj,'name') ? $obj->name() : $obj->name,
+						);
+					}
+				}
 				$paramArr[] = array(
+					"id" => $param->id,
 					"name" => $param->param_name,
 					"type" => $param->param_type,
-					"desc" => $param->description
+					"desc" => $param->description,
+					"objs" => $param_list_arr,
+					"hasobjs" => sizeof($param_list_arr) > 0 ? true : false,
 				);
 			}
 
-			$usage = '/api/'.$this->ent->api_name.'/'.$method->shortname.'/{'.$this->ent->id1.'}';
-			$usage.= $this->ent->id2 != NULL ? '/{'.$this->ent->id2.'}' : '';
+			$usage = '/api/'.$this->ent->api_name.'/'.$method->shortname.'/';
 
 			$templateArr["method"][] = array(
+				"id" => $method->id,
 				"api_method" => $method->api_method,
 				"shortname" => $method->shortname,
 				"description" => $method->description,

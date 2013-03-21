@@ -27,8 +27,8 @@
 			$retArr['user_picture'] = null; 	//TODO: Add To Database - user_picture : string
 			$retArr['user_weight'] = null; 		//TODO: Add To Database - user_weight : string
 			$retArr['user_height'] = null; 		//TODO: Add To Database - user_height : string
-			$retArr['num_followers'] = 0; 		//TODO: Add To Database - num_followers : int
-			$retArr['num_votes'] = 0; 			//TODO: Add To Database - num_votes : int
+			$retArr['num_followers'] = 0; 		//TODO: Write getNumberFollowers() method for User Model
+			$retArr['num_votes'] = 0; 			//TODO: Write getNumberVotes() method for User Model
 			return $retArr;
 		}
 		
@@ -46,7 +46,7 @@
 				$team = array();
 				$teams_link = $user_team->getBasics();
 				$team['team_name'] = $teams_link->name;
-				$team['team_location'] = null; 		//TODO: Add To Database - team_location : string
+				$team['team_location'] = null; 		//TODO: Write getLocationAsString() method for Tean Model
 				array_push($retArr, $team);
 			}
 			/*

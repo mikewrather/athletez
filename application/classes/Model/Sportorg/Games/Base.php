@@ -46,4 +46,5 @@ class Model_Sportorg_Games_Base extends ORM
 			"gameTime" => $this->gameTime,						
 		);
 	}
+
 }

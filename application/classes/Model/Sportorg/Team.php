@@ -52,7 +52,7 @@ class Model_Sportorg_Team extends ORM
 
 	public function getOrg()
 	{		
-		return $this->orgsportlink->org;
+		return $this->org_sport_link->org;
 	}
 	
 	public function getSeason()
@@ -61,7 +61,7 @@ class Model_Sportorg_Team extends ORM
 	}
 	public function getSport()
 	{
-		return $this->orgsportlink->sport;
+		return $this->org_sport_link->sport;
 	}
 		
 	public function getBasics()
@@ -78,5 +78,15 @@ class Model_Sportorg_Team extends ORM
 			"mascot" => $this->mascot,
 			"unique_ident" => $this->unique_ident,
 		);
+	}
+
+	public function name()
+	{
+		$title = "";
+		$title .= $this->getOrg()->name;
+		$title .= " ".$this->getSport()->name;
+		$title .= " ".$this->season->name;
+		$title .= " ".$this->year;
+		return $title;
 	}
 }
