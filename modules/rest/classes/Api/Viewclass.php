@@ -52,4 +52,5 @@ class Api_Viewclass
 	{
 		$this->putParams = $paramsArr;
 	}
+
 }

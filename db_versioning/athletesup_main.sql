@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50525
 File Encoding         : 65001
 
-Date: 2013-03-21 02:49:12
+Date: 2013-03-22 03:58:20
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -400,188 +400,188 @@ INSERT INTO `apiparams` VALUES ('77', '125', 'orgs_id', 'int', '0', 'Organizatio
 INSERT INTO `apiparams` VALUES ('78', '125', 'sports_id', 'int', '0', 'Sport ID', '4');
 INSERT INTO `apiparams` VALUES ('79', '125', 'complevels_id', 'int', '0', 'Competition Level ID', '11');
 INSERT INTO `apiparams` VALUES ('80', '125', 'seasons_id', 'int', '0', 'Season ID', '6');
-INSERT INTO `apiparams` VALUES ('81', '126', 'sports_id', 'int', '0', 'ID of the sport to be added', null);
-INSERT INTO `apiparams` VALUES ('82', '420', 'teams_id', 'int', '0', 'Team ID the position is for (We are adding a position to a user/team link)', null);
-INSERT INTO `apiparams` VALUES ('83', '420', 'positions_id', 'int', '0', 'The posititon to add.', null);
-INSERT INTO `apiparams` VALUES ('84', '244', 'roles_id', 'int', '0', 'The ID of the role to associate the user with', null);
+INSERT INTO `apiparams` VALUES ('81', '126', 'sports_id', 'int', '0', 'ID of the sport to be added', '4');
+INSERT INTO `apiparams` VALUES ('82', '420', 'teams_id', 'int', '0', 'Team ID the position is for (We are adding a position to a user/team link)', '5');
+INSERT INTO `apiparams` VALUES ('83', '420', 'positions_id', 'int', '0', 'The posititon to add.', '3');
+INSERT INTO `apiparams` VALUES ('84', '244', 'roles_id', 'int', '0', 'The ID of the role to associate the user with', '48');
 INSERT INTO `apiparams` VALUES ('85', '245', 'provider', 'string', '0', 'The provider the identity is for', null);
 INSERT INTO `apiparams` VALUES ('86', '245', 'identity', 'string', '0', 'The Identity string for a specific provider', null);
-INSERT INTO `apiparams` VALUES ('87', '135', 'name', 'int', '0', 'The name of the organization', null);
+INSERT INTO `apiparams` VALUES ('87', '135', 'name', 'string', '0', 'The name of the organization', null);
 INSERT INTO `apiparams` VALUES ('88', '135', 'singlesport', 'bool', '0', 'This is a 1 or a 0 for true / false', null);
-INSERT INTO `apiparams` VALUES ('89', '135', 'season_profiles_id', 'int', '0', 'ID of the Season Profile this organization uses', null);
-INSERT INTO `apiparams` VALUES ('90', '135', 'complevel_profiles_id', 'int', '0', 'ID of the Competition Level Profile this organization uses', null);
-INSERT INTO `apiparams` VALUES ('91', '135', 'leagues_id', 'int', '0', 'ID of the League (If Applicable)', null);
-INSERT INTO `apiparams` VALUES ('92', '135', 'divisions_id', 'int', '0', 'ID of the Division (If Applicable)', null);
-INSERT INTO `apiparams` VALUES ('93', '136', 'sports_id', 'int', '0', 'Add a Sport to this Organization', null);
+INSERT INTO `apiparams` VALUES ('89', '135', 'season_profiles_id', 'int', '0', 'ID of the Season Profile this organization uses', '7');
+INSERT INTO `apiparams` VALUES ('90', '135', 'complevel_profiles_id', 'int', '0', 'ID of the Competition Level Profile this organization uses', '12');
+INSERT INTO `apiparams` VALUES ('91', '135', 'leagues_id', 'int', '0', 'ID of the League (If Applicable)', '41');
+INSERT INTO `apiparams` VALUES ('92', '135', 'divisions_id', 'int', '0', 'ID of the Division (If Applicable)', '40');
+INSERT INTO `apiparams` VALUES ('93', '136', 'sports_id', 'int', '0', 'Add a Sport to this Organization', '4');
 INSERT INTO `apiparams` VALUES ('94', '143', 'name', 'string', '1', 'Name of the Posititon to be added', null);
-INSERT INTO `apiparams` VALUES ('95', '143', 'sports_id', 'int', '0', 'Sport the position belongs to', null);
-INSERT INTO `apiparams` VALUES ('96', '143', 'stattab_id', 'int', '0', 'Default Statistics Tab to use for this position', null);
+INSERT INTO `apiparams` VALUES ('95', '143', 'sports_id', 'int', '0', 'Sport the position belongs to', '4');
+INSERT INTO `apiparams` VALUES ('96', '143', 'stattab_id', 'int', '0', 'Default Statistics Tab to use for this position', '30');
 INSERT INTO `apiparams` VALUES ('97', '149', 'name', 'string', '1', 'Name of the Sport to add', null);
 INSERT INTO `apiparams` VALUES ('98', '149', 'male', 'bool', '0', 'True if this sport is for men', null);
 INSERT INTO `apiparams` VALUES ('99', '149', 'female', 'bool', '0', 'True if sport is for women', null);
-INSERT INTO `apiparams` VALUES ('100', '149', 'sporttype', 'int', '0', 'ID of the Sport Type', null);
+INSERT INTO `apiparams` VALUES ('100', '149', 'sporttype', 'int', '0', 'ID of the Sport Type', '44');
 INSERT INTO `apiparams` VALUES ('101', '151', 'name', 'string', '0', 'Name of the position to add', null);
-INSERT INTO `apiparams` VALUES ('102', '151', 'stattab_id', 'int', '0', 'ID of the default statistics tab for the position', null);
+INSERT INTO `apiparams` VALUES ('102', '151', 'stattab_id', 'int', '0', 'ID of the default statistics tab for the position', '30');
 INSERT INTO `apiparams` VALUES ('103', '159', 'org_sport_link_id', 'int', '0', 'ID of the linking row for Organization / Sport (Optional alternative to providing sport / org separately)', null);
-INSERT INTO `apiparams` VALUES ('104', '159', 'orgs_id', 'int', '0', 'Organization ID (If Org_Sport_Link not provided)', null);
-INSERT INTO `apiparams` VALUES ('105', '159', 'sports_id', 'int', '0', 'Sport ID (If Org_Sport_Link not provided)', null);
-INSERT INTO `apiparams` VALUES ('106', '159', 'complevels_id', 'int', '0', 'Competition Level ID', null);
-INSERT INTO `apiparams` VALUES ('107', '159', 'seasons_id', 'int', '0', 'Season ID', null);
+INSERT INTO `apiparams` VALUES ('104', '159', 'orgs_id', 'int', '0', 'Organization ID (If Org_Sport_Link not provided)', '2');
+INSERT INTO `apiparams` VALUES ('105', '159', 'sports_id', 'int', '0', 'Sport ID (If Org_Sport_Link not provided)', '4');
+INSERT INTO `apiparams` VALUES ('106', '159', 'complevels_id', 'int', '0', 'Competition Level ID', '11');
+INSERT INTO `apiparams` VALUES ('107', '159', 'seasons_id', 'int', '0', 'Season ID', '6');
 INSERT INTO `apiparams` VALUES ('108', '159', 'year', 'string', '0', 'The Year of the Season', null);
 INSERT INTO `apiparams` VALUES ('109', '159', 'mascot', 'string', '0', 'An optional mascot for the team', null);
 INSERT INTO `apiparams` VALUES ('110', '159', 'unique_ident', 'string', '0', 'This is an optional identifier for organizations that have multiple teams with all other criteria the same.', null);
-INSERT INTO `apiparams` VALUES ('111', '160', 'games_id', 'int', '0', 'If this is provided, the system will assume the game already exists and simply create the linking row.  If not provided the game will be created.', null);
+INSERT INTO `apiparams` VALUES ('111', '160', 'games_id', 'int', '0', 'If this is provided, the system will assume the game already exists and simply create the linking row.  If not provided the game will be created.', '8');
 INSERT INTO `apiparams` VALUES ('112', '160', 'game_datetime', 'datetime', '0', 'The date/time of the game.', null);
-INSERT INTO `apiparams` VALUES ('113', '160', 'locations_id', 'int', '0', 'ID of the location', null);
+INSERT INTO `apiparams` VALUES ('113', '160', 'locations_id', 'int', '0', 'ID of the location', '33');
 INSERT INTO `apiparams` VALUES ('114', '160', 'home_team', 'bool', '0', 'True if this team is the home team for the game.', null);
 INSERT INTO `apiparams` VALUES ('115', '160', 'tournaments_id', 'int', '0', 'Optional tournaments ID if this game belongs to a tournament.', null);
-INSERT INTO `apiparams` VALUES ('116', '161', 'users_id', 'int', '0', 'Adds a Link between this user and this team', null);
+INSERT INTO `apiparams` VALUES ('116', '161', 'users_id', 'int', '0', 'Adds a Link between this user and this team', '1');
 INSERT INTO `apiparams` VALUES ('117', '162', 'name', 'string', '0', 'Name of the season to add', null);
-INSERT INTO `apiparams` VALUES ('118', '162', 'season_profiles_id', 'int', '0', 'The ID of the season profile this season belongs to', null);
+INSERT INTO `apiparams` VALUES ('118', '162', 'season_profiles_id', 'int', '0', 'The ID of the season profile this season belongs to', '7');
 INSERT INTO `apiparams` VALUES ('119', '165', 'name', 'string', '0', 'Name of the Season Profile to create', null);
 INSERT INTO `apiparams` VALUES ('120', '164', 'name', 'string', '0', 'Name of the Season to add', null);
 INSERT INTO `apiparams` VALUES ('121', '166', 'game_datetime', 'datetime', '0', 'The date / time of the Game', null);
-INSERT INTO `apiparams` VALUES ('122', '166', 'locations_id', 'int', '0', 'Location of the game', null);
-INSERT INTO `apiparams` VALUES ('123', '167', 'teams_id', 'int', '0', 'ID of the team to add', null);
+INSERT INTO `apiparams` VALUES ('122', '166', 'locations_id', 'int', '0', 'Location of the game', '33');
+INSERT INTO `apiparams` VALUES ('123', '167', 'teams_id', 'int', '0', 'ID of the team to add', '5');
 INSERT INTO `apiparams` VALUES ('124', '167', 'home_team', 'bool', '0', 'True if this is the home team at the game', null);
 INSERT INTO `apiparams` VALUES ('125', '167', 'isWinner', 'bool', '0', 'This is set to false if the team lost or if the game has not yet taken place', null);
 INSERT INTO `apiparams` VALUES ('126', '167', 'points_scored', 'int', '0', 'Number of points scored', null);
-INSERT INTO `apiparams` VALUES ('127', '167', 'points_agains', 'int', '0', 'Number of points scored against this team', null);
+INSERT INTO `apiparams` VALUES ('127', '167', 'points_against', 'int', '0', 'Number of points scored against this team', null);
 INSERT INTO `apiparams` VALUES ('128', '166', 'tournaments_id', 'int', '0', 'An optional tournament', null);
 INSERT INTO `apiparams` VALUES ('129', '169', 'match_num', 'string', '0', 'A number or unique identifier for the match (can be 1st, Last, or any string)', null);
 INSERT INTO `apiparams` VALUES ('130', '170', 'name', 'string', '0', 'Video Title', null);
 INSERT INTO `apiparams` VALUES ('131', '171', 'name', 'string', '0', 'Image Tiutle', null);
-INSERT INTO `apiparams` VALUES ('132', '172', 'games_id', 'int', '0', 'ID of the game we\'re adding the match for', null);
+INSERT INTO `apiparams` VALUES ('132', '172', 'games_id', 'int', '0', 'ID of the game we\'re adding the match for', '8');
 INSERT INTO `apiparams` VALUES ('133', '172', 'match_num', 'string', '0', 'A number or unique identifier for the match (can be 1st, Last, or any string)', null);
-INSERT INTO `apiparams` VALUES ('134', '173', 'users_id', 'int', '1', 'ID of the player to add', null);
+INSERT INTO `apiparams` VALUES ('134', '173', 'users_id', 'int', '1', 'ID of the player to add', '1');
 INSERT INTO `apiparams` VALUES ('135', '173', 'points_awarded', 'int', '0', 'Number of Points earned (if applicable)', null);
 INSERT INTO `apiparams` VALUES ('136', '173', 'match_won', 'bool', '0', 'True if the player won the match in question', null);
 INSERT INTO `apiparams` VALUES ('137', '173', 'result_time', 'string', '0', 'Result time (if applicable)', null);
-INSERT INTO `apiparams` VALUES ('138', '174', 'users_id', 'int', '0', 'The ID of the player to add', null);
-INSERT INTO `apiparams` VALUES ('139', '174', 'game_matches_id', 'int', '1', 'The Game Match ID', null);
+INSERT INTO `apiparams` VALUES ('138', '174', 'users_id', 'int', '0', 'The ID of the player to add', '1');
+INSERT INTO `apiparams` VALUES ('139', '174', 'game_matches_id', 'int', '1', 'The Game Match ID', '10');
 INSERT INTO `apiparams` VALUES ('140', '174', 'points_awarded', 'int', '1', 'Number of Points earned (if applicable)', null);
 INSERT INTO `apiparams` VALUES ('141', '174', 'match_won', 'bool', '0', 'True if the player won the match in question', null);
 INSERT INTO `apiparams` VALUES ('142', '174', 'result_time', 'string', '0', 'Result time (if applicable)', null);
 INSERT INTO `apiparams` VALUES ('143', '175', 'name', 'string', '1', 'Name of the new Competition Level', null);
-INSERT INTO `apiparams` VALUES ('144', '175', 'complevel_profiles_id', 'int', '1', 'The Competition Level Profile the Complevel belongs to', null);
+INSERT INTO `apiparams` VALUES ('144', '175', 'complevel_profiles_id', 'int', '1', 'The Competition Level Profile the Complevel belongs to', '12');
 INSERT INTO `apiparams` VALUES ('145', '178', 'name', 'string', '1', 'The name of the competition level profile', null);
 INSERT INTO `apiparams` VALUES ('146', '179', 'name', 'string', '1', 'The name of the Competition Level we are adding to this profile', null);
 INSERT INTO `apiparams` VALUES ('147', '180', 'comment', 'string', '1', 'The text of the comment', null);
-INSERT INTO `apiparams` VALUES ('148', '180', 'subject_type_id', 'int', '1', 'The ID of the subject type / entity type of the comment\'s subject (this is a row from the enttypes table) ', null);
+INSERT INTO `apiparams` VALUES ('148', '180', 'subject_type_id', 'int', '1', 'The ID of the subject type / entity type of the comment\'s subject (this is a row from the enttypes table) ', '46');
 INSERT INTO `apiparams` VALUES ('149', '180', 'subject_id', 'int', '1', 'This is the ID of the subject whos type is specified in the enttypes table', null);
-INSERT INTO `apiparams` VALUES ('150', '183', 'subject_type_id', 'int', '1', 'The ID of the subject type / entity type of the tag\'s subject (this is a row from the enttypes table) ', null);
+INSERT INTO `apiparams` VALUES ('150', '183', 'subject_type_id', 'int', '1', 'The ID of the subject type / entity type of the tag\'s subject (this is a row from the enttypes table) ', '46');
 INSERT INTO `apiparams` VALUES ('151', '183', 'subject_id', 'int', '1', 'This is the ID of the subject whos type is specified in the enttypes table', null);
-INSERT INTO `apiparams` VALUES ('152', '183', 'users_id', 'int', '0', 'User Being Tagged (If not set, the authenticated user will be used)', null);
-INSERT INTO `apiparams` VALUES ('153', '185', 'subject_type_id', 'int', '1', 'The ID of the subject type / entity type of the vote\'s subject (this is a row from the enttypes table) ', null);
+INSERT INTO `apiparams` VALUES ('152', '183', 'users_id', 'int', '0', 'User Being Tagged (If not set, the authenticated user will be used)', '1');
+INSERT INTO `apiparams` VALUES ('153', '185', 'subject_type_id', 'int', '1', 'The ID of the subject type / entity type of the vote\'s subject (this is a row from the enttypes table) ', '46');
 INSERT INTO `apiparams` VALUES ('154', '185', 'subject_id', 'int', '1', 'This is the ID of the subject whos type is specified in the enttypes table', null);
 INSERT INTO `apiparams` VALUES ('155', '189', 'name', 'string', '1', 'The name of the image', null);
-INSERT INTO `apiparams` VALUES ('156', '189', 'sports_id', 'int', '0', 'The sport that this image is associated with', null);
+INSERT INTO `apiparams` VALUES ('156', '189', 'sports_id', 'int', '0', 'The sport that this image is associated with', '4');
 INSERT INTO `apiparams` VALUES ('157', '190', 'name', 'string', '1', 'The name of the video clip', null);
-INSERT INTO `apiparams` VALUES ('158', '190', 'sports_id', 'int', '0', 'The ID of the sport this video is associated with', null);
+INSERT INTO `apiparams` VALUES ('158', '190', 'sports_id', 'int', '0', 'The ID of the sport this video is associated with', '4');
 INSERT INTO `apiparams` VALUES ('159', '193', 'name', 'string', '1', 'Name of the video service', null);
-INSERT INTO `apiparams` VALUES ('160', '190', 'video_services_id', 'int', '0', 'An optional video service that is responsible for this video', null);
-INSERT INTO `apiparams` VALUES ('161', '195', 'users_id', 'int', '0', 'The user this data is for', null);
+INSERT INTO `apiparams` VALUES ('160', '190', 'video_services_id', 'int', '0', 'An optional video service that is responsible for this video', '24');
+INSERT INTO `apiparams` VALUES ('161', '195', 'users_id', 'int', '0', 'The user this data is for', '1');
 INSERT INTO `apiparams` VALUES ('162', '195', 'user_value', 'string', '0', 'The user\'s Value', null);
-INSERT INTO `apiparams` VALUES ('163', '198', 'resume_data_profiles_id', 'int', '1', 'The Resume Data Profile to link the Group', null);
-INSERT INTO `apiparams` VALUES ('164', '201', 'sports_id', 'int', '1', 'The sport to link the Resume Data Profile to', null);
-INSERT INTO `apiparams` VALUES ('165', '202', 'resume_data_groups_id', 'int', '1', 'The Resume Data Group to link to this Profile', null);
+INSERT INTO `apiparams` VALUES ('163', '198', 'resume_data_profiles_id', 'int', '1', 'The Resume Data Profile to link the Group', '27');
+INSERT INTO `apiparams` VALUES ('164', '201', 'sports_id', 'int', '1', 'The sport to link the Resume Data Profile to', '4');
+INSERT INTO `apiparams` VALUES ('165', '202', 'resume_data_groups_id', 'int', '1', 'The Resume Data Group to link to this Profile', '26');
 INSERT INTO `apiparams` VALUES ('166', '203', 'name', 'string', '1', 'The name of the Resume Data Profile to add', null);
 INSERT INTO `apiparams` VALUES ('167', '203', 'sports', 'array', '1', 'An array of sports_id\'s in the form \"sports\" : [1,2,4,7]', null);
-INSERT INTO `apiparams` VALUES ('168', '204', 'resume_data_id', 'int', '1', 'The ID of the resume data you are adding', null);
+INSERT INTO `apiparams` VALUES ('168', '204', 'resume_data_id', 'int', '1', 'The ID of the resume data you are adding', '25');
 INSERT INTO `apiparams` VALUES ('169', '204', 'user_value', 'string', '1', 'The Value the user entered for this resume data', null);
-INSERT INTO `apiparams` VALUES ('170', '204', 'users_id', 'int', '0', 'This will default to the logged in user if left blank', null);
-INSERT INTO `apiparams` VALUES ('171', '212', 'users_id', 'int', '1', 'The ID of the user we are adding the value for', null);
-INSERT INTO `apiparams` VALUES ('172', '212', 'teams_id', 'int', '0', 'The Team that this statistic is associated with', null);
+INSERT INTO `apiparams` VALUES ('170', '204', 'users_id', 'int', '0', 'This will default to the logged in user if left blank', '1');
+INSERT INTO `apiparams` VALUES ('171', '212', 'users_id', 'int', '1', 'The ID of the user we are adding the value for', '1');
+INSERT INTO `apiparams` VALUES ('172', '212', 'teams_id', 'int', '0', 'The Team that this statistic is associated with', '5');
 INSERT INTO `apiparams` VALUES ('173', '212', 'statval', 'string', '0', 'The user\'s value', null);
 INSERT INTO `apiparams` VALUES ('174', '212', 'statdate', 'datetime', '0', 'The date that this statistic took place on', null);
-INSERT INTO `apiparams` VALUES ('175', '212', 'games_id', 'int', '0', 'The game that this statistic refers to', null);
-INSERT INTO `apiparams` VALUES ('176', '212', 'stat_contexts_id', 'int', '0', 'The ID of the context for this statistic', null);
+INSERT INTO `apiparams` VALUES ('175', '212', 'games_id', 'int', '0', 'The game that this statistic refers to', '8');
+INSERT INTO `apiparams` VALUES ('176', '212', 'stat_contexts_id', 'int', '0', 'The ID of the context for this statistic', '45');
 INSERT INTO `apiparams` VALUES ('177', '216', 'address', 'string', '0', 'Street Address of the location', null);
-INSERT INTO `apiparams` VALUES ('178', '216', 'cities_id', 'int', '0', 'ID of the city', null);
-INSERT INTO `apiparams` VALUES ('179', '216', 'states_id', 'int', '0', 'ID of the state', null);
+INSERT INTO `apiparams` VALUES ('178', '216', 'cities_id', 'int', '0', 'ID of the city', '34');
+INSERT INTO `apiparams` VALUES ('179', '216', 'states_id', 'int', '0', 'ID of the state', '36');
 INSERT INTO `apiparams` VALUES ('180', '216', 'lon', 'string', '0', 'If available, the longitude of the location (For instance, if the location is picked on a map instead of entered by address)', null);
 INSERT INTO `apiparams` VALUES ('181', '216', 'lat', 'string', '0', 'If available, the latitude of the location (For instance, if the location is picked on a map instead of entered by address)', null);
 INSERT INTO `apiparams` VALUES ('182', '216', 'location_type', 'string', '0', 'Specify whether this is a high school, park, etc.', null);
 INSERT INTO `apiparams` VALUES ('183', '218', 'name', 'string', '1', 'Name of the city to add', null);
-INSERT INTO `apiparams` VALUES ('184', '218', 'states_id', 'int', '0', 'State the city belongs to', null);
-INSERT INTO `apiparams` VALUES ('185', '218', 'counties_id', 'int', '1', 'The county the city belongs to', null);
+INSERT INTO `apiparams` VALUES ('184', '218', 'states_id', 'int', '0', 'State the city belongs to', '36');
+INSERT INTO `apiparams` VALUES ('185', '218', 'counties_id', 'int', '1', 'The county the city belongs to', '35');
 INSERT INTO `apiparams` VALUES ('186', '222', 'name', 'string', '1', 'The name of the County to add', null);
-INSERT INTO `apiparams` VALUES ('187', '222', 'states_id', 'int', '1', 'The ID of the state this county exists in', null);
+INSERT INTO `apiparams` VALUES ('187', '222', 'states_id', 'int', '1', 'The ID of the state this county exists in', '36');
 INSERT INTO `apiparams` VALUES ('188', '226', 'name', 'string', '1', 'The name of the state', null);
-INSERT INTO `apiparams` VALUES ('189', '226', 'countries_id', 'int', '1', 'The country the state belongs to', null);
+INSERT INTO `apiparams` VALUES ('189', '226', 'countries_id', 'int', '1', 'The country the state belongs to', '49');
 INSERT INTO `apiparams` VALUES ('190', '227', 'name', 'string', '1', 'The name of the county to add', null);
 INSERT INTO `apiparams` VALUES ('191', '228', 'name', 'string', '1', 'Name of the Division to add', null);
-INSERT INTO `apiparams` VALUES ('192', '228', 'sections_id', 'int', '0', 'The ID of the Section (if applicable)', null);
+INSERT INTO `apiparams` VALUES ('192', '228', 'sections_id', 'int', '0', 'The ID of the Section (if applicable)', '43');
 INSERT INTO `apiparams` VALUES ('193', '229', 'name', 'string', '1', 'Name of the Section to add', null);
-INSERT INTO `apiparams` VALUES ('194', '229', 'sports_id', 'int', '1', 'The ID of the sport this section refers to', null);
+INSERT INTO `apiparams` VALUES ('194', '229', 'sports_id', 'int', '1', 'The ID of the sport this section refers to', '4');
 INSERT INTO `apiparams` VALUES ('195', '230', 'name', 'string', '1', 'Name of the League to add', null);
-INSERT INTO `apiparams` VALUES ('196', '230', 'sections_id', 'int', '0', 'The ID of the Section (if applicable)', null);
+INSERT INTO `apiparams` VALUES ('196', '230', 'sections_id', 'int', '0', 'The ID of the Section (if applicable)', '43');
 INSERT INTO `apiparams` VALUES ('197', '232', 'name', 'string', '1', 'Name of the Division to add', null);
-INSERT INTO `apiparams` VALUES ('198', '232', 'states_id', 'int', '1', 'ID of the state this division belongs to', null);
-INSERT INTO `apiparams` VALUES ('199', '232', 'sections_id', 'int', '0', 'The ID of the Section this division belongs to (if applicable)', null);
+INSERT INTO `apiparams` VALUES ('198', '232', 'states_id', 'int', '1', 'ID of the state this division belongs to', '36');
+INSERT INTO `apiparams` VALUES ('199', '232', 'sections_id', 'int', '0', 'The ID of the Section this division belongs to (if applicable)', '43');
 INSERT INTO `apiparams` VALUES ('200', '234', 'name', 'string', '1', 'Name of the League to add', null);
-INSERT INTO `apiparams` VALUES ('201', '234', 'sections_id', 'int', '0', 'The ID of the Section (if applicable)', null);
-INSERT INTO `apiparams` VALUES ('202', '234', 'states_id', 'int', '1', 'The ID of the state the League belongs to', null);
+INSERT INTO `apiparams` VALUES ('201', '234', 'sections_id', 'int', '0', 'The ID of the Section (if applicable)', '43');
+INSERT INTO `apiparams` VALUES ('202', '234', 'states_id', 'int', '1', 'The ID of the state the League belongs to', '36');
 INSERT INTO `apiparams` VALUES ('203', '240', 'comment', 'string', '1', 'The comment to post about the specified subject', null);
-INSERT INTO `apiparams` VALUES ('204', '243', 'users_id', 'int', '0', 'If specified, this is the user that will be tagged to the subject.  If not specified, the logged in user will be used.', null);
-INSERT INTO `apiparams` VALUES ('205', '214', 'stats_id', 'int', '1', 'The ID of the statistic', null);
-INSERT INTO `apiparams` VALUES ('206', '214', 'users_id', 'int', '1', 'The ID of the user we are adding the value for', null);
-INSERT INTO `apiparams` VALUES ('207', '214', 'teams_id', 'int', '0', 'The Team that this statistic is associated with', null);
+INSERT INTO `apiparams` VALUES ('204', '243', 'users_id', 'int', '0', 'If specified, this is the user that will be tagged to the subject.  If not specified, the logged in user will be used.', '1');
+INSERT INTO `apiparams` VALUES ('205', '214', 'stats_id', 'int', '1', 'The ID of the statistic', '31');
+INSERT INTO `apiparams` VALUES ('206', '214', 'users_id', 'int', '1', 'The ID of the user we are adding the value for', '1');
+INSERT INTO `apiparams` VALUES ('207', '214', 'teams_id', 'int', '0', 'The Team that this statistic is associated with', '5');
 INSERT INTO `apiparams` VALUES ('208', '214', 'statval', 'string', '0', 'The user\'s value', null);
 INSERT INTO `apiparams` VALUES ('209', '214', 'statdate', 'datetime', '0', 'The date that this statistic took place on', null);
-INSERT INTO `apiparams` VALUES ('210', '214', 'games_id', 'int', '0', 'The game that this statistic refers to', null);
-INSERT INTO `apiparams` VALUES ('211', '214', 'stat_contexts_id', 'int', '0', 'The ID of the context for this statistic', null);
+INSERT INTO `apiparams` VALUES ('210', '214', 'games_id', 'int', '0', 'The game that this statistic refers to', '8');
+INSERT INTO `apiparams` VALUES ('211', '214', 'stat_contexts_id', 'int', '0', 'The ID of the context for this statistic', '45');
 INSERT INTO `apiparams` VALUES ('212', '246', 'email', 'string', '0', 'Updated Email Address', null);
 INSERT INTO `apiparams` VALUES ('213', '246', 'firstname', 'string', '0', 'Updated First Name', null);
 INSERT INTO `apiparams` VALUES ('214', '246', 'lastname', 'string', '0', 'Updated Last Name', null);
 INSERT INTO `apiparams` VALUES ('215', '246', 'password', 'string', '0', 'New Password', null);
 INSERT INTO `apiparams` VALUES ('216', '246', 're_password', 'string', '0', 'Re-entered Password for verification', null);
-INSERT INTO `apiparams` VALUES ('217', '246', 'cities_id', 'int', '0', 'User\'s Home City', null);
+INSERT INTO `apiparams` VALUES ('217', '246', 'cities_id', 'int', '0', 'User\'s Home City', '34');
 INSERT INTO `apiparams` VALUES ('218', '257', 'name', 'string', '0', 'Update the name of the organization', null);
 INSERT INTO `apiparams` VALUES ('219', '257', 'signle_sport', 'bool', '0', 'Change whether this is a one-sport organization', null);
-INSERT INTO `apiparams` VALUES ('220', '257', 'leagues_id', 'int', '0', 'Change the league this organization belongs to', null);
-INSERT INTO `apiparams` VALUES ('221', '257', 'divisions_id', 'int', '0', 'Change the division this organization belong to', null);
-INSERT INTO `apiparams` VALUES ('222', '257', 'season_profiles_id', 'int', '0', 'Change the Season Profile this organization uses', null);
-INSERT INTO `apiparams` VALUES ('223', '257', 'complevel_profiles_id', 'int', '0', 'Change the Competition Level Profile', null);
+INSERT INTO `apiparams` VALUES ('220', '257', 'leagues_id', 'int', '0', 'Change the league this organization belongs to', '41');
+INSERT INTO `apiparams` VALUES ('221', '257', 'divisions_id', 'int', '0', 'Change the division this organization belong to', '40');
+INSERT INTO `apiparams` VALUES ('222', '257', 'season_profiles_id', 'int', '0', 'Change the Season Profile this organization uses', '7');
+INSERT INTO `apiparams` VALUES ('223', '257', 'complevel_profiles_id', 'int', '0', 'Change the Competition Level Profile', '12');
 INSERT INTO `apiparams` VALUES ('224', '266', 'name', 'string', '0', 'Change the name of the Sports Position', null);
-INSERT INTO `apiparams` VALUES ('225', '266', 'stattab_id', 'int', '0', 'Change the default Statistics Tab', null);
-INSERT INTO `apiparams` VALUES ('226', '266', 'sports_id', 'int', '0', 'Change the sport this position belongs to', null);
+INSERT INTO `apiparams` VALUES ('225', '266', 'stattab_id', 'int', '0', 'Change the default Statistics Tab', '30');
+INSERT INTO `apiparams` VALUES ('226', '266', 'sports_id', 'int', '0', 'Change the sport this position belongs to', '4');
 INSERT INTO `apiparams` VALUES ('227', '271', 'name', 'string', '0', 'Update the name of this sport', null);
 INSERT INTO `apiparams` VALUES ('228', '271', 'male', 'bool', '0', 'Update whether men can compete in this sport', null);
 INSERT INTO `apiparams` VALUES ('229', '271', 'female', 'bool', '0', 'Update whether women can compete in this sport', null);
-INSERT INTO `apiparams` VALUES ('230', '271', 'sport_type_id', 'int', '0', 'Change the Sport Type ID for this sport', null);
-INSERT INTO `apiparams` VALUES ('231', '281', 'complevels_id', 'int', '0', 'Competition Level ID', null);
-INSERT INTO `apiparams` VALUES ('232', '281', 'seasons_id', 'int', '0', 'Update the Season ID', null);
+INSERT INTO `apiparams` VALUES ('230', '271', 'sport_type_id', 'int', '0', 'Change the Sport Type ID for this sport', '44');
+INSERT INTO `apiparams` VALUES ('231', '281', 'complevels_id', 'int', '0', 'Competition Level ID', '11');
+INSERT INTO `apiparams` VALUES ('232', '281', 'seasons_id', 'int', '0', 'Update the Season ID', '6');
 INSERT INTO `apiparams` VALUES ('233', '281', 'year', 'string', '0', 'Change the year of this team', null);
 INSERT INTO `apiparams` VALUES ('234', '281', 'mascot', 'string', '0', 'Change the mascot of this team', null);
 INSERT INTO `apiparams` VALUES ('235', '281', 'unique_ident', 'string', '0', 'Change the Unique Identifier for this team', null);
 INSERT INTO `apiparams` VALUES ('236', '284', 'name', 'string', '0', 'Change the name of the Season', null);
-INSERT INTO `apiparams` VALUES ('237', '284', 'seasons_profiles_id', 'int', '0', 'Change the Season Profile this season belongs to', null);
+INSERT INTO `apiparams` VALUES ('237', '284', 'seasons_profiles_id', 'int', '0', 'Change the Season Profile this season belongs to', '7');
 INSERT INTO `apiparams` VALUES ('238', '286', 'name', 'string', '0', 'Change the name of the Season Profile', null);
 INSERT INTO `apiparams` VALUES ('239', '288', 'game_datetime', 'datetime', '0', 'Change the date / time this game takes place', null);
-INSERT INTO `apiparams` VALUES ('240', '288', 'lodcations_id', 'int', '0', 'Change the location of this game', null);
+INSERT INTO `apiparams` VALUES ('240', '288', 'locations_id', 'int', '0', 'Change the location of this game', null);
 INSERT INTO `apiparams` VALUES ('241', '294', 'match_num', 'string', '0', 'Change the Match Num for this match', null);
 INSERT INTO `apiparams` VALUES ('242', '296', 'points_awarded', 'int', '0', 'Update the number of points awarded to this player during this match', null);
 INSERT INTO `apiparams` VALUES ('243', '296', 'match_winner', 'bool', '0', 'Update whether this player is the match winner', null);
 INSERT INTO `apiparams` VALUES ('244', '297', 'name', 'string', '0', 'Change the name of the Competition Level', null);
-INSERT INTO `apiparams` VALUES ('245', '297', 'complevel_profiles_id', 'int', '0', 'Change the Competition Profile', null);
+INSERT INTO `apiparams` VALUES ('245', '297', 'complevel_profiles_id', 'int', '0', 'Change the Competition Profile', '12');
 INSERT INTO `apiparams` VALUES ('246', '297', 'min_age', 'int', '0', 'Change Minimum Age for this Comp Level', null);
 INSERT INTO `apiparams` VALUES ('247', '297', 'max_age', 'int', '0', 'Change Maximum Age for this Comp Level', null);
 INSERT INTO `apiparams` VALUES ('248', '300', 'name', 'string', '0', 'Change the name of the Competition Level Profile', null);
 INSERT INTO `apiparams` VALUES ('249', '302', 'comment', 'string', '0', 'Update the comment', null);
-INSERT INTO `apiparams` VALUES ('250', '262', 'complevel_profiles_id', 'int', '0', 'Change The Competition Level ID of the Organization ID', null);
-INSERT INTO `apiparams` VALUES ('251', '263', 'season_profiles_id', 'int', '0', 'Change the Season Profiles ID', null);
-INSERT INTO `apiparams` VALUES ('252', '260', 'divisions_id', 'int', '0', 'Change the Division ID', null);
-INSERT INTO `apiparams` VALUES ('254', '274', 'sport_type_id', 'int', '0', 'Change the sport type ID', null);
+INSERT INTO `apiparams` VALUES ('250', '262', 'complevel_profiles_id', 'int', '0', 'Change The Competition Level ID of the Organization ID', '12');
+INSERT INTO `apiparams` VALUES ('251', '263', 'season_profiles_id', 'int', '0', 'Change the Season Profiles ID', '7');
+INSERT INTO `apiparams` VALUES ('252', '260', 'divisions_id', 'int', '0', 'Change the Division ID', '40');
+INSERT INTO `apiparams` VALUES ('254', '274', 'sport_type_id', 'int', '0', 'Change the sport type ID', '44');
 INSERT INTO `apiparams` VALUES ('255', '282', 'points_scored', 'int', '0', 'Change the number of points scored for this team in this game', null);
 INSERT INTO `apiparams` VALUES ('256', '282', 'points_against', 'int', '0', 'Change the number of points scored against this team / game', null);
 INSERT INTO `apiparams` VALUES ('257', '282', 'isWinner', 'bool', '0', 'Update whether this team won this game', null);
 INSERT INTO `apiparams` VALUES ('258', '282', 'is_home_team', 'bool', '0', 'Update whether this is the home team for this game', null);
 INSERT INTO `apiparams` VALUES ('260', '310', 'name', 'string', '0', 'Change the name of Media', null);
-INSERT INTO `apiparams` VALUES ('261', '310', 'sports_id', 'int', '0', 'Change the sport ID associated with this media', null);
-INSERT INTO `apiparams` VALUES ('262', '310', 'subject_type_id', 'int', '0', 'Change the subject type ID of this Media', null);
+INSERT INTO `apiparams` VALUES ('261', '310', 'sports_id', 'int', '0', 'Change the sport ID associated with this media', '4');
+INSERT INTO `apiparams` VALUES ('262', '310', 'subject_type_id', 'int', '0', 'Change the subject type ID of this Media', '46');
 INSERT INTO `apiparams` VALUES ('263', '310', 'subject_id', 'int', '0', 'Change the subject ID of this media', null);
-INSERT INTO `apiparams` VALUES ('264', '312', 'video_services_id', 'int', '0', 'Change the video service this video belongs to', null);
+INSERT INTO `apiparams` VALUES ('264', '312', 'video_services_id', 'int', '0', 'Change the video service this video belongs to', '24');
 INSERT INTO `apiparams` VALUES ('265', '315', 'name', 'string', '0', 'Update the name of the Video Service', null);
 INSERT INTO `apiparams` VALUES ('266', '315', 'website', 'string', '0', 'Update this Video Service\'s Website', null);
 INSERT INTO `apiparams` VALUES ('267', '317', 'name', 'string', '0', 'Change the name of the Resume Data', null);
@@ -593,23 +593,23 @@ INSERT INTO `apiparams` VALUES ('272', '326', 'user_value', 'string', '0', 'Upda
 INSERT INTO `apiparams` VALUES ('273', '334', 'name', 'string', '0', 'Change the name of this Statistic', null);
 INSERT INTO `apiparams` VALUES ('274', '334', 'description', 'string', '0', 'Change the description of this Statistic', null);
 INSERT INTO `apiparams` VALUES ('275', '338', 'address', 'string', '0', 'Change the address of this location', null);
-INSERT INTO `apiparams` VALUES ('276', '338', 'cities_id', 'int', '0', 'Change the city of the location', null);
+INSERT INTO `apiparams` VALUES ('276', '338', 'cities_id', 'int', '0', 'Change the city of the location', '34');
 INSERT INTO `apiparams` VALUES ('277', '338', 'lon', 'string', '0', 'Change the longitude of this location', null);
 INSERT INTO `apiparams` VALUES ('278', '338', 'lat', 'string', '0', 'Change the latitude of this location', null);
 INSERT INTO `apiparams` VALUES ('279', '338', 'location_type', 'string', '0', 'Change the location type of this location', null);
 INSERT INTO `apiparams` VALUES ('280', '344', 'name', 'string', '0', 'Change the name of the County', null);
-INSERT INTO `apiparams` VALUES ('281', '344', 'states_id', 'int', '0', 'Change the State this County exists in', null);
+INSERT INTO `apiparams` VALUES ('281', '344', 'states_id', 'int', '0', 'Change the State this County exists in', '36');
 INSERT INTO `apiparams` VALUES ('282', '348', 'name', 'string', '0', 'Update the name of the state', null);
-INSERT INTO `apiparams` VALUES ('283', '348', 'countries_id', 'int', '0', 'Change the country that the state exists in', null);
+INSERT INTO `apiparams` VALUES ('283', '348', 'countries_id', 'int', '0', 'Change the country that the state exists in', '49');
 INSERT INTO `apiparams` VALUES ('284', '354', 'name', 'string', '0', 'Update the name of the division', null);
-INSERT INTO `apiparams` VALUES ('285', '354', 'states_id', 'int', '0', 'Change the state of this division', null);
-INSERT INTO `apiparams` VALUES ('286', '354', 'sections_id', 'int', '0', 'Change the Section this division belongs to', null);
+INSERT INTO `apiparams` VALUES ('285', '354', 'states_id', 'int', '0', 'Change the state of this division', '36');
+INSERT INTO `apiparams` VALUES ('286', '354', 'sections_id', 'int', '0', 'Change the Section this division belongs to', '43');
 INSERT INTO `apiparams` VALUES ('287', '356', 'name', 'string', '0', 'Update the name of the league', null);
-INSERT INTO `apiparams` VALUES ('288', '356', 'states_id', 'int', '0', 'Change the state of this league', null);
-INSERT INTO `apiparams` VALUES ('289', '356', 'sections_id', 'int', '0', 'Change the Section this league belongs to', null);
+INSERT INTO `apiparams` VALUES ('288', '356', 'states_id', 'int', '0', 'Change the state of this league', '36');
+INSERT INTO `apiparams` VALUES ('289', '356', 'sections_id', 'int', '0', 'Change the Section this league belongs to', '43');
 INSERT INTO `apiparams` VALUES ('290', '358', 'name', 'string', '0', 'Update the name of the section', null);
-INSERT INTO `apiparams` VALUES ('291', '358', 'states_id', 'int', '0', 'Change the state of this section', null);
-INSERT INTO `apiparams` VALUES ('292', '358', 'states_id', 'int', '0', 'Change this section\'s state', null);
+INSERT INTO `apiparams` VALUES ('291', '358', 'states_id', 'int', '0', 'Change the state of this section', '36');
+INSERT INTO `apiparams` VALUES ('292', '358', 'states_id', 'int', '0', 'Change this section\'s state', '36');
 INSERT INTO `apiparams` VALUES ('293', '360', 'name', 'string', '0', 'Change the name of the sport type', null);
 
 -- ----------------------------
@@ -31447,16 +31447,20 @@ INSERT INTO `countries` VALUES ('1', 'United States');
 -- ----------------------------
 DROP TABLE IF EXISTS `divisions`;
 CREATE TABLE `divisions` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) DEFAULT NULL,
   `states_id` int(11) DEFAULT NULL COMMENT 'State ID is used for smaller states',
   `sections_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of divisions
 -- ----------------------------
+INSERT INTO `divisions` VALUES ('1', 'Division 8 Man', '5', '1');
+INSERT INTO `divisions` VALUES ('2', 'Division I', '5', '1');
+INSERT INTO `divisions` VALUES ('3', 'Division II', '5', '1');
+INSERT INTO `divisions` VALUES ('4', 'Division III', '5', '1');
 
 -- ----------------------------
 -- Table structure for `enttypes`
@@ -31472,7 +31476,7 @@ CREATE TABLE `enttypes` (
   `id1` varchar(25) DEFAULT NULL,
   `id2` varchar(25) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=48 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=50 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of enttypes
@@ -31508,15 +31512,15 @@ INSERT INTO `enttypes` VALUES ('34', 'City', 'city', 'Location_City', 'cities', 
 INSERT INTO `enttypes` VALUES ('35', 'County', 'county', 'Location_County', 'counties', 'A County references a parent State', 'counties_id', '');
 INSERT INTO `enttypes` VALUES ('36', 'State', 'state', 'Location_State', 'states', 'A State references a parent County and can contain divisions, leagues, sections, and more.', 'states_id', '');
 INSERT INTO `enttypes` VALUES ('37', 'Player of the Game', 'pog', 'Site_Pog', 'player_of_game', 'On a game page, any athlete in the roster of one of the competing teams can be voted \"Player of the Game\".  It\'s like MVP.  The POG votes will dictate their placement on the roster listing.', 'player_of_game_id', '');
-INSERT INTO `enttypes` VALUES ('38', 'High School', 'highschool', 'Sportorg_Orgs_Highschool', 'high_schools', 'High Schools refer to an organization but some data is kept in a separate table which is school specific and doesn\'t apply to other types of organizations.', 'highschools_id', '');
-INSERT INTO `enttypes` VALUES ('39', 'Sports Club', 'club', 'Sportorg_Orgs_Club', 'clubs', 'Sports Clubs refer to an organization but some data is kept in a separate table which is club specific and doesn\'t apply to other types of organizations.', 'clubs_id', '');
 INSERT INTO `enttypes` VALUES ('40', 'Sports Division', 'division', 'Sportorg_Division', 'divisions', 'An organization can be associated with a division.  Divisions then can belong to a section (but this is not always the case).  This is mostly for searching for a team.', 'divisions_id', '');
 INSERT INTO `enttypes` VALUES ('41', 'Sports League', 'league', 'Sportorg_League', 'leagues', 'An organization can be associated with a league.  Leagues then can belong to a section (but this is not always the case).  This is mostly for searching for a team.', 'leagues_id', '');
 INSERT INTO `enttypes` VALUES ('43', 'Sports Section', 'section', 'Sportorg_Section', 'sections', 'Large States are broken into sections before they are broken into Leagues / Divisions.  So a section might be \"Southern California\" in a large state like California.', 'sport_types_id', '');
-INSERT INTO `enttypes` VALUES ('44', 'Sport Type', 'sporttype', 'Sportorg_Type', 'sport_types', 'The Sport type will be used to designate whether a sport is event-driven, score driven, team-based or individual, etc.  The sport type will be used to determine how various things are presented on the site.', 'stat_contexts_id', '');
+INSERT INTO `enttypes` VALUES ('44', 'Sport Type', 'sporttype', 'Sportorg_Sporttype', 'sport_types', 'The Sport type will be used to designate whether a sport is event-driven, score driven, team-based or individual, etc.  The sport type will be used to determine how various things are presented on the site.', 'stat_contexts_id', '');
 INSERT INTO `enttypes` VALUES ('45', 'Statistics Context', 'statcontext', 'Stats_Context', 'stat_contexts', 'The statistics context exists so that we can designate whether a set of stats is for a game, a season, or something else.', 'statvals_id', '');
-INSERT INTO `enttypes` VALUES ('46', 'Anonymous Entity', 'ent', 'Site_Entdir', 'enttypes', 'Anonymous entities can become many different types of objects.  Instead of having a single ID and a table, a type is specified which will determine the table the id refers to.  This is used for things like comments, votes, tags, and media associations.', 'subject_type_id', 'subject_id');
-INSERT INTO `enttypes` VALUES ('47', 'Statistic Value', 'statval', 'Stats_Val', 'statvals', 'This is a user value for a specific statistic', 'statvals_id', null);
+INSERT INTO `enttypes` VALUES ('46', 'Anonymous Entity', 'ent', 'Site_Enttype', 'enttypes', 'Anonymous entities can become many different types of objects.  Instead of having a single ID and a table, a type is specified which will determine the table the id refers to.  This is used for things like comments, votes, tags, and media associations.', 'subject_type_id', 'subject_id');
+INSERT INTO `enttypes` VALUES ('47', 'Statistic Value', 'statval', 'Stats_Vals', 'statvals', 'This is a user value for a specific statistic', 'statvals_id', null);
+INSERT INTO `enttypes` VALUES ('48', 'User Role', 'role', 'Auth_Role', 'roles', 'A user can have many roles associated with his or her account such as login, admin, etc.', 'roles_id', null);
+INSERT INTO `enttypes` VALUES ('49', 'Country', 'country', 'Location_Country', 'countries', 'A Country...', 'countries_id', null);
 
 -- ----------------------------
 -- Table structure for `fitness_data`
@@ -31709,11 +31713,16 @@ CREATE TABLE `leagues` (
   `sections_id` int(10) DEFAULT NULL,
   `states_id` int(10) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of leagues
 -- ----------------------------
+INSERT INTO `leagues` VALUES ('1', 'Central', '1', '5');
+INSERT INTO `leagues` VALUES ('2', 'City (8 Men)', '1', '5');
+INSERT INTO `leagues` VALUES ('3', 'Coliseum', '1', '5');
+INSERT INTO `leagues` VALUES ('4', 'East Valley', '1', '5');
+INSERT INTO `leagues` VALUES ('5', 'Eastern', '1', '5');
 
 -- ----------------------------
 -- Table structure for `locations`
@@ -31769,13 +31778,20 @@ CREATE TABLE `orgs` (
   `complevel_profiles_id` int(11) DEFAULT NULL,
   `locations_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of orgs
 -- ----------------------------
 INSERT INTO `orgs` VALUES ('1', 'Crossroads School', '0', '1', '1', '1', '1', '1');
 INSERT INTO `orgs` VALUES ('2', 'Anarchist Acadamy', '0', '1', '1', '1', '1', '1');
+INSERT INTO `orgs` VALUES ('6', 'Blair Academy', '0', null, null, '1', '1', null);
+INSERT INTO `orgs` VALUES ('7', 'Mike Academy', '0', '1', '2', '2', '2', null);
+INSERT INTO `orgs` VALUES ('8', 'Another One', '1', '3', '4', '1', '2', null);
+INSERT INTO `orgs` VALUES ('9', 'Another Two', '1', '3', '4', '1', '2', null);
+INSERT INTO `orgs` VALUES ('10', 'asdfasdfasdf', '1', '4', '4', '1', '2', null);
+INSERT INTO `orgs` VALUES ('11', 'asdfasdfasdf', '0', '5', '4', '2', '2', null);
+INSERT INTO `orgs` VALUES ('12', null, '1', null, null, '2', null, null);
 
 -- ----------------------------
 -- Table structure for `org_league_link`
@@ -31800,12 +31816,17 @@ CREATE TABLE `org_sport_link` (
   `orgs_id` int(11) NOT NULL,
   `sports_id` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of org_sport_link
 -- ----------------------------
 INSERT INTO `org_sport_link` VALUES ('1', '1', '50');
+INSERT INTO `org_sport_link` VALUES ('2', '1', '58');
+INSERT INTO `org_sport_link` VALUES ('3', '6', '48');
+INSERT INTO `org_sport_link` VALUES ('4', '6', '48');
+INSERT INTO `org_sport_link` VALUES ('5', '6', '56');
+INSERT INTO `org_sport_link` VALUES ('6', '2', '61');
 
 -- ----------------------------
 -- Table structure for `player_of_game`
@@ -33469,16 +33490,17 @@ INSERT INTO `season_profiles` VALUES ('2', 'Year Round');
 -- ----------------------------
 DROP TABLE IF EXISTS `sections`;
 CREATE TABLE `sections` (
-  `id` int(11) NOT NULL DEFAULT '0',
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) DEFAULT NULL,
   `sports_id` int(11) DEFAULT NULL,
   `states_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of sections
 -- ----------------------------
+INSERT INTO `sections` VALUES ('1', 'Los Angeles City', '46', '5');
 
 -- ----------------------------
 -- Table structure for `social_links`
@@ -35214,7 +35236,7 @@ INSERT INTO `users` VALUES ('425979', 'clay_gorham@yahoo.com_', 'clay_gorham@yah
 INSERT INTO `users` VALUES ('425980', 'cavellobrick@yahoo.com_', 'pete.cavello', 'd5d845c15751d7bda5d9101d28fbcc13e22cba20c06e057132', '1', '1362980726', 'Pete', 'Cavello', '1771', null, null);
 INSERT INTO `users` VALUES ('425981', 'treythornburg@gmail.com_', 'treythornburg@gmail.com', '8e720bbf5b8e4e4587e627e599f79741f68ac2e3a9ed470260', '1', '1363024849', 'Trey', 'Thornburg', '0', null, null);
 INSERT INTO `users` VALUES ('425982', 'nicolette.elliott@yahoo.com_', 'nicolette.elliott@yahoo.com', '9cc3931c59b143ab87bece75e1d280cb3d1033e4d2a5b8f375', '1', '1363064186', 'Nicolette Amber', 'Elliott', '2462', null, null);
-INSERT INTO `users` VALUES ('425983', 'mike.wrather@gmail.com', 'mike', '896850b3f3929cbeff81d0ff8c98bee1931d42505d782915974c015472fca4cc', '2', '1363815939', null, null, null, null, null);
+INSERT INTO `users` VALUES ('425983', 'mike.wrather@gmail.com', 'mike', '896850b3f3929cbeff81d0ff8c98bee1931d42505d782915974c015472fca4cc', '2', '1363939432', null, null, null, null, null);
 
 -- ----------------------------
 -- Table structure for `users_teams_link`
@@ -35408,7 +35430,7 @@ CREATE TABLE `user_tokens` (
   KEY `fk_user_id` (`user_id`),
   KEY `expires` (`expires`),
   CONSTRAINT `user_tokens_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=38 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of user_tokens
@@ -35422,6 +35444,7 @@ INSERT INTO `user_tokens` VALUES ('24', '425983', '7e4e9cd3d03cacf48173e9ba841c1
 INSERT INTO `user_tokens` VALUES ('25', '425983', '7e4e9cd3d03cacf48173e9ba841c1e1223b4f2e1', '0148ab824ad6a2c8a436030393fddf97ab657e5e', '1363770997', '1364980597');
 INSERT INTO `user_tokens` VALUES ('26', '425983', '7e4e9cd3d03cacf48173e9ba841c1e1223b4f2e1', '01767bcbbe39a1d364605369ea56ac896ff0a92b', '1363771150', '1364980750');
 INSERT INTO `user_tokens` VALUES ('35', '425983', '7e4e9cd3d03cacf48173e9ba841c1e1223b4f2e1', 'f572ca70b7c496e423b8947b308c6d57cb3b850e', '1363773750', '1364983350');
+INSERT INTO `user_tokens` VALUES ('37', '425983', '32e9c33404e62a2c8403363e31076038feff7ee3', '44f7dcab9b572a17dfd4cc9feb51d1b21cf04cba', '1363939432', '1365149032');
 
 -- ----------------------------
 -- Table structure for `usl_game_link`

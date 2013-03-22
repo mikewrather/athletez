@@ -159,10 +159,13 @@
 		     // CHECK FOR PARAMETERS:
 			// name 
 			// The name of the organization
+
+			$new_org = ORM::factory('Sportorg_Org');
 				
-			if((int)trim($this->request->post('name')) > 0)
+			if(trim($this->request->post('name')) != '')
 			{
-				$name = (int)trim($this->request->post('name'));
+				$name = trim($this->request->post('name'));
+				$new_org->name = $name;
 			}
 
 			// singlesport 
@@ -172,6 +175,7 @@
 			{
 				//convert singlesport to a boolean
 				$singlesport = (bool)$this->request->post('singlesport');
+				$new_org->single_sport = $singlesport;
 			}
 
 			// season_profiles_id 
@@ -180,6 +184,7 @@
 			if((int)trim($this->request->post('season_profiles_id')) > 0)
 			{
 				$season_profiles_id = (int)trim($this->request->post('season_profiles_id'));
+				$new_org->season_profiles_id = $season_profiles_id;
 			}
 
 			// complevel_profiles_id 
@@ -188,6 +193,7 @@
 			if((int)trim($this->request->post('complevel_profiles_id')) > 0)
 			{
 				$complevel_profiles_id = (int)trim($this->request->post('complevel_profiles_id'));
+				$new_org->complevel_profiles_id = $complevel_profiles_id;
 			}
 
 			// leagues_id 
@@ -196,6 +202,7 @@
 			if((int)trim($this->request->post('leagues_id')) > 0)
 			{
 				$leagues_id = (int)trim($this->request->post('leagues_id'));
+				$new_org->leagues_id = $leagues_id;
 			}
 
 			// divisions_id 
@@ -204,7 +211,13 @@
 			if((int)trim($this->request->post('divisions_id')) > 0)
 			{
 				$divisions_id = (int)trim($this->request->post('divisions_id'));
+				$new_org->divisions_id = $divisions_id;
 			}
+
+
+			$this->processObjectSave($new_org);
+
+			return $new_org;
 
 		}
 		
@@ -220,12 +233,31 @@
 		     // CHECK FOR PARAMETERS:
 			// sports_id 
 			// Add a Sport to this Organization
-				
+
+			$this_org = ORM::factory('Sportorg_Org',$this->myID);
+
 			if((int)trim($this->request->post('sports_id')) > 0)
 			{
 				$sports_id = (int)trim($this->request->post('sports_id'));
+				$this_org->addSport($sports_id);
+			}
+			else // THIS WAS A REQUIRED PARAMETER
+			{
+				// Create Array for Error Data
+				$error_array = array(
+					"error" => "Required Parameter Missing",
+					"param_name" => "sports_id",
+					"param_desc" => "The ID of the sport being associated with this organization"
+				);
+
+				// Set whether it is a fatal error
+				$is_fatal = true;
+
+				// Call method to throw an error
+				$this->addError($error_array,$is_fatal);
 			}
 
+			return $this_org;
 		}
 		
 		############################################################################

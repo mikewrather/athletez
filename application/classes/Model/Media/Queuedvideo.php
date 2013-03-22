@@ -5,10 +5,10 @@
  * Time: 12:49 PM
  */
 
-class Model_Media_Queuedvidio extends ORM
+class Model_Media_Queuedvideo extends ORM
 {
 	
-	protected $_table_name = 'queued_videos';
+	protected $_table_name = 'queuedvideos';
 	
 
 	protected $_belongs_to = array(

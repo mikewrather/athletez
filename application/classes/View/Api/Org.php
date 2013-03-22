@@ -12,11 +12,6 @@
 	class View_Api_Org extends Api_Viewclass
 	{
 
-		public function __construct()
-		{
-			parent::__construct();
-		}
-
 	
 		/**
 		 * get_basics() Basic information about the organization
@@ -201,15 +196,6 @@
 		 */
 		public function post_add()
 		{
-			$retArr = array();
-
-			// Scaffolding Code For Array:
-			$objs = $this->obj->find_all();
-			foreach($objs as $obj)
-			{
-				$retArr[$obj->id] = $obj->getBasics();
-			}
-
 			// Scaffolding Code For Single:
 			$retArr = $this->obj->getBasics();
 
@@ -223,14 +209,6 @@
 		 */
 		public function post_addsport()
 		{
-			$retArr = array();
-
-			// Scaffolding Code For Array:
-			$objs = $this->obj->find_all();
-			foreach($objs as $obj)
-			{
-				$retArr[$obj->id] = $obj->getBasics();
-			}
 
 			// Scaffolding Code For Single:
 			$retArr = $this->obj->getBasics();

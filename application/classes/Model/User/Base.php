@@ -248,4 +248,9 @@ class Model_User_Base extends Model_Auth_User
 
 		return $last_name;
 	}
+
+	public function name()
+	{
+		return $this->first_name." ".$this->lastName();
+	}
 }

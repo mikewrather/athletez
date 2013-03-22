@@ -24,11 +24,29 @@ class Admin_View_Postparams
 	{
 		$methods = $this->ent->apimethods->where('api_method','=','POST')->find_all();
 
+		$siblings_arr = array();
+		$entity_list = Ent::eFactORMList($this->ent->id)->find_all();
+
+
+		foreach($entity_list as $entity)
+		{
+			//print_r($entity);
+			$siblings_arr[] = array(
+				"id" => $entity->id,
+				"name" => method_exists($entity,'name') ? $entity->name() : $entity->name,
+			);
+		}
+
+		$entity_data_for_methods = array(
+			"siblings" => $siblings_arr,
+			"hassiblings" => sizeof($siblings_arr) > 0 ? true : false,
+		);
+
 		$templateArr = array(
 			"ent_id" => $this->ent->id,
 			"entity_type" => $this->ent->name,
 			"primary_class" => $this->ent->class_name,
-			"desc" => $this->ent->description
+			"desc" => $this->ent->description,
 		);
 
 		foreach($methods as $method)
@@ -69,7 +87,8 @@ class Admin_View_Postparams
 				"description" => $method->description,
 				"usage" => $usage,
 				"hasparams" => sizeof($params),
-				"params" => $paramArr
+				"params" => $paramArr,
+				"entdata" => $entity_data_for_methods,
 			);
 
 		}

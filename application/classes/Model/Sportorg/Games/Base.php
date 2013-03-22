@@ -28,7 +28,7 @@ class Model_Sportorg_Games_Base extends ORM
 			'model' => 'Sportorg_Team',
 			'through' => 'games_teams_link',
 			'foreign_key' => 'games_id',
-			'far_id' => 'teams_id'
+			'far_key' => 'teams_id'
 		),
 		'uslgamelink' => array(
 			'model' => 'User_Sportlink_Gamelink',
@@ -47,4 +47,14 @@ class Model_Sportorg_Games_Base extends ORM
 		);
 	}
 
+	public function name()
+	{
+		$name = "";
+		$teams = $this->teams->find_all();
+		foreach($teams as $team)
+		{
+			$name .= $team->name().", ";
+		}
+		return rtrim($name,', ');
+	}
 }

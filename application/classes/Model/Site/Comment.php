@@ -38,4 +38,13 @@ class Model_Site_Comment extends Model_Site_Entdir
 			"comment" => $this->comment,
 		);
 	}
+
+	public function name()
+	{
+		$subject = $this->getSubject();
+		$name = $this->user->name();
+		$name .= " on ";
+		$name .= method_exists($subject,'name') ? $subject->name() : $subject->name;
+		return $name;
+	}
 }

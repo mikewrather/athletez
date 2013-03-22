@@ -26,6 +26,12 @@ class Model_Sportorg_Org extends ORM
 			'model' => 'Sportorg_Orgsportlink',
 			'foreign_key' => 'orgs_id'
 		),
+		'sports' => array(
+			'model' => 'Sportorg_Sport',
+			'foreign_key' => 'orgs_id',
+			'through' => 'org_sport_link',
+			'far_key' => 'sports_id'
+		),
 		'divisions' => array(
 			'model' => 'Sportorg_Division',
 			'foreign_key' => 'divisions_id',
@@ -67,6 +73,11 @@ class Model_Sportorg_Org extends ORM
 			"season_profile" => $this->season_profile->getBasics(),			
 			"complevel_profile" => $this->complevel_profile->getBasics(),
 		);
+	}
+
+	public function addSport($sports_id)
+	{
+		$this->add('sports',$sports_id);
 	}
 
 }

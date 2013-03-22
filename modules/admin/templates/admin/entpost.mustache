@@ -1,8 +1,23 @@
+{{entity_type}} - {{desc}}
 {{#methods}}<form id="form_{{id}}">
 <ul class="methods" style="margin-bottom: 30px; border: 1px solid #333; padding: 10px;">
 
 		<li class="firstmethod">{{shortname}} ({{api_method}})</li>
-		<li>{{usage}}</li>
+		<li>{{usage}}
+			{{#entdata}}
+			{{#hassiblings}}
+				<select name="id1">
+					<option value="0">None</option>
+					{{#siblings}}
+						<option value="{{id}}">{{name}}</option>
+					{{/siblings}}
+				</select>
+			{{/hassiblings}}
+			{{^hassiblings}}
+				<input type="text" name="id1" id="id1_{{id}}" />
+			{{/hassiblings}}
+			{{/entdata}}
+		</li>
 		<li class="description">{{description}}</li>
 		{{#hasparams}}
 		<li class="params">
@@ -13,6 +28,7 @@
 			<span class="paramname">{{name}} ({{type}})</span><span class="description">{{desc}}</span><br />
 			{{#hasobjs}}
 				<select  name="{{name}}" id="{{name}}">
+					<option value="0">No Value</option>
 					{{#objs}}<option value="{{id}}">{{name}}</option>{{/objs}}
 				</select>
 			{{/hasobjs}}
@@ -32,15 +48,20 @@
 	$(document).ready(function(){
 		$('form#form_{{id}}').submit(function(){
 
-			console.log($(this).serialize());
+			$me = $(this);
+
+			console.log($me.serialize());
+			var id1 = $me.find('input[name="id1"], select[name="id1"]').val();
 
 			$.ajax({
 				type : '{{api_method}}',
-				url : '{{usage}}',
+				url : '{{usage}}' + id1,
 				data : $(this).serialize(),
 				success : function(data)
 				{
 					console.log(data);
+					$me.find('select').val(0);
+					$me.find('input[type="text"]').val('');
 				}
 			});
 			return false;

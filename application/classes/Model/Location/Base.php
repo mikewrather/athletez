@@ -52,4 +52,8 @@ class Model_Location_Base extends ORM
 		);
 	}
 
+	public function name()
+	{
+		return $this->address;
+	}
 }

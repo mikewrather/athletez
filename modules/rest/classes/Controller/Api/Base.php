@@ -176,4 +176,29 @@ class Controller_Api_Base extends AuthController
 			//TODO: Kill The request and return error data
 		}
 	}
+
+	protected  function processObjectSave(&$model)
+	{
+		// Error Checking on save()
+		try
+		{
+			$model->save();
+		}
+		catch(ErrorException $e)
+		{
+			// Create Array for Error Data
+			$error_array = array(
+				"error" => "Unable to save ".get_class($model),
+				"desc" => $e->getMessage()
+			);
+
+			// Set whether it is a fatal error
+			$is_fatal = true;
+
+			// Call method to throw an error
+			$this->addError($error_array,$is_fatal);
+		}
+	}
+
+
 }

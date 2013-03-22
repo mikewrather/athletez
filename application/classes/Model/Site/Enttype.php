@@ -38,6 +38,11 @@ class Model_Site_Enttype extends ORM
 		return new $classname($objID);
 	}
 
+	static function eFactORMList($enttypeID)
+	{
+		return ORM::factory(self::getMyClass($enttypeID));
+	}
+
 	public function getBasics()
 	{
 		return array(
