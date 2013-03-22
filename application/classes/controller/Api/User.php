@@ -236,7 +236,33 @@
 			{
 				$facebook_id = trim($this->request->post('facebook_id'));
 			}
+						
+			$user_obj = ORM::factory("User_Base");
+			$user_obj->email = $email;
+			$user_obj->first_name = $firstname;
+			$user_obj->last_name = $lastname;
+			$user_obj->password = $password;
+			
+			//$user_obj->facebook_id = $facebook_id; //TODO: Add to database - facebook_id : integer
+			  
+			try
+			{
+				$user_obj->save();
+			} catch(ErrorException $e)
+			{
+				// Create Array for Error Data
+				$error_array = array(
+					"error" => "Unable to save User",
+					"desc" => $e->getMessage()
+				);
 
+				// Set whether it is a fatal error
+				$is_fatal = true;
+
+				// Call method to throw an error
+				$this->addError($error_array,$is_fatal);
+			}
+			return $user_obj;
 		}
 		
 		/**
@@ -251,12 +277,32 @@
 		     // CHECK FOR PARAMETERS:
 			// teams_id 
 			// ID of the Team to be added
+			if(!$this->user)
+			{
+				// Create Array for Error Data
+				$error_array = array(
+					"error" => "This action requires authentication"
+				);
+
+				// Set whether it is a fatal error
+				$is_fatal = true;
+
+				// Call method to throw an error
+				$this->addError($error_array,$is_fatal);
+			}
+			// orgs_id			 
+			// ID of the Team to be added
 				
 			if((int)trim($this->request->post('teams_id')) > 0)
 			{
 				$teams_id = (int)trim($this->request->post('teams_id'));
 			}
-
+				
+			if((int)trim($this->request->post('orgs_id')) > 0)
+			{
+				$orgs_id = (int)trim($this->request->post('orgs_id'));
+			}
+			
 			// orgs_id 
 			// Organization ID
 				
@@ -288,7 +334,41 @@
 			{
 				$seasons_id = (int)trim($this->request->post('seasons_id'));
 			}
+			
+			// get the org_sport_link_id
+			$org_sport_obj = ORM::factory('Sportorg_Orgsportlink')->where('id','=',$orgs_id);
+			$org_sport = $org_sport_obj->find(1);
+			$os_result = $org_sport->getBasics();
+			$org_sport_link_id = $os_result['id'];
+			
+			$new_team = ORM::factory("Sportorg_Team");
+			$new_team->org_sport_link_id = $org_sport_link_id;
+			$new_team->complevels_id = $complevels_id;
+			$new_team->seasons_id = $seasons_id;
+			
+			try{
+				$new_team->save();
+				$new_team_id = $new_team->id;
+				
+				// set to the users_teams_link table
+				$users_team_link_obj = ORM::factory('User_Teamslink');
+				$users_team_link_obj->teams_id = $new_team_id;
+				$users_team_link_obj->users_id = $this->user->id;
+				$users_team_link_obj->save();
+			}catch(ErrorException $e)
+			{
+				// Create Array for Error Data
+				$error_array = array(
+					"error" => "Unable to save User",
+					"desc" => $e->getMessage()
+				);
 
+				// Set whether it is a fatal error
+				$is_fatal = true;
+
+				// Call method to throw an error
+				$this->addError($error_array,$is_fatal);
+			}		
 		}
 		
 		/**
@@ -303,12 +383,45 @@
 		     // CHECK FOR PARAMETERS:
 			// sports_id 
 			// ID of the sport to be added
-				
+			
+			if(!$this->user)
+			{
+				// Create Array for Error Data
+				$error_array = array(
+					"error" => "This action requires authentication"
+				);
+
+				// Set whether it is a fatal error
+				$is_fatal = true;
+
+				// Call method to throw an error
+				$this->addError($error_array,$is_fatal);
+			}	
 			if((int)trim($this->request->post('sports_id')) > 0)
 			{
 				$sports_id = (int)trim($this->request->post('sports_id'));
 			}
+			$new_user_sport_link_obj = ORM::factory("Sportlink");
+			$new_user_sport_link_obj->sports_id = $sports_id;
+			$new_user_sport_link_obj->users_id = $this->user->id;		
+			
+			try{
+				$new_user_sport_link_obj->save();
+				 
+			}catch(ErrorException $e)
+			{
+				// Create Array for Error Data
+				$error_array = array(
+					"error" => "Unable to save User",
+					"desc" => $e->getMessage()
+				);
 
+				// Set whether it is a fatal error
+				$is_fatal = true;
+
+				// Call method to throw an error
+				$this->addError($error_array,$is_fatal);
+			}		
 		}
 		
 		/**
@@ -319,7 +432,19 @@
 		public function action_post_addrole()
 		{
 			$this->payloadDesc = "Add a new role for this User";
+			if(!$this->user)
+			{
+				// Create Array for Error Data
+				$error_array = array(
+					"error" => "This action requires authentication"
+				);
 
+				// Set whether it is a fatal error
+				$is_fatal = true;
+
+				// Call method to throw an error
+				$this->addError($error_array,$is_fatal);
+			}
 		     // CHECK FOR PARAMETERS:
 			// roles_id 
 			// The ID of the role to associate the user with
@@ -328,7 +453,28 @@
 			{
 				$roles_id = (int)trim($this->request->post('roles_id'));
 			}
+			
+			$new_roles_users_obj = ORM::factory("Roles_Users");
+			$new_roles_users_obj->role_id = $roles_id;
+			$new_roles_users_obj->users_id = $this->user->id;		
+			
+			try{
+				$new_roles_users_obj->save();
+				 
+			}catch(ErrorException $e)
+			{
+				// Create Array for Error Data
+				$error_array = array(
+					"error" => "Unable to save User",
+					"desc" => $e->getMessage()
+				);
 
+				// Set whether it is a fatal error
+				$is_fatal = true;
+
+				// Call method to throw an error
+				$this->addError($error_array,$is_fatal);
+			}	
 		}
 		
 		/**
@@ -339,7 +485,19 @@
 		public function action_post_addidentity()
 		{
 			$this->payloadDesc = "Add an aditional identity to this user\'s profile";
+			if(!$this->user)
+			{
+				// Create Array for Error Data
+				$error_array = array(
+					"error" => "This action requires authentication"
+				);
 
+				// Set whether it is a fatal error
+				$is_fatal = true;
+
+				// Call method to throw an error
+				$this->addError($error_array,$is_fatal);
+			}
 		     // CHECK FOR PARAMETERS:
 			// provider 
 			// The provider the identity is for
@@ -351,12 +509,37 @@
 
 			// identity 
 			// The Identity string for a specific provider
+			if(trim($this->request->post('provider')) != "")
+			{
+				$identity = trim($this->request->post('identity'));
+			}
 				
 			if(trim($this->request->post('identity')) != "")
 			{
 				$identity = trim($this->request->post('identity'));
 			}
+			$new_user_identities_obj = ORM::factory("User_Identitie");
+			$new_user_identities_obj->provider = $provider;
+			$new_user_identities_obj->identity = $identity;
+			$new_user_identities_obj->user_id = $this->user->id;		
+			
+			try{
+				$new_user_identities_obj->save();
+				 
+			}catch(ErrorException $e)
+			{
+				// Create Array for Error Data
+				$error_array = array(
+					"error" => "Unable to save User",
+					"desc" => $e->getMessage()
+				);
 
+				// Set whether it is a fatal error
+				$is_fatal = true;
+
+				// Call method to throw an error
+				$this->addError($error_array,$is_fatal);
+			}	
 		}
 		
 		/**
@@ -367,7 +550,20 @@
 		public function action_post_position()
 		{
 			$this->payloadDesc = "Add a Position for a user";
+			if(!$this->user)
+			{
+				// Create Array for Error Data
+				$error_array = array(
+					"error" => "This action requires authentication"
+				);
 
+				// Set whether it is a fatal error
+				$is_fatal = true;
+
+				// Call method to throw an error
+				$this->addError($error_array,$is_fatal);
+			}
+			
 		     // CHECK FOR PARAMETERS:
 			// teams_id 
 			// Team ID the position is for (We are adding a position to a user/team link)
@@ -384,7 +580,33 @@
 			{
 				$positions_id = (int)trim($this->request->post('positions_id'));
 			}
+			
+			// get users_teams_link_id
+			$teams_link_obj = ORM::factory('User_Teamslink')->where('teams_id','=',$teams_id)->and_where('users_id', '=', $this->user->id );
+			$teams_link  = $teams_link_obj->find(1);
+			$tl_result = $teams_link->getBasics();
+			$users_teams_link_id = $tl_result['id'];
+			
+			// create new utl_position_link object
+			$utl_position_link_obj = ORM::factory('User_Teamslink_Positionlink');
+			$utl_position_link_obj->users_teams_link_id = $users_teams_link_id;
+			$utl_position_link_obj->positions_id = $positions_id;
+			try{
+				$utl_position_link_obj->save();				 
+			}catch(ErrorException $e)
+			{
+				// Create Array for Error Data
+				$error_array = array(
+					"error" => "Unable to save User",
+					"desc" => $e->getMessage()
+				);
 
+				// Set whether it is a fatal error
+				$is_fatal = true;
+
+				// Call method to throw an error
+				$this->addError($error_array,$is_fatal);
+			}	
 		}
 		
 		############################################################################

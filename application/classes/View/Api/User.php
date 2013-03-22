@@ -369,18 +369,8 @@
 		 */
 		public function post_add()
 		{
-			$retArr = array();
-
-			// Scaffolding Code For Array:
-			$objs = $this->obj->find_all();
-			foreach($objs as $obj)
-			{
-				$retArr[$obj->id] = $obj->getBasics();
-			}
-
-			// Scaffolding Code For Single:
-			$retArr = $this->obj->getBasics();
-
+			$retArr = array(); 
+		 
 			return $retArr;
 		}
 		
@@ -392,17 +382,6 @@
 		public function post_addteam()
 		{
 			$retArr = array();
-
-			// Scaffolding Code For Array:
-			$objs = $this->obj->find_all();
-			foreach($objs as $obj)
-			{
-				$retArr[$obj->id] = $obj->getBasics();
-			}
-
-			// Scaffolding Code For Single:
-			$retArr = $this->obj->getBasics();
-
 			return $retArr;
 		}
 		
@@ -412,19 +391,7 @@
 		 * @retun array
 		 */
 		public function post_addsport()
-		{
-			$retArr = array();
-
-			// Scaffolding Code For Array:
-			$objs = $this->obj->find_all();
-			foreach($objs as $obj)
-			{
-				$retArr[$obj->id] = $obj->getBasics();
-			}
-
-			// Scaffolding Code For Single:
-			$retArr = $this->obj->getBasics();
-
+		{			 
 			return $retArr;
 		}
 		
@@ -435,17 +402,7 @@
 		 */
 		public function post_addrole()
 		{
-			$retArr = array();
-
-			// Scaffolding Code For Array:
-			$objs = $this->obj->find_all();
-			foreach($objs as $obj)
-			{
-				$retArr[$obj->id] = $obj->getBasics();
-			}
-
-			// Scaffolding Code For Single:
-			$retArr = $this->obj->getBasics();
+			$retArr = array(); 
 
 			return $retArr;
 		}
@@ -458,17 +415,7 @@
 		public function post_addidentity()
 		{
 			$retArr = array();
-
-			// Scaffolding Code For Array:
-			$objs = $this->obj->find_all();
-			foreach($objs as $obj)
-			{
-				$retArr[$obj->id] = $obj->getBasics();
-			}
-
-			// Scaffolding Code For Single:
-			$retArr = $this->obj->getBasics();
-
+ 
 			return $retArr;
 		}
 		
