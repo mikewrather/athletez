@@ -1,8 +1,12 @@
-{{entity_type}} - {{desc}}
-{{#methods}}<form id="form_{{id}}">
-<ul class="methods" style="margin-bottom: 30px; border: 1px solid #333; padding: 10px;">
 
-		<li class="firstmethod">{{shortname}} ({{api_method}})</li>
+{{#methods}}
+<h1>{{entity_type}}</h1><br />
+<h2>{{desc}}</h2>
+{{#method}}
+<form id="form_{{id}}">
+<ul class="methods" style="margin-bottom: 30px; border: 1px solid #333; padding: 10px; list-style: none;">
+
+		<li class="firstmethod"><h1>{{shortname}} ({{api_method}})</h1></li>
 		<li>{{usage}}
 			{{#entdata}}
 			{{#hassiblings}}
@@ -68,4 +72,5 @@
 		});
 	});
 </script>
+		{{/method}}
 {{/methods}}

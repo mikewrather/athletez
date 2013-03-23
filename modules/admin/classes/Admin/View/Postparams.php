@@ -93,6 +93,7 @@ class Admin_View_Postparams
 
 		}
 
-		return $templateArr["method"];
+	//	print_r($templateArr);
+		return $templateArr;
 	}
 }

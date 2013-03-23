@@ -253,4 +253,89 @@ class Model_User_Base extends Model_Auth_User
 	{
 		return $this->first_name." ".$this->lastName();
 	}
+
+	public function addTeam($args)
+	{
+		$resultArrary = array("success"=>0);
+
+		// EXTRACT VARIABLES FROM ARGUMENTS ARRAY
+		extract($args);
+
+		if($teams_id) // If team ID is provided add team
+		{
+			if(!$this->has('teams',$teams_id)) // CHECK IF USER ALREADY HAS TEAM ASSOCIATION
+			{
+				try
+				{
+					$this->add('teams',$teams_id);
+					$resultArrary["success"] = 1;
+				}
+				catch(ErrorException $e)
+				{
+					$resultArrary["errorMsg"] = $e->getMessage();
+				}
+			}
+		}
+		else
+		{
+			if(!(isset($orgs_id) && isset($sports_id) && isset($complevels_id) && isset($seasons_id) && isset($year)))
+			{
+				//These must all be set if teams_id is not set
+				$resultArrary["errorMsg"] = "Must either specify a team or all other criteria that picks out a team.";
+				return $resultArrary;
+			}
+
+			//Find Org / Sport link
+			$org_sport_link = ORM::factory('Sportorg_Orgsportlink')
+				->where('orgs_id','=',$orgs_id)
+				->and_where('sports_id','=',$sports_id)
+				->find();
+
+			if(!$org_sport_link->loaded()) // This means the organization does not have this sport
+			{
+				unset($org_sport_link);
+				//Add the Association
+				$org_sport_link = ORM::factory('Sportorg_Orgsportlink');
+				$org_sport_link->orgs_id = $orgs_id;
+				$org_sport_link->sports_id = $sports_id;
+				$org_sport_link->save();
+			}
+
+			$new_team = ORM::factory('Sportorg_Team')
+				->where('org_sport_link_id','=',$org_sport_link->id)
+				->and_where('seasons_id','=',$seasons_id)
+				->and_where('complevels_id','=',$complevels_id)
+				->and_where('year','=',$year)
+				->find();
+
+			// CHECK IF TEAM EXISTS AND CREATE IT IF IT DOESN'T
+			if(!$new_team->loaded())
+			{
+				unset($new_team);
+				$new_team = ORM::factory('Sportorg_Team');
+				$new_team->org_sport_link_id = $org_sport_link->id;
+				$new_team->complevels_id = $complevels_id;
+				$new_team->seasons_id = $seasons_id;
+				$new_team->year = $year;
+				$new_team->save();
+			}
+
+			if(!$this->has('teams',$new_team)) // CHECK IF USER ALREADY HAS TEAM ASSOCIATION
+			{
+				try
+				{
+					$this->add('teams',$new_team);
+					$resultArrary["success"] = 1;
+				}
+				catch(ErrorException $e)
+				{
+					$resultArrary["errorMsg"] = $e->getMessage();
+				}
+			}
+
+		}
+
+		return $resultArrary;
+
+	}
 }
