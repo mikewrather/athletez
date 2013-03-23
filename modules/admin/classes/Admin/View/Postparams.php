@@ -14,15 +14,17 @@ class Admin_View_Postparams
 {
 
 	public $ent;
-	public function __construct($entID)
-	{
-		$this->ent = ORM::factory('Codegen_Entlist',$entID);
+	protected $httpverb = 'POST';
 
+	public function __construct($entID,$httpverb='POST')
+	{
+		$this->httpverb = $httpverb;
+		$this->ent = ORM::factory('Codegen_Entlist',$entID);
 	}
 
 	public function methods()
 	{
-		$methods = $this->ent->apimethods->where('api_method','=','POST')->find_all();
+		$methods = $this->ent->apimethods->where('api_method','=',$this->httpverb)->find_all();
 
 		$siblings_arr = array();
 		$entity_list = Ent::eFactORMList($this->ent->id)->find_all();

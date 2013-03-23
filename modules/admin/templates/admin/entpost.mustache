@@ -23,8 +23,8 @@
 			{{/entdata}}
 		</li>
 		<li class="description">{{description}}</li>
-		{{#hasparams}}
-		<li class="params">
+
+		<li class="params">{{#hasparams}}
 			<div style="border-bottom:1px solid #cecece;"></div><br>
 
 			{{/hasparams}}
@@ -43,16 +43,16 @@
 
 			{{/params}}
 			{{#hasparams}}
-			<input type="submit">
-		</li>
-		{{/hasparams}}
 
+
+		{{/hasparams}}
+			<input type="submit"></li>
 </ul></form>
 <script type="text/javascript">
 	$(document).ready(function(){
 		$('form#form_{{id}}').submit(function(){
 
-			$me = $(this);
+			var $me = $(this);
 
 			console.log($me.serialize());
 			var id1 = $me.find('input[name="id1"], select[name="id1"]').val();

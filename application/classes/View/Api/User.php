@@ -43,10 +43,10 @@
 			$user_teams = $this->obj->find_all();
 			foreach($user_teams as $user_team)
 			{
+				$this_team = $user_team->team;
 				$team = array();
-				$teams_link = $user_team->getBasics();
-				$team['team_name'] = $teams_link->name;
-				$team['team_location'] = null; 		//TODO: Write getLocationAsString() method for Tean Model
+				$team['team_name'] = method_exists($this_team,'name') ? $this_team->name() : $this_team->name;
+				$team['team_location'] = $this_team->getLocation()->name();
 				array_push($retArr, $team);
 			}
 			/*
@@ -470,15 +470,6 @@
 		 */
 		public function put_sport()
 		{
-			$retArr = array();
-
-			// Scaffolding Code For Array:
-			$objs = $this->obj->find_all();
-			foreach($objs as $obj)
-			{
-				$retArr[$obj->id] = $obj->getBasics();
-			}
-
 			// Scaffolding Code For Single:
 			$retArr = $this->obj->getBasics();
 
@@ -580,15 +571,6 @@
 		 */
 		public function delete_role()
 		{
-			$retArr = array();
-
-			// Scaffolding Code For Array:
-			$objs = $this->obj->find_all();
-			foreach($objs as $obj)
-			{
-				$retArr[$obj->id] = $obj->getBasics();
-			}
-
 			// Scaffolding Code For Single:
 			$retArr = $this->obj->getBasics();
 

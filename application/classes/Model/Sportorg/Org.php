@@ -18,6 +18,10 @@ class Model_Sportorg_Org extends ORM
 		"season_profile" => array(
 			"model" => "Sportorg_Seasons_Profile",
 			"foreign_key" => "season_profiles_id"
+		),
+		"location" => array(
+			"model" => "Location_Base",
+			"foreign_key" => "locations_id"
 		)
 	);
 
@@ -69,7 +73,6 @@ class Model_Sportorg_Org extends ORM
 			"name" => $this->name,
 			"season_profiles_id" => $this->season_profiles_id,
 			"single_sport" => $this->single_sport,
-			
 			"season_profile" => $this->season_profile->getBasics(),			
 			"complevel_profile" => $this->complevel_profile->getBasics(),
 		);

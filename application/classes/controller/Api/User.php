@@ -812,6 +812,33 @@
 		{
 			$this->payloadDesc = "Delete a user\'s Role";
 
+			if(!$this->user || !($this->user->has('roles','admin')))
+			{
+				// Create Array for Error Data
+				$error_array = array(
+					"error" => "This action requires admin privledges"
+				);
+
+				// Set whether it is a fatal error
+				$is_fatal = true;
+
+				// Call method to throw an error
+				$this->addError($error_array,$is_fatal);
+				return false;
+			}
+
+
+
+			if($this->mainModel->id)
+			{
+
+			}
+			else
+			{
+
+			}
+
+
 		
 		}
 		

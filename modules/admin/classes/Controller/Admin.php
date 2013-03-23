@@ -85,6 +85,6 @@ class Controller_Admin extends AuthController
 	public function action_show_postparams()
 	{
 		$renderer = Kostache::factory();
-		$this->response->body($renderer->render(new Admin_View_Postparams($this->request->query('entID')),'admin/entpost'));
+		$this->response->body($renderer->render(new Admin_View_Postparams($this->request->query('entID'),$this->request->query('httpverb')),'admin/entpost'));
 	}
 }

@@ -38,4 +38,5 @@ class Model_User_Teamslink extends ORM
 			"users_id" => $this->users_id
 		);
 	}
+
 }

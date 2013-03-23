@@ -15,15 +15,21 @@
 					<tr>
 						<th class="table-header-check"></th>
 						<th class="table-header-repeat line-left minwidth-1"><a>Object Type</a></th>
-						<th style="width:400px;" class="table-header-repeat line-left minwidth-1"><a>Description</a></th>
+						<th style="width:700px;" class="table-header-repeat line-left minwidth-1"><a>Description</a></th>
 						<th class="table-header-repeat line-left minwidth-1"></th>
 					</tr>
 					{{#ents}}
 						<tr>
-							<td></td>
+							<td>{{id}}</td>
 							<td>{{name}}</td>
-							<td><div style="white-space: nowrap;	overflow: hidden;text-overflow: ellipsis; width:400px;">{{desc}}</div></td>
-							<td><div onclick="loadContent('/admin/show_postparams',{'entID':{{id}}});">POST</div></td>
+							<td><div style="white-space: nowrap;	overflow: hidden;text-overflow: ellipsis; width:700px;">{{desc}}</div></td>
+							<td>
+								<span onclick="loadContent('/admin/show_postparams',{'entID':{{id}},'httpverb':'POST'});">POST</span> |
+								<span onclick="loadContent('/admin/show_postparams',{'entID':{{id}},'httpverb':'GET'});">GET</span> |
+								<span onclick="loadContent('/admin/show_postparams',{'entID':{{id}},'httpverb':'PUT'});">PUT</span> |
+								<span onclick="loadContent('/admin/show_postparams',{'entID':{{id}},'httpverb':'DELETE'});">DELETE</span>
+							</td>
+
 						</tr>
 					{{/ents}}
 				</table>

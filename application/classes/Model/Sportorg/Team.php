@@ -89,4 +89,10 @@ class Model_Sportorg_Team extends ORM
 		$title .= " ".$this->year;
 		return $title;
 	}
+
+	public function getLocation()
+	{
+		$org = $this->getOrg();
+		return $org->location;
+	}
 }
