@@ -52,6 +52,7 @@
 			$retArr = array();
 
 			$orgs = $this->obj->find_all();
+
 			foreach($orgs as $org)
 			{
 				$retArr[$org->id] = $org->getBasics();
@@ -70,12 +71,13 @@
 
 			$retArr = array();
 
-			// Scaffolding Code For Array:
-			$objs = $this->obj->execute();
-			print_r($objs);
-			foreach($objs as $obj)
+
+			$games = $this->obj->execute();
+		//	print_r($games);
+			foreach($games as $game_array)
 			{
-				$retArr[$obj->id] = $obj->getBasics();
+				$game_obj = ORM::factory('Sportorg_Games_Base')->where('id','=',$game_array['id'])->find();
+				$retArr[$game_obj->id] = $game_obj->getBasics();
 			}
 
 			return $retArr;
@@ -88,18 +90,7 @@
 		 */
 		public function post_add()
 		{
-			$retArr = array();
-
-			// Scaffolding Code For Array:
-			$objs = $this->obj->find_all();
-			foreach($objs as $obj)
-			{
-				$retArr[$obj->id] = $obj->getBasics();
-			}
-
-			// Scaffolding Code For Single:
 			$retArr = $this->obj->getBasics();
-
 			return $retArr;
 		}
 		

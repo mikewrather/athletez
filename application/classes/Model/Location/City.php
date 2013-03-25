@@ -32,12 +32,43 @@ class Model_Location_City extends ORM
 	
 	public function getBasics()
 	{
+		if(!$this->loaded()) return false;
 		return array(
 			"id" => $this->id,
 			"name" => $this->name,
 			"county_id" => $this->county_id,
 			"county" => $this->county->getBasics(),
 		);
+	}
+
+	public function addCity($args = array())
+	{
+
+		extract($args);
+
+		if(isset($name))
+		{
+			$this->name = $name;
+		}
+
+		// states_id
+		// State the city belongs to
+		if(isset($states_id))
+		{
+			$this->state_id = $states_id;
+		}
+
+		// counties_id (REQUIRED)
+		// The county the city belongs to
+		if(isset($counties_id))
+		{
+			$this->county_id = $counties_id;
+		}
+
+		$this->save();
+
+		return $this;
+
 	}
 
 	/**
@@ -47,9 +78,10 @@ class Model_Location_City extends ORM
 	public function getGames($args = array())
 	{
 
+		if(!$this->loaded()) return false;
 		extract($args);
 
-		$games = DB::select('*')
+		$games = DB::select('games.id')
 			->from('games')
 				->join('locations','LEFT')
 					->on('games.locations_id','=','locations.id')
@@ -58,12 +90,13 @@ class Model_Location_City extends ORM
 				->where('cities.id','=',$this->id);
 
 		$games->where_open();
+		$games->where('games.id','>','0'); //This is added to solve an error of AND () if no params are provided
 
 		// CHECK FOR PARAMETERS:
 		// games_before
 		// Filter games associated with a given city to only show those before a given date
 
-		if($games_before != "")
+		if(isset($games_before))
 		{
 			// Format as date
 			$gameDay = date("Y-m-d",strtotime($games_before));
@@ -72,7 +105,7 @@ class Model_Location_City extends ORM
 			$games
 				->and_where_open()
 				->where('gameDay','<',$gameDay)
-				->and_where('gameTime','<',$gameTime)
+			//	->and_where('gameTime','<',$gameTime)
 				->and_where_close();
 		}
 
@@ -88,11 +121,11 @@ class Model_Location_City extends ORM
 			$games
 				->and_where_open()
 				->where('gameDay','>',$gameDay)
-				->and_where('gameTime','>',$gameTime)
+			//	->and_where('gameTime','>',$gameTime)
 				->and_where_close();
 		}
 
-		if(isset($sports_id) ||isset($complevels_id) || sset($teams_id))
+		if(isset($sports_id) ||isset($complevels_id) || isset($teams_id))
 		{
 			// SET UP JOINS WE NEED FOR THESE TABLES
 			$games
@@ -131,5 +164,34 @@ class Model_Location_City extends ORM
 
 
 		return $games;
+	}
+
+	/**
+	 * @param array $args can be empty or hold:
+	 * loc_type (location type)
+	 *
+	 * @return ORM the unexecuted ORM object with the query built
+	 */
+	public function getLocations($args = array())
+	{
+		$locations = $this->locations;
+		if(isset($args['loc_type']))
+		{
+			$locations->where('location_type','=',$args['loc_type']);
+		}
+
+		return $locations;
+	}
+
+	public function getOrgs($args = array())
+	{
+		if(!$this->loaded()) return false;
+		$orgs = ORM::factory('Sportorg_Org')
+			->join('locations','LEFT')
+				->on('sportorg_org.locations_id','=','locations.id')
+			->where('locations.cities_id','=',$this->id);
+
+		return $orgs;
+
 	}
 }

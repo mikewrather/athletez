@@ -39,6 +39,12 @@
 		{
 			$this->payloadDesc = "Basic information about a city";
 
+			//Check for ID and end the call if there isn't one
+			if(!$this->mainModel->id)
+			{
+				$this->modelNotSetError();
+				return false;
+			}
 		
 		}
 		
@@ -49,9 +55,17 @@
 		 */
 		public function action_get_locations()
 		{
-			$this->payloadDesc = "All locations within a given city";
+			$this->payloadDesc = "All locations within a given city optionally filtered by location type";
 
-			$locations = ORM::factory('Location_Base')->where('cities_id','=',$this->myID);
+			//Check for ID and end the call if there isn't one
+			if(!$this->mainModel->id)
+			{
+				$this->modelNotSetError();
+				return false;
+			}
+
+			// Set up arguments array to be passed
+			$args = array();
 
 			// CHECK FOR PARAMETERS:
 			// loc_type (REQUIRED)
@@ -59,25 +73,9 @@
 
 			if(trim($this->request->query('loc_type')) != "")
 			{
-				$loc_type = trim($this->request->query('loc_type'));
-				$locations->where('location_type','=',$loc_type);
+				$args['loc_type'] = trim($this->request->query('loc_type'));
 			}
-			else // THIS WAS A REQUIRED PARAMETER
-			{
-				// Create Array for Error Data
-				$error_array = array(
-					"error" => "Required Parameter Missing",
-					"param_name" => "loc_type",
-					"param_desc" => "Only return locations of a certain type within the given city"
-				);
-
-				// Set whether it is a fatal error
-				$is_fatal = true;
-
-				// Call method to throw an error
-				$this->addError($error_array,$is_fatal);
-			}
-
+			$locations = $this->mainModel->getLocations($args);
 			return $locations;
 		}
 		
@@ -89,7 +87,14 @@
 		public function action_get_orgs()
 		{
 			$this->payloadDesc = "All organizations within a given city";
+			//Check for ID and end the call if there isn't one
+			if(!$this->mainModel->id)
+			{
+				$this->modelNotSetError();
+				return false;
+			}
 
+			return $this->mainModel->getOrgs();
 		
 		}
 
@@ -169,13 +174,15 @@
 		{
 			$this->payloadDesc = "Add a new city";
 
+			$args = array(); //This will get passed to the add method
+
 		     // CHECK FOR PARAMETERS:
 			// name (REQUIRED)
 			// Name of the city to add
 				
 			if(trim($this->request->post('name')) != "")
 			{
-				$name = trim($this->request->post('name'));
+				$args['name'] = trim($this->request->post('name'));
 			}
 
 			else // THIS WAS A REQUIRED PARAMETER
@@ -200,7 +207,7 @@
 				
 			if((int)trim($this->request->post('states_id')) > 0)
 			{
-				$states_id = (int)trim($this->request->post('states_id'));
+				$args['states_id'] = (int)trim($this->request->post('states_id'));
 			}
 
 			// counties_id (REQUIRED)
@@ -208,7 +215,7 @@
 				
 			if((int)trim($this->request->post('counties_id')) > 0)
 			{
-				$counties_id = (int)trim($this->request->post('counties_id'));
+				$args['counties_id'] = (int)trim($this->request->post('counties_id'));
 			}
 
 			else // THIS WAS A REQUIRED PARAMETER
@@ -227,7 +234,11 @@
 				$this->addError($error_array,$is_fatal);
 
 			}
-			
+
+			$city = ORM::factory('Location_City');
+			return $city->addCity($args);
+
+
 		}
 		
 		############################################################################
