@@ -92,58 +92,66 @@
 
 		
 		}
-		
+
 		/**
 		 * action_get_games() All games that take place within a city
 		 * via /api/city/games/{cities_id}
 		 *
+		 * @return object DB expression retrieved from the getGames method
 		 */
 		public function action_get_games()
 		{
 			$this->payloadDesc = "All games that take place within a city";
 
+			//Check for ID and end the call if there isn't one
+			if(!$this->mainModel->id)
+			{
+				$this->modelNotSetError();
+				return false;
+			}
+
+			// This will be passed to the getGames() method of the org object.
+			$args = array();
+
 		     // CHECK FOR PARAMETERS:
+
 			// games_before 
 			// Filter games associated with a given city to only show those before a given date
-				
-			if($this->request->query('games_before') != "")
+			if(trim($this->request->query('games_before')) != "")
 			{
-				// Format as date
-				$games_before = date("Y-m-d H:i:s",strtotime($this->request->query('games_before')));
+				$args["games_before"] = trim($this->request->query('games_before'));
 			}
 
 			// games_after 
 			// Filter games associated with a given city to only show those before a given date
-				
-			if($this->request->query('games_after') != "")
+			if(trim($this->request->query('games_after')) != "")
 			{
-				// Format as date
-				$games_after = date("Y-m-d H:i:s",strtotime($this->request->query('games_after')));
+				$args["games_after"] = trim($this->request->query('games_after'));
 			}
 
 			// sports_id 
 			// Filter games associated with a given city to only show those for a specific sport
-				
 			if((int)trim($this->request->query('sports_id')) > 0)
 			{
-				$sports_id = (int)trim($this->request->query('sports_id'));
+				$args['sports_id'] = (int)trim($this->request->query('sports_id'));
 			}
 
 			// complevels_id 
 			// Filter games associated with a given city to only show those of a specific competition level
-				
 			if((int)trim($this->request->query('complevels_id')) > 0)
 			{
-				$complevels_id = (int)trim($this->request->query('complevels_id'));
+				$args['complevels_id'] = (int)trim($this->request->query('complevels_id'));
 			}
 
 			// teams_id 
 			// Filter games associated with a given city to only show those for a specific team
-				
 			if((int)trim($this->request->query('teams_id')) > 0)
 			{
-				$teams_id = (int)trim($this->request->query('teams_id'));
+				$args['teams_id'] = (int)trim($this->request->query('teams_id'));
 			}
+
+			$games = $this->mainModel->getGames($args);
+			return $games;
 
 		}
 		

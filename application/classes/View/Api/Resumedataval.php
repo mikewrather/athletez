@@ -12,10 +12,7 @@
 	class View_Api_Resumedataval extends Api_Viewclass
 	{
 
-		public function __construct()
-		{
-			parent::__construct();
-		}
+
 
 	
 		/**

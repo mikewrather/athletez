@@ -67,17 +67,16 @@
 		 */
 		public function get_games()
 		{
+
 			$retArr = array();
 
 			// Scaffolding Code For Array:
-			$objs = $this->obj->find_all();
+			$objs = $this->obj->execute();
+			print_r($objs);
 			foreach($objs as $obj)
 			{
 				$retArr[$obj->id] = $obj->getBasics();
 			}
-
-			// Scaffolding Code For Single:
-			$retArr = $this->obj->getBasics();
 
 			return $retArr;
 		}

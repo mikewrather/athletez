@@ -46,7 +46,7 @@ class Model_Sportorg_Org extends ORM
 		)
 	);
 
-	public function getTeams()
+	public function getTeamsAsArray()
 	{
 		$sports = $this->orgsports->find_all();
 		$teams = array();
@@ -60,6 +60,35 @@ class Model_Sportorg_Org extends ORM
 
 		}
 		return $teams;
+	}
+
+	public function getTeams()
+	{
+		if(!$this->id) return false; // return false if this object doesn't have an id
+		$teams = ORM::factory('Sportorg_Team')
+			->join('org_sport_link')
+				->on('org_sport_link.id','=','sportorg_team.org_sport_link_id')
+			->where('org_sport_link.orgs_id','=',$this->id);
+
+		return $teams;
+	}
+
+	public function getGames()
+	{
+		if(!$this->id) return false; // return false if this object doesn't have an id
+		$games = ORM::factory('Sportorg_Games_Base')
+			->join('games_teams_link','left')
+			->on('games.id','=','games_teams_link.games_id')
+
+			->join('teams','left')
+			->on('teams.id','=','games_teams_link.teams_id')
+
+			->join('org_sport_link')
+			->on('org_sport_link.id','=','team.org_sport_link_id')
+
+			->where('org_sport_link.orgs_id','=',$this->id);
+
+		return $games;
 	}
 	
 	public function getBasics()

@@ -12,10 +12,7 @@
 	class View_Api_Season extends Api_Viewclass
 	{
 
-		public function __construct()
-		{
-			parent::__construct();
-		}
+
 
 	
 		/**

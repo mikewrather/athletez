@@ -17,25 +17,14 @@ class Model_Location_Base extends ORM
 			'foreign_key' => 'cities_id'
 		)
 	);
-/*
+
 	protected $_has_many = array(
-		'[alias name]' => array(
-			'model' => '[model name]', 
-			'foreign_key' => '[column]'
-		),
-		'[alias name]' => array(
-			'model' => '[model name]', 
-			'through' => '[model name of pivot table]'
+		'games' => array(
+			'model' => 'Sportorg_Games_Base',
+			'foreign_key' => 'locations_id'
 		)
 	);
-	
-	protected $_has_one = array(
-		'[alias name]' => array(
-			'model' => '[model name]', 
-			'foreign_key' => '[column]'
-		)
-	);
-*/
+
 
 	public function getBasics()
 	{

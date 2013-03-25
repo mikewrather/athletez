@@ -64,7 +64,7 @@
 			$this->payloadDesc = "List of sports that the user is associated with";
 			
 			$sports = ORM::factory('User_Sportlink')->where('users_id', '=', $this->myID );
-			 
+
 			return $sports; 
 		}
 		
@@ -76,7 +76,16 @@
 		public function action_get_orgs()
 		{
 			$this->payloadDesc = "List of organizations the user is associated with";
-			$teams_link = ORM::factory('User_Teamslink')->where('users_id', '=', $this->myID ); 
+
+			// JOIN TABLES TO PULL ALL ORGANIZATIONS FOR A USER
+			$teams_link = ORM::factory('User_Teamslink')
+				->join('teams')
+					->on('user_teamslink.teams_id','=','teams.id')
+				->join('org_sport_link')
+					->on('teams.org_sport_link_id','=','org_sport_link.id')
+				->where('user_teamslink.users_id', '=', $this->myID )
+				->group_by('org_sport_link.orgs_id');
+
 			return $teams_link;
 		}
 		
@@ -420,6 +429,7 @@
 				}
 
 			}
+
 
 		}
 		

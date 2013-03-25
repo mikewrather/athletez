@@ -200,5 +200,20 @@ class Controller_Api_Base extends AuthController
 		}
 	}
 
+	protected function modelNotSetError()
+	{
+		// Create Array for Error Data
+		$error_array = array(
+			"error" => get_class($this->mainModel)." object has no ID",
+			"desc" => "In order to perform this action, you must set the ID of this object in the request URI"
+		);
+
+		// Set whether it is a fatal error
+		$is_fatal = true;
+
+		// Call method to throw an error
+		$this->addError($error_array,$is_fatal);
+
+	}
 
 }

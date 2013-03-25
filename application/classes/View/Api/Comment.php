@@ -12,11 +12,6 @@
 	class View_Api_Comment extends Api_Viewclass
 	{
 
-		public function __construct()
-		{
-			parent::__construct();
-		}
-
 	
 		/**
 		 * get_basics() Basic info on a specific comment
