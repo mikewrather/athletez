@@ -14,9 +14,16 @@ define(["facade", "models/base"], function (facade, BaseModel) {
             
             "payload": {
                 "id": 0,
+                "game_name": null,
                 "game_day": null,
                 "game_time": null,
-                "locations": null
+                "game_picture": null,
+                "teams": [{
+                    "team_name": null,
+                    "team_location": null,
+                    "points_scored": 0
+                }],                
+                "game_location": null
             },
             "desc": "Game information",
             "exec_data": {

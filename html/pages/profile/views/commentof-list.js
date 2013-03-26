@@ -5,7 +5,7 @@ define(['facade','views', 'utils', 'profile/views/commentof-item'],
 function(facade,  views,   utils,   ProfileCommentOfItemView) {
 
     var ProfileCommentOfListView, 
-        ProfileOrgListAbstract,
+        ProfileCommentOfListAbstract,
         $ = facade.$,
         _ = facade._,
         Channel = utils.lib.Channel,

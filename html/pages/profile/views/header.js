@@ -35,7 +35,7 @@ function(require, headerTemplate, selectSportTemplate) {
 
     ProfileHeaderView = SectionView.extend({
 
-        id: 'profile-header',
+        id: 'main-header',
 
         template: headerTemplate,
         

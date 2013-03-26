@@ -135,7 +135,35 @@ class Model_User_Base extends Model_Auth_User
 	{
 		return $this->media->where('media_type','=','image')->find_all();
 	}
-
+	
+	public function getSports($user_id)
+	{
+		if(!$this->loaded()) return false;
+		
+		// through user_sport_link table
+		$sports_link_obj = ORM::factory('Sportorg_Sport')				
+				->join('user_sport_link')
+					->on('user_sport_link.sports_id','=','sportorg_sport.id')
+				->where('user_sport_link.users_id', '=', $user_id );				
+				
+		// through team association
+		$org_sport_link_obj = ORM::factory('Sportorg_Sport')
+							->join('org_sport_link')							
+								->on('org_sport_link.sports_id', '=', 'sportorg_sport.id')
+							->join('teams')
+								->on('teams.org_sport_link_id', '=', 'org_sport_link.orgs_id')	
+							->join('users_teams_link')
+								->on('users_teams_link.teams_id', '=', 'teams.id')
+								->where('users_teams_link.users_id', '=', $user_id); 
+		// add to return array
+		$sports = array();
+		$sports['sport_link'] = $sports_link_obj;
+		$sports['org_sport_link'] = $org_sport_link_obj; 	
+		
+		// return result 
+		return (Object)$sports;		
+	}
+	
 	public function getBasics()
 	{
 		return array(

@@ -20,9 +20,9 @@
 		 */
 		public function get_basics()
 		{
-			$user = $this->obj->find(1);					
+			$user = $this->obj->find(1); 
 			$retArr = $user->getBasics();
-			
+						  
 			$retArr['grad_year'] = null; 		//TODO: Add To Database - grad_year : string
 			$retArr['user_picture'] = null; 	//TODO: Add To Database - user_picture : string
 			$retArr['user_weight'] = null; 		//TODO: Add To Database - user_weight : string
@@ -66,27 +66,23 @@
 		public function get_sports()
 		{
 			$retArr = array();
-			$user_sports = $this->obj->find_all();
-			
+			$user_sports = $this->obj;
+		 		
+			// through User_sport_link
 			foreach($user_sports as $user_sport )
-			{
-				$sport = array();	
-				$sport_link = $user_sport->getBasics();
-				
-				$sport['sport_id'] = $user_sport->sports_id;
-				$sport['sport_name'] = $sport_link['sport']['name'];
-				
-				$primary_position = null; 	 	//TODO: Add To Database - primary_position : string
-				
-				$social_links = array();		//TODO: Create to Database table - social_links -> should be the table name
-				$social_links['class'] = null;	//TODO: Add To Database - class : string
-				$social_links['title'] = null;	//TODO: Add To Database - title: string
-				$social_links['link'] = null;	//TODO: Add To Database - link : string
-				
-				$sport['social_links'] = $social_links;
-				array_push($retArr, $sport);
+			{					 
+				$sport_info = $user_sport->find_all();	
+			  
+				foreach($sport_info as $us )
+				{  
+					$retArr[$us->id] = $us->getBasics();	
+				} 
 			}	
 			
+			// through User_team_link
+			//$response = Request::factory('/api/user/sports/'.$this->obj->id)->execute();
+        	//var_dump( $response );
+						
 			/*					
 			$teams = $this->obj->teams->group_by('org_sport_link_id')->find_all();
 			foreach($teams as $team)
@@ -105,14 +101,16 @@
 		public function get_orgs()
 		{
 			$retArr = array();
+		
 			$teams_links = $this->obj->find_all();
 			 
 			foreach($teams_links as $teams_link)
-			{
-				$teams = array();
+			{ 
+				$teams = array(); 
 				$tl = $teams_link->getBasics();
 				$team = $tl['team'];
 				$teams['team_id'] = $team['id'];
+				$teams['year'] = $team['year'];
 				$teams['complevel'] = $team['complevel']['name'];
 				$teams['season'] = $team['season']['name'];
 				
@@ -123,7 +121,7 @@
 				$schedules['schedule_summary'] = null;	//TODO: Add To Database - schedule_summary : sstring
 				
 				$teams['schedules'] = $schedules;
-				 
+				
 				$org_id = $team['org_sport_link']['org']['id'];
 				$org_name = $team['org_sport_link']['org']['name'];
 				
@@ -149,7 +147,7 @@
 				
 				array_push($retArr, $payload); 
 			} 
-		 
+		 	
 			return $retArr;
 			/*
 			$teams = $this->obj->teams->group_by('org_sport_link_id')->find_all();
@@ -183,7 +181,7 @@
 			$retArr = $this->obj->getBasics();
 
 			return $retArr;
-			*/
+			
 			$retArr = array();
 			$teams_links = $this->obj->find_all();
 			
@@ -222,7 +220,7 @@
 				
 				array_push($retArr, $payload); 
 			} 
-			 
+			*/ 
 			return $retArr;
 		}
 		

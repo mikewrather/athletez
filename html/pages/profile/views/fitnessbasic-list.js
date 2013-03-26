@@ -5,7 +5,7 @@ define(['facade','views', 'utils', 'profile/views/fitnessbasic-item'],
 function(facade,  views,   utils,   ProfileFitnessBasicItemView) {
 
     var ProfileFitnessBasicListView, 
-        ProfileOrgListAbstract,
+        ProfileFitnessBasicListAbstract,
         $ = facade.$,
         _ = facade._,
         Channel = utils.lib.Channel,

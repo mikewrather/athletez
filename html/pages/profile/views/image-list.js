@@ -5,7 +5,7 @@ define(['facade','views', 'utils', 'profile/views/image-item'],
 function(facade,  views,   utils,   ProfileImageItemView) {
 
     var ProfileImageListView, 
-        ProfileOrgListAbstract,
+        ProfileImageListAbstract,
         $ = facade.$,
         _ = facade._,
         Channel = utils.lib.Channel,
