@@ -63,8 +63,7 @@
 		{
 			$this->payloadDesc = "List of sports that the user is associated with";
 			
-			$sports = ORM::factory('User_Sportlink')->where('users_id', '=', $this->myID );
-
+			$sports = $this->mainModel->getSports($this->myID); 
 			return $sports; 
 		}
 		
