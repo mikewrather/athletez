@@ -1,0 +1,52 @@
+{
+    "payload": [{
+        "team_id": 1,
+        "team_name": "Blair Academy",
+        "rosters": [{
+            "name": "James Taylor",
+            "picture": "images/user_image.png",
+            "grad_year": 13,
+            "sport_type": "Football",
+            "sport_name": "Running Back"
+        }, {
+            "name": "Thomas Roberts",
+            "picture": "images/user_image.png",
+            "grad_year": 13,
+            "sport_type": "Football",
+            "sport_name": "Running Back"
+        }, {
+            "name": "Antonin Scalla",
+            "picture": "images/user_image.png",
+            "grad_year": 13,
+            "sport_type": "Football",
+            "sport_name": "Running Back"
+        }]
+    }, {
+        "team_id": 1,
+        "team_name": "Hackettstown High School",
+        "rosters": [{
+            "name": "James Taylor",
+            "picture": "images/user_image.png",
+            "grad_year": 13,
+            "sport_type": "Football",
+            "sport_name": "Running Back"
+        }, {
+            "name": "Thomas Roberts",
+            "picture": "images/user_image.png",
+            "grad_year": 13,
+            "sport_type": "Football",
+            "sport_name": "Running Back"
+        }, {
+            "name": "Antonin Scalla",
+            "picture": "images/user_image.png",
+            "grad_year": 13,
+            "sport_type": "Football",
+            "sport_name": "Running Back"
+        }]
+    }],
+    "desc": "Team Roster List",
+    "exec_data": {
+        "exec_time": 0,
+        "exec_error": false
+    }
+}

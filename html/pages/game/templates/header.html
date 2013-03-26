@@ -1,0 +1,27 @@
+
+{{#payload}}
+<div class="row-fluid">
+    <div class="span4 textcenter">
+        {{#game_picture}}
+        <img src="{{base_url}}{{game_picture}}" alt="{{game_name}}" />
+        {{/game_picture}}
+    </div>
+    <div class="span8">
+        <div>
+            <h3 class="gametitle">{{game_name}}</h3>
+            Date: {{game_day}} {{game_time}}<br/>
+            Location: {{game_location}}<br/>
+            Teams: <br/>
+            {{#teams}}
+                {{team_name}}<br/>
+                {{team_location}}<br/>
+                {{points_scored}}<br/>
+            {{/teams}}            
+        </div>
+    </div>
+</div>
+<form action="#" method="post">
+    <input type="hidden" name="action" value="vote"/>
+    <input type="submit" name="submit" value="Vote"/>
+</form>
+{{/payload}}
