@@ -101,14 +101,16 @@
 		public function get_orgs()
 		{
 			$retArr = array();
+		
 			$teams_links = $this->obj->find_all();
-			
+			 
 			foreach($teams_links as $teams_link)
-			{
-				$teams = array();
+			{ 
+				$teams = array(); 
 				$tl = $teams_link->getBasics();
 				$team = $tl['team'];
 				$teams['team_id'] = $team['id'];
+				$teams['year'] = $team['year'];
 				$teams['complevel'] = $team['complevel']['name'];
 				$teams['season'] = $team['season']['name'];
 				
@@ -119,7 +121,7 @@
 				$schedules['schedule_summary'] = null;	//TODO: Add To Database - schedule_summary : sstring
 				
 				$teams['schedules'] = $schedules;
-				 
+				
 				$org_id = $team['org_sport_link']['org']['id'];
 				$org_name = $team['org_sport_link']['org']['name'];
 				

@@ -104,7 +104,7 @@ class Model_Sportorg_Org extends ORM
 			"single_sport" => $this->single_sport,
 			"season_profile" => $this->season_profile->getBasics(),			
 			"complevel_profile" => $this->complevel_profile->getBasics(),
-			"locations" => $this->locations->getBasics()
+			"locations" => $this->location->getBasics()
 		);
 	}
 
