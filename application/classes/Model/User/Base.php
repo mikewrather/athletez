@@ -135,10 +135,12 @@ class Model_User_Base extends Model_Auth_User
 	{
 		return $this->media->where('media_type','=','image')->find_all();
 	}
-	
-	public function getSports($user_id)
+
+
+	public function getSports($user_id=NULL)
 	{
 		if(!$this->loaded()) return false;
+		$user_id = ($user_id==NULL) ? $this->id : $user_id;
 		
 		// through user_sport_link table
 		$sports_link_obj = ORM::factory('Sportorg_Sport')				
@@ -234,7 +236,7 @@ class Model_User_Base extends Model_Auth_User
 			$retArr[$data['id']] = $data;
 		}
 
-		return $retArr;
+		return (object)$retArr;
 	}
 
 	public function getFitnessBasics()

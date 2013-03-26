@@ -63,7 +63,7 @@
 		{
 			$this->payloadDesc = "List of sports that the user is associated with";
 			
-			$sports = $this->mainModel->getSports($this->myID); 
+			$sports = $this->mainModel->getSports();
 			return $sports; 
 		}
 		
