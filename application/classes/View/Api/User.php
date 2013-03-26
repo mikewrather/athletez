@@ -181,7 +181,7 @@
 			$retArr = $this->obj->getBasics();
 
 			return $retArr;
-			*/
+			
 			$retArr = array();
 			$teams_links = $this->obj->find_all();
 			
@@ -220,7 +220,7 @@
 				
 				array_push($retArr, $payload); 
 			} 
-			 
+			*/ 
 			return $retArr;
 		}
 		

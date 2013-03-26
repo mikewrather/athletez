@@ -96,8 +96,8 @@
 		public function action_get_related()
 		{
 			$this->payloadDesc = "Content related to this user to be displayed on the \"related content\" pane";
-			$teams_link = ORM::factory('User_Teamslink')->where('users_id', '=', $this->myID ); 
-			return $teams_link; 
+			//$teams_link = ORM::factory('User_Teamslink')->where('users_id', '=', $this->myID ); 
+			//return $teams_link; 
 		}
 		
 		/**
