@@ -5,7 +5,7 @@ define(['facade','views', 'utils', 'profile/views/video-item'],
 function(facade,  views,   utils,   ProfileVideoItemView) {
 
     var ProfileVideoListView, 
-        ProfileOrgListAbstract,
+        ProfileVideoListAbstract,
         $ = facade.$,
         _ = facade._,
         Channel = utils.lib.Channel,

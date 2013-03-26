@@ -3,8 +3,8 @@
 // Requires define
 // Return {Object} App
 
-define( ["facade", "utils", "collections", "chrome", "controller", "profile"], 
-function (facade, utils, collections, chromeBootstrap, Controller, ProfileController) {
+define( ["facade", "utils", "collections", "chrome", "controller", "profile", "game"], 
+function (facade, utils, collections, chromeBootstrap, Controller, ProfileController, GameController) {
 
     var App,
         ApplicationStates = collections.ApplicationStates,
@@ -21,7 +21,14 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
             'home': 'initApp',
             'home/': 'initApp',
             'home/:action': 'initApp',
-            'profile': 'showProfile'
+            
+            'profile': 'showProfile',
+            'profile/': 'showProfile',
+            'profile/:action': 'showProfile',
+            
+            'game': 'showGame',
+            'game/': 'showGame',
+            'game/:action': 'showGame'
         },
 
         initialize: function (options) {
@@ -35,17 +42,27 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
         },
         
         initApp: function (action) {
-            this.showProfile();
+            //this.showProfile();
+            this.showGame();
         },
         
         showProfile: function () {
-            // load style sheets
             this.loadStyles();
             
             $('body').empty();
             chromeBootstrap();
             var profileController = new ProfileController({
                 "route": "resume"
+            });
+        },
+        
+        showGame: function () {
+            this.loadStyles();
+            
+            $('body').empty();
+            chromeBootstrap();
+            var gameController = new GameController({
+                "route": ""
             });
         },
 

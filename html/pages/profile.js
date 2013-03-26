@@ -34,7 +34,7 @@ define([
     "profile/views/commentof-list",
     "profile/views/commenton-list"
     
-    ], function (require, profileLayoutTemplate) {
+    ], function (require, pageLayoutTemplate) {
 
     var ProfileController,
         facade = require("facade"),
@@ -100,8 +100,7 @@ define([
             this.id = this.basics.id;
             
             this.addmedia = new ProfileAddMediaModel();
-            this.addmedia.id = this.id;
-            this.setupAddMediaView();
+            this.addmedia.id = this.id;            
             
             this.orgs = new ProfileOrgList();
             this.orgs.id = this.id;
@@ -141,6 +140,7 @@ define([
 
             $.when(this.basics.request).done(function () {
                 controller.setupHeaderView();                                
+                controller.setupAddMediaView();
             });
             
             $.when(this.orgs.request).done(function() {
@@ -182,7 +182,7 @@ define([
             headerView = new ProfileHeaderView({
                 model: this.basics,
                 name: "Header",
-                destination: "#profile-header"
+                destination: "#main-header"
             });
 
             this.scheme.push(headerView);            
@@ -207,7 +207,7 @@ define([
             
             orgListView = new ProfileOrgListView({
                 collection: this.orgs,
-                destination: "#profile-sidebar #org-wrap"
+                destination: "#main-sidebar #org-wrap"
             });
             
             this.scheme.push(orgListView);
@@ -219,7 +219,7 @@ define([
             
             relatedListView = new ProfileRelatedListView({
                 collection: this.relateds,
-                destination: "#profile-sidebar #related-wrap"
+                destination: "#main-sidebar #related-wrap"
             });
             
             this.scheme.push(relatedListView);
@@ -231,7 +231,7 @@ define([
             
             fitnessBasicListView = new ProfileFitnessBasicListView({
                 collection: this.fitnessbasics,
-                destination: "#profile-sidebar #fitnessbasic-wrap"
+                destination: "#main-sidebar #fitnessbasic-wrap"
             });
             
             this.scheme.push(fitnessBasicListView);
@@ -243,7 +243,7 @@ define([
             
             videoListView = new ProfileVideoListView({
                 collection: this.videos,
-                destination: "#profile-content #video-wrap"
+                destination: "#main-content #video-wrap"
             });
             
             this.scheme.push(videoListView);
@@ -255,7 +255,7 @@ define([
             
             imageListView = new ProfileImageListView({
                 collection: this.images,
-                destination: "#profile-content #image-wrap"
+                destination: "#main-content #image-wrap"
             });
             
             this.scheme.push(imageListView);
@@ -280,7 +280,7 @@ define([
             
             commentOfListView = new ProfileCommentOfListView({
                 collection: this.commentsof,
-                destination: "#profile-content #commentof-wrap"
+                destination: "#main-content #commentof-wrap"
             });
             
             this.scheme.push(commentOfListView);
@@ -292,7 +292,7 @@ define([
             
             commentOnListView = new ProfileCommentOnListView({
                 collection: this.commentson,
-                destination: "#profile-content #commenton-wrap"
+                destination: "#main-content #commenton-wrap"
             });
             
             this.scheme.push(commentOnListView);
@@ -300,15 +300,15 @@ define([
         },
         
         setupLayout: function () {
-            var profileLayout;
+            var pageLayout;
 
-            profileLayout = new LayoutView({
+            pageLayout = new LayoutView({
                 scheme: this.scheme,
                 destination: "#main",
-                template: profileLayoutTemplate,
+                template: pageLayoutTemplate,
                 displayWhen: "ready"
             });
-            this.layout = profileLayout;
+            this.layout = pageLayout;
 
             return this.layout;
         }

@@ -5,7 +5,7 @@ define(['facade','views', 'utils', 'profile/views/team-item'],
 function(facade,  views,   utils,   ProfileTeamItemView) {
 
     var ProfileTeamListView, 
-        ProfileOrgListAbstract,
+        ProfileTeamListAbstract,
         $ = facade.$,
         _ = facade._,
         Channel = utils.lib.Channel,

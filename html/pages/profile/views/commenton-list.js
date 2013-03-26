@@ -5,7 +5,7 @@ define(['facade','views', 'utils', 'profile/views/commenton-item', 'profile/view
 function(facade,  views,   utils,   ProfileCommentOnItemView,       ProfileCommentOnFormView) {
 
     var ProfileCommentOnListView, 
-        ProfileOrgListAbstract,
+        ProfileCommentOnListAbstract,
         $ = facade.$,
         _ = facade._,
         Channel = utils.lib.Channel,

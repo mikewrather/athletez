@@ -1,0 +1,24 @@
+{
+    "payload": {
+        "id": 101,
+        "game_name": "Football - Varsity - Fall '12",
+        "game_day": "Sept 14, 2002",
+        "game_time": "09:00 AM",
+        "game_picture": "images/game_medium.png",
+        "teams": [{
+            "team_name": "Blair Academy",
+            "team_location": "Blairstown, NJ",
+            "points_scored": 35
+        }, {
+            "team_name": "Hackettstown High School",
+            "team_location": "Hackettstown, NJ",
+            "points_scored": 14
+        }],                
+        "game_location": "Hackettstown, NJ"
+    },
+    "desc": "Basics information about the game.",
+    "exec_data": {
+        "exec_time": 0.024134,
+        "exec_error": false
+    }
+}

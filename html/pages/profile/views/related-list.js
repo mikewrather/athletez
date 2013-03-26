@@ -5,7 +5,7 @@ define(['facade','views', 'utils', 'profile/views/related-item'],
 function(facade,  views,   utils,   ProfileRelatedItemView) {
 
     var ProfileRelatedListView, 
-        ProfileOrgListAbstract,
+        ProfileRelatedListAbstract,
         $ = facade.$,
         _ = facade._,
         Channel = utils.lib.Channel,

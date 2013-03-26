@@ -1,40 +1,40 @@
-// The Profile Sport List
+// The Game Team Roster List
 // --------------
 
-define(['facade','views', 'utils', 'profile/views/sport-item'], 
-function(facade,  views,   utils,   ProfileSportItemView) {
+define(['facade','views', 'utils', 'game/views/teamroster-item'], 
+function(facade,  views,   utils,   GameTeamRosterItemView) {
 
-    var ProfileSportListView, 
-        ProfileSportListAbstract,
+    var GameTeamRosterListView, 
+        GameTeamRosterListAbstract,
         $ = facade.$,
         _ = facade._,
         Channel = utils.lib.Channel,
         CollectionView = views.CollectionView,
         SectionView = views.SectionView;
 
-    ProfileSportListAbstract = CollectionView.extend(SectionView.prototype);
+    GameTeamRosterListAbstract = CollectionView.extend(SectionView.prototype);
 
-    ProfileSportListView = ProfileSportListAbstract.extend({
+    GameTeamRosterListView = GameTeamRosterListAbstract.extend({
 
         __super__: CollectionView.prototype,
 
-        id: "profile-sport-list",
+        id: "game-teamroster-list",
 
-        name: "Profile Sport List",
+        name: "Game Team Roster List",
 
         tagName: "ul",
 
         // Tag for the child views
         _tagName: "li",
-        _className: "profile-sport",
+        _className: "game-teamroster",
 
         // Store constructor for the child views
-        _view: ProfileSportItemView,
+        _view: GameTeamRosterItemView,
 
         initialize: function(options) {
             CollectionView.prototype.initialize.call(this, options);
             if (!this.collection) {
-                throw new Error("ProfileSportListView expected options.collection.");
+                throw new Error("GameTeamRosterListView expected options.collection.");
             }
             _.bindAll(this);
             this.addSubscribers();
@@ -71,5 +71,5 @@ function(facade,  views,   utils,   ProfileSportItemView) {
 
     });
 
-    return ProfileSportListView;
+    return GameTeamRosterListView;
 });
