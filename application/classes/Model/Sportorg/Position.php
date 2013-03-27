@@ -39,4 +39,26 @@ class Model_Sportorg_Position extends ORM
 		);
 	}
 
+	public function addPosition($args=array())
+	{
+		extract($args);
+
+		if(isset($name))
+		{
+			$this->name = $name;
+		}
+		
+		if(isset($sports_id))
+		{
+			$this->sports_id = $sports_id;
+		}
+		
+		if(isset($stattab_id))
+		{
+			$this->stattab_id = $stattab_id;
+		}
+		
+		$this->save();
+		return $this;
+	}
 }

@@ -105,7 +105,8 @@
 				$this->addError($error_array,$is_fatal);
 
 			}
-			
+			$rgp_rdp_link = ORM::factory('User_Resume_Data_Group');
+			return $rgp_rdp_link->addtordp($resume_data_profiles_id);
 		}
 		
 		############################################################################

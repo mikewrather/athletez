@@ -95,14 +95,14 @@
 		public function action_post_value()
 		{
 			$this->payloadDesc = "Add a new Resume Data Value for a given Resume Data field";
-
+			$args = array();
 		     // CHECK FOR PARAMETERS:
 			// users_id 
 			// The user this data is for
 				
 			if((int)trim($this->request->post('users_id')) > 0)
 			{
-				$users_id = (int)trim($this->request->post('users_id'));
+				$args['users_id'] = (int)trim($this->request->post('users_id'));
 			}
 
 			// user_value 
@@ -110,9 +110,11 @@
 				
 			if(trim($this->request->post('user_value')) != "")
 			{
-				$user_value = trim($this->request->post('user_value'));
+				$args['user_value'] = trim($this->request->post('user_value'));
 			}
 
+			$resume_data = ORM::factory("User_Resume_Data_Vals");
+			return $resume_data->addValue($args);			 
 		}
 		
 		############################################################################

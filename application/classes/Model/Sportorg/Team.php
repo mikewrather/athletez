@@ -95,4 +95,37 @@ class Model_Sportorg_Team extends ORM
 		$org = $this->getOrg();
 		return $org->location;
 	}
+	
+	public function getSchedule($count = NULL, $past_games = false )
+	{ 
+		 if(!$this->loaded()) return false;
+		 
+		 // get game list		 
+	 	 $game_list_obj = ORM::factory('Sportorg_Games_Base')
+		 	->select('*', 'games_teams_link.*')				
+			->join('games_teams_link')
+				->on('games_teams_link.games_id','=','sportorg_games_base.id')		
+			->where('games_teams_link.teams_id', '=', $this->id );
+		
+		$game_list_obj->where_open();
+		$game_list_obj->where('sportorg_games_base.id','>','0'); //This is added to solve an error of AND () if no params are provided
+		// if the user setted the number of games to return,
+		if( isset($count))
+		{
+			$game_list_obj->limit($count);
+		}
+		
+		// if the user wanted to get the past games,
+		if( $past_games )
+		{
+			// Format as date
+			$gameDay = date("Y-m-d");
+			$game_list_obj
+				->and_where_open()
+				->where('gameDay','>',$gameDay)		
+				->and_where_close();
+		}		
+		$game_list_obj->where_close();		
+		return $game_list_obj->find_all();
+	}
 }

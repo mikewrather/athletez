@@ -155,14 +155,7 @@
 		public function post_add()
 		{
 			$retArr = array();
-
-			// Scaffolding Code For Array:
-			$objs = $this->obj->find_all();
-			foreach($objs as $obj)
-			{
-				$retArr[$obj->id] = $obj->getBasics();
-			}
-
+ 
 			// Scaffolding Code For Single:
 			$retArr = $this->obj->getBasics();
 

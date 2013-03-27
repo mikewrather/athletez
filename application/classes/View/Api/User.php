@@ -109,19 +109,39 @@
 				$teams = array(); 
 				$tl = $teams_link->getBasics();
 				$team = $tl['team'];
+				
+				
 				$teams['team_id'] = $team['id'];
 				$teams['year'] = $team['year'];
 				$teams['complevel'] = $team['complevel']['name'];
 				$teams['season'] = $team['season']['name'];
 				
-				$schedules = array();					//TODO: Create to Database table - schedules -> should be the table name
-				$schedules['schedule_id'] = 0;			//TODO: Add To Database - schedule_id : integer
-				$schedules['schedule_date'] = null;		//TODO: Add To Database - schedule_date : DATETIME
-				$schedules['other_team'] = null;		//TODO: Add To Database - other_team : string
-				$schedules['schedule_summary'] = null;	//TODO: Add To Database - schedule_summary : sstring
+				// get the game list by team.id
+				$schedule_list = $teams_link->team->getSchedule();
 				
-				$teams['schedules'] = $schedules;
-				
+				foreach($schedule_list as $schedule)
+				{
+					$schedules = array();								// game obj
+					$schedules['schedule_id'] = $schedule->id;			// game id
+					$schedules['schedule_date'] = $schedule->gameDay;	// game day
+					$schedules['schedule_summary'] = $schedule->points_scored;
+					 
+					// add the other teams				
+					$other_teams_obj = ORM::factory('Sportorg_Games_Teamslink')				
+										->join('games')
+											->on('games.id','=','sportorg_games_teamslink.games_id')		
+										->where('sportorg_games_teamslink.teams_id', '!=', $team['id'] )
+										->and_where('games.id', '=', $schedule->id)->find_all();
+										
+					foreach( $other_teams_obj as $other_team )
+					{
+						$o_team = $other_team->team;
+						
+						$schedules['other_team'][$other_team->id] = $o_team;
+					}
+					$teams['schedules'][$schedule->id] = $schedules;	 					
+				} 
+				 
 				$org_id = $team['org_sport_link']['org']['id'];
 				$org_name = $team['org_sport_link']['org']['name'];
 				

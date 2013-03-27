@@ -40,4 +40,9 @@ class Model_User_Resume_Data_Group extends ORM
 			"description" => $this->description,
 		);
 	}
+	
+	public function addtordp($resume_data_profiles_id)
+	{
+		return DB::insert('rdg_rdp_link', array('resume_data_profiles_id', 'resume_data_groups_id'))->values(array($resume_data_profiles_id, $this->id));
+	}
 }
