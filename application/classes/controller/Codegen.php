@@ -22,7 +22,7 @@ class Controller_Codegen extends Controller
 	{
 
 
-		$baseDir = "C:/xampp/htdocs/k3/application/classes/Test/";
+		$baseDir = "D:/xampp/htdocs/newsite/application/classes/Test/";
 		//generate the api controllers
 
 		$el = ORM::factory('Codegen_Entlist')->find_all();

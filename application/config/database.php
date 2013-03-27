@@ -21,7 +21,7 @@ $dbconfig = array
 			'hostname'   => 'localhost',
 			'database'   => 'athletesup_main',
 			'username'   => 'root',
-			'password'   => 'R370ad3d',
+			'password'   => '',//R370ad3d
 			'persistent' => FALSE,
 		),
 		'table_prefix' => '',
@@ -48,8 +48,8 @@ $dbconfig = array
 //SET UP CASE FOR ENV
 if(Kohana::$environment == Kohana::LOCALHOST)
 {
-	$dbconfig['default']['connection']['password'] = '  qmi!#j';
-	$dbconfig['scraping']['connection']['password'] = '  qmi!#j';
+	$dbconfig['default']['connection']['password'] = '';
+	$dbconfig['scraping']['connection']['password'] = '';
 }
 
 return $dbconfig;
