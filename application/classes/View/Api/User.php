@@ -221,7 +221,7 @@
 				array_push($retArr, $payload); 
 			} 
 			*/ 
-			return $retArr;
+			return $retArr = array();
 		}
 		
 		/**
@@ -232,18 +232,10 @@
 		public function get_videos()
 		{
 			$retArr = array();
-			$videos = $this->obj->getVideos();
+			$videos = $this->obj->find_all();
 			foreach($videos as $video)
 			{
-				$retArr[$video->id] = array(
-					'name' => $video->name
-				);
-				if($video->video->video_services_id > 0)
-				{
-					// Example of using subrequest to call api
-					$response = Request::factory('/api/videoservice/basics/'.$video->video->video_services_id)->execute();
-					$retArr[$video->id]['video_service'] = $response->body;
-				}
+				$retArr[$video->id] = $video->getBasics();
 			}
 			return $retArr;
 		}
@@ -272,11 +264,7 @@
 		public function get_commentsof()
 		{
 			$retArr = array();
-			$user_id = $this->obj->id;
-			$comments = ORM::factory('Site_Comment')
-				->where('users_id','=',$user_id)
-				->find_all();
-
+			$comments = $this->obj->find_all();
 			foreach($comments as $comment)
 			{
 				$retArr[$comment->id] = $comment->getBasics();
@@ -292,16 +280,8 @@
 		public function get_commentson()
 		{
 			$retArr = array();
-			$user_id = $this->obj->id;
 
-			// GET ENT TYPE ID FOR A USER_BASE MODEL
-			$enttype_id = Ent::getMyEntTypeID('Users_Base');
-
-			$comments = ORM::factory('Site_Comment')
-				->where('subject_enttypes_id','=',$enttype_id)
-				->and_where('subject_id','=',$user_id)
-				->find_all();
-
+			$comments = $this->obj->find_all();
 			foreach($comments as $comment)
 			{
 				$retArr[$comment->id] = $comment->getBasics();

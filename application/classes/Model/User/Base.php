@@ -115,6 +115,13 @@ class Model_User_Base extends Model_Auth_User
 
 	);
 
+	protected $_has_one = array(
+		'userprofile' => array(
+			'model' => 'User_Profile',
+			'foreign_key' => 'users_id'
+		),
+	);
+
 	/**
 	 * protected $singlesport, if set, will be used to filter queries where a sport is relevant.
 	 * @var null
@@ -128,35 +135,36 @@ class Model_User_Base extends Model_Auth_User
 
 	public function getVideos()
 	{
-		return $this->media->where('media_type','=','video')->find_all();
+		return $this->media->where('media_type','=','video');
 	}
 
 	public function getImages()
 	{
-		return $this->media->where('media_type','=','image')->find_all();
+		return $this->media->where('media_type','=','image');
+
 	}
 
 
-	public function getSports($user_id=NULL)
+	public function getSports()
 	{
 		if(!$this->loaded()) return false;
-		$user_id = ($user_id==NULL) ? $this->id : $user_id;
 		
 		// through user_sport_link table
 		$sports_link_obj = ORM::factory('Sportorg_Sport')				
 				->join('user_sport_link')
 					->on('user_sport_link.sports_id','=','sportorg_sport.id')
-				->where('user_sport_link.users_id', '=', $user_id );				
+				->where('user_sport_link.users_id', '=', $this->id );
 				
 		// through team association
 		$org_sport_link_obj = ORM::factory('Sportorg_Sport')
-							->join('org_sport_link')							
-								->on('org_sport_link.sports_id', '=', 'sportorg_sport.id')
-							->join('teams')
-								->on('teams.org_sport_link_id', '=', 'org_sport_link.orgs_id')	
-							->join('users_teams_link')
-								->on('users_teams_link.teams_id', '=', 'teams.id')
-								->where('users_teams_link.users_id', '=', $user_id); 
+			->join('org_sport_link')
+				->on('org_sport_link.sports_id', '=', 'sportorg_sport.id')
+			->join('teams')
+				->on('teams.org_sport_link_id', '=', 'org_sport_link.orgs_id')
+			->join('users_teams_link')
+				->on('users_teams_link.teams_id', '=', 'teams.id')
+				->where('users_teams_link.users_id', '=', $this->id);
+
 		// add to return array
 		$sports = array();
 		$sports['sport_link'] = $sports_link_obj;
@@ -291,7 +299,7 @@ class Model_User_Base extends Model_Auth_User
 		// EXTRACT VARIABLES FROM ARGUMENTS ARRAY
 		extract($args);
 
-		if($teams_id) // If team ID is provided add team
+		if(isset($teams_id)) // If team ID is provided add team
 		{
 			if(!$this->has('teams',$teams_id)) // CHECK IF USER ALREADY HAS TEAM ASSOCIATION
 			{
@@ -368,4 +376,16 @@ class Model_User_Base extends Model_Auth_User
 		return $resultArrary;
 
 	}
+
+	public function getCommentsOn()
+	{
+		return Model_Site_Comment::getCommentsOn($this);
+	}
+
+	public function getCommentsOf()
+	{
+		return Model_Site_Comment::getCommentsOf($this);
+	}
+
+
 }

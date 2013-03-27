@@ -108,7 +108,7 @@
 		public function action_get_videos()
 		{
 			$this->payloadDesc = "List of videos uploaded by the user";
-
+			return $this->mainModel->getVideos();
 		
 		}
 		
@@ -132,8 +132,7 @@
 		public function action_get_commentsof()
 		{
 			$this->payloadDesc = "Get a list of the comments made by the user";
-
-		
+			return $this->mainModel->getCommentsOf();
 		}
 		
 		/**
@@ -144,8 +143,7 @@
 		public function action_get_commentson()
 		{
 			$this->payloadDesc = "Get a list of comments related to the user";
-
-		
+			return $this->mainModel->getCommentsOn();
 		}
 		
 		/**

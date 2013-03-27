@@ -26,10 +26,18 @@ class Model_Site_Enttype extends ORM
 		return ORM::factory(self::getMyClass($enttypeID));
 	}
 
-	static function getMyEntTypeID($classname)
+	/**
+	 * @static
+	 * @param $class can be an object or a classname
+	 * @return mixed
+	 */
+	static function getMyEntTypeID($class)
 	{
+		$classname = is_object($class) ? get_class($class) : (string)$class;
+		$classname = str_replace('Model_','',$classname);
 		$oneofme = ORM::factory('Site_Enttype')->where('class_name','=',$classname)->find();
-		return $oneofme->id;
+		if($oneofme->loaded()) return $oneofme->id;
+		return false;
 	}
 
 	static function eFact($enttypeID,$objID=NULL)
