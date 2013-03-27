@@ -109,14 +109,15 @@
 		public function action_post_add()
 		{
 			$this->payloadDesc = "Add a new location";
-
-		     // CHECK FOR PARAMETERS:
+			$args = array(); //This will get passed to the add method
+		    
+		    // CHECK FOR PARAMETERS:
 			// address 
 			// Street Address of the location
 				
 			if(trim($this->request->post('address')) != "")
 			{
-				$address = trim($this->request->post('address'));
+				$args['address'] = trim($this->request->post('address'));
 			}
 
 			// cities_id 
@@ -124,7 +125,7 @@
 				
 			if((int)trim($this->request->post('cities_id')) > 0)
 			{
-				$cities_id = (int)trim($this->request->post('cities_id'));
+				$args['cities_id'] = (int)trim($this->request->post('cities_id'));
 			}
 
 			// states_id 
@@ -132,7 +133,7 @@
 				
 			if((int)trim($this->request->post('states_id')) > 0)
 			{
-				$states_id = (int)trim($this->request->post('states_id'));
+				$args['states_id'] = (int)trim($this->request->post('states_id'));
 			}
 
 			// lon 
@@ -140,7 +141,7 @@
 				
 			if(trim($this->request->post('lon')) != "")
 			{
-				$lon = trim($this->request->post('lon'));
+				$args['lon'] = trim($this->request->post('lon'));
 			}
 
 			// lat 
@@ -148,7 +149,13 @@
 				
 			if(trim($this->request->post('lat')) != "")
 			{
-				$lat = trim($this->request->post('lat'));
+				$args['lat'] = trim($this->request->post('lat'));
+			}
+
+			// loc_point	
+			if(trim($this->request->post('loc_point')) != "")
+			{
+				$args['loc_point'] = trim($this->request->post('loc_point'));
 			}
 
 			// location_type 
@@ -156,9 +163,11 @@
 				
 			if(trim($this->request->post('location_type')) != "")
 			{
-				$location_type = trim($this->request->post('location_type'));
+				$args['location_type'] = trim($this->request->post('location_type'));
 			}
-
+			
+			$location_obj = ORM::factory("Location_Base");
+			return $location_obj->addLocation($args);  
 		}
 		
 		############################################################################

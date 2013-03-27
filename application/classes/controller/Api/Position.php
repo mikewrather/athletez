@@ -179,14 +179,14 @@
 		public function action_post_add()
 		{
 			$this->payloadDesc = "Add a new position";
-
+			$args = array();
 		     // CHECK FOR PARAMETERS:
 			// name (REQUIRED)
 			// Name of the Posititon to be added
 				
 			if(trim($this->request->post('name')) != "")
 			{
-				$name = trim($this->request->post('name'));
+				$args['name'] = trim($this->request->post('name'));
 			}
 
 			else // THIS WAS A REQUIRED PARAMETER
@@ -211,7 +211,7 @@
 				
 			if((int)trim($this->request->post('sports_id')) > 0)
 			{
-				$sports_id = (int)trim($this->request->post('sports_id'));
+				$args['sports_id'] = (int)trim($this->request->post('sports_id'));
 			}
 
 			// stattab_id 
@@ -219,9 +219,11 @@
 				
 			if((int)trim($this->request->post('stattab_id')) > 0)
 			{
-				$stattab_id = (int)trim($this->request->post('stattab_id'));
+				$args['stattab_id'] = (int)trim($this->request->post('stattab_id'));
 			}
-
+			
+			$position_obj = ORM::factory("Sportorg_Position");
+			return $position_obj->addPosition($args);			
 		}
 		
 		############################################################################

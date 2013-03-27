@@ -41,4 +41,21 @@ class Model_User_Resume_Data_Vals extends ORM
 			"resume_data_id" => $this->resume_data_id
 		);
 	}
+	
+	public function addValue($args = array())
+	{
+		extract($args);
+		
+		if(isset($user_value))
+		{
+			$this->user_value = $user_value;
+		}
+		
+		if(isset($users_id))
+		{
+			$this->users_id = $users_id;
+		} 
+		$this->save();
+		return $this;
+	}
 }

@@ -45,4 +45,55 @@ class Model_Location_Base extends ORM
 	{
 		return $this->address;
 	}
+	
+	public function addLocation($args = array())
+	{
+		extract($args);
+		
+		if(isset($address))
+		{
+			$this->address = $address;
+		}
+		
+		if(isset($cities_id))
+		{
+			$this->cities_id = $cities_id;
+		}
+		
+		if(isset($states_id))
+		{
+			$this->states_id = $states_id;
+		}
+		
+		if(isset($lon))
+		{
+			$this->lon = $lon;
+		}
+		
+		if(isset($lat))
+		{
+			$this->lat = $lat;
+		}
+		
+		if(isset($loc_point))
+		{
+			$this->loc_point = $loc_point;
+		}
+		
+		// states_id
+		// State the city belongs to
+		if(isset($states_id))
+		{
+			$this->state_id = $states_id;
+		}
+		
+		if(isset($location_type))
+		{
+			$this->location_type = $location_type;
+		}
+		
+		$this->save();
+		return $this;
+	}
+	
 }
