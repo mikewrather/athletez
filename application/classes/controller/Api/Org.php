@@ -278,50 +278,50 @@
 			// name 
 			// Update the name of the organization
 				
-			if(trim($this->request->body('name')) != "")
+			if(trim($this->put('name')) != "")
 			{
-				$name = trim($this->request->body('name'));
+				$name = trim($this->put('name'));
 			}
 
 			// signle_sport 
 			// Change whether this is a one-sport organization
 				
-			if($this->request->body('signle_sport') != "")
+			if($this->put('signle_sport') != "")
 			{
 				//convert signle_sport to a boolean
-				$signle_sport = (bool)$this->request->body('signle_sport');
+				$signle_sport = (bool)$this->put('signle_sport');
 			}
 
 			// leagues_id 
 			// Change the league this organization belongs to
 				
-			if((int)trim($this->request->body('leagues_id')) > 0)
+			if((int)trim($this->put('leagues_id')) > 0)
 			{
-				$leagues_id = (int)trim($this->request->body('leagues_id'));
+				$leagues_id = (int)trim($this->put('leagues_id'));
 			}
 
 			// divisions_id 
 			// Change the division this organization belong to
 				
-			if((int)trim($this->request->body('divisions_id')) > 0)
+			if((int)trim($this->put('divisions_id')) > 0)
 			{
-				$divisions_id = (int)trim($this->request->body('divisions_id'));
+				$divisions_id = (int)trim($this->put('divisions_id'));
 			}
 
 			// season_profiles_id 
 			// Change the Season Profile this organization uses
 				
-			if((int)trim($this->request->body('season_profiles_id')) > 0)
+			if((int)trim($this->put('season_profiles_id')) > 0)
 			{
-				$season_profiles_id = (int)trim($this->request->body('season_profiles_id'));
+				$season_profiles_id = (int)trim($this->put('season_profiles_id'));
 			}
 
 			// complevel_profiles_id 
 			// Change the Competition Level Profile
 				
-			if((int)trim($this->request->body('complevel_profiles_id')) > 0)
+			if((int)trim($this->put('complevel_profiles_id')) > 0)
 			{
-				$complevel_profiles_id = (int)trim($this->request->body('complevel_profiles_id'));
+				$complevel_profiles_id = (int)trim($this->put('complevel_profiles_id'));
 			}
 
 		}
@@ -339,9 +339,9 @@
 			// divisions_id 
 			// Change the Division ID
 				
-			if((int)trim($this->request->body('divisions_id')) > 0)
+			if((int)trim($this->put('divisions_id')) > 0)
 			{
-				$divisions_id = (int)trim($this->request->body('divisions_id'));
+				$divisions_id = (int)trim($this->put('divisions_id'));
 			}
 
 		}
@@ -359,9 +359,9 @@
 			// complevel_profiles_id 
 			// Change The Competition Level ID of the Organization ID
 				
-			if((int)trim($this->request->body('complevel_profiles_id')) > 0)
+			if((int)trim($this->put('complevel_profiles_id')) > 0)
 			{
-				$complevel_profiles_id = (int)trim($this->request->body('complevel_profiles_id'));
+				$complevel_profiles_id = (int)trim($this->put('complevel_profiles_id'));
 			}
 
 		}
@@ -379,9 +379,9 @@
 			// season_profiles_id 
 			// Change the Season Profiles ID
 				
-			if((int)trim($this->request->body('season_profiles_id')) > 0)
+			if((int)trim($this->put('season_profiles_id')) > 0)
 			{
-				$season_profiles_id = (int)trim($this->request->body('season_profiles_id'));
+				$season_profiles_id = (int)trim($this->put('season_profiles_id'));
 			}
 
 		}

@@ -360,35 +360,35 @@
 			// name 
 			// Update the name of this sport
 				
-			if(trim($this->request->body('name')) != "")
+			if(trim($this->put('name')) != "")
 			{
-				$name = trim($this->request->body('name'));
+				$name = trim($this->put('name'));
 			}
 
 			// male 
 			// Update whether men can compete in this sport
 				
-			if($this->request->body('male') != "")
+			if($this->put('male') != "")
 			{
 				//convert male to a boolean
-				$male = (bool)$this->request->body('male');
+				$male = (bool)$this->put('male');
 			}
 
 			// female 
 			// Update whether women can compete in this sport
 				
-			if($this->request->body('female') != "")
+			if($this->put('female') != "")
 			{
 				//convert female to a boolean
-				$female = (bool)$this->request->body('female');
+				$female = (bool)$this->put('female');
 			}
 
 			// sport_type_id 
 			// Change the Sport Type ID for this sport
 				
-			if((int)trim($this->request->body('sport_type_id')) > 0)
+			if((int)trim($this->put('sport_type_id')) > 0)
 			{
-				$sport_type_id = (int)trim($this->request->body('sport_type_id'));
+				$sport_type_id = (int)trim($this->put('sport_type_id'));
 			}
 
 		}
@@ -406,9 +406,9 @@
 			// sport_type_id 
 			// Change the sport type ID
 				
-			if((int)trim($this->request->body('sport_type_id')) > 0)
+			if((int)trim($this->put('sport_type_id')) > 0)
 			{
-				$sport_type_id = (int)trim($this->request->body('sport_type_id'));
+				$sport_type_id = (int)trim($this->put('sport_type_id'));
 			}
 
 		}

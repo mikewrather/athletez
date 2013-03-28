@@ -215,33 +215,33 @@
 			// name 
 			// Change the name of the Competition Level
 				
-			if(trim($this->request->body('name')) != "")
+			if(trim($this->put('name')) != "")
 			{
-				$name = trim($this->request->body('name'));
+				$name = trim($this->put('name'));
 			}
 
 			// complevel_profiles_id 
 			// Change the Competition Profile
 				
-			if((int)trim($this->request->body('complevel_profiles_id')) > 0)
+			if((int)trim($this->put('complevel_profiles_id')) > 0)
 			{
-				$complevel_profiles_id = (int)trim($this->request->body('complevel_profiles_id'));
+				$complevel_profiles_id = (int)trim($this->put('complevel_profiles_id'));
 			}
 
 			// min_age 
 			// Change Minimum Age for this Comp Level
 				
-			if((int)trim($this->request->body('min_age')) > 0)
+			if((int)trim($this->put('min_age')) > 0)
 			{
-				$min_age = (int)trim($this->request->body('min_age'));
+				$min_age = (int)trim($this->put('min_age'));
 			}
 
 			// max_age 
 			// Change Maximum Age for this Comp Level
 				
-			if((int)trim($this->request->body('max_age')) > 0)
+			if((int)trim($this->put('max_age')) > 0)
 			{
-				$max_age = (int)trim($this->request->body('max_age'));
+				$max_age = (int)trim($this->put('max_age'));
 			}
 
 		}

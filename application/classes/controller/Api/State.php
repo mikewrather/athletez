@@ -367,17 +367,17 @@
 			// name 
 			// Update the name of the state
 				
-			if(trim($this->request->body('name')) != "")
+			if(trim($this->put('name')) != "")
 			{
-				$name = trim($this->request->body('name'));
+				$name = trim($this->put('name'));
 			}
 
 			// countries_id 
 			// Change the country that the state exists in
 				
-			if((int)trim($this->request->body('countries_id')) > 0)
+			if((int)trim($this->put('countries_id')) > 0)
 			{
-				$countries_id = (int)trim($this->request->body('countries_id'));
+				$countries_id = (int)trim($this->put('countries_id'));
 			}
 
 		}

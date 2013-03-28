@@ -686,49 +686,49 @@
 			// email 
 			// Updated Email Address
 				
-			if(trim($this->request->body('email')) != "")
+			if(trim($this->put('email')) != "")
 			{
-				$email = trim($this->request->body('email'));
+				$email = trim($this->put('email'));
 			}
 
 			// firstname 
 			// Updated First Name
 				
-			if(trim($this->request->body('firstname')) != "")
+			if(trim($this->put('firstname')) != "")
 			{
-				$firstname = trim($this->request->body('firstname'));
+				$firstname = trim($this->put('firstname'));
 			}
 
 			// lastname 
 			// Updated Last Name
 				
-			if(trim($this->request->body('lastname')) != "")
+			if(trim($this->put('lastname')) != "")
 			{
-				$lastname = trim($this->request->body('lastname'));
+				$lastname = trim($this->put('lastname'));
 			}
 
 			// password 
 			// New Password
 				
-			if(trim($this->request->body('password')) != "")
+			if(trim($this->put('password')) != "")
 			{
-				$password = trim($this->request->body('password'));
+				$password = trim($this->put('password'));
 			}
 
 			// re_password 
 			// Re-entered Password for verification
 				
-			if(trim($this->request->body('re_password')) != "")
+			if(trim($this->put('re_password')) != "")
 			{
-				$re_password = trim($this->request->body('re_password'));
+				$re_password = trim($this->put('re_password'));
 			}
 
 			// cities_id 
 			// User's Home City
 				
-			if((int)trim($this->request->body('cities_id')) > 0)
+			if((int)trim($this->put('cities_id')) > 0)
 			{
-				$cities_id = (int)trim($this->request->body('cities_id'));
+				$cities_id = (int)trim($this->put('cities_id'));
 			}
 
 		}

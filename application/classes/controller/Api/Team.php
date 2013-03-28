@@ -273,41 +273,41 @@
 			// complevels_id 
 			// Competition Level ID
 				
-			if((int)trim($this->request->body('complevels_id')) > 0)
+			if((int)trim($this->put('complevels_id')) > 0)
 			{
-				$complevels_id = (int)trim($this->request->body('complevels_id'));
+				$complevels_id = (int)trim($this->put('complevels_id'));
 			}
 
 			// seasons_id 
 			// Update the Season ID
 				
-			if((int)trim($this->request->body('seasons_id')) > 0)
+			if((int)trim($this->put('seasons_id')) > 0)
 			{
-				$seasons_id = (int)trim($this->request->body('seasons_id'));
+				$seasons_id = (int)trim($this->put('seasons_id'));
 			}
 
 			// year 
 			// Change the year of this team
 				
-			if(trim($this->request->body('year')) != "")
+			if(trim($this->put('year')) != "")
 			{
-				$year = trim($this->request->body('year'));
+				$year = trim($this->put('year'));
 			}
 
 			// mascot 
 			// Change the mascot of this team
 				
-			if(trim($this->request->body('mascot')) != "")
+			if(trim($this->put('mascot')) != "")
 			{
-				$mascot = trim($this->request->body('mascot'));
+				$mascot = trim($this->put('mascot'));
 			}
 
 			// unique_ident 
 			// Change the Unique Identifier for this team
 				
-			if(trim($this->request->body('unique_ident')) != "")
+			if(trim($this->put('unique_ident')) != "")
 			{
-				$unique_ident = trim($this->request->body('unique_ident'));
+				$unique_ident = trim($this->put('unique_ident'));
 			}
 
 		}
@@ -325,35 +325,35 @@
 			// points_scored 
 			// Change the number of points scored for this team in this game
 				
-			if((int)trim($this->request->body('points_scored')) > 0)
+			if((int)trim($this->put('points_scored')) > 0)
 			{
-				$points_scored = (int)trim($this->request->body('points_scored'));
+				$points_scored = (int)trim($this->put('points_scored'));
 			}
 
 			// points_against 
 			// Change the number of points scored against this team / game
 				
-			if((int)trim($this->request->body('points_against')) > 0)
+			if((int)trim($this->put('points_against')) > 0)
 			{
-				$points_against = (int)trim($this->request->body('points_against'));
+				$points_against = (int)trim($this->put('points_against'));
 			}
 
 			// isWinner 
 			// Update whether this team won this game
 				
-			if($this->request->body('isWinner') != "")
+			if($this->put('isWinner') != "")
 			{
 				//convert isWinner to a boolean
-				$isWinner = (bool)$this->request->body('isWinner');
+				$isWinner = (bool)$this->put('isWinner');
 			}
 
 			// is_home_team 
 			// Update whether this is the home team for this game
 				
-			if($this->request->body('is_home_team') != "")
+			if($this->put('is_home_team') != "")
 			{
 				//convert is_home_team to a boolean
-				$is_home_team = (bool)$this->request->body('is_home_team');
+				$is_home_team = (bool)$this->put('is_home_team');
 			}
 
 		}

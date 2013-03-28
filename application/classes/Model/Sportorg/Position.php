@@ -32,7 +32,7 @@ class Model_Sportorg_Position extends ORM
 		return array(
 			"id" => $this->id,
 			"name" => $this->name,
-			"sport_id" => $this->sport_id,
+			"sports_id" => $this->sports_id,
 			"stattab_id" => $this->stattab_id,
 			"stattab" => $this->stattab->getBasics(),
 			"sport" => $this->sport->getBasics()

@@ -175,9 +175,9 @@
 			// match_num 
 			// Change the Match Num for this match
 				
-			if(trim($this->request->body('match_num')) != "")
+			if(trim($this->put('match_num')) != "")
 			{
-				$match_num = trim($this->request->body('match_num'));
+				$match_num = trim($this->put('match_num'));
 			}
 
 		}

@@ -161,17 +161,17 @@
 			// name 
 			// Change the name of the Season
 				
-			if(trim($this->request->body('name')) != "")
+			if(trim($this->put('name')) != "")
 			{
-				$name = trim($this->request->body('name'));
+				$name = trim($this->put('name'));
 			}
 
 			// seasons_profiles_id 
 			// Change the Season Profile this season belongs to
 				
-			if((int)trim($this->request->body('seasons_profiles_id')) > 0)
+			if((int)trim($this->put('seasons_profiles_id')) > 0)
 			{
-				$seasons_profiles_id = (int)trim($this->request->body('seasons_profiles_id'));
+				$seasons_profiles_id = (int)trim($this->put('seasons_profiles_id'));
 			}
 
 		}

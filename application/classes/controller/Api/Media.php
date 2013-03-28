@@ -65,33 +65,33 @@
 			// name 
 			// Change the name of Media
 				
-			if(trim($this->request->body('name')) != "")
+			if(trim($this->put('name')) != "")
 			{
-				$name = trim($this->request->body('name'));
+				$name = trim($this->put('name'));
 			}
 
 			// sports_id 
 			// Change the sport ID associated with this media
 				
-			if((int)trim($this->request->body('sports_id')) > 0)
+			if((int)trim($this->put('sports_id')) > 0)
 			{
-				$sports_id = (int)trim($this->request->body('sports_id'));
+				$sports_id = (int)trim($this->put('sports_id'));
 			}
 
 			// subject_type_id 
 			// Change the subject type ID of this Media
 				
-			if((int)trim($this->request->body('subject_type_id')) > 0)
+			if((int)trim($this->put('subject_type_id')) > 0)
 			{
-				$subject_type_id = (int)trim($this->request->body('subject_type_id'));
+				$subject_type_id = (int)trim($this->put('subject_type_id'));
 			}
 
 			// subject_id 
 			// Change the subject ID of this media
 				
-			if((int)trim($this->request->body('subject_id')) > 0)
+			if((int)trim($this->put('subject_id')) > 0)
 			{
-				$subject_id = (int)trim($this->request->body('subject_id'));
+				$subject_id = (int)trim($this->put('subject_id'));
 			}
 
 		}

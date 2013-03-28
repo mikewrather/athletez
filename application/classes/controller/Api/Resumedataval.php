@@ -138,9 +138,9 @@
 			// user_value 
 			// Update the user's entered value for this peice of resume data
 				
-			if(trim($this->request->body('user_value')) != "")
+			if(trim($this->put('user_value')) != "")
 			{
-				$user_value = trim($this->request->body('user_value'));
+				$user_value = trim($this->put('user_value'));
 			}
 
 		}
