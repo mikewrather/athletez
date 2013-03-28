@@ -96,7 +96,9 @@
 			{
 				$name = trim($this->request->post('name'));
 			}
-
+			
+			$season_profile = ORM::factory('Sportorg_Seasons_Profile');
+			return $season_profile->addSeasonprofile($name);
 		}
 		
 		############################################################################

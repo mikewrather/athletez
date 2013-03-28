@@ -103,14 +103,14 @@
 		public function action_post_add()
 		{
 			$this->payloadDesc = "Add a new State";
-
+			$args = array();
 		     // CHECK FOR PARAMETERS:
 			// name (REQUIRED)
 			// The name of the state
 				
 			if(trim($this->request->post('name')) != "")
 			{
-				$name = trim($this->request->post('name'));
+				$args['name'] = trim($this->request->post('name'));
 			}
 
 			else // THIS WAS A REQUIRED PARAMETER
@@ -135,7 +135,7 @@
 				
 			if((int)trim($this->request->post('countries_id')) > 0)
 			{
-				$countries_id = (int)trim($this->request->post('countries_id'));
+				$args['countries_id'] = (int)trim($this->request->post('countries_id'));
 			}
 
 			else // THIS WAS A REQUIRED PARAMETER
@@ -154,6 +154,9 @@
 				$this->addError($error_array,$is_fatal);
 
 			}
+			
+			$state = ORM::factory('Location_State');
+			return $state->addState($args);
 			
 		}
 		

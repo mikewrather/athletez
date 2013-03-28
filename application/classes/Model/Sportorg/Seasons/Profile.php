@@ -28,4 +28,14 @@ class Model_Sportorg_Seasons_Profile extends ORM
 			"name" => $this->name
 		);
 	}
+	
+	public function addSeasonprofile($name)
+	{
+		if(isset($name))
+		{
+			$this->name = $name;
+		}
+		$this->save();
+		return $this;
+	}
 }

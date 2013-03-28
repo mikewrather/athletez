@@ -42,5 +42,25 @@ class Model_Location_State extends ORM
 			"country" => $this->country->getBasics()
 		);
 	}
+	
+	public function addState($args = array())
+	{
+		extract($args);
+		if(isset($name))
+		{
+			$this->name = $name;
+		}
+ 
+		// counties_id (REQUIRED)
+		// The county the city belongs to
+		if(isset($counties_id))
+		{
+			$this->countries_id = $counties_id;
+		}
+
+		$this->save();
+
+		return $this;
+	}
 
 }

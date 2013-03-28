@@ -55,14 +55,14 @@
 		public function action_post_add()
 		{
 			$this->payloadDesc = "Add a new Resume Data Value for a User\'s Resume";
-
+			$args = array();
 		     // CHECK FOR PARAMETERS:
 			// resume_data_id (REQUIRED)
 			// The ID of the resume data you are adding
 				
 			if((int)trim($this->request->post('resume_data_id')) > 0)
 			{
-				$resume_data_id = (int)trim($this->request->post('resume_data_id'));
+				$args['resume_data_id'] = (int)trim($this->request->post('resume_data_id'));
 			}
 
 			else // THIS WAS A REQUIRED PARAMETER
@@ -87,7 +87,7 @@
 				
 			if(trim($this->request->post('user_value')) != "")
 			{
-				$user_value = trim($this->request->post('user_value'));
+				$args['user_value'] = trim($this->request->post('user_value'));
 			}
 
 			else // THIS WAS A REQUIRED PARAMETER
@@ -112,8 +112,11 @@
 				
 			if((int)trim($this->request->post('users_id')) > 0)
 			{
-				$users_id = (int)trim($this->request->post('users_id'));
+				$args['users_id'] = (int)trim($this->request->post('users_id'));
 			}
+			
+			$resume_data_val = ORM::factory('User_Resume_Data_Vals');
+			return $resume_data_val->addResumeDataVal($args);
 
 		}
 		
