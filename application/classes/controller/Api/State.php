@@ -194,7 +194,8 @@
 				$this->addError($error_array,$is_fatal);
 
 			}
-			
+			$state = ORM::factory('Location_State');
+			return $state->addCounty($name);
 		}
 		
 		/**
@@ -205,14 +206,15 @@
 		public function action_post_division()
 		{
 			$this->payloadDesc = "Add a division within the state";
-
-		     // CHECK FOR PARAMETERS:
+			$args = array();
+		    
+		    // CHECK FOR PARAMETERS:
 			// name (REQUIRED)
 			// Name of the Division to add
 				
 			if(trim($this->request->post('name')) != "")
 			{
-				$name = trim($this->request->post('name'));
+				$args['name'] = trim($this->request->post('name'));
 			}
 
 			else // THIS WAS A REQUIRED PARAMETER
@@ -237,9 +239,10 @@
 				
 			if((int)trim($this->request->post('sections_id')) > 0)
 			{
-				$sections_id = (int)trim($this->request->post('sections_id'));
+				$args['sections_id'] = (int)trim($this->request->post('sections_id'));
 			}
-
+			$state = ORM::factory('Location_State');
+			return $state->addDivision($args);
 		}
 		
 		/**
@@ -250,14 +253,14 @@
 		public function action_post_section()
 		{
 			$this->payloadDesc = "Add a section within the state";
-
+			$args = array();
 		     // CHECK FOR PARAMETERS:
 			// name (REQUIRED)
 			// Name of the Section to add
 				
 			if(trim($this->request->post('name')) != "")
 			{
-				$name = trim($this->request->post('name'));
+				$args['name'] = trim($this->request->post('name'));
 			}
 
 			else // THIS WAS A REQUIRED PARAMETER
@@ -282,7 +285,7 @@
 				
 			if((int)trim($this->request->post('sports_id')) > 0)
 			{
-				$sports_id = (int)trim($this->request->post('sports_id'));
+				$args['sports_id'] = (int)trim($this->request->post('sports_id'));
 			}
 
 			else // THIS WAS A REQUIRED PARAMETER
@@ -301,7 +304,8 @@
 				$this->addError($error_array,$is_fatal);
 
 			}
-			
+			$state = ORM::factory('Location_State');
+			return $state->addSection($args);
 		}
 		
 		/**
@@ -312,14 +316,14 @@
 		public function action_post_league()
 		{
 			$this->payloadDesc = "Add a league within the state";
-
+			$args = array();
 		     // CHECK FOR PARAMETERS:
 			// name (REQUIRED)
 			// Name of the League to add
 				
 			if(trim($this->request->post('name')) != "")
 			{
-				$name = trim($this->request->post('name'));
+				$args['name'] = trim($this->request->post('name'));
 			}
 
 			else // THIS WAS A REQUIRED PARAMETER
@@ -344,9 +348,10 @@
 				
 			if((int)trim($this->request->post('sections_id')) > 0)
 			{
-				$sections_id = (int)trim($this->request->post('sections_id'));
+				$args['sections_id'] = (int)trim($this->request->post('sections_id'));
 			}
-
+			$state = ORM::factory('Location_State');
+			return $state->addLeague($args);
 		}
 		
 		############################################################################

@@ -43,6 +43,81 @@ class Model_Location_State extends ORM
 		);
 	}
 	
+	public function addCounty($name)
+	{
+		if(isset($name))
+		{
+			$this->name = $name;
+		}
+		$this->states_id = $this->id;
+		$this->save();
+
+		return $this;
+	}
+	 
+	public function addLeague($args = array())
+	{
+		extract($args);
+		// name column
+		if(isset($name))
+		{
+			$this->name = $name;
+		}
+		// states_id column
+		$this->states_id = $this->id;
+		
+		// sports_id column
+		if(isset($sections_id))
+		{
+			$this->sections_id = $sections_id;
+		}
+		
+		$this->save();
+		return $this;
+	}	
+	
+	public function addSection($args = array())
+	{
+		extract($args);
+		// name column
+		if(isset($name))
+		{
+			$this->name = $name;
+		}
+		// states_id column
+		$this->states_id = $this->id;
+		
+		// sports_id column
+		if(isset($sports_id))
+		{
+			$this->sports_id = $sports_id;
+		}
+		
+		$this->save();
+		return $this;
+	}	
+	
+	public function addDivision($args = array() )
+	{
+		extract($args);
+		// name column
+		if(isset($name))
+		{
+			$this->name = $name;
+		}
+		
+		// sections_id column
+		if(isset($sections_id))
+		{
+			$this->sections_id = $sections_id;
+		}
+		
+		// states_id colunn
+		$this->states_id = $this->id;
+		$this->save();
+		return $this;
+	}
+	
 	public function addState($args = array())
 	{
 		extract($args);
