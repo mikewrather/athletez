@@ -158,9 +158,9 @@
 			// video_services_id 
 			// Change the video service this video belongs to
 				
-			if((int)trim($this->request->body('video_services_id')) > 0)
+			if((int)trim($this->put('video_services_id')) > 0)
 			{
-				$video_services_id = (int)trim($this->request->body('video_services_id'));
+				$video_services_id = (int)trim($this->put('video_services_id'));
 			}
 
 		}

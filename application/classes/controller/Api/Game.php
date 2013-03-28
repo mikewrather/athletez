@@ -276,18 +276,18 @@
 			// game_datetime 
 			// Change the date / time this game takes place
 				
-			if($this->request->body('game_datetime') != "")
+			if($this->put('game_datetime') != "")
 			{
 				// Format as date
-				$game_datetime = date("Y-m-d H:i:s",strtotime($this->request->body('game_datetime')));
+				$game_datetime = date("Y-m-d H:i:s",strtotime($this->put('game_datetime')));
 			}
 
 			// lodcations_id 
 			// Change the location of this game
 				
-			if((int)trim($this->request->body('lodcations_id')) > 0)
+			if((int)trim($this->put('lodcations_id')) > 0)
 			{
-				$lodcations_id = (int)trim($this->request->body('lodcations_id'));
+				$lodcations_id = (int)trim($this->put('lodcations_id'));
 			}
 
 		}

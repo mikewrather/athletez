@@ -152,18 +152,18 @@
 			// points_awarded 
 			// Update the number of points awarded to this player during this match
 				
-			if((int)trim($this->request->body('points_awarded')) > 0)
+			if((int)trim($this->put('points_awarded')) > 0)
 			{
-				$points_awarded = (int)trim($this->request->body('points_awarded'));
+				$points_awarded = (int)trim($this->put('points_awarded'));
 			}
 
 			// match_winner 
 			// Update whether this player is the match winner
 				
-			if($this->request->body('match_winner') != "")
+			if($this->put('match_winner') != "")
 			{
 				//convert match_winner to a boolean
-				$match_winner = (bool)$this->request->body('match_winner');
+				$match_winner = (bool)$this->put('match_winner');
 			}
 
 		}

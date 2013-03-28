@@ -171,17 +171,17 @@
 			// name 
 			// Change the name of this Statistic
 				
-			if(trim($this->request->body('name')) != "")
+			if(trim($this->put('name')) != "")
 			{
-				$name = trim($this->request->body('name'));
+				$name = trim($this->put('name'));
 			}
 
 			// description 
 			// Change the description of this Statistic
 				
-			if(trim($this->request->body('description')) != "")
+			if(trim($this->put('description')) != "")
 			{
-				$description = trim($this->request->body('description'));
+				$description = trim($this->put('description'));
 			}
 
 		}

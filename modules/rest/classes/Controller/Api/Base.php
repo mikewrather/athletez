@@ -19,6 +19,8 @@ class Controller_Api_Base extends AuthController
 	protected $payloadDesc;
 
 
+	protected $put = array();
+
 
 	/**
 	 * @var $starttime is used to calculate the total execution time for the controller script
@@ -37,6 +39,37 @@ class Controller_Api_Base extends AuthController
 		$this->myID2 = (int)$this->request->param('id2') > 0 ? (int)$this->request->param('id2') : 0;
 
 		$this->populateAuthVars();
+
+		if($this->request->method() == 'PUT')
+		{
+			$this->setPutParams();
+		//	print_r($this->put);
+		}
+	}
+
+	protected function setPutParams()
+	{
+		$putParams = $this->request->body();
+		$putArr = explode('&',$putParams);
+		foreach($putArr as $argPair)
+		{
+			$argArr = explode('=',$argPair);
+			$this->put[$argArr[0]] = $argArr[1];
+		}
+	}
+
+	protected function put($arg,$val=NULL)
+	{
+		if($val !== NULL)
+		{
+			return $this->put[$arg] = $val;
+		}
+		else
+		{
+			if(isset($this->put[$arg])) return $this->put[$arg];
+			else return false;
+		}
+
 	}
 
 	public function execute()

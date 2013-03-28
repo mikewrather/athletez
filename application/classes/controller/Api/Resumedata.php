@@ -135,17 +135,17 @@
 			// name 
 			// Change the name of the Resume Data
 				
-			if(trim($this->request->body('name')) != "")
+			if(trim($this->put('name')) != "")
 			{
-				$name = trim($this->request->body('name'));
+				$name = trim($this->put('name'));
 			}
 
 			// resume_data_type 
 			// Change the data type of the resume data
 				
-			if(trim($this->request->body('resume_data_type')) != "")
+			if(trim($this->put('resume_data_type')) != "")
 			{
-				$resume_data_type = trim($this->request->body('resume_data_type'));
+				$resume_data_type = trim($this->put('resume_data_type'));
 			}
 
 		}

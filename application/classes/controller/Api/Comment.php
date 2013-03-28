@@ -176,9 +176,9 @@
 			// comment 
 			// Update the comment
 				
-			if(trim($this->request->body('comment')) != "")
+			if(trim($this->put('comment')) != "")
 			{
-				$comment = trim($this->request->body('comment'));
+				$comment = trim($this->put('comment'));
 			}
 
 		}

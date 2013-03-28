@@ -59,12 +59,7 @@ class Model_Location_Base extends ORM
 		{
 			$this->cities_id = $cities_id;
 		}
-		
-		if(isset($states_id))
-		{
-			$this->states_id = $states_id;
-		}
-		
+
 		if(isset($lon))
 		{
 			$this->lon = $lon;
@@ -78,13 +73,6 @@ class Model_Location_Base extends ORM
 		if(isset($loc_point))
 		{
 			$this->loc_point = $loc_point;
-		}
-		
-		// states_id
-		// State the city belongs to
-		if(isset($states_id))
-		{
-			$this->state_id = $states_id;
 		}
 		
 		if(isset($location_type))

@@ -147,25 +147,25 @@
 			// name 
 			// Update the name of the division
 				
-			if(trim($this->request->body('name')) != "")
+			if(trim($this->put('name')) != "")
 			{
-				$name = trim($this->request->body('name'));
+				$name = trim($this->put('name'));
 			}
 
 			// states_id 
 			// Change the state of this division
 				
-			if((int)trim($this->request->body('states_id')) > 0)
+			if((int)trim($this->put('states_id')) > 0)
 			{
-				$states_id = (int)trim($this->request->body('states_id'));
+				$states_id = (int)trim($this->put('states_id'));
 			}
 
 			// sections_id 
 			// Change the Section this division belongs to
 				
-			if((int)trim($this->request->body('sections_id')) > 0)
+			if((int)trim($this->put('sections_id')) > 0)
 			{
-				$sections_id = (int)trim($this->request->body('sections_id'));
+				$sections_id = (int)trim($this->put('sections_id'));
 			}
 
 		}

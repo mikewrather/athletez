@@ -244,25 +244,25 @@
 			// name 
 			// Change the name of the Sports Position
 				
-			if(trim($this->request->body('name')) != "")
+			if(trim($this->put('name')) != "")
 			{
-				$name = trim($this->request->body('name'));
+				$name = trim($this->put('name'));
 			}
 
 			// stattab_id 
 			// Change the default Statistics Tab
 				
-			if((int)trim($this->request->body('stattab_id')) > 0)
+			if((int)trim($this->put('stattab_id')) > 0)
 			{
-				$stattab_id = (int)trim($this->request->body('stattab_id'));
+				$stattab_id = (int)trim($this->put('stattab_id'));
 			}
 
 			// sports_id 
 			// Change the sport this position belongs to
 				
-			if((int)trim($this->request->body('sports_id')) > 0)
+			if((int)trim($this->put('sports_id')) > 0)
 			{
-				$sports_id = (int)trim($this->request->body('sports_id'));
+				$sports_id = (int)trim($this->put('sports_id'));
 			}
 
 		}

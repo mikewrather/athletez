@@ -188,41 +188,41 @@
 			// address 
 			// Change the address of this location
 				
-			if(trim($this->request->body('address')) != "")
+			if(trim($this->put('address')) != "")
 			{
-				$address = trim($this->request->body('address'));
+				$address = trim($this->put('address'));
 			}
 
 			// cities_id 
 			// Change the city of the location
 				
-			if((int)trim($this->request->body('cities_id')) > 0)
+			if((int)trim($this->put('cities_id')) > 0)
 			{
-				$cities_id = (int)trim($this->request->body('cities_id'));
+				$cities_id = (int)trim($this->put('cities_id'));
 			}
 
 			// lon 
 			// Change the longitude of this location
 				
-			if(trim($this->request->body('lon')) != "")
+			if(trim($this->put('lon')) != "")
 			{
-				$lon = trim($this->request->body('lon'));
+				$lon = trim($this->put('lon'));
 			}
 
 			// lat 
 			// Change the latitude of this location
 				
-			if(trim($this->request->body('lat')) != "")
+			if(trim($this->put('lat')) != "")
 			{
-				$lat = trim($this->request->body('lat'));
+				$lat = trim($this->put('lat'));
 			}
 
 			// location_type 
 			// Change the location type of this location
 				
-			if(trim($this->request->body('location_type')) != "")
+			if(trim($this->put('location_type')) != "")
 			{
-				$location_type = trim($this->request->body('location_type'));
+				$location_type = trim($this->put('location_type'));
 			}
 
 		}

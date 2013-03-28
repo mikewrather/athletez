@@ -103,14 +103,14 @@
 		public function action_post_add()
 		{
 			$this->payloadDesc = "Add a new State";
-
+			$args = array();
 		     // CHECK FOR PARAMETERS:
 			// name (REQUIRED)
 			// The name of the state
 				
 			if(trim($this->request->post('name')) != "")
 			{
-				$name = trim($this->request->post('name'));
+				$args['name'] = trim($this->request->post('name'));
 			}
 
 			else // THIS WAS A REQUIRED PARAMETER
@@ -135,7 +135,7 @@
 				
 			if((int)trim($this->request->post('countries_id')) > 0)
 			{
-				$countries_id = (int)trim($this->request->post('countries_id'));
+				$args['countries_id'] = (int)trim($this->request->post('countries_id'));
 			}
 
 			else // THIS WAS A REQUIRED PARAMETER
@@ -154,6 +154,9 @@
 				$this->addError($error_array,$is_fatal);
 
 			}
+			
+			$state = ORM::factory('Location_State');
+			return $state->addState($args);
 			
 		}
 		
@@ -191,7 +194,8 @@
 				$this->addError($error_array,$is_fatal);
 
 			}
-			
+			$state = ORM::factory('Location_State');
+			return $state->addCounty($name);
 		}
 		
 		/**
@@ -202,14 +206,15 @@
 		public function action_post_division()
 		{
 			$this->payloadDesc = "Add a division within the state";
-
-		     // CHECK FOR PARAMETERS:
+			$args = array();
+		    
+		    // CHECK FOR PARAMETERS:
 			// name (REQUIRED)
 			// Name of the Division to add
 				
 			if(trim($this->request->post('name')) != "")
 			{
-				$name = trim($this->request->post('name'));
+				$args['name'] = trim($this->request->post('name'));
 			}
 
 			else // THIS WAS A REQUIRED PARAMETER
@@ -234,9 +239,10 @@
 				
 			if((int)trim($this->request->post('sections_id')) > 0)
 			{
-				$sections_id = (int)trim($this->request->post('sections_id'));
+				$args['sections_id'] = (int)trim($this->request->post('sections_id'));
 			}
-
+			$state = ORM::factory('Location_State');
+			return $state->addDivision($args);
 		}
 		
 		/**
@@ -247,14 +253,14 @@
 		public function action_post_section()
 		{
 			$this->payloadDesc = "Add a section within the state";
-
+			$args = array();
 		     // CHECK FOR PARAMETERS:
 			// name (REQUIRED)
 			// Name of the Section to add
 				
 			if(trim($this->request->post('name')) != "")
 			{
-				$name = trim($this->request->post('name'));
+				$args['name'] = trim($this->request->post('name'));
 			}
 
 			else // THIS WAS A REQUIRED PARAMETER
@@ -279,7 +285,7 @@
 				
 			if((int)trim($this->request->post('sports_id')) > 0)
 			{
-				$sports_id = (int)trim($this->request->post('sports_id'));
+				$args['sports_id'] = (int)trim($this->request->post('sports_id'));
 			}
 
 			else // THIS WAS A REQUIRED PARAMETER
@@ -298,7 +304,8 @@
 				$this->addError($error_array,$is_fatal);
 
 			}
-			
+			$state = ORM::factory('Location_State');
+			return $state->addSection($args);
 		}
 		
 		/**
@@ -309,14 +316,14 @@
 		public function action_post_league()
 		{
 			$this->payloadDesc = "Add a league within the state";
-
+			$args = array();
 		     // CHECK FOR PARAMETERS:
 			// name (REQUIRED)
 			// Name of the League to add
 				
 			if(trim($this->request->post('name')) != "")
 			{
-				$name = trim($this->request->post('name'));
+				$args['name'] = trim($this->request->post('name'));
 			}
 
 			else // THIS WAS A REQUIRED PARAMETER
@@ -341,9 +348,10 @@
 				
 			if((int)trim($this->request->post('sections_id')) > 0)
 			{
-				$sections_id = (int)trim($this->request->post('sections_id'));
+				$args['sections_id'] = (int)trim($this->request->post('sections_id'));
 			}
-
+			$state = ORM::factory('Location_State');
+			return $state->addLeague($args);
 		}
 		
 		############################################################################
@@ -364,17 +372,17 @@
 			// name 
 			// Update the name of the state
 				
-			if(trim($this->request->body('name')) != "")
+			if(trim($this->put('name')) != "")
 			{
-				$name = trim($this->request->body('name'));
+				$name = trim($this->put('name'));
 			}
 
 			// countries_id 
 			// Change the country that the state exists in
 				
-			if((int)trim($this->request->body('countries_id')) > 0)
+			if((int)trim($this->put('countries_id')) > 0)
 			{
-				$countries_id = (int)trim($this->request->body('countries_id'));
+				$countries_id = (int)trim($this->put('countries_id'));
 			}
 
 		}

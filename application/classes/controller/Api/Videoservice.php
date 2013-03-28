@@ -122,17 +122,17 @@
 			// name 
 			// Update the name of the Video Service
 				
-			if(trim($this->request->body('name')) != "")
+			if(trim($this->put('name')) != "")
 			{
-				$name = trim($this->request->body('name'));
+				$name = trim($this->put('name'));
 			}
 
 			// website 
 			// Update this Video Service's Website
 				
-			if(trim($this->request->body('website')) != "")
+			if(trim($this->put('website')) != "")
 			{
-				$website = trim($this->request->body('website'));
+				$website = trim($this->put('website'));
 			}
 
 		}
