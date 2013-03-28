@@ -15,10 +15,12 @@ define([
     "game/models/basics",
     "game/models/addmedia",
     "game/collections/teamrosters",
+    "game/models/videoplayer",
     
     "game/views/header",
     "game/views/add-media",
-    "game/views/teamroster-list"
+    "game/views/teamroster-list",
+    "game/views/videoplayer"
     
     ], function (require, pageLayoutTemplate) {
 
@@ -32,10 +34,12 @@ define([
         GameBasicsModel = require("game/models/basics"),
         GameAddMediaModel = require("game/models/addmedia"),
         GameTeamRosterList = require("game/collections/teamrosters"),
+        GameVideoPlayerModel = require("game/models/videoplayer"),
         
         GameHeaderView = require("game/views/header"),
         GameAddMediaView = require("game/views/add-media"),
         GameTeamRosterListView = require("game/views/teamroster-list"),
+        GameVideoPlayerView = require("game/views/videoplayer"),
         
         
         LayoutView = views.LayoutView,
@@ -78,6 +82,10 @@ define([
             this.teamrosters = new GameTeamRosterList();
             this.teamrosters.id = this.id;
             this.teamrosters.fetch();
+            
+            this.videoplayer = new GameVideoPlayerModel();
+            this.videoplayer.id = this.id;
+            this.videoplayer.fetch();
         },
         
         handleDeferreds: function() {
@@ -90,6 +98,10 @@ define([
             
             $.when(this.teamrosters.request).done(function () {
                 controller.setupTeamRosterListView();                        
+            });
+            
+            $.when(this.videoplayer.request).done(function () {
+                controller.setupVideoPlayerView();                        
             });
             
         },
@@ -129,6 +141,19 @@ define([
             });
             
             this.scheme.push(teamRosterListView);
+            this.layout.render();
+        },
+        
+        setupVideoPlayerView: function() {
+            var videoPlayerView;
+            
+            videoPlayerView = new GameVideoPlayerView({
+                model: this.videoplayer,
+                name: "Video Player",
+                destination: "#video-player"
+            });
+            
+            this.scheme.push(videoPlayerView);
             this.layout.render();
         },
                         
