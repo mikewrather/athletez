@@ -5,20 +5,29 @@
         "video_quality": 0.9,
         "video_image": "images/video_thumb.png",
         "org_name": "Blair Academy",
-        "team": {
-            "complevel": "Varsity",
-            "season": "Winter",
-            "grad_year": "'12",
-            "schedule": {
-                "schedule_date": "Dec 14",
-                "other_team": "Mercersberg Academy",
-                "schedule_summary": "w 88- 72"
-            }
-        },
+        "games": [{
+            "team1_name": "Blair",
+            "team2_name": "Hackettstown"
+        }],
         "video_desc": "This is the description of the highlight. The user can include whatever they want here. I think no character limit is neccessary. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut...",
         "num_votes": 13,
         "num_views": 33,
-        "num_comments": 11                
+        "num_comments": 11,
+        "social_links": [{
+            "class": "facebook",
+            "title": "Facebook",
+            "link": "http://www.facebook.com"
+        },
+        {
+            "class": "twitter",
+            "title": "Twitter",
+            "link": "http://www.twitter.com"
+        },
+        {
+            "class": "email",
+            "title": "Email",
+            "link": "mailto:example@site.com"
+        }]
     },
     "desc": "Primary video information about the user",
     "exec_data": {

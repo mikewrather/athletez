@@ -49,7 +49,7 @@ class Controller_Api_Base extends AuthController
 
 	protected function setPutParams()
 	{
-		$putParams = $this->request->body();
+		$putParams = (string)$this->request->body();
 		$putArr = explode('&',$putParams);
 		foreach($putArr as $argPair)
 		{
@@ -69,7 +69,6 @@ class Controller_Api_Base extends AuthController
 			if(isset($this->put[$arg])) return $this->put[$arg];
 			else return false;
 		}
-
 	}
 
 	public function execute()

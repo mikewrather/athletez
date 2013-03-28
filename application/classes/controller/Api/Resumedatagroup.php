@@ -126,10 +126,12 @@
 		     // CHECK FOR PARAMETERS:
 			// name 
 			// Change the name of the Resume Data Group
+
+			$args = array();
 				
 			if(trim($this->put('name')) != "")
 			{
-				$name = trim($this->put('name'));
+				$args['name'] = trim($this->put('name'));
 			}
 
 			// description 
@@ -137,8 +139,10 @@
 				
 			if(trim($this->put('description')) != "")
 			{
-				$description = trim($this->put('description'));
+				$args['description'] = trim($this->put('description'));
 			}
+
+			return $this->mainModel->updateBasics($args);
 
 		}
 		
