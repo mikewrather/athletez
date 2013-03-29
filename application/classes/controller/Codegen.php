@@ -448,7 +448,7 @@ class Controller_Codegen extends Controller
 		if($methodID > 0)
 		{
 			$method = ORM::factory('Codegen_Apimethod',$methodID);
-			$method->done = $this->request->query('isDone') ? 1 : 0;
+			echo $method->done = $this->request->query('isDone')=="true" ? 1 : 0;
 			$method->save();
 		}
 		else return false;

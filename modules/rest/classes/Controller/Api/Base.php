@@ -21,6 +21,8 @@ class Controller_Api_Base extends AuthController
 
 	protected $put = array();
 
+	protected $errorThrown = false;
+
 
 	/**
 	 * @var $starttime is used to calculate the total execution time for the controller script
@@ -73,7 +75,6 @@ class Controller_Api_Base extends AuthController
 
 	public function execute()
 	{
-
 		//print_r(debug_backtrace());
 		$this->response->body = array();
 
@@ -89,9 +90,8 @@ class Controller_Api_Base extends AuthController
 			$action_no_verb = 'action_' . $this->request->action();
 			if (!method_exists($this, $action_no_verb))
 			{
-				throw HTTP_Exception::factory(404,'The requested URL :uri was not found on this server.',
-					array(':uri' => $this->request->uri())
-				)->request($this->request);
+				$uriArr = array(':uri' => $this->request->uri());
+				throw HTTP_Exception::factory(404,'The requested URL :uri was not found on this server.',$uriArr)->request($this->request);
 			}
 			else
 			{
@@ -100,8 +100,11 @@ class Controller_Api_Base extends AuthController
 		}
 
 		// Execute the action itself
-		$retObj = $this->{$action}();
-		$result = is_object($retObj) ? $this->getDataFromView($retObj) : $this->getDataFromView();
+		if(!$this->errorThrown) //if at any point this property is set to true it will skip this action
+			$retObj = $this->{$action}();
+
+		if(!$this->errorThrown) //if at any point this property is set to true it will skip this action
+			$result = is_object($retObj) ? $this->getDataFromView($retObj) : $this->getDataFromView();
 
 		$this->response->headers('Content-Type','application/json');
 
@@ -147,8 +150,6 @@ class Controller_Api_Base extends AuthController
 			);
 		}
 	}
-
-
 
 	protected function setMainModel($model)
 	{
@@ -205,7 +206,7 @@ class Controller_Api_Base extends AuthController
 		$this->execErrors[] = $error_array;
 		if($is_fatal)
 		{
-			//TODO: Kill The request and return error data
+			$this->errorThrown = true;
 		}
 	}
 
@@ -245,7 +246,10 @@ class Controller_Api_Base extends AuthController
 
 		// Call method to throw an error
 		$this->addError($error_array,$is_fatal);
-
 	}
 
+	protected function requireID()
+	{
+		if(!$this->mainModel->loaded()) $this->modelNotSetError();
+	}
 }
