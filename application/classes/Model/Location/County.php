@@ -26,7 +26,33 @@ class Model_Location_County extends ORM
 	);
 	
 
-
+	public function addCounty($args = array())	
+	{
+		extract($args);
+		$exists_obj = $this->where('name', '=', $name)->and_where('states_id', '=', $states_id);
+		$exists_obj->reset(FALSE);
+		$count = $exists_obj->count_all();
+		
+		if ( $count == 0 )
+		{
+			if(isset($name))
+			{
+				$this->name = $name;
+			}
+			if(isset($states_id))
+			{
+				$this->states_id = $states_id;	
+			}
+			
+			$this->save();
+	
+			return $this;
+		} else {
+			return $exists_obj->find();
+		}
+		
+	}
+	
 	public function getBasics()
 	{
 		return array(

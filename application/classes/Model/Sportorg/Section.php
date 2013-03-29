@@ -49,5 +49,42 @@ class Model_Sportorg_Section extends ORM
 			"states" => $this->state->getBasics()
 		);
 	}
+	
+	
+	public function addSection($args = array())
+	{
+		extract($args);
+		$exists_obj = $this->where('name', '=', $name)->and_where('states_id', '=', $states_id)->and_where('sports_id', '=', $sports_id);
+		$exists_obj->reset(FALSE);
+		$count = $exists_obj->count_all();
+		
+		if ( $count == 0 )
+		{
+			// name column
+			if(isset($name))
+			{
+				$this->name = $name;
+			}
+			// states_id column 
+			if(isset($states_id))
+			{
+				$this->states_id = $states_id;	
+			}
+			
+			// sports_id column
+			if(isset($sports_id))
+			{
+				$this->sports_id = $sports_id;
+			}
+			
+			$this->save();
+			return $this;
+		}else
+		{
+			return $exists_obj->find();
+		}
+		
+	}	
+	
 
 }

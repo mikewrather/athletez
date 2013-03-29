@@ -42,100 +42,37 @@ class Model_Location_State extends ORM
 			"country" => $this->country->getBasics()
 		);
 	}
-	
-	public function addCounty($name)
-	{
-		if(isset($name))
-		{
-			$this->name = $name;
-		}
-		$this->states_id = $this->id;
-		$this->save();
-
-		return $this;
-	}
-	 
-	public function addLeague($args = array())
-	{
-		extract($args);
-		// name column
-		if(isset($name))
-		{
-			$this->name = $name;
-		}
-		// states_id column
-		$this->states_id = $this->id;
-		
-		// sports_id column
-		if(isset($sections_id))
-		{
-			$this->sections_id = $sections_id;
-		}
-		
-		$this->save();
-		return $this;
-	}	
-	
-	public function addSection($args = array())
-	{
-		extract($args);
-		// name column
-		if(isset($name))
-		{
-			$this->name = $name;
-		}
-		// states_id column
-		$this->states_id = $this->id;
-		
-		// sports_id column
-		if(isset($sports_id))
-		{
-			$this->sports_id = $sports_id;
-		}
-		
-		$this->save();
-		return $this;
-	}	
-	
-	public function addDivision($args = array() )
-	{
-		extract($args);
-		// name column
-		if(isset($name))
-		{
-			$this->name = $name;
-		}
-		
-		// sections_id column
-		if(isset($sections_id))
-		{
-			$this->sections_id = $sections_id;
-		}
-		
-		// states_id colunn
-		$this->states_id = $this->id;
-		$this->save();
-		return $this;
-	}
-	
+	 	
 	public function addState($args = array())
 	{
 		extract($args);
-		if(isset($name))
+		
+		// validate
+		$exists_obj = $this->where('name', '=', $name)->and_where('countries_id', '=', $countries_id);
+		$exists_obj->reset(FALSE);
+		$count = $exists_obj->count_all();
+	 
+		if ( $count == 0 )
 		{
-			$this->name = $name;
-		}
- 
-		// counties_id (REQUIRED)
-		// The county the city belongs to
-		if(isset($counties_id))
+			if(isset($name))
+			{
+				$this->name = $name;
+			}
+	 
+			// counties_id (REQUIRED)
+			// The county the city belongs to
+			if(isset($countries_id))
+			{
+				$this->countries_id = $countries_id;
+			}
+			
+			$this->save();
+			return $this;
+		} else
 		{
-			$this->countries_id = $counties_id;
+			return $exists_obj->find();
 		}
-
-		$this->save();
-
-		return $this;
+		
 	}
 
 }

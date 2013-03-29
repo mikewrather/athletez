@@ -38,8 +38,14 @@
 		public function action_get_basics()
 		{
 			$this->payloadDesc = "Basics on a League";
-
-		
+			//Check for ID and end the call if there isn't one
+			if(!$this->mainModel->id)
+			{
+				$this->modelNotSetError();
+				return false;
+			}
+			
+			return $this->mainModel;
 		}
 		
 		/**
@@ -50,8 +56,15 @@
 		public function action_get_orgs()
 		{
 			$this->payloadDesc = "All organizations within a League";
-
 		
+			//Check for ID and end the call if there isn't one
+			if(!$this->mainModel->id)
+			{
+				$this->modelNotSetError();
+				return false;
+			}
+
+			return $this->mainModel->getOrgs();
 		}
 		
 		############################################################################

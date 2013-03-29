@@ -41,8 +41,27 @@ class Model_User_Resume_Data_Group extends ORM
 		);
 	}
 	
-	public function addtordp($resume_data_profiles_id)
+	public function addtordp($args = array())
 	{
-		return DB::insert('rdg_rdp_link', array('resume_data_profiles_id', 'resume_data_groups_id'))->values(array($resume_data_profiles_id, $this->id));
+		extract($args);
+		$new_link = DB::insert('rdg_rdp_link', array('resume_data_profiles_id', 'resume_data_groups_id'))->values(array($resume_data_profiles_id, $resume_data_groups_id));
+	 	try
+		{
+			$new_link->execute();
+			return $new_link;			
+		} catch(Exception $e)
+		{	
+			// Create Array for Error Data
+			$error_array = array(
+				"error" => "Unable to save User",
+				"desc" => $e->getMessage()
+			);
+
+			// Set whether it is a fatal error
+			$is_fatal = true;
+
+			// Call method to throw an error			
+			return $error_array;			 
+		}
 	}
 }
