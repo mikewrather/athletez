@@ -28,7 +28,12 @@
 		{{#hasparams}}
 		</li>
 		{{/hasparams}}
-
+		<div>
+			<span>Current Status:</span><br />
+			<textarea id="{{id}}_currstat">{{status}}</textarea><br />
+			<button id="update_{{id}}" onclick="updateStatus({{id}});">Update Status</button>
+			<input type="checkbox" id="chk_{{id}}" onclick="updateComplete({{id}},this.checked);"{{#complete}} checked="checked"{{/complete}} /> <span>Complete</span>
+		</div>
 	</ul>
 	{{/method}}
 

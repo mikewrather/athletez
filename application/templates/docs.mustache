@@ -12,23 +12,38 @@
 	<link rel="apple-touch-icon" href="images/apple-touch-icon-iphone.png" />
 	<link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-ipad.png" />
 	<link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-iphone4.png" />
-	<link rel="stylesheet" href="css/normalize.css">
-	<script data-main="main" src="vendor/require.js"></script>
+	<link rel="stylesheet" href="/css/normalize.css">
+	<script src="/vendor/jquery-1.9.0.min.js"></script>
+
 	<script>
-		require(['facade', 'application', 'utils'], function (facade, App, utils) {
-			var $ = facade.$,
-					Backbone = facade.Backbone,
-					debug = utils.debug;
 
-			$(function () { // doc ready
-				var app;
-
-				// run the application, it all starts here.
-				app = new App();
-				Backbone.history.start({pushState: true});
-				debug.log("app initialized.");
+		var updateStatus = function(id)
+		{
+			var text = $('textarea#' + id + '_currstat').val();
+			$.ajax({
+				url:'/codegen/savestatus',
+				data:{
+					id:id,
+					currStatus:text
+				},
+				type:'GET'
 			});
-		});
+		}
+
+		var updateComplete = function(id,isDone)
+		{
+			$.ajax({
+				url:'/codegen/savecomplete',
+				data:{
+					id:id,
+					isDone:isDone
+				},
+				type:'GET',
+				success : function(data){
+					console.log(data);
+				}
+			});
+		}
 	</script>
 	<style>
 
@@ -91,6 +106,10 @@
 		li.params{ margin:5px; margin-left: 15px; background-color: rgba(147, 148, 148, 0.18); padding:10px;  }
 		li.params span {display: block;}
 		span.paramname { font-weight: bold;}
+
+		div textarea{
+			width:90%;
+		}
 	</style>
 </head>
 <body>
