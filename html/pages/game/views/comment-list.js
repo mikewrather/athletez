@@ -1,40 +1,40 @@
-// The Profile CommentOn List
+// The Game Comment List
 // --------------
 
-define(['facade','views', 'utils', 'profile/views/commenton-item', 'profile/views/commenton-form'], 
-function(facade,  views,   utils,   ProfileCommentOnItemView,       ProfileCommentOnFormView) {
+define(['facade','views', 'utils', 'game/views/comment-item', 'game/views/comment-form'], 
+function(facade,  views,   utils,   GameCommentItemView,    GameCommentFormView) {
 
-    var ProfileCommentOnListView, 
-        ProfileCommentOnListAbstract,
+    var GameCommentListView, 
+        GameCommentListAbstract,
         $ = facade.$,
         _ = facade._,
         Channel = utils.lib.Channel,
         CollectionView = views.CollectionView,
         SectionView = views.SectionView;
 
-    ProfileCommentOnListAbstract = CollectionView.extend(SectionView.prototype);
+    GameCommentListAbstract = CollectionView.extend(SectionView.prototype);
 
-    ProfileCommentOnListView = ProfileCommentOnListAbstract.extend({
+    GameCommentListView = GameCommentListAbstract.extend({
 
         __super__: CollectionView.prototype,
 
-        id: "profile-commenton-list",
+        id: "game-comment-list",
 
-        name: "Profile CommentOn List",
+        name: "Game Comment List",
 
         tagName: "ul",
 
         // Tag for the child views
         _tagName: "li",
-        _className: "profile-commenton",
+        _className: "game-comment",
 
         // Store constructor for the child views
-        _view: ProfileCommentOnItemView,
+        _view: GameCommentItemView,
 
         initialize: function(options) {
             CollectionView.prototype.initialize.call(this, options);
             if (!this.collection) {
-                throw new Error("ProfileCommentOnListView expected options.collection.");
+                throw new Error("GameCommentListView expected options.collection.");
             }
             _.bindAll(this);
             this.addSubscribers();
@@ -72,7 +72,7 @@ function(facade,  views,   utils,   ProfileCommentOnItemView,       ProfileComme
         
         setupFormView: function () {
             var listView = this,
-                formView = new ProfileCommentOnFormView({collection: this.collection}),
+                formView = new GameCommentFormView({collection: this.collection}),
                 renderAddView = this.addChildView(formView);
             
             this.childViews.form = formView;
@@ -86,10 +86,10 @@ function(facade,  views,   utils,   ProfileCommentOnItemView,       ProfileComme
                 listView.$el.prepend(formView.el);
             }
             
-            Channel('profilecommentonform:fetch').subscribe(callback);
+            Channel('gamecommentform:fetch').subscribe(callback);
         }
 
     });
 
-    return ProfileCommentOnListView;
+    return GameCommentListView;
 });

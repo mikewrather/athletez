@@ -29,7 +29,7 @@
             "link": "mailto:example@site.com"
         }]
     },
-    "desc": "Primary video information about the user",
+    "desc": "Video Player Information",
     "exec_data": {
         "exec_time": 0.024134,
         "exec_error": false

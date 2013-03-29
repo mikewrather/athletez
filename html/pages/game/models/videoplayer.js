@@ -13,7 +13,7 @@ define( ["facade", "media/models/video"], function (facade, MediaVideoModel) {
         url: function() {
             if (testpath)
                 return testpath + '/game/videoplayer/' + this.id;
-            return '/api/game/videoplayer?user_id=' + this.id;
+            return '/api/game/videoplayer?game_id=' + this.id;
         }
         
     });

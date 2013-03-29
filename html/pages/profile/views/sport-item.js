@@ -43,13 +43,14 @@ function (
                 self.rendered = true;
                 self.initTeamList();
             }
+            this.id = options.model.collection.id;
             Channel('profilesports:select' + this.model.get('payload')['sport_id']).subscribe(callback);
         },
         
         initTeamList: function() {
             var self = this;
             this.teams = new ProfileTeamList();
-            this.teams.id = this.model.get('id');
+            this.teams.id = this.id;
             this.teams.sport_id = this.model.get('payload')['sport_id'];
             this.teams.fetch();
             $.when(this.teams.request).done(function() {

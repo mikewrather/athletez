@@ -1,8 +1,8 @@
-// Profile Add Media View
+// Game Add Media View
 // ---------
-// Package Profile
+// Package Game
 // Requires `define`, `require`
-// Returns {ProfileAddMediaView} constructor
+// Returns {GameAddMediaView} constructor
 
 define([
         'require', 

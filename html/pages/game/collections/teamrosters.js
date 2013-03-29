@@ -1,9 +1,9 @@
-// Profile TeamRosters Data
+// Game TeamRosters Data
 // ----------
 
 // Package Game
 // Requires define
-// Returns {ProfileTeamRosterList} constructor
+// Returns {GameTeamRosterList} constructor
 
 define(['facade', 'sportorg/collections/teamrosters', 'utils'], 
 function(facade, SportorgTeamRosterList, utils) {

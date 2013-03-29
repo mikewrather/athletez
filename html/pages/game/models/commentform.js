@@ -1,20 +1,20 @@
-// commenton-form.js Model
+// comment-form.js Model
 // ------------
 // Requires define
-// Return {ProfileCommentOnFormModel} model constructor object
+// Return {GameCommentFormModel} model constructor object
 
 define( ["facade", "site/models/comment", "utils"], function (facade, SiteCommentModel, utils) {
 
-    var ProfileCommentOnFormModel,
+    var GameCommentFormModel,
         _ = facade._,
         Channel = utils.lib.Channel;
 
-    ProfileCommentOnFormModel = SiteCommentModel.extend({
+    GameCommentFormModel = SiteCommentModel.extend({
         
         url: function() {
             if (testpath)
-                return testpath + '/user/commentonform/' + this.id;
-            return '/api/user/commentonform?user_id=' + this.id;
+                return testpath + '/game/commentform/' + this.id;
+            return '/api/game/commentform?game_id=' + this.id;
         },
         
         initialize: function (attributes, options) {
@@ -23,11 +23,11 @@ define( ["facade", "site/models/comment", "utils"], function (facade, SiteCommen
         
         fetchSuccess: function (model, response) {
             SiteCommentModel.prototype.fetchSuccess.call(model, response);
-            Channel('profilecommentonform:fetch').publish(model);
+            Channel('gamecommentform:fetch').publish(model);
         }
         
     });
 
-    return ProfileCommentOnFormModel;
+    return GameCommentFormModel;
 });
 
