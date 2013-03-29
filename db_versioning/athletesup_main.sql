@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50525
 File Encoding         : 65001
 
-Date: 2013-03-27 01:38:55
+Date: 2013-03-28 23:45:34
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -42,270 +42,270 @@ CREATE TABLE `apiaccess` (
   `done` tinyint(1) NOT NULL DEFAULT '0',
   `id1` varchar(25) DEFAULT NULL,
   `id2` varchar(25) DEFAULT NULL,
+  `current_status` text,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=421 DEFAULT CHARSET=utf16;
 
 -- ----------------------------
 -- Records of apiaccess
 -- ----------------------------
-INSERT INTO `apiaccess` VALUES ('1', '1', 'GET', 'basics', 'Basic information about the user.', '1', null, null);
-INSERT INTO `apiaccess` VALUES ('2', '1', 'GET', 'teams', 'List of teams the user is associated with', '1', null, null);
-INSERT INTO `apiaccess` VALUES ('3', '1', 'GET', 'sports', 'List of sports that the user is associated with', '1', null, null);
-INSERT INTO `apiaccess` VALUES ('4', '1', 'GET', 'orgs', 'List of organizations the user is associated with', '1', null, null);
-INSERT INTO `apiaccess` VALUES ('5', '1', 'GET', 'related', 'Content related to this user to be displayed on the \"related content\" pane', '1', null, null);
-INSERT INTO `apiaccess` VALUES ('6', '1', 'GET', 'videos', 'List of videos uploaded by the user', '1', null, null);
-INSERT INTO `apiaccess` VALUES ('7', '1', 'GET', 'images', 'List of images uploaded by the user', '1', null, null);
-INSERT INTO `apiaccess` VALUES ('8', '1', 'GET', 'commentsof', 'Get a list of the comments made by the user', '1', null, null);
-INSERT INTO `apiaccess` VALUES ('9', '1', 'GET', 'commentson', 'Get a list of comments related to the user', '1', null, null);
-INSERT INTO `apiaccess` VALUES ('10', '1', 'GET', 'fitnessbasics', 'Get the basic fitness data for the user', '1', null, null);
-INSERT INTO `apiaccess` VALUES ('11', '1', 'GET', 'primaryvideo', 'Get the primary video to be displayed on a user profile page', '1', null, null);
-INSERT INTO `apiaccess` VALUES ('12', '2', 'GET', 'basics', 'Basic information about the organization', '0', null, null);
-INSERT INTO `apiaccess` VALUES ('13', '2', 'GET', 'teams', 'List of all teams within the organization', '0', null, null);
-INSERT INTO `apiaccess` VALUES ('14', '2', 'GET', 'league', 'League that the organization belongs to', '0', null, null);
-INSERT INTO `apiaccess` VALUES ('15', '2', 'GET', 'division', 'Division that the organization belongs to', '0', null, null);
-INSERT INTO `apiaccess` VALUES ('16', '2', 'GET', 'sports', 'All sports associated with a given organization', '0', null, null);
-INSERT INTO `apiaccess` VALUES ('17', '2', 'GET', 'complevels', 'List of possible competition levels for this organization', '0', null, null);
-INSERT INTO `apiaccess` VALUES ('18', '2', 'GET', 'seasons', 'List of all seasons this organization plays', '0', null, null);
-INSERT INTO `apiaccess` VALUES ('19', '2', 'GET', 'section', 'If applicable, returns the section that the organization exists in.', '0', null, null);
-INSERT INTO `apiaccess` VALUES ('20', '3', 'GET', 'listall', 'Lists available positions.', '0', null, null);
-INSERT INTO `apiaccess` VALUES ('21', '3', 'GET', 'players', 'Retrives all players for a given position narrowed by other optional criteria', '0', null, null);
-INSERT INTO `apiaccess` VALUES ('22', '3', 'GET', 'defaultstattab', 'Gets the default statistics tab to select for a given position', '0', null, null);
-INSERT INTO `apiaccess` VALUES ('23', '3', 'GET', 'sport', 'Gets the sport associated with a given position', '0', null, null);
-INSERT INTO `apiaccess` VALUES ('24', '3', 'GET', 'images', 'Gets images for players of a given position', '0', null, null);
-INSERT INTO `apiaccess` VALUES ('25', '3', 'GET', 'videos', 'Gets videos for players of a given position', '0', null, null);
-INSERT INTO `apiaccess` VALUES ('26', '4', 'GET', 'basics', 'Provides basic information about a sport', '0', null, null);
-INSERT INTO `apiaccess` VALUES ('27', '4', 'GET', 'listall', 'Retrives a list of all sports narrowed by a number of optional criteria', '0', null, null);
-INSERT INTO `apiaccess` VALUES ('28', '4', 'GET', 'positions', 'Lists all positions for a given sport', '0', null, null);
-INSERT INTO `apiaccess` VALUES ('29', '4', 'GET', 'type', 'Get the type of sport', '0', null, null);
-INSERT INTO `apiaccess` VALUES ('30', '4', 'GET', 'videos', 'Videos associated with a given sport', '0', null, null);
-INSERT INTO `apiaccess` VALUES ('31', '4', 'GET', 'images', 'Images associated with a given sport', '0', null, null);
-INSERT INTO `apiaccess` VALUES ('32', '4', 'GET', 'resumedata', 'Retrieves resume data related to the sport', '0', null, null);
-INSERT INTO `apiaccess` VALUES ('33', '4', 'GET', 'statistics', 'Gets statistics associated with a given sport', '0', null, null);
-INSERT INTO `apiaccess` VALUES ('34', '4', 'GET', 'stattabs', 'Gets the statistics tabs for a given sport', '0', null, null);
-INSERT INTO `apiaccess` VALUES ('35', '4', 'GET', 'users', 'Gets all users for a given sport', '0', null, null);
-INSERT INTO `apiaccess` VALUES ('36', '5', 'GET', 'basics', 'Basic info on a given team', '0', null, null);
-INSERT INTO `apiaccess` VALUES ('37', '5', 'GET', 'games', 'Get all games for a given team', '0', null, null);
-INSERT INTO `apiaccess` VALUES ('38', '5', 'GET', 'roster', 'Get the players for a given team', '0', null, null);
-INSERT INTO `apiaccess` VALUES ('39', '6', 'GET', 'teams', 'Gets all the teams for a given season narrowed by passed in parameters', '0', null, null);
-INSERT INTO `apiaccess` VALUES ('40', '6', 'GET', 'basics', 'Basic information about a season', '0', null, null);
-INSERT INTO `apiaccess` VALUES ('41', '7', 'GET', 'basics', 'Basic info about the season profile', '0', null, null);
-INSERT INTO `apiaccess` VALUES ('42', '7', 'GET', 'seasons', 'List of seasons in the season profile', '0', null, null);
-INSERT INTO `apiaccess` VALUES ('43', '8', 'GET', 'basics', 'Basic information about the game', '0', null, null);
-INSERT INTO `apiaccess` VALUES ('44', '8', 'GET', 'teams', 'All teams competing in the game', '0', null, null);
-INSERT INTO `apiaccess` VALUES ('45', '8', 'GET', 'location', 'Returns the location of a game', '0', null, null);
-INSERT INTO `apiaccess` VALUES ('46', '8', 'GET', 'matches', 'List of all matches within a given game', '0', null, null);
-INSERT INTO `apiaccess` VALUES ('47', '8', 'GET', 'videos', 'Get all videos tagged with a certain game', '0', null, null);
-INSERT INTO `apiaccess` VALUES ('48', '8', 'GET', 'images', 'Get all images associated with a certain game', '0', null, null);
-INSERT INTO `apiaccess` VALUES ('49', '9', 'GET', 'basics', 'Basic info for a game match', '0', null, null);
-INSERT INTO `apiaccess` VALUES ('50', '9', 'GET', 'players', 'All players within a given match', '0', null, null);
-INSERT INTO `apiaccess` VALUES ('51', '10', 'GET', 'basics', 'Basic information about a player in a match', '0', null, null);
-INSERT INTO `apiaccess` VALUES ('52', '11', 'GET', 'basics', 'Basic info on competion level', '0', null, null);
-INSERT INTO `apiaccess` VALUES ('53', '11', 'GET', 'teams', 'List of teams for a given complevel narrowed by additional criteria', '0', null, null);
-INSERT INTO `apiaccess` VALUES ('54', '11', 'GET', 'listall', 'List of competition levels narrowed by criteria', '0', null, null);
-INSERT INTO `apiaccess` VALUES ('55', '12', 'GET', 'basics', 'Basic information about the competition level profile', '0', null, null);
-INSERT INTO `apiaccess` VALUES ('56', '12', 'GET', 'complevels', 'List the competition levels for this profile', '0', null, null);
-INSERT INTO `apiaccess` VALUES ('57', '14', 'GET', 'basics', 'Basic info on a specific comment', '0', null, null);
-INSERT INTO `apiaccess` VALUES ('58', '14', 'GET', 'subject', 'Returns the subject with which the comment is associated.', '0', null, null);
-INSERT INTO `apiaccess` VALUES ('60', '14', 'GET', 'user', 'Return the user responsible for a comment', '0', null, null);
-INSERT INTO `apiaccess` VALUES ('61', '16', 'GET', 'basics', 'Basic information on a given tag', '0', null, null);
-INSERT INTO `apiaccess` VALUES ('63', '16', 'GET', 'user', 'Gets the user being tagged', '0', null, null);
-INSERT INTO `apiaccess` VALUES ('64', '18', 'GET', 'basics', 'Basic information on a given vote', '0', null, null);
-INSERT INTO `apiaccess` VALUES ('65', '18', 'GET', 'subject', 'Returns the subject for a given vote', '0', null, null);
-INSERT INTO `apiaccess` VALUES ('67', '18', 'GET', 'user', 'Returns the user who voted', '0', null, null);
-INSERT INTO `apiaccess` VALUES ('68', '19', 'GET', 'basics', 'Basic information about some media', '0', null, null);
-INSERT INTO `apiaccess` VALUES ('69', '21', 'GET', 'basics', 'Basic info about a given image', '0', null, null);
-INSERT INTO `apiaccess` VALUES ('70', '23', 'GET', 'basics', 'Basic information about a video', '0', null, null);
-INSERT INTO `apiaccess` VALUES ('71', '23', 'GET', 'types', 'Return all formats this video is available in', '0', null, null);
-INSERT INTO `apiaccess` VALUES ('72', '23', 'GET', 'meta', 'Retrives all metadata for a certain video.', '0', null, null);
-INSERT INTO `apiaccess` VALUES ('73', '24', 'GET', 'basics', 'Basic info about a given video service.', '0', null, null);
-INSERT INTO `apiaccess` VALUES ('74', '24', 'GET', 'videos', 'Returns a list of videos produced by a video service', '0', null, null);
-INSERT INTO `apiaccess` VALUES ('75', '25', 'GET', 'basics', 'Return the basics about a given peice of resume data', '0', null, null);
-INSERT INTO `apiaccess` VALUES ('76', '25', 'GET', 'listall', 'Return a list of all resume data narrowed by supplied parameters', '0', null, null);
-INSERT INTO `apiaccess` VALUES ('77', '25', 'GET', 'vals', 'Retrieves the values for a peice of resume data narrowed by supplied parameters, most noteably userID', '0', null, null);
-INSERT INTO `apiaccess` VALUES ('78', '26', 'GET', 'basics', 'Retrives basic information for a resume data group', '0', null, null);
-INSERT INTO `apiaccess` VALUES ('79', '26', 'GET', 'resumedata', 'Returns a list of the resume data for a given group', '0', null, null);
-INSERT INTO `apiaccess` VALUES ('80', '26', 'GET', 'profiles', 'Returns all Resume Data Profiles for which this Resume Data Group exists', '0', null, null);
-INSERT INTO `apiaccess` VALUES ('81', '27', 'GET', 'basics', 'Returns basic info for a given Resume Data Profile', '0', null, null);
-INSERT INTO `apiaccess` VALUES ('82', '27', 'GET', 'datagroups', 'Returns all Resume Data Groups for a given Resume Data Profile', '0', null, null);
-INSERT INTO `apiaccess` VALUES ('83', '27', 'GET', 'sports', 'Returns all sports for a given Resume Data Profile', '0', null, null);
-INSERT INTO `apiaccess` VALUES ('84', '28', 'GET', 'basics', 'Basic information about a given data value for resume data', '0', null, null);
-INSERT INTO `apiaccess` VALUES ('85', '29', 'GET', 'basics', 'Basic information about a Section', '0', null, null);
-INSERT INTO `apiaccess` VALUES ('86', '29', 'GET', 'leagues', 'Returns all leagues within a given section', '0', null, null);
-INSERT INTO `apiaccess` VALUES ('87', '29', 'GET', 'divisions', 'Returns all divisions within a given section', '0', null, null);
-INSERT INTO `apiaccess` VALUES ('88', '30', 'GET', 'basics', 'Basics on the Statistics Tab', '0', null, null);
-INSERT INTO `apiaccess` VALUES ('89', '30', 'GET', 'childtabs', 'Returns all child tabs within a given statistics tab', '0', null, null);
-INSERT INTO `apiaccess` VALUES ('90', '30', 'GET', 'stats', 'Returns all stats within a given stattab', '0', null, null);
-INSERT INTO `apiaccess` VALUES ('91', '30', 'GET', 'positions', 'Returns positions for which this is the default tab', '0', null, null);
-INSERT INTO `apiaccess` VALUES ('92', '31', 'GET', 'basics', 'Basic information for a given stat', '0', null, null);
-INSERT INTO `apiaccess` VALUES ('93', '31', 'GET', 'listall', 'Lists all statistics (apply filters)', '0', null, null);
-INSERT INTO `apiaccess` VALUES ('94', '45', 'GET', 'basics', 'Basic info for a given stat value field', '0', null, null);
-INSERT INTO `apiaccess` VALUES ('95', '32', 'GET', 'basics', 'Basic info about this queued video', '0', null, null);
-INSERT INTO `apiaccess` VALUES ('96', '33', 'GET', 'basics', 'Returns basic info about this location', '0', null, null);
-INSERT INTO `apiaccess` VALUES ('97', '33', 'GET', 'games', 'Returns all games that have taken place at a certain location', '0', null, null);
-INSERT INTO `apiaccess` VALUES ('98', '34', 'GET', 'basics', 'Basic information about a city', '0', null, null);
-INSERT INTO `apiaccess` VALUES ('99', '34', 'GET', 'locations', 'All locations within a given city', '0', null, null);
-INSERT INTO `apiaccess` VALUES ('100', '34', 'GET', 'orgs', 'All organizations within a given city', '0', null, null);
-INSERT INTO `apiaccess` VALUES ('101', '34', 'GET', 'games', 'All games that take place within a city', '0', null, null);
-INSERT INTO `apiaccess` VALUES ('102', '35', 'GET', 'basics', 'Basic info on a county', '0', null, null);
-INSERT INTO `apiaccess` VALUES ('103', '35', 'GET', 'cities', 'All cities within a given county', '0', null, null);
-INSERT INTO `apiaccess` VALUES ('104', '35', 'GET', 'orgs', 'All organizations within a given county', '0', null, null);
-INSERT INTO `apiaccess` VALUES ('105', '35', 'GET', 'games', 'All games that take place within a county', '0', null, null);
-INSERT INTO `apiaccess` VALUES ('106', '36', 'GET', 'basics', 'Basic info on a given state', '0', null, null);
-INSERT INTO `apiaccess` VALUES ('107', '36', 'GET', 'counties', 'All counties within the state', '0', null, null);
-INSERT INTO `apiaccess` VALUES ('108', '36', 'GET', 'divisions', 'All divisions within a state', '0', null, null);
-INSERT INTO `apiaccess` VALUES ('109', '36', 'GET', 'sections', 'All sections within a state', '0', null, null);
-INSERT INTO `apiaccess` VALUES ('110', '36', 'GET', 'leagues', 'All leagues within a given state', '0', null, null);
-INSERT INTO `apiaccess` VALUES ('111', '37', 'GET', 'basics', 'Player of the Game basics', '0', null, null);
-INSERT INTO `apiaccess` VALUES ('112', '40', 'GET', 'basics', 'Basic information about a division', '0', null, null);
-INSERT INTO `apiaccess` VALUES ('113', '40', 'GET', 'orgs', 'Returns all organizations within with a certain division', '0', null, null);
-INSERT INTO `apiaccess` VALUES ('114', '41', 'GET', 'basics', 'Basics on a League', '0', null, null);
-INSERT INTO `apiaccess` VALUES ('115', '41', 'GET', 'orgs', 'All organizations within a League', '0', null, null);
-INSERT INTO `apiaccess` VALUES ('116', '43', 'GET', 'basics', 'Basic information  about a sport type', '0', null, null);
-INSERT INTO `apiaccess` VALUES ('117', '43', 'GET', 'sports', 'All sports of this type', '0', null, null);
-INSERT INTO `apiaccess` VALUES ('118', '44', 'GET', 'basics', 'Basic info on a Statistics Context', '0', null, null);
-INSERT INTO `apiaccess` VALUES ('119', '46', 'GET', 'basics', 'Basic info on an entity', '0', null, null);
-INSERT INTO `apiaccess` VALUES ('120', '46', 'GET', 'comments', 'Get comments on a specific subject', '0', null, null);
-INSERT INTO `apiaccess` VALUES ('121', '46', 'GET', 'votes', 'Get votes on a specific subject', '0', null, null);
-INSERT INTO `apiaccess` VALUES ('122', '46', 'GET', 'followers', 'Get followers on a specific subject', '0', null, null);
-INSERT INTO `apiaccess` VALUES ('123', '46', 'GET', 'tags', 'Get tags for a specific subject', '0', null, null);
-INSERT INTO `apiaccess` VALUES ('124', '1', 'POST', 'add', 'Create a new user with all necessary basic information (possibly first step of registration)', '0', '0', null);
-INSERT INTO `apiaccess` VALUES ('125', '1', 'POST', 'addteam', 'Add a new team association for a user', '0', null, null);
-INSERT INTO `apiaccess` VALUES ('126', '1', 'POST', 'addsport', 'Add a new sport association for a user', '0', null, null);
-INSERT INTO `apiaccess` VALUES ('135', '2', 'POST', 'add', 'Create a new organization', '0', '0', null);
-INSERT INTO `apiaccess` VALUES ('136', '2', 'POST', 'addsport', 'Add a new sport association for the organization', '0', null, null);
-INSERT INTO `apiaccess` VALUES ('143', '3', 'POST', 'add', 'Add a new position', '0', '0', null);
-INSERT INTO `apiaccess` VALUES ('149', '4', 'POST', 'add', 'Add a new Sport', '0', '0', null);
-INSERT INTO `apiaccess` VALUES ('151', '4', 'POST', 'position', 'Add a new position for a given sport', '0', null, null);
-INSERT INTO `apiaccess` VALUES ('159', '5', 'POST', 'add', 'Add a new team', '0', '0', null);
-INSERT INTO `apiaccess` VALUES ('160', '5', 'POST', 'game', 'Add a new game to a team\'s schedule', '0', null, null);
-INSERT INTO `apiaccess` VALUES ('161', '5', 'POST', 'player', 'Add a new player to the roster', '0', null, null);
-INSERT INTO `apiaccess` VALUES ('162', '6', 'POST', 'add', 'Add a new season', '0', '0', null);
-INSERT INTO `apiaccess` VALUES ('164', '7', 'POST', 'addseason', 'Add a new season to a season profile', '0', null, null);
-INSERT INTO `apiaccess` VALUES ('165', '7', 'POST', 'add', 'Add a new season profile', '0', '0', null);
-INSERT INTO `apiaccess` VALUES ('166', '8', 'POST', 'add', 'Add a new game', '0', '0', null);
-INSERT INTO `apiaccess` VALUES ('167', '8', 'POST', 'addteam', 'Add a new team to this game', '0', null, null);
-INSERT INTO `apiaccess` VALUES ('169', '8', 'POST', 'addmatch', 'Add a new match to this game', '0', null, null);
-INSERT INTO `apiaccess` VALUES ('170', '8', 'POST', 'addvideo', 'Post a new video for this game', '0', null, null);
-INSERT INTO `apiaccess` VALUES ('171', '8', 'POST', 'addimage', 'Post a new image for this game', '0', null, null);
-INSERT INTO `apiaccess` VALUES ('172', '9', 'POST', 'add', 'Add a new Game Match', '0', '0', null);
-INSERT INTO `apiaccess` VALUES ('173', '9', 'POST', 'addplayer', 'Add a new player to this match', '0', null, null);
-INSERT INTO `apiaccess` VALUES ('174', '10', 'POST', 'add', 'Add a player to a Game Match', '0', '0', null);
-INSERT INTO `apiaccess` VALUES ('175', '11', 'POST', 'add', 'Add a new Competition Level', '0', '0', null);
-INSERT INTO `apiaccess` VALUES ('178', '12', 'POST', 'add', 'Add a new Competition Level Profile', '0', '0', null);
-INSERT INTO `apiaccess` VALUES ('179', '12', 'POST', 'addlevel', 'Add a new Competition Level for this Profile', '0', null, null);
-INSERT INTO `apiaccess` VALUES ('180', '14', 'POST', 'add', 'Add a new comment', '0', '0', null);
-INSERT INTO `apiaccess` VALUES ('183', '16', 'POST', 'add', 'Add a new tag', '0', '0', null);
-INSERT INTO `apiaccess` VALUES ('185', '18', 'POST', 'add', 'Add a new Vote', '0', '0', null);
-INSERT INTO `apiaccess` VALUES ('189', '21', 'POST', 'add', 'Post a new image', '0', '0', null);
-INSERT INTO `apiaccess` VALUES ('190', '23', 'POST', 'add', 'Post a new Video', '0', '0', null);
-INSERT INTO `apiaccess` VALUES ('193', '24', 'POST', 'add', 'Add a new video service', '0', '0', null);
-INSERT INTO `apiaccess` VALUES ('195', '25', 'POST', 'value', 'Add a new Resume Data Value for a given Resume Data field', '0', null, null);
-INSERT INTO `apiaccess` VALUES ('198', '26', 'POST', 'addtordp', 'Link this RDG to an RDP', '0', null, null);
-INSERT INTO `apiaccess` VALUES ('201', '27', 'POST', 'linksport', 'Link this RDP to a Sport', '0', null, null);
-INSERT INTO `apiaccess` VALUES ('202', '27', 'POST', 'linkrdg', 'Link to a Resume Data Group', '0', null, null);
-INSERT INTO `apiaccess` VALUES ('203', '27', 'POST', 'add', 'Add a new Resume Data Profile', '0', '0', null);
-INSERT INTO `apiaccess` VALUES ('204', '28', 'POST', 'add', 'Add a new Resume Data Value for a User\'s Resume', '0', '0', null);
-INSERT INTO `apiaccess` VALUES ('205', '29', 'POST', 'add', 'Add a new Section', '0', '0', null);
-INSERT INTO `apiaccess` VALUES ('206', '29', 'POST', 'league', 'Add a new league to this Section', '0', null, null);
-INSERT INTO `apiaccess` VALUES ('207', '29', 'POST', 'division', 'Add a new division to this Section', '0', null, null);
-INSERT INTO `apiaccess` VALUES ('212', '31', 'POST', 'addval', 'Add a Stat value for a given statistic', '0', null, null);
-INSERT INTO `apiaccess` VALUES ('214', '47', 'POST', 'add', 'Add a new User Value for a Statistic', '0', '0', null);
-INSERT INTO `apiaccess` VALUES ('216', '33', 'POST', 'add', 'Add a new location', '0', '0', null);
-INSERT INTO `apiaccess` VALUES ('218', '34', 'POST', 'add', 'Add a new city', '0', '0', null);
-INSERT INTO `apiaccess` VALUES ('222', '35', 'POST', 'add', 'Add a new County', '0', '0', null);
-INSERT INTO `apiaccess` VALUES ('226', '36', 'POST', 'add', 'Add a new State', '0', '0', null);
-INSERT INTO `apiaccess` VALUES ('227', '36', 'POST', 'addcounty', 'Add a county within the state', '0', null, null);
-INSERT INTO `apiaccess` VALUES ('228', '36', 'POST', 'division', 'Add a division within the state', '0', null, null);
-INSERT INTO `apiaccess` VALUES ('229', '36', 'POST', 'section', 'Add a section within the state', '0', null, null);
-INSERT INTO `apiaccess` VALUES ('230', '36', 'POST', 'league', 'Add a league within the state', '0', null, null);
-INSERT INTO `apiaccess` VALUES ('232', '40', 'POST', 'add', 'Add a new Division', '0', '0', null);
-INSERT INTO `apiaccess` VALUES ('234', '41', 'POST', 'add', 'Add a new League', '0', '0', null);
-INSERT INTO `apiaccess` VALUES ('240', '46', 'POST', 'comment', 'Post a new comment about a given subject', '0', null, null);
-INSERT INTO `apiaccess` VALUES ('241', '46', 'POST', 'vote', 'Post a Vote on a specific subject', '0', null, null);
-INSERT INTO `apiaccess` VALUES ('242', '46', 'POST', 'follow', 'Follow a Subject', '0', null, null);
-INSERT INTO `apiaccess` VALUES ('243', '46', 'POST', 'tag', 'Tag a Subject', '0', null, null);
-INSERT INTO `apiaccess` VALUES ('244', '1', 'POST', 'addrole', 'Add a new role for this User', '0', null, null);
-INSERT INTO `apiaccess` VALUES ('245', '1', 'POST', 'addidentity', 'Add an aditional identity to this user\'s profile', '0', null, null);
-INSERT INTO `apiaccess` VALUES ('246', '1', 'PUT', 'basics', 'Update basic information about the user', '0', '', '');
-INSERT INTO `apiaccess` VALUES ('247', '1', 'PUT', 'team', 'Update the user / team assosication (for future use)', '0', 'users_id', 'teams_id');
-INSERT INTO `apiaccess` VALUES ('248', '1', 'PUT', 'sport', 'Update the user / sport association (for future use)', '0', 'users_id', 'sports_id');
-INSERT INTO `apiaccess` VALUES ('255', '1', 'PUT', 'fitnessbasics', 'Update basic fitness data for the user', '0', 'users_id', 'fitness_data_id');
-INSERT INTO `apiaccess` VALUES ('257', '2', 'PUT', 'basics', 'Update Basic information about the organization', '0', '', '');
-INSERT INTO `apiaccess` VALUES ('260', '2', 'PUT', 'division', 'Change the Division for an Organization', '0', '', '');
-INSERT INTO `apiaccess` VALUES ('262', '2', 'PUT', 'complevelprofile', 'Change the Competition Level Profiles for the Organization', '0', '', '');
-INSERT INTO `apiaccess` VALUES ('263', '2', 'PUT', 'seasonprofile', 'Change the Season Profiles for the Organization', '0', '', '');
-INSERT INTO `apiaccess` VALUES ('265', '2', 'PUT', 'sport', 'Update the org / sport association (for future use)', '0', '', '');
-INSERT INTO `apiaccess` VALUES ('266', '3', 'PUT', 'basics', 'Update Basics properties of the position', '0', '', '');
-INSERT INTO `apiaccess` VALUES ('271', '4', 'PUT', 'basics', 'Update basic information about a sport', '0', '', '');
-INSERT INTO `apiaccess` VALUES ('274', '4', 'PUT', 'type', 'Update the type of sport', '0', '', '');
-INSERT INTO `apiaccess` VALUES ('281', '5', 'PUT', 'basics', 'Update Basic info on a given team', '0', '', '');
-INSERT INTO `apiaccess` VALUES ('282', '5', 'PUT', 'gamelink', 'Update the link between teams and games which contains score information', '0', 'teams_id', 'games_id');
-INSERT INTO `apiaccess` VALUES ('284', '6', 'PUT', 'basics', 'Update the basic information about a season', '0', '', '');
-INSERT INTO `apiaccess` VALUES ('286', '7', 'PUT', 'basics', 'Update Basic info about the season profile', '0', '', '');
-INSERT INTO `apiaccess` VALUES ('288', '8', 'PUT', 'basics', 'Update Basic information about the game', '0', '', '');
-INSERT INTO `apiaccess` VALUES ('294', '9', 'PUT', 'basics', 'Update Basic info for a game match', '0', '', '');
-INSERT INTO `apiaccess` VALUES ('296', '10', 'PUT', 'basics', 'Update basic information about a player in a match', '0', '', '');
-INSERT INTO `apiaccess` VALUES ('297', '11', 'PUT', 'basics', 'Update basic info on competion level', '0', '', '');
-INSERT INTO `apiaccess` VALUES ('300', '12', 'PUT', 'basics', 'Update Basic information about the competition level profile', '0', '', '');
-INSERT INTO `apiaccess` VALUES ('302', '14', 'PUT', 'basics', 'Update basic info on a specific comment', '0', '', '');
-INSERT INTO `apiaccess` VALUES ('310', '19', 'PUT', 'basics', 'Update basic information about some media', '0', '', '');
-INSERT INTO `apiaccess` VALUES ('312', '23', 'PUT', 'basics', 'Update basic information about a video', '0', '', '');
-INSERT INTO `apiaccess` VALUES ('315', '24', 'PUT', 'basics', 'Basic info about a given video service.', '0', '', '');
-INSERT INTO `apiaccess` VALUES ('317', '25', 'PUT', 'basics', 'Update the basics about a given peice of resume data', '0', '', '');
-INSERT INTO `apiaccess` VALUES ('320', '26', 'PUT', 'basics', 'Updates basic information for a resume data group', '0', '', '');
-INSERT INTO `apiaccess` VALUES ('323', '27', 'PUT', 'basics', 'Updates basic info for a given Resume Data Profile', '0', '', '');
-INSERT INTO `apiaccess` VALUES ('326', '28', 'PUT', 'basics', 'Update basic information about a given data value for resume data', '0', '', '');
-INSERT INTO `apiaccess` VALUES ('327', '29', 'PUT', 'basics', 'Update basic information about a Section', '0', '', '');
-INSERT INTO `apiaccess` VALUES ('330', '30', 'PUT', 'basics', 'Update basics on the Statistics Tab', '0', '', '');
-INSERT INTO `apiaccess` VALUES ('334', '31', 'PUT', 'basics', 'Update basic information for a given stat', '0', '', '');
-INSERT INTO `apiaccess` VALUES ('336', '45', 'PUT', 'basics', 'Update basic info for a given stat value field', '0', '', '');
-INSERT INTO `apiaccess` VALUES ('338', '33', 'PUT', 'basics', 'Updates basic info about this location', '0', '', '');
-INSERT INTO `apiaccess` VALUES ('344', '35', 'PUT', 'basics', 'Update basic info on a county', '0', '', '');
-INSERT INTO `apiaccess` VALUES ('348', '36', 'PUT', 'basics', 'Update basic info on a given state', '0', '', '');
-INSERT INTO `apiaccess` VALUES ('354', '40', 'PUT', 'basics', 'Update basic information about a division', '0', '', '');
-INSERT INTO `apiaccess` VALUES ('356', '41', 'PUT', 'basics', 'Update basics on a League', '0', '', '');
-INSERT INTO `apiaccess` VALUES ('358', '43', 'PUT', 'basics', 'Update basic information  about a sport type', '0', '', '');
-INSERT INTO `apiaccess` VALUES ('360', '44', 'PUT', 'basics', 'Update basic info on a Statistics Context', '0', '', '');
-INSERT INTO `apiaccess` VALUES ('366', '1', 'DELETE', 'base', 'Delete a User', '0', '', '');
-INSERT INTO `apiaccess` VALUES ('367', '1', 'DELETE', 'team', 'Delete the user / team assosication', '0', 'users_id', 'teams_id');
-INSERT INTO `apiaccess` VALUES ('368', '1', 'DELETE', 'sport', 'Delete the user / sport association', '0', 'users_id', 'sports_id');
-INSERT INTO `apiaccess` VALUES ('370', '2', 'DELETE', 'base', 'Delete an Organization', '0', '', '');
-INSERT INTO `apiaccess` VALUES ('376', '3', 'DELETE', 'base', 'Delete a Sports Position', '0', '', '');
-INSERT INTO `apiaccess` VALUES ('377', '2', 'DELETE', 'sport', 'Delete the org / sport association', '0', '', '');
-INSERT INTO `apiaccess` VALUES ('382', '5', 'DELETE', 'base', 'Delete a team', '0', '', '');
-INSERT INTO `apiaccess` VALUES ('383', '5', 'DELETE', 'gamelink', 'Delete a team from a game', '0', 'teams_id', 'games_id');
-INSERT INTO `apiaccess` VALUES ('384', '6', 'DELETE', 'base', 'Delete a Season', '0', '', '');
-INSERT INTO `apiaccess` VALUES ('386', '7', 'DELETE', 'base', 'Delete a Season Profile', '0', '', '');
-INSERT INTO `apiaccess` VALUES ('387', '8', 'DELETE', 'base', 'Delete a Game', '0', '', '');
-INSERT INTO `apiaccess` VALUES ('388', '9', 'DELETE', 'base', 'Delete a Game Match', '0', '', '');
-INSERT INTO `apiaccess` VALUES ('389', '9', 'DELETE', 'player', 'Delete a player from the Game Match', '0', 'game_matches_id', 'users_id');
-INSERT INTO `apiaccess` VALUES ('391', '11', 'DELETE', 'base', 'Delete Competition Level', '0', '', '');
-INSERT INTO `apiaccess` VALUES ('393', '12', 'DELETE', 'base', 'Delete Competition Level Profile', '0', '', '');
-INSERT INTO `apiaccess` VALUES ('394', '14', 'DELETE', 'base', 'Delete Comment', '0', '', '');
-INSERT INTO `apiaccess` VALUES ('395', '16', 'DELETE', 'base', 'Delete Tab', '0', '', '');
-INSERT INTO `apiaccess` VALUES ('396', '18', 'DELETE', 'base', 'Delete a Vote', '0', '', '');
-INSERT INTO `apiaccess` VALUES ('397', '19', 'DELETE', 'base', 'Delete Media', '0', '', '');
-INSERT INTO `apiaccess` VALUES ('398', '21', 'DELETE', 'base', 'Delete an Image', '0', '', '');
-INSERT INTO `apiaccess` VALUES ('399', '23', 'DELETE', 'base', 'Delete Video', '0', '', '');
-INSERT INTO `apiaccess` VALUES ('400', '24', 'DELETE', 'base', 'Delete Video Service', '0', '', '');
-INSERT INTO `apiaccess` VALUES ('401', '25', 'DELETE', 'base', 'Delete Resume Data', '0', '', '');
-INSERT INTO `apiaccess` VALUES ('403', '26', 'DELETE', 'base', 'Delete Resume Data Group', '0', '', '');
-INSERT INTO `apiaccess` VALUES ('404', '27', 'DELETE', 'base', 'Delete Resume Data Profile', '0', '', '');
-INSERT INTO `apiaccess` VALUES ('405', '28', 'DELETE', 'base', 'Delete a given data value for resume data', '0', '', '');
-INSERT INTO `apiaccess` VALUES ('406', '29', 'DELETE', 'base', 'Delete a Section', '0', '', '');
-INSERT INTO `apiaccess` VALUES ('407', '30', 'DELETE', 'base', 'Delete  Statistics Tab', '0', '', '');
-INSERT INTO `apiaccess` VALUES ('408', '31', 'DELETE', 'base', 'Delete  a given stat', '0', '', '');
-INSERT INTO `apiaccess` VALUES ('409', '45', 'DELETE', 'base', 'Delete  a given stat value field', '0', '', '');
-INSERT INTO `apiaccess` VALUES ('411', '33', 'DELETE', 'base', 'Delete  location', '0', '', '');
-INSERT INTO `apiaccess` VALUES ('412', '35', 'DELETE', 'base', 'Delete  county', '0', '', '');
-INSERT INTO `apiaccess` VALUES ('413', '36', 'DELETE', 'base', 'Delete  state', '0', '', '');
-INSERT INTO `apiaccess` VALUES ('414', '40', 'DELETE', 'base', 'Delete  division', '0', '', '');
-INSERT INTO `apiaccess` VALUES ('415', '41', 'DELETE', 'base', 'Delete  League', '0', '', '');
-INSERT INTO `apiaccess` VALUES ('416', '43', 'DELETE', 'base', 'Delete  sport type', '0', '', '');
-INSERT INTO `apiaccess` VALUES ('417', '44', 'DELETE', 'base', 'Delete  Statistics Context', '0', '', '');
-INSERT INTO `apiaccess` VALUES ('418', '1', 'DELETE', 'role', 'Delete a user\'s Role', '0', 'users_id', 'roles_id');
-INSERT INTO `apiaccess` VALUES ('419', '1', 'DELETE', 'identity', 'Delete a User\'s Identity', '0', 'users_id', 'identity_id');
-INSERT INTO `apiaccess` VALUES ('420', '1', 'POST', 'position', 'Add a Position for a user', '0', null, null);
+INSERT INTO `apiaccess` VALUES ('1', '1', 'GET', 'basics', 'Basic information about the user.', '1', null, null, 'Basics method returning data but still needs height, weight, and userpic.');
+INSERT INTO `apiaccess` VALUES ('2', '1', 'GET', 'teams', 'List of teams the user is associated with', '1', null, null, 'Need to add location lat / lon and team IDs.  Other than that it matches the test data.');
+INSERT INTO `apiaccess` VALUES ('3', '1', 'GET', 'sports', 'List of sports that the user is associated with', '1', null, null, 'This looks okay for now and it looks like it\'s disappeared from the data structure spreadsheet.');
+INSERT INTO `apiaccess` VALUES ('4', '1', 'GET', 'orgs', 'List of organizations the user is associated with', '1', null, null, 'Needs the schedule and stat information.');
+INSERT INTO `apiaccess` VALUES ('5', '1', 'GET', 'related', 'Content related to this user to be displayed on the \"related content\" pane', '1', null, null, 'BLANK');
+INSERT INTO `apiaccess` VALUES ('6', '1', 'GET', 'videos', 'List of videos uploaded by the user', '1', null, null, null);
+INSERT INTO `apiaccess` VALUES ('7', '1', 'GET', 'images', 'List of images uploaded by the user', '1', null, null, null);
+INSERT INTO `apiaccess` VALUES ('8', '1', 'GET', 'commentsof', 'Get a list of the comments made by the user', '1', null, null, null);
+INSERT INTO `apiaccess` VALUES ('9', '1', 'GET', 'commentson', 'Get a list of comments related to the user', '1', null, null, null);
+INSERT INTO `apiaccess` VALUES ('10', '1', 'GET', 'fitnessbasics', 'Get the basic fitness data for the user', '1', null, null, null);
+INSERT INTO `apiaccess` VALUES ('11', '1', 'GET', 'primaryvideo', 'Get the primary video to be displayed on a user profile page', '1', null, null, null);
+INSERT INTO `apiaccess` VALUES ('12', '2', 'GET', 'basics', 'Basic information about the organization', '0', null, null, null);
+INSERT INTO `apiaccess` VALUES ('13', '2', 'GET', 'teams', 'List of all teams within the organization', '0', null, null, null);
+INSERT INTO `apiaccess` VALUES ('14', '2', 'GET', 'league', 'League that the organization belongs to', '0', null, null, null);
+INSERT INTO `apiaccess` VALUES ('15', '2', 'GET', 'division', 'Division that the organization belongs to', '0', null, null, null);
+INSERT INTO `apiaccess` VALUES ('16', '2', 'GET', 'sports', 'All sports associated with a given organization', '0', null, null, null);
+INSERT INTO `apiaccess` VALUES ('17', '2', 'GET', 'complevels', 'List of possible competition levels for this organization', '0', null, null, null);
+INSERT INTO `apiaccess` VALUES ('18', '2', 'GET', 'seasons', 'List of all seasons this organization plays', '0', null, null, null);
+INSERT INTO `apiaccess` VALUES ('19', '2', 'GET', 'section', 'If applicable, returns the section that the organization exists in.', '0', null, null, null);
+INSERT INTO `apiaccess` VALUES ('20', '3', 'GET', 'listall', 'Lists available positions.', '0', null, null, null);
+INSERT INTO `apiaccess` VALUES ('21', '3', 'GET', 'players', 'Retrives all players for a given position narrowed by other optional criteria', '0', null, null, null);
+INSERT INTO `apiaccess` VALUES ('22', '3', 'GET', 'defaultstattab', 'Gets the default statistics tab to select for a given position', '0', null, null, null);
+INSERT INTO `apiaccess` VALUES ('23', '3', 'GET', 'sport', 'Gets the sport associated with a given position', '0', null, null, null);
+INSERT INTO `apiaccess` VALUES ('24', '3', 'GET', 'images', 'Gets images for players of a given position', '0', null, null, null);
+INSERT INTO `apiaccess` VALUES ('25', '3', 'GET', 'videos', 'Gets videos for players of a given position', '0', null, null, null);
+INSERT INTO `apiaccess` VALUES ('26', '4', 'GET', 'basics', 'Provides basic information about a sport', '0', null, null, null);
+INSERT INTO `apiaccess` VALUES ('27', '4', 'GET', 'listall', 'Retrives a list of all sports narrowed by a number of optional criteria', '0', null, null, null);
+INSERT INTO `apiaccess` VALUES ('28', '4', 'GET', 'positions', 'Lists all positions for a given sport', '0', null, null, null);
+INSERT INTO `apiaccess` VALUES ('29', '4', 'GET', 'type', 'Get the type of sport', '0', null, null, null);
+INSERT INTO `apiaccess` VALUES ('30', '4', 'GET', 'videos', 'Videos associated with a given sport', '0', null, null, null);
+INSERT INTO `apiaccess` VALUES ('31', '4', 'GET', 'images', 'Images associated with a given sport', '0', null, null, null);
+INSERT INTO `apiaccess` VALUES ('32', '4', 'GET', 'resumedata', 'Retrieves resume data related to the sport', '0', null, null, null);
+INSERT INTO `apiaccess` VALUES ('33', '4', 'GET', 'statistics', 'Gets statistics associated with a given sport', '0', null, null, null);
+INSERT INTO `apiaccess` VALUES ('34', '4', 'GET', 'stattabs', 'Gets the statistics tabs for a given sport', '0', null, null, null);
+INSERT INTO `apiaccess` VALUES ('35', '4', 'GET', 'users', 'Gets all users for a given sport', '0', null, null, null);
+INSERT INTO `apiaccess` VALUES ('36', '5', 'GET', 'basics', 'Basic info on a given team', '0', null, null, null);
+INSERT INTO `apiaccess` VALUES ('37', '5', 'GET', 'games', 'Get all games for a given team', '0', null, null, null);
+INSERT INTO `apiaccess` VALUES ('38', '5', 'GET', 'roster', 'Get the players for a given team', '0', null, null, null);
+INSERT INTO `apiaccess` VALUES ('39', '6', 'GET', 'teams', 'Gets all the teams for a given season narrowed by passed in parameters', '0', null, null, null);
+INSERT INTO `apiaccess` VALUES ('40', '6', 'GET', 'basics', 'Basic information about a season', '0', null, null, null);
+INSERT INTO `apiaccess` VALUES ('41', '7', 'GET', 'basics', 'Basic info about the season profile', '0', null, null, null);
+INSERT INTO `apiaccess` VALUES ('42', '7', 'GET', 'seasons', 'List of seasons in the season profile', '0', null, null, null);
+INSERT INTO `apiaccess` VALUES ('43', '8', 'GET', 'basics', 'Basic information about the game', '0', null, null, null);
+INSERT INTO `apiaccess` VALUES ('44', '8', 'GET', 'teams', 'All teams competing in the game', '0', null, null, null);
+INSERT INTO `apiaccess` VALUES ('45', '8', 'GET', 'location', 'Returns the location of a game', '0', null, null, null);
+INSERT INTO `apiaccess` VALUES ('46', '8', 'GET', 'matches', 'List of all matches within a given game', '0', null, null, null);
+INSERT INTO `apiaccess` VALUES ('47', '8', 'GET', 'videos', 'Get all videos tagged with a certain game', '0', null, null, null);
+INSERT INTO `apiaccess` VALUES ('48', '8', 'GET', 'images', 'Get all images associated with a certain game', '0', null, null, null);
+INSERT INTO `apiaccess` VALUES ('49', '9', 'GET', 'basics', 'Basic info for a game match', '0', null, null, null);
+INSERT INTO `apiaccess` VALUES ('50', '9', 'GET', 'players', 'All players within a given match', '0', null, null, null);
+INSERT INTO `apiaccess` VALUES ('51', '10', 'GET', 'basics', 'Basic information about a player in a match', '0', null, null, null);
+INSERT INTO `apiaccess` VALUES ('52', '11', 'GET', 'basics', 'Basic info on competion level', '0', null, null, null);
+INSERT INTO `apiaccess` VALUES ('53', '11', 'GET', 'teams', 'List of teams for a given complevel narrowed by additional criteria', '0', null, null, null);
+INSERT INTO `apiaccess` VALUES ('54', '11', 'GET', 'listall', 'List of competition levels narrowed by criteria', '0', null, null, null);
+INSERT INTO `apiaccess` VALUES ('55', '12', 'GET', 'basics', 'Basic information about the competition level profile', '0', null, null, null);
+INSERT INTO `apiaccess` VALUES ('56', '12', 'GET', 'complevels', 'List the competition levels for this profile', '0', null, null, null);
+INSERT INTO `apiaccess` VALUES ('57', '14', 'GET', 'basics', 'Basic info on a specific comment', '0', null, null, null);
+INSERT INTO `apiaccess` VALUES ('58', '14', 'GET', 'subject', 'Returns the subject with which the comment is associated.', '0', null, null, null);
+INSERT INTO `apiaccess` VALUES ('60', '14', 'GET', 'user', 'Return the user responsible for a comment', '0', null, null, null);
+INSERT INTO `apiaccess` VALUES ('61', '16', 'GET', 'basics', 'Basic information on a given tag', '0', null, null, null);
+INSERT INTO `apiaccess` VALUES ('63', '16', 'GET', 'user', 'Gets the user being tagged', '0', null, null, null);
+INSERT INTO `apiaccess` VALUES ('64', '18', 'GET', 'basics', 'Basic information on a given vote', '0', null, null, null);
+INSERT INTO `apiaccess` VALUES ('65', '18', 'GET', 'subject', 'Returns the subject for a given vote', '0', null, null, null);
+INSERT INTO `apiaccess` VALUES ('67', '18', 'GET', 'user', 'Returns the user who voted', '0', null, null, null);
+INSERT INTO `apiaccess` VALUES ('68', '19', 'GET', 'basics', 'Basic information about some media', '0', null, null, null);
+INSERT INTO `apiaccess` VALUES ('69', '21', 'GET', 'basics', 'Basic info about a given image', '0', null, null, null);
+INSERT INTO `apiaccess` VALUES ('70', '23', 'GET', 'basics', 'Basic information about a video', '0', null, null, null);
+INSERT INTO `apiaccess` VALUES ('71', '23', 'GET', 'types', 'Return all formats this video is available in', '0', null, null, null);
+INSERT INTO `apiaccess` VALUES ('72', '23', 'GET', 'meta', 'Retrives all metadata for a certain video.', '0', null, null, null);
+INSERT INTO `apiaccess` VALUES ('73', '24', 'GET', 'basics', 'Basic info about a given video service.', '0', null, null, null);
+INSERT INTO `apiaccess` VALUES ('74', '24', 'GET', 'videos', 'Returns a list of videos produced by a video service', '0', null, null, null);
+INSERT INTO `apiaccess` VALUES ('75', '25', 'GET', 'basics', 'Return the basics about a given peice of resume data', '0', null, null, null);
+INSERT INTO `apiaccess` VALUES ('76', '25', 'GET', 'listall', 'Return a list of all resume data narrowed by supplied parameters', '0', null, null, null);
+INSERT INTO `apiaccess` VALUES ('77', '25', 'GET', 'vals', 'Retrieves the values for a peice of resume data narrowed by supplied parameters, most noteably userID', '0', null, null, null);
+INSERT INTO `apiaccess` VALUES ('78', '26', 'GET', 'basics', 'Retrives basic information for a resume data group', '0', null, null, null);
+INSERT INTO `apiaccess` VALUES ('79', '26', 'GET', 'resumedata', 'Returns a list of the resume data for a given group', '0', null, null, null);
+INSERT INTO `apiaccess` VALUES ('80', '26', 'GET', 'profiles', 'Returns all Resume Data Profiles for which this Resume Data Group exists', '0', null, null, null);
+INSERT INTO `apiaccess` VALUES ('81', '27', 'GET', 'basics', 'Returns basic info for a given Resume Data Profile', '0', null, null, null);
+INSERT INTO `apiaccess` VALUES ('82', '27', 'GET', 'datagroups', 'Returns all Resume Data Groups for a given Resume Data Profile', '0', null, null, null);
+INSERT INTO `apiaccess` VALUES ('83', '27', 'GET', 'sports', 'Returns all sports for a given Resume Data Profile', '0', null, null, null);
+INSERT INTO `apiaccess` VALUES ('84', '28', 'GET', 'basics', 'Basic information about a given data value for resume data', '0', null, null, null);
+INSERT INTO `apiaccess` VALUES ('85', '29', 'GET', 'basics', 'Basic information about a Section', '0', null, null, null);
+INSERT INTO `apiaccess` VALUES ('86', '29', 'GET', 'leagues', 'Returns all leagues within a given section', '0', null, null, null);
+INSERT INTO `apiaccess` VALUES ('87', '29', 'GET', 'divisions', 'Returns all divisions within a given section', '0', null, null, null);
+INSERT INTO `apiaccess` VALUES ('88', '30', 'GET', 'basics', 'Basics on the Statistics Tab', '0', null, null, null);
+INSERT INTO `apiaccess` VALUES ('89', '30', 'GET', 'childtabs', 'Returns all child tabs within a given statistics tab', '0', null, null, null);
+INSERT INTO `apiaccess` VALUES ('90', '30', 'GET', 'stats', 'Returns all stats within a given stattab', '0', null, null, null);
+INSERT INTO `apiaccess` VALUES ('91', '30', 'GET', 'positions', 'Returns positions for which this is the default tab', '0', null, null, null);
+INSERT INTO `apiaccess` VALUES ('92', '31', 'GET', 'basics', 'Basic information for a given stat', '0', null, null, null);
+INSERT INTO `apiaccess` VALUES ('93', '31', 'GET', 'listall', 'Lists all statistics (apply filters)', '0', null, null, null);
+INSERT INTO `apiaccess` VALUES ('94', '45', 'GET', 'basics', 'Basic info for a given stat value field', '0', null, null, null);
+INSERT INTO `apiaccess` VALUES ('95', '32', 'GET', 'basics', 'Basic info about this queued video', '0', null, null, null);
+INSERT INTO `apiaccess` VALUES ('96', '33', 'GET', 'basics', 'Returns basic info about this location', '0', null, null, null);
+INSERT INTO `apiaccess` VALUES ('97', '33', 'GET', 'games', 'Returns all games that have taken place at a certain location', '0', null, null, null);
+INSERT INTO `apiaccess` VALUES ('98', '34', 'GET', 'basics', 'Basic information about a city', '0', null, null, null);
+INSERT INTO `apiaccess` VALUES ('99', '34', 'GET', 'locations', 'All locations within a given city', '0', null, null, null);
+INSERT INTO `apiaccess` VALUES ('100', '34', 'GET', 'orgs', 'All organizations within a given city', '0', null, null, null);
+INSERT INTO `apiaccess` VALUES ('101', '34', 'GET', 'games', 'All games that take place within a city', '0', null, null, null);
+INSERT INTO `apiaccess` VALUES ('102', '35', 'GET', 'basics', 'Basic info on a county', '0', null, null, null);
+INSERT INTO `apiaccess` VALUES ('103', '35', 'GET', 'cities', 'All cities within a given county', '0', null, null, null);
+INSERT INTO `apiaccess` VALUES ('104', '35', 'GET', 'orgs', 'All organizations within a given county', '0', null, null, null);
+INSERT INTO `apiaccess` VALUES ('105', '35', 'GET', 'games', 'All games that take place within a county', '0', null, null, null);
+INSERT INTO `apiaccess` VALUES ('106', '36', 'GET', 'basics', 'Basic info on a given state', '0', null, null, null);
+INSERT INTO `apiaccess` VALUES ('107', '36', 'GET', 'counties', 'All counties within the state', '0', null, null, null);
+INSERT INTO `apiaccess` VALUES ('108', '36', 'GET', 'divisions', 'All divisions within a state', '0', null, null, null);
+INSERT INTO `apiaccess` VALUES ('109', '36', 'GET', 'sections', 'All sections within a state', '0', null, null, null);
+INSERT INTO `apiaccess` VALUES ('110', '36', 'GET', 'leagues', 'All leagues within a given state', '0', null, null, null);
+INSERT INTO `apiaccess` VALUES ('111', '37', 'GET', 'basics', 'Player of the Game basics', '0', null, null, null);
+INSERT INTO `apiaccess` VALUES ('112', '40', 'GET', 'basics', 'Basic information about a division', '0', null, null, null);
+INSERT INTO `apiaccess` VALUES ('113', '40', 'GET', 'orgs', 'Returns all organizations within with a certain division', '0', null, null, null);
+INSERT INTO `apiaccess` VALUES ('114', '41', 'GET', 'basics', 'Basics on a League', '0', null, null, null);
+INSERT INTO `apiaccess` VALUES ('115', '41', 'GET', 'orgs', 'All organizations within a League', '0', null, null, null);
+INSERT INTO `apiaccess` VALUES ('116', '43', 'GET', 'basics', 'Basic information  about a sport type', '0', null, null, null);
+INSERT INTO `apiaccess` VALUES ('117', '43', 'GET', 'sports', 'All sports of this type', '0', null, null, null);
+INSERT INTO `apiaccess` VALUES ('118', '44', 'GET', 'basics', 'Basic info on a Statistics Context', '0', null, null, null);
+INSERT INTO `apiaccess` VALUES ('119', '46', 'GET', 'basics', 'Basic info on an entity', '0', null, null, null);
+INSERT INTO `apiaccess` VALUES ('120', '46', 'GET', 'comments', 'Get comments on a specific subject', '0', null, null, null);
+INSERT INTO `apiaccess` VALUES ('121', '46', 'GET', 'votes', 'Get votes on a specific subject', '0', null, null, null);
+INSERT INTO `apiaccess` VALUES ('122', '46', 'GET', 'followers', 'Get followers on a specific subject', '0', null, null, null);
+INSERT INTO `apiaccess` VALUES ('123', '46', 'GET', 'tags', 'Get tags for a specific subject', '0', null, null, null);
+INSERT INTO `apiaccess` VALUES ('124', '1', 'POST', 'add', 'Create a new user with all necessary basic information (possibly first step of registration)', '0', '0', null, null);
+INSERT INTO `apiaccess` VALUES ('125', '1', 'POST', 'addteam', 'Add a new team association for a user', '0', null, null, null);
+INSERT INTO `apiaccess` VALUES ('126', '1', 'POST', 'addsport', 'Add a new sport association for a user', '0', null, null, null);
+INSERT INTO `apiaccess` VALUES ('135', '2', 'POST', 'add', 'Create a new organization', '0', '0', null, null);
+INSERT INTO `apiaccess` VALUES ('136', '2', 'POST', 'addsport', 'Add a new sport association for the organization', '0', null, null, null);
+INSERT INTO `apiaccess` VALUES ('143', '3', 'POST', 'add', 'Add a new position', '0', '0', null, null);
+INSERT INTO `apiaccess` VALUES ('149', '4', 'POST', 'add', 'Add a new Sport', '0', '0', null, null);
+INSERT INTO `apiaccess` VALUES ('151', '4', 'POST', 'position', 'Add a new position for a given sport', '0', null, null, null);
+INSERT INTO `apiaccess` VALUES ('159', '5', 'POST', 'add', 'Add a new team', '0', '0', null, null);
+INSERT INTO `apiaccess` VALUES ('160', '5', 'POST', 'game', 'Add a new game to a team\'s schedule', '0', null, null, null);
+INSERT INTO `apiaccess` VALUES ('161', '5', 'POST', 'player', 'Add a new player to the roster', '0', null, null, null);
+INSERT INTO `apiaccess` VALUES ('162', '6', 'POST', 'add', 'Add a new season', '0', '0', null, null);
+INSERT INTO `apiaccess` VALUES ('164', '7', 'POST', 'addseason', 'Add a new season to a season profile', '0', null, null, null);
+INSERT INTO `apiaccess` VALUES ('165', '7', 'POST', 'add', 'Add a new season profile', '0', '0', null, null);
+INSERT INTO `apiaccess` VALUES ('166', '8', 'POST', 'add', 'Add a new game', '0', '0', null, null);
+INSERT INTO `apiaccess` VALUES ('167', '8', 'POST', 'addteam', 'Add a new team to this game', '0', null, null, null);
+INSERT INTO `apiaccess` VALUES ('169', '8', 'POST', 'addmatch', 'Add a new match to this game', '0', null, null, null);
+INSERT INTO `apiaccess` VALUES ('170', '8', 'POST', 'addvideo', 'Post a new video for this game', '0', null, null, null);
+INSERT INTO `apiaccess` VALUES ('171', '8', 'POST', 'addimage', 'Post a new image for this game', '0', null, null, null);
+INSERT INTO `apiaccess` VALUES ('172', '9', 'POST', 'add', 'Add a new Game Match', '0', '0', null, null);
+INSERT INTO `apiaccess` VALUES ('173', '9', 'POST', 'addplayer', 'Add a new player to this match', '0', null, null, null);
+INSERT INTO `apiaccess` VALUES ('174', '10', 'POST', 'add', 'Add a player to a Game Match', '0', '0', null, null);
+INSERT INTO `apiaccess` VALUES ('175', '11', 'POST', 'add', 'Add a new Competition Level', '0', '0', null, null);
+INSERT INTO `apiaccess` VALUES ('178', '12', 'POST', 'add', 'Add a new Competition Level Profile', '0', '0', null, null);
+INSERT INTO `apiaccess` VALUES ('179', '12', 'POST', 'addlevel', 'Add a new Competition Level for this Profile', '0', null, null, null);
+INSERT INTO `apiaccess` VALUES ('180', '14', 'POST', 'add', 'Add a new comment', '0', '0', null, null);
+INSERT INTO `apiaccess` VALUES ('183', '16', 'POST', 'add', 'Add a new tag', '0', '0', null, null);
+INSERT INTO `apiaccess` VALUES ('185', '18', 'POST', 'add', 'Add a new Vote', '0', '0', null, null);
+INSERT INTO `apiaccess` VALUES ('189', '21', 'POST', 'add', 'Post a new image', '0', '0', null, null);
+INSERT INTO `apiaccess` VALUES ('190', '23', 'POST', 'add', 'Post a new Video', '0', '0', null, null);
+INSERT INTO `apiaccess` VALUES ('193', '24', 'POST', 'add', 'Add a new video service', '0', '0', null, null);
+INSERT INTO `apiaccess` VALUES ('198', '26', 'POST', 'addtordp', 'Link this RDG to an RDP', '0', null, null, null);
+INSERT INTO `apiaccess` VALUES ('201', '27', 'POST', 'linksport', 'Link this RDP to a Sport', '0', null, null, null);
+INSERT INTO `apiaccess` VALUES ('202', '27', 'POST', 'linkrdg', 'Link to a Resume Data Group', '0', null, null, null);
+INSERT INTO `apiaccess` VALUES ('203', '27', 'POST', 'add', 'Add a new Resume Data Profile', '0', '0', null, null);
+INSERT INTO `apiaccess` VALUES ('204', '28', 'POST', 'add', 'Add a new Resume Data Value for a User\'s Resume', '0', '0', null, null);
+INSERT INTO `apiaccess` VALUES ('205', '29', 'POST', 'add', 'Add a new Section', '0', '0', null, null);
+INSERT INTO `apiaccess` VALUES ('206', '29', 'POST', 'league', 'Add a new league to this Section', '0', null, null, null);
+INSERT INTO `apiaccess` VALUES ('207', '29', 'POST', 'division', 'Add a new division to this Section', '0', null, null, null);
+INSERT INTO `apiaccess` VALUES ('212', '31', 'POST', 'addval', 'Add a Stat value for a given statistic', '0', null, null, null);
+INSERT INTO `apiaccess` VALUES ('214', '47', 'POST', 'add', 'Add a new User Value for a Statistic', '0', '0', null, null);
+INSERT INTO `apiaccess` VALUES ('216', '33', 'POST', 'add', 'Add a new location', '0', '0', null, null);
+INSERT INTO `apiaccess` VALUES ('218', '34', 'POST', 'add', 'Add a new city', '0', '0', null, null);
+INSERT INTO `apiaccess` VALUES ('222', '35', 'POST', 'add', 'Add a new County', '0', '0', null, null);
+INSERT INTO `apiaccess` VALUES ('226', '36', 'POST', 'add', 'Add a new State', '0', '0', null, null);
+INSERT INTO `apiaccess` VALUES ('227', '36', 'POST', 'addcounty', 'Add a county within the state', '0', null, null, null);
+INSERT INTO `apiaccess` VALUES ('228', '36', 'POST', 'division', 'Add a division within the state', '0', null, null, null);
+INSERT INTO `apiaccess` VALUES ('229', '36', 'POST', 'section', 'Add a section within the state', '0', null, null, null);
+INSERT INTO `apiaccess` VALUES ('230', '36', 'POST', 'league', 'Add a league within the state', '0', null, null, null);
+INSERT INTO `apiaccess` VALUES ('232', '40', 'POST', 'add', 'Add a new Division', '0', '0', null, null);
+INSERT INTO `apiaccess` VALUES ('234', '41', 'POST', 'add', 'Add a new League', '0', '0', null, null);
+INSERT INTO `apiaccess` VALUES ('240', '46', 'POST', 'comment', 'Post a new comment about a given subject', '0', null, null, null);
+INSERT INTO `apiaccess` VALUES ('241', '46', 'POST', 'vote', 'Post a Vote on a specific subject', '0', null, null, null);
+INSERT INTO `apiaccess` VALUES ('242', '46', 'POST', 'follow', 'Follow a Subject', '0', null, null, null);
+INSERT INTO `apiaccess` VALUES ('243', '46', 'POST', 'tag', 'Tag a Subject', '0', null, null, null);
+INSERT INTO `apiaccess` VALUES ('244', '1', 'POST', 'addrole', 'Add a new role for this User', '0', null, null, null);
+INSERT INTO `apiaccess` VALUES ('245', '1', 'POST', 'addidentity', 'Add an aditional identity to this user\'s profile', '0', null, null, null);
+INSERT INTO `apiaccess` VALUES ('246', '1', 'PUT', 'basics', 'Update basic information about the user', '0', '', '', null);
+INSERT INTO `apiaccess` VALUES ('247', '1', 'PUT', 'team', 'Update the user / team assosication (for future use)', '0', 'users_id', 'teams_id', null);
+INSERT INTO `apiaccess` VALUES ('248', '1', 'PUT', 'sport', 'Update the user / sport association (for future use)', '0', 'users_id', 'sports_id', null);
+INSERT INTO `apiaccess` VALUES ('255', '1', 'PUT', 'fitnessbasics', 'Update basic fitness data for the user', '0', 'users_id', 'fitness_data_id', null);
+INSERT INTO `apiaccess` VALUES ('257', '2', 'PUT', 'basics', 'Update Basic information about the organization', '0', '', '', null);
+INSERT INTO `apiaccess` VALUES ('260', '2', 'PUT', 'division', 'Change the Division for an Organization', '0', '', '', null);
+INSERT INTO `apiaccess` VALUES ('262', '2', 'PUT', 'complevelprofile', 'Change the Competition Level Profiles for the Organization', '0', '', '', null);
+INSERT INTO `apiaccess` VALUES ('263', '2', 'PUT', 'seasonprofile', 'Change the Season Profiles for the Organization', '0', '', '', null);
+INSERT INTO `apiaccess` VALUES ('265', '2', 'PUT', 'sport', 'Update the org / sport association (for future use)', '0', '', '', null);
+INSERT INTO `apiaccess` VALUES ('266', '3', 'PUT', 'basics', 'Update Basics properties of the position', '0', '', '', null);
+INSERT INTO `apiaccess` VALUES ('271', '4', 'PUT', 'basics', 'Update basic information about a sport', '0', '', '', null);
+INSERT INTO `apiaccess` VALUES ('274', '4', 'PUT', 'type', 'Update the type of sport', '0', '', '', null);
+INSERT INTO `apiaccess` VALUES ('281', '5', 'PUT', 'basics', 'Update Basic info on a given team', '0', '', '', null);
+INSERT INTO `apiaccess` VALUES ('282', '5', 'PUT', 'gamelink', 'Update the link between teams and games which contains score information', '0', 'teams_id', 'games_id', null);
+INSERT INTO `apiaccess` VALUES ('284', '6', 'PUT', 'basics', 'Update the basic information about a season', '0', '', '', null);
+INSERT INTO `apiaccess` VALUES ('286', '7', 'PUT', 'basics', 'Update Basic info about the season profile', '0', '', '', null);
+INSERT INTO `apiaccess` VALUES ('288', '8', 'PUT', 'basics', 'Update Basic information about the game', '0', '', '', null);
+INSERT INTO `apiaccess` VALUES ('294', '9', 'PUT', 'basics', 'Update Basic info for a game match', '0', '', '', null);
+INSERT INTO `apiaccess` VALUES ('296', '10', 'PUT', 'basics', 'Update basic information about a player in a match', '0', '', '', null);
+INSERT INTO `apiaccess` VALUES ('297', '11', 'PUT', 'basics', 'Update basic info on competion level', '0', '', '', null);
+INSERT INTO `apiaccess` VALUES ('300', '12', 'PUT', 'basics', 'Update Basic information about the competition level profile', '0', '', '', null);
+INSERT INTO `apiaccess` VALUES ('302', '14', 'PUT', 'basics', 'Update basic info on a specific comment', '0', '', '', null);
+INSERT INTO `apiaccess` VALUES ('310', '19', 'PUT', 'basics', 'Update basic information about some media', '0', '', '', null);
+INSERT INTO `apiaccess` VALUES ('312', '23', 'PUT', 'basics', 'Update basic information about a video', '0', '', '', null);
+INSERT INTO `apiaccess` VALUES ('315', '24', 'PUT', 'basics', 'Basic info about a given video service.', '0', '', '', null);
+INSERT INTO `apiaccess` VALUES ('317', '25', 'PUT', 'basics', 'Update the basics about a given peice of resume data', '0', '', '', null);
+INSERT INTO `apiaccess` VALUES ('320', '26', 'PUT', 'basics', 'Updates basic information for a resume data group', '0', '', '', null);
+INSERT INTO `apiaccess` VALUES ('323', '27', 'PUT', 'basics', 'Updates basic info for a given Resume Data Profile', '0', '', '', null);
+INSERT INTO `apiaccess` VALUES ('326', '28', 'PUT', 'basics', 'Update basic information about a given data value for resume data', '0', '', '', null);
+INSERT INTO `apiaccess` VALUES ('327', '29', 'PUT', 'basics', 'Update basic information about a Section', '0', '', '', null);
+INSERT INTO `apiaccess` VALUES ('330', '30', 'PUT', 'basics', 'Update basics on the Statistics Tab', '0', '', '', null);
+INSERT INTO `apiaccess` VALUES ('334', '31', 'PUT', 'basics', 'Update basic information for a given stat', '0', '', '', null);
+INSERT INTO `apiaccess` VALUES ('336', '45', 'PUT', 'basics', 'Update basic info for a given stat value field', '0', '', '', null);
+INSERT INTO `apiaccess` VALUES ('338', '33', 'PUT', 'basics', 'Updates basic info about this location', '0', '', '', null);
+INSERT INTO `apiaccess` VALUES ('344', '35', 'PUT', 'basics', 'Update basic info on a county', '0', '', '', null);
+INSERT INTO `apiaccess` VALUES ('348', '36', 'PUT', 'basics', 'Update basic info on a given state', '0', '', '', null);
+INSERT INTO `apiaccess` VALUES ('354', '40', 'PUT', 'basics', 'Update basic information about a division', '0', '', '', null);
+INSERT INTO `apiaccess` VALUES ('356', '41', 'PUT', 'basics', 'Update basics on a League', '0', '', '', null);
+INSERT INTO `apiaccess` VALUES ('358', '43', 'PUT', 'basics', 'Update basic information  about a sport type', '0', '', '', null);
+INSERT INTO `apiaccess` VALUES ('360', '44', 'PUT', 'basics', 'Update basic info on a Statistics Context', '0', '', '', null);
+INSERT INTO `apiaccess` VALUES ('366', '1', 'DELETE', 'base', 'Delete a User', '0', '', '', null);
+INSERT INTO `apiaccess` VALUES ('367', '1', 'DELETE', 'team', 'Delete the user / team assosication', '0', 'users_id', 'teams_id', null);
+INSERT INTO `apiaccess` VALUES ('368', '1', 'DELETE', 'sport', 'Delete the user / sport association', '0', 'users_id', 'sports_id', null);
+INSERT INTO `apiaccess` VALUES ('370', '2', 'DELETE', 'base', 'Delete an Organization', '0', '', '', null);
+INSERT INTO `apiaccess` VALUES ('376', '3', 'DELETE', 'base', 'Delete a Sports Position', '0', '', '', null);
+INSERT INTO `apiaccess` VALUES ('377', '2', 'DELETE', 'sport', 'Delete the org / sport association', '0', '', '', null);
+INSERT INTO `apiaccess` VALUES ('382', '5', 'DELETE', 'base', 'Delete a team', '0', '', '', null);
+INSERT INTO `apiaccess` VALUES ('383', '5', 'DELETE', 'gamelink', 'Delete a team from a game', '0', 'teams_id', 'games_id', null);
+INSERT INTO `apiaccess` VALUES ('384', '6', 'DELETE', 'base', 'Delete a Season', '0', '', '', null);
+INSERT INTO `apiaccess` VALUES ('386', '7', 'DELETE', 'base', 'Delete a Season Profile', '0', '', '', null);
+INSERT INTO `apiaccess` VALUES ('387', '8', 'DELETE', 'base', 'Delete a Game', '0', '', '', null);
+INSERT INTO `apiaccess` VALUES ('388', '9', 'DELETE', 'base', 'Delete a Game Match', '0', '', '', null);
+INSERT INTO `apiaccess` VALUES ('389', '9', 'DELETE', 'player', 'Delete a player from the Game Match', '0', 'game_matches_id', 'users_id', null);
+INSERT INTO `apiaccess` VALUES ('391', '11', 'DELETE', 'base', 'Delete Competition Level', '0', '', '', null);
+INSERT INTO `apiaccess` VALUES ('393', '12', 'DELETE', 'base', 'Delete Competition Level Profile', '0', '', '', null);
+INSERT INTO `apiaccess` VALUES ('394', '14', 'DELETE', 'base', 'Delete Comment', '0', '', '', null);
+INSERT INTO `apiaccess` VALUES ('395', '16', 'DELETE', 'base', 'Delete Tab', '0', '', '', null);
+INSERT INTO `apiaccess` VALUES ('396', '18', 'DELETE', 'base', 'Delete a Vote', '0', '', '', null);
+INSERT INTO `apiaccess` VALUES ('397', '19', 'DELETE', 'base', 'Delete Media', '0', '', '', null);
+INSERT INTO `apiaccess` VALUES ('398', '21', 'DELETE', 'base', 'Delete an Image', '0', '', '', null);
+INSERT INTO `apiaccess` VALUES ('399', '23', 'DELETE', 'base', 'Delete Video', '0', '', '', null);
+INSERT INTO `apiaccess` VALUES ('400', '24', 'DELETE', 'base', 'Delete Video Service', '0', '', '', null);
+INSERT INTO `apiaccess` VALUES ('401', '25', 'DELETE', 'base', 'Delete Resume Data', '0', '', '', null);
+INSERT INTO `apiaccess` VALUES ('403', '26', 'DELETE', 'base', 'Delete Resume Data Group', '0', '', '', null);
+INSERT INTO `apiaccess` VALUES ('404', '27', 'DELETE', 'base', 'Delete Resume Data Profile', '0', '', '', null);
+INSERT INTO `apiaccess` VALUES ('405', '28', 'DELETE', 'base', 'Delete a given data value for resume data', '0', '', '', null);
+INSERT INTO `apiaccess` VALUES ('406', '29', 'DELETE', 'base', 'Delete a Section', '0', '', '', null);
+INSERT INTO `apiaccess` VALUES ('407', '30', 'DELETE', 'base', 'Delete  Statistics Tab', '0', '', '', null);
+INSERT INTO `apiaccess` VALUES ('408', '31', 'DELETE', 'base', 'Delete  a given stat', '0', '', '', null);
+INSERT INTO `apiaccess` VALUES ('409', '45', 'DELETE', 'base', 'Delete  a given stat value field', '0', '', '', null);
+INSERT INTO `apiaccess` VALUES ('411', '33', 'DELETE', 'base', 'Delete  location', '0', '', '', null);
+INSERT INTO `apiaccess` VALUES ('412', '35', 'DELETE', 'base', 'Delete  county', '0', '', '', null);
+INSERT INTO `apiaccess` VALUES ('413', '36', 'DELETE', 'base', 'Delete  state', '0', '', '', null);
+INSERT INTO `apiaccess` VALUES ('414', '40', 'DELETE', 'base', 'Delete  division', '0', '', '', null);
+INSERT INTO `apiaccess` VALUES ('415', '41', 'DELETE', 'base', 'Delete  League', '0', '', '', null);
+INSERT INTO `apiaccess` VALUES ('416', '43', 'DELETE', 'base', 'Delete  sport type', '0', '', '', null);
+INSERT INTO `apiaccess` VALUES ('417', '44', 'DELETE', 'base', 'Delete  Statistics Context', '0', '', '', null);
+INSERT INTO `apiaccess` VALUES ('418', '1', 'DELETE', 'role', 'Delete a user\'s Role', '0', 'users_id', 'roles_id', null);
+INSERT INTO `apiaccess` VALUES ('419', '1', 'DELETE', 'identity', 'Delete a User\'s Identity', '0', 'users_id', 'identity_id', null);
+INSERT INTO `apiaccess` VALUES ('420', '1', 'POST', 'position', 'Add a Position for a user', '0', null, null, null);
 
 -- ----------------------------
 -- Table structure for `apiparams`
@@ -320,7 +320,7 @@ CREATE TABLE `apiparams` (
   `description` varchar(255) DEFAULT NULL,
   `enttypes_id` int(10) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=295 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=296 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of apiparams
@@ -480,8 +480,8 @@ INSERT INTO `apiparams` VALUES ('157', '190', 'name', 'string', '1', 'The name o
 INSERT INTO `apiparams` VALUES ('158', '190', 'sports_id', 'int', '0', 'The ID of the sport this video is associated with', '4');
 INSERT INTO `apiparams` VALUES ('159', '193', 'name', 'string', '1', 'Name of the video service', null);
 INSERT INTO `apiparams` VALUES ('160', '190', 'video_services_id', 'int', '0', 'An optional video service that is responsible for this video', '24');
-INSERT INTO `apiparams` VALUES ('161', '195', 'users_id', 'int', '0', 'The user this data is for', '1');
-INSERT INTO `apiparams` VALUES ('162', '195', 'user_value', 'string', '0', 'The user\'s Value', null);
+INSERT INTO `apiparams` VALUES ('161', '0', 'users_id', 'int', '0', 'The user this data is for', '1');
+INSERT INTO `apiparams` VALUES ('162', '0', 'user_value', 'string', '0', 'The user\'s Value', null);
 INSERT INTO `apiparams` VALUES ('163', '198', 'resume_data_profiles_id', 'int', '1', 'The Resume Data Profile to link the Group', '27');
 INSERT INTO `apiparams` VALUES ('164', '201', 'sports_id', 'int', '1', 'The sport to link the Resume Data Profile to', '4');
 INSERT INTO `apiparams` VALUES ('165', '202', 'resume_data_groups_id', 'int', '1', 'The Resume Data Group to link to this Profile', '26');
@@ -498,7 +498,7 @@ INSERT INTO `apiparams` VALUES ('175', '212', 'games_id', 'int', '0', 'The game 
 INSERT INTO `apiparams` VALUES ('176', '212', 'stat_contexts_id', 'int', '0', 'The ID of the context for this statistic', '45');
 INSERT INTO `apiparams` VALUES ('177', '216', 'address', 'string', '0', 'Street Address of the location', null);
 INSERT INTO `apiparams` VALUES ('178', '216', 'cities_id', 'int', '0', 'ID of the city', '34');
-INSERT INTO `apiparams` VALUES ('179', '216', 'states_id', 'int', '0', 'ID of the state', '36');
+INSERT INTO `apiparams` VALUES ('179', '0', 'states_id', 'int', '0', 'ID of the state', '36');
 INSERT INTO `apiparams` VALUES ('180', '216', 'lon', 'string', '0', 'If available, the longitude of the location (For instance, if the location is picked on a map instead of entered by address)', null);
 INSERT INTO `apiparams` VALUES ('181', '216', 'lat', 'string', '0', 'If available, the latitude of the location (For instance, if the location is picked on a map instead of entered by address)', null);
 INSERT INTO `apiparams` VALUES ('182', '216', 'location_type', 'string', '0', 'Specify whether this is a high school, park, etc.', null);
@@ -612,6 +612,7 @@ INSERT INTO `apiparams` VALUES ('291', '358', 'states_id', 'int', '0', 'Change t
 INSERT INTO `apiparams` VALUES ('292', '358', 'states_id', 'int', '0', 'Change this section\'s state', '36');
 INSERT INTO `apiparams` VALUES ('293', '360', 'name', 'string', '0', 'Change the name of the sport type', null);
 INSERT INTO `apiparams` VALUES ('294', '124', 're_password', 'string', '0', 'Re-Enter Password', null);
+INSERT INTO `apiparams` VALUES ('295', '198', 'name', 'string', '0', 'The name of the Resume Data Group', null);
 
 -- ----------------------------
 -- Table structure for `cities`
@@ -31377,7 +31378,7 @@ INSERT INTO `comments` VALUES ('2', '1', '424500', '1', 'Test Comment');
 INSERT INTO `comments` VALUES ('3', '1', '424500', '425983', 'Test Comment');
 INSERT INTO `comments` VALUES ('4', '1', '424500', '425983', 'Test Comment again');
 INSERT INTO `comments` VALUES ('5', '1', '424500', '425983', 'Test Comment again');
-INSERT INTO `comments` VALUES ('6', '1', '425983', '425983', 'Butt sex');
+INSERT INTO `comments` VALUES ('6', '1', '425983', '425983', 'Butt fg');
 
 -- ----------------------------
 -- Table structure for `complevels`
@@ -34899,12 +34900,13 @@ CREATE TABLE `locations` (
   `location_type` enum('High School','Park','Other') DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `point_index` (`loc_point`(25))
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of locations
 -- ----------------------------
 INSERT INTO `locations` VALUES ('1', '2317 Hill St.', '1713', '0', '0', null, 'High School');
+INSERT INTO `locations` VALUES ('2', '13235 Old Oak Ln', '1685', null, null, null, 'Park');
 
 -- ----------------------------
 -- Table structure for `media`
@@ -35020,7 +35022,7 @@ CREATE TABLE `positions` (
   `sport_name` varchar(255) DEFAULT NULL,
   `gender` varchar(1) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=295 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=297 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of positions
@@ -35319,6 +35321,8 @@ INSERT INTO `positions` VALUES ('291', 'Stroke', null, null, 'Crew', 'F');
 INSERT INTO `positions` VALUES ('292', 'Middle Crew', null, null, 'Crew', 'F');
 INSERT INTO `positions` VALUES ('293', 'Bowman', null, null, 'Crew', 'F');
 INSERT INTO `positions` VALUES ('294', 'Coxswain', null, null, 'Crew', 'F');
+INSERT INTO `positions` VALUES ('295', 'Backup', '86', null, null, null);
+INSERT INTO `positions` VALUES ('296', 'Backup', '86', null, null, null);
 
 -- ----------------------------
 -- Table structure for `queuedvideos`
@@ -37078,7 +37082,7 @@ CREATE TABLE `states` (
   `name` varchar(255) DEFAULT NULL,
   `countries_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=52 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB AUTO_INCREMENT=54 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
 
 -- ----------------------------
 -- Records of states
@@ -37134,6 +37138,7 @@ INSERT INTO `states` VALUES ('48', 'West Virginia', '1');
 INSERT INTO `states` VALUES ('49', 'Wisconsin', '1');
 INSERT INTO `states` VALUES ('50', 'Wyoming', '1');
 INSERT INTO `states` VALUES ('51', 'District of Columbia', '1');
+INSERT INTO `states` VALUES ('53', 'test state', null);
 
 -- ----------------------------
 -- Table structure for `stats`

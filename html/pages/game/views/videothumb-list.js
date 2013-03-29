@@ -1,44 +1,44 @@
-// The Profile CommentOn List
+// The Game Video Thumb List
 // --------------
 
-define(['facade','views', 'utils', 'profile/views/commenton-item', 'profile/views/commenton-form'], 
-function(facade,  views,   utils,   ProfileCommentOnItemView,       ProfileCommentOnFormView) {
+define(['facade','views', 'utils', 'game/views/videothumb-item', 'game/views/addvideo'], 
+function(facade,  views,   utils,   GameVideoThumbItemView,      GameAddVideoView) {
 
-    var ProfileCommentOnListView, 
-        ProfileCommentOnListAbstract,
+    var GameVideoThumbListView, 
+        GameVideoThumbListAbstract,
         $ = facade.$,
         _ = facade._,
         Channel = utils.lib.Channel,
         CollectionView = views.CollectionView,
         SectionView = views.SectionView;
 
-    ProfileCommentOnListAbstract = CollectionView.extend(SectionView.prototype);
+    GameVideoThumbListAbstract = CollectionView.extend(SectionView.prototype);
 
-    ProfileCommentOnListView = ProfileCommentOnListAbstract.extend({
+    GameVideoThumbListView = GameVideoThumbListAbstract.extend({
 
         __super__: CollectionView.prototype,
 
-        id: "profile-commenton-list",
+        id: "game-videothumb-list",
 
-        name: "Profile CommentOn List",
+        name: "Game Video Thumb List",
 
         tagName: "ul",
 
         // Tag for the child views
         _tagName: "li",
-        _className: "profile-commenton",
+        _className: "game-videothumb",
 
         // Store constructor for the child views
-        _view: ProfileCommentOnItemView,
+        _view: GameVideoThumbItemView,
 
         initialize: function(options) {
             CollectionView.prototype.initialize.call(this, options);
             if (!this.collection) {
-                throw new Error("ProfileCommentOnListView expected options.collection.");
+                throw new Error("GameVideoThumbListView expected options.collection.");
             }
             _.bindAll(this);
             this.addSubscribers();
-            this.setupFormView();
+            this.setupAddView();
         },
 
         render: function () {
@@ -54,7 +54,7 @@ function(facade,  views,   utils,   ProfileCommentOnItemView,       ProfileComme
                 main.show();
             } else {
                 main.hide();
-            }            
+            }
         },
 
         // Child views...
@@ -70,26 +70,26 @@ function(facade,  views,   utils,   ProfileCommentOnItemView,       ProfileComme
             this.collection.off('add remove reset sync toggleAllComplete clearCompleted', this.handleListDisplay);
         },
         
-        setupFormView: function () {
+        setupAddView: function() {
             var listView = this,
-                formView = new ProfileCommentOnFormView({collection: this.collection}),
-                renderAddView = this.addChildView(formView);
+                addView = new GameAddVideoView({collection: this.collection}),
+                renderAddView = this.addChildView(addView);
             
-            this.childViews.form = formView;
+            this.childViews.form = addView;
             this.callbacks.add(function() {
                 renderAddView();
             });
             
             function callback (data) {
-                formView.model = data;
-                formView.render();
-                listView.$el.prepend(formView.el);
+                addView.model = data;
+                addView.render();
+                listView.$el.append(addView.el);
             }
             
-            Channel('profilecommentonform:fetch').subscribe(callback);
+            Channel('gameaddvideo:fetch').subscribe(callback);
         }
 
     });
 
-    return ProfileCommentOnListView;
+    return GameVideoThumbListView;
 });

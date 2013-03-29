@@ -37,9 +37,8 @@
 		 */
 		public function action_get_basics()
 		{
-			$this->payloadDesc = "Basic information about the user.";			
-			$users = ORM::factory('User_Base')->where('id','=',$this->myID);			  
-			return $users;
+			$this->payloadDesc = "Basic information about the user.";
+			$this->requireID();
 		}
 		
 		/**
@@ -49,6 +48,7 @@
 		 */
 		public function action_get_teams()
 		{
+			$this->requireID();
 			$this->payloadDesc = "List of teams the user is associated with";
 			$user_teams = ORM::factory("User_Teamslink")->where('users_id', '=', $this->myID );
 			return $user_teams;
@@ -62,7 +62,7 @@
 		public function action_get_sports()
 		{
 			$this->payloadDesc = "List of sports that the user is associated with";
-			
+			$this->requireID();
 			$sports = $this->mainModel->getSports();
 			return $sports; 
 		}
@@ -74,6 +74,7 @@
 		 */
 		public function action_get_orgs()
 		{
+			$this->requireID();
 			$this->payloadDesc = "List of organizations the user is associated with";
 
 			// JOIN TABLES TO PULL ALL ORGANIZATIONS FOR A USER
@@ -95,6 +96,7 @@
 		 */
 		public function action_get_related()
 		{
+			$this->requireID();
 			$this->payloadDesc = "Content related to this user to be displayed on the \"related content\" pane";
 			//$teams_link = ORM::factory('User_Teamslink')->where('users_id', '=', $this->myID ); 
 			//return $teams_link; 
@@ -107,6 +109,7 @@
 		 */
 		public function action_get_videos()
 		{
+			$this->requireID();
 			$this->payloadDesc = "List of videos uploaded by the user";
 			return $this->mainModel->getVideos();
 		
@@ -119,9 +122,8 @@
 		 */
 		public function action_get_images()
 		{
+			$this->requireID();
 			$this->payloadDesc = "List of images uploaded by the user";
-
-		
 		}
 		
 		/**
@@ -131,6 +133,7 @@
 		 */
 		public function action_get_commentsof()
 		{
+			$this->requireID();
 			$this->payloadDesc = "Get a list of the comments made by the user";
 			return $this->mainModel->getCommentsOf();
 		}
@@ -142,6 +145,7 @@
 		 */
 		public function action_get_commentson()
 		{
+			$this->requireID();
 			$this->payloadDesc = "Get a list of comments related to the user";
 			return $this->mainModel->getCommentsOn();
 		}
@@ -153,6 +157,7 @@
 		 */
 		public function action_get_fitnessbasics()
 		{
+			$this->requireID();
 			$this->payloadDesc = "Get the basic fitness data for the user";
 			$fitnessbasic = ORM::factory('User_Fitness_Dataval')->where('users_id', '=', $this->myID ); 
 			return $fitnessbasic;
@@ -166,6 +171,7 @@
 		 */
 		public function action_get_primaryvideo()
 		{
+			$this->requireID();
 			$this->payloadDesc = "Get the primary video to be displayed on a user profile page";
 
 		

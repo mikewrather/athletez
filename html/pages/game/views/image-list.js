@@ -1,44 +1,44 @@
-// The Profile CommentOn List
+// The Game Image List
 // --------------
 
-define(['facade','views', 'utils', 'profile/views/commenton-item', 'profile/views/commenton-form'], 
-function(facade,  views,   utils,   ProfileCommentOnItemView,       ProfileCommentOnFormView) {
+define(['facade','views', 'utils', 'game/views/image-item', 'game/views/addimage'], 
+function(facade,  views,   utils,   GameImageItemView,      GameAddImageView) {
 
-    var ProfileCommentOnListView, 
-        ProfileCommentOnListAbstract,
+    var GameImageListView, 
+        GameImageListAbstract,
         $ = facade.$,
         _ = facade._,
         Channel = utils.lib.Channel,
         CollectionView = views.CollectionView,
         SectionView = views.SectionView;
 
-    ProfileCommentOnListAbstract = CollectionView.extend(SectionView.prototype);
+    GameImageListAbstract = CollectionView.extend(SectionView.prototype);
 
-    ProfileCommentOnListView = ProfileCommentOnListAbstract.extend({
+    GameImageListView = GameImageListAbstract.extend({
 
         __super__: CollectionView.prototype,
 
-        id: "profile-commenton-list",
+        id: "game-image-list",
 
-        name: "Profile CommentOn List",
+        name: "Game Image List",
 
         tagName: "ul",
 
         // Tag for the child views
         _tagName: "li",
-        _className: "profile-commenton",
+        _className: "game-image",
 
         // Store constructor for the child views
-        _view: ProfileCommentOnItemView,
+        _view: GameImageItemView,
 
         initialize: function(options) {
             CollectionView.prototype.initialize.call(this, options);
             if (!this.collection) {
-                throw new Error("ProfileCommentOnListView expected options.collection.");
+                throw new Error("GameImageListView expected options.collection.");
             }
             _.bindAll(this);
             this.addSubscribers();
-            this.setupFormView();
+            this.setupAddView();
         },
 
         render: function () {
@@ -70,26 +70,26 @@ function(facade,  views,   utils,   ProfileCommentOnItemView,       ProfileComme
             this.collection.off('add remove reset sync toggleAllComplete clearCompleted', this.handleListDisplay);
         },
         
-        setupFormView: function () {
+        setupAddView: function() {
             var listView = this,
-                formView = new ProfileCommentOnFormView({collection: this.collection}),
-                renderAddView = this.addChildView(formView);
+                addView = new GameAddImageView({collection: this.collection}),
+                renderAddView = this.addChildView(addView);
             
-            this.childViews.form = formView;
+            this.childViews.form = addView;
             this.callbacks.add(function() {
                 renderAddView();
             });
             
             function callback (data) {
-                formView.model = data;
-                formView.render();
-                listView.$el.prepend(formView.el);
+                addView.model = data;
+                addView.render();
+                listView.$el.append(addView.el);
             }
             
-            Channel('profilecommentonform:fetch').subscribe(callback);
+            Channel('gameaddimage:fetch').subscribe(callback);
         }
 
     });
 
-    return ProfileCommentOnListView;
+    return GameImageListView;
 });

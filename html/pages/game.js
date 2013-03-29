@@ -15,10 +15,18 @@ define([
     "game/models/basics",
     "game/models/addmedia",
     "game/collections/teamrosters",
+    "game/models/videoplayer",
+    "game/collections/videothumbs",
+    "game/collections/images",
+    "game/collections/comments",
     
     "game/views/header",
     "game/views/add-media",
-    "game/views/teamroster-list"
+    "game/views/teamroster-list",
+    "game/views/videoplayer",
+    "game/views/videothumb-list",
+    "game/views/image-list",
+    "game/views/comment-list"
     
     ], function (require, pageLayoutTemplate) {
 
@@ -32,10 +40,18 @@ define([
         GameBasicsModel = require("game/models/basics"),
         GameAddMediaModel = require("game/models/addmedia"),
         GameTeamRosterList = require("game/collections/teamrosters"),
+        GameVideoPlayerModel = require("game/models/videoplayer"),
+        GameVideoThumbList = require("game/collections/videothumbs");
+        GameImageList = require("game/collections/images");
+        GameCommentList = require("game/collections/comments");
         
         GameHeaderView = require("game/views/header"),
         GameAddMediaView = require("game/views/add-media"),
         GameTeamRosterListView = require("game/views/teamroster-list"),
+        GameVideoPlayerView = require("game/views/videoplayer"),
+        GameVideoThumbListView = require("game/views/videothumb-list"),
+        GameImageListView = require("game/views/image-list"),
+        GameCommentListView = require("game/views/comment-list"),
         
         
         LayoutView = views.LayoutView,
@@ -69,6 +85,7 @@ define([
         
         createGameData: function () {
             this.basics = new GameBasicsModel();
+            this.basics.id = '101';            
             this.basics.fetch();
             this.id = this.basics.id;
             
@@ -78,6 +95,22 @@ define([
             this.teamrosters = new GameTeamRosterList();
             this.teamrosters.id = this.id;
             this.teamrosters.fetch();
+            
+            this.videoplayer = new GameVideoPlayerModel();
+            this.videoplayer.id = this.id;
+            this.videoplayer.fetch();
+            
+            this.videothumbs = new GameVideoThumbList();
+            this.videothumbs.id = this.id;
+            this.videothumbs.fetch();
+            
+            this.images = new GameImageList();
+            this.images.id = this.id;
+            this.images.fetch();
+            
+            this.comments = new GameCommentList();
+            this.comments.id = this.id;
+            this.comments.fetch();
         },
         
         handleDeferreds: function() {
@@ -92,6 +125,21 @@ define([
                 controller.setupTeamRosterListView();                        
             });
             
+            $.when(this.videoplayer.request).done(function () {
+                controller.setupVideoPlayerView();                        
+            });
+            
+            $.when(this.videothumbs.request).done(function () {
+                controller.setupVideoThumbListView();                        
+            });
+            
+            $.when(this.images.request).done(function() {
+                controller.setupImageListView();
+            });
+            
+            $.when(this.comments.request).done(function() {
+                controller.setupCommentListView();
+            })
         },
         
         setupHeaderView: function() {
@@ -125,11 +173,60 @@ define([
             
             teamRosterListView = new GameTeamRosterListView({
                 collection: this.teamrosters,
-                destination: "#main-sidebar #roster-wrap"
+                destination: "#roster-wrap"
             });
             
             this.scheme.push(teamRosterListView);
             this.layout.render();
+        },
+        
+        setupVideoPlayerView: function() {
+            var videoPlayerView;
+            
+            videoPlayerView = new GameVideoPlayerView({
+                model: this.videoplayer,
+                name: "Video Player",
+                destination: "#video-player"
+            });
+            
+            this.scheme.push(videoPlayerView);
+            this.layout.render();
+        },
+        
+        setupVideoThumbListView: function() {
+            var videoThumbListView;
+            
+            videoThumbListView = new GameVideoThumbListView({
+                collection: this.videothumbs,
+                destination: "#videothumb-wrap"
+            });
+            
+            this.scheme.push(videoThumbListView);
+            this.layout.render();            
+        },
+        
+        setupImageListView: function() {
+            var imageListView;
+            
+            imageListView = new GameImageListView({
+                collection: this.images,
+                destination: "#image-wrap"
+            });
+            
+            this.scheme.push(imageListView);
+            this.layout.render();
+        },
+        
+        setupCommentListView: function() {
+            var commentListView;
+            
+            commentListView = new GameCommentListView({
+                collection: this.comments,
+                destination: "#comment-wrap"
+            });
+            
+            this.scheme.push(commentListView);
+            this.layout.render();            
         },
                         
         setupLayout: function () {

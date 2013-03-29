@@ -20,8 +20,7 @@
 		 */
 		public function get_basics()
 		{
-			$user = $this->obj->find(1); 
-			$retArr = $user->getBasics();
+			$retArr = $this->obj->getBasics();
 						  
 			$retArr['grad_year'] = null; 		//TODO: Add To Database - grad_year : string
 			$retArr['user_picture'] = null; 	//TODO: Add To Database - user_picture : string

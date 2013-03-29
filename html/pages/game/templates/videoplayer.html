@@ -1,0 +1,16 @@
+
+{{#payload}}
+    <div class="textcenter"><img src="{{base_url}}{{video_image}}" alt="{{video_title}}"/></div>
+    <h3>{{video_title}}</h3>
+    {{#games}} 
+        {{team1_name}} vs {{team2_name}}
+    {{/games}}    
+    Votes: {{num_votes}}, Views: {{num_views}}, Comments: {{num_comments}}<br/>
+    
+    <div class="social-links">
+    {{#social_links}}
+        <a class="{{class}}" href="{{link}}" title="{{title}}">{{title}}</a>
+    {{/social_links}}
+    </div>
+{{/payload}}
+

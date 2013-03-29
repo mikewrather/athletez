@@ -1,31 +1,31 @@
 // CommentOn Form View
 // ---------
-// Input form to create Profile comments
+// Input form to create Game comments
 
-// Package Profile
+// Package Game
 // Requires define
-// Returns {ProfileCommentOnFormView} constructor
+// Returns {GameCommentFormView} constructor
 
 define([
         'require', 
-        'text!profile/templates/commenton-form.html', 
+        'text!game/templates/comment-form.html', 
         'facade', 
         'views', 
-        'profile/models/commentonform'
-        ], function(require, profileCommentOnFormTemplate) {
+        'game/models/commentform'
+        ], function(require, gameCommentFormTemplate) {
 
-    var ProfileCommentOnFormView,
+    var GameCommentFormView,
         facade = require('facade'),
         views = require('views'),
-        ProfileCommentOnFormModel = require('profile/models/commentonform'),
+        GameCommentFormModel = require('game/models/commentform'),
         BaseView = views.BaseView,
         _ = facade._;
 
-    ProfileCommentOnFormView = BaseView.extend({
+    GameCommentFormView = BaseView.extend({
 
         tagName: "li",
 
-        template: profileCommentOnFormTemplate,
+        template: gameCommentFormTemplate,
 
         // Delegated events for creating new items, and clearing completed ones.
         events: {
@@ -35,10 +35,10 @@ define([
         // **Method** `setOptions` - called by BaseView's initialize method
         setOptions: function (options) {
             if (!this.collection) {
-                throw new Error("ProfileCommentOnFormView expected options.collection.");
+                throw new Error("GameCommentFormView expected options.collection.");
             }
             if (!this.model) {
-                this.model = new ProfileCommentOnFormModel({id: this.collection.id});
+                this.model = new GameCommentFormModel({id: this.collection.id});
                 this.model.fetch();
             }            
         },
@@ -58,7 +58,7 @@ define([
             this.createOnEnter(e);
         },
 
-        // If you hit return in the main input field, create new **ProfileCommentOn** model,
+        // If you hit return in the main input field, create new **GameCommentForm** model,
         // persisting it to *localStorage*.
         createOnEnter: function(e) {
             var comment = this.input.val();
@@ -83,5 +83,5 @@ define([
 
     });
 
-    return ProfileCommentOnFormView;
+    return GameCommentFormView;
 });

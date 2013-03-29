@@ -95,9 +95,10 @@ define([
         },
         
         createProfileData: function () {
+            this.id = '101';
             this.basics = new ProfileBasicsModel();
+            this.basics.id = this.id;
             this.basics.fetch();
-            this.id = this.basics.id;
             
             this.addmedia = new ProfileAddMediaModel();
             this.addmedia.id = this.id;            
@@ -123,6 +124,7 @@ define([
             this.images.fetch();
             
             this.primaryvideo = new ProfilePrimaryVideoModel();
+            this.primaryvideo.id = this.id;
             this.primaryvideo.fetch();
             
             this.commentsof = new ProfileCommentOfList();
@@ -207,7 +209,7 @@ define([
             
             orgListView = new ProfileOrgListView({
                 collection: this.orgs,
-                destination: "#main-sidebar #org-wrap"
+                destination: "#org-wrap"
             });
             
             this.scheme.push(orgListView);
@@ -219,7 +221,7 @@ define([
             
             relatedListView = new ProfileRelatedListView({
                 collection: this.relateds,
-                destination: "#main-sidebar #related-wrap"
+                destination: "#related-wrap"
             });
             
             this.scheme.push(relatedListView);
@@ -231,7 +233,7 @@ define([
             
             fitnessBasicListView = new ProfileFitnessBasicListView({
                 collection: this.fitnessbasics,
-                destination: "#main-sidebar #fitnessbasic-wrap"
+                destination: "#fitnessbasic-wrap"
             });
             
             this.scheme.push(fitnessBasicListView);
@@ -243,7 +245,7 @@ define([
             
             videoListView = new ProfileVideoListView({
                 collection: this.videos,
-                destination: "#main-content #video-wrap"
+                destination: "#video-wrap"
             });
             
             this.scheme.push(videoListView);
@@ -255,7 +257,7 @@ define([
             
             imageListView = new ProfileImageListView({
                 collection: this.images,
-                destination: "#main-content #image-wrap"
+                destination: "#image-wrap"
             });
             
             this.scheme.push(imageListView);
@@ -280,7 +282,7 @@ define([
             
             commentOfListView = new ProfileCommentOfListView({
                 collection: this.commentsof,
-                destination: "#main-content #commentof-wrap"
+                destination: "#commentof-wrap"
             });
             
             this.scheme.push(commentOfListView);
@@ -292,7 +294,7 @@ define([
             
             commentOnListView = new ProfileCommentOnListView({
                 collection: this.commentson,
-                destination: "#main-content #commenton-wrap"
+                destination: "#commenton-wrap"
             });
             
             this.scheme.push(commentOnListView);

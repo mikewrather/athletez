@@ -19,18 +19,21 @@ define(["facade", "models/base"], function (facade, BaseModel) {
                 "video_thumb": null,
                 "video_image": null,
                 "org_name": null,
-                "team": [{
-                    "complevel": "Varsity",
-                    "season": "Winter",
-                    "year": "'12",
+                "teams": [{
+                    "complevel": null,
+                    "season": null,
+                    "grad_year": 0,
+                    "team_name": null,
                     "schedule": {
-                        "schedule_date": "Dec 14",
-                        "other_team": "Mercersberg Academy",
-                        "schedule_summary": "w 88- 72"
+                        "schedule_date": null,
+                        "other_team": null,
+                        "schedule_summary": null
                     }
                 }],
-                "games": [
-                ],
+                "games": [{
+                    "team1_name": null,
+                    "team2_name": null
+                }],
                 "video_desc": null,
                 "user_name": null,
                 "post_date": null,
@@ -39,7 +42,12 @@ define(["facade", "models/base"], function (facade, BaseModel) {
                 ],
                 "num_votes": 0,
                 "num_views": 0,
-                "num_comments": 0
+                "num_comments": 0,
+                "social_links": [{
+                    "class": null,
+                    "title": null,
+                    "link": null
+                }]
             },
             "desc": "Video information",
             "exec_data": {

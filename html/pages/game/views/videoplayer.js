@@ -1,29 +1,29 @@
-// Game Add Media View
+// Game Video Player View
 // ---------
 // Package Game
 // Requires `define`, `require`
-// Returns {GameAddMediaView} constructor
+// Returns {GameVideoPlayerView} constructor
 
 define([
         'require', 
-        'text!game/templates/add-media.html', 
-        'game/models/addmedia',
+        'text!game/templates/videoplayer.html', 
+        'game/models/videoplayer',
         'facade', 
         'views'
         ], 
-function(require, addMediaTemplate) {
+function(require, videoPlayerTemplate) {
 
-    var GameAddMediaView,
+    var GameVideoPlayerView,
         facade = require('facade'),
         views = require('views'),
         SectionView = views.SectionView,
         _ = facade._;
 
-    GameAddMediaView = SectionView.extend({
+    GameVideoPlayerView = SectionView.extend({
 
-        id: 'add-media',
+        id: 'game-videoplayer',
 
-        template: addMediaTemplate,
+        template: videoPlayerTemplate,
         
         initialize: function (options) {
             SectionView.prototype.initialize.call(this, options);            
@@ -32,7 +32,7 @@ function(require, addMediaTemplate) {
         // **Method** `setOptions` - called by BaseView's initialize method
         setOptions: function (options) {
             if (!this.model) {
-                throw new Error("GameAddMediaView expects option with model property.");
+                throw new Error("GameVideoPlayerView expects option with model property.");
             }            
         },
         
@@ -47,5 +47,5 @@ function(require, addMediaTemplate) {
                 
     });
 
-    return GameAddMediaView;
+    return GameVideoPlayerView;
 });

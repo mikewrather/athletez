@@ -408,7 +408,10 @@ class Controller_Codegen extends Controller
 			$usage.= $ent->id2 != NULL ? '/{'.$ent->id2.'}' : '';
 
 			$templateArr["method"][] = array(
+				"id" =>$method->id,
+				"complete" => $method->done==1 ? true : false,
 				"api_method" => $method->api_method,
+				"status" => $method->current_status,
 				"shortname" => $method->shortname,
 				"description" => $method->description,
 				"usage" => $usage,
@@ -425,6 +428,30 @@ class Controller_Codegen extends Controller
 		return $docstr;
 
 
+	}
+
+	public function action_savestatus()
+	{
+		$methodID = $this->request->query('id');
+		if($methodID > 0)
+		{
+			$method = ORM::factory('Codegen_Apimethod',$methodID);
+			$method->current_status = $this->request->query('currStatus');
+			$method->save();
+		}
+		else return false;
+	}
+
+	public function action_savecomplete()
+	{
+		$methodID = $this->request->query('id');
+		if($methodID > 0)
+		{
+			$method = ORM::factory('Codegen_Apimethod',$methodID);
+			echo $method->done = $this->request->query('isDone')=="true" ? 1 : 0;
+			$method->save();
+		}
+		else return false;
 	}
 
 

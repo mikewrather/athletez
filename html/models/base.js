@@ -20,7 +20,7 @@ define(['facade', 'utils'], function (facade, utils) {
         
         defaults: {
             
-            "id": "101",
+            //"id": "101",
             
             "base_url": base_url,
             
