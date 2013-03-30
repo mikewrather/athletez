@@ -41,6 +41,19 @@ class Model_User_Resume_Data_Profile extends ORM
 		);
 	}
 	
+	public function getDatagroups()
+	{
+		// get the data groups		 
+		$datagroups = $this->datagroups;		
+		return $datagroups;
+	}
+	
+	public function getSports()
+	{
+		$sports = $this->sports;
+		return $sports;
+	}
+	
 	public function addLinksport($args = array())
 	{
 		extract($args); 

@@ -38,8 +38,12 @@
 		public function action_get_basics()
 		{
 			$this->payloadDesc = "Returns basic info for a given Resume Data Profile";
-	
-		
+			if(!$this->mainModel->id)
+			{
+				$this->modelNotSetError();
+				return false;
+			}
+			return $this->mainModel;
 		}
 		
 		/**
@@ -51,7 +55,12 @@
 		{
 			$this->payloadDesc = "Returns all Resume Data Groups for a given Resume Data Profile";
 
-		
+			if(!$this->mainModel->id)
+			{
+				$this->modelNotSetError();
+				return false;
+			} 
+			return $this->mainModel->getDatagroups(); 
 		}
 		
 		/**
@@ -63,7 +72,12 @@
 		{
 			$this->payloadDesc = "Returns all sports for a given Resume Data Profile";
 
-		
+			if(!$this->mainModel->id)
+			{
+				$this->modelNotSetError();
+				return false;
+			} 
+			return $this->mainModel->getSports(); 
 		}
 		
 		############################################################################
