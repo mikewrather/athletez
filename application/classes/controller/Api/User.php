@@ -273,6 +273,18 @@
 
 				// Call method to throw an error
 				$this->addError($error_array,$is_fatal);
+			}catch (ORM_Validation_Exception $e){
+				// Create Array for Error Data
+				$error_array = array(
+					"error" => "Unable to save User",
+					"desc" => $e->getMessage()
+				);
+
+				// Set whether it is a fatal error
+				$is_fatal = true;
+
+				// Call method to throw an error
+				$this->addError($error_array,$is_fatal);
 			}
 			return $user_obj;
 		}
