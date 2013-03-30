@@ -10,6 +10,7 @@ class Model_Sportorg_Team extends ORM
 
 	protected $_table_name = 'teams';
 
+
 	protected $_belongs_to = array(
 		'org_sport_link' => array(
 			'model' => 'Sportorg_Orgsportlink',
@@ -49,6 +50,29 @@ class Model_Sportorg_Team extends ORM
 			'foreign_key' => 'teams_id',
 		),
 	);
+
+	public function rules()
+	{
+		return array(
+//			'org_sport_link_id' => array(
+//				array('not_empty')
+//			),
+//			'sports_id' => array(
+//				array('not_empty')
+//			),
+			'seasons_id' => array(
+				array('not_empty')
+			),
+			'complevels_id' => array(
+				array('not_empty')
+			),
+			'year' => array(
+				array('not_empty'),
+				array('digit'),
+				array('exact_length', array(':value', 4)),
+			)
+		);
+	}
 
 	public function getOrg()
 	{		
@@ -128,4 +152,15 @@ class Model_Sportorg_Team extends ORM
 		$game_list_obj->where_close();		
 		return $game_list_obj->find_all();
 	}
+
+	//Custom Validation
+	public static function not_equals($value, $null_value)
+	{
+		if ($value == ""){
+			return false;
+		}
+		return ($value != $null_value);
+	}
+
+
 }

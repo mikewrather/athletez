@@ -179,6 +179,59 @@
 				$unique_ident = trim($this->request->post('unique_ident'));
 			}
 
+			//Jeffrey add save&validation logic here
+			$team_obj = ORM::factory("Sportorg_Team");
+			$team_obj->org_sport_link_id = $org_sport_link_id;
+			//$team_obj->orgs_id = $orgs_id;
+			//$team_obj->sports_id = $sports_id;
+			$team_obj->complevels_id = $complevels_id;
+			$team_obj->seasons_id = $seasons_id;
+			$team_obj->year = $year;
+			$team_obj->mascot = $mascot;
+			$team_obj->unique_ident = $unique_ident;
+			try
+			{
+				//check org_sport_link_id, org_id and sport_id are required when org_sport_link_id is null
+				if ($org_sport_link_id == ""){
+					$check_org_sport = Validation::factory($team_obj->as_array())
+						->rule('org_id', 'Model_Sportorg_Team::not_equals', array(':value', 0))
+						->rule('sports_id', 'Model_Sportorg_Team::not_equals', array(':value', 0));
+					if ($check_org_sport->check()){
+						$team_obj->save();
+					}else{
+						$err_exception = new ErrorException("Validation error");
+						throw $err_exception;
+						return $team_obj;
+					}
+				}
+			} catch(ErrorException $e)
+			{
+				// Create Array for Error Data
+				$error_array = array(
+					"error" => "Unable to save team info",
+					"desc" => $e->getMessage()
+				);
+
+				// Set whether it is a fatal error
+				$is_fatal = true;
+
+				// Call method to throw an error
+				$this->addError($error_array,$is_fatal);
+			}catch (ORM_Validation_Exception $e){
+				// Create Array for Error Data
+				$error_array = array(
+					"error" => "Unable to save team info",
+					"desc" => $e->getMessage()
+				);
+
+				// Set whether it is a fatal error
+				$is_fatal = true;
+
+				// Call method to throw an error
+				$this->addError($error_array,$is_fatal);
+			}
+			return $team_obj;
+
 		}
 		
 		/**
