@@ -38,7 +38,7 @@
 		public function action_get_basics()
 		{
 			$this->payloadDesc = "Returns basic info for a given Resume Data Profile";
-
+	
 		
 		}
 		
@@ -79,14 +79,14 @@
 		public function action_post_linksport()
 		{
 			$this->payloadDesc = "Link this RDP to a Sport";
-
+			$args = array();
 		     // CHECK FOR PARAMETERS:
 			// sports_id (REQUIRED)
 			// The sport to link the Resume Data Profile to
 				
 			if((int)trim($this->request->post('sports_id')) > 0)
 			{
-				$sports_id = (int)trim($this->request->post('sports_id'));
+				$args['sports_id'] = (int)trim($this->request->post('sports_id'));
 			}
 
 			else // THIS WAS A REQUIRED PARAMETER
@@ -105,7 +105,16 @@
 				$this->addError($error_array,$is_fatal);
 
 			}
+			if(!$this->mainModel->id)
+			{
+				$this->modelNotSetError();
+				return false;
+			}
 			
+			$args['resume_data_profiles_id'] = $this->mainModel->id;
+			$rdp = ORM::factory('User_Resume_Data_Profile');
+			$add_link_obj = $rdp->addLinksport($args);
+			return $rdp->where('id','=',$this->mainModel->id);		 
 		}
 		
 		/**
@@ -116,14 +125,14 @@
 		public function action_post_linkrdg()
 		{
 			$this->payloadDesc = "Link to a Resume Data Group";
-
+			$args = array();
 		     // CHECK FOR PARAMETERS:
 			// resume_data_groups_id (REQUIRED)
 			// The Resume Data Group to link to this Profile
 				
 			if((int)trim($this->request->post('resume_data_groups_id')) > 0)
 			{
-				$resume_data_groups_id = (int)trim($this->request->post('resume_data_groups_id'));
+				$args['resume_data_groups_id'] = (int)trim($this->request->post('resume_data_groups_id'));
 			}
 
 			else // THIS WAS A REQUIRED PARAMETER
@@ -142,6 +151,16 @@
 				$this->addError($error_array,$is_fatal);
 
 			}
+			if(!$this->mainModel->id)
+			{
+				$this->modelNotSetError();
+				return false;
+			}
+			
+			$args['resume_data_profiles_id'] = $this->mainModel->id;
+			$rdp = ORM::factory('User_Resume_Data_Profile');
+			$add_link_obj = $rdp->addRdg($args);
+			return $rdp->where('id','=',$this->mainModel->id);
 			
 		}
 		
@@ -153,14 +172,14 @@
 		public function action_post_add()
 		{
 			$this->payloadDesc = "Add a new Resume Data Profile";
-
+			$args = array();
 		     // CHECK FOR PARAMETERS:
 			// name (REQUIRED)
 			// The name of the Resume Data Profile to add
 				
 			if(trim($this->request->post('name')) != "")
 			{
-				$name = trim($this->request->post('name'));
+				$args['name'] = trim($this->request->post('name'));
 			}
 
 			else // THIS WAS A REQUIRED PARAMETER
@@ -183,13 +202,10 @@
 			// sports (REQUIRED)
 			// An array of sports_id's in the form "sports" : [1,2,4,7]
 				
-			if(isset($this->request->post('sports')))
+			if(trim($this->request->post('sports')) != "")
 			{
-				$sports_array = $this->request->post('sports');
-				foreach($sports_array as $sports_key =>$sports_val)
-				{
-					// Access each item in the array through the $sports_val variable
-				}
+				$sports = trim($this->request->post('sports'));				
+				$args['sports_array'] = $sports; 
 			}
 
 			else // THIS WAS A REQUIRED PARAMETER
@@ -198,7 +214,7 @@
 				$error_array = array(
 					"error" => "Required Parameter Missing",
 					"param_name" => "sports",
-					"param_desc" => "An array of sports_id's in the form "sports" : [1,2,4,7]"
+					"param_desc" => "An array of sports_id's in the form sports : [1,2,4,7]"
 				);
 
 				// Set whether it is a fatal error
@@ -208,7 +224,9 @@
 				$this->addError($error_array,$is_fatal);
 
 			}
-			
+			 
+			$rdp = ORM::factory('User_Resume_Data_Profile');
+			return $rdp->addRdp($args);
 		}
 		
 		############################################################################

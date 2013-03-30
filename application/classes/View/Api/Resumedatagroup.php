@@ -90,7 +90,11 @@
 		{
 			$retArr = array(); 
 			// Scaffolding Code For Single:
-			$retArr = $this->obj;
+			$objs = $this->obj->find_all();
+			foreach($objs as $obj)
+			{
+				$retArr[$obj->id] = $obj->getBasics();
+			}
 
 			return $retArr;
 		}
