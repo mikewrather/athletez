@@ -167,7 +167,9 @@
 			}
 			
 			$location_obj = ORM::factory("Location_Base");
-			return $location_obj->addLocation($args);  
+			$location = $location_obj->addLocation($args);
+			 
+			return (Object)$location;
 		}
 		
 		############################################################################

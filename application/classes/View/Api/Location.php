@@ -67,7 +67,13 @@
 		public function post_add()
 		{	 
 			// Scaffolding Code For Single:
-			$retArr = $this->obj->getBasics();
+			$obj = $this->obj;
+		 	 
+			if (isset($new_location))
+				$retArr = $obj->getBasics();
+			else {
+				$retArr = $obj->error_array;
+			}
 			return $retArr;
 		}
 		

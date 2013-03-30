@@ -49,6 +49,7 @@ class Model_Location_Base extends ORM
 	public function addLocation($args = array())
 	{
 		extract($args);
+		$result = array();
 		
 		if(isset($address))
 		{
@@ -58,6 +59,17 @@ class Model_Location_Base extends ORM
 		if(isset($cities_id))
 		{
 			$this->cities_id = $cities_id;
+		}
+		$blMsg = false;
+		$error = array();
+		if ( empty($address) || empty($cities_id) )
+		{
+			$blMsg = true;
+			$error_array = array(
+				"error" => "You should input the adress or city",
+				"desc" => "You should input the adress or city",
+			);
+			$result['error_array'] = $error_array;			
 		}
 
 		if(isset($lon))
@@ -70,6 +82,16 @@ class Model_Location_Base extends ORM
 			$this->lat = $lat;
 		}
 		
+		if ( empty($lon) || empty($lat) )
+		{
+			$blMsg = true;
+			$error_array = array(
+				"error" => "You should input the longitude or latitude",
+				"desc" => "You should input the longitude or latitude"	);
+			
+			$result['error_array'] = $error_array;
+		}
+		
 		if(isset($loc_point))
 		{
 			$this->loc_point = $loc_point;
@@ -80,8 +102,23 @@ class Model_Location_Base extends ORM
 			$this->location_type = $location_type;
 		}
 		
-		$this->save();
-		return $this;
+		try{
+			if ( $blMsg == false)
+			$new_location = $this->save();
+			$result['new_location'] = $new_location;
+		} catch(ErrorException $e)
+		{
+			$error_array = array(
+				"error" => "Unable to save",
+				"desc" => "You should input the longitude or latitude"	);
+
+			// Set whether it is a fatal error
+			$is_fatal = true;
+			// Call method to throw an error		
+			$result['error_array'] = $error_array;	
+		} 	
+		
+		return $result;
 	}
 	
 }
