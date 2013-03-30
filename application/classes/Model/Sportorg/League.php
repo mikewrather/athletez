@@ -31,8 +31,56 @@ class Model_Sportorg_League extends ORM
 			"id" => $this->id,
 			"section" => $this->section->getBasics(),
 			"name" => $this->name,			
-			"section_id" => $this->section_id,
+			"sections_id" => $this->sections_id,
 			"states_id" => $this->states_id,
 		);
 	}
+	
+	public function getOrgs()
+	{
+		if(!$this->loaded()) return false;
+		$orgs = ORM::factory('Sportorg_Org')
+			->join('leagues','LEFT')
+				->on('leagues.id','=','sportorg_org.leagues_id')
+			->where('sportorg_org.leagues_id','=',$this->id);
+		 
+		return $orgs;
+	}
+	
+	
+	public function addLeague($args = array())
+	{
+		extract($args);
+		$exists_obj = $this->where('name', '=', $name)->and_where('states_id', '=', $states_id)->and_where('sections_id', '=', $sections_id);
+		$exists_obj->reset(FALSE);
+		$count = $exists_obj->count_all();
+		
+		if ( $count == 0 )
+		{
+			// name column
+			if(isset($name))
+			{
+				$this->name = $name;
+			}
+			// states_id column 
+			if(isset($states_id))
+			{
+				$this->states_id = $states_id;	
+			}
+			
+			// sports_id column
+			if(isset($sections_id))
+			{
+				$this->sections_id = $sections_id;
+			}
+			
+			$this->save();
+			return $this;
+		} else
+		{
+			return $exists_obj->find();
+		}
+		
+	}	
+	
 }

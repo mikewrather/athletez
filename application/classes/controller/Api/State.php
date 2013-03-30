@@ -168,14 +168,19 @@
 		public function action_post_addcounty()
 		{
 			$this->payloadDesc = "Add a county within the state";
-
+			$args = array();
+			if(!$this->mainModel->id)
+			{
+				$this->modelNotSetError();
+				return false;
+			}
 		     // CHECK FOR PARAMETERS:
 			// name (REQUIRED)
 			// The name of the county to add
 				
 			if(trim($this->request->post('name')) != "")
 			{
-				$name = trim($this->request->post('name'));
+				$args['name'] = trim($this->request->post('name'));
 			}
 
 			else // THIS WAS A REQUIRED PARAMETER
@@ -194,8 +199,11 @@
 				$this->addError($error_array,$is_fatal);
 
 			}
-			$state = ORM::factory('Location_State');
-			return $state->addCounty($name);
+			
+			$args['states_id'] = $this->mainModel->id;
+			 
+			$county = ORM::factory('Location_County');
+			return $county->addCounty($args);
 		}
 		
 		/**
@@ -207,7 +215,11 @@
 		{
 			$this->payloadDesc = "Add a division within the state";
 			$args = array();
-		    
+		    if(!$this->mainModel->id)
+			{
+				$this->modelNotSetError();
+				return false;
+			}
 		    // CHECK FOR PARAMETERS:
 			// name (REQUIRED)
 			// Name of the Division to add
@@ -241,8 +253,10 @@
 			{
 				$args['sections_id'] = (int)trim($this->request->post('sections_id'));
 			}
-			$state = ORM::factory('Location_State');
-			return $state->addDivision($args);
+			$args['states_id'] = $this->mainModel->id;
+			  
+			$division = ORM::factory('Sportorg_Division');
+			return $division->addDivision($args);
 		}
 		
 		/**
@@ -253,6 +267,12 @@
 		public function action_post_section()
 		{
 			$this->payloadDesc = "Add a section within the state";
+			if(!$this->mainModel->id)
+			{
+				$this->modelNotSetError();
+				return false;
+			}
+			
 			$args = array();
 		     // CHECK FOR PARAMETERS:
 			// name (REQUIRED)
@@ -304,8 +324,9 @@
 				$this->addError($error_array,$is_fatal);
 
 			}
-			$state = ORM::factory('Location_State');
-			return $state->addSection($args);
+			$args['states_id'] = $this->mainModel->id; 
+			$section = ORM::factory('Sportorg_Section');
+			return $section->addSection($args);
 		}
 		
 		/**
@@ -317,6 +338,12 @@
 		{
 			$this->payloadDesc = "Add a league within the state";
 			$args = array();
+			if(!$this->mainModel->id)
+			{
+				$this->modelNotSetError();
+				return false;
+			}
+			$args['states_id'] = $this->mainModel->id; 
 		     // CHECK FOR PARAMETERS:
 			// name (REQUIRED)
 			// Name of the League to add
@@ -350,8 +377,8 @@
 			{
 				$args['sections_id'] = (int)trim($this->request->post('sections_id'));
 			}
-			$state = ORM::factory('Location_State');
-			return $state->addLeague($args);
+			$league = ORM::factory('Sportorg_League');
+			return $league->addLeague($args);
 		}
 		
 		############################################################################

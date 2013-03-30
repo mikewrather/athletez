@@ -35,9 +35,46 @@ class Model_Sportorg_Division extends ORM
 				"state" => $this->state->getBasics(),			 
 				"name" => $this->name,			
 				"states_id" => $this->states_id,
-				"section_id" => $this->section_id,
+				"sections_id" => $this->sections_id,
 				"section" => $this->section->getBasics(),
 			);
 			
+	}
+	
+	
+	public function addDivision($args = array() )
+	{
+		extract($args);
+		$exists_obj = $this->where('name', '=', $name)->and_where('states_id', '=', $states_id)->and_where('sections_id', '=', $sections_id);
+		$exists_obj->reset(FALSE);
+		$count = $exists_obj->count_all();
+		
+		if ( $count == 0 )
+		{
+				// name column
+			if(isset($name))
+			{
+				$this->name = $name;
+			}
+			
+			// sections_id column
+			if(isset($sections_id))
+			{
+				$this->sections_id = $sections_id;
+			}
+			
+			// states_id colunn
+			if(isset($states_id))
+			{
+				$this->states_id = $states_id;	
+			}
+			 
+			$this->save();
+			return $this;
+		} else
+		{
+			return $exists_obj->find();
+		}
+		
 	}
 }
