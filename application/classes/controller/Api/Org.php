@@ -38,7 +38,13 @@
 		public function action_get_basics()
 		{
 			$this->payloadDesc = "Basic information about the organization";
-
+			if(!$this->mainModel->id)
+			{
+				$this->modelNotSetError();
+				return false;
+			}
+			
+			return $this->mainModel;
 		
 		}
 		
@@ -50,14 +56,15 @@
 		public function action_get_teams()
 		{
 			$this->payloadDesc = "List of all teams within the organization";
-
+			
+			$args = array();
 		     // CHECK FOR PARAMETERS:
 			// sports_id 
 			// Will filter the list of teams to a given sport
 				
 			if((int)trim($this->request->query('sports_id')) > 0)
 			{
-				$sports_id = (int)trim($this->request->query('sports_id'));
+				$args['sports_id'] = (int)trim($this->request->query('sports_id'));
 			}
 
 			// complevels_id 
@@ -65,9 +72,15 @@
 				
 			if((int)trim($this->request->query('complevels_id')) > 0)
 			{
-				$complevels_id = (int)trim($this->request->query('complevels_id'));
+				$args['complevels_id'] = (int)trim($this->request->query('complevels_id'));
 			}
-
+			if(!$this->mainModel->id)
+			{
+				$this->modelNotSetError();
+				return false;
+			}
+			 
+			return $this->mainModel->getTeams($args);
 		}
 		
 		/**
@@ -79,7 +92,13 @@
 		{
 			$this->payloadDesc = "League that the organization belongs to";
 
-		
+			if(!$this->mainModel->id)
+			{
+				$this->modelNotSetError();
+				return false;
+			}
+			 
+			return $this->mainModel->getLeague();
 		}
 		
 		/**
@@ -91,7 +110,13 @@
 		{
 			$this->payloadDesc = "Division that the organization belongs to";
 
-		
+			if(!$this->mainModel->id)
+			{
+				$this->modelNotSetError();
+				return false;
+			}
+			 
+			return $this->mainModel->getDivisions();
 		}
 		
 		/**
@@ -103,7 +128,13 @@
 		{
 			$this->payloadDesc = "All sports associated with a given organization";
 
-		
+			if(!$this->mainModel->id)
+			{
+				$this->modelNotSetError();
+				return false;
+			}
+			 
+			return $this->mainModel->getSports();
 		}
 		
 		/**
@@ -115,7 +146,13 @@
 		{
 			$this->payloadDesc = "List of possible competition levels for this organization";
 
-		
+			if(!$this->mainModel->id)
+			{
+				$this->modelNotSetError();
+				return false;
+			}
+			 
+			return $this->mainModel->getComplevels();
 		}
 		
 		/**
@@ -127,7 +164,13 @@
 		{
 			$this->payloadDesc = "List of all seasons this organization plays";
 
-		
+			if(!$this->mainModel->id)
+			{
+				$this->modelNotSetError();
+				return false;
+			}
+			 
+			return $this->mainModel->getSessons();
 		}
 		
 		/**
@@ -139,7 +182,13 @@
 		{
 			$this->payloadDesc = "If applicable, returns the section that the organization exists in.";
 
-		
+			if(!$this->mainModel->id)
+			{
+				$this->modelNotSetError();
+				return false;
+			}
+			 
+			return $this->mainModel->getSection();
 		}
 		
 		############################################################################

@@ -38,8 +38,12 @@
 		public function action_get_basics()
 		{
 			$this->payloadDesc = "Basic information about a given data value for resume data";
-
-		
+			if(!$this->mainModel->id)
+			{
+				$this->modelNotSetError();
+				return false;
+			}
+			return $this->mainModel; 
 		}
 		
 		############################################################################
@@ -115,9 +119,13 @@
 				$args['users_id'] = (int)trim($this->request->post('users_id'));
 			}
 			
-			$resume_data_val = ORM::factory('User_Resume_Data_Vals');
-			return $resume_data_val->addResumeDataVal($args);
-
+			if(!$this->mainModel->id)
+			{
+				$this->modelNotSetError();
+				return false;
+			}
+			
+			return $this->mainModel->addResumeDataVal($args); 
 		}
 		
 		############################################################################

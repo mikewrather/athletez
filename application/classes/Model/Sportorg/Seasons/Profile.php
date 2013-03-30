@@ -12,7 +12,7 @@ class Model_Sportorg_Seasons_Profile extends ORM
 
 	protected $_has_many = array(
 		'seasons' => array(
-			'model' => 'Sportorg_Seasons',
+			'model' => 'Sportorg_Seasons_Base',
 			'foreign_key' => 'season_profiles_id',
 		),
 		'orgs' => array(

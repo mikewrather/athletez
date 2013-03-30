@@ -19,7 +19,7 @@ class Model_Sportorg_Sport extends ORM
 	
 	protected $_has_many = array(
 		'sections' => array(
-			'model' => 'Sportorg_Sections',
+			'model' => 'Sportorg_Section',
 			'foreign_key' => 'sports_id'
 		),
 		'usl' => array(
