@@ -215,10 +215,10 @@ class Controller_Codegen extends Controller
 				$data_source = '$this->request->post';
 				break;
 			case 'put':
-				$data_source = '$this->request->body';
+				$data_source = '$this->put';
 				break;
 			case 'delete':
-				$data_source = '$this->request->body';
+				$data_source = '$this->delete';
 				break;
 			default:
 				return false;
@@ -242,7 +242,7 @@ class Controller_Codegen extends Controller
 		public function action_'.strtolower($method->api_method).'_'.$method->shortname.'()
 		{
 			$this->payloadDesc = "'.addslashes($method->description).'";
-
+			$arguments = array();
 		';
 
 			$params = $method->params->find_all();
@@ -262,7 +262,7 @@ class Controller_Codegen extends Controller
 					$filecontents.= '
 			if((int)trim('.$data_source.'(\''.$param->param_name.'\'))'.$existence_check.')
 			{
-				$'.$param->param_name.' = (int)trim('.$data_source.'(\''.$param->param_name.'\'));
+				$arguments["'.$param->param_name.'"] = (int)trim('.$data_source.'(\''.$param->param_name.'\'));
 			}
 ';
 				}
@@ -272,7 +272,7 @@ class Controller_Codegen extends Controller
 					$filecontents.= '
 			if(trim('.$data_source.'(\''.$param->param_name.'\'))'.$existence_check.')
 			{
-				$'.$param->param_name.' = trim('.$data_source.'(\''.$param->param_name.'\'));
+				$arguments["'.$param->param_name.'"] = trim('.$data_source.'(\''.$param->param_name.'\'));
 			}
 ';
 				}
@@ -283,7 +283,7 @@ class Controller_Codegen extends Controller
 			if('.$data_source.'(\''.$param->param_name.'\')'.$existence_check.')
 			{
 				// Format as date
-				$'.$param->param_name.' = date("Y-m-d H:i:s",strtotime('.$data_source.'(\''.$param->param_name.'\')));
+				$arguments["'.$param->param_name.'"] = date("Y-m-d H:i:s",strtotime('.$data_source.'(\''.$param->param_name.'\')));
 			}
 ';
 				}
@@ -294,7 +294,7 @@ class Controller_Codegen extends Controller
 			if('.$data_source.'(\''.$param->param_name.'\')'.$existence_check.')
 			{
 				//convert '.$param->param_name.' to a boolean
-				$'.$param->param_name.' = (bool)'.$data_source.'(\''.$param->param_name.'\');
+				$arguments["'.$param->param_name.'"] = (bool)'.$data_source.'(\''.$param->param_name.'\');
 			}
 ';
 				}
@@ -303,8 +303,8 @@ class Controller_Codegen extends Controller
 					$filecontents.= '
 			if(isset('.$data_source.'(\''.$param->param_name.'\')))
 			{
-				$'.$param->param_name.'_array = '.$data_source.'(\''.$param->param_name.'\');
-				foreach($'.$param->param_name.'_array as $'.$param->param_name.'_key =>$'.$param->param_name.'_val)
+				$arguments["'.$param->param_name.'"] = '.$data_source.'(\''.$param->param_name.'\');
+				foreach($arguments["'.$param->param_name.'"] as $'.$param->param_name.'_key =>$'.$param->param_name.'_val)
 				{
 					// Access each item in the array through the $'.$param->param_name.'_val variable
 				}
@@ -317,7 +317,7 @@ class Controller_Codegen extends Controller
 					$filecontents.= '
 			if('.$data_source.'(\''.$param->param_name.'\')'.$existence_check.')
 			{
-				$'.$param->param_name.' = '.$data_source.'(\''.$param->param_name.'\');
+				$arguments["'.$param->param_name.'"] = '.$data_source.'(\''.$param->param_name.'\');
 			}
 ';
 				}
@@ -337,6 +337,7 @@ class Controller_Codegen extends Controller
 
 				// Call method to throw an error
 				$this->addError($error_array,$is_fatal);
+				return false;
 
 			}
 			'; }
@@ -346,6 +347,7 @@ class Controller_Codegen extends Controller
 			}
 
 			$filecontents.='
+
 		}
 		';
 

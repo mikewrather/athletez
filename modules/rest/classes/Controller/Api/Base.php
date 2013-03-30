@@ -19,9 +19,11 @@ class Controller_Api_Base extends AuthController
 	protected $payloadDesc;
 
 
+	// These arrays are populated with data from the body in the case of put or delete requests
 	protected $put = array();
+	protected $delete = array();
 
-	protected $errorThrown = false;
+	protected $fatalErrorThrown = false;
 
 
 	/**
@@ -34,32 +36,51 @@ class Controller_Api_Base extends AuthController
 	public function __construct(Request $request, Response $response)
 	{
 
+		// start the counter
 		$this->starttime = microtime();
+
+		// execute parent controller constructor
 		parent::__construct($request,$response);
 
+		// set IDs passed in the url string (or set to 0 if not available)
 		$this->myID = (int)$this->request->param('id') > 0 ? (int)$this->request->param('id') : 0;
 		$this->myID2 = (int)$this->request->param('id2') > 0 ? (int)$this->request->param('id2') : 0;
 
+		// calls a method to set the user and logged_in properties
 		$this->populateAuthVars();
 
+		// Because we can only get GET / POST values through request->query and request->post, we are extending functionality to put and delete
 		if($this->request->method() == 'PUT')
 		{
-			$this->setPutParams();
-		//	print_r($this->put);
+			$this->setBodyParams('put');
+		}
+		elseif($this->request->method() == 'DELETE')
+		{
+			$this->setBodyParams('delete');
 		}
 	}
 
-	protected function setPutParams()
+	/**
+	 * @param string $verb is put by default, but can be set to delete for delete requests
+	 */
+	protected function setBodyParams($verb='put')
 	{
 		$putParams = (string)$this->request->body();
 		$putArr = explode('&',$putParams);
 		foreach($putArr as $argPair)
 		{
 			$argArr = explode('=',$argPair);
-			$this->put[$argArr[0]] = $argArr[1];
+			$this->$verb($argArr[0],$argArr[1]);
 		}
+		print_r($this->$verb);
 	}
 
+	/**
+	 * put() gets / sets a value of the put array
+	 * @param $arg is the argument you are getting / setting
+	 * @param null $val is the optional value you are setting the argument to.
+	 * @return array|bool
+	 */
 	protected function put($arg,$val=NULL)
 	{
 		if($val !== NULL)
@@ -69,6 +90,25 @@ class Controller_Api_Base extends AuthController
 		else
 		{
 			if(isset($this->put[$arg])) return $this->put[$arg];
+			else return false;
+		}
+	}
+
+	/**
+	 * delete gets / sets a value of the delete array
+	 * @param $arg is the argument you are getting / setting
+	 * @param null $val is the optional value you are setting the argument to.
+	 * @return array|bool
+	 */
+	protected function delete($arg,$val=NULL)
+	{
+		if($val !== NULL)
+		{
+			return $this->delete[$arg] = $val;
+		}
+		else
+		{
+			if(isset($this->delete[$arg])) return $this->delete[$arg];
 			else return false;
 		}
 	}
@@ -100,10 +140,10 @@ class Controller_Api_Base extends AuthController
 		}
 
 		// Execute the action itself
-		if(!$this->errorThrown) //if at any point this property is set to true it will skip this action
+		if(!$this->fatalErrorThrown) //if at any point this property is set to true it will skip this action
 			$retObj = $this->{$action}();
 
-		if(!$this->errorThrown) //if at any point this property is set to true it will skip this action
+		if(!$this->fatalErrorThrown) //if at any point this property is set to true it will skip this action
 			$result = is_object($retObj) ? $this->getDataFromView($retObj) : $this->getDataFromView();
 
 		$this->response->headers('Content-Type','application/json');
@@ -206,7 +246,7 @@ class Controller_Api_Base extends AuthController
 		$this->execErrors[] = $error_array;
 		if($is_fatal)
 		{
-			$this->errorThrown = true;
+			$this->fatalErrorThrown = true;
 		}
 	}
 

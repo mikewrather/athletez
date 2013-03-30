@@ -79,14 +79,14 @@
 		public function action_post_addtordp()
 		{
 			$this->payloadDesc = "Link this RDG to an RDP";
-
+			$args = array();
 		     // CHECK FOR PARAMETERS:
 			// resume_data_profiles_id (REQUIRED)
 			// The Resume Data Profile to link the Group
 				
 			if((int)trim($this->request->post('resume_data_profiles_id')) > 0)
 			{
-				$resume_data_profiles_id = (int)trim($this->request->post('resume_data_profiles_id'));
+				$args['resume_data_profiles_id'] = (int)trim($this->request->post('resume_data_profiles_id'));
 			}
 
 			else // THIS WAS A REQUIRED PARAMETER
@@ -105,8 +105,15 @@
 				$this->addError($error_array,$is_fatal);
 
 			}
-			$rgp_rdp_link = ORM::factory('User_Resume_Data_Group');
-			return $rgp_rdp_link->addtordp($resume_data_profiles_id);
+			
+			if(!$this->mainModel->id)
+			{
+				$this->modelNotSetError();
+				return false;
+			}
+			$args['resume_data_groups_id'] = $this->mainModel->id;			 
+			$rgp_rdp_link = ORM::factory('User_Resume_Data_Group');			
+			return  $rgp_rdp_link->addtordp($args); 
 		}
 		
 		############################################################################
