@@ -112,8 +112,9 @@
 				return false;
 			}
 			$args['resume_data_groups_id'] = $this->mainModel->id;			 
-			$rgp_rdp_link = ORM::factory('User_Resume_Data_Group');			
-			return  $rgp_rdp_link->addtordp($args); 
+			$rdp = ORM::factory('User_Resume_Data_Profile');
+			$add_link_obj = $rdp->addRdg($args);
+			return $rdp->where('id','=',$this->mainModel->id);
 		}
 		
 		############################################################################

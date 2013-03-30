@@ -10,11 +10,7 @@
  */
 
 	class View_Api_Resumedataprofile extends Api_Viewclass
-	{
-
-
-
-	
+	{ 
 		/**
 		 * get_basics() Returns basic info for a given Resume Data Profile
 		 *
@@ -95,11 +91,7 @@
 			foreach($objs as $obj)
 			{
 				$retArr[$obj->id] = $obj->getBasics();
-			}
-
-			// Scaffolding Code For Single:
-			$retArr = $this->obj->getBasics();
-
+			}	
 			return $retArr;
 		}
 		
@@ -118,10 +110,7 @@
 			{
 				$retArr[$obj->id] = $obj->getBasics();
 			}
-
-			// Scaffolding Code For Single:
-			$retArr = $this->obj->getBasics();
-
+ 
 			return $retArr;
 		}
 		
