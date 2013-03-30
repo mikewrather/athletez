@@ -203,6 +203,8 @@
 						throw $err_exception;
 						return $team_obj;
 					}
+				}else{
+					$team_obj->save();
 				}
 			} catch(ErrorException $e)
 			{
