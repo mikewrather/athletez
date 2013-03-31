@@ -81,64 +81,44 @@
 		{
 			$this->payloadDesc = "Add a new League";
 
-		     // CHECK FOR PARAMETERS:
-			// name (REQUIRED)
-			// Name of the League to add
-				
+			$new_league = ORM::factory('Sportorg_League');
 			if(trim($this->request->post('name')) != "")
 			{
 				$name = trim($this->request->post('name'));
 			}
+			// sections_id
+			// The ID of the Section (if applicable)
 
-			else // THIS WAS A REQUIRED PARAMETER
-			{
-				// Create Array for Error Data
+			$sections_id = (int)trim($this->request->post('sections_id'));
+			$states_id = trim($this->request->post('states_id'));
+
+			$new_league->name = $name;
+			$new_league->sections_id = $sections_id;
+			$new_league->states_id = $states_id;
+
+			//add validation & save logic here
+			$league_validate = Validation::factory($new_league->as_array())
+				->rule('name', 'not_empty')
+				->rule('sections_id', 'not_empty')
+				->rule('sections_id', 'not_equals', array(':value', 0))
+				->rule('states_id', 'not_empty')
+				->rule('states_id', 'not_equals', array(':value', 0));
+
+			if (!$league_validate->check()){
+				$validate_errors = $league_validate->errors('models/sportorg/league');
 				$error_array = array(
-					"error" => "Required Parameter Missing",
+					"error" => implode('\n', $validate_errors),
 					"param_name" => "name",
 					"param_desc" => "Name of the League to add"
 				);
-
 				// Set whether it is a fatal error
 				$is_fatal = true;
-
-				// Call method to throw an error
 				$this->addError($error_array,$is_fatal);
-
+				return $new_league;
 			}
-			
-			// sections_id 
-			// The ID of the Section (if applicable)
-				
-			if((int)trim($this->request->post('sections_id')) > 0)
-			{
-				$sections_id = (int)trim($this->request->post('sections_id'));
-			}
-
-			// states_id (REQUIRED)
-			// The ID of the state the League belongs to
-				
-			if((int)trim($this->request->post('states_id')) > 0)
-			{
-				$states_id = (int)trim($this->request->post('states_id'));
-			}
-
-			else // THIS WAS A REQUIRED PARAMETER
-			{
-				// Create Array for Error Data
-				$error_array = array(
-					"error" => "Required Parameter Missing",
-					"param_name" => "states_id",
-					"param_desc" => "The ID of the state the League belongs to"
-				);
-
-				// Set whether it is a fatal error
-				$is_fatal = true;
-
-				// Call method to throw an error
-				$this->addError($error_array,$is_fatal);
-
-			}
+			//validate already pass
+			$new_league->save();
+			return $new_league;
 			
 		}
 		

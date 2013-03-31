@@ -148,7 +148,7 @@
 				$error_array = array(
 					"error" => implode('\n', $validate_errors),
 					"param_name" => "name",
-					"param_desc" => "Name of the Org to add"
+					"param_desc" => "Name of the Season to add"
 				);
 				// Set whether it is a fatal error
 				$is_fatal = true;
