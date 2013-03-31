@@ -319,7 +319,7 @@
 			$sports_obj->female = $female;
 			$sports_obj->sport_type_id = $sporttype;
 
-				$a = Validation::factory($sports_obj->as_array())
+				$sport_validate = Validation::factory($sports_obj->as_array())
 					->rule('name', 'not_empty')
 					->rule('male', 'not_empty')
 					->rule('female', 'not_empty')
@@ -328,8 +328,8 @@
 					->rule('sport_type_id', 'not_empty')
 					->rule('sport_type_id', 'Model_Scrape_Sport::check_sport_type_exist');
 
-				if (!$a->check()){
-					$validate_errors = $a->errors('models/scrape/sport');
+				if (!$sport_validate->check()){
+					$validate_errors = $sport_validate->errors('models/scrape/sport');
 					$error_array = array(
 						"error" => implode('\n', $validate_errors),
 						"param_name" => "name",

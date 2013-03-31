@@ -223,44 +223,43 @@
 			if($this->request->post('singlesport') != "")
 			{
 				//convert singlesport to a boolean
-				$singlesport = (bool)$this->request->post('singlesport');
+				$singlesport = $this->request->post('singlesport');
 				$new_org->single_sport = $singlesport;
 			}
 
-			// season_profiles_id 
-			// ID of the Season Profile this organization uses
-				
-			if((int)trim($this->request->post('season_profiles_id')) > 0)
-			{
-				$season_profiles_id = (int)trim($this->request->post('season_profiles_id'));
-				$new_org->season_profiles_id = $season_profiles_id;
-			}
+			$season_profiles_id = trim($this->request->post('season_profiles_id'));
+			$new_org->season_profiles_id = $season_profiles_id;
 
-			// complevel_profiles_id 
-			// ID of the Competition Level Profile this organization uses
-				
-			if((int)trim($this->request->post('complevel_profiles_id')) > 0)
-			{
-				$complevel_profiles_id = (int)trim($this->request->post('complevel_profiles_id'));
-				$new_org->complevel_profiles_id = $complevel_profiles_id;
-			}
+			$complevel_profiles_id = trim($this->request->post('complevel_profiles_id'));
+			$new_org->complevel_profiles_id = $complevel_profiles_id;
 
-			// leagues_id 
-			// ID of the League (If Applicable)
-				
-			if((int)trim($this->request->post('leagues_id')) > 0)
-			{
-				$leagues_id = (int)trim($this->request->post('leagues_id'));
-				$new_org->leagues_id = $leagues_id;
-			}
+			$leagues_id = trim($this->request->post('leagues_id'));
+			$new_org->leagues_id = $leagues_id;
 
-			// divisions_id 
-			// ID of the Division (If Applicable)
-				
-			if((int)trim($this->request->post('divisions_id')) > 0)
-			{
-				$divisions_id = (int)trim($this->request->post('divisions_id'));
-				$new_org->divisions_id = $divisions_id;
+			$divisions_id = trim($this->request->post('divisions_id'));
+			$new_org->divisions_id = $divisions_id;
+
+			//add validation & save logics here
+			$sport_validate = Validation::factory($new_org->as_array())
+				->rule('name', 'not_empty')
+				->rule('single_sport', 'not_empty')
+				->rule('single_sport', 'in_array', array(':value', array(0, 1)))
+				->rule('season_profiles_id', 'not_equals', array(':value', 0))
+				->rule('complevel_profiles_id', 'not_equals', array(':value', 0))
+				->rule('leagues_id', 'not_equals', array(':value', 0))
+				->rule('divisions_id', 'not_equals', array(':value', 0));
+
+			if (!$sport_validate->check()){
+				$validate_errors = $sport_validate->errors('models/sportorg/org');
+				$error_array = array(
+					"error" => implode('\n', $validate_errors),
+					"param_name" => "name",
+					"param_desc" => "Name of the Org to add"
+				);
+				// Set whether it is a fatal error
+				$is_fatal = true;
+				$this->addError($error_array,$is_fatal);
+				return $new_org;
 			}
 
 
