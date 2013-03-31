@@ -7,9 +7,9 @@
 
 class Model_Scrape_Sport extends ORM
 {
-	protected $_db_group = 'scraping';
+	//protected $_db_group = 'scraping';
 	protected $_table_name = 'sports';
-	protected $_primary_key = 'ssid';
+	protected $_primary_key = 'id';
 	
 /*
 	protected $_belongs_to = array(
@@ -32,7 +32,26 @@ class Model_Scrape_Sport extends ORM
 			'foreign_key' => '[column]'
 		)
 	);
-*/
+	*/
 
+	public function getBasics()
+	{
+		return array(
+			"id" => $this->id,
+			'name' => $this->name
+		);
+	}
+
+	//custom validation.
+	public static function check_sport_type_exist($sport_type_id){
+		$sport_type_model = ORM::factory("Sportorg_Sporttype");
+		$sport_type_model->select("id")
+			->where('id', '=', $sport_type_id)
+			->find();
+		if ($sport_type_model->loaded()){
+			return true;
+		}
+		return false;
+	}
 
 }

@@ -268,7 +268,7 @@
 			{
 				$name = trim($this->request->post('name'));
 			}
-
+			/*
 			else // THIS WAS A REQUIRED PARAMETER
 			{
 				// Create Array for Error Data
@@ -285,14 +285,14 @@
 				$this->addError($error_array,$is_fatal);
 
 			}
-			
+			*/
 			// male 
 			// True if this sport is for men
 				
 			if($this->request->post('male') != "")
 			{
 				//convert male to a boolean
-				$male = (bool)$this->request->post('male');
+				$male = $this->request->post('male');
 			}
 
 			// female 
@@ -301,7 +301,7 @@
 			if($this->request->post('female') != "")
 			{
 				//convert female to a boolean
-				$female = (bool)$this->request->post('female');
+				$female = $this->request->post('female');
 			}
 
 			// sporttype 
@@ -312,6 +312,48 @@
 				$sporttype = (int)trim($this->request->post('sporttype'));
 			}
 
+			//add validation & save logic here.
+			$sports_obj = ORM::factory("Scrape_Sport");
+			$sports_obj->name = $name;
+			$sports_obj->male = $male;
+			$sports_obj->female = $female;
+			$sports_obj->sport_type_id = $sporttype;
+
+				$a = Validation::factory($sports_obj->as_array())
+					->rule('name', 'not_empty')
+					->rule('male', 'not_empty')
+					->rule('female', 'not_empty')
+					->rule('male', 'in_array', array(":value",array('True', 'False')))
+					->rule('female', 'in_array', array(":value", array('True', 'False')))
+					->rule('sport_type_id', 'not_empty')
+					->rule('sport_type_id', 'Model_Scrape_Sport::check_sport_type_exist');
+
+				if (!$a->check()){
+					$validate_errors = $a->errors('models/scrape/sport');
+					$error_array = array(
+						"error" => implode('\n', $validate_errors),
+						"param_name" => "name",
+						"param_desc" => "Name of the Sport to add"
+					);
+
+					// Set whether it is a fatal error
+					$is_fatal = true;
+					$this->addError($error_array,$is_fatal);
+				}
+				if (strtolower($male) == 'true'){
+					$sports_obj->male = 1;
+				}else{
+					$sports_obj->male = 0;
+				}
+
+				if (strtolower($female) == 'true'){
+					$sports_obj->female = 1;
+				}else{
+					$sports_obj->female = 0;
+				}
+
+				$sports_obj->save();
+			return $sports_obj;
 		}
 		
 		/**
