@@ -16,7 +16,7 @@
 		{
 			parent::__construct($request,$response);
 
-			$this->setMainModel(ORM::factory('Sportorg_Season_Base'));
+			$this->setMainModel(ORM::factory('Sportorg_Seasons_Base'));
 			$this->popMainModel();
 		}
 
@@ -127,20 +127,37 @@
 		     // CHECK FOR PARAMETERS:
 			// name 
 			// Name of the season to add
-				
+			$new_season = ORM::factory('Sportorg_Seasons_Base');
 			if(trim($this->request->post('name')) != "")
 			{
 				$name = trim($this->request->post('name'));
 			}
 
-			// season_profiles_id 
-			// The ID of the season profile this season belongs to
-				
-			if((int)trim($this->request->post('season_profiles_id')) > 0)
-			{
-				$season_profiles_id = (int)trim($this->request->post('season_profiles_id'));
-			}
+			$season_profiles_id = trim($this->request->post('season_profiles_id'));
+			$new_season->name = $name;
+			$new_season->season_profiles_id = $season_profiles_id;
 
+			//add validation & save logic here
+			$season_validate = Validation::factory($new_season->as_array())
+				->rule('name', 'not_empty')
+				->rule('season_profiles_id', 'not_empty')
+				->rule('season_profiles_id', 'not_equals', array(':value', 0));
+
+			if (!$season_validate->check()){
+				$validate_errors = $season_validate->errors('models/sportorg/seasons/base');
+				$error_array = array(
+					"error" => implode('\n', $validate_errors),
+					"param_name" => "name",
+					"param_desc" => "Name of the Org to add"
+				);
+				// Set whether it is a fatal error
+				$is_fatal = true;
+				$this->addError($error_array,$is_fatal);
+				return $new_season;
+			}
+			//validate already pass
+			$new_season->save();
+			return $new_season;
 		}
 		
 		############################################################################

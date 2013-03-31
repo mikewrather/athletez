@@ -240,7 +240,7 @@
 			$new_org->divisions_id = $divisions_id;
 
 			//add validation & save logics here
-			$sport_validate = Validation::factory($new_org->as_array())
+			$org_validate = Validation::factory($new_org->as_array())
 				->rule('name', 'not_empty')
 				->rule('single_sport', 'not_empty')
 				->rule('single_sport', 'in_array', array(':value', array(0, 1)))
@@ -249,8 +249,8 @@
 				->rule('leagues_id', 'not_equals', array(':value', 0))
 				->rule('divisions_id', 'not_equals', array(':value', 0));
 
-			if (!$sport_validate->check()){
-				$validate_errors = $sport_validate->errors('models/sportorg/org');
+			if (!$org_validate->check()){
+				$validate_errors = $org_validate->errors('models/sportorg/org');
 				$error_array = array(
 					"error" => implode('\n', $validate_errors),
 					"param_name" => "name",
