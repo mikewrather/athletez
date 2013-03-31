@@ -197,6 +197,23 @@
 						->rule('org_id', 'Model_Sportorg_Team::not_equals', array(':value', 0))
 						->rule('sports_id', 'Model_Sportorg_Team::not_equals', array(':value', 0));
 					if ($check_org_sport->check()){
+						//check org_sport in db.
+						$org_sport_link_model = ORM::factory("Sportorg_Orgsportlink");
+						$result = $org_sport_link_model->getOrgSportId($orgs_id, $sports_id);
+						if(!$result->loaded())
+						{
+							unset($org_sport_link_model);
+							$org_sport_link_model = ORM::factory("Sportorg_Orgsportlink");
+							//Insert new row to org_sport_link
+							$org_sport_link_model->orgs_id = $orgs_id;
+							$org_sport_link_model->sports_id = $sports_id;
+							$org_sport_link_model->save();
+							$org_sport_pk = $org_sport_link_model->pk();
+							$team_obj->org_sport_link_id = $org_sport_pk;
+						}else{
+							$team_obj->org_sport_link_id = $result->id;
+						}
+
 						$team_obj->save();
 					}else{
 						$err_exception = new ErrorException("Validation error");
@@ -204,6 +221,13 @@
 						return $team_obj;
 					}
 				}else{
+					$check_org_sport_id_legal = Validation::factory($team_obj->as_array())
+						->rule('org_sport_link_id', 'Model_Sportorg_Team::check_org_sport_id_exist');
+					if (!$check_org_sport_id_legal->check()){
+						$err_exception = new ErrorException("org_sport_link_id does not exist");
+						throw $err_exception;
+						return $team_obj;
+					}
 					$team_obj->save();
 				}
 			} catch(ErrorException $e)

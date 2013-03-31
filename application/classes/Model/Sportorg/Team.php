@@ -162,5 +162,17 @@ class Model_Sportorg_Team extends ORM
 		return ($value != $null_value);
 	}
 
+	//Custom Validation
+	public static function check_org_sport_id_exist($org_sport_id){
+		$org_sport_link_model = ORM::factory("Sportorg_Orgsportlink");
+		$org_sport_link_model->select("id")
+			->where('id', '=', $org_sport_id)
+			->find();
+		if ($org_sport_link_model->loaded()){
+			return true;
+		}
+		return false;
+	}
+
 
 }

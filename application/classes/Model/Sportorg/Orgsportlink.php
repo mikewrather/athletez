@@ -42,4 +42,14 @@ class Model_Sportorg_Orgsportlink extends ORM
 			"sport" => $this->sport->getBasics(),			
 		);
 	}
+
+	public function getOrgSportId($orgId = "", $sportId = ""){
+		$result_obj = ORM::factory('Sportorg_Orgsportlink')
+			->select('id')
+			->where('orgs_id', '=', $orgId)
+			->and_where('sports_id', '=', $sportId);
+		return $result_obj->find();
+	}
+
+
 }
