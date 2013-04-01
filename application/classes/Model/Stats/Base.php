@@ -54,7 +54,7 @@ class Model_Stats_Base extends ORM
 			"stattab" => $this->stattab->getBasics(),
 			"description" => $this->description,
 			"datatype" => $this->datatype,
-			"orderNum" => $this->orderNumb,
+			"orderNum" => $this->orderNum,
 			"field_size" => $this->field_size,
 			"calc_formula" => $this -> calc_formula,
 			"is_calc" => $this -> is_calc						

@@ -16,7 +16,7 @@
 		{
 			parent::__construct($request,$response);
 
-			$this->setMainModel(ORM::factory('Stats_Val'));
+			$this->setMainModel(ORM::factory('Stats_Vals'));
 			$this->popMainModel();
 		}
 
@@ -43,14 +43,14 @@
 		public function action_post_add()
 		{
 			$this->payloadDesc = "Add a new User Value for a Statistic";
-
+			$args = array();
 		     // CHECK FOR PARAMETERS:
 			// stats_id (REQUIRED)
 			// The ID of the statistic
 				
 			if((int)trim($this->request->post('stats_id')) > 0)
 			{
-				$stats_id = (int)trim($this->request->post('stats_id'));
+				$args['stats_id'] = (int)trim($this->request->post('stats_id'));
 			}
 
 			else // THIS WAS A REQUIRED PARAMETER
@@ -75,7 +75,7 @@
 				
 			if((int)trim($this->request->post('users_id')) > 0)
 			{
-				$users_id = (int)trim($this->request->post('users_id'));
+				$args['users_id'] = (int)trim($this->request->post('users_id'));
 			}
 
 			else // THIS WAS A REQUIRED PARAMETER
@@ -100,7 +100,7 @@
 				
 			if((int)trim($this->request->post('teams_id')) > 0)
 			{
-				$teams_id = (int)trim($this->request->post('teams_id'));
+				$args['teams_id'] = (int)trim($this->request->post('teams_id'));
 			}
 
 			// statval 
@@ -108,7 +108,7 @@
 				
 			if(trim($this->request->post('statval')) != "")
 			{
-				$statval = trim($this->request->post('statval'));
+				$args['statval'] = trim($this->request->post('statval'));
 			}
 
 			// statdate 
@@ -117,7 +117,7 @@
 			if($this->request->post('statdate') != "")
 			{
 				// Format as date
-				$statdate = date("Y-m-d H:i:s",strtotime($this->request->post('statdate')));
+				$args['statdate'] = date("Y-m-d H:i:s",strtotime($this->request->post('statdate')));
 			}
 
 			// games_id 
@@ -125,7 +125,7 @@
 				
 			if((int)trim($this->request->post('games_id')) > 0)
 			{
-				$games_id = (int)trim($this->request->post('games_id'));
+				$args['games_id'] = (int)trim($this->request->post('games_id'));
 			}
 
 			// stat_contexts_id 
@@ -133,9 +133,13 @@
 				
 			if((int)trim($this->request->post('stat_contexts_id')) > 0)
 			{
-				$stat_contexts_id = (int)trim($this->request->post('stat_contexts_id'));
+				$args['stat_contexts_id'] = (int)trim($this->request->post('stat_contexts_id'));
 			}
-
+			 
+			$statvals_obj = ORM::factory('Stats_Vals');
+			$statvals = $statvals_obj->addStatvals($args);
+			
+			return $statvals;
 		}
 		
 		############################################################################

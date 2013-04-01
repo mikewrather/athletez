@@ -62,4 +62,70 @@ class Model_Stats_Vals extends ORM
 			"statval" => $this->statval,
 		);
 	}
+	
+	public function addStatvals($args)
+	{
+		extract($args);
+		$result = array();
+		// stats_id - NOT NULL
+		// The ID of the statistic
+		if ( isset($stats_id))
+		{
+			$this->stats_id = $stats_id;
+		}  
+			
+		// users_id - NOT NULL
+		// The ID of the user we are adding the value for
+		if ( isset($users_id))
+		{
+			$this->users_id = $users_id;
+		} 
+		
+		// teams_id
+		// The Team that this statistic is associated with
+		if( isset($teams_id) )
+			$this->teams_id = $teams_id;
+		
+		// statval - NOT NULL
+		// The user's value
+		if ( isset($users_id))
+		{
+			$this->statval = $statval;
+		} 
+		
+		// statdate 
+		// The date that this statistic took place on
+		if ( isset($statdate))
+		{
+			$this->statdate = $statdate;
+		}
+		
+		// games_id
+		// The game that this statistic refers to
+		if ( isset($games_id))
+		{
+			$this->games_id = $games_id;
+		}
+		
+		// stat_contexts_id
+		// The ID of the context for this statistic
+		if ( isset($stat_contexts_id) )
+		{
+			$this->stat_contexts_id = $stat_contexts_id;
+		}
+		
+		$result = array();
+		try
+		{
+			if ( empty($error))			
+				$new = $this->save();			
+			  
+		}catch(Exception $e)
+		{
+			
+		}		
+		
+		 
+		return $new;
+	}
 }
