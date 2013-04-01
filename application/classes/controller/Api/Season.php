@@ -38,14 +38,14 @@
 		public function action_get_teams()
 		{
 			$this->payloadDesc = "Gets all the teams for a given season narrowed by passed in parameters";
-
+			$args = array();
 		     // CHECK FOR PARAMETERS:
 			// complevels_id 
 			// Filter teams for a certain season to only show those for a specific competition level
 				
 			if((int)trim($this->request->query('complevels_id')) > 0)
 			{
-				$complevels_id = (int)trim($this->request->query('complevels_id'));
+				$args['complevels_id'] = (int)trim($this->request->query('complevels_id'));
 			}
 
 			// orgs_id 
@@ -53,7 +53,7 @@
 				
 			if((int)trim($this->request->query('orgs_id')) > 0)
 			{
-				$orgs_id = (int)trim($this->request->query('orgs_id'));
+				$args['orgs_id'] = (int)trim($this->request->query('orgs_id'));
 			}
 
 			// sports_id 
@@ -61,7 +61,7 @@
 				
 			if((int)trim($this->request->query('sports_id')) > 0)
 			{
-				$sports_id = (int)trim($this->request->query('sports_id'));
+				$args['sports_id'] = (int)trim($this->request->query('sports_id'));
 			}
 
 			// divisions_id 
@@ -69,7 +69,7 @@
 				
 			if((int)trim($this->request->query('divisions_id')) > 0)
 			{
-				$divisions_id = (int)trim($this->request->query('divisions_id'));
+				$args['divisions_id'] = (int)trim($this->request->query('divisions_id'));
 			}
 
 			// leagues_id 
@@ -77,7 +77,7 @@
 				
 			if((int)trim($this->request->query('leagues_id')) > 0)
 			{
-				$leagues_id = (int)trim($this->request->query('leagues_id'));
+				$args['leagues_id'] = (int)trim($this->request->query('leagues_id'));
 			}
 
 			// sections_id 
@@ -85,7 +85,7 @@
 				
 			if((int)trim($this->request->query('sections_id')) > 0)
 			{
-				$sections_id = (int)trim($this->request->query('sections_id'));
+				$args['sections_id'] = (int)trim($this->request->query('sections_id'));
 			}
 
 			// states_id 
@@ -93,9 +93,16 @@
 				
 			if((int)trim($this->request->query('states_id')) > 0)
 			{
-				$states_id = (int)trim($this->request->query('states_id'));
+				$args['states_id'] = (int)trim($this->request->query('states_id'));
 			}
-
+			
+			if(!$this->mainModel->id)
+			{
+				$this->modelNotSetError();
+				return false;
+			}
+			
+			return $this->mainModel->getTeams($args);
 		}
 		
 		/**
@@ -106,8 +113,12 @@
 		public function action_get_basics()
 		{
 			$this->payloadDesc = "Basic information about a season";
-
-		
+			if(!$this->mainModel->id)
+			{
+				$this->modelNotSetError();
+				return false;
+			}
+			return $this->mainModel; 
 		}
 		
 		############################################################################
