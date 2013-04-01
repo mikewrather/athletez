@@ -28,7 +28,18 @@ class Model_User_Resume_Data_Profile extends ORM
 			'far_key' => 'sports_id'
 		)
 	);
-
+	
+	public function updateResumedataprofile($name)
+	{
+		$this->name = $name;
+		return $this->save();
+	}
+	
+	public function deleteResumedataprofile()
+	{
+		return $this->delete();
+	}
+	
 	public function __construct($id=NULL)
 	{
 		parent::__construct($id);

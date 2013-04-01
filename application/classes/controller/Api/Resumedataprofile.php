@@ -265,7 +265,13 @@
 			{
 				$name = trim($this->put('name'));
 			}
-
+			
+			if(!$this->mainModel->id)
+			{
+				$this->modelNotSetError();
+				return false;
+			}
+			return $this->mainModel->updateResumedataprofile($name);
 		}
 		
 		############################################################################
@@ -282,7 +288,13 @@
 		{
 			$this->payloadDesc = "Delete Resume Data Profile";
 
-		
+			if(!$this->mainModel->id)
+			{
+				$this->modelNotSetError();
+				return false;
+			}
+			$this->mainModel->deleteResumedataprofile();
+			return $this;
 		}
 		
 	}

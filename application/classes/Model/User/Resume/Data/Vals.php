@@ -42,6 +42,19 @@ class Model_User_Resume_Data_Vals extends ORM
 		);
 	}
 	
+	public function updateResumeDataVal($user_value)
+	{
+		if(isset($user_value))
+		{
+			$this->user_value = $user_value;
+		}
+		return $this->save();
+	}
+	
+	public function deleteResumeDataVal()
+	{
+		return $this->delete();
+	}
 	public function addValue($args = array())
 	{
 		extract($args);

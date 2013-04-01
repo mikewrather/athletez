@@ -142,14 +142,14 @@
 		public function action_put_basics()
 		{
 			$this->payloadDesc = "Update basic information about a division";
-
+			$args = array();
 		     // CHECK FOR PARAMETERS:
 			// name 
 			// Update the name of the division
 				
 			if(trim($this->put('name')) != "")
 			{
-				$name = trim($this->put('name'));
+				$args['name'] = trim($this->put('name'));
 			}
 
 			// states_id 
@@ -157,7 +157,7 @@
 				
 			if((int)trim($this->put('states_id')) > 0)
 			{
-				$states_id = (int)trim($this->put('states_id'));
+				$args['states_id'] = (int)trim($this->put('states_id'));
 			}
 
 			// sections_id 
@@ -165,9 +165,15 @@
 				
 			if((int)trim($this->put('sections_id')) > 0)
 			{
-				$sections_id = (int)trim($this->put('sections_id'));
+				$args['sections_id'] = (int)trim($this->put('sections_id'));
 			}
 
+			if(!$this->mainModel->id)
+			{
+				$this->modelNotSetError();
+				return false;
+			}
+			return $this->mainModel->updateDivision($args);
 		}
 		
 		############################################################################
@@ -183,7 +189,12 @@
 		public function action_delete_base()
 		{
 			$this->payloadDesc = "Delete  division";
-
+			if(!$this->mainModel->id)
+			{
+				$this->modelNotSetError();
+				return false;
+			}
+			return $this->mainModel->deleteDivision();
 		
 		}
 		

@@ -29,6 +29,11 @@ class Model_Sportorg_Seasons_Profile extends ORM
 		);
 	}
 	
+	public function deleteSeasonprofile()
+	{
+		return $this->delete();
+	}
+	
 	public function addSeasonprofile($name)
 	{
 		if(isset($name))

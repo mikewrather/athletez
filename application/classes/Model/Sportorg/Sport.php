@@ -47,7 +47,38 @@ class Model_Sportorg_Sport extends ORM
 			'far_key' => 'orgs_id'
 		),
 	);
-
+	
+	public function updateType($sport_type_id)
+	{
+		$this->sport_type_id = $sport_type_id;
+		return $this->save();
+	}
+	
+	public function updateSport($args)
+	{
+		extract($args);
+		if ( isset($name))
+		{
+			$this->name = $name;
+		}
+		
+		if ( isset($male))
+		{
+			$this->male = $male;
+		}
+		
+		if ( isset($female))
+		{
+			$this->female = $female;
+		}
+		
+		if ( isset($sport_type_id))
+		{
+			$this->sport_type_id = $sport_type_id;
+		}
+		
+		return $this->save();
+	}
 	public function getBasics()
 	{
 		return array(

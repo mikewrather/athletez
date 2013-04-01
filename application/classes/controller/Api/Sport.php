@@ -397,14 +397,14 @@
 		public function action_put_basics()
 		{
 			$this->payloadDesc = "Update basic information about a sport";
-
+			$args = array();
 		     // CHECK FOR PARAMETERS:
 			// name 
 			// Update the name of this sport
 				
 			if(trim($this->put('name')) != "")
 			{
-				$name = trim($this->put('name'));
+				$args['name'] = trim($this->put('name'));
 			}
 
 			// male 
@@ -413,7 +413,7 @@
 			if($this->put('male') != "")
 			{
 				//convert male to a boolean
-				$male = (bool)$this->put('male');
+				$args['male'] = (bool)$this->put('male');
 			}
 
 			// female 
@@ -422,7 +422,7 @@
 			if($this->put('female') != "")
 			{
 				//convert female to a boolean
-				$female = (bool)$this->put('female');
+				$args['female'] = (bool)$this->put('female');
 			}
 
 			// sport_type_id 
@@ -430,9 +430,16 @@
 				
 			if((int)trim($this->put('sport_type_id')) > 0)
 			{
-				$sport_type_id = (int)trim($this->put('sport_type_id'));
+				$args['sport_type_id'] = (int)trim($this->put('sport_type_id'));
 			}
-
+			
+			
+			if(!$this->mainModel->id)
+			{
+				$this->modelNotSetError();
+				return false;
+			}
+			return $this->mainModel->updateSport($args);
 		}
 		
 		/**
@@ -452,7 +459,13 @@
 			{
 				$sport_type_id = (int)trim($this->put('sport_type_id'));
 			}
-
+			
+			if(!$this->mainModel->id)
+			{
+				$this->modelNotSetError();
+				return false;
+			}
+			return $this->mainModel->updateType($sport_type_id);
 		}
 		
 		############################################################################

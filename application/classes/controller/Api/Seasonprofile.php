@@ -16,7 +16,7 @@
 		{
 			parent::__construct($request,$response);
 
-			$this->setMainModel(ORM::factory('Sportorg_Season_Profile'));
+			$this->setMainModel(ORM::factory('Sportorg_Seasons_Profile'));
 			$this->popMainModel();
 		}
 
@@ -123,7 +123,15 @@
 			{
 				$name = trim($this->put('name'));
 			}
-
+			
+			if(!$this->mainModel->id)
+			{
+				$this->modelNotSetError();
+				return false;
+			}
+			 
+			
+			return $this->mainModel->addSeasonprofile($name);
 		}
 		
 		############################################################################
@@ -140,7 +148,12 @@
 		{
 			$this->payloadDesc = "Delete a Season Profile";
 
-		
+			if(!$this->mainModel->id)
+			{
+				$this->modelNotSetError();
+				return false;
+			}
+			return $this->mainModel->deleteSeasonprofile();
 		}
 		
 	}

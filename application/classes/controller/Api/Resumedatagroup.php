@@ -149,8 +149,13 @@
 			{
 				$args['description'] = trim($this->put('description'));
 			}
-
-			return $this->mainModel->updateBasics($args);
+			if(!$this->mainModel->id)
+			{
+				$this->modelNotSetError();
+				return false;
+			}
+			
+			return $this->mainModel->updateResumedataGroup($args);
 
 		}
 		
@@ -167,7 +172,12 @@
 		public function action_delete_base()
 		{
 			$this->payloadDesc = "Delete Resume Data Group";
-
+			if(!$this->mainModel->id)
+			{
+				$this->modelNotSetError();
+				return false;
+			}
+			$this->mainModel->deleteResumedataGroup();
 		
 		}
 		

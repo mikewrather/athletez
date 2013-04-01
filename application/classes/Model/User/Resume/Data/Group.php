@@ -40,6 +40,26 @@ class Model_User_Resume_Data_Group extends ORM
 			"description" => $this->description,
 		);
 	}
+	public function updateResumedataGroup($args = array())
+	{
+		extract($args);
+		
+		if ( isset($description))
+		{
+			$this->description = $description;
+		}
+		
+		if ( isset($name) )
+		{
+			$this->name = $name;
+		}
+		return $this->save();		
+	}
+	
+	public function deleteResumedataGroup()
+	{
+		return $this->delete();
+	}
 	
 	public function addtordp($args = array())
 	{

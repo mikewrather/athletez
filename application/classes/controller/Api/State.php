@@ -394,14 +394,14 @@
 		public function action_put_basics()
 		{
 			$this->payloadDesc = "Update basic info on a given state";
-
+			$args = array();
 		     // CHECK FOR PARAMETERS:
 			// name 
 			// Update the name of the state
 				
 			if(trim($this->put('name')) != "")
 			{
-				$name = trim($this->put('name'));
+				$args['name'] = trim($this->put('name'));
 			}
 
 			// countries_id 
@@ -409,9 +409,14 @@
 				
 			if((int)trim($this->put('countries_id')) > 0)
 			{
-				$countries_id = (int)trim($this->put('countries_id'));
+				$args['countries_id'] = (int)trim($this->put('countries_id'));
 			}
-
+			if(!$this->mainModel->id)
+			{
+				$this->modelNotSetError();
+				return false;
+			}
+			return $this->mainModel->updateState($args);
 		}
 		
 		############################################################################
@@ -428,7 +433,12 @@
 		{
 			$this->payloadDesc = "Delete  state";
 
-		
+			if(!$this->mainModel->id)
+			{
+				$this->modelNotSetError();
+				return false;
+			}
+			return $this->delete();
 		}
 		
 	}

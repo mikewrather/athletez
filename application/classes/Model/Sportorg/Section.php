@@ -50,7 +50,34 @@ class Model_Sportorg_Section extends ORM
 		);
 	}
 	
+	public function updateSection($args = array())
+	{
+		extract($args);
+		// name column
+		if(isset($name))
+		{
+			$this->name = $name;
+		}
+		// states_id column 
+		if(isset($states_id))
+		{
+			$this->states_id = $states_id;	
+		}
+		
+		// sports_id column
+		if(isset($sports_id))
+		{
+			$this->sports_id = $sports_id;
+		}
+		
+		$this->save();
+		return $this;
+	}
 	
+	public function deleteSection()
+	{
+		return $this->delete();
+	}
 	public function addSection($args = array())
 	{
 		extract($args);

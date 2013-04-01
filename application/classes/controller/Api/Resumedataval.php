@@ -150,6 +150,13 @@
 			{
 				$user_value = trim($this->put('user_value'));
 			}
+			if(!$this->mainModel->id)
+			{
+				$this->modelNotSetError();
+				return false;
+			}
+			
+			return $this->mainModel->updateResumeDataVal($user_value); 
 
 		}
 		
@@ -167,7 +174,13 @@
 		{
 			$this->payloadDesc = "Delete a given data value for resume data";
 
-		
+			if(!$this->mainModel->id)
+			{
+				$this->modelNotSetError();
+				return false;
+			}
+			
+			return $this->mainModel->deleteResumeDataVal();
 		}
 		
 	}

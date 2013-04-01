@@ -72,14 +72,14 @@
 		public function action_put_basics()
 		{
 			$this->payloadDesc = "Update basic information  about a sport type";
-
+			$args = array();
 		     // CHECK FOR PARAMETERS:
 			// name 
 			// Update the name of the section
 				
 			if(trim($this->put('name')) != "")
 			{
-				$name = trim($this->put('name'));
+				$args['name'] = trim($this->put('name'));
 			}
 
 			// states_id 
@@ -87,7 +87,7 @@
 				
 			if((int)trim($this->put('states_id')) > 0)
 			{
-				$states_id = (int)trim($this->put('states_id'));
+				$args['states_id'] = (int)trim($this->put('states_id'));
 			}
 
 			// states_id 
@@ -95,9 +95,15 @@
 				
 			if((int)trim($this->put('states_id')) > 0)
 			{
-				$states_id = (int)trim($this->put('states_id'));
+				$args['states_id'] = (int)trim($this->put('states_id'));
 			}
-
+			
+			if(!$this->mainModel->id)
+			{
+				$this->modelNotSetError();
+				return false;
+			}
+			return $this->mainModel->updateSection($args);
 		}
 		
 		############################################################################
@@ -114,7 +120,12 @@
 		{
 			$this->payloadDesc = "Delete  sport type";
 
-		
+			if(!$this->mainModel->id)
+			{
+				$this->modelNotSetError();
+				return false;
+			}
+			return $this->mainModel->deleteSection();
 		}
 		
 	}

@@ -41,6 +41,36 @@ class Model_Sportorg_Division extends ORM
 			
 	}
 	
+	public function updateDivision($args = array())
+	{
+		extract($args);
+		
+		// name column
+		if(isset($name))
+		{
+			$this->name = $name;
+		}
+		
+		// sections_id column
+		if(isset($sections_id))
+		{
+			$this->sections_id = $sections_id;
+		}
+		
+		// states_id colunn
+		if(isset($states_id))
+		{
+			$this->states_id = $states_id;	
+		}
+		
+		$this->save();
+		return $this;
+	}
+	
+	public function deleteDivision()
+	{
+		return $this->delete();
+	}
 	
 	public function addDivision($args = array() )
 	{
@@ -51,7 +81,7 @@ class Model_Sportorg_Division extends ORM
 		
 		if ( $count == 0 )
 		{
-				// name column
+			// name column
 			if(isset($name))
 			{
 				$this->name = $name;
