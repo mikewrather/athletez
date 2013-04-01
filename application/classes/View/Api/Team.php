@@ -36,18 +36,15 @@
 		 */
 		public function get_games()
 		{
-			$retArr = array();
-
-			// Scaffolding Code For Array:
+			$retArr = array(); 
+			// Scaffolding Code For Single:
 			$objs = $this->obj->find_all();
+			
 			foreach($objs as $obj)
 			{
 				$retArr[$obj->id] = $obj->getBasics();
 			}
-
-			// Scaffolding Code For Single:
-			$retArr = $this->obj->getBasics();
-
+			
 			return $retArr;
 		}
 		
@@ -58,18 +55,16 @@
 		 */
 		public function get_roster()
 		{
-			$retArr = array();
-
+			$retArr = array();			
 			// Scaffolding Code For Array:
 			$objs = $this->obj->find_all();
+			 
 			foreach($objs as $obj)
 			{
-				$retArr[$obj->id] = $obj->getBasics();
+				$basics = $obj->getBasics();				
+				$retArr[$obj->users_id] = $basics['user'];
 			}
-
-			// Scaffolding Code For Single:
-			$retArr = $this->obj->getBasics();
-
+			 
 			return $retArr;
 		}
 		

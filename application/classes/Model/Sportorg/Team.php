@@ -120,6 +120,79 @@ class Model_Sportorg_Team extends ORM
 		return $org->location;
 	}
 	
+	/**
+	 * @param array $args is an array of parameters to filter the games we are selecting
+	 * @return $games DB::select object
+	 */
+	public function getGames($args = array())
+	{
+		extract($args);
+		$games = $this->games;
+		// CHECK FOR PARAMETERS:
+		// games_before
+		// Filter games associated with a given city to only show those before a given date
+
+		if(isset($games_before))
+		{
+			// Format as date
+			$gameDay = date("Y-m-d",strtotime($games_before));
+			$gameTime = date("H:i:s",strtotime($games_before));
+
+			$games
+				->and_where_open()
+				->where('gameDay','<',$gameDay)
+			//	->and_where('gameTime','<',$gameTime)
+				->and_where_close();
+		}
+		
+		
+		// games_after
+		// Filter games associated with a given city to only show those before a given date
+		if(isset($games_after))
+		{
+			// Format as date
+			$gameDay = date("Y-m-d",strtotime($games_after));
+			$gameTime = date("H:i:s",strtotime($games_after));
+
+			$games
+				->and_where_open()
+				->where('gameDay','>',$gameDay)
+			//	->and_where('gameTime','>',$gameTime)
+				->and_where_close();
+		}
+		
+		// isWinner
+		if(isset($isWinner))
+		{
+			$games->where('games_teams_link.isWinner', '=', $isWinner);
+		}
+		
+		return $games;
+	}
+	
+	public function getRoaster($args = array())
+	{
+		extract($args);		
+		// positions_id
+		// Filter the roster of a given team to only show those players for a certain position
+		if ( isset($positions_id) )
+		{
+			// get user_teams_link
+			$user_teams_link_obj = ORM::factory('User_Teamslink')
+				->join('teams')->on('teams.id', '=', 'user_teamslink.teams_id' )
+				->join('utl_position_link')->on('utl_position_link.users_teams_link_id','=', 'user_teamslink.id')
+					->where('teams.id', '=', $this->id )
+					->and_where('utl_position_link.positions_id','=', $positions_id );
+		} else {
+			$user_teams_link_obj = ORM::factory('User_Teamslink')
+				->join('teams')->on('teams.id', '=', 'user_teamslink.teams_id' )				
+					->where('teams.id', '=', $this->id );
+		}
+		 
+		return $user_teams_link_obj;
+		
+	}
+	
 	public function getSchedule($count = NULL, $past_games = false )
 	{ 
 		 if(!$this->loaded()) return false;

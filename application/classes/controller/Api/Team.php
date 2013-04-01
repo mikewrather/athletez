@@ -39,7 +39,12 @@
 		{
 			$this->payloadDesc = "Basic info on a given team";
 
-		
+			if(!$this->mainModel->id)
+			{
+				$this->modelNotSetError();
+				return false;
+			}
+			return $this->mainModel; 
 		}
 		
 		/**
@@ -50,7 +55,7 @@
 		public function action_get_games()
 		{
 			$this->payloadDesc = "Get all games for a given team";
-
+			$args = array();
 		     // CHECK FOR PARAMETERS:
 			// games_before 
 			// Filter games associated with a given team to only show those before a given date
@@ -58,7 +63,7 @@
 			if($this->request->query('games_before') != "")
 			{
 				// Format as date
-				$games_before = date("Y-m-d H:i:s",strtotime($this->request->query('games_before')));
+				$args['games_before'] = date("Y-m-d H:i:s",strtotime($this->request->query('games_before')));
 			}
 
 			// games_after 
@@ -67,7 +72,7 @@
 			if($this->request->query('games_after') != "")
 			{
 				// Format as date
-				$games_after = date("Y-m-d H:i:s",strtotime($this->request->query('games_after')));
+				$args['games_after'] = date("Y-m-d H:i:s",strtotime($this->request->query('games_after')));
 			}
 
 			// is_winner 
@@ -75,9 +80,15 @@
 				
 			if((int)trim($this->request->query('is_winner')) > 0)
 			{
-				$is_winner = (int)trim($this->request->query('is_winner'));
+				$args['is_winner'] = (int)trim($this->request->query('is_winner'));
 			}
-
+			if(!$this->mainModel->id)
+			{
+				$this->modelNotSetError();
+				return false;
+			}
+			
+			return $this->mainModel->getGames($args);
 		}
 		
 		/**
@@ -92,12 +103,18 @@
 		     // CHECK FOR PARAMETERS:
 			// positions_id 
 			// Filter the roster of a given team to only show those players for a certain position
-				
+			$args = array();	
 			if((int)trim($this->request->query('positions_id')) > 0)
 			{
-				$positions_id = (int)trim($this->request->query('positions_id'));
+				$args['positions_id'] = (int)trim($this->request->query('positions_id'));
 			}
-
+			
+			if(!$this->mainModel->id)
+			{
+				$this->modelNotSetError();
+				return false;
+			}
+			return $this->mainModel->getRoaster($args);			
 		}
 		
 		############################################################################
