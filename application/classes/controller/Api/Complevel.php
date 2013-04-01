@@ -143,14 +143,14 @@
 		public function action_post_add()
 		{
 			$this->payloadDesc = "Add a new Competition Level";
-
+			$args = array(); 
 		     // CHECK FOR PARAMETERS:
 			// name (REQUIRED)
 			// Name of the new Competition Level
 				
 			if(trim($this->request->post('name')) != "")
 			{
-				$name = trim($this->request->post('name'));
+				$args['name'] = trim($this->request->post('name'));
 			}
 
 			else // THIS WAS A REQUIRED PARAMETER
@@ -175,7 +175,7 @@
 				
 			if((int)trim($this->request->post('complevel_profiles_id')) > 0)
 			{
-				$complevel_profiles_id = (int)trim($this->request->post('complevel_profiles_id'));
+				$args['complevel_profiles_id'] = (int)trim($this->request->post('complevel_profiles_id'));
 			}
 
 			else // THIS WAS A REQUIRED PARAMETER
@@ -194,7 +194,9 @@
 				$this->addError($error_array,$is_fatal);
 
 			}
-			
+			 
+			$complevel_obj = ORM::factory('Sportorg_Complevel_Base');
+			return $complevel_obj->addComplevel($args);
 		}
 		
 		############################################################################
