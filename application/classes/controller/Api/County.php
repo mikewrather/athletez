@@ -134,57 +134,36 @@
 		{
 			$this->payloadDesc = "Add a new County";
 
-		     // CHECK FOR PARAMETERS:
-			// name (REQUIRED)
-			// The name of the County to add
-				
+			$new_county = ORM::factory('Location_County');
+
 			if(trim($this->request->post('name')) != "")
 			{
 				$name = trim($this->request->post('name'));
 			}
 
-			else // THIS WAS A REQUIRED PARAMETER
-			{
-				// Create Array for Error Data
+			$states_id = trim($this->request->post('states_id'));
+
+			$new_county->name = $name;
+			$new_county->states_id = $states_id;
+			//add validation & save logics here
+			$county_validate = Validation::factory($new_county->as_array())
+				->rule('name', 'not_empty')
+				->rule('states_id', 'not_equals', array(':value', 0));
+
+			if (!$county_validate->check()){
+				$validate_errors = $county_validate->errors('models/location/county');
 				$error_array = array(
-					"error" => "Required Parameter Missing",
+					"error" => implode('\n', $validate_errors),
 					"param_name" => "name",
-					"param_desc" => "The name of the County to add"
+					"param_desc" => "Name of the County to add"
 				);
-
 				// Set whether it is a fatal error
 				$is_fatal = true;
-
-				// Call method to throw an error
-				$this->addError($error_array,$is_fatal);
-
+				$this->addError($error_array, $is_fatal);
+				return $new_county;
 			}
-			
-			// states_id (REQUIRED)
-			// The ID of the state this county exists in
-				
-			if((int)trim($this->request->post('states_id')) > 0)
-			{
-				$states_id = (int)trim($this->request->post('states_id'));
-			}
-
-			else // THIS WAS A REQUIRED PARAMETER
-			{
-				// Create Array for Error Data
-				$error_array = array(
-					"error" => "Required Parameter Missing",
-					"param_name" => "states_id",
-					"param_desc" => "The ID of the state this county exists in"
-				);
-
-				// Set whether it is a fatal error
-				$is_fatal = true;
-
-				// Call method to throw an error
-				$this->addError($error_array,$is_fatal);
-
-			}
-			
+			$new_county->save();
+			return $new_county;
 		}
 		
 		############################################################################
