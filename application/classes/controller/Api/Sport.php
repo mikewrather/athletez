@@ -471,6 +471,16 @@
 		############################################################################
 		###########################    DELETE METHODS    ###########################
 		############################################################################
+		public function action_delete_base()
+		{
+			$this->payloadDesc = "Delete Sport Data";
 
+			if(!$this->mainModel->id)
+			{
+				$this->modelNotSetError();
+				return false;
+			}
+			return $this->delete();			
+		}
 		
 	}

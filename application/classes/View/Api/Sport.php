@@ -302,4 +302,18 @@
 			return $retArr;
 		}
 		
+		/**
+		 * delete_base() Delete Resume Data Profile
+		 *
+		 * @retun array
+		 */
+		public function delete_base()
+		{
+			$retArr = array();
+
+			// Scaffolding Code For Array:
+			$objs = $this->obj; 
+			return $retArr;
+		}
+		
 	}

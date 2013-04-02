@@ -67,43 +67,54 @@ class Model_User_Resume_Data_Profile extends ORM
 	
 	public function addLinksport($args = array())
 	{
-		extract($args); 
-		$exists_obj = DB::select('*')
+		extract($args);
+		if ( isset($resume_data_profiles_id) && isset($sports_id))
+		{
+			$exists_obj = DB::select('*')
 				->from('rdp_sports_link')				
 					->where('resume_data_profiles_id','=',$resume_data_profiles_id)
 					->and_where('sports_id', '=', $sports_id)->execute();
-					
-		 
-		$count = count($exists_obj);		
-		
-		if ( $count == 0)
-		{
-			return DB::insert('rdp_sports_link', array('resume_data_profiles_id', 'sports_id'))->values(array($resume_data_profiles_id, $sports_id))->execute();	
-		} else
-		{			
-			return $exists_obj;
-		}				
 			
+			$count = count($exists_obj);		
+			
+			if ( $count == 0)
+			{
+				
+				return DB::insert('rdp_sports_link', array('resume_data_profiles_id', 'sports_id'))->values(array($resume_data_profiles_id, $sports_id))->execute();	
+			} else
+			{			
+				return $exists_obj;
+			}	
+		} else {
+			return $this;
+		}		 
 	}
 
 	public function addRdg($args = array())
-	{
+	{		
 		extract($args);
-		$exists_obj = DB::select('*')
+		if ( isset($resume_data_profiles_id) && isset($resume_data_groups_id))
+		{
+			$exists_obj = DB::select('*')
 				->from('rdg_rdp_link')				
 					->where('resume_data_profiles_id','=',$resume_data_profiles_id)
 					->and_where('resume_data_groups_id', '=', $resume_data_groups_id)->execute();
 					
-		 
-		$count = count($exists_obj);		
-		
-		if ( $count == 0)
-		{
-			return DB::insert('rdg_rdp_link', array('resume_data_profiles_id', 'resume_data_groups_id'))->values(array($resume_data_profiles_id, $resume_data_groups_id))->execute();	
+			 
+			$count = count($exists_obj);		
+			
+			if ( $count == 0)
+			{
+				return DB::insert('rdg_rdp_link', array('resume_data_profiles_id', 'resume_data_groups_id'))->values(array($resume_data_profiles_id, $resume_data_groups_id))->execute();	
+			} else
+			{			
+				return $exists_obj;
+			}	
 		} else
-		{			
-			return $exists_obj;
-		}	
+		{
+			return $this;
+		}
+		
 	}
 
 	public function addRdp($args = array())
