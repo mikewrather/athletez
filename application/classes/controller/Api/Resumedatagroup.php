@@ -105,16 +105,13 @@
 				$this->addError($error_array,$is_fatal);
 
 			}
-			
-			if(!$this->mainModel->id)
+			if(trim($this->request->post('name')) != "")
 			{
-				$this->modelNotSetError();
-				return false;
+				$args['name'] = trim($this->request->post('name'));
 			}
-			$args['resume_data_groups_id'] = $this->mainModel->id;			 
-			$rdp = ORM::factory('User_Resume_Data_Profile');
-			$add_link_obj = $rdp->addRdg($args);
-			return $rdp->where('id','=',$this->mainModel->id);
+			
+			$rdg = ORM::factory('User_Resume_Data_Group');
+			return $rdg->addtordp($args); 
 		}
 		
 		############################################################################

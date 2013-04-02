@@ -89,13 +89,8 @@
 		public function post_addtordp()
 		{
 			$retArr = array(); 
-			// Scaffolding Code For Single:
-			$objs = $this->obj->find_all();
-			foreach($objs as $obj)
-			{
-				$retArr[$obj->id] = $obj->getBasics();
-			}
-
+			// Scaffolding Code For Single:			 
+			$retArr = $this->obj->getBasics();
 			return $retArr;
 		}
 		

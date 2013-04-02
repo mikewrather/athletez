@@ -130,14 +130,14 @@
 		public function action_put_basics()
 		{
 			$this->payloadDesc = "Update the basics about a given peice of resume data";
-
+			$args = array();
 		     // CHECK FOR PARAMETERS:
 			// name 
 			// Change the name of the Resume Data
 				
 			if(trim($this->put('name')) != "")
 			{
-				$name = trim($this->put('name'));
+				$args['name'] = trim($this->put('name'));
 			}
 
 			// resume_data_type 
@@ -145,9 +145,14 @@
 				
 			if(trim($this->put('resume_data_type')) != "")
 			{
-				$resume_data_type = trim($this->put('resume_data_type'));
+				$args['resume_data_type'] = trim($this->put('resume_data_type'));
 			}
-
+			if(!$this->mainModel->id)
+			{
+				$this->modelNotSetError();
+				return false;
+			}
+			return $this->mainModel->updateResumedata($args);
 		}
 		
 		############################################################################
@@ -163,8 +168,13 @@
 		public function action_delete_base()
 		{
 			$this->payloadDesc = "Delete Resume Data";
-
-		
+			if(!$this->mainModel->id)
+			{
+				$this->modelNotSetError();
+				return false;
+			}
+			
+			return $this->delete(); 
 		}
 		
 	}

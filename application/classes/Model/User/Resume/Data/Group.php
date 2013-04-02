@@ -64,11 +64,28 @@ class Model_User_Resume_Data_Group extends ORM
 	public function addtordp($args = array())
 	{
 		extract($args);
+		 
+		if (isset($name))
+		{	
+			$temp = $this->where('name', '=', $name)->find();			 
+			if ( $temp->loaded())
+			{ 
+				$new_rdg = $temp->getBasics();
+				$resume_data_groups_id = $new_rdg['id'];				 
+			} else
+			{
+				$this->name = $name;
+				$resume_data_groups	= $this->save();
+				$new_rdg = $resume_data_groups->getBasics();
+				$resume_data_groups_id = $new_rdg['id'];						
+			}
+			
+		} 
+		
 		$new_link = DB::insert('rdg_rdp_link', array('resume_data_profiles_id', 'resume_data_groups_id'))->values(array($resume_data_profiles_id, $resume_data_groups_id));
 	 	try
 		{
-			$new_link->execute();
-			return $new_link;			
+			$new_link->execute();			 
 		} catch(Exception $e)
 		{	
 			// Create Array for Error Data
@@ -79,9 +96,7 @@ class Model_User_Resume_Data_Group extends ORM
 
 			// Set whether it is a fatal error
 			$is_fatal = true;
-
-			// Call method to throw an error			
-			return $error_array;			 
 		}
+		return $this;
 	}
 }

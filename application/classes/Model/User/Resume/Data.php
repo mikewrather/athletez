@@ -43,4 +43,22 @@ class Model_User_Resume_Data extends ORM
 			"resume_data_groups_id" => $this->resume_data_groups_id
 		);
 	}
+	
+	public function updateResumedata($args = array())
+	{
+		extract($args);
+		
+		if ( isset($name) )
+		{
+			$this->name = $name;
+		}
+		
+		if ( isset($resume_data_type) )
+		{
+			$this->resume_data_type = $resume_data_type;
+		}
+		
+		return $this->save();		
+	}
+	
 }
