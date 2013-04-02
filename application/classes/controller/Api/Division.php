@@ -67,66 +67,37 @@
 		public function action_post_add()
 		{
 			$this->payloadDesc = "Add a new Division";
+			$division_obj = ORM::factory('Sportorg_Division');
+			$name = trim($this->request->post('name'));
 
-		     // CHECK FOR PARAMETERS:
-			// name (REQUIRED)
-			// Name of the Division to add
-				
-			if(trim($this->request->post('name')) != "")
-			{
-				$name = trim($this->request->post('name'));
-			}
+			$states_id = (int)trim($this->request->post('states_id'));
 
-			else // THIS WAS A REQUIRED PARAMETER
-			{
-				// Create Array for Error Data
+			$sections_id = (int)trim($this->request->post('sections_id'));
+
+			$division_obj->name = $name;
+			$division_obj->states_id = $states_id;
+			$division_obj->sections_id = $sections_id;
+
+			//add validation & save logics here
+			$division_validate = Validation::factory($division_obj->as_array())
+				->rule('name', 'not_empty')
+				->rule('states_id', 'not_equals', array(':value', 0))
+				->rule('sections_id', 'not_equals', array(':value', 0));
+
+			if (!$division_validate->check()){
+				$validate_errors = $division_validate->errors('models/sportorg/division');
 				$error_array = array(
-					"error" => "Required Parameter Missing",
+					"error" => implode('\n', $validate_errors),
 					"param_name" => "name",
-					"param_desc" => "Name of the Division to add"
+					"param_desc" => "Name of the County to add"
 				);
-
 				// Set whether it is a fatal error
 				$is_fatal = true;
-
-				// Call method to throw an error
-				$this->addError($error_array,$is_fatal);
-
+				$this->addError($error_array, $is_fatal);
+				return $division_obj;
 			}
-			
-			// states_id (REQUIRED)
-			// ID of the state this division belongs to
-				
-			if((int)trim($this->request->post('states_id')) > 0)
-			{
-				$states_id = (int)trim($this->request->post('states_id'));
-			}
-
-			else // THIS WAS A REQUIRED PARAMETER
-			{
-				// Create Array for Error Data
-				$error_array = array(
-					"error" => "Required Parameter Missing",
-					"param_name" => "states_id",
-					"param_desc" => "ID of the state this division belongs to"
-				);
-
-				// Set whether it is a fatal error
-				$is_fatal = true;
-
-				// Call method to throw an error
-				$this->addError($error_array,$is_fatal);
-
-			}
-			
-			// sections_id 
-			// The ID of the Section this division belongs to (if applicable)
-				
-			if((int)trim($this->request->post('sections_id')) > 0)
-			{
-				$sections_id = (int)trim($this->request->post('sections_id'));
-			}
-
+			$division_obj->save();
+			return $division_obj;
 		}
 		
 		############################################################################
