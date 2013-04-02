@@ -40,7 +40,47 @@ class Model_Location_Base extends ORM
 			// put point here
 		);
 	}
-
+	
+	public function updateLocation($args = array())
+	{
+		extract($args);
+		
+		// address 
+		// Change the address of this location
+		if ( isset($address) )
+		{
+			$this->address = $address;
+		}
+		
+		// cities_id
+		// Change the city of the location
+		if ( isset($cities_id) )
+		{
+			$this->cities_id = $cities_id;
+		}
+		
+		// lon 
+		// Change the longitude of this location
+		if ( isset($lon) )
+		{
+			$this->lon = $lon;
+		}
+		// lat 
+		// Change the latitude of this location
+		if ( isset($lat) )
+		{
+			$this->lat = $lat;
+		}
+		
+		// location_type
+		// Change the location type of this location
+		if ( isset($location_type) )
+		{
+			$this->location_type = $location_type;
+		}
+		return $this->save();
+	}
+	
 	public function name()
 	{
 		return $this->address;

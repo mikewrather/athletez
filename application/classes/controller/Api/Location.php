@@ -185,14 +185,14 @@
 		public function action_put_basics()
 		{
 			$this->payloadDesc = "Updates basic info about this location";
-
+			$args = array();
 		     // CHECK FOR PARAMETERS:
 			// address 
 			// Change the address of this location
 				
 			if(trim($this->put('address')) != "")
 			{
-				$address = trim($this->put('address'));
+				$args['address'] = trim($this->put('address'));
 			}
 
 			// cities_id 
@@ -200,7 +200,7 @@
 				
 			if((int)trim($this->put('cities_id')) > 0)
 			{
-				$cities_id = (int)trim($this->put('cities_id'));
+				$args['cities_id'] = (int)trim($this->put('cities_id'));
 			}
 
 			// lon 
@@ -208,7 +208,7 @@
 				
 			if(trim($this->put('lon')) != "")
 			{
-				$lon = trim($this->put('lon'));
+				$args['lon'] = trim($this->put('lon'));
 			}
 
 			// lat 
@@ -216,7 +216,7 @@
 				
 			if(trim($this->put('lat')) != "")
 			{
-				$lat = trim($this->put('lat'));
+				$args['lat'] = trim($this->put('lat'));
 			}
 
 			// location_type 
@@ -224,8 +224,16 @@
 				
 			if(trim($this->put('location_type')) != "")
 			{
-				$location_type = trim($this->put('location_type'));
+				$args['location_type'] = trim($this->put('location_type'));
 			}
+			
+			if(!$this->mainModel->id)
+			{
+				$this->modelNotSetError();
+				return false;
+			}
+			
+			return $this->mainModel->updateLocation($args);
 
 		}
 		
@@ -242,7 +250,13 @@
 		public function action_delete_base()
 		{
 			$this->payloadDesc = "Delete  location";
-
+			if(!$this->mainModel->id)
+			{
+				$this->modelNotSetError();
+				return false;
+			}
+			
+			return $this->delete();
 		
 		}
 		
