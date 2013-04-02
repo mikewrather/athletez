@@ -194,15 +194,7 @@
 		 */
 		public function put_basics()
 		{
-			$retArr = array();
-
-			// Scaffolding Code For Array:
-			$objs = $this->obj->find_all();
-			foreach($objs as $obj)
-			{
-				$retArr[$obj->id] = $obj->getBasics();
-			}
-
+			$retArr = array();  
 			// Scaffolding Code For Single:
 			$retArr = $this->obj->getBasics();
 
@@ -217,14 +209,7 @@
 		public function put_division()
 		{
 			$retArr = array();
-
-			// Scaffolding Code For Array:
-			$objs = $this->obj->find_all();
-			foreach($objs as $obj)
-			{
-				$retArr[$obj->id] = $obj->getBasics();
-			}
-
+ 
 			// Scaffolding Code For Single:
 			$retArr = $this->obj->getBasics();
 
@@ -238,15 +223,7 @@
 		 */
 		public function put_complevelprofile()
 		{
-			$retArr = array();
-
-			// Scaffolding Code For Array:
-			$objs = $this->obj->find_all();
-			foreach($objs as $obj)
-			{
-				$retArr[$obj->id] = $obj->getBasics();
-			}
-
+			$retArr = array(); 
 			// Scaffolding Code For Single:
 			$retArr = $this->obj->getBasics();
 
@@ -260,15 +237,7 @@
 		 */
 		public function put_seasonprofile()
 		{
-			$retArr = array();
-
-			// Scaffolding Code For Array:
-			$objs = $this->obj->find_all();
-			foreach($objs as $obj)
-			{
-				$retArr[$obj->id] = $obj->getBasics();
-			}
-
+			$retArr = array(); 
 			// Scaffolding Code For Single:
 			$retArr = $this->obj->getBasics();
 

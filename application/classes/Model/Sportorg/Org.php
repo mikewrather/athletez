@@ -148,7 +148,81 @@ class Model_Sportorg_Org extends ORM
 			"locations" => $this->location->getBasics()
 		);
 	}
+	
+	public function updateOrg($args = array())
+	{
+		extract($args);
+		// name 
+		// Update the name of the organization
+		if ( isset($name) )
+		{
+			$this->name = $name;
+		}	 
 
+		// signle_sport 
+		// Change whether this is a one-sport organization
+		if ( isset($single_sport))
+		{
+			$this->single_sport = $single_sport;
+		}
+
+		// leagues_id 
+		// Change the league this organization belongs to
+		if ( isset($leagues_id))
+		{
+			$this->leagues_id = $leagues_id;
+		}	 
+
+		// divisions_id 
+		// Change the division this organization belong to
+		if ( isset($divisions_id))
+		{
+			$this->divisions_id = $divisions_id;
+		}	 
+
+		// season_profiles_id 
+		// Change the Season Profile this organization uses
+		if ( isset($season_profiles_id))
+		{
+			$this->season_profiles_id = $season_profiles_id;
+		}
+
+		// complevel_profiles_id 
+		// Change the Competition Level Profile
+		if ( isset($complevel_profiles_id))
+		{
+			$this->complevel_profiles_id = $complevel_profiles_id;
+		}		
+		return $this->save();
+	}
+	
+	public function updateDivision($divisions_id)
+	{
+		if (isset($divisions_id))
+		{
+			$this->divisions_id = $divisions_id;
+		}
+		return $this->save();
+	}
+	
+	public function updateComplevelprofile($complevel_profiles_id)
+	{
+		if (isset($complevel_profiles_id))
+		{
+			$this->complevel_profiles_id = $complevel_profiles_id;
+		}
+		return $this->save();
+	}
+	
+	public function updateSeasonProfile($season_profiles_id)
+	{
+		if (isset($season_profiles_id))
+		{
+			$this->season_profiles_id = $season_profiles_id;
+		}
+		return $this->save();
+	}
+	
 	public function addSport($sports_id)
 	{
 		$this->add('sports',$sports_id);

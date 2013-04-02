@@ -321,14 +321,14 @@
 		public function action_put_basics()
 		{
 			$this->payloadDesc = "Update Basic information about the organization";
-
+			$args = array();
 		     // CHECK FOR PARAMETERS:
 			// name 
 			// Update the name of the organization
 				
 			if(trim($this->put('name')) != "")
 			{
-				$name = trim($this->put('name'));
+				$args['name'] = trim($this->put('name'));
 			}
 
 			// signle_sport 
@@ -337,7 +337,7 @@
 			if($this->put('signle_sport') != "")
 			{
 				//convert signle_sport to a boolean
-				$signle_sport = (bool)$this->put('signle_sport');
+				$args['single_sport'] = (bool)$this->put('signle_sport');
 			}
 
 			// leagues_id 
@@ -345,7 +345,7 @@
 				
 			if((int)trim($this->put('leagues_id')) > 0)
 			{
-				$leagues_id = (int)trim($this->put('leagues_id'));
+				$args['leagues_id'] = (int)trim($this->put('leagues_id'));
 			}
 
 			// divisions_id 
@@ -353,7 +353,7 @@
 				
 			if((int)trim($this->put('divisions_id')) > 0)
 			{
-				$divisions_id = (int)trim($this->put('divisions_id'));
+				$args['divisions_id'] = (int)trim($this->put('divisions_id'));
 			}
 
 			// season_profiles_id 
@@ -361,7 +361,7 @@
 				
 			if((int)trim($this->put('season_profiles_id')) > 0)
 			{
-				$season_profiles_id = (int)trim($this->put('season_profiles_id'));
+				$args['season_profiles_id'] = (int)trim($this->put('season_profiles_id'));
 			}
 
 			// complevel_profiles_id 
@@ -369,9 +369,17 @@
 				
 			if((int)trim($this->put('complevel_profiles_id')) > 0)
 			{
-				$complevel_profiles_id = (int)trim($this->put('complevel_profiles_id'));
+				$args['complevel_profiles_id'] = (int)trim($this->put('complevel_profiles_id'));
 			}
-
+			
+			if(!$this->mainModel->id)
+			{
+				$this->modelNotSetError();
+				return false;
+			}
+			
+			return $this->mainModel->updateOrg($args);
+			
 		}
 		
 		/**
@@ -391,7 +399,13 @@
 			{
 				$divisions_id = (int)trim($this->put('divisions_id'));
 			}
-
+			
+			if(!$this->mainModel->id)
+			{
+				$this->modelNotSetError();
+				return false;
+			}
+			return $this->mainModel->updateDivision($divisions_id);
 		}
 		
 		/**
@@ -411,7 +425,13 @@
 			{
 				$complevel_profiles_id = (int)trim($this->put('complevel_profiles_id'));
 			}
-
+			
+			if(!$this->mainModel->id)
+			{
+				$this->modelNotSetError();
+				return false;
+			}
+			return $this->mainModel->updateComplevelprofile($complevel_profiles_id);
 		}
 		
 		/**
@@ -431,7 +451,12 @@
 			{
 				$season_profiles_id = (int)trim($this->put('season_profiles_id'));
 			}
-
+			if(!$this->mainModel->id)
+			{
+				$this->modelNotSetError();
+				return false;
+			}
+			return $this->mainModel->updateSeasonProfile($season_profiles_id);
 		}
 		
 		/**
@@ -442,8 +467,7 @@
 		public function action_put_sport()
 		{
 			$this->payloadDesc = "Update the org / sport association (for future use)";
-
-		
+			 
 		}
 		
 		############################################################################
@@ -459,8 +483,7 @@
 		public function action_delete_base()
 		{
 			$this->payloadDesc = "Delete an Organization";
-
-		
+			return $this->delete();
 		}
 		
 		/**
