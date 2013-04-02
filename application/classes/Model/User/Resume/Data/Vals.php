@@ -30,15 +30,21 @@ class Model_User_Resume_Data_Vals extends ORM
 		parent::__construct($id);
 	}
 	
+	public function name()
+	{
+		return $this->user->first_name.' '.$this->user->last_name;
+	}
+	
 	public function getBasics()
 	{
 		return array(
 			"id" => $this->id,
 			"user" => $this->user->getBasics(),
-			"resume_data" => $this->resdata->getBasics(),
+			"resume_data" => $this->resume_data->getBasics(),
 			"user_value" => $this->user_value,
-			"user_id" => $this->user_id,
-			"resume_data_id" => $this->resume_data_id
+			"user_id" => $this->users_id,
+			"resume_data_id" => $this->resume_data_id,
+		 
 		);
 	}
 	
@@ -76,9 +82,9 @@ class Model_User_Resume_Data_Vals extends ORM
 	{
 		extract($args);
 		
-		if(isset($user_value))
+		if(isset($users_id))
 		{
-			$this->user_value = $user_value;
+			$this->users_id = $users_id;
 		}
 		
 		if(isset($user_value))

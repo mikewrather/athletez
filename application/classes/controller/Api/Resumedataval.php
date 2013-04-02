@@ -119,13 +119,8 @@
 				$args['users_id'] = (int)trim($this->request->post('users_id'));
 			}
 			
-			if(!$this->mainModel->id)
-			{
-				$this->modelNotSetError();
-				return false;
-			}
-			
-			return $this->mainModel->addResumeDataVal($args); 
+			$new_rdv = ORM::factory('User_Resume_Data_Vals');
+			return $new_rdv->addResumeDataVal($args); 
 		}
 		
 		############################################################################
