@@ -39,7 +39,12 @@
 		{
 			$this->payloadDesc = "Basic information about a player in a match";
 
-		
+			if(!$this->mainModel->id)
+			{
+				$this->modelNotSetError();
+				return false;
+			}
+			return $this->mainModel; 
 		}
 		
 		############################################################################

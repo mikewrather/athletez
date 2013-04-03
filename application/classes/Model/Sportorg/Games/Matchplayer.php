@@ -34,4 +34,9 @@ class Model_Sportorg_Games_Matchplayer extends ORM
 			"match_winnder" => $this->match_winner
 		);
 	}
+	
+	public function name()
+	{
+		return null;
+	}
 }
