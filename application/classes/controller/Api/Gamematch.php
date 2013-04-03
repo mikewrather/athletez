@@ -39,7 +39,12 @@
 		{
 			$this->payloadDesc = "Basic info for a game match";
 
-		
+			if(!$this->mainModel->id)
+			{
+				$this->modelNotSetError();
+				return false;
+			}
+			return $this->mainModel; 
 		}
 		
 		/**
@@ -59,6 +64,13 @@
 			{
 				$positions_id = (int)trim($this->request->query('positions_id'));
 			}
+			
+			if(!$this->mainModel->id)
+			{
+				$this->modelNotSetError();
+				return false;
+			}
+			return $this->mainModel->getPlayers($positions_id);
 
 		}
 		

@@ -12,7 +12,7 @@ class Model_Sportorg_Games_Matchplayer extends ORM
 
 	protected $_belongs_to = array(
 		'user' => array(
-			'model' => 'User',
+			'model' => 'User_Base',
 			'foreign_key' => 'users_id'
 		),
 		'game_matches' => array(
