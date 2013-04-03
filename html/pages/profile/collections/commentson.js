@@ -1,18 +1,18 @@
-// Profile CommentsOn Data
+// CommentsOn Data
 // ----------
 
 // Package Profile
 // Requires define
-// Returns {ProfileCommentOnList} constructor
+// Returns {CommentOnList} constructor
 
 define(['facade', 'site/collections/comments', 'utils'], 
 function(facade, SiteCommentList, utils) {
 
-    var ProfileCommentOnList,
+    var CommentOnList,
         _ = facade._,
         Channel = utils.lib.Channel;
 
-    ProfileCommentOnList = SiteCommentList.extend({
+    CommentOnList = SiteCommentList.extend({
         
         url: function() {
             if (testpath)
@@ -22,5 +22,5 @@ function(facade, SiteCommentList, utils) {
 
     });
 
-    return ProfileCommentOnList;
+    return CommentOnList;
 });

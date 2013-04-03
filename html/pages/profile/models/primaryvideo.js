@@ -1,14 +1,14 @@
 // primaryvideo.js Model
 // ------------
 // Requires define
-// Return {ProfilePrimaryVideoModel} model constructor object
+// Return {PrimaryVideoModel} model constructor object
 
 define( ["facade", "media/models/video"], function (facade, MediaVideoModel) {
 
-    var ProfilePrimaryVideoModel,
+    var PrimaryVideoModel,
         _ = facade._;
 
-    ProfilePrimaryVideoModel = MediaVideoModel.extend({
+    PrimaryVideoModel = MediaVideoModel.extend({
         
         url: function() {
             if (testpath)
@@ -18,6 +18,6 @@ define( ["facade", "media/models/video"], function (facade, MediaVideoModel) {
         
     });
 
-    return ProfilePrimaryVideoModel;
+    return PrimaryVideoModel;
 });
 

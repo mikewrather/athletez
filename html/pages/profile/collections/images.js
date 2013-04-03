@@ -1,18 +1,18 @@
-// Profile Images Data
+// Images Data
 // ----------
 
 // Package Profile
 // Requires define
-// Returns {ProfileImageList} constructor
+// Returns {ImageList} constructor
 
 define(['facade', 'media/collections/images', 'utils'], 
 function(facade, MediaImageList, utils) {
 
-    var ProfileImageList,
+    var ImageList,
         _ = facade._,
         Channel = utils.lib.Channel;
 
-    ProfileImageList = MediaImageList.extend({
+    ImageList = MediaImageList.extend({
         
         url: function() {
             if (testpath)
@@ -22,5 +22,5 @@ function(facade, MediaImageList, utils) {
         
     });
 
-    return ProfileImageList;
+    return ImageList;
 });

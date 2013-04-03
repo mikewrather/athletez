@@ -1,18 +1,18 @@
-// Profile Related Users Data
+// Related Users Data
 // ----------
 
 // Package Profile
 // Requires define
-// Returns {ProfileRelatedList} constructor
+// Returns {RelatedList} constructor
 
 define(['facade', 'user/collections/relateds', 'utils'], 
 function(facade, UserRelatedList, utils) {
 
-    var ProfileRelatedList,
+    var RelatedList,
         _ = facade._,
         Channel = utils.lib.Channel;
 
-    ProfileRelatedList = UserRelatedList.extend({
+    RelatedList = UserRelatedList.extend({
         
         url: function() {
             if (testpath)
@@ -22,5 +22,5 @@ function(facade, UserRelatedList, utils) {
 
     });
 
-    return ProfileRelatedList;
+    return RelatedList;
 });

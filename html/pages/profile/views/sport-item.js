@@ -1,7 +1,7 @@
 // sport-item.js  
 // -------  
 // Requires `define`
-// Return {ProfileSportItemView} object as constructor
+// Return {SportItemView} object as constructor
 
 define([ 
         'vendor', 
@@ -9,33 +9,33 @@ define([
         'utils', 
         'text!profile/templates/sport-item.html',
         'profile/collections/teams',
-        'profile/views/team-list'
+        'sportorg/views/team-list'
         ], 
 function (
         vendor,
         views,
         utils,
-        profileSportItemTemplate
+        sportItemTemplate
         ) {
 
-    var ProfileSportItemView
+    var SportItemView
       , $ = vendor.$
       , BaseView = views.BaseView
       , Mustache = vendor.Mustache,
       Channel = utils.lib.Channel,
-      ProfileTeamListView = require('profile/views/team-list'),
-      ProfileTeamList = require('profile/collections/teams');
+      TeamListView = require('sportorg/views/team-list'),
+      TeamList = require('profile/collections/teams');
 
-      ProfileSportItemView = BaseView.extend({
+      SportItemView = BaseView.extend({
 
         tagName: "li",
 
-        className: "profile-sport",
+        className: "sport",
         
         rendered: false,
         
         initialize: function (options) {
-            this.template = profileSportItemTemplate;
+            this.template = sportItemTemplate;
             var self = this;
             function callback() {
                 if (self.rendered)
@@ -44,24 +44,24 @@ function (
                 self.initTeamList();
             }
             this.id = options.model.collection.id;
-            Channel('profilesports:select' + this.model.get('payload')['sport_id']).subscribe(callback);
+            Channel('sports:select' + this.model.get('payload')['sport_id']).subscribe(callback);
         },
         
         initTeamList: function() {
             var self = this;
-            this.teams = new ProfileTeamList();
+            this.teams = new TeamList();
             this.teams.id = this.id;
             this.teams.sport_id = this.model.get('payload')['sport_id'];
             this.teams.fetch();
             $.when(this.teams.request).done(function() {
                 self.setupTeamListView();
-                Channel('profileteams:fetch').publish();
+                Channel('teams:fetch').publish();
             });
         },
         
         setupTeamListView: function() {
             var self = this,
-                teamListView = new ProfileTeamListView({
+                teamListView = new TeamListView({
                     collection: this.teams
                 });
             
@@ -69,7 +69,7 @@ function (
                 teamListView.render();
                 self.$el.find('.teams-info').html(teamListView.el);                
             }
-            Channel('profileteams:fetch').subscribe(callback);
+            Channel('teams:fetch').subscribe(callback);
         },
 
         render: function () {
@@ -80,5 +80,5 @@ function (
         
       });
 
-    return ProfileSportItemView;
+    return SportItemView;
 });

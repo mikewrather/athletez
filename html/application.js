@@ -3,8 +3,8 @@
 // Requires define
 // Return {Object} App
 
-define( ["facade", "utils", "collections", "chrome", "controller", "profile", "game"], 
-function (facade, utils, collections, chromeBootstrap, Controller, ProfileController, GameController) {
+define( ["facade", "utils", "collections", "chrome", "controller", "profile", "game", "team"], 
+function (facade, utils, collections, chromeBootstrap, Controller, ProfileController, GameController, TeamController) {
 
     var App,
         ApplicationStates = collections.ApplicationStates,
@@ -28,7 +28,11 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
             
             'game': 'showGame',
             'game/': 'showGame',
-            'game/:action': 'showGame'
+            'game/:action': 'showGame',
+            
+            'team': 'showTeam',
+            'team/': 'showTeam',
+            'team/:action': 'showTeam'
         },
 
         initialize: function (options) {
@@ -43,7 +47,8 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
         
         initApp: function (action) {
             //this.showProfile();
-            this.showGame();
+            //this.showGame();
+            this.showTeam();
         },
         
         showProfile: function () {
@@ -64,6 +69,16 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
             var gameController = new GameController({
                 "route": ""
             });
+        },
+        
+        showTeam: function() {
+            this.loadStyles();
+            
+            $('body').empty();
+            chromeBootstrap();
+            var teamController = new TeamController({
+                "route": ""
+            })
         },
 
         // load style sheets

@@ -1,14 +1,14 @@
 // basics.js Model
 // ------------
 // Requires define
-// Return {ProfileBasicsModel} model constructor object
+// Return {BasicsModel} model constructor object
 
 define( ["facade", "user/models/basics"], function (facade, UserBasicsModel) {
 
-    var ProfileBasicsModel,
+    var BasicsModel,
         _ = facade._;
 
-    ProfileBasicsModel = UserBasicsModel.extend({
+    BasicsModel = UserBasicsModel.extend({
         
         url: function() {
             if (testpath)
@@ -18,6 +18,6 @@ define( ["facade", "user/models/basics"], function (facade, UserBasicsModel) {
         
     });
 
-    return ProfileBasicsModel;
+    return BasicsModel;
 });
 

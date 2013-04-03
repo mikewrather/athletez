@@ -5,9 +5,9 @@
 
 define( ["models/base"], function (BaseModel) {
 
-    var GameAddMediaModel;
+    var AddMediaModel;
 
-    GameAddMediaModel = BaseModel.extend({
+    AddMediaModel = BaseModel.extend({
 
         defaults: {
             
@@ -24,6 +24,6 @@ define( ["models/base"], function (BaseModel) {
 
     });
 
-    return GameAddMediaModel;
+    return AddMediaModel;
 });
 

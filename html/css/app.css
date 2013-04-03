@@ -24,4 +24,5 @@ header .signup-email { margin:0 5px; }
 
 #main { padding-top:15px; padding-bottom:15px; }
 #main .sports-info { margin-top:20px; }
-#main .profile-image { float:left; }
+#main .image { float:left; }
+#main .videothumb { float:left; }

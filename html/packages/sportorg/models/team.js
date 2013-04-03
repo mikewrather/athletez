@@ -14,6 +14,7 @@ define(["facade", "models/base"], function (facade, BaseModel) {
             
             "payload": {
                 "id": 0,
+                
                 "complevel": null,
                 "season": null,
                 "year": null,

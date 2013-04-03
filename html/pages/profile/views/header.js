@@ -1,8 +1,8 @@
-// Profile Header View
+// Header View
 // ---------
 // Package Profile
 // Requires `define`, `require`
-// Returns {ProfileHeaderView} constructor
+// Returns {HeaderView} constructor
 
 define([
         'require', 
@@ -18,13 +18,13 @@ define([
         ], 
 function(require, headerTemplate, selectSportTemplate) {
 
-    var ProfileHeaderView,
+    var HeaderView,
         facade = require('facade'),
         views = require('views'),
-        ProfileBasicsModel = require('profile/models/basics'),
+        BasicsModel = require('profile/models/basics'),
         SectionView = views.SectionView,
-        ProfileSportListView = require('profile/views/sport-list'),
-        ProfileSportList = require('profile/collections/sports'),
+        SportListView = require('profile/views/sport-list'),
+        SportList = require('profile/collections/sports'),
         utils = require('utils'),
         Channel = utils.lib.Channel,
         vendor = require('vendor'),
@@ -33,7 +33,7 @@ function(require, headerTemplate, selectSportTemplate) {
         _ = facade._;
         
 
-    ProfileHeaderView = SectionView.extend({
+    HeaderView = SectionView.extend({
 
         id: 'main-header',
 
@@ -50,14 +50,24 @@ function(require, headerTemplate, selectSportTemplate) {
             this.initSportList();            
         },
         
+        // **Method** `setOptions` - called by BaseView's initialize method
+        setOptions: function (options) {
+            if (!this.model) {
+                throw new Error("HeaderView expects option with model property.");
+            }            
+        },
+        
+        // Child views...
+        childViews: {},
+        
         initSportList: function () {
             var self = this;
-            this.sports = new ProfileSportList();
+            this.sports = new SportList();
             this.sports.id = this.model.id;
             this.sports.fetch();
             $.when(this.sports.request).done(function() {
                 self.setupSportListView();
-                Channel('profilesports:fetch').publish();
+                Channel('sports:fetch').publish();
                 self.select_sport = self.$('#select-sport');
                 self.selectSport();                
             });
@@ -65,7 +75,7 @@ function(require, headerTemplate, selectSportTemplate) {
         
         setupSportListView: function() {
             var self = this,
-                sportListView = new ProfileSportListView({
+                sportListView = new SportListView({
                     collection: this.sports
                 }),
                 renderSportListView = this.addChildView(sportListView);
@@ -90,32 +100,18 @@ function(require, headerTemplate, selectSportTemplate) {
                     self.$el.find('#sports-info').html('');
                 }                
             }
-            Channel('profilesports:fetch').subscribe(callback);      
-        },
-        
-        // **Method** `setOptions` - called by BaseView's initialize method
-        setOptions: function (options) {
-            if (!this.model) {
-                throw new Error("ProfileHeaderView expects option with model property.");
-            }            
-        },
-        
-        // Child views...
-        childViews: {},
-        
-        render: function (domInsertion, dataDecorator, partials) {
-            SectionView.prototype.render.call(this, domInsertion, dataDecorator, partials); 
+            Channel('sports:fetch').subscribe(callback);      
         },
         
         selectSport: function(event) {
             var sport_id = this.select_sport.val();
             this.$('.sport-info').stop().slideUp();
             this.$('.sport-info-' + sport_id).stop().slideDown();
-            Channel('profilesports:select' + sport_id).publish();            
+            Channel('sports:select' + sport_id).publish();            
         }
         
                 
     });
 
-    return ProfileHeaderView;
+    return HeaderView;
 });

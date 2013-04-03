@@ -1,15 +1,15 @@
 // commenton-form.js Model
 // ------------
 // Requires define
-// Return {ProfileCommentOnFormModel} model constructor object
+// Return {CommentOnFormModel} model constructor object
 
 define( ["facade", "site/models/comment", "utils"], function (facade, SiteCommentModel, utils) {
 
-    var ProfileCommentOnFormModel,
+    var CommentOnFormModel,
         _ = facade._,
         Channel = utils.lib.Channel;
 
-    ProfileCommentOnFormModel = SiteCommentModel.extend({
+    CommentOnFormModel = SiteCommentModel.extend({
         
         url: function() {
             if (testpath)
@@ -23,11 +23,11 @@ define( ["facade", "site/models/comment", "utils"], function (facade, SiteCommen
         
         fetchSuccess: function (model, response) {
             SiteCommentModel.prototype.fetchSuccess.call(model, response);
-            Channel('profilecommentonform:fetch').publish(model);
+            Channel('commentonform:fetch').publish(model);
         }
         
     });
 
-    return ProfileCommentOnFormModel;
+    return CommentOnFormModel;
 });
 

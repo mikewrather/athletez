@@ -1,18 +1,18 @@
-// Profile Videos Data
+// Videos Data
 // ----------
 
 // Package Profile
 // Requires define
-// Returns {ProfileVideoList} constructor
+// Returns {VideoList} constructor
 
 define(['facade', 'media/collections/videos', 'utils'], 
 function(facade, MediaVideoList, utils) {
 
-    var ProfileVideoList,
+    var VideoList,
         _ = facade._,
         Channel = utils.lib.Channel;
 
-    ProfileVideoList = MediaVideoList.extend({
+    VideoList = MediaVideoList.extend({
         
         url: function() {
             if (testpath)
@@ -22,5 +22,5 @@ function(facade, MediaVideoList, utils) {
 
     });
 
-    return ProfileVideoList;
+    return VideoList;
 });

@@ -1,18 +1,18 @@
-// Game Images Data
+// Images Data
 // ----------
 
 // Package Game
 // Requires define
-// Returns {GameImageList} constructor
+// Returns {ImageList} constructor
 
 define(['facade', 'media/collections/images', 'utils'], 
 function(facade, MediaImageList, utils) {
 
-    var GameImageList,
+    var ImageList,
         _ = facade._,
         Channel = utils.lib.Channel;
 
-    GameImageList = MediaImageList.extend({
+    ImageList = MediaImageList.extend({
         
         url: function() {
             if (testpath)
@@ -22,5 +22,5 @@ function(facade, MediaImageList, utils) {
         
     });
 
-    return GameImageList;
+    return ImageList;
 });

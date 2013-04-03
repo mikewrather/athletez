@@ -22,8 +22,8 @@ define([
     
     "game/views/header",
     "game/views/add-media",
-    "game/views/teamroster-list",
-    "game/views/videoplayer",
+    "sportorg/views/teamroster-list",
+    "media/views/videoplayer",
     "game/views/videothumb-list",
     "game/views/image-list",
     "game/views/comment-list"
@@ -37,21 +37,21 @@ define([
         views = require("views"),
         utils = require("utils"),
         
-        GameBasicsModel = require("game/models/basics"),
-        GameAddMediaModel = require("game/models/addmedia"),
-        GameTeamRosterList = require("game/collections/teamrosters"),
-        GameVideoPlayerModel = require("game/models/videoplayer"),
-        GameVideoThumbList = require("game/collections/videothumbs");
-        GameImageList = require("game/collections/images");
-        GameCommentList = require("game/collections/comments");
+        BasicsModel = require("game/models/basics"),
+        AddMediaModel = require("game/models/addmedia"),
+        TeamRosterList = require("game/collections/teamrosters"),
+        VideoPlayerModel = require("game/models/videoplayer"),
+        VideoThumbList = require("game/collections/videothumbs");
+        ImageList = require("game/collections/images");
+        CommentList = require("game/collections/comments");
         
-        GameHeaderView = require("game/views/header"),
-        GameAddMediaView = require("game/views/add-media"),
-        GameTeamRosterListView = require("game/views/teamroster-list"),
-        GameVideoPlayerView = require("game/views/videoplayer"),
-        GameVideoThumbListView = require("game/views/videothumb-list"),
-        GameImageListView = require("game/views/image-list"),
-        GameCommentListView = require("game/views/comment-list"),
+        HeaderView = require("game/views/header"),
+        AddMediaView = require("game/views/add-media"),
+        TeamRosterListView = require("sportorg/views/teamroster-list"),
+        VideoPlayerView = require("media/views/videoplayer"),
+        VideoThumbListView = require("game/views/videothumb-list"),
+        ImageListView = require("game/views/image-list"),
+        CommentListView = require("game/views/comment-list"),
         
         
         LayoutView = views.LayoutView,
@@ -72,43 +72,43 @@ define([
 
             this.handleOptions(options);
             
-            this.initGame();
+            this.init();
             
             return this;
         },
         
-        initGame: function() {
+        init: function() {
             this.setupLayout().render();
-            this.createGameData();
+            this.createData();
             this.handleDeferreds();            
         },
         
-        createGameData: function () {
-            this.basics = new GameBasicsModel();
+        createData: function () {
+            this.basics = new BasicsModel();
             this.basics.id = '101';            
             this.basics.fetch();
             this.id = this.basics.id;
             
-            this.addmedia = new GameAddMediaModel();
+            this.addmedia = new AddMediaModel();
             this.addmedia.id = this.id;            
             
-            this.teamrosters = new GameTeamRosterList();
+            this.teamrosters = new TeamRosterList();
             this.teamrosters.id = this.id;
             this.teamrosters.fetch();
             
-            this.videoplayer = new GameVideoPlayerModel();
+            this.videoplayer = new VideoPlayerModel();
             this.videoplayer.id = this.id;
             this.videoplayer.fetch();
             
-            this.videothumbs = new GameVideoThumbList();
+            this.videothumbs = new VideoThumbList();
             this.videothumbs.id = this.id;
             this.videothumbs.fetch();
             
-            this.images = new GameImageList();
+            this.images = new ImageList();
             this.images.id = this.id;
             this.images.fetch();
             
-            this.comments = new GameCommentList();
+            this.comments = new CommentList();
             this.comments.id = this.id;
             this.comments.fetch();
         },
@@ -145,7 +145,7 @@ define([
         setupHeaderView: function() {
             var headerView;
             
-            headerView = new GameHeaderView({
+            headerView = new HeaderView({
                 model: this.basics,
                 name: "Header",
                 destination: "#main-header"
@@ -158,7 +158,7 @@ define([
         setupAddMediaView: function() {
             var addMediaView;
             
-            addMediaView = new GameAddMediaView({
+            addMediaView = new AddMediaView({
                 model: this.addmedia,
                 name: "Add Media",
                 destination: "#add-media"
@@ -171,7 +171,7 @@ define([
         setupTeamRosterListView: function() {
             var teamRosterListView;
             
-            teamRosterListView = new GameTeamRosterListView({
+            teamRosterListView = new TeamRosterListView({
                 collection: this.teamrosters,
                 destination: "#roster-wrap"
             });
@@ -183,7 +183,7 @@ define([
         setupVideoPlayerView: function() {
             var videoPlayerView;
             
-            videoPlayerView = new GameVideoPlayerView({
+            videoPlayerView = new VideoPlayerView({
                 model: this.videoplayer,
                 name: "Video Player",
                 destination: "#video-player"
@@ -196,7 +196,7 @@ define([
         setupVideoThumbListView: function() {
             var videoThumbListView;
             
-            videoThumbListView = new GameVideoThumbListView({
+            videoThumbListView = new VideoThumbListView({
                 collection: this.videothumbs,
                 destination: "#videothumb-wrap"
             });
@@ -208,7 +208,7 @@ define([
         setupImageListView: function() {
             var imageListView;
             
-            imageListView = new GameImageListView({
+            imageListView = new ImageListView({
                 collection: this.images,
                 destination: "#image-wrap"
             });
@@ -220,7 +220,7 @@ define([
         setupCommentListView: function() {
             var commentListView;
             
-            commentListView = new GameCommentListView({
+            commentListView = new CommentListView({
                 collection: this.comments,
                 destination: "#comment-wrap"
             });

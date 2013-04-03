@@ -1,18 +1,18 @@
-// Profile Teams Data
+// Teams Data
 // ----------
 
 // Package Profile
 // Requires define
-// Returns {ProfileTeamList} constructor
+// Returns {TeamList} constructor
 
 define(['facade', 'sportorg/collections/teams', 'utils'], 
 function(facade, SportorgTeamList, utils) {
 
-    var ProfileTeamList,
+    var TeamList,
         _ = facade._,
         Channel = utils.lib.Channel;
 
-    ProfileTeamList = SportorgTeamList.extend({
+    TeamList = SportorgTeamList.extend({
         
         url: function() {
             if (testpath)
@@ -22,5 +22,5 @@ function(facade, SportorgTeamList, utils) {
 
     });
 
-    return ProfileTeamList;
+    return TeamList;
 });

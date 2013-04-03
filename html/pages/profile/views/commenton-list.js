@@ -1,78 +1,19 @@
-// The Profile CommentOn List
+// The CommentOn List
 // --------------
 
-define(['facade','views', 'utils', 'profile/views/commenton-item', 'profile/views/commenton-form'], 
-function(facade,  views,   utils,   ProfileCommentOnItemView,       ProfileCommentOnFormView) {
+define(['facade', 'utils', 'site/views/comment-list', 'profile/views/commenton-form'], 
+function(facade,   utils,   BaseCommentListView,       CommentFormView) {
 
-    var ProfileCommentOnListView, 
-        ProfileCommentOnListAbstract,
-        $ = facade.$,
-        _ = facade._,
-        Channel = utils.lib.Channel,
-        CollectionView = views.CollectionView,
-        SectionView = views.SectionView;
+    var CommentOnListView, 
+        Channel = utils.lib.Channel;
 
-    ProfileCommentOnListAbstract = CollectionView.extend(SectionView.prototype);
+    CommentOnListView = BaseCommentListView.extend({
 
-    ProfileCommentOnListView = ProfileCommentOnListAbstract.extend({
-
-        __super__: CollectionView.prototype,
-
-        id: "profile-commenton-list",
-
-        name: "Profile CommentOn List",
-
-        tagName: "ul",
-
-        // Tag for the child views
-        _tagName: "li",
-        _className: "profile-commenton",
-
-        // Store constructor for the child views
-        _view: ProfileCommentOnItemView,
-
-        initialize: function(options) {
-            CollectionView.prototype.initialize.call(this, options);
-            if (!this.collection) {
-                throw new Error("ProfileCommentOnListView expected options.collection.");
-            }
-            _.bindAll(this);
-            this.addSubscribers();
-            this.setupFormView();
-        },
-
-        render: function () {
-            SectionView.prototype.render.call(this);
-            _.delay(this.handleListDisplay, 250);
-            return this;
-        },
-
-        handleListDisplay: function () {
-            var main = $(this.destination);
-
-            if (this.collection.length) {
-                main.show();
-            } else {
-                main.hide();
-            }            
-        },
-
-        // Child views...
-        childViews: {},
-
-        // Event handlers...
-
-        addSubscribers: function () {
-            this.collection.on('add remove reset sync toggleAllComplete clearCompleted', this.handleListDisplay); 
-        },
-
-        removeSubscribers: function () {
-            this.collection.off('add remove reset sync toggleAllComplete clearCompleted', this.handleListDisplay);
-        },
+        name: "Commenton List",
         
         setupFormView: function () {
             var listView = this,
-                formView = new ProfileCommentOnFormView({collection: this.collection}),
+                formView = new CommentFormView({collection: this.collection}),
                 renderAddView = this.addChildView(formView);
             
             this.childViews.form = formView;
@@ -86,10 +27,10 @@ function(facade,  views,   utils,   ProfileCommentOnItemView,       ProfileComme
                 listView.$el.prepend(formView.el);
             }
             
-            Channel('profilecommentonform:fetch').subscribe(callback);
+            Channel('commentonform:fetch').subscribe(callback);
         }
 
     });
 
-    return ProfileCommentOnListView;
+    return CommentOnListView;
 });

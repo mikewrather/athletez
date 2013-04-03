@@ -1,26 +1,24 @@
-// Game Header View
+// Header View
 // ---------
 // Package Game
 // Requires `define`, `require`
-// Returns {GameHeaderView} constructor
+// Returns {HeaderView} constructor
 
 define([
         'require', 
         'text!game/templates/header.html', 
-        'game/models/basics',
         'facade', 
         'views'
         ], 
 function(require, headerTemplate) {
 
-    var GameHeaderView,
+    var HeaderView,
         facade = require('facade'),
         views = require('views'),
-        GameBasicsModel = require('game/models/basics'),
         SectionView = views.SectionView;
         
 
-    GameHeaderView = SectionView.extend({
+    HeaderView = SectionView.extend({
 
         id: 'main-header',
 
@@ -29,5 +27,5 @@ function(require, headerTemplate) {
                 
     });
 
-    return GameHeaderView;
+    return HeaderView;
 });

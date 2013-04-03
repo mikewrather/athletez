@@ -60,6 +60,7 @@ require.config({
         'chrome'       : '/pages/chrome',
         'profile'      : '/pages/profile',
         'game'         : '/pages/game',
+        'team'         : '/pages/team',
         
         // Application - bootstrap for frontend app 
         'application'  : '/application'

@@ -1,18 +1,18 @@
-// Game Comments Data
+// Comments Data
 // ----------
 
 // Package Game
 // Requires define
-// Returns {GameCommentList} constructor
+// Returns {CommentList} constructor
 
 define(['facade', 'site/collections/comments', 'utils'], 
 function(facade, SiteCommentList, utils) {
 
-    var GameCommentList,
+    var CommentList,
         _ = facade._,
         Channel = utils.lib.Channel;
 
-    GameCommentList = SiteCommentList.extend({
+    CommentList = SiteCommentList.extend({
         
         url: function() {
             if (testpath)
@@ -22,5 +22,5 @@ function(facade, SiteCommentList, utils) {
 
     });
 
-    return GameCommentList;
+    return CommentList;
 });

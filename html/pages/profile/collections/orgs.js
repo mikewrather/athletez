@@ -1,18 +1,18 @@
-// Profile Orgs Data
+// Orgs Data
 // ----------
 
 // Package Profile
 // Requires define
-// Returns {ProfileOrgList} constructor
+// Returns {OrgList} constructor
 
 define(['facade', 'sportorg/collections/orgs', 'utils'], 
 function(facade, SportorgOrgList, utils) {
 
-    var ProfileOrgList,
+    var OrgList,
         _ = facade._,
         Channel = utils.lib.Channel;
 
-    ProfileOrgList = SportorgOrgList.extend({
+    OrgList = SportorgOrgList.extend({
         
         url: function() {
             if (testpath)
@@ -24,5 +24,5 @@ function(facade, SportorgOrgList, utils) {
 
     });
 
-    return ProfileOrgList;
+    return OrgList;
 });

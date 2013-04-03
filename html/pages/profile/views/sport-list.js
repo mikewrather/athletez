@@ -1,40 +1,38 @@
-// The Profile Sport List
+// Sport List
 // --------------
 
 define(['facade','views', 'utils', 'profile/views/sport-item'], 
-function(facade,  views,   utils,   ProfileSportItemView) {
+function(facade,  views,   utils,   SportItemView) {
 
-    var ProfileSportListView, 
-        ProfileSportListAbstract,
+    var SportListView, 
+        SportListAbstract,
         $ = facade.$,
         _ = facade._,
         Channel = utils.lib.Channel,
         CollectionView = views.CollectionView,
         SectionView = views.SectionView;
 
-    ProfileSportListAbstract = CollectionView.extend(SectionView.prototype);
+    SportListAbstract = CollectionView.extend(SectionView.prototype);
 
-    ProfileSportListView = ProfileSportListAbstract.extend({
+    SportListView = SportListAbstract.extend({
 
         __super__: CollectionView.prototype,
 
-        id: "profile-sport-list",
-
-        name: "Profile Sport List",
-
+        id: "sport-list",
+        name: "Sport List",
         tagName: "ul",
 
         // Tag for the child views
         _tagName: "li",
-        _className: "profile-sport",
+        _className: "sport",
 
         // Store constructor for the child views
-        _view: ProfileSportItemView,
+        _view: SportItemView,
 
         initialize: function(options) {
             CollectionView.prototype.initialize.call(this, options);
             if (!this.collection) {
-                throw new Error("ProfileSportListView expected options.collection.");
+                throw new Error("SportListView expected options.collection.");
             }
             _.bindAll(this);
             this.addSubscribers();
@@ -44,32 +42,9 @@ function(facade,  views,   utils,   ProfileSportItemView) {
             SectionView.prototype.render.call(this);
             _.delay(this.handleListDisplay, 250);
             return this;
-        },
-
-        handleListDisplay: function () {
-            var main = $(this.destination);
-
-            if (this.collection.length) {
-                main.show();
-            } else {
-                main.hide();
-            }            
-        },
-
-        // Child views...
-        childViews: {},
-
-        // Event handlers...
-
-        addSubscribers: function () {
-            this.collection.on('add remove reset sync toggleAllComplete clearCompleted', this.handleListDisplay); 
-        },
-
-        removeSubscribers: function () {
-            this.collection.off('add remove reset sync toggleAllComplete clearCompleted', this.handleListDisplay);
         }
 
     });
 
-    return ProfileSportListView;
+    return SportListView;
 });
