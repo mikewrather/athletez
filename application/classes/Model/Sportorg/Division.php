@@ -107,4 +107,10 @@ class Model_Sportorg_Division extends ORM
 		}
 		
 	}
+	
+	public function getOrgs()
+	{
+		$orgs = $this->orgs;
+		return $orgs;
+	} 
 }

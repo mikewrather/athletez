@@ -45,7 +45,7 @@
 				$this->modelNotSetError();
 				return false;
 			}
-		
+			return $this->mainModel; 
 		}
 		
 		/**

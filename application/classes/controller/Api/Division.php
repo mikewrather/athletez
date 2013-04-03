@@ -39,7 +39,12 @@
 		{
 			$this->payloadDesc = "Basic information about a division";
 
-		
+			if(!$this->mainModel->id)
+			{
+				$this->modelNotSetError();
+				return false;
+			}
+			return $this->mainModel; 
 		}
 		
 		/**
@@ -51,7 +56,12 @@
 		{
 			$this->payloadDesc = "Returns all organizations within with a certain division";
 
-		
+			if(!$this->mainModel->id)
+			{
+				$this->modelNotSetError();
+				return false;
+			}
+			return $this->mainModel->getOrgs();
 		}
 		
 		############################################################################
