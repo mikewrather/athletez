@@ -127,7 +127,16 @@ class Model_User_Base extends Model_Auth_User
 	 * @var null
 	 */
 	protected $singlesport = false;
-
+	 
+	public function getPrimaryVideo()
+	{
+		$profile = $this->userprofile;
+		$profile_obj = $profile->getBasics();		
+		$media = $this->media->where('id', '=', $profile_obj['primary_video_id'])->and_where('media_type','=','video');
+		 
+		return $media->video;
+	}
+	
 	public function getPositions()
 	{
 		//loop through teams and get positions for each.
@@ -144,34 +153,18 @@ class Model_User_Base extends Model_Auth_User
 
 	}
 
-
+	public function getOrgs()
+	{
+		$org_sport_link_obj = ORM::factory('Sportorg_Orgsportlink')
+					->join('teams')->on('sportorg_orgsportlink.id', '=', 'teams.org_sport_link_id')					
+					->join('users_teams_link')->on('users_teams_link.teams_id','=','teams.id')
+					->where('users_teams_link.users_id', '=', $this->id);
+		return $org_sport_link_obj;
+	}
+	
 	public function getSports()
 	{
-		if(!$this->loaded()) return false;
-		
-		// through user_sport_link table
-		$sports_link_obj = ORM::factory('Sportorg_Sport')				
-				->join('user_sport_link')
-					->on('user_sport_link.sports_id','=','sportorg_sport.id')
-				->where('user_sport_link.users_id', '=', $this->id );
-				
-		// through team association
-		$org_sport_link_obj = ORM::factory('Sportorg_Sport')
-			->join('org_sport_link')
-				->on('org_sport_link.sports_id', '=', 'sportorg_sport.id')
-			->join('teams')
-				->on('teams.org_sport_link_id', '=', 'org_sport_link.orgs_id')
-			->join('users_teams_link')
-				->on('users_teams_link.teams_id', '=', 'teams.id')
-				->where('users_teams_link.users_id', '=', $this->id);
-
-		// add to return array
-		$sports = array();
-		$sports['sport_link'] = $sports_link_obj;
-		$sports['org_sport_link'] = $org_sport_link_obj; 	
-		
-		// return result 
-		return (Object)$sports;		
+		return $this->isports; 		
 	}
 	
 	public function getBasics()
@@ -207,7 +200,11 @@ class Model_User_Base extends Model_Auth_User
 		return $retArr;
 	*/
 	}
-
+	
+	public function getTeams()
+	{
+		return $this->teams;
+	}
 	public function getResumeData()
 	{
 		$retArr = array();
@@ -266,7 +263,7 @@ class Model_User_Base extends Model_Auth_User
 		{
 			$retArr[$data['id']] = $data;
 		}
-
+		 
 		return $retArr;
 
 	}

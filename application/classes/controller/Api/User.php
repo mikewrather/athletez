@@ -38,7 +38,12 @@
 		public function action_get_basics()
 		{
 			$this->payloadDesc = "Basic information about the user.";
-			$this->requireID();
+			if(!$this->mainModel->id)
+			{
+				$this->modelNotSetError();
+				return false;
+			}
+			return $this->mainModel; 
 		}
 		
 		/**
@@ -50,8 +55,12 @@
 		{
 			$this->requireID();
 			$this->payloadDesc = "List of teams the user is associated with";
-			$user_teams = ORM::factory("User_Teamslink")->where('users_id', '=', $this->myID );
-			return $user_teams;
+			if(!$this->mainModel->id)
+			{
+				$this->modelNotSetError();
+				return false;
+			}
+			return $this->mainModel->getTeams();
 		}
 		
 		/**
@@ -62,9 +71,12 @@
 		public function action_get_sports()
 		{
 			$this->payloadDesc = "List of sports that the user is associated with";
-			$this->requireID();
-			$sports = $this->mainModel->getSports();
-			return $sports; 
+			if(!$this->mainModel->id)
+			{
+				$this->modelNotSetError();
+				return false;
+			}
+			return $this->mainModel->getSports();
 		}
 		
 		/**
@@ -76,17 +88,12 @@
 		{
 			$this->requireID();
 			$this->payloadDesc = "List of organizations the user is associated with";
-
-			// JOIN TABLES TO PULL ALL ORGANIZATIONS FOR A USER
-			$teams_link = ORM::factory('User_Teamslink')
-				->join('teams')
-					->on('user_teamslink.teams_id','=','teams.id')
-				->join('org_sport_link')
-					->on('teams.org_sport_link_id','=','org_sport_link.id')
-				->where('user_teamslink.users_id', '=', $this->myID )
-				->group_by('org_sport_link.orgs_id');
-
-			return $teams_link;
+			if(!$this->mainModel->id)
+			{
+				$this->modelNotSetError();
+				return false;
+			}
+			return (Object)$this->mainModel->getOrgs($this->myID);			
 		}
 		
 		/**
@@ -109,9 +116,14 @@
 		 */
 		public function action_get_videos()
 		{
-			$this->requireID();
+			 
 			$this->payloadDesc = "List of videos uploaded by the user";
-			return $this->mainModel->getVideos();
+			if(!$this->mainModel->id)
+			{
+				$this->modelNotSetError();
+				return false;
+			}
+			return $this->mainModel->getVideos();			
 		
 		}
 		
@@ -122,8 +134,14 @@
 		 */
 		public function action_get_images()
 		{
-			$this->requireID();
+			 
 			$this->payloadDesc = "List of images uploaded by the user";
+			if(!$this->mainModel->id)
+			{
+				$this->modelNotSetError();
+				return false;
+			}
+			return $this->mainModel->getImages();		
 		}
 		
 		/**
@@ -158,9 +176,14 @@
 		public function action_get_fitnessbasics()
 		{
 			$this->requireID();
-			$this->payloadDesc = "Get the basic fitness data for the user";
-			$fitnessbasic = ORM::factory('User_Fitness_Dataval')->where('users_id', '=', $this->myID ); 
-			return $fitnessbasic;
+			$this->payloadDesc = "Get the basic fitness data for the user"; 
+			
+			if(!$this->mainModel->id)
+			{
+				$this->modelNotSetError();
+				return false;
+			}
+			return (Object)$this->mainModel->getFitnessbasics();		
 		
 		}
 		
@@ -173,8 +196,13 @@
 		{
 			$this->requireID();
 			$this->payloadDesc = "Get the primary video to be displayed on a user profile page";
-
-		
+	
+			if(!$this->mainModel->id)
+			{
+				$this->modelNotSetError();
+				return false;
+			}
+			return (Object)$this->mainModel->getPrimaryVideo();	
 		}
 		
 		############################################################################
