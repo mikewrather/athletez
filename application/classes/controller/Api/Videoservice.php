@@ -39,7 +39,12 @@
 		{
 			$this->payloadDesc = "Basic info about a given video service.";
 
-		
+			if(!$this->mainModel->id)
+			{
+				$this->modelNotSetError();
+				return false;
+			}
+			return $this->mainModel;
 		}
 		
 		/**
@@ -59,7 +64,13 @@
 			{
 				$sports_id = (int)trim($this->request->query('sports_id'));
 			}
-
+			/*
+			if(!$this->mainModel->id)
+			{
+				$this->modelNotSetError();
+				return false;
+			}*/
+			return $this->mainModel->getVideos($sports_id);
 		}
 		
 		############################################################################

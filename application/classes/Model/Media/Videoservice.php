@@ -20,7 +20,18 @@ class Model_Media_Videoservice extends ORM
 			'foreign_key' => 'video_services_id'
 		)
 	);
-
+	
+	public function getVideos($sports_id = null)
+	{
+		$sports = $this->videos;
+		if(isset($sports_id))
+		{
+			$sports->join('media')->on('media.id', '=','media_video.media_id')
+					->where('media.sports_id', '=', $sports_id);
+		}  
+		 
+		return $sports;
+	}
 	public function getBasics()
 	{
 		return array(
