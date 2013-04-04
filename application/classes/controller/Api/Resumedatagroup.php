@@ -38,8 +38,12 @@
 		public function action_get_basics()
 		{
 			$this->payloadDesc = "Retrives basic information for a resume data group";
-
-		
+			if(!$this->mainModel->id)
+			{
+				$this->modelNotSetError();
+				return false;
+			}
+			return $this->mainModel; 
 		}
 		
 		/**
@@ -51,7 +55,12 @@
 		{
 			$this->payloadDesc = "Returns a list of the resume data for a given group";
 
-		
+			if(!$this->mainModel->id)
+			{
+				$this->modelNotSetError();
+				return false;
+			}
+			return $this->mainModel->getResumedata();
 		}
 		
 		/**
@@ -63,7 +72,12 @@
 		{
 			$this->payloadDesc = "Returns all Resume Data Profiles for which this Resume Data Group exists";
 
-		
+			if(!$this->mainModel->id)
+			{
+				$this->modelNotSetError();
+				return false;
+			}
+			return $this->mainModel->getResumeprofile();
 		}
 		
 		############################################################################
