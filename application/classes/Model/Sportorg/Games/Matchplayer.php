@@ -60,7 +60,6 @@ class Model_Sportorg_Games_Matchplayer extends ORM
 
 			// points_awarded (int)
 			'points_awarded'=>array(
-				array('not_empty'),
 				array('digit'),
 			),
 

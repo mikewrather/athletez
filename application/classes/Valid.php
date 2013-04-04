@@ -38,4 +38,26 @@
 			}
 			return false;
 		}
+
+		public static function stat_tab_id_exist($value){
+			$stat_tab_model = ORM::factory("Stats_Tab");
+			$stat_tab_model->select("id")
+				->where('id', '=', $value)
+				->find();
+			if ($stat_tab_model->loaded()){
+				return true;
+			}
+			return false;
+		}
+
+		public static function unique_email($value){
+			$user_model = ORM::factory("User_Base");
+			$user_model->select("id")
+				->where('email', '=', $value)
+				->find();
+			if (!$user_model->loaded()){
+				return true;
+			}
+			return false;
+		}
 	}

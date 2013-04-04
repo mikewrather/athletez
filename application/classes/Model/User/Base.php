@@ -394,4 +394,68 @@ class Model_User_Base extends Model_Auth_User
 			->get('total');
 	}
 
+	//validation rules:
+	public function rules(){
+		return array
+		(
+			// email (varchar)
+			'email'=>array(
+				array('not_empty'),
+				array('email'),
+				array('unique_email'),
+			),
+
+			// first_name (varchar)
+			'first_name'=>array(
+				array('not_empty'),
+				array('alpha'),
+			),
+
+			// last_name (varchar)
+			'last_name'=>array(
+				array('not_empty'),
+				array('alpha'),
+			),
+
+			// username (varchar)
+//			'username'=>array(
+//				array('not_empty'),
+//			),
+
+			// password (varchar)
+			'password'=>array(
+				array('not_empty'),
+			),
+
+			// login_count (int)
+//			'login_count'=>array(
+//				array('not_empty'),
+//				array('digit'),
+//			),
+
+			// last_login (int)
+//			'last_login'=>array(
+//				array('not_empty'),
+//				array('digit'),
+//			),
+
+			// cities_id (int)
+//			'cities_id'=>array(
+//				array('not_empty'),
+//				array('digit'),
+//			),
+//
+//			// date_created (date)
+//			'date_created'=>array(
+//				array('not_empty'),
+//				array('date'),
+//			),
+//
+//			// logins (int)
+//			'logins'=>array(
+//				array('not_empty'),
+//				array('digit'),
+//			),
+		);
+	}
 }

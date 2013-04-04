@@ -292,4 +292,15 @@ class Controller_Api_Base extends AuthController
 	{
 		if(!$this->mainModel->loaded()) $this->modelNotSetError();
 	}
+
+	public function collect_error_messages($error_arrays){
+		$external_errors = array();
+		if (isset($error_arrays['_external'])){
+			$external_errors = $error_arrays['_external'];
+			$error_arrays = array();
+		}
+		$error_arrays = array_merge($error_arrays, $external_errors);
+		$error_desc = implode("\n", $error_arrays);
+		return $error_desc;
+	}
 }

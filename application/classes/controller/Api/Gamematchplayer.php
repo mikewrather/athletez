@@ -88,13 +88,7 @@
 				$game_match_player_obj->save();
 			}catch (ORM_Validation_Exception $e){
 				$error_arrays = $e->errors('models/sportorg/games/sportorg_games_matchplayer');
-				$external_errors = array();
-				if (isset($error_arrays['_external'])){
-					$external_errors = $error_arrays['_external'];
-					$error_arrays = array();
-				}
-				$error_arrays = array_merge($error_arrays, $external_errors);
-				$error_desc = implode("\n", $error_arrays);
+				$error_desc = $this->collect_error_messages($error_arrays);
 
 				// Create Array for Error Data
 				$error_array = array(
