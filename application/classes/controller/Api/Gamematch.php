@@ -64,13 +64,6 @@
 			{
 				$positions_id = (int)trim($this->request->query('positions_id'));
 			}
-			
-			if(!$this->mainModel->id)
-			{
-				$this->modelNotSetError();
-				return false;
-			}
-			return $this->mainModel->getPlayers($positions_id);
 
 		}
 		
@@ -91,20 +84,32 @@
 		     // CHECK FOR PARAMETERS:
 			// games_id 
 			// ID of the game we're adding the match for
-				
-			if((int)trim($this->request->post('games_id')) > 0)
-			{
-				$games_id = (int)trim($this->request->post('games_id'));
-			}
+			$game_match_obj = ORM::factory("Sportorg_Games_Match");
 
-			// match_num 
-			// A number or unique identifier for the match (can be 1st, Last, or any string)
-				
-			if(trim($this->request->post('match_num')) != "")
-			{
-				$match_num = trim($this->request->post('match_num'));
-			}
+			$games_id = (int)trim($this->request->post('games_id'));
+			$match_num = trim($this->request->post('match_num'));
 
+			$game_match_obj->games_id = $games_id;
+			$game_match_obj->match_num = $match_num;
+
+			try{
+				$game_match_obj->save();
+			}catch (ORM_Validation_Exception $e){
+				$error_arrays = $e->errors("");
+				$error_desc = implode("\n", $error_arrays);
+				// Create Array for Error Data
+				$error_array = array(
+					"error" => "Unable to save game match info",
+					"desc" => $error_desc
+				);
+
+				// Set whether it is a fatal error
+				$is_fatal = true;
+
+				// Call method to throw an error
+				$this->addError($error_array,$is_fatal);
+			}
+			return $game_match_obj;
 		}
 		
 		/**

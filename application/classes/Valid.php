@@ -15,4 +15,8 @@
 			}
 			return ($value != $null_value);
 		}
+
+		public static function unique(){
+			//TODO
+		}
 	}
