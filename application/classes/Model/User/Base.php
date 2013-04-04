@@ -387,5 +387,14 @@ class Model_User_Base extends Model_Auth_User
 		return Model_Site_Comment::getCommentsOf($this);
 	}
 
+	public static function unique_username($email)
+	{
+		// Check if the username already exists in the database
+		return ! DB::select(array(DB::expr('COUNT(id)'), 'total'))
+			->from('users')
+			->where('email', '=', $email)
+			->execute()
+			->get('total');
+	}
 
 }

@@ -10,6 +10,13 @@ class Model_Site_Enttype extends ORM
 
 	protected $_table_name = 'enttypes';
 
+	protected $_has_many = array(
+		'fields' => array(
+			'model' => 'Site_Enttype_Field',
+			'foreign_key' => 'enttypes_id'
+		)
+	);
+
 	public function __construct($id=NULL)
 	{
 		parent::__construct($id);
