@@ -27,4 +27,15 @@
 			}
 			return true;
 		}
+
+		public static function game_match_id_exist($value){
+			$games_match_model = ORM::factory("Sportorg_Games_Match");
+			$games_match_model->select("id")
+				->where('id', '=', $value)
+				->find();
+			if ($games_match_model->loaded()){
+				return true;
+			}
+			return false;
+		}
 	}
