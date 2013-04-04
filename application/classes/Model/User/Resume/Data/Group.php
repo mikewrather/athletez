@@ -99,4 +99,13 @@ class Model_User_Resume_Data_Group extends ORM
 		}
 		return $this;
 	}
+	public function getResumeprofile()
+	{
+		return $this->profiles;
+	}
+	
+	public function getResumedata()
+	{
+		return $this->resdata;		
+	}
 }
