@@ -1,44 +1,44 @@
-// Sport List
+// Complevel List
 // --------------
 
-define(['facade','views', 'utils', 'team/views/sport-item'], 
-function(facade,  views,   utils,   SportItemView) {
+define(['facade','views', 'utils', 'team/views/complevel-item'], 
+function(facade,  views,   utils,   ComplevelItemView) {
 
-    var SportListView, 
-        SportListAbstract,
+    var ComplevelListView, 
+        ComplevelListAbstract,
         $ = facade.$,
         _ = facade._,
         Channel = utils.lib.Channel,
         CollectionView = views.CollectionView,
         SectionView = views.SectionView;
 
-    SportListAbstract = CollectionView.extend(SectionView.prototype);
+    ComplevelListAbstract = CollectionView.extend(SectionView.prototype);
 
-    SportListView = SportListAbstract.extend({
+    ComplevelListView = ComplevelListAbstract.extend({
 
         __super__: CollectionView.prototype,
 
-        id: "sport-list",
-        name: "Sport List",
+        id: "complevel-list",
+        name: "Complevel List",
         tagName: "ul",
 
         // Tag for the child views
         _tagName: "li",
-        _className: "sport",
+        _className: "complevel",
 
         // Store constructor for the child views
-        _view: SportItemView,
+        _view: ComplevelItemView,
 
         initialize: function(options) {
             CollectionView.prototype.initialize.call(this, options);
             if (!this.collection) {
-                throw new Error("SportListView expected options.collection.");
+                throw new Error("ComplevelListView expected options.collection.");
             }
             _.bindAll(this);
             this.addSubscribers();
-        }
+        }        
 
     });
 
-    return SportListView;
+    return ComplevelListView;
 });

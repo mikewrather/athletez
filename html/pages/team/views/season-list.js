@@ -1,44 +1,44 @@
-// Sport List
+// Season List
 // --------------
 
-define(['facade','views', 'utils', 'team/views/sport-item'], 
-function(facade,  views,   utils,   SportItemView) {
+define(['facade','views', 'utils', 'team/views/season-item'], 
+function(facade,  views,   utils,   SeasonItemView) {
 
-    var SportListView, 
-        SportListAbstract,
+    var SeasonListView, 
+        SeasonListAbstract,
         $ = facade.$,
         _ = facade._,
         Channel = utils.lib.Channel,
         CollectionView = views.CollectionView,
         SectionView = views.SectionView;
 
-    SportListAbstract = CollectionView.extend(SectionView.prototype);
+    SeasonListAbstract = CollectionView.extend(SectionView.prototype);
 
-    SportListView = SportListAbstract.extend({
+    SeasonListView = SeasonListAbstract.extend({
 
         __super__: CollectionView.prototype,
 
-        id: "sport-list",
-        name: "Sport List",
+        id: "season-list",
+        name: "Season List",
         tagName: "ul",
 
         // Tag for the child views
         _tagName: "li",
-        _className: "sport",
+        _className: "season",
 
         // Store constructor for the child views
-        _view: SportItemView,
+        _view: SeasonItemView,
 
         initialize: function(options) {
             CollectionView.prototype.initialize.call(this, options);
             if (!this.collection) {
-                throw new Error("SportListView expected options.collection.");
+                throw new Error("SeasonListView expected options.collection.");
             }
             _.bindAll(this);
             this.addSubscribers();
-        }
+        }        
 
     });
 
-    return SportListView;
+    return SeasonListView;
 });
