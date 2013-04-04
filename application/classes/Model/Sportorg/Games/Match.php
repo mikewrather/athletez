@@ -66,9 +66,6 @@ class Model_Sportorg_Games_Match extends ORM
 			'games_id' => array(
 				array('not_equals', array(':value', 0))
 			),
-			'match_num' => array(
-				array('not_empty'),
-			)
 		);
 	}
 }

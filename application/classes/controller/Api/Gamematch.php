@@ -91,12 +91,21 @@
 
 			$game_match_obj->games_id = $games_id;
 			$game_match_obj->match_num = $match_num;
-
 			try{
-				$game_match_obj->save();
+				$validate_game_match = $game_match_obj->validation();
+				$validate_game_match->rule('match_num', "not_empty")
+					->rule('match_num', 'match_num_unique_in_one_game', array(':value', $games_id));
+				$game_match_obj->save($validate_game_match);
 			}catch (ORM_Validation_Exception $e){
-				$error_arrays = $e->errors("");
+				$error_arrays = $e->errors("models/sportorg/games");
+				$external_errors = array();
+				if (isset($error_arrays['_external'])){
+					$external_errors = $error_arrays['_external'];
+					$error_arrays = array();
+				}
+				$error_arrays = array_merge($error_arrays, $external_errors);
 				$error_desc = implode("\n", $error_arrays);
+
 				// Create Array for Error Data
 				$error_array = array(
 					"error" => "Unable to save game match info",
