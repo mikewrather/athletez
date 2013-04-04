@@ -46,8 +46,6 @@ function (
             var self = this;
             function callback() {
                 if (self.rendered) {
-                    Channel('seasons:fetch').publish();
-                    self.select_season = self.$('#select-season');
                     self.selectSeason();
                     return;
                 }
@@ -66,15 +64,17 @@ function (
             this.seasons.sport_id = this.model.collection.sport_id;
             this.seasons.complevel_id = this.model.get('payload')['complevel_id'];
             this.seasons.fetch();
+            var sport_id = this.seasons.sport_id;
+            var complevel_id = this.seasons.complevel_id;
             $.when(this.seasons.request).done(function() {
-                self.setupSeasonListView();
-                Channel('seasons:fetch').publish();
+                self.setupSeasonListView(sport_id, complevel_id);
+                Channel('seasons' + sport_id + '-' + complevel_id + ':fetch').publish();
                 self.select_season = self.$('#select-season');
                 self.selectSeason();
             });
         },
         
-        setupSeasonListView: function() {
+        setupSeasonListView: function(sport_id, complevel_id) {
             var self = this,
                 seasonListView = new SeasonListView({
                     collection: this.seasons
@@ -96,7 +96,7 @@ function (
                     self.$el.find('.seasons').html('');
                 } 
             }
-            Channel('seasons:fetch').subscribe(callback);
+            Channel('seasons' + sport_id + '-' + complevel_id + ':fetch').subscribe(callback);
         },
 
         render: function () {
@@ -109,10 +109,10 @@ function (
             return this;
         },
         
-        selectSeason: function() {
-            var season_id = this.select_season.val();
+        selectSeason: function() {                                
+            var season_id = this.select_season.val();            
             var sport_id = this.model.collection.sport_id;
-            var complevel_id = this.model.collection.complevel_id;
+            var complevel_id = this.model.get('payload')['complevel_id'];
             this.$('.season-info').stop().slideUp();
             this.$('.season-info-' + sport_id + '-' + complevel_id + '-' + season_id).stop().slideDown();
             Channel('seasons:select' + sport_id + '-' + complevel_id + '-' + season_id).publish();

@@ -9,7 +9,6 @@ define(['facade', 'sportorg/collections/complevels', 'utils'],
 function(facade, SportorgComplevelList, utils) {
 
     var ComplevelList,
-        _ = facade._,
         Channel = utils.lib.Channel;
 
     ComplevelList = SportorgComplevelList.extend({

@@ -46,8 +46,6 @@ function (
             var self = this;
             function callback() {
                 if (self.rendered) {
-                    Channel('complevels:fetch').publish();
-                    self.select_complevel = self.$('#select-complevel');
                     self.selectComplevel();
                     return;
                 }
@@ -64,15 +62,16 @@ function (
             this.complevels.id = this.id;
             this.complevels.sport_id = this.model.get('payload')['sport_id'];
             this.complevels.fetch();
+            var sport_id = this.complevels.sport_id;
             $.when(this.complevels.request).done(function() {
-                self.setupComplevelListView();
-                Channel('complevels:fetch').publish();
-                self.select_complevel = self.$('#select-complevel');
+                self.setupComplevelListView(sport_id);
+                Channel('complevels' + sport_id + ':fetch').publish();                
+                self.select_complevel = self.$('#select-complevel');            
                 self.selectComplevel();
             });
         },
         
-        setupComplevelListView: function() {
+        setupComplevelListView: function(sport_id) {
             var self = this,
                 complevelListView = new ComplevelListView({
                     collection: this.complevels
@@ -94,7 +93,7 @@ function (
                     self.$el.find('.complevels').html('');
                 } 
             }
-            Channel('complevels:fetch').subscribe(callback);
+            Channel('complevels' + sport_id + ':fetch').subscribe(callback);
         },
 
         render: function () {

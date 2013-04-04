@@ -21,7 +21,9 @@ define(["facade", "models/base"], function (facade, BaseModel) {
                 "teams": [{
                     "team_name": null,
                     "team_location": null,
-                    "points_scored": 0
+                    "points_scored": 0,
+                    "points_against": 0,
+                    "is_winner": null
                 }],                
                 "game_location": null
             },

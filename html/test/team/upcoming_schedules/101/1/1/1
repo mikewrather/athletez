@@ -1,0 +1,26 @@
+{            
+    "payload": [{
+        "game_day": "Dec 4",
+        "game_time": "",
+        "teams": [{
+            "team_name": "The Peddie School"
+        }]
+    }, {
+        "game_day": "Dec 14",
+        "game_time": "",
+        "teams": [{
+            "team_name": "Mercersberg Academy"
+        }]
+    }, {
+        "game_day": "Dec 29",
+        "game_time": "",
+        "teams": [{
+            "team_name": "The Hun School"
+        }]
+    }],
+    "desc": "List of sports associated with the team.",
+    "exec_data": {
+        "exec_time": 0.024134,
+        "exec_error": false
+    }
+}

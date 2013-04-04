@@ -9,7 +9,6 @@ define(['facade', 'sportorg/collections/seasons', 'utils'],
 function(facade, SportorgSeasonList, utils) {
 
     var SeasonList,
-        _ = facade._,
         Channel = utils.lib.Channel;
 
     SeasonList = SportorgSeasonList.extend({

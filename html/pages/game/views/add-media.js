@@ -6,7 +6,7 @@
 
 define([
         'require', 
-        'text!game/templates/add-media.html', 
+        'text!media/templates/add-media.html', 
         'game/models/addmedia',
         'facade', 
         'views'

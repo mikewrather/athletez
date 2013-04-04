@@ -1,0 +1,35 @@
+{            
+    "payload": [{
+        "game_day": "Dec 4",
+        "game_time": "",
+        "teams": [{
+            "team_name": "The Peddie School",
+            "is_winner": "W",
+            "points_scored": 88,
+            "points_against": 72
+        }]
+    }, {
+        "game_day": "Dec 4",
+        "game_time": "",
+        "teams": [{
+            "team_name": "The Peddie School",
+            "is_winner": "W",
+            "points_scored": 88,
+            "points_against": 72
+        }]
+    }, {
+        "game_day": "Dec 4",
+        "game_time": "",
+        "teams": [{
+            "team_name": "The Peddie School",
+            "is_winner": "W",
+            "points_scored": 88,
+            "points_against": 72
+        }]
+    }],
+    "desc": "List of sports associated with the team.",
+    "exec_data": {
+        "exec_time": 0.024134,
+        "exec_error": false
+    }
+}
