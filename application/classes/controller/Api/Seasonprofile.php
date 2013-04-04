@@ -39,7 +39,13 @@
 		{
 			$this->payloadDesc = "Basic info about the season profile";
 
-		
+			
+			if(!$this->mainModel->id)
+			{
+				$this->modelNotSetError();
+				return false;
+			}
+			return $this->mainModel;
 		}
 		
 		/**
@@ -50,7 +56,12 @@
 		public function action_get_seasons()
 		{
 			$this->payloadDesc = "List of seasons in the season profile";
-
+			if(!$this->mainModel->id)
+			{
+				$this->modelNotSetError();
+				return false;
+			}
+			return $this->mainModel->getSeasons();
 		
 		}
 		

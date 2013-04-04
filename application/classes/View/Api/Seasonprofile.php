@@ -44,10 +44,7 @@
 			foreach($objs as $obj)
 			{
 				$retArr[$obj->id] = $obj->getBasics();
-			}
-
-			// Scaffolding Code For Single:
-			$retArr = $this->obj->getBasics();
+			} 
 
 			return $retArr;
 		}
