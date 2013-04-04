@@ -61,4 +61,30 @@ class Model_User_Resume_Data extends ORM
 		return $this->save();		
 	}
 	
+	public function getListall($args = array())
+	{
+		extract($args);
+		$resumedata = ORM::factory('User_Resume_Data')
+		 		->join('rdg_rdp_link')->on('rdg_rdp_link.resume_data_groups_id', '=', 'user_resume_data.resume_data_groups_id')
+				->where('user_resume_data.id', '=', $this->id);
+				
+		if ( isset($resume_data_groups_id) )
+		{
+			
+			$resumedata->where('rdg_rdp_link.resume_data_groups_id', '=', $resume_data_groups_id );
+		}
+		
+		if ( isset($resume_data_profiles) )
+		{
+			
+			$resumedata->where('rdg_rdp_link.resume_data_profiles_id', '=', $resume_data_profiles );
+		}
+		
+		return $resumedata; 
+	}
+	
+	public function getVals()
+	{
+		return $this->datavals;
+	} 
 }
