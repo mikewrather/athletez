@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50525
 File Encoding         : 65001
 
-Date: 2013-03-28 23:45:34
+Date: 2013-04-03 16:55:15
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -52,14 +52,14 @@ CREATE TABLE `apiaccess` (
 INSERT INTO `apiaccess` VALUES ('1', '1', 'GET', 'basics', 'Basic information about the user.', '1', null, null, 'Basics method returning data but still needs height, weight, and userpic.');
 INSERT INTO `apiaccess` VALUES ('2', '1', 'GET', 'teams', 'List of teams the user is associated with', '1', null, null, 'Need to add location lat / lon and team IDs.  Other than that it matches the test data.');
 INSERT INTO `apiaccess` VALUES ('3', '1', 'GET', 'sports', 'List of sports that the user is associated with', '1', null, null, 'This looks okay for now and it looks like it\'s disappeared from the data structure spreadsheet.');
-INSERT INTO `apiaccess` VALUES ('4', '1', 'GET', 'orgs', 'List of organizations the user is associated with', '1', null, null, 'Needs the schedule and stat information.');
-INSERT INTO `apiaccess` VALUES ('5', '1', 'GET', 'related', 'Content related to this user to be displayed on the \"related content\" pane', '1', null, null, 'BLANK');
-INSERT INTO `apiaccess` VALUES ('6', '1', 'GET', 'videos', 'List of videos uploaded by the user', '1', null, null, null);
-INSERT INTO `apiaccess` VALUES ('7', '1', 'GET', 'images', 'List of images uploaded by the user', '1', null, null, null);
-INSERT INTO `apiaccess` VALUES ('8', '1', 'GET', 'commentsof', 'Get a list of the comments made by the user', '1', null, null, null);
-INSERT INTO `apiaccess` VALUES ('9', '1', 'GET', 'commentson', 'Get a list of comments related to the user', '1', null, null, null);
-INSERT INTO `apiaccess` VALUES ('10', '1', 'GET', 'fitnessbasics', 'Get the basic fitness data for the user', '1', null, null, null);
-INSERT INTO `apiaccess` VALUES ('11', '1', 'GET', 'primaryvideo', 'Get the primary video to be displayed on a user profile page', '1', null, null, null);
+INSERT INTO `apiaccess` VALUES ('4', '1', 'GET', 'orgs', 'List of organizations the user is associated with', '0', null, null, 'Needs the schedule and stat information.');
+INSERT INTO `apiaccess` VALUES ('5', '1', 'GET', 'related', 'Content related to this user to be displayed on the \"related content\" pane', '0', null, null, 'BLANK for now.');
+INSERT INTO `apiaccess` VALUES ('6', '1', 'GET', 'videos', 'List of videos uploaded by the user', '0', null, null, null);
+INSERT INTO `apiaccess` VALUES ('7', '1', 'GET', 'images', 'List of images uploaded by the user', '0', null, null, null);
+INSERT INTO `apiaccess` VALUES ('8', '1', 'GET', 'commentsof', 'Get a list of the comments made by the user', '0', null, null, 'Returning data but not in correct format');
+INSERT INTO `apiaccess` VALUES ('9', '1', 'GET', 'commentson', 'Get a list of comments related to the user', '0', null, null, null);
+INSERT INTO `apiaccess` VALUES ('10', '1', 'GET', 'fitnessbasics', 'Get the basic fitness data for the user', '0', null, null, null);
+INSERT INTO `apiaccess` VALUES ('11', '1', 'GET', 'primaryvideo', 'Get the primary video to be displayed on a user profile page', '0', null, null, null);
 INSERT INTO `apiaccess` VALUES ('12', '2', 'GET', 'basics', 'Basic information about the organization', '0', null, null, null);
 INSERT INTO `apiaccess` VALUES ('13', '2', 'GET', 'teams', 'List of all teams within the organization', '0', null, null, null);
 INSERT INTO `apiaccess` VALUES ('14', '2', 'GET', 'league', 'League that the organization belongs to', '0', null, null, null);
@@ -141,7 +141,7 @@ INSERT INTO `apiaccess` VALUES ('92', '31', 'GET', 'basics', 'Basic information 
 INSERT INTO `apiaccess` VALUES ('93', '31', 'GET', 'listall', 'Lists all statistics (apply filters)', '0', null, null, null);
 INSERT INTO `apiaccess` VALUES ('94', '45', 'GET', 'basics', 'Basic info for a given stat value field', '0', null, null, null);
 INSERT INTO `apiaccess` VALUES ('95', '32', 'GET', 'basics', 'Basic info about this queued video', '0', null, null, null);
-INSERT INTO `apiaccess` VALUES ('96', '33', 'GET', 'basics', 'Returns basic info about this location', '0', null, null, null);
+INSERT INTO `apiaccess` VALUES ('96', '33', 'GET', 'basics', 'Returns basic info about this location', '0', null, null, '500 ERROR');
 INSERT INTO `apiaccess` VALUES ('97', '33', 'GET', 'games', 'Returns all games that have taken place at a certain location', '0', null, null, null);
 INSERT INTO `apiaccess` VALUES ('98', '34', 'GET', 'basics', 'Basic information about a city', '0', null, null, null);
 INSERT INTO `apiaccess` VALUES ('99', '34', 'GET', 'locations', 'All locations within a given city', '0', null, null, null);
@@ -210,7 +210,7 @@ INSERT INTO `apiaccess` VALUES ('206', '29', 'POST', 'league', 'Add a new league
 INSERT INTO `apiaccess` VALUES ('207', '29', 'POST', 'division', 'Add a new division to this Section', '0', null, null, null);
 INSERT INTO `apiaccess` VALUES ('212', '31', 'POST', 'addval', 'Add a Stat value for a given statistic', '0', null, null, null);
 INSERT INTO `apiaccess` VALUES ('214', '47', 'POST', 'add', 'Add a new User Value for a Statistic', '0', '0', null, null);
-INSERT INTO `apiaccess` VALUES ('216', '33', 'POST', 'add', 'Add a new location', '0', '0', null, null);
+INSERT INTO `apiaccess` VALUES ('216', '33', 'POST', 'add', 'Add a new location', '1', '0', null, 'The point type needs to be created but other than that all of the parameters are working.  Also I added a zip code to the db, we need to add it to the code.');
 INSERT INTO `apiaccess` VALUES ('218', '34', 'POST', 'add', 'Add a new city', '0', '0', null, null);
 INSERT INTO `apiaccess` VALUES ('222', '35', 'POST', 'add', 'Add a new County', '0', '0', null, null);
 INSERT INTO `apiaccess` VALUES ('226', '36', 'POST', 'add', 'Add a new State', '0', '0', null, null);
@@ -234,7 +234,7 @@ INSERT INTO `apiaccess` VALUES ('257', '2', 'PUT', 'basics', 'Update Basic infor
 INSERT INTO `apiaccess` VALUES ('260', '2', 'PUT', 'division', 'Change the Division for an Organization', '0', '', '', null);
 INSERT INTO `apiaccess` VALUES ('262', '2', 'PUT', 'complevelprofile', 'Change the Competition Level Profiles for the Organization', '0', '', '', null);
 INSERT INTO `apiaccess` VALUES ('263', '2', 'PUT', 'seasonprofile', 'Change the Season Profiles for the Organization', '0', '', '', null);
-INSERT INTO `apiaccess` VALUES ('265', '2', 'PUT', 'sport', 'Update the org / sport association (for future use)', '0', '', '', null);
+INSERT INTO `apiaccess` VALUES ('265', '2', 'PUT', 'sport', 'Update the org / sport association (for future use)', '1', '', '', 'This is just for future use');
 INSERT INTO `apiaccess` VALUES ('266', '3', 'PUT', 'basics', 'Update Basics properties of the position', '0', '', '', null);
 INSERT INTO `apiaccess` VALUES ('271', '4', 'PUT', 'basics', 'Update basic information about a sport', '0', '', '', null);
 INSERT INTO `apiaccess` VALUES ('274', '4', 'PUT', 'type', 'Update the type of sport', '0', '', '', null);
@@ -320,7 +320,7 @@ CREATE TABLE `apiparams` (
   `description` varchar(255) DEFAULT NULL,
   `enttypes_id` int(10) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=296 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=297 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of apiparams
@@ -613,6 +613,7 @@ INSERT INTO `apiparams` VALUES ('292', '358', 'states_id', 'int', '0', 'Change t
 INSERT INTO `apiparams` VALUES ('293', '360', 'name', 'string', '0', 'Change the name of the sport type', null);
 INSERT INTO `apiparams` VALUES ('294', '124', 're_password', 'string', '0', 'Re-Enter Password', null);
 INSERT INTO `apiparams` VALUES ('295', '198', 'name', 'string', '0', 'The name of the Resume Data Group', null);
+INSERT INTO `apiparams` VALUES ('296', '216', 'zip', 'string', '0', 'The zip code of the location', null);
 
 -- ----------------------------
 -- Table structure for `cities`
@@ -34678,9 +34679,366 @@ INSERT INTO `enttypes` VALUES ('44', 'Sport Type', 'sporttype', 'Sportorg_Sportt
 INSERT INTO `enttypes` VALUES ('45', 'Statistics Context', 'statcontext', 'Stats_Context', 'stat_contexts', 'The statistics context exists so that we can designate whether a set of stats is for a game, a season, or something else.', 'statvals_id', '');
 INSERT INTO `enttypes` VALUES ('46', 'Anonymous Entity', 'ent', 'Site_Enttype', 'enttypes', 'Anonymous entities can become many different types of objects.  Instead of having a single ID and a table, a type is specified which will determine the table the id refers to.  This is used for things like comments, votes, tags, and media associations.', 'subject_type_id', 'subject_id');
 INSERT INTO `enttypes` VALUES ('47', 'Statistic Value', 'statval', 'Stats_Vals', 'statvals', 'This is a user value for a specific statistic', 'statvals_id', null);
-INSERT INTO `enttypes` VALUES ('48', 'User Role', 'role', 'Auth_Role', 'roles', 'A user can have many roles associated with his or her account such as login, admin, etc.', 'roles_id', null);
+INSERT INTO `enttypes` VALUES ('48', 'User Role', 'role', 'Role', 'roles', 'A user can have many roles associated with his or her account such as login, admin, etc.', 'roles_id', null);
 INSERT INTO `enttypes` VALUES ('49', 'Country', 'country', 'Location_Country', 'countries', 'A Country...', 'countries_id', null);
 INSERT INTO `enttypes` VALUES ('50', 'Video Type', 'videotype', 'Media_Videotype', 'video_types', 'Video Types -- a combination of container, codec, resolution, framerate and other video characteristics.', 'video_types_id', null);
+
+-- ----------------------------
+-- Table structure for `enttype_fields`
+-- ----------------------------
+DROP TABLE IF EXISTS `enttype_fields`;
+CREATE TABLE `enttype_fields` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `enttypes_id` int(11) DEFAULT NULL,
+  `enttypes_table` varchar(255) DEFAULT NULL,
+  `name` varchar(255) DEFAULT NULL,
+  `data_type` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=325 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of enttype_fields
+-- ----------------------------
+INSERT INTO `enttype_fields` VALUES ('1', null, 'academic_data', 'id', 'int');
+INSERT INTO `enttype_fields` VALUES ('2', null, 'academic_data', 'users_id', 'int');
+INSERT INTO `enttype_fields` VALUES ('3', null, 'apiaccess', 'id', 'int');
+INSERT INTO `enttype_fields` VALUES ('4', null, 'apiaccess', 'entlist_id', 'int');
+INSERT INTO `enttype_fields` VALUES ('5', null, 'apiaccess', 'api_method', 'enum');
+INSERT INTO `enttype_fields` VALUES ('6', null, 'apiaccess', 'shortname', 'varchar');
+INSERT INTO `enttype_fields` VALUES ('7', null, 'apiaccess', 'description', 'varchar');
+INSERT INTO `enttype_fields` VALUES ('8', null, 'apiaccess', 'done', 'tinyint');
+INSERT INTO `enttype_fields` VALUES ('9', null, 'apiaccess', 'id1', 'varchar');
+INSERT INTO `enttype_fields` VALUES ('10', null, 'apiaccess', 'id2', 'varchar');
+INSERT INTO `enttype_fields` VALUES ('11', null, 'apiaccess', 'current_status', 'text');
+INSERT INTO `enttype_fields` VALUES ('12', null, 'apiparams', 'id', 'int');
+INSERT INTO `enttype_fields` VALUES ('13', null, 'apiparams', 'apiaccess_id', 'int');
+INSERT INTO `enttype_fields` VALUES ('14', null, 'apiparams', 'param_name', 'varchar');
+INSERT INTO `enttype_fields` VALUES ('15', null, 'apiparams', 'param_type', 'enum');
+INSERT INTO `enttype_fields` VALUES ('16', null, 'apiparams', 'param_req', 'tinyint');
+INSERT INTO `enttype_fields` VALUES ('17', null, 'apiparams', 'description', 'varchar');
+INSERT INTO `enttype_fields` VALUES ('18', null, 'apiparams', 'enttypes_id', 'int');
+INSERT INTO `enttype_fields` VALUES ('19', '34', 'cities', 'id', 'int');
+INSERT INTO `enttype_fields` VALUES ('20', '34', 'cities', 'name', 'varchar');
+INSERT INTO `enttype_fields` VALUES ('21', '34', 'cities', 'state_id', 'int');
+INSERT INTO `enttype_fields` VALUES ('22', '34', 'cities', 'county_id', 'int');
+INSERT INTO `enttype_fields` VALUES ('23', '34', 'cities', 'name2', 'varchar');
+INSERT INTO `enttype_fields` VALUES ('24', '14', 'comments', 'id', 'int');
+INSERT INTO `enttype_fields` VALUES ('25', '14', 'comments', 'subject_enttypes_id', 'int');
+INSERT INTO `enttype_fields` VALUES ('26', '14', 'comments', 'subject_id', 'int');
+INSERT INTO `enttype_fields` VALUES ('27', '14', 'comments', 'users_id', 'int');
+INSERT INTO `enttype_fields` VALUES ('28', '14', 'comments', 'comment', 'text');
+INSERT INTO `enttype_fields` VALUES ('29', '12', 'complevel_profiles', 'id', 'int');
+INSERT INTO `enttype_fields` VALUES ('30', '12', 'complevel_profiles', 'name', 'varchar');
+INSERT INTO `enttype_fields` VALUES ('31', '11', 'complevels', 'id', 'int');
+INSERT INTO `enttype_fields` VALUES ('32', '11', 'complevels', 'name', 'varchar');
+INSERT INTO `enttype_fields` VALUES ('33', '11', 'complevels', 'min_age', 'int');
+INSERT INTO `enttype_fields` VALUES ('34', '11', 'complevels', 'max_age', 'int');
+INSERT INTO `enttype_fields` VALUES ('35', '11', 'complevels', 'complevel_profiles_id', 'int');
+INSERT INTO `enttype_fields` VALUES ('36', '35', 'counties', 'id', 'int');
+INSERT INTO `enttype_fields` VALUES ('37', '35', 'counties', 'name', 'varchar');
+INSERT INTO `enttype_fields` VALUES ('38', '35', 'counties', 'states_id', 'int');
+INSERT INTO `enttype_fields` VALUES ('39', '49', 'countries', 'id', 'int');
+INSERT INTO `enttype_fields` VALUES ('40', '49', 'countries', 'name', 'varchar');
+INSERT INTO `enttype_fields` VALUES ('41', '40', 'divisions', 'id', 'int');
+INSERT INTO `enttype_fields` VALUES ('42', '40', 'divisions', 'name', 'varchar');
+INSERT INTO `enttype_fields` VALUES ('43', '40', 'divisions', 'states_id', 'int');
+INSERT INTO `enttype_fields` VALUES ('44', '40', 'divisions', 'sections_id', 'int');
+INSERT INTO `enttype_fields` VALUES ('45', null, 'enttype_field_rules', 'id', 'int');
+INSERT INTO `enttype_fields` VALUES ('46', null, 'enttype_field_rules', 'enttype_fields_id', 'int');
+INSERT INTO `enttype_fields` VALUES ('47', null, 'enttype_field_rules', 'rule_name', 'varchar');
+INSERT INTO `enttype_fields` VALUES ('48', null, 'enttype_field_rules', 'error_message', 'varchar');
+INSERT INTO `enttype_fields` VALUES ('49', null, 'enttype_fields', 'id', 'int');
+INSERT INTO `enttype_fields` VALUES ('50', null, 'enttype_fields', 'enttypes_id', 'int');
+INSERT INTO `enttype_fields` VALUES ('51', null, 'enttype_fields', 'enttypes_table', 'varchar');
+INSERT INTO `enttype_fields` VALUES ('52', null, 'enttype_fields', 'name', 'varchar');
+INSERT INTO `enttype_fields` VALUES ('53', null, 'enttype_fields', 'data_type', 'varchar');
+INSERT INTO `enttype_fields` VALUES ('54', '46', 'enttypes', 'id', 'int');
+INSERT INTO `enttype_fields` VALUES ('55', '46', 'enttypes', 'name', 'varchar');
+INSERT INTO `enttype_fields` VALUES ('56', '46', 'enttypes', 'api_name', 'varchar');
+INSERT INTO `enttype_fields` VALUES ('57', '46', 'enttypes', 'class_name', 'varchar');
+INSERT INTO `enttype_fields` VALUES ('58', '46', 'enttypes', 'db_table', 'varchar');
+INSERT INTO `enttype_fields` VALUES ('59', '46', 'enttypes', 'description', 'varchar');
+INSERT INTO `enttype_fields` VALUES ('60', '46', 'enttypes', 'id1', 'varchar');
+INSERT INTO `enttype_fields` VALUES ('61', '46', 'enttypes', 'id2', 'varchar');
+INSERT INTO `enttype_fields` VALUES ('62', null, 'fitness_data', 'id', 'int');
+INSERT INTO `enttype_fields` VALUES ('63', null, 'fitness_data', 'fitness_test', 'varchar');
+INSERT INTO `enttype_fields` VALUES ('64', null, 'fitness_data', 'unit_type', 'enum');
+INSERT INTO `enttype_fields` VALUES ('65', null, 'fitness_data', 'sports_id', 'int');
+INSERT INTO `enttype_fields` VALUES ('66', null, 'fitness_data_vals', 'id', 'int');
+INSERT INTO `enttype_fields` VALUES ('67', null, 'fitness_data_vals', 'fitness_data_id', 'int');
+INSERT INTO `enttype_fields` VALUES ('68', null, 'fitness_data_vals', 'user_value', 'varchar');
+INSERT INTO `enttype_fields` VALUES ('69', null, 'fitness_data_vals', 'users_id', 'int');
+INSERT INTO `enttype_fields` VALUES ('70', null, 'followers', 'id', 'int');
+INSERT INTO `enttype_fields` VALUES ('71', null, 'followers', 'follower_users_id', 'int');
+INSERT INTO `enttype_fields` VALUES ('72', null, 'followers', 'followed_users_id', 'int');
+INSERT INTO `enttype_fields` VALUES ('73', '10', 'game_match_players', 'id', 'int');
+INSERT INTO `enttype_fields` VALUES ('74', '10', 'game_match_players', 'game_matches_id', 'int');
+INSERT INTO `enttype_fields` VALUES ('75', '10', 'game_match_players', 'users_id', 'int');
+INSERT INTO `enttype_fields` VALUES ('76', '10', 'game_match_players', 'points_awarded', 'int');
+INSERT INTO `enttype_fields` VALUES ('77', '10', 'game_match_players', 'result_time', 'varchar');
+INSERT INTO `enttype_fields` VALUES ('78', '10', 'game_match_players', 'match_winner', 'tinyint');
+INSERT INTO `enttype_fields` VALUES ('79', '9', 'game_matches', 'id', 'int');
+INSERT INTO `enttype_fields` VALUES ('80', '9', 'game_matches', 'games_id', 'int');
+INSERT INTO `enttype_fields` VALUES ('81', '8', 'games', 'id', 'int');
+INSERT INTO `enttype_fields` VALUES ('82', '8', 'games', 'gameDay', 'date');
+INSERT INTO `enttype_fields` VALUES ('83', '8', 'games', 'gameTime', 'time');
+INSERT INTO `enttype_fields` VALUES ('84', '8', 'games', 'locations_id', 'int');
+INSERT INTO `enttype_fields` VALUES ('85', null, 'games_teams_link', 'teams_id', 'int');
+INSERT INTO `enttype_fields` VALUES ('86', null, 'games_teams_link', 'games_id', 'int');
+INSERT INTO `enttype_fields` VALUES ('87', null, 'games_teams_link', 'points_scored', 'int');
+INSERT INTO `enttype_fields` VALUES ('88', null, 'games_teams_link', 'points_against', 'int');
+INSERT INTO `enttype_fields` VALUES ('89', null, 'games_teams_link', 'isWinner', 'int');
+INSERT INTO `enttype_fields` VALUES ('90', null, 'games_teams_link', 'is_home_team', 'tinyint');
+INSERT INTO `enttype_fields` VALUES ('91', null, 'games_teams_link', 'tournaments_id', 'int');
+INSERT INTO `enttype_fields` VALUES ('92', null, 'gov_bodies', 'id', 'int');
+INSERT INTO `enttype_fields` VALUES ('93', null, 'gov_bodies', 'name', 'varchar');
+INSERT INTO `enttype_fields` VALUES ('94', null, 'gov_bodies', 'org_type', 'enum');
+INSERT INTO `enttype_fields` VALUES ('95', null, 'gov_bodies', 'season_profiles_id', 'int');
+INSERT INTO `enttype_fields` VALUES ('96', null, 'gov_bodies', 'complevel_profiles_id', 'int');
+INSERT INTO `enttype_fields` VALUES ('97', null, 'gov_body_sport_link', 'id', 'int');
+INSERT INTO `enttype_fields` VALUES ('98', null, 'gov_body_sport_link', 'gov_bodies_id', 'int');
+INSERT INTO `enttype_fields` VALUES ('99', null, 'gov_body_sport_link', 'sports_id', 'int');
+INSERT INTO `enttype_fields` VALUES ('100', '21', 'images', 'id', 'int');
+INSERT INTO `enttype_fields` VALUES ('101', '21', 'images', 'media_id', 'int');
+INSERT INTO `enttype_fields` VALUES ('102', null, 'images_meta', 'id', 'int');
+INSERT INTO `enttype_fields` VALUES ('103', null, 'images_meta', 'images_id', 'int');
+INSERT INTO `enttype_fields` VALUES ('104', null, 'images_meta', 'image_prop', 'varchar');
+INSERT INTO `enttype_fields` VALUES ('105', null, 'images_meta', 'image_val', 'varchar');
+INSERT INTO `enttype_fields` VALUES ('106', '41', 'leagues', 'id', 'int');
+INSERT INTO `enttype_fields` VALUES ('107', '41', 'leagues', 'name', 'varchar');
+INSERT INTO `enttype_fields` VALUES ('108', '41', 'leagues', 'sections_id', 'int');
+INSERT INTO `enttype_fields` VALUES ('109', '41', 'leagues', 'states_id', 'int');
+INSERT INTO `enttype_fields` VALUES ('110', '33', 'locations', 'id', 'int');
+INSERT INTO `enttype_fields` VALUES ('111', '33', 'locations', 'address', 'varchar');
+INSERT INTO `enttype_fields` VALUES ('112', '33', 'locations', 'cities_id', 'int');
+INSERT INTO `enttype_fields` VALUES ('113', '33', 'locations', 'zip', 'varchar');
+INSERT INTO `enttype_fields` VALUES ('114', '33', 'locations', 'lon', 'float');
+INSERT INTO `enttype_fields` VALUES ('115', '33', 'locations', 'lat', 'float');
+INSERT INTO `enttype_fields` VALUES ('116', '33', 'locations', 'loc_point', 'point');
+INSERT INTO `enttype_fields` VALUES ('117', '33', 'locations', 'location_type', 'enum');
+INSERT INTO `enttype_fields` VALUES ('118', '19', 'media', 'id', 'int');
+INSERT INTO `enttype_fields` VALUES ('119', '19', 'media', 'name', 'varchar');
+INSERT INTO `enttype_fields` VALUES ('120', '19', 'media', 'users_id', 'int');
+INSERT INTO `enttype_fields` VALUES ('121', '19', 'media', 'media_type', 'enum');
+INSERT INTO `enttype_fields` VALUES ('122', '19', 'media', 'sports_id', 'int');
+INSERT INTO `enttype_fields` VALUES ('123', '19', 'media', 'subject_type_id', 'int');
+INSERT INTO `enttype_fields` VALUES ('124', '19', 'media', 'subject_id', 'int');
+INSERT INTO `enttype_fields` VALUES ('125', null, 'org_league_link', 'orgs_id', 'int');
+INSERT INTO `enttype_fields` VALUES ('126', null, 'org_league_link', 'leagues_id', 'int');
+INSERT INTO `enttype_fields` VALUES ('127', null, 'org_sport_link', 'id', 'int');
+INSERT INTO `enttype_fields` VALUES ('128', null, 'org_sport_link', 'orgs_id', 'int');
+INSERT INTO `enttype_fields` VALUES ('129', null, 'org_sport_link', 'sports_id', 'int');
+INSERT INTO `enttype_fields` VALUES ('130', '2', 'orgs', 'id', 'int');
+INSERT INTO `enttype_fields` VALUES ('131', '2', 'orgs', 'name', 'longtext');
+INSERT INTO `enttype_fields` VALUES ('132', '2', 'orgs', 'single_sport', 'smallint');
+INSERT INTO `enttype_fields` VALUES ('133', '2', 'orgs', 'leagues_id', 'int');
+INSERT INTO `enttype_fields` VALUES ('134', '2', 'orgs', 'divisions_id', 'int');
+INSERT INTO `enttype_fields` VALUES ('135', '2', 'orgs', 'season_profiles_id', 'int');
+INSERT INTO `enttype_fields` VALUES ('136', '2', 'orgs', 'complevel_profiles_id', 'int');
+INSERT INTO `enttype_fields` VALUES ('137', '2', 'orgs', 'locations_id', 'int');
+INSERT INTO `enttype_fields` VALUES ('138', '37', 'player_of_game', 'id', 'int');
+INSERT INTO `enttype_fields` VALUES ('139', '37', 'player_of_game', 'player_users_id', 'int');
+INSERT INTO `enttype_fields` VALUES ('140', '37', 'player_of_game', 'voter_user_id', 'int');
+INSERT INTO `enttype_fields` VALUES ('141', '37', 'player_of_game', 'games_id', 'int');
+INSERT INTO `enttype_fields` VALUES ('142', '37', 'player_of_game', 'timePosted', 'timestamp');
+INSERT INTO `enttype_fields` VALUES ('143', '3', 'positions', 'id', 'int');
+INSERT INTO `enttype_fields` VALUES ('144', '3', 'positions', 'name', 'varchar');
+INSERT INTO `enttype_fields` VALUES ('145', '3', 'positions', 'sports_id', 'int');
+INSERT INTO `enttype_fields` VALUES ('146', '3', 'positions', 'stattab_id', 'int');
+INSERT INTO `enttype_fields` VALUES ('147', '3', 'positions', 'sport_name', 'varchar');
+INSERT INTO `enttype_fields` VALUES ('148', '3', 'positions', 'gender', 'varchar');
+INSERT INTO `enttype_fields` VALUES ('149', '32', 'queuedvideos', 'id', 'int');
+INSERT INTO `enttype_fields` VALUES ('150', '32', 'queuedvideos', 'title', 'varchar');
+INSERT INTO `enttype_fields` VALUES ('151', '32', 'queuedvideos', 'url', 'varchar');
+INSERT INTO `enttype_fields` VALUES ('152', '32', 'queuedvideos', 'jobID', 'int');
+INSERT INTO `enttype_fields` VALUES ('153', '32', 'queuedvideos', 'users_id', 'int');
+INSERT INTO `enttype_fields` VALUES ('154', '32', 'queuedvideos', 'videos_id', 'int');
+INSERT INTO `enttype_fields` VALUES ('155', '32', 'queuedvideos', 'complete', 'tinyint');
+INSERT INTO `enttype_fields` VALUES ('156', '32', 'queuedvideos', 'duration', 'decimal');
+INSERT INTO `enttype_fields` VALUES ('157', '32', 'queuedvideos', 'mm_id', 'varchar');
+INSERT INTO `enttype_fields` VALUES ('158', '32', 'queuedvideos', 'mm_encode', 'tinyint');
+INSERT INTO `enttype_fields` VALUES ('159', '32', 'queuedvideos', 'sports_id', 'int');
+INSERT INTO `enttype_fields` VALUES ('160', '32', 'queuedvideos', 'user_sess', 'varchar');
+INSERT INTO `enttype_fields` VALUES ('161', '32', 'queuedvideos', 'video_services_id', 'int');
+INSERT INTO `enttype_fields` VALUES ('162', null, 'rdg_rdp_link', 'resume_data_profiles_id', 'int');
+INSERT INTO `enttype_fields` VALUES ('163', null, 'rdg_rdp_link', 'resume_data_groups_id', 'int');
+INSERT INTO `enttype_fields` VALUES ('164', null, 'rdp_sports_link', 'resume_data_profiles_id', 'int');
+INSERT INTO `enttype_fields` VALUES ('165', null, 'rdp_sports_link', 'sports_id', 'int');
+INSERT INTO `enttype_fields` VALUES ('166', '25', 'resume_data', 'id', 'int');
+INSERT INTO `enttype_fields` VALUES ('167', '25', 'resume_data', 'resume_data_groups_id', 'int');
+INSERT INTO `enttype_fields` VALUES ('168', '25', 'resume_data', 'name', 'varchar');
+INSERT INTO `enttype_fields` VALUES ('169', '25', 'resume_data', 'resume_data_type', 'enum');
+INSERT INTO `enttype_fields` VALUES ('170', '26', 'resume_data_groups', 'id', 'int');
+INSERT INTO `enttype_fields` VALUES ('171', '26', 'resume_data_groups', 'name', 'varchar');
+INSERT INTO `enttype_fields` VALUES ('172', '26', 'resume_data_groups', 'description', 'varchar');
+INSERT INTO `enttype_fields` VALUES ('173', '27', 'resume_data_profiles', 'id', 'int');
+INSERT INTO `enttype_fields` VALUES ('174', '27', 'resume_data_profiles', 'name', 'varchar');
+INSERT INTO `enttype_fields` VALUES ('175', '28', 'resume_data_vals', 'id', 'int');
+INSERT INTO `enttype_fields` VALUES ('176', '28', 'resume_data_vals', 'resume_data_id', 'int');
+INSERT INTO `enttype_fields` VALUES ('177', '28', 'resume_data_vals', 'users_id', 'int');
+INSERT INTO `enttype_fields` VALUES ('178', '28', 'resume_data_vals', 'user_value', 'varchar');
+INSERT INTO `enttype_fields` VALUES ('179', null, 'resumes', 'id', 'int');
+INSERT INTO `enttype_fields` VALUES ('180', '48', 'roles', 'id', 'int');
+INSERT INTO `enttype_fields` VALUES ('181', '48', 'roles', 'name', 'varchar');
+INSERT INTO `enttype_fields` VALUES ('182', '48', 'roles', 'description', 'varchar');
+INSERT INTO `enttype_fields` VALUES ('183', null, 'roles_users', 'user_id', 'int');
+INSERT INTO `enttype_fields` VALUES ('184', null, 'roles_users', 'role_id', 'int');
+INSERT INTO `enttype_fields` VALUES ('185', '7', 'season_profiles', 'id', 'int');
+INSERT INTO `enttype_fields` VALUES ('186', '7', 'season_profiles', 'name', 'varchar');
+INSERT INTO `enttype_fields` VALUES ('187', '6', 'seasons', 'id', 'int');
+INSERT INTO `enttype_fields` VALUES ('188', '6', 'seasons', 'name', 'varchar');
+INSERT INTO `enttype_fields` VALUES ('189', '6', 'seasons', 'season_profiles_id', 'int');
+INSERT INTO `enttype_fields` VALUES ('190', '43', 'sections', 'id', 'int');
+INSERT INTO `enttype_fields` VALUES ('191', '43', 'sections', 'name', 'varchar');
+INSERT INTO `enttype_fields` VALUES ('192', '43', 'sections', 'sports_id', 'int');
+INSERT INTO `enttype_fields` VALUES ('193', '43', 'sections', 'states_id', 'int');
+INSERT INTO `enttype_fields` VALUES ('194', null, 'social_links', 'id', 'int');
+INSERT INTO `enttype_fields` VALUES ('195', null, 'social_links', 'users_id', 'int');
+INSERT INTO `enttype_fields` VALUES ('196', null, 'social_links', 'social_types_id', 'int');
+INSERT INTO `enttype_fields` VALUES ('197', null, 'social_types', 'id', 'int');
+INSERT INTO `enttype_fields` VALUES ('198', null, 'social_types', 'name', 'varchar');
+INSERT INTO `enttype_fields` VALUES ('199', null, 'social_types', 'description', 'varchar');
+INSERT INTO `enttype_fields` VALUES ('200', null, 'social_types', 'icon_desktop', 'varchar');
+INSERT INTO `enttype_fields` VALUES ('201', null, 'social_types', 'icon_mobile', 'varchar');
+INSERT INTO `enttype_fields` VALUES ('202', '44', 'sport_types', 'id', 'int');
+INSERT INTO `enttype_fields` VALUES ('203', '44', 'sport_types', 'name', 'varchar');
+INSERT INTO `enttype_fields` VALUES ('204', '4', 'sports', 'id', 'int');
+INSERT INTO `enttype_fields` VALUES ('205', '4', 'sports', 'name', 'varchar');
+INSERT INTO `enttype_fields` VALUES ('206', '4', 'sports', 'male', 'tinyint');
+INSERT INTO `enttype_fields` VALUES ('207', '4', 'sports', 'female', 'tinyint');
+INSERT INTO `enttype_fields` VALUES ('208', '4', 'sports', 'sport_type_id', 'int');
+INSERT INTO `enttype_fields` VALUES ('209', '45', 'stat_contexts', 'id', 'int');
+INSERT INTO `enttype_fields` VALUES ('210', '45', 'stat_contexts', 'name', 'varchar');
+INSERT INTO `enttype_fields` VALUES ('211', '36', 'states', 'id', 'int');
+INSERT INTO `enttype_fields` VALUES ('212', '36', 'states', 'name', 'varchar');
+INSERT INTO `enttype_fields` VALUES ('213', '36', 'states', 'countries_id', 'int');
+INSERT INTO `enttype_fields` VALUES ('214', '31', 'stats', 'id', 'int');
+INSERT INTO `enttype_fields` VALUES ('215', '31', 'stats', 'sports_id', 'int');
+INSERT INTO `enttype_fields` VALUES ('216', '31', 'stats', 'sports_id2', 'int');
+INSERT INTO `enttype_fields` VALUES ('217', '31', 'stats', 'name', 'varchar');
+INSERT INTO `enttype_fields` VALUES ('218', '31', 'stats', 'description', 'varchar');
+INSERT INTO `enttype_fields` VALUES ('219', '31', 'stats', 'stattabs_id', 'int');
+INSERT INTO `enttype_fields` VALUES ('220', '31', 'stats', 'datatype', 'varchar');
+INSERT INTO `enttype_fields` VALUES ('221', '31', 'stats', 'orderNum', 'int');
+INSERT INTO `enttype_fields` VALUES ('222', '31', 'stats', 'field_size', 'int');
+INSERT INTO `enttype_fields` VALUES ('223', '31', 'stats', 'calc_formula', 'text');
+INSERT INTO `enttype_fields` VALUES ('224', '31', 'stats', 'is_calc', 'int');
+INSERT INTO `enttype_fields` VALUES ('225', '30', 'stattabs', 'id', 'int');
+INSERT INTO `enttype_fields` VALUES ('226', '30', 'stattabs', 'stattab_id', 'int');
+INSERT INTO `enttype_fields` VALUES ('227', '30', 'stattabs', 'sport_id', 'int');
+INSERT INTO `enttype_fields` VALUES ('228', '30', 'stattabs', 'sport_id2', 'int');
+INSERT INTO `enttype_fields` VALUES ('229', '30', 'stattabs', 'name', 'varchar');
+INSERT INTO `enttype_fields` VALUES ('230', '30', 'stattabs', 'classname', 'varchar');
+INSERT INTO `enttype_fields` VALUES ('231', '30', 'stattabs', 'is_root', 'tinyint');
+INSERT INTO `enttype_fields` VALUES ('232', '30', 'stattabs', 'defaultChild', 'int');
+INSERT INTO `enttype_fields` VALUES ('233', '30', 'stattabs', 'orderNum', 'int');
+INSERT INTO `enttype_fields` VALUES ('234', '47', 'statvals', 'id', 'int');
+INSERT INTO `enttype_fields` VALUES ('235', '47', 'statvals', 'stats_id', 'int');
+INSERT INTO `enttype_fields` VALUES ('236', '47', 'statvals', 'users_id', 'int');
+INSERT INTO `enttype_fields` VALUES ('237', '47', 'statvals', 'teams_id', 'int');
+INSERT INTO `enttype_fields` VALUES ('238', '47', 'statvals', 'statval', 'varchar');
+INSERT INTO `enttype_fields` VALUES ('239', '47', 'statvals', 'statdate', 'date');
+INSERT INTO `enttype_fields` VALUES ('240', '47', 'statvals', 'games_id', 'int');
+INSERT INTO `enttype_fields` VALUES ('241', '47', 'statvals', 'stat_contexts_id', 'int');
+INSERT INTO `enttype_fields` VALUES ('242', '16', 'tags', 'id', 'int');
+INSERT INTO `enttype_fields` VALUES ('243', '16', 'tags', 'subject_enttypes_id', 'int');
+INSERT INTO `enttype_fields` VALUES ('244', '16', 'tags', 'subject_id', 'int');
+INSERT INTO `enttype_fields` VALUES ('245', '16', 'tags', 'users_id', 'int');
+INSERT INTO `enttype_fields` VALUES ('246', '5', 'teams', 'id', 'int');
+INSERT INTO `enttype_fields` VALUES ('247', '5', 'teams', 'org_sport_link_id', 'int');
+INSERT INTO `enttype_fields` VALUES ('248', '5', 'teams', 'complevels_id', 'int');
+INSERT INTO `enttype_fields` VALUES ('249', '5', 'teams', 'seasons_id', 'int');
+INSERT INTO `enttype_fields` VALUES ('250', '5', 'teams', 'year', 'int');
+INSERT INTO `enttype_fields` VALUES ('251', '5', 'teams', 'mascot', 'longtext');
+INSERT INTO `enttype_fields` VALUES ('252', '5', 'teams', 'unique_ident', 'varchar');
+INSERT INTO `enttype_fields` VALUES ('253', null, 'user_identities', 'id', 'int');
+INSERT INTO `enttype_fields` VALUES ('254', null, 'user_identities', 'user_id', 'int');
+INSERT INTO `enttype_fields` VALUES ('255', null, 'user_identities', 'provider', 'varchar');
+INSERT INTO `enttype_fields` VALUES ('256', null, 'user_identities', 'identity', 'varchar');
+INSERT INTO `enttype_fields` VALUES ('257', null, 'user_profile_data', 'id', 'int');
+INSERT INTO `enttype_fields` VALUES ('258', null, 'user_profile_data', 'users_id', 'int');
+INSERT INTO `enttype_fields` VALUES ('259', null, 'user_profile_data', 'cities_id', 'int');
+INSERT INTO `enttype_fields` VALUES ('260', null, 'user_profile_data', 'height_inches', 'int');
+INSERT INTO `enttype_fields` VALUES ('261', null, 'user_profile_data', 'weight_lbs', 'int');
+INSERT INTO `enttype_fields` VALUES ('262', null, 'user_profile_data', 'primary_video_id', 'int');
+INSERT INTO `enttype_fields` VALUES ('263', null, 'user_sport_link', 'id', 'int');
+INSERT INTO `enttype_fields` VALUES ('264', null, 'user_sport_link', 'sports_id', 'int');
+INSERT INTO `enttype_fields` VALUES ('265', null, 'user_sport_link', 'users_id', 'int');
+INSERT INTO `enttype_fields` VALUES ('266', null, 'user_tokens', 'id', 'int');
+INSERT INTO `enttype_fields` VALUES ('267', null, 'user_tokens', 'user_id', 'int');
+INSERT INTO `enttype_fields` VALUES ('268', null, 'user_tokens', 'user_agent', 'varchar');
+INSERT INTO `enttype_fields` VALUES ('269', null, 'user_tokens', 'token', 'varchar');
+INSERT INTO `enttype_fields` VALUES ('270', null, 'user_tokens', 'created', 'int');
+INSERT INTO `enttype_fields` VALUES ('271', null, 'user_tokens', 'expires', 'int');
+INSERT INTO `enttype_fields` VALUES ('272', '1', 'users', 'id', 'int');
+INSERT INTO `enttype_fields` VALUES ('273', '1', 'users', 'email', 'varchar');
+INSERT INTO `enttype_fields` VALUES ('274', '1', 'users', 'username', 'varchar');
+INSERT INTO `enttype_fields` VALUES ('275', '1', 'users', 'password', 'varchar');
+INSERT INTO `enttype_fields` VALUES ('276', '1', 'users', 'login_count', 'int');
+INSERT INTO `enttype_fields` VALUES ('277', '1', 'users', 'last_login', 'int');
+INSERT INTO `enttype_fields` VALUES ('278', '1', 'users', 'first_name', 'varchar');
+INSERT INTO `enttype_fields` VALUES ('279', '1', 'users', 'last_name', 'varchar');
+INSERT INTO `enttype_fields` VALUES ('280', '1', 'users', 'cities_id', 'int');
+INSERT INTO `enttype_fields` VALUES ('281', '1', 'users', 'date_created', 'date');
+INSERT INTO `enttype_fields` VALUES ('282', '1', 'users', 'logins', 'int');
+INSERT INTO `enttype_fields` VALUES ('283', null, 'users_teams_link', 'id', 'int');
+INSERT INTO `enttype_fields` VALUES ('284', null, 'users_teams_link', 'teams_id', 'int');
+INSERT INTO `enttype_fields` VALUES ('285', null, 'users_teams_link', 'users_id', 'int');
+INSERT INTO `enttype_fields` VALUES ('286', null, 'usl_game_link', 'id', 'int');
+INSERT INTO `enttype_fields` VALUES ('287', null, 'usl_game_link', 'user_sport_link_id', 'int');
+INSERT INTO `enttype_fields` VALUES ('288', null, 'usl_game_link', 'games_id', 'int');
+INSERT INTO `enttype_fields` VALUES ('289', null, 'usl_game_link', 'result_time', 'time');
+INSERT INTO `enttype_fields` VALUES ('290', null, 'usl_game_link', 'isWinner', 'int');
+INSERT INTO `enttype_fields` VALUES ('291', null, 'usl_game_link', 'tournaments_id', 'int');
+INSERT INTO `enttype_fields` VALUES ('292', null, 'utl_position_link', 'id', 'int');
+INSERT INTO `enttype_fields` VALUES ('293', null, 'utl_position_link', 'users_teams_link_id', 'int');
+INSERT INTO `enttype_fields` VALUES ('294', null, 'utl_position_link', 'positions_id', 'int');
+INSERT INTO `enttype_fields` VALUES ('295', '24', 'video_services', 'id', 'int');
+INSERT INTO `enttype_fields` VALUES ('296', '24', 'video_services', 'name', 'varchar');
+INSERT INTO `enttype_fields` VALUES ('297', '24', 'video_services', 'website', 'varchar');
+INSERT INTO `enttype_fields` VALUES ('298', null, 'video_type_link', 'id', 'int');
+INSERT INTO `enttype_fields` VALUES ('299', null, 'video_type_link', 'videos_id', 'int');
+INSERT INTO `enttype_fields` VALUES ('300', null, 'video_type_link', 'video_types_id', 'int');
+INSERT INTO `enttype_fields` VALUES ('301', '50', 'video_types', 'id', 'int');
+INSERT INTO `enttype_fields` VALUES ('302', '50', 'video_types', 'name', 'varchar');
+INSERT INTO `enttype_fields` VALUES ('303', '50', 'video_types', 'vid_extension', 'varchar');
+INSERT INTO `enttype_fields` VALUES ('304', '50', 'video_types', 'height', 'int');
+INSERT INTO `enttype_fields` VALUES ('305', '50', 'video_types', 'width', 'int');
+INSERT INTO `enttype_fields` VALUES ('306', '50', 'video_types', 'zencoder_command', 'text');
+INSERT INTO `enttype_fields` VALUES ('307', '50', 'video_types', 'active', 'tinyint');
+INSERT INTO `enttype_fields` VALUES ('308', '23', 'videos', 'id', 'int');
+INSERT INTO `enttype_fields` VALUES ('309', '23', 'videos', 'media_id', 'int');
+INSERT INTO `enttype_fields` VALUES ('310', '23', 'videos', 'video_services_id', 'int');
+INSERT INTO `enttype_fields` VALUES ('311', null, 'videos_meta', 'id', 'int');
+INSERT INTO `enttype_fields` VALUES ('312', null, 'videos_meta', 'video_type_link_id', 'int');
+INSERT INTO `enttype_fields` VALUES ('313', null, 'videos_meta', 'vid_ver', 'varchar');
+INSERT INTO `enttype_fields` VALUES ('314', null, 'videos_meta', 'vid_prop', 'varchar');
+INSERT INTO `enttype_fields` VALUES ('315', null, 'videos_meta', 'vid_val', 'varchar');
+INSERT INTO `enttype_fields` VALUES ('316', null, 'views', 'id', 'int');
+INSERT INTO `enttype_fields` VALUES ('317', null, 'views', 'subject_enttypes_id', 'int');
+INSERT INTO `enttype_fields` VALUES ('318', null, 'views', 'subject_id', 'int');
+INSERT INTO `enttype_fields` VALUES ('319', null, 'views', 'users_id', 'int');
+INSERT INTO `enttype_fields` VALUES ('320', null, 'views', 'timeViewed', 'timestamp');
+INSERT INTO `enttype_fields` VALUES ('321', '18', 'votes', 'id', 'int');
+INSERT INTO `enttype_fields` VALUES ('322', '18', 'votes', 'subject_enttypes_id', 'int');
+INSERT INTO `enttype_fields` VALUES ('323', '18', 'votes', 'subject_id', 'int');
+INSERT INTO `enttype_fields` VALUES ('324', '18', 'votes', 'voter_users_id', 'int');
+
+-- ----------------------------
+-- Table structure for `enttype_field_rules`
+-- ----------------------------
+DROP TABLE IF EXISTS `enttype_field_rules`;
+CREATE TABLE `enttype_field_rules` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `enttype_fields_id` int(255) DEFAULT NULL,
+  `rule_name` varchar(40) CHARACTER SET latin1 COLLATE latin1_german1_ci DEFAULT NULL,
+  `error_message` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of enttype_field_rules
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for `fitness_data`
@@ -34778,6 +35136,7 @@ DROP TABLE IF EXISTS `game_matches`;
 CREATE TABLE `game_matches` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `games_id` int(11) DEFAULT NULL,
+  `match_num` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -34894,19 +35253,22 @@ CREATE TABLE `locations` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `address` varchar(255) DEFAULT NULL,
   `cities_id` int(11) DEFAULT NULL,
+  `zip` varchar(10) CHARACTER SET latin1 COLLATE latin1_german1_ci DEFAULT NULL,
   `lon` float(25,0) DEFAULT NULL,
   `lat` float(25,0) DEFAULT NULL,
   `loc_point` point DEFAULT NULL,
   `location_type` enum('High School','Park','Other') DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `point_index` (`loc_point`(25))
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of locations
 -- ----------------------------
-INSERT INTO `locations` VALUES ('1', '2317 Hill St.', '1713', '0', '0', null, 'High School');
-INSERT INTO `locations` VALUES ('2', '13235 Old Oak Ln', '1685', null, null, null, 'Park');
+INSERT INTO `locations` VALUES ('1', '2317 Hill St.', '1713', null, '0', '0', null, 'High School');
+INSERT INTO `locations` VALUES ('2', '13235 Old Oak Ln', '1685', null, null, null, null, 'Park');
+INSERT INTO `locations` VALUES ('3', '12345 Panther Drive', '1713', null, '18', '-37', null, 'High School');
+INSERT INTO `locations` VALUES ('4', null, '2091', null, null, null, null, null);
 
 -- ----------------------------
 -- Table structure for `media`
@@ -35343,7 +35705,7 @@ CREATE TABLE `queuedvideos` (
   `user_sess` varchar(255) CHARACTER SET utf8 DEFAULT NULL,
   `video_services_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=132 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- ----------------------------
 -- Records of queuedvideos
@@ -36909,6 +37271,7 @@ INSERT INTO `roles_users` VALUES ('425980', '1');
 INSERT INTO `roles_users` VALUES ('425981', '1');
 INSERT INTO `roles_users` VALUES ('425982', '1');
 INSERT INTO `roles_users` VALUES ('425983', '1');
+INSERT INTO `roles_users` VALUES ('425984', '1');
 INSERT INTO `roles_users` VALUES ('425983', '2');
 INSERT INTO `roles_users` VALUES ('425983', '3');
 INSERT INTO `roles_users` VALUES ('425983', '4');
@@ -37178,7 +37541,7 @@ CREATE TABLE `stattabs` (
   `defaultChild` int(10) DEFAULT NULL,
   `orderNum` int(10) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=48 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- ----------------------------
 -- Records of stattabs
@@ -37279,7 +37642,7 @@ CREATE TABLE `users` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `uniq_username` (`username`),
   UNIQUE KEY `uniq_email` (`email`)
-) ENGINE=InnoDB AUTO_INCREMENT=425984 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=425985 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of users
@@ -38705,7 +39068,8 @@ INSERT INTO `users` VALUES ('425979', 'clay_gorham@yahoo.com_', 'clay_gorham@yah
 INSERT INTO `users` VALUES ('425980', 'cavellobrick@yahoo.com_', 'pete.cavello', 'd5d845c15751d7bda5d9101d28fbcc13e22cba20c06e057132', '1', '1362980726', 'Pete', 'Cavello', '1771', null, null);
 INSERT INTO `users` VALUES ('425981', 'treythornburg@gmail.com_', 'treythornburg@gmail.com', '8e720bbf5b8e4e4587e627e599f79741f68ac2e3a9ed470260', '1', '1363024849', 'Trey', 'Thornburg', '0', null, null);
 INSERT INTO `users` VALUES ('425982', 'nicolette.elliott@yahoo.com_', 'nicolette.elliott@yahoo.com', '9cc3931c59b143ab87bece75e1d280cb3d1033e4d2a5b8f375', '1', '1363064186', 'Nicolette Amber', 'Elliott', '2462', null, null);
-INSERT INTO `users` VALUES ('425983', 'mike.wrather@gmail.com', 'mike', '896850b3f3929cbeff81d0ff8c98bee1931d42505d782915974c015472fca4cc', '2', '1363939432', null, null, null, null, null);
+INSERT INTO `users` VALUES ('425983', 'mike.wrather@gmail.com', 'mike', '896850b3f3929cbeff81d0ff8c98bee1931d42505d782915974c015472fca4cc', '2', '1364941228', null, null, null, null, null);
+INSERT INTO `users` VALUES ('425984', 'admin@mail.com', 'admin', '896850b3f3929cbeff81d0ff8c98bee1931d42505d782915974c015472fca4cc', '0', '1364686469', null, null, null, null, null);
 
 -- ----------------------------
 -- Table structure for `users_teams_link`
@@ -38929,7 +39293,7 @@ CREATE TABLE `user_tokens` (
   KEY `fk_user_id` (`user_id`),
   KEY `expires` (`expires`),
   CONSTRAINT `user_tokens_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=38 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=42 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of user_tokens
@@ -38944,6 +39308,8 @@ INSERT INTO `user_tokens` VALUES ('25', '425983', '7e4e9cd3d03cacf48173e9ba841c1
 INSERT INTO `user_tokens` VALUES ('26', '425983', '7e4e9cd3d03cacf48173e9ba841c1e1223b4f2e1', '01767bcbbe39a1d364605369ea56ac896ff0a92b', '1363771150', '1364980750');
 INSERT INTO `user_tokens` VALUES ('35', '425983', '7e4e9cd3d03cacf48173e9ba841c1e1223b4f2e1', 'f572ca70b7c496e423b8947b308c6d57cb3b850e', '1363773750', '1364983350');
 INSERT INTO `user_tokens` VALUES ('37', '425983', '32e9c33404e62a2c8403363e31076038feff7ee3', '44f7dcab9b572a17dfd4cc9feb51d1b21cf04cba', '1363939432', '1365149032');
+INSERT INTO `user_tokens` VALUES ('40', '425984', 'c5c7614ce4ca71c19464edee3f5d6753fd5fd302', 'e25329d49cc766331ea8670c60ef535c1c7cf589', '1364686469', '1365896069');
+INSERT INTO `user_tokens` VALUES ('41', '425983', 'c5c7614ce4ca71c19464edee3f5d6753fd5fd302', '9a469d809120ebf4173f2cdc78899fc05eedd797', '1364941228', '1366150828');
 
 -- ----------------------------
 -- Table structure for `usl_game_link`
@@ -39004,7 +39370,7 @@ CREATE TABLE `videos_meta` (
   `vid_prop` varchar(255) NOT NULL,
   `vid_val` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1104 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- ----------------------------
 -- Records of videos_meta

@@ -14,14 +14,14 @@ class Model_Site_Enttype_Field extends ORM
 	
 	protected $_table_name = 'enttype_fields';
 	
-/*
+
 	protected $_belongs_to = array(
-		'_alias_' => array(
-			'model' => '_model_name_', 
-			'foreign_key' => '_column_'
+		'enttype' => array(
+			'model' => 'Site_Enttype',
+			'foreign_key' => 'enttypes_id'
 		)
 	);
-	
+/*
 	protected $_has_many = array(
 		'_alias_' => array(
 			'model' => '_model_name_', 
