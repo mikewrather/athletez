@@ -39,7 +39,12 @@
 		{
 			$this->payloadDesc = "Basic info on a given state";
 
-		
+			if(!$this->mainModel->id)
+			{
+				$this->modelNotSetError();
+				return false;
+			}
+			return $this->mainModel;
 		}
 		
 		/**
@@ -50,8 +55,13 @@
 		public function action_get_counties()
 		{
 			$this->payloadDesc = "All counties within the state";
-
-		
+			
+			if(!$this->mainModel->id)
+			{
+				$this->modelNotSetError();
+				return false;
+			}
+			return $this->mainModel->getCountries();
 		}
 		
 		/**
@@ -63,7 +73,12 @@
 		{
 			$this->payloadDesc = "All divisions within a state";
 
-		
+			if(!$this->mainModel->id)
+			{
+				$this->modelNotSetError();
+				return false;
+			}
+			return $this->mainModel->getDivisions();
 		}
 		
 		/**
@@ -75,7 +90,12 @@
 		{
 			$this->payloadDesc = "All sections within a state";
 
-		
+			if(!$this->mainModel->id)
+			{
+				$this->modelNotSetError();
+				return false;
+			}
+			return $this->mainModel->getSections();
 		}
 		
 		/**
@@ -87,7 +107,12 @@
 		{
 			$this->payloadDesc = "All leagues within a given state";
 
-		
+			if(!$this->mainModel->id)
+			{
+				$this->modelNotSetError();
+				return false;
+			}
+			return $this->mainModel->getLeagues();
 		}
 		
 		############################################################################
