@@ -39,21 +39,15 @@
 		public function get_teams()
 		{
 			$retArr = array();
-			$user_teams = $this->obj->find_all();
-			foreach($user_teams as $user_team)
+
+			// Scaffolding Code For Array:
+			$objs = $this->obj->find_all();
+			 
+			foreach($objs as $obj)
 			{
-				$this_team = $user_team->team;
-				$team = array();
-				$team['team_name'] = method_exists($this_team,'name') ? $this_team->name() : $this_team->name;
-				$team['team_location'] = $this_team->getLocation()->name();
-				array_push($retArr, $team);
+				$retArr[$obj->id] = $obj->getBasics();
 			}
-			/*
-			foreach($this->obj->teams->find_all() as $team)
-			{
-				$response = Request::factory('/api/team/basics/'.$team->id.'?users_id='.$this->obj->id)->execute();
-				$retArr[$team->id] = $response->body;
-			}*/
+ 
 			return $retArr;
 		}
 		
@@ -65,30 +59,13 @@
 		public function get_sports()
 		{
 			$retArr = array();
-			$user_sports = $this->obj;
-		 		
-			// through User_sport_link
-			foreach($user_sports as $user_sport )
-			{					 
-				$sport_info = $user_sport->find_all();	
-			  
-				foreach($sport_info as $us )
-				{  
-					$retArr[$us->id] = $us->getBasics();	
-				} 
-			}	
-			
-			// through User_team_link
-			//$response = Request::factory('/api/user/sports/'.$this->obj->id)->execute();
-        	//var_dump( $response );
-						
-			/*					
-			$teams = $this->obj->teams->group_by('org_sport_link_id')->find_all();
-			foreach($teams as $team)
+			// Scaffolding Code For Array:
+			$objs = $this->obj->find_all();
+			 
+			foreach($objs as $obj)
 			{
-				$sport = $team->getSport();
-				$retArr[$sport->id] = $sport->getBasics();
-			}*/
+				$retArr[$obj->id] = $obj->getBasics();
+			}
 			return $retArr;
 		}
 		
@@ -101,82 +78,16 @@
 		{
 			$retArr = array();
 		
-			$teams_links = $this->obj->find_all();
+			$objs = $this->obj->find_all();
 			 
-			foreach($teams_links as $teams_link)
-			{ 
-				$teams = array(); 
-				$tl = $teams_link->getBasics();
-				$team = $tl['team'];
-				
-				
-				$teams['team_id'] = $team['id'];
-				$teams['year'] = $team['year'];
-				$teams['complevel'] = $team['complevel']['name'];
-				$teams['season'] = $team['season']['name'];
-				
-				// get the game list by team.id
-				$schedule_list = $teams_link->team->getSchedule();
-				
-				foreach($schedule_list as $schedule)
-				{
-					$schedules = array();								// game obj
-					$schedules['schedule_id'] = $schedule->id;			// game id
-					$schedules['schedule_date'] = $schedule->gameDay;	// game day
-					$schedules['schedule_summary'] = $schedule->points_scored;
-					 
-					// add the other teams				
-					$other_teams_obj = ORM::factory('Sportorg_Games_Teamslink')				
-										->join('games')
-											->on('games.id','=','sportorg_games_teamslink.games_id')		
-										->where('sportorg_games_teamslink.teams_id', '!=', $team['id'] )
-										->and_where('games.id', '=', $schedule->id)->find_all();
-										
-					foreach( $other_teams_obj as $other_team )
-					{
-						$o_team = $other_team->team;
-						
-						$schedules['other_team'][$other_team->id] = $o_team;
-					}
-					$teams['schedules'][$schedule->id] = $schedules;	 					
-				} 
-				 
-				$org_id = $team['org_sport_link']['org']['id'];
-				$org_name = $team['org_sport_link']['org']['name'];
-				
-				// StatVals
-				$statvals_list = $teams_link->team->statvals;
-				$statvals = array();
-				 
-				foreach($statvals_list as $sv)
-				{
-					$statval = $sv->getBasics();
-					array_push($statvals, $statval['statval']);
-					
-					$stats = $sv->stat->getBasics();
-					$stat_name = $stats['name'];					
-					 
-				}
-				
-				$payload['statvals'] = $statvals;
-				$payload = array();
-				$payload['org_id'] = $org_id;
-				$payload['org_name'] = $org_name;
-				$payload['teams'] = $teams;
-				
-				array_push($retArr, $payload); 
-			} 
-		 	
-			return $retArr;
-			/*
-			$teams = $this->obj->teams->group_by('org_sport_link_id')->find_all();
-			foreach($teams as $team)
+			foreach($objs as $obj)
 			{
-				$org = $team->getOrg();
-				$response = Request::factory('/api/org/basics/'.$org->id.'?users_id='.$this->obj->id)->execute();
-				$retArr[$org->id] = $response->body;
-			}*/
-			
+				$org_sport_link = $obj->getBasics();
+				$org = $org_sport_link['org'];
+				$retArr[$org['id']] = $org;
+			}
+		 	
+			return $retArr; 
 		}
 		
 		/**
@@ -267,7 +178,7 @@
 		public function get_images()
 		{
 			$retArr = array();
-			$images = $this->obj->getImages();
+			$images = $this->obj->find_all();
 			foreach($images as $image)
 			{
 				$retArr[$image->id] = $image->getBasics();
@@ -319,19 +230,11 @@
 			//$retArr = $this->obj->getResumeData();
 			$retArr = array();
 			
-			$fitnessbasics = $this->obj->find_all();
+			$fitnessbasics = $this->obj; 
 			
 			foreach($fitnessbasics as $fb)
-			{
-				$fitness = array();
-				$fitness_data_value = $fb->getBasics();
-				$fitness_data = $fb->fitness_data->getBasics();
-				
-				$fitness['name'] = $fitness_data['fitness_test'];
-				$fitness['val'] = $fitness_data_value['user_value'];				
-				$fitness['units'] = $fitness_data['unit_type'];
-				
-				array_push($retArr, $fitness);
+			{	
+				$retArr[$fb['id']] = $fb;
 			}
 			 
 			return $retArr;
@@ -344,18 +247,14 @@
 		 */
 		public function get_primaryvideo()
 		{
-			$retArr = array();
-
-			// Scaffolding Code For Array:
-			$objs = $this->obj->find_all();
-			foreach($objs as $obj)
-			{
-				$retArr[$obj->id] = $obj->getBasics();
-			}
-
+			$retArr = array(); 
 			// Scaffolding Code For Single:
-			$retArr = $this->obj->getBasics();
-
+			$comments = $this->obj->find_all();
+			foreach($comments as $comment)
+			{
+				$retArr[$comment->id] = $comment->getBasics();
+			}
+			 
 			return $retArr;
 		}
 		
