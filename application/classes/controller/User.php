@@ -16,6 +16,8 @@ class Controller_User extends Controller_Template
 
 		$user = Auth::instance()->get_user();
 
+		print_r($user);
+
 		if(!$user) HTTP::redirect('user/login');
 
 	}

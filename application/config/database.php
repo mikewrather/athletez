@@ -48,8 +48,8 @@ $dbconfig = array
 //SET UP CASE FOR ENV
 if(Kohana::$environment == Kohana::LOCALHOST)
 {
-	$dbconfig['default']['connection']['password'] = '';
-	$dbconfig['scraping']['connection']['password'] = '';
+	$dbconfig['default']['connection']['password'] = '  qmi!#j';
+	$dbconfig['scraping']['connection']['password'] = '  qmi!#j';
 }
 
 return $dbconfig;
