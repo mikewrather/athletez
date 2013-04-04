@@ -16,7 +16,7 @@ class Model_Sportorg_Games_Matchplayer extends ORM
 			'foreign_key' => 'users_id'
 		),
 		'game_matches' => array(
-			'model' => 'Sportorg_Game_Match',
+			'model' => 'Sportorg_Games_Match',
 			'foreign_key' => 'game_matches_id'
 		)
 	);
@@ -31,7 +31,7 @@ class Model_Sportorg_Games_Matchplayer extends ORM
 			"result_time" => $this->result_time,
 			"game_matches" => $this->game_matches->getBasics(),
 			"user" => $this->user->getBasics(),
-			"match_winnder" => $this->match_winner
+			"match_winner" => $this->match_winner
 		);
 	}
 	
@@ -39,4 +39,42 @@ class Model_Sportorg_Games_Matchplayer extends ORM
 	{
 		return null;
 	}
+
+	public function rules(){
+
+		return array
+		(
+			// game_matches_id (int)
+			'game_matches_id'=>array(
+				array('not_empty'),
+				array('digit'),
+				array('game_match_id_exist')
+			),
+
+			// users_id (int)
+			'users_id'=>array(
+				//array('not_empty'),
+				//array('digit'),
+				array('not_equals', array(':value', 0))
+			),
+
+			// points_awarded (int)
+			'points_awarded'=>array(
+				array('not_empty'),
+				array('digit'),
+			),
+
+			// result_time (varchar)
+			'result_time'=>array(
+				array('not_empty'),
+			),
+
+			// match_winner (tinyint)
+			'match_winner'=>array(
+				array('not_empty'),
+				array('in_array', array(':value', array('true', 'false'))),
+			),
+		);
+	}
+
 }
