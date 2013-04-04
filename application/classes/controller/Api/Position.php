@@ -38,14 +38,14 @@
 		public function action_get_listall()
 		{
 			$this->payloadDesc = "Lists available positions.";
-
+			$args = array();
 		     // CHECK FOR PARAMETERS:
 			// sports_id 
 			// Filter list of positions to a given sport.
 				
 			if((int)trim($this->request->query('sports_id')) > 0)
 			{
-				$sports_id = (int)trim($this->request->query('sports_id'));
+				$args['sports_id'] = (int)trim($this->request->query('sports_id'));
 			}
 
 			// users_id 
@@ -53,9 +53,11 @@
 				
 			if((int)trim($this->request->query('users_id')) > 0)
 			{
-				$users_id = (int)trim($this->request->query('users_id'));
+				$args['users_id'] = (int)trim($this->request->query('users_id'));
 			}
-
+			  
+		 	$position = ORM::factory('Sportorg_Position');
+			return $position->getListall($args);
 		}
 		
 		/**
@@ -66,14 +68,14 @@
 		public function action_get_players()
 		{
 			$this->payloadDesc = "Retrives all players for a given position narrowed by other optional criteria";
-
+			$args = array();
 		     // CHECK FOR PARAMETERS:
 			// orgs_id 
 			// Filter the players for a given position to a specific organization
 				
 			if((int)trim($this->request->query('orgs_id')) > 0)
 			{
-				$orgs_id = (int)trim($this->request->query('orgs_id'));
+				$args['orgs_id'] = (int)trim($this->request->query('orgs_id'));
 			}
 
 			// cities_id 
@@ -81,9 +83,15 @@
 				
 			if((int)trim($this->request->query('cities_id')) > 0)
 			{
-				$cities_id = (int)trim($this->request->query('cities_id'));
+				$args['cities_id'] = (int)trim($this->request->query('cities_id'));
 			}
-
+			
+			if(!$this->mainModel->id)
+			{
+				$this->modelNotSetError();
+				return false;
+			}
+			return $this->mainModel->getPlayers($args);
 		}
 		
 		/**
@@ -95,7 +103,12 @@
 		{
 			$this->payloadDesc = "Gets the default statistics tab to select for a given position";
 
-		
+			if(!$this->mainModel->id)
+			{
+				$this->modelNotSetError();
+				return false;
+			}
+			return (Object)$this->mainModel->getStattab();
 		}
 		
 		/**
@@ -107,7 +120,12 @@
 		{
 			$this->payloadDesc = "Gets the sport associated with a given position";
 
-		
+			if(!$this->mainModel->id)
+			{
+				$this->modelNotSetError();
+				return false;
+			}
+			return (Object)$this->mainModel->getSport();
 		}
 		
 		/**
@@ -118,14 +136,14 @@
 		public function action_get_images()
 		{
 			$this->payloadDesc = "Gets images for players of a given position";
-
+			$args = array();
 		     // CHECK FOR PARAMETERS:
 			// orgs_id 
 			// Filter images to those for players who play a certain position within a specific organization.
 				
 			if((int)trim($this->request->query('orgs_id')) > 0)
 			{
-				$orgs_id = (int)trim($this->request->query('orgs_id'));
+				$args['orgs_id'] = (int)trim($this->request->query('orgs_id'));
 			}
 
 			// cities_id 
@@ -133,9 +151,15 @@
 				
 			if((int)trim($this->request->query('cities_id')) > 0)
 			{
-				$cities_id = (int)trim($this->request->query('cities_id'));
+				$args['cities_id'] = (int)trim($this->request->query('cities_id'));
 			}
-
+			if(!$this->mainModel->id)
+			{
+				$this->modelNotSetError();
+				return false;
+			}
+			$args['type'] = 'image';
+			return $this->mainModel->getMedia($args);
 		}
 		
 		/**
@@ -146,14 +170,14 @@
 		public function action_get_videos()
 		{
 			$this->payloadDesc = "Gets videos for players of a given position";
-
+			$args = array();
 		     // CHECK FOR PARAMETERS:
 			// orgs_id 
 			// Filter videos to those for players who play a certain position within a specific organization.
 				
 			if((int)trim($this->request->query('orgs_id')) > 0)
 			{
-				$orgs_id = (int)trim($this->request->query('orgs_id'));
+				$args['orgs_id'] = (int)trim($this->request->query('orgs_id'));
 			}
 
 			// cities_id 
@@ -161,9 +185,10 @@
 				
 			if((int)trim($this->request->query('cities_id')) > 0)
 			{
-				$cities_id = (int)trim($this->request->query('cities_id'));
+				$args['cities_id'] = (int)trim($this->request->query('cities_id'));
 			}
-
+			$args['type'] = 'video';
+			return $this->mainModel->getMedia($args);
 		}
 		
 		############################################################################
