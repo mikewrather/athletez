@@ -1,84 +1,117 @@
 // sport-item.js  
 // -------  
 // Requires `define`
-// Return {TeamSportItemView} object as constructor
+// Return {SportItemView} object as constructor
 
 define([ 
         'vendor', 
         'views',
         'utils', 
         'text!team/templates/sport-item.html',
-        'team/collections/teams',
-        'team/views/team-list'
+        'text!team/templates/complevel-select.html',
+        'team/collections/complevels',
+        'team/views/complevel-list'
         ], 
 function (
         vendor,
         views,
         utils,
-        teamSportItemTemplate
+        sportItemTemplate,
+        selectComplevelTemplate
         ) {
 
-    var TeamSportItemView
+    var SportItemView
       , $ = vendor.$
       , BaseView = views.BaseView
       , Mustache = vendor.Mustache,
       Channel = utils.lib.Channel,
-      TeamTeamListView = require('team/views/team-list'),
-      TeamTeamList = require('team/collections/teams');
+      ComplevelListView = require('team/views/complevel-list'),
+      ComplevelList = require('team/collections/complevels');
 
-      TeamSportItemView = BaseView.extend({
+      SportItemView = BaseView.extend({
 
         tagName: "li",
 
-        className: "team-sport",
+        className: "sport",
         
         rendered: false,
         
-        initialize: function (options) {
-            this.template = teamSportItemTemplate;
-            var self = this;
-            function callback() {
-                if (self.rendered)
-                    return;
-                self.rendered = true;
-                self.initTeamList();
-            }
-            this.id = options.model.collection.id;
-            Channel('teamsports:select' + this.model.get('payload')['sport_id']).subscribe(callback);
+        events: {
+            "change #select-complevel": "selectComplevel"
         },
         
-        initTeamList: function() {
+        initialize: function (options) {
+            this.template = sportItemTemplate;
+            this.selectComplevelTemplate = selectComplevelTemplate;
             var self = this;
-            this.teams = new TeamTeamList();
-            this.teams.id = this.id;
-            this.teams.sport_id = this.model.get('payload')['sport_id'];
-            this.teams.fetch();
-            $.when(this.teams.request).done(function() {
-                self.setupTeamListView();
-                Channel('teamteams:fetch').publish();
+            function callback() {
+                if (self.rendered) {
+                    Channel('complevels:fetch').publish();
+                    self.select_complevel = self.$('#select-complevel');
+                    self.selectComplevel();
+                    return;
+                }
+                self.rendered = true;
+                self.initList();
+            }
+            this.id = options.model.collection.id;
+            Channel('sports:select' + this.model.get('payload')['sport_id']).subscribe(callback);            
+        },
+        
+        initList: function() {
+            var self = this;
+            this.complevels = new ComplevelList();
+            this.complevels.id = this.id;
+            this.complevels.sport_id = this.model.get('payload')['sport_id'];
+            this.complevels.fetch();
+            $.when(this.complevels.request).done(function() {
+                self.setupComplevelListView();
+                Channel('complevels:fetch').publish();
+                self.select_complevel = self.$('#select-complevel');
+                self.selectComplevel();
             });
         },
         
-        setupTeamListView: function() {
+        setupComplevelListView: function() {
             var self = this,
-                teamListView = new TeamTeamListView({
-                    collection: this.teams
+                complevelListView = new ComplevelListView({
+                    collection: this.complevels
                 });
             
             function callback () {
-                teamListView.render();
-                self.$el.find('.teams-info').html(teamListView.el);                
+                complevelListView.render();
+                self.$el.find('.complevels').html(complevelListView.el);                
+                
+                var data = {"payload": []};
+                var collection = complevelListView.collection;
+                if (collection.length) {
+                    for (i = 0; i < collection.length; i++) {
+                        data["payload"][i] = collection.at(i).get('payload');
+                    }
+                    var markup = Mustache.to_html(self.selectComplevelTemplate, data);                                
+                    self.$el.find('.complevels').prepend(markup);
+                } else {
+                    self.$el.find('.complevels').html('');
+                } 
             }
-            Channel('teamteams:fetch').subscribe(callback);
+            Channel('complevels:fetch').subscribe(callback);
         },
 
         render: function () {
             var markup = Mustache.to_html(this.template, this.model.toJSON());
             this.$el.html(markup);
             return this;
+        },
+        
+        selectComplevel: function() {
+            var complevel_id = this.select_complevel.val();
+            var sport_id = this.model.get('payload')['sport_id'];
+            this.$('.complevel-info').stop().slideUp();
+            this.$('.complevel-info-' + sport_id + '-' + complevel_id).stop().slideDown();
+            Channel('complevels:select' + sport_id + '-' + complevel_id).publish();
         }        
         
       });
 
-    return TeamSportItemView;
+    return SportItemView;
 });
