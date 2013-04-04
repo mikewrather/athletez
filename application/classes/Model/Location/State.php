@@ -32,7 +32,32 @@ class Model_Location_State extends ORM
 			'foreign_key' => 'states_id'
 		)
 	);
-
+	public function getSections()
+	{
+		return $this->sections;
+	}
+	
+	public function getCountries()
+	{
+		return $this->counties;
+	}
+	
+	public function getDivisions()
+	{
+		return $this->divisions;
+	}
+	
+	public function getLeagues()
+	{
+		$leagues = ORM::factory('Sportorg_League')
+					->join('states')
+					->on('states.id', '=', 'sportorg_league.states_id')
+					->where('states.id', '=', $this->id);
+		
+	 		
+		return $leagues;	
+	}
+	
 	public function getBasics()
 	{
 		return array(

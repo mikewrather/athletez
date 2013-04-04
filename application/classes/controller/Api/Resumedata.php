@@ -39,7 +39,12 @@
 		{
 			$this->payloadDesc = "Return the basics about a given peice of resume data";
 
-		
+			if(!$this->mainModel->id)
+			{
+				$this->modelNotSetError();
+				return false;
+			}
+			return $this->mainModel; 
 		}
 		
 		/**
@@ -50,14 +55,14 @@
 		public function action_get_listall()
 		{
 			$this->payloadDesc = "Return a list of all resume data narrowed by supplied parameters";
-
+			$args = array();
 		     // CHECK FOR PARAMETERS:
 			// resume_data_groups_id 
 			// Filter resume data list to show only those entries for a certain data group
 				
 			if((int)trim($this->request->query('resume_data_groups_id')) > 0)
 			{
-				$resume_data_groups_id = (int)trim($this->request->query('resume_data_groups_id'));
+				$args['resume_data_groups_id'] = (int)trim($this->request->query('resume_data_groups_id'));
 			}
 
 			// resume_data_profiles 
@@ -65,9 +70,15 @@
 				
 			if((int)trim($this->request->query('resume_data_profiles')) > 0)
 			{
-				$resume_data_profiles = (int)trim($this->request->query('resume_data_profiles'));
+				$args['resume_data_profiles'] = (int)trim($this->request->query('resume_data_profiles'));
 			}
-
+			
+			if(!$this->mainModel->id)
+			{
+				$this->modelNotSetError();
+				return false;
+			}
+			return $this->mainModel->getListall($args); 
 		}
 		
 		/**
@@ -78,8 +89,12 @@
 		public function action_get_vals()
 		{
 			$this->payloadDesc = "Retrieves the values for a peice of resume data narrowed by supplied parameters, most noteably userID";
-
-		
+			if(!$this->mainModel->id)
+			{
+				$this->modelNotSetError();
+				return false;
+			}
+			return $this->mainModel->getVals();  
 		}
 		
 		############################################################################

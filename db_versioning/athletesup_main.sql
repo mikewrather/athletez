@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50525
 File Encoding         : 65001
 
-Date: 2013-04-03 16:55:15
+Date: 2013-04-03 18:32:33
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -40,11 +40,11 @@ CREATE TABLE `apiaccess` (
   `shortname` varchar(20) DEFAULT NULL,
   `description` varchar(255) DEFAULT NULL,
   `done` tinyint(1) NOT NULL DEFAULT '0',
-  `id1` varchar(25) DEFAULT NULL,
-  `id2` varchar(25) DEFAULT NULL,
+  `id1` varchar(25) CHARACTER SET latin1 COLLATE latin1_german1_ci DEFAULT NULL,
+  `id2` varchar(25) CHARACTER SET latin1 COLLATE latin1_german1_ci DEFAULT NULL,
   `current_status` text,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=421 DEFAULT CHARSET=utf16;
+) ENGINE=InnoDB AUTO_INCREMENT=421 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of apiaccess
@@ -37273,8 +37273,11 @@ INSERT INTO `roles_users` VALUES ('425982', '1');
 INSERT INTO `roles_users` VALUES ('425983', '1');
 INSERT INTO `roles_users` VALUES ('425984', '1');
 INSERT INTO `roles_users` VALUES ('425983', '2');
+INSERT INTO `roles_users` VALUES ('425984', '2');
 INSERT INTO `roles_users` VALUES ('425983', '3');
+INSERT INTO `roles_users` VALUES ('425984', '3');
 INSERT INTO `roles_users` VALUES ('425983', '4');
+INSERT INTO `roles_users` VALUES ('425984', '4');
 
 -- ----------------------------
 -- Table structure for `seasons`
