@@ -15,4 +15,16 @@
 			}
 			return ($value != $null_value);
 		}
+
+		public static function match_num_unique_in_one_game($value, $games_id){
+			$games_match_model = ORM::factory("Sportorg_Games_Match");
+			$games_match_model->select("id")
+				->where('games_id', '=', $games_id)
+				->and_where('match_num', '=', $value)
+				->find();
+			if ($games_match_model->loaded()){
+				return false;
+			}
+			return true;
+		}
 	}
