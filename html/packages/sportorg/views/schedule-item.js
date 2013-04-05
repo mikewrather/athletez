@@ -1,34 +1,34 @@
-// team-item.js  
+// schedule-item.js  
 // -------  
 // Requires `define`
-// Return {TeamTeamItemView} object as constructor
+// Return {ScheduleItemView} object as constructor
 
 define([ 
         'vendor', 
         'views',
         'utils', 
-        'text!team/templates/team-item.html'
+        'text!sportorg/templates/schedule-item.html'
         ], 
 function (
         vendor,
         views,
         utils,
-        teamTeamItemTemplate
+        scheduleItemTemplate
         ) {
 
-    var TeamTeamItemView
+    var ScheduleItemView
       , $ = vendor.$
       , BaseView = views.BaseView
       , Mustache = vendor.Mustache;
 
-      TeamTeamItemView = BaseView.extend({
+      ScheduleItemView = BaseView.extend({
 
         tagName: "li",
 
-        className: "team-team",
+        className: "schedule",
           
         initialize: function (options) {
-            this.template = teamTeamItemTemplate;
+            this.template = scheduleItemTemplate;
         },
 
         render: function () {
@@ -39,5 +39,5 @@ function (
         
       });
 
-    return TeamTeamItemView;
+    return ScheduleItemView;
 });

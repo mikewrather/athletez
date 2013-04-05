@@ -9,7 +9,6 @@ define(['facade', 'site/collections/comments', 'utils'],
 function(facade, SiteCommentList, utils) {
 
     var CommentOfList,
-        _ = facade._,
         Channel = utils.lib.Channel;
 
     CommentOfList = SiteCommentList.extend({

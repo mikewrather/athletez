@@ -60,31 +60,40 @@
 		public function action_post_add()
 		{
 			$this->payloadDesc = "Add a player to a Game Match";
+			$game_match_player_obj = ORM::factory("Sportorg_Games_Matchplayer");
 
-		     // CHECK FOR PARAMETERS:
-			// users_id 
-			// The ID of the player to add
-				
-			if((int)trim($this->request->post('users_id')) > 0)
-			{
-				$users_id = (int)trim($this->request->post('users_id'));
+			$users_id = (int)trim($this->request->post('users_id'));
+
+			$game_matches_id = (int)trim($this->request->post('game_matches_id'));
+
+			$points_awarded = (int)trim($this->request->post('points_awarded'));
+
+			//convert match_won to a boolean
+			$match_winner = $this->request->post('match_won');
+
+			$result_time = trim($this->request->post('result_time'));
+
+			$game_match_player_obj->users_id = $users_id;
+			$game_match_player_obj->game_matches_id = $game_matches_id;
+			$game_match_player_obj->points_awarded = $points_awarded;
+			$game_match_player_obj->match_winner = $match_winner;
+			$game_match_player_obj->result_time = $result_time;
+			if (strtolower($game_match_player_obj->match_winner) == 'true'){
+				$game_match_player_obj->match_winner = 'true';
 			}
-
-			// game_matches_id (REQUIRED)
-			// The Game Match ID
-				
-			if((int)trim($this->request->post('game_matches_id')) > 0)
-			{
-				$game_matches_id = (int)trim($this->request->post('game_matches_id'));
+			if (strtolower($game_match_player_obj->match_winner) == 'false'){
+				$game_match_player_obj->match_winner = 'false';
 			}
+			try{
+				$game_match_player_obj->save();
+			}catch (ORM_Validation_Exception $e){
+				$error_arrays = $e->errors('models/sportorg/games/sportorg_games_matchplayer');
+				$error_desc = $this->collect_error_messages($error_arrays);
 
-			else // THIS WAS A REQUIRED PARAMETER
-			{
 				// Create Array for Error Data
 				$error_array = array(
-					"error" => "Required Parameter Missing",
-					"param_name" => "game_matches_id",
-					"param_desc" => "The Game Match ID"
+					"error" => "Unable to save game match info",
+					"desc" => $error_desc
 				);
 
 				// Set whether it is a fatal error
@@ -92,52 +101,9 @@
 
 				// Call method to throw an error
 				$this->addError($error_array,$is_fatal);
-
 			}
-			
-			// points_awarded (REQUIRED)
-			// Number of Points earned (if applicable)
-				
-			if((int)trim($this->request->post('points_awarded')) > 0)
-			{
-				$points_awarded = (int)trim($this->request->post('points_awarded'));
-			}
-
-			else // THIS WAS A REQUIRED PARAMETER
-			{
-				// Create Array for Error Data
-				$error_array = array(
-					"error" => "Required Parameter Missing",
-					"param_name" => "points_awarded",
-					"param_desc" => "Number of Points earned (if applicable)"
-				);
-
-				// Set whether it is a fatal error
-				$is_fatal = true;
-
-				// Call method to throw an error
-				$this->addError($error_array,$is_fatal);
-
-			}
-			
-			// match_won 
-			// True if the player won the match in question
-				
-			if($this->request->post('match_won') != "")
-			{
-				//convert match_won to a boolean
-				$match_won = (bool)$this->request->post('match_won');
-			}
-
-			// result_time 
-			// Result time (if applicable)
-				
-			if(trim($this->request->post('result_time')) != "")
-			{
-				$result_time = trim($this->request->post('result_time'));
-			}
-
-		}
+			return $game_match_player_obj;
+        }
 		
 		############################################################################
 		############################    PUT METHODS    #############################

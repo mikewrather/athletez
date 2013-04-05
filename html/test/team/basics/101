@@ -1,15 +1,13 @@
 {
     "payload": {
-        "user_name": "Maxwell Doyle",
-        "grad_year": 13,
-        "user_picture": "images/photo_large.png",
-        "user_height": "5' 7\"",
-        "user_weight": "185 lbs",
-        
-        "num_followers": 124,
-        "num_votes": 2342
+        "id": 101,
+        "name": "Blair Academy",
+        "location": "Blairstown, NJ",
+        "picture": "images/team_medium.png",
+        "num_votes": 378,
+        "num_followers": 212
     },
-    "desc": "Basics information about the user.",
+    "desc": "Basics information about the team.",
     "exec_data": {
         "exec_time": 0.024134,
         "exec_error": false

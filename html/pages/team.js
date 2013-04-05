@@ -13,8 +13,15 @@ define([
     "utils",
     
     "team/models/basics",
+    "team/models/addmedia",
+    "team/collections/upcoming_schedules",
+    "team/collections/recent_schedules",
+    "team/collections/competitor_teams",
     
-    "team/views/header"
+    "team/views/header",
+    "team/views/add-media",
+    "sportorg/views/schedule-list",
+    "sportorg/views/competitorteam-list"
     
     
     ], function (require, pageLayoutTemplate) {
@@ -27,8 +34,15 @@ define([
         utils = require("utils"),
         
         BasicsModel = require("team/models/basics"),
+        AddMediaModel = require("team/models/addmedia"),
+        UpcomingScheduleList = require("team/collections/upcoming_schedules"),
+        RecentScheduleList = require("team/collections/recent_schedules"),
+        CompetitorTeamList = require("team/collections/competitor_teams"),
         
         HeaderView = require("team/views/header"),
+        AddMediaView = require("team/views/add-media"),
+        ScheduleListView = require("sportorg/views/schedule-list"),
+        CompetitorTeamListView = require("sportorg/views/competitorteam-list"),
         
         LayoutView = views.LayoutView,
         $ = facade.$,
@@ -65,28 +79,38 @@ define([
             this.basics.fetch();
             this.id = this.basics.id;
             
-            /*this.addmedia = new GameAddMediaModel();
-            this.addmedia.id = this.id;            
+            this.addmedia = new AddMediaModel();
+            this.addmedia.id = this.id;
             
-            this.teamrosters = new GameTeamRosterList();
-            this.teamrosters.id = this.id;
-            this.teamrosters.fetch();
+            var controller = this;
             
-            this.videoplayer = new GameVideoPlayerModel();
-            this.videoplayer.id = this.id;
-            this.videoplayer.fetch();
+            function callback(sport_id, complevel_id, season_id) {
+                controller.refreshPage();
             
-            this.videothumbs = new GameVideoThumbList();
-            this.videothumbs.id = this.id;
-            this.videothumbs.fetch();
-            
-            this.images = new GameImageList();
-            this.images.id = this.id;
-            this.images.fetch();
-            
-            this.comments = new GameCommentList();
-            this.comments.id = this.id;
-            this.comments.fetch();*/
+                controller.upcoming_schedules = new UpcomingScheduleList();
+                controller.upcoming_schedules.id = controller.id;
+                controller.upcoming_schedules.sport_id = sport_id;
+                controller.upcoming_schedules.complevel_id = complevel_id;
+                controller.upcoming_schedules.season_id = season_id;
+                controller.upcoming_schedules.fetch();
+                
+                controller.recent_schedules = new RecentScheduleList();
+                controller.recent_schedules.id = controller.id;
+                controller.recent_schedules.sport_id = sport_id;
+                controller.recent_schedules.complevel_id = complevel_id;
+                controller.recent_schedules.season_id = season_id;
+                controller.recent_schedules.fetch();
+                
+                controller.competitor_teams = new CompetitorTeamList();
+                controller.competitor_teams.id = controller.id;
+                controller.competitor_teams.sport_id = sport_id;
+                controller.competitor_teams.complevel_id = complevel_id;
+                controller.competitor_teams.season_id = season_id;
+                controller.competitor_teams.fetch();
+                
+                controller.handleDeferredsDynamic();
+            }
+            Channel('refresh-teampage').subscribe(callback);
         },
         
         handleDeferreds: function() {
@@ -94,28 +118,47 @@ define([
 
             $.when(this.basics.request).done(function () {
                 controller.setupHeaderView();  
-                //controller.setupAddMediaView();                              
+                controller.setupAddMediaView();                              
+            });
+        },
+        
+        refreshPage: function() {
+            var position;
+            
+            if (this.upcomingScheduleListView) {
+                $(this.upcomingScheduleListView.destination).html('');
+                position = $.inArray(this.upcomingScheduleListView, this.scheme);
+                if ( ~position ) this.scheme.splice(position, 1);
+            }
+            
+            if (this.recentScheduleListView) {
+                $(this.recentScheduleListView.destination).html('');
+                position = $.inArray(this.recentScheduleListView, this.scheme);
+                if ( ~position ) this.scheme.splice(position, 1);
+            }
+            
+            if (this.competitorTeamListView) {
+                $(this.competitorTeamListView.destination).html('');
+                position = $.inArray(this.competitorTeamListView, this.scheme);
+                if ( ~position ) this.scheme.splice(position, 1);
+            }
+            
+        },
+        
+        handleDeferredsDynamic: function() {
+            var controller = this;
+            
+            $.when(this.upcoming_schedules.request).done(function () {
+                controller.setupUpcomingSchedules();
             });
             
-            /*$.when(this.teamrosters.request).done(function () {
-                controller.setupTeamRosterListView();                        
+            $.when(this.recent_schedules.request).done(function () {
+                controller.setupRecentSchedules();
             });
             
-            $.when(this.videoplayer.request).done(function () {
-                controller.setupVideoPlayerView();                        
+            $.when(this.competitor_teams.request).done(function () {
+                controller.setupCompetitorTeams();
             });
-            
-            $.when(this.videothumbs.request).done(function () {
-                controller.setupVideoThumbListView();                        
-            });
-            
-            $.when(this.images.request).done(function() {
-                controller.setupImageListView();
-            });
-            
-            $.when(this.comments.request).done(function() {
-                controller.setupCommentListView();
-            })*/
         },
         
         setupHeaderView: function() {
@@ -131,10 +174,10 @@ define([
             this.layout.render();
         },
         
-        /*setupAddMediaView: function() {
+        setupAddMediaView: function() {
             var addMediaView;
             
-            addMediaView = new GameAddMediaView({
+            addMediaView = new AddMediaView({
                 model: this.addmedia,
                 name: "Add Media",
                 destination: "#add-media"
@@ -144,66 +187,45 @@ define([
             this.layout.render();
         },
         
-        setupRosterListView: function() {
-            var teamRosterListView;
+        setupUpcomingSchedules: function() {
+            var UpcomingScheduleListView;
             
-            teamRosterListView = new GameTeamRosterListView({
-                collection: this.teamrosters,
-                destination: "#roster-wrap"
+            UpcomingScheduleListView = ScheduleListView.extend({
+                name: "Upcoming Schedule List"
+            });
+            this.upcomingScheduleListView = new UpcomingScheduleListView({
+                collection: this.upcoming_schedules,
+                destination: "#upcoming-schedule"
             });
             
-            this.scheme.push(teamRosterListView);
+            this.scheme.push(this.upcomingScheduleListView);
             this.layout.render();
         },
         
-        setupVideoPlayerView: function() {
-            var videoPlayerView;
+        setupRecentSchedules: function() {
+            var RecentScheduleListView;
             
-            videoPlayerView = new GameVideoPlayerView({
-                model: this.videoplayer,
-                name: "Video Player",
-                destination: "#video-player"
+            RecentScheduleListView = ScheduleListView.extend({
+                name: "Recent Schedule List"
+            });
+            this.recentScheduleListView = new RecentScheduleListView({
+                collection: this.recent_schedules,
+                destination: "#recent-schedule"
             });
             
-            this.scheme.push(videoPlayerView);
+            this.scheme.push(this.recentScheduleListView);
             this.layout.render();
         },
         
-        setupVideoThumbListView: function() {
-            var videoThumbListView;
-            
-            videoThumbListView = new GameVideoThumbListView({
-                collection: this.videothumbs,
-                destination: "#videothumb-wrap"
+        setupCompetitorTeams: function() {
+            this.competitorTeamListView = new CompetitorTeamListView({
+                collection: this.competitor_teams,
+                destination: "#competitor-teams"
             });
             
-            this.scheme.push(videoThumbListView);
-            this.layout.render();            
-        },
-        
-        setupImageListView: function() {
-            var imageListView;
-            
-            imageListView = new GameImageListView({
-                collection: this.images,
-                destination: "#image-wrap"
-            });
-            
-            this.scheme.push(imageListView);
+            this.scheme.push(this.competitorTeamListView);
             this.layout.render();
         },
-        
-        setupCommentListView: function() {
-            var commentListView;
-            
-            commentListView = new GameCommentListView({
-                collection: this.comments,
-                destination: "#comment-wrap"
-            });
-            
-            this.scheme.push(commentListView);
-            this.layout.render();            
-        },*/
                         
         setupLayout: function () {
             var pageLayout;
@@ -214,6 +236,7 @@ define([
                 template: pageLayoutTemplate,
                 displayWhen: "ready"
             });
+            
             this.layout = pageLayout;
 
             return this.layout;

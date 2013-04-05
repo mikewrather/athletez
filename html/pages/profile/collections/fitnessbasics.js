@@ -9,7 +9,6 @@ define(['facade', 'user/collections/fitnessbasics', 'utils'],
 function(facade, UserFitnessBasicList, utils) {
 
     var FitnessBasicList,
-        _ = facade._,
         Channel = utils.lib.Channel;
 
     FitnessBasicList = UserFitnessBasicList.extend({

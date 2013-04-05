@@ -1,0 +1,15 @@
+{            
+    "payload": [{
+        "complevel_id": "1",
+        "complevel_name": "Varsity5"
+    },{
+        "complevel_id": "2",
+        "complevel_name": "Varsity6"
+    }],
+    "desc": "List of complevel associated with the team and sport",
+    "exec_data": {
+        "exec_time": 0.024134,
+        "exec_error": false
+    }
+}
+

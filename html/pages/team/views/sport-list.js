@@ -1,75 +1,44 @@
-// The Team Sport List
+// Sport List
 // --------------
 
 define(['facade','views', 'utils', 'team/views/sport-item'], 
-function(facade,  views,   utils,   TeamSportItemView) {
+function(facade,  views,   utils,   SportItemView) {
 
-    var TeamSportListView, 
-        TeamSportListAbstract,
+    var SportListView, 
+        SportListAbstract,
         $ = facade.$,
         _ = facade._,
         Channel = utils.lib.Channel,
         CollectionView = views.CollectionView,
         SectionView = views.SectionView;
 
-    TeamSportListAbstract = CollectionView.extend(SectionView.prototype);
+    SportListAbstract = CollectionView.extend(SectionView.prototype);
 
-    TeamSportListView = TeamSportListAbstract.extend({
+    SportListView = SportListAbstract.extend({
 
         __super__: CollectionView.prototype,
 
-        id: "team-sport-list",
-
-        name: "Team Sport List",
-
+        id: "sport-list",
+        name: "Sport List",
         tagName: "ul",
 
         // Tag for the child views
         _tagName: "li",
-        _className: "team-sport",
+        _className: "sport",
 
         // Store constructor for the child views
-        _view: TeamSportItemView,
+        _view: SportItemView,
 
         initialize: function(options) {
             CollectionView.prototype.initialize.call(this, options);
             if (!this.collection) {
-                throw new Error("TeamSportListView expected options.collection.");
+                throw new Error("SportListView expected options.collection.");
             }
             _.bindAll(this);
             this.addSubscribers();
-        },
-
-        render: function () {
-            SectionView.prototype.render.call(this);
-            _.delay(this.handleListDisplay, 250);
-            return this;
-        },
-
-        handleListDisplay: function () {
-            var main = $(this.destination);
-
-            if (this.collection.length) {
-                main.show();
-            } else {
-                main.hide();
-            }            
-        },
-
-        // Child views...
-        childViews: {},
-
-        // Event handlers...
-
-        addSubscribers: function () {
-            this.collection.on('add remove reset sync toggleAllComplete clearCompleted', this.handleListDisplay); 
-        },
-
-        removeSubscribers: function () {
-            this.collection.off('add remove reset sync toggleAllComplete clearCompleted', this.handleListDisplay);
         }
 
     });
 
-    return TeamSportListView;
+    return SportListView;
 });

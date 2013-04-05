@@ -219,43 +219,16 @@
 		{
 			$this->payloadDesc = "Create a new user with all necessary basic information (possibly first step of registration)";
 
-		     // CHECK FOR PARAMETERS:
-			// email (REQUIRED)
-			// Email Address of New User
-				
 			if(trim($this->request->post('email')) != "")
 			{
 				$email = trim($this->request->post('email'));
 			}
 
-			else // THIS WAS A REQUIRED PARAMETER
-			{
-				// Create Array for Error Data
-				$error_array = array(
-					"error" => "Required Parameter Missing",
-					"param_name" => "email",
-					"param_desc" => "Email Address of New User"
-				);
-
-				// Set whether it is a fatal error
-				$is_fatal = true;
-
-				// Call method to throw an error
-				$this->addError($error_array,$is_fatal);
-
-			}
-			
-			// firstname 
-			// First Name of User
-				
 			if(trim($this->request->post('firstname')) != "")
 			{
 				$firstname = trim($this->request->post('firstname'));
 			}
 
-			// lastname 
-			// Last Name of User
-				
 			if(trim($this->request->post('lastname')) != "")
 			{
 				$lastname = trim($this->request->post('lastname'));
@@ -288,24 +261,13 @@
 			try
 			{
 				$user_obj->save();
-			} catch(ErrorException $e)
-			{
+			} catch (ORM_Validation_Exception $e){
+				$error_arrays = $e->errors('models/user');
+				$error_desc = $this->collect_error_messages($error_arrays);
 				// Create Array for Error Data
 				$error_array = array(
-					"error" => "Unable to save User",
-					"desc" => $e->getMessage()
-				);
-
-				// Set whether it is a fatal error
-				$is_fatal = true;
-
-				// Call method to throw an error
-				$this->addError($error_array,$is_fatal);
-			}catch (ORM_Validation_Exception $e){
-				// Create Array for Error Data
-				$error_array = array(
-					"error" => "Unable to save User",
-					"desc" => $e->getMessage()
+					"error" => "Unable to save game match info",
+					"desc" => $error_desc
 				);
 
 				// Set whether it is a fatal error

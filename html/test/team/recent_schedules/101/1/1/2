@@ -1,0 +1,35 @@
+{            
+    "payload": [{
+        "game_day": "Dec 12",
+        "game_time": "",
+        "teams": [{
+            "team_name": "The Peddie School",
+            "is_winner": "W",
+            "points_scored": 88,
+            "points_against": 72
+        }]
+    }, {
+        "game_day": "Dec 19",
+        "game_time": "",
+        "teams": [{
+            "team_name": "The Peddie School",
+            "is_winner": "W",
+            "points_scored": 88,
+            "points_against": 72
+        }]
+    }, {
+        "game_day": "Dec 23",
+        "game_time": "",
+        "teams": [{
+            "team_name": "The Peddie School",
+            "is_winner": "W",
+            "points_scored": 88,
+            "points_against": 72
+        }]
+    }],
+    "desc": "List of recent schedules associated with team, sport and complevel, season.",
+    "exec_data": {
+        "exec_time": 0.024134,
+        "exec_error": false
+    }
+}

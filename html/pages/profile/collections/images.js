@@ -9,7 +9,6 @@ define(['facade', 'media/collections/images', 'utils'],
 function(facade, MediaImageList, utils) {
 
     var ImageList,
-        _ = facade._,
         Channel = utils.lib.Channel;
 
     ImageList = MediaImageList.extend({

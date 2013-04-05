@@ -57,7 +57,7 @@ function(require, headerTemplate, selectSportTemplate) {
             this.sports.fetch();
             $.when(this.sports.request).done(function() {
                 self.setupSportListView();
-                Channel('teamsports:fetch').publish();
+                Channel('sports:fetch').publish();
                 self.select_sport = self.$('#select-sport');
                 self.selectSport();                
             });
@@ -90,13 +90,13 @@ function(require, headerTemplate, selectSportTemplate) {
                     self.$el.find('#sports-info').html('');
                 }                
             }
-            Channel('teamsports:fetch').subscribe(callback);      
+            Channel('sports:fetch').subscribe(callback);      
         },
         
         // **Method** `setOptions` - called by BaseView's initialize method
         setOptions: function (options) {
             if (!this.model) {
-                throw new Error("TeamHeaderView expects option with model property.");
+                throw new Error("HeaderView expects option with model property.");
             }            
         },
         
@@ -111,7 +111,7 @@ function(require, headerTemplate, selectSportTemplate) {
             var sport_id = this.select_sport.val();
             this.$('.sport-info').stop().slideUp();
             this.$('.sport-info-' + sport_id).stop().slideDown();
-            Channel('teamsports:select' + sport_id).publish();            
+            Channel('sports:select' + sport_id).publish();            
         }
         
                 
