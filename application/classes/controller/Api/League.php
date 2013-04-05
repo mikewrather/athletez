@@ -135,14 +135,14 @@
 		public function action_put_basics()
 		{
 			$this->payloadDesc = "Update basics on a League";
-
+			$args = array();
 		     // CHECK FOR PARAMETERS:
 			// name 
 			// Update the name of the league
 				
 			if(trim($this->put('name')) != "")
 			{
-				$name = trim($this->put('name'));
+				$args['name'] = trim($this->put('name'));
 			}
 
 			// states_id 
@@ -150,7 +150,7 @@
 				
 			if((int)trim($this->put('states_id')) > 0)
 			{
-				$states_id = (int)trim($this->put('states_id'));
+				$args['states_id'] = (int)trim($this->put('states_id'));
 			}
 
 			// sections_id 
@@ -158,9 +158,34 @@
 				
 			if((int)trim($this->put('sections_id')) > 0)
 			{
-				$sections_id = (int)trim($this->put('sections_id'));
+				$args['sections_id'] = (int)trim($this->put('sections_id'));
 			}
+			
+			if(!$this->mainModel->id)
+			{
+				$this->modelNotSetError();
+				return false;
+			}
+			try
+			{
+				$update_obj = $this->mainModel->updateLeague($args);
+				return $update_obj->save();					
+			}catch(Exception $e)
+			{
+				// Create Array for Error Data
+				$error_array = array(
+					"error" => "Unable to save county",
+					"desc" => $e->getMessage()
+				);
+				 
+				// Set whether it is a fatal error
+				$is_fatal = true;
 
+				// Call method to throw an error
+				$this->addError($error_array,$is_fatal);
+				 
+				return $this;
+			}
 		}
 		
 		############################################################################
@@ -177,7 +202,13 @@
 		{
 			$this->payloadDesc = "Delete  League";
 
-		
+			if(!$this->mainModel->id)
+			{
+				$this->modelNotSetError();
+				return false;
+			}
+			
+			return $this->mainModel->delete();
 		}
 		
 	}

@@ -47,6 +47,29 @@ class Model_Sportorg_League extends ORM
 		return $orgs;
 	}
 	
+	public function updateLeague($args = array())
+	{
+		extract($args);
+		// name 
+		// Update the name of the league
+		if(isset($name))
+		{
+			$this->name = $name;
+		}
+		// states_id 
+		// Change the state of this league
+		if(isset($states_id))
+		{
+			$this->states_id = $states_id;	
+		}
+		// sections_id 
+		// Change the Section this league belongs to
+		if(isset($sections_id))
+		{
+			$this->sections_id = $sections_id;
+		}
+		return $this;
+	}
 	
 	public function addLeague($args = array())
 	{

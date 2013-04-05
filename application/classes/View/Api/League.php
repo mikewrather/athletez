@@ -71,15 +71,7 @@
 		public function put_basics()
 		{
 			$retArr = array();
-
-			// Scaffolding Code For Array:
-			$objs = $this->obj->find_all();
-			foreach($objs as $obj)
-			{
-				$retArr[$obj->id] = $obj->getBasics();
-			}
-
-			// Scaffolding Code For Single:
+ 			// Scaffolding Code For Single:
 			$retArr = $this->obj->getBasics();
 
 			return $retArr;
@@ -93,16 +85,8 @@
 		public function delete_base()
 		{
 			$retArr = array();
-
-			// Scaffolding Code For Array:
-			$objs = $this->obj->find_all();
-			foreach($objs as $obj)
-			{
-				$retArr[$obj->id] = $obj->getBasics();
-			}
-
 			// Scaffolding Code For Single:
-			$retArr = $this->obj->getBasics();
+			$retArr = $this->obj; 
 
 			return $retArr;
 		}
