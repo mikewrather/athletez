@@ -246,6 +246,89 @@ class Model_Sportorg_Team extends ORM
 		}
 		return false;
 	}
-
-
+	
+	public function deleteGamelink()
+	{
+		$game_link_obj = DB::delete('games_teams_link')->where('teams_id','=', $this->id)->execute();
+		return $game_link_obj;
+	}
+	
+	public function updateGamelink($args = array() )
+	{
+		extract($args);
+		$game_link_obj = ORM::factory('Sportorg_Games_Teamslink')->where('teams_id','=', $this->id)->find();
+			
+			
+		// points_scored 
+		// Change the number of points scored for this team in this game
+		if(isset($points_scored))
+		{
+			$game_link_obj->points_scored = $points_scored;
+		}
+		 
+		// points_against 
+		// Change the number of points scored against this team / game
+		if(isset($points_against))
+		{
+			$game_link_obj->points_against = $points_against;
+		}
+		
+		// isWinner 
+		// Update whether this team won this game
+		if(isset($isWinner))
+		{
+			$game_link_obj->isWinner = $isWinner;
+		}
+		
+		// is_home_team 
+		// Update whether this is the home team for this game
+		if(isset($is_home_team))
+		{
+			$game_link_obj->is_home_team = $is_home_team;
+		}	
+		
+		return $game_link_obj;
+	}
+	
+	public function updateTeam($args = array())
+	{
+		extract($args);
+		// complevels_id 
+		// Competition Level ID
+		if(isset($complevels_id))
+		{
+			$this->complevels_id = $complevels_id;
+		}
+		
+		// seasons_id 
+		// Update the Season ID
+		if(isset($seasons_id))
+		{
+			$this->seasons_id = $seasons_id;
+		}
+			
+		// year 
+		// Change the year of this team
+		if(isset($year))
+		{
+			$this->year = $year;
+		}
+	 	 
+		// mascot 
+		// Change the mascot of this team
+		if(isset($mascot))
+		{
+			$this->mascot = $mascot;
+		}
+		
+		// unique_ident 
+		// Change the Unique Identifier for this team
+		if(isset($unique_ident))
+		{
+			$this->unique_ident = $unique_ident;
+		}
+	 
+		
+		return $this;
+	}  
 }

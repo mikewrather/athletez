@@ -364,14 +364,14 @@
 		public function action_put_basics()
 		{
 			$this->payloadDesc = "Update Basic info on a given team";
-
+			$args = array();
 		     // CHECK FOR PARAMETERS:
 			// complevels_id 
 			// Competition Level ID
 				
 			if((int)trim($this->put('complevels_id')) > 0)
 			{
-				$complevels_id = (int)trim($this->put('complevels_id'));
+				$args['complevels_id'] = (int)trim($this->put('complevels_id'));
 			}
 
 			// seasons_id 
@@ -379,7 +379,7 @@
 				
 			if((int)trim($this->put('seasons_id')) > 0)
 			{
-				$seasons_id = (int)trim($this->put('seasons_id'));
+				$args['seasons_id'] = (int)trim($this->put('seasons_id'));
 			}
 
 			// year 
@@ -387,7 +387,7 @@
 				
 			if(trim($this->put('year')) != "")
 			{
-				$year = trim($this->put('year'));
+				$args['year'] = trim($this->put('year'));
 			}
 
 			// mascot 
@@ -395,7 +395,7 @@
 				
 			if(trim($this->put('mascot')) != "")
 			{
-				$mascot = trim($this->put('mascot'));
+				$args['mascot'] = trim($this->put('mascot'));
 			}
 
 			// unique_ident 
@@ -403,9 +403,35 @@
 				
 			if(trim($this->put('unique_ident')) != "")
 			{
-				$unique_ident = trim($this->put('unique_ident'));
+				$args['unique_ident'] = trim($this->put('unique_ident'));
 			}
+			
+			if(!$this->mainModel->id)
+			{
+				$this->modelNotSetError();
+				return false;
+			}
+		
+			try
+			{
+				$update_obj = $this->mainModel->updateTeam($args);
+				return $update_obj->save(); 
+			}catch(Exception $e)
+			{
+				
+				// Create Array for Error Data
+				$error_array = array(
+					"error" => "Unable to save team",
+					"desc" => $e->getMessage()
+				);
+				 
+				// Set whether it is a fatal error
+				$is_fatal = true;
 
+				// Call method to throw an error
+				$this->addError($error_array,$is_fatal);				 
+				return $this;
+			}
 		}
 		
 		/**
@@ -416,14 +442,14 @@
 		public function action_put_gamelink()
 		{
 			$this->payloadDesc = "Update the link between teams and games which contains score information";
-
+			$args = array();
 		     // CHECK FOR PARAMETERS:
 			// points_scored 
 			// Change the number of points scored for this team in this game
 				
 			if((int)trim($this->put('points_scored')) > 0)
 			{
-				$points_scored = (int)trim($this->put('points_scored'));
+				$args['points_scored'] = (int)trim($this->put('points_scored'));
 			}
 
 			// points_against 
@@ -431,7 +457,7 @@
 				
 			if((int)trim($this->put('points_against')) > 0)
 			{
-				$points_against = (int)trim($this->put('points_against'));
+				$args['points_against'] = (int)trim($this->put('points_against'));
 			}
 
 			// isWinner 
@@ -440,7 +466,7 @@
 			if($this->put('isWinner') != "")
 			{
 				//convert isWinner to a boolean
-				$isWinner = (bool)$this->put('isWinner');
+				$args['isWinner'] = (bool)$this->put('isWinner');
 			}
 
 			// is_home_team 
@@ -449,7 +475,33 @@
 			if($this->put('is_home_team') != "")
 			{
 				//convert is_home_team to a boolean
-				$is_home_team = (bool)$this->put('is_home_team');
+				$args['is_home_team'] = (bool)$this->put('is_home_team');
+			}
+			if(!$this->mainModel->id)
+			{
+				$this->modelNotSetError();
+				return false;
+			}
+		
+			try
+			{
+				$update_obj = $this->mainModel->updateGamelink($args);
+				return $update_obj->save(); 
+			}catch(Exception $e)
+			{
+				
+				// Create Array for Error Data
+				$error_array = array(
+					"error" => "Unable to save team",
+					"desc" => $e->getMessage()
+				);
+				 
+				// Set whether it is a fatal error
+				$is_fatal = true;
+
+				// Call method to throw an error
+				$this->addError($error_array,$is_fatal);				 
+				return $this;
 			}
 
 		}
@@ -468,7 +520,12 @@
 		{
 			$this->payloadDesc = "Delete a team";
 
-		
+			if(!$this->mainModel->id)
+			{
+				$this->modelNotSetError();
+				return false;
+			}
+			return $this->mainModel->delete();
 		}
 		
 		/**
@@ -479,8 +536,12 @@
 		public function action_delete_gamelink()
 		{
 			$this->payloadDesc = "Delete a team from a game";
-
-		
+			if(!$this->mainModel->id)
+			{
+				$this->modelNotSetError();
+				return false;
+			}
+			return $this->mainModel->deleteGamelink();
 		}
 		
 	}
