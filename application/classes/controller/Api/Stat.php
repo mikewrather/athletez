@@ -166,14 +166,14 @@
 		public function action_put_basics()
 		{
 			$this->payloadDesc = "Update basic information for a given stat";
-
+			$args = array();
 		     // CHECK FOR PARAMETERS:
 			// name 
 			// Change the name of this Statistic
 				
 			if(trim($this->put('name')) != "")
 			{
-				$name = trim($this->put('name'));
+				$args['name'] = trim($this->put('name'));
 			}
 
 			// description 
@@ -181,7 +181,33 @@
 				
 			if(trim($this->put('description')) != "")
 			{
-				$description = trim($this->put('description'));
+				$args['description'] = trim($this->put('description'));
+			}
+			
+			if(!$this->mainModel->id)
+			{
+				$this->modelNotSetError();
+				return false;
+			}
+			try
+			{
+				$update_obj = $this->mainModel->updateStat($args);
+				return $update_obj->save();					
+			}catch(Exception $e)
+			{
+				// Create Array for Error Data
+				$error_array = array(
+					"error" => "Unable to save county",
+					"desc" => $e->getMessage()
+				);
+				 
+				// Set whether it is a fatal error
+				$is_fatal = true;
+
+				// Call method to throw an error
+				$this->addError($error_array,$is_fatal);
+				 
+				return $this;
 			}
 
 		}
@@ -200,7 +226,12 @@
 		{
 			$this->payloadDesc = "Delete  a given stat";
 
-		
+			if(!$this->mainModel->id)
+			{
+				$this->modelNotSetError();
+				return false;
+			}
+			return $this->mainModel->delete();
 		}
 		
 	}

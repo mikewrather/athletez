@@ -41,6 +41,25 @@ class Model_Stats_Base extends ORM
 		parent::__construct($id);
 	}
 
+	public function updateStat($args = array())
+	{
+		extract($args);
+		
+		// name 
+		// Change the name of this Statistic
+		if( isset($name))
+		{
+			$this->name = $name;
+		}
+		// description 
+		// Change the description of this Statistic
+		if( isset($description))
+		{
+			$this->description = $description;
+		}	
+		return $this;
+	}
+	
 	public function getBasics()
 	{
 		return array(
