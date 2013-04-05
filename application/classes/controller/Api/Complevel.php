@@ -288,7 +288,12 @@
 		{
 			$this->payloadDesc = "Delete Competition Level";
 
-		
+			if(!$this->mainModel->id)
+			{
+				$this->modelNotSetError();
+				return false;
+			}
+			return $this->mainModel->delete();
 		}
 		
 	}

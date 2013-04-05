@@ -483,7 +483,7 @@
 		public function action_delete_base()
 		{
 			$this->payloadDesc = "Delete an Organization";
-			return $this->delete();
+			return $this->mainModel->delete();
 		}
 		
 		/**

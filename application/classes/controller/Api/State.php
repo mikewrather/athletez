@@ -463,7 +463,7 @@
 				$this->modelNotSetError();
 				return false;
 			}
-			return $this->delete();
+			return $this->mainModel->delete();
 		}
 		
 	}
