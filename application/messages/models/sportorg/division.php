@@ -7,11 +7,13 @@
  * To change this template use File | Settings | File Templates.
  */
 
-	return array(
-		'states_id' => array(
-			'not_equals' => ':field can\'t be null',
-		),
-		'sections_id' => array(
-			'not_equals' => ':field can\'t be null',
-		)
-	);
+$e = Kohana::$config->load('error_messages');
+
+return array(
+	'states_id' => array(
+		'not_equals' => $e->get('not_null'),
+	),
+	'sections_id' => array(
+		'not_equals' => $e->get('not_null'),
+	)
+);

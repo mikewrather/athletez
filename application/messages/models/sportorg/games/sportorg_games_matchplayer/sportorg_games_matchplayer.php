@@ -6,15 +6,15 @@
  * Time: 下午4:29
  * To change this template use File | Settings | File Templates.
  */
-
-	return array(
-		'users_id' => array(
-			'not_equals' => ':field can\'t be null',
-		),
-		'game_matches_id' => array(
-			'game_match_id_exist' => ':field not exist',
-		),
-		'match_winner' => array(
-			'in_array' => ':field only accept True/False',
-		)
-	);
+$e = Kohana::$config->load('error_messages');
+return array(
+	'users_id' => array(
+		'not_equals' => $e->get('not_null'),
+	),
+	'game_matches_id' => array(
+		'game_match_id_exist' => $e->get('not_found'),
+	),
+	'match_winner' => array(
+		'in_array' => $e->get('bool'),
+	)
+);
