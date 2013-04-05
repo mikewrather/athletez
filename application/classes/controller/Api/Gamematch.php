@@ -64,6 +64,13 @@
 			{
 				$positions_id = (int)trim($this->request->query('positions_id'));
 			}
+			
+			if(!$this->mainModel->id)
+			{
+				$this->modelNotSetError();
+				return false;
+			}
+			return $this->mainModel->getPlayers($positions_id);
 
 		}
 		
@@ -205,7 +212,31 @@
 			{
 				$match_num = trim($this->put('match_num'));
 			}
+			if(!$this->mainModel->id)
+			{
+				$this->modelNotSetError();
+				return false;
+			}
+			try
+			{
+				$update_obj = $this->mainModel->updateGamematch($match_num);
+				return $update_obj->save();					
+			}catch(Exception $e)
+			{
+				// Create Array for Error Data
+				$error_array = array(
+					"error" => "Unable to save county",
+					"desc" => $e->getMessage()
+				);
+				 
+				// Set whether it is a fatal error
+				$is_fatal = true;
 
+				// Call method to throw an error
+				$this->addError($error_array,$is_fatal);
+				 
+				return $this;
+			}
 		}
 		
 		############################################################################
@@ -222,7 +253,12 @@
 		{
 			$this->payloadDesc = "Delete a Game Match";
 
-		
+			if(!$this->mainModel->id)
+			{
+				$this->modelNotSetError();
+				return false;
+			}
+			return $this->mainModel->delete();
 		}
 		
 		/**
@@ -234,7 +270,13 @@
 		{
 			$this->payloadDesc = "Delete a player from the Game Match";
 
-		
+			if(!$this->mainModel->id)
+			{
+				$this->modelNotSetError();
+				return false;
+			}
+			
+			return $this->mainModel->deletePlayers();
 		}
 		
 	}

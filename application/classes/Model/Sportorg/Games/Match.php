@@ -40,6 +40,23 @@ class Model_Sportorg_Games_Match extends ORM
 		);
 	}
 	
+	public function updateGamematch($match_num)
+	{
+		// match_num 
+		// Change the Match Num for this match
+		if ( isset($match_num))
+		{
+			$this->match_num = $match_num;
+		}
+		return $this;
+	}
+	public function deletePlayers()
+	{		
+		$players = $this->players->find();	
+					
+		return $players->delete();
+	}
+	
 	public function getPlayers( $positions_id = null )
 	{
 		$players = $this->players;
