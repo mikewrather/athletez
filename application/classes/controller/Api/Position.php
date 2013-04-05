@@ -264,14 +264,14 @@
 		public function action_put_basics()
 		{
 			$this->payloadDesc = "Update Basics properties of the position";
-
+			$args = array();
 		     // CHECK FOR PARAMETERS:
 			// name 
 			// Change the name of the Sports Position
 				
 			if(trim($this->put('name')) != "")
 			{
-				$name = trim($this->put('name'));
+				$args['name'] = trim($this->put('name'));
 			}
 
 			// stattab_id 
@@ -279,7 +279,7 @@
 				
 			if((int)trim($this->put('stattab_id')) > 0)
 			{
-				$stattab_id = (int)trim($this->put('stattab_id'));
+				$args['stattab_id'] = (int)trim($this->put('stattab_id'));
 			}
 
 			// sports_id 
@@ -287,9 +287,33 @@
 				
 			if((int)trim($this->put('sports_id')) > 0)
 			{
-				$sports_id = (int)trim($this->put('sports_id'));
+				$args['sports_id'] = (int)trim($this->put('sports_id'));
 			}
+			if(!$this->mainModel->id)
+			{
+				$this->modelNotSetError();
+				return false;
+			}
+			try
+			{
+				$update_obj = $this->mainModel->updatePosition($args);
+				return (Object)$update_obj->save();					
+			}catch(Exception $e)
+			{
+				// Create Array for Error Data
+				$error_array = array(
+					"error" => "Unable to save county",
+					"desc" => $e->getMessage()
+				);
+				 
+				// Set whether it is a fatal error
+				$is_fatal = true;
 
+				// Call method to throw an error
+				$this->addError($error_array,$is_fatal);
+				 
+				return $this;
+			}
 		}
 		
 		############################################################################
@@ -305,7 +329,12 @@
 		public function action_delete_base()
 		{
 			$this->payloadDesc = "Delete a Sports Position";
-
+			if(!$this->mainModel->id)
+			{
+				$this->modelNotSetError();
+				return false;
+			}
+			return $this->mainModel->delete();
 		
 		}
 		

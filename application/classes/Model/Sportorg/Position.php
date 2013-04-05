@@ -129,6 +129,27 @@ class Model_Sportorg_Position extends ORM
 		return $players;
 	}
 	
+	public function updatePosition($args = array())
+	{
+		extract($args);
+
+		if(isset($name))
+		{
+			$this->name = $name;
+		}
+		
+		if(isset($sports_id))
+		{
+			$this->sports_id = $sports_id;
+		}
+		
+		if(isset($stattab_id))
+		{
+			$this->stattab_id = $stattab_id;
+		}
+		return $this;
+	}
+	
 	public function addPosition($args=array())
 	{
 		extract($args);
