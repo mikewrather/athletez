@@ -36,6 +36,36 @@ class Model_Sportorg_Complevel_Base extends ORM
 		);
 	}
 	
+	public function updateComplevel($args = array())
+	{
+		extract($args);
+		// name 
+		// Change the name of the Competition Level
+		if(isset($name))
+		{
+			$this->name = $name;
+		}
+		// complevel_profiles_id 
+		// Change the Competition Profile
+		if(isset($complevel_profiles_id))
+		{
+			$this->complevel_profiles_id = $complevel_profiles_id;
+		}
+		// min_age 
+		// Change Minimum Age for this Comp Level
+		if(isset($min_age))
+		{
+			$this->min_age = $min_age;
+		}
+		// max_age 
+		// Change Maximum Age for this Comp Level
+		if(isset($max_age))
+		{
+			$this->max_age = $max_age;
+		}	
+		return $this;
+	}
+	
 	public function addComplevel($args = array())
 	{
 		extract($args); 

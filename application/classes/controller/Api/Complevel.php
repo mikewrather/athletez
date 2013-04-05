@@ -212,14 +212,14 @@
 		public function action_put_basics()
 		{
 			$this->payloadDesc = "Update basic info on competion level";
-
+			$args = array();
 		     // CHECK FOR PARAMETERS:
 			// name 
 			// Change the name of the Competition Level
 				
 			if(trim($this->put('name')) != "")
 			{
-				$name = trim($this->put('name'));
+				$args['name'] = trim($this->put('name'));
 			}
 
 			// complevel_profiles_id 
@@ -227,7 +227,7 @@
 				
 			if((int)trim($this->put('complevel_profiles_id')) > 0)
 			{
-				$complevel_profiles_id = (int)trim($this->put('complevel_profiles_id'));
+				$args['complevel_profiles_id'] = (int)trim($this->put('complevel_profiles_id'));
 			}
 
 			// min_age 
@@ -235,7 +235,7 @@
 				
 			if((int)trim($this->put('min_age')) > 0)
 			{
-				$min_age = (int)trim($this->put('min_age'));
+				$args['min_age'] = (int)trim($this->put('min_age'));
 			}
 
 			// max_age 
@@ -243,9 +243,35 @@
 				
 			if((int)trim($this->put('max_age')) > 0)
 			{
-				$max_age = (int)trim($this->put('max_age'));
+				$args['max_age'] = (int)trim($this->put('max_age'));
 			}
+			
+			if(!$this->mainModel->id)
+			{
+				$this->modelNotSetError();
+				return false;
+			}
+			
+			try
+			{
+				$update_obj = $this->mainModel->updateComplevel($args);
+				return $update_obj->save();					
+			}catch(Exception $e)
+			{
+				// Create Array for Error Data
+				$error_array = array(
+					"error" => "Unable to save comment",
+					"desc" => $e->getMessage()
+				);
+				 
+				// Set whether it is a fatal error
+				$is_fatal = true;
 
+				// Call method to throw an error
+				$this->addError($error_array,$is_fatal);
+				 
+				return $this;
+			}
 		}
 		
 		############################################################################
