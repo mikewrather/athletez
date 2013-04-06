@@ -179,7 +179,6 @@
 		     // CHECK FOR PARAMETERS:
 			// name (REQUIRED)
 			// Name of the city to add
-				
 			if(trim($this->request->post('name')) != "")
 			{
 				$args['name'] = trim($this->request->post('name'));
@@ -187,15 +186,15 @@
 
 			// states_id
 			// State the city belongs to
-
+			/*
 			if((int)trim($this->request->post('states_id')) > 0)
 			{
 				$args['states_id'] = (int)trim($this->request->post('states_id'));
 			}
+			*/
 
 			// counties_id (REQUIRED)
 			// The county the city belongs to
-				
 			if((int)trim($this->request->post('counties_id')) > 0)
 			{
 				$args['counties_id'] = (int)trim($this->request->post('counties_id'));
@@ -213,9 +212,7 @@
 				//parse error and add to error array
 				$this->processValidationError($result,$this->mainModel->error_message_path);
 				return false;
-
 			}
-
 
 		}
 		

@@ -60,4 +60,11 @@
 			}
 			return false;
 		}
+
+		public static function checkCountyExists($county)
+		{
+			$c = ORM::factory('Location_County',$county);
+			if($c->loaded())return true;
+			return false;
+		}
 	}

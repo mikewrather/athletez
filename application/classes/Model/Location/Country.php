@@ -25,4 +25,5 @@ class Model_Location_Country extends ORM
 			"name" => $this->name
 		);
 	}
+
 }

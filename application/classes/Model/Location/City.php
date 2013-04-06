@@ -37,15 +37,11 @@ class Model_Location_City extends ORM
 				array('not_empty'),
 			),
 
-			// state_id (int)
-			'state_id'=>array(
-				array('digit'),
-			),
-
 			// county_id (int)
 			'county_id'=>array(
 				array('not_empty'),
 				array('digit'),
+				array('checkCountyExists',array(':value'))
 			),
 		);
 	}
@@ -70,7 +66,6 @@ class Model_Location_City extends ORM
 
 	public function addCity($args = array())
 	{
-
 		extract($args);
 
 		if(isset($name))
@@ -78,18 +73,15 @@ class Model_Location_City extends ORM
 			$this->name = $name;
 		}
 
-		// states_id
-		// State the city belongs to
-		if(isset($states_id))
-		{
-			$this->state_id = $states_id;
-		}
-
 		// counties_id (REQUIRED)
 		// The county the city belongs to
 		if(isset($counties_id))
 		{
 			$this->county_id = $counties_id;
+			$county = ORM::factory('Location_County',$counties_id);
+
+			// Get State for County
+			$this->state_id = $county->state->id;
 		}
 
 		try

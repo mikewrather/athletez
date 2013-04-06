@@ -9,13 +9,12 @@
 $e = Kohana::$config->load('error_messages');
 
 return array(
-	'states_id' => array(
-		'not_equals' => $e->get('not_null'),
-	),
 	'counties_id' => array(
 		'not_equals' => $e->get('not_null'),
+		'checkCountyExists' => 'Test',
 	),
 	'name' => array(
 		'not_equals' => $e->get('not_null'),
 	),
+
 );
