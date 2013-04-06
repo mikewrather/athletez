@@ -10,6 +10,8 @@ class Model_Sportorg_Games_Matchplayer extends ORM
 	
 	protected $_table_name = 'game_match_players';
 
+	public $error_message_path = 'models/sportorg/games/sportorg_games_matchplayer';
+
 	protected $_belongs_to = array(
 		'user' => array(
 			'model' => 'User_Base',
