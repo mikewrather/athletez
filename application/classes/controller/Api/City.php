@@ -185,26 +185,9 @@
 				$args['name'] = trim($this->request->post('name'));
 			}
 
-			else // THIS WAS A REQUIRED PARAMETER
-			{
-				// Create Array for Error Data
-				$error_array = array(
-					"error" => "Required Parameter Missing",
-					"param_name" => "name",
-					"param_desc" => "Name of the city to add"
-				);
-
-				// Set whether it is a fatal error
-				$is_fatal = true;
-
-				// Call method to throw an error
-				$this->addError($error_array,$is_fatal);
-
-			}
-			
-			// states_id 
+			// states_id
 			// State the city belongs to
-				
+
 			if((int)trim($this->request->post('states_id')) > 0)
 			{
 				$args['states_id'] = (int)trim($this->request->post('states_id'));
@@ -218,25 +201,20 @@
 				$args['counties_id'] = (int)trim($this->request->post('counties_id'));
 			}
 
-			else // THIS WAS A REQUIRED PARAMETER
+			$result =  $this->mainModel->addCity($args);
+
+			//Check for success / error
+			if(get_class($result) == get_class($this->mainModel))
 			{
-				// Create Array for Error Data
-				$error_array = array(
-					"error" => "Required Parameter Missing",
-					"param_name" => "counties_id",
-					"param_desc" => "The county the city belongs to"
-				);
-
-				// Set whether it is a fatal error
-				$is_fatal = true;
-
-				// Call method to throw an error
-				$this->addError($error_array,$is_fatal);
+				return $result;
+			}
+			elseif(get_class($result) == 'ORM_Validation_Exception')
+			{
+				//parse error and add to error array
+				$this->processValidationError($result,$this->mainModel->error_message_path);
+				return false;
 
 			}
-
-			$city = ORM::factory('Location_City');
-			return $city->addCity($args);
 
 
 		}

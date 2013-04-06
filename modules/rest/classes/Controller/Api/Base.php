@@ -303,4 +303,27 @@ class Controller_Api_Base extends AuthController
 		$error_desc = implode("\n", $error_arrays);
 		return $error_desc;
 	}
+
+	protected function processValidationError($errObj,$path = NULL)
+	{
+		// Use Default Error Message Path if Not Set
+		if($path === NULL) $path = $this->mainModel->error_message_path;
+
+		// Extract Errors from Validation Error Object
+		$errors = $errObj->errors($path);
+		foreach($errors as $field => $msg)
+		{
+			// Create Array for Error Data
+			$error_array = array(
+				"error" => $msg,
+				"field" => $field,
+			);
+
+			// Set whether it is a fatal error
+			$is_fatal = true;
+
+			// Call method to throw an error
+			$this->addError($error_array,$is_fatal);
+		}
+	}
 }

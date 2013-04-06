@@ -371,7 +371,7 @@
 			{
 				$args['complevel_profiles_id'] = (int)trim($this->put('complevel_profiles_id'));
 			}
-			
+
 			if(!$this->mainModel->id)
 			{
 				$this->modelNotSetError();

@@ -25,6 +25,33 @@ class Model_Location_City extends ORM
 		)
 	);
 
+	public $error_message_path = 'models/location/city';
+
+## Rules For Location_City -- City
+	public function rules(){
+
+		return array
+		(
+			// name (varchar)
+			'name'=>array(
+				array('not_empty'),
+			),
+
+			// state_id (int)
+			'state_id'=>array(
+				array('digit'),
+			),
+
+			// county_id (int)
+			'county_id'=>array(
+				array('not_empty'),
+				array('digit'),
+			),
+		);
+	}
+	// end rules for Location_City
+
+
 	public function __construct()
 	{
 		parent::__construct();
@@ -65,10 +92,15 @@ class Model_Location_City extends ORM
 			$this->county_id = $counties_id;
 		}
 
-		$this->save();
-
-		return $this;
-
+		try
+		{
+			$this->save();
+			return $this;
+		}
+		catch(ORM_Validation_Exception $e)
+		{
+			return $e;
+		}
 	}
 
 	/**
