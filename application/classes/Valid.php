@@ -16,6 +16,20 @@
 			return ($value != $null_value);
 		}
 
+		public static function check_org_sport_id_exist($org_sport_id){
+			if ($org_sport_id == ""){
+				return false;
+			}
+			$org_sport_link_model = ORM::factory("Sportorg_Orgsportlink");
+			$org_sport_link_model->select("id")
+				->where('id', '=', $org_sport_id)
+				->find();
+			if ($org_sport_link_model->loaded()){
+				return true;
+			}
+			return false;
+		}
+
 		public static function match_num_unique_in_one_game($value, $games_id){
 			$games_match_model = ORM::factory("Sportorg_Games_Match");
 			$games_match_model->select("id")

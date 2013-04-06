@@ -57,4 +57,8 @@ class Model_Sportorg_Games_Base extends ORM
 		}
 		return rtrim($name,', ');
 	}
+
+	public function addGame(){
+		//TODO
+	}
 }

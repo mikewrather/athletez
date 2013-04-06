@@ -38,7 +38,12 @@
 		public function action_get_basics()
 		{
 			$this->payloadDesc = "Basic info on a county";
-
+			if(!$this->mainModel->id)
+			{
+				$this->modelNotSetError();
+				return false;
+			}
+			return $this->mainModel;
 		
 		}
 		
@@ -50,8 +55,12 @@
 		public function action_get_cities()
 		{
 			$this->payloadDesc = "All cities within a given county";
-
-		
+			if(!$this->mainModel->id)
+			{
+				$this->modelNotSetError();
+				return false;
+			}
+			return $this->mainModel;
 		}
 		
 		/**
@@ -62,8 +71,12 @@
 		public function action_get_orgs()
 		{
 			$this->payloadDesc = "All organizations within a given county";
-
-		
+			if(!$this->mainModel->id)
+			{
+				$this->modelNotSetError();
+				return false;
+			}
+			return $this->mainModel;
 		}
 		
 		/**

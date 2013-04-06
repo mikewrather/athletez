@@ -10,6 +10,8 @@ class Model_Sportorg_Games_Matchplayer extends ORM
 	
 	protected $_table_name = 'game_match_players';
 
+	public $error_message_path = 'models/sportorg/games/sportorg_games_matchplayer';
+
 	protected $_belongs_to = array(
 		'user' => array(
 			'model' => 'User_Base',
@@ -71,9 +73,31 @@ class Model_Sportorg_Games_Matchplayer extends ORM
 			// match_winner (tinyint)
 			'match_winner'=>array(
 				array('not_empty'),
-				array('in_array', array(':value', array('true', 'false'))),
+				array('in_array', array(':value', array(0, 1))),
 			),
 		);
+	}
+
+	public function updateGameMatchPlayer($args = array()){
+		extract($args);
+
+		if(isset($points_awarded))
+		{
+			$this->points_awarded = $points_awarded;
+		}
+
+		if(isset($match_winner))
+		{
+			$this->match_winner = $match_winner;
+		}
+
+		try {
+			$this->save();
+			return $this;
+		} catch(ORM_Validation_Exception $e){
+			return $e;
+		}
+		return $this;
 	}
 
 }

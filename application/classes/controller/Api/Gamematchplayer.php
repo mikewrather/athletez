@@ -69,7 +69,16 @@
 			$points_awarded = (int)trim($this->request->post('points_awarded'));
 
 			//convert match_won to a boolean
-			$match_winner = $this->request->post('match_won');
+			$match_winner = strtolower($this->request->post('match_won'));
+			if (!in_array($match_winner, array('true', 'false'))){
+				$match_winner = 2;//means not in 0,1
+			}else{
+				if ($match_winner == 'true'){
+					$match_winner = 1;
+				}else{
+					$match_winner = 0;
+				}
+			}
 
 			$result_time = trim($this->request->post('result_time'));
 
@@ -131,12 +140,44 @@
 			// match_winner 
 			// Update whether this player is the match winner
 				
-			if($this->put('match_winner') != "")
+			if(trim($this->put('match_winner')) != "")
 			{
 				//convert match_winner to a boolean
-				$match_winner = (bool)$this->put('match_winner');
+				$match_winner = strtolower(trim($this->put('match_winner')));
+				if (!in_array($match_winner, array('true', 'false'))){
+					$match_winner = 2;//means not in 0,1
+				}else{
+					if ($match_winner == 'true'){
+						$match_winner = 1;
+					}else{
+						$match_winner = 0;
+					}
+				}
 			}
 
+			if(!$this->mainModel->id)
+			{
+				$this->modelNotSetError();
+				return false;
+			}
+
+			$args['id']  = $this->mainModel->id;
+
+			$args['points_awarded'] = $points_awarded;
+			$args['match_winner'] = $match_winner;
+			$result =  $this->mainModel->updateGameMatchPlayer($args);
+
+			//Check for success / error
+			if(get_class($result) == get_class($this->mainModel))
+			{
+				return $result;
+			}
+			elseif(get_class($result) == 'ORM_Validation_Exception')
+			{
+				//parse error and add to error array
+				$this->processValidationError($result,$this->mainModel->error_message_path);
+				return false;
+			}
 		}
 		
 		############################################################################

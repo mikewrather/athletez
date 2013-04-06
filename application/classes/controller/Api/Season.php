@@ -155,9 +155,9 @@
 				->rule('season_profiles_id', 'not_equals', array(':value', 0));
 
 			if (!$season_validate->check()){
-				$validate_errors = $season_validate->errors('models/sportorg/seasons/base');
+				$validate_errors_arr = $season_validate->errors('models/sportorg/seasons/base');
 				$error_array = array(
-					"error" => implode('\n', $validate_errors),
+					"error" => implode('\n', $validate_errors_arr),
 					"param_name" => "name",
 					"param_desc" => "Name of the Season to add"
 				);

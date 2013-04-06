@@ -134,43 +134,29 @@
 		     // CHECK FOR PARAMETERS:
 			// org_sport_link_id 
 			// ID of the linking row for Organization / Sport (Optional alternative to providing sport / org separately)
-				
-			if((int)trim($this->request->post('org_sport_link_id')) > 0)
-			{
-				$org_sport_link_id = (int)trim($this->request->post('org_sport_link_id'));
-			}
+
+			$org_sport_link_id = (int)trim($this->request->post('org_sport_link_id'));
 
 			// orgs_id 
 			// Organization ID (If Org_Sport_Link not provided)
-				
-			if((int)trim($this->request->post('orgs_id')) > 0)
-			{
-				$orgs_id = (int)trim($this->request->post('orgs_id'));
-			}
 
-			// sports_id 
+			$orgs_id = (int)trim($this->request->post('orgs_id'));
+
+			// sports_id
 			// Sport ID (If Org_Sport_Link not provided)
 				
-			if((int)trim($this->request->post('sports_id')) > 0)
-			{
-				$sports_id = (int)trim($this->request->post('sports_id'));
-			}
+			$sports_id = (int)trim($this->request->post('sports_id'));
 
-			// complevels_id 
+			// complevels_id
 			// Competition Level ID
 				
-			if((int)trim($this->request->post('complevels_id')) > 0)
-			{
-				$complevels_id = (int)trim($this->request->post('complevels_id'));
-			}
+			$complevels_id = (int)trim($this->request->post('complevels_id'));
 
-			// seasons_id 
+			// seasons_id
 			// Season ID
-				
-			if((int)trim($this->request->post('seasons_id')) > 0)
-			{
-				$seasons_id = (int)trim($this->request->post('seasons_id'));
-			}
+
+			$seasons_id = (int)trim($this->request->post('seasons_id'));
+
 
 			// year 
 			// The Year of the Season
@@ -196,85 +182,31 @@
 				$unique_ident = trim($this->request->post('unique_ident'));
 			}
 
-			//Jeffrey add save&validation logic here
-			$team_obj = ORM::factory("Sportorg_Team");
-			$team_obj->org_sport_link_id = $org_sport_link_id;
-			//$team_obj->orgs_id = $orgs_id;
-			//$team_obj->sports_id = $sports_id;
-			$team_obj->complevels_id = $complevels_id;
-			$team_obj->seasons_id = $seasons_id;
-			$team_obj->year = $year;
-			$team_obj->mascot = $mascot;
-			$team_obj->unique_ident = $unique_ident;
-			try
+			//Add save&validation logic here
+
+			$args['org_sport_link_id'] = $org_sport_link_id;
+			$args['orgs_id'] = $orgs_id;
+			$args['sports_id'] = $sports_id;
+			$args['complevels_id'] = $complevels_id;
+			$args['seasons_id'] = $seasons_id;
+			$args['year'] = $year;
+			$args['mascot'] = $mascot;
+			$args['unique_ident'] = $unique_ident;
+
+			$result =  $this->mainModel->addTeam($args);
+
+			//Check for success / error
+			if(get_class($result) == get_class($this->mainModel))
 			{
-				//check org_sport_link_id, org_id and sport_id are required when org_sport_link_id is null
-				if ($org_sport_link_id == ""){
-					$check_org_sport = Validation::factory($team_obj->as_array())
-						->rule('org_id', 'Model_Sportorg_Team::not_equals', array(':value', 0))
-						->rule('sports_id', 'Model_Sportorg_Team::not_equals', array(':value', 0));
-					if ($check_org_sport->check()){
-						//check org_sport in db.
-						$org_sport_link_model = ORM::factory("Sportorg_Orgsportlink");
-						$result = $org_sport_link_model->getOrgSportId($orgs_id, $sports_id);
-						if(!$result->loaded())
-						{
-							unset($org_sport_link_model);
-							$org_sport_link_model = ORM::factory("Sportorg_Orgsportlink");
-							//Insert new row to org_sport_link
-							$org_sport_link_model->orgs_id = $orgs_id;
-							$org_sport_link_model->sports_id = $sports_id;
-							$org_sport_link_model->save();
-							$org_sport_pk = $org_sport_link_model->pk();
-							$team_obj->org_sport_link_id = $org_sport_pk;
-						}else{
-							$team_obj->org_sport_link_id = $result->id;
-						}
-
-						$team_obj->save();
-					}else{
-						$err_exception = new ErrorException("Validation error");
-						throw $err_exception;
-						return $team_obj;
-					}
-				}else{
-					$check_org_sport_id_legal = Validation::factory($team_obj->as_array())
-						->rule('org_sport_link_id', 'Model_Sportorg_Team::check_org_sport_id_exist');
-					if (!$check_org_sport_id_legal->check()){
-						$err_exception = new ErrorException("org_sport_link_id does not exist");
-						throw $err_exception;
-						return $team_obj;
-					}
-					$team_obj->save();
-				}
-			} catch(ErrorException $e)
-			{
-				// Create Array for Error Data
-				$error_array = array(
-					"error" => "Unable to save team info",
-					"desc" => $e->getMessage()
-				);
-
-				// Set whether it is a fatal error
-				$is_fatal = true;
-
-				// Call method to throw an error
-				$this->addError($error_array,$is_fatal);
-			}catch (ORM_Validation_Exception $e){
-				// Create Array for Error Data
-				$error_array = array(
-					"error" => "Unable to save team info",
-					"desc" => $e->getMessage()
-				);
-
-				// Set whether it is a fatal error
-				$is_fatal = true;
-
-				// Call method to throw an error
-				$this->addError($error_array,$is_fatal);
+				return $result;
 			}
-			return $team_obj;
+			elseif(get_class($result) == 'ORM_Validation_Exception')
+			{
+				//parse error and add to error array
+				$this->processValidationError($result,$this->mainModel->error_message_path);
+				return false;
 
+			}
 		}
 		
 		/**
@@ -365,22 +297,10 @@
 		{
 			$this->payloadDesc = "Update Basic info on a given team";
 			$args = array();
-		     // CHECK FOR PARAMETERS:
-			// complevels_id 
-			// Competition Level ID
-				
-			if((int)trim($this->put('complevels_id')) > 0)
-			{
-				$args['complevels_id'] = (int)trim($this->put('complevels_id'));
-			}
 
-			// seasons_id 
-			// Update the Season ID
-				
-			if((int)trim($this->put('seasons_id')) > 0)
-			{
-				$args['seasons_id'] = (int)trim($this->put('seasons_id'));
-			}
+			$args['complevels_id'] = (int)trim($this->put('complevels_id'));
+
+			$args['seasons_id'] = (int)trim($this->put('seasons_id'));
 
 			// year 
 			// Change the year of this team
@@ -411,26 +331,21 @@
 				$this->modelNotSetError();
 				return false;
 			}
-		
-			try
-			{
-				$update_obj = $this->mainModel->updateTeam($args);
-				return $update_obj->save(); 
-			}catch(Exception $e)
-			{
-				
-				// Create Array for Error Data
-				$error_array = array(
-					"error" => "Unable to save team",
-					"desc" => $e->getMessage()
-				);
-				 
-				// Set whether it is a fatal error
-				$is_fatal = true;
 
-				// Call method to throw an error
-				$this->addError($error_array,$is_fatal);				 
-				return $this;
+			$args['id']  = $this->mainModel->id;
+
+			$result =  $this->mainModel->updateTeam($args);
+
+			//Check for success / error
+			if(get_class($result) == get_class($this->mainModel))
+			{
+				return $result;
+			}
+			elseif(get_class($result) == 'ORM_Validation_Exception')
+			{
+				//parse error and add to error array
+				$this->processValidationError($result,$this->mainModel->error_message_path);
+				return false;
 			}
 		}
 		

@@ -9,7 +9,8 @@ class Model_Sportorg_Team extends ORM
 {
 
 	protected $_table_name = 'teams';
-
+	//protected $_table_columns = array('id','org_sport_link_id', 'complevels_id','seasons_id','year','mascot','unique_ident','orgs_id','sports_id');
+	public $error_message_path = 'models/sportorg/seasons';
 
 	protected $_belongs_to = array(
 		'org_sport_link' => array(
@@ -54,22 +55,22 @@ class Model_Sportorg_Team extends ORM
 	public function rules()
 	{
 		return array(
-//			'org_sport_link_id' => array(
-//				array('not_empty')
-//			),
-//			'sports_id' => array(
-//				array('not_empty')
-//			),
 			'seasons_id' => array(
-				array('not_empty')
+				array('not_equals', array(':value', 0))
 			),
 			'complevels_id' => array(
-				array('not_empty')
+				array('not_equals', array(':value', 0))
 			),
 			'year' => array(
 				array('not_empty'),
 				array('digit'),
 				array('exact_length', array(':value', 4)),
+			),
+			'mascot' => array(
+				array('alpha')
+			),
+			'unique_ident' => array(
+				array('alpha')
 			)
 		);
 	}
@@ -86,6 +87,68 @@ class Model_Sportorg_Team extends ORM
 	public function getSport()
 	{
 		return $this->org_sport_link->sport;
+	}
+
+	public function addTeam($post_values = array()){
+		extract($post_values);
+		if (isset($org_sport_link_id))
+			$this->org_sport_link_id = $org_sport_link_id;
+
+		if (isset($complevels_id))
+			$this->complevels_id = $complevels_id;
+
+		if (isset($seasons_id))
+			$this->seasons_id = $seasons_id;
+
+		if (isset($year))
+			$this->year = $year;
+
+		if (isset($mascot))
+			$this->mascot = $mascot;
+
+		if (isset($unique_ident))
+			$this->unique_ident = $unique_ident;
+
+		if (!isset($orgs_id))
+			$post_values['orgs_id'] = 0;
+
+		if (!isset($sports_id))
+			$post_values['sports_id'] = 0;
+
+		if ($org_sport_link_id == ""){
+			$external_validate = Validation::factory($post_values)
+				->rule('orgs_id', 'not_equals', array(':value', 0))
+				->rule('sports_id', 'not_equals', array(':value', 0));
+			//if check pass,add org_id,sports_id to db,generate org_sport_id for use
+			if ($external_validate->check()){
+				//check org_sport in db.
+				$org_sport_link_model = ORM::factory("Sportorg_Orgsportlink");
+				$result = $org_sport_link_model->getOrgSportId($orgs_id, $sports_id);
+				if(!$result->loaded())
+				{
+					unset($org_sport_link_model);
+					$org_sport_link_model = ORM::factory("Sportorg_Orgsportlink");
+					//Insert new row to org_sport_link
+					$org_sport_link_model->orgs_id = $orgs_id;//already extracted
+					$org_sport_link_model->sports_id = $sports_id;//already extracted
+					$org_sport_link_model->save();
+					$org_sport_pk = $org_sport_link_model->pk();
+					$this->org_sport_link_id = $org_sport_pk;
+				}else{
+					$this->org_sport_link_id = $result->id;
+				}
+			}
+		}else{
+			$external_validate = Validation::factory($this->as_array())
+				->rule('org_sport_link_id', 'check_org_sport_id_exist');
+		}
+
+		try {
+			$this->save($external_validate);
+			return $this;
+		} catch(ORM_Validation_Exception $e){
+				return $e;
+		}
 	}
 		
 	public function getBasics()
@@ -226,27 +289,6 @@ class Model_Sportorg_Team extends ORM
 		return $game_list_obj->find_all();
 	}
 
-	//Custom Validation
-	public static function not_equals($value, $null_value)
-	{
-		if ($value == ""){
-			return false;
-		}
-		return ($value != $null_value);
-	}
-
-	//Custom Validation
-	public static function check_org_sport_id_exist($org_sport_id){
-		$org_sport_link_model = ORM::factory("Sportorg_Orgsportlink");
-		$org_sport_link_model->select("id")
-			->where('id', '=', $org_sport_id)
-			->find();
-		if ($org_sport_link_model->loaded()){
-			return true;
-		}
-		return false;
-	}
-	
 	public function deleteGamelink()
 	{
 		$game_link_obj = DB::delete('games_teams_link')->where('teams_id','=', $this->id)->execute();
@@ -288,6 +330,8 @@ class Model_Sportorg_Team extends ORM
 		}	
 		
 		return $game_link_obj;
+
+
 	}
 	
 	public function updateTeam($args = array())
@@ -327,8 +371,13 @@ class Model_Sportorg_Team extends ORM
 		{
 			$this->unique_ident = $unique_ident;
 		}
-	 
-		
+
+		try {
+			$this->save();
+			return $this;
+		} catch(ORM_Validation_Exception $e){
+			return $e;
+		}
 		return $this;
 	}  
 }

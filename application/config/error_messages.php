@@ -14,4 +14,5 @@ return array(
 	"bool" => ":field need to be either True or False",
 	"not_found" => "The value entered for the :field field does not seem to exist",
 	"unique" => "The :field field must have a unique value",
+	"org_sport_not_exist" => "Org sport id doesn't exist",
 );
