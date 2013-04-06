@@ -73,9 +73,31 @@ class Model_Sportorg_Games_Matchplayer extends ORM
 			// match_winner (tinyint)
 			'match_winner'=>array(
 				array('not_empty'),
-				array('in_array', array(':value', array('true', 'false'))),
+				array('in_array', array(':value', array(0, 1))),
 			),
 		);
+	}
+
+	public function updateGameMatchPlayer($args = array()){
+		extract($args);
+
+		if(isset($points_awarded))
+		{
+			$this->points_awarded = $points_awarded;
+		}
+
+		if(isset($match_winner))
+		{
+			$this->match_winner = $match_winner;
+		}
+
+		try {
+			$this->save();
+			return $this;
+		} catch(ORM_Validation_Exception $e){
+			return $e;
+		}
+		return $this;
 	}
 
 }
