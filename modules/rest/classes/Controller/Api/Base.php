@@ -72,7 +72,7 @@ class Controller_Api_Base extends AuthController
 			$argArr = explode('=',$argPair);
 			$this->$verb($argArr[0],$argArr[1]);
 		}
-		print_r($this->$verb);
+		//print_r($this->$verb);
 	}
 
 	/**

@@ -17,6 +17,9 @@
 		}
 
 		public static function check_org_sport_id_exist($org_sport_id){
+			if ($org_sport_id == ""){
+				return false;
+			}
 			$org_sport_link_model = ORM::factory("Sportorg_Orgsportlink");
 			$org_sport_link_model->select("id")
 				->where('id', '=', $org_sport_id)

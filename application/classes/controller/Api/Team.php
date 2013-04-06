@@ -134,39 +134,29 @@
 		     // CHECK FOR PARAMETERS:
 			// org_sport_link_id 
 			// ID of the linking row for Organization / Sport (Optional alternative to providing sport / org separately)
-				
-			if((int)trim($this->request->post('org_sport_link_id')) > 0)
-			{
-				$org_sport_link_id = (int)trim($this->request->post('org_sport_link_id'));
-			}
+
+			$org_sport_link_id = (int)trim($this->request->post('org_sport_link_id'));
 
 			// orgs_id 
 			// Organization ID (If Org_Sport_Link not provided)
 
-				$orgs_id = (int)trim($this->request->post('orgs_id'));
+			$orgs_id = (int)trim($this->request->post('orgs_id'));
 
-
-			// sports_id 
+			// sports_id
 			// Sport ID (If Org_Sport_Link not provided)
 				
-				$sports_id = (int)trim($this->request->post('sports_id'));
+			$sports_id = (int)trim($this->request->post('sports_id'));
 
-
-			// complevels_id 
+			// complevels_id
 			// Competition Level ID
 				
-			if((int)trim($this->request->post('complevels_id')) > 0)
-			{
-				$complevels_id = (int)trim($this->request->post('complevels_id'));
-			}
+			$complevels_id = (int)trim($this->request->post('complevels_id'));
 
-			// seasons_id 
+			// seasons_id
 			// Season ID
-				
-			if((int)trim($this->request->post('seasons_id')) > 0)
-			{
-				$seasons_id = (int)trim($this->request->post('seasons_id'));
-			}
+
+			$seasons_id = (int)trim($this->request->post('seasons_id'));
+
 
 			// year 
 			// The Year of the Season
@@ -307,22 +297,10 @@
 		{
 			$this->payloadDesc = "Update Basic info on a given team";
 			$args = array();
-		     // CHECK FOR PARAMETERS:
-			// complevels_id 
-			// Competition Level ID
-				
-			if((int)trim($this->put('complevels_id')) > 0)
-			{
-				$args['complevels_id'] = (int)trim($this->put('complevels_id'));
-			}
 
-			// seasons_id 
-			// Update the Season ID
-				
-			if((int)trim($this->put('seasons_id')) > 0)
-			{
-				$args['seasons_id'] = (int)trim($this->put('seasons_id'));
-			}
+			$args['complevels_id'] = (int)trim($this->put('complevels_id'));
+
+			$args['seasons_id'] = (int)trim($this->put('seasons_id'));
 
 			// year 
 			// Change the year of this team
@@ -353,26 +331,21 @@
 				$this->modelNotSetError();
 				return false;
 			}
-		
-			try
-			{
-				$update_obj = $this->mainModel->updateTeam($args);
-				return $update_obj->save(); 
-			}catch(Exception $e)
-			{
-				
-				// Create Array for Error Data
-				$error_array = array(
-					"error" => "Unable to save team",
-					"desc" => $e->getMessage()
-				);
-				 
-				// Set whether it is a fatal error
-				$is_fatal = true;
 
-				// Call method to throw an error
-				$this->addError($error_array,$is_fatal);				 
-				return $this;
+			$args['id']  = $this->mainModel->id;
+
+			$result =  $this->mainModel->updateTeam($args);
+
+			//Check for success / error
+			if(get_class($result) == get_class($this->mainModel))
+			{
+				return $result;
+			}
+			elseif(get_class($result) == 'ORM_Validation_Exception')
+			{
+				//parse error and add to error array
+				$this->processValidationError($result,$this->mainModel->error_message_path);
+				return false;
 			}
 		}
 		

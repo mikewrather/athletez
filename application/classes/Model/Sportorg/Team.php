@@ -56,10 +56,10 @@ class Model_Sportorg_Team extends ORM
 	{
 		return array(
 			'seasons_id' => array(
-				array('not_empty')
+				array('not_equals', array(':value', 0))
 			),
 			'complevels_id' => array(
-				array('not_empty')
+				array('not_equals', array(':value', 0))
 			),
 			'year' => array(
 				array('not_empty'),
@@ -371,8 +371,13 @@ class Model_Sportorg_Team extends ORM
 		{
 			$this->unique_ident = $unique_ident;
 		}
-	 
-		
+
+		try {
+			$this->save();
+			return $this;
+		} catch(ORM_Validation_Exception $e){
+			return $e;
+		}
 		return $this;
 	}  
 }
