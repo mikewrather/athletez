@@ -23,14 +23,6 @@
 		public function get_basics()
 		{
 			$retArr = array();
-
-			// Scaffolding Code For Array:
-			$objs = $this->obj->find_all();
-			foreach($objs as $obj)
-			{
-				$retArr[$obj->id] = $obj->getBasics();
-			}
-
 			// Scaffolding Code For Single:
 			$retArr = $this->obj->getBasics();
 
@@ -45,16 +37,14 @@
 		public function get_teams()
 		{
 			$retArr = array();
-
 			// Scaffolding Code For Array:
 			$objs = $this->obj->find_all();
+
 			foreach($objs as $obj)
 			{
-				$retArr[$obj->id] = $obj->getBasics();
+				$basics = $obj->getBasics();
+				$retArr[$obj->id] = $basics;
 			}
-
-			// Scaffolding Code For Single:
-			$retArr = $this->obj->getBasics();
 
 			return $retArr;
 		}
@@ -74,10 +64,6 @@
 			{
 				$retArr[$obj->id] = $obj->getBasics();
 			}
-
-			// Scaffolding Code For Single:
-			$retArr = $this->obj->getBasics();
-
 			return $retArr;
 		}
 		

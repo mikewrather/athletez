@@ -38,7 +38,12 @@
 		public function action_get_basics()
 		{
 			$this->payloadDesc = "Basic info on competion level";
-
+			if(!$this->mainModel->id)
+			{
+				$this->modelNotSetError();
+				return false;
+			}
+			return $this->mainModel;
 		
 		}
 		
@@ -108,6 +113,24 @@
 				$states_id = (int)trim($this->request->query('states_id'));
 			}
 
+			if(!$this->mainModel->id)
+			{
+				$this->modelNotSetError();
+				return false;
+			}
+
+			$param = array(
+				'complevels_id' => $this->mainModel->id,
+				'seasons_id' => $seasons_id,
+				'orgs_id' => $orgs_id,
+				'sports_id' => $sports_id,
+				'divisions_id' => $divisions_id,
+				'leagues_id' => $leagues_id,
+				'sections_id' => $sections_id,
+				'states_id' => $states_id
+			);
+
+			return $this->mainModel->getTeams($param);
 		}
 		
 		/**
@@ -127,7 +150,9 @@
 			{
 				$complevel_profiles_id = (int)trim($this->request->query('complevel_profiles_id'));
 			}
+			$args = array('complevel_profiles_id' => $complevel_profiles_id);
 
+			return $this->mainModel->getListAll($args);
 		}
 		
 		############################################################################
