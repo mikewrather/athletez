@@ -39,7 +39,12 @@
 		{
 			$this->payloadDesc = "Basic information  about a sport type";
 
-		
+			if(!$this->mainModel->id)
+			{
+				$this->modelNotSetError();
+				return false;
+			}
+			return $this->mainModel;
 		}
 		
 		/**
@@ -51,7 +56,12 @@
 		{
 			$this->payloadDesc = "All sports of this type";
 
-		
+			if(!$this->mainModel->id)
+			{
+				$this->modelNotSetError();
+				return false;
+			}
+			return $this->mainModel;
 		}
 		
 		############################################################################
