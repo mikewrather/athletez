@@ -114,7 +114,7 @@
 				$this->modelNotSetError();
 				return false;
 			}
-			return $this->mainModel->getRoaster($args);			
+			return $this->mainModel->getRoster($args);
 		}
 		
 		############################################################################
@@ -132,24 +132,24 @@
 			$this->payloadDesc = "Add a new team";
 
 		     // CHECK FOR PARAMETERS:
-			// org_sport_link_id 
+			// org_sport_link_id
 			// ID of the linking row for Organization / Sport (Optional alternative to providing sport / org separately)
 
 			$org_sport_link_id = (int)trim($this->request->post('org_sport_link_id'));
 
-			// orgs_id 
+			// orgs_id
 			// Organization ID (If Org_Sport_Link not provided)
 
 			$orgs_id = (int)trim($this->request->post('orgs_id'));
 
 			// sports_id
 			// Sport ID (If Org_Sport_Link not provided)
-				
+
 			$sports_id = (int)trim($this->request->post('sports_id'));
 
 			// complevels_id
 			// Competition Level ID
-				
+
 			$complevels_id = (int)trim($this->request->post('complevels_id'));
 
 			// seasons_id
@@ -158,25 +158,25 @@
 			$seasons_id = (int)trim($this->request->post('seasons_id'));
 
 
-			// year 
+			// year
 			// The Year of the Season
-				
+
 			if(trim($this->request->post('year')) != "")
 			{
 				$year = trim($this->request->post('year'));
 			}
 
-			// mascot 
+			// mascot
 			// An optional mascot for the team
-				
+
 			if(trim($this->request->post('mascot')) != "")
 			{
 				$mascot = trim($this->request->post('mascot'));
 			}
 
-			// unique_ident 
+			// unique_ident
 			// This is an optional identifier for organizations that have multiple teams with all other criteria the same.
-				
+
 			if(trim($this->request->post('unique_ident')) != "")
 			{
 				$unique_ident = trim($this->request->post('unique_ident'));
