@@ -62,6 +62,54 @@ class Model_Sportorg_Org extends ORM
 		return $teams;
 	}
 
+	public function rules(){
+
+		return array
+		(
+			// name (longtext)
+			'name'=>array(
+				array('not_empty'),
+			),
+
+			// single_sport (smallint)
+			'single_sport'=>array(
+				array('not_empty'),
+				array('in_array', array(':value', array('true', 'false'))),
+			),
+
+			// leagues_id (int)
+			'leagues_id'=>array(
+				array('not_empty'),
+				array('not_equals', array(':value', 0))
+			),
+
+			// divisions_id (int)
+			'divisions_id'=>array(
+				array('not_empty'),
+				array('not_equals', array(':value', 0))
+			),
+
+			// season_profiles_id (int)
+			'season_profiles_id'=>array(
+				array('not_empty'),
+				array('not_equals', array(':value', 0))
+			),
+
+			// complevel_profiles_id (int)
+			'complevel_profiles_id'=>array(
+				array('not_empty'),
+				array('not_equals', array(':value', 0))
+			),
+
+			//comment by jeffrey, no this field in add form
+//			'locations_id'=>array(
+//				array('not_empty'),
+//				array('not_equals', array(':value', 0))
+//			),
+		);
+	}
+
+
 	public function getTeams($args = array())
 	{
 		extract($args);
