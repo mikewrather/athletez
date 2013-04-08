@@ -75,6 +75,11 @@
 			return false;
 		}
 
+		public static function unique_username(){
+			//TODO, add by jeffrey
+			return true;
+		}
+
 		public static function checkCountyExists($county)
 		{
 			$c = ORM::factory('Location_County',$county);

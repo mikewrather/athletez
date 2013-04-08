@@ -7,6 +7,7 @@
 
 class Model_User_Base extends Model_Auth_User
 {
+	public $error_message_path = 'models/user/user_base';
 
 	protected $_table_name = 'users';
 
@@ -127,6 +128,76 @@ class Model_User_Base extends Model_Auth_User
 	 * @var null
 	 */
 	protected $singlesport = false;
+
+	public function rules(){
+		return array
+		(
+			// email (varchar)
+			'email'=>array(
+				array('not_empty'),
+				array('email'),
+				array('unique_email'),
+			),
+
+			// username (varchar)
+			//TODO, add by jeffrey. no username field in add user page
+//			'username'=>array(
+//				array('not_empty'),
+//				array('unique_username'),
+//			),
+
+			// password (varchar)
+			'password'=>array(
+				array('not_empty'),
+				array('min_length', array(':value', 4)),
+				array('max_length', array(':value', 8)),
+			),
+			/* Validate not required
+			// login_count (int)
+			'login_count'=>array(
+				array('not_empty'),
+				array('digit'),
+			),
+
+			// last_login (int)
+			'last_login'=>array(
+				array('not_empty'),
+				array('digit'),
+			),
+			*/
+
+			// first_name (varchar)
+			'first_name'=>array(
+				array('not_empty'),
+				array('alpha'),
+			),
+
+			// last_name (varchar)
+			'last_name'=>array(
+				array('not_empty'),
+				array('alpha'),
+			),
+			/* Validate not required
+			// cities_id (int)
+			'cities_id'=>array(
+				array('not_empty'),
+				array('digit'),
+			),
+
+			// date_created (date)
+			'date_created'=>array(
+				array('not_empty'),
+				array('date'),
+			),
+
+			// logins (int)
+			'logins'=>array(
+				array('not_empty'),
+				array('digit'),
+			),
+			*/
+		);
+	}
 	 
 	public function getPrimaryVideo()
 	{
@@ -289,7 +360,130 @@ class Model_User_Base extends Model_Auth_User
 		return $this->first_name." ".$this->lastName();
 	}
 
+	/** Modified by Jeffrey
+	 * @param $args
+	 * @return Model_User_Base|ORM_Validation_Exception
+	 */
 	public function addTeam($args)
+	{
+		$resultArrary = array();
+		extract($args);
+		$teams_obj = ORM::factory('Sportorg_Team');
+		$org_sport_link = ORM::factory('Sportorg_Orgsportlink');
+
+		if(isset($orgs_id) && $orgs_id !=""){
+			$org_sport_link->orgs_id = $orgs_id;
+		}
+
+		if(isset($sports_id) && $sports_id !=""){
+			$org_sport_link->sports_id = $sports_id;
+		}
+
+		if(isset($complevels_id) && $complevels_id !=""){
+			$teams_obj->complevels_id = $complevels_id;
+		}
+
+		if(isset($seasons_id) && $seasons_id !=""){
+			$teams_obj->seasons_id = $seasons_id;
+		}
+
+		if(isset($year) && $year !=""){
+			$teams_obj->year = $year;
+		}
+
+		if(isset($teams_id) && $teams_id != 0) // If team ID is provided add team
+		{
+			if(!$this->has('teams',$teams_id)) // CHECK IF USER ALREADY HAS TEAM ASSOCIATION
+			{
+				try
+				{
+					$this->add('teams',$teams_id);
+					$resultArrary["success"] = 1;
+				}
+				catch(ErrorException $e)
+				{
+					$resultArrary["errorMsg"] = $e->getMessage();
+				}
+			}
+		}
+		else
+		{
+			$args = array('orgs_id' => $orgs_id, 'sports_id' => $sports_id);
+			//Add new logic here.new teams validation
+			$args1 = array('complevels_id' => $complevels_id, 'seasons_id' => $seasons_id);
+
+			$combine_validate = Validation::factory(array_merge($args, $args1));
+			$combine_validate->rule('orgs_id', 'not_equals', array(':value', 0))
+				->rule('sports_id', 'not_equals', array(':value', 0))
+				->rule('complevels_id', 'not_equals', array(':value', 0))
+				->rule('seasons_id', 'not_equals', array(':value', 0));
+			try
+			{
+				$org_sport_link->check($combine_validate);
+			}
+			catch(ORM_Validation_Exception $e)
+			{
+				return $e;
+			}
+
+			//Find Org / Sport link
+			$org_sport_link = ORM::factory('Sportorg_Orgsportlink')
+				->where('orgs_id','=',$orgs_id)
+				->and_where('sports_id','=',$sports_id)
+				->find();
+
+			if(!$org_sport_link->loaded()) // This means the organization does not have this sport
+			{
+
+				unset($org_sport_link);
+				//Add the Association
+				$org_sport_link = ORM::factory('Sportorg_Orgsportlink');
+				$org_sport_link->orgs_id = $orgs_id;
+				$org_sport_link->sports_id = $sports_id;
+				$org_sport_link->save();
+			}
+
+			$new_team = ORM::factory('Sportorg_Team')
+				->where('org_sport_link_id','=',$org_sport_link->id)
+				->and_where('seasons_id','=',$seasons_id)
+				->and_where('complevels_id','=',$complevels_id)
+				->and_where('year','=',$year)
+				->find();
+
+			// CHECK IF TEAM EXISTS AND CREATE IT IF IT DOESN'T
+			if(!$new_team->loaded())
+			{
+				unset($new_team);
+				$new_team = ORM::factory('Sportorg_Team');
+				$new_team->org_sport_link_id = $org_sport_link->id;
+				$new_team->complevels_id = $complevels_id;
+				$new_team->seasons_id = $seasons_id;
+				$new_team->year = $year;
+				$new_team->save();
+			}
+
+			if(!$this->has('teams',$new_team)) // CHECK IF USER ALREADY HAS TEAM ASSOCIATION
+			{
+				try
+				{
+					$this->add('teams',$new_team);
+					$resultArrary["success"] = 1;
+				}
+				catch(ErrorException $e)
+				{
+					$resultArrary["errorMsg"] = $e->getMessage();
+				}
+			}
+		}
+		return $this;
+
+	}
+
+	/*
+	 * deprecated, comment by jeffrey
+	 *
+	 *
+	public function addTeam_old($args)
 	{
 		$resultArrary = array("success"=>0);
 
@@ -373,6 +567,7 @@ class Model_User_Base extends Model_Auth_User
 		return $resultArrary;
 
 	}
+	 */
 
 	public function getCommentsOn()
 	{
@@ -384,6 +579,12 @@ class Model_User_Base extends Model_Auth_User
 		return Model_Site_Comment::getCommentsOf($this);
 	}
 
+	/** Not used yet, comment it temporarily by Jeffrey,
+	 * developer can use custom unique_username rule in valid.php
+	 *
+	 * @param $email
+	 * @return bool
+
 	public static function unique_username($email)
 	{
 		// Check if the username already exists in the database
@@ -393,69 +594,5 @@ class Model_User_Base extends Model_Auth_User
 			->execute()
 			->get('total');
 	}
-
-	//validation rules:
-	public function rules(){
-		return array
-		(
-			// email (varchar)
-			'email'=>array(
-				array('not_empty'),
-				array('email'),
-				array('unique_email'),
-			),
-
-			// first_name (varchar)
-			'first_name'=>array(
-				array('not_empty'),
-				array('alpha'),
-			),
-
-			// last_name (varchar)
-			'last_name'=>array(
-				array('not_empty'),
-				array('alpha'),
-			),
-
-			// username (varchar)
-//			'username'=>array(
-//				array('not_empty'),
-//			),
-
-			// password (varchar)
-			'password'=>array(
-				array('not_empty'),
-			),
-
-			// login_count (int)
-//			'login_count'=>array(
-//				array('not_empty'),
-//				array('digit'),
-//			),
-
-			// last_login (int)
-//			'last_login'=>array(
-//				array('not_empty'),
-//				array('digit'),
-//			),
-
-			// cities_id (int)
-//			'cities_id'=>array(
-//				array('not_empty'),
-//				array('digit'),
-//			),
-//
-//			// date_created (date)
-//			'date_created'=>array(
-//				array('not_empty'),
-//				array('date'),
-//			),
-//
-//			// logins (int)
-//			'logins'=>array(
-//				array('not_empty'),
-//				array('digit'),
-//			),
-		);
-	}
+	*/
 }

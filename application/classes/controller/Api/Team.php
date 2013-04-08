@@ -261,6 +261,8 @@
 				$tournaments_id = (int)trim($this->request->post('tournaments_id'));
 			}
 
+
+
 		}
 		
 		/**

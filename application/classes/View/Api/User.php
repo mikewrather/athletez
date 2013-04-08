@@ -278,6 +278,9 @@
 		public function post_addteam()
 		{
 			$retArr = array();
+			// Scaffolding Code For Array:
+			$retArr = $this->obj->getBasics();
+
 			return $retArr;
 		}
 		

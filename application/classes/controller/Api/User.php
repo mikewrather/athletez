@@ -278,13 +278,109 @@
 			}
 			return $user_obj;
 		}
-		
+
 		/**
-		 * action_post_addteam() Add a new team association for a user
-		 * via /api/user/addteam/{users_id}
-		 *
+		 * Modified by Jeffrey
+		 * @return bool
 		 */
-		public function action_post_addteam()
+		public function action_post_addteam(){
+			$this->payloadDesc = "Add a new team association for a user";
+
+			// Check That:
+			// a) user is loaded
+			// b) EITHER user in main model matches user logged in
+			// c) OR user is an admin
+
+			if(!$this->user || !($this->user->id == $this->mainModel->id || $this->user->has('roles','admin')))
+			{
+				// Create Array for Error Data
+				$error_array = array(
+					"error" => "This action requires authentication"
+				);
+
+				// Set whether it is a fatal error
+				$is_fatal = true;
+
+				// Call method to throw an error
+				$this->addError($error_array,$is_fatal);
+			}
+
+			// CHECK WHAT PARAMETERS WERE PROVIDED IN POST DATA:
+
+			if((int)trim($this->request->post('teams_id')) >= 0)
+			{
+				$teams_id = (int)trim($this->request->post('teams_id'));
+			}
+
+			// orgs_id
+			// Organization ID
+			if((int)trim($this->request->post('orgs_id')) >= 0)
+			{
+				$orgs_id = (int)trim($this->request->post('orgs_id'));
+			}
+
+			// sports_id
+			// Sport ID
+			if((int)trim($this->request->post('sports_id')) >= 0)
+			{
+				$sports_id = (int)trim($this->request->post('sports_id'));
+			}
+
+			// complevels_id
+			// Competition Level ID
+			if((int)trim($this->request->post('complevels_id')) >= 0)
+			{
+				$complevels_id = (int)trim($this->request->post('complevels_id'));
+			}
+
+			// seasons_id
+			// Season ID
+			if((int)trim($this->request->post('seasons_id')) >= 0)
+			{
+				$seasons_id = (int)trim($this->request->post('seasons_id'));
+			}
+
+			// year
+			// Year
+			if((int)trim($this->request->post('year')) > 0)
+			{
+				$year = (int)trim($this->request->post('year'));
+			}
+			else
+			{
+				// IF THE YEAR IS NOT SET, SET IT TO CURRENT YEAR
+				$year = date('Y',time());
+			}
+
+			$args = array(
+				'teams_id' => $teams_id,
+				'orgs_id' => $orgs_id,
+				'sports_id' => $sports_id,
+				'complevels_id' => $complevels_id,
+				'seasons_id' => $seasons_id,
+				'year' => $year,
+			);
+
+			$result = $this->mainModel->addTeam($args);
+
+			//Check for success / error
+			if(get_class($result) == get_class($this->mainModel))
+			{
+				return $result;
+			}
+			elseif(get_class($result) == 'ORM_Validation_Exception')
+			{
+				//parse error and add to error array
+				$this->processValidationError($result,$this->mainModel->error_message_path);
+				return false;
+			}
+
+		}
+
+		/**
+		 * Deprecated, comment by Jeffrey
+		 *
+		public function action_post_addteam_old()
 		{
 			$this->payloadDesc = "Add a new team association for a user";
 
@@ -434,9 +530,8 @@
 				}
 
 			}
-
-
 		}
+		 */
 		
 		/**
 		 * action_post_addsport() Add a new sport association for a user

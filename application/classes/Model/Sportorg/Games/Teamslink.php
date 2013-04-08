@@ -21,6 +21,27 @@ class Model_Sportorg_Games_Teamslink extends ORM
 		)
 	);
 
+	public function rules(){
+		//TODO, add by Jeffrey
+		return array(
+//			'games_id' => array(
+//				array(''),
+//			),
+//			'game_datetime' => array(
+//				array(''),
+//			),
+//			'locations_id' => array(
+//				array(''),
+//			),
+//			'home_team' => array(
+//				array(''),
+//			),
+//			'tournaments_id' => array(
+//				array(''),
+//			),
+		);
+	}
+
 	public function getBasics()
 	{
 		return array(
