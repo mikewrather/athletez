@@ -219,6 +219,7 @@ class Model_User_Base extends Model_Auth_User
 				array('not_empty'),
 				array('min_length', array(':value', 4)),
 				array('max_length', array(':value', 8)),
+				array('confirm_password',  'matches', array(':validation', ':field', 'password'))
 			),
 			/* Validate not required
 			// login_count (int)
