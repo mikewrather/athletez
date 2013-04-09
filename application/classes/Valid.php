@@ -75,6 +75,23 @@
 			return false;
 		}
 
+		/**
+		 * date format must like "2013-04-05 12:12:12"
+		 * @param $value
+		 * @return bool
+		 * @author Jeffrey
+		 */
+		public static function correct_date_format($value){
+
+			$reg="^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}$";
+			$return = preg_match($reg, $value);
+			if ($return == 0){
+				return false;
+			}else{
+				return true;
+			}
+		}
+
 		public static function unique_email($value){
 			$user_model = ORM::factory("User_Base");
 			$user_model->select("id")

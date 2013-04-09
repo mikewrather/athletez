@@ -36,6 +36,31 @@ class Model_Sportorg_Games_Base extends ORM
 		)
 	);
 
+	public function rules(){
+
+		return array
+		(
+			/* TODO, below fields not exist in post add page,need set it's value manually.
+			 * Use "correct_date_format" to check the origin date format
+			 *
+			// gameDay (date)
+			'gameDay'=>array(
+				array('not_empty'),
+			),
+
+			// gameTime (time)
+			'gameTime'=>array(
+				array('not_empty'),
+			),
+			*/
+			// locations_id (int)
+			'locations_id'=>array(
+				array('not_empty'),
+				array('not_equals', array(':value', 0))
+			),
+		);
+	}
+
 	public function getBasics()
 	{
 		return array(
