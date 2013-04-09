@@ -24,6 +24,36 @@ class Model_Sportorg_Complevel_Base extends ORM
 			'foreign_key' => 'complevels_id'
 		),
 	);
+
+	public function rules(){
+
+		return array
+		(
+			// name (varchar)
+			'name'=>array(
+				array('not_empty'),
+			),
+			/* TODO, add by Jeffrey, not below 2 items in add page.
+			// min_age (int)
+			'min_age'=>array(
+				array('not_empty'),
+				array('digit'),
+			),
+
+			// max_age (int)
+			'max_age'=>array(
+				array('not_empty'),
+				array('digit'),
+			),
+			*/
+			// complevel_profiles_id (int)
+			'complevel_profiles_id'=>array(
+				array('not_empty'),
+				array('not_equals', array(':value', 0))
+			),
+		);
+	}
+
 	public function getBasics()
 	{
 		return array(
