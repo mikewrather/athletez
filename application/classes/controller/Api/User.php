@@ -784,22 +784,22 @@
 		public function action_put_basics()
 		{
 			$this->payloadDesc = "Update basic information about the user";
-
+            $args = array();
 		     // CHECK FOR PARAMETERS:
 			// email 
 			// Updated Email Address
 				
 			if(trim($this->put('email')) != "")
 			{
-				$email = trim($this->put('email'));
+				$args['email'] = str_replace('%40', '@', trim($this->put('email')));
 			}
-
+            
 			// firstname 
 			// Updated First Name
 				
 			if(trim($this->put('firstname')) != "")
 			{
-				$firstname = trim($this->put('firstname'));
+				$args['firstname'] = trim($this->put('firstname'));
 			}
 
 			// lastname 
@@ -807,7 +807,7 @@
 				
 			if(trim($this->put('lastname')) != "")
 			{
-				$lastname = trim($this->put('lastname'));
+				$args['lastname'] = trim($this->put('lastname'));
 			}
 
 			// password 
@@ -815,7 +815,7 @@
 				
 			if(trim($this->put('password')) != "")
 			{
-				$password = trim($this->put('password'));
+				$args['password'] = trim($this->put('password'));
 			}
 
 			// re_password 
@@ -823,7 +823,7 @@
 				
 			if(trim($this->put('re_password')) != "")
 			{
-				$re_password = trim($this->put('re_password'));
+				$args['re_password'] = trim($this->put('re_password'));
 			}
 
 			// cities_id 
@@ -831,9 +831,46 @@
 				
 			if((int)trim($this->put('cities_id')) > 0)
 			{
-				$cities_id = (int)trim($this->put('cities_id'));
+				$args['cities_id'] = (int)trim($this->put('cities_id'));
 			}
+            
+            if(!$this->mainModel->id)
+            {
+                $this->modelNotSetError();
+                return false;
+            }
+            
+            if ( $args['password'] == $args['re_password'])
+            {
+                $result = $this->mainModel->updateUser($args);    
+                
+                //Check for success / error
+                if(get_class($result) == get_class($this->mainModel))
+                {
+                    return $result;
+                }
+                
+                elseif(get_class($result) == 'ORM_Validation_Exception')
+                {
+                    //parse error and add to error array
+                    $this->processValidationError($result,$this->mainModel->error_message_path);
+                    return false;
 
+                } 
+            }else
+            {   
+                // Create Array for Error Data
+                $error_array = array(
+                    "error" => "Please confirm the password",
+                    "error" => "Please confirm the password",
+                );
+
+                // Set whether it is a fatal error
+                $is_fatal = true;
+
+                // Call method to throw an error
+                $this->addError($error_array,$is_fatal);
+            } 
 		}
 		
 		/**
@@ -845,7 +882,26 @@
 		{
 			$this->payloadDesc = "Update the user / team assosication (for future use)";
 
-		
+		    if(!$this->mainModel->id)
+            {
+                $this->modelNotSetError();
+                return false;
+            }
+            
+            $result = $this->mainModel->updateTeam();    
+                
+            //Check for success / error
+            if(get_class($result) == get_class($this->mainModel))
+            {
+                return $result;
+            }
+            
+            elseif(get_class($result) == 'ORM_Validation_Exception')
+            {
+                //parse error and add to error array
+                $this->processValidationError($result,$this->mainModel->error_message_path);
+                return false; 
+            }  
 		}
 		
 		/**
@@ -857,7 +913,26 @@
 		{
 			$this->payloadDesc = "Update the user / sport association (for future use)";
 
-		
+		    if(!$this->mainModel->id)
+            {
+                $this->modelNotSetError();
+                return false;
+            }
+            
+            $result = $this->mainModel->updateSport();    
+                
+            //Check for success / error
+            if(get_class($result) == get_class($this->mainModel))
+            {
+                return $result;
+            }
+            
+            elseif(get_class($result) == 'ORM_Validation_Exception')
+            {
+                //parse error and add to error array
+                $this->processValidationError($result,$this->mainModel->error_message_path);
+                return false; 
+            }  
 		}
 		
 		/**
@@ -886,7 +961,12 @@
 		{
 			$this->payloadDesc = "Delete a User";
 
-		
+		    if(!$this->mainModel->id)
+            {
+                $this->modelNotSetError();
+                return false;
+            }
+            return $this->mainModel->delete();
 		}
 		
 		/**
@@ -898,7 +978,12 @@
 		{
 			$this->payloadDesc = "Delete the user / team assosication";
 
-		
+		    if(!$this->mainModel->id)
+            {
+                $this->modelNotSetError();
+                return false;
+            }
+            return $this->mainModel->deleteTeam();            
 		}
 		
 		/**
@@ -910,7 +995,12 @@
 		{
 			$this->payloadDesc = "Delete the user / sport association";
 
-		
+		    if(!$this->mainModel->id)
+            {
+                $this->modelNotSetError();
+                return false;
+            }
+            return $this->mainModel->deleteSport();   
 		}
 		
 		/**
@@ -941,15 +1031,13 @@
 
 			if($this->mainModel->id)
 			{
-
+                return $this->mainModel->deleteRole();   
 			}
 			else
-			{
-
-			}
-
-
-		
+			{                   
+                $this->modelNotSetError();
+                return false;
+			} 
 		}
 		
 		/**
@@ -960,8 +1048,13 @@
 		public function action_delete_identity()
 		{
 			$this->payloadDesc = "Delete a User\'s Identity";
-
-		
+            
+		    if(!$this->mainModel->id)
+            {
+                $this->modelNotSetError();
+                return false;
+            }
+            return $this->mainModel->deleteIdentity();
 		}
 		
 	}

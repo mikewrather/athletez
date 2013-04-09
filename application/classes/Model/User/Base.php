@@ -128,7 +128,75 @@ class Model_User_Base extends Model_Auth_User
 	 * @var null
 	 */
 	protected $singlesport = false;
-
+     
+    public function deleteTeam()
+    {
+        $teams = DB::delete('users_teams_link')->where('users_id','=', $this->id)->execute();
+    
+        return $teams;
+    }
+    
+    public function deleteSport()
+    {
+        $sports = DB::delete('user_sport_link')->where('users_id','=', $this->id)->execute();
+        return $sports;
+    }
+    
+    public function deleteRole()
+    {
+        $roles = DB::delete('roles_users')->where('users_id','=', $this->id)->execute();
+        return $roles;
+    }
+    
+    public function deleteIdentity()
+    {
+        $identity = DB::delete('user_identities')->where('user_id','=', $this->id)->execute();
+        return $identity;
+    }
+    
+    public function updateUser($args = array())
+    {
+        extract($args);
+        // email 
+        // Updated Email Address
+        if(isset($email))
+        {
+            $this->email = $email;
+        }
+        // firstname 
+        // Updated First Name
+        if(isset($firstname))
+        {
+            $this->first_name  = $firstname;
+        }
+        
+        // lastname 
+        // Updated Last Name
+        if(isset($lastname))
+        {
+            $this->last_name  = $lastname;
+        }
+        
+        // password 
+        // New Password
+        if(isset($lastname))
+        {
+            $this->last_name  = $lastname;
+        }
+        // cities_id 
+        // User's Home City
+        if(isset($cities_id))
+        {
+            $this->cities_id  = $cities_id ;
+        }   
+        try {
+            $this->save();
+            return $this;
+        } catch(ORM_Validation_Exception $e){
+            return $e;
+        }
+        return $this; 
+    }
 	public function rules(){
 		return array
 		(
