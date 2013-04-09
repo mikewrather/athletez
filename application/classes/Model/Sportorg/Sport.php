@@ -47,7 +47,38 @@ class Model_Sportorg_Sport extends ORM
 			'far_key' => 'orgs_id'
 		),
 	);
-	
+
+	public function rules(){
+
+		return array
+		(
+			// name (varchar)
+			'name'=>array(
+				array('not_empty'),
+			),
+
+			// male (tinyint)
+			'male'=>array(
+				array('not_empty'),
+				array('in_array', array(':value', array(0, 1))),
+			),
+
+			// female (tinyint)
+			'female'=>array(
+				array('not_empty'),
+				array('in_array', array(':value', array(0, 1))),
+			),
+
+			// sport_type_id (int)
+			'sport_type_id'=>array(
+				array('not_empty'),
+				array('digit'),
+				array('sport_type_id_exist'),
+			),
+		);
+	}
+
+
 	public function updateType($sport_type_id)
 	{
 		$this->sport_type_id = $sport_type_id;

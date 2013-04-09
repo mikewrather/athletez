@@ -64,6 +64,17 @@
 			return false;
 		}
 
+		public static function sport_type_id_exist($value){
+			$sport_types_model = ORM::factory("Sportorg_Sporttype");
+			$sport_types_model->select("id")
+				->where('id', '=', $value)
+				->find();
+			if ($sport_types_model->loaded()){
+				return true;
+			}
+			return false;
+		}
+
 		public static function unique_email($value){
 			$user_model = ORM::factory("User_Base");
 			$user_model->select("id")
