@@ -24,7 +24,16 @@ class Model_Sportorg_Games_Match extends ORM
 			'foreign_key' => 'game_matches_id'
 		),
 	);
-	
+
+	public function rules(){
+		return array(
+			'games_id' => array(
+				array('not_empty'),
+				array('not_equals', array(':value', 0))
+			),
+		);
+	}
+
 	public function name()
 	{
 		return 'name';
@@ -74,15 +83,5 @@ class Model_Sportorg_Games_Match extends ORM
 		return $result;
 		
 		
-	}
-
-	//validation
-
-	public function rules(){
-		return array(
-			'games_id' => array(
-				array('not_equals', array(':value', 0))
-			),
-		);
 	}
 }
