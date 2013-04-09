@@ -27,6 +27,42 @@ class Model_Sportorg_Position extends ORM
 			'foreign_key' => 'positions_id'
 		)
 	);
+
+	public function rules(){
+
+		return array
+		(
+			// name (varchar)
+			'name'=>array(
+				array('not_empty'),
+			),
+
+			// sports_id (int)
+			'sports_id'=>array(
+				array('not_empty'),
+				array('not_equals', array(':value', 0))
+			),
+
+			// stattab_id (int)
+			'stattab_id'=>array(
+				array('not_empty'),
+				array('stat_tab_id_exist')
+			),
+			//TODO, add by Jeffrey.
+			/*
+			// sport_name (varchar)
+			'sport_name'=>array(
+				array('not_empty'),
+			),
+
+			// gender (varchar)
+			'gender'=>array(
+				array('not_empty'),
+			),
+			*/
+		);
+	}
+
 	public function getBasics()
 	{
 		return array(
