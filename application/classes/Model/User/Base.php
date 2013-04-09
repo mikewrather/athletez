@@ -214,12 +214,30 @@ class Model_User_Base extends Model_Auth_User
 //				array('unique_username'),
 //			),
 
+			// first_name (varchar)
+			'first_name'=>array(
+				array('not_empty'),
+				array('alpha'),
+			),
+
+			// last_name (varchar)
+			'last_name'=>array(
+				array('not_empty'),
+				array('alpha'),
+			),
+
 			// password (varchar)
 			'password'=>array(
 				array('not_empty'),
 				array('min_length', array(':value', 4)),
 				array('max_length', array(':value', 8)),
-				array('re_password',  'matches', array(':validation', ':field', 'password'))
+			),
+
+			're_password'=>array(
+				array('not_empty'),
+				array('min_length', array(':value', 4)),
+				array('max_length', array(':value', 8)),
+				array('matches', array(':validation', ':field', 'password'))
 			),
 			/* Validate not required
 			// login_count (int)
@@ -235,17 +253,6 @@ class Model_User_Base extends Model_Auth_User
 			),
 			*/
 
-			// first_name (varchar)
-			'first_name'=>array(
-				array('not_empty'),
-				array('alpha'),
-			),
-
-			// last_name (varchar)
-			'last_name'=>array(
-				array('not_empty'),
-				array('alpha'),
-			),
 			/* Validate not required
 			// cities_id (int)
 			'cities_id'=>array(
