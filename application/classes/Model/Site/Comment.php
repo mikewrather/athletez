@@ -25,6 +25,35 @@ class Model_Site_Comment extends Model_Site_Entdir
 		parent::__construct($id);
 	}
 
+	public function rules(){
+
+		return array
+		(
+			// subject_enttypes_id (int)
+			'subject_enttypes_id'=>array(
+				array('not_empty'),
+				array('not_equals', array(':value', 0))
+			),
+
+			// subject_id (int)
+			'subject_id'=>array(
+				array('not_empty'),
+				array('digit'),
+			),
+			/* TODO, add by Jeffrey. need to confirm
+			// users_id (int)
+			'users_id'=>array(
+				array('not_empty'),
+				array('digit'),
+			),
+			*/
+			// comment (text)
+			'comment'=>array(
+				array('not_empty'),
+			),
+		);
+	}
+
 	public static function getCommentsOn($ent)
 	{
 		if(!$ent->loaded()) return false;
