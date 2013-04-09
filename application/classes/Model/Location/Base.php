@@ -94,44 +94,38 @@ class Model_Location_Base extends ORM
 		if(isset($address))
 		{
 			$this->address = $address;
-		}
+		} else
+	        {
+	            $args['address'] = '';
+	        }
 		
 		if(isset($cities_id))
 		{
 			$this->cities_id = $cities_id;
-		}
-		$blMsg = false;
+		}else
+	        {
+	            $args['cities_id'] = '';
+	        }
+		 
 		$error = array();
-		if ( empty($address) || empty($cities_id) )
-		{
-			$blMsg = true;
-			$error_array = array(
-				"error" => "You should input the adress or city",
-				"desc" => "You should input the adress or city",
-			);
-			$result['error_array'] = $error_array;			
-		}
+		
 
 		if(isset($lon))
 		{
 			$this->lon = $lon;
-		}
+		} else
+	        {
+	            $args['lon'] = '';
+	        }
 		
 		if(isset($lat))
 		{
 			$this->lat = $lat;
-		}
-		
-		if ( empty($lon) || empty($lat) )
-		{
-			$blMsg = true;
-			$error_array = array(
-				"error" => "You should input the longitude or latitude",
-				"desc" => "You should input the longitude or latitude"	);
-			
-			$result['error_array'] = $error_array;
-		}
-		
+		}else
+	        {
+	            $args['lat'] = '';
+	        }
+				
 		if(isset($loc_point))
 		{
 			$this->loc_point = $loc_point;
@@ -141,24 +135,26 @@ class Model_Location_Base extends ORM
 		{
 			$this->location_type = $location_type;
 		}
-		
-		try{
-			if ( $blMsg == false)
-			$new_location = $this->save();
-			$result['new_location'] = $new_location;
-		} catch(ErrorException $e)
+		         
+		try{			
+            $external_validate = Validation::factory($args)
+                ->rule('address', 'not_empty')
+                ->rule('cities_id', 'not_empty')
+                ->rule('lon', 'not_empty')
+                ->rule('lat', 'not_empty');
+            
+            if ($external_validate->check())
+            {
+                $new_location = $this->save($external_validate);    
+            }               
+			
+            return $new_location;			
+		} catch(ORM_Validation_Exception $e)
 		{
-			$error_array = array(
-				"error" => "Unable to save",
-				"desc" => "You should input the longitude or latitude"	);
-
-			// Set whether it is a fatal error
-			$is_fatal = true;
-			// Call method to throw an error		
-			$result['error_array'] = $error_array;	
+        	return $e;
 		} 	
 		
-		return $result;
+		 
 	}
 	
 }
