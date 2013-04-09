@@ -24,7 +24,19 @@ class Model_Media_Image extends ORM
 			'foreign_key' => 'images_id'
 		),
 	);
-	
+
+	public function rules(){
+
+		return array
+		(
+			// media_id (int)
+			'media_id'=>array(
+				array('not_empty'),
+				array('digit'),
+			),
+		);
+	}
+
 	public function getBasics()
 	{
 		return array(
