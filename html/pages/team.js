@@ -17,11 +17,13 @@ define([
     "team/collections/upcoming_schedules",
     "team/collections/recent_schedules",
     "team/collections/competitor_teams",
+    "team/collections/rosters",
     
     "team/views/header",
     "team/views/add-media",
     "sportorg/views/schedule-list",
-    "sportorg/views/competitorteam-list"
+    "sportorg/views/competitorteam-list",
+    "sportorg/views/roster-list"
     
     
     ], function (require, pageLayoutTemplate) {
@@ -38,11 +40,13 @@ define([
         UpcomingScheduleList = require("team/collections/upcoming_schedules"),
         RecentScheduleList = require("team/collections/recent_schedules"),
         CompetitorTeamList = require("team/collections/competitor_teams"),
+        RosterList = require("team/collections/rosters");
         
         HeaderView = require("team/views/header"),
         AddMediaView = require("team/views/add-media"),
         ScheduleListView = require("sportorg/views/schedule-list"),
         CompetitorTeamListView = require("sportorg/views/competitorteam-list"),
+        RosterListView = require("sportorg/views/roster-list"),
         
         LayoutView = views.LayoutView,
         $ = facade.$,
@@ -108,6 +112,13 @@ define([
                 controller.competitor_teams.season_id = season_id;
                 controller.competitor_teams.fetch();
                 
+                controller.rosters = new RosterList();
+                controller.rosters.id = controller.id;
+                controller.rosters.sport_id = sport_id;
+                controller.rosters.complevel_id = complevel_id;
+                controller.rosters.season_id = season_id;
+                controller.rosters.fetch();
+                
                 controller.handleDeferredsDynamic();
             }
             Channel('refresh-teampage').subscribe(callback);
@@ -143,6 +154,12 @@ define([
                 if ( ~position ) this.scheme.splice(position, 1);
             }
             
+            if (this.rosterListView) {
+                $(this.rosterListView.destination).html('');
+                position = $.inArray(this.rosterListView, this.scheme);
+                if ( ~position ) this.scheme.splice(position, 1);
+            }
+            
         },
         
         handleDeferredsDynamic: function() {
@@ -158,6 +175,10 @@ define([
             
             $.when(this.competitor_teams.request).done(function () {
                 controller.setupCompetitorTeams();
+            });
+            
+            $.when(this.rosters.request).done(function () {
+                controller.setupRosters();
             });
         },
         
@@ -224,6 +245,16 @@ define([
             });
             
             this.scheme.push(this.competitorTeamListView);
+            this.layout.render();
+        },
+        
+        setupRosters: function() {
+            this.rosterListView = new RosterListView({
+                collection: this.rosters,
+                destination: "#roster-wrap"
+            });
+            
+            this.scheme.push(this.rosterListView);
             this.layout.render();
         },
                         

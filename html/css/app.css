@@ -26,3 +26,5 @@ header .signup-email { margin:0 5px; }
 #main .sports-info { margin-top:20px; }
 #main .image { float:left; }
 #main .videothumb { float:left; }
+
+#main-content .roster { float:left; }
