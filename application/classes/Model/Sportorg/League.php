@@ -25,6 +25,29 @@ class Model_Sportorg_League extends ORM
 		)
 	);
 
+	public function rules(){
+
+		return array
+		(
+			// name (varchar)
+			'name'=>array(
+				array('not_empty'),
+			),
+
+			// sections_id (int)
+			'sections_id'=>array(
+				array('not_empty'),
+				array('not_equals', array(':value', 0))
+			),
+
+			// states_id (int)
+			'states_id'=>array(
+				array('not_empty'),
+				array('not_equals', array(':value', 0))
+			),
+		);
+	}
+
 	public function getBasics()
 	{
 		return array(
