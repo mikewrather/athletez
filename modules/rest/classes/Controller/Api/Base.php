@@ -311,8 +311,10 @@ class Controller_Api_Base extends AuthController
 
 		// Extract Errors from Validation Error Object
 		$errors = $errObj->errors($path);
+
 		//Check if have the external validation
-		if (isset($errors['_external'])){
+		if (isset($errors['_external']))
+		{
 			$external_errors = $errors['_external'];
 			$errors = array_merge($errors, $external_errors);
 			unset($errors['_external']);
