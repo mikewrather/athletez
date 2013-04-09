@@ -21,6 +21,17 @@ class Model_Sportorg_Seasons_Profile extends ORM
 		)
 	);
 
+	public function rules(){
+
+		return array
+		(
+			// name (varchar)
+			'name'=>array(
+				array('not_empty'),
+			),
+		);
+	}
+
 	public function getBasics()
 	{
 		return array(
