@@ -27,6 +27,24 @@ class Model_User_Resume_Data_Group extends ORM
 		)
 	);
 
+	public function rules(){
+
+		return array
+		(
+			// name (varchar)
+			'name'=>array(
+				array('not_empty'),
+			),
+
+			// description (varchar)
+			'resume_data_profiles_id'=>array(
+				array('not_empty'),
+				array('digit'),
+				array('resume_data_profiles_id_exist'),
+			),
+		);
+	}
+
 	public function __construct($id=NULL)
 	{
 		parent::__construct($id);
