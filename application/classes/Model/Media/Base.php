@@ -32,6 +32,47 @@ class Model_Media_Base extends ORM
 		)
 	);
 
+	public function rules(){
+
+		return array
+		(
+			// name (varchar)
+			'name'=>array(
+				array('not_empty'),
+			),
+
+			// users_id (int)
+			'users_id'=>array(
+				array('not_empty'),
+				array('digit'),
+			),
+
+			// media_type (enum)
+			'media_type'=>array(
+				array('not_empty'),
+			),
+
+			// sports_id (int)
+			'sports_id'=>array(
+				array('not_empty'),
+				array('not_equals', array(':value', 0))
+			),
+
+			// subject_type_id (int)
+			'subject_type_id'=>array(
+				array('not_empty'),
+				array('not_equals', array(':value', 0))
+			),
+
+			// subject_id (int)
+			'subject_id'=>array(
+				array('not_empty'),
+				array('digit'),
+				array('subject_id_exist',array( ':validation', 'subject_type_id', 'subject_id'))
+			),
+		);
+	}
+
 	public function getBasics()
 	{
 		return array(
