@@ -10,6 +10,8 @@ class Model_Site_Comment extends Model_Site_Entdir
 	
 	protected $_table_name = 'comments';
 
+	public $error_message_path = 'models/site';
+
 	protected $_belongs_to = array(
 		'user' => array(
 			'model' => 'User_Base',
@@ -39,6 +41,7 @@ class Model_Site_Comment extends Model_Site_Entdir
 			'subject_id'=>array(
 				array('not_empty'),
 				array('digit'),
+				array('subject_id_exist',array( ':validation', 'subject_enttypes_id', 'subject_id'))
 			),
 			/* TODO, add by Jeffrey. need to confirm
 			// users_id (int)
@@ -52,6 +55,37 @@ class Model_Site_Comment extends Model_Site_Entdir
 				array('not_empty'),
 			),
 		);
+	}
+
+	public function addComment( $args = array()){
+		extract($args);
+		if(isset($comment))
+		{
+			$this->comment = $comment;
+		}
+
+		if(isset($subject_enttypes_id))
+		{
+			$this->subject_enttypes_id = $subject_enttypes_id;
+		}
+
+		if(isset($subject_id))
+		{
+			$this->subject_id = $subject_id;
+		}
+
+		if(isset($users_id))
+		{
+			$this->users_id = $users_id;
+		}
+
+		try {
+			$this->save();
+			return $this;
+		} catch(ORM_Validation_Exception $e){
+			return $e;
+		}
+
 	}
 
 	public static function getCommentsOn($ent)

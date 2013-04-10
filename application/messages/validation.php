@@ -13,4 +13,5 @@
 	return array(
 		'not_equals' => $e->get('not_null'),
 		'unique_email' => $e->get('unique_email'),
+		'subject_id_exist' => $e->get('subject_id_exist'),
 	);

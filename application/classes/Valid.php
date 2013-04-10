@@ -64,6 +64,22 @@
 			return false;
 		}
 
+		public static function subject_id_exist($validate_element, $enttype, $subject)
+		{
+			$data = $validate_element->data();
+			$enttype_id = $data[$enttype];
+			$subject_id = $data[$subject];
+			$enttypes_obj = Ent::eFact($enttype_id);
+			$result = DB::select('*')
+				->from($enttypes_obj->table_name())
+				->where('id', '=', $subject_id)
+				->execute(NULL, false);
+			if ($result->count()){
+				return true;
+			}
+			return false;
+		}
+
 		public static function sport_type_id_exist($value){
 			$sport_types_model = ORM::factory("Sportorg_Sporttype");
 			$sport_types_model->select("id")

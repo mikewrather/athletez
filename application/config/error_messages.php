@@ -16,4 +16,5 @@ return array(
 	"unique" => "The :field field must have a unique value",
 	"org_sport_not_exist" => "Org sport id doesn't exist",
 	"unique_email" => "Email already exist",
+	"subject_id_exist" => "Subject id doesn't exist"
 );

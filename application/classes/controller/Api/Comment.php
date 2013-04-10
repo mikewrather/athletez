@@ -80,22 +80,11 @@
 		{
 			$this->payloadDesc = "Add a new comment";
 
-		     // CHECK FOR PARAMETERS:
-			// comment (REQUIRED)
-			// The text of the comment
-				
-			if(trim($this->request->post('comment')) != "")
-			{
-				$comment = trim($this->request->post('comment'));
-			}
-
-			else // THIS WAS A REQUIRED PARAMETER
+			if(!$this->user)
 			{
 				// Create Array for Error Data
 				$error_array = array(
-					"error" => "Required Parameter Missing",
-					"param_name" => "comment",
-					"param_desc" => "The text of the comment"
+					"error" => "This action requires authentication"
 				);
 
 				// Set whether it is a fatal error
@@ -103,9 +92,13 @@
 
 				// Call method to throw an error
 				$this->addError($error_array,$is_fatal);
-
 			}
-			
+
+			if(trim($this->request->post('comment')) != "")
+			{
+				$comment = trim($this->request->post('comment'));
+			}
+
 			// subject_type_id (REQUIRED)
 			// The ID of the subject type / entity type of the comment's subject (this is a row from the enttypes table) 
 				
@@ -114,23 +107,6 @@
 				$subject_type_id = (int)trim($this->request->post('subject_type_id'));
 			}
 
-			else // THIS WAS A REQUIRED PARAMETER
-			{
-				// Create Array for Error Data
-				$error_array = array(
-					"error" => "Required Parameter Missing",
-					"param_name" => "subject_type_id",
-					"param_desc" => "The ID of the subject type / entity type of the comment's subject (this is a row from the enttypes table) "
-				);
-
-				// Set whether it is a fatal error
-				$is_fatal = true;
-
-				// Call method to throw an error
-				$this->addError($error_array,$is_fatal);
-
-			}
-			
 			// subject_id (REQUIRED)
 			// This is the ID of the subject whos type is specified in the enttypes table
 				
@@ -139,24 +115,26 @@
 				$subject_id = (int)trim($this->request->post('subject_id'));
 			}
 
-			else // THIS WAS A REQUIRED PARAMETER
+			$args['comment'] = $comment;
+			$args['subject_enttypes_id'] = $subject_type_id;
+			$args['subject_id'] = $subject_id;
+			$args['users_id'] = $this->user;
+
+			$result =  $this->mainModel->addComment($args);
+
+			//Check for success / error
+			if(get_class($result) == get_class($this->mainModel))
 			{
-				// Create Array for Error Data
-				$error_array = array(
-					"error" => "Required Parameter Missing",
-					"param_name" => "subject_id",
-					"param_desc" => "This is the ID of the subject whos type is specified in the enttypes table"
-				);
-
-				// Set whether it is a fatal error
-				$is_fatal = true;
-
-				// Call method to throw an error
-				$this->addError($error_array,$is_fatal);
+				return $result;
+			}
+			elseif(get_class($result) == 'ORM_Validation_Exception')
+			{
+				//parse error and add to error array
+				$this->processValidationError($result,$this->mainModel->error_message_path);
+				return false;
 
 			}
-			
-		}
+        }
 		
 		############################################################################
 		############################    PUT METHODS    #############################
