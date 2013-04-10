@@ -33,6 +33,29 @@ class Model_Sportorg_Section extends ORM
 		),
 	);
 
+	public function rules(){
+
+		return array
+		(
+			// name (varchar)
+			'name'=>array(
+				array('not_empty'),
+			),
+
+			// sports_id (int)
+			'sports_id'=>array(
+				array('not_empty'),
+				array('not_equals', array(':value', 0))
+			),
+
+			// states_id (int)
+			'states_id'=>array(
+				array('not_empty'),
+				array('not_equals', array(':value', 0))
+			),
+		);
+	}
+
 	public function __construct($id=NULL)
 	{
 		parent::__construct($id);
