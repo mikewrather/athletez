@@ -26,7 +26,7 @@ class Model_User_Resume_Data_Group extends ORM
 			'far_key' => 'resume_data_profiles_id'
 		)
 	);
-
+    public $error_message_path = 'models/sportorg/seasons';
 	public function __construct($id=NULL)
 	{
 		parent::__construct($id);
@@ -61,44 +61,61 @@ class Model_User_Resume_Data_Group extends ORM
 		return $this->delete();
 	}
 	
+    public function rules()
+    {
+        return array(
+            'name' => array(
+                array('not_equals', array(':value', '')),
+                array('not_empty'),
+            )
+        );
+    }
 	public function addtordp($args = array())
 	{
-		extract($args);
-		 
-		if (isset($name))
-		{	
-			$temp = $this->where('name', '=', $name)->find();			 
-			if ( $temp->loaded())
-			{ 
-				$new_rdg = $temp->getBasics();
-				$resume_data_groups_id = $new_rdg['id'];				 
-			} else
-			{
-				$this->name = $name;
-				$resume_data_groups	= $this->save();
-				$new_rdg = $resume_data_groups->getBasics();
-				$resume_data_groups_id = $new_rdg['id'];						
-			}
-			
-		} 
-		
-		$new_link = DB::insert('rdg_rdp_link', array('resume_data_profiles_id', 'resume_data_groups_id'))->values(array($resume_data_profiles_id, $resume_data_groups_id));
-	 	try
-		{
-			$new_link->execute();			 
-		} catch(Exception $e)
-		{	
-			// Create Array for Error Data
-			$error_array = array(
-				"error" => "Unable to save User",
-				"desc" => $e->getMessage()
-			);
-
-			// Set whether it is a fatal error
-			$is_fatal = true;
-		}
-		return $this;
+	   extract($args); 
+       // add to the resumedata group table and get the resume_data_group_id 
+       if(isset($name))                        
+       {           
+           $this->name = $name;              
+       } 
+       
+       try
+       {                
+            $result = $this->getRDGIdByName($name);               
+            
+            if (!$result->loaded())
+            {
+                $this->save();
+                $resume_data_groups_id = $this->pk();     
+            }else
+            {
+                return $result;      
+            } 
+           
+       }catch(ORM_Validation_Exception $e){           
+            return $e;
+       }                   
+        // resume profile        
+        try
+        { 
+              $new_link = DB::insert('rdg_rdp_link', array('resume_data_profiles_id', 'resume_data_groups_id'))->values(array($resume_data_profiles_id, $resume_data_groups_id));    
+              $new_rdp = $new_link->execute();
+              return $this;
+        } catch(ORM_Validation_Exception $e){
+            return $e;
+        } catch(Exception $e)
+        {
+            return $e;
+        }
 	}
+     
+    public function getRDGIdByName($name = null )
+    {
+        $result_obj = ORM::factory('User_Resume_Data_Group')
+            ->select('id')
+            ->where('name', '=', $name);
+        return $result_obj->find();
+    }
 	public function getResumeprofile()
 	{
 		return $this->profiles;

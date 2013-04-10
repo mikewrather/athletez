@@ -124,8 +124,34 @@
 				$args['name'] = trim($this->request->post('name'));
 			}
 			
-			$rdg = ORM::factory('User_Resume_Data_Group');
-			return $rdg->addtordp($args); 
+			 
+			$result = $this->mainModel->addtordp($args); 
+            //Check for success / error
+            if(get_class($result) == get_class($this->mainModel))
+            {
+                return $result;
+            }
+            elseif(get_class($result) == 'ORM_Validation_Exception')
+            {
+                //parse error and add to error array
+                $this->processValidationError($result,$this->mainModel->error_message_path);
+                return false;
+
+            }elseif(get_class($result) == 'Exception')
+            {
+                // Create Array for Error Data
+                $error_array = array(
+                    "error" => "This is already exists",
+                    "param_name" => "resume_data_profiles_id",
+                    "param_desc" => "The Resume Data Profile to link the Group"
+                );
+
+                // Set whether it is a fatal error
+                $is_fatal = true;
+
+                // Call method to throw an error
+                $this->addError($error_array,$is_fatal);
+            }
 		}
 		
 		############################################################################
