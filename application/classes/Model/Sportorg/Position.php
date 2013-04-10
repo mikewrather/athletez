@@ -48,18 +48,6 @@ class Model_Sportorg_Position extends ORM
 				array('not_empty'),
 				array('stat_tab_id_exist')
 			),
-			//TODO, add by Jeffrey.
-			/*
-			// sport_name (varchar)
-			'sport_name'=>array(
-				array('not_empty'),
-			),
-
-			// gender (varchar)
-			'gender'=>array(
-				array('not_empty'),
-			),
-			*/
 		);
 	}
 
