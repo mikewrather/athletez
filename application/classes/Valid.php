@@ -77,12 +77,8 @@
 			$data = $validate_element->data();
 			$enttype_id = $data[$enttype];
 			$subject_id = $data[$subject];
-			$enttypes_obj = Ent::eFact($enttype_id);
-			$result = DB::select('*')
-				->from($enttypes_obj->table_name())
-				->where('id', '=', $subject_id)
-				->execute(NULL, false);
-			if ($result->count()){
+			$enttypes_obj = Ent::eFact($enttype_id,$subject_id);
+			if($enttypes_obj->loaded()){
 				return true;
 			}
 			return false;
