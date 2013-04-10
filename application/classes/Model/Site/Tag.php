@@ -21,6 +21,34 @@ class Model_Site_Tag extends Model_Site_Entdir
 		)
 	);
 
+	public function rules(){
+
+		return array
+		(
+			// subject_enttypes_id (int)
+			'subject_enttypes_id'=>array(
+				array('not_empty'),
+				array('digit'),
+			),
+
+			// subject_id (int)
+			'subject_id'=>array(
+				array('not_empty'),
+				array('digit'),
+				array('subject_id_exist',array( ':validation', 'subject_enttypes_id', 'subject_id'))
+			),
+
+			// users_id (int)
+			//TODO, add by jeffrey, this user id validation need developer do manually.
+			/*
+			'users_id'=>array(
+				array('not_empty'),
+				array('digit'),
+			),
+			*/
+		);
+	}
+
 	public function __construct($id=NULL)
 	{
 		parent::__construct($id);
