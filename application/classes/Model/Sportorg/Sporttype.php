@@ -17,6 +17,17 @@ class Model_Sportorg_Sporttype extends ORM
 		)
 	);
 
+	public function rules(){
+
+		return array
+		(
+			// name (varchar)
+			'name'=>array(
+				array('not_empty'),
+			),
+		);
+	}
+
 	public function __construct($id=NULL)
 	{
 		parent::__construct($id);
