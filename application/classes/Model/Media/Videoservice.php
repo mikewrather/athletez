@@ -20,7 +20,24 @@ class Model_Media_Videoservice extends ORM
 			'foreign_key' => 'video_services_id'
 		)
 	);
-	
+
+	public function rules(){
+
+		return array
+		(
+			// name (varchar)
+			'name'=>array(
+				array('not_empty'),
+			),
+
+			// website (varchar)
+			'website'=>array(
+				array('not_empty'),
+				array('url'),
+			),
+		);
+	}
+
 	public function getVideos($sports_id = null)
 	{
 		$sports = $this->videos;
