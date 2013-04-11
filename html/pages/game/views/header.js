@@ -22,7 +22,11 @@ function(require, headerTemplate) {
 
         id: 'main-header',
 
-        template: headerTemplate
+        template: headerTemplate,
+        
+        initialize: function (options) {
+            SectionView.prototype.initialize.call(this, options);                        
+        },
         
                 
     });

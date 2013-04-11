@@ -45,7 +45,7 @@ define([
         ImageList = require("game/collections/images");
         CommentList = require("game/collections/comments");
         
-        HeaderView = require("game/views/header"),
+        GameHeaderView = require("game/views/header"),
         AddMediaView = require("game/views/add-media"),
         TeamRosterListView = require("sportorg/views/teamroster-list"),
         VideoPlayerView = require("media/views/videoplayer"),
@@ -145,7 +145,7 @@ define([
         setupHeaderView: function() {
             var headerView;
             
-            headerView = new HeaderView({
+            headerView = new GameHeaderView({
                 model: this.basics,
                 name: "Header",
                 destination: "#main-header"

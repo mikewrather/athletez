@@ -18,12 +18,14 @@ define([
     "team/collections/recent_schedules",
     "team/collections/competitor_teams",
     "team/collections/rosters",
+    "team/collections/videos",
     
     "team/views/header",
     "team/views/add-media",
     "sportorg/views/schedule-list",
     "sportorg/views/competitorteam-list",
-    "sportorg/views/roster-list"
+    "sportorg/views/roster-list",
+    "team/views/video-list"
     
     
     ], function (require, pageLayoutTemplate) {
@@ -41,12 +43,14 @@ define([
         RecentScheduleList = require("team/collections/recent_schedules"),
         CompetitorTeamList = require("team/collections/competitor_teams"),
         RosterList = require("team/collections/rosters");
+        VideoList = require("team/collections/videos");
         
-        HeaderView = require("team/views/header"),
+        TeamHeaderView = require("team/views/header"),
         AddMediaView = require("team/views/add-media"),
         ScheduleListView = require("sportorg/views/schedule-list"),
         CompetitorTeamListView = require("sportorg/views/competitorteam-list"),
         RosterListView = require("sportorg/views/roster-list"),
+        VideoListView = require("team/views/video-list"),
         
         LayoutView = views.LayoutView,
         $ = facade.$,
@@ -119,6 +123,13 @@ define([
                 controller.rosters.season_id = season_id;
                 controller.rosters.fetch();
                 
+                controller.videos = new VideoList();
+                controller.videos.id = controller.id;
+                controller.videos.sport_id = sport_id;
+                controller.videos.complevel_id = complevel_id;
+                controller.videos.season_id = season_id;
+                controller.videos.fetch();
+                
                 controller.handleDeferredsDynamic();
             }
             Channel('refresh-teampage').subscribe(callback);
@@ -160,6 +171,11 @@ define([
                 if ( ~position ) this.scheme.splice(position, 1);
             }
             
+            if (this.videoListView) {
+                $(this.videoListView.destination).html('');
+                position = $.inArray(this.videoListView, this.scheme);
+                if ( ~position ) this.scheme.splice(position, 1);
+            }
         },
         
         handleDeferredsDynamic: function() {
@@ -180,12 +196,16 @@ define([
             $.when(this.rosters.request).done(function () {
                 controller.setupRosters();
             });
+            
+            $.when(this.videos.request).done(function () {
+                controller.setupVideos();
+            });
         },
         
         setupHeaderView: function() {
             var headerView;
             
-            headerView = new HeaderView({
+            headerView = new TeamHeaderView({
                 model: this.basics,
                 name: "Header",
                 destination: "#main-header"
@@ -255,6 +275,16 @@ define([
             });
             
             this.scheme.push(this.rosterListView);
+            this.layout.render();
+        },
+        
+        setupVideos: function() {
+            this.videoListView = new VideoListView({
+                collection: this.videos,
+                destination: "#video-wrap"
+            });
+            
+            this.scheme.push(this.videoListView);
             this.layout.render();
         },
                         

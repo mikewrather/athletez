@@ -26,6 +26,11 @@ function (
         tagName: "li",
 
         className: "video",
+        
+        // Event handlers...
+        events: {
+            "click": "changeVideo"
+        },
           
         initialize: function (options) {
             this.template = videoItemTemplate;
@@ -35,7 +40,11 @@ function (
             var markup = Mustache.to_html(this.template, this.model.toJSON());
             this.$el.html(markup);
             return this;
-        }        
+        }, 
+        
+        changeVideo: function() {
+            Channel('changevideo' + this.model.collection.id).publish(this.model);
+        }
         
       });
 

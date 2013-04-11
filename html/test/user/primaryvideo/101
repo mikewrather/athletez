@@ -3,7 +3,7 @@
         "video_id": 1,
         "video_title": "Blair vs Peddie Highlights",
         "video_quality": 0.9,
-        "video_image": "images/video_thumb.png",
+        "video_src": "images/video_src.png",
         "org_name": "Blair Academy",
         "team": {
             "complevel": "Varsity",
