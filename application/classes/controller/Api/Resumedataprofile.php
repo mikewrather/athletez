@@ -123,12 +123,38 @@
 			{
 				$this->modelNotSetError();
 				return false;
-			}
-			
-			$args['resume_data_profiles_id'] = $this->mainModel->id;
-			$rdp = ORM::factory('User_Resume_Data_Profile');
-			$add_link_obj = $rdp->addLinksport($args);
-			return $rdp->where('id','=',$this->mainModel->id);		 
+			}	
+            
+            $args['resume_data_profiles_id'] = $this->mainModel->id;
+			if ( $this->mainModel->check_sports_link_exist($args)) 
+			    $result = $this->mainModel->addLinksport($args); 
+                
+                //Check for success / error
+                if(get_class($result) == get_class($this->mainModel))
+                {
+                    return $result;
+                }
+                elseif(get_class($result) == 'ORM_Validation_Exception')
+                {
+                    //parse error and add to error array
+                    $this->processValidationError($result,$this->mainModel->error_message_path);
+                    return false;
+
+                }     
+            else
+            {
+                $error_array = array(
+                    "error" => "This sport link already exists",
+                    "param_name" => "sports_id",
+                    "param_desc" => "The sport to link the Resume Data Profile to"
+                );
+
+                // Set whether it is a fatal error
+                $is_fatal = true;
+
+                // Call method to throw an error
+                $this->addError($error_array,$is_fatal);
+            }              
 		}
 		
 		/**
@@ -170,12 +196,36 @@
 				$this->modelNotSetError();
 				return false;
 			}
-			
-			$args['resume_data_profiles_id'] = $this->mainModel->id;
-			$rdp = ORM::factory('User_Resume_Data_Profile');
-			$add_link_obj = $rdp->addRdg($args);
-			return $rdp->where('id','=',$this->mainModel->id);
-			
+            $args['resume_data_profiles_id'] = $this->mainModel->id;              
+		    if ( $this->mainModel->check_rdg_rdp_link_exist($args))
+            {
+                $result = $this->mainModel->addRdg($args);                                         
+                //Check for success / error
+                if(get_class($result) == get_class($this->mainModel))
+                {
+                    return $result;
+                }
+                elseif(get_class($result) == 'ORM_Validation_Exception')
+                {
+                    //parse error and add to error array
+                    $this->processValidationError($result,$this->mainModel->error_message_path);
+                    return false;
+
+                }         
+            }else
+            {
+                 $error_array = array(
+                    "error" => "This rdg link already exists",
+                    "param_name" => "resume_data_groups_id",
+                    "param_desc" => "The Resume Data Group to link to this Profile"
+                );
+
+                // Set whether it is a fatal error
+                $is_fatal = true;
+
+                // Call method to throw an error
+                $this->addError($error_array,$is_fatal);
+            }      
 		}
 		
 		/**
@@ -219,7 +269,13 @@
 			if(trim($this->request->post('sports')) != "")
 			{
 				$sports = trim($this->request->post('sports'));				
-				$args['sports_array'] = $sports; 
+                $temp = explode(',',$sports);
+                $sports_array = array();
+                foreach($temp as $sports_id)
+                {    
+                    array_push($sports_array, $sports_id);
+                }    	
+                $args['sports_array'] = $sports_array;			
 			}
 
 			else // THIS WAS A REQUIRED PARAMETER
@@ -239,8 +295,21 @@
 
 			}
 			 
-			$rdp = ORM::factory('User_Resume_Data_Profile');
-			return $rdp->addRdp($args);
+			 
+			$result = $this->mainModel->addRdp($args);
+           
+            //Check for success / error
+            if(get_class($result) == get_class($this->mainModel))
+            {
+                return $result;
+            }
+            elseif(get_class($result) == 'ORM_Validation_Exception')
+            {
+                //parse error and add to error array
+                $this->processValidationError($result,$this->mainModel->error_message_path);
+                return false;
+
+            }
 		}
 		
 		############################################################################
