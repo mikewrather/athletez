@@ -12,7 +12,26 @@
 	class View_Api_Comment extends Api_Viewclass
 	{
 
-	
+
+		/**
+		 * get_getall() Get all comments for a given subject.   This does not require a comment ID and parameters are used to specify the subject instead.
+		 *
+		 * @retun array
+		 */
+		public function get_getall()
+		{
+			$retArr = array();
+
+			// The obj object should hold the list of the comments
+			$objs = $this->obj->find_all();
+			foreach($objs as $obj)
+			{
+				$retArr[$obj->id] = $obj->getBasics();
+			}
+
+			return $retArr;
+		}
+
 		/**
 		 * get_basics() Basic info on a specific comment
 		 *

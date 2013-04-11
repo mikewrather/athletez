@@ -26,6 +26,25 @@ class Model_User_Resume_Data_Group extends ORM
 			'far_key' => 'resume_data_profiles_id'
 		)
 	);
+
+	public function rules(){
+
+		return array
+		(
+			// name (varchar)
+			'name'=>array(
+				array('not_empty'),
+			),
+
+			// description (varchar)
+			'resume_data_profiles_id'=>array(
+				array('not_empty'),
+				array('digit'),
+				array('resume_data_profiles_id_exist'),
+			),
+		);
+	}
+
     public $error_message_path = 'models/sportorg/seasons';
 	public function __construct($id=NULL)
 	{
@@ -61,15 +80,6 @@ class Model_User_Resume_Data_Group extends ORM
 		return $this->delete();
 	}
 	
-    public function rules()
-    {
-        return array(
-            'name' => array(
-                array('not_equals', array(':value', '')),
-                array('not_empty'),
-            )
-        );
-    }
 	public function addtordp($args = array())
 	{
 	   extract($args); 

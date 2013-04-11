@@ -21,6 +21,26 @@ class Model_Media_Video extends ORM
 		)
 	);
 
+	public function rules(){
+
+		return array
+		(
+			// media_id (int)
+			'media_id'=>array(
+				array('not_empty'),
+				array('digit'),
+				array('not_equals', array(':value', 0))
+			),
+
+			// video_services_id (int)
+			'video_services_id'=>array(
+				array('not_empty'),
+				array('digit'),
+				array('not_equals', array(':value', 0))
+			),
+		);
+	}
+
 	//TODO: update videos_meta to go through video_type_link because there's metadata per video type, not per video
 	protected $_has_many = array(
 		'metadata' => array(

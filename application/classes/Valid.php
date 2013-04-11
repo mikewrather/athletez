@@ -64,17 +64,43 @@
 			return false;
 		}
 
+		/**
+		 * first param param is :validation, second param is enttype_id,third param is subject_id
+		 * @param $validate_element
+		 * @param $enttype
+		 * @param $subject
+		 * @return bool
+		 * @author Jeffrey
+		 */
 		public static function subject_id_exist($validate_element, $enttype, $subject)
 		{
 			$data = $validate_element->data();
 			$enttype_id = $data[$enttype];
 			$subject_id = $data[$subject];
-			$enttypes_obj = Ent::eFact($enttype_id);
-			$result = DB::select('*')
-				->from($enttypes_obj->table_name())
-				->where('id', '=', $subject_id)
-				->execute(NULL, false);
-			if ($result->count()){
+			$enttypes_obj = Ent::eFact($enttype_id,$subject_id);
+			if($enttypes_obj->loaded()){
+				return true;
+			}
+			return false;
+		}
+
+		public static function resume_data_profiles_id_exist($value){
+			$resume_data_profiles = ORM::factory("User_Resume_Data_Profile");
+			$resume_data_profiles->select("id")
+				->where('id', '=', $value)
+				->find();
+			if ($resume_data_profiles->loaded()){
+				return true;
+			}
+			return false;
+		}
+
+		public static function resume_data_id_exist($value){
+			$resume_data = ORM::factory("User_Resume_Data");
+			$resume_data->select("id")
+				->where('id', '=', $value)
+				->find();
+			if ($resume_data->loaded()){
 				return true;
 			}
 			return false;

@@ -27,6 +27,32 @@ class Model_Sportorg_Division extends ORM
 			'foreign_key' => 'divisions_id'
 		)
 	);
+
+	public function rules(){
+
+		return array
+		(
+			// name (varchar)
+			'name'=>array(
+				array('not_empty'),
+			),
+
+			// states_id (int)
+			'states_id'=>array(
+				array('not_empty'),
+				array('digit'),
+				array('not_equals', array(':value', 0))
+			),
+
+			// sections_id (int)
+			'sections_id'=>array(
+				array('not_empty'),
+				array('digit'),
+				array('not_equals', array(':value', 0))
+			),
+		);
+	}
+
 	public function getBasics()
 	{
 		

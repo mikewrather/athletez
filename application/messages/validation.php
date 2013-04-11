@@ -14,4 +14,6 @@
 		'not_equals' => $e->get('not_null'),
 		'unique_email' => $e->get('unique_email'),
 		'subject_id_exist' => $e->get('subject_id_exist'),
+		'resume_data_profiles_id_exist' => $e->get('resume_data_profiles_id_exist'),
+		'resume_data_id_exist' => $e->get('resume_data_id_exist'),
 	);

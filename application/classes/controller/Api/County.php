@@ -80,10 +80,14 @@
 		}
 		
 		/**
+		 *
+		 * I'm going to remove this method from the code.  I'll make a note in the documentation. -mike
+		 *
 		 * action_get_games() All games that take place within a county
 		 * via /api/county/games/{counties_id}
 		 *
 		 */
+		/*
 		public function action_get_games()
 		{
 			$this->payloadDesc = "All games that take place within a county";
@@ -132,6 +136,7 @@
 			}
 
 		}
+		*/
 		
 		############################################################################
 		###########################    POST METHODS    #############################

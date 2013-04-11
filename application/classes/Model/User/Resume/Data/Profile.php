@@ -28,7 +28,18 @@ class Model_User_Resume_Data_Profile extends ORM
 			'far_key' => 'sports_id'
 		)
 	);
-	
+
+	public function rules(){
+
+		return array
+		(
+			// name (varchar)
+			'name'=>array(
+				array('not_empty'),
+			),
+		);
+	}
+
 	public function updateResumedataprofile($name)
 	{
 		$this->name = $name;
