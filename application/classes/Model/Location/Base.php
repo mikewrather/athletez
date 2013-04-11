@@ -179,18 +179,8 @@ class Model_Location_Base extends ORM
 			$this->location_type = $location_type;
 		}
 		         
-		try{			
-            $external_validate = Validation::factory($args)
-                ->rule('address', 'not_empty')
-                ->rule('cities_id', 'not_empty')
-                ->rule('lon', 'not_empty')
-                ->rule('lat', 'not_empty');
-            
-            if ($external_validate->check())
-            {
-                $new_location = $this->save($external_validate);    
-            }               
-			
+		try{		 
+            $new_location = $this->save();    
             return $new_location;			
 		} catch(ORM_Validation_Exception $e)
 		{
