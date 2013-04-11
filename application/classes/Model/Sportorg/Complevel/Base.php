@@ -9,7 +9,7 @@ class Model_Sportorg_Complevel_Base extends ORM
 {
 	
 	protected $_table_name = 'complevels';
-	
+	public $error_message_path = 'models/sportorg/complevel';
 
 	protected $_belongs_to = array(
 		'complevelprofile' => array(
@@ -110,54 +110,47 @@ class Model_Sportorg_Complevel_Base extends ORM
 	
 	public function addComplevel($args = array())
 	{
-		extract($args); 
-		 
-		// insert to the complevel table
-		// validate
-		$exists_obj =  ORM::factory('Sportorg_Complevel_Base')->where('name', '=', $name)->and_where('complevel_profiles_id', '=', $complevel_profiles_id);
-		$exists_obj->reset(FALSE);
-		$count = $exists_obj->count_all();
-		 
-		if ( $count == 0 )
-		{
-			// name 
-			// Name of the new Competition Level
-			if(isset($name))
-			{
-				$this->name = $name;
-			}
-	 
-			// complevel_profiles_id
-			// The Competition Level Profile the Complevel belongs to
-			if(isset($complevel_profiles_id))
-			{
-				$this->complevel_profiles_id = $complevel_profiles_id;
-			}
-			
-			$this->save();
-			return $this;
-		} else
-		{
-			return $exists_obj->find();
-		} 
+		extract($args); 		 
+        // name 
+        // Name of the new Competition Level
+        if(isset($name))
+        {
+            $this->name = $name;
+        }
+ 
+        // complevel_profiles_id
+        // The Competition Level Profile the Complevel belongs to
+        if(isset($complevel_profiles_id))
+        {
+            $this->complevel_profiles_id = $complevel_profiles_id;
+        }
+        
+        try {         
+            $this->save();
+            return $this;
+        } catch(ORM_Validation_Exception $e){
+            return $e;
+        } 
 	}
 	
 	//Custom Validation
-	public static function check_complevel_exist($name, $complevel_profiles_id)
-	{		
-		$complevel_obj = ORM::factory("Sportorg_Complevel_Base");
-		$complevel_obj->select("id");
-		if (!empty($name))
-			$complevel_obj->where('name', '=', $name);
-		
-		if (!empty($complevel_profiles_id))	
-			$complevel_obj->where('complevel_profiles_id','=', $complevel_profiles_id);
-			
-		$complevel_obj->find();
-		if ($complevel_obj->loaded()){
-			return true;
-		}
-		return false;
+	public static function check_complevel_exist($args = array())
+	{
+        extract($args);
+        if(isset($name) && isset($complevel_profiles_id))
+        {            
+            $exists_obj = ORM::factory('Sportorg_Complevel_Base')
+                            ->where('name', '=', $name)
+                            ->and_where('complevel_profiles_id', '=', $complevel_profiles_id)->find();
+            
+             if (!$exists_obj->loaded())
+                return true;
+            else
+                return false;  
+        }else
+        {
+            return true;
+        }    
 	}
 
 	public function getTeams($args = array()){
