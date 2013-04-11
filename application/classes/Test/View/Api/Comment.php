@@ -3,7 +3,7 @@
 /**
  * Comment API View class
  *
- * Date: Auto-generated on Mar 18th, 2013 2:33 am
+ * Date: Auto-generated on Apr 11th, 2013 12:30 am
  *
  * @author: Mike Wrather
  *
@@ -12,26 +12,12 @@
 	class View_Api_Comment extends Api_Viewclass
 	{
 
-
-		/**
-		 * get_getall() Get all comments for a given subject.   This does not require a comment ID and parameters are used to specify the subject instead.
-		 *
-		 * @retun array
-		 */
-		public function get_getall()
+		public function __construct()
 		{
-			$retArr = array();
-
-			// The obj object should hold the list of the comments
-			$objs = $this->obj->find_all();
-			foreach($objs as $obj)
-			{
-				$retArr[$obj->id] = $obj->getBasics();
-			}
-
-			return $retArr;
+			parent::__construct();
 		}
 
+	
 		/**
 		 * get_basics() Basic info on a specific comment
 		 *
@@ -40,6 +26,14 @@
 		public function get_basics()
 		{
 			$retArr = array();
+
+			// Scaffolding Code For Array:
+			$objs = $this->obj->find_all();
+			foreach($objs as $obj)
+			{
+				$retArr[$obj->id] = $obj->getBasics();
+			}
+
 			// Scaffolding Code For Single:
 			$retArr = $this->obj->getBasics();
 
@@ -98,6 +92,14 @@
 		public function post_add()
 		{
 			$retArr = array();
+
+			// Scaffolding Code For Array:
+			$objs = $this->obj->find_all();
+			foreach($objs as $obj)
+			{
+				$retArr[$obj->id] = $obj->getBasics();
+			}
+
 			// Scaffolding Code For Single:
 			$retArr = $this->obj->getBasics();
 
@@ -132,6 +134,28 @@
 		 * @retun array
 		 */
 		public function delete_base()
+		{
+			$retArr = array();
+
+			// Scaffolding Code For Array:
+			$objs = $this->obj->find_all();
+			foreach($objs as $obj)
+			{
+				$retArr[$obj->id] = $obj->getBasics();
+			}
+
+			// Scaffolding Code For Single:
+			$retArr = $this->obj->getBasics();
+
+			return $retArr;
+		}
+		
+		/**
+		 * get_getall() Get all comments for a given subject.   This does not require a comment ID and parameters are used to specify the subject instead.
+		 *
+		 * @retun array
+		 */
+		public function get_getall()
 		{
 			$retArr = array();
 

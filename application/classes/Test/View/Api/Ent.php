@@ -1,45 +1,39 @@
 <?php defined('SYSPATH') or die('No direct script access.');
 
 /**
- * Comment API View class
+ * Ent API View class
  *
- * Date: Auto-generated on Mar 18th, 2013 2:33 am
+ * Date: Auto-generated on Apr 11th, 2013 12:30 am
  *
  * @author: Mike Wrather
  *
  */
 
-	class View_Api_Comment extends Api_Viewclass
+	class View_Api_Ent extends Api_Viewclass
 	{
 
-
-		/**
-		 * get_getall() Get all comments for a given subject.   This does not require a comment ID and parameters are used to specify the subject instead.
-		 *
-		 * @retun array
-		 */
-		public function get_getall()
+		public function __construct()
 		{
-			$retArr = array();
-
-			// The obj object should hold the list of the comments
-			$objs = $this->obj->find_all();
-			foreach($objs as $obj)
-			{
-				$retArr[$obj->id] = $obj->getBasics();
-			}
-
-			return $retArr;
+			parent::__construct();
 		}
 
+	
 		/**
-		 * get_basics() Basic info on a specific comment
+		 * get_basics() Basic info on an entity
 		 *
 		 * @retun array
 		 */
 		public function get_basics()
 		{
 			$retArr = array();
+
+			// Scaffolding Code For Array:
+			$objs = $this->obj->find_all();
+			foreach($objs as $obj)
+			{
+				$retArr[$obj->id] = $obj->getBasics();
+			}
+
 			// Scaffolding Code For Single:
 			$retArr = $this->obj->getBasics();
 
@@ -47,11 +41,11 @@
 		}
 		
 		/**
-		 * get_subject() Returns the subject with which the comment is associated.
+		 * get_comments() Get comments on a specific subject
 		 *
 		 * @retun array
 		 */
-		public function get_subject()
+		public function get_comments()
 		{
 			$retArr = array();
 
@@ -69,11 +63,11 @@
 		}
 		
 		/**
-		 * get_user() Return the user responsible for a comment
+		 * get_votes() Get votes on a specific subject
 		 *
 		 * @retun array
 		 */
-		public function get_user()
+		public function get_votes()
 		{
 			$retArr = array();
 
@@ -91,25 +85,11 @@
 		}
 		
 		/**
-		 * post_add() Add a new comment
+		 * get_followers() Get followers on a specific subject
 		 *
 		 * @retun array
 		 */
-		public function post_add()
-		{
-			$retArr = array();
-			// Scaffolding Code For Single:
-			$retArr = $this->obj->getBasics();
-
-			return $retArr;
-		}
-		
-		/**
-		 * put_basics() Update basic info on a specific comment
-		 *
-		 * @retun array
-		 */
-		public function put_basics()
+		public function get_followers()
 		{
 			$retArr = array();
 
@@ -127,11 +107,99 @@
 		}
 		
 		/**
-		 * delete_base() Delete Comment
+		 * get_tags() Get tags for a specific subject
 		 *
 		 * @retun array
 		 */
-		public function delete_base()
+		public function get_tags()
+		{
+			$retArr = array();
+
+			// Scaffolding Code For Array:
+			$objs = $this->obj->find_all();
+			foreach($objs as $obj)
+			{
+				$retArr[$obj->id] = $obj->getBasics();
+			}
+
+			// Scaffolding Code For Single:
+			$retArr = $this->obj->getBasics();
+
+			return $retArr;
+		}
+		
+		/**
+		 * post_comment() Post a new comment about a given subject
+		 *
+		 * @retun array
+		 */
+		public function post_comment()
+		{
+			$retArr = array();
+
+			// Scaffolding Code For Array:
+			$objs = $this->obj->find_all();
+			foreach($objs as $obj)
+			{
+				$retArr[$obj->id] = $obj->getBasics();
+			}
+
+			// Scaffolding Code For Single:
+			$retArr = $this->obj->getBasics();
+
+			return $retArr;
+		}
+		
+		/**
+		 * post_vote() Post a Vote on a specific subject
+		 *
+		 * @retun array
+		 */
+		public function post_vote()
+		{
+			$retArr = array();
+
+			// Scaffolding Code For Array:
+			$objs = $this->obj->find_all();
+			foreach($objs as $obj)
+			{
+				$retArr[$obj->id] = $obj->getBasics();
+			}
+
+			// Scaffolding Code For Single:
+			$retArr = $this->obj->getBasics();
+
+			return $retArr;
+		}
+		
+		/**
+		 * post_follow() Follow a Subject
+		 *
+		 * @retun array
+		 */
+		public function post_follow()
+		{
+			$retArr = array();
+
+			// Scaffolding Code For Array:
+			$objs = $this->obj->find_all();
+			foreach($objs as $obj)
+			{
+				$retArr[$obj->id] = $obj->getBasics();
+			}
+
+			// Scaffolding Code For Single:
+			$retArr = $this->obj->getBasics();
+
+			return $retArr;
+		}
+		
+		/**
+		 * post_tag() Tag a Subject
+		 *
+		 * @retun array
+		 */
+		public function post_tag()
 		{
 			$retArr = array();
 

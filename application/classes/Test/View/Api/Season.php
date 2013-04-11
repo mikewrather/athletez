@@ -1,59 +1,53 @@
 <?php defined('SYSPATH') or die('No direct script access.');
 
 /**
- * Comment API View class
+ * Season API View class
  *
- * Date: Auto-generated on Mar 18th, 2013 2:33 am
+ * Date: Auto-generated on Apr 11th, 2013 12:30 am
  *
  * @author: Mike Wrather
  *
  */
 
-	class View_Api_Comment extends Api_Viewclass
+	class View_Api_Season extends Api_Viewclass
 	{
 
+		public function __construct()
+		{
+			parent::__construct();
+		}
 
+	
 		/**
-		 * get_getall() Get all comments for a given subject.   This does not require a comment ID and parameters are used to specify the subject instead.
+		 * get_teams() Gets all the teams for a given season narrowed by passed in parameters
 		 *
 		 * @retun array
 		 */
-		public function get_getall()
+		public function get_teams()
 		{
 			$retArr = array();
 
-			// The obj object should hold the list of the comments
+			// Scaffolding Code For Array:
 			$objs = $this->obj->find_all();
 			foreach($objs as $obj)
 			{
 				$retArr[$obj->id] = $obj->getBasics();
 			}
 
+			// Scaffolding Code For Single:
+			$retArr = $this->obj->getBasics();
+
 			return $retArr;
 		}
-
+		
 		/**
-		 * get_basics() Basic info on a specific comment
+		 * get_basics() Basic information about a season
 		 *
 		 * @retun array
 		 */
 		public function get_basics()
 		{
 			$retArr = array();
-			// Scaffolding Code For Single:
-			$retArr = $this->obj->getBasics();
-
-			return $retArr;
-		}
-		
-		/**
-		 * get_subject() Returns the subject with which the comment is associated.
-		 *
-		 * @retun array
-		 */
-		public function get_subject()
-		{
-			$retArr = array();
 
 			// Scaffolding Code For Array:
 			$objs = $this->obj->find_all();
@@ -69,35 +63,21 @@
 		}
 		
 		/**
-		 * get_user() Return the user responsible for a comment
-		 *
-		 * @retun array
-		 */
-		public function get_user()
-		{
-			$retArr = array();
-
-			// Scaffolding Code For Array:
-			$objs = $this->obj->find_all();
-			foreach($objs as $obj)
-			{
-				$retArr[$obj->id] = $obj->getBasics();
-			}
-
-			// Scaffolding Code For Single:
-			$retArr = $this->obj->getBasics();
-
-			return $retArr;
-		}
-		
-		/**
-		 * post_add() Add a new comment
+		 * post_add() Add a new season
 		 *
 		 * @retun array
 		 */
 		public function post_add()
 		{
 			$retArr = array();
+
+			// Scaffolding Code For Array:
+			$objs = $this->obj->find_all();
+			foreach($objs as $obj)
+			{
+				$retArr[$obj->id] = $obj->getBasics();
+			}
+
 			// Scaffolding Code For Single:
 			$retArr = $this->obj->getBasics();
 
@@ -105,7 +85,7 @@
 		}
 		
 		/**
-		 * put_basics() Update basic info on a specific comment
+		 * put_basics() Update the basic information about a season
 		 *
 		 * @retun array
 		 */
@@ -127,7 +107,7 @@
 		}
 		
 		/**
-		 * delete_base() Delete Comment
+		 * delete_base() Delete a Season
 		 *
 		 * @retun array
 		 */

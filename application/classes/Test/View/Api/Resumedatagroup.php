@@ -1,45 +1,39 @@
 <?php defined('SYSPATH') or die('No direct script access.');
 
 /**
- * Comment API View class
+ * Resumedatagroup API View class
  *
- * Date: Auto-generated on Mar 18th, 2013 2:33 am
+ * Date: Auto-generated on Apr 11th, 2013 12:30 am
  *
  * @author: Mike Wrather
  *
  */
 
-	class View_Api_Comment extends Api_Viewclass
+	class View_Api_Resumedatagroup extends Api_Viewclass
 	{
 
-
-		/**
-		 * get_getall() Get all comments for a given subject.   This does not require a comment ID and parameters are used to specify the subject instead.
-		 *
-		 * @retun array
-		 */
-		public function get_getall()
+		public function __construct()
 		{
-			$retArr = array();
-
-			// The obj object should hold the list of the comments
-			$objs = $this->obj->find_all();
-			foreach($objs as $obj)
-			{
-				$retArr[$obj->id] = $obj->getBasics();
-			}
-
-			return $retArr;
+			parent::__construct();
 		}
 
+	
 		/**
-		 * get_basics() Basic info on a specific comment
+		 * get_basics() Retrives basic information for a resume data group
 		 *
 		 * @retun array
 		 */
 		public function get_basics()
 		{
 			$retArr = array();
+
+			// Scaffolding Code For Array:
+			$objs = $this->obj->find_all();
+			foreach($objs as $obj)
+			{
+				$retArr[$obj->id] = $obj->getBasics();
+			}
+
 			// Scaffolding Code For Single:
 			$retArr = $this->obj->getBasics();
 
@@ -47,11 +41,11 @@
 		}
 		
 		/**
-		 * get_subject() Returns the subject with which the comment is associated.
+		 * get_resumedata() Returns a list of the resume data for a given group
 		 *
 		 * @retun array
 		 */
-		public function get_subject()
+		public function get_resumedata()
 		{
 			$retArr = array();
 
@@ -69,11 +63,11 @@
 		}
 		
 		/**
-		 * get_user() Return the user responsible for a comment
+		 * get_profiles() Returns all Resume Data Profiles for which this Resume Data Group exists
 		 *
 		 * @retun array
 		 */
-		public function get_user()
+		public function get_profiles()
 		{
 			$retArr = array();
 
@@ -91,13 +85,21 @@
 		}
 		
 		/**
-		 * post_add() Add a new comment
+		 * post_addtordp() Link this RDG to an RDP
 		 *
 		 * @retun array
 		 */
-		public function post_add()
+		public function post_addtordp()
 		{
 			$retArr = array();
+
+			// Scaffolding Code For Array:
+			$objs = $this->obj->find_all();
+			foreach($objs as $obj)
+			{
+				$retArr[$obj->id] = $obj->getBasics();
+			}
+
 			// Scaffolding Code For Single:
 			$retArr = $this->obj->getBasics();
 
@@ -105,7 +107,7 @@
 		}
 		
 		/**
-		 * put_basics() Update basic info on a specific comment
+		 * put_basics() Updates basic information for a resume data group
 		 *
 		 * @retun array
 		 */
@@ -127,7 +129,7 @@
 		}
 		
 		/**
-		 * delete_base() Delete Comment
+		 * delete_base() Delete Resume Data Group
 		 *
 		 * @retun array
 		 */

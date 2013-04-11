@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50525
 File Encoding         : 65001
 
-Date: 2013-04-03 18:32:33
+Date: 2013-04-11 00:49:50
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -44,7 +44,7 @@ CREATE TABLE `apiaccess` (
   `id2` varchar(25) CHARACTER SET latin1 COLLATE latin1_german1_ci DEFAULT NULL,
   `current_status` text,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=421 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=422 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of apiaccess
@@ -306,6 +306,7 @@ INSERT INTO `apiaccess` VALUES ('417', '44', 'DELETE', 'base', 'Delete  Statisti
 INSERT INTO `apiaccess` VALUES ('418', '1', 'DELETE', 'role', 'Delete a user\'s Role', '0', 'users_id', 'roles_id', null);
 INSERT INTO `apiaccess` VALUES ('419', '1', 'DELETE', 'identity', 'Delete a User\'s Identity', '0', 'users_id', 'identity_id', null);
 INSERT INTO `apiaccess` VALUES ('420', '1', 'POST', 'position', 'Add a Position for a user', '0', null, null, null);
+INSERT INTO `apiaccess` VALUES ('421', '14', 'GET', 'getall', 'Get all comments for a given subject.   This does not require a comment ID and parameters are used to specify the subject instead.', '0', null, null, null);
 
 -- ----------------------------
 -- Table structure for `apiparams`
@@ -320,7 +321,7 @@ CREATE TABLE `apiparams` (
   `description` varchar(255) DEFAULT NULL,
   `enttypes_id` int(10) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=297 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=299 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of apiparams
@@ -608,12 +609,14 @@ INSERT INTO `apiparams` VALUES ('287', '356', 'name', 'string', '0', 'Update the
 INSERT INTO `apiparams` VALUES ('288', '356', 'states_id', 'int', '0', 'Change the state of this league', '36');
 INSERT INTO `apiparams` VALUES ('289', '356', 'sections_id', 'int', '0', 'Change the Section this league belongs to', '43');
 INSERT INTO `apiparams` VALUES ('290', '358', 'name', 'string', '0', 'Update the name of the section', null);
-INSERT INTO `apiparams` VALUES ('291', '358', 'states_id', 'int', '0', 'Change the state of this section', '36');
+INSERT INTO `apiparams` VALUES ('291', '0', 'states_id', 'int', '0', 'Change the state of this section', '36');
 INSERT INTO `apiparams` VALUES ('292', '358', 'states_id', 'int', '0', 'Change this section\'s state', '36');
 INSERT INTO `apiparams` VALUES ('293', '360', 'name', 'string', '0', 'Change the name of the sport type', null);
 INSERT INTO `apiparams` VALUES ('294', '124', 're_password', 'string', '0', 'Re-Enter Password', null);
 INSERT INTO `apiparams` VALUES ('295', '198', 'name', 'string', '0', 'The name of the Resume Data Group', null);
 INSERT INTO `apiparams` VALUES ('296', '216', 'zip', 'string', '0', 'The zip code of the location', null);
+INSERT INTO `apiparams` VALUES ('297', '421', 'subject_enttypes_id', 'int', '1', 'The Subject Type ID or Ent Type ID defines what type of entity this is', '46');
+INSERT INTO `apiparams` VALUES ('298', '421', 'subject_id', 'int', '1', 'This is the ID that will specify a given row in a table defined separately by Subject Type ID.', null);
 
 -- ----------------------------
 -- Table structure for `cities`
@@ -630,7 +633,7 @@ CREATE TABLE `cities` (
   KEY `county_id` (`county_id`),
   KEY `name` (`name`),
   KEY `name_2` (`name`)
-) ENGINE=MyISAM AUTO_INCREMENT=30724 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=30726 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of cities
@@ -31357,6 +31360,8 @@ INSERT INTO `cities` VALUES ('30719', 'Zoarville', '35', '1212', '');
 INSERT INTO `cities` VALUES ('30721', 'Johns Creek', '10', '3156', '');
 INSERT INTO `cities` VALUES ('30722', 'New City', '5', '2990', null);
 INSERT INTO `cities` VALUES ('30723', 'New City', '5', '2990', null);
+INSERT INTO `cities` VALUES ('30724', 'test', '1', '1', null);
+INSERT INTO `cities` VALUES ('30725', 'asdfasdfasdf', '21', '6', null);
 
 -- ----------------------------
 -- Table structure for `comments`
@@ -31369,7 +31374,7 @@ CREATE TABLE `comments` (
   `users_id` int(11) NOT NULL,
   `comment` text NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of comments
@@ -31377,9 +31382,11 @@ CREATE TABLE `comments` (
 INSERT INTO `comments` VALUES ('1', '8', '1', '1', 'Nice Game!!!');
 INSERT INTO `comments` VALUES ('2', '1', '424500', '1', 'Test Comment');
 INSERT INTO `comments` VALUES ('3', '1', '424500', '425983', 'Test Comment');
-INSERT INTO `comments` VALUES ('4', '1', '424500', '425983', 'Test Comment again');
-INSERT INTO `comments` VALUES ('5', '1', '424500', '425983', 'Test Comment again');
+INSERT INTO `comments` VALUES ('4', '1', '425983', '425983', 'Test Comment again');
+INSERT INTO `comments` VALUES ('5', '1', '425983', '425983', 'Test Comment again');
 INSERT INTO `comments` VALUES ('6', '1', '425983', '425983', 'Butt fg');
+INSERT INTO `comments` VALUES ('7', '4', '47', '425983', 'test');
+INSERT INTO `comments` VALUES ('8', '1', '425983', '425983', 'test comment on user');
 
 -- ----------------------------
 -- Table structure for `complevels`
@@ -35738,6 +35745,8 @@ CREATE TABLE `rdp_sports_link` (
 -- ----------------------------
 -- Records of rdp_sports_link
 -- ----------------------------
+INSERT INTO `rdp_sports_link` VALUES ('1', '53');
+INSERT INTO `rdp_sports_link` VALUES ('1', '54');
 
 -- ----------------------------
 -- Table structure for `resumes`
@@ -35791,11 +35800,12 @@ CREATE TABLE `resume_data_profiles` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of resume_data_profiles
 -- ----------------------------
+INSERT INTO `resume_data_profiles` VALUES ('1', 'Highschool');
 
 -- ----------------------------
 -- Table structure for `resume_data_vals`
@@ -39071,7 +39081,7 @@ INSERT INTO `users` VALUES ('425979', 'clay_gorham@yahoo.com_', 'clay_gorham@yah
 INSERT INTO `users` VALUES ('425980', 'cavellobrick@yahoo.com_', 'pete.cavello', 'd5d845c15751d7bda5d9101d28fbcc13e22cba20c06e057132', '1', '1362980726', 'Pete', 'Cavello', '1771', null, null);
 INSERT INTO `users` VALUES ('425981', 'treythornburg@gmail.com_', 'treythornburg@gmail.com', '8e720bbf5b8e4e4587e627e599f79741f68ac2e3a9ed470260', '1', '1363024849', 'Trey', 'Thornburg', '0', null, null);
 INSERT INTO `users` VALUES ('425982', 'nicolette.elliott@yahoo.com_', 'nicolette.elliott@yahoo.com', '9cc3931c59b143ab87bece75e1d280cb3d1033e4d2a5b8f375', '1', '1363064186', 'Nicolette Amber', 'Elliott', '2462', null, null);
-INSERT INTO `users` VALUES ('425983', 'mike.wrather@gmail.com', 'mike', '896850b3f3929cbeff81d0ff8c98bee1931d42505d782915974c015472fca4cc', '2', '1364941228', null, null, null, null, null);
+INSERT INTO `users` VALUES ('425983', 'mike.wrather@gmail.com', 'mike', '896850b3f3929cbeff81d0ff8c98bee1931d42505d782915974c015472fca4cc', '2', '1365574769', null, null, null, null, null);
 INSERT INTO `users` VALUES ('425984', 'admin@mail.com', 'admin', '896850b3f3929cbeff81d0ff8c98bee1931d42505d782915974c015472fca4cc', '0', '1364686469', null, null, null, null, null);
 
 -- ----------------------------
@@ -39296,7 +39306,7 @@ CREATE TABLE `user_tokens` (
   KEY `fk_user_id` (`user_id`),
   KEY `expires` (`expires`),
   CONSTRAINT `user_tokens_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=42 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=44 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of user_tokens
@@ -39313,6 +39323,8 @@ INSERT INTO `user_tokens` VALUES ('35', '425983', '7e4e9cd3d03cacf48173e9ba841c1
 INSERT INTO `user_tokens` VALUES ('37', '425983', '32e9c33404e62a2c8403363e31076038feff7ee3', '44f7dcab9b572a17dfd4cc9feb51d1b21cf04cba', '1363939432', '1365149032');
 INSERT INTO `user_tokens` VALUES ('40', '425984', 'c5c7614ce4ca71c19464edee3f5d6753fd5fd302', 'e25329d49cc766331ea8670c60ef535c1c7cf589', '1364686469', '1365896069');
 INSERT INTO `user_tokens` VALUES ('41', '425983', 'c5c7614ce4ca71c19464edee3f5d6753fd5fd302', '9a469d809120ebf4173f2cdc78899fc05eedd797', '1364941228', '1366150828');
+INSERT INTO `user_tokens` VALUES ('42', '425983', '7d6c1f710cceee14059b881da14070c750f9f925', '16fce17c455b967a3f352b8f2ffdf8114b01a8ff', '1365501138', '1366710738');
+INSERT INTO `user_tokens` VALUES ('43', '425983', 'f983ca877f1ee47474ecfd9b63d4a6bd8c61ea27', '192ff9a23ebff87f2800b4b9491c3074b9f75729', '1365574769', '1366784369');
 
 -- ----------------------------
 -- Table structure for `usl_game_link`
