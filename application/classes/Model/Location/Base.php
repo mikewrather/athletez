@@ -25,6 +25,49 @@ class Model_Location_Base extends ORM
 		)
 	);
 
+	public function rules(){
+
+		return array
+		(
+			// address (varchar)
+			'address'=>array(
+				array('not_empty'),
+			),
+
+			// cities_id (int)
+			'cities_id'=>array(
+				array('not_empty'),
+				array('digit'),
+				array('not_equals', array(':value', 0))
+			),
+
+			// zip (varchar)
+			'zip'=>array(
+				array('not_empty'),
+			),
+
+			// lon (float)
+			'lon'=>array(
+				array('not_empty'),
+			),
+
+			// lat (float)
+			'lat'=>array(
+				array('not_empty'),
+			),
+
+			// loc_point (point), Comment by jeffrey, no this field in page, ignore
+			/*
+			'loc_point'=>array(
+				array('not_empty'),
+			),*/
+
+			// location_type (enum)
+			'location_type'=>array(
+				array('not_empty'),
+			),
+		);
+	}
 
 	public function getBasics()
 	{
