@@ -17,7 +17,25 @@ class Model_Location_State extends ORM
 			'foreign_key' => 'countries_id'
 		)
 	);
-	
+
+	public function rules(){
+
+		return array
+		(
+			// name (varchar)
+			'name'=>array(
+				array('not_empty'),
+			),
+
+			// countries_id (int)
+			'countries_id'=>array(
+				array('not_empty'),
+				array('digit'),
+				array('not_equals', array(':value', 0))
+			),
+		);
+	}
+
 	protected $_has_many = array(
 		'divisions' => array(
 			'model' => 'Sportorg_Division',
