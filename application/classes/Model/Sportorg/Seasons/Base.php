@@ -53,12 +53,14 @@ class Model_Sportorg_Seasons_Base extends ORM
             $exists_obj = ORM::factory('Sportorg_Seasons_Base')
                         ->where('name','=', $name)
                         ->and_where('season_profiles_id','=', $season_profiles_id)->find();    
-        }
-                                                                                                        
-        if (!$exists_obj->loaded())
+             if (!$exists_obj->loaded())
+                return true;
+            else
+                return false;    
+        }else
+        {
             return true;
-        else
-            return false;            
+        }      
     }
     
     public function addSeasons($args = array())
@@ -110,7 +112,10 @@ class Model_Sportorg_Seasons_Base extends ORM
 		{ 
 			$orgs = $teams->where('complevels_id', '=', $complevels_id);
 			
-		} 	
+		} else
+        {
+            $orgs = $teams;
+        } 	
 		$orgs->join('org_sport_link')->on('org_sport_link.id', '=', 'sportorg_team.org_sport_link_id');	
 		// orgs_id
 		// Filter teams for a certain season to only show those for a specific organization
