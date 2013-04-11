@@ -78,7 +78,7 @@
 		public function action_post_addseason()
 		{
 			$this->payloadDesc = "Add a new season to a season profile";
-
+            $args = array();
 		     // CHECK FOR PARAMETERS:
 			// name 
 			// Name of the Season to add
@@ -87,7 +87,46 @@
 			{
 				$name = trim($this->request->post('name'));
 			}
+            if(!$this->mainModel->id)
+            {
+                $this->modelNotSetError();
+                return false;
+            }
+            
+            $args['name'] = $name;
+            $args['season_profiles_id'] = $this->mainModel->id;            
+            $season_obj = ORM::factory('Sportorg_Seasons_Base');
+            if($season_obj->check_season_exist($args))
+            {
+                unset($season_obj);
+                $season_obj = ORM::factory('Sportorg_Seasons_Base');
+                $result = $season_obj->addSeasons($args);    
+                //Check for success / error
+                if(get_class($result) == get_class($this->mainModel))
+                {
+                    return $result;
+                }
+                elseif(get_class($result) == 'ORM_Validation_Exception')
+                {
+                    //parse error and add to error array
+                    $this->processValidationError($result,$this->mainModel->error_message_path);
+                    return false;
 
+                }    
+            }else
+            {
+                $error_array = array(
+                    "error" => "This season already exists",
+                    "param_name" => "season name and season profile",
+                    "param_desc" => "Name of the Season to create"
+                );
+
+                // Set whether it is a fatal error
+                $is_fatal = true;
+
+                // Call method to throw an error
+                $this->addError($error_array,$is_fatal);
+            }
 		}
 		
 		/**
@@ -107,9 +146,37 @@
 			{
 				$name = trim($this->request->post('name'));
 			}
-			
-			$season_profile = ORM::factory('Sportorg_Seasons_Profile');
-			return $season_profile->addSeasonprofile($name);
+			 
+            
+            if($this->mainModel->check_name_exist($name))
+            {
+                $result = $this->mainModel->addSeasonprofile($name);    
+                //Check for success / error
+                if(get_class($result) == get_class($this->mainModel))
+                {
+                    return $result;
+                }
+                elseif(get_class($result) == 'ORM_Validation_Exception')
+                {
+                    //parse error and add to error array
+                    $this->processValidationError($result,$this->mainModel->error_message_path);
+                    return false;
+
+                }    
+            } else
+            {
+                $error_array = array(
+                    "error" => "This season profile already exists",
+                    "param_name" => "name",
+                    "param_desc" => "Name of the Season Profile to create"
+                );
+
+                // Set whether it is a fatal error
+                $is_fatal = true;
+
+                // Call method to throw an error
+                $this->addError($error_array,$is_fatal);
+            }  
 		}
 		
 		############################################################################
