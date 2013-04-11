@@ -24,7 +24,56 @@ class Model_Location_County extends ORM
 			'foreign_key' => 'counties_id'
 		)
 	);
-
+	
+    public static function check_county_exist($args = array())
+    {
+        extract($args);
+        if(isset($name) && isset($states_id))
+        {
+            $exists_obj = ORM::factory('Location_County')
+                        ->where('name','=', $name)
+                        ->and_where('states_id','=', $states_id)->find();    
+             if (!$exists_obj->loaded())
+                return true;
+            else
+                return false;  
+        }else
+        {
+            return true;
+        }    
+    }
+	public function addCounty($args = array())	
+	{
+		extract($args);
+		 
+		if(isset($name))
+        {
+            $this->name = $name;
+        }
+        if(isset($states_id))
+        {
+            $this->states_id = $states_id;    
+        }		
+        
+		try {         
+            $this->save();
+            return $this;
+        } catch(ORM_Validation_Exception $e){
+            return $e;
+        }  
+	}
+ 
+     
+	public function getBasics()
+	{
+		return array(
+			"id" => $this->id,
+			"state" => $this->state->getBasics(),
+			"name" => $this->name,
+			"states_id" => $this->states_id,
+		);
+	}
+	
 	public function rules(){
 
 		return array
@@ -40,43 +89,6 @@ class Model_Location_County extends ORM
 				array('digit'),
 				array('not_equals', array(':value', 0))
 			),
-		);
-	}
-
-	public function addCounty($args = array())	
-	{
-		extract($args);
-		$exists_obj = $this->where('name', '=', $name)->and_where('states_id', '=', $states_id);
-		$exists_obj->reset(FALSE);
-		$count = $exists_obj->count_all();
-		
-		if ( $count == 0 )
-		{
-			if(isset($name))
-			{
-				$this->name = $name;
-			}
-			if(isset($states_id))
-			{
-				$this->states_id = $states_id;	
-			}
-			
-			$this->save();
-	
-			return $this;
-		} else {
-			return $exists_obj->find();
-		}
-		
-	}
-	
-	public function getBasics()
-	{
-		return array(
-			"id" => $this->id,
-			"state" => $this->state->getBasics(),
-			"name" => $this->name,
-			"states_id" => $this->states_id,
 		);
 	}
 }

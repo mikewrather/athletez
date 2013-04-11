@@ -50,6 +50,9 @@ class Model_Location_State extends ORM
 			'foreign_key' => 'states_id'
 		)
 	);
+    
+    public $error_message_path = 'models/location';
+    
 	public function getSections()
 	{
 		return $this->sections;
@@ -104,37 +107,47 @@ class Model_Location_State extends ORM
 		$this->save();
 		return $this;
 	}
-	
+	public static function check_state_exist($args = array())
+    {
+        extract($args);
+        if(isset($name) && isset($countries_id))
+        {
+            $exists_obj = ORM::factory('Location_State')
+                        ->where('name','=', $name)
+                        ->and_where('countries_id','=', $countries_id)->find();    
+             if (!$exists_obj->loaded())
+                return true;
+            else
+                return false;  
+        }else
+        {
+            return true;
+        }        
+    }
+    
 	public function addState($args = array())
 	{
 		extract($args);
+		if(isset($name))
+        {
+            $this->name = $name;
+        }
+ 
+        // counties_id (REQUIRED)
+        // The county the city belongs to
+        if(isset($countries_id))
+        {
+            $this->countries_id = $countries_id;
+        }		
 		
-		// validate
-		$exists_obj = $this->where('name', '=', $name)->and_where('countries_id', '=', $countries_id);
-		$exists_obj->reset(FALSE);
-		$count = $exists_obj->count_all();
-	 
-		if ( $count == 0 )
-		{
-			if(isset($name))
-			{
-				$this->name = $name;
-			}
-	 
-			// counties_id (REQUIRED)
-			// The county the city belongs to
-			if(isset($countries_id))
-			{
-				$this->countries_id = $countries_id;
-			}
-			
-			$this->save();
-			return $this;
-		} else
-		{
-			return $exists_obj->find();
-		}
-		
+        try {         
+            $this->save();
+            return $this;
+        } catch(ORM_Validation_Exception $e){
+            return $e;
+        }  
 	}
+    
+     
 
 }
