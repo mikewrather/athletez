@@ -24,7 +24,7 @@
 		{
 			$retArr = array();
  		  
-			$retArr = $obj->getBasics();
+			$retArr = $this->obj->getBasics();
 			return $retArr;
 		}
 		

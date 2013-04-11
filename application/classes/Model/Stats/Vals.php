@@ -58,12 +58,43 @@ class Model_Stats_Vals extends ORM
 			"games_id" => $this->games_id,
 			"context" => $this->context->getBasics(),
 			"stat_contexts_id" => $this->stat_contexts_id,
-			"statdate" => $this->statedate,
+			"statdate" => $this->statdate,
 			"statval" => $this->statval,
 		);
 	}
 	
-	public function addStatvals($args)
+    public static function check_statvals_exist($args= array())
+    {
+        extract($args);
+        if( isset($stats_id) && 
+            isset($users_id) && 
+            isset($teams_id) && 
+            isset($statval) &&
+            isset($statdate) &&
+            isset($games_id) &&
+            isset($stat_contexts_id) )
+        {            
+            $exists_obj = ORM::factory('Stats_Vals')
+                            ->where('stats_id', '=', $stats_id)
+                            ->and_where('users_id', '=', $users_id)
+                            ->and_where('teams_id', '=', $teams_id)
+                            ->and_where('statval', '=', $statval)
+                            ->and_where('statdate', '=', $statdate)
+                            ->and_where('games_id', '=', $games_id)
+                            ->and_where('stat_contexts_id', '=', $stat_contexts_id)
+                            ->find();
+            
+             if (!$exists_obj->loaded())
+                return true;
+            else
+                return false;  
+        }else
+        {
+            return true;
+        }   
+    }
+    
+	public function addStatvals($args = array())
 	{
 		extract($args);
 		$result = array();
@@ -88,7 +119,7 @@ class Model_Stats_Vals extends ORM
 		
 		// statval - NOT NULL
 		// The user's value
-		if ( isset($users_id))
+		if ( isset($statval))
 		{
 			$this->statval = $statval;
 		} 
@@ -114,18 +145,11 @@ class Model_Stats_Vals extends ORM
 			$this->stat_contexts_id = $stat_contexts_id;
 		}
 		
-		$result = array();
-		try
-		{
-			if ( empty($error))			
-				$new = $this->save();			
-			  
-		}catch(Exception $e)
-		{
-			
-		}		
-		
-		 
-		return $new;
+        try {         
+            $this->save();
+            return $this;
+        } catch(ORM_Validation_Exception $e){
+            return $e;
+        } 		
 	}
 }
