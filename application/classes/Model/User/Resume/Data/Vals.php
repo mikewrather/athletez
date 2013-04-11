@@ -120,7 +120,12 @@ class Model_User_Resume_Data_Vals extends ORM
 		{
 			$this->resume_data_id = $resume_data_id;
 		}
-		$this->save();
-		return $this;
+		
+		try {
+            $this->save();  
+            return $this;
+        } catch(ORM_Validation_Exception $e){
+            return $e;
+        }   
 	}
 }
