@@ -178,10 +178,38 @@
 				// Call method to throw an error
 				$this->addError($error_array,$is_fatal);
 
-			}
-			
-			$state = ORM::factory('Location_State');
-			return $state->addState($args);
+			} 
+			 
+            if($this->mainModel->check_state_exist($args))
+            {
+                $result = $this->mainModel->addState($args);    
+                //Check for success / error
+                if(get_class($result) == get_class($this->mainModel))
+                {
+                    return $result;
+                }
+                elseif(get_class($result) == 'ORM_Validation_Exception')
+                {
+                    //parse error and add to error array
+                    $this->processValidationError($result,$this->mainModel->error_message_path);
+                    return false;
+
+                }  
+            } else
+            {
+                // Create Array for Error Data
+                $error_array = array(
+                    "error" => "This state already exists",
+                    "param_name" => "countries_id and name",
+                    "param_desc" => "The country the state belongs to"
+                );
+
+                // Set whether it is a fatal error
+                $is_fatal = true;
+
+                // Call method to throw an error
+                $this->addError($error_array,$is_fatal);
+            }
 			
 		}
 		
@@ -228,7 +256,38 @@
 			$args['states_id'] = $this->mainModel->id;
 			 
 			$county = ORM::factory('Location_County');
-			return $county->addCounty($args);
+            if($county->check_county_exist($args))
+            {
+                unset($county);
+                $county = ORM::factory('Location_County');
+                $result = $county->addCounty($args);
+                //Check for success / error
+                if(get_class($result) == get_class($this->mainModel))
+                {
+                    return $result;
+                }
+                elseif(get_class($result) == 'ORM_Validation_Exception')
+                {
+                    //parse error and add to error array
+                    $this->processValidationError($result,$this->mainModel->error_message_path);
+                    return false;
+
+                }  
+            } else
+            {
+                // Create Array for Error Data
+                $error_array = array(
+                    "error" => "This county already exists",
+                    "param_name" => "name and state_id",
+                    "param_desc" => "name and state_id"
+                );
+
+                // Set whether it is a fatal error
+                $is_fatal = true;
+
+                // Call method to throw an error
+                $this->addError($error_array,$is_fatal);
+            }
 		}
 		
 		/**
@@ -280,8 +339,40 @@
 			}
 			$args['states_id'] = $this->mainModel->id;
 			  
-			$division = ORM::factory('Sportorg_Division');
-			return $division->addDivision($args);
+			$division = ORM::factory('Sportorg_Division');			
+            
+            if($division->check_division_exist($args))
+            {
+                unset($division);
+                $division = ORM::factory('Sportorg_Division');
+                $result = $division->addDivision($args);
+                //Check for success / error
+                if(get_class($result) == get_class($this->mainModel))
+                {
+                    return $result;
+                }
+                elseif(get_class($result) == 'ORM_Validation_Exception')
+                {
+                    //parse error and add to error array
+                    $this->processValidationError($result,$this->mainModel->error_message_path);
+                    return false;
+
+                }  
+            } else
+            {
+                // Create Array for Error Data
+                $error_array = array(
+                    "error" => "This division already exists",
+                    "param_name" => "name and state_id",
+                    "param_desc" => "name and state_id"
+                );
+
+                // Set whether it is a fatal error
+                $is_fatal = true;
+
+                // Call method to throw an error
+                $this->addError($error_array,$is_fatal);
+            }
 		}
 		
 		/**
@@ -351,7 +442,39 @@
 			}
 			$args['states_id'] = $this->mainModel->id; 
 			$section = ORM::factory('Sportorg_Section');
-			return $section->addSection($args);
+			 
+            if($section->check_section_exist($args))
+            {
+                unset($section);
+                $section = ORM::factory('Sportorg_Section');
+                $result = $section->addSection($args);
+                //Check for success / error
+                if(get_class($result) == get_class($this->mainModel))
+                {
+                    return $result;
+                }
+                elseif(get_class($result) == 'ORM_Validation_Exception')
+                {
+                    //parse error and add to error array
+                    $this->processValidationError($result,$this->mainModel->error_message_path);
+                    return false;
+
+                }  
+            } else
+            {
+                // Create Array for Error Data
+                $error_array = array(
+                    "error" => "This section already exists",
+                    "param_name" => "name,state_id, sports_id",
+                    "param_desc" => "name,state_id, sports_id"
+                );
+
+                // Set whether it is a fatal error
+                $is_fatal = true;
+
+                // Call method to throw an error
+                $this->addError($error_array,$is_fatal);
+            }
 		}
 		
 		/**
@@ -403,7 +526,39 @@
 				$args['sections_id'] = (int)trim($this->request->post('sections_id'));
 			}
 			$league = ORM::factory('Sportorg_League');
-			return $league->addLeague($args);
+			 
+            if($league->check_league_exist($args))
+            {
+                unset($league);
+                $league = ORM::factory('Sportorg_League');
+                $result = $league->addLeague($args);
+                //Check for success / error
+                if(get_class($result) == get_class($this->mainModel))
+                {
+                    return $result;
+                }
+                elseif(get_class($result) == 'ORM_Validation_Exception')
+                {
+                    //parse error and add to error array
+                    $this->processValidationError($result,$this->mainModel->error_message_path);
+                    return false;
+
+                }  
+            } else
+            {
+                // Create Array for Error Data
+                $error_array = array(
+                    "error" => "This league already exists",
+                    "param_name" => "name,state_id, sports_id",
+                    "param_desc" => "name,state_id, sports_id"
+                );
+
+                // Set whether it is a fatal error
+                $is_fatal = true;
+
+                // Call method to throw an error
+                $this->addError($error_array,$is_fatal);
+            }
 		}
 		
 		############################################################################

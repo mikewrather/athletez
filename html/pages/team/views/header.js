@@ -1,8 +1,8 @@
-// Team Header View
+// Header View
 // ---------
 // Package Team
 // Requires `define`, `require`
-// Returns {TeamHeaderView} constructor
+// Returns {HeaderView} constructor
 
 define([
         'require', 
@@ -18,7 +18,7 @@ define([
         ], 
 function(require, headerTemplate, selectSportTemplate) {
 
-    var TeamHeaderView,
+    var HeaderView,
         facade = require('facade'),
         views = require('views'),
         TeamBasicsModel = require('team/models/basics'),
@@ -33,7 +33,7 @@ function(require, headerTemplate, selectSportTemplate) {
         _ = facade._;
         
 
-    TeamHeaderView = SectionView.extend({
+    HeaderView = SectionView.extend({
 
         id: 'main-header',
 
@@ -117,5 +117,5 @@ function(require, headerTemplate, selectSportTemplate) {
                 
     });
 
-    return TeamHeaderView;
+    return HeaderView;
 });

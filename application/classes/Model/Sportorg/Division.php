@@ -27,6 +27,32 @@ class Model_Sportorg_Division extends ORM
 			'foreign_key' => 'divisions_id'
 		)
 	);
+
+	public function rules(){
+
+		return array
+		(
+			// name (varchar)
+			'name'=>array(
+				array('not_empty'),
+			),
+
+			// states_id (int)
+			'states_id'=>array(
+				array('not_empty'),
+				array('digit'),
+				array('not_equals', array(':value', 0))
+			),
+
+			// sections_id (int)
+			'sections_id'=>array(
+				array('not_empty'),
+				array('digit'),
+				array('not_equals', array(':value', 0))
+			),
+		);
+	}
+
 	public function getBasics()
 	{
 		
@@ -72,40 +98,56 @@ class Model_Sportorg_Division extends ORM
 		return $this->delete();
 	}
 	
+    public static function check_division_exist($args = array())
+    {
+        extract($args);
+        if(isset($name) && isset($states_id) && isset($sections_id))
+        {            
+            $exists_obj = ORM::factory('Sportorg_Division')
+                        ->where('name', '=', $name)
+                        ->and_where('states_id', '=', $states_id)
+                        ->and_where('sections_id', '=', $sections_id)->find();
+            
+             if (!$exists_obj->loaded())
+                return true;
+            else
+                return false;  
+        }else
+        {
+            return true;
+        }       
+    }
+    
+          
+     
 	public function addDivision($args = array() )
 	{
 		extract($args);
-		$exists_obj = $this->where('name', '=', $name)->and_where('states_id', '=', $states_id)->and_where('sections_id', '=', $sections_id);
-		$exists_obj->reset(FALSE);
-		$count = $exists_obj->count_all();
-		
-		if ( $count == 0 )
+		 
+		// name column
+		if(isset($name))
 		{
-			// name column
-			if(isset($name))
-			{
-				$this->name = $name;
-			}
-			
-			// sections_id column
-			if(isset($sections_id))
-			{
-				$this->sections_id = $sections_id;
-			}
-			
-			// states_id colunn
-			if(isset($states_id))
-			{
-				$this->states_id = $states_id;	
-			}
-			 
-			$this->save();
-			return $this;
-		} else
-		{
-			return $exists_obj->find();
+			$this->name = $name;
 		}
 		
+		// sections_id column
+		if(isset($sections_id))
+		{
+			$this->sections_id = $sections_id;
+		}
+		
+		// states_id colunn
+		if(isset($states_id))
+		{
+			$this->states_id = $states_id;	
+		}
+		
+        try {         
+            $this->save();
+            return $this;
+        } catch(ORM_Validation_Exception $e){
+            return $e;
+        } 
 	}
 	
 	public function getOrgs()

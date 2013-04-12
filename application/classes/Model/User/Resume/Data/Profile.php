@@ -28,7 +28,18 @@ class Model_User_Resume_Data_Profile extends ORM
 			'far_key' => 'sports_id'
 		)
 	);
-	
+
+	public function rules(){
+
+		return array
+		(
+			// name (varchar)
+			'name'=>array(
+				array('not_empty'),
+			),
+		);
+	}
+
 	public function updateResumedataprofile($name)
 	{
 		$this->name = $name;
@@ -68,102 +79,107 @@ class Model_User_Resume_Data_Profile extends ORM
 	public function addLinksport($args = array())
 	{
 		extract($args);
-		if ( isset($resume_data_profiles_id) && isset($sports_id))
-		{
-			$exists_obj = DB::select('*')
-				->from('rdp_sports_link')				
-					->where('resume_data_profiles_id','=',$resume_data_profiles_id)
-					->and_where('sports_id', '=', $sports_id)->execute();
-			
-			$count = count($exists_obj);		
-			
-			if ( $count == 0)
-			{
 				
-				return DB::insert('rdp_sports_link', array('resume_data_profiles_id', 'sports_id'))->values(array($resume_data_profiles_id, $sports_id))->execute();	
-			} else
-			{			
-				return $exists_obj;
-			}	
-		} else {
-			return $this;
-		}		 
+        try {
+            if ( isset($sports_id))
+            {                     
+                $new_rdp_sports_obj = DB::insert('rdp_sports_link', array('resume_data_profiles_id', 'sports_id'))->values(array($this->id, $sports_id))->execute();                    
+            }  
+            return $this;
+        } catch(ORM_Validation_Exception $e){
+            return $e;
+        }   
 	}
 
+    public static function check_sports_link_exist($args = array())
+    {
+        extract($args);
+        $exists_obj = DB::select('*')
+            ->from('rdp_sports_link')                
+                ->where('resume_data_profiles_id','=',$resume_data_profiles_id)
+                ->and_where('sports_id', '=', $sports_id)->execute();
+        
+        $count = count($exists_obj);        
+        if ($count == 0)
+            return true;
+        else
+            return false;
+    }
+    
+    public static function check_rdg_rdp_link_exist($args = array())
+    {
+        extract($args);
+        $exists_obj = DB::select('*')
+                ->from('rdg_rdp_link')                
+                    ->where('resume_data_profiles_id','=',$resume_data_profiles_id)
+                    ->and_where('resume_data_groups_id', '=', $resume_data_groups_id)->execute();
+                    
+             
+        $count = count($exists_obj);    
+        if ($count == 0)
+            return true;
+        else
+            return false;
+    }
 	public function addRdg($args = array())
 	{		
 		extract($args);
-		if ( isset($resume_data_profiles_id) && isset($resume_data_groups_id))
-		{
-			$exists_obj = DB::select('*')
-				->from('rdg_rdp_link')				
-					->where('resume_data_profiles_id','=',$resume_data_profiles_id)
-					->and_where('resume_data_groups_id', '=', $resume_data_groups_id)->execute();
-					
-			 
-			$count = count($exists_obj);		
-			
-			if ( $count == 0)
-			{
-				return DB::insert('rdg_rdp_link', array('resume_data_profiles_id', 'resume_data_groups_id'))->values(array($resume_data_profiles_id, $resume_data_groups_id))->execute();	
-			} else
-			{			
-				return $exists_obj;
-			}	
-		} else
-		{
+        try
+        {
+		    if ( isset($resume_data_groups_id))
+		    {
+                $new_rdg_rdp_link_obj = DB::insert('rdg_rdp_link', array('resume_data_profiles_id', 'resume_data_groups_id'))->values(array($resume_data_profiles_id, $resume_data_groups_id))->execute();    
+		    } 		
 			return $this;
-		}
-		
+		} catch(ORM_Validation_Exception $e){
+            return $e;
+        }  
 	}
-
+    
+    public function rules()
+    {
+        return array(
+            'name' => array(
+                array('not_equals', array(':value', '')),
+                array('not_empty'),
+            )
+        );
+    }
+    
 	public function addRdp($args = array())
 	{
 		extract($args);
+        //to check that the sport exists before adding the association
+        $sports_ids = array();
+        if(isset($sports_array))
+        {
+            // check exists             
+            foreach($sports_array as $sports_id)
+            {
+                $check_sports_id = ORM::factory('Sportorg_Sport')->check_sports_id_exist($sports_id);
+                if($check_sports_id)
+                {
+                    array_push($sports_ids, $sports_id);                    
+                }
+            }            
+        }
+        
 		// check exists 
-		$exists_obj = $this->where('name', '=', $name);
-		$exists_obj->reset(FALSE);
-		$count = $exists_obj->count_all();
-		
 		if(isset($name))
 		{
 			$this->name = $name;			
 		}
-		
-		try
-		{
-			if ( $count == 0)
-			{
-				$new_rdp = $this->save();
-	 		 
-				if(isset($sports_array))
-				{
-					$temp = explode(',',$sports_array);
-					  
-					foreach($temp as $sports_id)
-					{	
-						DB::insert('rdp_sports_link', array('resume_data_profiles_id', 'sports_id'))->values(array($new_rdp->id, $sports_id))->execute();
-					}	
-				}	
-			} else
-			{
-				$new_rdp = $exists_obj->find();
-			}				
-		} catch(Exception $e)
-		{
-			// Create Array for Error Data
-			$error_array = array(
-				"error" => "Unable to save User",
-				"desc" => $e->getMessage()
-			);
-
-			// Set whether it is a fatal error
-			$is_fatal = true;
-
-			// Call method to throw an error
-			return $error_array;
-		}		 
-		
-		return $new_rdp;
+        
+		try {
+            $rdp_model = $this->save();
+            $rdp_pk = $rdp_model->pk();
+            foreach($sports_ids as $sports_id)
+            {    
+                DB::insert('rdp_sports_link', array('resume_data_profiles_id', 'sports_id'))->values(array($rdp_pk, $sports_id))->execute();
+            }
+            return $rdp_model;
+        } catch(ORM_Validation_Exception $e){
+            return $e;
+        }    
 	}
 }

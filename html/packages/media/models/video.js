@@ -17,7 +17,7 @@ define(["facade", "models/base"], function (facade, BaseModel) {
                 "video_title": null,
                 "video_quality": 0,
                 "video_thumb": null,
-                "video_image": null,
+                "video_src": null,
                 "org_name": null,
                 "teams": [{
                     "complevel": null,

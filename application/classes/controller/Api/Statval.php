@@ -136,9 +136,36 @@
 				$args['stat_contexts_id'] = (int)trim($this->request->post('stat_contexts_id'));
 			}
 			 
-			$statvals_obj = ORM::factory('Stats_Vals');
-			$statvals = $statvals_obj->addStatvals($args);
-			
+			 
+            if($this->mainModel->check_statvals_exist($args))
+            {
+                $result = $this->mainModel->addStatvals($args);    
+                //Check for success / error
+                if(get_class($result) == get_class($this->mainModel))
+                {
+                    return $result;
+                }
+                elseif(get_class($result) == 'ORM_Validation_Exception')
+                {
+                    //parse error and add to error array
+                    $this->processValidationError($result,$this->mainModel->error_message_path);
+                    return false;
+
+                }    
+            } else
+            {
+                $error_array = array(
+                    "error" => "This complevel already exists",
+                    "param_name" => "name",
+                    "param_desc" => "Name of the complevel to create"
+                );
+
+                // Set whether it is a fatal error
+                $is_fatal = true;
+
+                // Call method to throw an error
+                $this->addError($error_array,$is_fatal);
+            }  
 			return $statvals;
 		}
 		

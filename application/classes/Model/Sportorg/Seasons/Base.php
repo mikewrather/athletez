@@ -26,24 +26,65 @@ class Model_Sportorg_Seasons_Base extends ORM
 			'foreign_key' => 'seasons_id'
 		)
 	);
+    
+     public function rules(){
 
-	public function rules(){
+        return array
+        (
+            // name (varchar)
+            'name'=>array(
+                array('not_empty'),
+            ),
 
-		return array
-		(
-			// name (varchar)
-			'name'=>array(
-				array('not_empty'),
-			),
+            // season_profiles_id (int)
+            'season_profiles_id'=>array(
+                array('not_empty'),
+                array('not_equals', array(':value', 0))
+            ),
+        );
+     }
+ 
 
-			// season_profiles_id (int)
-			'season_profiles_id'=>array(
-				array('not_empty'),
-				array('not_equals', array(':value', 0))
-			),
-		);
-	}
-
+    public static function check_season_exist($args = array())
+    {
+        extract($args);
+        if(isset($name) && isset($season_profiles_id))
+        {
+            $exists_obj = ORM::factory('Sportorg_Seasons_Base')
+                        ->where('name','=', $name)
+                        ->and_where('season_profiles_id','=', $season_profiles_id)->find();    
+             if (!$exists_obj->loaded())
+                return true;
+            else
+                return false;    
+        }else
+        {
+            return true;
+        }      
+    }
+    
+    public function addSeasons($args = array())
+    {
+        extract($args);
+        
+        //name (string) - Name of the Season to add
+        if(isset($name))
+        {
+            $this->name = $name;
+        }
+        // season profiles id
+        if(isset($season_profiles_id))
+        {
+            $this->season_profiles_id = $season_profiles_id;
+        }
+        
+        try {         
+            $this->save();
+            return $this;
+        } catch(ORM_Validation_Exception $e){
+            return $e;
+        }  
+    }
 	public function getTeamsBySport($sports_id=NULL)
 	{
 
@@ -71,7 +112,10 @@ class Model_Sportorg_Seasons_Base extends ORM
 		{ 
 			$orgs = $teams->where('complevels_id', '=', $complevels_id);
 			
-		} 	
+		} else
+        {
+            $orgs = $teams;
+        } 	
 		$orgs->join('org_sport_link')->on('org_sport_link.id', '=', 'sportorg_team.org_sport_link_id');	
 		// orgs_id
 		// Filter teams for a certain season to only show those for a specific organization

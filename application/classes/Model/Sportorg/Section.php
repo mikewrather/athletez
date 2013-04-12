@@ -101,39 +101,56 @@ class Model_Sportorg_Section extends ORM
 	{
 		return $this->delete();
 	}
+    
+    public static function check_section_exist($args = array())
+    {
+        extract($args);
+        if(isset($name) && isset($states_id) && isset($sports_id))
+        {            
+            $exists_obj = ORM::factory('Sportorg_Section')
+                        ->where('name', '=', $name)
+                        ->and_where('states_id', '=', $states_id)
+                        ->and_where('sports_id', '=', $sports_id)->find();
+            
+             if (!$exists_obj->loaded())
+                return true;
+            else
+                return false;  
+        }else
+        {
+            return true;
+        }     
+    }
+   
+     
 	public function addSection($args = array())
 	{
 		extract($args);
-		$exists_obj = $this->where('name', '=', $name)->and_where('states_id', '=', $states_id)->and_where('sports_id', '=', $sports_id);
-		$exists_obj->reset(FALSE);
-		$count = $exists_obj->count_all();
-		
-		if ( $count == 0 )
+		 
+		// name column
+		if(isset($name))
 		{
-			// name column
-			if(isset($name))
-			{
-				$this->name = $name;
-			}
-			// states_id column 
-			if(isset($states_id))
-			{
-				$this->states_id = $states_id;	
-			}
-			
-			// sports_id column
-			if(isset($sports_id))
-			{
-				$this->sports_id = $sports_id;
-			}
-			
-			$this->save();
-			return $this;
-		}else
+			$this->name = $name;
+		}
+		// states_id column 
+		if(isset($states_id))
 		{
-			return $exists_obj->find();
+			$this->states_id = $states_id;	
 		}
 		
+		// sports_id column
+		if(isset($sports_id))
+		{
+			$this->sports_id = $sports_id;
+		}
+		
+		 
+		try {         
+            $this->save();
+            return $this;
+        } catch(ORM_Validation_Exception $e){
+            return $e;
+        } 
 	}	
 	
 

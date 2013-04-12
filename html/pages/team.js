@@ -18,12 +18,18 @@ define([
     "team/collections/recent_schedules",
     "team/collections/competitor_teams",
     "team/collections/rosters",
+    "team/collections/videos",
+    "team/collections/images",
+    "team/collections/comments",
     
     "team/views/header",
     "team/views/add-media",
     "sportorg/views/schedule-list",
     "sportorg/views/competitorteam-list",
-    "sportorg/views/roster-list"
+    "sportorg/views/roster-list",
+    "team/views/video-list",
+    "team/views/image-list",
+    "team/views/comment-list"
     
     
     ], function (require, pageLayoutTemplate) {
@@ -41,12 +47,18 @@ define([
         RecentScheduleList = require("team/collections/recent_schedules"),
         CompetitorTeamList = require("team/collections/competitor_teams"),
         RosterList = require("team/collections/rosters");
+        VideoList = require("team/collections/videos");
+        ImageList = require("team/collections/images");
+        CommentList = require("team/collections/comments");
         
-        HeaderView = require("team/views/header"),
+        TeamHeaderView = require("team/views/header"),
         AddMediaView = require("team/views/add-media"),
         ScheduleListView = require("sportorg/views/schedule-list"),
         CompetitorTeamListView = require("sportorg/views/competitorteam-list"),
         RosterListView = require("sportorg/views/roster-list"),
+        VideoListView = require("team/views/video-list"),
+        ImageListView = require("team/views/image-list"),
+        CommentListView = require("team/views/comment-list"),
         
         LayoutView = views.LayoutView,
         $ = facade.$,
@@ -119,6 +131,27 @@ define([
                 controller.rosters.season_id = season_id;
                 controller.rosters.fetch();
                 
+                controller.videos = new VideoList();
+                controller.videos.id = controller.id;
+                controller.videos.sport_id = sport_id;
+                controller.videos.complevel_id = complevel_id;
+                controller.videos.season_id = season_id;
+                controller.videos.fetch();
+                
+                controller.images = new ImageList();
+                controller.images.id = controller.id;
+                controller.images.sport_id = sport_id;
+                controller.images.complevel_id = complevel_id;
+                controller.images.season_id = season_id;
+                controller.images.fetch();
+                
+                controller.comments = new CommentList();
+                controller.comments.id = controller.id;
+                controller.comments.sport_id = sport_id;
+                controller.comments.complevel_id = complevel_id;
+                controller.comments.season_id = season_id;
+                controller.comments.fetch();
+                
                 controller.handleDeferredsDynamic();
             }
             Channel('refresh-teampage').subscribe(callback);
@@ -160,6 +193,23 @@ define([
                 if ( ~position ) this.scheme.splice(position, 1);
             }
             
+            if (this.videoListView) {
+                $(this.videoListView.destination).html('');
+                position = $.inArray(this.videoListView, this.scheme);
+                if ( ~position ) this.scheme.splice(position, 1);
+            }
+            
+            if (this.imageListView) {
+                $(this.imageListView.destination).html('');
+                position = $.inArray(this.imageListView, this.scheme);
+                if ( ~position ) this.scheme.splice(position, 1);
+            }
+            
+            if (this.commentListView) {
+                $(this.commentListView.destination).html('');
+                position = $.inArray(this.commentListView, this.scheme);
+                if ( ~position ) this.scheme.splice(position, 1);
+            }
         },
         
         handleDeferredsDynamic: function() {
@@ -180,12 +230,24 @@ define([
             $.when(this.rosters.request).done(function () {
                 controller.setupRosters();
             });
+            
+            $.when(this.videos.request).done(function () {
+                controller.setupVideos();
+            });
+            
+            $.when(this.images.request).done(function () {
+                controller.setupImages();
+            });
+            
+            $.when(this.comments.request).done(function () {
+                controller.setupComments();
+            });
         },
         
         setupHeaderView: function() {
             var headerView;
             
-            headerView = new HeaderView({
+            headerView = new TeamHeaderView({
                 model: this.basics,
                 name: "Header",
                 destination: "#main-header"
@@ -255,6 +317,36 @@ define([
             });
             
             this.scheme.push(this.rosterListView);
+            this.layout.render();
+        },
+        
+        setupVideos: function() {
+            this.videoListView = new VideoListView({
+                collection: this.videos,
+                destination: "#video-wrap"
+            });
+            
+            this.scheme.push(this.videoListView);
+            this.layout.render();
+        },
+        
+        setupImages: function() {
+            this.imageListView = new ImageListView({
+                collection: this.images,
+                destination: "#image-wrap"
+            });
+            
+            this.scheme.push(this.imageListView);
+            this.layout.render();
+        },
+        
+        setupComments: function() {
+            this.commentListView = new CommentListView({
+                collection: this.comments,
+                destination: "#comment-wrap"
+            });
+            
+            this.scheme.push(this.commentListView);
             this.layout.render();
         },
                         

@@ -25,6 +25,30 @@ class Model_User_Resume_Data_Vals extends ORM
 		)
 	);
 
+	public function rules(){
+
+		return array
+		(
+			// resume_data_id (int)
+			'resume_data_id'=>array(
+				array('not_empty'),
+				array('digit'),
+				array('resume_data_id_exist'),
+			),
+
+			/*TODO, add by Jeffrey, developer need to validate this element manually
+			'users_id'=>array(
+				array('not_empty'),
+				array('digit'),
+			),
+			*/
+			// user_value (varchar)
+			'user_value'=>array(
+				array('not_empty'),
+			),
+		);
+	}
+
 	public function __construct($id=NULL)
 	{
 		parent::__construct($id);
@@ -96,7 +120,12 @@ class Model_User_Resume_Data_Vals extends ORM
 		{
 			$this->resume_data_id = $resume_data_id;
 		}
-		$this->save();
-		return $this;
+		
+		try {
+            $this->save();  
+            return $this;
+        } catch(ORM_Validation_Exception $e){
+            return $e;
+        }   
 	}
 }

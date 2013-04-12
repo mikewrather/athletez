@@ -54,7 +54,7 @@ define([
         CommentOfList = require("profile/collections/commentsof"),
         CommentOnList = require("profile/collections/commentson"),
         
-        HeaderView = require("profile/views/header"),
+        ProfileHeaderView = require("profile/views/header"),
         AddMediaView = require("profile/views/add-media"),
         OrgListView = require("sportorg/views/org-list"),
         RelatedListView = require("user/views/related-list"),
@@ -181,7 +181,7 @@ define([
         setupHeaderView: function() {
             var headerView;
             
-            headerView = new HeaderView({
+            headerView = new ProfileHeaderView({
                 model: this.basics,
                 name: "Header",
                 destination: "#main-header"

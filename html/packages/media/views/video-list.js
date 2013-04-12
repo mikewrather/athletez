@@ -1,8 +1,8 @@
 // Video List
 // --------------
 
-define(['facade','views', 'utils', 'media/views/video-item'], 
-function(facade,  views,   utils,   VideoItemView) {
+define(['facade','views', 'utils', 'media/views/video-item', 'media/views/video-player', 'media/views/add-video'], 
+function(facade,  views,   utils,   VideoItemView,            VideoPlayerView,            AddVideoView) {
 
     var VideoListView, 
         VideoListAbstract,
@@ -36,6 +36,53 @@ function(facade,  views,   utils,   VideoItemView) {
             }
             _.bindAll(this);
             this.addSubscribers();
+            this.setupPlayerView();
+            this.setupAddView();   
+        },
+        
+        // Child views...
+        childViews: {},
+
+        // Event handlers...
+        
+        // Add Views
+        setupAddView: function() {
+            var listView = this,
+                addView = new AddVideoView({collection: this.collection}),
+                renderAddView = this.addChildView(addView);
+            
+            this.childViews.form = addView;
+            this.callbacks.add(function() {
+                renderAddView();
+            });
+            
+            function callback (data) {
+                addView.model = data;
+                addView.render();
+                listView.$el.append(addView.el);
+            }
+            
+            Channel('addvideo:fetch').subscribe(callback);
+        },
+        
+        setupPlayerView: function() {
+            var listView = this,
+                addView = new VideoPlayerView({collection: this.collection, model: this.collection.at(0)}),
+                renderAddView = this.addChildView(addView);
+            
+            this.childViews.player = addView;
+            this.callbacks.add(function() {
+                renderAddView();
+                addView.render();
+                listView.$el.prepend(addView.el);
+            });
+            
+            function changeVideo(data) {
+                addView.model = data;
+                addView.render();
+            }
+            
+            Channel('changevideo' + this.collection.id).subscribe(changeVideo);
         }
 
     });

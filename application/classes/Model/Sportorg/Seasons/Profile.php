@@ -56,7 +56,25 @@ class Model_Sportorg_Seasons_Profile extends ORM
 		{
 			$this->name = $name;
 		}
-		$this->save();
-		return $this;
+		
+         try {
+          $this->save();
+            return $this;
+        } catch(ORM_Validation_Exception $e){
+            return $e;
+        } 
 	}
+    
+    public static function check_name_exist($name)
+    {           
+        if(!isset($name))
+            return false;
+            
+        $exists_obj = ORM::factory('Sportorg_Seasons_Profile')->where('name','=', $name)->find();
+                                                                                               
+        if (!$exists_obj->loaded())
+            return true;
+        else
+            return false;
+    }
 }

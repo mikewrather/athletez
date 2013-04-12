@@ -17,5 +17,6 @@ return array(
 	"org_sport_not_exist" => "Org sport id doesn't exist",
 	"unique_email" => "Email already exist",
 	"subject_id_exist" => "Subject id doesn't exist",
-	"resume_data_profiles_id_exist" => "Resume data profiles is doesn't exist"
+	"resume_data_profiles_id_exist" => "Resume data profiles doesn't exist",
+	"resume_data_id_exist" => "Resume data doesn't exist"
 );

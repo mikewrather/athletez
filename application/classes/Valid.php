@@ -95,6 +95,17 @@
 			return false;
 		}
 
+		public static function resume_data_id_exist($value){
+			$resume_data = ORM::factory("User_Resume_Data");
+			$resume_data->select("id")
+				->where('id', '=', $value)
+				->find();
+			if ($resume_data->loaded()){
+				return true;
+			}
+			return false;
+		}
+
 		public static function sport_type_id_exist($value){
 			$sport_types_model = ORM::factory("Sportorg_Sporttype");
 			$sport_types_model->select("id")
