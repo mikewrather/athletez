@@ -1,7 +1,6 @@
 // Add Video View
 // ---------
 
-// Package Game
 // Requires define
 // Returns {AddVideoView} constructor
 
