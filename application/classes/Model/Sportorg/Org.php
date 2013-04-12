@@ -102,10 +102,10 @@ class Model_Sportorg_Org extends ORM
 			),
 
 			//comment by jeffrey, no this field in add form
-//			'locations_id'=>array(
-//				array('not_empty'),
-//				array('not_equals', array(':value', 0))
-//			),
+			'locations_id'=>array(
+				array('not_empty'),
+				array('not_equals', array(':value', 0))
+			),
 		);
 	}
 
