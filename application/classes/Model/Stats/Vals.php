@@ -38,6 +38,57 @@ class Model_Stats_Vals extends ORM
 		)
 	);
 
+	public function rules(){
+
+		return array
+		(
+			// stats_id (int)
+			'stats_id'=>array(
+				array('not_empty'),
+				array('digit'),
+				array('stat_id_exist'),
+			),
+
+			// users_id (int)
+			'users_id'=>array(
+				array('not_empty'),
+				array('digit'),
+				array('not_equals', array(':value', 0))
+			),
+
+			// teams_id (int)
+			'teams_id'=>array(
+				array('not_empty'),
+				array('digit'),
+				array('not_equals', array(':value', 0))
+			),
+
+			// statval (varchar)
+			'statval'=>array(
+				array('not_empty'),
+			),
+
+			// statdate (date)
+			'statdate'=>array(
+				array('not_empty'),
+				array('date'),
+			),
+
+			// games_id (int)
+			'games_id'=>array(
+				array('not_empty'),
+				array('digit'),
+				array('not_equals', array(':value', 0))
+			),
+
+			// stat_contexts_id (int)
+			'stat_contexts_id'=>array(
+				array('not_empty'),
+				array('digit'),
+				array('stat_contexts_id_exist')
+			),
+		);
+	}
 
 	public function __construct($id=NULL)
 	{

@@ -117,6 +117,28 @@
 			return false;
 		}
 
+		public static function stat_contexts_id_exist($value){
+			$stat_contexts = ORM::factory("Stats_Context");
+			$stat_contexts->select("id")
+				->where('id', '=', $value)
+				->find();
+			if ($stat_contexts->loaded()){
+				return true;
+			}
+			return false;
+		}
+
+		public static function stat_id_exist($value){
+			$stat = ORM::factory("Stats_Base");
+			$stat->select("id")
+				->where('id', '=', $value)
+				->find();
+			if ($stat->loaded()){
+				return true;
+			}
+			return false;
+		}
+
 		/**
 		 * date format must like "2013-04-05 12:12:12"
 		 * @param $value

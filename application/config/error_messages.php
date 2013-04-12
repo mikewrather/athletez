@@ -18,5 +18,7 @@ return array(
 	"unique_email" => "Email already exist",
 	"subject_id_exist" => "Subject id doesn't exist",
 	"resume_data_profiles_id_exist" => "Resume data profiles doesn't exist",
-	"resume_data_id_exist" => "Resume data doesn't exist"
+	"resume_data_id_exist" => "Resume data doesn't exist",
+	"stat_contexts_id_exist" => "Statistic contexts id doesn't exist",
+	"stat_id_exist" => "Statistic id doesn't exist",
 );
