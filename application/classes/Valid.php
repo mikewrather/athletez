@@ -139,6 +139,17 @@
 			return false;
 		}
 
+		public static function resume_data_groups_id_exist($value){
+			$resume_data_grp = ORM::factory("User_Resume_Data_Group");
+			$resume_data_grp->select("id")
+				->where('id', '=', $value)
+				->find();
+			if ($resume_data_grp->loaded()){
+				return true;
+			}
+			return false;
+		}
+
 		/**
 		 * date format must like "2013-04-05 12:12:12"
 		 * @param $value

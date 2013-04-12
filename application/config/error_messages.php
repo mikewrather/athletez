@@ -21,4 +21,5 @@ return array(
 	"resume_data_id_exist" => "Resume data doesn't exist",
 	"stat_contexts_id_exist" => "Statistic contexts id doesn't exist",
 	"stat_id_exist" => "Statistic id doesn't exist",
+	"resume_data_groups_id_exist" => "Resume datagroups id doesn't exist",
 );

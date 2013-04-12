@@ -14,6 +14,8 @@ class Model_User_Resume_Data extends ORM
 	
 	protected $_table_name = 'resume_data';
 
+	public $error_message_path = 'models/user/resume';
+
 	protected $_belongs_to = array(
 		'resume_data_group' => array(
 			'model' => 'User_Resume_Data_Group',
@@ -27,6 +29,30 @@ class Model_User_Resume_Data extends ORM
 			'foreign_key' => 'resume_data_id'
 		),
 	);
+
+	public function rules(){
+
+		return array
+		(
+			// resume_data_groups_id (int)
+			'resume_data_groups_id'=>array(
+				array('not_empty'),
+				array('digit'),
+				array('resume_data_groups_id_exist'),
+			),
+
+			// name (varchar)
+			'name'=>array(
+				array('not_empty'),
+			),
+
+			// resume_data_type (enum)
+			'resume_data_type'=>array(
+				array('not_empty'),
+				array('in_array', array(':value', array('number','string','time')))
+			),
+		);
+	}
 
 	public function __construct($id=NULL)
 	{
