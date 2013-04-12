@@ -33,7 +33,7 @@ class AuthController extends Controller
 		if(isset($user))
 		{
 			$this->is_logged_in = true;
-			$this->user = $user;
+			$this->user = ORM::factory('User_Base',$user->id);
 
 			foreach($user->roles->find_all() as $role)
 			{

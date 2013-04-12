@@ -5,7 +5,7 @@
  * Time: 12:17 AM
  */
 
-class Model_User_Base extends Model_Auth_User
+class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 {
 	public $error_message_path = 'models/user/user_base';
 
@@ -20,7 +20,12 @@ class Model_User_Base extends Model_Auth_User
 	protected $_has_many = array(
 		//From Auth
 		'user_tokens' => array('model' => 'User_Token'),
-		'roles'       => array('model' => 'Role', 'through' => 'roles_users'),
+		'roles'       => array
+		(
+			'model' => 'Role',
+			'through' => 'roles_users',
+			'foreign_key' => 'user_id'
+		),
 
 		//Sportorg
 		'isports' => array(
@@ -671,4 +676,63 @@ class Model_User_Base extends Model_Auth_User
 			->get('total');
 	}
 	*/
+
+
+	/**
+	 * Wrapper method to execute ACL policies. Only returns a boolean, if you
+	 * need a specific error code, look at Policy::$last_code
+	 * @param string $policy_name the policy to run
+	 * @param array $args arguments to pass to the rule
+	 * @return boolean
+	 */
+	public function can($policy_name, $args = array())
+	{
+		$status = FALSE;
+		try
+		{
+			$refl = new ReflectionClass('Policy_' . $policy_name);
+			$class = $refl->newInstanceArgs();
+			$status = $class->execute($this, $args);
+			if (TRUE === $status)
+				return TRUE;
+		}
+		catch (ReflectionException $ex) // try and find a message based policy
+		{
+			// Try each of this user's roles to match a policy
+			foreach ($this->roles->find_all() as $role)
+			{
+				$status = Kohana::message('policy', $policy_name.'.'.$role->id);
+				if ($status)
+					return TRUE;
+			}
+
+		}
+		// We don't know what kind of specific error this was
+		if (FALSE === $status)
+		{
+			$status = Policy::GENERAL_FAILURE;
+		}
+		Policy::$last_code = $status;
+		return TRUE === $status;
+	}
+
+	/**
+	 * Wrapper method for self::can() but throws an exception instead of bool
+	 * @param string $policy_name the policy to run
+	 * @param array $args arguments to pass to the rule
+	 * @throws Policy_Exception
+	 * @return null
+	 */
+	public function assert($policy_name, $args = array())
+	{
+		$status = $this->can($policy_name, $args);
+		if (TRUE !== $status)
+		{
+			throw new Policy_Exception(
+				'Could not authorize policy :policy',
+				array(':policy' => $policy_name),
+				Policy::$last_code
+			);
+		}
+	}
 }

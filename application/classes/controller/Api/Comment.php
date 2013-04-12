@@ -242,7 +242,22 @@
 		     // CHECK FOR PARAMETERS:
 			// comment 
 			// Update the comment
-				
+
+			if(!$this->user)
+			{
+				return false;
+			}
+			else
+			{
+				if($this->user->can('EditComment'))
+				{
+					echo "Can Edit";
+				}
+				else
+				{
+					echo "Cannot Edit";
+				}
+			}
 			if(trim($this->put('comment')) != "")
 			{
 				$comment = trim($this->put('comment'));

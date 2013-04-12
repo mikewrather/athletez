@@ -127,6 +127,7 @@ Kohana::$config->attach(new Config_File);
  */
 Kohana::modules(array(
 	'auth'          => MODPATH . 'auth', // Basic authentication
+	'acl'           => MODPATH . 'acl',
 	// 'cache'      => MODPATH . 'cache',      // Caching with multiple backends
 	// 'codebench'  => MODPATH . 'codebench',  // Benchmarking tool
 	'database'      => MODPATH . 'database', // Database access
