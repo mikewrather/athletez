@@ -303,19 +303,44 @@
 		     // CHECK FOR PARAMETERS:
 			// game_datetime 
 			// Change the date / time this game takes place
-				
+			if(!$this->mainModel->id)
+			{
+				$this->modelNotSetError();
+				return false;
+			}
+
 			if($this->put('game_datetime') != "")
 			{
 				// Format as date
-				$game_datetime = date("Y-m-d H:i:s",strtotime($this->put('game_datetime')));
+				$game_datetime = date("Y-m-d H:i:s",strtotime(urldecode($this->put('game_datetime'))));
 			}
-
-			// lodcations_id 
+			// lodcations_id
 			// Change the location of this game
 				
-			if((int)trim($this->put('lodcations_id')) > 0)
+			if((int)trim($this->put('locations_id')) > 0)
 			{
-				$lodcations_id = (int)trim($this->put('lodcations_id'));
+				$locations_id = (int)trim($this->put('locations_id'));
+			}
+
+			$args = array(
+				'id' => $this->mainModel->id,
+				'game_datetime' => $game_datetime,
+				'locations_id' => $locations_id
+			);
+
+			$result =  $this->mainModel->addGame($args);
+
+			//Check for success / error
+			if(get_class($result) == get_class($this->mainModel))
+			{
+				return $result;
+			}
+			elseif(get_class($result) == 'ORM_Validation_Exception')
+			{
+				//parse error and add to error array
+				$this->processValidationError($result,$this->mainModel->error_message_path);
+				return false;
+
 			}
 
 
@@ -335,8 +360,13 @@
 		public function action_delete_base()
 		{
 			$this->payloadDesc = "Delete a Game";
+			if(!$this->mainModel->id)
+			{
+				$this->modelNotSetError();
+				return false;
+			}
 
-		
+			return $this->mainModel->delete();
 		}
 		
 	}

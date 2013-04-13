@@ -71,6 +71,10 @@ class Model_Sportorg_Games_Base extends ORM
 			//$args['gameTime'] = $gameTime;
 		}
 
+		if (isset($id) && $id != ""){
+			$this->id = $id;
+		}
+
 		if (isset($locations_id))
 			$this->locations_id = $locations_id;
 
