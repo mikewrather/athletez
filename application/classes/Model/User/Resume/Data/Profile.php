@@ -135,16 +135,7 @@ class Model_User_Resume_Data_Profile extends ORM
             return $e;
         }  
 	}
-    
-    public function rules()
-    {
-        return array(
-            'name' => array(
-                array('not_equals', array(':value', '')),
-                array('not_empty'),
-            )
-        );
-    }
+
     
 	public function addRdp($args = array())
 	{
@@ -156,8 +147,8 @@ class Model_User_Resume_Data_Profile extends ORM
             // check exists             
             foreach($sports_array as $sports_id)
             {
-                $check_sports_id = ORM::factory('Sportorg_Sport')->check_sports_id_exist($sports_id);
-                if($check_sports_id)
+                $check_sports_id = ORM::factory('Sportorg_Sport',$sports_id);
+                if($check_sports_id->loaded())
                 {
                     array_push($sports_ids, $sports_id);                    
                 }

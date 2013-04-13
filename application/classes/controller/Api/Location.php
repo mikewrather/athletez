@@ -165,7 +165,12 @@
 			{
 				$args['location_type'] = trim($this->request->post('location_type'));
 			}
-			
+
+			if(trim($this->request->post('zip')) != "")
+			{
+				$args['zip'] = trim($this->request->post('zip'));
+			}
+
 			$location_obj = ORM::factory("Location_Base");
 			$result = $location_obj->addLocation($args);
 			

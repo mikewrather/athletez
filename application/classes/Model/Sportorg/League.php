@@ -36,8 +36,7 @@ class Model_Sportorg_League extends ORM
 
 			// sections_id (int)
 			'sections_id'=>array(
-				array('not_empty'),
-				array('not_equals', array(':value', 0))
+				array('digit'),
 			),
 
 			// states_id (int)

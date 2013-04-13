@@ -291,7 +291,8 @@
 			// b) EITHER user in main model matches user logged in
 			// c) OR user is an admin
 
-			if(!$this->user || !($this->user->id == $this->mainModel->id || $this->user->has('roles','admin')))
+
+			if(!$this->user || !($this->user->id == $this->mainModel->id || $this->user->has('roles','2')))
 			{
 				// Create Array for Error Data
 				$error_array = array(

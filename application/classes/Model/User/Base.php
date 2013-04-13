@@ -24,7 +24,8 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 		(
 			'model' => 'Role',
 			'through' => 'roles_users',
-			'foreign_key' => 'user_id'
+			'foreign_key' => 'user_id',
+			'far_key' => 'role_id',
 		),
 
 		//Sportorg

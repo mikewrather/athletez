@@ -68,4 +68,6 @@ class Model_Site_Enttype extends ORM
 			"description" => $this->description
 		);
 	}
+
+
 }

@@ -125,7 +125,7 @@
 			}
 			
 			 
-			$result = $this->mainModel->addtordp($args); 
+			$result = $this->mainModel->addToRdp($args);
             //Check for success / error
             if(get_class($result) == get_class($this->mainModel))
             {

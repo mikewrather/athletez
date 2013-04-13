@@ -37,11 +37,13 @@ class Model_User_Resume_Data_Group extends ORM
 			),
 
 			// description (varchar)
-			'resume_data_profiles_id'=>array(
+/*  I'm removing this chunk because the field doesn't exist in this table.
+ * 			'resume_data_profiles_id'=>array(
 				array('not_empty'),
 				array('digit'),
 				array('resume_data_profiles_id_exist'),
 			),
+*/
 		);
 	}
 
@@ -79,8 +81,8 @@ class Model_User_Resume_Data_Group extends ORM
 	{
 		return $this->delete();
 	}
-	
-	public function addtordp($args = array())
+
+	public function addToRdp($args = array())
 	{
 	   extract($args); 
        // add to the resumedata group table and get the resume_data_group_id 

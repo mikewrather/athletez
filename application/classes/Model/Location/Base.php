@@ -9,7 +9,7 @@ class Model_Location_Base extends ORM
 {
 	
 	protected $_table_name = 'locations';
-	
+	public $error_message_path = "models/location/base";
 
 	protected $_belongs_to = array(
 		'city' => array(
@@ -46,7 +46,7 @@ class Model_Location_Base extends ORM
 				array('not_empty'),
 			),
 
-			// lon (float)
+/*			// lon (float)
 			'lon'=>array(
 				array('not_empty'),
 			),
@@ -54,18 +54,18 @@ class Model_Location_Base extends ORM
 			// lat (float)
 			'lat'=>array(
 				array('not_empty'),
-			),
+			), */
 
 			// loc_point (point), Comment by jeffrey, no this field in page, ignore
 			/*
 			'loc_point'=>array(
 				array('not_empty'),
-			),*/
+			),
 
 			// location_type (enum)
 			'location_type'=>array(
 				array('not_empty'),
-			),
+			),*/
 		);
 	}
 
@@ -172,6 +172,11 @@ class Model_Location_Base extends ORM
 		if(isset($loc_point))
 		{
 			$this->loc_point = $loc_point;
+		}
+
+		if(isset($zip))
+		{
+			$this->zip = $zip;
 		}
 		
 		if(isset($location_type))
