@@ -31,6 +31,10 @@ class Model_Site_Entdir extends ORM
 	 */
 	public function getSubject()
 	{
+		//Fix bug when no subject_enttypes_id , subject_id value.
+		if (!isset($this->subject_enttypes_id) && !isset($this->subject_id)){
+			return;
+		}
 		$this->subject = Ent::eFact($this->subject_enttypes_id,$this->subject_id);
 		return $this->subject;
 	}
