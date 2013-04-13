@@ -379,5 +379,5 @@ public function addTeam($post_values = array()){
 			return $e;
 		}
 		return $this;
-	}  
+	}
 }

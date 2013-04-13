@@ -273,6 +273,13 @@
 		public function action_post_player()
 		{
 			$this->payloadDesc = "Add a new player to the roster";
+			if(!$this->mainModel->id)
+			{
+				$this->modelNotSetError();
+				return false;
+			}
+
+			$team_users_link = ORM::factory("User_Teamslink");
 
 		     // CHECK FOR PARAMETERS:
 			// users_id 
@@ -282,6 +289,26 @@
 			{
 				$users_id = (int)trim($this->request->post('users_id'));
 			}
+
+			$args = array(
+				'users_id' => $users_id,
+				'teams_id' => $this->mainModel->id,
+			);
+			$result =  $team_users_link->addPlayer($args);
+
+			//Check for success / error
+			if(get_class($result) == get_class($team_users_link))
+			{
+				return $result;
+			}
+			elseif(get_class($result) == 'ORM_Validation_Exception')
+			{
+				//parse error and add to error array
+				$this->processValidationError($result,$this->mainModel->error_message_path);
+				return false;
+
+			}
+
 
 		}
 		

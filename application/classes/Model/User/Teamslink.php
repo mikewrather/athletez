@@ -28,6 +28,22 @@ class Model_User_Teamslink extends ORM
 			'far_key' => 'positions_id'
 		)
 	);
+
+	public function rules(){
+		return array
+		(
+			'teams_id'=>array(
+				array('not_empty'),
+				array('not_equals', array(':value', 0))
+			),
+
+			'users_id'=>array(
+				array('not_empty'),
+				array('not_equals', array(':value', 0))
+			),
+		);
+	}
+
 	public function getBasics()
 	{
 		return array(
@@ -37,6 +53,21 @@ class Model_User_Teamslink extends ORM
 			"teams_id" => $this->teams_id,
 			"users_id" => $this->users_id
 		);
+	}
+
+	public function addPlayer($args = array()){
+		extract($args);
+		if (isset($teams_id))
+			$this->teams_id = $teams_id;
+		if (isset($users_id))
+			$this->users_id = $users_id;
+		try {
+			$this->save();
+			return $this;
+		} catch(ORM_Validation_Exception $e){
+			return $e;
+		}
+		return $this;
 	}
 
 }
