@@ -103,4 +103,27 @@ class Model_Sportorg_Games_Base extends ORM
 		}
 		return rtrim($name,', ');
 	}
+
+	public function getTeams(){
+		$teams = $this->teams;
+		return $teams;
+	}
+
+	public function getLocation(){
+		$location = $this->location;
+		return $location;
+	}
+
+	public function getMatches(){
+		$matches = $this->matches;
+		return $matches;
+	}
+
+	public function getVideos(){
+		//TODO,
+	}
+
+	public function getImages(){
+		//TODO,
+	}
 }

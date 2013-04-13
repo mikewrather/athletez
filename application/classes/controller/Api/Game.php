@@ -39,7 +39,12 @@
 		{
 			$this->payloadDesc = "Basic information about the game";
 
-		
+			if(!$this->mainModel->id)
+			{
+				$this->modelNotSetError();
+				return false;
+			}
+			return $this->mainModel;
 		}
 		
 		/**
@@ -50,8 +55,12 @@
 		public function action_get_teams()
 		{
 			$this->payloadDesc = "All teams competing in the game";
-
-		
+			if(!$this->mainModel->id)
+			{
+				$this->modelNotSetError();
+				return false;
+			}
+			return $this->mainModel->getTeams();
 		}
 		
 		/**
@@ -62,8 +71,12 @@
 		public function action_get_location()
 		{
 			$this->payloadDesc = "Returns the location of a game";
-
-		
+			if(!$this->mainModel->id)
+			{
+				$this->modelNotSetError();
+				return false;
+			}
+			return $this->mainModel->getLocation();
 		}
 		
 		/**
@@ -74,8 +87,12 @@
 		public function action_get_matches()
 		{
 			$this->payloadDesc = "List of all matches within a given game";
-
-		
+			if(!$this->mainModel->id)
+			{
+				$this->modelNotSetError();
+				return false;
+			}
+			return $this->mainModel->getMatches();
 		}
 		
 		/**
