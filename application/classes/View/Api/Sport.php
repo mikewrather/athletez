@@ -23,14 +23,6 @@
 		public function get_basics()
 		{
 			$retArr = array();
-
-			// Scaffolding Code For Array:
-			$objs = $this->obj->find_all();
-			foreach($objs as $obj)
-			{
-				$retArr[$obj->id] = $obj->getBasics();
-			}
-
 			// Scaffolding Code For Single:
 			$retArr = $this->obj->getBasics();
 
@@ -53,9 +45,6 @@
 				$retArr[$obj->id] = $obj->getBasics();
 			}
 
-			// Scaffolding Code For Single:
-			$retArr = $this->obj->getBasics();
-
 			return $retArr;
 		}
 		
@@ -67,16 +56,12 @@
 		public function get_positions()
 		{
 			$retArr = array();
-
 			// Scaffolding Code For Array:
 			$objs = $this->obj->find_all();
 			foreach($objs as $obj)
 			{
 				$retArr[$obj->id] = $obj->getBasics();
 			}
-
-			// Scaffolding Code For Single:
-			$retArr = $this->obj->getBasics();
 
 			return $retArr;
 		}
@@ -89,14 +74,6 @@
 		public function get_type()
 		{
 			$retArr = array();
-
-			// Scaffolding Code For Array:
-			$objs = $this->obj->find_all();
-			foreach($objs as $obj)
-			{
-				$retArr[$obj->id] = $obj->getBasics();
-			}
-
 			// Scaffolding Code For Single:
 			$retArr = $this->obj->getBasics();
 
@@ -133,14 +110,6 @@
 		public function get_images()
 		{
 			$retArr = array();
-
-			// Scaffolding Code For Array:
-			$objs = $this->obj->find_all();
-			foreach($objs as $obj)
-			{
-				$retArr[$obj->id] = $obj->getBasics();
-			}
-
 			// Scaffolding Code For Single:
 			$retArr = $this->obj->getBasics();
 
@@ -177,14 +146,6 @@
 		public function get_statistics()
 		{
 			$retArr = array();
-
-			// Scaffolding Code For Array:
-			$objs = $this->obj->find_all();
-			foreach($objs as $obj)
-			{
-				$retArr[$obj->id] = $obj->getBasics();
-			}
-
 			// Scaffolding Code For Single:
 			$retArr = $this->obj->getBasics();
 
@@ -199,14 +160,6 @@
 		public function get_stattabs()
 		{
 			$retArr = array();
-
-			// Scaffolding Code For Array:
-			$objs = $this->obj->find_all();
-			foreach($objs as $obj)
-			{
-				$retArr[$obj->id] = $obj->getBasics();
-			}
-
 			// Scaffolding Code For Single:
 			$retArr = $this->obj->getBasics();
 
@@ -221,14 +174,6 @@
 		public function get_users()
 		{
 			$retArr = array();
-
-			// Scaffolding Code For Array:
-			$objs = $this->obj->find_all();
-			foreach($objs as $obj)
-			{
-				$retArr[$obj->id] = $obj->getBasics();
-			}
-
 			// Scaffolding Code For Single:
 			$retArr = $this->obj->getBasics();
 

@@ -110,6 +110,7 @@ class Model_Sportorg_Sport extends ORM
 		
 		return $this->save();
 	}
+
 	public function getBasics()
 	{
 		return array(
@@ -119,6 +120,31 @@ class Model_Sportorg_Sport extends ORM
 			"female" => $this->female,
 			"sport_type_id" => $this->sport_type_id,
 			"sport_type" => $this->type->getBasics()
+
 		);
+	}
+
+	public function getListall($args = array()){
+		extract($args);
+		$sports = ORM::factory('Sportorg_Sport');
+		if ($id != 0){
+			$sports->where('id', '=', $this->id);
+		}
+		return $sports;
+	}
+
+	public function getPositions(){
+		$positions = $this->positions;
+		return $positions;
+	}
+
+	public function getSportType(){
+		$type = $this->type;
+		return $type;
+	}
+
+	public function getAthletes(){
+		$athletes = $this->athletes;
+		return $athletes;
 	}
 }

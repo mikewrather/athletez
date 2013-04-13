@@ -51,7 +51,13 @@
 		{
 			$this->payloadDesc = "Retrives a list of all sports narrowed by a number of optional criteria";
 
-		
+//			if(!$this->mainModel->id)
+//			{
+//				$this->modelNotSetError();
+//				return false;
+//			}
+			$args['id'] = $this->mainModel->id;
+			return $this->mainModel->getListall($args);
 		}
 		
 		/**
@@ -62,8 +68,13 @@
 		public function action_get_positions()
 		{
 			$this->payloadDesc = "Lists all positions for a given sport";
-
-		
+			if(!$this->mainModel->id)
+			{
+				$this->modelNotSetError();
+				return false;
+			}
+			$args['id'] = $this->mainModel->id;
+			return $this->mainModel->getPositions($args);
 		}
 		
 		/**
@@ -74,8 +85,12 @@
 		public function action_get_type()
 		{
 			$this->payloadDesc = "Get the type of sport";
-
-		
+			if(!$this->mainModel->id)
+			{
+				$this->modelNotSetError();
+				return false;
+			}
+			$this->mainModel->getSportType();
 		}
 		
 		/**
