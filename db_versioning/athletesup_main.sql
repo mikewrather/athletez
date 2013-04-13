@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50525
 File Encoding         : 65001
 
-Date: 2013-04-13 01:59:39
+Date: 2013-04-13 02:18:01
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -38,7 +38,7 @@ CREATE TABLE `apiaccess` (
   `entlist_id` int(11) NOT NULL,
   `api_method` enum('GET','POST','PUT','DELETE') DEFAULT 'POST',
   `shortname` varchar(20) DEFAULT NULL,
-  `description` varchar(255) DEFAULT NULL,
+  `description` varchar(1000) DEFAULT NULL,
   `done` tinyint(1) NOT NULL DEFAULT '0',
   `id1` varchar(25) CHARACTER SET latin1 COLLATE latin1_german1_ci DEFAULT NULL,
   `id2` varchar(25) CHARACTER SET latin1 COLLATE latin1_german1_ci DEFAULT NULL,
@@ -229,7 +229,7 @@ INSERT INTO `apiaccess` VALUES ('245', '1', 'POST', 'addidentity', 'Add an aditi
 INSERT INTO `apiaccess` VALUES ('246', '1', 'PUT', 'basics', 'Update basic information about the user', '0', '', '', null);
 INSERT INTO `apiaccess` VALUES ('247', '1', 'PUT', 'team', 'Update the user / team assosication (for future use)', '0', 'users_id', 'teams_id', null);
 INSERT INTO `apiaccess` VALUES ('248', '1', 'PUT', 'sport', 'Update the user / sport association (for future use)', '0', 'users_id', 'sports_id', null);
-INSERT INTO `apiaccess` VALUES ('255', '1', 'PUT', 'fitnessbasics', 'Update basic fitness data for the user', '0', 'users_id', 'fitness_data_id', null);
+INSERT INTO `apiaccess` VALUES ('255', '1', 'PUT', 'fitnessbasics', 'Update basic fitness data for the user.  This will require the logged in user owns the fitness data value or the logged in user is an admin.  This method can work either my taking in the fitness_data_values_id and a new value or fitness_data_id, user_id (can be logged in user), and the new value.', '0', 'users_id', 'fitness_data_id', null);
 INSERT INTO `apiaccess` VALUES ('257', '2', 'PUT', 'basics', 'Update Basic information about the organization', '0', '', '', null);
 INSERT INTO `apiaccess` VALUES ('260', '2', 'PUT', 'division', 'Change the Division for an Organization', '0', '', '', null);
 INSERT INTO `apiaccess` VALUES ('262', '2', 'PUT', 'complevelprofile', 'Change the Competition Level Profiles for the Organization', '0', '', '', null);
@@ -321,7 +321,7 @@ CREATE TABLE `apiparams` (
   `description` varchar(255) DEFAULT NULL,
   `enttypes_id` int(10) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=305 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=309 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of apiparams
@@ -623,6 +623,10 @@ INSERT INTO `apiparams` VALUES ('301', '367', 'teams_id', 'int', '1', 'The ID of
 INSERT INTO `apiparams` VALUES ('302', '368', 'sports_id', 'int', '1', 'The ID of sport to disassociate the user from.  This will be used for individual sports through the user_sport_link table.', '4');
 INSERT INTO `apiparams` VALUES ('303', '418', 'role_id', 'int', '1', 'This is the ID of the role from which to disassociate the user.', '48');
 INSERT INTO `apiparams` VALUES ('304', '419', 'identity_id', 'int', '1', 'This is the ID of the identity from which to disassociate the user.', null);
+INSERT INTO `apiparams` VALUES ('305', '255', 'fitness_data_id', 'int', '0', 'The ID of the fitness data entry you are updating the value for.', null);
+INSERT INTO `apiparams` VALUES ('306', '255', 'users_id', 'int', '0', 'The ID of the user you are updating the value for.  This requires ownership or admin.', null);
+INSERT INTO `apiparams` VALUES ('307', '255', 'user_value', 'int', '1', 'The new value.', null);
+INSERT INTO `apiparams` VALUES ('308', '255', 'fitness_data_values_id', 'int', '0', 'If this is provided, we don\'t need fitness_data_id or users_id.  Still requires ownership or admin access.', null);
 
 -- ----------------------------
 -- Table structure for `cities`

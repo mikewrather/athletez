@@ -3,7 +3,7 @@
 /**
  * User API controller class
  *
- * Date: Auto-generated on Apr 13th, 2013 1:56 am
+ * Date: Auto-generated on Apr 13th, 2013 2:17 am
  *
  * @author: Mike Wrather
  *
@@ -529,15 +529,65 @@
 		}
 		
 		/**
-		 * action_put_fitnessbasics() Update basic fitness data for the user
+		 * action_put_fitnessbasics() Update basic fitness data for the user.  This will require the logged in user owns the fitness data value or the logged in user is an admin.  This method can work either my taking in the fitness_data_values_id and a new value or fitness_data_id, user_id (can be logged in user), and the new value.
 		 * via /api/user/fitnessbasics/{users_id}/fitness_data_id
 		 *
 		 */
 		public function action_put_fitnessbasics()
 		{
-			$this->payloadDesc = "Update basic fitness data for the user";
+			$this->payloadDesc = "Update basic fitness data for the user.  This will require the logged in user owns the fitness data value or the logged in user is an admin.  This method can work either my taking in the fitness_data_values_id and a new value or fitness_data_id, user_id (can be logged in user), and the new value.";
 			$arguments = array();
-		
+		     // CHECK FOR PARAMETERS:
+			// fitness_data_id 
+			// The ID of the fitness data entry you are updating the value for.
+				
+			if((int)trim($this->put('fitness_data_id')) > 0)
+			{
+				$arguments["fitness_data_id"] = (int)trim($this->put('fitness_data_id'));
+			}
+
+			// users_id 
+			// The ID of the user you are updating the value for.  This requires ownership or admin.
+				
+			if((int)trim($this->put('users_id')) > 0)
+			{
+				$arguments["users_id"] = (int)trim($this->put('users_id'));
+			}
+
+			// user_value (REQUIRED)
+			// The new value.
+				
+			if((int)trim($this->put('user_value')) > 0)
+			{
+				$arguments["user_value"] = (int)trim($this->put('user_value'));
+			}
+
+			else // THIS WAS A REQUIRED PARAMETER
+			{
+				// Create Array for Error Data
+				$error_array = array(
+					"error" => "Required Parameter Missing",
+					"param_name" => "user_value",
+					"param_desc" => "The new value."
+				);
+
+				// Set whether it is a fatal error
+				$is_fatal = true;
+
+				// Call method to throw an error
+				$this->addError($error_array,$is_fatal);
+				return false;
+
+			}
+			
+			// fitness_data_values_id 
+			// If this is provided, we don't need fitness_data_id or users_id.  Still requires ownership or admin access.
+				
+			if((int)trim($this->put('fitness_data_values_id')) > 0)
+			{
+				$arguments["fitness_data_values_id"] = (int)trim($this->put('fitness_data_values_id'));
+			}
+
 
 		}
 		
