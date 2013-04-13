@@ -89,67 +89,114 @@ class Model_Sportorg_Team extends ORM
 		return $this->org_sport_link->sport;
 	}
 
-public function addTeam($post_values = array()){
-	extract($post_values);
-	if (isset($org_sport_link_id))
-		$this->org_sport_link_id = $org_sport_link_id;
+	public function addTeam($post_values = array()){
+		extract($post_values);
+		if (isset($org_sport_link_id))
+			$this->org_sport_link_id = $org_sport_link_id;
 
-	if (isset($complevels_id))
-		$this->complevels_id = $complevels_id;
+		if (isset($complevels_id))
+			$this->complevels_id = $complevels_id;
 
-	if (isset($seasons_id))
-		$this->seasons_id = $seasons_id;
+		if (isset($seasons_id))
+			$this->seasons_id = $seasons_id;
 
-	if (isset($year))
-		$this->year = $year;
+		if (isset($year))
+			$this->year = $year;
 
-	if (isset($mascot))
-		$this->mascot = $mascot;
+		if (isset($mascot))
+			$this->mascot = $mascot;
 
-	if (isset($unique_ident))
-		$this->unique_ident = $unique_ident;
+		if (isset($unique_ident))
+			$this->unique_ident = $unique_ident;
 
-	if (!isset($orgs_id))
-		$post_values['orgs_id'] = 0;
+		if (!isset($orgs_id))
+			$post_values['orgs_id'] = 0;
 
-	if (!isset($sports_id))
-		$post_values['sports_id'] = 0;
+		if (!isset($sports_id))
+			$post_values['sports_id'] = 0;
 
-	if ($org_sport_link_id == ""){
-		$external_validate = Validation::factory($post_values)
-			->rule('orgs_id', 'not_equals', array(':value', 0))
-			->rule('sports_id', 'not_equals', array(':value', 0));
-		//if check pass,add org_id,sports_id to db,generate org_sport_id for use
-		if ($external_validate->check()){
-			//check org_sport in db.
-			$org_sport_link_model = ORM::factory("Sportorg_Orgsportlink");
-			$result = $org_sport_link_model->getOrgSportId($orgs_id, $sports_id);
-			if(!$result->loaded())
-			{
-				unset($org_sport_link_model);
+		if ($org_sport_link_id == ""){
+			$external_validate = Validation::factory($post_values)
+				->rule('orgs_id', 'not_equals', array(':value', 0))
+				->rule('sports_id', 'not_equals', array(':value', 0));
+			//if check pass,add org_id,sports_id to db,generate org_sport_id for use
+			if ($external_validate->check()){
+				//check org_sport in db.
 				$org_sport_link_model = ORM::factory("Sportorg_Orgsportlink");
-				//Insert new row to org_sport_link
-				$org_sport_link_model->orgs_id = $orgs_id;//already extracted
-				$org_sport_link_model->sports_id = $sports_id;//already extracted
-				$org_sport_link_model->save();
-				$org_sport_pk = $org_sport_link_model->pk();
-				$this->org_sport_link_id = $org_sport_pk;
+				$result = $org_sport_link_model->getOrgSportId($orgs_id, $sports_id);
+				if(!$result->loaded())
+				{
+					unset($org_sport_link_model);
+					$org_sport_link_model = ORM::factory("Sportorg_Orgsportlink");
+					//Insert new row to org_sport_link
+					$org_sport_link_model->orgs_id = $orgs_id;//already extracted
+					$org_sport_link_model->sports_id = $sports_id;//already extracted
+					$org_sport_link_model->save();
+					$org_sport_pk = $org_sport_link_model->pk();
+					$this->org_sport_link_id = $org_sport_pk;
+				}else{
+					$this->org_sport_link_id = $result->id;
+				}
+			}
+		}else{
+			$external_validate = Validation::factory($this->as_array())
+				->rule('org_sport_link_id', 'check_org_sport_id_exist');
+		}
+
+		try {
+			$this->save($external_validate);
+			return $this;
+		} catch(ORM_Validation_Exception $e){
+				return $e;
+		}
+	}
+
+	public function addGame($args = array()){
+		extract($args);
+		if (isset($game_datetime)){
+			if ($game_datetime == ""){
 			}else{
-				$this->org_sport_link_id = $result->id;
+				$arr = explode(" " ,$game_datetime);
+				$gameDay = $arr[0];
+				$gameTime = $arr[1];
 			}
 		}
-	}else{
-		$external_validate = Validation::factory($this->as_array())
-			->rule('org_sport_link_id', 'check_org_sport_id_exist');
-	}
+		$games_teams_link = ORM::factory("Sportorg_Games_Teamslink");
+		try {
+			if ($games_id == ""){
+				$games_model = ORM::factory("Sportorg_Games_Base");
+				$games_model->gameDay = $gameDay;
+				$games_model->gameTime = $gameTime;
+				$games_model->locations_id = $locations_id;
+				$games_model->save();
 
-	try {
-		$this->save($external_validate);
-		return $this;
-	} catch(ORM_Validation_Exception $e){
+				$new_games_id = $games_model->pk();
+					$games_teams_link->teams_id = $teams_id;
+					$games_teams_link->games_id = $new_games_id;
+					$games_teams_link->is_home_team = $is_home_team;
+					$games_teams_link->tournaments_id = $tournaments_id;
+					$games_teams_link->save();
+
+			}else{
+
+				if (!$games_teams_link->check_combine_primary_key_exist($teams_id, $games_id)){
+					unset($games_teams_link);
+					$games_teams_link = ORM::factory("Sportorg_Games_Teamslink");
+					$games_teams_link->teams_id = $teams_id;
+					$games_teams_link->games_id = $games_id;
+					$games_teams_link->is_home_team = $is_home_team;
+					$games_teams_link->tournaments_id = $tournaments_id;
+					$games_teams_link->save();
+				}else{
+					//Nothing to do
+					echo "Duplicato now";
+				}
+			}
+			return $this;
+		} catch(ORM_Validation_Exception $e){
 			return $e;
+		}
 	}
-}
 		
 	public function getBasics()
 	{

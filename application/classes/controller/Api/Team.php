@@ -221,7 +221,12 @@
 		     // CHECK FOR PARAMETERS:
 			// games_id 
 			// If this is provided, the system will assume the game already exists and simply create the linking row.  If not provided the game will be created.
-				
+			if(!$this->mainModel->id)
+			{
+				$this->modelNotSetError();
+				return false;
+			}
+
 			if((int)trim($this->request->post('games_id')) > 0)
 			{
 				$games_id = (int)trim($this->request->post('games_id'));
@@ -247,10 +252,19 @@
 			// home_team 
 			// True if this team is the home team for the game.
 				
-			if($this->request->post('home_team') != "")
+			if(trim($this->request->post('home_team') != ""))
 			{
 				//convert home_team to a boolean
-				$home_team = (bool)$this->request->post('home_team');
+				$home_team = strtolower(trim($this->request->post('home_team')));
+				if (in_array($home_team, array('true', 'false'))){
+					if ($home_team == 'true'){
+						$home_team = 1;
+					}else{
+						$home_team = 0;
+					}
+				}else{
+					$home_team = 2;// validation not acceptable
+				}
 			}
 
 			// tournaments_id 
@@ -261,8 +275,29 @@
 				$tournaments_id = (int)trim($this->request->post('tournaments_id'));
 			}
 
+			$args = array(
+				'teams_id' => $this->mainModel->id,
+				'games_id' => $games_id,
+				'game_datetime' => $game_datetime,
+				'locations_id' => $locations_id,
+				'is_home_team' => $home_team,
+				'tournaments_id' => $tournaments_id,
+			);
 
+			$result = $this->mainModel->addGame($args);
 
+			//Check for success / error
+			if(get_class($result) == get_class($this->mainModel))
+			{
+				return $result;
+			}
+			elseif(get_class($result) == 'ORM_Validation_Exception')
+			{
+				//parse error and add to error array
+				$this->processValidationError($result,$this->mainModel->error_message_path);
+				return false;
+
+			}
 		}
 		
 		/**
