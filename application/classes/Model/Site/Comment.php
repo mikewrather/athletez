@@ -132,5 +132,10 @@ class Model_Site_Comment extends Model_Site_Entdir
 		return $name;
 	}
 
+	public function getUser(){
+		$user = $this->user;
+		return $user;
+	}
+
 
 }
