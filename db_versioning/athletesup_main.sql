@@ -618,6 +618,10 @@ INSERT INTO `apiparams` VALUES ('296', '216', 'zip', 'string', '0', 'The zip cod
 INSERT INTO `apiparams` VALUES ('297', '421', 'subject_enttypes_id', 'int', '1', 'The Subject Type ID or Ent Type ID defines what type of entity this is', '46');
 INSERT INTO `apiparams` VALUES ('298', '421', 'subject_id', 'int', '1', 'This is the ID that will specify a given row in a table defined separately by Subject Type ID.', null);
 INSERT INTO `apiparams` VALUES ('299', '135', 'locations_id', 'Locations unique ID', '33');
+/*
+ Delete tournaments_id in post_add_game,ref #258
+*/
+delete from apiparams where id = 128;
 -- ----------------------------
 -- Table structure for `cities`
 -- ----------------------------
