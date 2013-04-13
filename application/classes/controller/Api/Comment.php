@@ -127,8 +127,13 @@
 		public function action_get_basics()
 		{
 			$this->payloadDesc = "Basic info on a specific comment";
+			if(!$this->mainModel->id)
+			{
+				$this->modelNotSetError();
+				return false;
+			}
+			return $this->mainModel;
 
-		
 		}
 		
 		/**
@@ -151,8 +156,12 @@
 		public function action_get_user()
 		{
 			$this->payloadDesc = "Return the user responsible for a comment";
-
-		
+			if(!$this->mainModel->id)
+			{
+				$this->modelNotSetError();
+				return false;
+			}
+			$this->mainModel->getUser();
 		}
 		
 		############################################################################
