@@ -134,14 +134,25 @@
 				$locations_id = (int)trim($this->request->post('locations_id'));
 			}
 
-			// tournaments_id 
-			// An optional tournament
-				
-			if((int)trim($this->request->post('tournaments_id')) > 0)
-			{
-				$tournaments_id = (int)trim($this->request->post('tournaments_id'));
-			}
+			$args = array(
+				'game_datetime' => $game_datetime,
+				'locations_id' => $locations_id
+			);
 
+			$result =  $this->mainModel->addGame($args);
+
+			//Check for success / error
+			if(get_class($result) == get_class($this->mainModel))
+			{
+				return $result;
+			}
+			elseif(get_class($result) == 'ORM_Validation_Exception')
+			{
+				//parse error and add to error array
+				$this->processValidationError($result,$this->mainModel->error_message_path);
+				return false;
+
+			}
 		}
 		
 		/**

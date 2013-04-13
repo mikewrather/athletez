@@ -9,7 +9,7 @@ class Model_Sportorg_Games_Base extends ORM
 {
 	
 	protected $_table_name = 'games';
-
+	public $error_message_path = 'models/sportorg/games';
 	protected $_belongs_to = array
 	(
 		'location' => array(
@@ -40,9 +40,7 @@ class Model_Sportorg_Games_Base extends ORM
 
 		return array
 		(
-			/* TODO, below fields not exist in post add page,need set it's value manually.
-			 * Use "correct_date_format" to check the origin date format
-			 *
+
 			// gameDay (date)
 			'gameDay'=>array(
 				array('not_empty'),
@@ -52,13 +50,36 @@ class Model_Sportorg_Games_Base extends ORM
 			'gameTime'=>array(
 				array('not_empty'),
 			),
-			*/
+
 			// locations_id (int)
 			'locations_id'=>array(
 				array('not_empty'),
 				array('not_equals', array(':value', 0))
 			),
 		);
+	}
+
+	public function addGame($args = array()){
+		extract($args);
+		if (isset($game_datetime) && $game_datetime != ""){
+			$arr = explode(' ', $game_datetime);
+			$gameDay = $arr[0];
+			$gameTime = $arr[1];
+			$this->gameDay = $gameDay;
+			//$args['gameDay'] = $gameDay;
+			$this->gameTime = $gameTime;
+			//$args['gameTime'] = $gameTime;
+		}
+
+		if (isset($locations_id))
+			$this->locations_id = $locations_id;
+
+		try {
+			$this->save();
+			return $this;
+		} catch(ORM_Validation_Exception $e){
+			return $e;
+		}
 	}
 
 	public function getBasics()
@@ -81,9 +102,5 @@ class Model_Sportorg_Games_Base extends ORM
 			$name .= $team->name().", ";
 		}
 		return rtrim($name,', ');
-	}
-
-	public function addGame(){
-		//TODO
 	}
 }
