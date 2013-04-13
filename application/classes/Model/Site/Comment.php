@@ -64,6 +64,11 @@ class Model_Site_Comment extends Model_Site_Entdir
 			$this->comment = $comment;
 		}
 
+		if(isset($id) && $id != "" )
+		{
+			$this->id = $id;
+		}
+
 		if(isset($subject_enttypes_id))
 		{
 			$this->subject_enttypes_id = $subject_enttypes_id;

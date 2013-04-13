@@ -248,10 +248,7 @@
 		{
 			$this->payloadDesc = "Update basic info on a specific comment";
 
-		     // CHECK FOR PARAMETERS:
-			// comment 
-			// Update the comment
-
+			/* TODO, add by Jeffrey, Here need to do persmission check in next milestone
 			if(!$this->user)
 			{
 				return false;
@@ -267,11 +264,38 @@
 					echo "Cannot Edit";
 				}
 			}
+			*/
+
+			if(!$this->mainModel->id)
+			{
+				$this->modelNotSetError();
+				return false;
+			}
+
 			if(trim($this->put('comment')) != "")
 			{
 				$comment = trim($this->put('comment'));
 			}
 
+			$args = array(
+				'id' => $this->mainModel->id,
+				'comment' => $comment
+			);
+
+			$result =  $this->mainModel->addComment($args);
+
+			//Check for success / error
+			if(get_class($result) == get_class($this->mainModel))
+			{
+				return $result;
+			}
+			elseif(get_class($result) == 'ORM_Validation_Exception')
+			{
+				//parse error and add to error array
+				$this->processValidationError($result,$this->mainModel->error_message_path);
+				return false;
+
+			}
 		}
 		
 		############################################################################
@@ -288,8 +312,12 @@
 		{
 			$this->payloadDesc = "Delete Comment";
 
-
-		
+			if(!$this->mainModel->id)
+			{
+				$this->modelNotSetError();
+				return false;
+			}
+			return $this->mainModel->delete();
 		}
 		
 	}
