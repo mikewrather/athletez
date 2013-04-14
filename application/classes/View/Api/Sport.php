@@ -146,10 +146,13 @@
 		public function get_statistics()
 		{
 			$retArr = array();
-			// Scaffolding Code For Single:
-			//print_r($this->obj->find()->as_array());
 
-			$retArr = $this->obj->getBasics();
+			// Scaffolding Code For Array:
+			$objs = $this->obj->find_all();
+			foreach($objs as $obj)
+			{
+				$retArr[$obj->id] = $obj->getBasics();
+			}
 
 			return $retArr;
 		}

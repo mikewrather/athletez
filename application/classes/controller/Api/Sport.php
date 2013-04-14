@@ -202,8 +202,7 @@
 				$this->modelNotSetError();
 				return false;
 			}
-			$sport_id = $this->mainModel->id;
-			return $this->mainModel->getStat($sport_id);
+			return $this->mainModel->getStat();
 		}
 		
 		/**

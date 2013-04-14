@@ -181,10 +181,9 @@ class Model_Sportorg_Sport extends ORM
 		return $athletes;
 	}
 
-	public function getStat($id){
-		$state = ORM::factory("Stats_Base");
-		$state->where('sports_id', '=', $id);
-		//print_r($obj);
-		return $state;
+	public function getStat(){
+		$stat = ORM::factory("Stats_Base");
+		$stat->where('sports_id', '=', $this->id)->or_where('sports_id2','=',$this->id);
+		return $stat;
 	}
 }
