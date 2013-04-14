@@ -38,8 +38,12 @@
 		public function action_get_basics()
 		{
 			$this->payloadDesc = "Provides basic information about a sport";
-
-		
+			if(!$this->mainModel->id)
+			{
+				$this->modelNotSetError();
+				return false;
+			}
+			return $this->mainModel;
 		}
 		
 		/**
@@ -259,6 +263,19 @@
 				$complevels_id = (int)trim($this->request->query('complevels_id'));
 			}
 
+			if(!$this->mainModel->id)
+			{
+				$this->modelNotSetError();
+				return false;
+			}
+
+			$args['orgs_id'] = $orgs_id;
+			$args['teams_id'] = $teams_id;
+			$args['seasons_id'] = $seasons_id;
+			$args['positions_id'] = $positions_id;
+			$args['complevels_id'] = $complevels_id;
+
+			return $this->mainModel->getAthletes($args);
 		}
 		
 		############################################################################

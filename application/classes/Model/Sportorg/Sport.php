@@ -27,7 +27,7 @@ class Model_Sportorg_Sport extends ORM
 			'foreign_key' => 'sports_id'
 		),
 		'athletes' => array(
-			'model' => 'Users_Base',
+			'model' => 'User_Base',
 			'through' => 'user_sport_link',
 			'foreign_key' => 'sports_id',
 			'far_key' => 'users_id'
@@ -143,8 +143,41 @@ class Model_Sportorg_Sport extends ORM
 		return $type;
 	}
 
-	public function getAthletes(){
+	public function getAthletes($args = array()){
+
+		extract($args);
+
 		$athletes = $this->athletes;
+
+		$athletes->join('org_sport_link')->on('org_sport_link.sports_id', '=', 'user_sport_link.sports_id');
+
+		$athletes->join('positions')->on('positions.sports_id', '=', 'user_sport_link.sports_id');
+
+		if ( isset($positions_id) && $positions_id !="")
+		{
+			$athletes = $athletes->where('positions.id', '=', $positions_id);
+		}
+
+		if ( isset($orgs_id) && $orgs_id !="")
+		{
+			$athletes = $athletes->where('org_sport_link.orgs_id', '=', $orgs_id);
+		}
+
+		$athletes->join('teams')->on('teams.org_sport_link_id', '=', 'org_sport_link.id');
+
+		if ( isset($teams_id) && $teams_id != "")
+		{
+			$athletes = $athletes->where('teams.id', '=', $teams_id);
+		}
+
+		if ( isset($seasons_id) && $seasons_id != ""){
+			$athletes->where('teams.seasons_id', '=', $seasons_id);
+		}
+
+		if ( isset($complevels_id) && $complevels_id != ""){
+			$athletes->where('teams.complevels_id', '=', $complevels_id);
+		}
+
 		return $athletes;
 	}
 }
