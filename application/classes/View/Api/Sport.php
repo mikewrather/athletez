@@ -147,6 +147,8 @@
 		{
 			$retArr = array();
 			// Scaffolding Code For Single:
+			//print_r($this->obj->find()->as_array());
+
 			$retArr = $this->obj->getBasics();
 
 			return $retArr;

@@ -197,8 +197,13 @@
 		public function action_get_statistics()
 		{
 			$this->payloadDesc = "Gets statistics associated with a given sport";
-
-		
+			if(!$this->mainModel->id)
+			{
+				$this->modelNotSetError();
+				return false;
+			}
+			$sport_id = $this->mainModel->id;
+			return $this->mainModel->getStat($sport_id);
 		}
 		
 		/**
