@@ -42,6 +42,20 @@
 			return true;
 		}
 
+		public static function fitness_datavalue_exist($fitness_data_id, $users_id){
+
+			$games_match_model = ORM::factory("User_Fitness_Dataval");
+			$games_match_model->select("id")
+				->where('fitness_data_id', '=', $fitness_data_id)
+				->and_where('users_id', '=', $users_id)
+				->find();
+			if ($games_match_model->loaded()){
+				//$return_pk = $games_match_model->id;
+				return true;
+			}
+			return false;
+		}
+
 		public static function game_match_id_exist($value){
 			$games_match_model = ORM::factory("Sportorg_Games_Match");
 			$games_match_model->select("id")
@@ -117,6 +131,17 @@
 			return false;
 		}
 
+		public static function fitness_data_values_id_exist($value){
+			$fitness_data_values = ORM::factory("User_Fitness_Dataval");
+			$fitness_data_values->select("id")
+				->where('id', '=', $value)
+				->find();
+			if ($fitness_data_values->loaded()){
+				return true;
+			}
+			return false;
+		}
+
 		public static function stat_contexts_id_exist($value){
 			$stat_contexts = ORM::factory("Stats_Context");
 			$stat_contexts->select("id")
@@ -165,6 +190,17 @@
 			}else{
 				return true;
 			}
+		}
+
+		public static function users_id_exist($value){
+			$resume_data = ORM::factory("User_Base");
+			$resume_data->select("id")
+				->where('id', '=', $value)
+				->find();
+			if ($resume_data->loaded()){
+				return true;
+			}
+			return false;
 		}
 
 		public static function unique_email($value){

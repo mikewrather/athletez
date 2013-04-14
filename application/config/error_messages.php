@@ -22,4 +22,8 @@ return array(
 	"stat_contexts_id_exist" => "Statistic contexts id doesn't exist",
 	"stat_id_exist" => "Statistic id doesn't exist",
 	"resume_data_groups_id_exist" => "Resume datagroups id doesn't exist",
+	"fitness_datavalue_exist" => "Fitness data value doesn't exist",
+	"fitness_data_values_id_exist" => "Fitness data value id doesn't exist",
+	"users_id_exist" => "User id doesn't exist",
+
 );

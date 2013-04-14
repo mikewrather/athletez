@@ -943,9 +943,40 @@
 		 */
 		public function action_put_fitnessbasics()
 		{
-			$this->payloadDesc = "Update basic fitness data for the user";
+			$this->payloadDesc = "Update basic fitness data for the user.  This will require the logged in user owns the fitness data value or the logged in user is an admin.  This method can work either my taking in the fitness_data_values_id and a new value or fitness_data_id, user_id (can be logged in user), and the new value.";
+			$arguments = array();
 
-		
+			$arguments["fitness_data_id"] = trim($this->put('fitness_data_id'));
+
+			$arguments["users_id"] =  trim($this->put('users_id'));
+
+			$arguments["user_value"] = trim($this->put('user_value'));
+
+			$arguments["fitness_data_values_id"] = trim($this->put('fitness_data_values_id'));
+
+
+			if($this->mainModel->id)
+			{
+				$arguments['users_id'] = $this->mainModel->id;
+			}
+
+			//TODO, add by Jeffrey, Here need to do permission check, only owner and admin can update the fitness data
+
+			$fitness_dataval = ORM::factory("User_Fitness_Dataval");
+
+			$result = $fitness_dataval->updateFitnessData($arguments);
+			//Check for success / error
+			if(get_class($result) == get_class($fitness_dataval))
+			{
+				return $result;
+			}
+			elseif(get_class($result) == 'ORM_Validation_Exception')
+			{
+				//parse error and add to error array
+				$this->processValidationError($result,$this->mainModel->error_message_path);
+				return false;
+
+			}
 		}
 		
 		############################################################################
