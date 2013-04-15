@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50525
 File Encoding         : 65001
 
-Date: 2013-04-14 16:36:22
+Date: 2013-04-15 01:08:55
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -44,7 +44,7 @@ CREATE TABLE `apiaccess` (
   `id2` varchar(25) CHARACTER SET latin1 COLLATE latin1_german1_ci DEFAULT NULL,
   `current_status` text,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=422 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=427 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of apiaccess
@@ -307,6 +307,11 @@ INSERT INTO `apiaccess` VALUES ('418', '1', 'DELETE', 'role', 'Delete a user\'s 
 INSERT INTO `apiaccess` VALUES ('419', '1', 'DELETE', 'identity', 'Delete a User\'s Identity', '0', 'users_id', 'identity_id', null);
 INSERT INTO `apiaccess` VALUES ('420', '1', 'POST', 'position', 'Add a Position for a user', '0', null, null, null);
 INSERT INTO `apiaccess` VALUES ('421', '14', 'GET', 'getall', 'Get all comments for a given subject.   This does not require a comment ID and parameters are used to specify the subject instead.', '0', null, null, null);
+INSERT INTO `apiaccess` VALUES ('422', '1', 'POST', 'fbreg', 'Register a new user with Facebook oAuth.  This will pull name, email, gender, birthday, and potentially high school for registration purpose.', '0', null, null, null);
+INSERT INTO `apiaccess` VALUES ('423', '36', 'GET', 'search', 'Used to auto-narrow a list of states based on passed parameters and partial search strings.', '0', null, null, null);
+INSERT INTO `apiaccess` VALUES ('424', '34', 'GET', 'search', 'Used to auto-narrow a list of cities based on passed parameters and partial search strings.', '0', null, null, null);
+INSERT INTO `apiaccess` VALUES ('425', '4', 'GET', 'search', 'Used to auto-narrow a list of sports based on passed parameters and partial search strings.', '0', null, null, null);
+INSERT INTO `apiaccess` VALUES ('426', '2', 'GET', 'search', 'Used to auto-narrow a list of organizations based on passed parameters and partial search strings.', '0', null, null, null);
 
 -- ----------------------------
 -- Table structure for `apiparams`
@@ -321,7 +326,7 @@ CREATE TABLE `apiparams` (
   `description` varchar(255) DEFAULT NULL,
   `enttypes_id` int(10) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=309 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=321 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of apiparams
@@ -408,7 +413,7 @@ INSERT INTO `apiparams` VALUES ('84', '244', 'roles_id', 'int', '0', 'The ID of 
 INSERT INTO `apiparams` VALUES ('85', '245', 'provider', 'string', '0', 'The provider the identity is for', null);
 INSERT INTO `apiparams` VALUES ('86', '245', 'identity', 'string', '0', 'The Identity string for a specific provider', null);
 INSERT INTO `apiparams` VALUES ('87', '135', 'name', 'string', '0', 'The name of the organization', null);
-INSERT INTO `apiparams` VALUES ('88', '135', 'singlesport', 'bool', '0', 'This is a 1 or a 0 for true / false', null);
+INSERT INTO `apiparams` VALUES ('88', '135', 'sports_club', 'bool', '0', 'This is a 1 or a 0 for true / false', null);
 INSERT INTO `apiparams` VALUES ('89', '135', 'season_profiles_id', 'int', '0', 'ID of the Season Profile this organization uses', '7');
 INSERT INTO `apiparams` VALUES ('90', '135', 'complevel_profiles_id', 'int', '0', 'ID of the Competition Level Profile this organization uses', '12');
 INSERT INTO `apiparams` VALUES ('91', '135', 'leagues_id', 'int', '0', 'ID of the League (If Applicable)', '41');
@@ -627,6 +632,18 @@ INSERT INTO `apiparams` VALUES ('305', '255', 'fitness_data_id', 'int', '0', 'Th
 INSERT INTO `apiparams` VALUES ('306', '255', 'users_id', 'int', '0', 'The ID of the user you are updating the value for.  This requires ownership or admin.', null);
 INSERT INTO `apiparams` VALUES ('307', '255', 'user_value', 'int', '1', 'The new value.', null);
 INSERT INTO `apiparams` VALUES ('308', '255', 'fitness_data_values_id', 'int', '0', 'If this is provided, we don\'t need fitness_data_id or users_id.  Still requires ownership or admin access.', null);
+INSERT INTO `apiparams` VALUES ('309', '56', 'orgs_id', 'int', '0', 'If this is provided, the complevel profile can be assertained using the org ID.  This means you can leave the complevel_profiles_id blank', null);
+INSERT INTO `apiparams` VALUES ('310', '42', 'orgs_id', 'int', '0', 'If provided, the season profile can be obtained through the org table instead of being provided explicitly in the URI.', null);
+INSERT INTO `apiparams` VALUES ('311', '423', 'state_name', 'string', '1', 'This is a partial string which will be used to narrow the list.  Because the states list is short a list will be returned after 1 character is typed.', null);
+INSERT INTO `apiparams` VALUES ('312', '424', 'city_name', 'string', '1', 'This is a partial string which will be used to narrow the list.  Because the cities long, no list will be returned unless at least three characters have been provided in the search string.  Searches front of string.', null);
+INSERT INTO `apiparams` VALUES ('313', '425', 'sport_name', 'string', '1', 'This string will search the beginning of the sport name.  Results will be provided after a single character is given.', null);
+INSERT INTO `apiparams` VALUES ('314', '425', 'gender', 'string', '0', 'This can be m/f or \"user\", which will use the gender of the logged in user (if available).', null);
+INSERT INTO `apiparams` VALUES ('315', '425', 'orgs_id', 'int', '0', 'If the orgs_id is provided, the list of sports will be narrowed to those with rows in org_sport_link.', null);
+INSERT INTO `apiparams` VALUES ('316', '426', 'sports_club', 'bool', '0', 'If set to true only sports clubs will be returned.', null);
+INSERT INTO `apiparams` VALUES ('317', '426', 'states_id', 'int', '1', 'This will be necessary to narrow the list because there are so many organizations.', null);
+INSERT INTO `apiparams` VALUES ('318', '426', 'sports_id', 'int', '0', 'Only return orgs which are linked to this sport.', null);
+INSERT INTO `apiparams` VALUES ('319', '426', 'cities_id', 'int', '0', 'Narrow organization by city.', null);
+INSERT INTO `apiparams` VALUES ('320', '125', 'seasons_arr', 'array', '0', 'Array of seasons to add.  This will create multiple teams with one addteam call.', null);
 
 -- ----------------------------
 -- Table structure for `cities`
@@ -35315,28 +35332,29 @@ CREATE TABLE `media` (
 DROP TABLE IF EXISTS `orgs`;
 CREATE TABLE `orgs` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` longtext,
-  `single_sport` smallint(6) DEFAULT NULL,
+  `name` varchar(255) DEFAULT NULL,
+  `sports_club` tinyint(1) DEFAULT NULL,
   `leagues_id` int(11) DEFAULT NULL,
   `divisions_id` int(11) DEFAULT NULL,
   `season_profiles_id` int(11) DEFAULT NULL,
   `complevel_profiles_id` int(11) DEFAULT NULL,
   `locations_id` int(11) DEFAULT NULL,
+  `states_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of orgs
 -- ----------------------------
-INSERT INTO `orgs` VALUES ('1', 'Crossroads School', '0', '1', '1', '1', '1', '1');
-INSERT INTO `orgs` VALUES ('2', 'Anarchist Acadamy', '0', '1', '1', '1', '1', '1');
-INSERT INTO `orgs` VALUES ('6', 'Blair Academy', '0', null, null, '1', '1', '1');
-INSERT INTO `orgs` VALUES ('7', 'Mike Academy', '0', '1', '2', '2', '2', '1');
-INSERT INTO `orgs` VALUES ('8', 'Another One', '1', '3', '4', '1', '2', '1');
-INSERT INTO `orgs` VALUES ('9', 'Another Two', '1', '3', '4', '1', '2', '1');
-INSERT INTO `orgs` VALUES ('10', 'asdfasdfasdf', '1', '4', '4', '1', '2', '1');
-INSERT INTO `orgs` VALUES ('11', 'asdfasdfasdf', '0', '5', '4', '2', '2', '1');
-INSERT INTO `orgs` VALUES ('12', null, '1', null, null, '2', null, null);
+INSERT INTO `orgs` VALUES ('1', 'Crossroads School', '0', '1', '1', '1', '1', '1', null);
+INSERT INTO `orgs` VALUES ('2', 'Anarchist Acadamy', '0', '1', '1', '1', '1', '1', null);
+INSERT INTO `orgs` VALUES ('6', 'Blair Academy', '0', null, null, '1', '1', '1', null);
+INSERT INTO `orgs` VALUES ('7', 'Mike Academy', '0', '1', '2', '2', '2', '1', null);
+INSERT INTO `orgs` VALUES ('8', 'Another One', '1', '3', '4', '1', '2', '1', null);
+INSERT INTO `orgs` VALUES ('9', 'Another Two', '1', '3', '4', '1', '2', '1', null);
+INSERT INTO `orgs` VALUES ('10', 'asdfasdfasdf', '1', '4', '4', '1', '2', '1', null);
+INSERT INTO `orgs` VALUES ('11', 'asdfasdfasdf', '0', '5', '4', '2', '2', '1', null);
+INSERT INTO `orgs` VALUES ('12', null, '1', null, null, '2', null, null, null);
 
 -- ----------------------------
 -- Table structure for `org_league_link`
