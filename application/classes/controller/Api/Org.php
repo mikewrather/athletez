@@ -217,14 +217,14 @@
 				$new_org->name = $name;
 			}
 
-			// singlesport 
+			// sports_club 
 			// This is a 1 or a 0 for true / false
 				
-			if($this->request->post('singlesport') != "")
+			if($this->request->post('sports_club') != "")
 			{
-				//convert singlesport to a boolean
-				$singlesport = $this->request->post('singlesport');
-				$new_org->single_sport = $singlesport;
+				//convert sports_club to a boolean
+				$sports_club = $this->request->post('sports_club');
+				$new_org->sports_club = $sports_club;
 			}
 
 			$season_profiles_id = trim($this->request->post('season_profiles_id'));
@@ -242,8 +242,8 @@
 			//add validation & save logics here
 			$org_validate = Validation::factory($new_org->as_array())
 				->rule('name', 'not_empty')
-				->rule('single_sport', 'not_empty')
-				->rule('single_sport', 'in_array', array(':value', array(0, 1)))
+				->rule('sports_club', 'not_empty')
+				->rule('sports_club', 'in_array', array(':value', array(0, 1)))
 				->rule('season_profiles_id', 'not_equals', array(':value', 0))
 				->rule('complevel_profiles_id', 'not_equals', array(':value', 0))
 				->rule('leagues_id', 'not_equals', array(':value', 0))
@@ -334,10 +334,10 @@
 			// signle_sport 
 			// Change whether this is a one-sport organization
 				
-			if($this->put('signle_sport') != "")
+			if($this->put('sports_club') != "")
 			{
 				//convert signle_sport to a boolean
-				$args['single_sport'] = (bool)$this->put('signle_sport');
+				$args['sports_club'] = (bool)$this->put('sports_club');
 			}
 
 			// leagues_id 

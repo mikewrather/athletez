@@ -71,8 +71,8 @@ class Model_Sportorg_Org extends ORM
 				array('not_empty'),
 			),
 
-			// single_sport (smallint)
-			'single_sport'=>array(
+			// sports_club (smallint)
+			'sports_club'=>array(
 				array('not_empty'),
 				array('in_array', array(':value', array('true', 'false'))),
 			),
@@ -190,7 +190,7 @@ class Model_Sportorg_Org extends ORM
 			"complevel_profiles_id" => $this->complevel_profiles_id,
 			"name" => $this->name,
 			"season_profiles_id" => $this->season_profiles_id,
-			"single_sport" => $this->single_sport,
+			"sports_club" => $this->sports_club,
 			"season_profile" => $this->season_profile->getBasics(),			
 			"complevel_profile" => $this->complevel_profile->getBasics(),
 			"locations" => $this->location->getBasics()
@@ -209,9 +209,9 @@ class Model_Sportorg_Org extends ORM
 
 		// signle_sport 
 		// Change whether this is a one-sport organization
-		if ( isset($single_sport))
+		if ( isset($sports_club))
 		{
-			$this->single_sport = $single_sport;
+			$this->sports_club = $sports_club;
 		}
 
 		// leagues_id 

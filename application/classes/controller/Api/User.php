@@ -209,7 +209,18 @@
 		###########################    POST METHODS    #############################
 		############################################################################
 
-		
+
+		/**
+		 *
+		 */
+		public function action_post_fbreg()
+		{
+			//This is where oauth needs to get taken care of.
+
+			//This should create a new user and return the user's basic info.
+
+		}
+
 		/**
 		 * action_post_add() Create a new user with all necessary basic information (possibly first step of registration)
 		 * via /api/user/add/{0}
@@ -378,161 +389,7 @@
 
 		}
 
-		/**
-		 * Deprecated, comment by Jeffrey
-		 *
-		public function action_post_addteam_old()
-		{
-			$this->payloadDesc = "Add a new team association for a user";
 
-			// Check That:
-			// a) user is loaded
-			// b) EITHER user in main model matches user logged in
-			// c) OR user is an admin
-			if(!$this->user || !($this->user->id == $this->mainModel->id || $this->user->has('roles','admin')))
-			{
-				// Create Array for Error Data
-				$error_array = array(
-					"error" => "This action requires authentication"
-				);
-
-				// Set whether it is a fatal error
-				$is_fatal = true;
-
-				// Call method to throw an error
-				$this->addError($error_array,$is_fatal);
-			}
-
-
-			// CHECK WHAT PARAMETERS WERE PROVIDED IN POST DATA:
-
-			if((int)trim($this->request->post('teams_id')) > 0)
-			{
-				$teams_id = (int)trim($this->request->post('teams_id'));
-			}
-
-			// orgs_id 
-			// Organization ID
-			if((int)trim($this->request->post('orgs_id')) > 0)
-			{
-				$orgs_id = (int)trim($this->request->post('orgs_id'));
-			}
-
-			// sports_id 
-			// Sport ID
-			if((int)trim($this->request->post('sports_id')) > 0)
-			{
-				$sports_id = (int)trim($this->request->post('sports_id'));
-			}
-
-			// complevels_id 
-			// Competition Level ID
-			if((int)trim($this->request->post('complevels_id')) > 0)
-			{
-				$complevels_id = (int)trim($this->request->post('complevels_id'));
-			}
-
-			// seasons_id 
-			// Season ID
-			if((int)trim($this->request->post('seasons_id')) > 0)
-			{
-				$seasons_id = (int)trim($this->request->post('seasons_id'));
-			}
-
-			// year
-			// Year
-			if((int)trim($this->request->post('year')) > 0)
-			{
-				$year = (int)trim($this->request->post('year'));
-			}
-			else
-			{
-				// IF THE YEAR IS NOT SET, SET IT TO CURRENT YEAR
-				$year = date('Y',time());
-			}
-
-			// CHECK THAT DATA:
-			// provides EITHER a team ID OR an organization ID, sport ID, complevel ID, season ID AND a year
-			if(!(isset($teams_id) || (isset($orgs_id) && isset($sports_id) && isset($complevels_id) && isset($seasons_id) && isset($year))))
-			{
-				// Create Array for Error Data
-				$error_array = array(
-					"error" => "Missing Parameters",
-					"desc" => "You must provide either a team ID or an organization ID, sport ID, complevel ID, season ID and a year"
-				);
-
-				// Set whether it is a fatal error
-				$is_fatal = true;
-
-				// Call method to throw an error
-				$this->addError($error_array,$is_fatal);
-			}
-			else // WE HAVE DATA WE NEED.  NOW WE ADD THE TEAM
-			{
-				// set up arguments to pass to the addSport function.
-				// we are either going to pass just a teams ID or the combination of everything else
-				if(isset($teams_id))
-				{
-					$team_args = array(
-						"teams_id" => $teams_id
-					);
-				}
-				else
-				{
-					$team_args = array(
-						"orgs_id" => $orgs_id,
-						"sports_id" => $sports_id,
-						"complevels_id" => $complevels_id,
-						"seasons_id" => $seasons_id,
-						"year" => $year,
-					);
-				}
-
-				// Determine whether we are adding to mainModel (preference) or logged in user
-				if($this->mainModel->id)
-				{
-					$result = $this->mainModel->addTeam($team_args);
-					if($result["success"] == 0)
-					{
-						// Create Array for Error Data
-						$error_array = array(
-							"error" => "Failed To Add",
-							"desc" => $result["errorMsg"]
-						);
-
-						// Set whether it is a fatal error
-						$is_fatal = true;
-
-						// Call method to throw an error
-						$this->addError($error_array,$is_fatal);
-					}
-					return $this->mainModel;
-				}
-				else
-				{
-					// CREATE THE USER OBJECT USING THE ID OF THE LOGGED IN USER
-					$user = ORM::factory('User_Base',$this->user->id);
-					$result = $user->addTeam($team_args);
-					if($result["success"] == 0)
-					{
-						// Create Array for Error Data
-						$error_array = array(
-							"error" => "Failed To Add",
-							"desc" => $result["errorMsg"]
-						);
-
-						// Set whether it is a fatal error
-						$is_fatal = true;
-
-						// Call method to throw an error
-						$this->addError($error_array,$is_fatal);
-					}
-					return $user;
-				}
-
-			}
-		}
-		 */
 		
 		/**
 		 * action_post_addsport() Add a new sport association for a user

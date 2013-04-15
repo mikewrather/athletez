@@ -9,7 +9,7 @@
 $e = Kohana::$config->load('error_messages');
 
 return array(
-	'single_sport' => array(
+	'sports_club' => array(
 		'in_array' => $e->get('bool'),
 	),
 	'season_profiles_id' => array(
