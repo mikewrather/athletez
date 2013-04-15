@@ -138,7 +138,8 @@ Kohana::modules(array(
 	// 'userguide'  => MODPATH . 'userguide',  // User guide and API documentation
 	'KOstache'      => MODPATH . 'kostache',
 	'REST'          => MODPATH . 'rest',
-	"admin"         => MODPATH . 'admin'
+	"admin"         => MODPATH . 'admin',
+	"postmark"         => MODPATH . 'postmark',
 ));
 
 

@@ -651,7 +651,26 @@
 			{
 				$args['email'] = str_replace('%40', '@', trim($this->put('email')));
 			}
-            
+
+			// fullname
+			// Updated First Name
+
+			if(trim($this->put('fullname')) != "")
+			{
+				$fullname = trim($this->put('fullname'));
+				$namearr = explode(' ',$fullname);
+				if(sizeof($namearr) == 2)
+				{
+					$args['firstname'] = $namearr[0];
+					$args['lastname'] = $namearr[1];
+				}
+				elseif(sizeof($namearr) == 3)
+				{
+					$args['firstname'] = $namearr[0]. " " . $namearr[1];
+					$args['lastname'] = $namearr[2];
+				}
+			}
+
 			// firstname 
 			// Updated First Name
 				

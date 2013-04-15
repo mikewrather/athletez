@@ -15,7 +15,16 @@ class Controller_Codegen extends Controller
 
 	public function action_index()
 	{
+		/* Test of Postmark
+		$pm = new Postmark();
+		$pm	->from('donotreply@highlightfront.com', "Mike Wrather")
+			->addTo('mike.wrather@gmail.com','Mike Wrather')
+			->subject('TEST')
+			->messageHtml("TEST");
 
+		$pm->send();
+		print_r($pm);
+		*/
 	}
 
 	public function action_genfiles()
