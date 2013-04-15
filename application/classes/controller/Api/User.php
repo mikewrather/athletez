@@ -230,19 +230,21 @@
 		{
 			$this->payloadDesc = "Create a new user with all necessary basic information (possibly first step of registration)";
 
+			$args = array();
+
 			if(trim($this->request->post('email')) != "")
 			{
-				$email = trim($this->request->post('email'));
+				$args['email'] = trim($this->request->post('email'));
 			}
 
 			if(trim($this->request->post('firstname')) != "")
 			{
-				$firstname = trim($this->request->post('firstname'));
+				$args['firstname'] = trim($this->request->post('firstname'));
 			}
 
 			if(trim($this->request->post('lastname')) != "")
 			{
-				$lastname = trim($this->request->post('lastname'));
+				$args['lastname'] = trim($this->request->post('lastname'));
 			}
 
 			// password 
@@ -250,7 +252,20 @@
 				
 			if(trim($this->request->post('password')) != "")
 			{
-				$password = trim($this->request->post('password'));
+				$args['password'] = $this->request->post('password');
+			}
+
+			// password
+			// User Password
+
+			if(trim($this->request->post('re_password')) != "")
+			{
+				$args['re_password'] = $this->request->post('re_password');
+			}
+
+			if(trim($this->request->post('dob')) != "")
+			{
+				$args['dob'] = date('Y-m-d',strtotime(trim($this->request->post('dob'))));
 			}
 
 			// facebook_id 
@@ -258,27 +273,31 @@
 				
 			if(trim($this->request->post('facebook_id')) != "")
 			{
-				$facebook_id = trim($this->request->post('facebook_id'));
+				$args['facebook_id'] = trim($this->request->post('facebook_id'));
 			}
-						
-			$user_obj = ORM::factory("User_Base");
-			$user_obj->email = $email;
-			$user_obj->first_name = $firstname;
-			$user_obj->last_name = $lastname;
-			$user_obj->password = $password;
-			
-			//$user_obj->facebook_id = $facebook_id; //TODO: Add to database - facebook_id : integer
-			  
-			try
+
+		//	if ( $args['password'] == $args['re_password'])
+		//	{
+				$result = $this->mainModel->addUser($args);
+
+				//Check for success / error
+				if(get_class($result) == get_class($this->mainModel))
+				{
+					return $result;
+				}
+
+				elseif(get_class($result) == 'ORM_Validation_Exception')
+				{
+					//parse error and add to error array
+					$this->processValidationError($result,$this->mainModel->error_message_path);
+					return false;
+
+				}
+	/*		}else
 			{
-				$user_obj->save();
-			} catch (ORM_Validation_Exception $e){
-				$error_arrays = $e->errors('models/user');
-				$error_desc = $this->collect_error_messages($error_arrays);
 				// Create Array for Error Data
 				$error_array = array(
-					"error" => "Unable to save game match info",
-					"desc" => $error_desc
+					"error" => "Please confirm the password",
 				);
 
 				// Set whether it is a fatal error
@@ -287,7 +306,7 @@
 				// Call method to throw an error
 				$this->addError($error_array,$is_fatal);
 			}
-			return $user_obj;
+*/
 		}
 
 		/**

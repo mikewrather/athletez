@@ -194,15 +194,76 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
         if(isset($cities_id))
         {
             $this->cities_id  = $cities_id ;
-        }   
+        }
+
+	    if(isset($re_password))
+	    {
+		//    $this->re_password = $re_password;
+	    }
+
+	    if(isset($password))
+	    {
+		    $this->password = $password;
+	    }
+
         try {
-            $this->save();
+            $this->update();
             return $this;
         } catch(ORM_Validation_Exception $e){
             return $e;
         }
-        return $this; 
     }
+
+	public function addUser($args = array())
+	{
+		extract($args);
+		// email
+		// Updated Email Address
+		if(isset($email))
+		{
+			$this->email = $email;
+		}
+		// firstname
+		// Updated First Name
+		if(isset($firstname))
+		{
+			$this->first_name  = $firstname;
+		}
+
+		// lastname
+		// Updated Last Name
+		if(isset($lastname))
+		{
+			$this->last_name  = $lastname;
+		}
+
+		// password
+		// New Password
+		if(isset($lastname))
+		{
+			$this->last_name  = $lastname;
+		}
+		// cities_id
+		// User's Home City
+		if(isset($cities_id))
+		{
+			$this->cities_id  = $cities_id ;
+		}
+
+
+		if(isset($password))
+		{
+			$this->password = $password;
+		}
+
+		try {
+			$this->create();
+			return $this;
+		} catch(ORM_Validation_Exception $e){
+			return $e;
+		}
+	}
+
 	public function rules(){
 		return array
 		(
