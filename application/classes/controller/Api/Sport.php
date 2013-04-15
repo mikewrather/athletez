@@ -214,7 +214,12 @@
 		{
 			$this->payloadDesc = "Gets the statistics tabs for a given sport";
 
-		
+			if(!$this->mainModel->id)
+			{
+				$this->modelNotSetError();
+				return false;
+			}
+			return $this->mainModel->getStatTabs();
 		}
 		
 		/**

@@ -186,4 +186,10 @@ class Model_Sportorg_Sport extends ORM
 		$stat->where('sports_id', '=', $this->id)->or_where('sports_id2','=',$this->id);
 		return $stat;
 	}
+
+	public function getStatTabs(){
+		$stattabs = ORM::factory("Stats_Tab");
+		$stattabs->where('sport_id', '=', $this->id)->or_where('sport_id2','=',$this->id);
+		return $stattabs;
+	}
 }
