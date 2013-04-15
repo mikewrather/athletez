@@ -255,9 +255,24 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 		{
 			$this->password = $password;
 		}
-
+//		print_r($args);
 		try {
-			$this->create();
+			$extra_validate = Validation::factory($args);
+
+			$extra_validate->rule('password','not_empty');
+			$extra_validate->rule('password','min_length', array(':value', 4));
+			$extra_validate->rule('password','max_length', array(':value', 8));
+
+			$extra_validate->rule('re_password','not_empty');
+			$extra_validate->rule('re_password','min_length', array(':value', 4));
+			$extra_validate->rule('re_password','max_length', array(':value', 8));
+			$extra_validate->rule('re_password','matches', array(':validation', ':field', 'password'));
+
+			if ($this->check($extra_validate)){
+				$this->password = Auth::instance()->hash($password);
+				$this->create();
+			}
+
 			return $this;
 		} catch(ORM_Validation_Exception $e){
 			return $e;
@@ -294,18 +309,8 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 			),
 
 			// password (varchar)
-			'password'=>array(
-				array('not_empty'),
-				array('min_length', array(':value', 4)),
-				array('max_length', array(':value', 8)),
-			),
 
-			're_password'=>array(
-				array('not_empty'),
-				array('min_length', array(':value', 4)),
-				array('max_length', array(':value', 8)),
-				array('matches', array(':validation', ':field', 'password'))
-			),
+
 			/* Validate not required
 			// login_count (int)
 			'login_count'=>array(
@@ -339,6 +344,15 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 				array('digit'),
 			),
 			*/
+		);
+	}
+
+	public function filters()
+	{
+		return array(
+//			'password' => array(
+//				array(array(Auth::instance(), 'hash'))
+//			)
 		);
 	}
 	 
