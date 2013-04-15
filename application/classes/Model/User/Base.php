@@ -135,29 +135,41 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 	 */
 	protected $singlesport = false;
      
-    public function deleteTeam()
+    public function deleteTeam($args)
     {
-        $teams = DB::delete('users_teams_link')->where('users_id','=', $this->id)->execute();
+        $teams = DB::delete('users_teams_link')
+			->where('users_id','=', $this->id)
+			->and_where('teams_id', '=', $args['teams_id'])
+			->execute();
     
         return $teams;
     }
     
-    public function deleteSport()
+    public function deleteSport($args)
     {
-        $sports = DB::delete('user_sport_link')->where('users_id','=', $this->id)->execute();
+        $sports = DB::delete('user_sport_link')
+			->where('users_id','=', $this->id)
+			->and_where('sports_id', '=', $args['sports_id'])
+			->execute();
         return $sports;
     }
     
-    public function deleteRole()
+    public function deleteRole($args)
     {
-        $roles = DB::delete('roles_users')->where('users_id','=', $this->id)->execute();
+        $roles = DB::delete('roles_users')
+			->where('users_id','=', $this->id)
+			->and_where('role_id', '=', $args['role_id'])
+			->execute();
         return $roles;
     }
     
-    public function deleteIdentity()
+    public function deleteIdentity($args)
     {
-        $identity = DB::delete('user_identities')->where('user_id','=', $this->id)->execute();
-        return $identity;
+        $identity = DB::delete('user_identities')
+			->where('user_id','=', $this->id)
+			->and_where('identity', '=', $args['identity_id'])
+			->execute();
+		return $identity;
     }
     
     public function updateUser($args = array())

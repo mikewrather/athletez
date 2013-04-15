@@ -910,7 +910,36 @@
                 $this->modelNotSetError();
                 return false;
             }
-            return $this->mainModel->deleteTeam();            
+
+			$arguments = array();
+			// CHECK FOR PARAMETERS:
+			// teams_id (REQUIRED)
+			// The ID of team to disassociate the user from.  This will delete any connections that exist but won't throw an error if the team-user link does not exist.
+
+			if((int)trim($this->delete('teams_id')) > 0)
+			{
+				$arguments["teams_id"] = (int)trim($this->delete('teams_id'));
+			}
+
+			else // THIS WAS A REQUIRED PARAMETER
+			{
+				// Create Array for Error Data
+				$error_array = array(
+					"error" => "Required Parameter Missing",
+					"param_name" => "teams_id",
+					"param_desc" => "The ID of team to disassociate the user from.  This will delete any connections that exist but won't throw an error if the team-user link does not exist."
+				);
+
+				// Set whether it is a fatal error
+				$is_fatal = true;
+
+				// Call method to throw an error
+				$this->addError($error_array,$is_fatal);
+				return false;
+
+			}
+
+            return $this->mainModel->deleteTeam($arguments);
 		}
 		
 		/**
@@ -927,7 +956,35 @@
                 $this->modelNotSetError();
                 return false;
             }
-            return $this->mainModel->deleteSport();   
+
+			$arguments = array();
+			// CHECK FOR PARAMETERS:
+			// sports_id (REQUIRED)
+			// The ID of sport to disassociate the user from.  This will be used for individual sports through the user_sport_link table.
+
+			if((int)trim($this->delete('sports_id')) > 0)
+			{
+				$arguments["sports_id"] = (int)trim($this->delete('sports_id'));
+			}
+
+			else // THIS WAS A REQUIRED PARAMETER
+			{
+				// Create Array for Error Data
+				$error_array = array(
+					"error" => "Required Parameter Missing",
+					"param_name" => "sports_id",
+					"param_desc" => "The ID of sport to disassociate the user from.  This will be used for individual sports through the user_sport_link table."
+				);
+
+				// Set whether it is a fatal error
+				$is_fatal = true;
+
+				// Call method to throw an error
+				$this->addError($error_array,$is_fatal);
+				return false;
+
+			}
+            return $this->mainModel->deleteSport($arguments);
 		}
 		
 		/**
@@ -939,11 +996,23 @@
 		{
 			$this->payloadDesc = "Delete a user\'s Role";
 
-			if(!$this->user || !($this->user->has('roles','admin')))
+			$arguments = array();
+			// CHECK FOR PARAMETERS:
+			// role_id (REQUIRED)
+			// This is the ID of the role from which to disassociate the user.
+
+			if((int)trim($this->delete('role_id')) > 0)
+			{
+				$arguments["role_id"] = (int)trim($this->delete('role_id'));
+			}
+
+			else // THIS WAS A REQUIRED PARAMETER
 			{
 				// Create Array for Error Data
 				$error_array = array(
-					"error" => "This action requires admin privledges"
+					"error" => "Required Parameter Missing",
+					"param_name" => "role_id",
+					"param_desc" => "This is the ID of the role from which to disassociate the user."
 				);
 
 				// Set whether it is a fatal error
@@ -952,19 +1021,18 @@
 				// Call method to throw an error
 				$this->addError($error_array,$is_fatal);
 				return false;
+
 			}
-
-
 
 			if($this->mainModel->id)
 			{
-                return $this->mainModel->deleteRole();   
+				return $this->mainModel->deleteRole($arguments);
 			}
 			else
-			{                   
-                $this->modelNotSetError();
-                return false;
-			} 
+			{
+				$this->modelNotSetError();
+				return false;
+			}
 		}
 		
 		/**
@@ -981,7 +1049,50 @@
                 $this->modelNotSetError();
                 return false;
             }
-            return $this->mainModel->deleteIdentity();
+
+			$arguments = array();
+			// CHECK FOR PARAMETERS:
+			// identity_id (REQUIRED)
+			// This is the ID of the identity from which to disassociate the user.
+
+			if( trim($this->delete('identity_id')) != "")
+			{
+				$arguments["identity_id"] = trim($this->delete('identity_id'));
+				if (!Valid::identity_exist($arguments["identity_id"])){
+					$error_array = array(
+						"error" => "Identity doesn't exist",
+						"param_name" => "identity_id",
+						"param_desc" => "This is the ID of the identity from which to disassociate the user."
+					);
+
+					// Set whether it is a fatal error
+					$is_fatal = true;
+
+					// Call method to throw an error
+					$this->addError($error_array,$is_fatal);
+					return false;
+				}
+			}
+
+			else // THIS WAS A REQUIRED PARAMETER
+			{
+				// Create Array for Error Data
+				$error_array = array(
+					"error" => "Required Parameter Missing",
+					"param_name" => "identity_id",
+					"param_desc" => "This is the ID of the identity from which to disassociate the user."
+				);
+
+				// Set whether it is a fatal error
+				$is_fatal = true;
+
+				// Call method to throw an error
+				$this->addError($error_array,$is_fatal);
+				return false;
+
+			}
+
+            return $this->mainModel->deleteIdentity($arguments);
 		}
 		
 	}

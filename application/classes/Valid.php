@@ -16,6 +16,20 @@
 			return ($value != $null_value);
 		}
 
+		public static function identity_exist($id){
+			if ($id == ""){
+				return false;
+			}
+			$identity = DB::select('*')
+				->from('user_identities')
+				->where('identity','=', $id)
+				->execute()->as_array();
+			if (count($identity) > 0){
+				return true;
+			}
+			return false;
+		}
+
 		public static function check_org_sport_id_exist($org_sport_id){
 			if ($org_sport_id == ""){
 				return false;
