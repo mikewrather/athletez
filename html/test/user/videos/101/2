@@ -1,9 +1,10 @@
 {            
     "payload": [{
         "video_id": 1,
-        "video_title": "Blair vs Peddie Highlights",
+        "video_title": "Blair vs Peddie Highlights2",
         "video_quality": 0.9,
         "video_thumb": "images/video_thumb.png",
+        "video_src": "images/video_src.png",
         "teams": [                
             "Blair Academy", "Peddie Academy"
         ],
@@ -25,9 +26,10 @@
         "num_comments": 11                
     }, {
         "video_id": 2,
-        "video_title": "Blair vs Peddie Highlights",
+        "video_title": "Blair vs Peddie Highlights21",
         "video_quality": 0.9,
         "video_thumb": "images/video_thumb.png",
+        "video_src": "images/video_src.png",
         "teams": [                
             "Blair Academy", "Peddie Academy"
         ],
@@ -46,9 +48,10 @@
         "num_comments": 20
     }, {
         "video_id": 3,
-        "video_title": "Blair vs Peddie Highlights",
+        "video_title": "Blair vs Peddie Highlights22",
         "video_quality": 0.9,
         "video_thumb": "images/video_thumb.png",
+        "video_src": "images/video_src.png",
         "teams": [                
             "Blair Academy", "Peddie Academy"
         ],
