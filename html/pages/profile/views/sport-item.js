@@ -37,14 +37,13 @@ function (
         initialize: function (options) {
             this.template = sportItemTemplate;
             var self = this;
+            this.id = options.model.collection.id;            
+            var sport_id = this.model.get('payload')['sport_id'];
             function callback() {
-                if (self.rendered)
-                    return;
-                self.rendered = true;
                 self.initTeamList();
+                Channel('refresh-profilepage').publish(sport_id);
             }
-            this.id = options.model.collection.id;
-            Channel('sports:select' + this.model.get('payload')['sport_id']).subscribe(callback);
+            Channel('sports:select' + sport_id).subscribe(callback);
         },
         
         initTeamList: function() {
@@ -67,7 +66,7 @@ function (
             
             function callback () {
                 teamListView.render();
-                self.$el.find('.teams-info').html(teamListView.el);                
+                self.$el.find('.teams-info').html(teamListView.el);
             }
             Channel('teams:fetch').subscribe(callback);
         },

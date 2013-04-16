@@ -19,7 +19,6 @@ define([
     "profile/collections/fitnessbasics",
     "profile/collections/videos",
     "profile/collections/images",
-    "profile/models/primaryvideo",
     "profile/collections/commentsof",
     "profile/collections/commentson",
     
@@ -28,9 +27,8 @@ define([
     "sportorg/views/org-list",
     "user/views/related-list",
     "user/views/fitnessbasic-list",
-    "media/views/video-list",
+    "profile/views/video-list",
     "profile/views/image-list",
-    "media/views/primaryvideo",
     "profile/views/commentof-list",
     "profile/views/commenton-list"
     
@@ -50,7 +48,6 @@ define([
         FitnessBasicList = require("profile/collections/fitnessbasics"),
         VideoList = require("profile/collections/videos"),
         ImageList = require("profile/collections/images"),
-        PrimaryVideoModel = require("profile/models/primaryvideo"),
         CommentOfList = require("profile/collections/commentsof"),
         CommentOnList = require("profile/collections/commentson"),
         
@@ -59,9 +56,8 @@ define([
         OrgListView = require("sportorg/views/org-list"),
         RelatedListView = require("user/views/related-list"),
         FitnessBasicListView = require("user/views/fitnessbasic-list"),
-        VideoListView = require("media/views/video-list"),
+        VideoListView = require("profile/views/video-list"),
         ImageListView = require("profile/views/image-list"),
-        PrimaryVideoView = require("media/views/primaryvideo"),
         CommentOfListView = require("profile/views/commentof-list"),
         CommentOnListView = require("profile/views/commenton-list"),
         
@@ -101,31 +97,7 @@ define([
             this.basics.fetch();
             
             this.addmedia = new AddMediaModel();
-            this.addmedia.id = this.id;            
-            
-            this.orgs = new OrgList();
-            this.orgs.id = this.id;
-            this.orgs.fetch();            
-            
-            this.relateds = new RelatedList();
-            this.relateds.id = this.id;
-            this.relateds.fetch();
-            
-            this.fitnessbasics = new FitnessBasicList();
-            this.fitnessbasics.id = this.id;
-            this.fitnessbasics.fetch();
-            
-            this.videos = new VideoList();
-            this.videos.id = this.id;
-            this.videos.fetch();
-            
-            this.images = new ImageList();
-            this.images.id = this.id;
-            this.images.fetch();
-            
-            this.primaryvideo = new PrimaryVideoModel();
-            this.primaryvideo.id = this.id;
-            this.primaryvideo.fetch();
+            this.addmedia.id = this.id;
             
             this.commentsof = new CommentOfList();
             this.commentsof.id = this.id;
@@ -135,6 +107,39 @@ define([
             this.commentson.id = this.id;
             this.commentson.fetch();
             
+            var controller = this;
+            
+            function callback(sport_id) {
+                controller.refreshPage();
+            
+                controller.orgs = new OrgList();
+                controller.orgs.id = controller.id;
+                controller.orgs.sport_id = sport_id;
+                controller.orgs.fetch();            
+                
+                controller.relateds = new RelatedList();
+                controller.relateds.id = controller.id;
+                controller.relateds.sport_id = sport_id;
+                controller.relateds.fetch();
+                
+                controller.fitnessbasics = new FitnessBasicList();
+                controller.fitnessbasics.id = controller.id;
+                controller.fitnessbasics.sport_id = sport_id;
+                controller.fitnessbasics.fetch();
+                
+                controller.videos = new VideoList();
+                controller.videos.id = controller.id;
+                controller.videos.sport_id = sport_id;
+                controller.videos.fetch();
+                
+                controller.images = new ImageList();
+                controller.images.id = controller.id;
+                controller.images.sport_id = sport_id;
+                controller.images.fetch();
+                
+                controller.handleDeferredsDynamic();
+            }
+            Channel('refresh-profilepage').subscribe(callback);
         },
         
         handleDeferreds: function() {
@@ -144,6 +149,52 @@ define([
                 controller.setupHeaderView();                                
                 controller.setupAddMediaView();
             });
+            
+            $.when(this.commentsof.request).done(function() {
+                controller.setupCommentOfListView();
+            });
+            
+            $.when(this.commentson.request).done(function() {
+                controller.setupCommentOnListView();
+            });
+        },
+        
+        refreshPage: function() {
+            var position;
+            
+            if (this.orgListView) {
+                $(this.orgListView.destination).html('');
+                position = $.inArray(this.orgListView, this.scheme);
+                if ( ~position ) this.scheme.splice(position, 1);
+            }
+            
+            if (this.relatedListView) {
+                $(this.relatedListView.destination).html('');
+                position = $.inArray(this.relatedListView, this.scheme);
+                if ( ~position ) this.scheme.splice(position, 1);
+            }
+            
+            if (this.fitnessBasicListView) {
+                $(this.fitnessBasicListView.destination).html('');
+                position = $.inArray(this.fitnessBasicListView, this.scheme);
+                if ( ~position ) this.scheme.splice(position, 1);
+            }
+            
+            if (this.videoListView) {
+                $(this.videoListView.destination).html('');
+                position = $.inArray(this.videoListView, this.scheme);
+                if ( ~position ) this.scheme.splice(position, 1);
+            }
+            
+            if (this.imageListView) {
+                $(this.imageListView.destination).html('');
+                position = $.inArray(this.imageListView, this.scheme);
+                if ( ~position ) this.scheme.splice(position, 1);
+            }
+        },
+        
+        handleDeferredsDynamic: function() {
+            var controller = this;
             
             $.when(this.orgs.request).done(function() {
                 controller.setupOrgListView();
@@ -163,18 +214,6 @@ define([
             
             $.when(this.images.request).done(function() {
                 controller.setupImageListView();
-            });
-            
-            $.when(this.primaryvideo.request).done(function() {
-                controller.setupPrimaryVideoView();
-            });
-            
-            $.when(this.commentsof.request).done(function() {
-                controller.setupCommentOfListView();
-            });
-            
-            $.when(this.commentson.request).done(function() {
-                controller.setupCommentOnListView();
             });
         },
         
@@ -207,73 +246,60 @@ define([
         setupOrgListView: function() {
             var orgListView;
             
-            orgListView = new OrgListView({
+            this.orgListView = new OrgListView({
                 collection: this.orgs,
                 destination: "#org-wrap"
             });
             
-            this.scheme.push(orgListView);
+            this.scheme.push(this.orgListView);
             this.layout.render();
         },
         
         setupRelatedListView: function() {
             var relatedListView;
             
-            relatedListView = new RelatedListView({
+            this.relatedListView = new RelatedListView({
                 collection: this.relateds,
                 destination: "#related-wrap"
             });
             
-            this.scheme.push(relatedListView);
+            this.scheme.push(this.relatedListView);
             this.layout.render();
         },
         
         setupFitnessBasicListView: function() {
             var fitnessBasicListView;
             
-            fitnessBasicListView = new FitnessBasicListView({
+            this.fitnessBasicListView = new FitnessBasicListView({
                 collection: this.fitnessbasics,
                 destination: "#fitnessbasic-wrap"
             });
             
-            this.scheme.push(fitnessBasicListView);
+            this.scheme.push(this.fitnessBasicListView);
             this.layout.render();
         },
         
         setupVideoListView: function() {
             var videoListView;
             
-            videoListView = new VideoListView({
+            this.videoListView = new VideoListView({
                 collection: this.videos,
                 destination: "#video-wrap"
             });
             
-            this.scheme.push(videoListView);
+            this.scheme.push(this.videoListView);
             this.layout.render();
         },
         
         setupImageListView: function() {
             var imageListView;
             
-            imageListView = new ImageListView({
+            this.imageListView = new ImageListView({
                 collection: this.images,
                 destination: "#image-wrap"
             });
             
-            this.scheme.push(imageListView);
-            this.layout.render();
-        },
-        
-        setupPrimaryVideoView: function() {
-            var primaryVideoView;
-            
-            primaryVideoView = new PrimaryVideoView({
-                model: this.primaryvideo,
-                name: "Primary Video",
-                destination: "#primaryvideo"
-            });
-
-            this.scheme.push(primaryVideoView);            
+            this.scheme.push(this.imageListView);
             this.layout.render();
         },
         

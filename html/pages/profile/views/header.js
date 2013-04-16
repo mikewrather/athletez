@@ -50,16 +50,6 @@ function(require, headerTemplate, selectSportTemplate) {
             this.initSportList();            
         },
         
-        // **Method** `setOptions` - called by BaseView's initialize method
-        setOptions: function (options) {
-            if (!this.model) {
-                throw new Error("HeaderView expects option with model property.");
-            }            
-        },
-        
-        // Child views...
-        childViews: {},
-        
         initSportList: function () {
             var self = this;
             this.sports = new SportList();
@@ -69,7 +59,7 @@ function(require, headerTemplate, selectSportTemplate) {
                 self.setupSportListView();
                 Channel('sports:fetch').publish();
                 self.select_sport = self.$('#select-sport');
-                self.selectSport();                
+                self.selectSport();
             });
         },
         
@@ -86,7 +76,7 @@ function(require, headerTemplate, selectSportTemplate) {
             });            
             
             function callback () {
-                sportListView.render();
+                sportListView.render();                
                 self.$el.find('#sports-info').html(sportListView.el);
                 var data = {"payload": []};
                 var collection = sportListView.collection;
@@ -101,6 +91,20 @@ function(require, headerTemplate, selectSportTemplate) {
                 }                
             }
             Channel('sports:fetch').subscribe(callback);      
+        },
+        
+        // **Method** `setOptions` - called by BaseView's initialize method
+        setOptions: function (options) {
+            if (!this.model) {
+                throw new Error("HeaderView expects option with model property.");
+            }            
+        },
+        
+        // Child views...
+        childViews: {},
+        
+        render: function (domInsertion, dataDecorator, partials) {
+            SectionView.prototype.render.call(this, domInsertion, dataDecorator, partials); 
         },
         
         selectSport: function(event) {

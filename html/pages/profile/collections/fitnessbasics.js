@@ -15,8 +15,8 @@ function(facade, UserFitnessBasicList, utils) {
         
         url: function() {
             if (testpath)
-                return testpath + '/user/fitnessbasics/' + this.id;            
-            return '/api/user/fitnessbasics?user_id=' + this.id;                        
+                return testpath + '/user/fitnessbasics/' + this.id + '/' + this.sport_id;            
+            return '/api/user/fitnessbasics?user_id=' + this.id + '&sport_id=' + this.sport_id;                        
         }
         
 

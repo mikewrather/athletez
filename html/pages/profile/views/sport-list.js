@@ -36,14 +36,7 @@ function(facade,  views,   utils,   SportItemView) {
             }
             _.bindAll(this);
             this.addSubscribers();
-        },
-
-        render: function () {
-            SectionView.prototype.render.call(this);
-            _.delay(this.handleListDisplay, 250);
-            return this;
         }
-
     });
 
     return SportListView;
