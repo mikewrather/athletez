@@ -131,6 +131,19 @@
 				$complevels_id = (int)trim($this->request->query('complevels_id'));
 			}
 
+			$args['users_id'] = $users_id;
+			$args['seasons_id'] = $seasons_id;
+			$args['complevels_id'] = $complevels_id;
+
+			if(!$this->mainModel->id)
+			{
+				$this->modelNotSetError();
+				return false;
+			}
+
+			return $this->mainModel->getVideos($args);
+
+
 		}
 		
 		/**
@@ -166,6 +179,19 @@
 			{
 				$complevels_id = (int)trim($this->request->query('complevels_id'));
 			}
+
+			$args['users_id'] = $users_id;
+			$args['seasons_id'] = $seasons_id;
+			$args['complevels_id'] = $complevels_id;
+
+			if(!$this->mainModel->id)
+			{
+				$this->modelNotSetError();
+				return false;
+			}
+
+			return $this->mainModel->getImages($args);
+
 
 		}
 		

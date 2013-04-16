@@ -73,6 +73,15 @@ class Model_Media_Base extends ORM
 		);
 	}
 
+	public function getMediaForObject(ORM $object)
+	{
+
+		// Get Ent Type ID
+		$enttypeID = Ent::getMyEntTypeID($object);
+		$result = $this->where('subject_type_id','=',$enttypeID);
+		return $result;
+	}
+
 	public function getBasics()
 	{
 		return array(

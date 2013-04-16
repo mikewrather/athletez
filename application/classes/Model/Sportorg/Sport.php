@@ -192,4 +192,52 @@ class Model_Sportorg_Sport extends ORM
 		$stattabs->where('sport_id', '=', $this->id)->or_where('sport_id2','=',$this->id);
 		return $stattabs;
 	}
+
+	public function getVideos($args = array()){
+		$video_model = ORM::factory("Media_Video");
+		$video = $this->media;
+		$video->getMediaForObject($video_model);
+
+		extract($args);
+
+		$video->join('org_sport_link')->on('org_sport_link.sports_id', '=', 'media_base.sports_id');
+		$video->join('teams')->on('teams.org_sport_link_id', '=', 'org_sport_link.id');
+
+		if (isset($users_id) && $users_id !=""){
+			$video->where('media_base.users_id', '=', $users_id);
+		}
+
+		if ( isset($seasons_id) && $seasons_id != ""){
+			$video->where('teams.seasons_id', '=', $seasons_id);
+		}
+
+		if ( isset($complevels_id) && $complevels_id != ""){
+			$video->where('teams.complevels_id', '=', $complevels_id);
+		}
+		return $video;
+	}
+
+	public function getImages($args = array()){
+		$image_model = ORM::factory("Media_Image");
+		$image = $this->media;
+		$image->getMediaForObject($image_model);
+
+		extract($args);
+
+		$image->join('org_sport_link')->on('org_sport_link.sports_id', '=', 'media_base.sports_id');
+		$image->join('teams')->on('teams.org_sport_link_id', '=', 'org_sport_link.id');
+
+		if (isset($users_id) && $users_id !=""){
+			$image->where('media_base.users_id', '=', $users_id);
+		}
+
+		if ( isset($seasons_id) && $seasons_id != ""){
+			$image->where('teams.seasons_id', '=', $seasons_id);
+		}
+
+		if ( isset($complevels_id) && $complevels_id != ""){
+			$image->where('teams.complevels_id', '=', $complevels_id);
+		}
+		return $image;
+	}
 }
