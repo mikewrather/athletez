@@ -64,4 +64,28 @@ class Model_Media_Video extends ORM
 		);
 	}
 
+	public function getVideos($games_id){
+		$games_model = ORM::factory("Sportorg_Games_Base");
+		$games_model->id = $games_id;
+
+		$media_video = ORM::factory("Media_Video");
+		$enttypeID = Ent::getMyEntTypeID($games_model);
+//		$video_results = $media_base->where('subject_type_id','=',$enttypeID)
+//			->and_where('subject_id','=',$games_model->id)
+//			->find_all();
+//		$media_ids = array();
+//		foreach($video_results as $result){
+//			$media_ids[] = $result->id;
+//		}
+//		if (empty($media_ids)){
+//			$media_ids[] = -1;//No media_id match
+//		}
+//		return $media_video->where('media_id','in', $media_ids);
+
+		$media_video->join('media', 'RIGHT')->on('media_video.media_id', '=','media.id')
+			->where('media.subject_type_id', '=', $enttypeID)
+			->and_where('media.subject_id', '=', $games_model->id);
+		return $media_video;
+	}
+
 }

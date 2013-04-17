@@ -15,7 +15,7 @@ class Model_Sportorg_Games_Base extends ORM
 		'location' => array(
 			'model' => 'Location_Base',
 			'foreign_key' => 'locations_id'
-		)
+		),
 	);
 	
 	protected $_has_many = array
@@ -93,7 +93,8 @@ class Model_Sportorg_Games_Base extends ORM
 			"locations_id" => $this->locations_id,
 			"location" => $this->location->getBasics(),
 			"gameDay" => $this->gameDay,
-			"gameTime" => $this->gameTime,						
+			"gameTime" => $this->gameTime,
+			"teams" => $this->teams,
 		);
 	}
 
@@ -121,13 +122,5 @@ class Model_Sportorg_Games_Base extends ORM
 	public function getMatches(){
 		$matches = $this->matches;
 		return $matches;
-	}
-
-	public function getVideos(){
-		//TODO,
-	}
-
-	public function getImages(){
-		//TODO,
 	}
 }

@@ -44,4 +44,16 @@ class Model_Media_Image extends ORM
 			"media" => $this->media->getBasics()
 		);
 	}
+
+	public function getImages($games_id){
+		$games_model = ORM::factory("Sportorg_Games_Base");
+
+		$media_image = ORM::factory("Media_Image");
+		$enttypeID = Ent::getMyEntTypeID($games_model);
+
+		$media_image->join('media', 'RIGHT')->on('media_image.media_id', '=','media.id')
+			->where('media.subject_type_id', '=', $enttypeID)
+			->and_where('media.subject_id', '=', $games_id);
+		return $media_image;
+	}
 }
