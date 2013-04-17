@@ -661,73 +661,54 @@
 		public function action_put_basics()
 		{
 			$this->payloadDesc = "Update basic information about the user";
-            $args = array();
-		     // CHECK FOR PARAMETERS:
-			// email 
+			$arguments = array();
+			// CHECK FOR PARAMETERS:
+			// email
 			// Updated Email Address
-				
+
 			if(trim($this->put('email')) != "")
 			{
-				$args['email'] = str_replace('%40', '@', trim($this->put('email')));
+				$arguments["email"] = urldecode(trim($this->put('email')));
 			}
 
-			// fullname
+			// firstname
 			// Updated First Name
 
-			if(trim($this->put('fullname')) != "")
-			{
-				$fullname = trim($this->put('fullname'));
-				$namearr = explode(' ',$fullname);
-				if(sizeof($namearr) == 2)
-				{
-					$args['firstname'] = $namearr[0];
-					$args['lastname'] = $namearr[1];
-				}
-				elseif(sizeof($namearr) == 3)
-				{
-					$args['firstname'] = $namearr[0]. " " . $namearr[1];
-					$args['lastname'] = $namearr[2];
-				}
-			}
-
-			// firstname 
-			// Updated First Name
-				
 			if(trim($this->put('firstname')) != "")
 			{
-				$args['firstname'] = trim($this->put('firstname'));
+				$arguments["firstname"] = trim($this->put('firstname'));
 			}
 
-			// lastname 
+			// lastname
 			// Updated Last Name
-				
+
 			if(trim($this->put('lastname')) != "")
 			{
-				$args['lastname'] = trim($this->put('lastname'));
+				$arguments["lastname"] = trim($this->put('lastname'));
 			}
 
-			// password 
+			// password
 			// New Password
-				
+
 			if(trim($this->put('password')) != "")
 			{
-				$args['password'] = trim($this->put('password'));
+				$arguments["password"] = trim($this->put('password'));
 			}
 
-			// re_password 
+			// re_password
 			// Re-entered Password for verification
-				
+
 			if(trim($this->put('re_password')) != "")
 			{
-				$args['re_password'] = trim($this->put('re_password'));
+				$arguments["re_password"] = trim($this->put('re_password'));
 			}
 
-			// cities_id 
+			// cities_id
 			// User's Home City
-				
+
 			if((int)trim($this->put('cities_id')) > 0)
 			{
-				$args['cities_id'] = (int)trim($this->put('cities_id'));
+				$arguments["cities_id"] = (int)trim($this->put('cities_id'));
 			}
             
             if(!$this->mainModel->id)
@@ -735,17 +716,15 @@
                 $this->modelNotSetError();
                 return false;
             }
-            
-            if ( $args['password'] == $args['re_password'])
-            {
-                $result = $this->mainModel->updateUser($args);    
+			$arguments['id'] =  $this->mainModel->id;
+
+                $result = $this->mainModel->updateUser($arguments);
                 
                 //Check for success / error
                 if(get_class($result) == get_class($this->mainModel))
                 {
                     return $result;
                 }
-                
                 elseif(get_class($result) == 'ORM_Validation_Exception')
                 {
                     //parse error and add to error array
@@ -753,20 +732,6 @@
                     return false;
 
                 } 
-            }else
-            {   
-                // Create Array for Error Data
-                $error_array = array(
-                    "error" => "Please confirm the password",
-                    "error" => "Please confirm the password",
-                );
-
-                // Set whether it is a fatal error
-                $is_fatal = true;
-
-                // Call method to throw an error
-                $this->addError($error_array,$is_fatal);
-            } 
 		}
 		
 		/**
