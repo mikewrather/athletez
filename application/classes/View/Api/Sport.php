@@ -131,7 +131,7 @@
 			}
 
 			// Scaffolding Code For Single:
-			$retArr = $this->obj->getBasics();
+			//$retArr = $this->obj->getBasics();
 
 			return $retArr;
 		}
