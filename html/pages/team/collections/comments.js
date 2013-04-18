@@ -2,16 +2,16 @@
 // ----------
 
 // Requires define
-// Returns {CommentList} constructor
+// Returns {TeamCommentList} constructor
 
 define(['facade', 'site/collections/comments', 'utils'], 
 function(facade, SiteCommentList, utils) {
 
-    var CommentList,
+    var TeamCommentList,
         _ = facade._,
         Channel = utils.lib.Channel;
 
-    CommentList = SiteCommentList.extend({
+    TeamCommentList = SiteCommentList.extend({
         
         url: function() {
             if (testpath)
@@ -21,5 +21,5 @@ function(facade, SiteCommentList, utils) {
 
     });
 
-    return CommentList;
+    return TeamCommentList;
 });

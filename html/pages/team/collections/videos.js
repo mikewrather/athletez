@@ -3,16 +3,16 @@
 
 // Package Team
 // Requires define
-// Returns {VideoList} constructor
+// Returns {TeamVideoList} constructor
 
 define(['facade', 'media/collections/videos', 'utils'], 
 function(facade, MediaVideoList, utils) {
 
-    var VideoList,
+    var TeamVideoList,
         _ = facade._,
         Channel = utils.lib.Channel;
 
-    VideoList = MediaVideoList.extend({
+    TeamVideoList = MediaVideoList.extend({
         
         url: function() {
             if (testpath)
@@ -22,5 +22,5 @@ function(facade, MediaVideoList, utils) {
 
     });
 
-    return VideoList;
+    return TeamVideoList;
 });

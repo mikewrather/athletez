@@ -2,16 +2,16 @@
 // --------------
 
 define(['facade', 'utils', 'media/views/image-list', 'game/views/add-image'], 
-function(facade,  utils,   BaseImageListView,       AddImageView) {
+function(facade,   utils,   BaseImageListView,        GameAddImageView) {
 
-    var ImageListView, 
+    var GameImageListView, 
         Channel = utils.lib.Channel;
 
-    ImageListView = BaseImageListView.extend({
+    GameImageListView = BaseImageListView.extend({
 
         setupAddView: function() {
             var listView = this,
-                addView = new AddImageView({collection: this.collection}),
+                addView = new GameAddImageView({collection: this.collection}),
                 renderAddView = this.addChildView(addView);
             
             this.childViews.form = addView;
@@ -25,10 +25,10 @@ function(facade,  utils,   BaseImageListView,       AddImageView) {
                 listView.$el.append(addView.el);
             }
             
-            Channel('addimage:fetch').subscribe(callback);
+            Channel('gameaddimage:fetch').subscribe(callback);
         }
 
     });
 
-    return ImageListView;
+    return GameImageListView;
 });

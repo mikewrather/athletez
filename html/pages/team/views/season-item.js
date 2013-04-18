@@ -16,13 +16,13 @@ function (
         seasonItemTemplate
         ) {
 
-    var SeasonItemView
+    var TeamSeasonItemView
       , $ = vendor.$
       , BaseView = views.BaseView
       , Mustache = vendor.Mustache,
       Channel = utils.lib.Channel,
       
-      SeasonItemView = BaseView.extend({
+      TeamSeasonItemView = BaseView.extend({
 
         tagName: "li",
 
@@ -38,7 +38,7 @@ function (
             function callback() {
                 Channel('refresh-teampage').publish(sport_id, complevel_id, season_id);
             }
-            Channel('seasons:select' + sport_id + '-' + complevel_id + '-' + season_id).subscribe(callback);
+            Channel('teamseasons:select' + sport_id + '-' + complevel_id + '-' + season_id).subscribe(callback);
         },
         
         render: function () {
@@ -49,5 +49,5 @@ function (
         
       });
 
-    return SeasonItemView;
+    return TeamSeasonItemView;
 });

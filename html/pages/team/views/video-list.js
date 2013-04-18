@@ -4,10 +4,10 @@
 define(['facade', 'utils', 'media/views/video-list', 'team/views/add-video'], 
 function(facade,  utils,   BaseVideoListView,       AddVideoView) {
 
-    var VideoListView, 
+    var TeamVideoListView, 
         Channel = utils.lib.Channel;
 
-    VideoListView = BaseVideoListView.extend({
+    TeamVideoListView = BaseVideoListView.extend({
         
         setupAddView: function() {
             var listView = this,
@@ -25,10 +25,10 @@ function(facade,  utils,   BaseVideoListView,       AddVideoView) {
                 listView.$el.append(addView.el);
             }
             
-            Channel('addvideo:fetch').subscribe(callback);
+            Channel('teamaddvideo:fetch').subscribe(callback);
         }
 
     });
 
-    return VideoListView;
+    return TeamVideoListView;
 });

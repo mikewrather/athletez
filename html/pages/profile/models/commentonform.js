@@ -5,11 +5,11 @@
 
 define( ["facade", "site/models/comment", "utils"], function (facade, SiteCommentModel, utils) {
 
-    var CommentOnFormModel,
+    var ProfileCommentOnFormModel,
         _ = facade._,
         Channel = utils.lib.Channel;
 
-    CommentOnFormModel = SiteCommentModel.extend({
+    ProfileCommentOnFormModel = SiteCommentModel.extend({
         
         url: function() {
             if (testpath)
@@ -23,11 +23,11 @@ define( ["facade", "site/models/comment", "utils"], function (facade, SiteCommen
         
         fetchSuccess: function (model, response) {
             SiteCommentModel.prototype.fetchSuccess.call(model, response);
-            Channel('commentonform:fetch').publish(model);
+            Channel('gamecommentonform:fetch').publish(model);
         }
         
     });
 
-    return CommentOnFormModel;
+    return ProfileCommentOnFormModel;
 });
 

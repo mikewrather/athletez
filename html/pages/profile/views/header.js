@@ -16,9 +16,9 @@ define([
         'profile/collections/sports',
         'profile/views/sport-list'
         ], 
-function(require, headerTemplate, selectSportTemplate) {
+function(require, profileHeaderTemplate, selectSportTemplate) {
 
-    var HeaderView,
+    var ProfileHeaderView,
         facade = require('facade'),
         views = require('views'),
         BasicsModel = require('profile/models/basics'),
@@ -33,11 +33,11 @@ function(require, headerTemplate, selectSportTemplate) {
         _ = facade._;
         
 
-    HeaderView = SectionView.extend({
+    ProfileHeaderView = SectionView.extend({
 
         id: 'main-header',
 
-        template: headerTemplate,
+        template: profileHeaderTemplate,
         
         selectSportTemplate: selectSportTemplate,
         
@@ -57,7 +57,7 @@ function(require, headerTemplate, selectSportTemplate) {
             this.sports.fetch();
             $.when(this.sports.request).done(function() {
                 self.setupSportListView();
-                Channel('sports:fetch').publish();
+                Channel('gamesports:fetch').publish();
                 self.select_sport = self.$('#select-sport');
                 self.selectSport();
             });
@@ -90,7 +90,7 @@ function(require, headerTemplate, selectSportTemplate) {
                     self.$el.find('#sports-info').html('');
                 }                
             }
-            Channel('sports:fetch').subscribe(callback);      
+            Channel('gamesports:fetch').subscribe(callback);      
         },
         
         // **Method** `setOptions` - called by BaseView's initialize method
@@ -111,11 +111,11 @@ function(require, headerTemplate, selectSportTemplate) {
             var sport_id = this.select_sport.val();
             this.$('.sport-info').stop().slideUp();
             this.$('.sport-info-' + sport_id).stop().slideDown();
-            Channel('sports:select' + sport_id).publish();            
+            Channel('gamesports:select' + sport_id).publish();            
         }
         
                 
     });
 
-    return HeaderView;
+    return ProfileHeaderView;
 });

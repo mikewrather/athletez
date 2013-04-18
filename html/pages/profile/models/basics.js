@@ -5,10 +5,10 @@
 
 define( ["facade", "user/models/basics"], function (facade, UserBasicsModel) {
 
-    var BasicsModel,
+    var ProfileBasicsModel,
         _ = facade._;
 
-    BasicsModel = UserBasicsModel.extend({
+    ProfileBasicsModel = UserBasicsModel.extend({
         
         url: function() {
             if (testpath)
@@ -18,6 +18,6 @@ define( ["facade", "user/models/basics"], function (facade, UserBasicsModel) {
         
     });
 
-    return BasicsModel;
+    return ProfileBasicsModel;
 });
 

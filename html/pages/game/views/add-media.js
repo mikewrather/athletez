@@ -11,7 +11,7 @@ define([
         'facade', 
         'views'
         ], 
-function(require, addMediaTemplate) {
+function(require, gameAddMediaTemplate) {
 
     var AddMediaView,
         facade = require('facade'),
@@ -19,11 +19,11 @@ function(require, addMediaTemplate) {
         SectionView = views.SectionView,
         _ = facade._;
 
-    AddMediaView = SectionView.extend({
+    GameAddMediaView = SectionView.extend({
 
         id: 'add-media',
 
-        template: addMediaTemplate,
+        template: gameAddMediaTemplate,
         
         initialize: function (options) {
             SectionView.prototype.initialize.call(this, options);            
@@ -47,5 +47,5 @@ function(require, addMediaTemplate) {
                 
     });
 
-    return AddMediaView;
+    return GameAddMediaView;
 });

@@ -4,10 +4,10 @@
 define(['facade', 'utils', 'media/views/image-list', 'team/views/add-image'], 
 function(facade,  utils,   BaseImageListView,       AddImageView) {
 
-    var ImageListView, 
+    var TeamImageListView, 
         Channel = utils.lib.Channel;
 
-    ImageListView = BaseImageListView.extend({
+    TeamImageListView = BaseImageListView.extend({
 
         setupAddView: function() {
             var listView = this,
@@ -25,10 +25,10 @@ function(facade,  utils,   BaseImageListView,       AddImageView) {
                 listView.$el.append(addView.el);
             }
             
-            Channel('addimage:fetch').subscribe(callback);
+            Channel('teamaddimage:fetch').subscribe(callback);
         }
 
     });
 
-    return ImageListView;
+    return TeamImageListView;
 });

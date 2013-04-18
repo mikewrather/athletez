@@ -4,10 +4,10 @@
 define(['facade', 'utils', 'site/views/comment-list'],
 function(facade,   utils,   BaseCommentListView) {
 
-    var CommentOfListView, 
+    var ProfileCommentOfListView, 
         Channel = utils.lib.Channel;
 
-    CommentOfListView = BaseCommentListView.extend({
+    ProfileCommentOfListView = BaseCommentListView.extend({
         
         name: "Commentof List",
         
@@ -17,5 +17,5 @@ function(facade,   utils,   BaseCommentListView) {
 
     });
 
-    return CommentOfListView;
+    return ProfileCommentOfListView;
 });

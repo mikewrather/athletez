@@ -1,7 +1,7 @@
 // sport-item.js  
 // -------  
 // Requires `define`
-// Return {SportItemView} object as constructor
+// Return {TeamSportItemView} object as constructor
 
 define([ 
         'vendor', 
@@ -20,7 +20,7 @@ function (
         selectComplevelTemplate
         ) {
 
-    var SportItemView
+    var TeamSportItemView
       , $ = vendor.$
       , BaseView = views.BaseView
       , Mustache = vendor.Mustache,
@@ -28,7 +28,7 @@ function (
       ComplevelListView = require('team/views/complevel-list'),
       ComplevelList = require('team/collections/complevels');
 
-      SportItemView = BaseView.extend({
+      TeamSportItemView = BaseView.extend({
 
         tagName: "li",
 
@@ -53,7 +53,7 @@ function (
                 self.initList();
             }
             this.id = options.model.collection.id;
-            Channel('sports:select' + this.model.get('payload')['sport_id']).subscribe(callback);            
+            Channel('teamsports:select' + this.model.get('payload')['sport_id']).subscribe(callback);            
         },
         
         initList: function() {
@@ -65,7 +65,7 @@ function (
             var sport_id = this.complevels.sport_id;
             $.when(this.complevels.request).done(function() {
                 self.setupComplevelListView(sport_id);
-                Channel('complevels' + sport_id + ':fetch').publish();                
+                Channel('teamcomplevels' + sport_id + ':fetch').publish();                
                 self.select_complevel = self.$('#select-complevel');            
                 self.selectComplevel();
             });
@@ -93,7 +93,7 @@ function (
                     self.$el.find('.complevels').html('');
                 } 
             }
-            Channel('complevels' + sport_id + ':fetch').subscribe(callback);
+            Channel('teamcomplevels' + sport_id + ':fetch').subscribe(callback);
         },
 
         render: function () {
@@ -107,10 +107,10 @@ function (
             var sport_id = this.model.get('payload')['sport_id'];
             this.$('.complevel-info').stop().slideUp();
             this.$('.complevel-info-' + sport_id + '-' + complevel_id).stop().slideDown();
-            Channel('complevels:select' + sport_id + '-' + complevel_id).publish();
+            Channel('teamcomplevels:select' + sport_id + '-' + complevel_id).publish();
         }        
         
       });
 
-    return SportItemView;
+    return TeamSportItemView;
 });

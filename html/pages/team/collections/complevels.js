@@ -3,15 +3,15 @@
 
 // Package Team
 // Requires define
-// Returns {ComplevelsList} constructor
+// Returns {TeamComplevelsList} constructor
 
 define(['facade', 'sportorg/collections/complevels', 'utils'], 
 function(facade, SportorgComplevelList, utils) {
 
-    var ComplevelList,
+    var TeamComplevelList,
         Channel = utils.lib.Channel;
 
-    ComplevelList = SportorgComplevelList.extend({
+    TeamComplevelList = SportorgComplevelList.extend({
         
         url: function() {
             if (testpath)
@@ -21,5 +21,5 @@ function(facade, SportorgComplevelList, utils) {
 
     });
 
-    return ComplevelList;
+    return TeamComplevelList;
 });

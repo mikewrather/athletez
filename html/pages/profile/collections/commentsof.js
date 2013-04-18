@@ -3,15 +3,15 @@
 
 // Package Profile
 // Requires define
-// Returns {CommentOfList} constructor
+// Returns {ProfileCommentOfList} constructor
 
 define(['facade', 'site/collections/comments', 'utils'], 
 function(facade, SiteCommentList, utils) {
 
-    var CommentOfList,
+    var ProfileCommentOfList,
         Channel = utils.lib.Channel;
 
-    CommentOfList = SiteCommentList.extend({
+    ProfileCommentOfList = SiteCommentList.extend({
         
         url: function() {
             if (testpath)
@@ -21,5 +21,5 @@ function(facade, SiteCommentList, utils) {
 
     });
 
-    return CommentOfList;
+    return ProfileCommentOfList;
 });

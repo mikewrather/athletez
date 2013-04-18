@@ -1,14 +1,14 @@
 // videoplayer.js Model
 // ------------
 // Requires define
-// Return {VideoPlayerModel} model constructor object
+// Return {GameVideoPlayerModel} model constructor object
 
 define( ["facade", "media/models/video"], function (facade, MediaVideoModel) {
 
-    var VideoPlayerModel,
+    var GameVideoPlayerModel,
         _ = facade._;
 
-    VideoPlayerModel = MediaVideoModel.extend({
+    GameVideoPlayerModel = MediaVideoModel.extend({
         
         url: function() {
             if (testpath)
@@ -18,6 +18,6 @@ define( ["facade", "media/models/video"], function (facade, MediaVideoModel) {
         
     });
 
-    return VideoPlayerModel;
+    return GameVideoPlayerModel;
 });
 

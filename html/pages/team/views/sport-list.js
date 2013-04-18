@@ -4,17 +4,17 @@
 define(['facade','views', 'utils', 'team/views/sport-item'], 
 function(facade,  views,   utils,   SportItemView) {
 
-    var SportListView, 
-        SportListAbstract,
+    var TeamSportListView, 
+        TeamSportListAbstract,
         $ = facade.$,
         _ = facade._,
         Channel = utils.lib.Channel,
         CollectionView = views.CollectionView,
         SectionView = views.SectionView;
 
-    SportListAbstract = CollectionView.extend(SectionView.prototype);
+    TeamSportListAbstract = CollectionView.extend(SectionView.prototype);
 
-    SportListView = SportListAbstract.extend({
+    TeamSportListView = TeamSportListAbstract.extend({
 
         __super__: CollectionView.prototype,
 
@@ -40,5 +40,5 @@ function(facade,  views,   utils,   SportItemView) {
 
     });
 
-    return SportListView;
+    return TeamSportListView;
 });

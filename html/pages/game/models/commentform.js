@@ -1,15 +1,15 @@
 // comment-form.js Model
 // ------------
 // Requires define
-// Return {CommentFormModel} model constructor object
+// Return {GameCommentFormModel} model constructor object
 
 define( ["facade", "site/models/comment", "utils"], function (facade, SiteCommentModel, utils) {
 
-    var CommentFormModel,
+    var GameCommentFormModel,
         _ = facade._,
         Channel = utils.lib.Channel;
 
-    CommentFormModel = SiteCommentModel.extend({
+    GameCommentFormModel = SiteCommentModel.extend({
         
         url: function() {
             if (testpath)
@@ -23,11 +23,11 @@ define( ["facade", "site/models/comment", "utils"], function (facade, SiteCommen
         
         fetchSuccess: function (model, response) {
             SiteCommentModel.prototype.fetchSuccess.call(model, response);
-            Channel('commentform:fetch').publish(model);
+            Channel('gamecommentform:fetch').publish(model);
         }
         
     });
 
-    return CommentFormModel;
+    return GameCommentFormModel;
 });
 

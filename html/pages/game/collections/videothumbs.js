@@ -3,16 +3,16 @@
 
 // Package Game
 // Requires define
-// Returns {VideoThumbList} constructor
+// Returns {GameVideoThumbList} constructor
 
 define(['facade', 'media/collections/videos', 'utils'], 
 function(facade, MediaVideoList, utils) {
 
-    var VideoThumbList,
+    var GameVideoThumbList,
         _ = facade._,
         Channel = utils.lib.Channel;
 
-    VideoThumbList = MediaVideoList.extend({
+    GameVideoThumbList = MediaVideoList.extend({
         
         url: function() {
             if (testpath)
@@ -22,5 +22,5 @@ function(facade, MediaVideoList, utils) {
 
     });
 
-    return VideoThumbList;
+    return GameVideoThumbList;
 });

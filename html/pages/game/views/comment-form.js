@@ -4,26 +4,26 @@
 
 // Package Game
 // Requires define
-// Returns {CommentFormView} constructor
+// Returns {GameCommentFormView} constructor
 
 define(['require', 'game/models/commentform', 'site/views/comment-form'], 
-function(require,  CommentFormModel,          BaseCommentFormView) {
+function(require,   GameCommentFormModel,      BaseCommentFormView) {
 
-    var CommentFormView;
+    var GameCommentFormView;
 
-    CommentFormView = BaseCommentFormView.extend({
+    GameCommentFormView = BaseCommentFormView.extend({
 
         // **Method** `setOptions` - called by BaseView's initialize method
         setOptions: function (options) {
             if (!this.collection) {
-                throw new Error("CommentFormView expected options.collection.");
+                throw new Error("GameCommentFormView expected options.collection.");
             }
             if (!this.model) {
-                this.model = new CommentFormModel({id: this.collection.id});
+                this.model = new GameCommentFormModel({id: this.collection.id});
                 this.model.fetch();
             }            
         }
     });
 
-    return CommentFormView;
+    return GameCommentFormView;
 });
