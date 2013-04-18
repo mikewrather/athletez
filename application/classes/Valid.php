@@ -81,6 +81,90 @@
 			return false;
 		}
 
+		public static function teams_id_exist($value){
+			if ($value == "" || $value == 0){
+				return false;
+			}
+			$team_model = ORM::factory("Sportorg_Team");
+			$team_model->select("id")
+				->where('id', '=', $value)
+				->find();
+			if ($team_model->loaded()){
+				return true;
+			}
+			return false;
+		}
+
+		public static function complevels_id_exist($value){
+			if ($value == "" || $value == 0){
+				return false;
+			}
+			$complevels_model = ORM::factory("Sportorg_Complevel_Base");
+			$complevels_model->select("id")
+				->where('id', '=', $value)
+				->find();
+			if ($complevels_model->loaded()){
+				return true;
+			}
+			return false;
+		}
+
+		public static function sports_id_exist($value){
+			if ($value == "" || $value == 0){
+				return false;
+			}
+			$sports_model = ORM::factory("Sportorg_Sport");
+			$sports_model->select("id")
+				->where('id', '=', $value)
+				->find();
+			if ($sports_model->loaded()){
+				return true;
+			}
+			return false;
+		}
+
+		public static function roles_id_exist($value){
+			if ($value == "" || $value == 0){
+				return false;
+			}
+			$role_model = ORM::factory("Role");
+			$role_model->select("id")
+				->where('id', '=', $value)
+				->find();
+			if ($role_model->loaded()){
+				return true;
+			}
+			return false;
+		}
+
+		public static function orgs_id_exist($value){
+			if ($value == "" || $value == 0){
+				return false;
+			}
+			$orgs_model = ORM::factory("Sportorg_Org");
+			$orgs_model->select("id")
+				->where('id', '=', $value)
+				->find();
+			if ($orgs_model->loaded()){
+				return true;
+			}
+			return false;
+		}
+
+		public static function seasons_id_exist($value){
+			if ($value == "" || $value == 0){
+				return false;
+			}
+			$seasons_model = ORM::factory("Sportorg_Seasons_Base");
+			$seasons_model->select("id")
+				->where('id', '=', $value)
+				->find();
+			if ($seasons_model->loaded()){
+				return true;
+			}
+			return false;
+		}
+
 		public static function stat_tab_id_exist($value){
 			$stat_tab_model = ORM::factory("Stats_Tab");
 			$stat_tab_model->select("id")

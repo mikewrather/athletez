@@ -264,7 +264,7 @@ class Model_Sportorg_Sport extends ORM
 			->on('rdp_sports_link.resume_data_profiles_id','=','resume_data_profiles.id')
 
 			->join('sports')
-			->on('rdp_sports_link.sports_id','=','sports.id');
+			->on('rdp_sports_link.SPORTS_ID','=','sports.id');
 
 			$resumeData->where('sports.id', '=', $sports_id);
 
