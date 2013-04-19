@@ -102,7 +102,6 @@ class Model_Location_City extends ORM
 	public function getGames($args = array())
 	{
 
-		if(!$this->loaded()) return false;
 		extract($args);
 
 		$games = DB::select('games.id')
@@ -209,7 +208,6 @@ class Model_Location_City extends ORM
 
 	public function getOrgs($args = array())
 	{
-		if(!$this->loaded()) return false;
 		$orgs = ORM::factory('Sportorg_Org')
 			->join('locations','LEFT')
 				->on('sportorg_org.locations_id','=','locations.id')
@@ -217,5 +215,14 @@ class Model_Location_City extends ORM
 
 		return $orgs;
 
+	}
+
+	public function getCities($args = array()){
+		extract($args);
+		$cities = ORM::factory("Location_City");
+		if(isset($city_name))
+			$cities->where('name', 'like', "%$city_name%");
+
+		return $cities;
 	}
 }

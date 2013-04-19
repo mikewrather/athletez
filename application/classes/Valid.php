@@ -16,6 +16,14 @@
 			return ($value != $null_value);
 		}
 
+		public static function location_type_exist($value){
+			if (in_array($value, array('High School', 'Park', 'Other'))){
+				return true;
+			}else{
+				return false;
+			}
+		}
+
 		public static function identity_exist($id){
 			if ($id == ""){
 				return false;

@@ -74,6 +74,15 @@
 			if(trim($this->request->query('loc_type')) != "")
 			{
 				$args['loc_type'] = trim($this->request->query('loc_type'));
+				//make sure all the location type are in enum values
+				if (!Valid::location_type_exist($args['loc_type'])){
+					$error = array(
+						"error" => "Invalid location type",
+						"desc" => "Location type should be 'High School' or 'Park' or 'Other'"
+					);
+					$this->modelNotSetError($error);
+					return false;
+				}
 			}
 			$locations = $this->mainModel->getLocations($args);
 			return $locations;
@@ -158,6 +167,51 @@
 			$games = $this->mainModel->getGames($args);
 			return $games;
 
+		}
+
+		public function action_get_search()
+		{
+			$this->payloadDesc = "Used to auto-narrow a list of cities based on passed parameters and partial search strings.";
+			$arguments = array();
+			// CHECK FOR PARAMETERS:
+			// city_name (REQUIRED)
+			// This is a partial string which will be used to narrow the list.  Because the cities long, no list will be returned unless at least three characters have been provided in the search string.  Searches front of string.
+
+			if(trim($this->request->query('city_name')) != "")
+			{
+				$arguments["city_name"] = trim($this->request->query('city_name'));
+			}
+
+			else // THIS WAS A REQUIRED PARAMETER
+			{
+				// Create Array for Error Data
+				$error_array = array(
+					"error" => "Required Parameter Missing",
+					"param_name" => "city_name",
+					"param_desc" => "This is a partial string which will be used to narrow the list.  Because the cities long, no list will be returned unless at least three characters have been provided in the search string.  Searches front of string."
+				);
+
+				// Set whether it is a fatal error
+				$is_fatal = true;
+
+				// Call method to throw an error
+				$this->addError($error_array,$is_fatal);
+				return false;
+			}
+
+			if (isset($arguments['city_name'])){
+				if (!strlen($arguments['city_name'])>= 3){
+					$error = array(
+						"error" => "Invalid city name",
+						"desc" => "City name must at least have 3 characters"
+					);
+					$this->modelNotSetError($error);
+					return false;
+				}
+			}
+
+			$cities = $this->mainModel->getCities($arguments);
+			return $cities;
 		}
 		
 		############################################################################

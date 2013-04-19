@@ -82,6 +82,19 @@
 
 			return $retArr;
 		}
+
+		public function get_search()
+		{
+			$retArr = array();
+
+			$cities = $this->obj->find_all();
+			foreach($cities as $loc)
+			{
+				$retArr[$loc->id] = $loc->getBasics();
+			}
+
+			return $retArr;
+		}
 		
 		/**
 		 * post_add() Add a new city
