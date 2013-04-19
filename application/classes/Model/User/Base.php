@@ -208,18 +208,36 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
             $this->cities_id  = $cities_id ;
         }
 
-	    if(isset($re_password))
-	    {
-		//    $this->re_password = $re_password;
-	    }
-
 	    if(isset($password))
 	    {
 		    $this->password = $password;
 	    }
 
+		if(isset($id) && $id != "")
+		{
+			$this->id = $id;
+		}
+
         try {
-            $this->update();
+			$extra_validate = Validation::factory($args);
+			if (isset($password)){
+				$extra_validate->rule('password','not_empty');
+				$extra_validate->rule('password','min_length', array(':value', 4));
+				$extra_validate->rule('password','max_length', array(':value', 8));
+
+				$extra_validate->rule('re_password','not_empty');
+				$extra_validate->rule('re_password','min_length', array(':value', 4));
+				$extra_validate->rule('re_password','max_length', array(':value', 8));
+				$extra_validate->rule('re_password','matches', array(':validation', ':field', 'password'));
+
+				if ($this->check($extra_validate)){
+					$this->password = Auth::instance()->hash($password);
+					$this->update();
+				}
+			}else{
+				$this->update();
+			}
+
             return $this;
         } catch(ORM_Validation_Exception $e){
             return $e;

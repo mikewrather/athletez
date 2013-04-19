@@ -1,15 +1,15 @@
 // addvideo.js Model
 // ------------
 // Requires define
-// Return {AddVideoModel} model constructor object
+// Return {GameAddVideoModel} model constructor object
 
 define( ["facade", "media/models/video", "utils"], function (facade, MediaVideoModel, utils) {
 
-    var AddVideoModel,
+    var GameAddVideoModel,
         _ = facade._,
         Channel = utils.lib.Channel;
 
-    AddVideoModel = MediaVideoModel.extend({
+    GameAddVideoModel = MediaVideoModel.extend({
         
         url: function() {
             if (testpath)
@@ -24,11 +24,11 @@ define( ["facade", "media/models/video", "utils"], function (facade, MediaVideoM
         
         fetchSuccess: function (model, response) {
             MediaVideoModel.prototype.fetchSuccess.call(model, response);
-            Channel('addvideo:fetch').publish(model);
+            Channel('gameaddvideo:fetch').publish(model);
         }
         
     });
 
-    return AddVideoModel;
+    return GameAddVideoModel;
 });
 

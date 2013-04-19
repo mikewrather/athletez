@@ -2,16 +2,16 @@
 // --------------
 
 define(['facade', 'utils', 'site/views/comment-list', 'team/views/comment-form'], 
-function(facade,   utils,   BaseCommentListView,       CommentFormView) {
+function(facade,   utils,   BaseCommentListView,       TeamCommentFormView) {
 
-    var CommentListView, 
+    var TeamCommentListView, 
         Channel = utils.lib.Channel;
 
-    CommentListView = BaseCommentListView.extend({
+    TeamCommentListView = BaseCommentListView.extend({
 
         setupFormView: function () {
             var listView = this,
-                formView = new CommentFormView({collection: this.collection}),
+                formView = new TeamCommentFormView({collection: this.collection}),
                 renderAddView = this.addChildView(formView);
             
             this.childViews.form = formView;
@@ -25,10 +25,10 @@ function(facade,   utils,   BaseCommentListView,       CommentFormView) {
                 listView.$el.prepend(formView.el);
             }
             
-            Channel('commentform:fetch').subscribe(callback);
+            Channel('teamcommentform:fetch').subscribe(callback);
         }
 
     });
 
-    return CommentListView;
+    return TeamCommentListView;
 });

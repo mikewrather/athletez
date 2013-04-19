@@ -2,19 +2,19 @@
 // --------------
 
 define(['facade','views', 'utils', 'profile/views/sport-item'], 
-function(facade,  views,   utils,   SportItemView) {
+function(facade,  views,   utils,   ProfileSportItemView) {
 
-    var SportListView, 
-        SportListAbstract,
+    var ProfileSportListView, 
+        ProfileSportListAbstract,
         $ = facade.$,
         _ = facade._,
         Channel = utils.lib.Channel,
         CollectionView = views.CollectionView,
         SectionView = views.SectionView;
 
-    SportListAbstract = CollectionView.extend(SectionView.prototype);
+    ProfileSportListAbstract = CollectionView.extend(SectionView.prototype);
 
-    SportListView = SportListAbstract.extend({
+    ProfileSportListView = ProfileSportListAbstract.extend({
 
         __super__: CollectionView.prototype,
 
@@ -27,7 +27,7 @@ function(facade,  views,   utils,   SportItemView) {
         _className: "sport",
 
         // Store constructor for the child views
-        _view: SportItemView,
+        _view: ProfileSportItemView,
 
         initialize: function(options) {
             CollectionView.prototype.initialize.call(this, options);
@@ -39,5 +39,5 @@ function(facade,  views,   utils,   SportItemView) {
         }
     });
 
-    return SportListView;
+    return ProfileSportListView;
 });

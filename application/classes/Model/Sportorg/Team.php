@@ -42,9 +42,9 @@ class Model_Sportorg_Team extends ORM
 		),
 		'athletes' => array(
 			'model' => 'User_Base',
-			'through' => 'users_teams_link',
 			'foreign_key' => 'teams_id',
-			'far_key' => 'users_id'
+			'far_key' => 'users_id',
+			'through' => 'users_teams_link'
 		),
 		
 		// StatVals

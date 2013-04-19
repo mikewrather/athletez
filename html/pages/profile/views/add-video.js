@@ -2,26 +2,26 @@
 // ---------
 
 // Requires define
-// Returns {AddVideoView} constructor
+// Returns {ProfileAddVideoView} constructor
 
 define(['require', 'profile/models/addvideo', 'media/views/add-video'], 
-function(require,  AddVideoModel,          BaseAddVideoView) {
+function(require,   ProfileAddVideoModel,      BaseAddVideoView) {
 
-    var AddVideoView;
+    var ProfileAddVideoView;
 
-    AddVideoView = BaseAddVideoView.extend({
+    ProfileAddVideoView = BaseAddVideoView.extend({
 
         // **Method** `setOptions` - called by BaseView's initialize method
         setOptions: function (options) {
             if (!this.collection) {
-                throw new Error("AddVideoView expected options.collection.");
+                throw new Error("ProfileAddVideoView expected options.collection.");
             }
             if (!this.model) {
-                this.model = new AddVideoModel({id: this.collection.id, sport_id: this.collection.sport_id});                
+                this.model = new ProfileAddVideoModel({id: this.collection.id, sport_id: this.collection.sport_id});                
                 this.model.fetch();
             }            
         }
     });
 
-    return AddVideoView;
+    return ProfileAddVideoView;
 });

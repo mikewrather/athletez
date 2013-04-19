@@ -2,14 +2,14 @@
 // ---------
 
 // Requires define
-// Returns {AddImageView} constructor
+// Returns {TeamAddImageView} constructor
 
 define(['require', 'team/models/addimage', 'media/views/add-image'], 
-function(require,  AddImageModel,          BaseAddImageView) {
+function(require,  TeamAddImageModel,          BaseAddImageView) {
 
-    var AddImageView;
+    var TeamAddImageView;
 
-    AddImageView = BaseAddImageView.extend({
+    TeamAddImageView = BaseAddImageView.extend({
 
         // **Method** `setOptions` - called by BaseView's initialize method
         setOptions: function (options) {
@@ -17,11 +17,11 @@ function(require,  AddImageModel,          BaseAddImageView) {
                 throw new Error("AddImageView expected options.collection.");
             }
             if (!this.model) {
-                this.model = new AddImageModel({id: this.collection.id, sport_id: this.collection.sport_id, complevel_id: this.collection.complevel_id, season_id: this.collection.season_id});                
+                this.model = new TeamAddImageModel({id: this.collection.id, sport_id: this.collection.sport_id, complevel_id: this.collection.complevel_id, season_id: this.collection.season_id});                
                 this.model.fetch();
             }            
         }
     });
 
-    return AddImageView;
+    return TeamAddImageView;
 });

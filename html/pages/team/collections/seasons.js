@@ -3,15 +3,15 @@
 
 // Package Team
 // Requires define
-// Returns {SeasonList} constructor
+// Returns {TeamSeasonList} constructor
 
 define(['facade', 'sportorg/collections/seasons', 'utils'], 
 function(facade, SportorgSeasonList, utils) {
 
-    var SeasonList,
+    var TeamSeasonList,
         Channel = utils.lib.Channel;
 
-    SeasonList = SportorgSeasonList.extend({
+    TeamSeasonList = SportorgSeasonList.extend({
         
         url: function() {
             if (testpath)
@@ -21,5 +21,5 @@ function(facade, SportorgSeasonList, utils) {
 
     });
 
-    return SeasonList;
+    return TeamSeasonList;
 });

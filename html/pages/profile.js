@@ -41,25 +41,25 @@ define([
         views = require("views"),
         utils = require("utils"),
         
-        BasicsModel = require("profile/models/basics"),
-        AddMediaModel = require("profile/models/addmedia"),
-        OrgList = require("profile/collections/orgs"),
-        RelatedList = require("profile/collections/relateds"),
-        FitnessBasicList = require("profile/collections/fitnessbasics"),
-        VideoList = require("profile/collections/videos"),
-        ImageList = require("profile/collections/images"),
-        CommentOfList = require("profile/collections/commentsof"),
-        CommentOnList = require("profile/collections/commentson"),
+        ProfileBasicsModel = require("profile/models/basics"),
+        ProfileAddMediaModel = require("profile/models/addmedia"),
+        ProfileOrgList = require("profile/collections/orgs"),
+        ProfileRelatedList = require("profile/collections/relateds"),
+        ProfileFitnessBasicList = require("profile/collections/fitnessbasics"),
+        ProfileVideoList = require("profile/collections/videos"),
+        ProfileImageList = require("profile/collections/images"),
+        ProfileCommentOfList = require("profile/collections/commentsof"),
+        ProfileCommentOnList = require("profile/collections/commentson"),
         
         ProfileHeaderView = require("profile/views/header"),
-        AddMediaView = require("profile/views/add-media"),
-        OrgListView = require("sportorg/views/org-list"),
-        RelatedListView = require("user/views/related-list"),
-        FitnessBasicListView = require("user/views/fitnessbasic-list"),
-        VideoListView = require("profile/views/video-list"),
-        ImageListView = require("profile/views/image-list"),
-        CommentOfListView = require("profile/views/commentof-list"),
-        CommentOnListView = require("profile/views/commenton-list"),
+        ProfileAddMediaView = require("profile/views/add-media"),
+        ProfileOrgListView = require("sportorg/views/org-list"),
+        ProfileRelatedListView = require("user/views/related-list"),
+        ProfileFitnessBasicListView = require("user/views/fitnessbasic-list"),
+        ProfileVideoListView = require("profile/views/video-list"),
+        ProfileImageListView = require("profile/views/image-list"),
+        ProfileCommentOfListView = require("profile/views/commentof-list"),
+        ProfileCommentOnListView = require("profile/views/commenton-list"),
         
         LayoutView = views.LayoutView,
         $ = facade.$,
@@ -92,18 +92,18 @@ define([
         
         createData: function () {
             this.id = '101';
-            this.basics = new BasicsModel();
+            this.basics = new ProfileBasicsModel();
             this.basics.id = this.id;
             this.basics.fetch();
             
-            this.addmedia = new AddMediaModel();
+            this.addmedia = new ProfileAddMediaModel();
             this.addmedia.id = this.id;
             
-            this.commentsof = new CommentOfList();
+            this.commentsof = new ProfileCommentOfList();
             this.commentsof.id = this.id;
             this.commentsof.fetch();
             
-            this.commentson = new CommentOnList();
+            this.commentson = new ProfileCommentOnList();
             this.commentson.id = this.id;
             this.commentson.fetch();
             
@@ -112,27 +112,27 @@ define([
             function callback(sport_id) {
                 controller.refreshPage();
             
-                controller.orgs = new OrgList();
+                controller.orgs = new ProfileOrgList();
                 controller.orgs.id = controller.id;
                 controller.orgs.sport_id = sport_id;
                 controller.orgs.fetch();            
                 
-                controller.relateds = new RelatedList();
+                controller.relateds = new ProfileRelatedList();
                 controller.relateds.id = controller.id;
                 controller.relateds.sport_id = sport_id;
                 controller.relateds.fetch();
                 
-                controller.fitnessbasics = new FitnessBasicList();
+                controller.fitnessbasics = new ProfileFitnessBasicList();
                 controller.fitnessbasics.id = controller.id;
                 controller.fitnessbasics.sport_id = sport_id;
                 controller.fitnessbasics.fetch();
                 
-                controller.videos = new VideoList();
+                controller.videos = new ProfileVideoList();
                 controller.videos.id = controller.id;
                 controller.videos.sport_id = sport_id;
                 controller.videos.fetch();
                 
-                controller.images = new ImageList();
+                controller.images = new ProfileImageList();
                 controller.images.id = controller.id;
                 controller.images.sport_id = sport_id;
                 controller.images.fetch();
@@ -233,7 +233,7 @@ define([
         setupAddMediaView: function() {
             var addMediaView;
             
-            addMediaView = new AddMediaView({
+            addMediaView = new ProfileAddMediaView({
                 model: this.addmedia,
                 name: "Add Media",
                 destination: "#add-media"
@@ -246,7 +246,7 @@ define([
         setupOrgListView: function() {
             var orgListView;
             
-            this.orgListView = new OrgListView({
+            this.orgListView = new ProfileOrgListView({
                 collection: this.orgs,
                 destination: "#org-wrap"
             });
@@ -258,7 +258,7 @@ define([
         setupRelatedListView: function() {
             var relatedListView;
             
-            this.relatedListView = new RelatedListView({
+            this.relatedListView = new ProfileRelatedListView({
                 collection: this.relateds,
                 destination: "#related-wrap"
             });
@@ -270,7 +270,7 @@ define([
         setupFitnessBasicListView: function() {
             var fitnessBasicListView;
             
-            this.fitnessBasicListView = new FitnessBasicListView({
+            this.fitnessBasicListView = new ProfileFitnessBasicListView({
                 collection: this.fitnessbasics,
                 destination: "#fitnessbasic-wrap"
             });
@@ -282,7 +282,7 @@ define([
         setupVideoListView: function() {
             var videoListView;
             
-            this.videoListView = new VideoListView({
+            this.videoListView = new ProfileVideoListView({
                 collection: this.videos,
                 destination: "#video-wrap"
             });
@@ -294,7 +294,7 @@ define([
         setupImageListView: function() {
             var imageListView;
             
-            this.imageListView = new ImageListView({
+            this.imageListView = new ProfileImageListView({
                 collection: this.images,
                 destination: "#image-wrap"
             });
@@ -306,7 +306,7 @@ define([
         setupCommentOfListView: function() {
             var commentOfListView;
             
-            commentOfListView = new CommentOfListView({
+            commentOfListView = new ProfileCommentOfListView({
                 collection: this.commentsof,
                 destination: "#commentof-wrap"
             });
@@ -318,7 +318,7 @@ define([
         setupCommentOnListView: function() {
             var commentOnListView;
             
-            commentOnListView = new CommentOnListView({
+            commentOnListView = new ProfileCommentOnListView({
                 collection: this.commentson,
                 destination: "#commenton-wrap"
             });

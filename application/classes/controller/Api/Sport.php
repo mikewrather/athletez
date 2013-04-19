@@ -203,16 +203,23 @@
 		public function action_get_resumedata()
 		{
 			$this->payloadDesc = "Retrieves resume data related to the sport";
-
-		     // CHECK FOR PARAMETERS:
-			// users_id 
+			$arguments = array();
+			// CHECK FOR PARAMETERS:
+			// users_id
 			// Filter resume data associated with a given sport to a specific user
-				
+
 			if((int)trim($this->request->query('users_id')) > 0)
 			{
-				$users_id = (int)trim($this->request->query('users_id'));
+				$arguments["users_id"] = (int)trim($this->request->query('users_id'));
 			}
 
+			if(!$this->mainModel->id)
+			{
+				$this->modelNotSetError();
+				return false;
+			}
+			$arguments['sports_id'] = $this->mainModel->id;
+			return $this->mainModel->getResumeData($arguments);
 		}
 		
 		/**

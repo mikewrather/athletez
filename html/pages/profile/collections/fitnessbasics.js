@@ -3,15 +3,15 @@
 
 // Package Profile
 // Requires define
-// Returns {FitnessBasicList} constructor
+// Returns {ProfileFitnessBasicList} constructor
 
 define(['facade', 'user/collections/fitnessbasics', 'utils'], 
 function(facade, UserFitnessBasicList, utils) {
 
-    var FitnessBasicList,
+    var ProfileFitnessBasicList,
         Channel = utils.lib.Channel;
 
-    FitnessBasicList = UserFitnessBasicList.extend({
+    ProfileFitnessBasicList = UserFitnessBasicList.extend({
         
         url: function() {
             if (testpath)
@@ -22,5 +22,5 @@ function(facade, UserFitnessBasicList, utils) {
 
     });
 
-    return FitnessBasicList;
+    return ProfileFitnessBasicList;
 });

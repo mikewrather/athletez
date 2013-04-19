@@ -3,15 +3,15 @@
 
 // Package Team
 // Requires define
-// Returns {CompetitorTeamList} constructor
+// Returns {TeamCompetitorTeamList} constructor
 
 define(['facade', 'sportorg/collections/teams', 'utils'], 
 function(facade, SportorgTeamList, utils) {
 
-    var CompetitorTeamList,
+    var TeamCompetitorTeamList,
         Channel = utils.lib.Channel;
 
-    CompetitorTeamList = SportorgTeamList.extend({
+    TeamCompetitorTeamList = SportorgTeamList.extend({
         
         url: function() {
             if (testpath)
@@ -21,5 +21,5 @@ function(facade, SportorgTeamList, utils) {
 
     });
 
-    return CompetitorTeamList;
+    return TeamCompetitorTeamList;
 });

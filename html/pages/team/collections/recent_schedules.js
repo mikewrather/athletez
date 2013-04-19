@@ -3,15 +3,15 @@
 
 // Package Team
 // Requires define
-// Returns {RecentScheduleList} constructor
+// Returns {TeamRecentScheduleList} constructor
 
 define(['facade', 'sportorg/collections/games', 'utils'], 
 function(facade, SportorgGameList, utils) {
 
-    var RecentScheduleList,
+    var TeamRecentScheduleList,
         Channel = utils.lib.Channel;
 
-    RecentScheduleList = SportorgGameList.extend({
+    TeamRecentScheduleList = SportorgGameList.extend({
         
         url: function() {
             if (testpath)
@@ -21,5 +21,5 @@ function(facade, SportorgGameList, utils) {
 
     });
 
-    return RecentScheduleList;
+    return TeamRecentScheduleList;
 });

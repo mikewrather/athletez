@@ -4,14 +4,14 @@
 
 // Package Team
 // Requires define
-// Returns {CommentFormView} constructor
+// Returns {TeamCommentFormView} constructor
 
 define(['require', 'team/models/commentform', 'site/views/comment-form'], 
-function(require,  CommentFormModel,          BaseCommentFormView) {
+function(require,  TeamCommentFormModel,          BaseCommentFormView) {
 
-    var CommentFormView;
+    var TeamCommentFormView;
 
-    CommentFormView = BaseCommentFormView.extend({
+    TeamCommentFormView = BaseCommentFormView.extend({
 
         // **Method** `setOptions` - called by BaseView's initialize method
         setOptions: function (options) {
@@ -19,11 +19,11 @@ function(require,  CommentFormModel,          BaseCommentFormView) {
                 throw new Error("CommentFormView expected options.collection.");
             }
             if (!this.model) {
-                this.model = new CommentFormModel({id: this.collection.id, sport_id: this.collection.sport_id, complevel_id: this.collection.complevel_id, season_id: this.collection.season_id});
+                this.model = new TeamCommentFormModel({id: this.collection.id, sport_id: this.collection.sport_id, complevel_id: this.collection.complevel_id, season_id: this.collection.season_id});
                 this.model.fetch();
             }            
         }
     });
 
-    return CommentFormView;
+    return TeamCommentFormView;
 });

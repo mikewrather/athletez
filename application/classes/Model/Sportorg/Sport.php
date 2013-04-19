@@ -240,4 +240,47 @@ class Model_Sportorg_Sport extends ORM
 		}
 		return $image;
 	}
+
+	public function getResumeData($args = array()){
+		$retArr = array();
+		extract($args);
+		$resumeData = ORM::factory("User_Resume_Data_Vals");
+		$resumeData
+			//->from('resume_data_vals')
+
+			->join('resume_data')
+			->on('user_resume_data_vals.resume_data_id','=','resume_data.id')
+
+			->join('resume_data_groups','LEFT')
+			->on('resume_data.resume_data_groups_id','=','resume_data_groups.id')
+
+			->join('rdg_rdp_link')
+			->on('resume_data_groups.id','=','rdg_rdp_link.resume_data_groups_id')
+
+			->join('resume_data_profiles')
+			->on('rdg_rdp_link.resume_data_profiles_id','=','resume_data_profiles.id')
+
+			->join('rdp_sports_link')
+			->on('rdp_sports_link.resume_data_profiles_id','=','resume_data_profiles.id')
+
+			->join('sports')
+			->on('rdp_sports_link.SPORTS_ID','=','sports.id');
+
+			$resumeData->where('sports.id', '=', $sports_id);
+
+			if (isset($users_id)){
+				$resumeData->where('user_resume_data_vals.users_id','=',$this->id);
+			}
+			print_r($resumeData);
+			return $resumeData;
+//
+//		$res = $resumeData->execute();
+//
+//		foreach($res as $data)
+//		{
+//			$retArr[$data['id']] = $data;
+//		}
+//
+//		return (object)$retArr;
+	}
 }

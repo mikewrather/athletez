@@ -20,7 +20,7 @@ function (
         selectSeasonTemplate
         ) {
 
-    var ComplevelItemView
+    var TeamComplevelItemView
       , $ = vendor.$
       , BaseView = views.BaseView
       , Mustache = vendor.Mustache,
@@ -28,7 +28,7 @@ function (
       SeasonListView = require('team/views/season-list'),
       SeasonList = require('team/collections/seasons');
 
-      ComplevelItemView = BaseView.extend({
+      TeamComplevelItemView = BaseView.extend({
 
         tagName: "li",
 
@@ -54,7 +54,7 @@ function (
             }
             this.id = options.model.collection.id;
             var sport_id = this.model.collection.sport_id;
-            Channel('complevels:select' + sport_id + '-' + this.model.get('payload')['complevel_id']).subscribe(callback);
+            Channel('teamcomplevels:select' + sport_id + '-' + this.model.get('payload')['complevel_id']).subscribe(callback);
         },
         
         initList: function() {
@@ -68,7 +68,7 @@ function (
             var complevel_id = this.seasons.complevel_id;
             $.when(this.seasons.request).done(function() {
                 self.setupSeasonListView(sport_id, complevel_id);
-                Channel('seasons' + sport_id + '-' + complevel_id + ':fetch').publish();
+                Channel('teamseasons' + sport_id + '-' + complevel_id + ':fetch').publish();
                 self.select_season = self.$('#select-season');
                 self.selectSeason();
             });
@@ -96,7 +96,7 @@ function (
                     self.$el.find('.seasons').html('');
                 } 
             }
-            Channel('seasons' + sport_id + '-' + complevel_id + ':fetch').subscribe(callback);
+            Channel('teamseasons' + sport_id + '-' + complevel_id + ':fetch').subscribe(callback);
         },
 
         render: function () {
@@ -115,10 +115,10 @@ function (
             var complevel_id = this.model.get('payload')['complevel_id'];
             this.$('.season-info').stop().slideUp();
             this.$('.season-info-' + sport_id + '-' + complevel_id + '-' + season_id).stop().slideDown();
-            Channel('seasons:select' + sport_id + '-' + complevel_id + '-' + season_id).publish();
+            Channel('teamseasons:select' + sport_id + '-' + complevel_id + '-' + season_id).publish();
         }        
         
       });
 
-    return ComplevelItemView;
+    return TeamComplevelItemView;
 });

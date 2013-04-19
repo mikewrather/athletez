@@ -5,9 +5,9 @@
 
 define( ["models/base"], function (BaseModel) {
 
-    var AddMediaModel;
+    var ProfileAddMediaModel;
 
-    AddMediaModel = BaseModel.extend({
+    ProfileAddMediaModel = BaseModel.extend({
 
         defaults: {
             
@@ -27,6 +27,6 @@ define( ["models/base"], function (BaseModel) {
 
     });
 
-    return AddMediaModel;
+    return ProfileAddMediaModel;
 });
 

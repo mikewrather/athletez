@@ -37,21 +37,21 @@ define([
         views = require("views"),
         utils = require("utils"),
         
-        BasicsModel = require("game/models/basics"),
-        AddMediaModel = require("game/models/addmedia"),
-        TeamRosterList = require("game/collections/teamrosters"),
-        VideoPlayerModel = require("game/models/videoplayer"),
-        VideoThumbList = require("game/collections/videothumbs");
-        ImageList = require("game/collections/images");
-        CommentList = require("game/collections/comments");
+        GameBasicsModel = require("game/models/basics"),
+        GameAddMediaModel = require("game/models/addmedia"),
+        GameTeamRosterList = require("game/collections/teamrosters"),
+        GameVideoPlayerModel = require("game/models/videoplayer"),
+        GameVideoThumbList = require("game/collections/videothumbs");
+        GameImageList = require("game/collections/images");
+        GameCommentList = require("game/collections/comments");
         
         GameHeaderView = require("game/views/header"),
-        AddMediaView = require("game/views/add-media"),
-        TeamRosterListView = require("sportorg/views/teamroster-list"),
-        VideoPlayerView = require("media/views/videoplayer"),
-        VideoThumbListView = require("game/views/videothumb-list"),
-        ImageListView = require("game/views/image-list"),
-        CommentListView = require("game/views/comment-list"),
+        GameAddMediaView = require("game/views/add-media"),
+        GameTeamRosterListView = require("sportorg/views/teamroster-list"),
+        GameVideoPlayerView = require("media/views/videoplayer"),
+        GameVideoThumbListView = require("game/views/videothumb-list"),
+        GameImageListView = require("game/views/image-list"),
+        GameCommentListView = require("game/views/comment-list"),
         
         
         LayoutView = views.LayoutView,
@@ -84,31 +84,31 @@ define([
         },
         
         createData: function () {
-            this.basics = new BasicsModel();
+            this.basics = new GameBasicsModel();
             this.basics.id = '101';            
             this.basics.fetch();
             this.id = this.basics.id;
             
-            this.addmedia = new AddMediaModel();
+            this.addmedia = new GameAddMediaModel();
             this.addmedia.id = this.id;            
             
-            this.teamrosters = new TeamRosterList();
+            this.teamrosters = new GameTeamRosterList();
             this.teamrosters.id = this.id;
             this.teamrosters.fetch();
             
-            this.videoplayer = new VideoPlayerModel();
+            this.videoplayer = new GameVideoPlayerModel();
             this.videoplayer.id = this.id;
             this.videoplayer.fetch();
             
-            this.videothumbs = new VideoThumbList();
+            this.videothumbs = new GameVideoThumbList();
             this.videothumbs.id = this.id;
             this.videothumbs.fetch();
             
-            this.images = new ImageList();
+            this.images = new GameImageList();
             this.images.id = this.id;
             this.images.fetch();
             
-            this.comments = new CommentList();
+            this.comments = new GameCommentList();
             this.comments.id = this.id;
             this.comments.fetch();
         },
@@ -158,7 +158,7 @@ define([
         setupAddMediaView: function() {
             var addMediaView;
             
-            addMediaView = new AddMediaView({
+            addMediaView = new GameAddMediaView({
                 model: this.addmedia,
                 name: "Add Media",
                 destination: "#add-media"
@@ -171,7 +171,7 @@ define([
         setupTeamRosterListView: function() {
             var teamRosterListView;
             
-            teamRosterListView = new TeamRosterListView({
+            teamRosterListView = new GameTeamRosterListView({
                 collection: this.teamrosters,
                 destination: "#roster-wrap"
             });
@@ -183,7 +183,7 @@ define([
         setupVideoPlayerView: function() {
             var videoPlayerView;
             
-            videoPlayerView = new VideoPlayerView({
+            videoPlayerView = new GameVideoPlayerView({
                 model: this.videoplayer,
                 name: "Video Player",
                 destination: "#video-player"
@@ -196,7 +196,7 @@ define([
         setupVideoThumbListView: function() {
             var videoThumbListView;
             
-            videoThumbListView = new VideoThumbListView({
+            videoThumbListView = new GameVideoThumbListView({
                 collection: this.videothumbs,
                 destination: "#videothumb-wrap"
             });
@@ -208,7 +208,7 @@ define([
         setupImageListView: function() {
             var imageListView;
             
-            imageListView = new ImageListView({
+            imageListView = new GameImageListView({
                 collection: this.images,
                 destination: "#image-wrap"
             });
@@ -220,7 +220,7 @@ define([
         setupCommentListView: function() {
             var commentListView;
             
-            commentListView = new CommentListView({
+            commentListView = new GameCommentListView({
                 collection: this.comments,
                 destination: "#comment-wrap"
             });

@@ -1,15 +1,15 @@
 // addimage.js Model
 // ------------
 // Requires define
-// Return {AddImageModel} model constructor object
+// Return {GameAddImageModel} model constructor object
 
 define( ["facade", "media/models/image", "utils"], function (facade, MediaImageModel, utils) {
 
-    var AddImageModel,
+    var GameAddImageModel,
         _ = facade._,
         Channel = utils.lib.Channel;
 
-    AddImageModel = MediaImageModel.extend({
+    GameAddImageModel = MediaImageModel.extend({
         
         url: function() {
             if (testpath)
@@ -24,11 +24,11 @@ define( ["facade", "media/models/image", "utils"], function (facade, MediaImageM
         
         fetchSuccess: function (model, response) {
             MediaImageModel.prototype.fetchSuccess.call(model, response);
-            Channel('addimage:fetch').publish(model);
+            Channel('gameaddimage:fetch').publish(model);
         }
         
     });
 
-    return AddImageModel;
+    return GameAddImageModel;
 });
 

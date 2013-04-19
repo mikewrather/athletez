@@ -5,11 +5,11 @@
 
 define( ["facade", "media/models/video", "utils"], function (facade, MediaVideoModel, utils) {
 
-    var AddVideoModel,
+    var ProfileAddVideoModel,
         _ = facade._,
         Channel = utils.lib.Channel;
 
-    AddVideoModel = MediaVideoModel.extend({
+    ProfileAddVideoModel = MediaVideoModel.extend({
         
         url: function() {
             if (testpath)
@@ -24,11 +24,11 @@ define( ["facade", "media/models/video", "utils"], function (facade, MediaVideoM
         
         fetchSuccess: function (model, response) {
             MediaVideoModel.prototype.fetchSuccess.call(model, response);
-            Channel('addvideo:fetch').publish(model);
+            Channel('gameaddvideo:fetch').publish(model);
         }
         
     });
 
-    return AddVideoModel;
+    return ProfileAddVideoModel;
 });
 

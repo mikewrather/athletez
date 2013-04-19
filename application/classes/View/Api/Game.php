@@ -79,8 +79,14 @@
 		public function get_videos()
 		{
 			$retArr = array();
-			// Scaffolding Code For Single:
-			$retArr = $this->obj->getBasics();
+
+			// Scaffolding Code For Array:
+			$objs = $this->obj->find_all();
+
+			foreach($objs as $obj)
+			{
+				$retArr[$obj->id] = $obj->getBasics();
+			}
 
 			return $retArr;
 		}
@@ -93,8 +99,12 @@
 		public function get_images()
 		{
 			$retArr = array();
-			// Scaffolding Code For Single:
-			$retArr = $this->obj->getBasics();
+			// Scaffolding Code For Array:
+			$objs = $this->obj->find_all();
+			foreach($objs as $obj)
+			{
+				$retArr[$obj->id] = $obj->getBasics();
+			}
 
 			return $retArr;
 		}

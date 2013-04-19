@@ -2,7 +2,7 @@
 // ---------
 // Package Profile
 // Requires `define`, `require`
-// Returns {AddMediaView} constructor
+// Returns {TeamAddMediaView} constructor
 
 define([
         'require', 
@@ -11,29 +11,29 @@ define([
         'facade', 
         'views'
         ], 
-function(require, addMediaTemplate) {
+function(require, teamAddMediaTemplate) {
 
-    var AddMediaView,
+    var TeamAddMediaView,
         facade = require('facade'),
         views = require('views'),
         SectionView = views.SectionView,
         _ = facade._;
 
-    AddMediaView = SectionView.extend({
+    TeamAddMediaView = SectionView.extend({
 
         id: 'add-media',
 
-        template: addMediaTemplate,
+        template: teamAddMediaTemplate,
         
         // **Method** `setOptions` - called by BaseView's initialize method
         setOptions: function (options) {
             if (!this.model) {
-                throw new Error("AddMediaView expects option with model property.");
+                throw new Error("TeamAddMediaView expects option with model property.");
             }            
         }
         
                 
     });
 
-    return AddMediaView;
+    return TeamAddMediaView;
 });

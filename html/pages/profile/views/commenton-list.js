@@ -2,18 +2,18 @@
 // --------------
 
 define(['facade', 'utils', 'site/views/comment-list', 'profile/views/commenton-form'], 
-function(facade,   utils,   BaseCommentListView,       CommentFormView) {
+function(facade,   utils,   BaseCommentListView,       ProfileCommentFormView) {
 
-    var CommentOnListView, 
+    var ProfileCommentOnListView, 
         Channel = utils.lib.Channel;
 
-    CommentOnListView = BaseCommentListView.extend({
+    ProfileCommentOnListView = BaseCommentListView.extend({
 
         name: "Commenton List",
         
         setupFormView: function () {
             var listView = this,
-                formView = new CommentFormView({collection: this.collection}),
+                formView = new ProfileCommentFormView({collection: this.collection}),
                 renderAddView = this.addChildView(formView);
             
             this.childViews.form = formView;
@@ -27,10 +27,10 @@ function(facade,   utils,   BaseCommentListView,       CommentFormView) {
                 listView.$el.prepend(formView.el);
             }
             
-            Channel('commentonform:fetch').subscribe(callback);
+            Channel('gamecommentonform:fetch').subscribe(callback);
         }
 
     });
 
-    return CommentOnListView;
+    return ProfileCommentOnListView;
 });

@@ -4,9 +4,9 @@
 define(['facade', 'utils', 'media/views/image-list'],
 function(facade,  utils,   BaseImageListView) {
 
-    var ImageListView;
+    var ProfileImageListView;
 
-    ImageListView = BaseImageListView.extend({
+    ProfileImageListView = BaseImageListView.extend({
 
         setupAddView: function() {
             
@@ -14,5 +14,5 @@ function(facade,  utils,   BaseImageListView) {
 
     });
 
-    return ImageListView;
+    return ProfileImageListView;
 });

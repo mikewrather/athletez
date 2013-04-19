@@ -18,7 +18,7 @@ define([
         ], 
 function(require, headerTemplate, selectSportTemplate) {
 
-    var HeaderView,
+    var TeamHeaderView,
         facade = require('facade'),
         views = require('views'),
         TeamBasicsModel = require('team/models/basics'),
@@ -33,7 +33,7 @@ function(require, headerTemplate, selectSportTemplate) {
         _ = facade._;
         
 
-    HeaderView = SectionView.extend({
+    TeamHeaderView = SectionView.extend({
 
         id: 'main-header',
 
@@ -57,7 +57,7 @@ function(require, headerTemplate, selectSportTemplate) {
             this.sports.fetch();
             $.when(this.sports.request).done(function() {
                 self.setupSportListView();
-                Channel('sports:fetch').publish();
+                Channel('teamsports:fetch').publish();
                 self.select_sport = self.$('#select-sport');
                 self.selectSport();                
             });
@@ -90,7 +90,7 @@ function(require, headerTemplate, selectSportTemplate) {
                     self.$el.find('#sports-info').html('');
                 }                
             }
-            Channel('sports:fetch').subscribe(callback);      
+            Channel('teamsports:fetch').subscribe(callback);      
         },
         
         // **Method** `setOptions` - called by BaseView's initialize method
@@ -111,11 +111,11 @@ function(require, headerTemplate, selectSportTemplate) {
             var sport_id = this.select_sport.val();
             this.$('.sport-info').stop().slideUp();
             this.$('.sport-info-' + sport_id).stop().slideDown();
-            Channel('sports:select' + sport_id).publish();            
+            Channel('teamsports:select' + sport_id).publish();            
         }
         
                 
     });
 
-    return HeaderView;
+    return TeamHeaderView;
 });

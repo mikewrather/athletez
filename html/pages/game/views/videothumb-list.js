@@ -2,16 +2,16 @@
 // --------------
 
 define(['facade', 'utils', 'media/views/videothumb-list', 'game/views/add-video'], 
-function(facade,  utils,   BaseVideoThumbListView,       AddVideoView) {
+function(facade,   utils,   BaseVideoThumbListView,        GameAddVideoView) {
 
-    var VideoThumbListView, 
+    var GameVideoThumbListView, 
         Channel = utils.lib.Channel;
 
-    VideoThumbListView = BaseVideoThumbListView.extend({
+    GameVideoThumbListView = BaseVideoThumbListView.extend({
 
         setupAddView: function() {
             var listView = this,
-                addView = new AddVideoView({collection: this.collection}),
+                addView = new GameAddVideoView({collection: this.collection}),
                 renderAddView = this.addChildView(addView);
             
             this.childViews.form = addView;
@@ -25,10 +25,10 @@ function(facade,  utils,   BaseVideoThumbListView,       AddVideoView) {
                 listView.$el.append(addView.el);
             }
             
-            Channel('addvideo:fetch').subscribe(callback);
+            Channel('gameaddvideo:fetch').subscribe(callback);
         }
 
     });
 
-    return VideoThumbListView;
+    return GameVideoThumbListView;
 });

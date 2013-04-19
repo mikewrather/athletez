@@ -3,26 +3,26 @@
 
 // Package Game
 // Requires define
-// Returns {AddImageView} constructor
+// Returns {GameAddImageView} constructor
 
 define(['require', 'game/models/addimage', 'media/views/add-image'], 
-function(require,  AddImageModel,          BaseAddImageView) {
+function(require,   GameAddImageModel,      BaseAddImageView) {
 
-    var AddImageView;
+    var GameAddImageView;
 
-    AddImageView = BaseAddImageView.extend({
+    GameAddImageView = BaseAddImageView.extend({
 
         // **Method** `setOptions` - called by BaseView's initialize method
         setOptions: function (options) {
             if (!this.collection) {
-                throw new Error("AddImageView expected options.collection.");
+                throw new Error("GameAddImageView expected options.collection.");
             }
             if (!this.model) {
-                this.model = new AddImageModel({id: this.collection.id});
+                this.model = new GameAddImageModel({id: this.collection.id});
                 this.model.fetch();
             }            
         }
     });
 
-    return AddImageView;
+    return GameAddImageView;
 });

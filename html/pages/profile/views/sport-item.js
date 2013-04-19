@@ -18,7 +18,7 @@ function (
         sportItemTemplate
         ) {
 
-    var SportItemView
+    var ProfileSportItemView
       , $ = vendor.$
       , BaseView = views.BaseView
       , Mustache = vendor.Mustache,
@@ -26,7 +26,7 @@ function (
       TeamListView = require('sportorg/views/team-list'),
       TeamList = require('profile/collections/teams');
 
-      SportItemView = BaseView.extend({
+      ProfileSportItemView = BaseView.extend({
 
         tagName: "li",
 
@@ -43,7 +43,7 @@ function (
                 self.initTeamList();
                 Channel('refresh-profilepage').publish(sport_id);
             }
-            Channel('sports:select' + sport_id).subscribe(callback);
+            Channel('gamesports:select' + sport_id).subscribe(callback);
         },
         
         initTeamList: function() {
@@ -54,7 +54,7 @@ function (
             this.teams.fetch();
             $.when(this.teams.request).done(function() {
                 self.setupTeamListView();
-                Channel('teams:fetch').publish();
+                Channel('gameteams:fetch').publish();
             });
         },
         
@@ -68,7 +68,7 @@ function (
                 teamListView.render();
                 self.$el.find('.teams-info').html(teamListView.el);
             }
-            Channel('teams:fetch').subscribe(callback);
+            Channel('gameteams:fetch').subscribe(callback);
         },
 
         render: function () {
@@ -79,5 +79,5 @@ function (
         
       });
 
-    return SportItemView;
+    return ProfileSportItemView;
 });

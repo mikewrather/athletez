@@ -41,24 +41,24 @@ define([
         views = require("views"),
         utils = require("utils"),
         
-        BasicsModel = require("team/models/basics"),
-        AddMediaModel = require("team/models/addmedia"),
-        UpcomingScheduleList = require("team/collections/upcoming_schedules"),
-        RecentScheduleList = require("team/collections/recent_schedules"),
-        CompetitorTeamList = require("team/collections/competitor_teams"),
-        RosterList = require("team/collections/rosters");
-        VideoList = require("team/collections/videos");
-        ImageList = require("team/collections/images");
-        CommentList = require("team/collections/comments");
+        TeamBasicsModel = require("team/models/basics"),
+        TeamAddMediaModel = require("team/models/addmedia"),
+        TeamUpcomingScheduleList = require("team/collections/upcoming_schedules"),
+        TeamRecentScheduleList = require("team/collections/recent_schedules"),
+        TeamCompetitorTeamList = require("team/collections/competitor_teams"),
+        TeamRosterList = require("team/collections/rosters");
+        TeamVideoList = require("team/collections/videos");
+        TeamImageList = require("team/collections/images");
+        TeamCommentList = require("team/collections/comments");
         
         TeamHeaderView = require("team/views/header"),
-        AddMediaView = require("team/views/add-media"),
-        ScheduleListView = require("sportorg/views/schedule-list"),
-        CompetitorTeamListView = require("sportorg/views/competitorteam-list"),
-        RosterListView = require("sportorg/views/roster-list"),
-        VideoListView = require("team/views/video-list"),
-        ImageListView = require("team/views/image-list"),
-        CommentListView = require("team/views/comment-list"),
+        TeamAddMediaView = require("team/views/add-media"),
+        TeamScheduleListView = require("sportorg/views/schedule-list"),
+        TeamCompetitorTeamListView = require("sportorg/views/competitorteam-list"),
+        TeamRosterListView = require("sportorg/views/roster-list"),
+        TeamVideoListView = require("team/views/video-list"),
+        TeamImageListView = require("team/views/image-list"),
+        TeamCommentListView = require("team/views/comment-list"),
         
         LayoutView = views.LayoutView,
         $ = facade.$,
@@ -90,12 +90,12 @@ define([
         },
         
         createData: function () {
-            this.basics = new BasicsModel();
+            this.basics = new TeamBasicsModel();
             this.basics.id = '101';            
             this.basics.fetch();
             this.id = this.basics.id;
             
-            this.addmedia = new AddMediaModel();
+            this.addmedia = new TeamAddMediaModel();
             this.addmedia.id = this.id;
             
             var controller = this;
@@ -103,49 +103,49 @@ define([
             function callback(sport_id, complevel_id, season_id) {
                 controller.refreshPage();
             
-                controller.upcoming_schedules = new UpcomingScheduleList();
+                controller.upcoming_schedules = new TeamUpcomingScheduleList();
                 controller.upcoming_schedules.id = controller.id;
                 controller.upcoming_schedules.sport_id = sport_id;
                 controller.upcoming_schedules.complevel_id = complevel_id;
                 controller.upcoming_schedules.season_id = season_id;
                 controller.upcoming_schedules.fetch();
                 
-                controller.recent_schedules = new RecentScheduleList();
+                controller.recent_schedules = new TeamRecentScheduleList();
                 controller.recent_schedules.id = controller.id;
                 controller.recent_schedules.sport_id = sport_id;
                 controller.recent_schedules.complevel_id = complevel_id;
                 controller.recent_schedules.season_id = season_id;
                 controller.recent_schedules.fetch();
                 
-                controller.competitor_teams = new CompetitorTeamList();
+                controller.competitor_teams = new TeamCompetitorTeamList();
                 controller.competitor_teams.id = controller.id;
                 controller.competitor_teams.sport_id = sport_id;
                 controller.competitor_teams.complevel_id = complevel_id;
                 controller.competitor_teams.season_id = season_id;
                 controller.competitor_teams.fetch();
                 
-                controller.rosters = new RosterList();
+                controller.rosters = new TeamRosterList();
                 controller.rosters.id = controller.id;
                 controller.rosters.sport_id = sport_id;
                 controller.rosters.complevel_id = complevel_id;
                 controller.rosters.season_id = season_id;
                 controller.rosters.fetch();
                 
-                controller.videos = new VideoList();
+                controller.videos = new TeamVideoList();
                 controller.videos.id = controller.id;
                 controller.videos.sport_id = sport_id;
                 controller.videos.complevel_id = complevel_id;
                 controller.videos.season_id = season_id;
                 controller.videos.fetch();
                 
-                controller.images = new ImageList();
+                controller.images = new TeamImageList();
                 controller.images.id = controller.id;
                 controller.images.sport_id = sport_id;
                 controller.images.complevel_id = complevel_id;
                 controller.images.season_id = season_id;
                 controller.images.fetch();
                 
-                controller.comments = new CommentList();
+                controller.comments = new TeamCommentList();
                 controller.comments.id = controller.id;
                 controller.comments.sport_id = sport_id;
                 controller.comments.complevel_id = complevel_id;
@@ -260,7 +260,7 @@ define([
         setupAddMediaView: function() {
             var addMediaView;
             
-            addMediaView = new AddMediaView({
+            addMediaView = new TeamAddMediaView({
                 model: this.addmedia,
                 name: "Add Media",
                 destination: "#add-media"
@@ -273,7 +273,7 @@ define([
         setupUpcomingSchedules: function() {
             var UpcomingScheduleListView;
             
-            UpcomingScheduleListView = ScheduleListView.extend({
+            UpcomingScheduleListView = TeamScheduleListView.extend({
                 name: "Upcoming Schedule List"
             });
             this.upcomingScheduleListView = new UpcomingScheduleListView({
@@ -288,7 +288,7 @@ define([
         setupRecentSchedules: function() {
             var RecentScheduleListView;
             
-            RecentScheduleListView = ScheduleListView.extend({
+            RecentScheduleListView = TeamScheduleListView.extend({
                 name: "Recent Schedule List"
             });
             this.recentScheduleListView = new RecentScheduleListView({
@@ -301,7 +301,7 @@ define([
         },
         
         setupCompetitorTeams: function() {
-            this.competitorTeamListView = new CompetitorTeamListView({
+            this.competitorTeamListView = new TeamCompetitorTeamListView({
                 collection: this.competitor_teams,
                 destination: "#competitor-teams"
             });
@@ -311,7 +311,7 @@ define([
         },
         
         setupRosters: function() {
-            this.rosterListView = new RosterListView({
+            this.rosterListView = new TeamRosterListView({
                 collection: this.rosters,
                 destination: "#roster-wrap"
             });
@@ -321,7 +321,7 @@ define([
         },
         
         setupVideos: function() {
-            this.videoListView = new VideoListView({
+            this.videoListView = new TeamVideoListView({
                 collection: this.videos,
                 destination: "#video-wrap"
             });
@@ -331,7 +331,7 @@ define([
         },
         
         setupImages: function() {
-            this.imageListView = new ImageListView({
+            this.imageListView = new TeamImageListView({
                 collection: this.images,
                 destination: "#image-wrap"
             });
@@ -341,7 +341,7 @@ define([
         },
         
         setupComments: function() {
-            this.commentListView = new CommentListView({
+            this.commentListView = new TeamCommentListView({
                 collection: this.comments,
                 destination: "#comment-wrap"
             });

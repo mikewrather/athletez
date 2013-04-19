@@ -3,16 +3,16 @@
 
 // Package Game
 // Requires define
-// Returns {TeamRosterList} constructor
+// Returns {GameTeamRosterList} constructor
 
 define(['facade', 'sportorg/collections/teamrosters', 'utils'], 
 function(facade, SportorgTeamRosterList, utils) {
 
-    var TeamRosterList,
+    var GameTeamRosterList,
         _ = facade._,
         Channel = utils.lib.Channel;
 
-    TeamRosterList = SportorgTeamRosterList.extend({
+    GameTeamRosterList = SportorgTeamRosterList.extend({
         
         url: function() {
             if (testpath)
@@ -22,5 +22,5 @@ function(facade, SportorgTeamRosterList, utils) {
 
     });
 
-    return TeamRosterList;
+    return GameTeamRosterList;
 });

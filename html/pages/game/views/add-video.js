@@ -3,26 +3,26 @@
 
 // Package Game
 // Requires define
-// Returns {AddVideoView} constructor
+// Returns {GameAddVideoView} constructor
 
 define(['require', 'game/models/addvideo', 'media/views/add-video'], 
-function(require,  AddVideoModel,          BaseAddVideoView) {
+function(require,   GameAddVideoModel,      BaseAddVideoView) {
 
-    var AddVideoView;
+    var GameAddVideoView;
 
-    AddVideoView = BaseAddVideoView.extend({
+    GameAddVideoView = BaseAddVideoView.extend({
 
         // **Method** `setOptions` - called by BaseView's initialize method
         setOptions: function (options) {
             if (!this.collection) {
-                throw new Error("AddVideoView expected options.collection.");
+                throw new Error("GameAddVideoView expected options.collection.");
             }
             if (!this.model) {
-                this.model = new AddVideoModel({id: this.collection.id});
+                this.model = new GameAddVideoModel({id: this.collection.id});
                 this.model.fetch();
             }            
         }
     });
 
-    return AddVideoView;
+    return GameAddVideoView;
 });

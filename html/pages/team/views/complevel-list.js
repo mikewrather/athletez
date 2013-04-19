@@ -4,7 +4,7 @@
 define(['facade','views', 'utils', 'team/views/complevel-item'], 
 function(facade,  views,   utils,   ComplevelItemView) {
 
-    var ComplevelListView, 
+    var TeamComplevelListView, 
         ComplevelListAbstract,
         $ = facade.$,
         _ = facade._,
@@ -12,9 +12,9 @@ function(facade,  views,   utils,   ComplevelItemView) {
         CollectionView = views.CollectionView,
         SectionView = views.SectionView;
 
-    ComplevelListAbstract = CollectionView.extend(SectionView.prototype);
+    TeamComplevelListAbstract = CollectionView.extend(SectionView.prototype);
 
-    ComplevelListView = ComplevelListAbstract.extend({
+    TeamComplevelListView = TeamComplevelListAbstract.extend({
 
         __super__: CollectionView.prototype,
 
@@ -40,5 +40,5 @@ function(facade,  views,   utils,   ComplevelItemView) {
 
     });
 
-    return ComplevelListView;
+    return TeamComplevelListView;
 });

@@ -103,8 +103,13 @@
 		public function action_get_videos()
 		{
 			$this->payloadDesc = "Get all videos tagged with a certain game";
-
-		
+			if(!$this->mainModel->id)
+			{
+				$this->modelNotSetError();
+				return false;
+			}
+			$video_model = ORM::factory("Media_Video");
+			return $video_model->getVideos($this->mainModel->id);
 		}
 		
 		/**
@@ -115,8 +120,14 @@
 		public function action_get_images()
 		{
 			$this->payloadDesc = "Get all images associated with a certain game";
+			if(!$this->mainModel->id)
+			{
+				$this->modelNotSetError();
+				return false;
+			}
 
-		
+			$video_model = ORM::factory("Media_Image");
+			return $video_model->getImages($this->mainModel->id);
 		}
 		
 		############################################################################

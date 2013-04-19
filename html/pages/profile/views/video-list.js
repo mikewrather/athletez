@@ -2,16 +2,16 @@
 // --------------
 
 define(['facade', 'utils', 'media/views/video-list', 'profile/views/add-video'], 
-function(facade,  utils,   BaseVideoListView,       AddVideoView) {
+function(facade,  utils,   BaseVideoListView,       ProfileAddVideoView) {
 
-    var VideoListView, 
+    var ProfileVideoListView, 
         Channel = utils.lib.Channel;
 
-    VideoListView = BaseVideoListView.extend({
+    ProfileVideoListView = BaseVideoListView.extend({
         
         setupAddView: function() {
             var listView = this,
-                addView = new AddVideoView({collection: this.collection}),
+                addView = new ProfileAddVideoView({collection: this.collection}),
                 renderAddView = this.addChildView(addView);
             
             this.childViews.form = addView;
@@ -25,10 +25,10 @@ function(facade,  utils,   BaseVideoListView,       AddVideoView) {
                 listView.$el.append(addView.el);
             }
             
-            Channel('addvideo:fetch').subscribe(callback);
+            Channel('gameaddvideo:fetch').subscribe(callback);
         }
 
     });
 
-    return VideoListView;
+    return ProfileVideoListView;
 });

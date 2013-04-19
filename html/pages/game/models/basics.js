@@ -1,14 +1,14 @@
 // basics.js Model
 // ------------
 // Requires define
-// Return {BasicsModel} model constructor object
+// Return {GameBasicsModel} model constructor object
 
 define( ["facade", "sportorg/models/game"], function (facade, SportorgGameModel) {
 
-    var BasicsModel,
+    var GameBasicsModel,
         _ = facade._;
 
-    BasicsModel = SportorgGameModel.extend({
+    GameBasicsModel = SportorgGameModel.extend({
         
         url: function() {
             if (testpath)
@@ -18,6 +18,6 @@ define( ["facade", "sportorg/models/game"], function (facade, SportorgGameModel)
         
     });
 
-    return BasicsModel;
+    return GameBasicsModel;
 });
 

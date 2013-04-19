@@ -4,17 +4,17 @@
 define(['facade','views', 'utils', 'team/views/season-item'], 
 function(facade,  views,   utils,   SeasonItemView) {
 
-    var SeasonListView, 
-        SeasonListAbstract,
+    var TeamSeasonListView, 
+        TeamSeasonListAbstract,
         $ = facade.$,
         _ = facade._,
         Channel = utils.lib.Channel,
         CollectionView = views.CollectionView,
         SectionView = views.SectionView;
 
-    SeasonListAbstract = CollectionView.extend(SectionView.prototype);
+    TeamSeasonListAbstract = CollectionView.extend(SectionView.prototype);
 
-    SeasonListView = SeasonListAbstract.extend({
+    TeamSeasonListView = TeamSeasonListAbstract.extend({
 
         __super__: CollectionView.prototype,
 
@@ -40,5 +40,5 @@ function(facade,  views,   utils,   SeasonItemView) {
 
     });
 
-    return SeasonListView;
+    return TeamSeasonListView;
 });
