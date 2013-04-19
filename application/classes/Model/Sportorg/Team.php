@@ -41,8 +41,10 @@ class Model_Sportorg_Team extends ORM
 			'foreign_key' => 'teams_id',
 		),
 		'athletes' => array(
-			'model' => 'Users',
-			'through' => 'users_teams_link'
+			'model' => 'User_Base',
+			'through' => 'users_teams_link',
+			'foreign_key' => 'teams_id',
+			'far_key' => 'users_id'
 		),
 		
 		// StatVals
@@ -200,6 +202,9 @@ class Model_Sportorg_Team extends ORM
 		
 	public function getBasics()
 	{
+		$athletesArray = array();
+		foreach($this->athletes->find_all() as $athlete) { $athletesArray[$athlete->id] = $athlete->getBasics(); }
+
 		return array(
 			"id" => $this->id,
 			"org_sport_link" => $this->org_sport_link->getBasics(),
@@ -211,6 +216,7 @@ class Model_Sportorg_Team extends ORM
 			"year" => $this->year,
 			"mascot" => $this->mascot,
 			"unique_ident" => $this->unique_ident,
+			"athletes" => $athletesArray
 		);
 	}
 
