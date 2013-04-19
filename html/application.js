@@ -3,8 +3,8 @@
 // Requires define
 // Return {Object} App
 
-define( ["facade", "utils", "collections", "chrome", "controller", "profile", "game", "team"], 
-function (facade, utils, collections, chromeBootstrap, Controller, ProfileController, GameController, TeamController) {
+define( ["facade", "utils", "collections", "chrome", "controller", "profile", "game", "team", "registration"], 
+function (facade, utils, collections, chromeBootstrap, Controller, ProfileController, GameController, TeamController, RegistrationController) {
 
     var App,
         ApplicationStates = collections.ApplicationStates,
@@ -32,7 +32,11 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
             
             'team': 'showTeam',
             'team/': 'showTeam',
-            'team/:action': 'showTeam'
+            'team/:action': 'showTeam',
+            
+            'registration': 'showRegistration',
+            'registration/': 'showRegistration',
+            'registration/:action': 'showRegistration'
         },
 
         initialize: function (options) {
@@ -48,7 +52,8 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
         initApp: function (action) {
             //this.showProfile();
             //this.showGame();
-            this.showTeam();
+            //this.showTeam();
+            this.showRegistration();
         },
         
         showProfile: function () {
@@ -80,12 +85,23 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
                 "route": ""
             })
         },
+        
+        showRegistration: function() {
+            this.loadStyles();
+            
+            $('body').empty();
+            chromeBootstrap();
+            var registrationController = new RegistrationController({
+                "route": ""
+            })
+        },
 
         // load style sheets
         loadStyles: function () {
             Channel('load:css').publish([base_url + "css/bootstrap.css", 
                 base_url + "css/bootstrap-responsive.css", 
-                base_url + "css/app.css"]);
+                base_url + "css/app.css",
+                base_url + 'css/jquery-ui-1.10.2.custom.css']);
         },
 
         // Pub / Sub

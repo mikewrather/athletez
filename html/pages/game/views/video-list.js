@@ -1,13 +1,13 @@
 // The VideoThumb List
 // --------------
 
-define(['facade', 'utils', 'media/views/videothumb-list', 'game/views/add-video'], 
-function(facade,   utils,   BaseVideoThumbListView,        GameAddVideoView) {
+define(['facade', 'utils', 'media/views/video-list', 'game/views/add-video'], 
+function(facade,   utils,   BaseVideoListView,        GameAddVideoView) {
 
-    var GameVideoThumbListView, 
+    var GameVideoListView, 
         Channel = utils.lib.Channel;
 
-    GameVideoThumbListView = BaseVideoThumbListView.extend({
+    GameVideoListView = BaseVideoListView.extend({
 
         setupAddView: function() {
             var listView = this,
@@ -30,5 +30,5 @@ function(facade,   utils,   BaseVideoThumbListView,        GameAddVideoView) {
 
     });
 
-    return GameVideoThumbListView;
+    return GameVideoListView;
 });
