@@ -15,8 +15,8 @@
 		public function __construct($request,$response)
 		{
 			parent::__construct($request,$response);
-
-			$this->setMainModel(ORM::factory('Sportorg_Games_Match'));
+			$a = ORM::factory("Sportorg_Games_Match");
+			$this->setMainModel($a);
 			$this->popMainModel();
 		}
 
@@ -38,13 +38,12 @@
 		public function action_get_basics()
 		{
 			$this->payloadDesc = "Basic info for a game match";
-
 			if(!$this->mainModel->id)
 			{
 				$this->modelNotSetError();
 				return false;
 			}
-			return $this->mainModel; 
+			return $this->mainModel;
 		}
 		
 		/**

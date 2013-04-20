@@ -41,11 +41,16 @@ class Model_Sportorg_Games_Match extends ORM
 
 	public function getBasics()
 	{
+		$playerArr = array();
+		foreach($this->players->find_all() as $player){
+			$playerArr[$player->id] = $player->getBasics();
+		}
 		return array(
 			"id" => $this->id,
 			"games_id" => $this->games_id,
 			"match_num" => $this->match_num,
-			"game" => $this->game->getBasics()			
+			"game" => $this->game->getBasics(),
+			"players" =>$this->game
 		);
 	}
 	
@@ -66,11 +71,11 @@ class Model_Sportorg_Games_Match extends ORM
 		return $players->delete();
 	}
 	
-	public function getPlayers( $positions_id = null )
+	public function getPlayers( $positions_id = "" )
 	{
 		$players = $this->players;
 		$result = null;
-		if ( isset($positions_id) )
+		if ( isset($positions_id) && inval($positions_id) > 0)
 		{
 			$result = $players->join('users_teams_link')->on('users_teams_link.users_id', '=', 'sportorg_games_matchplayer.users_id')
 							->join('utl_position_link')->on('utl_position_link.users_teams_link_id', '=', 'users_teams_link.id')
@@ -81,7 +86,5 @@ class Model_Sportorg_Games_Match extends ORM
 		}
 		 
 		return $result;
-		
-		
 	}
 }

@@ -53,16 +53,19 @@ class Model_Sportorg_Division extends ORM
 
 	public function getBasics()
 	{
-		
-			return array(
-				"id" => $this->id,
-				"state" => $this->state->getBasics(),			 
-				"name" => $this->name,			
-				"states_id" => $this->states_id,
-				"sections_id" => $this->sections_id,
-				"section" => $this->section->getBasics(),
-			);
-			
+		$orgsArray = array();
+		foreach($this->orgs->find_all() as $org){
+			$orgsArray[$org->id] = $org->getBasics();
+		}
+		return array(
+			"id" => $this->id,
+			"state" => $this->state->getBasics(),
+			"name" => $this->name,
+			"states_id" => $this->states_id,
+			"sections_id" => $this->sections_id,
+			"section" => $this->section->getBasics(),
+			"orgs" =>$orgsArray
+		);
 	}
 	
 	public function updateDivision($args = array())

@@ -49,18 +49,22 @@ class Model_Sportorg_League extends ORM
 
 	public function getBasics()
 	{
+		$orgsArray = array();
+		foreach($this->orgs->find_all() as $org){
+			$orgsArray[$org->id] = $org->getBasics();
+		}
 		return array(
 			"id" => $this->id,
 			"section" => $this->section->getBasics(),
 			"name" => $this->name,			
 			"sections_id" => $this->sections_id,
 			"states_id" => $this->states_id,
+			"orgs" => $orgsArray
 		);
 	}
 	
 	public function getOrgs()
 	{
-		if(!$this->loaded()) return false;
 		$orgs = ORM::factory('Sportorg_Org')
 			->join('leagues','LEFT')
 				->on('leagues.id','=','sportorg_org.leagues_id')
