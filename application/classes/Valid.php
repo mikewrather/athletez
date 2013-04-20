@@ -111,6 +111,32 @@
 			return false;
 		}
 
+		public static function countries_id_exist($value){
+			if ($value == "" || $value == 0){
+				return false;
+			}
+			$states_model = ORM::factory("Location_Country");
+			$states_model->select("id")
+				->where('id', '=', $value)
+				->find();
+			if ($states_model->loaded()){
+				return true;
+			}
+			return false;
+		}
+
+
+		public static function state_entity_exist($state_name, $countries_id)
+		{
+			$exists_obj = ORM::factory('Location_State')
+				->where('name','=', $state_name)
+				->and_where('countries_id','=', $countries_id)->find();
+			if ($exists_obj->loaded())
+				return false;
+			else
+				return true;
+		}
+
 		public static function states_id_exist($value){
 			if ($value == "" || $value == 0){
 				return false;

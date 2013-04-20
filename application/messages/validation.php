@@ -20,4 +20,5 @@
 		'resume_data_groups_id_exist' => $e->get('resume_data_groups_id_exist'),
 		'users_id_exist' => $e->get('users_id_exist'),
 		'location_type_exist' => $e->get('location_type_exist'),
+		'state_entity_exist' => $e->get('state_entity_exist'),
 	);

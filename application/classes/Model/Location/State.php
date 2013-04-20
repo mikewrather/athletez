@@ -9,7 +9,8 @@ class Model_Location_State extends ORM
 {
 	
 	protected $_table_name = 'states';
-	
+
+	public $error_message_path = 'models/location';
 
 	protected $_belongs_to = array(
 		'country' => array(
@@ -31,7 +32,7 @@ class Model_Location_State extends ORM
 			'countries_id'=>array(
 				array('not_empty'),
 				array('digit'),
-				array('not_equals', array(':value', 0))
+				array('countries_id_exist')
 			),
 		);
 	}
@@ -50,8 +51,6 @@ class Model_Location_State extends ORM
 			'foreign_key' => 'states_id'
 		)
 	);
-    
-    public $error_message_path = 'models/location';
     
 	public function getSections()
 	{
@@ -92,9 +91,15 @@ class Model_Location_State extends ORM
 	public function updateState($args = array())
 	{
 		extract($args);
-		if(isset($name))
+
+		if(isset($id))
 		{
-			$this->name = $name;
+			$this->id = $id;
+		}
+
+		if(!isset($name))
+		{
+			$name = $this->name;
 		}
  
 		// counties_id (REQUIRED)
@@ -102,37 +107,38 @@ class Model_Location_State extends ORM
 		if(isset($countries_id))
 		{
 			$this->countries_id = $countries_id;
+		}else{
+			$countries_id = $this->countries_id;
 		}
-		
-		$this->save();
-		return $this;
+
+
+		try{
+
+			if ($this->check()){
+				$exteral_validate = Validation::factory($args);
+				$exteral_validate->rule("name", "state_entity_exist", array($name, $countries_id));
+				if ($this->check($exteral_validate) && $args['name'] != $this->name){
+					 $this->name = $args['name'];
+					$this->update($exteral_validate);
+				}
+			}
+
+			return $this;
+		} catch(ORM_Validation_Exception $e)
+		{
+			return $e;
+		}
 	}
-	public static function check_state_exist($args = array())
-    {
-        extract($args);
-        if(isset($name) && isset($countries_id))
-        {
-            $exists_obj = ORM::factory('Location_State')
-                        ->where('name','=', $name)
-                        ->and_where('countries_id','=', $countries_id)->find();    
-             if (!$exists_obj->loaded())
-                return true;
-            else
-                return false;  
-        }else
-        {
-            return true;
-        }        
-    }
-    
+
+
+
 	public function addState($args = array())
 	{
 		extract($args);
 		if(isset($name))
         {
             $this->name = $name;
-        }
- 
+		}
         // counties_id (REQUIRED)
         // The county the city belongs to
         if(isset($countries_id))
@@ -140,14 +146,14 @@ class Model_Location_State extends ORM
             $this->countries_id = $countries_id;
         }		
 		
-        try {         
-            $this->save();
+        try {
+			$exteral_validate = Validation::factory($args);
+			$exteral_validate->rule("name", "state_entity_exist", array($name, $countries_id));
+			$this->save($exteral_validate);
+
             return $this;
         } catch(ORM_Validation_Exception $e){
             return $e;
         }  
 	}
-    
-     
-
 }

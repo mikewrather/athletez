@@ -137,23 +137,6 @@
 			{
 				$args['name'] = trim($this->request->post('name'));
 			}
-
-			else // THIS WAS A REQUIRED PARAMETER
-			{
-				// Create Array for Error Data
-				$error_array = array(
-					"error" => "Required Parameter Missing",
-					"param_name" => "name",
-					"param_desc" => "The name of the state"
-				);
-
-				// Set whether it is a fatal error
-				$is_fatal = true;
-
-				// Call method to throw an error
-				$this->addError($error_array,$is_fatal);
-
-			}
 			
 			// countries_id (REQUIRED)
 			// The country the state belongs to
@@ -163,26 +146,7 @@
 				$args['countries_id'] = (int)trim($this->request->post('countries_id'));
 			}
 
-			else // THIS WAS A REQUIRED PARAMETER
-			{
-				// Create Array for Error Data
-				$error_array = array(
-					"error" => "Required Parameter Missing",
-					"param_name" => "countries_id",
-					"param_desc" => "The country the state belongs to"
-				);
-
-				// Set whether it is a fatal error
-				$is_fatal = true;
-
-				// Call method to throw an error
-				$this->addError($error_array,$is_fatal);
-
-			} 
-			 
-            if($this->mainModel->check_state_exist($args))
-            {
-                $result = $this->mainModel->addState($args);    
+                $result = $this->mainModel->addState($args);
                 //Check for success / error
                 if(get_class($result) == get_class($this->mainModel))
                 {
@@ -193,24 +157,7 @@
                     //parse error and add to error array
                     $this->processValidationError($result,$this->mainModel->error_message_path);
                     return false;
-
-                }  
-            } else
-            {
-                // Create Array for Error Data
-                $error_array = array(
-                    "error" => "This state already exists",
-                    "param_name" => "countries_id and name",
-                    "param_desc" => "The country the state belongs to"
-                );
-
-                // Set whether it is a fatal error
-                $is_fatal = true;
-
-                // Call method to throw an error
-                $this->addError($error_array,$is_fatal);
-            }
-			
+				}
 		}
 		
 		/**
@@ -596,7 +543,20 @@
 				$this->modelNotSetError();
 				return false;
 			}
-			return $this->mainModel->updateState($args);
+			$args['id'] = $this->mainModel->id;
+			$result = $this->mainModel->updateState($args);
+
+			//Check for success / error
+			if(get_class($result) == get_class($this->mainModel))
+			{
+				return $result;
+			}
+			elseif(get_class($result) == 'ORM_Validation_Exception')
+			{
+				//parse error and add to error array
+				$this->processValidationError($result,$this->mainModel->error_message_path);
+				return false;
+			}
 		}
 		
 		############################################################################
