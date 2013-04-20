@@ -85,10 +85,35 @@ class Model_Location_County extends ORM
 
 			// states_id (int)
 			'states_id'=>array(
-				array('not_empty'),
 				array('digit'),
-				array('not_equals', array(':value', 0))
+				array('states_id_exist')
 			),
 		);
+	}
+
+	public function updateCounty($args = array()){
+		extract($args);
+		if(isset($name))
+		{
+			$this->name = $name;
+		}
+		// states_id
+		// Change the state of this league
+		if(isset($states_id))
+		{
+			$this->states_id = $states_id;
+		}
+
+		if(isset($id))
+		{
+			$this->id = $id;
+		}
+
+		try {
+			$this->update();
+			return $this;
+		} catch(ORM_Validation_Exception $e){
+			return $e;
+		}
 	}
 }

@@ -220,27 +220,20 @@
 				$this->modelNotSetError();
 				return false;
 			}
-			
-			try
-			{
-				$update_obj = $this->mainModel->updateCounty($args);
-				return $update_obj->save();					
-			}catch(Exception $e)
-			{
-				// Create Array for Error Data
-				$error_array = array(
-					"error" => "Unable to save county",
-					"desc" => $e->getMessage()
-				);
-				 
-				// Set whether it is a fatal error
-				$is_fatal = true;
+				$args['id'] = $this->mainModel->id;
 
-				// Call method to throw an error
-				$this->addError($error_array,$is_fatal);
-				 
-				return $this;
-			}
+				$result = $this->mainModel->updateCounty($args);
+				//Check for success / error
+				if(get_class($result) == get_class($this->mainModel))
+				{
+					return $result;
+				}
+				elseif(get_class($result) == 'ORM_Validation_Exception')
+				{
+					//parse error and add to error array
+					$this->processValidationError($result,$this->mainModel->error_message_path);
+					return false;
+				}
 		}
 		
 		############################################################################
