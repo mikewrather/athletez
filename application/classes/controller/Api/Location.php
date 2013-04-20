@@ -172,6 +172,7 @@
 			}
 
 			$location_obj = ORM::factory("Location_Base");
+
 			$result = $location_obj->addLocation($args);
 			
             
@@ -241,7 +242,7 @@
 				
 			if(trim($this->put('location_type')) != "")
 			{
-				$args['location_type'] = trim($this->put('location_type'));
+				$args['location_type'] = urldecode(trim($this->put('location_type')));
 			}
 			
 			if(!$this->mainModel->id)
@@ -249,8 +250,20 @@
 				$this->modelNotSetError();
 				return false;
 			}
-			
-			return $this->mainModel->updateLocation($args);
+			$args['id'] = $this->mainModel->id;
+
+			$result = $this->mainModel->updateLocation($args);
+			//Check for success / error
+			if(get_class($result) == get_class($this->mainModel))
+			{
+				return $result;
+			}
+			elseif(get_class($result) == 'ORM_Validation_Exception')
+			{
+				//parse error and add to error array
+				$this->processValidationError($result,$this->mainModel->error_message_path);
+				return false;
+			}
 
 		}
 		

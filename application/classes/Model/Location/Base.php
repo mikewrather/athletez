@@ -9,7 +9,7 @@ class Model_Location_Base extends ORM
 {
 	
 	protected $_table_name = 'locations';
-	public $error_message_path = "models/location/base";
+	public $error_message_path = "models/location";
 
 	protected $_belongs_to = array(
 		'city' => array(
@@ -38,7 +38,7 @@ class Model_Location_Base extends ORM
 			'cities_id'=>array(
 				array('not_empty'),
 				array('digit'),
-				array('not_equals', array(':value', 0))
+				array('city_id_exist')
 			),
 
 			// zip (varchar)
@@ -61,11 +61,11 @@ class Model_Location_Base extends ORM
 			'loc_point'=>array(
 				array('not_empty'),
 			),
-
-			// location_type (enum)
+			*/
 			'location_type'=>array(
 				array('not_empty'),
-			),*/
+				array('location_type_exist')
+			),
 		);
 	}
 
@@ -90,6 +90,12 @@ class Model_Location_Base extends ORM
 		
 		// address 
 		// Change the address of this location
+
+		if ( isset($id) )
+		{
+			$this->id = $id;
+		}
+
 		if ( isset($address) )
 		{
 			$this->address = $address;
@@ -121,7 +127,14 @@ class Model_Location_Base extends ORM
 		{
 			$this->location_type = $location_type;
 		}
-		return $this->save();
+
+		try{
+			$this->update();
+			return $this;
+		} catch(ORM_Validation_Exception $e)
+		{
+			return $e;
+		}
 	}
 	
 	public function name()
@@ -132,43 +145,26 @@ class Model_Location_Base extends ORM
 	public function addLocation($args = array())
 	{
 		extract($args);
-		$result = array();
-		
 		if(isset($address))
 		{
 			$this->address = $address;
-		} else
-	        {
-	            $args['address'] = '';
-	        }
-		
+		}
+
 		if(isset($cities_id))
 		{
 			$this->cities_id = $cities_id;
-		}else
-	        {
-	            $args['cities_id'] = '';
-	        }
-		 
-		$error = array();
-		
+		}
 
 		if(isset($lon))
 		{
 			$this->lon = $lon;
-		} else
-	        {
-	            $args['lon'] = '';
-	        }
+		}
 		
 		if(isset($lat))
 		{
 			$this->lat = $lat;
-		}else
-	        {
-	            $args['lat'] = '';
-	        }
-				
+		}
+
 		if(isset($loc_point))
 		{
 			$this->loc_point = $loc_point;
@@ -191,8 +187,6 @@ class Model_Location_Base extends ORM
 		{
         	return $e;
 		} 	
-		
-		 
 	}
 	
 }

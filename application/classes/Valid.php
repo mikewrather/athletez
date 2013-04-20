@@ -125,6 +125,20 @@
 			return false;
 		}
 
+		public static function city_id_exist($value){
+			if ($value == "" || $value == 0){
+				return false;
+			}
+			$cities_model = ORM::factory("Location_City");
+			$cities_model->select("id")
+				->where('id', '=', $value)
+				->find();
+			if ($cities_model->loaded()){
+				return true;
+			}
+			return false;
+		}
+
 		public static function complevels_id_exist($value){
 			if ($value == "" || $value == 0){
 				return false;
