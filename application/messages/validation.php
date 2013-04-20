@@ -19,4 +19,5 @@
 		'stat_contexts_id_exist' => $e->get('stat_contexts_id_exist'),
 		'resume_data_groups_id_exist' => $e->get('resume_data_groups_id_exist'),
 		'users_id_exist' => $e->get('users_id_exist'),
+		'location_type_exist' => $e->get('location_type_exist'),
 	);
