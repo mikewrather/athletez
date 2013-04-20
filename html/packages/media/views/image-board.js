@@ -1,35 +1,35 @@
-// Video Player View
+// Image Board View
 // ---------
 // Package Media
 // Requires `define`, `require`
-// Returns {VideoPlayerView} constructor
+// Returns {ImageBoardView} constructor
 
 define([
         'require', 
-        'text!media/templates/video-player.html', 
+        'text!media/templates/image-board.html', 
         'facade', 
         'views'
         ], 
-function(require, videoPlayerTemplate) {
+function(require, imageBoardTemplate) {
 
-    var VideoPlayerView,
+    var ImageBoardView,
         facade = require('facade'),
         views = require('views'),
         BaseView = views.BaseView,
         _ = facade._;
 
-    VideoPlayerView = BaseView.extend({
+    ImageBoardView = BaseView.extend({
 
         tagName: "li",
         
-        className: "video-player",
+        className: "image-board",
 
-        template: videoPlayerTemplate,
+        template: imageBoardTemplate,
 
         // **Method** `setOptions` - called by BaseView's initialize method
         setOptions: function (options) {
             if (!this.model) {
-                throw new Error("VideoPlayerView expected options.model.");
+                throw new Error("ImageBoardView expected options.model.");
             }            
         },
 
@@ -39,5 +39,5 @@ function(require, videoPlayerTemplate) {
         
     });
 
-    return VideoPlayerView;
+    return ImageBoardView;
 });

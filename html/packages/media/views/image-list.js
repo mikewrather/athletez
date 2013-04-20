@@ -1,8 +1,8 @@
 // The Image List
 // --------------
 
-define(['facade','views', 'utils', 'media/views/image-item', 'media/views/add-image'], 
-function(facade,  views,   utils,   ImageItemView,      AddImageView) {
+define(['facade','views', 'utils', 'media/views/image-item', 'media/views/image-board', 'media/views/add-image'], 
+function(facade,  views,   utils,   ImageItemView,            ImageBoardView,            AddImageView) {
 
     var ImageListView, 
         ImageListAbstract,
@@ -36,6 +36,7 @@ function(facade,  views,   utils,   ImageItemView,      AddImageView) {
             }
             _.bindAll(this);
             this.addSubscribers();
+            this.setupBoardView();
             this.setupAddView();
         },
 
@@ -62,6 +63,26 @@ function(facade,  views,   utils,   ImageItemView,      AddImageView) {
             }
             
             Channel('addimage:fetch').subscribe(callback);
+        },
+        
+        setupBoardView: function() {
+            var listView = this,
+                addView = new ImageBoardView({collection: this.collection, model: this.collection.at(0)}),
+                renderAddView = this.addChildView(addView);
+            
+            this.childViews.board = addView;
+            this.callbacks.add(function() {
+                renderAddView();
+                addView.render();
+                listView.$el.prepend(addView.el);
+            });
+            
+            function changeBoard(data) {
+                addView.model = data;
+                addView.render();
+            }
+            
+            Channel('changeimage' + this.collection.id).subscribe(changeBoard);
         }
 
     });

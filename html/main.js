@@ -21,6 +21,9 @@ require.config({
 
         // Plugins
         'bootstrap'    : '/vendor/plugins/bootstrap',
+        'jquery.pstrength' : '/vendor/plugins/jquery.pstrength-min.1.2',
+        'jqueryui'     : '/vendor/plugins/jquery-ui-1.10.2.custom.min',
+        'jquery.imgareaselect' : '/vendor/plugins/jquery.imgareaselect.min',
 
         // RequireJS
         'domready'     : '/vendor/plugins/domReady',
@@ -61,6 +64,7 @@ require.config({
         'profile'      : '/pages/profile',
         'game'         : '/pages/game',
         'team'         : '/pages/team',
+        'registration' : '/pages/registration',
         
         // Application - bootstrap for frontend app 
         'application'  : '/application'
@@ -71,7 +75,7 @@ require.config({
             exports: '_'
         },
         'backbone': {
-            deps: ['underscore', 'jquery', 'json2', 'html5'],
+            deps: ['underscore', 'jquery', 'json2', 'html5', 'jqueryui'],
             exports: 'Backbone'
         }
     },

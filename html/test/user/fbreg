@@ -1,0 +1,14 @@
+{
+    "payload": {
+        "name": "Mike Wrather",
+        "birth_day": "June 18th 1982",
+        "high_school": "Crassroads School",
+        "email": "mike.wrather@gmail.com",
+        "picture": "images/photo_large.png"
+    },
+    "desc": "Facebook registration information about the user.",
+    "exec_data": {
+        "exec_time": 0.024134,
+        "exec_error": false
+    }
+}

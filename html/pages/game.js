@@ -15,16 +15,14 @@ define([
     "game/models/basics",
     "game/models/addmedia",
     "game/collections/teamrosters",
-    "game/models/videoplayer",
-    "game/collections/videothumbs",
+    "game/collections/videos",
     "game/collections/images",
     "game/collections/comments",
     
     "game/views/header",
     "game/views/add-media",
     "sportorg/views/teamroster-list",
-    "media/views/videoplayer",
-    "game/views/videothumb-list",
+    "game/views/video-list",
     "game/views/image-list",
     "game/views/comment-list"
     
@@ -40,16 +38,14 @@ define([
         GameBasicsModel = require("game/models/basics"),
         GameAddMediaModel = require("game/models/addmedia"),
         GameTeamRosterList = require("game/collections/teamrosters"),
-        GameVideoPlayerModel = require("game/models/videoplayer"),
-        GameVideoThumbList = require("game/collections/videothumbs");
+        GameVideoList = require("game/collections/videos");
         GameImageList = require("game/collections/images");
         GameCommentList = require("game/collections/comments");
         
         GameHeaderView = require("game/views/header"),
         GameAddMediaView = require("game/views/add-media"),
         GameTeamRosterListView = require("sportorg/views/teamroster-list"),
-        GameVideoPlayerView = require("media/views/videoplayer"),
-        GameVideoThumbListView = require("game/views/videothumb-list"),
+        GameVideoListView = require("game/views/video-list"),
         GameImageListView = require("game/views/image-list"),
         GameCommentListView = require("game/views/comment-list"),
         
@@ -96,13 +92,9 @@ define([
             this.teamrosters.id = this.id;
             this.teamrosters.fetch();
             
-            this.videoplayer = new GameVideoPlayerModel();
-            this.videoplayer.id = this.id;
-            this.videoplayer.fetch();
-            
-            this.videothumbs = new GameVideoThumbList();
-            this.videothumbs.id = this.id;
-            this.videothumbs.fetch();
+            this.videos = new GameVideoList();
+            this.videos.id = this.id;
+            this.videos.fetch();
             
             this.images = new GameImageList();
             this.images.id = this.id;
@@ -125,12 +117,8 @@ define([
                 controller.setupTeamRosterListView();                        
             });
             
-            $.when(this.videoplayer.request).done(function () {
-                controller.setupVideoPlayerView();                        
-            });
-            
-            $.when(this.videothumbs.request).done(function () {
-                controller.setupVideoThumbListView();                        
+            $.when(this.videos.request).done(function () {
+                controller.setupVideoListView();                        
             });
             
             $.when(this.images.request).done(function() {
@@ -180,28 +168,15 @@ define([
             this.layout.render();
         },
         
-        setupVideoPlayerView: function() {
-            var videoPlayerView;
+        setupVideoListView: function() {
+            var videoListView;
             
-            videoPlayerView = new GameVideoPlayerView({
-                model: this.videoplayer,
-                name: "Video Player",
-                destination: "#video-player"
+            videoListView = new GameVideoListView({
+                collection: this.videos,
+                destination: "#video-wrap"
             });
             
-            this.scheme.push(videoPlayerView);
-            this.layout.render();
-        },
-        
-        setupVideoThumbListView: function() {
-            var videoThumbListView;
-            
-            videoThumbListView = new GameVideoThumbListView({
-                collection: this.videothumbs,
-                destination: "#videothumb-wrap"
-            });
-            
-            this.scheme.push(videoThumbListView);
+            this.scheme.push(videoListView);
             this.layout.render();            
         },
         

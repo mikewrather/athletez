@@ -1,0 +1,14 @@
+
+
+.password {
+    border : 1px solid #cc9933;
+    width : 200px;
+}
+.pstrength-minchar {
+    font-size : 10px;
+}
+
+.fbimage {
+    float:left;
+    width:150px;
+}

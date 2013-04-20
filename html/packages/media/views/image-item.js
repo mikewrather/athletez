@@ -27,6 +27,11 @@ function (
 
         className: "image",
         
+        // Event handlers...
+        events: {
+            "click": "changeImage"
+        },
+        
         initialize: function (options) {
             this.template = imageItemTemplate;
         },
@@ -35,6 +40,10 @@ function (
             var markup = Mustache.to_html(this.template, this.model.toJSON());
             this.$el.html(markup);
             return this;
+        },
+        
+        changeImage: function() {
+            Channel('changeimage' + this.model.collection.id).publish(this.model);
         }        
         
       });
