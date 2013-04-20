@@ -11,10 +11,6 @@
 
 	class View_Api_Gamematch extends Api_Viewclass
 	{
-
-
-
-	
 		/**
 		 * get_basics() Basic info for a game match
 		 *

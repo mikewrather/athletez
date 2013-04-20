@@ -85,10 +85,6 @@ class Model_Sportorg_Seasons_Base extends ORM
             return $e;
         }  
     }
-	public function getTeamsBySport($sports_id=NULL)
-	{
-
-	}
 
 	public function getBasics()
 	{
