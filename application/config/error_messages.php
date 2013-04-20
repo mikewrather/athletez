@@ -25,5 +25,5 @@ return array(
 	"fitness_datavalue_exist" => "Fitness data value doesn't exist",
 	"fitness_data_values_id_exist" => "Fitness data value id doesn't exist",
 	"users_id_exist" => "User id doesn't exist",
-
+	"location_type_exist" => "Location type should be 'High School' or 'Park' or 'Other'",
 );
