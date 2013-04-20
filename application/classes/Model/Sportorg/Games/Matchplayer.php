@@ -31,6 +31,7 @@ class Model_Sportorg_Games_Matchplayer extends ORM
 			"game_matches_id" => $this->game_matches_id,
 			"points_awarded" => $this->points_awarded,			
 			"result_time" => $this->result_time,
+			//TODO, add by Jeffrey.Need upadate after align with Mike
 			//"game_matches" => $this->game_matches->getBasics(),
 			"user" => $this->user->getBasics(),
 			"match_winner" => $this->match_winner

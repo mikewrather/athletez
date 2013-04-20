@@ -153,39 +153,31 @@
 				$args['states_id'] = (int)trim($this->put('states_id'));
 			}
 
-			// sections_id 
+			// sections_id
 			// Change the Section this league belongs to
-				
+
 			if((int)trim($this->put('sections_id')) > 0)
 			{
 				$args['sections_id'] = (int)trim($this->put('sections_id'));
 			}
-			
+
 			if(!$this->mainModel->id)
 			{
 				$this->modelNotSetError();
 				return false;
 			}
-			try
-			{
-				$update_obj = $this->mainModel->updateLeague($args);
-				return $update_obj->save();					
-			}catch(Exception $e)
-			{
-				// Create Array for Error Data
-				$error_array = array(
-					"error" => "Unable to save county",
-					"desc" => $e->getMessage()
-				);
-				 
-				// Set whether it is a fatal error
-				$is_fatal = true;
-
-				// Call method to throw an error
-				$this->addError($error_array,$is_fatal);
-				 
-				return $this;
-			}
+				$args['id'] = $this->mainModel->id;
+				$result = $this->mainModel->updateLeague($args);
+				if(get_class($result) == get_class($this->mainModel))
+				{
+					return $result;
+				}
+				elseif(get_class($result) == 'ORM_Validation_Exception')
+				{
+					//parse error and add to error array
+					$this->processValidationError($result,$this->mainModel->error_message_path);
+					return false;
+				}
 		}
 		
 		############################################################################

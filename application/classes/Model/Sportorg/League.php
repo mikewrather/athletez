@@ -9,7 +9,8 @@ class Model_Sportorg_League extends ORM
 {
 	
 	protected $_table_name = 'leagues';
-	
+
+	public $error_message_path = 'models/sportorg/league';
 
 	protected $_belongs_to = array(
 		'section' => array(
@@ -37,18 +38,20 @@ class Model_Sportorg_League extends ORM
 			// sections_id (int)
 			'sections_id'=>array(
 				array('digit'),
+				array('sections_id_exist'),
 			),
 
 			// states_id (int)
 			'states_id'=>array(
-				array('not_empty'),
-				array('not_equals', array(':value', 0))
+				array('digit'),
+				array('states_id_exist')
 			),
 		);
 	}
 
 	public function getBasics()
 	{
+		//TODO, add by Jeffrey. Here need to align with Mike
 		$orgsArray = array();
 		foreach($this->orgs->find_all() as $org){
 			$orgsArray[$org->id] = $org->getBasics();
@@ -88,13 +91,23 @@ class Model_Sportorg_League extends ORM
 		{
 			$this->states_id = $states_id;	
 		}
-		// sections_id 
-		// Change the Section this league belongs to
+
 		if(isset($sections_id))
 		{
 			$this->sections_id = $sections_id;
 		}
-		return $this;
+
+		if(isset($id))
+		{
+			$this->id = $id;
+		}
+
+		try {
+			$this->update();
+			return $this;
+		} catch(ORM_Validation_Exception $e){
+			return $e;
+		}
 	}
 	
     public function check_league_exist($args = array())

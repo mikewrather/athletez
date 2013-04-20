@@ -103,6 +103,20 @@
 			return false;
 		}
 
+		public static function states_id_exist($value){
+			if ($value == "" || $value == 0){
+				return false;
+			}
+			$states_model = ORM::factory("Location_State");
+			$states_model->select("id")
+				->where('id', '=', $value)
+				->find();
+			if ($states_model->loaded()){
+				return true;
+			}
+			return false;
+		}
+
 		public static function complevels_id_exist($value){
 			if ($value == "" || $value == 0){
 				return false;
@@ -154,6 +168,20 @@
 				->where('id', '=', $value)
 				->find();
 			if ($orgs_model->loaded()){
+				return true;
+			}
+			return false;
+		}
+
+		public static function sections_id_exist($value){
+			if ($value == "" || $value == 0){
+				return false;
+			}
+			$sections_model = ORM::factory("Sportorg_Section");
+			$sections_model->select("id")
+				->where('id', '=', $value)
+				->find();
+			if ($sections_model->loaded()){
 				return true;
 			}
 			return false;
