@@ -111,7 +111,6 @@
 		public function get_complevels()
 		{
 			$retArr = array();
-
 			// Scaffolding Code For Array:
 			$objs = $this->obj->find_all();
 			foreach($objs as $obj)
@@ -140,6 +139,21 @@
  
 			return $retArr;
 		}
+
+		public function get_search()
+		{
+			$retArr = array();
+
+			// Scaffolding Code For Array:
+			$objs = $this->obj->find_all();
+			foreach($objs as $obj)
+			{
+				$retArr[$obj->id] = $obj->getBasics();
+			}
+
+			return $retArr;
+		}
+
 		
 		/**
 		 * get_section() If applicable, returns the section that the organization exists in.

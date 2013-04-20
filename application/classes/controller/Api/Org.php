@@ -79,7 +79,7 @@
 				$this->modelNotSetError();
 				return false;
 			}
-			 
+			 $args['id'] = $this->mainModel->id;
 			return $this->mainModel->getTeams($args);
 		}
 		
@@ -97,7 +97,7 @@
 				$this->modelNotSetError();
 				return false;
 			}
-			 
+
 			return $this->mainModel->getLeague();
 		}
 		
@@ -151,8 +151,8 @@
 				$this->modelNotSetError();
 				return false;
 			}
-			 
-			return $this->mainModel->getComplevels();
+			$args['id'] = $this->mainModel->id;
+			return $this->mainModel->getComplevels($args);
 		}
 		
 		/**
@@ -169,8 +169,89 @@
 				$this->modelNotSetError();
 				return false;
 			}
-			 
-			return $this->mainModel->getSessons();
+			$args['id'] = $this->mainModel->id;
+			return $this->mainModel->getSeasons($args);
+		}
+
+		public function action_get_search()
+		{
+			$this->payloadDesc = "Used to auto-narrow a list of organizations based on passed parameters and partial search strings.";
+			$arguments = array();
+			// CHECK FOR PARAMETERS:
+			// sports_club
+			// If set to true only sports clubs will be returned.
+
+			if($this->request->query('sports_club') != "")
+			{
+				//convert sports_club to a boolean
+				$arguments["sports_club"] = strtolower($this->request->query('sports_club'));
+				if (Valid::is_true_or_false($arguments["sports_club"])){
+					if ($arguments["sports_club"] == 'true'){
+						$arguments["sports_club"] = 1;
+					}else{
+						$arguments["sports_club"] = 0;
+					}
+				}else{
+					$error_array = array(
+						"error" => "Sport club invalid",
+						"desc" => "Sport club only accept True or False"
+					);
+					$this->modelNotSetError($error_array);
+					return false;
+				}
+			}
+
+			// states_id (REQUIRED)
+			// This will be necessary to narrow the list because there are so many organizations.
+
+			if((int)trim($this->request->query('states_id')) > 0)
+			{
+				$arguments["states_id"] = (int)trim($this->request->query('states_id'));
+				if (!Valid::states_id_exist($arguments["states_id"])){
+					$error_array = array(
+						"error" => "States id invalid",
+						"desc" => "States ID doesn't exist"
+					);
+					$this->modelNotSetError($error_array);
+					return false;
+				}
+			}
+			else // THIS WAS A REQUIRED PARAMETER
+			{
+				// Create Array for Error Data
+				$error_array = array(
+					"error" => "Required Parameter Missing",
+					"param_name" => "states_id",
+					"param_desc" => "This will be necessary to narrow the list because there are so many organizations."
+				);
+
+				// Set whether it is a fatal error
+				$is_fatal = true;
+
+				// Call method to throw an error
+				$this->addError($error_array,$is_fatal);
+				return false;
+
+			}
+
+			// sports_id
+			// Only return orgs which are linked to this sport.
+
+			if((int)trim($this->request->query('sports_id')) > 0)
+			{
+				$arguments["sports_id"] = (int)trim($this->request->query('sports_id'));
+			}
+
+			// cities_id
+			// Narrow organization by city.
+
+			if((int)trim($this->request->query('cities_id')) > 0)
+			{
+				$arguments["cities_id"] = (int)trim($this->request->query('cities_id'));
+			}
+
+			//get results here.
+			return $this->mainModel->get_search($arguments);
 		}
 		
 		/**
@@ -187,8 +268,9 @@
 				$this->modelNotSetError();
 				return false;
 			}
-			 
-			return $this->mainModel->getSection();
+
+			$args['id'] = $this->mainModel->id;
+			return $this->mainModel->getSection($args);
 		}
 		
 		############################################################################

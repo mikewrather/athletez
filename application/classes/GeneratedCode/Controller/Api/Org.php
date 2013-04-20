@@ -211,6 +211,8 @@
 				$arguments["cities_id"] = (int)trim($this->request->query('cities_id'));
 			}
 
+			return $this->mainModel->get_search($arguments);
+
 
 		}
 		

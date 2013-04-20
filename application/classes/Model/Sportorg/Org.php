@@ -42,7 +42,9 @@ class Model_Sportorg_Org extends ORM
 		),
 		'leagues' => array(
 			'model' => 'Sportorg_League',
-			'foreign_key' => 'leagues_id',
+			'foreign_key' => 'orgs_id',
+			'through' => 'org_league_link',
+			'far_key' => 'leagues_id'
 		)
 	);
 
@@ -113,30 +115,36 @@ class Model_Sportorg_Org extends ORM
 	public function getTeams($args = array())
 	{
 		extract($args);
-		$org_sport_link_obj = $this->orgsports;
+
+		$teams_model = ORM::factory("Sportorg_Team");
+		$teams_model->join("org_sport_link", "RIGHT")
+			->on("org_sport_link.id", '=', "sportorg_team.org_sport_link_id");
+		$teams_model->join("orgs", "RIGHT")
+			->on("orgs.id", '=', "org_sport_link.orgs_id");
+
+		$teams_model->where('orgs.id', '=', $id);
 		if ( isset($sports_id))
 		{
-			$org_sport_link_obj->where('sports_id','=',$sports_id);
+			$teams_model->where('org_sport_link.sports_id', '=', $sports_id);
 		}
-		
+
 		if ( isset($complevels_id) )
 		{
-			$org_sport_link_obj->teams->where('complevels_id', '=', $complevels_id);
+			$teams_model->where('sportorg_team.complevels_id', '=', $complevels_id);
 		}
-		  
-		return $org_sport_link_obj;
+		return $teams_model;
 	}
 	
 	public function getLeague()
 	{
-		$leagues = ORM::factory('Sportorg_Org')->join('leagues')->on('leagues.id', '=', 'sportorg_org.leagues_id')->where('sportorg_org.id','=', $this->id);
-		return (Object)$leagues;
+		return $this->leagues;
 	}
 	
 	public function getDivisions()
 	{
-		$divisions = ORM::factory('Sportorg_Org')->join('divisions')->on('divisions.id', '=', 'sportorg_org.divisions_id')->where('sportorg_org.id','=', $this->id);		 
-		return (Object)$divisions;		
+		//$divisions = ORM::factory('Sportorg_Org')->join('divisions')->on('divisions.id', '=', 'sportorg_org.divisions_id')->where('sportorg_org.id','=', $this->id);
+
+		return $this->divisions;
 	} 
 	
 	public function getSports()
@@ -145,23 +153,63 @@ class Model_Sportorg_Org extends ORM
 		return $org_sport_link_obj;
 	}
 	
-	public function getComplevels()
+	public function getComplevels($args = array())
 	{
-		$complevel_profiles_obj = $this->complevel_profile->complevels;		
-		return $complevel_profiles_obj;
+		extract($args);
+		$complevels_model = ORM::factory("Sportorg_Complevel_Base");
+		$complevels_model->join('orgs')->on('orgs.complevel_profiles_id', '=', 'sportorg_complevel_base.complevel_profiles_id');
+		$complevels_model->where('orgs.id', '=', $id);
+		return $complevels_model;
 	}
 	
-	public function getSection()
+	public function getSection($args = array())
 	{
+		extract($args);
 		$sections = $this->sports->sections;
-		return $sections;
+		$sections_model = ORM::factory("Sportorg_Section");
+		$sections_model->join('leagues')
+			->on('leagues.sections_id', '=', 'sportorg_section.id');
+
+		$sections_model->join('orgs')
+			->on('orgs.leagues_id', '=', 'leagues.id');
+		$sections_model->where('orgs.id', '=', $id);
+
+		return $sections_model;
 	}
 	
-	public function getSessons()
+	public function getSeasons($args)
 	{
-		$sessons = $this->season_profile->seasons;
-		return $sessons;
+		extract($args);
+		$seasons_model = ORM::factory("Sportorg_Seasons_Base");
+		$seasons_model->join('orgs')->on('orgs.season_profiles_id', '=', 'sportorg_seasons_base.season_profiles_id');
+		$seasons_model->where('orgs.id', '=', $id);
+		return $seasons_model;
 	}
+
+	public function get_search($args = array()){
+		extract($args);
+		$orgs_model = ORM::factory("Sportorg_Org");
+
+		if (isset($sports_id)){
+			$orgs_model->join('org_sport_link')
+				->on('org_sport_link.orgs_id', '=', 'sportorg_org.id');
+			$orgs_model->where('org_sport_link.sports_id', '=', $sports_id);
+		}
+
+		if (isset($cities_id)){
+			$orgs_model->join('locations')
+				->on('locations.id', '=', 'sportorg_org.locations_id');
+			$orgs_model->where('locations.cities_id', '=', cities_id);
+		}
+		if (isset($sports_club)){
+			$orgs_model->where('sportorg_org.sports_club', '=', $sports_club);
+		}
+
+		$orgs_model->where('sportorg_org.states_id', '=', $states_id);
+
+		return $orgs_model;
+	}
+
 	public function getGames()
 	{
 		if(!$this->id) return false; // return false if this object doesn't have an id
@@ -176,7 +224,6 @@ class Model_Sportorg_Org extends ORM
 			->on('org_sport_link.id','=','team.org_sport_link_id')
 
 			->where('org_sport_link.orgs_id','=',$this->id);
-
 		return $games;
 	}
 	
