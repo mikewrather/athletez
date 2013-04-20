@@ -63,6 +63,22 @@
 			}
 			return $this->mainModel->getCountries();
 		}
+
+		public function action_get_search()
+		{
+			$this->payloadDesc = "Used to auto-narrow a list of states based on passed parameters and partial search strings.";
+			$arguments = array();
+			// CHECK FOR PARAMETERS:
+			// state_name (REQUIRED)
+			// This is a partial string which will be used to narrow the list.  Because the states list is short a list will be returned after 1 character is typed.
+
+			if(trim($this->request->query('state_name')) != "")
+			{
+				$arguments["name"] = trim($this->request->query('state_name'));
+			}
+			//allow user do not keyin state name
+			return $this->mainModel->get_search($arguments);
+		}
 		
 		/**
 		 * action_get_divisions() All divisions within a state

@@ -73,9 +73,18 @@ class Model_Location_State extends ORM
 					->join('states')
 					->on('states.id', '=', 'sportorg_league.states_id')
 					->where('states.id', '=', $this->id);
-		
-	 		
-		return $leagues;	
+		return $leagues;
+	}
+
+	public function get_search($args = array()){
+		if (empty($args)){
+			return $this;
+		}else{
+			extract($args);
+			$this->where('name', 'like', "%$name%");
+		}
+
+		return $this;
 	}
 	
 	public function getBasics()
