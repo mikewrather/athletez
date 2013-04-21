@@ -39,13 +39,11 @@ class Model_Sportorg_Position extends ORM
 
 			// sports_id (int)
 			'sports_id'=>array(
-				array('not_empty'),
-				array('not_equals', array(':value', 0))
+				array('sports_id_exist')
 			),
 
 			// stattab_id (int)
 			'stattab_id'=>array(
-				array('not_empty'),
 				array('stat_tab_id_exist')
 			),
 		);
@@ -171,7 +169,14 @@ class Model_Sportorg_Position extends ORM
 		{
 			$this->stattab_id = $stattab_id;
 		}
-		return $this;
+
+		try{
+			$this->update();
+			return $this;
+		} catch(ORM_Validation_Exception $e)
+		{
+			return $e;
+		}
 	}
 	
 	public function addPosition($args=array())
