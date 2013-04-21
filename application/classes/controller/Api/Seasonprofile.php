@@ -56,12 +56,18 @@
 		public function action_get_seasons()
 		{
 			$this->payloadDesc = "List of seasons in the season profile";
+			$arguments = array();
 			if(!$this->mainModel->id)
 			{
 				$this->modelNotSetError();
 				return false;
 			}
-			return $this->mainModel->getSeasons();
+			if((int)trim($this->request->query('orgs_id')) > 0)
+			{
+				$arguments["orgs_id"] = (int)trim($this->request->query('orgs_id'));
+			}
+
+			return $this->mainModel->getSeasons($arguments);
 		
 		}
 		

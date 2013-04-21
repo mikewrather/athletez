@@ -45,9 +45,21 @@ class Model_Sportorg_Seasons_Profile extends ORM
 		return $this->delete();
 	}
 	
-	public function getSeasons()
+	public function getSeasons($args = array())
 	{
-		return $this->seasons;
+		extract($args);
+		$seasons = $this->seasons;
+
+		$seasons->join("season_profiles", 'LEFT')
+			->on('season_profiles.id', '=', 'sportorg_seasons_base.season_profiles_id');
+
+		if (isset($orgs_id) && $orgs_id != ""){
+			$seasons->join("orgs", 'LEFT')
+				->on('orgs.season_profiles_id', '=', 'season_profiles.id');
+			$seasons->where('orgs.id', '=', $orgs_id);
+		}
+
+		return $seasons;
 	}
 	
 	public function addSeasonprofile($name)
