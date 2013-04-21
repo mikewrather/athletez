@@ -73,11 +73,11 @@
 				$args['resume_data_profiles'] = (int)trim($this->request->query('resume_data_profiles'));
 			}
 			
-			if(!$this->mainModel->id)
-			{
-				$this->modelNotSetError();
-				return false;
-			}
+//			if(!$this->mainModel->id)
+//			{
+//				$this->modelNotSetError();
+//				return false;
+//			}
 			return $this->mainModel->getListall($args); 
 		}
 		

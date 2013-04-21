@@ -11,10 +11,6 @@
 
 	class View_Api_Resumedata extends Api_Viewclass
 	{
-
-
-
-	
 		/**
 		 * get_basics() Return the basics about a given peice of resume data
 		 *
@@ -23,7 +19,6 @@
 		public function get_basics()
 		{
 			$retArr = array();
- 
 
 			// Scaffolding Code For Single:
 			$retArr = $this->obj->getBasics();
