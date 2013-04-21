@@ -108,7 +108,8 @@
 				$this->modelNotSetError();
 				return false;
 			}
-			return (Object)$this->mainModel->getStattab();
+			$args['id'] = $this->mainModel->id;
+			return $this->mainModel->getStattab($args);
 		}
 		
 		/**
@@ -125,7 +126,9 @@
 				$this->modelNotSetError();
 				return false;
 			}
-			return (Object)$this->mainModel->getSport();
+
+			$args['id'] = $this->mainModel->id;
+			return $this->mainModel->getSport($args);
 		}
 		
 		/**

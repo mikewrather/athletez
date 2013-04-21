@@ -61,20 +61,28 @@ class Model_Sportorg_Position extends ORM
 		);
 	}
 	
-	public function getStattab()
+	public function getStattab($args = array())
 	{
-		$defaultstattab = $this->getBasics();
-		$stattab = $defaultstattab['stattab'];
-		 		
-		return $stattab;
+		extract($args);
+		$stattab_model = ORM::factory("Stats_Tab");
+		$stattab_model->join('positions')
+			->on('stats_tab.id', '=', 'positions.stattab_id');
+
+		$stattab_model->where('positions.id', '=', $id);
+
+		return $stattab_model;
 	}
 	
-	public function getSport()
+	public function getSport($args = array())
 	{
-		$position = $this->getBasics();
-		$sport = $position['sport'];
-		
-		return $sport;
+		extract($args);
+		$stattab_model = ORM::factory("Sportorg_Sport");
+		$stattab_model->join('positions')
+			->on('sports.id', '=', 'positions.sport_id');
+
+		$stattab_model->where('positions.id', '=', $id);
+
+		return $stattab_model;
 	}
 		
 	public function getMedia($args = array())

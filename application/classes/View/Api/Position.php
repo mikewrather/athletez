@@ -61,8 +61,7 @@
 		public function get_defaultstattab()
 		{
 			$retArr = array();
- 
-			// Scaffolding Code For Single:			
+ 			// Scaffolding Code For Single:
 			$retArr = $this->obj; 
 
 			return $retArr;
