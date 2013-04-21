@@ -10,6 +10,8 @@ class Model_Sportorg_Sport extends ORM
 
 	protected $_table_name = 'sports';
 
+	public $error_message_path = "models/sportorg";
+
 	protected $_belongs_to = array(
 		'type' => array(
 			'model' => 'Sportorg_Sporttype',
@@ -71,7 +73,6 @@ class Model_Sportorg_Sport extends ORM
 
 			// sport_type_id (int)
 			'sport_type_id'=>array(
-				array('not_empty'),
 				array('digit'),
 				array('sport_type_id_exist'),
 			),
@@ -82,7 +83,7 @@ class Model_Sportorg_Sport extends ORM
 	public function updateType($sport_type_id)
 	{
 		$this->sport_type_id = $sport_type_id;
-		return $this->save();
+		return $this->update();
 	}
 	
 	public function updateSport($args)
@@ -107,8 +108,14 @@ class Model_Sportorg_Sport extends ORM
 		{
 			$this->sport_type_id = $sport_type_id;
 		}
-		
-		return $this->save();
+
+		try{
+			$this->update();
+			return $this;
+		} catch(ORM_Validation_Exception $e)
+		{
+			return $e;
+		}
 	}
 
 	public function getBasics()

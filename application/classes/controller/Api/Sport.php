@@ -77,8 +77,7 @@
 				$this->modelNotSetError();
 				return false;
 			}
-			$args['id'] = $this->mainModel->id;
-			return $this->mainModel->getPositions($args);
+			return $this->mainModel->getPositions();
 		}
 		
 		/**
@@ -478,7 +477,7 @@
 				
 			if(trim($this->put('name')) != "")
 			{
-				$args['name'] = trim($this->put('name'));
+				$args['name'] = trim(urldecode($this->put('name')));
 			}
 
 			// male 
@@ -487,7 +486,7 @@
 			if($this->put('male') != "")
 			{
 				//convert male to a boolean
-				$args['male'] = (bool)$this->put('male');
+				$args['male'] =  $this->put('male');
 			}
 
 			// female 
@@ -496,7 +495,7 @@
 			if($this->put('female') != "")
 			{
 				//convert female to a boolean
-				$args['female'] = (bool)$this->put('female');
+				$args['female'] = $this->put('female');
 			}
 
 			// sport_type_id 
@@ -506,14 +505,25 @@
 			{
 				$args['sport_type_id'] = (int)trim($this->put('sport_type_id'));
 			}
-			
-			
+
 			if(!$this->mainModel->id)
 			{
 				$this->modelNotSetError();
 				return false;
 			}
-			return $this->mainModel->updateSport($args);
+
+			$result = $this->mainModel->updateSport($args);
+			//Check for success / error
+			if(get_class($result) == get_class($this->mainModel))
+			{
+				return $result;
+			}
+			elseif(get_class($result) == 'ORM_Validation_Exception')
+			{
+				//parse error and add to error array
+				$this->processValidationError($result,$this->mainModel->error_message_path);
+				return false;
+			}
 		}
 		
 		/**
@@ -539,7 +549,18 @@
 				$this->modelNotSetError();
 				return false;
 			}
-			return $this->mainModel->updateType($sport_type_id);
+			$result = $this->mainModel->updateType($sport_type_id);
+			//Check for success / error
+			if(get_class($result) == get_class($this->mainModel))
+			{
+				return $result;
+			}
+			elseif(get_class($result) == 'ORM_Validation_Exception')
+			{
+				//parse error and add to error array
+				$this->processValidationError($result,$this->mainModel->error_message_path);
+				return false;
+			}
 		}
 		
 		############################################################################
