@@ -461,26 +461,19 @@
 				$this->modelNotSetError();
 				return false;
 			}
-		
-			try
-			{
-				$update_obj = $this->mainModel->updateGamelink($args);
-				return $update_obj->save(); 
-			}catch(Exception $e)
-			{
-				
-				// Create Array for Error Data
-				$error_array = array(
-					"error" => "Unable to save team",
-					"desc" => $e->getMessage()
-				);
-				 
-				// Set whether it is a fatal error
-				$is_fatal = true;
+			$args['teams_id'] = $this->mainModel->id;
 
-				// Call method to throw an error
-				$this->addError($error_array,$is_fatal);				 
-				return $this;
+			$result = $this->mainModel->updateGamelink($args);
+			//Check for success / error
+			if(get_class($result) == get_class($this->mainModel))
+			{
+				return $result;
+			}
+			elseif(get_class($result) == 'ORM_Validation_Exception')
+			{
+				//parse error and add to error array
+				$this->processValidationError($result,$this->mainModel->error_message_path);
+				return false;
 			}
 
 		}

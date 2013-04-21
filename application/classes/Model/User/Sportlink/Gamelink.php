@@ -26,7 +26,6 @@ class Model_User_Sportlink_Gamelink extends ORM
 		)
 	);
 
-
 	public function __construct($id=NULL)
 	{
 		parent::__construct($id);

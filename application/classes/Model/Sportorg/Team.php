@@ -58,10 +58,10 @@ class Model_Sportorg_Team extends ORM
 	{
 		return array(
 			'seasons_id' => array(
-				array('not_equals', array(':value', 0))
+				array('seasons_id_exist')
 			),
 			'complevels_id' => array(
-				array('not_equals', array(':value', 0))
+				array('complevels_id_exist')
 			),
 			'year' => array(
 				array('not_empty'),
@@ -86,6 +86,7 @@ class Model_Sportorg_Team extends ORM
 	{
 		return $this->season;
 	}
+
 	public function getSport()
 	{
 		return $this->org_sport_link->sport;
@@ -351,10 +352,10 @@ class Model_Sportorg_Team extends ORM
 	public function updateGamelink($args = array() )
 	{
 		extract($args);
-		$game_link_obj = ORM::factory('Sportorg_Games_Teamslink')->where('teams_id','=', $this->id)->find();
-			
-			
-		// points_scored 
+		$game_link_obj = ORM::factory('Sportorg_Games_Teamslink')->where('teams_id','=', $teams_id)->find();
+
+		//print_r($game_link_obj);
+		// points_scored
 		// Change the number of points scored for this team in this game
 		if(isset($points_scored))
 		{
@@ -374,17 +375,23 @@ class Model_Sportorg_Team extends ORM
 		{
 			$game_link_obj->isWinner = $isWinner;
 		}
-		
+
+		$game_link_obj->teams_id = $teams_id;
+
 		// is_home_team 
 		// Update whether this is the home team for this game
 		if(isset($is_home_team))
 		{
 			$game_link_obj->is_home_team = $is_home_team;
-		}	
+		}
 		
+		try {
+			$game_link_obj->update();
+			return $game_link_obj;
+		} catch(ORM_Validation_Exception $e){
+			return $e;
+		}
 		return $game_link_obj;
-
-
 	}
 	
 	public function updateTeam($args = array())
@@ -392,35 +399,35 @@ class Model_Sportorg_Team extends ORM
 		extract($args);
 		// complevels_id 
 		// Competition Level ID
-		if(isset($complevels_id))
+		if(isset($complevels_id) && $complevels_id == "")
 		{
 			$this->complevels_id = $complevels_id;
 		}
 		
 		// seasons_id 
 		// Update the Season ID
-		if(isset($seasons_id))
+		if(isset($seasons_id) && $seasons_id == "")
 		{
 			$this->seasons_id = $seasons_id;
 		}
 			
 		// year 
 		// Change the year of this team
-		if(isset($year))
+		if(isset($year)  && $year == "")
 		{
 			$this->year = $year;
 		}
 	 	 
 		// mascot 
 		// Change the mascot of this team
-		if(isset($mascot))
+		if(isset($mascot) && $mascot == "")
 		{
 			$this->mascot = $mascot;
 		}
 		
 		// unique_ident 
 		// Change the Unique Identifier for this team
-		if(isset($unique_ident))
+		if(isset($unique_ident) && $unique_ident == "")
 		{
 			$this->unique_ident = $unique_ident;
 		}
