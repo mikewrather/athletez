@@ -644,6 +644,9 @@ INSERT INTO `apiparams` VALUES ('317', '426', 'states_id', 'int', '1', 'This wil
 INSERT INTO `apiparams` VALUES ('318', '426', 'sports_id', 'int', '0', 'Only return orgs which are linked to this sport.', null);
 INSERT INTO `apiparams` VALUES ('319', '426', 'cities_id', 'int', '0', 'Narrow organization by city.', null);
 INSERT INTO `apiparams` VALUES ('320', '125', 'seasons_arr', 'array', '0', 'Array of seasons to add.  This will create multiple teams with one addteam call.', null);
+INSERT INTO `apiparams` VALUES ('321', '175', 'min_age', 'int', '1', 'Minimum age.', null);
+INSERT INTO `apiparams` VALUES ('322', '175', 'max_age', 'int', '1', 'Maximum age.', null);
+
 
 -- ----------------------------
 -- Table structure for `cities`
