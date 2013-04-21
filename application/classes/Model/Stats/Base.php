@@ -56,7 +56,15 @@ class Model_Stats_Base extends ORM
 		if( isset($description))
 		{
 			$this->description = $description;
-		}	
+		}
+
+		try {
+			$this->save();
+			return $this;
+		} catch(ORM_Validation_Exception $e){
+			return $e;
+		}
+
 		return $this;
 	}
 	
