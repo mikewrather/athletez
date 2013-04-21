@@ -33,23 +33,21 @@ class Model_Sportorg_Complevel_Base extends ORM
 			'name'=>array(
 				array('not_empty'),
 			),
-			/* TODO, add by Jeffrey, not below 2 items in add page.
+
 			// min_age (int)
 			'min_age'=>array(
-				array('not_empty'),
 				array('digit'),
 			),
 
 			// max_age (int)
 			'max_age'=>array(
-				array('not_empty'),
 				array('digit'),
 			),
-			*/
+
 			// complevel_profiles_id (int)
 			'complevel_profiles_id'=>array(
 				array('not_empty'),
-				array('not_equals', array(':value', 0))
+				array('complevel_profiles_id_exist')
 			),
 		);
 	}
@@ -104,7 +102,14 @@ class Model_Sportorg_Complevel_Base extends ORM
 		if(isset($max_age))
 		{
 			$this->max_age = $max_age;
-		}	
+		}
+
+		try {
+			$this->save();
+			return $this;
+		} catch(ORM_Validation_Exception $e){
+			return $e;
+		}
 		return $this;
 	}
 	
@@ -124,7 +129,17 @@ class Model_Sportorg_Complevel_Base extends ORM
         {
             $this->complevel_profiles_id = $complevel_profiles_id;
         }
-        
+
+		if(isset($min_age))
+		{
+			$this->min_age = $min_age;
+		}
+
+		if(isset($max_age))
+		{
+			$this->max_age = $max_age;
+		}
+
         try {         
             $this->save();
             return $this;

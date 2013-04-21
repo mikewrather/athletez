@@ -125,6 +125,20 @@
 			return false;
 		}
 
+	public static function complevel_profiles_id_exist($value){
+		if ($value == "" || $value == 0){
+			return false;
+		}
+		$complevel_profile_model = ORM::factory("Sportorg_Complevel_Profile");
+		$complevel_profile_model->select("id")
+			->where('id', '=', $value)
+			->find();
+		if ($complevel_profile_model->loaded()){
+			return true;
+		}
+		return false;
+	}
+
 
 		public static function state_entity_exist($state_name, $countries_id)
 		{

@@ -178,23 +178,6 @@
 				$args['name'] = trim($this->request->post('name'));
 			}
 
-			else // THIS WAS A REQUIRED PARAMETER
-			{
-				// Create Array for Error Data
-				$error_array = array(
-					"error" => "Required Parameter Missing",
-					"param_name" => "name",
-					"param_desc" => "Name of the new Competition Level"
-				);
-
-				// Set whether it is a fatal error
-				$is_fatal = true;
-
-				// Call method to throw an error
-				$this->addError($error_array,$is_fatal);
-
-			}
-			
 			// complevel_profiles_id (REQUIRED)
 			// The Competition Level Profile the Complevel belongs to
 				
@@ -203,25 +186,19 @@
 				$args['complevel_profiles_id'] = (int)trim($this->request->post('complevel_profiles_id'));
 			}
 
-			else // THIS WAS A REQUIRED PARAMETER
+			if((int)trim($this->request->post('min_age')) > 0)
 			{
-				// Create Array for Error Data
-				$error_array = array(
-					"error" => "Required Parameter Missing",
-					"param_name" => "complevel_profiles_id",
-					"param_desc" => "The Competition Level Profile the Complevel belongs to"
-				);
+				$args['min_age'] = (int)trim($this->request->post('min_age'));
+			}
 
-				// Set whether it is a fatal error
-				$is_fatal = true;
+			if((int)trim($this->request->post('max_age')) > 0)
+			{
+				$args['max_age'] = (int)trim($this->request->post('max_age'));
+			}
 
-				// Call method to throw an error
-				$this->addError($error_array,$is_fatal);
-
-			}			 
 			
-            if($this->mainModel->check_complevel_exist($args))
-            {
+//            if($this->mainModel->check_complevel_exist($args))
+//            {
                 $result = $this->mainModel->addComplevel($args);    
                 //Check for success / error
                 if(get_class($result) == get_class($this->mainModel))
@@ -235,20 +212,20 @@
                     return false;
 
                 }    
-            } else
-            {
-                $error_array = array(
-                    "error" => "This complevel already exists",
-                    "param_name" => "name",
-                    "param_desc" => "Name of the complevel to create"
-                );
-
-                // Set whether it is a fatal error
-                $is_fatal = true;
-
-                // Call method to throw an error
-                $this->addError($error_array,$is_fatal);
-            }  
+//            } else
+//            {
+//                $error_array = array(
+//                    "error" => "This complevel already exists",
+//                    "param_name" => "name",
+//                    "param_desc" => "Name of the complevel to create"
+//                );
+//
+//                // Set whether it is a fatal error
+//                $is_fatal = true;
+//
+//                // Call method to throw an error
+//                $this->addError($error_array,$is_fatal);
+//            }
 		}
 		
 		############################################################################
@@ -271,7 +248,7 @@
 				
 			if(trim($this->put('name')) != "")
 			{
-				$args['name'] = trim($this->put('name'));
+				$args['name'] = trim(urldecode($this->put('name')));
 			}
 
 			// complevel_profiles_id 
@@ -303,27 +280,12 @@
 				$this->modelNotSetError();
 				return false;
 			}
-			
-			try
-			{
-				$update_obj = $this->mainModel->updateComplevel($args);
-				return $update_obj->save();					
-			}catch(Exception $e)
-			{
-				// Create Array for Error Data
-				$error_array = array(
-					"error" => "Unable to save comment",
-					"desc" => $e->getMessage()
-				);
-				 
-				// Set whether it is a fatal error
-				$is_fatal = true;
 
-				// Call method to throw an error
-				$this->addError($error_array,$is_fatal);
-				 
-				return $this;
-			}
+				$update_obj = $this->mainModel->updateComplevel($args);
+
+
+
+
 		}
 		
 		############################################################################
