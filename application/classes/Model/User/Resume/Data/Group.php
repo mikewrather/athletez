@@ -14,6 +14,8 @@ class Model_User_Resume_Data_Group extends ORM
 	
 	protected $_table_name = 'resume_data_groups';
 
+	public $error_message_path = 'models/user/resume/data';
+
 	protected $_has_many = array(
 		'resdata' => array(
 			'model' => 'User_Resume_Data',
@@ -47,7 +49,6 @@ class Model_User_Resume_Data_Group extends ORM
 		);
 	}
 
-    public $error_message_path = 'models/sportorg/seasons';
 	public function __construct($id=NULL)
 	{
 		parent::__construct($id);
@@ -74,7 +75,14 @@ class Model_User_Resume_Data_Group extends ORM
 		{
 			$this->name = $name;
 		}
-		return $this->save();		
+
+		try{
+			$this->update();
+			return $this;
+		} catch(ORM_Validation_Exception $e)
+		{
+			return $e;
+		}
 	}
 	
 	public function deleteResumedataGroup()

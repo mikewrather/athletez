@@ -119,6 +119,20 @@
 			return false;
 		}
 
+		public static function games_id_exist($value){
+			if ($value == "" || $value == 0){
+				return false;
+			}
+			$games_model = ORM::factory("Sportorg_Games_Base");
+			$games_model->select("id")
+				->where('id', '=', $value)
+				->find();
+			if ($games_model->loaded()){
+				return true;
+			}
+			return false;
+		}
+
 		public static function countries_id_exist($value){
 			if ($value == "" || $value == 0){
 				return false;
