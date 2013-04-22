@@ -332,7 +332,7 @@
 				
 			if(trim($this->put('name')) != "")
 			{
-				$name = trim($this->put('name'));
+				$name = trim(urldecode($this->put('name')));
 			}
 			
 			if(!$this->mainModel->id)
@@ -340,7 +340,18 @@
 				$this->modelNotSetError();
 				return false;
 			}
-			return $this->mainModel->updateResumedataprofile($name);
+			$result = $this->mainModel->updateResumedataprofile($name);
+			//Check for success / error
+			if(get_class($result) == get_class($this->mainModel))
+			{
+				return $result;
+			}
+			elseif(get_class($result) == 'ORM_Validation_Exception')
+			{
+				//parse error and add to error array
+				$this->processValidationError($result,$this->mainModel->error_message_path);
+				return false;
+			}
 		}
 		
 		############################################################################
