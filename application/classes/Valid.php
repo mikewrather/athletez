@@ -32,6 +32,14 @@
 			}
 		}
 
+		public static function resume_data_type_exist($value){
+			if (in_array($value, array('number', 'string', 'time'))){
+				return true;
+			}else{
+				return false;
+			}
+		}
+
 		public static function identity_exist($id){
 			if ($id == ""){
 				return false;

@@ -152,7 +152,7 @@
 				
 			if(trim($this->put('name')) != "")
 			{
-				$args['name'] = trim($this->put('name'));
+				$args['name'] = trim(urldecode($this->put('name')));
 			}
 
 			// resume_data_type 
@@ -160,14 +160,32 @@
 				
 			if(trim($this->put('resume_data_type')) != "")
 			{
-				$args['resume_data_type'] = trim($this->put('resume_data_type'));
+				$args['resume_data_type'] = trim(urldecode($this->put('resume_data_type')));
 			}
+
+			if((int)trim($this->put('resume_data_groups_id')) > 0)
+			{
+				$args["resume_data_groups_id"] = (int)trim($this->put('resume_data_groups_id'));
+			}
+
 			if(!$this->mainModel->id)
 			{
 				$this->modelNotSetError();
 				return false;
 			}
-			return $this->mainModel->updateResumedata($args);
+
+			$result = $this->mainModel->updateResumedata($args);
+			//Check for success / error
+			if(get_class($result) == get_class($this->mainModel))
+			{
+				return $result;
+			}
+			elseif(get_class($result) == 'ORM_Validation_Exception')
+			{
+				//parse error and add to error array
+				$this->processValidationError($result,$this->mainModel->error_message_path);
+				return false;
+			}
 		}
 		
 		############################################################################
