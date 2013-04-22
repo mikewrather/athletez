@@ -32,13 +32,14 @@ class Model_Media_Base extends ORM
 		)
 	);
 
+
 	public function rules(){
 
 		return array
 		(
 			// name (varchar)
 			'name'=>array(
-				array('not_empty'),
+			//	array('not_empty'),
 			),
 
 			// users_id (int)
@@ -52,24 +53,25 @@ class Model_Media_Base extends ORM
 				array('not_empty'),
 			),
 
-			// sports_id (int)
-			'sports_id'=>array(
-				array('not_empty'),
-				array('not_equals', array(':value', 0))
+		/*		// sports_id (int)
+					'sports_id'=>array(
+						array('not_empty'),
+						array('not_equals', array(':value', 0))
 			),
 
-			// subject_type_id (int)
-			'subject_type_id'=>array(
-				array('not_empty'),
-				array('not_equals', array(':value', 0))
-			),
+					// subject_type_id (int)
+					'subject_type_id'=>array(
+						array('not_empty'),
+						array('not_equals', array(':value', 0))
+					),
 
-			// subject_id (int)
-			'subject_id'=>array(
-				array('not_empty'),
-				array('digit'),
-				array('subject_id_exist',array( ':validation', 'subject_type_id', 'subject_id'))
-			),
+					// subject_id (int)
+					'subject_id'=>array(
+						array('not_empty'),
+						array('digit'),
+						array('subject_id_exist',array( ':validation', 'subject_type_id', 'subject_id'))
+					),
+		*/
 		);
 	}
 
@@ -93,5 +95,28 @@ class Model_Media_Base extends ORM
 			"sport" => $this->sport->getBasics(),
 			"user" => $this->user->getBasics(),
 		);
+	}
+
+	public function addMedia($args = array())
+	{
+		//using user_id instead of users_id because I'm using this method to transfer old stuff right now.
+		if(isset($args['user_id']))
+		{
+			$this->users_id = $args['user_id'];
+		}
+
+		//using user_id instead of users_id because I'm using this method to transfer old stuff right now.
+		if(isset($args['media_type']))
+		{
+			$this->media_type = $args['media_type'];
+		}
+
+		$this->name = "";
+
+		if(!$this->loaded())
+		{
+			$this->save();
+		}
+		return $this->id;
 	}
 }

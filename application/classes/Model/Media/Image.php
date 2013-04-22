@@ -56,4 +56,23 @@ class Model_Media_Image extends ORM
 			->and_where('media.subject_id', '=', $games_id);
 		return $media_image;
 	}
+
+	public function addImage($args = array())
+	{
+
+		$args["media_type"] = "image";
+		$this->media_id = ORM::factory('Media_Base')->addMedia($args);
+		if(!$this->loaded()) $this->create();
+
+		foreach($args as $metaprop => $metaval)
+		{
+			$metaObj = ORM::factory('Media_Imagesmeta');
+			$metaObj->images_id = $this->id;
+			$metaObj->image_prop = $metaprop;
+			$metaObj->image_val = $metaval;
+			$metaObj->save();
+
+		}
+
+	}
 }
