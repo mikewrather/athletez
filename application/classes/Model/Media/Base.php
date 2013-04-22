@@ -53,25 +53,25 @@ class Model_Media_Base extends ORM
 				array('not_empty'),
 			),
 
-		/*		// sports_id (int)
-					'sports_id'=>array(
-						array('not_empty'),
-						array('not_equals', array(':value', 0))
+			// sports_id (int)
+				'sports_id'=>array(
+					array('not_empty'),
+					array('not_equals', array(':value', 0))
 			),
 
-					// subject_type_id (int)
-					'subject_type_id'=>array(
-						array('not_empty'),
-						array('not_equals', array(':value', 0))
-					),
+			// subject_type_id (int)
+			'subject_type_id'=>array(
+				array('not_empty'),
+				array('not_equals', array(':value', 0))
+			),
 
-					// subject_id (int)
-					'subject_id'=>array(
-						array('not_empty'),
-						array('digit'),
-						array('subject_id_exist',array( ':validation', 'subject_type_id', 'subject_id'))
-					),
-		*/
+			// subject_id (int)
+			'subject_id'=>array(
+				array('not_empty'),
+				array('digit'),
+				array('subject_id_exist',array( ':validation', 'subject_type_id', 'subject_id'))
+			),
+
 		);
 	}
 
