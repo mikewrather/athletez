@@ -20,7 +20,7 @@ class Controller_Updateimages extends Controller
 
 	public function action_dotransfer()
 	{
-
+/*
 		//
 		$images = ORM::factory('Media_Imageold')->find_all();
 		foreach($images as $image)
@@ -37,7 +37,7 @@ class Controller_Updateimages extends Controller
 			$newImage->addImage($args);
 
 		}
-
+*/
 
 	}
 }
