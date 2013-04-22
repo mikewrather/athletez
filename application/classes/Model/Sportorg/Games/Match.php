@@ -50,7 +50,7 @@ class Model_Sportorg_Games_Match extends ORM
 			"games_id" => $this->games_id,
 			"match_num" => $this->match_num,
 			"game" => $this->game->getBasics(),
-			"players" =>$this->game
+			"players" => $playerArr
 		);
 	}
 	
@@ -75,12 +75,12 @@ class Model_Sportorg_Games_Match extends ORM
 	{
 		$players = $this->players;
 		$result = null;
-		if ( isset($positions_id) && inval($positions_id) > 0)
+		if ( isset($positions_id) && intval($positions_id) > 0)
 		{
 			$result = $players->join('users_teams_link')->on('users_teams_link.users_id', '=', 'sportorg_games_matchplayer.users_id')
 							->join('utl_position_link')->on('utl_position_link.users_teams_link_id', '=', 'users_teams_link.id')
 							->join('positions')->on('positions.id','=', 'utl_position_link.positions_id')
-							->where('positions.id', '=', $positions_id);		 			 
+							->where('positions.idx', '=', $positions_id);
 		} else {
 			$result = $players;		
 		}
