@@ -14,6 +14,8 @@ class Model_User_Resume_Data_Vals extends ORM
 	
 	protected $_table_name = 'resume_data_vals';
 
+	public $error_message_path = 'models/user/resume/data';
+
 	protected $_belongs_to = array(
 		'user' => array(
 			'model' => 'User_Base',
@@ -78,7 +80,13 @@ class Model_User_Resume_Data_Vals extends ORM
 		{
 			$this->user_value = $user_value;
 		}
-		return $this->save();
+		try{
+			$this->update();
+			return $this;
+		} catch(ORM_Validation_Exception $e)
+		{
+			return $e;
+		}
 	}
 	
 	public function deleteResumeDataVal()
