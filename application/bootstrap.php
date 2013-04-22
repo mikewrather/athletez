@@ -139,7 +139,8 @@ Kohana::modules(array(
 	'KOstache'      => MODPATH . 'kostache',
 	'REST'          => MODPATH . 'rest',
 	"admin"         => MODPATH . 'admin',
-	"postmark"         => MODPATH . 'postmark',
+	"postmark"		=> MODPATH . 'postmark',
+	"facebookauth"	=> MODPATH . 'facebookauth'
 ));
 
 

@@ -205,6 +205,16 @@
 			return (Object)$this->mainModel->getPrimaryVideo();	
 		}
 		
+		/**
+		 * action_get_fbreg() Get user facebook basic information
+		 * via /api/user/fbreg
+		 *
+		 */
+		public function  action_get_fbreg()
+		{
+			$this->payloadDesc = "Get user facebook basic information";
+		}
+		
 		############################################################################
 		###########################    POST METHODS    #############################
 		############################################################################

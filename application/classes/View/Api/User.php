@@ -467,4 +467,21 @@
 			return $retArr;
 		}
 		
+		/**
+		 * get_fbreg() Get facebook user information
+		 *
+		 * @retun array
+		 */
+		public function get_fbreg()
+		{
+			$retArr = array();
+			
+			$facebook = FacebookAuth::factory();
+			
+			// Get user facebook task
+			$retArr =  $facebook->get_user();
+			
+			return $retArr;
+		}
+		
 	}
