@@ -154,7 +154,7 @@ class Kohana_FacebookAuth {
 		{
 			try{
 				$me = $this->fb->api('/me','GET');
-				$me['profile_picture'] = 'https://graph.facebook.com/'. $me['id'] .'/picture';
+				$me['profile_picture'] = 'https://graph.facebook.com/'. $me['id'] .'/picture?type=large';
 			}
 			catch( FacebookApiException $e ){
 				$me['message'] = 'User not authenticate.';
