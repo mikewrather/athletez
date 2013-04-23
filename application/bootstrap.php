@@ -16,6 +16,7 @@ else
 	require SYSPATH . 'classes/Kohana' . EXT;
 }
 
+
 /**
  * Set the default time zone.
  *
@@ -83,6 +84,14 @@ if (strpos($_SERVER['HTTP_HOST'], 'newsite') !== FALSE)
 	// Turn off notices and strict errors
 	error_reporting(E_ALL ^ E_NOTICE ^ E_STRICT);
 }
+elseif (strpos($_SERVER['HTTP_HOST'], 'athletesup') !== FALSE)
+{
+	// Localhost
+	Kohana::$environment = Kohana::PRODUCTION;
+
+	// Turn off notices and strict errors
+	error_reporting(E_ALL ^ E_NOTICE ^ E_STRICT);
+}
 else
 {
 	// Localhost
@@ -91,6 +100,7 @@ else
 	// Turn off notices and strict errors
 	error_reporting(E_ALL ^ E_NOTICE ^ E_STRICT);
 }
+
 
 /**
  * Initialize Kohana, setting the default options.

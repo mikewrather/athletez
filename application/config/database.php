@@ -51,5 +51,9 @@ if(Kohana::$environment == Kohana::LOCALHOST)
 	$dbconfig['default']['connection']['password'] = '  qmi!#j';
 	$dbconfig['scraping']['connection']['password'] = '  qmi!#j';
 }
+elseif(Kohana::$environment == Kohana::PRODUCTION)
+{
+	$dbconfig['default']['connection']['password'] = 'R370ad3d';
+}
 
 return $dbconfig;
