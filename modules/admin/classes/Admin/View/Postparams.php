@@ -84,6 +84,8 @@ class Admin_View_Postparams
 
 			$templateArr["method"][] = array(
 				"id" => $method->id,
+				"complete" => $method->done,
+				"status" => $method->current_status,
 				"api_method" => $method->api_method,
 				"shortname" => $method->shortname,
 				"description" => $method->description,

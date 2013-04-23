@@ -35,6 +35,34 @@
 				});
 			}
 
+            var updateStatus = function(id)
+            {
+                var text = $('textarea#' + id + '_currstat').val();
+                $.ajax({
+                    url:'/codegen/savestatus',
+                    data:{
+                        id:id,
+                        currStatus:text
+                    },
+                    type:'GET'
+                });
+            }
+
+            var updateComplete = function(id,isDone)
+            {
+                $.ajax({
+                    url:'/codegen/savecomplete',
+                    data:{
+                        id:id,
+                        isDone:isDone
+                    },
+                    type:'GET',
+                    success : function(data){
+                        console.log(data);
+                    }
+                });
+            }
+
 	</script>
 </head>
 <body>
