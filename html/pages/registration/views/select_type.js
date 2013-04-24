@@ -38,6 +38,7 @@ function(require, registrationSelectTypeTemplate) {
         
         registerWithFacebook: function(event) {                                
             event.preventDefault();
+            console.log('registerWithFacebook');
             // Additional JS functions here
             window.fbAsyncInit = function() {
                 FB.init({
@@ -77,7 +78,10 @@ function(require, registrationSelectTypeTemplate) {
             // Load the SDK Asynchronously
             function loadFBLogin(){
                 var js, id = 'facebook-jssdk', ref = document.getElementsByTagName('script')[0];
-                if (document.getElementById(id)) {return;}
+                if (document.getElementById(id)) {
+                    login();
+                    return;
+                }
                 js = document.createElement('script'); js.id = id; js.async = true;
                 js.src = "//connect.facebook.net/en_US/all.js";
                 ref.parentNode.insertBefore(js, ref);
