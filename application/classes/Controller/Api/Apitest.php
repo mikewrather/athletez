@@ -24,7 +24,6 @@ class Controller_Api_Apitest extends Controller_Api_Base
 	
 	}
 
-	//POST methods
 	public function action_get_testval()
 	{
 		
