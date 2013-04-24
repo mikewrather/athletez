@@ -49,6 +49,7 @@ class Admin_View_Postparams
 			"entity_type" => $this->ent->name,
 			"primary_class" => $this->ent->class_name,
 			"desc" => $this->ent->description,
+			"verb" => $this->httpverb,
 		);
 
 		foreach($methods as $method)
@@ -80,10 +81,24 @@ class Admin_View_Postparams
 				);
 			}
 
+			$testarr = array();
+			$tests = $method->apitests->find_all();
+			foreach($tests as $test)
+			{
+				$testarr[] = array(
+					"id"=>$test->id,
+					"name"=>$test->name,
+				);
+			}
+
 			$usage = '/api/'.$this->ent->api_name.'/'.$method->shortname.'/';
+
+			$testfile = '/test/'.$this->ent->api_name.'/'.$method->shortname.'/101';
 
 			$templateArr["method"][] = array(
 				"id" => $method->id,
+				"complete" => $method->done,
+				"status" => $method->current_status,
 				"api_method" => $method->api_method,
 				"shortname" => $method->shortname,
 				"description" => $method->description,
@@ -91,6 +106,9 @@ class Admin_View_Postparams
 				"hasparams" => sizeof($params),
 				"params" => $paramArr,
 				"entdata" => $entity_data_for_methods,
+				"hastests" => sizeof($testarr),
+				"tests" => $testarr,
+				"testfile" => $testfile,
 			);
 
 		}

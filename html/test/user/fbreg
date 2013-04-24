@@ -1,14 +1,63 @@
 {
-    "payload": {
-        "name": "Mike Wrather",
-        "birth_day": "June 18th 1982",
-        "high_school": "Crassroads School",
-        "email": "mike.wrather@gmail.com",
-        "picture": "images/photo_large.png"
-    },
-    "desc": "Facebook registration information about the user.",
-    "exec_data": {
-        "exec_time": 0.024134,
-        "exec_error": false
-    }
+   "payload":{
+      "id":"641244973",
+      "name":"Mike Wrather",
+      "first_name":"Mike",
+      "last_name":"Wrather",
+      "link":"http://www.facebook.com/mike.wrather",
+      "username":"mike.wrather",
+      "birthday":"06/18/1982",
+      "hometown":{
+         "id":"109683405724572",
+         "name":"Santa Monica, California"
+      },
+      "location":{
+         "id":"113216112023878",
+         "name":"Culver City, California"
+      },
+      "work":[
+         {
+            "employer":{
+               "id":"243879372396659",
+               "name":"HighlightFront.com"
+            },
+            "position":{
+               "id":"149467408397032",
+               "name":"Owner/Partner"
+            },
+            "description":"Doing God's work",
+            "start_date":"2010-01"
+         },
+         {
+            "employer":{
+               "id":"111084355591970",
+               "name":"Runtriz"
+            },
+            "location":{
+               "id":"113796808633570",
+               "name":"Hollywood"
+            },
+            "position":{
+               "id":"150618714954744",
+               "name":"Lead Architect"
+            },
+            "description":"Built sandcastles in my mind.",
+            "start_date":"2008-01",
+            "end_date":"2012-01"
+         }
+      ],
+      "gender":"male",
+      "email":"mike.wrather@gmail.com",
+      "timezone":-7,
+      "locale":"en_US",
+      "verified":true,
+      "updated_time":"2012-12-04T20:17:48+0000",
+      "profile_picture":"https://graph.facebook.com/641244973/picture"
+   },
+   "desc":"Get user facebook basic information",
+   "exec_data":{
+      "exec_time":0.548082,
+      "exec_error":false,
+      "error_array":null
+   }
 }

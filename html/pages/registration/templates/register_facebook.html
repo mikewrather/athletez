@@ -3,7 +3,7 @@
 <h1>Register with Facebook</h1>
 <div class="row-fluid">
     <div class="span4">
-        <img src="{{picture}}" alt="{{name}}"/><br/>
+        <img class="picture" src="{{profile_picture}}" alt="{{name}}"/><br/>
         <a href="#" class="diff_fb_pic">Different Facebook Pic</a><br/>
         <a href="#" class="upload_new_image">Upload a New Image</a><br/>
     </div>
@@ -11,9 +11,9 @@
         <h3>{{name}}</h3>
         <div class="field">
             Born: 
-            <span class="value" data-name="birth_day" data-value="{{birth_day}}">
-                <input type="hidden" name="birth_day" value="{{birth_day}}"/>
-                {{birth_day}} <a href="#" class="change-field">change</a>
+            <span class="value" data-name="birthday" data-value="{{birthday}}">
+                <input type="hidden" name="birthday" value="{{birthday}}"/>
+                {{birthday}} <a href="#" class="change-field">change</a>
             </span>
         </div>
         <div class="field">
@@ -40,10 +40,7 @@
     </div>
 </div>
 <div class="row-fluid">
-    <label for="agree"><input type="checkbox" name="agree"/>I have read and agree to the <a href="#">Terms of Service</a></label>
+    <label for="agree"><input type="checkbox" id="agree" name="agree"/>I have read and agree to the <a href="#">Terms of Service</a></label>
     <a href="#" class="next">What's Next</a>
 </div>
 {{/payload}}
-<div id="dialog" title="Basic dialog">
-<p>This is the default dialog which is useful for displaying information. The dialog window can be moved, resized and closed with the 'x' icon.</p>
-</div>

@@ -44,7 +44,7 @@ define([
         Channel = utils.lib.Channel,
         cssArr = [
             "/pages/registration/registration.css",
-            "/css/imgareaselect-default.css"
+            "/css/style.jrac.css"
         ];
 
     RegistrationController = Controller.extend({
