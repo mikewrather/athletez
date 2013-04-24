@@ -43,12 +43,12 @@ class Model_Sportorg_Games_Base extends ORM
 
 			// gameDay (date)
 			'gameDay'=>array(
-				array('not_empty'),
+				//array('not_empty'),
 			),
 
 			// gameTime (time)
 			'gameTime'=>array(
-				array('not_empty'),
+				//array('not_empty'),
 			),
 
 			// locations_id (int)
@@ -61,15 +61,6 @@ class Model_Sportorg_Games_Base extends ORM
 
 	public function addGame($args = array()){
 		extract($args);
-		if (isset($game_datetime) && $game_datetime != ""){
-			$arr = explode(' ', $game_datetime);
-			$gameDay = $arr[0];
-			$gameTime = $arr[1];
-			$this->gameDay = $gameDay;
-			//$args['gameDay'] = $gameDay;
-			$this->gameTime = $gameTime;
-			//$args['gameTime'] = $gameTime;
-		}
 
 		if (isset($id) && $id != ""){
 			$this->id = $id;
@@ -79,6 +70,18 @@ class Model_Sportorg_Games_Base extends ORM
 			$this->locations_id = $locations_id;
 
 		try {
+			$external_validate = Validation::factory(array('game_datetime' => $game_datetime));
+			$external_validate->rule("game_datetime", 'not_empty');
+			$external_validate->rule("game_datetime", 'correct_date_format');
+			if ($this->check($external_validate)){
+				$arr = explode(' ', $game_datetime);
+				$gameDay = $arr[0];
+				$gameTime = $arr[1];
+				$this->gameDay = $gameDay;
+				//$args['gameDay'] = $gameDay;
+				$this->gameTime = $gameTime;
+			}
+
 			$this->save();
 			return $this;
 		} catch(ORM_Validation_Exception $e){

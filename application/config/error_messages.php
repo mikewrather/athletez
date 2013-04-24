@@ -28,5 +28,6 @@ return array(
 	"location_type_exist" => "Location type should be 'High School' or 'Park' or 'Other'",
 	"state_entity_exist" => "State already exist",
 	"sport_type_id_exist" => "Sport type doesn't exist",
+	"correct_date_format" => "The format should be 'yyyy-mm-dd H:i:s'",
 
 );

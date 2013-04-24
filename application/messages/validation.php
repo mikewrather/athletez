@@ -21,4 +21,5 @@
 		'users_id_exist' => $e->get('users_id_exist'),
 		'location_type_exist' => $e->get('location_type_exist'),
 		'state_entity_exist' => $e->get('state_entity_exist'),
+		'correct_date_format' => $e->get('correct_date_format'),
 	);

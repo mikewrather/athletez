@@ -151,7 +151,7 @@
 			if($this->request->post('game_datetime') != "")
 			{
 				// Format as date
-				$game_datetime = date("Y-m-d H:i:s",strtotime($this->request->post('game_datetime')));
+				$game_datetime = $this->request->post('game_datetime');//date("Y-m-d H:i:s",strtotime($this->request->post('game_datetime')));
 			}
 
 			// locations_id 

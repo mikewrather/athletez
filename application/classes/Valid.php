@@ -401,7 +401,7 @@
 		 */
 		public static function correct_date_format($value){
 
-			$reg="^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}$";
+			$reg= "/\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}/";
 			$return = preg_match($reg, $value);
 			if ($return == 0){
 				return false;
