@@ -55,5 +55,33 @@ class Controller_Apiadmin extends AuthController
 		}
 		else return false;
 	}
+
+	public function action_delparam()
+	{
+		$this->populateAuthVars();
+		if($this->is_admin && (int)$this->request->post('params_id') > 0)
+		{
+
+			$param = ORM::factory('Codegen_Apiparams',(int)$this->request->post('params_id'));
+			if($param->loaded()) $param->delete();
+			else return false;
+
+		}
+		else return false;
+	}
+
+	public function action_delmethod()
+	{
+		$this->populateAuthVars();
+		if($this->is_admin && (int)$this->request->post('methods_id') > 0)
+		{
+
+			$apimethod = ORM::factory('Codegen_Apimethod',(int)$this->request->post('methods_id'));
+			if($apimethod->loaded()) $apimethod->delete();
+			else return false;
+
+		}
+		else return false;
+	}
 	
 }

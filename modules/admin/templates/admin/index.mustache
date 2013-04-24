@@ -91,6 +91,37 @@
             })
         }
 
+            var delParam = function(paramID,entID,verb)
+            {
+                if(confirm("Delete Parameter?"))
+                {
+                    $.ajax({
+                        url:'/apiadmin/delparam',
+                        type:'POST',
+                        data:{'params_id':paramID},
+                        success:function(json)
+                        {
+                            loadContent('/admin/show_postparams',{'entID':entID,'httpverb':verb});
+                        }
+                    });
+                }
+            }
+            var delMethod = function(methodID,entID,verb)
+            {
+                if(confirm("Delete Method?"))
+                {
+                    $.ajax({
+                        url:'/apiadmin/delmethod',
+                        type:'POST',
+                        data:{'methods_id':methodID},
+                        success:function(json)
+                        {
+                            loadContent('/admin/show_postparams',{'entID':entID,'httpverb':verb});
+                        }
+                    });
+                }
+            }
+
 	</script>
 </head>
 <body>

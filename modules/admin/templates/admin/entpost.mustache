@@ -6,7 +6,7 @@
 <form id="form_{{id}}">
 <ul class="methods" style="margin-bottom: 10px; border: 1px solid #333; padding: 10px; list-style: none;">
 
-		<li class="firstmethod"><h1>{{id}} - {{shortname}} ({{api_method}})</h1></li>
+		<li class="firstmethod"><h1>{{id}} - {{shortname}} ({{api_method}})</h1>  <span class="delete" onclick="delMethod({{id}},{{ent_id}},'{{verb}}');">DELETE METHOD</span></li>
 		<li>{{usage}}
 			{{#entdata}}
 			{{#hassiblings}}
@@ -29,7 +29,7 @@
 
 			{{/hasparams}}
 			{{#params}}
-			<span class="paramname">{{name}} ({{type}})</span> - <span class="description">{{desc}}</span><br />
+			<span class="paramname">{{name}} ({{type}})</span> - <span class="description">{{desc}}</span> - <span class="delete" onclick="delParam({{id}},{{ent_id}},'{{verb}}');">Delete</span><br />
 			{{#hasobjs}}
 				<select  name="{{name}}" id="{{name}}">
 					<option value="0">No Value</option>
