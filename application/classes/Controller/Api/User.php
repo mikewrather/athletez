@@ -226,7 +226,22 @@
 		public function action_post_fbreg()
 		{
 			$facebook = FacebookAuth::factory();
-			return $facebook;
+			$retArr =  $facebook->get_user();
+			if($retArr['message']){
+				$error_array = array(
+					"error" => $retArr['message']
+				);
+
+				// Set whether it is a fatal error
+				$is_fatal = true;
+
+				// Call method to throw an error
+				$this->addError($error_array,$is_fatal);
+				return false;
+			}
+			else{
+				return $facebook;
+			}
 		}
 
 		/**
