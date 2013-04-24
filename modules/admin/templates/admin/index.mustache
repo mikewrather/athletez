@@ -35,6 +35,62 @@
 				});
 			}
 
+            var updateStatus = function(id)
+            {
+                var text = $('textarea#' + id + '_currstat').val();
+                $.ajax({
+                    url:'/codegen/savestatus',
+                    data:{
+                        id:id,
+                        currStatus:text
+                    },
+                    type:'GET'
+                });
+            }
+
+            var updateComplete = function(id,isDone)
+            {
+                $.ajax({
+                    url:'/codegen/savecomplete',
+                    data:{
+                        id:id,
+                        isDone:isDone
+                    },
+                    type:'GET',
+                    success : function(data){
+                        console.log(data);
+                    }
+                });
+            }
+
+            var loadTest = function(dest,id)
+            {
+                $.getJSON('/api/apitest/testval/'+id,{},function(json){
+                    console.log(json.payload.testval);
+                    console.log(dest);
+                    $(dest).val(json.payload.testval);
+                });
+            }
+
+        var fileTest = function(dest)
+        {
+            $.getJSON($(dest).val(),{},function(json){console.log(json)});
+        }
+
+        var manualTest = function(dest,data,verb)
+        {
+            console.log(dest);
+            $.ajax({
+                url:$(dest).val(),
+                type:verb,
+                data:$(data).val(),
+                success:function(json)
+                {
+                    console.log(json);
+                }
+            })
+        }
+
 	</script>
 </head>
 <body>

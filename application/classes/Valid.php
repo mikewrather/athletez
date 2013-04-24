@@ -32,6 +32,14 @@
 			}
 		}
 
+		public static function resume_data_type_exist($value){
+			if (in_array($value, array('number', 'string', 'time'))){
+				return true;
+			}else{
+				return false;
+			}
+		}
+
 		public static function identity_exist($id){
 			if ($id == ""){
 				return false;
@@ -106,6 +114,20 @@
 				->where('id', '=', $value)
 				->find();
 			if ($team_model->loaded()){
+				return true;
+			}
+			return false;
+		}
+
+		public static function games_id_exist($value){
+			if ($value == "" || $value == 0){
+				return false;
+			}
+			$games_model = ORM::factory("Sportorg_Games_Base");
+			$games_model->select("id")
+				->where('id', '=', $value)
+				->find();
+			if ($games_model->loaded()){
 				return true;
 			}
 			return false;

@@ -13,7 +13,8 @@ class Model_Stats_Vals extends ORM
 {
 	
 	protected $_table_name = 'statvals';
-	
+
+	public $error_message_path = 'models/stats';
 
 	protected $_belongs_to = array(
 		'user' => array(
@@ -53,14 +54,14 @@ class Model_Stats_Vals extends ORM
 			'users_id'=>array(
 				array('not_empty'),
 				array('digit'),
-				array('not_equals', array(':value', 0))
+				array('users_id_exist')
 			),
 
 			// teams_id (int)
 			'teams_id'=>array(
 				array('not_empty'),
 				array('digit'),
-				array('not_equals', array(':value', 0))
+				array('teams_id_exist')
 			),
 
 			// statval (varchar)
@@ -78,7 +79,7 @@ class Model_Stats_Vals extends ORM
 			'games_id'=>array(
 				array('not_empty'),
 				array('digit'),
-				array('not_equals', array(':value', 0))
+				array('games_id_exist')
 			),
 
 			// stat_contexts_id (int)
@@ -113,7 +114,11 @@ class Model_Stats_Vals extends ORM
 			"statval" => $this->statval,
 		);
 	}
-	
+
+	/*
+	 * Deprecated, add by Jeffrey
+	 * */
+	//TODO, added by jeffrey, we can delete it.
     public static function check_statvals_exist($args= array())
     {
         extract($args);

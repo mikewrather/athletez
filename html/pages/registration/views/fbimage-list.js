@@ -1,8 +1,8 @@
 // Facebook Image List
 // --------------
 
-define(['facade', 'utils', 'media/views/image-list', 'registration/views/fbimage-board'],
-function(facade,  utils,   BaseImageListView,         FBImageBoardView) {
+define(['facade', 'utils', 'media/views/image-list', 'registration/views/fbimage-board', 'registration/views/picture_buttons'],
+function(facade,  utils,   BaseImageListView,         FBImageBoardView,                   RegistrationPicButtonsView) {
 
     var RegistrationFBImageListView,
         _ = facade._;
@@ -11,14 +11,23 @@ function(facade,  utils,   BaseImageListView,         FBImageBoardView) {
 
         id: "fbimage-list",
         name: "Facebook Image List",
-        tagName: "ul",
+        tagName: "div",
 
         // Tag for the child views
-        _tagName: "li",
+        _tagName: "div",
         _className: "fbimage",
         
         setupAddView: function() {
+            var listView = this,
+                buttonsView = new RegistrationPicButtonsView(),
+                renderButtonsView = this.addChildView(buttonsView);
             
+            this.childViews.buttons = buttonsView;
+            this.callbacks.add(function() {
+                renderButtonsView();                
+                buttonsView.render();
+                listView.$el.append(buttonsView.el);
+            });
         },
         
         setupBoardView: function() {
@@ -31,10 +40,42 @@ function(facade,  utils,   BaseImageListView,         FBImageBoardView) {
                 renderAddView();
                 addView.render();
                 listView.$el.prepend(addView.el);
-                _.delay(addView.initCropView, 700);
+                _.delay(addView.initCropView, 400);
             });
             
-            Channel('changeimage' + this.collection.id).subscribe(this.changeBoard);            
+            Channel('changeimage' + this.collection.id).subscribe(this.changeBoard);
+            
+            // Use This Image
+            function fbUseThisImage() {
+                var board = listView.childViews.board;
+                board.getImageInfo();
+                board.model.url = function() {
+                    if (testpath)
+                        return testpath + '/user/fbselectimage';
+                    return '/api/user/fbselectimage';
+                }
+                board.model.saveSuccess = function(model, response) {
+                    var exec_data = model.get('exec_data');
+                    var payload = model.get('payload');
+                    if (!exec_data['exec_error'] && payload) {
+                        Channel("registration-change-picture").publish(payload['picture']);
+                    }
+                    $('#' + listView.id).dialog('close');
+                }                
+                board.model.saveError = function(model, response) {
+                    $('#' + listView.id).dialog('close');
+                }
+                board.model.save();                
+            }
+            
+            Channel("registration-use-image").subscribe(fbUseThisImage);
+            
+            // Upload User Image
+            function uploadNewImage() {
+                $('#' + listView.id).dialog('close');
+            }
+            
+            Channel("registration-upload-image").subscribe(uploadNewImage);
         },
         
         changeBoard: function(data){

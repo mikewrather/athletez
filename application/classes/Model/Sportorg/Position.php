@@ -10,6 +10,8 @@ class Model_Sportorg_Position extends ORM
 	
 	protected $_table_name = 'positions';
 
+	public $error_message_path = 'models/sportorg';
+
 	protected $_belongs_to = array(
 		'sport' => array(
 			'model' => 'Sportorg_Sport',

@@ -176,7 +176,7 @@
 				
 			if(trim($this->put('name')) != "")
 			{
-				$args['name'] = trim($this->put('name'));
+				$args['name'] = trim(urldecode($this->put('name')));
 			}
 
 			// description 
@@ -184,7 +184,7 @@
 				
 			if(trim($this->put('description')) != "")
 			{
-				$args['description'] = trim($this->put('description'));
+				$args['description'] = trim(urldecode($this->put('description')));
 			}
 			if(!$this->mainModel->id)
 			{
@@ -192,7 +192,18 @@
 				return false;
 			}
 			
-			return $this->mainModel->updateResumedataGroup($args);
+			$result = $this->mainModel->updateResumedataGroup($args);
+			//Check for success / error
+			if(get_class($result) == get_class($this->mainModel))
+			{
+				return $result;
+			}
+			elseif(get_class($result) == 'ORM_Validation_Exception')
+			{
+				//parse error and add to error array
+				$this->processValidationError($result,$this->mainModel->error_message_path);
+				return false;
+			}
 
 		}
 		

@@ -83,8 +83,19 @@ class Model_User_Resume_Data extends ORM
 		{
 			$this->resume_data_type = $resume_data_type;
 		}
-		
-		return $this->save();		
+
+		if ( isset($resume_data_groups_id) )
+		{
+			$this->resume_data_groups_id = $resume_data_groups_id;
+		}
+
+		try{
+			$this->update();
+			return $this;
+		} catch(ORM_Validation_Exception $e)
+		{
+			return $e;
+		}
 	}
 	
 	public function getListall($args = array())

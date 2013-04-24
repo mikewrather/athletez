@@ -4,16 +4,16 @@
 <h2>{{desc}}</h2>
 {{#method}}
 <form id="form_{{id}}">
-<ul class="methods" style="margin-bottom: 30px; border: 1px solid #333; padding: 10px; list-style: none;">
+<ul class="methods" style="margin-bottom: 10px; border: 1px solid #333; padding: 10px; list-style: none;">
 
-		<li class="firstmethod"><h1>{{shortname}} ({{api_method}})</h1></li>
+		<li class="firstmethod"><h1>{{id}} - {{shortname}} ({{api_method}})</h1></li>
 		<li>{{usage}}
 			{{#entdata}}
 			{{#hassiblings}}
 				<select name="id1">
 					<option value="0">None</option>
 					{{#siblings}}
-						<option value="{{id}}">{{name}}</option>
+						<option value="{{id}}">{{id}} - {{name}}</option>
 					{{/siblings}}
 				</select>
 			{{/hassiblings}}
@@ -44,10 +44,44 @@
 			{{/params}}
 			{{#hasparams}}
 
-
 		{{/hasparams}}
-			<input type="submit"></li>
+			<input type="submit"><br />
+
+
+        </li>
 </ul></form>
+<ul class="methods" style="margin-bottom: 10px; border: 1px solid #333; padding: 10px; list-style: none;"
+            <li><h2>{{shortname}} {{api_method}} Tests</h2>
+                <h3>File Test (for comparison)</h3>
+                <input type="text" id="testFile_{{id}}" value="{{testfile}}" style="width:50%;" /><button onclick="fileTest('#testFile_{{id}}');">Get Test File Data</button>
+                {{#hastests}}
+                <br />
+                <h3>Saved Tests</h3>
+                <select id="testlist_{{id}}" onchange="loadTest('#testbox_{{id}}',this.value);">
+                    <option value="0">Select Test</option>
+                    {{#tests}}
+                    <option value="{{id}}">{{name}}</option>
+                    {{/tests}}
+                </select>
+
+                <input type="text" id="testDest_{{id}}" value="{{usage}}" style="width:50%;" placeholder="Test Destination" />
+
+                <br />
+                <textarea id="testbox_{{id}}" style="width:100%; height: 55px;"></textarea>
+                <button onclick="manualTest('#testDest_{{id}}','#testbox_{{id}}','{{api_method}}');">Run Saved Test</button>
+                {{/hastests}}
+            </li>
+        </ul>
+        <ul class="methods" style="margin-bottom: 30px; border: 1px solid #333; padding: 10px; list-style: none;">
+            <li>
+                <div><h2>{{shortname}} ({{api_method}}) Dev Status</h2>
+                    <input type="checkbox" id="chk_{{id}}" onclick="updateComplete({{id}},this.checked);"{{#complete}} checked="checked"{{/complete}} /> <span>Complete</span>
+<br />
+                    <textarea id="{{id}}_currstat" style="width:100%; height: 55px;">{{status}}</textarea><br />
+                    <button id="update_{{id}}" onclick="updateStatus({{id}});">Update Status</button>
+                    </div>
+            </li>
+        </ul><hr /><br />
 <script type="text/javascript">
 	$(document).ready(function(){
 		$('form#form_{{id}}').submit(function(){
@@ -70,6 +104,8 @@
 			});
 			return false;
 		});
+
+
 	});
 </script>
 		{{/method}}

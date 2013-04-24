@@ -40,7 +40,15 @@ function(require, registrationFacebookTemplate) {
         template: registrationFacebookTemplate,
         
         initialize: function (options) {
-            SectionView.prototype.initialize.call(this, options);            
+            var self = this;
+            
+            SectionView.prototype.initialize.call(this, options); 
+            
+            function changeUserPicture(picture) {
+                self.$('.picture').attr('src', base_url + picture);
+            }   
+            
+            Channel("registration-change-picture").subscribe(changeUserPicture);
         },
         
         // Child views...
@@ -75,11 +83,10 @@ function(require, registrationFacebookTemplate) {
             } else {
                 $('#' + this.fbImageListView.id).dialog({
                     width: '80%',
-                    draggable: false,
-                    beforeClose: self.removeListView
+                    close: self.removeListView
                 });
                 this.fbImageListView.initCropView();
-            }            
+            }
         },
         
         setupFBPictures: function() {
@@ -100,8 +107,7 @@ function(require, registrationFacebookTemplate) {
                 self.$el.append(self.fbImageListView.el);
                 $('#' + self.fbImageListView.id).dialog({
                     width: '80%',
-                    draggable: false,
-                    beforeClose: self.removeListView
+                    close: self.removeListView
                 });
             }
             

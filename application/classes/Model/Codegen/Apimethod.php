@@ -27,6 +27,10 @@ class Model_Codegen_Apimethod extends ORM
 			'model' => 'Codegen_Apiparams',
 			'foreign_key' => 'apiaccess_id'
 		),
+		'apitests' => array(
+			'model' => 'Codegen_Apitest',
+			'foreign_key' => 'apiaccess_id'
+		),
 	);
 /*
 	protected $_has_one = array(
