@@ -1,9 +1,60 @@
 
+<div id="fb-root"></div>
+<script>
+  // Additional JS functions here
+  window.fbAsyncInit = function() {
+    FB.init({
+      appId      : '239430712864961', // App ID
+      status     : true, // check login status
+      cookie     : true, // enable cookies to allow the server to access the session
+      xfbml      : true,  // parse XFBML
+      oauth         : true
+    });
+
+    // Additional init code here
+    FB.getLoginStatus(function(response) {
+        if (response.status === 'connected') {
+            FB.api('/me', function(response) {
+                console.log(response);
+            });
+        } else if (response.status === 'not_authorized') {
+            console.log('not_authorized');
+            login();
+        } else {
+            login();
+        }
+    });
+  };
+    
+    function login() {
+        FB.login(function(response) {
+            if (response.authResponse) {
+                // connected
+            } else {
+                // cancelled
+            }
+        },
+        {scope: 'email, user_birthday'}
+        );
+    }
+
+  // Load the SDK Asynchronously
+  function loadFBLogin(){
+     var js, id = 'facebook-jssdk', ref = document.getElementsByTagName('script')[0];
+     if (document.getElementById(id)) {return;}
+     js = document.createElement('script'); js.id = id; js.async = true;
+     js.src = "//connect.facebook.net/en_US/all.js";
+     ref.parentNode.insertBefore(js, ref);
+  }
+  
+  loadFBLogin();
+</script>
+
 {{#payload}}
 <h1>Register with Facebook</h1>
 <div class="row-fluid">
     <div class="span4">
-        <img class="picture" src="{{base_url}}{{picture}}" alt="{{name}}"/><br/>
+        <img class="picture" src="{{profile_picture}}" alt="{{name}}"/><br/>
         <a href="#" class="diff_fb_pic">Different Facebook Pic</a><br/>
         <a href="#" class="upload_new_image">Upload a New Image</a><br/>
     </div>
@@ -11,9 +62,9 @@
         <h3>{{name}}</h3>
         <div class="field">
             Born: 
-            <span class="value" data-name="birth_day" data-value="{{birth_day}}">
-                <input type="hidden" name="birth_day" value="{{birth_day}}"/>
-                {{birth_day}} <a href="#" class="change-field">change</a>
+            <span class="value" data-name="birthday" data-value="{{birthday}}">
+                <input type="hidden" name="birthday" value="{{birthday}}"/>
+                {{birthday}} <a href="#" class="change-field">change</a>
             </span>
         </div>
         <div class="field">
@@ -40,7 +91,7 @@
     </div>
 </div>
 <div class="row-fluid">
-    <label for="agree"><input type="checkbox" name="agree"/>I have read and agree to the <a href="#">Terms of Service</a></label>
+    <label for="agree"><input type="checkbox" id="agree" name="agree"/>I have read and agree to the <a href="#">Terms of Service</a></label>
     <a href="#" class="next">What's Next</a>
 </div>
 {{/payload}}

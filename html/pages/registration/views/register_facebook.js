@@ -49,6 +49,18 @@ function(require, registrationFacebookTemplate) {
             }   
             
             Channel("registration-change-picture").subscribe(changeUserPicture);
+            
+            function showDiffFBPicture() {
+                self.initFBPictures();
+            }
+            
+            Channel("registration-diff-fbpicture").subscribe(showDiffFBPicture);
+            
+            function showUploadImage() {
+                self.initUploadImage();
+            }
+            
+            Channel("registration-upload-image").subscribe(showUploadImage);
         },
         
         // Child views...
@@ -66,7 +78,7 @@ function(require, registrationFacebookTemplate) {
         
         uploadNewImage: function(event) {
             event.preventDefault();
-            initUploadImage();
+            this.initUploadImage();
         },
         
         initFBPictures: function () {
@@ -119,13 +131,13 @@ function(require, registrationFacebookTemplate) {
         },
         
         initUploadImage: function() {
-            
+            alert('Upload Image');
         },
         
         changeField: function(event) {
             event.preventDefault();
             $parent = this.$(event.target).parent();
-            id = $parent.attr('data-id');
+            id = $parent.attr('data-name');
             value = $parent.attr('data-value');            
             $parent.html('<input type="text" id="' + id + '" name="' + id + '" value="' + value + '"/>');
         },
@@ -151,6 +163,8 @@ function(require, registrationFacebookTemplate) {
                 return;
             }
             this.model.set('payload', payload);
+            console.log(this.model.toJSON());
+            this.model.save();
             Channel('registration-after-facebook').publish(this.model);
         }
     });

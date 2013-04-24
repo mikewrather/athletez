@@ -35,12 +35,7 @@ function(require, imageBoardTemplate) {
         setOptions: function (options) {
             if (!this.model) {
                 throw new Error("ImageBoardView expected options.model.");
-            }
-            this.model.url = function() {
-                if (testpath)
-                    return testpath + '/user/fbselectimage';
-                return '/api/user/fbselectimage';
-            }
+            }            
         },
 
         render: function () {
