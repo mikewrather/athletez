@@ -23,7 +23,7 @@ require.config({
         'bootstrap'    : '/vendor/plugins/bootstrap',
         'jquery.pstrength' : '/vendor/plugins/jquery.pstrength-min.1.2',
         'jqueryui'     : '/vendor/plugins/jquery-ui-1.10.2.custom.min',
-        'jquery.imgareaselect' : '/vendor/plugins/jquery.imgareaselect.min',
+        'jquery.jrac'  : '/vendor/plugins/jquery.jrac',
 
         // RequireJS
         'domready'     : '/vendor/plugins/domReady',

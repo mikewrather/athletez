@@ -12,3 +12,6 @@
     float:left;
     width:150px;
 }
+.picture-buttons {
+    clear:both;
+}
