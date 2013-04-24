@@ -29,14 +29,14 @@ class Model_Media_Video extends ORM
 			'media_id'=>array(
 				array('not_empty'),
 				array('digit'),
-				array('not_equals', array(':value', 0))
+				array('media_id_exist')
 			),
 
 			// video_services_id (int)
 			'video_services_id'=>array(
 				array('not_empty'),
 				array('digit'),
-				array('not_equals', array(':value', 0))
+				array('video_services_id_exist')
 			),
 		);
 	}

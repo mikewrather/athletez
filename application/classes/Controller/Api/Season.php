@@ -152,7 +152,7 @@
 			$season_validate = Validation::factory($new_season->as_array())
 				->rule('name', 'not_empty')
 				->rule('season_profiles_id', 'not_empty')
-				->rule('season_profiles_id', 'not_equals', array(':value', 0));
+				->rule('season_profiles_id', 'season_profiles_id_exist');
 
 			if (!$season_validate->check()){
 				$validate_errors_arr = $season_validate->errors('models/sportorg/seasons/base');

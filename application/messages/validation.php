@@ -22,4 +22,13 @@
 		'location_type_exist' => $e->get('location_type_exist'),
 		'state_entity_exist' => $e->get('state_entity_exist'),
 		'correct_date_format' => $e->get('correct_date_format'),
+		'season_profiles_id_exist' => $e->get('season_profiles_id_exist'),
+		'locations_id_exist' => $e->get('locations_id_exist'),
+		'states_id_exist' => $e->get('states_id_exist'),
+		'sections_id_exist' => $e->get('sections_id_exist'),
+		'complevel_profiles_id_exist' => $e->get('complevel_profiles_id_exist'),
+		'leagues_id_exist' => $e->get('leagues_id_exist'),
+		'divisions_id_exist' => $e->get('divisions_id_exist'),
+		'video_services_id_exist' => $e->get('video_services_id_exist'),
+		'media_id_exist' => $e->get('media_id_exist'),
 	);

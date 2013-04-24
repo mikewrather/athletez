@@ -45,13 +45,13 @@ class Model_Sportorg_Section extends ORM
 			// sports_id (int)
 			'sports_id'=>array(
 				array('not_empty'),
-				array('not_equals', array(':value', 0))
+				array('sports_id_exist')
 			),
 
 			// states_id (int)
 			'states_id'=>array(
 				array('not_empty'),
-				array('not_equals', array(':value', 0))
+				array('states_id_exist')
 			),
 		);
 	}

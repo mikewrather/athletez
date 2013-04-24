@@ -91,8 +91,8 @@
 			//add validation & save logics here
 			$division_validate = Validation::factory($division_obj->as_array())
 				->rule('name', 'not_empty')
-				->rule('states_id', 'not_equals', array(':value', 0))
-				->rule('sections_id', 'not_equals', array(':value', 0));
+				->rule('states_id', 'states_id_exist')
+				->rule('sections_id', 'sections_id_exist');
 
 			if (!$division_validate->check()){
 				$validate_errors = $division_validate->errors('models/sportorg/division');

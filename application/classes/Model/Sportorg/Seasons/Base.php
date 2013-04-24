@@ -39,7 +39,7 @@ class Model_Sportorg_Seasons_Base extends ORM
             // season_profiles_id (int)
             'season_profiles_id'=>array(
                 array('not_empty'),
-                array('not_equals', array(':value', 0))
+                array('season_profiles_id_exist')
             ),
         );
      }

@@ -34,12 +34,12 @@ class Model_User_Teamslink extends ORM
 		(
 			'teams_id'=>array(
 				array('not_empty'),
-				array('not_equals', array(':value', 0))
+				array('teams_id_exist')
 			),
 
 			'users_id'=>array(
 				array('not_empty'),
-				array('not_equals', array(':value', 0))
+				array('users_id_exist')
 			),
 		);
 	}

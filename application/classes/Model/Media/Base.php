@@ -56,7 +56,7 @@ class Model_Media_Base extends ORM
 			// sports_id (int)
 				'sports_id'=>array(
 					array('not_empty'),
-					array('not_equals', array(':value', 0))
+					array('sports_id_exist')
 			),
 
 			// subject_type_id (int)

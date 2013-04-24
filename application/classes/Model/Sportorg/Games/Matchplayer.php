@@ -57,7 +57,7 @@ class Model_Sportorg_Games_Matchplayer extends ORM
 			// users_id (int)
 			'users_id'=>array(
 				array('not_empty'),
-				array('not_equals', array(':value', 0))
+				array('users_id_exist')
 			),
 
 			// points_awarded (int)

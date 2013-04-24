@@ -29,7 +29,7 @@ class Model_Sportorg_Games_Match extends ORM
 		return array(
 			'games_id' => array(
 				array('not_empty'),
-				array('not_equals', array(':value', 0))
+				array('games_id_exist')
 			),
 		);
 	}

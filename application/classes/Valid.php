@@ -161,6 +161,63 @@
 		return false;
 	}
 
+	public static function leagues_id_exist($value){
+		if ($value == "" || $value == 0){
+			return false;
+		}
+		$leagues_model = ORM::factory("Sportorg_League");
+		$leagues_model->select("id")
+			->where('id', '=', $value)
+			->find();
+		if ($leagues_model->loaded()){
+			return true;
+		}
+		return false;
+	}
+
+	public static function video_services_id_exist($value){
+		if ($value == "" || $value == 0){
+			return false;
+		}
+		$video_service_model = ORM::factory("Media_Videoservice");
+		$video_service_model->select("id")
+			->where('id', '=', $value)
+			->find();
+		if ($video_service_model->loaded()){
+			return true;
+		}
+		return false;
+	}
+
+	public static function divisions_id_exist($value){
+		if ($value == "" || $value == 0){
+			return false;
+		}
+		$divisions_model = ORM::factory("Sportorg_Division");
+		$divisions_model->select("id")
+			->where('id', '=', $value)
+			->find();
+		if ($divisions_model->loaded()){
+			return true;
+		}
+		return false;
+	}
+
+
+	public static function season_profiles_id_exist($value){
+		if ($value == "" || $value == 0){
+			return false;
+		}
+		$complevel_profile_model = ORM::factory("Sportorg_Seasons_Profile");
+		$complevel_profile_model->select("id")
+			->where('id', '=', $value)
+			->find();
+		if ($complevel_profile_model->loaded()){
+			return true;
+		}
+		return false;
+	}
+
 
 		public static function state_entity_exist($state_name, $countries_id)
 		{
@@ -224,6 +281,34 @@
 				->where('id', '=', $value)
 				->find();
 			if ($sports_model->loaded()){
+				return true;
+			}
+			return false;
+		}
+
+		public static function locations_id_exist($value){
+			if ($value == "" || $value == 0){
+				return false;
+			}
+			$sports_model = ORM::factory("Location_Base");
+			$sports_model->select("id")
+				->where('id', '=', $value)
+				->find();
+			if ($sports_model->loaded()){
+				return true;
+			}
+			return false;
+		}
+
+		public static function media_id_exist($value){
+			if ($value == "" || $value == 0){
+				return false;
+			}
+			$media_model = ORM::factory("Media_Base");
+			$media_model->select("id")
+				->where('id', '=', $value)
+				->find();
+			if ($media_model->loaded()){
 				return true;
 			}
 			return false;

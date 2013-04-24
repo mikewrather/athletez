@@ -10,10 +10,10 @@
 $e = Kohana::$config->load('error_messages');
 
 return array(
-	'sections_id' => array(
-		'not_equals' => $e->get('not_null'),
-	),
-	'states_id' => array(
-		'not_equals' => $e->get('not_null'),
-	)
+//	'sections_id' => array(
+//		'not_equals' => $e->get('not_null'),
+//	),
+//	'states_id' => array(
+//		'not_equals' => $e->get('not_null'),
+//	)
 );

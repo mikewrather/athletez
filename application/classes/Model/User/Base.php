@@ -600,10 +600,10 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 			$args1 = array('complevels_id' => $complevels_id, 'seasons_id' => $seasons_id);
 
 			$combine_validate = Validation::factory(array_merge($args, $args1));
-			$combine_validate->rule('orgs_id', 'not_equals', array(':value', 0))
-				->rule('sports_id', 'not_equals', array(':value', 0))
-				->rule('complevels_id', 'not_equals', array(':value', 0))
-				->rule('seasons_id', 'not_equals', array(':value', 0));
+			$combine_validate->rule('orgs_id', 'orgs_id_exist')
+				->rule('sports_id', 'sports_id_exist')
+				->rule('complevels_id', 'complevels_id_exist')
+				->rule('seasons_id', 'seasons_id_exist');
 			try
 			{
 				$org_sport_link->check($combine_validate);

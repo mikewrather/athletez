@@ -100,9 +100,9 @@
 			$league_validate = Validation::factory($new_league->as_array())
 				->rule('name', 'not_empty')
 				->rule('sections_id', 'not_empty')
-				->rule('sections_id', 'not_equals', array(':value', 0))
+				->rule('sections_id', 'sections_id_exist')
 				->rule('states_id', 'not_empty')
-				->rule('states_id', 'not_equals', array(':value', 0));
+				->rule('states_id', 'states_id_exist');
 
 			if (!$league_validate->check()){
 				$validate_errors = $league_validate->errors('models/sportorg/league');

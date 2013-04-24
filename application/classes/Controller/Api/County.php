@@ -166,7 +166,7 @@
 			//add validation & save logics here
 			$county_validate = Validation::factory($new_county->as_array())
 				->rule('name', 'not_empty')
-				->rule('states_id', 'not_equals', array(':value', 0));
+				->rule('states_id', 'states_id_exist');
 
 			if (!$county_validate->check()){
 				$validate_errors = $county_validate->errors('models/location/county');

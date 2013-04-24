@@ -326,10 +326,10 @@
 				->rule('name', 'not_empty')
 				->rule('sports_club', 'not_empty')
 				->rule('sports_club', 'in_array', array(':value', array(0, 1)))
-				->rule('season_profiles_id', 'not_equals', array(':value', 0))
-				->rule('complevel_profiles_id', 'not_equals', array(':value', 0))
-				->rule('leagues_id', 'not_equals', array(':value', 0))
-				->rule('divisions_id', 'not_equals', array(':value', 0));
+				->rule('season_profiles_id', 'season_profiles_id_exist')
+				->rule('complevel_profiles_id', 'complevel_profiles_id_exist')
+				->rule('leagues_id', 'leagues_id_exist')
+				->rule('divisions_id', 'divisions_id_exist');
 
 			if (!$org_validate->check()){
 				$validate_errors = $org_validate->errors('models/sportorg/org');

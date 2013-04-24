@@ -41,7 +41,7 @@ class Model_Sportorg_Division extends ORM
 			'states_id'=>array(
 				array('not_empty'),
 				array('digit'),
-				array('not_equals', array(':value', 0))
+				array('states_id_exist')
 			),
 
 			// sections_id (int) -- I took out two rules here because section ID is only for some states

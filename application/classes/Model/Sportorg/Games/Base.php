@@ -54,7 +54,7 @@ class Model_Sportorg_Games_Base extends ORM
 			// locations_id (int)
 			'locations_id'=>array(
 				array('not_empty'),
-				array('not_equals', array(':value', 0))
+				array('locations_id_exist')
 			),
 		);
 	}

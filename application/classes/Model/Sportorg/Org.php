@@ -82,31 +82,31 @@ class Model_Sportorg_Org extends ORM
 			// leagues_id (int)
 			'leagues_id'=>array(
 				array('not_empty'),
-				array('not_equals', array(':value', 0))
+				array('leagues_id_exist')
 			),
 
 			// divisions_id (int)
 			'divisions_id'=>array(
 				array('not_empty'),
-				array('not_equals', array(':value', 0))
+				array('divisions_id_exist')
 			),
 
 			// season_profiles_id (int)
 			'season_profiles_id'=>array(
 				array('not_empty'),
-				array('not_equals', array(':value', 0))
+				array('season_profiles_id_exist')
 			),
 
 			// complevel_profiles_id (int)
 			'complevel_profiles_id'=>array(
 				array('not_empty'),
-				array('not_equals', array(':value', 0))
+				array('complevel_profiles_id_exist')
 			),
 
 			//comment by jeffrey, no this field in add form
 			'locations_id'=>array(
 				array('not_empty'),
-				array('not_equals', array(':value', 0))
+				array('locations_id_exist')
 			),
 		);
 	}

@@ -120,8 +120,8 @@ class Model_Sportorg_Team extends ORM
 
 		if ($org_sport_link_id == ""){
 			$external_validate = Validation::factory($post_values)
-				->rule('orgs_id', 'not_equals', array(':value', 0))
-				->rule('sports_id', 'not_equals', array(':value', 0));
+				->rule('orgs_id', 'orgs_id_exist')
+				->rule('sports_id', 'sports_id_exist');
 			//if check pass,add org_id,sports_id to db,generate org_sport_id for use
 			if ($external_validate->check()){
 				//check org_sport in db.

@@ -29,5 +29,13 @@ return array(
 	"state_entity_exist" => "State already exist",
 	"sport_type_id_exist" => "Sport type doesn't exist",
 	"correct_date_format" => "The format should be 'yyyy-mm-dd H:i:s'",
-
+	"season_profiles_id_exist" => "Season profiles id doesn't exist",
+	"locations_id_exist" => "Locations id doesn't exist",
+	"states_id_exist" => "States id doesn't exist",
+	"sections_id_exist" => "Sections id doesn't exist",
+	"complevel_profiles_id_exist" => "Complevel profiles id doesn't exist",
+	"leagues_id_exist" => "Leagues id doesn't exist",
+	"divisions_id_exist" => "Divisions id doesn't exist",
+	"video_services_id_exist" => "Video services id doesn't exist",
+	"media_id_exist" => "Media id doesn't exist",
 );
