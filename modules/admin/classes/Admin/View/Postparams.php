@@ -49,6 +49,7 @@ class Admin_View_Postparams
 			"entity_type" => $this->ent->name,
 			"primary_class" => $this->ent->class_name,
 			"desc" => $this->ent->description,
+			"verb" => $this->httpverb,
 		);
 
 		foreach($methods as $method)

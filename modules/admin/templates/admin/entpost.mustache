@@ -50,7 +50,7 @@
 
         </li>
 </ul></form>
-<ul class="methods" style="margin-bottom: 10px; border: 1px solid #333; padding: 10px; list-style: none;"
+<ul class="methods" style="margin-bottom: 10px; border: 1px solid #333; padding: 10px; list-style: none;">
             <li><h2>{{shortname}} {{api_method}} Tests</h2>
                 <h3>File Test (for comparison)</h3>
                 <input type="text" id="testFile_{{id}}" value="{{testfile}}" style="width:50%;" /><button onclick="fileTest('#testFile_{{id}}');">Get Test File Data</button>
@@ -72,7 +72,7 @@
                 {{/hastests}}
             </li>
         </ul>
-        <ul class="methods" style="margin-bottom: 30px; border: 1px solid #333; padding: 10px; list-style: none;">
+        <ul class="methods" style="margin-bottom: 10px; border: 1px solid #333; padding: 10px; list-style: none;">
             <li>
                 <div><h2>{{shortname}} ({{api_method}}) Dev Status</h2>
                     <input type="checkbox" id="chk_{{id}}" onclick="updateComplete({{id}},this.checked);"{{#complete}} checked="checked"{{/complete}} /> <span>Complete</span>
@@ -81,7 +81,60 @@
                     <button id="update_{{id}}" onclick="updateStatus({{id}});">Update Status</button>
                     </div>
             </li>
-        </ul><hr /><br />
+        </ul>
+
+<ul class="methods" style="margin-bottom: 30px; border: 1px solid #333; padding: 10px; list-style: none;">
+    <li>
+        <h2>Add A New Parameter to {{shortname}} Method</h2>
+        <form id="addParam_{{id}}">
+            <input type="hidden" name="apiaccess_id" value="{{id}}" />
+            <div>
+                <h3>Shortname</h3>
+                <input type="text" name="param_name" />
+                <h3>Data Type</h3>
+                <select name="param_type">
+                    <option value="int">Integer</option>
+                    <option value="string">String</option>
+                    <option value="datetime">Date / Time</option>
+                    <option value="bool">Boolean</option>
+                    <option value="array">Array</option>
+                </select>
+                <h3>Description</h3>
+                <textarea name="description" style="width:100%; height: 55px;"></textarea><br />
+                <h3>Entity Type of Parameter (leave blank for none)</h3>
+                <input type="text" name="enttypes_id" />
+                <input type="submit">
+            </div>
+        </form>
+        <script type="text/javascript">
+            $(document).ready(function(){
+                $('form#addParam_{{id}}').submit(function(){
+
+                    var $me = $(this);
+                    var formdata = $me.serialize();
+
+                    console.log(formdata);
+
+                    $.ajax({
+                        type : 'POST',
+                        url : '/apiadmin/addapiparam',
+                        data : formdata,
+                        success : function(data)
+                        {
+                            console.log(data);
+                            loadContent('/admin/show_postparams',{'entID':'{{ent_id}}','httpverb':'{{verb}}'});
+                        }
+                    });
+                    return false;
+                });
+
+
+            });
+        </script>
+    </li>
+</ul>
+
+<hr /><br />
 <script type="text/javascript">
 	$(document).ready(function(){
 		$('form#form_{{id}}').submit(function(){
@@ -109,4 +162,47 @@
 	});
 </script>
 		{{/method}}
+
+<ul class="methods" style="margin-bottom: 10px; border: 1px solid #333; padding: 10px; list-style: none;">
+    <li>
+        <h2>Add A New Method to {{entity_type}}</h2>
+        <form id="addmethod">
+            <input type="hidden" name="entlist_id" value="{{ent_id}}" />
+            <input type="hidden" name="method" value="{{verb}}" />
+            <div>
+                <h3>Shortname</h3>
+                <input type="text" name="shortname" />
+                <h3>Description</h3>
+                <textarea name="description" style="width:100%; height: 55px;"></textarea><br />
+                <input type="submit">
+            </div>
+        </form>
+        <script type="text/javascript">
+            $(document).ready(function(){
+                $('form#addmethod').submit(function(){
+
+                    var $me = $(this);
+                    var formdata = $me.serialize();
+
+                    console.log(formdata);
+
+                    $.ajax({
+                        type : 'POST',
+                        url : '/apiadmin/addapimethod',
+                        data : formdata,
+                        success : function(data)
+                        {
+                            console.log(data);
+                            loadContent('/admin/show_postparams',{'entID':'{{ent_id}}','httpverb':'{{verb}}'});
+                        }
+                    });
+                    return false;
+                });
+
+
+            });
+        </script>
+    </li>
+</ul>
+
 {{/methods}}
