@@ -1,54 +1,57 @@
+{{#exec_data}}
+    {{#exec_error}}
+    <div id="fb-root"></div>
+    <script>
+      // Additional JS functions here
+      window.fbAsyncInit = function() {
+        FB.init({
+          appId      : '239430712864961', // App ID
+          status     : true, // check login status
+          cookie     : true, // enable cookies to allow the server to access the session
+          xfbml      : true,  // parse XFBML
+          oauth         : true
+        });
 
-<div id="fb-root"></div>
-<script>
-  // Additional JS functions here
-  window.fbAsyncInit = function() {
-    FB.init({
-      appId      : '239430712864961', // App ID
-      status     : true, // check login status
-      cookie     : true, // enable cookies to allow the server to access the session
-      xfbml      : true,  // parse XFBML
-      oauth         : true
-    });
-
-    // Additional init code here
-    FB.getLoginStatus(function(response) {
-        if (response.status === 'connected') {
-            FB.api('/me', function(response) {
-                console.log(response);
-            });
-        } else if (response.status === 'not_authorized') {
-            console.log('not_authorized');
-            login();
-        } else {
-            login();
-        }
-    });
-  };
-    
-    function login() {
-        FB.login(function(response) {
-            if (response.authResponse) {
-                // connected
+        // Additional init code here
+        FB.getLoginStatus(function(response) {
+            if (response.status === 'connected') {
+                FB.api('/me', function(response) {
+                    console.log(response);
+                });
+            } else if (response.status === 'not_authorized') {
+                console.log('not_authorized');
+                login();
             } else {
-                // cancelled
+                login();
             }
-        },
-        {scope: 'email, user_birthday'}
-        );
-    }
+        });
+      };
+        
+        function login() {
+            FB.login(function(response) {
+                if (response.authResponse) {
+                    // connected
+                } else {
+                    // cancelled
+                }
+            },
+            {scope: 'email, user_birthday'}
+            );
+        }
 
-  // Load the SDK Asynchronously
-  function loadFBLogin(){
-     var js, id = 'facebook-jssdk', ref = document.getElementsByTagName('script')[0];
-     if (document.getElementById(id)) {return;}
-     js = document.createElement('script'); js.id = id; js.async = true;
-     js.src = "//connect.facebook.net/en_US/all.js";
-     ref.parentNode.insertBefore(js, ref);
-  }
-  
-  loadFBLogin();
-</script>
+      // Load the SDK Asynchronously
+      function loadFBLogin(){
+         var js, id = 'facebook-jssdk', ref = document.getElementsByTagName('script')[0];
+         if (document.getElementById(id)) {return;}
+         js = document.createElement('script'); js.id = id; js.async = true;
+         js.src = "//connect.facebook.net/en_US/all.js";
+         ref.parentNode.insertBefore(js, ref);
+      }
+      
+      loadFBLogin();
+    </script>
+    {{/exec_error}}
+{{/exec_data}}
 
 {{#payload}}
 <h1>Register with Facebook</h1>
