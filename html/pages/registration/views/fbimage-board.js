@@ -10,7 +10,7 @@ define([
         'facade', 
         'views',
         'utils',
-        'jquery.imgareaselect'
+        'jquery.jrac'
         ], 
 function(require, imageBoardTemplate) {
 
@@ -20,11 +20,12 @@ function(require, imageBoardTemplate) {
         utils = require('utils'),
         BaseView = views.BaseView,
         _ = facade._,
+        $ = facade.$,
         Channel = utils.lib.Channel;
 
     RegistrationFBImageBoardView = BaseView.extend({
 
-        tagName: "li",
+        tagName: "div",
         
         className: "image-board",
 
@@ -34,7 +35,12 @@ function(require, imageBoardTemplate) {
         setOptions: function (options) {
             if (!this.model) {
                 throw new Error("ImageBoardView expected options.model.");
-            }            
+            }
+            this.model.url = function() {
+                if (testpath)
+                    return testpath + '/user/fbselectimage';
+                return '/api/user/fbselectimage';
+            }
         },
 
         render: function () {
@@ -53,11 +59,55 @@ function(require, imageBoardTemplate) {
         },
         
         initCropView: function() {
-            $('#image-select').imgAreaSelect({ aspectRatio: '1:1', handles: true, onSelectChange: this.selectArea });            
+            $('#image-select').jrac({
+                'crop_width': 150,
+                'crop_height': 150,
+                'crop_aspect_ratio': '1:1',
+                'crop_x': 100,
+                'crop_y': 100,
+                'image_width': 400,
+                'viewport_onload': function() {
+                    var $viewport = this;
+                    var inputs = $viewport.$container.parent('.pane').find('.coords input:hidden');
+                    var events = ['jrac_crop_x','jrac_crop_y','jrac_crop_width','jrac_crop_height','jrac_image_width','jrac_image_height'];
+                    for (var i = 0; i < events.length; i++) {
+                        var event_name = events[i];
+                        // Register an event with an element.
+                        $viewport.observator.register(event_name, inputs.eq(i));
+                        // Attach a handler to that event for the element.
+                         inputs.eq(i).bind(event_name, function(event, $viewport, value) {
+                            $(this).val(value);
+                        })
+                        // Attach a handler for the built-in jQuery change event, handler
+                        // which read user input and apply it to relevent viewport object.
+                        .change(event_name, function(event) {
+                            var event_name = event.data;
+                            $viewport.$image.scale_proportion_locked = $viewport.$container.parent('.pane').find('.coords input:checkbox').is(':checked');
+                            $viewport.observator.set_property(event_name,$(this).val());
+                        });
+                    }
+                    $viewport.$container.append('<div class="natual-size">Image natual size: ' +$viewport.$image.originalWidth+' x ' +$viewport.$image.originalHeight+'</div>')
+                }
+            })
+            // React on all viewport events.
+            .bind('jrac_events', function(event, $viewport) {
+                var inputs = $(this).parents('.pane').find('.coords input');
+                inputs.css('background-color',($viewport.observator.crop_consistent())?'chartreuse':'salmon');
+            });
         },
         
         removeCropView: function() {
-            $('#image-select').imgAreaSelect({remove: true});
+            $('#image-select').jrac('destroy');
+            $('#image-select').parent().find('.natual-size').remove();
+        },
+        
+        getImageInfo: function() {
+            var fields = this.$(".coords :input").serializeArray();
+            var payload = this.model.get('payload');
+            $.each(fields, function(i, field){
+                payload[field.name] = field.value;
+            });
+            this.model.set('payload', payload);
         }
         
     });
