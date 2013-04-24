@@ -472,15 +472,10 @@
 		 *
 		 * @retun array
 		 */
-		public function get_fbreg()
+		public function post_fbreg()
 		{
-			$retArr = array();
-			
-			$facebook = FacebookAuth::factory();
-			
 			// Get user facebook task
-			$retArr =  $facebook->get_user();
-			
+			$retArr =  $this->obj->get_user();
 			return $retArr;
 		}
 		

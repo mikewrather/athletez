@@ -225,10 +225,8 @@
 		 */
 		public function action_post_fbreg()
 		{
-			//This is where oauth needs to get taken care of.
-
-			//This should create a new user and return the user's basic info.
-
+			$facebook = FacebookAuth::factory();
+			return $facebook;
 		}
 
 		/**
