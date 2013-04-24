@@ -115,6 +115,7 @@
 			// address 
 			// Street Address of the location
 				
+
 			if(trim($this->request->post('address')) != "")
 			{
 				$args['address'] = trim($this->request->post('address'));
@@ -150,6 +151,17 @@
 			if(trim($this->request->post('lat')) != "")
 			{
 				$args['lat'] = trim($this->request->post('lat'));
+			}
+
+			//if long and lat empty than add lat and long from google api
+			if(trim($this->request->post('lon')) == "" && trim($this->request->post('lat')) == "" && trim($this->request->post('address')) != "")
+			{
+				$address = str_replace(" ", "+", $args['address']);
+				$json = file_get_contents("http://maps.google.com/maps/api/geocode/json?address=$address&sensor=false");
+				$json = json_decode($json);
+
+				$args['lat'] = $json->{'results'}[0]->{'geometry'}->{'location'}->{'lat'};
+				$args['lon'] = $json->{'results'}[0]->{'geometry'}->{'location'}->{'lng'};
 			}
 
 			// loc_point	
