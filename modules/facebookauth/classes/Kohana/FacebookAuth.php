@@ -176,18 +176,15 @@ class Kohana_FacebookAuth {
 				//Get profile album
 				$albums = $this->fb->api("/me/albums");
 				$album_id = ""; 
-				foreach($albums["data"] as $item){
-					if($item["type"] == "profile"){
-						$album_id = $item["id"];
-						break;
-					}
-				}
-				//Get album photos
-				$photos = $this->fb->api("/$album_id/photos/all",'GET');
 				$i = 0;
-				foreach($photos['data'] as $photo){
-					$me['photos'][$i] = $photo['images'][0]['source'];
-					$i++;
+				foreach($albums["data"] as $item){
+					$album_id = $item["id"];
+					//Get album photos
+					$photos = $this->fb->api("/$album_id/photos/all",'GET');
+					foreach($photos['data'] as $photo){
+						$me['photos'][$i] = $photo['images'][0]['source'];
+						$i++;
+					}
 				}
 			}
 			catch( FacebookApiException $e ){
