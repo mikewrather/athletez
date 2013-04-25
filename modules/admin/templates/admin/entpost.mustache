@@ -1,8 +1,14 @@
-
+<a name="top"></a>
+<div id="nav">
+    {{#methods}}<ul>{{#method}}
+        <li><a href="#method{{id}}"><h3>{{id}} - {{shortname}} ({{api_method}})</h3></a></li>
+    {{/method}}</ul>{{/methods}}
+</div>
 {{#methods}}
 <h1>{{entity_type}}</h1><br />
 <h2>{{desc}}</h2>
 {{#method}}
+<a name="method{{id}}"></a><a href="#top"><span>Go To Top</span></a>
 <form id="form_{{id}}">
 <ul class="methods" style="margin-bottom: 10px; border: 1px solid #333; padding: 10px; list-style: none;">
 
@@ -45,7 +51,13 @@
 			{{#hasparams}}
 
 		{{/hasparams}}
-			<input type="submit"><br />
+			<input type="submit">
+
+            <div>
+                <input type="checkbox" name="saveRequest" id="chk_save_{{id}}" onclick="markSave(this,'#save_title_{{id}}');" />&nbsp;Save This Request For Later
+                <input type="hidden" name="apiaccess_id" value="{{id}}" />
+                <input type="text" name="saveTitle" id="save_title_{{id}}" placeholder="Alias For This Saved Request" disabled="disabled" style="width:200px;" />
+            </div><br />
             <a href="/codegen/genmethod?methods_id={{id}}" target="_blank">Generate Scaffolding Code for {{shortname}}</a>
 
 

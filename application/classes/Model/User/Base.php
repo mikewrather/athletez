@@ -252,6 +252,7 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 		if(isset($email))
 		{
 			$this->email = $email;
+			$this->username = $email;
 		}
 		// firstname
 		// Updated First Name

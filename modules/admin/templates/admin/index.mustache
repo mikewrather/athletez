@@ -122,6 +122,18 @@
                 }
             }
 
+        var markSave = function(el,txt_id)
+        {
+            if(el.checked)
+            {
+                $(txt_id).removeAttr('disabled');
+            }
+            else
+            {
+                $(txt_id).attr('disabled','disabled').val('');
+            }
+        }
+
 	</script>
 </head>
 <body>

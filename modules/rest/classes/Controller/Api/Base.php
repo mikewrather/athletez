@@ -58,6 +58,11 @@ class Controller_Api_Base extends AuthController
 		{
 			$this->setBodyParams('delete');
 		}
+
+		//Check to see if we want to save the request
+		$this->checkForSave();
+
+
 	}
 
 	/**
@@ -336,5 +341,41 @@ class Controller_Api_Base extends AuthController
 			// Call method to throw an error
 			$this->addError($error_array,$is_fatal);
 		}
+	}
+
+	protected function checkForSave()
+	{
+
+		if(!$this->is_admin) return false;
+
+		switch ($this->request->method())
+		{
+			case 'POST':
+				$verb = 'post';
+				break;
+			case 'GET':
+				$verb = 'query';
+				break;
+			case 'PUT':
+				$verb = 'put';
+				break;
+			default:
+				break;
+		}
+		if(!isset($verb)) return false;
+
+		$saveReq = $this->request->{$verb}('saveRequest')=='on' ? 1 : 0;
+		if(!$saveReq) return false;
+
+		$saveTitle = $this->request->{$verb}('saveTitle');
+		$apiaccess_id = $this->request->{$verb}('apiaccess_id');
+		$saveBody = str_replace(array('saveRequest','saveTitle','apiaccess_id'),'xxx',$this->request->body());
+
+		$test = ORM::factory('Codegen_Apitest');
+		$test->testval = $saveBody;
+		$test->name = $saveTitle;
+		$test->apiaccess_id = $apiaccess_id;
+		$test->save();
+
 	}
 }
