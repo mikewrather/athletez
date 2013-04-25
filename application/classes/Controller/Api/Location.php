@@ -157,11 +157,30 @@
 			if(trim($this->request->post('lon')) == "" && trim($this->request->post('lat')) == "" && trim($this->request->post('address')) != "")
 			{
 				$address = str_replace(" ", "+", $args['address']);
+
 				$json = file_get_contents("http://maps.google.com/maps/api/geocode/json?address=$address&sensor=false");
 				$json = json_decode($json);
 
-				$args['lat'] = $json->{'results'}[0]->{'geometry'}->{'location'}->{'lat'};
-				$args['lon'] = $json->{'results'}[0]->{'geometry'}->{'location'}->{'lng'};
+				if($json->{status} != 'ZERO_RESULTS')
+				{
+					$args['lat'] = $json->{'results'}[0]->{'geometry'}->{'location'}->{'lat'};
+					$args['lon'] = $json->{'results'}[0]->{'geometry'}->{'location'}->{'lng'};
+					//$args['loc_point'] =  'Point('.$args['lat'].','.$args['lon'].')';
+				}
+				else
+				{
+					$error_array = array(
+						"error" => "Invalid address."
+					);
+
+					// Set whether it is a fatal error
+					$is_fatal = true;
+
+					// Call method to throw an error
+					$this->addError($error_array,$is_fatal);
+					return false;
+				}
+
 			}
 
 			// loc_point	

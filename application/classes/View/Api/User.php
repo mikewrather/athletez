@@ -490,4 +490,19 @@
 			$retArr = $this->obj->getBasics();
 			return $retArr;
 		}
+
+		/**
+		 * post_fbpics() This is the method return facebook user photos.
+		 *
+		 * @retun array
+		 */
+		public function post_fbpics()
+		{
+			$retArr = array();
+			
+			//Get facebook login users photos
+			$retArr =  $this->obj->get_photos();
+			
+			return $retArr;
+		}
 	}
