@@ -228,7 +228,7 @@
 
 			$retArr =  $facebook->get_user();
 
-			if($retArr['message'])
+			if($retArr['message']){
 
 				//Error message array
 				$error_array = array(
