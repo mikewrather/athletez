@@ -1,8 +1,8 @@
 // Facebook Image List
 // --------------
 
-define(['facade', 'utils', 'media/views/image-list', 'registration/views/fbimage-board', 'registration/views/picture_buttons'],
-function(facade,  utils,   BaseImageListView,         FBImageBoardView,                   RegistrationPicButtonsView) {
+define(['facade', 'utils', 'registration/views/fbimage-item', 'media/views/image-list', 'registration/views/fbimage-board', 'registration/views/picture_buttons', 'models/base'],
+function(facade,  utils,   FBImageItemView,                    BaseImageListView,         FBImageBoardView,                   RegistrationPicButtonsView, BaseModel) {
 
     var RegistrationFBImageListView,
         _ = facade._;
@@ -16,6 +16,8 @@ function(facade,  utils,   BaseImageListView,         FBImageBoardView,         
         // Tag for the child views
         _tagName: "div",
         _className: "fbimage",
+        
+        _view: FBImageItemView,
         
         setupAddView: function() {
             var listView = this,
@@ -49,12 +51,14 @@ function(facade,  utils,   BaseImageListView,         FBImageBoardView,         
             function fbUseThisImage() {
                 var board = listView.childViews.board;
                 board.getImageInfo();
-                board.model.url = function() {
+                var payload = board.model.get('payload');
+                var saveImage = new BaseModel(payload);
+                saveImage.url = function() {
                     if (testpath)
-                        return testpath + '/user/fbselectimage';
-                    return '/api/user/fbselectimage';
+                        return testpath + '/user/savecrop';
+                    return '/api/user/savecrop';
                 }
-                board.model.saveSuccess = function(model, response) {
+                saveImage.saveSuccess = function(model, response) {
                     var exec_data = model.get('exec_data');
                     var payload = model.get('payload');
                     if (!exec_data['exec_error'] && payload) {
@@ -62,10 +66,10 @@ function(facade,  utils,   BaseImageListView,         FBImageBoardView,         
                     }
                     $('#' + listView.id).dialog('close');
                 }                
-                board.model.saveError = function(model, response) {
+                saveImage.saveError = function(model, response) {
                     $('#' + listView.id).dialog('close');
                 }
-                board.model.save();                
+                saveImage.save();                
             }
             
             Channel("registration-use-image").subscribe(fbUseThisImage);

@@ -20,18 +20,6 @@ define(['facade', 'utils'], function (facade, utils) {
         
         defaults: {
             
-            //"id": "101",
-            
-            "base_url": base_url,
-            
-            "payload": {
-                
-            },
-            "desc": null,
-            "exec_data": {
-                "exec_time": 0,
-                "exec_error": false
-            }
         },
         
         // Param {Object} `attributes` set on model when creating an instance  

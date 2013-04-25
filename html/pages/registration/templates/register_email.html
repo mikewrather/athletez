@@ -1,8 +1,53 @@
 
-{{#payload}}
-Register With Email Address
-<h1>{{title}}</h1>
-<a href="#" class="register_facebook">{{register_facebook}}</a>
-<br/><br/> OR <br/><br/>
-<a href="#" class="register_email">{{register_email}}</a>
-{{/payload}}
+<h1>The Basics</h1>
+<div class="row-fluid">
+    <form class="form-horizontal">
+        <div class="control-group">
+            <label class="control-label" for="name">Name: </label>
+            <div class="controls">
+                <input type="text" name="name" id="name" placeholder="Name">
+                <p class="text-error"></p>
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label" for="birthday">DOB: </label>
+            <div class="controls">
+                <input type="text" name="birthday" id="birthday" placeholder="Birthday">
+                <p class="text-error"></p>
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label" for="email">Email: </label>
+            <div class="controls">
+                <input type="text" name="email" id="email" placeholder="Email">
+                <p class="text-error"></p>
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label">Gender: </label>
+            <div class="controls">
+                <label for="male"><input type="radio" id="male" name="gender" value="male"> Male</label>
+                <label for="female"><input type="radio" id="female" name="gender" value="female"> Female</label>
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label" for="password">Password: </label>
+            <div class="controls">
+                <input type="password" id="password" name="password"/>
+                <p class="text-error"></p>
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label" for="password-again">Again: </label>
+            <div class="controls">
+                <input type="password" id="password-again" name="password-again"/>                
+            </div>
+        </div>
+        <div>
+            <p class="agree-error text-error"></p>
+            <label for="agree"><input type="checkbox" id="agree" name="agree"/>I have read and agree to the <a href="#">Terms of Service</a></label>
+            <div class="alert form-alert" style="display:none;"></div>
+            <a href="#" class="next">What's Next</a>
+        </div>    
+    </form>
+</div>

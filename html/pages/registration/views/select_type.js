@@ -38,7 +38,6 @@ function(require, registrationSelectTypeTemplate) {
         
         registerWithFacebook: function(event) {                                
             event.preventDefault();
-            console.log('registerWithFacebook');
             // Additional JS functions here
             window.fbAsyncInit = function() {
                 FB.init({

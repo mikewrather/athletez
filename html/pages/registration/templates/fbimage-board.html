@@ -1,15 +1,14 @@
 
 {{#payload}}
     <div class="textcenter pane">
-        <img id="image-select" src="{{base_url}}{{image_path}}" alt="{{image_title}}"/>
+        <img id="image-select" src="{{image_url}}" alt="{{image_title}}"/>
         <div class="coords" style="display:none;">
             <div>crop x <input name="crop-x" type="hidden" /></div>
             <div>crop y <input name="crop-y" type="hidden" /></div>
             <div>crop width <input name="crop-width" type="hidden" /></div>
             <div>crop height <input name="crop-height" type="hidden" /></div>
             <div>image width <input name="image-width" type="hidden" /></div>
-            <div>image height <input name="image-height" type="hidden" /></div>
-            <div>lock proportion <input name="lock-proportion" type="checkbox" checked="checked" /></div>
+            <div>image height <input name="image-height" type="hidden" /></div>            
         </div>
     </div>
 {{/payload}}

@@ -31,6 +31,7 @@ function(require, registrationFacebookTemplate) {
         id: 'main-content',
         
         events: {
+            "keypress": "stopSubmit",
             "click .change-field": "changeField",
             "click .diff_fb_pic": "diffFBPicture",
             "click .upload_new_image": "uploadNewImage",
@@ -41,6 +42,10 @@ function(require, registrationFacebookTemplate) {
         
         initialize: function (options) {
             var self = this;
+            
+            if (!this.model) {
+                throw new Error("RegistrationFacebokkView expected options.model.");
+            }
             
             SectionView.prototype.initialize.call(this, options); 
             
@@ -69,6 +74,13 @@ function(require, registrationFacebookTemplate) {
         render: function (domInsertion, dataDecorator, partials) {
             SectionView.prototype.render.call(this, domInsertion, dataDecorator, partials);            
             this.$('.password').pstrength();
+        },
+        
+        stopSubmit: function (event) {
+            var code = (event.keyCode ? event.keyCode : event.which);
+            if (code == 13) {
+                event.preventDefault();
+            }
         },
         
         diffFBPicture: function(event) {
