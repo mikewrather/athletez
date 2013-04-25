@@ -22,7 +22,7 @@
 		} else {
 			login();
 		}
-	});
+	},{scope: 'email, user_birthday, user_photos'});
   };
 	
 	function login() {
@@ -32,9 +32,7 @@
 			} else {
 				// cancelled
 			}
-		},
-		{scope: 'email, user_birthday'}
-		);
+		},{scope: 'email, user_birthday, user_photos'});
 	}
 
   // Load the SDK Asynchronously

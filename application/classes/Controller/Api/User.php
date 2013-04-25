@@ -219,15 +219,18 @@
 		###########################    POST METHODS    #############################
 		############################################################################
 
-
 		/**
 		 *
 		 */
 		public function action_post_fbreg()
 		{
 			$facebook = FacebookAuth::factory();
+
 			$retArr =  $facebook->get_user();
-			if($retArr['message']){
+
+			if($retArr['message'])
+
+				//Error message array
 				$error_array = array(
 					"error" => $retArr['message']
 				);
@@ -237,9 +240,43 @@
 
 				// Call method to throw an error
 				$this->addError($error_array,$is_fatal);
+
 				return false;
 			}
-			else{
+			else
+			{
+				return $facebook;
+			}
+		}
+
+		/**
+		 * action_post_fbpics() Get Facebook all user profile photo(s)
+		 * via /api/user/fbpics/{0}
+		 *
+		 */
+		public function action_post_fbpics()
+		{
+			$facebook = FacebookAuth::factory();
+
+			$retArr =  $facebook->get_photos();
+
+			if($retArr['error_message'])
+			{
+				//Error message array
+				$error_array = array(
+					"error" => $retArr['error_message']
+				);
+
+				// Set whether it is a fatal error
+				$is_fatal = true;
+
+				// Call method to throw an error
+				$this->addError($error_array,$is_fatal);
+
+				return false;
+			}
+			else
+			{
 				return $facebook;
 			}
 		}
