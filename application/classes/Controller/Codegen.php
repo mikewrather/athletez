@@ -62,14 +62,35 @@ class Controller_Codegen extends Controller
 		}
 	}
 
+	public function action_genmethod()
+	{
+		if($this->request->query('methods_id'))
+		{
+			$methods = ORM::factory('Codegen_Apimethod')->where('id','=',$this->request->query('methods_id'))->find_all();
+			$method = ORM::factory('Codegen_Apimethod')->where('id','=',$this->request->query('methods_id'))->find();
+		}
+		else
+		{
+			return false;
+		}
+
+		echo "<pre>";
+		echo $this->getHTTPVerbMethods($methods,strtolower($method->api_method));
+
+		echo $this->generateView($method->entlist,$method->id);
+
+		echo "</pre>";
+	}
+
 	/**
 	 * generateController generates an API controller
 	 *
 	 * @param $ent
 	 * @return string
 	 */
-	private function generateController($ent)
+	private function generateController($ent,$method_id=NULL)
 	{
+
 		$filecontents = '<?php defined(\'SYSPATH\') or die(\'No direct script access.\');
 
 /**
@@ -149,8 +170,11 @@ class Controller_Codegen extends Controller
 	 * @param $ent
 	 * @return string
 	 */
-	private function generateView($ent)
+	private function generateView($ent,$method_id=NULL)
 	{
+
+		if($method_id==NULL)
+		{
 		$filecontents = '<?php defined(\'SYSPATH\') or die(\'No direct script access.\');
 
 /**
@@ -171,10 +195,12 @@ class Controller_Codegen extends Controller
 		}
 
 	';
+		}
 
 
+		if($method_id==NULL) $methods = $ent->apimethods->find_all();
+		else $methods = ORM::factory('Codegen_Apimethod')->where('id','=',$method_id)->find_all();
 
-		$methods = $ent->apimethods->find_all();
 		foreach($methods as $method)
 		{
 
@@ -204,10 +230,11 @@ class Controller_Codegen extends Controller
 
 		}
 
-
+		if($method_id==NULL)
+		{
 		$filecontents .= '
 	}';
-
+		}
 		return $filecontents;
 
 
