@@ -478,5 +478,16 @@
 			$retArr =  $this->obj->get_user();
 			return $retArr;
 		}
-		
+
+		/**
+		 * post_savecrop() This is the method that can save the cropping information for an image being used as userpic.  It differs from those in the media controller in that it assumes this is going to be a userpic.
+		 *
+		 * @retun array
+		 */
+		public function post_savecrop()
+		{
+			// Scaffolding Code For Single:
+			$retArr = $this->obj->getBasics();
+			return $retArr;
+		}
 	}

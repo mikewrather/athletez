@@ -656,6 +656,211 @@
 				$this->addError($error_array,$is_fatal);
 			}	
 		}
+
+		/**
+		 * action_post_savecrop() This is the method that can save the cropping information for an image being used as userpic.
+		 * It differs from those in the media controller in that it assumes this is going to be a userpic.
+		 * via /api/user/savecrop/{users_id}
+		 *
+		 */
+		public function action_post_savecrop()
+		{
+			$this->payloadDesc = "This is the method that can save the cropping information for an image being used as userpic.  It differs from those in the media controller in that it assumes this is going to be a userpic.";
+			$arguments = array();
+			// CHECK FOR PARAMETERS:
+			// image_url (REQUIRED)
+			// This is the url of the image being cropped.  It will be downloaded from this url and the crop data will be used to save a new version.
+
+			if(trim($this->request->post('image_url')) != "")
+			{
+				$arguments["image_url"] = trim($this->request->post('image_url'));
+			}
+
+			else // THIS WAS A REQUIRED PARAMETER
+			{
+				// Create Array for Error Data
+				$error_array = array(
+					"error" => "Required Parameter Missing",
+					"param_name" => "image_url",
+					"param_desc" => "This is the url of the image being cropped.  It will be downloaded from this url and the crop data will be used to save a new version."
+				);
+
+				// Set whether it is a fatal error
+				$is_fatal = true;
+
+				// Call method to throw an error
+				$this->addError($error_array,$is_fatal);
+				return false;
+
+			}
+
+			// crop_x (REQUIRED)
+			// The x axis of the top left corner of the crop box.
+
+			if((int)trim($this->request->post('crop_x')) > 0)
+			{
+				$arguments["crop_x"] = (int)trim($this->request->post('crop_x'));
+			}
+
+			else // THIS WAS A REQUIRED PARAMETER
+			{
+				// Create Array for Error Data
+				$error_array = array(
+					"error" => "Required Parameter Missing",
+					"param_name" => "crop_x",
+					"param_desc" => "The x axis of the top left corner of the crop box."
+				);
+
+				// Set whether it is a fatal error
+				$is_fatal = true;
+
+				// Call method to throw an error
+				$this->addError($error_array,$is_fatal);
+				return false;
+
+			}
+
+			// crop_y (REQUIRED)
+			// The y axis of the top left corner of the cropping box.
+
+			if((int)trim($this->request->post('crop_y')) > 0)
+			{
+				$arguments["crop_y"] = (int)trim($this->request->post('crop_y'));
+			}
+
+			else // THIS WAS A REQUIRED PARAMETER
+			{
+				// Create Array for Error Data
+				$error_array = array(
+					"error" => "Required Parameter Missing",
+					"param_name" => "crop_y",
+					"param_desc" => "The y axis of the top left corner of the cropping box."
+				);
+
+				// Set whether it is a fatal error
+				$is_fatal = true;
+
+				// Call method to throw an error
+				$this->addError($error_array,$is_fatal);
+				return false;
+
+			}
+
+			// crop_width (REQUIRED)
+			// The width of the crop box.
+
+			if((int)trim($this->request->post('crop_width')) > 0)
+			{
+				$arguments["crop_width"] = (int)trim($this->request->post('crop_width'));
+			}
+
+			else // THIS WAS A REQUIRED PARAMETER
+			{
+				// Create Array for Error Data
+				$error_array = array(
+					"error" => "Required Parameter Missing",
+					"param_name" => "crop_width",
+					"param_desc" => "The width of the crop box."
+				);
+
+				// Set whether it is a fatal error
+				$is_fatal = true;
+
+				// Call method to throw an error
+				$this->addError($error_array,$is_fatal);
+				return false;
+
+			}
+
+			// crop_height (REQUIRED)
+			// The height of the crop box.
+
+			if((int)trim($this->request->post('crop_height')) > 0)
+			{
+				$arguments["crop_height"] = (int)trim($this->request->post('crop_height'));
+			}
+
+			else // THIS WAS A REQUIRED PARAMETER
+			{
+				// Create Array for Error Data
+				$error_array = array(
+					"error" => "Required Parameter Missing",
+					"param_name" => "crop_height",
+					"param_desc" => "The height of the crop box."
+				);
+
+				// Set whether it is a fatal error
+				$is_fatal = true;
+
+				// Call method to throw an error
+				$this->addError($error_array,$is_fatal);
+				return false;
+
+			}
+
+			// image_width (REQUIRED)
+			// The width of the image after it has been resized with zoom.
+
+			if((int)trim($this->request->post('image_width')) > 0)
+			{
+				$arguments["image_width"] = (int)trim($this->request->post('image_width'));
+			}
+
+			else // THIS WAS A REQUIRED PARAMETER
+			{
+				// Create Array for Error Data
+				$error_array = array(
+					"error" => "Required Parameter Missing",
+					"param_name" => "image_width",
+					"param_desc" => "The width of the image after it has been resized with zoom."
+				);
+
+				// Set whether it is a fatal error
+				$is_fatal = true;
+
+				// Call method to throw an error
+				$this->addError($error_array,$is_fatal);
+				return false;
+
+			}
+
+			// image_height (REQUIRED)
+			// The height of the image after it has been resized with zoom.
+
+			if((int)trim($this->request->post('image_height')) > 0)
+			{
+				$arguments["image_height"] = (int)trim($this->request->post('image_height'));
+			}
+
+			else // THIS WAS A REQUIRED PARAMETER
+			{
+				// Create Array for Error Data
+				$error_array = array(
+					"error" => "Required Parameter Missing",
+					"param_name" => "image_height",
+					"param_desc" => "The height of the image after it has been resized with zoom."
+				);
+
+				// Set whether it is a fatal error
+				$is_fatal = true;
+
+				// Call method to throw an error
+				$this->addError($error_array,$is_fatal);
+				return false;
+
+			}
+
+			// lock-proportion
+			// Not exactly sure what this does.
+
+			if($this->request->post('lock-proportion') != "")
+			{
+				//convert lock-proportion to a boolean
+				$arguments["lock-proportion"] = (bool)$this->request->post('lock-proportion');
+			}
+
+
+		}
 		
 		############################################################################
 		############################    PUT METHODS    #############################
