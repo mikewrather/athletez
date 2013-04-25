@@ -39,7 +39,12 @@
 		{
 			$this->payloadDesc = "Basic information about some media";
 
-		
+			if(!$this->mainModel->id)
+			{
+				$this->modelNotSetError();
+				return false;
+			}
+			return $this->mainModel;
 		}
 		
 		############################################################################
