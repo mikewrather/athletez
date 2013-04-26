@@ -1,9 +1,21 @@
 <a name="top"></a>
-<div id="nav" style=" float:right;border:1px solid red;margin-left:950px;">
+<div class="nav_toggle">Hide Nav</div>
+<div class="nav_toggle" style="display:none;">Show Nav</div>
+<div id="nav">
     {{#methods}}<ul>{{#method}}
         <li><a href="#method{{id}}"><h3>{{id}} - {{shortname}} ({{api_method}})</h3></a></li>
     {{/method}}</ul>{{/methods}}
 </div>
+<script>
+    $(document).ready(function(){
+        $('.nav_toggle').bind('click',function(){
+           $('#nav').toggle('slow',function(){
+               $('.nav_toggle').toggle();
+           });
+        });
+    });
+</script>
+
 {{#methods}}
 <h1>{{entity_type}}</h1><br />
 <h2>{{desc}}</h2>
