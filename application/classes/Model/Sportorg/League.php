@@ -26,6 +26,16 @@ class Model_Sportorg_League extends ORM
 		)
 	);
 
+	public function deleteBasic(){
+		$result = $this->orgs->find_all()->as_array();
+		if (count($result) > 0){
+			return false;
+		}else{
+			$this->delete();
+			return true;
+		}
+	}
+
 	public function rules(){
 
 		return array

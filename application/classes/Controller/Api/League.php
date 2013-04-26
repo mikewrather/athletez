@@ -200,7 +200,15 @@
 				return false;
 			}
 			
-			return $this->mainModel->delete();
+			if (!$this->mainModel->deleteBasic()){
+				$error_array = array(
+					"error" => "Leagues can't delete",
+					"desc" => "Leagues can't delete, b/c already in use"
+				);
+				$this->modelNotSetError($error_array);
+				return false;
+			}
+			return $this;
 		}
 		
 	}
