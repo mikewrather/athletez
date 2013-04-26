@@ -496,7 +496,7 @@
 		 *
 		 * @retun array
 		 */
-		public function post_fbpics()
+		public function get_fbpics()
 		{
 			$retArr = array();
 			

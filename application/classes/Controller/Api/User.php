@@ -251,11 +251,11 @@
 		}
 
 		/**
-		 * action_post_fbpics() Get Facebook all user profile photo(s)
+		 * action_get_fbpics() Get Facebook all user profile photo(s)
 		 * via /api/user/fbpics/{0}
 		 *
 		 */
-		public function action_post_fbpics()
+		public function action_get_fbpics()
 		{
 			$facebook = FacebookAuth::factory();
 
