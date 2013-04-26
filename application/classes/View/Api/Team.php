@@ -67,7 +67,28 @@
 			 
 			return $retArr;
 		}
-		
+
+		/**
+		 * get_search() Search for a team
+		 *
+		 * @retun array
+		 */
+		public function get_search()
+		{
+			$retArr = array();
+
+			// Scaffolding Code For Array:
+			$objs = $this->obj->find_all();
+			foreach($objs as $obj)
+			{
+				$retArr[$obj->id] = $obj->getBasics();
+			}
+
+
+			return $retArr;
+		}
+
+
 		/**
 		 * post_add() Add a new team
 		 *
