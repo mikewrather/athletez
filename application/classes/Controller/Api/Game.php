@@ -129,6 +129,59 @@
 			$video_model = ORM::factory("Media_Image");
 			return $video_model->getImages($this->mainModel->id);
 		}
+
+		/**
+		 * action_get_search() Search for a game based on several parameters
+		 * via /api/game/search/{games_id}
+		 *
+		 */
+		public function action_get_search()
+		{
+			$this->payloadDesc = "Search for a game based on several parameters";
+			$arguments = array();
+			// CHECK FOR PARAMETERS:
+			// sports_id
+			// Narrow user list based on sport
+
+			if((int)trim($this->request->query('sports_id')) > 0)
+			{
+				$arguments["sports_id"] = (int)trim($this->request->query('sports_id'));
+			}
+
+			// complevels_id
+			// Narrow user list to users of a comp level
+
+			if((int)trim($this->request->query('complevels_id')) > 0)
+			{
+				$arguments["complevels_id"] = (int)trim($this->request->query('complevels_id'));
+			}
+
+			// orderby
+			// Default will be to order by time descending
+
+			if(trim($this->request->query('orderby')) != "")
+			{
+				$arguments["orderby"] = trim($this->request->query('orderby'));
+			}
+
+			// searchtext
+			// A string to search names of teams.
+
+			if(trim($this->request->query('searchtext')) != "")
+			{
+				$arguments["searchtext"] = trim($this->request->query('searchtext'));
+			}
+
+			// loc_search
+			// This will search the city, county, state of the game's location as well as the zipcode.
+
+			if(trim($this->request->query('loc_search')) != "")
+			{
+				$arguments["loc_search"] = trim($this->request->query('loc_search'));
+			}
+
+
+		}
 		
 		############################################################################
 		###########################    POST METHODS    #############################

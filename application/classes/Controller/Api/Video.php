@@ -81,6 +81,59 @@
 			}
 
 		}
+
+		/**
+		 * action_get_search() Search for videos
+		 * via /api/video/search/{videos_id}
+		 *
+		 */
+		public function action_get_search()
+		{
+			$this->payloadDesc = "Search for videos";
+			$arguments = array();
+			// CHECK FOR PARAMETERS:
+			// sports_id
+			// Narrow list based on tagged user's sport affiliations
+
+			if((int)trim($this->request->query('sports_id')) > 0)
+			{
+				$arguments["sports_id"] = (int)trim($this->request->query('sports_id'));
+			}
+
+			// complevels_id
+			// Narrow user list to users of a comp level
+
+			if((int)trim($this->request->query('complevels_id')) > 0)
+			{
+				$arguments["complevels_id"] = (int)trim($this->request->query('complevels_id'));
+			}
+
+			// gradyear
+			// This will have to search the grad year of all the players tagged in the video
+
+			if(trim($this->request->query('gradyear')) != "")
+			{
+				$arguments["gradyear"] = trim($this->request->query('gradyear'));
+			}
+
+			// orderby
+			// Default will be to order by votes.
+
+			if(trim($this->request->query('orderby')) != "")
+			{
+				$arguments["orderby"] = trim($this->request->query('orderby'));
+			}
+
+			// searchtext
+			// A string to search names of tagged athletes
+
+			if(trim($this->request->query('searchtext')) != "")
+			{
+				$arguments["searchtext"] = trim($this->request->query('searchtext'));
+			}
+
+
+		}
 		
 		############################################################################
 		###########################    POST METHODS    #############################

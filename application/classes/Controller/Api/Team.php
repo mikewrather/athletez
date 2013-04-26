@@ -116,6 +116,67 @@
 			}
 			return $this->mainModel->getRoster($args);
 		}
+
+		/**
+		 * action_get_search() Search for a team
+		 * via /api/team/search/{teams_id}
+		 *
+		 */
+		public function action_get_search()
+		{
+			$this->payloadDesc = "Search for a team";
+			$arguments = array();
+			// CHECK FOR PARAMETERS:
+			// sports_id
+			// Narrow team list based on sport
+
+			if((int)trim($this->request->query('sports_id')) > 0)
+			{
+				$arguments["sports_id"] = (int)trim($this->request->query('sports_id'));
+			}
+
+			// complevels_id
+			// Narrow user list to teams of a specific comp level
+
+			if((int)trim($this->request->query('complevels_id')) > 0)
+			{
+				$arguments["complevels_id"] = (int)trim($this->request->query('complevels_id'));
+			}
+
+			// orderby
+			// Default will be to order by votes.
+
+			if(trim($this->request->query('orderby')) != "")
+			{
+				$arguments["orderby"] = trim($this->request->query('orderby'));
+			}
+
+			// searchtext
+			// A string to search name of a team
+
+			if(trim($this->request->query('searchtext')) != "")
+			{
+				$arguments["searchtext"] = trim($this->request->query('searchtext'));
+			}
+
+			// zipcode
+			// This will search the location of the team's ORG
+
+			if((int)trim($this->request->query('zipcode')) > 0)
+			{
+				$arguments["zipcode"] = (int)trim($this->request->query('zipcode'));
+			}
+
+			// loc_name
+			// This will search the org's location's city, county and state.
+
+			if(trim($this->request->query('loc_name')) != "")
+			{
+				$arguments["loc_name"] = trim($this->request->query('loc_name'));
+			}
+
+
+		}
 		
 		############################################################################
 		###########################    POST METHODS    #############################
