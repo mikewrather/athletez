@@ -71,29 +71,27 @@
 		     // CHECK FOR PARAMETERS:
 			// name (REQUIRED)
 			// The name of the competition level profile
-				
+			$args = array();
 			if(trim($this->request->post('name')) != "")
 			{
 				$name = trim($this->request->post('name'));
 			}
 
-			else // THIS WAS A REQUIRED PARAMETER
+			$args['name'] = $name;
+
+			$complevelprofile = ORM::factory("Sportorg_Complevel_Profile");
+			$result = $complevelprofile->addComplevelprofile($args);
+
+			if(get_class($result) == get_class($this->mainModel))
 			{
-				// Create Array for Error Data
-				$error_array = array(
-					"error" => "Required Parameter Missing",
-					"param_name" => "name",
-					"param_desc" => "The name of the competition level profile"
-				);
-
-				// Set whether it is a fatal error
-				$is_fatal = true;
-
-				// Call method to throw an error
-				$this->addError($error_array,$is_fatal);
-
+				return $result;
 			}
-			
+			elseif(get_class($result) == 'ORM_Validation_Exception')
+			{
+				//parse error and add to error array
+				$this->processValidationError($result,$this->mainModel->error_message_path);
+				return false;
+			}
 		}
 		
 		/**
@@ -114,21 +112,26 @@
 				$name = trim($this->request->post('name'));
 			}
 
-			else // THIS WAS A REQUIRED PARAMETER
+			if(!$this->mainModel->id)
 			{
-				// Create Array for Error Data
-				$error_array = array(
-					"error" => "Required Parameter Missing",
-					"param_name" => "name",
-					"param_desc" => "The name of the Competition Level we are adding to this profile"
-				);
+				$this->modelNotSetError();
+				return false;
+			}
+			$args['complevel_profiles_id'] = $this->mainModel->id;
+			$args['name'] = $name;
 
-				// Set whether it is a fatal error
-				$is_fatal = true;
+			$complevel = ORM::factory("Sportorg_Complevel_Base");
+			$result = $complevel->addComplevel($args);
 
-				// Call method to throw an error
-				$this->addError($error_array,$is_fatal);
-
+			if(get_class($result) == get_class($this->mainModel))
+			{
+				return $result;
+			}
+			elseif(get_class($result) == 'ORM_Validation_Exception')
+			{
+				//parse error and add to error array
+				$this->processValidationError($result,$this->mainModel->error_message_path);
+				return false;
 			}
 			
 		}

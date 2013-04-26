@@ -9,8 +9,8 @@ class Model_Sportorg_Complevel_Profile extends ORM
 {
 	
 	protected $_table_name = 'complevel_profiles';
-	
 
+	public $error_message_path = 'models/sportorg/complevel';
 	
 	protected $_has_many = array(
 		'orgs' => array(
@@ -32,6 +32,22 @@ class Model_Sportorg_Complevel_Profile extends ORM
 				array('not_empty'),
 			),
 		);
+	}
+
+
+	function addComplevelprofile($args){
+		extract($args);
+		if (isset($name)){
+			$this->name = $name;
+		}
+		try {
+			$this->save();
+			return $this;
+		} catch(ORM_Validation_Exception $e){
+			return $e;
+		}
+		$this->save();
+		return $this;
 	}
 
 	public function getBasics()
