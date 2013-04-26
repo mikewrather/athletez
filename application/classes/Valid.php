@@ -517,6 +517,18 @@
 			return false;
 		}
 
+		public static function gamesteams_combine_primary_key_exist($teams_id, $games_id){
+			$exists_obj = DB::select('*')
+				->from("games_teams_link")
+				->where('teams_id', '=', $teams_id)
+				->and_where('games_id', '=', $games_id)->execute();
+			$count = count($exists_obj->as_array());
+			if ($count == 0)
+				return true;
+			else
+				return false;
+		}
+
 		public static function unique_username(){
 			//TODO, add by jeffrey
 			return true;

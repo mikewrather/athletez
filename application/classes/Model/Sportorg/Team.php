@@ -182,17 +182,18 @@ class Model_Sportorg_Team extends ORM
 
 			}else{
 
-				if (!$games_teams_link->check_combine_primary_key_exist($teams_id, $games_id)){
-					unset($games_teams_link);
-					$games_teams_link = ORM::factory("Sportorg_Games_Teamslink");
-					$games_teams_link->teams_id = $teams_id;
-					$games_teams_link->games_id = $games_id;
-					$games_teams_link->is_home_team = $is_home_team;
-					$games_teams_link->tournaments_id = $tournaments_id;
+				$external_validate = Validation::factory($args);
+				$external_validate->rule('teams_id', 'gamesteams_combine_primary_key_exist', array($teams_id, $games_id));
+
+				unset($games_teams_link);
+				$games_teams_link = ORM::factory("Sportorg_Games_Teamslink");
+				$games_teams_link->teams_id = $teams_id;
+				$games_teams_link->games_id = $games_id;
+				$games_teams_link->is_home_team = $is_home_team;
+				$games_teams_link->tournaments_id = $tournaments_id;
+
+				if ($games_teams_link->check($external_validate)){
 					$games_teams_link->save();
-				}else{
-					//Nothing to do
-					echo "Duplicato now";
 				}
 			}
 			return $this;
@@ -352,46 +353,53 @@ class Model_Sportorg_Team extends ORM
 	public function updateGamelink($args = array() )
 	{
 		extract($args);
-		$game_link_obj = ORM::factory('Sportorg_Games_Teamslink')->where('teams_id','=', $teams_id)->find();
+		$new_games_teams_link = ORM::factory('Sportorg_Games_Teamslink');
+		try {
+		$game_link_obj = ORM::factory('Sportorg_Games_Teamslink')
+			->where('teams_id','=', $teams_id)
+			->where('games_id','=', $games_id)
+			->find()->as_array();
 
-		//print_r($game_link_obj);
-		// points_scored
-		// Change the number of points scored for this team in this game
 		if(isset($points_scored))
 		{
-			$game_link_obj->points_scored = $points_scored;
+			$game_link_obj['points_scored'] = $points_scored;
 		}
-		 
-		// points_against 
+
+		// points_against
 		// Change the number of points scored against this team / game
 		if(isset($points_against))
 		{
-			$game_link_obj->points_against = $points_against;
+			$game_link_obj['points_against'] = $points_against;
 		}
-		
-		// isWinner 
+
+		// isWinner
 		// Update whether this team won this game
 		if(isset($isWinner))
 		{
-			$game_link_obj->isWinner = $isWinner;
+			$game_link_obj['isWinner'] = $isWinner;
 		}
 
-		$game_link_obj->teams_id = $teams_id;
-
-		// is_home_team 
 		// Update whether this is the home team for this game
 		if(isset($is_home_team))
 		{
-			$game_link_obj->is_home_team = $is_home_team;
+			$game_link_obj['is_home_team'] = $is_home_team;
 		}
-		
-		try {
-			$game_link_obj->update();
-			return $game_link_obj;
+
+		$update = DB::update("games_teams_link")
+			->set($game_link_obj)
+			->where('teams_id','=', $teams_id)
+			->where('games_id','=', $games_id);
+
+		$update->execute();
+
+		$new_games_teams_link->where('games_id', '=', $games_id);
+		$new_games_teams_link->and_where('teams_id', '=', $teams_id);
+
+		return $new_games_teams_link;
+
 		} catch(ORM_Validation_Exception $e){
 			return $e;
 		}
-		return $game_link_obj;
 	}
 	
 	public function updateTeam($args = array())
