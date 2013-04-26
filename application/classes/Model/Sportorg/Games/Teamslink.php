@@ -54,16 +54,5 @@ class Model_Sportorg_Games_Teamslink extends ORM
 		);
 	}
 
-	public function check_combine_primary_key_exist($teams_id, $games_id){
-		$exists_obj = DB::select('*')
-			->from($this->_table_name)
-			->where('teams_id', '=', $teams_id)
-			->and_where('games_id', '=', $games_id)->execute();
 
-        $count = count($exists_obj);
-        if ($count == 0)
-			return false;
-		else
-			return true;
-	}
 }

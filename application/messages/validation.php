@@ -31,4 +31,5 @@
 		'divisions_id_exist' => $e->get('divisions_id_exist'),
 		'video_services_id_exist' => $e->get('video_services_id_exist'),
 		'media_id_exist' => $e->get('media_id_exist'),
+		'gamesteams_combine_primary_key_exist' => $e->get('gamesteams_combine_primary_key_exist'),
 	);

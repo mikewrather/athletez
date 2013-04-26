@@ -456,12 +456,28 @@
 				//convert is_home_team to a boolean
 				$args['is_home_team'] = (bool)$this->put('is_home_team');
 			}
+
+			if((int)trim($this->put('games_id')) > 0)
+			{
+				$args["games_id"] = (int)trim($this->put('games_id'));
+			}
+
 			if(!$this->mainModel->id)
 			{
 				$this->modelNotSetError();
 				return false;
 			}
+
 			$args['teams_id'] = $this->mainModel->id;
+
+			if (Valid::gamesteams_combine_primary_key_exist($args['teams_id'], $args['games_id'])){
+				$error_array = array(
+					"error" => "Game doesn't exist in the team",
+					"desc" => "Game doesn't exist in the team"
+				);
+				$this->modelNotSetError($error_array);
+				return false;
+			}
 
 			$result = $this->mainModel->updateGamelink($args);
 			//Check for success / error
