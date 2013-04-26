@@ -25,7 +25,6 @@ class Controller_Api_Base extends AuthController
 
 	protected $fatalErrorThrown = false;
 
-
 	/**
 	 * @var $starttime is used to calculate the total execution time for the controller script
 	 */
@@ -351,24 +350,28 @@ class Controller_Api_Base extends AuthController
 		switch ($this->request->method())
 		{
 			case 'POST':
+				$container = $this->request;
 				$verb = 'post';
 				break;
 			case 'GET':
+				$container = $this->request;
 				$verb = 'query';
 				break;
 			case 'PUT':
+				$container = $this;
 				$verb = 'put';
 				break;
 			default:
 				break;
 		}
+
 		if(!isset($verb)) return false;
 
-		$saveReq = $this->request->{$verb}('saveRequest')=='on' ? 1 : 0;
+		$saveReq = $container->{$verb}('saveRequest')=='on' ? 1 : 0;
 		if(!$saveReq) return false;
 
-		$saveTitle = $this->request->{$verb}('saveTitle');
-		$apiaccess_id = $this->request->{$verb}('apiaccess_id');
+		$saveTitle = $container->{$verb}('saveTitle');
+		$apiaccess_id = $container->{$verb}('apiaccess_id');
 		$saveBody = str_replace(array('saveRequest','saveTitle','apiaccess_id'),'xxx',$this->request->body());
 
 		$test = ORM::factory('Codegen_Apitest');
