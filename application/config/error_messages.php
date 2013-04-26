@@ -39,4 +39,5 @@ return array(
 	"video_services_id_exist" => "Video services id doesn't exist",
 	"media_id_exist" => "Media id doesn't exist",
 	"gamesteams_combine_primary_key_exist" => "Team already have the game",
+	"complevel_name_exist" => "Complevel name already exist",
 );

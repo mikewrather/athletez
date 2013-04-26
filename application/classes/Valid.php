@@ -80,6 +80,17 @@
 			return true;
 		}
 
+		public static function complevel_name_exist($name, $complevel_profiles_id)
+		{
+			$exists_obj = ORM::factory('Sportorg_Complevel_Base')
+				->where('name', '=', $name)
+				->and_where('complevel_profiles_id', '=', $complevel_profiles_id)->find();
+			if (!$exists_obj->loaded())
+				return true;
+			else
+				return false;
+		}
+
 		public static function fitness_datavalue_exist($fitness_data_id, $users_id){
 
 			$games_match_model = ORM::factory("User_Fitness_Dataval");

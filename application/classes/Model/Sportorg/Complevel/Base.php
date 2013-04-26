@@ -140,32 +140,17 @@ class Model_Sportorg_Complevel_Base extends ORM
 			$this->max_age = $max_age;
 		}
 
-        try {         
-            $this->save();
+        try {
+			$external_validate = Validation::factory(array('name' => $name));
+
+			$external_validate->rule('name', 'complevel_name_exist', array($name, $complevel_profiles_id));
+			if ($this->check($external_validate)){
+				$this->save();
+			}
             return $this;
         } catch(ORM_Validation_Exception $e){
             return $e;
         } 
-	}
-	
-	//Custom Validation
-	public static function check_complevel_exist($args = array())
-	{
-        extract($args);
-        if(isset($name) && isset($complevel_profiles_id))
-        {            
-            $exists_obj = ORM::factory('Sportorg_Complevel_Base')
-                            ->where('name', '=', $name)
-                            ->and_where('complevel_profiles_id', '=', $complevel_profiles_id)->find();
-            
-             if (!$exists_obj->loaded())
-                return true;
-            else
-                return false;  
-        }else
-        {
-            return true;
-        }    
 	}
 
 	public function getTeams($args = array()){

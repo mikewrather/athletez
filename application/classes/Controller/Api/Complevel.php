@@ -196,9 +196,7 @@
 				$args['max_age'] = (int)trim($this->request->post('max_age'));
 			}
 
-			
-//            if($this->mainModel->check_complevel_exist($args))
-//            {
+
                 $result = $this->mainModel->addComplevel($args);    
                 //Check for success / error
                 if(get_class($result) == get_class($this->mainModel))
@@ -212,20 +210,6 @@
                     return false;
 
                 }    
-//            } else
-//            {
-//                $error_array = array(
-//                    "error" => "This complevel already exists",
-//                    "param_name" => "name",
-//                    "param_desc" => "Name of the complevel to create"
-//                );
-//
-//                // Set whether it is a fatal error
-//                $is_fatal = true;
-//
-//                // Call method to throw an error
-//                $this->addError($error_array,$is_fatal);
-//            }
 		}
 		
 		############################################################################
