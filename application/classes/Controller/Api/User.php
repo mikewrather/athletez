@@ -887,7 +887,7 @@
 				//Process user's info,set it to session
 				Auth::instance()->login($email, $password);
 				//Here to send mail
-				if (Email::send_mail('ws315c@gmail.com', 'register success', 'test content')){
+				if (Email::send_mail($email, 'register success', 'test content')){
 					//TODO, add by jeffrey, give message to user.
 				}else{
 					if(!$this->mainModel->id)
