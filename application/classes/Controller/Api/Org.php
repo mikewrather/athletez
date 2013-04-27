@@ -43,7 +43,15 @@
 				$this->modelNotSetError();
 				return false;
 			}
-			
+
+//			if(!$this->user->can('Orgcontent', array('read'))){
+//				$error_array = array(
+//					"error" => "Sorry, You don't have permission to read",
+//					"desc" => "In order to read this action, please contact your adminstrator"
+//				);
+//				$this->modelNotSetError($error_array);
+//				return false;
+//			}
 			return $this->mainModel;
 		
 		}
