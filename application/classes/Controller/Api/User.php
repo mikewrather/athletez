@@ -739,33 +739,45 @@
 			{
 				$positions_id = (int)trim($this->request->post('positions_id'));
 			}
-			
-			// get users_teams_link_id
-			$teams_link_obj = ORM::factory('User_Teamslink')->where('teams_id','=',$teams_id)->and_where('users_id', '=', $this->user->id );
-			$teams_link  = $teams_link_obj->find(1);
-			$tl_result = $teams_link->getBasics();
-			$users_teams_link_id = $tl_result['id'];
-			
-			// create new utl_position_link object
-			$utl_position_link_obj = ORM::factory('User_Teamslink_Positionlink');
-			$utl_position_link_obj->users_teams_link_id = $users_teams_link_id;
-			$utl_position_link_obj->positions_id = $positions_id;
-			try{
-				$utl_position_link_obj->save();				 
-			}catch(ErrorException $e)
+
+			if(!$this->mainModel->id)
 			{
-				// Create Array for Error Data
+				$this->modelNotSetError();
+				return false;
+			}
+
+			$teams_link = ORM::factory("User_Teamslink");
+			// get users_teams_link_id
+			$users_teams_id = "";
+			if (!$teams_link->check_user_teams_link_exist($this->user->id, $teams_id, $users_teams_id)){
 				$error_array = array(
-					"error" => "Unable to save User",
-					"desc" => $e->getMessage()
+					"error" => "Users teams ID doesn't exist",
+					"desc" => "Users teams ID doesn't exist, you must set link between users and teams first"
 				);
+				$this->modelNotSetError($error_array);
+				return false;
+			}
 
-				// Set whether it is a fatal error
-				$is_fatal = true;
+			// create new utl_position_link object
 
-				// Call method to throw an error
-				$this->addError($error_array,$is_fatal);
-			}	
+			$utl_position_link_obj = ORM::factory('User_Teamslink_Positionlink');
+
+			$args['users_teams_link_id'] = $users_teams_id;
+			$args['positions_id'] = $positions_id;
+
+			$result = $utl_position_link_obj->savePositionLink($args);
+
+			if(get_class($result) == get_class($this->mainModel))
+			{
+				return $result;
+			}
+			elseif(get_class($result) == 'ORM_Validation_Exception')
+			{
+				//parse error and add to error array
+				$this->processValidationError($result,$this->mainModel->error_message_path);
+				return false;
+
+			}
 		}
 
 		/**

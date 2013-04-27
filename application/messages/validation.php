@@ -34,4 +34,6 @@
 		'gamesteams_combine_primary_key_exist' => $e->get('gamesteams_combine_primary_key_exist'),
 		'complevel_name_exist' => $e->get('complevel_name_exist'),
 		'valid_age_frame' => $e->get('valid_age_frame'),
+		'utl_position_link_exist' => $e->get('utl_position_link_exist'),
+		'positions_id_exist' => $e->get('positions_id_exist'),
 	);

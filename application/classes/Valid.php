@@ -9,6 +9,17 @@
 
 	class Valid extends Kohana_Valid{
 
+		public static function utl_position_link_exist($users_teams_link_id, $positions_id){
+			$utl_positoin_link = ORM::factory("User_Teamslink_Positionlink");
+			$utl_positoin_link->where("users_teams_link_id", '=', $users_teams_link_id);
+			$utl_positoin_link->where("positions_id", '=', $positions_id)->find();
+			if ($utl_positoin_link->loaded()){
+				return false;
+			}else{
+				return true;
+			}
+		}
+
 		public static function valid_age_frame($value){
 			$current_year = intval(date('Y'));
 			$dob_year = intval(date('Y', strtotime($value)));
@@ -37,6 +48,17 @@
 
 		public static function location_type_exist($value){
 			if (in_array($value, array('High School', 'Park', 'Other'))){
+				return true;
+			}else{
+				return false;
+			}
+		}
+
+		public function positions_id_exist($value){
+			$positions = ORM::factory("Sportorg_Position");
+			$positions->where('id', '=', $value)->find();
+
+			if ($positions->loaded()){
 				return true;
 			}else{
 				return false;

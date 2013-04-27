@@ -41,4 +41,6 @@ return array(
 	"gamesteams_combine_primary_key_exist" => "Team already have the game",
 	"complevel_name_exist" => "Complevel name already exist",
 	"valid_age_frame" => "User's age must great than 13",
+	"utl_position_link_exist" => "user's position already exist",
+	"positions_id_exist" => "Positions doesn't exist",
 );
