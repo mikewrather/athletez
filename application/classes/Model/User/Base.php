@@ -286,6 +286,12 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 		{
 			$this->password = $password;
 		}
+
+		if(isset($dob))
+		{
+			$this->dob = $dob;
+		}
+
 //		print_r($args);
 		try {
 			$extra_validate = Validation::factory($args);
@@ -338,6 +344,7 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 				array('not_empty'),
 				array('alpha'),
 			),
+
 
 			// password (varchar)
 
@@ -571,8 +578,8 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 			$teams_obj->complevels_id = $complevels_id;
 		}
 
-		if(isset($seasons_id) && $seasons_id !=""){
-			$teams_obj->seasons_id = $seasons_id;
+		if(isset($seasons_arr)){
+			//$teams_obj->seasons_id = $seasons_id;
 		}
 
 		if(isset($year) && $year !=""){
@@ -596,70 +603,74 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 		}
 		else
 		{
-			$args = array('orgs_id' => $orgs_id, 'sports_id' => $sports_id);
-			//Add new logic here.new teams validation
-			$args1 = array('complevels_id' => $complevels_id, 'seasons_id' => $seasons_id);
+			foreach($seasons_arr as $seasons_id){
 
-			$combine_validate = Validation::factory(array_merge($args, $args1));
-			$combine_validate->rule('orgs_id', 'orgs_id_exist')
-				->rule('sports_id', 'sports_id_exist')
-				->rule('complevels_id', 'complevels_id_exist')
-				->rule('seasons_id', 'seasons_id_exist');
-			try
-			{
-				$org_sport_link->check($combine_validate);
-			}
-			catch(ORM_Validation_Exception $e)
-			{
-				return $e;
-			}
 
-			//Find Org / Sport link
-			$org_sport_link = ORM::factory('Sportorg_Orgsportlink')
-				->where('orgs_id','=',$orgs_id)
-				->and_where('sports_id','=',$sports_id)
-				->find();
+				$args = array('orgs_id' => $orgs_id, 'sports_id' => $sports_id);
+				//Add new logic here.new teams validation
+				$args1 = array('complevels_id' => $complevels_id, 'seasons_id' => $seasons_id);
 
-			if(!$org_sport_link->loaded()) // This means the organization does not have this sport
-			{
-
-				unset($org_sport_link);
-				//Add the Association
-				$org_sport_link = ORM::factory('Sportorg_Orgsportlink');
-				$org_sport_link->orgs_id = $orgs_id;
-				$org_sport_link->sports_id = $sports_id;
-				$org_sport_link->save();
-			}
-
-			$new_team = ORM::factory('Sportorg_Team')
-				->where('org_sport_link_id','=',$org_sport_link->id)
-				->and_where('seasons_id','=',$seasons_id)
-				->and_where('complevels_id','=',$complevels_id)
-				->and_where('year','=',$year)
-				->find();
-
-			// CHECK IF TEAM EXISTS AND CREATE IT IF IT DOESN'T
-			if(!$new_team->loaded())
-			{
-				unset($new_team);
-				$new_team = ORM::factory('Sportorg_Team');
-				$new_team->org_sport_link_id = $org_sport_link->id;
-				$new_team->complevels_id = $complevels_id;
-				$new_team->seasons_id = $seasons_id;
-				$new_team->year = $year;
-				$new_team->save();
-			}
-
-			if(!$this->has('teams',$new_team)) // CHECK IF USER ALREADY HAS TEAM ASSOCIATION
-			{
+				$combine_validate = Validation::factory(array_merge($args, $args1));
+				$combine_validate->rule('orgs_id', 'orgs_id_exist')
+					->rule('sports_id', 'sports_id_exist')
+					->rule('complevels_id', 'complevels_id_exist')
+					->rule('seasons_id', 'seasons_id_exist');
 				try
 				{
-					$this->add('teams',$new_team);
-					$resultArrary["success"] = 1;
+					$org_sport_link->check($combine_validate);
 				}
-				catch(ErrorException $e)
+				catch(ORM_Validation_Exception $e)
 				{
-					$resultArrary["errorMsg"] = $e->getMessage();
+					return $e;
+				}
+
+				//Find Org / Sport link
+				$org_sport_link = ORM::factory('Sportorg_Orgsportlink')
+					->where('orgs_id','=',$orgs_id)
+					->and_where('sports_id','=',$sports_id)
+					->find();
+
+				if(!$org_sport_link->loaded()) // This means the organization does not have this sport
+				{
+
+					unset($org_sport_link);
+					//Add the Association
+					$org_sport_link = ORM::factory('Sportorg_Orgsportlink');
+					$org_sport_link->orgs_id = $orgs_id;
+					$org_sport_link->sports_id = $sports_id;
+					$org_sport_link->save();
+				}
+
+				$new_team = ORM::factory('Sportorg_Team')
+					->where('org_sport_link_id','=',$org_sport_link->id)
+					->and_where('seasons_id','=',$seasons_id)
+					->and_where('complevels_id','=',$complevels_id)
+					->and_where('year','=',$year)
+					->find();
+
+				// CHECK IF TEAM EXISTS AND CREATE IT IF IT DOESN'T
+				if(!$new_team->loaded())
+				{
+					unset($new_team);
+					$new_team = ORM::factory('Sportorg_Team');
+					$new_team->org_sport_link_id = $org_sport_link->id;
+					$new_team->complevels_id = $complevels_id;
+					$new_team->seasons_id = $seasons_id;
+					$new_team->year = $year;
+					$new_team->save();
+				}
+
+				if(!$this->has('teams',$new_team)) // CHECK IF USER ALREADY HAS TEAM ASSOCIATION
+				{
+					try
+					{
+						$this->add('teams',$new_team);
+						$resultArrary["success"] = 1;
+					}
+					catch(ErrorException $e)
+					{
+						$resultArrary["errorMsg"] = $e->getMessage();
+					}
 				}
 			}
 		}
@@ -756,6 +767,78 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 
 	}
 	 */
+
+	public function addRegister($args){
+		extract($args);
+		if(isset($email))
+		{
+			$this->email = $email;
+			$this->username = $email;
+		}
+		// firstname
+		// Updated First Name
+		if(isset($firstname))
+		{
+			$this->first_name  = $firstname;
+		}
+
+		// lastname
+		// Updated Last Name
+		if(isset($lastname))
+		{
+			$this->last_name  = $lastname;
+		}
+
+		// password
+		// New Password
+		if(isset($lastname))
+		{
+			$this->last_name  = $lastname;
+		}
+		// cities_id
+		// User's Home City
+		if(isset($gender))
+		{
+			$this->gender = $gender ;
+		}
+
+		if(isset($password))
+		{
+			$this->password = $password;
+		}
+
+		if(isset($dob))
+		{
+			$this->dob = $dob;
+		}
+//		print_r($args);
+		try {
+			$extra_validate = Validation::factory($args);
+
+			$extra_validate->rule('password','not_empty');
+			$extra_validate->rule('password','min_length', array(':value', 4));
+			$extra_validate->rule('password','max_length', array(':value', 8));
+
+			$extra_validate->rule('re_password','not_empty');
+			$extra_validate->rule('re_password','min_length', array(':value', 4));
+			$extra_validate->rule('re_password','max_length', array(':value', 8));
+			$extra_validate->rule('re_password','matches', array(':validation', ':field', 'password'));
+
+			$extra_validate->rule('gender', 'in_array', array(':value', array(0, 1)));
+			$extra_validate->rule('dob','not_empty');
+			$extra_validate->rule('dob','date');
+			$extra_validate->rule('dob','valid_age_frame', array($dob));
+
+			if ($this->check($extra_validate)){
+				$this->password = Auth::instance()->hash($password);
+				$this->create();
+			}
+
+			return $this;
+		} catch(ORM_Validation_Exception $e){
+			return $e;
+		}
+	}
 
 	public function getCommentsOn()
 	{

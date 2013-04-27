@@ -40,4 +40,5 @@ return array(
 	"media_id_exist" => "Media id doesn't exist",
 	"gamesteams_combine_primary_key_exist" => "Team already have the game",
 	"complevel_name_exist" => "Complevel name already exist",
+	"valid_age_frame" => "User's age must great than 13",
 );

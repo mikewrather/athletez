@@ -33,4 +33,5 @@
 		'media_id_exist' => $e->get('media_id_exist'),
 		'gamesteams_combine_primary_key_exist' => $e->get('gamesteams_combine_primary_key_exist'),
 		'complevel_name_exist' => $e->get('complevel_name_exist'),
+		'valid_age_frame' => $e->get('valid_age_frame'),
 	);

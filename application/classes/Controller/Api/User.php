@@ -428,7 +428,11 @@
 			// a) user is loaded
 			// b) EITHER user in main model matches user logged in
 			// c) OR user is an admin
-
+			if(!$this->mainModel->id)
+			{
+				$this->modelNotSetError();
+				return false;
+			}
 
 			if(!$this->user || !($this->user->id == $this->mainModel->id || $this->user->has('roles','2')))
 			{
@@ -474,9 +478,17 @@
 
 			// seasons_id
 			// Season ID
-			if((int)trim($this->request->post('seasons_id')) >= 0)
+			$seasons_arr = array();
+			if(trim($this->request->post('seasons_arr')) != "")
 			{
-				$seasons_id = (int)trim($this->request->post('seasons_id'));
+				$seasons_arr = explode(',' , trim($this->request->post('seasons_arr')));
+			}else{
+				$error_array = array(
+					"error" => "Seasons id invalid",
+					"desc" => "Multiple seasons id should be like 1,2"
+				);
+				$this->modelNotSetError($error_array);
+				return false;
 			}
 
 			// year
@@ -496,7 +508,7 @@
 				'orgs_id' => $orgs_id,
 				'sports_id' => $sports_id,
 				'complevels_id' => $complevels_id,
-				'seasons_id' => $seasons_id,
+				'seasons_arr' => $seasons_arr,
 				'year' => $year,
 			);
 
@@ -754,6 +766,149 @@
 				// Call method to throw an error
 				$this->addError($error_array,$is_fatal);
 			}	
+		}
+
+		/**
+		 * action_post_register() This is different than add in that it will also log the person in and send verification email.
+		 * via /api/user/register/{users_id}
+		 *
+		 */
+		public function action_post_register()
+		{
+			$this->payloadDesc = "This is different than add in that it will also log the person in and send verification email.";
+			$arguments = array();
+			// CHECK FOR PARAMETERS:
+			// email (REQUIRED)
+			// Email Address of New Registrant
+
+			if(trim($this->request->post('email')) != "")
+			{
+				$arguments["email"] = trim($this->request->post('email'));
+			}
+
+			else // THIS WAS A REQUIRED PARAMETER
+			{
+				// Create Array for Error Data
+				$error_array = array(
+					"error" => "Required Parameter Missing",
+					"param_name" => "email",
+					"param_desc" => "Email Address of New Registrant"
+				);
+
+				// Set whether it is a fatal error
+				$is_fatal = true;
+
+				// Call method to throw an error
+				$this->addError($error_array,$is_fatal);
+				return false;
+
+			}
+
+			// firstname
+			// First Name of Registrant
+
+			if(trim($this->request->post('firstname')) != "")
+			{
+				$arguments["firstname"] = trim($this->request->post('firstname'));
+			}
+
+			// lastname
+			// Last Name of Registrant
+
+			if(trim($this->request->post('lastname')) != "")
+			{
+				$arguments["lastname"] = trim($this->request->post('lastname'));
+			}
+
+			// password
+			// Registrant Password
+
+			if(trim($this->request->post('password')) != "")
+			{
+				$arguments["password"] = trim($this->request->post('password'));
+			}
+
+			// accept_terms (REQUIRED)
+			// This isn't just required, but it has to be true in order to create an account.
+
+			if($this->request->post('accept_terms') != "")
+			{
+				//convert accept_terms to a boolean
+				$arguments["accept_terms"] = (bool)$this->request->post('accept_terms');
+			}
+
+			else // THIS WAS A REQUIRED PARAMETER
+			{
+				// Create Array for Error Data
+				$error_array = array(
+					"error" => "Required Parameter Missing",
+					"param_name" => "accept_terms",
+					"param_desc" => "This isn't just required, but it has to be true in order to create an account."
+				);
+
+				// Set whether it is a fatal error
+				$is_fatal = true;
+
+				// Call method to throw an error
+				$this->addError($error_array,$is_fatal);
+				return false;
+
+			}
+
+			// re_password
+			// Re-Enter Registrant Password
+
+			if(trim($this->request->post('re_password')) != "")
+			{
+				$arguments["re_password"] = trim($this->request->post('re_password'));
+			}
+
+			// dob (REQUIRED)
+			// Date of Birth for New Registrant
+
+			if(trim($this->request->post('dob')) != "")
+			{
+				$arguments["dob"] = trim($this->request->post('dob'));
+			}
+			// gender
+			// Gender
+
+			if($this->request->post('gender') != "")
+			{
+				//convert gender to a boolean
+				$arguments["gender"] = (bool)$this->request->post('gender');
+			}
+
+			$result = $this->mainModel->addRegister($arguments);
+
+			//Check for success / error
+			if(get_class($result) == get_class($this->mainModel))
+			{
+				//Process user's info,set it to session
+				Auth::instance()->login($email, $password);
+				//Here to send mail
+				if (Email::send_mail('ws315c@gmail.com', 'register success', 'test content')){
+					//TODO, add by jeffrey, give message to user.
+				}else{
+					if(!$this->mainModel->id)
+					{
+						$error_array = array(
+							"error" => "Something wrong to send register notification mail",
+							"desc" => "Something wrong to send register notification mail"
+						);
+						$this->modelNotSetError($error_array);
+						return false;
+					}
+				}
+				return $result;
+			}
+			elseif(get_class($result) == 'ORM_Validation_Exception')
+			{
+				//parse error and add to error array
+				$this->processValidationError($result,$this->mainModel->error_message_path);
+				return false;
+
+			}
 		}
 
 		/**

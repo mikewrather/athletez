@@ -8,6 +8,17 @@
  */
 
 	class Valid extends Kohana_Valid{
+
+		public static function valid_age_frame($value){
+			$current_year = intval(date('Y'));
+			$dob_year = intval(date('Y', strtotime($value)));
+			$config = Kohana::$config->load('sysconfig');
+			if ($current_year - $dob_year >= $config->get('regist_min_age')){
+				return true;
+			}
+			return false;
+		}
+
 		public static function not_equals($value, $null_value)
 		{
 			if ($value == ""){

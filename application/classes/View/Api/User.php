@@ -466,6 +466,20 @@
 
 			return $retArr;
 		}
+
+		/**
+		 * post_register() This is different than add in that it will also log the person in and send verification email.
+		 *
+		 * @retun array
+		 */
+		public function post_register()
+		{
+			$retArr = array();
+			// Scaffolding Code For Single:
+			$retArr = $this->obj->getBasics();
+
+			return $retArr;
+		}
 		
 		/**
 		 * get_fbreg() Get facebook user information
