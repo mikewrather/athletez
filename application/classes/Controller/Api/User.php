@@ -593,47 +593,49 @@
 			$this->payloadDesc = "Add a new role for this User";
 			if(!$this->user)
 			{
-				// Create Array for Error Data
 				$error_array = array(
-					"error" => "This action requires authentication"
+					"error" => "This action need authentication",
+					"desc" => "This action need authentication"
 				);
-
-				// Set whether it is a fatal error
-				$is_fatal = true;
-
-				// Call method to throw an error
-				$this->addError($error_array,$is_fatal);
+				$this->modelNotSetError($error_array);
+				return false;
 			}
-		     // CHECK FOR PARAMETERS:
-			// roles_id 
+
+			if(!$this->mainModel->id)
+			{
+				$this->modelNotSetError();
+				return false;
+			}
+
+			$arguments = array();
+			// CHECK FOR PARAMETERS:
+			// roles_id
 			// The ID of the role to associate the user with
-				
+
 			if((int)trim($this->request->post('roles_id')) > 0)
 			{
-				$roles_id = (int)trim($this->request->post('roles_id'));
+				$arguments["role_id"] = (int)trim($this->request->post('roles_id'));
 			}
+
+
 			
-			$new_roles_users_obj = ORM::factory("Roles_Users");
-			$new_roles_users_obj->role_id = $roles_id;
-			$new_roles_users_obj->users_id = $this->user->id;		
-			
-			try{
-				$new_roles_users_obj->save();
-				 
-			}catch(ErrorException $e)
+			$new_roles_users_obj = ORM::factory("RolesUsers");
+
+			$arguments['user_id'] = $this->mainModel->id;
+
+			$result = $new_roles_users_obj->addRole($arguments);
+
+			if(get_class($result) == get_class($this->mainModel))
 			{
-				// Create Array for Error Data
-				$error_array = array(
-					"error" => "Unable to save User",
-					"desc" => $e->getMessage()
-				);
+				return $result;
+			}
+			elseif(get_class($result) == 'ORM_Validation_Exception')
+			{
+				//parse error and add to error array
+				$this->processValidationError($result,$this->mainModel->error_message_path);
+				return false;
 
-				// Set whether it is a fatal error
-				$is_fatal = true;
-
-				// Call method to throw an error
-				$this->addError($error_array,$is_fatal);
-			}	
+			}
 		}
 		
 		/**

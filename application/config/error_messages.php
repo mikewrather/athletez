@@ -43,4 +43,5 @@ return array(
 	"valid_age_frame" => "User's age must great than 13",
 	"utl_position_link_exist" => "user's position already exist",
 	"positions_id_exist" => "Positions doesn't exist",
+	"roles_users_exist" => "Roles users link already exist",
 );

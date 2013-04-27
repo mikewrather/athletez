@@ -20,6 +20,18 @@
 			}
 		}
 
+		public static function roles_users_exist($user_id, $role_id){
+			$roles_users = ORM::factory("RolesUsers");
+			$roles_users->where('user_id', '=', $user_id)
+				->and_where('role_id', '=', $role_id)->find();
+
+			if ($roles_users->user_id != ""){
+				return false;
+			}else{
+				return true;
+			}
+		}
+
 		public static function valid_age_frame($value){
 			$current_year = intval(date('Y'));
 			$dob_year = intval(date('Y', strtotime($value)));

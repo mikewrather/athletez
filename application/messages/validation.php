@@ -36,4 +36,5 @@
 		'valid_age_frame' => $e->get('valid_age_frame'),
 		'utl_position_link_exist' => $e->get('utl_position_link_exist'),
 		'positions_id_exist' => $e->get('positions_id_exist'),
+		'roles_users_exist' => $e->get('roles_users_exist'),
 	);
