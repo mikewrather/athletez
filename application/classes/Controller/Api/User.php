@@ -273,8 +273,22 @@
 				$arguments["searchtext"] = trim($this->request->query('searchtext'));
 			}
 
+			$user_obj = ORM::factory('User_Base');
 
-		}
+			$result = $user_obj->getSearch($arguments);
+
+			if(get_class($result) == get_class($this->mainModel))
+			{
+				return $result;
+			}
+			elseif(get_class($result) == 'ORM_Validation_Exception')
+			{
+				//parse error and add to error array
+				$this->processValidationError($result,$this->mainModel->error_message_path);
+				return false;
+
+			}
+        }
 		
 		############################################################################
 		###########################    POST METHODS    #############################

@@ -534,6 +534,44 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 
 	}
 
+	public function getSearch($args = array()){
+		extract($args);
+
+		$this->join('users_teams_link')->on('users_teams_link.users_id', '=', 'user_base.id');
+		$this->join('teams')->on('users_teams_link.teams_id', '=', 'teams.id');
+
+
+		if (isset($sports_id)){
+			$this->join('org_sport_link')->on('org_sport_link.id', '=', 'teams.org_sport_link_id');
+			$this->where('org_sport_link.sports_id', '=', $sports_id);
+		}
+
+		if (isset($complevels_id)){
+			$this->where('teams.complevels_id', '=', $complevels_id);
+		}
+
+		if (isset($positions_id)){
+			$this->join('utl_position_link')->on('utl_position_link.users_teams_link_id', '=', 'users_teams_link.id');
+			$this->where('utl_position_link.positions_id', '=', $positions_id);
+		}
+
+		if (isset($gradyear)){
+			$this->where('user_base.grad_year', '=', $gradyear);
+		}
+
+		if (isset($orderby)){
+			$this->order_by('user_base.'.$orderby, 'desc');
+		}else{
+			$this->order_by('user_base.num_votes', 'desc');
+		}
+
+		if (isset($searchtext)){
+			$this->where('user_base.first_name', 'like', "%$searchtext%");
+		}
+
+		return $this;
+	}
+
 	public function setSingleSport($sports_id)
 	{
 		$this->singlesport = $sports_id;
