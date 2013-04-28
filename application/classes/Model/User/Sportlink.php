@@ -47,4 +47,27 @@ class Model_User_Sportlink extends ORM
 		);
 	}
 
+	function addSport($args = array()){
+		extract($args);
+		if(isset($sports_id)){
+			$this->sports_id = $sports_id;
+		}
+
+		if(isset($users_id)){
+			$this->users_id = $users_id;
+		}
+
+		try {
+
+			$external_validate = Validation::factory($args);
+			$external_validate->rule('users_id', 'users_sports_exist', array($users_id, $sports_id));
+			$external_validate->rule('sports_id', 'sports_id_exist');
+			if ($this->check($external_validate))
+				$this->save();
+			return $this;
+		} catch(ORM_Validation_Exception $e){
+			return $e;
+		}
+	}
+
 }

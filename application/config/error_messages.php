@@ -44,4 +44,5 @@ return array(
 	"utl_position_link_exist" => "user's position already exist",
 	"positions_id_exist" => "Positions doesn't exist",
 	"roles_users_exist" => "Roles users link already exist",
+	"users_sports_exist" => "Users sports link already exist",
 );

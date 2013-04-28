@@ -20,6 +20,18 @@
 			}
 		}
 
+		public static function users_sports_exist($users_id, $sports_id){
+			$user_sport_link = ORM::factory("User_Sportlink");
+			$user_sport_link->where('users_id', '=', $users_id)
+				->and_where('sports_id', '=', $sports_id)->find();
+
+			if ($user_sport_link->users_id != ""){
+				return false;
+			}else{
+				return true;
+			}
+		}
+
 		public static function roles_users_exist($user_id, $role_id){
 			$roles_users = ORM::factory("RolesUsers");
 			$roles_users->where('user_id', '=', $user_id)

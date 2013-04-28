@@ -563,38 +563,40 @@
 				$error_array = array(
 					"error" => "This action requires authentication"
 				);
-
 				// Set whether it is a fatal error
 				$is_fatal = true;
-
 				// Call method to throw an error
 				$this->addError($error_array,$is_fatal);
-			}	
+			}
+
+			if(!$this->mainModel->id)
+			{
+				$this->modelNotSetError();
+				return false;
+			}
+
+			$arguments = array();
+
 			if((int)trim($this->request->post('sports_id')) > 0)
 			{
-				$sports_id = (int)trim($this->request->post('sports_id'));
+				$arguments["sports_id"] = (int)trim($this->request->post('sports_id'));
 			}
+
+			$arguments['users_id'] = $this->mainModel->id;
 			$new_user_sport_link_obj = ORM::factory("User_Sportlink");
-			$new_user_sport_link_obj->sports_id = $sports_id;
-			$new_user_sport_link_obj->users_id = $this->user->id;		
-			
-			try{
-				$new_user_sport_link_obj->save();
-				 
-			}catch(ErrorException $e)
+			$result = $new_user_sport_link_obj->addSport($arguments);
+
+			//Check for success / error
+			if(get_class($result) == get_class($this->mainModel))
 			{
-				// Create Array for Error Data
-				$error_array = array(
-					"error" => "Unable to save User",
-					"desc" => $e->getMessage()
-				);
-
-				// Set whether it is a fatal error
-				$is_fatal = true;
-
-				// Call method to throw an error
-				$this->addError($error_array,$is_fatal);
-			}		
+				return $result;
+			}
+			elseif(get_class($result) == 'ORM_Validation_Exception')
+			{
+				//parse error and add to error array
+				$this->processValidationError($result,$this->mainModel->error_message_path);
+				return false;
+			}
 		}
 		
 		/**

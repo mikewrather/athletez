@@ -37,4 +37,5 @@
 		'utl_position_link_exist' => $e->get('utl_position_link_exist'),
 		'positions_id_exist' => $e->get('positions_id_exist'),
 		'roles_users_exist' => $e->get('roles_users_exist'),
+		'users_sports_exist' => $e->get('users_sports_exist'),
 	);
