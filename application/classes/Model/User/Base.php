@@ -537,6 +537,9 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 	public function getSearch($args = array()){
 		extract($args);
 
+		//$this->select();
+		//$this->select(array(concat('user_base.first_name',' ','user_base.last_name'), 'full_name'));
+
 		$this->join('users_teams_link')->on('users_teams_link.users_id', '=', 'user_base.id');
 		$this->join('teams')->on('users_teams_link.teams_id', '=', 'teams.id');
 
@@ -559,14 +562,17 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 			$this->where('user_base.grad_year', '=', $gradyear);
 		}
 
-		if (isset($orderby)){
-			$this->order_by('user_base.'.$orderby, 'desc');
+		$enttype_id = Model_Site_Enttype::getMyEntTypeID($this);
+		if (!isset($orderby)){
+			$this->join('votes')->on('votes.subject_id', '=', 'user_base.id');
+			$this->where('votes.subject_enttypes_id', '=', $enttype_id);
+			$this->order_by('num_votes', 'asc');
 		}else{
-			$this->order_by('user_base.num_votes', 'desc');
+			$this->order_by($orderby, 'asc');
 		}
 
 		if (isset($searchtext)){
-			$this->where('user_base.first_name', 'like', "%$searchtext%");
+			$this->where(array(Db::expr('CONCAT(user_base.first_name," ",user_base.last_name)'), 'full_name'), 'like ','%'.$searchtext.'%');
 		}
 
 		return $this;
