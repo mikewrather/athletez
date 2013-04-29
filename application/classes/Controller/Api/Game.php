@@ -180,7 +180,10 @@
 				$arguments["loc_search"] = trim($this->request->query('loc_search'));
 			}
 
+			$game = ORM::factory('Sportorg_Games_Base');
+			$result = $game->getSearch($arguments);
 
+			return $result;
 		}
 		
 		############################################################################

@@ -126,4 +126,39 @@ class Model_Sportorg_Games_Base extends ORM
 		$matches = $this->matches;
 		return $matches;
 	}
+
+	public function getSearch($args = array()){
+		extract($args);
+		$this->join('games_teams_link')->on('games_teams_link.games_id', '=', 'sportorg_games_base.id');
+		$this->join('teams')->on('games_teams_link.teams_id', '=', 'teams.id');
+
+
+		if (isset($sports_id)){
+			$this->join('org_sport_link')->on('org_sport_link.id', '=', 'teams.org_sport_link_id');
+			$this->where('org_sport_link.sports_id', '=', $sports_id);
+		}
+
+		if (isset($complevels_id)){
+			$this->where('teams.complevels_id', '=', $complevels_id);
+		}
+
+		$enttype_id = Model_Site_Enttype::getMyEntTypeID($this);
+		if (!isset($orderby)){
+			$this->join('votes')->on('votes.subject_id', '=', 'sportorg_games_base.idx');
+			$this->where('votes.subject_enttypes_id', '=', $enttype_id);
+			$this->order_by('num_votes', 'asc');
+		}else{
+			$this->order_by($orderby, 'asc');
+		}
+
+		if (isset($searchtext)){
+			$this->join('orgs')->on('orgs.id', '=', 'org_sport_link.orgs_id');
+			$this->where('orgs.name', 'like', "%".$searchtext."%");
+		}
+
+		//TODO, add by Jeffrey. Here need to confirm with Mike
+		// loc_search
+
+		return $this;
+	}
 }

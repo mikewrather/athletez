@@ -314,7 +314,7 @@ class Model_Sportorg_Team extends ORM
 		}
 
 		if (isset($searchtext)){
-			$this->where('orgs.name', '=', $searchtext);
+			$this->where('orgs.name', 'like', "%".$searchtext."%");
 		}
 
 		if (isset($zipcode)){
