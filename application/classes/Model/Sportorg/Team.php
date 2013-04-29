@@ -287,6 +287,46 @@ class Model_Sportorg_Team extends ORM
 		
 		return $games;
 	}
+
+	public function getSearch($args = array()){
+		extract($args);
+
+		//$this->join('users_teams_link')->on('users_teams_link.users_id', '=', 'users.id');
+		//$this->join('teams')->on('users_teams_link.teams_id', '=', 'teams.id');
+
+		$this->join('org_sport_link')->on('org_sport_link.id', '=', 'sportorg_team.org_sport_link_id');
+		$this->join('orgs')->on('orgs.id', '=', 'org_sport_link.orgs_id');
+		$this->join('locations')->on('locations.id', '=', 'orgs.locations_id');
+		if (isset($sports_id)){
+			$this->where('org_sport_link.sports_id', '=', $sports_id);
+		}
+
+		if (isset($complevels_id)){
+			$this->where('sportorg_team.complevels_id', '=', $complevels_id);
+		}
+		$enttype_id = Model_Site_Enttype::getMyEntTypeID($this);
+		if (!isset($orderby)){
+			$this->join('votes')->on('votes.subject_id', '=', 'sportorg_team.id');
+			$this->where('votes.subject_enttypes_id', '=', $enttype_id);
+			$this->order_by('num_votes', 'asc');
+		}else{
+			$this->order_by($orderby, 'asc');
+		}
+
+		if (isset($searchtext)){
+			$this->where('orgs.name', '=', $searchtext);
+		}
+
+		if (isset($zipcode)){
+			$this->where('locations.zip', '=', $zipcode);
+		}
+		//TODO, Add by Jeffrey,Need to complete the loc_name after ask Mike.
+		if (isset($loc_name)){
+			//$this->where('locations.zip', '=', $zipcode);
+		}
+
+		return $this;
+	}
 	
 	public function getRoster($args = array())
 	{

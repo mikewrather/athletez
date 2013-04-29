@@ -38,5 +38,4 @@ class Model_Site_Entdir extends ORM
 		$this->subject = Ent::eFact($this->subject_enttypes_id,$this->subject_id);
 		return $this->subject;
 	}
-
 }

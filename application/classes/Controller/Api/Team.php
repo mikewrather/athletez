@@ -175,7 +175,9 @@
 				$arguments["loc_name"] = trim($this->request->query('loc_name'));
 			}
 
+			$teams_model = ORM::factory("Sportorg_Team");
 
+			return $teams_model->getSearch($arguments);
 		}
 		
 		############################################################################
