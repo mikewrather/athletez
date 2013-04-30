@@ -38,4 +38,10 @@
 		'positions_id_exist' => $e->get('positions_id_exist'),
 		'roles_users_exist' => $e->get('roles_users_exist'),
 		'users_sports_exist' => $e->get('users_sports_exist'),
+		'users_teams_exist' => $e->get('users_teams_exist'),
+		'orgs_id_exist' => $e->get('orgs_id_exist'),
+		'complevels_id_exist' => $e->get('complevels_id_exist'),
+		'seasons_id_exist' => $e->get('seasons_id_exist'),
+		'sports_id_exist' => $e->get('sports_id_exist'),
+		'teams_id_exist' => $e->get('teams_id_exist'),
 	);

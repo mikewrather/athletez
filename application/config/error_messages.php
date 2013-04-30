@@ -45,4 +45,10 @@ return array(
 	"positions_id_exist" => "Positions doesn't exist",
 	"roles_users_exist" => "Roles users link already exist",
 	"users_sports_exist" => "Users sports link already exist",
+	"users_teams_exist" => "Users teams link already exist",
+	"orgs_id_exist" => "Orgs id doesn't exist",
+	"complevels_id_exist"=> "Complevels id doesn't exist",
+	"seasons_id_exist" => "Seasons id doesn't exist",
+	"sports_id_exist" => "Sports id doesn't exist",
+	"teams_id_exist" => "teams id doesn't exist"
 );

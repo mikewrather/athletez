@@ -447,7 +447,7 @@
 				$this->modelNotSetError();
 				return false;
 			}
-
+			//TODO, add by Jeffrey, Here need to add ACL control.
 			if(!$this->user || !($this->user->id == $this->mainModel->id || $this->user->has('roles','2')))
 			{
 				// Create Array for Error Data
@@ -493,16 +493,19 @@
 			// seasons_id
 			// Season ID
 			$seasons_arr = array();
-			if(trim($this->request->post('seasons_arr')) != "")
-			{
-				$seasons_arr = explode(',' , trim($this->request->post('seasons_arr')));
-			}else{
-				$error_array = array(
-					"error" => "Seasons id invalid",
-					"desc" => "Multiple seasons id should be like 1,2"
-				);
-				$this->modelNotSetError($error_array);
-				return false;
+
+			if (!intval($teams_id) > 0){
+				if(trim($this->request->post('seasons_arr')) != "")
+				{
+					$seasons_arr = explode(',' , trim($this->request->post('seasons_arr')));
+				}else{
+					$error_array = array(
+						"error" => "Seasons id invalid",
+						"desc" => "Multiple seasons id should be like 1,2"
+					);
+					$this->modelNotSetError($error_array);
+					return false;
+				}
 			}
 
 			// year
@@ -524,6 +527,7 @@
 				'complevels_id' => $complevels_id,
 				'seasons_arr' => $seasons_arr,
 				'year' => $year,
+				'users_id' => $this->mainModel->id
 			);
 
 			$result = $this->mainModel->addTeam($args);

@@ -632,41 +632,39 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 
 		if(isset($teams_id) && $teams_id != 0) // If team ID is provided add team
 		{
-			if(!$this->has('teams',$teams_id)) // CHECK IF USER ALREADY HAS TEAM ASSOCIATION
+			try
 			{
+				$user_teams_link = ORM::factory("User_Teamslink");
+				$user_teams_link->users_id = $users_id;
+				$user_teams_link->teams_id = $teams_id;
+				$validate_array = array('users_id'=>$users_id, 'teams_id'=>$teams_id);
+				$external_validate = Validation::factory($validate_array);
+				$external_validate->rule('users_id', 'users_teams_exist', array($users_id, $teams_id));
+				if ($user_teams_link->check($external_validate))
+					$user_teams_link->save();
+			}
+			catch(ORM_Validation_Exception $e)
+			{
+				return $e;
+			}
+			return $this;
+		}else{
+			foreach($seasons_arr as $seasons_id){
 				try
 				{
-					$this->add('teams',$teams_id);
-					$resultArrary["success"] = 1;
-				}
-				catch(ErrorException $e)
-				{
-					$resultArrary["errorMsg"] = $e->getMessage();
-				}
-			}
-		}
-		else
-		{
-			foreach($seasons_arr as $seasons_id){
-
-
+				//$org_sport_link->seasons_id = $seasons_id;
 				$args = array('orgs_id' => $orgs_id, 'sports_id' => $sports_id);
 				//Add new logic here.new teams validation
-				$args1 = array('complevels_id' => $complevels_id, 'seasons_id' => $seasons_id);
-
-				$combine_validate = Validation::factory(array_merge($args, $args1));
+				//$args1 = array('complevels_id' => $complevels_id, 'seasons_id' => $seasons_id);
+				//$a = array_merge($args, $args1);
+				$combine_validate = Validation::factory($args);
 				$combine_validate->rule('orgs_id', 'orgs_id_exist')
-					->rule('sports_id', 'sports_id_exist')
-					->rule('complevels_id', 'complevels_id_exist')
-					->rule('seasons_id', 'seasons_id_exist');
-				try
-				{
+					->rule('sports_id', 'sports_id_exist');
+					//->rule('complevels_id', 'complevels_id_exist')
+					//->rule('seasons_id', 'seasons_id_exist');
+
 					$org_sport_link->check($combine_validate);
-				}
-				catch(ORM_Validation_Exception $e)
-				{
-					return $e;
-				}
+
 
 				//Find Org / Sport link
 				$org_sport_link = ORM::factory('Sportorg_Orgsportlink')
@@ -704,22 +702,20 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 					$new_team->save();
 				}
 
-				if(!$this->has('teams',$new_team)) // CHECK IF USER ALREADY HAS TEAM ASSOCIATION
+				if(!$this->has('teams', $new_team)) // CHECK IF USER ALREADY HAS TEAM ASSOCIATION
 				{
-					try
-					{
-						$this->add('teams',$new_team);
-						$resultArrary["success"] = 1;
-					}
-					catch(ErrorException $e)
-					{
-						$resultArrary["errorMsg"] = $e->getMessage();
-					}
+					$user_teams_link = ORM::factory("User_Teamslink");
+					$user_teams_link->users_id = $users_id;
+					$user_teams_link->teams_id = $new_team->id;
+					$user_teams_link->save();
 				}
+			}catch(ORM_Validation_Exception $e)
+					{
+						return $e;
+					}
 			}
+			return $this;
 		}
-		return $this;
-
 	}
 
 	/*
