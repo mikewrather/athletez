@@ -144,7 +144,7 @@ class Model_Sportorg_Games_Base extends ORM
 
 		$enttype_id = Model_Site_Enttype::getMyEntTypeID($this);
 		if (!isset($orderby)){
-			$this->join('votes')->on('votes.subject_id', '=', 'sportorg_games_base.idx');
+			$this->join('votes')->on('votes.subject_id', '=', 'sportorg_games_base.id');
 			$this->where('votes.subject_enttypes_id', '=', $enttype_id);
 			$this->order_by('num_votes', 'asc');
 		}else{
@@ -156,8 +156,17 @@ class Model_Sportorg_Games_Base extends ORM
 			$this->where('orgs.name', 'like', "%".$searchtext."%");
 		}
 
-		//TODO, add by Jeffrey. Here need to confirm with Mike
-		// loc_search
+		if (isset($loc_search)){
+			$this->and_where_open();
+			$this->join('locations')->on('locations.id', '=', 'orgs.locations_idx');
+			$this->join('cities')->on('locations.cities_id', '=', 'cities.id');
+			$this->or_where('cities.name', 'like', "%".$loc_search."%");
+			$this->join('counties')->on('cities.county_id', '=', 'counties.id');
+			$this->or_where('counties.name', 'like', "%".$loc_search."%");
+			$this->join('states')->on('states.id', '=', 'counties.states_id');
+			$this->or_where('states.name', 'like', "%".$loc_search."%");
+			$this->and_where_close();
+		}
 
 		return $this;
 	}
