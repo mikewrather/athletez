@@ -142,11 +142,8 @@ class Model_Sportorg_Games_Base extends ORM
 			$this->where('teams.complevels_id', '=', $complevels_id);
 		}
 
-		$enttype_id = Model_Site_Enttype::getMyEntTypeID($this);
 		if (!isset($orderby)){
-			$this->join('votes')->on('votes.subject_id', '=', 'sportorg_games_base.id');
-			$this->where('votes.subject_enttypes_id', '=', $enttype_id);
-			$this->order_by('num_votes', 'asc');
+			$this->order_by('gameDay', 'asc');
 		}else{
 			$this->order_by($orderby, 'asc');
 		}
@@ -158,7 +155,7 @@ class Model_Sportorg_Games_Base extends ORM
 
 		if (isset($loc_search)){
 			$this->and_where_open();
-			$this->join('locations')->on('locations.id', '=', 'orgs.locations_idx');
+			$this->join('locations')->on('locations.id', '=', 'orgs.locations_id');
 			$this->join('cities')->on('locations.cities_id', '=', 'cities.id');
 			$this->or_where('cities.name', 'like', "%".$loc_search."%");
 			$this->join('counties')->on('cities.county_id', '=', 'counties.id');
