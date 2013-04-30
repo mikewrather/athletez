@@ -132,7 +132,8 @@
 				$arguments["searchtext"] = trim($this->request->query('searchtext'));
 			}
 
-
+			$video_model = ORM::factory("Media_Video");
+			return $video_model->getSearch($arguments);
 		}
 		
 		############################################################################
