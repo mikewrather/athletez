@@ -61,7 +61,7 @@ function(require, registrationSelectTypeTemplate) {
                     } else {
                         login();
                     }
-                });
+                },{scope: 'email, user_birthday, user_photos'});
             };
 
             function login() {
@@ -71,7 +71,7 @@ function(require, registrationSelectTypeTemplate) {
                     } else {
                         alert('Cancelled');
                     }
-                },{scope: 'email, user_birthday'});
+                },{scope: 'email, user_birthday, user_photos'});
             }
 
             // Load the SDK Asynchronously
