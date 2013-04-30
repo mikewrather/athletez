@@ -100,7 +100,8 @@
 				$arguments["searchtext"] = trim($this->request->query('searchtext'));
 			}
 
-
+			$image_model = ORM::factory('Media_Image');
+			return $image_model->getSearch($arguments);
 		}
 
 		############################################################################

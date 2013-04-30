@@ -76,6 +76,47 @@ class Model_Media_Image extends ORM
 
 	}
 
+	public function getSearch($args = array()){
+		extract($args);
+		$this->join('media')->on('media_image.media_id', '=', 'media.id');
+		$this->join('sports')->on('media.sports_id', '=', 'sports.id');
+		$this->join('org_sport_link')->on('sports.id', '=', 'org_sport_link.sports_id');
+		$this->join('teams')->on('org_sport_link.id', '=', 'teams.org_sport_link_id');
+		$this->join('users_teams_link')->on('users_teams_link.teams_id', '=', 'teams.id');
+		$this->join('users')->on('users_teams_link.users_id', '=', 'users.id');
+		$this->join('orgs')->on('orgs.id', '=', 'org_sport_link.orgs_id');
+		if (isset($sports_id)){
+			$this->where('org_sport_link.sports_id', '=', $sports_id);
+		}
+
+		if (isset($complevels_id)){
+			$this->where('teams.complevels_id', '=', $complevels_id);
+		}
+
+		$enttype_id = Model_Site_Enttype::getMyEntTypeID($this);
+		if (!isset($orderby)){
+			$this->join('votes')->on('votes.subject_id', '=', 'users.id');
+			$this->where('votes.subject_enttypes_id', '=', $enttype_id);
+			$this->order_by('num_votes', 'asc');
+		}else{
+			$this->order_by($orderby, 'asc');
+		}
+
+		if (isset($gradyear)){
+			$this->where('users.grad_year', '=', $gradyear);
+		}
+
+		if (isset($positions_id)){
+			$this->join('positions')->on('positions.sports_id', '=', 'sports.id');
+			$this->where('positions.id', '=', $positions_id);
+		}
+
+		if (isset($searchtext))
+			$this->where('orgs.name', 'like', "%".$searchtext."%");
+
+		return $this;
+	}
+
 	public function name()
 	{
 		return "Image ".$this->id;

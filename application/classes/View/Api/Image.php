@@ -52,6 +52,11 @@
 			{
 				$retArr[$obj->id] = $obj->getBasics();
 			}
+
+			if (empty($retArr)){
+				return null;
+			}
+
 			return $retArr;
 		}
 		
