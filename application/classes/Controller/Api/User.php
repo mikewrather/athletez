@@ -213,6 +213,7 @@
 		public function  action_get_fbreg()
 		{
 			$this->payloadDesc = "Get user facebook basic information";
+			$this->action_post_fbreg();
 		}
 
 		/**
@@ -324,6 +325,7 @@
 				return $facebook;
 			}
 		}
+
 
 		/**
 		 * action_get_fbpics() Get Facebook all user profile photo(s)
@@ -918,6 +920,9 @@
 			//Check for success / error
 			if(get_class($result) == get_class($this->mainModel))
 			{
+
+				$email = $arguments['email'];
+				$password = $arguments['password'];
 				//Process user's info,set it to session
 				Auth::instance()->login($email, $password);
 				//Here to send mail

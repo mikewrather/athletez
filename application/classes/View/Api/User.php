@@ -479,6 +479,18 @@
 		}
 
 		/**
+		 * get_fbreg() Get facebook user information
+		 *
+		 * @retun array
+		 */
+		public function get_fbreg()
+		{
+			$this->post_fbreg();
+		}
+
+
+
+		/**
 		 * post_savecrop() This is the method that can save the cropping information for an image being used as userpic.  It differs from those in the media controller in that it assumes this is going to be a userpic.
 		 *
 		 * @retun array
