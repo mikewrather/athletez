@@ -21,13 +21,6 @@
 		public function get_basics()
 		{
 			$retArr = $this->obj->getBasics();
-						  
-			$retArr['grad_year'] = null; 		//TODO: Add To Database - grad_year : string
-			$retArr['user_picture'] = null; 	//TODO: Add To Database - user_picture : string
-			$retArr['user_weight'] = null; 		//TODO: Add To Database - user_weight : string
-			$retArr['user_height'] = null; 		//TODO: Add To Database - user_height : string
-			$retArr['num_followers'] = 0; 		//TODO: Write getNumberFollowers() method for User Model
-			$retArr['num_votes'] = 0; 			//TODO: Write getNumberVotes() method for User Model
 			return $retArr;
 		}
 		

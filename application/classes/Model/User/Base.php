@@ -435,16 +435,22 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 	
 	public function getBasics()
 	{
+		$num_votes = Model_Site_Vote::getNumVotes($this, $this->id);
+		$num_followers = Model_User_Followers::num_followers($this->id);
 		return array(
 			"id" => $this->id,
 			"email" => $this->email,
-		//	"password" => $this->password,
+			"user_name" => $this->first_name." ".$this->last_name,
 			"date_created" => $this->date_created,
 			"login_count" => $this->login_count,
 			"last_login" => $this->last_login,
-			"first_name" => $this->first_name,
-			"last_name" => $this->last_name,
-			"city" => $this->city->getBasics()
+			"user_weight" => $this->weight_lb,
+			"user_height" => $this->height_in,
+			"grad_year" => $this->grad_year,
+			"user_picture" => $this->user_picture,
+			"num_followers" => $num_followers,
+			"num_votes" => $num_votes,
+			"city" => $this->city->getBasics(),
 		);
 
 		//This logic will be added later to return appropriate data for the user's permissions
