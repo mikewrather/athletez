@@ -284,7 +284,6 @@ class Model_Sportorg_Team extends ORM
 		{
 			$games->where('games_teams_link.isWinner', '=', $isWinner);
 		}
-		
 		return $games;
 	}
 

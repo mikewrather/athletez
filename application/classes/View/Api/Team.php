@@ -44,6 +44,10 @@
 			{
 				$retArr[$obj->id] = $obj->getBasics();
 			}
+
+			if (empty($retArr)){
+				return null;
+			}
 			
 			return $retArr;
 		}
@@ -62,7 +66,7 @@
 			foreach($objs as $obj)
 			{
 				$basics = $obj->getBasics();				
-				$retArr[$obj->users_id] = $basics['user'];
+				$retArr[] = $basics['user'];
 			}
 			 
 			return $retArr;
