@@ -918,6 +918,9 @@
 			//Check for success / error
 			if(get_class($result) == get_class($this->mainModel))
 			{
+
+				$email = $arguments['email'];
+				$password = $arguments['password'];
 				//Process user's info,set it to session
 				Auth::instance()->login($email, $password);
 				//Here to send mail
