@@ -213,6 +213,7 @@
 		public function  action_get_fbreg()
 		{
 			$this->payloadDesc = "Get user facebook basic information";
+			$this->action_post_fbreg();
 		}
 
 		/**
@@ -324,6 +325,7 @@
 				return $facebook;
 			}
 		}
+
 
 		/**
 		 * action_get_fbpics() Get Facebook all user profile photo(s)
