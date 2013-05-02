@@ -126,8 +126,8 @@
 				return false;
 			}
 
-			$video_model = ORM::factory("Media_Image");
-			return $video_model->getImages($this->mainModel->id);
+			$image_model = ORM::factory("Media_Image");
+			return $image_model->getImages($this->mainModel->id);
 		}
 
 		/**

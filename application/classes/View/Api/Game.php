@@ -103,9 +103,24 @@
 			$objs = $this->obj->find_all();
 			foreach($objs as $obj)
 			{
-				$retArr[$obj->id] = $obj->getBasics();
+				$object = new stdClass();
+				$basic_info = $obj->getBasics();
+				$meta_data = $obj->metadata->find_all()->as_array();
+				$object->image_path = null;
+				$object->image_title = null;
+				foreach($meta_data as $b){
+					if ($b->image_prop == 'url')
+						$object->image_path = $b->image_val;
+					if ($b->image_prop == 'title')
+						$object->image_title = $b->image_val;
+				}
+				$object->image_id = $basic_info['id'];
+				$object->num_votes = $basic_info['num_votes'];
+				$retArr[] = $object;
 			}
-
+			if (empty($retArr)){
+				return null;
+			}
 			return $retArr;
 		}
 
