@@ -90,6 +90,16 @@
 		 */
 		public function get_related()
 		{
+		
+			$retArr = array(
+				"num_fans" => NULL,
+				"num_votes" => NULL,
+				"teams" => array(),
+				"user_id" => NULL,
+				"user_name" => NULL,
+				"user_picture" => NULL
+			);
+			return $retArr;
 			/*
 			$retArr = array();
 
@@ -159,6 +169,26 @@
 			foreach($videos as $video)
 			{
 				$retArr[$video->id] = $video->getBasics();
+			}
+			if(empty($retArr))
+			{
+				$retArr = array(
+					"games" => array(),
+					"num_comments" => NULL,
+					"num_views" => NULL,
+					"num_votes" => NULL,
+					"post_date" => NULL,
+					"tags" => array(),
+					"tags_count" => NULL,
+					"teams" => array(),
+					"user_name" => NULL,
+					"video_desc" => NULL,
+					"video_id" => NULL,
+					"video_quality" => NULL,
+					"video_src" => NULL,
+					"video_thumb" => NULL,
+					"video_title" => NULL
+				);
 			}
 			return $retArr;
 		}

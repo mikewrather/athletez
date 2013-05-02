@@ -230,12 +230,12 @@ class Model_Sportorg_Org extends ORM
 	public function getBasics()
 	{
 		return array(
-			"id" => $this->id,
+			"org_id" => $this->id,
 			"divisions_id" => $this->divisions_id,
 			"leagues_id" => $this->leagues_id,
 			"locations_id" => $this->locations_id,
 			"complevel_profiles_id" => $this->complevel_profiles_id,
-			"name" => $this->name,
+			"org_name" => $this->name,
 			"season_profiles_id" => $this->season_profiles_id,
 			"sports_club" => $this->sports_club,
 			"season_profile" => $this->season_profile->getBasics(),			

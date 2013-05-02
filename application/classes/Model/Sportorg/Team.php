@@ -208,7 +208,8 @@ class Model_Sportorg_Team extends ORM
 		foreach($this->athletes->find_all() as $athlete) { $athletesArray[$athlete->id] = $athlete->getBasics(); }
 
 		return array(
-			"id" => $this->id,
+			"team_id" => $this->id,
+			"team_name" => $this->unique_ident,
 			"org_sport_link" => $this->org_sport_link->getBasics(),
 			"org_sport_link_id" => $this->org_sport_link_id,
 			"complevel" => $this->complevel->getBasics(),
@@ -217,8 +218,9 @@ class Model_Sportorg_Team extends ORM
 			"seasons_id" => $this->seasons_id,
 			"year" => $this->year,
 			"mascot" => $this->mascot,
-			"unique_ident" => $this->unique_ident,
-			"athletes" => $athletesArray
+			"athletes" => $athletesArray,
+			"team_location" => NULL
+			
 		);
 	}
 
