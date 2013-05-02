@@ -430,7 +430,12 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 	
 	public function getSports()
 	{
-		return $this->isports; 		
+		return $this->isports;
+	}
+	
+	public function getRelated()
+	{
+		
 	}
 	
 	public function getBasics()

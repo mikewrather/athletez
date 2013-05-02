@@ -93,7 +93,7 @@
 				$this->modelNotSetError();
 				return false;
 			}
-			return (Object)$this->mainModel->getOrgs($this->myID);			
+			return $this->mainModel->getOrgs($this->myID);			
 		}
 		
 		/**
@@ -105,6 +105,12 @@
 		{
 			$this->requireID();
 			$this->payloadDesc = "Content related to this user to be displayed on the \"related content\" pane";
+			if(!$this->mainModel->id)
+			{
+				$this->modelNotSetError();
+				return false;
+			}
+			return $this->mainModel->getRelated();
 			//$teams_link = ORM::factory('User_Teamslink')->where('users_id', '=', $this->myID ); 
 			//return $teams_link; 
 		}
