@@ -208,4 +208,19 @@ class Model_Stats_Vals extends ORM
             return $e;
         } 		
 	}
+
+	public function owner(){
+		if(!$this->id){
+			return "";
+		}
+		return intval($this->users_id);
+	}
+
+	public function is_owner($user){
+		if (is_object($user)){
+			return invtal($user->id) == $this->owner();
+		}else{
+			return invtal($user) == $this->owner();
+		}
+	}
 }

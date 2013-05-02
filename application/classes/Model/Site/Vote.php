@@ -75,4 +75,19 @@ class Model_Site_Vote extends Model_Site_Entdir
 		}
 		return 0;
 	}
+
+	public function owner(){
+		if(!$this->id){
+			return "";
+		}
+		return intval($this->voter_users_id);
+	}
+
+	public function is_owner($user){
+		if (is_object($user)){
+			return invtal($user->id) == $this->owner();
+		}else{
+			return invtal($user) == $this->owner();
+		}
+	}
 }

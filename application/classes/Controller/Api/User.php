@@ -18,6 +18,9 @@
 
 			$this->setMainModel(ORM::factory('User_Base'));
 			$this->popMainModel();
+			if(!$this->mainModel->id && $this->is_logged_in){
+				$this->mainModel->id = $this->user->id;
+			}
 		}
 
 		public function action_index()

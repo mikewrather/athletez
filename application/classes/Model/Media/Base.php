@@ -119,4 +119,19 @@ class Model_Media_Base extends ORM
 		}
 		return $this->id;
 	}
+
+	public function owner(){
+		if(!$this->id){
+			return "";
+		}
+		return intval($this->users_id);
+	}
+
+	public function is_owner($user){
+		if (is_object($user)){
+			return invtal($user->id) == $this->owner();
+		}else{
+			return invtal($user) == $this->owner();
+		}
+	}
 }
