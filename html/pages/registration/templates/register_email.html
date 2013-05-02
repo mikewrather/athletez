@@ -3,16 +3,23 @@
 <div class="row-fluid">
     <form class="form-horizontal">
         <div class="control-group">
-            <label class="control-label" for="name">Name: </label>
+            <label class="control-label" for="firstname">First Name: </label>
             <div class="controls">
-                <input type="text" name="name" id="name" placeholder="Name">
+                <input type="text" name="firstname" id="firstname" placeholder="First Name">
                 <p class="text-error"></p>
             </div>
         </div>
         <div class="control-group">
-            <label class="control-label" for="birthday">DOB: </label>
+            <label class="control-label" for="lastname">Last Name: </label>
             <div class="controls">
-                <input type="text" name="birthday" id="birthday" placeholder="Birthday">
+                <input type="text" name="lastname" id="lastname" placeholder="Last Name">
+                <p class="text-error"></p>
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label" for="dob">DOB: </label>
+            <div class="controls">
+                <input type="text" name="dob" id="dob" placeholder="Birthday">
                 <p class="text-error"></p>
             </div>
         </div>
@@ -26,8 +33,9 @@
         <div class="control-group">
             <label class="control-label">Gender: </label>
             <div class="controls">
-                <label for="male"><input type="radio" id="male" name="gender" value="male"> Male</label>
-                <label for="female"><input type="radio" id="female" name="gender" value="female"> Female</label>
+                <label for="male"><input type="radio" id="male" name="gender" value="1"> Male</label>
+                <label for="female"><input type="radio" id="female" name="gender" value="0"> Female</label>
+                <p class="text-error"></p>
             </div>
         </div>
         <div class="control-group">
@@ -38,14 +46,14 @@
             </div>
         </div>
         <div class="control-group">
-            <label class="control-label" for="password-again">Again: </label>
+            <label class="control-label" for="re-password">Again: </label>
             <div class="controls">
-                <input type="password" id="password-again" name="password-again"/>                
+                <input type="password" id="re-password" name="re-password"/>                
             </div>
         </div>
         <div>
             <p class="agree-error text-error"></p>
-            <label for="agree"><input type="checkbox" id="agree" name="agree"/>I have read and agree to the <a href="#">Terms of Service</a></label>
+            <label for="accept_terms"><input type="checkbox" id="accept_terms" name="accept_terms"/>I have read and agree to the <a href="#">Terms of Service</a></label>
             <div class="alert form-alert" style="display:none;"></div>
             <a href="#" class="next">What's Next</a>
         </div>    

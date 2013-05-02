@@ -11,7 +11,7 @@ define([
         'views',
         'utils',
         'jquery.pstrength',
-        'user/models/basics'
+        'models/base'
         ], 
 function(require, registrationEmailTemplate) {
 
@@ -21,7 +21,7 @@ function(require, registrationEmailTemplate) {
         utils = require('utils'),
         Channel = utils.lib.Channel,
         SectionView = views.SectionView,
-        UserBasicsModel = require('user/models/basics');
+        BaseModel = require('models/base');
         
 
     RegistrationEmailView = SectionView.extend({
@@ -37,7 +37,7 @@ function(require, registrationEmailTemplate) {
         
         initialize: function (options) {
             if (!this.model) {
-                this.model = new UserBasicsModel();
+                throw new Error("RegistrationEmailView expected options.model.");
             }
             SectionView.prototype.initialize.call(this, options);            
         },
@@ -57,7 +57,7 @@ function(require, registrationEmailTemplate) {
         nextStep: function (event) {
             event.preventDefault();
             var fields = this.$(":input").serializeArray();
-            var payload = this.model.get('payload');
+            var payload = {};
             $.each(fields, function(i, field){
                 payload[field.name] = field.value;
             });
@@ -65,8 +65,13 @@ function(require, registrationEmailTemplate) {
             this.$('.text-error').html('');
             this.$('.form-alert').hide().removeClass('alert-error').removeClass('alert-info');
             
-            if (payload['name'].length < 13) {
-                this.$('#name').parent().find('.text-error').html('You have to be at least 13.');
+            if (payload['firstname'] == '') {
+                this.$('#firstname').parent().find('.text-error').html('Please input a first name.');
+                error = true;
+            }
+            
+            if (payload['lastname'] == '') {
+                this.$('#lastname').parent().find('.text-error').html('Please input a last name.');
                 error = true;
             }
             
@@ -75,16 +80,27 @@ function(require, registrationEmailTemplate) {
                 error = true;
             }
             
-            if (payload['password'] == '' || payload['password-again'] == '') {
-                this.$('#password').parent().find('.text-error').html('Please input a password');
-                error = true;
-            }
-            if (payload['password'] != payload['password-again']) {
-                this.$('#password').parent().find('.text-error').html('Passwords Do Not Match');
+            if (payload['email'] == '') {
+                this.$('#email').parent().find('.text-error').html('Please input an email.');
                 error = true;
             }
             
-            if (payload['agree'] == null) {
+            if ('undefined' == typeof payload['gender']) {
+                console.log(1);
+                this.$('#male').parents('.controls').find('.text-error').html('Please select a gender.');
+                error = true;
+            }
+            
+            if (payload['password'] == '' || payload['re-password'] == '') {
+                this.$('#password').parent().find('.text-error').html('Please input a password');
+                error = true;
+            }
+            if (payload['password'] != payload['re-password']) {
+                this.$('#password').parent().find('.text-error').html('Passwords Do Not Match');
+                error = true;
+                    }
+            
+            if (payload['accept_terms'] == null) {
                 this.$('.agree-error').html('I know it\'s boring, but you\'ll have to read it to continue.');
                 error = true;                
             } else {
@@ -93,14 +109,21 @@ function(require, registrationEmailTemplate) {
             
             if (!error) {
                 this.$('.form-alert').addClass('alert-info').html('Outstanding! We sent you an email to verify your address.').show();
-                this.model.set('payload', payload);
-                this.model.url = function() {
-                    if (testpath)
-                        return testpath + '/user/basics';
-                    return '/api/user/basics';
+                var register = new BaseModel(payload);
+                register.url = function() {
+                    return '/api/user/register';
                 }
-                this.model.save();
-                Channel('registration-after-email').publish(this.model);
+                register.saveSuccess = function(model, response) {
+                    var exec_data = model.get('exec_data');
+                    var payload = model.get('payload');
+                    if (!exec_data['exec_error'] && payload) {
+                        Channel('registration-uploadimage-email').publish();
+                    }                    
+                }                
+                register.saveError = function(model, response) {
+                    
+                }
+                register.save();                
             } else {
                 this.$('.form-alert').addClass('alert-error').html('Hold on. There were problems. See sad faces above.').show();
             }

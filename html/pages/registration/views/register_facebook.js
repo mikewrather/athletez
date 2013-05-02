@@ -44,7 +44,7 @@ function(require, registrationFacebookTemplate) {
             var self = this;
             
             if (!this.model) {
-                throw new Error("RegistrationFacebokkView expected options.model.");
+                throw new Error("RegistrationFacebookView expected options.model.");
             }
             
             SectionView.prototype.initialize.call(this, options); 

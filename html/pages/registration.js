@@ -15,10 +15,12 @@ define([
     "registration/models/select_type",
     "registration/models/register_facebook",
     "registration/models/register_email",
+    "registration/models/upload_image",
     
     "registration/views/select_type",
     "registration/views/register_facebook",
-    "registration/views/register_email"
+    "registration/views/register_email",
+    "registration/views/upload_image"
     
     ], function (require, pageLayoutTemplate) {
 
@@ -32,10 +34,12 @@ define([
         RegistrationSelectTypeModel = require("registration/models/select_type"),
         RegistrationFacebookModel = require("registration/models/register_facebook"),
         RegistrationEmailModel = require("registration/models/register_email"),
+        RegistrationUploadImageModel = require("registration/models/upload_image"),
         
         RegistrationSelectTypeView = require("registration/views/select_type"),
         RegistrationFacebookView = require("registration/views/register_facebook"),
         RegistrationEmailView = require("registration/views/register_email"),
+        RegistrationUploadImageView = require("registration/views/upload_image"),
         
         LayoutView = views.LayoutView,
         $ = facade.$,
@@ -85,8 +89,19 @@ define([
                 controller.initRegisterEmail();
             }
             Channel('registration-with-email').subscribe(registerWithEmail);
+            
+            function uploadImage() {
+                controller.uploadImage();
+            }
+            Channel('registration-uploadimage-email').subscribe(uploadImage);
+            
+            function registerComplete() {
+                alert('complete');
+            }
+            Channel('registration-after-facebook').subscribe(registerComplete);
+            Channel('registration-after-email').subscribe(registerComplete);
         },
-        
+                
         refreshPage: function() {
             var position;
             
@@ -154,7 +169,7 @@ define([
         
         setupRegisterEmailView: function() {
             this.registerEmailView = new RegistrationEmailView({
-                model: this.select_type,
+                model: this.register_email,
                 name: "Registration with Email Address",
                 destination: "#main-content"
             });
@@ -163,7 +178,25 @@ define([
             this.layout.render();
         },
         
+        uploadImage: function() {
+            var controller = this;
+            
+            this.refreshPage();
+            this.upload_image = new RegistrationUploadImageModel();
+            
+            this.setupUploadImageView();
+        },
         
+        setupUploadImageView: function() {
+            this.uploadImageView = new RegistrationUploadImageView({
+                model: this.upload_image,
+                name: "Registration Upload Image",
+                destination: "#main-content"
+            });
+            
+            this.scheme.push(this.uploadImageView);
+            this.layout.render();
+        },
         
         setupLayout: function () {
             var pageLayout;

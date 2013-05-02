@@ -45,7 +45,7 @@ function(require, registrationSelectTypeTemplate) {
                     status     : true, // check login status
                     cookie     : true, // enable cookies to allow the server to access the session
                     xfbml      : true,  // parse XFBML
-                    oauth         : true
+                    oauth      : true
                 });
 
                 // Additional init code here
@@ -70,6 +70,8 @@ function(require, registrationSelectTypeTemplate) {
                         Channel('registration-with-facebook').publish();
                     } else {
                         alert('Cancelled');
+                        // for test
+                        //Channel('registration-with-facebook').publish();
                     }
                 },{scope: 'email, user_birthday, user_photos'});
             }
