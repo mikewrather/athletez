@@ -442,20 +442,35 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 	{
 		$num_votes = Model_Site_Vote::getNumVotes($this, $this->id);
 		$num_followers = Model_User_Followers::num_followers($this->id);
+		if ($this->user_picture){
+			$user_image_meta = Model_Media_Image::get_user_image_meta( $this->user_picture)->as_array();
+			foreach($user_image_meta as $b){
+				if ($b->image_prop == 'url')
+					$user_picture = $b->image_val;
+			}
+		}
+
+//		$utl_results = $this->utl->find_all();
+//		$results = array();
+//		foreach($utl_results as $tmp_utl){
+//			$results[] = $tmp_utl->as_array();
+//		}
+
 		return array(
 			"id" => $this->id,
 			"email" => $this->email,
-			"user_name" => $this->first_name." ".$this->last_name,
+			"name" => $this->first_name." ".$this->last_name,
 			"date_created" => $this->date_created,
 			"login_count" => $this->login_count,
 			"last_login" => $this->last_login,
 			"user_weight" => $this->weight_lb,
 			"user_height" => $this->height_in,
 			"grad_year" => $this->grad_year,
-			"user_picture" => $this->user_picture,
+			"user_picture" => $user_picture,
 			"num_followers" => $num_followers,
 			"num_votes" => $num_votes,
 			"city" => $this->city->getBasics(),
+			//"utl" =>$results
 		);
 
 		//This logic will be added later to return appropriate data for the user's permissions

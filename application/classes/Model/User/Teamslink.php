@@ -55,6 +55,15 @@ class Model_User_Teamslink extends ORM
 		);
 	}
 
+	public function getPositionByUserteamslinkid($user_teams_link_id){
+		$utpl = ORM::factory("User_Teamslink_Positionlink");
+		$model = $utpl->where('users_teams_link_id', '=', $user_teams_link_id)->find();
+		if ($model->loaded()){
+			return $model->position->name;
+		}
+		return null;
+	}
+
 	public function check_user_teams_link_exist($user_id, $teams_id, &$return_id = ""){
 		$teams_link_obj = ORM::factory('User_Teamslink')->where('teams_id','=',$teams_id)->and_where('users_id', '=', $user_id);
 		$teams_link  = $teams_link_obj->find();
