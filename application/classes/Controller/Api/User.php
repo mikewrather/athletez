@@ -924,7 +924,7 @@
 				$arguments["gender"] = (bool)$this->request->post('gender');
 			}
 
-			$result = $this->mainModel->addRegister($arguments);
+			$result = ORM::factory('User_Base')->addRegister($arguments);
 
 			//Check for success / error
 			if(get_class($result) == get_class($this->mainModel))

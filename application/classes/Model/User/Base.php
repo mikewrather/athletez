@@ -729,95 +729,6 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 		}
 	}
 
-	/*
-	 * deprecated, comment by jeffrey
-	 *
-	 *
-	public function addTeam_old($args)
-	{
-		$resultArrary = array("success"=>0);
-
-		// EXTRACT VARIABLES FROM ARGUMENTS ARRAY
-		extract($args);
-
-		if(isset($teams_id)) // If team ID is provided add team
-		{
-			if(!$this->has('teams',$teams_id)) // CHECK IF USER ALREADY HAS TEAM ASSOCIATION
-			{
-				try
-				{
-					$this->add('teams',$teams_id);
-					$resultArrary["success"] = 1;
-				}
-				catch(ErrorException $e)
-				{
-					$resultArrary["errorMsg"] = $e->getMessage();
-				}
-			}
-		}
-		else
-		{
-			if(!(isset($orgs_id) && isset($sports_id) && isset($complevels_id) && isset($seasons_id) && isset($year)))
-			{
-				//These must all be set if teams_id is not set
-				$resultArrary["errorMsg"] = "Must either specify a team or all other criteria that picks out a team.";
-				return $resultArrary;
-			}
-
-			//Find Org / Sport link
-			$org_sport_link = ORM::factory('Sportorg_Orgsportlink')
-				->where('orgs_id','=',$orgs_id)
-				->and_where('sports_id','=',$sports_id)
-				->find();
-
-			if(!$org_sport_link->loaded()) // This means the organization does not have this sport
-			{
-				unset($org_sport_link);
-				//Add the Association
-				$org_sport_link = ORM::factory('Sportorg_Orgsportlink');
-				$org_sport_link->orgs_id = $orgs_id;
-				$org_sport_link->sports_id = $sports_id;
-				$org_sport_link->save();
-			}
-
-			$new_team = ORM::factory('Sportorg_Team')
-				->where('org_sport_link_id','=',$org_sport_link->id)
-				->and_where('seasons_id','=',$seasons_id)
-				->and_where('complevels_id','=',$complevels_id)
-				->and_where('year','=',$year)
-				->find();
-
-			// CHECK IF TEAM EXISTS AND CREATE IT IF IT DOESN'T
-			if(!$new_team->loaded())
-			{
-				unset($new_team);
-				$new_team = ORM::factory('Sportorg_Team');
-				$new_team->org_sport_link_id = $org_sport_link->id;
-				$new_team->complevels_id = $complevels_id;
-				$new_team->seasons_id = $seasons_id;
-				$new_team->year = $year;
-				$new_team->save();
-			}
-
-			if(!$this->has('teams',$new_team)) // CHECK IF USER ALREADY HAS TEAM ASSOCIATION
-			{
-				try
-				{
-					$this->add('teams',$new_team);
-					$resultArrary["success"] = 1;
-				}
-				catch(ErrorException $e)
-				{
-					$resultArrary["errorMsg"] = $e->getMessage();
-				}
-			}
-
-		}
-
-		return $resultArrary;
-
-	}
-	 */
 
 	public function addRegister($args){
 		extract($args);
@@ -860,7 +771,7 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 
 		if(isset($dob))
 		{
-			$this->dob = $dob;
+			$this->dob = date('Y-m-d',strtotime($dob));
 		}
 //		print_r($args);
 		try {
@@ -881,8 +792,16 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 			$extra_validate->rule('dob','valid_age_frame', array($dob));
 
 			if ($this->check($extra_validate)){
-				$this->password = Auth::instance()->hash($password);
+				$ai = Auth::instance();
+				$this->password = $ai->hash($password);
 				$this->create();
+
+				//Log out if already logged in
+				if($ai->logged_in()) $ai->logout();
+
+				// Log in the user that was just created
+				Auth::instance()->login($this->email,$password,TRUE);
+
 			}
 
 			return $this;
