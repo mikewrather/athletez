@@ -54,9 +54,9 @@ class Model_Media_Base extends ORM
 			),
 
 			// sports_id (int)
-				'sports_id'=>array(
-					array('not_empty'),
-					array('sports_id_exist')
+			'sports_id'=>array(
+				array('not_empty'),
+				array('sports_id_exist')
 			),
 
 			// subject_type_id (int)
@@ -120,14 +120,17 @@ class Model_Media_Base extends ORM
 		return $this->id;
 	}
 
-	public function owner(){
-		if(!$this->id){
+	public function owner()
+	{
+		if(!$this->id)
+		{
 			return "";
 		}
 		return intval($this->users_id);
 	}
 
-	public function is_owner($user){
+	public function is_owner($user)
+	{
 		if (is_object($user)){
 			return invtal($user->id) == $this->owner();
 		}else{

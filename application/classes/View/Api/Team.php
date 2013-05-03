@@ -65,8 +65,24 @@
 			 
 			foreach($objs as $obj)
 			{
-				$basics = $obj->getBasics();				
-				$retArr[] = $basics['user'];
+				$combine_obj = new stdClass();
+				$basics = $obj->getBasics();
+
+				$position_name = $this->obj->getPositionByUserteamslinkid($obj->id);
+				$sport_name = $basics['team']['org_sport_link']['sport']['sport_name'];
+				$combine_obj->name = $basics['user']['name'];
+				$combine_obj->user_picture = $basics['user']['user_picture'];
+				$combine_obj->grad_year = $basics['user']['grad_year'];
+				$combine_obj->sport_name = $sport_name;
+				$combine_obj->position = $position_name;
+				$combine_obj->num_votes = $basics['user']['num_votes'];
+				$combine_obj->num_followers = $basics['user']['num_followers'];
+
+				$retArr[] = $combine_obj;
+			}
+
+			if (empty($retArr)){
+				return null;
 			}
 			 
 			return $retArr;

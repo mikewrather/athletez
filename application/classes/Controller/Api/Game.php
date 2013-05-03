@@ -127,7 +127,7 @@
 			}
 
 			$image_model = ORM::factory("Media_Image");
-			return $image_model->getImages($this->mainModel->id);
+			return $image_model->getGameImages($this->mainModel->id);
 		}
 
 		/**

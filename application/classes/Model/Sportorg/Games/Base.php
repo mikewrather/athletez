@@ -88,18 +88,6 @@ class Model_Sportorg_Games_Base extends ORM
 			return $e;
 		}
 	}
-	//TODO, Add by jeffrey, not completed yet
-	public function get_game_image($obj, $game_id){
-		$image_id = "";
-		$subject_enttypes_id = Model_Site_Enttype::getMyEntTypeID($obj);
-		$site_vote = ORM::factory("Site_Vote");
-		$site_vote->where('subject_enttypes_id', '=', $subject_enttypes_id);
-		$site_vote->where('subject_id', '=', $game_id)->find();
-		if ($site_vote->loaded()){
-			return intval($site_vote->num_votes);
-		}
-
-	}
 
 	public function getBasics()
 	{

@@ -39,6 +39,7 @@
 			foreach($objs as $obj)
 			{
 				$retArr[$obj->id] = $obj->getBasics();
+				$retArr[$obj->id]['team_location'] = array();
 			}
  
 			return $retArr;
@@ -58,6 +59,8 @@
 			foreach($objs as $obj)
 			{
 				$retArr[$obj->id] = $obj->getBasics();
+				$retArr[$obj->id]['primary_position'] = NULL;
+				$retArr[$obj->id]['social_links'] = array();
 			}
 			return $retArr;
 		}
@@ -77,7 +80,8 @@
 			{
 				$org_sport_link = $obj->getBasics();
 				$org = $org_sport_link['org'];
-				$retArr[$org['id']] = $org;
+				$retArr[$org->id] = $org;
+				$retArr[$org->id]['teams'] = array();
 			}
 		 	
 			return $retArr; 
@@ -205,6 +209,10 @@
 			foreach($images as $image)
 			{
 				$retArr[$image->id] = $image->getBasics();
+				$retArr[$image->id]['image_id'] = $retArr[$image->id]['id'];
+				$retArr[$image->id]['image_path'] = NULL;
+				$retArr[$image->id]['image_title'] = $retArr[$image->id]['name'];
+				$retArr[$image->id]['num_votes'] = NULL;
 			}
 			return $retArr;
 		}
@@ -217,14 +225,19 @@
 		public function get_commentsof()
 		{
 			$retArr = array();
+
 			$comments = $this->obj->find_all();
 			foreach($comments as $comment)
 			{
 				$retArr[$comment->id] = $comment->getBasics();
+				$retArr[$comment->id]['poster']	= $retArr[$comment->id]['user']['user_name'];
+				$retArr[$comment->id]['poster_picture']	= $retArr[$comment->id]['user']['user_picture'];
+				$retArr[$comment->id]['comment_date'] = NULL;
 			}
+
 			return $retArr;
 		}
-		
+
 		/**
 		 * get_commentson() Get a list of comments related to the user
 		 *
@@ -238,10 +251,14 @@
 			foreach($comments as $comment)
 			{
 				$retArr[$comment->id] = $comment->getBasics();
+				$retArr[$comment->id]['poster'] = $retArr[$comment->id]['user']['user_name'];
+				$retArr[$comment->id]['poster_picture'] = $retArr[$comment->id]['user']['user_picture'];
+				$retArr[$comment->id]['comment_date'] = NULL;
 			}
+
 			return $retArr;
 		}
-		
+
 		/**
 		 * get_fitnessbasics() Get the basic fitness data for the user
 		 *
@@ -252,17 +269,17 @@
 			// Scaffolding Code For Single:
 			//$retArr = $this->obj->getResumeData();
 			$retArr = array();
-			
+
 			$fitnessbasics = $this->obj; 
-			
+
 			foreach($fitnessbasics as $fb)
 			{	
 				$retArr[$fb['id']] = $fb;
 			}
-			 
+
 			return $retArr;
 		}
-		
+
 		/**
 		 * get_primaryvideo() Get the primary video to be displayed on a user profile page
 		 *

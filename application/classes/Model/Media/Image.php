@@ -47,7 +47,7 @@ class Model_Media_Image extends ORM
 		);
 	}
 
-	public function getImages($games_id){
+	public function getGameImages($games_id){
 		$games_model = ORM::factory("Sportorg_Games_Base");
 
 		$media_image = ORM::factory("Media_Image");
@@ -123,4 +123,15 @@ class Model_Media_Image extends ORM
 	{
 		return "Image ".$this->id;
 	}
+
+	public static function get_user_image_meta($image_id){
+		if (empty($image_id)){
+			return "";
+		}
+		$media_image = ORM::factory("Media_Image", $image_id);
+
+		return $media_image->metadata->find_all();
+	}
+
+
 }
