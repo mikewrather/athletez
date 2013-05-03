@@ -24,7 +24,7 @@ define(["facade", "models/base"], function (facade, BaseModel) {
                     "year": null
                 }],
                 "num_votes": 0,
-                "num_fans": 0
+                "num_followers": 0
             },
             "desc": "Related user information about the user",
             "exec_data": {

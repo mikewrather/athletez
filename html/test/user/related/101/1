@@ -17,7 +17,7 @@
             "year": "'12/'13"
         }],
         "num_votes": 13,
-        "num_fans": 232            
+        "num_followers": 232            
     }, {
         "user_id": 2,
         "user_name": "Montel Legget",
@@ -30,7 +30,7 @@
             "year": "'12/'13"
         }],
         "num_votes": 123,
-        "num_fans": 22            
+        "num_followers": 22            
     }, {
         "user_id": 3,
         "user_name": "Montel Legget",
@@ -43,7 +43,7 @@
             "year": "'12/'13"
         }],
         "num_votes": 1113,
-        "num_fans": 22            
+        "num_followers": 22            
     }],
     "desc": "Related users information about the user",
     "exec_data": {

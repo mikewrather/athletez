@@ -86,7 +86,6 @@ function(require, registrationEmailTemplate) {
             }
             
             if ('undefined' == typeof payload['gender']) {
-                console.log(1);
                 this.$('#male').parents('.controls').find('.text-error').html('Please select a gender.');
                 error = true;
             }

@@ -16,7 +16,7 @@ define( ["facade", "models/base"], function (facade, BaseModel) {
                 "birth_day": null,
                 "high_school": null,
                 "email": null,
-                "picture": null
+                "user_picture": null
             },
             "desc": "Facebook Registration Information",
             "exec_data": {

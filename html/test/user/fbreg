@@ -52,7 +52,7 @@
       "locale":"en_US",
       "verified":true,
       "updated_time":"2012-12-04T20:17:48+0000",
-      "profile_picture":"https://graph.facebook.com/641244973/picture"
+      "user_picture":"https://graph.facebook.com/641244973/picture"
    },
    "desc":"Get user facebook basic information",
    "exec_data":{

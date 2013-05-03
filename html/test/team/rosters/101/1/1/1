@@ -1,28 +1,28 @@
 {
     "payload": [{
         "name": "James Taylor",
-        "picture": "images/user_image.png",
+        "user_picture": "images/user_image.png",
         "grad_year": 13,
-        "sport_type": "Football",
-        "sport_name": "Running Back",
+        "sport_name": "Football",
+        "position": "Running Back",
         "num_votes": 132,
-        "num_fans": 123
+        "num_followers": 123
     }, {
         "name": "Thomas Roberts",
-        "picture": "images/user_image.png",
+        "user_picture": "images/user_image.png",
         "grad_year": 13,
-        "sport_type": "Football",
-        "sport_name": "Running Back",
+        "sport_name": "Football",
+        "position": "Running Back",
         "num_votes": 132,
-        "num_fans": 123
+        "num_followers": 123
     }, {
         "name": "Antonin Scalla",
-        "picture": "images/user_image.png",
+        "user_picture": "images/user_image.png",
         "grad_year": 13,
-        "sport_type": "Football",
-        "sport_name": "Running Back",
+        "sport_name": "Football",
+        "position": "Running Back",
         "num_votes": 132,
-        "num_fans": 123
+        "num_followers": 123
     }],
     "desc": "Team Roster List",
     "exec_data": {

@@ -17,10 +17,10 @@ define(["facade", "models/base"], function (facade, BaseModel) {
                 "team_name": null,
                 "rosters": [{
                     "name": null,
-                    "picture": null,
+                    "user_picture": null,
                     "grad_year": 0,
-                    "sport_type": null,
-                    "sport_name": null
+                    "sport_name": null,
+                    "position": null
                 }]
             },
             "desc": "Team Roster information",

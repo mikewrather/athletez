@@ -15,12 +15,12 @@ define(["facade", "models/base"], function (facade, BaseModel) {
             "payload": {
                 "id" : 0,
                 "name": null,
-                "picture": null,
+                "user_picture": null,
                 "grad_year": 0,
-                "sport_type": null,
                 "sport_name": null,
+                "position": null,
                 "num_votes": 0,
-                "num_fans": 0
+                "num_followers": 0
             },
             "desc": "Roster information",
             "exec_data": {
