@@ -812,10 +812,10 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 				$this->create();
 
 				//Log out if already logged in
-				if($ai->logged_in()) $ai->logout();
+				//if($ai->logged_in()) $ai->logout();
 
 				// Log in the user that was just created
-				Auth::instance()->login($this->email,$password,TRUE);
+				//Auth::instance()->login($this->email,$password,TRUE);
 
 			}
 
