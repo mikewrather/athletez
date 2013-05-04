@@ -381,4 +381,20 @@ class Controller_Api_Base extends AuthController
 		$test->save();
 
 	}
+
+	function is_logged_user(){
+		if(!$this->user){
+			return false;
+		}
+		return true;
+	}
+
+	function throw_authentication_error(){
+		$error_array = array(
+			"error" => "This action requires authentication",
+			"desc" => "Please login first"
+		);
+		$this->modelNotSetError($error_array);
+		return false;
+	}
 }

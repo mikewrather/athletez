@@ -9,6 +9,7 @@ class Model_Sportorg_Org extends ORM
 {
 
 	protected $_table_name = "orgs";
+	public $error_message_path = 'models/sportorg';
 
 	protected $_belongs_to = array(
 		"complevel_profile" => array(
@@ -76,7 +77,7 @@ class Model_Sportorg_Org extends ORM
 			// sports_club (smallint)
 			'sports_club'=>array(
 				array('not_empty'),
-				array('in_array', array(':value', array('true', 'false'))),
+				array('in_array', array(':value', array(1, 0))),
 			),
 
 			// leagues_id (int)
@@ -103,11 +104,13 @@ class Model_Sportorg_Org extends ORM
 				array('complevel_profiles_id_exist')
 			),
 
-			//comment by jeffrey, no this field in add form
+			//TODO,comment by jeffrey, no this field in add form
+			/*
 			'locations_id'=>array(
 				array('not_empty'),
 				array('locations_id_exist')
 			),
+			*/
 		);
 	}
 
@@ -287,8 +290,14 @@ class Model_Sportorg_Org extends ORM
 		if ( isset($complevel_profiles_id))
 		{
 			$this->complevel_profiles_id = $complevel_profiles_id;
-		}		
-		return $this->save();
+		}
+
+		try{
+			$this->update();
+			return $this;
+		}catch(ORM_Validation_Exception $e){
+			return $e;
+		}
 	}
 	
 	public function updateDivision($divisions_id)
@@ -316,6 +325,40 @@ class Model_Sportorg_Org extends ORM
 			$this->season_profiles_id = $season_profiles_id;
 		}
 		return $this->save();
+	}
+
+	public function addOrg($args = array()){
+		extract($args);
+		if (isset($name)){
+			$this->name = $name;
+		}
+
+		if (isset($signle_sport)){
+			$this->signle_sport = $signle_sport;
+		}
+
+		if (isset($season_profiles_id)){
+			$this->season_profiles_id = $season_profiles_id;
+		}
+
+		if (isset($complevel_profiles_id)){
+			$this->complevel_profiles_id = $complevel_profiles_id;
+		}
+
+		if (isset($leagues_id)){
+			$this->leagues_id = $leagues_id;
+		}
+
+		if (isset($divisions_id)){
+			$this->divisions_id = $divisions_id;
+		}
+
+		try{
+			$this->save();
+			return $this;
+		}catch(ORM_Validation_Exception $e){
+			return $e;
+		}
 	}
 	
 	public function addSport($sports_id)

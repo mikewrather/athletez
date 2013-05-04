@@ -44,16 +44,7 @@
 				return false;
 			}
 
-//			if(!$this->user->can('Orgcontent', array('read'))){
-//				$error_array = array(
-//					"error" => "Sorry, You don't have permission to read",
-//					"desc" => "In order to read this action, please contact your adminstrator"
-//				);
-//				$this->modelNotSetError($error_array);
-//				return false;
-//			}
 			return $this->mainModel;
-		
 		}
 		
 		/**
@@ -293,70 +284,78 @@
 		 */
 		public function action_post_add()
 		{
-			$this->payloadDesc = "Create a new organization";
-
-		     // CHECK FOR PARAMETERS:
-			// name 
-			// The name of the organization
-
-			$new_org = ORM::factory('Sportorg_Org');
-				
-			if(trim($this->request->post('name')) != '')
-			{
-				$name = trim($this->request->post('name'));
-				$new_org->name = $name;
+			//Must logged user can do action
+			if (!$this->is_logged_user()){
+				return $this->throw_authentication_error();
 			}
 
-			// sports_club 
+			$this->payloadDesc = "Create a new organization";
+			$arguments = array();
+			// CHECK FOR PARAMETERS:
+			// name
+			// The name of the organization
+
+			if(trim($this->request->post('name')) != "")
+			{
+				$arguments["name"] = trim($this->request->post('name'));
+			}
+
+			// sports_club
 			// This is a 1 or a 0 for true / false
-				
+
 			if($this->request->post('sports_club') != "")
 			{
 				//convert sports_club to a boolean
-				$sports_club = $this->request->post('sports_club');
-				$new_org->sports_club = $sports_club;
+				$arguments["sports_club"] = (bool)$this->request->post('sports_club');
 			}
 
-			$season_profiles_id = trim($this->request->post('season_profiles_id'));
-			$new_org->season_profiles_id = $season_profiles_id;
+			// season_profiles_id
+			// ID of the Season Profile this organization uses
 
-			$complevel_profiles_id = trim($this->request->post('complevel_profiles_id'));
-			$new_org->complevel_profiles_id = $complevel_profiles_id;
+			if((int)trim($this->request->post('season_profiles_id')) > 0)
+			{
+				$arguments["season_profiles_id"] = (int)trim($this->request->post('season_profiles_id'));
+			}
 
-			$leagues_id = trim($this->request->post('leagues_id'));
-			$new_org->leagues_id = $leagues_id;
+			// complevel_profiles_id
+			// ID of the Competition Level Profile this organization uses
 
-			$divisions_id = trim($this->request->post('divisions_id'));
-			$new_org->divisions_id = $divisions_id;
+			if((int)trim($this->request->post('complevel_profiles_id')) > 0)
+			{
+				$arguments["complevel_profiles_id"] = (int)trim($this->request->post('complevel_profiles_id'));
+			}
 
-			//add validation & save logics here
-			$org_validate = Validation::factory($new_org->as_array())
-				->rule('name', 'not_empty')
-				->rule('sports_club', 'not_empty')
-				->rule('sports_club', 'in_array', array(':value', array(0, 1)))
-				->rule('season_profiles_id', 'season_profiles_id_exist')
-				->rule('complevel_profiles_id', 'complevel_profiles_id_exist')
-				->rule('leagues_id', 'leagues_id_exist')
-				->rule('divisions_id', 'divisions_id_exist');
+			// leagues_id
+			// ID of the League (If Applicable)
 
-			if (!$org_validate->check()){
-				$validate_errors = $org_validate->errors('models/sportorg/org');
-				$error_array = array(
-					"error" => implode('\n', $validate_errors),
-					"param_name" => "name",
-					"param_desc" => "Name of the Org to add"
-				);
-				// Set whether it is a fatal error
-				$is_fatal = true;
-				$this->addError($error_array,$is_fatal);
-				return $new_org;
+			if((int)trim($this->request->post('leagues_id')) > 0)
+			{
+				$arguments["leagues_id"] = (int)trim($this->request->post('leagues_id'));
+			}
+
+			// divisions_id
+			// ID of the Division (If Applicable)
+
+			if((int)trim($this->request->post('divisions_id')) > 0)
+			{
+				$arguments["divisions_id"] = (int)trim($this->request->post('divisions_id'));
 			}
 
 
-			$this->processObjectSave($new_org);
+			$new_org = ORM::factory('Sportorg_Org');
+			$result = $new_org->addOrg($arguments);
 
-			return $new_org;
-
+			//Check for success / error
+			if(get_class($result) == get_class($this->mainModel))
+			{
+				return $result;
+			}
+			elseif(get_class($result) == 'ORM_Validation_Exception')
+			{
+				//parse error and add to error array
+				$this->processValidationError($result,$this->mainModel->error_message_path);
+				return false;
+			}
 		}
 		
 		/**
@@ -366,6 +365,11 @@
 		 */
 		public function action_post_addsport()
 		{
+			//Must logged user can do action
+			if (!$this->is_logged_user()){
+				return $this->throw_authentication_error();
+			}
+
 			$this->payloadDesc = "Add a new sport association for the organization";
 
 		     // CHECK FOR PARAMETERS:
@@ -410,6 +414,15 @@
 		 */
 		public function action_put_basics()
 		{
+			if(!$this->user->can('Orgcontent', array('action'=>'modify'))){
+				$error_array = array(
+					"error" => "Sorry, You don't have permission to modify",
+					"desc" => "In order to modify this action, please contact your adminstrator"
+				);
+				$this->modelNotSetError($error_array);
+				return false;
+			}
+
 			$this->payloadDesc = "Update Basic information about the organization";
 			$args = array();
 		     // CHECK FOR PARAMETERS:
@@ -421,42 +434,42 @@
 				$args['name'] = trim($this->put('name'));
 			}
 
-			// signle_sport 
+			// signle_sport
 			// Change whether this is a one-sport organization
-				
+
 			if($this->put('sports_club') != "")
 			{
 				//convert signle_sport to a boolean
-				$args['sports_club'] = (bool)$this->put('sports_club');
+				$args['sports_club'] = intval($this->put('sports_club'));
 			}
 
-			// leagues_id 
+			// leagues_id
 			// Change the league this organization belongs to
-				
+
 			if((int)trim($this->put('leagues_id')) > 0)
 			{
 				$args['leagues_id'] = (int)trim($this->put('leagues_id'));
 			}
 
-			// divisions_id 
+			// divisions_id
 			// Change the division this organization belong to
-				
+
 			if((int)trim($this->put('divisions_id')) > 0)
 			{
 				$args['divisions_id'] = (int)trim($this->put('divisions_id'));
 			}
 
-			// season_profiles_id 
+			// season_profiles_id
 			// Change the Season Profile this organization uses
-				
+
 			if((int)trim($this->put('season_profiles_id')) > 0)
 			{
 				$args['season_profiles_id'] = (int)trim($this->put('season_profiles_id'));
 			}
 
-			// complevel_profiles_id 
+			// complevel_profiles_id
 			// Change the Competition Level Profile
-				
+
 			if((int)trim($this->put('complevel_profiles_id')) > 0)
 			{
 				$args['complevel_profiles_id'] = (int)trim($this->put('complevel_profiles_id'));
@@ -467,8 +480,19 @@
 				$this->modelNotSetError();
 				return false;
 			}
-			
-			return $this->mainModel->updateOrg($args);
+
+			$result =  $this->mainModel->updateOrg($args);
+			//Check for success / error
+			if(get_class($result) == get_class($this->mainModel))
+			{
+				return $result;
+			}
+			elseif(get_class($result) == 'ORM_Validation_Exception')
+			{
+				//parse error and add to error array
+				$this->processValidationError($result,$this->mainModel->error_message_path);
+				return false;
+			}
 			
 		}
 		
@@ -479,6 +503,16 @@
 		 */
 		public function action_put_division()
 		{
+
+			if(!$this->user->can('Orgcontent', array('action'=>'modify'))){
+				$error_array = array(
+					"error" => "Sorry, You don't have permission to modify",
+					"desc" => "In order to modify this action, please contact your adminstrator"
+				);
+				$this->modelNotSetError($error_array);
+				return false;
+			}
+
 			$this->payloadDesc = "Change the Division for an Organization";
 
 		     // CHECK FOR PARAMETERS:
@@ -505,6 +539,16 @@
 		 */
 		public function action_put_complevelprofile()
 		{
+
+			if(!$this->user->can('Orgcontent', array('action'=>'modify'))){
+				$error_array = array(
+					"error" => "Sorry, You don't have permission to modify",
+					"desc" => "In order to modify this action, please contact your adminstrator"
+				);
+				$this->modelNotSetError($error_array);
+				return false;
+			}
+
 			$this->payloadDesc = "Change the Competition Level Profiles for the Organization";
 
 		     // CHECK FOR PARAMETERS:
@@ -531,6 +575,15 @@
 		 */
 		public function action_put_seasonprofile()
 		{
+			if(!$this->user->can('Orgcontent', array('action'=>'modify'))){
+				$error_array = array(
+					"error" => "Sorry, You don't have permission to modify",
+					"desc" => "In order to modify this action, please contact your adminstrator"
+				);
+				$this->modelNotSetError($error_array);
+				return false;
+			}
+
 			$this->payloadDesc = "Change the Season Profiles for the Organization";
 
 		     // CHECK FOR PARAMETERS:
@@ -556,6 +609,15 @@
 		 */
 		public function action_put_sport()
 		{
+			if(!$this->user->can('Orgcontent', array('action'=>'modify'))){
+				$error_array = array(
+					"error" => "Sorry, You don't have permission to modify",
+					"desc" => "In order to modify this action, please contact your adminstrator"
+				);
+				$this->modelNotSetError($error_array);
+				return false;
+			}
+			
 			$this->payloadDesc = "Update the org / sport association (for future use)";
 			 
 		}
@@ -572,6 +634,15 @@
 		 */
 		public function action_delete_base()
 		{
+			if(!$this->user->can('Orgcontent', array('action'=>'delete'))){
+				$error_array = array(
+					"error" => "Sorry, You don't have permission to delete",
+					"desc" => "In order to delete this action, please contact your adminstrator"
+				);
+				$this->modelNotSetError($error_array);
+				return false;
+			}
+
 			$this->payloadDesc = "Delete an Organization";
 			return $this->mainModel->delete();
 		}
@@ -583,6 +654,14 @@
 		 */
 		public function action_delete_sport()
 		{
+			if(!$this->user->can('Orgcontent', array('action'=>'delete'))){
+				$error_array = array(
+					"error" => "Sorry, You don't have permission to delete",
+					"desc" => "In order to delete this action, please contact your adminstrator"
+				);
+				$this->modelNotSetError($error_array);
+				return false;
+			}
 			$this->payloadDesc = "Delete the org / sport association";
 
 		
