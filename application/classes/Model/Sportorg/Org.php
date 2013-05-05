@@ -366,4 +366,18 @@ class Model_Sportorg_Org extends ORM
 		$this->add('sports',$sports_id);
 	}
 
+	public function updateOrgSportLink($org_id, $sports_id){
+		$oslink = ORM::factory("Sportorg_Orgsportlink");
+		$results = $oslink->where('orgs_id', '=', $org_id)
+			->find_all();
+		try{
+			foreach($results as $result){
+				$result->sports_id = $sports_id;
+				$result->update();
+			}
+			return $this;
+		}catch(ORM_Validation_Exception $e){
+			return $e;
+		}
+	}
 }

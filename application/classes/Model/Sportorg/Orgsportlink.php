@@ -10,6 +10,8 @@ class Model_Sportorg_Orgsportlink extends ORM
 
 	protected $_table_name = 'org_sport_link';
 
+	public $error_message_path = 'models/sportorg';
+
 	protected $_belongs_to = array(
 		'org' => array(
 			'model' => 'Sportorg_Org',
@@ -32,6 +34,22 @@ class Model_Sportorg_Orgsportlink extends ORM
 	{
 		parent::__construct($id);
 	}
+
+	public function rules(){
+
+		return array
+			(
+			'orgs_id'=>array(
+				array('not_empty'),
+				array('orgs_id_exist')
+			),
+
+			'sports_id'=>array(
+				array('not_empty'),
+				array('sports_id_exist')
+			),);
+	}
+
 	public function getBasics()
 	{
 		return array(

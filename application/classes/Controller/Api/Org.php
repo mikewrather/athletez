@@ -617,9 +617,34 @@
 				$this->modelNotSetError($error_array);
 				return false;
 			}
-			
+
 			$this->payloadDesc = "Update the org / sport association (for future use)";
-			 
+			$arguments = array();
+			// CHECK FOR PARAMETERS:
+			// sports_id
+			// Sports ID
+
+			if((int)trim($this->put('sports_id')) > 0)
+			{
+				$arguments["sports_id"] = (int)trim($this->put('sports_id'));
+			}
+
+			if(!$this->mainModel->id)
+			{
+				$this->modelNotSetError();
+				return false;
+			}
+			$result = $this->mainModel->updateOrgSportLink($this->mainModel->id, $arguments["sports_id"]);
+			if(get_class($result) == get_class($this->mainModel))
+			{
+				return $result;
+			}
+			elseif(get_class($result) == 'ORM_Validation_Exception')
+			{
+				//parse error and add to error array
+				$this->processValidationError($result,$this->mainModel->error_message_path);
+				return false;
+			}
 		}
 		
 		############################################################################
