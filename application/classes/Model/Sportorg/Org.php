@@ -147,15 +147,13 @@ class Model_Sportorg_Org extends ORM
 	
 	public function getDivisions()
 	{
-		//$divisions = ORM::factory('Sportorg_Org')->join('divisions')->on('divisions.id', '=', 'sportorg_org.divisions_id')->where('sportorg_org.id','=', $this->id);
-
 		return $this->divisions;
 	} 
 	
 	public function getSports()
 	{
-		$org_sport_link_obj = $this->sports;
-		return $org_sport_link_obj;
+		$sports = $this->sports;
+		return $sports;
 	}
 	
 	public function getComplevels($args = array())
