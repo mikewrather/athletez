@@ -365,7 +365,7 @@
 			if($this->request->post('male') != "")
 			{
 				//convert male to a boolean
-				$male = $this->request->post('male');
+				$male = Util::contert_to_boolean($this->request->post('male'));
 			}
 
 			// female 
@@ -374,7 +374,7 @@
 			if($this->request->post('female') != "")
 			{
 				//convert female to a boolean
-				$female = $this->request->post('female');
+				$female = Util::contert_to_boolean($this->request->post('female'));
 			}
 
 			// sporttype 
@@ -396,8 +396,8 @@
 					->rule('name', 'not_empty')
 					->rule('male', 'not_empty')
 					->rule('female', 'not_empty')
-					->rule('male', 'in_array', array(":value",array('True', 'False')))
-					->rule('female', 'in_array', array(":value", array('True', 'False')))
+					->rule('male', 'in_array', array(":value",array(0, 1)))
+					->rule('female', 'in_array', array(":value", array(0, 1)))
 					->rule('sport_type_id', 'not_empty')
 					->rule('sport_type_id', 'Model_Scrape_Sport::check_sport_type_exist');
 

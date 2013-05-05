@@ -73,7 +73,7 @@ class Model_Sportorg_Team extends ORM
 			),
 			'unique_ident' => array(
 				array('alpha')
-			)
+			),
 		);
 	}
 

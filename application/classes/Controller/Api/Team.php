@@ -318,16 +318,7 @@
 			if(trim($this->request->post('home_team') != ""))
 			{
 				//convert home_team to a boolean
-				$home_team = strtolower(trim($this->request->post('home_team')));
-				if (in_array($home_team, array('true', 'false'))){
-					if ($home_team == 'true'){
-						$home_team = 1;
-					}else{
-						$home_team = 0;
-					}
-				}else{
-					$home_team = 2;// validation not acceptable
-				}
+				$home_team = Util::contert_to_boolean(trim($this->request->post('home_team')));
 			}
 
 			// tournaments_id 
