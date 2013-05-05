@@ -183,20 +183,13 @@
 			if($this->request->query('sports_club') != "")
 			{
 				//convert sports_club to a boolean
-				$arguments["sports_club"] = strtolower($this->request->query('sports_club'));
-				if (Valid::is_true_or_false($arguments["sports_club"])){
-					if ($arguments["sports_club"] == 'true'){
-						$arguments["sports_club"] = 1;
-					}else{
-						$arguments["sports_club"] = 0;
-					}
-				}else{
+				$arguments["sports_club"] = Util::contert_to_boolean($this->request->query('sports_club'));
+				if ($arguments["sports_club"] == null){
 					$error_array = array(
-						"error" => "Sport club invalid",
-						"desc" => "Sport club only accept True or False"
+						"error" => "True/false required",
+						"desc" => "Invalid sports club value"
 					);
 					$this->modelNotSetError($error_array);
-					return false;
 				}
 			}
 
@@ -306,7 +299,7 @@
 			if($this->request->post('sports_club') != "")
 			{
 				//convert sports_club to a boolean
-				$arguments["sports_club"] = (bool)$this->request->post('sports_club');
+				$arguments["sports_club"] = Util::contert_to_boolean($this->request->post('sports_club'));
 			}
 
 			// season_profiles_id
@@ -449,9 +442,9 @@
 			if($this->put('sports_club') != "")
 			{
 				//convert signle_sport to a boolean
-				$args['sports_club'] = intval($this->put('sports_club'));
-			}
+				$args['sports_club'] = Util::contert_to_boolean($this->put('sports_club'));
 
+			}
 			// leagues_id
 			// Change the league this organization belongs to
 
