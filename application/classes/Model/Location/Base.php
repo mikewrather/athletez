@@ -38,7 +38,7 @@ class Model_Location_Base extends ORM
 			'cities_id'=>array(
 				array('not_empty'),
 				array('digit'),
-				array('city_id_exist')
+				array('cities_id_exist')
 			),
 
 			// zip (varchar)

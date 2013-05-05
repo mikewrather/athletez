@@ -13,7 +13,7 @@
 			$utl_positoin_link = ORM::factory("User_Teamslink_Positionlink");
 			$utl_positoin_link->where("users_teams_link_id", '=', $users_teams_link_id);
 			$utl_positoin_link->where("positions_id", '=', $positions_id)->find();
-			if ($utl_positoin_link->loaded()){
+			if ($utl_positoin_link->positions_id != ""){
 				return false;
 			}else{
 				return true;
@@ -90,7 +90,7 @@
 			}
 		}
 
-		public function positions_id_exist($value){
+		public static function positions_id_exist($value){
 			$positions = ORM::factory("Sportorg_Position");
 			$positions->where('id', '=', $value)->find();
 
@@ -324,7 +324,7 @@
 			return false;
 		}
 
-		public static function city_id_exist($value){
+		public static function cities_id_exist($value){
 			if ($value == "" || $value == 0){
 				return false;
 			}

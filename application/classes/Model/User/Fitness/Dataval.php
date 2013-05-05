@@ -61,7 +61,7 @@ class Model_User_Fitness_Dataval extends ORM
 
 	public function updateFitnessData($args = array()){
 		extract($args);
-		//unset($args['fitness_data_values_id']);
+
 		try {
 			$validate = Validation::factory($args);
 			if ($fitness_data_values_id != ""){

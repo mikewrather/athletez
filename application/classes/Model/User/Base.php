@@ -179,7 +179,7 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
         // Updated Email Address
         if(isset($email))
         {
-            $this->email = $email;
+            //$this->email = $email;
         }
         // firstname 
         // Updated First Name
@@ -220,6 +220,14 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 
         try {
 			$extra_validate = Validation::factory($args);
+			if ($email == ""){
+
+			}else{
+				if ($this->email != $email){
+					$extra_validate->rule('email','unique_email');
+				}
+			}
+
 			if (isset($password)){
 				$extra_validate->rule('password','not_empty');
 				$extra_validate->rule('password','min_length', array(':value', 4));
@@ -229,13 +237,15 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 				$extra_validate->rule('re_password','min_length', array(':value', 4));
 				$extra_validate->rule('re_password','max_length', array(':value', 8));
 				$extra_validate->rule('re_password','matches', array(':validation', ':field', 'password'));
+				$extra_validate->rule('cities_id','cities_id_exist');
 
 				if ($this->check($extra_validate)){
 					$this->password = Auth::instance()->hash($password);
+					$this->email = $email;
 					$this->update();
 				}
 			}else{
-				$this->update();
+				$this->update($extra_validate);
 			}
 
             return $this;
@@ -295,7 +305,9 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 //		print_r($args);
 		try {
 			$extra_validate = Validation::factory($args);
-
+			if ($email != ""){
+				$extra_validate->rule('email','unique_email');
+			}
 			$extra_validate->rule('password','not_empty');
 			$extra_validate->rule('password','min_length', array(':value', 4));
 			$extra_validate->rule('password','max_length', array(':value', 8));
@@ -323,7 +335,6 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 			'email'=>array(
 				array('not_empty'),
 				array('email'),
-				array('unique_email'),
 			),
 
 			// username (varchar)
@@ -557,7 +568,6 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 		}
 		 
 		return $retArr;
-
 	}
 
 	public function getSearch($args = array()){
@@ -791,7 +801,7 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 //		print_r($args);
 		try {
 			$extra_validate = Validation::factory($args);
-
+			$extra_validate->rule('email','unique_email');
 			$extra_validate->rule('password','not_empty');
 			$extra_validate->rule('password','min_length', array(':value', 4));
 			$extra_validate->rule('password','max_length', array(':value', 8));

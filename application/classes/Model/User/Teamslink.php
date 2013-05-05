@@ -67,7 +67,7 @@ class Model_User_Teamslink extends ORM
 	public function check_user_teams_link_exist($user_id, $teams_id, &$return_id = ""){
 		$teams_link_obj = ORM::factory('User_Teamslink')->where('teams_id','=',$teams_id)->and_where('users_id', '=', $user_id);
 		$teams_link  = $teams_link_obj->find();
-		if ($teams_link->loaded()){
+		if ($teams_link->users_id != ""){
 			$return_id = $teams_link->id;
 			return true;
 		}

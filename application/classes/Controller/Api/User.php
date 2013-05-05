@@ -193,7 +193,6 @@
 				return false;
 			}
 			return (Object)$this->mainModel->getFitnessbasics();		
-		
 		}
 		
 		/**
@@ -557,8 +556,6 @@
 
 		}
 
-
-		
 		/**
 		 * action_post_addsport() Add a new sport association for a user
 		 * via /api/user/addsport/{users_id}
@@ -571,7 +568,7 @@
 		     // CHECK FOR PARAMETERS:
 			// sports_id 
 			// ID of the sport to be added
-			
+			//TODO, Add by Jeffrey, Here need to do permissoin check.
 			if(!$this->user)
 			{
 				// Create Array for Error Data
@@ -648,8 +645,6 @@
 				$arguments["role_id"] = (int)trim($this->request->post('roles_id'));
 			}
 
-
-			
 			$new_roles_users_obj = ORM::factory("RolesUsers");
 
 			$arguments['user_id'] = $this->mainModel->id;
@@ -673,7 +668,7 @@
 		 * action_post_addidentity() Add an aditional identity to this user's profile
 		 * via /api/user/addidentity/{users_id}
 		 *
-		 */
+
 		public function action_post_addidentity()
 		{
 			$this->payloadDesc = "Add an aditional identity to this user\'s profile";
@@ -733,7 +728,8 @@
 				$this->addError($error_array,$is_fatal);
 			}	
 		}
-		
+		 */
+
 		/**
 		 * action_post_position() Add a Position for a user
 		 * via /api/user/position/{users_id}
@@ -742,6 +738,7 @@
 		public function action_post_position()
 		{
 			$this->payloadDesc = "Add a Position for a user";
+			//TODO, add by Jeffrey, here need to permission check.
 			if(!$this->user)
 			{
 				// Create Array for Error Data
@@ -782,7 +779,7 @@
 			$teams_link = ORM::factory("User_Teamslink");
 			// get users_teams_link_id
 			$users_teams_id = "";
-			if (!$teams_link->check_user_teams_link_exist($this->user->id, $teams_id, $users_teams_id)){
+			if (!$teams_link->check_user_teams_link_exist($this->mainModel->id, $teams_id, $users_teams_id)){
 				$error_array = array(
 					"error" => "Users teams ID doesn't exist",
 					"desc" => "Users teams ID doesn't exist, you must set link between users and teams first"
@@ -1393,9 +1390,6 @@
             }
 
 			$arguments = array();
-			// CHECK FOR PARAMETERS:
-			// teams_id (REQUIRED)
-			// The ID of team to disassociate the user from.  This will delete any connections that exist but won't throw an error if the team-user link does not exist.
 
 			if((int)trim($this->delete('teams_id')) > 0)
 			{
@@ -1407,15 +1401,10 @@
 				// Create Array for Error Data
 				$error_array = array(
 					"error" => "Required Parameter Missing",
-					"param_name" => "teams_id",
-					"param_desc" => "The ID of team to disassociate the user from.  This will delete any connections that exist but won't throw an error if the team-user link does not exist."
+					"desc" => "The ID of team to disassociate the user from.  This will delete any connections that exist but won't throw an error if the team-user link does not exist."
 				);
 
-				// Set whether it is a fatal error
-				$is_fatal = true;
-
-				// Call method to throw an error
-				$this->addError($error_array,$is_fatal);
+				$this->modelNotSetError($error_array);
 				return false;
 
 			}
@@ -1453,17 +1442,11 @@
 				// Create Array for Error Data
 				$error_array = array(
 					"error" => "Required Parameter Missing",
-					"param_name" => "sports_id",
-					"param_desc" => "The ID of sport to disassociate the user from.  This will be used for individual sports through the user_sport_link table."
+					"desc" => "The ID of sport to disassociate the user from.  This will be used for individual sports through the user_sport_link table."
 				);
 
-				// Set whether it is a fatal error
-				$is_fatal = true;
-
-				// Call method to throw an error
-				$this->addError($error_array,$is_fatal);
+				$this->modelNotSetError($error_array);
 				return false;
-
 			}
             return $this->mainModel->deleteSport($arguments);
 		}
@@ -1492,15 +1475,9 @@
 				// Create Array for Error Data
 				$error_array = array(
 					"error" => "Required Parameter Missing",
-					"param_name" => "role_id",
-					"param_desc" => "This is the ID of the role from which to disassociate the user."
+					"desc" => "This is the ID of the role from which to disassociate the user."
 				);
-
-				// Set whether it is a fatal error
-				$is_fatal = true;
-
-				// Call method to throw an error
-				$this->addError($error_array,$is_fatal);
+				$this->modelNotSetError($error_array);
 				return false;
 
 			}
@@ -1532,25 +1509,22 @@
             }
 
 			$arguments = array();
-			// CHECK FOR PARAMETERS:
-			// identity_id (REQUIRED)
-			// This is the ID of the identity from which to disassociate the user.
 
 			if( trim($this->delete('identity_id')) != "")
 			{
 				$arguments["identity_id"] = trim($this->delete('identity_id'));
 				if (!Valid::identity_exist($arguments["identity_id"])){
+//					$error_array = array(
+//						"error" => "Identity doesn't exist",
+//						"param_name" => "identity_id",
+//						"param_desc" => "This is the ID of the identity from which to disassociate the user."
+//					);
+
 					$error_array = array(
 						"error" => "Identity doesn't exist",
-						"param_name" => "identity_id",
-						"param_desc" => "This is the ID of the identity from which to disassociate the user."
+						"desc" => "This is the ID of the identity from which to disassociate the user."
 					);
-
-					// Set whether it is a fatal error
-					$is_fatal = true;
-
-					// Call method to throw an error
-					$this->addError($error_array,$is_fatal);
+					$this->modelNotSetError($error_array);
 					return false;
 				}
 			}
@@ -1558,19 +1532,19 @@
 			else // THIS WAS A REQUIRED PARAMETER
 			{
 				// Create Array for Error Data
+//				$error_array = array(
+//					"error" => "Required Parameter Missing",
+//					"param_name" => "identity_id",
+//					"param_desc" => "This is the ID of the identity from which to disassociate the user."
+//				);
+
 				$error_array = array(
 					"error" => "Required Parameter Missing",
-					"param_name" => "identity_id",
-					"param_desc" => "This is the ID of the identity from which to disassociate the user."
+					"desc" => "This is the ID of the identity from which to disassociate the user."
 				);
+				$this->modelNotSetError($error_array);
 
-				// Set whether it is a fatal error
-				$is_fatal = true;
-
-				// Call method to throw an error
-				$this->addError($error_array,$is_fatal);
 				return false;
-
 			}
 
             return $this->mainModel->deleteIdentity($arguments);

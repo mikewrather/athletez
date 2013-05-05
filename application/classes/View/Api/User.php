@@ -41,6 +41,10 @@
 				$retArr[$obj->id] = $obj->getBasics();
 				$retArr[$obj->id]['team_location'] = array();
 			}
+
+			if (empty($retArr)){
+				return null;
+			}
  
 			return $retArr;
 		}
@@ -61,6 +65,10 @@
 				$retArr[$obj->id] = $obj->getBasics();
 				$retArr[$obj->id]['primary_position'] = NULL;
 				$retArr[$obj->id]['social_links'] = array();
+			}
+
+			if (empty($retArr)){
+				return null;
 			}
 			return $retArr;
 		}
@@ -274,9 +282,11 @@
 
 			foreach($fitnessbasics as $fb)
 			{	
-				$retArr[$fb['id']] = $fb;
+				$retArr[] = $fb;
 			}
-
+			if (empty($retArr)){
+				return null;
+			}
 			return $retArr;
 		}
 
