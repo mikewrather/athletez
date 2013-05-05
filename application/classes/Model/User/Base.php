@@ -441,7 +441,25 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 	
 	public function getSports()
 	{
-		return $this->isports;
+		$positions_qry = DB::select('positions_id')
+			->from('utl_position_link')
+			->where('is_primary','=','1')
+			->and_where('users_teams_link_id', '=', DB::expr('`users_teams_link`.`id`'));
+
+		$utl = DB::select('org_sport_link.sports_id',array($positions_qry,'positions_id'),array(DB::expr('"team"'),'sport_type'))
+			->from('users_teams_link')
+			->join('teams')->on('users_teams_link.teams_id', '=', 'teams.id')
+			->join('org_sport_link')->on('org_sport_link.id','=','teams.org_sport_link_id')
+			->group_by('org_sport_link.sports_id')
+			->where('users_teams_link.users_id', '=', $this->id);
+
+		$isports = DB::select('sports_id',array(DB::expr('NULL'),'positions_id'),array(DB::expr('"individual"'),'sport_type'))
+			->union($utl)
+			->from('user_sport_link')
+			->where('users_id','=',$this->id);
+
+
+		return $isports;
 	}
 	
 	public function getRelated()

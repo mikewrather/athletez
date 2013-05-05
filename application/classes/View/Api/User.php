@@ -58,13 +58,18 @@
 		{
 			$retArr = array();
 			// Scaffolding Code For Array:
-			$objs = $this->obj->find_all();
-			 
+
+			$objs = $this->obj->execute();
+
+			print_r($objs);
+
 			foreach($objs as $obj)
 			{
-				$retArr[$obj->id] = $obj->getBasics();
-				$retArr[$obj->id]['primary_position'] = NULL;
-				$retArr[$obj->id]['social_links'] = array();
+				$sport = ORM::factory('Sportorg_Sport',$obj['sports_id']);
+				$retArr[$sport->id] = $sport->getBasics();
+				$retArr[$sport->id]['primary_position'] = ORM::factory('Sportorg_Position',$obj['positions_id'])->name;
+				$retArr[$sport->id]['team_type'] = $obj['sport_type'];
+				$retArr[$sport->id]['social_links'] = array();
 			}
 
 			if (empty($retArr)){
@@ -83,7 +88,7 @@
 			$retArr = array();
 		
 			$objs = $this->obj->find_all();
-			 
+
 			foreach($objs as $obj)
 			{
 				$org_sport_link = $obj->getBasics();
