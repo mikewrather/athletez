@@ -341,6 +341,15 @@
 				$arguments["divisions_id"] = (int)trim($this->request->post('divisions_id'));
 			}
 
+			if((int)trim($this->request->post('locations_id')) > 0)
+			{
+				$arguments["locations_id"] = (int)trim($this->request->post('locations_id'));
+			}
+
+			if((int)trim($this->request->post('states_id')) > 0)
+			{
+				$arguments["states_id"] = (int)trim($this->request->post('states_id'));
+			}
 
 			$new_org = ORM::factory('Sportorg_Org');
 			$result = $new_org->addOrg($arguments);
@@ -473,6 +482,16 @@
 			if((int)trim($this->put('complevel_profiles_id')) > 0)
 			{
 				$args['complevel_profiles_id'] = (int)trim($this->put('complevel_profiles_id'));
+			}
+
+			if((int)trim($this->put('locations_id')) > 0)
+			{
+				$args['locations_id'] = (int)trim($this->put('locations_id'));
+			}
+
+			if((int)trim($this->put('states_id')) > 0)
+			{
+				$args['states_id'] = (int)trim($this->put('states_id'));
 			}
 
 			if(!$this->mainModel->id)
@@ -688,8 +707,25 @@
 				return false;
 			}
 			$this->payloadDesc = "Delete the org / sport association";
+			if(!$this->mainModel->id)
+			{
+				$this->modelNotSetError();
+				return false;
+			}
 
-		
+			if((int)trim($this->delete('sports_id')) > 0)
+			{
+				$arguments["sports_id"] = (int)trim($this->delete('sports_id'));
+			}
+
+			if (!isset($arguments["sports_id"])){
+				$error_array = array(
+					"error" => "Sports ID required",
+					"desc" => "Sports ID required"
+				);
+				$this->modelNotSetError($error_array);
+			}
+			$this->mainModel->deleteSport($this->mainModel->id, $arguments["sports_id"]);
 		}
 		
 	}

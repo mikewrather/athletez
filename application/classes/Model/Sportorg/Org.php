@@ -104,13 +104,15 @@ class Model_Sportorg_Org extends ORM
 				array('complevel_profiles_id_exist')
 			),
 
-			//TODO,comment by jeffrey, no this field in add form
-			/*
 			'locations_id'=>array(
-				array('not_empty'),
 				array('locations_id_exist')
 			),
-			*/
+
+			'states_id'=>array(
+				array('not_empty'),
+				array('states_id_exist')
+			),
+
 		);
 	}
 
@@ -292,6 +294,14 @@ class Model_Sportorg_Org extends ORM
 			$this->complevel_profiles_id = $complevel_profiles_id;
 		}
 
+		if (isset($locations_id)){
+			$this->locations_id = $locations_id;
+		}
+
+		if (isset($states_id)){
+			$this->states_id = $states_id;
+		}
+
 		try{
 			$this->update();
 			return $this;
@@ -353,6 +363,14 @@ class Model_Sportorg_Org extends ORM
 			$this->divisions_id = $divisions_id;
 		}
 
+		if (isset($locations_id)){
+			$this->locations_id = $locations_id;
+		}
+
+		if (isset($states_id)){
+			$this->states_id = $states_id;
+		}
+
 		try{
 			$this->save();
 			return $this;
@@ -379,5 +397,15 @@ class Model_Sportorg_Org extends ORM
 		}catch(ORM_Validation_Exception $e){
 			return $e;
 		}
+	}
+
+	public function deleteSport($org_id, $sports_id){
+		$oslink = ORM::factory("Sportorg_Orgsportlink");
+		$results = $oslink->where('orgs_id', '=', $org_id)
+			->where('sports_id', '=', $sports_id)->find_all();
+		foreach($results as $result){
+			$result->delete();
+		}
+		return $this;
 	}
 }
