@@ -31,13 +31,14 @@ class Model_Media_Video extends ORM
 				array('digit'),
 				array('media_id_exist')
 			),
-
+/*
 			// video_services_id (int)
 			'video_services_id'=>array(
 				array('not_empty'),
 				array('digit'),
 				array('video_services_id_exist')
 			),
+*/
 		);
 	}
 
@@ -45,6 +46,10 @@ class Model_Media_Video extends ORM
 	protected $_has_many = array(
 		'metadata' => array(
 			'model' => 'Media_Videometa',
+			'foreign_key' => 'videos_id'
+		),
+		'typelink' => array(
+			'model' => 'Media_Videotypelink',
 			'foreign_key' => 'videos_id'
 		),
 		'types' => array(
@@ -130,4 +135,99 @@ class Model_Media_Video extends ORM
 		return $this;
 	}
 
+	public function addVideo($args=array())
+	{
+
+		extract($args);
+
+
+		$media = ORM::factory('Media_Base');
+
+		$mediaArr = array(
+			"media_type" => "video",
+		);
+
+		if(isset($sports_id))
+		{
+			$mediaArr['sports_id'] = $sports_id;
+		}
+
+		if(!isset($user_id))
+		{
+			if(!Auth::instance()->logged_in()) return false;
+			else
+			{
+				$mediaArr['user_id'] = Auth::instance()->get_user()->id;
+			}
+		}
+		else
+		{
+			$mediaArr['user_id'] = $user_id;
+		}
+
+		if(isset($name))
+		{
+			$mediaArr['name'] = $name;
+		}
+
+		print_r($mediaArr);
+
+		$this->media_id = $media->addMedia($mediaArr);
+
+		if(isset($moviemasher_id))
+		{
+			$this->moviemasher_id = $moviemasher_id;
+		}
+
+		if(isset($video_services_id))
+		{
+			$this->video_services_id = $video_services_id;
+		}
+
+		if(isset($thumbs))
+		{
+			$this->thumbs = $thumbs;
+		}
+
+		try
+		{
+			$this->save();
+		}
+		catch(ORM_Validation_Exception $e)
+		{
+			return $e;
+		}
+
+		if(!isset($types) || !is_array($types)) return $this->id;
+
+		foreach($types as $types_id=>$meta)
+		{
+			$this->addType($types_id,$meta);
+		}
+
+		return $this->id;
+
+	}
+
+	public function addType($types_id,$meta)
+	{
+		if((int)$types_id == 0) return false;
+
+		if(!$this->loaded()) return false;
+		if($this->has('types',$types_id))
+		{
+			echo "Link Exists!";
+			return false;
+		}
+
+		$linkID = ORM::factory('Media_Videotypelink')->addLink($types_id,$this->id);
+		foreach($meta as $property=>$val)
+		{
+			$thismeta = ORM::factory('Media_Videometa');
+			$thismeta->video_type_link_id = $linkID;
+			$thismeta->vid_prop = $property;
+			$thismeta->vid_val = $val;
+			$thismeta->save();
+		}
+	}
 }

@@ -40,4 +40,58 @@ class Controller_Updateimages extends Controller
 */
 
 	}
+
+	public function action_vids()
+	{
+		/*
+		$vid_vers = array(
+			2=>'mp4_lq_url',
+			1=>'mp4_url',
+			4=>'webm_lq',
+			3=>'webm_hq',
+		);
+
+		$vids = ORM::factory('Media_Vidhf')
+			->where('id','>=',367)
+			->find_all();
+
+		foreach($vids as $vid)
+		{
+
+			$args = array(
+				"sports_id" => $vid->sports_id,
+				"name" => $vid->title,
+				"moviemasher_id" =>$vid->mm_id,
+				"thumbs" => $vid->multi_thumb,
+				"types" => array(),
+				"user_id" => $vid->user_id,
+			);
+
+			foreach($vid_vers as $vid_type_id => $vid_ver)
+			{
+
+				if($vid->$vid_ver != "")
+				{
+					echo $vid_ver;
+					echo "\n";
+					echo $vid->$vid_ver;
+					echo "\n\n";
+					$meta = $vid->meta->where('vid_ver','=',$vid_ver)->find_all();
+					foreach($meta as $md)
+					{
+						$args["types"][$vid_type_id][$md->vid_prop] = $md->vid_val;
+					}
+
+				}
+
+			}
+
+			print_r($args);
+			$video = ORM::factory('Media_Video');
+			$video->addVideo($args);
+
+		}
+		*/
+	}
+
 }
