@@ -394,6 +394,18 @@ class Model_Sportorg_Org extends ORM
 		$this->add('sports',$sports_id);
 	}
 
+	public static function orgs_sports_id_exist($orgs_id, $sports_id){
+		$org_sport_link = ORM::factory("Sportorg_Orgsportlink");
+		$org_sport_link->where('orgs_id', '=', $orgs_id)
+			->and_where('sports_id', '=', $sports_id)->find();
+
+		if ($org_sport_link->orgs_id != ""){
+			return true;
+		}else{
+			return false;
+		}
+	}
+
 	public function updateOrgSportLink($org_id, $sports_id){
 		$oslink = ORM::factory("Sportorg_Orgsportlink");
 		$results = $oslink->where('orgs_id', '=', $org_id)

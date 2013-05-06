@@ -383,7 +383,6 @@
 			if((int)trim($this->request->post('sports_id')) > 0)
 			{
 				$sports_id = (int)trim($this->request->post('sports_id'));
-				$this_org->addSport($sports_id);
 			}
 			else // THIS WAS A REQUIRED PARAMETER
 			{
@@ -400,7 +399,17 @@
 				// Call method to throw an error
 				$this->addError($error_array,$is_fatal);
 			}
+			if (Model_Sportorg_Org::orgs_sports_id_exist($this->mainModel->id, $sports_id)){
+				//report error
+				$error_array = array(
+					"error" => "Sports already exist",
+					"desc" => "Sports already exist"
+				);
+				$this->modelNotSetError($error_array);
+				return false;
+			}
 
+			$this_org->addSport($sports_id);
 			return $this_org;
 		}
 		
