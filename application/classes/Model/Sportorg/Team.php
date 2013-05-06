@@ -206,8 +206,8 @@ class Model_Sportorg_Team extends ORM
 	{
 		$athletesArray = array();
 		foreach($this->athletes->find_all() as $athlete) { $athletesArray[$athlete->id] = $athlete->getBasics(); }
-		$num_followers = Model_User_Followers::num_followers($this, $this->id);
-		$num_votes = Model_Site_Vote::getNumVotes($this, $this->id);
+		$num_followers = Model_User_Followers::num_followers($this);
+		$num_votes = Model_Site_Vote::getNumVotes($this);
 
 		return array(
 			"team_id" => $this->id,

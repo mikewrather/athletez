@@ -469,8 +469,8 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 	
 	public function getBasics()
 	{
-		$num_votes = Model_Site_Vote::getNumVotes($this, $this->id);
-		$num_followers = Model_User_Followers::num_followers($this, $this->id);
+		$num_votes = Model_Site_Vote::getNumVotes($this);
+		$num_followers = Model_User_Followers::num_followers($this);
 		if ($this->user_picture){
 			$user_image_meta = Model_Media_Image::get_user_image_meta( $this->user_picture)->as_array();
 			foreach($user_image_meta as $b){

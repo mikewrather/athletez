@@ -65,8 +65,9 @@ class Model_Site_Vote extends Model_Site_Entdir
 		);
 	}
 
-	public static function getNumVotes($obj, $subject_id){
+	public static function getNumVotes($obj){
 		$subject_enttypes_id = Model_Site_Enttype::getMyEntTypeID($obj);
+		$subject_id = $obj->id;
 		$site_vote = ORM::factory("Site_Vote");
 		$site_vote->where('subject_enttypes_id', '=', $subject_enttypes_id);
 		$site_vote->where('subject_id', '=', $subject_id)->find_all()->as_array();

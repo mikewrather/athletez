@@ -39,7 +39,7 @@ class Model_Media_Image extends ORM
 
 	public function getBasics()
 	{
-		$num_votes = Model_Site_Vote::getNumVotes($this, $this->id);
+		$num_votes = Model_Site_Vote::getNumVotes($this);
 		return array(
 			"id" => $this->id,
 			"media" => $this->media->getBasics(),

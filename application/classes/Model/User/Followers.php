@@ -9,8 +9,9 @@ class Model_User_Followers extends ORM
 {
 	protected $_table_name = 'followers';
 
-	public static function num_followers($obj, $subject_id){
+	public static function num_followers($obj){
 		$subject_enttypes_id = Model_Site_Enttype::getMyEntTypeID($obj);
+		$subject_id = $obj->id;
 		$followers = ORM::factory("User_Followers");
 		$followers->where('subject_enttypes_id', '=', $subject_enttypes_id);
 		$followers->where('subject_id', '=', $subject_id)->find_all()->as_array();
