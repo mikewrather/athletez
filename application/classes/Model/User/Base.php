@@ -863,6 +863,22 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 		return Model_Site_Comment::getCommentsOf($this);
 	}
 
+	//TODO, Add by Jeffrey, Have issues, need verify later
+	public function updateUserTeam($args = array()){
+		extract($args);
+		$ut_link = ORM::factory("User_Teamslink");
+		$results = $ut_link->where('users_id', '=', $users_id)->find_all();
+		try {
+			foreach($results as $result){
+				$result->teams_id = $teams_id;
+				$result->update();
+			}
+			return $this;
+		} catch(ORM_Validation_Exception $e){
+			return $e;
+		}
+	}
+
 	/** Not used yet, comment it temporarily by Jeffrey,
 	 * developer can use custom unique_username rule in valid.php
 	 *

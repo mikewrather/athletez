@@ -1261,8 +1261,21 @@
                 $this->modelNotSetError();
                 return false;
             }
-            
-            $result = $this->mainModel->updateTeam();    
+
+			if((int)trim($this->put('teams_id')) > 0)
+			{
+				$arguments["teams_id"] = (int)trim($this->put('teams_id'));
+			}else{
+				$error_array = array(
+					"error" => "Teams ID required",
+					"desc" => "Teams ID required"
+				);
+				$this->modelNotSetError($error_array);
+				return false;
+			}
+
+            $arguments['users_id'] = $this->mainModel->id;
+            $result = $this->mainModel->updateUserTeam($arguments);
                 
             //Check for success / error
             if(get_class($result) == get_class($this->mainModel))
