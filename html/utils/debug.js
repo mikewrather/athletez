@@ -25,7 +25,7 @@ define(['facade'], function (facade) {
             var active = this.mode();
             if (active) { 
                 // this.msgs.push(msg);
-                //console.log(msg);
+                console.log(msg);
             }
         }
     };

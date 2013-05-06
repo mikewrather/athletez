@@ -817,6 +817,15 @@
 		 */
 		public function action_post_register()
 		{
+            $model = urldecode($this->request->post('model'));
+            if ($model != "") {
+                $model = json_decode($model);
+                $vars = get_object_vars ( $model );
+                foreach($vars as $key=>$value) {
+                    $this->request->post($key, $value);
+                }
+            }
+            
 			$this->payloadDesc = "This is different than add in that it will also log the person in and send verification email.";
 			$arguments = array();
 			// CHECK FOR PARAMETERS:

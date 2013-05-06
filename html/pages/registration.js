@@ -16,12 +16,13 @@ define([
     "registration/models/register_facebook",
     "registration/models/register_email",
     "registration/models/upload_image",
+    "registration/models/select_org",
     
     "registration/views/select_type",
     "registration/views/register_facebook",
     "registration/views/register_email",
-    "registration/views/upload_image"
-    
+    "registration/views/upload_image",
+    "registration/views/select_org"
     ], function (require, pageLayoutTemplate) {
 
     var RegistrationController,
@@ -35,11 +36,13 @@ define([
         RegistrationFacebookModel = require("registration/models/register_facebook"),
         RegistrationEmailModel = require("registration/models/register_email"),
         RegistrationUploadImageModel = require("registration/models/upload_image"),
+        RegistrationSelectOrgModel = require("registration/models/select_org"),
         
         RegistrationSelectTypeView = require("registration/views/select_type"),
         RegistrationFacebookView = require("registration/views/register_facebook"),
         RegistrationEmailView = require("registration/views/register_email"),
         RegistrationUploadImageView = require("registration/views/upload_image"),
+        RegistrationSelectOrgView = require("registration/views/select_org"),
         
         LayoutView = views.LayoutView,
         $ = facade.$,
@@ -95,11 +98,10 @@ define([
             }
             Channel('registration-uploadimage-email').subscribe(uploadImage);
             
-            function registerComplete() {
-                alert('complete');
+            function selectOrg() {
+                controller.selectOrg();
             }
-            Channel('registration-after-facebook').subscribe(registerComplete);
-            Channel('registration-after-email').subscribe(registerComplete);
+            Channel('registration-select-org').subscribe(selectOrg);
         },
                 
         refreshPage: function() {
@@ -120,6 +122,12 @@ define([
             if (this.registerEmailView) {
                 $(this.registerEmailView.destination).html('');
                 position = $.inArray(this.registerEmailView, this.scheme);
+                if ( ~position ) this.scheme.splice(position, 1);
+            }
+            
+            if (this.selectOrgView) {
+                $(this.selectOrgView.destination).html('');
+                position = $.inArray(this.selectOrgView, this.scheme);
                 if ( ~position ) this.scheme.splice(position, 1);
             }
         },
@@ -195,6 +203,26 @@ define([
             });
             
             this.scheme.push(this.uploadImageView);
+            this.layout.render();
+        },
+        
+        selectOrg: function() {
+            var controller = this;
+            
+            this.refreshPage();
+            this.select_org = new RegistrationSelectOrgModel();
+            
+            this.setupSelectOrgView();
+        },
+        
+        setupSelectOrgView: function() {
+            this.selectOrgView = new RegistrationSelectOrgView({
+                model: this.select_org,
+                name: "Registration Select Org",
+                destination: "#main-content"
+            });
+            
+            this.scheme.push(this.selectOrgView);
             this.layout.render();
         },
         

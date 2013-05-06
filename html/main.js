@@ -13,7 +13,7 @@ require.config({
         'json2'        : '/vendor/json2',
         'modernizr'    : '/vendor/modernizr-2.6.2.min',
         'html5'        : '/vendor/html5',
-        'jquery'       : '/vendor/jquery-1.9.0.min',
+        'jquery'       : '/vendor/jquery-2.0.0',
         'zepto'        : '/vendor/zepto',
         'underscore'   : '/vendor/underscore',
         'mustache'     : '/vendor/mustache',
@@ -56,6 +56,7 @@ require.config({
         'media'        : '/packages/media',
         'site'         : '/packages/site',
         'sportorg'     : '/packages/sportorg',
+        'location'     : '/packages/location',
         
         // Pages
 

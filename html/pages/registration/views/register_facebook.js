@@ -97,12 +97,10 @@ function(require, registrationFacebookTemplate) {
             var self = this;
             
             if (!this.fbimages) {
-                var self = this;
                 this.fbimages = new RegistrationFBImageList();
                 this.fbimages.fetch();
                 $.when(this.fbimages.request).done(function() {
                     self.setupFBPictures();
-                    Channel('registration-fb-images:fetch').publish();
                 });
             } else {
                 $('#' + this.fbImageListView.id).dialog({
@@ -126,16 +124,12 @@ function(require, registrationFacebookTemplate) {
                 renderFBImageListView();                
             });
             
-            function callback () {
-                self.fbImageListView.render();                
-                self.$el.append(self.fbImageListView.el);
-                $('#' + self.fbImageListView.id).dialog({
-                    width: '80%',
-                    close: self.removeListView
-                });
-            }
-            
-            Channel('registration-fb-images:fetch').subscribe(callback);      
+            this.fbImageListView.render();                
+            this.$el.append(self.fbImageListView.el);
+            $('#' + this.fbImageListView.id).dialog({
+                width: '80%',
+                close: self.removeListView
+            });            
         },
         
         removeListView: function() {
@@ -177,7 +171,7 @@ function(require, registrationFacebookTemplate) {
             this.model.set('payload', payload);
             console.log(this.model.toJSON());
             this.model.save();
-            Channel('registration-after-facebook').publish(this.model);
+            Channel('registration-select-org').publish();
         }
     });
 

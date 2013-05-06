@@ -16,10 +16,10 @@
         "post_date": "September 9, 2012",
         "tags_count": 4,
         "tags": [
-            "images/tag.png", 
-            "images/tag.png",
-            "images/tag.png",
-            "images/tag.png"
+            "tag1", 
+            "tag2",
+            "tag3",
+            "tag4"
         ],
         "num_votes": 13,
         "num_views": 33,
@@ -39,9 +39,12 @@
         "video_desc": "This is the description of the highlight. The user can include whatever they want here. I think no character limit is neccessary. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut...",
         "user_name": "You",
         "post_date": "September 9, 2012",
-        "tags_count": 1,
+        "tags_count": 4,
         "tags": [
-            "images/tag.png"
+            "tag1", 
+            "tag2",
+            "tag3",
+            "tag4"
         ],
         "num_votes": 10,
         "num_views": 20,

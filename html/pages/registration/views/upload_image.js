@@ -26,7 +26,7 @@ function(require, registrationUploadImageTemplate) {
         id: 'main-content',
         
         events: {
-            
+            "click .next": "nextStep"
         },
 
         template: registrationUploadImageTemplate,
@@ -34,6 +34,11 @@ function(require, registrationUploadImageTemplate) {
         initialize: function (options) {
             SectionView.prototype.initialize.call(this, options);                        
         },
+        
+        nextStep: function(event) {
+            event.preventDefault();
+            Channel("registration-select-org").publish();
+        }
         
     });
 

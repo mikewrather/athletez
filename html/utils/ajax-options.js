@@ -7,11 +7,11 @@ define(function() {
     var options;
 
     options = {
-        dataType: 'json',
+        //dataType: 'json',
         beforeSend: function (xhr) {
-            xhr.setRequestHeader("Content-encoding", "gzip, deflate");
-            xhr.setRequestHeader("Content-type", "application/json");
-            xhr.setRequestHeader("Accept", "application/json");
+            //xhr.setRequestHeader("Content-encoding", "gzip, deflate");
+            //xhr.setRequestHeader("Content-type", "application/json");
+            //xhr.setRequestHeader("Accept", "application/json");
         }
     };
 
