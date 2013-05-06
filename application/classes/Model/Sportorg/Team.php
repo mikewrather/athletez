@@ -210,8 +210,9 @@ class Model_Sportorg_Team extends ORM
 		$num_votes = Model_Site_Vote::getNumVotes($this);
 
 		return array(
+
 			"team_id" => $this->id,
-			"team_name" => $this->unique_ident,
+			"team_name" => $this->name(),
 			"org_sport_link" => $this->org_sport_link->getBasics(),
 			"org_sport_link_id" => $this->org_sport_link_id,
 			"complevel" => $this->complevel->getBasics(),
@@ -221,15 +222,14 @@ class Model_Sportorg_Team extends ORM
 			"year" => $this->year,
 			"mascot" => $this->mascot,
 			"athletes" => $athletesArray,
-			"team_location" => NULL,
-            /* TODO, add by jeffrey ,waiting for answer
+			"team_location" => $this->getTeamLocation(),
+			/* TODO, Add by Jeffrey, In order to match Ma's test data ,below data is required from him */
 			"id" => $this->id,
 			"name" => $this->name(),
-			"location" => "Blairstown, NJ",
-			"picture" => "images/team_medium.png",
+			"location" => $this->getTeamLocation(),
+			"picture" => $this->getImage(),
 			"num_votes" => $num_votes,
 			"num_followers" => $num_followers
-            */
 		);
 	}
 
@@ -497,5 +497,23 @@ class Model_Sportorg_Team extends ORM
 			return $e;
 		}
 		return $this;
+	}
+
+	public function getTeamLocation(){
+		$org = $this->org_sport_link->org;
+
+		if ($org->getLocationName()){
+			return $org->getLocationName();
+		}else{
+			return $org->getStateName();
+		}
+	}
+	//TODO, add by Jeffrey.
+	public function getImage(){
+		//Step1, get all media(image)  - team_id(subject_id),team(enttype_id) from media(media type = 'image').
+		//Step2, get all images_id from images table according to step1's media_id..
+		//Step3, search in votes table, using images_id(subject_id),images(enttypeid). group by those subject_ids,count each subject_ids, got the max one.
+		//Step4, According to max_votes_image_id, get the real image from the images table(need join image_meta)
+		return null;
 	}
 }

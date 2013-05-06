@@ -23,6 +23,10 @@ class Model_Sportorg_Org extends ORM
 		"location" => array(
 			"model" => "Location_Base",
 			"foreign_key" => "locations_id"
+		),
+		"state" => array(
+			"model" => "Location_State",
+			"foreign_key" => "states_id"
 		)
 	);
 
@@ -48,6 +52,14 @@ class Model_Sportorg_Org extends ORM
 			'far_key' => 'leagues_id'
 		)
 	);
+
+	public function getLocationName(){
+		return $this->location->address;
+	}
+
+	public function getStateName(){
+		return $this->state->name;
+	}
 
 	public function getTeamsAsArray()
 	{
