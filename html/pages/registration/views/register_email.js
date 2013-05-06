@@ -92,11 +92,11 @@ define([
                         error = true;
                     }
 
-                    if (payload['password'] == '' || payload['re-password'] == '') {
+                    if (payload['password'] == '' || payload['re_password'] == '') {
                         this.$('#password').parent().find('.text-error').html('Please input a password');
                         error = true;
                     }
-                    if (payload['password'] != payload['re-password']) {
+                    if (payload['password'] != payload['re_password']) {
                         this.$('#password').parent().find('.text-error').html('Passwords Do Not Match');
                         error = true;
                     }
