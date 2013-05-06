@@ -183,7 +183,7 @@
 			if($this->request->query('sports_club') != "")
 			{
 				//convert sports_club to a boolean
-				$arguments["sports_club"] = Util::contert_to_boolean($this->request->query('sports_club'));
+				$arguments["sports_club"] = Util::convert_to_boolean($this->request->query('sports_club'));
 				if ($arguments["sports_club"] == null){
 					$error_array = array(
 						"error" => "True/false required",
@@ -299,7 +299,7 @@
 			if($this->request->post('sports_club') != "")
 			{
 				//convert sports_club to a boolean
-				$arguments["sports_club"] = Util::contert_to_boolean($this->request->post('sports_club'));
+				$arguments["sports_club"] = Util::convert_to_boolean($this->request->post('sports_club'));
 			}
 
 			// season_profiles_id
@@ -442,7 +442,7 @@
 			if($this->put('sports_club') != "")
 			{
 				//convert signle_sport to a boolean
-				$args['sports_club'] = Util::contert_to_boolean($this->put('sports_club'));
+				$args['sports_club'] = Util::convert_to_boolean($this->put('sports_club'));
 
 			}
 			// leagues_id

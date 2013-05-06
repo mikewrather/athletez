@@ -365,7 +365,7 @@
 			if($this->request->post('male') != "")
 			{
 				//convert male to a boolean
-				$male = Util::contert_to_boolean($this->request->post('male'));
+				$male = Util::convert_to_boolean($this->request->post('male'));
 			}
 
 			// female 
@@ -374,7 +374,7 @@
 			if($this->request->post('female') != "")
 			{
 				//convert female to a boolean
-				$female = Util::contert_to_boolean($this->request->post('female'));
+				$female = Util::convert_to_boolean($this->request->post('female'));
 			}
 
 			// sporttype 

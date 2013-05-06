@@ -318,7 +318,7 @@
 			if(trim($this->request->post('home_team') != ""))
 			{
 				//convert home_team to a boolean
-				$home_team = Util::contert_to_boolean(trim($this->request->post('home_team')));
+				$home_team = Util::convert_to_boolean(trim($this->request->post('home_team')));
 			}
 
 			// tournaments_id 

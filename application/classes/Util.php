@@ -2,7 +2,7 @@
 
 class Util {
 
-	public static function contert_to_boolean($value){
+	public static function convert_to_boolean($value){
 		$value = strtolower(trim($value));
 		if ($value == ""){
 			return null;
