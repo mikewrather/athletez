@@ -22,6 +22,8 @@ class Controller_Api_Base extends AuthController
 	// These arrays are populated with data from the body in the case of put or delete requests
 	protected $put = array();
 	protected $delete = array();
+	protected $post = array();
+	protected $get = array();
 
 	protected $fatalErrorThrown = false;
 
@@ -48,35 +50,74 @@ class Controller_Api_Base extends AuthController
 		// calls a method to set the user and logged_in properties
 		$this->populateAuthVars();
 
-		// Because we can only get GET / POST values through request->query and request->post, we are extending functionality to put and delete
-		if($this->request->method() == 'PUT')
-		{
-			$this->setBodyParams('put');
-		}
-		elseif($this->request->method() == 'DELETE')
-		{
-			$this->setBodyParams('delete');
-		}
+		//Moves the body data to the correct array
+		$this->setBodyParams();
 
 		//Check to see if we want to save the request
 		$this->checkForSave();
 
-
 	}
 
+
+	/**
+	 * This method checks for a "model" value in the array that holds data for the http verb
+	 * If it exists it checks to make sure it contains valid json.  If so, it decodes it
+	 * and replaces the array with the data contained in that json
+	 */
+	protected function check_for_json()
+	{
+		//Get HTTP Verb
+		$verb = strtolower($this->request->method());
+
+		//Check For Model
+		if(!$this->$verb('model')) return false;
+		if($this->$verb('model') == "") return false;
+
+		$json = json_decode($this->$verb('model'));
+		if (json_last_error() == JSON_ERROR_NONE)
+		{
+			empty($this->$verb);
+			$this->$verb = get_object_vars($json);
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
 	/**
 	 * @param string $verb is put by default, but can be set to delete for delete requests
 	 */
-	protected function setBodyParams($verb='put')
+	protected function setBodyParams($verb=NULL)
 	{
-		$putParams = (string)$this->request->body();
-		$putArr = explode('&',$putParams);
-		foreach($putArr as $argPair)
-		{
-			$argArr = explode('=',$argPair);
-			$this->$verb($argArr[0],$argArr[1]);
+
+		if($verb === NULL) $verb = strtolower($this->request->method());
+
+		$parseBody = false;
+		switch ($verb){
+			case 'get':
+				$this->get = $this->request->query();
+				break;
+			case 'post':
+				$this->post = $this->request->post();
+				break;
+			default:
+				$bodyStr = (string)$this->request->body();
+				$parseBody = true;
+				break;
 		}
-		//print_r($this->$verb);
+
+		if($parseBody)
+		{
+			$arr = explode('&',$bodyStr);
+			foreach($arr as $argPair)
+			{
+				$argArr = explode('=',$argPair);
+				$this->$verb($argArr[0],$argArr[1]);
+			}
+		}
+
+		$this->check_for_json($this->$verb);
 	}
 
 	/**
@@ -117,6 +158,44 @@ class Controller_Api_Base extends AuthController
 		}
 	}
 
+	/**
+	 * post() gets / sets a value of the post array
+	 * @param $arg is the argument you are getting / setting
+	 * @param null $val is the optional value you are setting the argument to.
+	 * @return array|bool
+	 */
+	protected function post($arg,$val=NULL)
+	{
+		if($val !== NULL)
+		{
+			return $this->post[$arg] = $val;
+		}
+		else
+		{
+			if(isset($this->post[$arg])) return $this->post[$arg];
+			else return false;
+		}
+	}
+
+	/**
+	 * get() gets / sets a value of the get array
+	 * @param $arg is the argument you are getting / setting
+	 * @param null $val is the optional value you are setting the argument to.
+	 * @return array|bool
+	 */
+	protected function get($arg,$val=NULL)
+	{
+		if($val !== NULL)
+		{
+			return $this->get[$arg] = $val;
+		}
+		else
+		{
+			if(isset($this->get[$arg])) return $this->get[$arg];
+			else return false;
+		}
+	}
+	
 	public function execute()
 	{
 		//print_r(debug_backtrace());
