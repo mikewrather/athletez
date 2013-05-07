@@ -87,14 +87,11 @@
 		{
 			$retArr = array();
 		
-			$objs = $this->obj->find_all();
-
-			foreach($objs as $obj)
+			$obj = $this->obj->execute();
+			
+			foreach($obj as $data)
 			{
-				$org_sport_link = $obj->getBasics();
-				$org = $org_sport_link['org'];
-				$retArr[$org->id] = $org;
-				$retArr[$org->id]['teams'] = array();
+				$retArr[$data['id']] = $data;
 			}
 		 	
 			return $retArr; 

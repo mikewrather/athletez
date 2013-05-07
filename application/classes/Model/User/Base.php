@@ -432,11 +432,34 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 
 	public function getOrgs()
 	{
-		$org_sport_link_obj = ORM::factory('Sportorg_Orgsportlink')
+		$retArr = array();
+		$org_sport_link_obj = DB::select(array('users.id', 'user_id'), 'orgs.*', array('orgs.id', 'org_id'), array('orgs.name', 'org_name'))
+			->from('users')
+			->join('users_teams_link')->on('users.id','=','users_teams_link.users_id')
+			->join('teams')->on('teams.id','=','users_teams_link.teams_id')
+			->join('org_sport_link')->on('org_sport_link.id','=','teams.org_sport_link_id')
+			->join('orgs')->on('orgs.id','=','org_sport_link.orgs_id')
+			->where('users.id','=',$this->id)
+			->group_by('orgs.id');
+
+		return (object)$org_sport_link_obj;
+		
+		/*$res = $org_sport_link_obj->execute();
+
+		foreach($res as $data)
+		{
+			$retArr[] = $data;
+		}
+
+		print '<pre>';
+		print_r($retArr);
+		exit;
+		//return (object)$retArr;
+		/*$org_sport_link_obj = ORM::factory('Sportorg_Orgsportlink')
 					->join('teams')->on('sportorg_orgsportlink.id', '=', 'teams.org_sport_link_id')					
 					->join('users_teams_link')->on('users_teams_link.teams_id','=','teams.id')
-					->where('users_teams_link.users_id', '=', $this->id);
-		return $org_sport_link_obj;
+					->where('users_teams_link.users_id', '=', $this->id);*/
+		
 	}
 	
 	public function getSports()
