@@ -100,7 +100,7 @@ class Controller_Api_Base extends AuthController
 		}
 	}
 	/**
-	 * @param string $verb is put by default, but can be set to delete for delete requests
+	 * @param string $verb is NULL by default and will use the current request's method.  But it can also be set manually.
 	 */
 	protected function setBodyParams($verb=NULL)
 	{
@@ -130,7 +130,6 @@ class Controller_Api_Base extends AuthController
 				$this->$verb($argArr[0],$argArr[1]);
 			}
 		}
-
 
 	}
 
