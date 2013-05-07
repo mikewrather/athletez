@@ -88,11 +88,60 @@ define(['facade', 'utils'], function (facade, utils) {
         // **Method:** `saveSuccess` - resolve the deferred here in success
         saveSuccess: function (model, response) {
             debug.log(response);
+            
+            $('.global-alert').stop().fadeOut().removeClass('alert-error').removeClass('alert-info');
+            $('.global-messages').stop().fadeOut();
+            $('.global-errors').stop().fadeOut();
+            $('.field-error').stop().fadeOut();
+            
+            var exec_data = model.get('exec_data');
+            var desc = model.get('desc');
+            if (!exec_data['exec_error']) {
+                $('.global-alert').addClass('alert-info').html(desc).stop().fadeIn();
+            } else {
+                $('.global-alert').addClass('alert-error').html(desc).stop().fadeIn();
+            }
+            var errorsArr = exec_data['error_array'];
+            if (errorsArr) {
+                var errors = '';
+                for (var i = 0; i < errorsArr.length; i++) {
+                    var item = errorsArr[i];
+                    if (item['field'] != '') {
+                        var field = item['field'];
+                        $('#' + field).parent().find('.field-error').html(item['error']).stop().fadeIn();
+                    } else {
+                        errors += item['error'] + '<br/>';
+                    }
+                }
+                if (errors != '')
+                    $('.global-errors').html(messages).stop().fadeIn();
+            }
+            
+            var messagesArr = exec_data['message_array'];
+            if (messagesArr) {
+                var messages = '';
+                for (var i = 0; i < messagesArr.length; i++) {
+                    var item = messagesArr[i];
+                    if (item['field'] != '') {
+                        var field = item['field'];
+                        $('#' + field).parent().find('.field-message').html(item['message']).stop().fadeIn();
+                    } else {
+                        messages += item['message'] + '<br/>';                
+                    }
+                }
+                if (messages != '')
+                    $('.global-messages').html(messages).stop().fadeIn();
+            }
         },
 
         // **Method:** `fetchError` - log response on error
         saveError: function (model, response) {
             debug.log(response);
+            
+            $('.global-alert').addClass('alert-error').html('Hold on. There were problems. See sad faces above.').stop().fadeIn();
+            $('.global-messages').stop().fadeOut();
+            $('.global-errors').stop().fadeOut();
+            $('.field-error').stop().fadeOut();
         },
 
         // Primarily a tool for unit tests... Don't rely on calling this.isReady!!

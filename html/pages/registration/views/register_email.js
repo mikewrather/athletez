@@ -63,71 +63,21 @@ define([
                     $.each(fields, function(i, field){
                             payload[field.name] = field.value;
                     });
-                    var error = false;
-                    this.$('.text-error').html('');
-                    this.$('.form-alert').hide().removeClass('alert-error').removeClass('alert-info');
-
-                    if (payload['firstname'] == '') {
-                        this.$('#firstname').parent().find('.text-error').html('Please input a first name.');
-                        error = true;
+                    
+                    var register = new BaseModel(payload);
+                    register.url = function() {
+                        return '/api/user/register';                            
                     }
-
-                    if (payload['lastname'] == '') {
-                        this.$('#lastname').parent().find('.text-error').html('Please input a last name.');
-                        error = true;
+                    register.saveSuccess = function(model, response) {
+                        BaseModel.prototype.saveSuccess.call(this, model, response);
+                        var exec_data = model.get('exec_data');
+                        var payload = model.get('payload');
+                        if (!exec_data['exec_error']) {
+                            Channel('registration-uploadimage-email').publish();
+                        }                        
                     }
-
-                    if (payload['birthday'] == '') {
-                        this.$('#birthday').parent().find('.text-error').html('Invalid DOB.');
-                        error = true;
-                    }
-
-                    if (payload['email'] == '') {
-                        this.$('#email').parent().find('.text-error').html('Please input an email.');
-                        error = true;
-                    }
-
-                    if ('undefined' == typeof payload['gender']) {
-                        this.$('#male').parents('.controls').find('.text-error').html('Please select a gender.');
-                        error = true;
-                    }
-
-                    if (payload['password'] == '' || payload['re_password'] == '') {
-                        this.$('#password').parent().find('.text-error').html('Please input a password');
-                        error = true;
-                    }
-                    if (payload['password'] != payload['re_password']) {
-                        this.$('#password').parent().find('.text-error').html('Passwords Do Not Match');
-                        error = true;
-                    }
-
-                    if (payload['accept_terms'] == null) {
-                        this.$('.agree-error').html('I know it\'s boring, but you\'ll have to read it to continue.');
-                        error = true;                
-                    } else {
-                        this.$('.agree-error').html('');
-                    }
-
-                    if (!error) {
-                        this.$('.form-alert').addClass('alert-info').html('Outstanding! We sent you an email to verify your address.').show();
-                        var register = new BaseModel(payload);
-                        register.url = function() {
-                            return '/api/user/register';                            
-                        }
-                        register.saveSuccess = function(model, response) {
-                            var exec_data = model.get('exec_data');
-                            var payload = model.get('payload');
-                            if (!exec_data['exec_error'] && payload) {
-                                Channel('registration-uploadimage-email').publish();
-                            }                            
-                        }                
-                        register.saveError = function(model, response) {
-                            alert('Error');
-                        }
-                        register.save();                                        
-                    } else {
-                        this.$('.form-alert').addClass('alert-error').html('Hold on. There were problems. See sad faces above.').show();
-                    }
+                    register.save();                                        
+                    
                 }
 
         });
