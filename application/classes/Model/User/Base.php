@@ -522,6 +522,7 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 			"num_followers" => $num_followers,
 			"num_votes" => $num_votes,
 			"city" => $this->city->getBasics(),
+			"dob" => $this->dob,
 			//"utl" =>$results
 		);
 
@@ -638,6 +639,10 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 		if (isset($gradyear)){
 			$this->where('user_base.grad_year', '=', $gradyear);
 		}
+
+        if (isset($dob)){
+            $this->where('user_base.dob', '=', $dob);
+        }
 
 		$enttype_id = Model_Site_Enttype::getMyEntTypeID($this);
 		if (!isset($orderby)){
