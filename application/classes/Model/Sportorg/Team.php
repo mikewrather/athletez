@@ -514,6 +514,17 @@ class Model_Sportorg_Team extends ORM
 		//Step2, get all images_id from images table according to step1's media_id..
 		//Step3, search in votes table, using images_id(subject_id),images(enttypeid). group by those subject_ids,count each subject_ids, got the max one.
 		//Step4, According to max_votes_image_id, get the real image from the images table(need join image_meta)
-		return null;
+		return "TODO, add by Jeffrey";
+	}
+
+	public function getTeamPointsScore($games_id){
+		$teams_id = $this->id;
+		$result = $this->teamgames->where('teams_id', '=', $teams_id)
+			->where('games_id', '=', $games_id)->find();
+
+		if (!empty($result) && $result->teams_id != ""){
+			return intval($result->points_scored);
+		}
+		return 0;
 	}
 }

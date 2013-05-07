@@ -30,4 +30,12 @@ class Util {
 		//Can't convert to boolean
 		return null;
 	}
+
+	public static function format_date($day){
+		return date("F j, Y", strtotime($day));
+	}
+
+	public static function format_time($time){
+		return date("g:i A", strtotime($time));
+	}
 }

@@ -93,13 +93,36 @@ class Model_Sportorg_Games_Base extends ORM
 	{
 
 		return array(
-			"id" => $this->id,
 			"locations_id" => $this->locations_id,
 			"location" => $this->location->getBasics(),
 			"gameDay" => $this->gameDay,
 			"gameTime" => $this->gameTime,
 			"teams" => $this->teams,
+
+			/* Required are required from Ma's test file*/
+			//TODO, add by Jeffrey, Clean up the unnecessary data.
+			"id" => $this->id,
+			"game_name" => $this->name(),
+			"game_day" => Util::format_date($this->gameDay), //"Sept 14, 2002",
+			"game_time" => Util::format_time($this->gameTime), //"09:00 AM",
+			"game_picture" => "TODO, add by Jeffrey",//"images/game_medium.png",
+			"teams" => $this->getTeams(),
+			"game_location" => $this->location->address
 		);
+	}
+
+	public function getTeams(){
+		$teams_arr = array();
+		$teams = $this->teams->find_all();
+		foreach($teams as $team){
+			$new_obj = new stdClass();
+			$teamBasicInfo = $team->getBasics();
+			$new_obj->team_name = $teamBasicInfo['team_name'];
+			$new_obj->team_location = $teamBasicInfo['team_location'];
+			$new_obj->points_scored = $team->getTeamPointsScore($this->id);
+			$teams_arr[] = $new_obj;
+		}
+		return $teams_arr;
 	}
 
 	public function name()
@@ -111,11 +134,6 @@ class Model_Sportorg_Games_Base extends ORM
 			$name .= $team->name().", ";
 		}
 		return rtrim($name,', ');
-	}
-
-	public function getTeams(){
-		$teams = $this->teams;
-		return $teams;
 	}
 
 	public function getLocation(){
