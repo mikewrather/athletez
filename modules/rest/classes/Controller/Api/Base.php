@@ -50,8 +50,22 @@ class Controller_Api_Base extends AuthController
 		// calls a method to set the user and logged_in properties
 		$this->populateAuthVars();
 
-		//Moves the body data to the correct array
+		// Moves the body data to the correct array
+		// Also calls method to put the
 		$this->setBodyParams();
+
+		// Check to see if data is stored as json with the "model" key
+		// This will return true if that key exists with valid json
+		if($this->check_for_json())
+		{
+			// Here we set the request query and post arrays
+			// to hold the data we've stored in this controller's
+			// respective arrays.
+			// We don't do this for the put and delete because
+			// there are already custom methods used for those
+			$this->request->query($this->get);
+			$this->request->post($this->post);
+		}
 
 		//Check to see if we want to save the request
 		$this->checkForSave();
@@ -117,7 +131,7 @@ class Controller_Api_Base extends AuthController
 			}
 		}
 
-		$this->check_for_json($this->$verb);
+
 	}
 
 	/**
