@@ -211,8 +211,11 @@ define([
             
             this.refreshPage();
             this.select_org = new RegistrationSelectOrgModel();
+            this.select_org.fetch();
             
-            this.setupSelectOrgView();
+            $.when(this.select_org.request).done(function() {
+                controller.setupSelectOrgView();
+            });
         },
         
         setupSelectOrgView: function() {
