@@ -120,6 +120,7 @@ else
 Kohana::init(array(
 	'base_url' => '/',
 	'index_file' => false,
+	'errors' => TRUE
 ));
 
 /**
@@ -150,7 +151,8 @@ Kohana::modules(array(
 	'REST'          => MODPATH . 'rest',
 	"admin"         => MODPATH . 'admin',
 	"postmark"		=> MODPATH . 'postmark',
-	"facebookauth"	=> MODPATH . 'facebookauth'
+	"facebookauth"	=> MODPATH . 'facebookauth',
+	"custom404"		=> MODPATH . 'custom404',
 ));
 
 
@@ -158,7 +160,6 @@ Route::set('API', '<directory>/<controller>(/<action>(/<id>(/<id2>)))',
 	array(
 		'directory' => 'api'
 	))->defaults(array());
-
 
 /**
  * Set the routes. Each route must have a minimum of a name, a URI and a set of
