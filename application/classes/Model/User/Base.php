@@ -840,7 +840,7 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 			$extra_validate->rule('re_password','max_length', array(':value', 8));
 			$extra_validate->rule('re_password','matches', array(':validation', ':field', 'password'));
 
-			$extra_validate->rule('gender', 'in_array', array(':value', array(0, 1)));
+			$extra_validate->rule('gender', 'in_array', array(':value', array('M', 'F')));
 			$extra_validate->rule('dob','not_empty');
 			$extra_validate->rule('dob','date');
 			$extra_validate->rule('dob','valid_age_frame', array($dob));

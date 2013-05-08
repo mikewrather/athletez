@@ -18,5 +18,8 @@
 			'not_empty' => 'You must enter an email address',
 			'email' =>	'Please enter valid email address',
 			'unique_email' => 'This email address is already in use.',
+		),
+		'gender' => array(
+			'in_array' => 'Gender must M or F'
 		)
 	);

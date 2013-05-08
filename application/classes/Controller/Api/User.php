@@ -920,7 +920,7 @@
 			if($this->request->post('gender') != "")
 			{
 				//convert gender to a boolean
-				$arguments["gender"] = (bool)$this->request->post('gender');
+				$arguments["gender"] = $this->request->post('gender');
 			}
 
 			$result = ORM::factory('User_Base')->addRegister($arguments);
