@@ -122,12 +122,7 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 
 	);
 
-	protected $_has_one = array(
-		'userprofile' => array(
-			'model' => 'User_Profile',
-			'foreign_key' => 'users_id'
-		),
-	);
+
 
 	/**
 	 * protected $singlesport, if set, will be used to filter queries where a sport is relevant.
@@ -407,11 +402,8 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 	 
 	public function getPrimaryVideo()
 	{
-		$profile = $this->userprofile;
-		$profile_obj = $profile->getBasics();		
-		$media = $this->media->where('id', '=', $profile_obj['primary_video_id'])->and_where('media_type','=','video');
-		 
-		return $media->video;
+		//TODO, add by Jeffrey,profile is removed.
+		return "TODO, b/c profile is remove from system,video need rebuild";
 	}
 	
 	public function getPositions()
