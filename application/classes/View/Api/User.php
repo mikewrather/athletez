@@ -191,11 +191,9 @@
 		public function get_videos()
 		{
 			$retArr = array();
-			$videos = $this->obj->find_all();
-			foreach($videos as $video)
-			{
-				$retArr[$video->id] = $video->getBasics();
-			}
+			$videos = $this->obj->result;
+			return $videos;
+
 			if(empty($retArr))
 			{
 				$retArr = array(

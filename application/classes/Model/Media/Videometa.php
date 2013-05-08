@@ -14,6 +14,10 @@ class Model_Media_Videometa extends ORM
 		'video' => array(
 			'model' => 'Media_Video',
 			'foreign_key' => 'videos_id'
+		),
+		'videotypelink' => array(
+			'model' => 'Media_Videotypelink',
+			'foreign_key' => 'video_type_link_id'
 		)
 	);
 

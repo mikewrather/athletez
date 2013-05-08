@@ -21,6 +21,13 @@ class Model_Media_Video extends ORM
 		)
 	);
 
+	protected $_has_one = array(
+		'videotypelink' => array(
+			'model' => 'Media_Videotypelink',
+			'foreign_key' => 'videos_id'
+		),
+	);
+
 	public function rules(){
 
 		return array

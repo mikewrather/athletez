@@ -122,14 +122,6 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 
 	);
 
-
-
-	/**
-	 * protected $singlesport, if set, will be used to filter queries where a sport is relevant.
-	 * @var null
-	 */
-	protected $singlesport = false;
-     
     public function deleteTeam($args)
     {
         $teams = DB::delete('users_teams_link')
@@ -413,13 +405,46 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 
 	public function getVideos()
 	{
-		return $this->media->where('media_type','=','video');
+		$media = $this->media->where('media_type','=','video');
+		$result_arr = array();
+		$combine_object = new stdClass();
+		foreach($media->find_all() as $single_media){
+
+			$typelink = $single_media->video->videotypelink;
+			$video_id = $single_media->video->id;
+			$video_title = $single_media->name;
+			$metas = $typelink->meta;
+			foreach($metas->find_all() as $a){
+				$combine_object->{$a->vid_prop} = $a->vid_val;
+			}
+
+			//Below I will do it tomorrow
+			/*
+			The data from Ma's test file
+			$combine_object->video_quality =  1;
+			$combine_object->video_thumb =  1;
+			$combine_object->video_src =  1;
+			$combine_object->video_desc =  1;
+			*/
+			$combine_object->video_id =  $video_id;
+			$combine_object->video_title =  $video_title;
+			$combine_object->user_name = 1; //Need to change to name
+			$combine_object->post_date =  1; //TODO,
+			$combine_object->tags_count =  1; //TODO,
+			$combine_object->tags =  1; //TODO,need like {'users':[{uer1},{uer2}],'teams'...}
+			$combine_object->num_votes =  1; //TODO,
+			$combine_object->num_views =  1; //TODO,
+			$combine_object->num_comments =  1; //TODO,
+			$result_arr[] = $combine_object;
+		}
+		$return_obj = new stdClass();
+		$return_obj->result = $result_arr;
+		return $return_obj;
 	}
 
 	public function getImages()
 	{
 		return $this->media->where('media_type','=','image');
-
 	}
 
 	public function getOrgs()
@@ -556,12 +581,6 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 
 			->where('resume_data_vals.users_id','=',$this->id);
 
-
-		if($this->singlesport)
-		{
-			$usersFitnessData->where('rdp_sports_link.sports_id','=',$this->singlesport);
-		}
-
 		$res = $usersFitnessData->execute();
 
 		foreach($res as $data)
@@ -580,11 +599,6 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 			->join('fitness_data','LEFT')
 			->on('fitness_data_vals.fitness_data_id','=','fitness_data.id')
 			->where('fitness_data_vals.users_id','=',$this->id);
-
-		if($this->singlesport)
-		{
-			$usersFitnessData->where('fitness_data.sports_id','=',$this->singlesport);
-		}
 
 		$res = $usersFitnessData->execute();
 		foreach($res as $data)
@@ -641,11 +655,6 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 		}
 
 		return $this;
-	}
-
-	public function setSingleSport($sports_id)
-	{
-		$this->singlesport = $sports_id;
 	}
 
 	public function lastName()
