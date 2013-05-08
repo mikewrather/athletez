@@ -17,6 +17,8 @@
 			parent::__construct($request,$response);
 
 			$this->setMainModel(ORM::factory('User_Base'));
+            if (!$this->myID) 
+                $this->myID = $this->user->id;
 			$this->popMainModel();
 			if(!$this->mainModel->id && $this->is_logged_in){
 				$this->mainModel->id = $this->user->id;

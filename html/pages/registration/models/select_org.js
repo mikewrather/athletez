@@ -3,11 +3,11 @@
 // Requires define
 // Return {RegistrationSelectOrgModel} model constructor object
 
-define( ["models/base"], function (BaseModel) {
+define( ["user/models/basics"], function (UserBasicsModel) {
 
     var RegistrationSelectOrgModel;
 
-    RegistrationSelectOrgModel = BaseModel.extend({
+    RegistrationSelectOrgModel = UserBasicsModel.extend({
 
         
     });

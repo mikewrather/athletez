@@ -2,60 +2,70 @@
 <h1>The Basics</h1>
 <div class="row-fluid">
     <form class="form-horizontal">
+        <div class="alert global-alert"></div>
+        <div class="alert alert-info global-messages"></div>
+        <div class="alert alert-error global-errors"></div>
         <div class="control-group">
             <label class="control-label" for="firstname">First Name: </label>
             <div class="controls">
                 <input type="text" name="firstname" id="firstname" placeholder="First Name">
-                <p class="text-error"></p>
+                <p class="field-error"></p>
+                <p class="field-message"></p>
             </div>
         </div>
         <div class="control-group">
             <label class="control-label" for="lastname">Last Name: </label>
             <div class="controls">
                 <input type="text" name="lastname" id="lastname" placeholder="Last Name">
-                <p class="text-error"></p>
+                <p class="field-error"></p>
+                <p class="field-message"></p>
             </div>
         </div>
         <div class="control-group">
             <label class="control-label" for="dob">DOB: </label>
             <div class="controls">
                 <input type="text" name="dob" id="dob" placeholder="Birthday">
-                <p class="text-error"></p>
+                <p class="field-error"></p>
+                <p class="field-message"></p>
             </div>
         </div>
         <div class="control-group">
             <label class="control-label" for="email">Email: </label>
             <div class="controls">
                 <input type="text" name="email" id="email" placeholder="Email">
-                <p class="text-error"></p>
+                <p class="field-error"></p>
+                <p class="field-message"></p>
             </div>
         </div>
         <div class="control-group">
             <label class="control-label">Gender: </label>
-            <div class="controls">
+            <div class="controls" id="gender">
                 <label for="male"><input type="radio" id="male" name="gender" value="1"> Male</label>
                 <label for="female"><input type="radio" id="female" name="gender" value="0"> Female</label>
-                <p class="text-error"></p>
+                <p class="field-error"></p>
+                <p class="field-message"></p>
             </div>
         </div>
         <div class="control-group">
             <label class="control-label" for="password">Password: </label>
             <div class="controls">
-                <input type="password" id="password" name="password"/>
-                <p class="text-error"></p>
+                <input type="password" id="password" name="password" placeholder="Password"/>
+                <p class="field-error"></p>
+                <p class="field-message"></p>
             </div>
         </div>
         <div class="control-group">
             <label class="control-label" for="re_password">Again: </label>
             <div class="controls">
-                <input type="password" id="re_password" name="re_password"/>                
+                <input type="password" id="re_password" name="re_password" placeholder="Password Again"/>
+                <p class="field-error"></p>
+                <p class="field-message"></p>
             </div>
         </div>
         <div>
             <p class="agree-error text-error"></p>
             <label for="accept_terms"><input type="checkbox" id="accept_terms" name="accept_terms"/>I have read and agree to the <a href="#">Terms of Service</a></label>
-            <div class="alert form-alert" style="display:none;"></div>
             <a href="#" class="next">What's Next</a>
-        </div>    
+        </div>
     </form>
 </div>

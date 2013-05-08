@@ -8,6 +8,12 @@
 .textright { text-align:right; }
 .textcenter { text-align:center; }
 
+.global-messages,
+.global-errors,
+.global-alert { display:none; }
+.field-error { color: #b94a48; display:none; }
+.field-message { color: #3a87ad; display:none; }
+
 ul { list-style:none; }
 
 header { border-bottom:1px solid #ccc; padding-top:10px; padding-bottom:10px; }
