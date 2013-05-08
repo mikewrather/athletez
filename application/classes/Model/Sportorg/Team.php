@@ -390,7 +390,7 @@ class Model_Sportorg_Team extends ORM
 				->where('gameDay','>',$gameDay)		
 				->and_where_close();
 		}		
-		$game_list_obj->where_close();		
+		$game_list_obj->where_close();
 		return $game_list_obj->find_all();
 	}
 

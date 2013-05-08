@@ -94,13 +94,17 @@
 				$orgArr = array('org_id' => $data['org_id'], 'org_name' => $data['org_name']);
 				$teamArr = array('team_id' => $data['team_id'], 'team_name' => $data['unique_ident'], 'year' => $data['year'], 'complevel' => $data['complevel_name'], 'season' => $data['season'], 'statval' => $data['statval'], 'stats' => array(), 'schedules' => array());
 				$team = ORM::factory('Sportorg_Team', $data['team_id']);
+
+				$schedule = $team->getSchedule(3,false);
+				$sArr = array();
+				foreach($schedule as $game)	{ $sArr[$game->id] = $game->getBasics(); }
 				if(array_key_exists($data['org_id'], $retArr)) {
+					$teamArr['schedule'] = $sArr;
 					$retArr[$data['org_id']]['teams'][$data['team_id']] = $teamArr;
-					$teamArr['schedule'] = $team->getSchedule();
 				} else {
+					$teamArr['schedule'] = $sArr;
 					$retArr[$data['org_id']] = $orgArr;
 					$retArr[$data['org_id']]['teams'][$data['team_id']] = $teamArr;
-					$teamArr['schedule'] = $team->getSchedule();
 				}
 			}
 		 	
