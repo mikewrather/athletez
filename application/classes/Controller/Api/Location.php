@@ -153,6 +153,8 @@
 				$args['lat'] = trim($this->request->post('lat'));
 			}
 
+			//TODO: This shit should all be moved to a validation method.  Also, we want to store the formatted results from google, not the user's info.
+
 			//if long and lat empty than add lat and long from google api
 			if(trim($this->request->post('lon')) == "" && trim($this->request->post('lat')) == "" && trim($this->request->post('address')) != "")
 			{
@@ -170,7 +172,7 @@
 				else
 				{
 					$error_array = array(
-						"error" => "Invalid address."
+						"error" => "We weren't able to validate your address."
 					);
 
 					// Set whether it is a fatal error

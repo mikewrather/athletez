@@ -51,7 +51,6 @@ class Controller_Api_Base extends AuthController
 		$this->populateAuthVars();
 
 		// Moves the body data to the correct array
-		// Also calls method to put the
 		$this->setBodyParams();
 
 		// Check to see if data is stored as json with the "model" key
