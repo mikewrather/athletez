@@ -321,21 +321,12 @@
 				$home_team = Util::convert_to_boolean(trim($this->request->post('home_team')));
 			}
 
-			// tournaments_id 
-			// Optional tournaments ID if this game belongs to a tournament.
-				
-			if((int)trim($this->request->post('tournaments_id')) > 0)
-			{
-				$tournaments_id = (int)trim($this->request->post('tournaments_id'));
-			}
-
 			$args = array(
 				'teams_id' => $this->mainModel->id,
 				'games_id' => $games_id,
 				'game_datetime' => $game_datetime,
 				'locations_id' => $locations_id,
 				'is_home_team' => $home_team,
-				'tournaments_id' => $tournaments_id,
 			);
 
 			$result = $this->mainModel->addGame($args);

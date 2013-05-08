@@ -139,16 +139,6 @@
 			{
 				$arguments["locations_id"] = (int)trim($this->request->post('locations_id'));
 			}
-
-			// tournaments_id 
-			// An optional tournament
-				
-			if((int)trim($this->request->post('tournaments_id')) > 0)
-			{
-				$arguments["tournaments_id"] = (int)trim($this->request->post('tournaments_id'));
-			}
-
-
 		}
 		
 		/**

@@ -228,16 +228,6 @@
 				//convert home_team to a boolean
 				$arguments["home_team"] = (bool)$this->request->post('home_team');
 			}
-
-			// tournaments_id 
-			// Optional tournaments ID if this game belongs to a tournament.
-				
-			if((int)trim($this->request->post('tournaments_id')) > 0)
-			{
-				$arguments["tournaments_id"] = (int)trim($this->request->post('tournaments_id'));
-			}
-
-
 		}
 		
 		/**
