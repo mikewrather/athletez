@@ -163,16 +163,75 @@
 				$json = file_get_contents("http://maps.google.com/maps/api/geocode/json?address=$address&sensor=false");
 				$json = json_decode($json);
 
-				if($json->{status} != 'ZERO_RESULTS')
+				if($json->{status} == 'OK')
 				{
-					$args['lat'] = $json->{'results'}[0]->{'geometry'}->{'location'}->{'lat'};
-					$args['lon'] = $json->{'results'}[0]->{'geometry'}->{'location'}->{'lng'};
-					//$args['loc_point'] =  'Point('.$args['lat'].','.$args['lon'].')';
+
+					$json = get_object_vars($json);
+					foreach($json["results"] as $key=>$res)
+					{
+						if(is_object($res)) $res = get_object_vars($res);
+
+						// Get full address, longitude and latitude
+						$args['full_address'] = $res['formatted_address'];
+						$args['lon'] = $res['geometry']->location->lng;
+						$args['lat'] = $res['geometry']->location->lat;
+
+						// Parse Address components and assign to correct array keys
+						foreach($res['address_components'] as $subkey=>$comp)
+						{
+							if(is_object($comp)) $comp = get_object_vars($comp);
+
+							foreach($comp['types'] as $ckey=>$cval)
+							{
+								switch ($cval)
+								{
+									case "street_number":
+										$args['number'] = $comp['long_name'];
+										break;
+									case "route":
+										$args['street'] = $comp['long_name'];
+										break;
+									case "country":
+										$args['country'] = $comp['long_name'];
+										break;
+									case "postal_code":
+										$args['zip'] = $comp['long_name'];
+										break;
+									case "locality":
+										$args['city'] = $comp['long_name'];
+										break;
+									case "neighborhood":
+										$args['neighborhood'] = $comp['long_name'];
+										break;
+									case "administrative_area_level_1":
+										$args['state'] = $comp['long_name'];
+										break;
+									case "administrative_area_level_2":
+										$args['county'] = $comp['long_name'];
+										break;
+									case "colloquial_area":
+										$args['colloquial_area'] = $comp['long_name'];
+										break;
+									case "park":
+										$args['park'] = $comp['long_name'];
+										break;
+									case "intersection":
+										$args['intersection'] = $comp['long_name'];
+										break;
+									default:
+										break;
+								}
+							}
+						}
+
+
+
+					}
 				}
 				else
 				{
 					$error_array = array(
-						"error" => "We weren't able to validate your address."
+						"error" => "We weren't able to validate your address.  Google gave us the code ".$json->{status}
 					);
 
 					// Set whether it is a fatal error

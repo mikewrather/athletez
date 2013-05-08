@@ -68,6 +68,32 @@
 		{
 			$this->payloadDesc = "Add a new tag";
 
+
+			// media_id (REQUIRED)
+			// This is the ID of the row in the media table that we are tagging something in.
+
+			if((int)trim($this->request->post('media_id')) > 0)
+			{
+				$arguments["media_id"] = (int)trim($this->request->post('media_id'));
+			}
+			else // THIS WAS A REQUIRED PARAMETER
+			{
+				// Create Array for Error Data
+				$error_array = array(
+					"error" => "Required Parameter Missing",
+					"param_name" => "media_id",
+					"param_desc" => "This is the ID of the row in the media table that we are tagging something in."
+				);
+
+				// Set whether it is a fatal error
+				$is_fatal = true;
+
+				// Call method to throw an error
+				$this->addError($error_array,$is_fatal);
+				return false;
+
+			}
+
 		     // CHECK FOR PARAMETERS:
 			// subject_type_id (REQUIRED)
 			// The ID of the subject type / entity type of the tag's subject (this is a row from the enttypes table) 

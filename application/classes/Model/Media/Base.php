@@ -78,11 +78,19 @@ class Model_Media_Base extends ORM
 
 	public function getMediaForObject(ORM $object)
 	{
-
 		// Get Ent Type ID
 		$enttypeID = Ent::getMyEntTypeID($object);
 		$result = $this->where('subject_type_id','=',$enttypeID);
 		return $result;
+	}
+
+	/**
+	 * getTaggedObjects should get all tagged objects and return them each with their getBasics data
+	 * this method should select from the tags table where media_id = $this->id
+	 */
+	public function getTaggedObjects()
+	{
+
 	}
 
 	public function getBasics()
