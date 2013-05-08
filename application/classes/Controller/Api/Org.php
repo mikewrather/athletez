@@ -550,7 +550,17 @@
 				$this->modelNotSetError();
 				return false;
 			}
-			return $this->mainModel->updateDivision($divisions_id);
+			$result =  $this->mainModel->updateDivision($divisions_id);
+			if(get_class($result) == get_class($this->mainModel))
+			{
+				return $result;
+			}
+			elseif(get_class($result) == 'ORM_Validation_Exception')
+			{
+				//parse error and add to error array
+				$this->processValidationError($result,$this->mainModel->error_message_path);
+				return false;
+			}
 		}
 		
 		/**
@@ -586,7 +596,17 @@
 				$this->modelNotSetError();
 				return false;
 			}
-			return $this->mainModel->updateComplevelprofile($complevel_profiles_id);
+			$result = $this->mainModel->updateComplevelprofile($complevel_profiles_id);
+			if(get_class($result) == get_class($this->mainModel))
+			{
+				return $result;
+			}
+			elseif(get_class($result) == 'ORM_Validation_Exception')
+			{
+				//parse error and add to error array
+				$this->processValidationError($result,$this->mainModel->error_message_path);
+				return false;
+			}
 		}
 		
 		/**
@@ -620,7 +640,18 @@
 				$this->modelNotSetError();
 				return false;
 			}
-			return $this->mainModel->updateSeasonProfile($season_profiles_id);
+
+			$result = $this->mainModel->updateSeasonProfile($season_profiles_id);
+			if(get_class($result) == get_class($this->mainModel))
+			{
+				return $result;
+			}
+			elseif(get_class($result) == 'ORM_Validation_Exception')
+			{
+				//parse error and add to error array
+				$this->processValidationError($result,$this->mainModel->error_message_path);
+				return false;
+			}
 		}
 		
 		/**

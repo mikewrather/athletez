@@ -326,7 +326,12 @@ class Model_Sportorg_Org extends ORM
 		{
 			$this->divisions_id = $divisions_id;
 		}
-		return $this->save();
+		try {
+			$this->save();
+			return $this;
+		} catch(ORM_Validation_Exception $e){
+			return $e;
+		}
 	}
 	
 	public function updateComplevelprofile($complevel_profiles_id)
@@ -335,7 +340,13 @@ class Model_Sportorg_Org extends ORM
 		{
 			$this->complevel_profiles_id = $complevel_profiles_id;
 		}
-		return $this->save();
+
+		try {
+			$this->save();
+			return $this;
+		} catch(ORM_Validation_Exception $e){
+			return $e;
+		}
 	}
 	
 	public function updateSeasonProfile($season_profiles_id)
@@ -344,7 +355,12 @@ class Model_Sportorg_Org extends ORM
 		{
 			$this->season_profiles_id = $season_profiles_id;
 		}
-		return $this->save();
+		try {
+			$this->save();
+			return $this;
+		} catch(ORM_Validation_Exception $e){
+			return $e;
+		}
 	}
 
 	public function addOrg($args = array()){
