@@ -67,6 +67,49 @@ class Model_Site_Tag extends Model_Site_Entdir
 		);
 	}
 
+	public static function getNumTags($obj){
+		$subject_enttypes_id = Model_Site_Enttype::getMyEntTypeID($obj);
+		$subject_id = $obj->id;
+		$site_tag = ORM::factory("Site_Tag");
+		$site_tag->where('subject_enttypes_id', '=', $subject_enttypes_id);
+		$result = $site_tag->where('subject_id', '=', $subject_id)->find_all()->as_array();
+		$total_tags = count($result);
+		if ($total_tags){
+			return intval($total_tags);
+		}
+		return 0;
+	}
+
+	public static function who_taged_media($media_id){
+		//echo "media_id = ".$media_id;
+		$tags = DB::select("subject_enttypes_id")
+			->select("subject_id")
+			->from('tags')
+			->where('tags.media_id','=', $media_id)
+			->group_by('subject_enttypes_id')
+			->group_by('subject_id');
+
+		$res = $tags->execute();
+		if($res->count() > 0)
+		{
+			$users = null;
+			$teams = null;
+
+			foreach($res as $row){
+				$entity = Model_Site_Enttype::eFact($row['subject_enttypes_id'], $row['subject_id']);
+				if ($entity instanceof Model_User_Base){
+					$users[] = $entity->getBasics();
+				}else if ($entity instanceof Model_Sportorg_Team){
+					$teams[] = $entity->getBasics();
+				}
+			}
+			$combine_obj = new stdClass();
+			$combine_obj->users = $users;
+			$combine_obj->teams = $teams;
+			return $combine_obj;
+		}
+	}
+
 	public function owner(){
 		if(!$this->id){
 			return "";

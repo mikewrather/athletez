@@ -410,31 +410,44 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 		$combine_object = new stdClass();
 		foreach($media->find_all() as $single_media){
 
-			$typelink = $single_media->video->videotypelink;
+			$typelink = $single_media->video->get_types_and_meta_as_array();
 			$video_id = $single_media->video->id;
+			$video_thumb = $single_media->video->thumbs;
 			$video_title = $single_media->name;
-			$metas = $typelink->meta;
-			foreach($metas->find_all() as $a){
-				$combine_object->{$a->vid_prop} = $a->vid_val;
-			}
+
+			$combine_object->video_type = $typelink;
+			/*foreach($typelink as $name => $a){
+				$meta_obj = new stdClass();
+				if ($a['vid_prop'] != ""){
+					$meta_obj->{$a['vid_prop']} = $a['vid_val'];
+					$combine_object->{$name} = $meta_obj;
+				}
+			}*/
 
 			//Below I will do it tomorrow
 			/*
 			The data from Ma's test file
 			$combine_object->video_quality =  1;
-			$combine_object->video_thumb =  1;
-			$combine_object->video_src =  1;
+
 			$combine_object->video_desc =  1;
 			*/
+			$username = $this->getBasics();
+
+			$num_tags = Model_Site_Tag::getNumTags($single_media->video);
+			$num_votes = Model_Site_Vote::getNumVotes($single_media->video);
+			$num_comments = Model_Site_Comment::getNumComments($single_media->video);
+			$num_views = Model_Site_View::getNumViews($single_media->video);
 			$combine_object->video_id =  $video_id;
+			$tags = Model_Site_Tag::who_taged_media($single_media->id);
 			$combine_object->video_title =  $video_title;
-			$combine_object->user_name = 1; //Need to change to name
-			$combine_object->post_date =  1; //TODO,
-			$combine_object->tags_count =  1; //TODO,
-			$combine_object->tags =  1; //TODO,need like {'users':[{uer1},{uer2}],'teams'...}
-			$combine_object->num_votes =  1; //TODO,
-			$combine_object->num_views =  1; //TODO,
-			$combine_object->num_comments =  1; //TODO,
+			$combine_object->video_thumb = $video_thumb;
+			$combine_object->user_name = $username['name'];
+			$combine_object->post_date =  "Waiting for Mike add this column to meida table"; //TODO,
+			$combine_object->tags_count =  $num_tags;
+			$combine_object->tags = $tags;
+			$combine_object->num_votes =  $num_votes;
+			$combine_object->num_views =  $num_views;
+			$combine_object->num_comments =  $num_comments;
 			$result_arr[] = $combine_object;
 		}
 		$return_obj = new stdClass();

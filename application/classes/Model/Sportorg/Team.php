@@ -508,13 +508,18 @@ class Model_Sportorg_Team extends ORM
 			return $org->getStateName();
 		}
 	}
-	//TODO, add by Jeffrey.
+
+	/**
+	 * Team image is the max voted images
+	 * @return null
+	 */
 	public function getImage(){
-		//Step1, get all media(image)  - team_id(subject_id),team(enttype_id) from media(media type = 'image').
-		//Step2, get all images_id from images table according to step1's media_id..
-		//Step3, search in votes table, using images_id(subject_id),images(enttypeid). group by those subject_ids,count each subject_ids, got the max one.
-		//Step4, According to max_votes_image_id, get the real image from the images table(need join image_meta)
-		return "TODO, add by Jeffrey";
+		if($primary = Model_Media_Base::find_most_voted_tag($this,'image',1))
+		{
+				$image_meta = $primary->get_meta_as_array();
+				return $image_meta['url'];
+		}
+		return null;
 	}
 
 	public function getTeamPointsScore($games_id){

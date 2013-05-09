@@ -143,6 +143,19 @@ class Model_Site_Comment extends Model_Site_Entdir
 		return $user;
 	}
 
+	public static function getNumComments($obj){
+		$subject_enttypes_id = Model_Site_Enttype::getMyEntTypeID($obj);
+		$subject_id = $obj->id;
+		$site_comment = ORM::factory("Site_Comment");
+		$site_comment->where('subject_enttypes_id', '=', $subject_enttypes_id);
+		$result = $site_comment->where('subject_id', '=', $subject_id)->find_all()->as_array();
+		$total_comments = count($result);
+		if ($total_comments){
+			return intval($total_comments);
+		}
+		return 0;
+	}
+
 	public function owner(){
 		if(!$this->id){
 			return "";

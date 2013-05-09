@@ -70,8 +70,8 @@ class Model_Site_Vote extends Model_Site_Entdir
 		$subject_id = $obj->id;
 		$site_vote = ORM::factory("Site_Vote");
 		$site_vote->where('subject_enttypes_id', '=', $subject_enttypes_id);
-		$site_vote->where('subject_id', '=', $subject_id)->find_all()->as_array();
-		$total_votes = count($site_vote);
+		$result = $site_vote->where('subject_id', '=', $subject_id)->find_all()->as_array();
+		$total_votes = count($result);
 		if ($total_votes){
 			return intval($total_votes);
 		}

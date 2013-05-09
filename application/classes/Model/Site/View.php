@@ -39,4 +39,17 @@ class Model_Site_View extends Model_Site_Entdir
 			"timeViewed" => $this->timeViewed,
 		);
 	}
+
+	public static function getNumViews($obj){
+		$subject_enttypes_id = Model_Site_Enttype::getMyEntTypeID($obj);
+		$subject_id = $obj->id;
+		$site_view = ORM::factory("Site_View");
+		$site_view->where('subject_enttypes_id', '=', $subject_enttypes_id);
+		$result = $site_view->where('subject_id', '=', $subject_id)->find_all()->as_array();
+		$total_views = count($result);
+		if ($total_views){
+			return intval($total_views);
+		}
+		return 0;
+	}
 }
