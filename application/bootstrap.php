@@ -155,6 +155,15 @@ Kohana::modules(array(
 	"custom404"		=> MODPATH . 'custom404',
 ));
 
+/**
+ * Base Page
+ */
+Route::set('mainpages', '(<controller>/<id>)',
+	array(
+		'id'=>'[0-9]+'
+	))->defaults(array(
+		'controller'=>'profile'
+	));
 
 Route::set('API', '<directory>/<controller>(/<action>(/<id>(/<id2>)))',
 	array(
@@ -170,3 +179,5 @@ Route::set('default', '(<controller>(/<action>(/<id>(/<id2>))))')
 	'controller' => 'Home',
 	'action' => 'index',
 ));
+
+
