@@ -168,7 +168,7 @@ class Model_Media_Base extends ORM
 		return $res;
 	}
 
-	public static function find_most_voted_tag($obj,$mediaType="image")
+	public static function find_most_voted_tag($obj,$mediaType="image",$limit=1)
 	{
 
 		//TODO: Make it so that teams pull users under them
@@ -183,7 +183,7 @@ class Model_Media_Base extends ORM
 		$tags = DB::select('media_id')
 			->from('tags')
 			->join('media','left')
-			->on('media.id','=','tags.media_id')
+				->on('media.id','=','tags.media_id')
 			->where('tags.subject_enttypes_id','=',$entTypeID)
 			->where('tags.subject_id','=',$subjectID)
 			->where('media.media_type','=',strtolower($mediaType))
@@ -199,12 +199,22 @@ class Model_Media_Base extends ORM
 		$qry = DB::select(array($count,'num_votes'),DB::expr('tagged.media_id'))
 			->from(array($tags,'tagged'))
 			->order_by('num_votes','DESC')
-			->limit(1);
+			->limit($limit);
 
 		$res = $qry->execute();
 
 		if($res->count() > 0)
 		{
+			// This will only be the case if $limit is set to multiple and there are multiple results
+			if($res->count() > 1)
+			{
+				$retArr = array();
+				foreach($res as $media)
+				{
+					$retArr[$media['media_id']] = Model_Media_Base::get_media_as_correct_type($media['media_id']);
+				}
+				if(sizeof($retArr) > 0) return $retArr;
+			}
 			// We use the getMediaAsCorrectType method to return either a video or an image (whatever the media ID refers to)
 			return Model_Media_Base::get_media_as_correct_type($res[0]['media_id']);
 		}

@@ -101,36 +101,66 @@ class Controller_Updateimages extends Controller
 
 		// We call this static method which will pass the object we created and whether we want the primary image or video
 		// If there are no results it will return false so we can do a check like this
-		if($primary = Model_Media_Base::find_most_voted_tag($team,'image'))
+		if($primary = Model_Media_Base::find_most_voted_tag($team,'image',3))
 		{
-			// This calls an image method that will load all of the images meta data into an array with key/value pairs
-			$image_meta = $primary->get_meta_as_array();
+			//if the third parameter is more than one and it finds more than one result then it will return them in an array
+			if(is_array($primary))
+			{
+				//Loop through results
+				foreach($primary as $media)
+				{
+					// This calls an image method that will load all of the images meta data into an array with key/value pairs
+					$image_meta = $media->get_meta_as_array();
 
-			// each of these can also be called individually
-			print_r($image_meta);
+					// each of these can also be called individually
+					print_r($image_meta);
+				}
+			}
+			else
+			{
+				// This calls an image method that will load all of the images meta data into an array with key/value pairs
+				$image_meta = $primary->get_meta_as_array();
+
+				// each of these can also be called individually
+				print_r($image_meta);
+			}
 		}
 		else
 		{
-			// No tagged media
+			echo "Nothing Found";
 		}
 
 		####################################################
 		// We call this static method which will pass the object we created and whether we want the primary image or video
 		// If there are no results it will return false so we can do a check like this
-		if($primary = Model_Media_Base::find_most_voted_tag($team,'video'))
+		if($primary = Model_Media_Base::find_most_voted_tag($team,'video',3))
 		{
-			// This calls an image method that will load all of the images meta data into an array with key/value pairs
-			$video = $primary->get_types_and_meta_as_array();
+			//if the third parameter is more than one and it finds more than one result then it will return them in an array
+			if(is_array($primary))
+			{
+				//Loop through results
+				foreach($primary as $media)
+				{
+					// This calls an image method that will load all of the images meta data into an array with key/value pairs
+					$video = $media->get_types_and_meta_as_array();
 
-			// each of these can also be called individually
-			print_r($video);
+					// each of these can also be called individually
+					print_r($video);
+				}
+			}
+			else
+			{
+				// This calls an image method that will load all of the images meta data into an array with key/value pairs
+				$video = $primary->get_types_and_meta_as_array();
+
+				// each of these can also be called individually
+				print_r($video);
+			}
 		}
 		else
 		{
-			// No tagged media
+			echo "Nothing Found";
 		}
-
-
 
 	}
 
