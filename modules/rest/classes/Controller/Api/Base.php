@@ -338,6 +338,16 @@ class Controller_Api_Base extends AuthController
 
 	protected function addError($error_array,$is_fatal=FALSE)
 	{
+
+		//format error array to match what Ma is expecting for client side error parsing
+		if(!isset($error_array['field']))
+		{
+			$error_array['field'] = $error_array['param_name'];
+			$error_array['error'] = $error_array['param_desc'];
+			unset($error_array['param_name']);
+			unset($error_array['param_desc']);
+		}
+
 		$this->execErrors[] = $error_array;
 		if($is_fatal)
 		{

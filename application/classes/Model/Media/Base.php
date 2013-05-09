@@ -155,4 +155,62 @@ class Model_Media_Base extends ORM
 			return intval($user) == $this->owner();
 		}
 	}
+
+	public static function get_media_as_correct_type($mediaID)
+	{
+		$media=ORM::factory('Media_Base',$mediaID);
+		if(!$media->loaded()) return false;
+
+		if($media->media_type == 'image') $model = 'Media_Image';
+		elseif($media->media_type == 'video') $model = 'Media_Video';
+
+		$res = ORM::factory($model)->where('media_id','=',$media->id)->find();
+		return $res;
+	}
+
+	public static function find_most_voted_tag($obj,$mediaType="image")
+	{
+
+		//TODO: Make it so that teams pull users under them
+
+		// get tagged images
+
+		$entTypeID = Ent::getMyEntTypeID($obj);
+		$subjectID = $obj->id;
+
+		// This is a sub query that pulls all the media with the passed object tagged
+		// It is joined with the media table so that we can pull media_type (image/vid)
+		$tags = DB::select('media_id')
+			->from('tags')
+			->join('media','left')
+			->on('media.id','=','tags.media_id')
+			->where('tags.subject_enttypes_id','=',$entTypeID)
+			->where('tags.subject_id','=',$subjectID)
+			->where('media.media_type','=',strtolower($mediaType))
+			->group_by('media_id');
+
+		// This sub query simply gets a count of votes for the current media ID
+		$count = DB::select(DB::expr('COUNT(id)'))
+			->from('votes')
+			->where('subject_enttypes_id','=',Ent::getMyEntTypeID('Media_Base'))
+			->and_where('subject_id','=',DB::expr('tagged.media_id'));
+
+		// This just puts it all together
+		$qry = DB::select(array($count,'num_votes'),DB::expr('tagged.media_id'))
+			->from(array($tags,'tagged'))
+			->order_by('num_votes','DESC')
+			->limit(1);
+
+		$res = $qry->execute();
+
+		if($res->count() > 0)
+		{
+			// We use the getMediaAsCorrectType method to return either a video or an image (whatever the media ID refers to)
+			return Model_Media_Base::get_media_as_correct_type($res[0]['media_id']);
+		}
+		else
+		{
+			return false;
+		}
+	}
 }

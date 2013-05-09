@@ -56,4 +56,23 @@ class Model_Media_Videotypelink extends ORM
 		}
 
 	}
+
+	/**
+	 * get_meta_as_array() will get all metadata for this video/type link and return an array of metadata with key/value pairs
+	 * @return array
+	 */
+	public function get_meta_as_array()
+	{
+		if(!$this->loaded()) return;
+		$vid_meta_res = $this->meta->find_all();
+
+		$retArr = array();
+
+		foreach($vid_meta_res as $data)
+		{
+			$retArr[$data->vid_prop] = $data->vid_val;
+		}
+
+		return $retArr;
+	}
 }

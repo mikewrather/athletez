@@ -51,10 +51,6 @@ class Model_Media_Video extends ORM
 
 	//TODO: update videos_meta to go through video_type_link because there's metadata per video type, not per video
 	protected $_has_many = array(
-		'metadata' => array(
-			'model' => 'Media_Videometa',
-			'foreign_key' => 'videos_id'
-		),
 		'typelink' => array(
 			'model' => 'Media_Videotypelink',
 			'foreign_key' => 'videos_id'
@@ -236,5 +232,25 @@ class Model_Media_Video extends ORM
 			$thismeta->vid_val = $val;
 			$thismeta->save();
 		}
+	}
+
+	/**
+	 * get_types_and_meta_as_array() loops through the video type link table and gets the metadata for each one of those links
+	 * The top level array keys will be the video type name.
+	 * @return array
+	 */
+	public function get_types_and_meta_as_array()
+	{
+		if(!$this->loaded()) return;
+		$vid_types_res = $this->typelink->find_all();
+
+		$retArr = array();
+
+		foreach($vid_types_res as $type_link)
+		{
+			$retArr[$type_link->type->name] = $type_link->get_meta_as_array();
+		}
+
+		return $retArr;
 	}
 }

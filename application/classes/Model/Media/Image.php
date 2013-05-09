@@ -133,5 +133,24 @@ class Model_Media_Image extends ORM
 		return $media_image->metadata->find_all();
 	}
 
+	/**
+	 * This method will return an array of metadata for this image with key/value pairs
+	 * @return array of metadata for the image
+	 */
+	public function get_meta_as_array()
+	{
+		if(!$this->loaded()) return;
+		$image_meta_res = $this->metadata->find_all();
+
+		$retArr = array();
+
+		foreach($image_meta_res as $data)
+		{
+			$retArr[$data->image_prop] = $data->image_val;
+		}
+
+		return $retArr;
+	}
+
 
 }

@@ -94,4 +94,44 @@ class Controller_Updateimages extends Controller
 		*/
 	}
 
+	public function action_tag()
+	{
+		// This is the object we want to find the media for
+		$team = ORM::factory('Sportorg_Team',3);
+
+		// We call this static method which will pass the object we created and whether we want the primary image or video
+		// If there are no results it will return false so we can do a check like this
+		if($primary = Model_Media_Base::find_most_voted_tag($team,'image'))
+		{
+			// This calls an image method that will load all of the images meta data into an array with key/value pairs
+			$image_meta = $primary->get_meta_as_array();
+
+			// each of these can also be called individually
+			print_r($image_meta);
+		}
+		else
+		{
+			// No tagged media
+		}
+
+		####################################################
+		// We call this static method which will pass the object we created and whether we want the primary image or video
+		// If there are no results it will return false so we can do a check like this
+		if($primary = Model_Media_Base::find_most_voted_tag($team,'video'))
+		{
+			// This calls an image method that will load all of the images meta data into an array with key/value pairs
+			$video = $primary->get_types_and_meta_as_array();
+
+			// each of these can also be called individually
+			print_r($video);
+		}
+		else
+		{
+			// No tagged media
+		}
+
+
+
+	}
+
 }
