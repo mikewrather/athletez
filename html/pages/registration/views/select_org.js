@@ -30,6 +30,8 @@ function(require, registrationSelectOrgTemplate) {
 
         id: 'main-content',
         
+        step: 1,
+        
         events: {
             "click .find_club": "findMyClub",
             "click .high_school": "highSchoolLocator",
@@ -48,6 +50,9 @@ function(require, registrationSelectOrgTemplate) {
         findMyClub: function(event) {
             event.preventDefault();
             
+            if (this.step != 1)
+                return;
+                
             var self = this;
             if (!this.myclub) {
                 this.myclub = new RegistrationMyClubModel();
@@ -99,16 +104,22 @@ function(require, registrationSelectOrgTemplate) {
         highSchoolLocator: function(event) {
             event.preventDefault();
             
+            if (this.step != 2)
+                return;
         },
         
         individualSports: function(event) {
             event.preventDefault();
             
+            if (this.step != 3)
+                return;
         },
         
         nextStep: function(event) {
             event.preventDefault();
             
+            if (this.step != 4)
+                return;
         }
                 
     });

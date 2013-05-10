@@ -2,21 +2,21 @@
 <h1>The Basics</h1>
 <div class="row-fluid">
     <form class="form-horizontal">
-        <div class="alert global-alert"></div>
+        <!--<div class="alert global-alert"></div>-->
         <div class="alert alert-info global-messages"></div>
         <div class="alert alert-error global-errors"></div>
         <div class="control-group">
-            <label class="control-label" for="firstname">First Name: </label>
+            <label class="control-label" for="first_name">First Name: </label>
             <div class="controls">
-                <input type="text" name="firstname" id="firstname" placeholder="First Name">
+                <input type="text" name="firstname" id="first_name" placeholder="First Name">
                 <p class="field-error"></p>
                 <p class="field-message"></p>
             </div>
         </div>
         <div class="control-group">
-            <label class="control-label" for="lastname">Last Name: </label>
+            <label class="control-label" for="last_name">Last Name: </label>
             <div class="controls">
-                <input type="text" name="lastname" id="lastname" placeholder="Last Name">
+                <input type="text" name="lastname" id="last_name" placeholder="Last Name">
                 <p class="field-error"></p>
                 <p class="field-message"></p>
             </div>
@@ -40,8 +40,8 @@
         <div class="control-group">
             <label class="control-label">Gender: </label>
             <div class="controls" id="gender">
-                <label for="male"><input type="radio" id="male" name="gender" value="M"> Male</label>
-                <label for="female"><input type="radio" id="female" name="gender" value="F"> Female</label>
+                <label for="male"><input type="radio" id="male" name="gender" value="1"> Male</label>
+                <label for="female"><input type="radio" id="female" name="gender" value="0"> Female</label>
                 <p class="field-error"></p>
                 <p class="field-message"></p>
             </div>
@@ -64,7 +64,11 @@
         </div>
         <div>
             <p class="agree-error text-error"></p>
-            <label for="accept_terms"><input type="checkbox" id="accept_terms" name="accept_terms"/>I have read and agree to the <a href="#">Terms of Service</a></label>
+            <label for="accept_terms">
+                <input type="checkbox" id="accept_terms" name="accept_terms"/>I have read and agree to the <a href="#">Terms of Service</a>
+                <p class="field-error"></p>
+                <p class="field-message"></p>
+            </label>            
             <a href="#" class="next">What's Next</a>
         </div>
     </form>
