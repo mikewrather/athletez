@@ -190,31 +190,8 @@
 		 */
 		public function get_videos()
 		{
-			$retArr = array();
 			$videos = $this->obj->result;
 			return $videos;
-
-			if(empty($retArr))
-			{
-				$retArr = array(
-					"games" => array(),
-					"num_comments" => NULL,
-					"num_views" => NULL,
-					"num_votes" => NULL,
-					"post_date" => NULL,
-					"tags" => array(),
-					"tags_count" => NULL,
-					"teams" => array(),
-					"user_name" => NULL,
-					"video_desc" => NULL,
-					"video_id" => NULL,
-					"video_quality" => NULL,
-					"video_src" => NULL,
-					"video_thumb" => NULL,
-					"video_title" => NULL
-				);
-			}
-			return $retArr;
 		}
 		
 		/**
@@ -224,17 +201,8 @@
 		 */
 		public function get_images()
 		{
-			$retArr = array();
-			$images = $this->obj->find_all();
-			foreach($images as $image)
-			{
-				$retArr[$image->id] = $image->getBasics();
-				$retArr[$image->id]['image_id'] = $retArr[$image->id]['id'];
-				$retArr[$image->id]['image_path'] = NULL;
-				$retArr[$image->id]['image_title'] = $retArr[$image->id]['name'];
-				$retArr[$image->id]['num_votes'] = NULL;
-			}
-			return $retArr;
+			$images = $this->obj->result;
+			return $images;
 		}
 		
 		/**

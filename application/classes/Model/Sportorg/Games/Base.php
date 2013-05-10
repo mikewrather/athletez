@@ -186,4 +186,5 @@ class Model_Sportorg_Games_Base extends ORM
 
 		return $this;
 	}
+
 }

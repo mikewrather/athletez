@@ -65,28 +65,118 @@ class Model_Media_Video extends ORM
 		);
 	}
 
-	public function getVideos($games_id){
-		$games_model = ORM::factory("Sportorg_Games_Base");
-		$games_model->id = $games_id;
+	public static function getVideoCounts($obj){
+		$enttype_id = Model_Site_Enttype::getMyEntTypeID($obj);
+		$subject_id = $obj->id;
+		$res = DB::select(array(DB::expr('COUNT(*)'), 'total_count'))->from('media')
+			->where('subject_type_id', '=', $enttype_id)
+			->where('subject_id', '=',$subject_id);
+		return $res->execute()->get('total_count');
+	}
 
-		$media_video = ORM::factory("Media_Video");
-		$enttypeID = Ent::getMyEntTypeID($games_model);
-//		$video_results = $media_base->where('subject_type_id','=',$enttypeID)
-//			->and_where('subject_id','=',$games_model->id)
-//			->find_all();
-//		$media_ids = array();
-//		foreach($video_results as $result){
-//			$media_ids[] = $result->id;
-//		}
-//		if (empty($media_ids)){
-//			$media_ids[] = -1;//No media_id match
-//		}
-//		return $media_video->where('media_id','in', $media_ids);
+	public function getTagedVideos($obj){
+		$arr = null;
+		$limit = Model_Media_Video::getVideoCounts($obj);
+		if($primary = Model_Media_Base::find_most_voted_tag($obj,'video', $limit))
+		{
+			$combine_obj = new stdClass();
+			//if the third parameter is more than one and it finds more than one result then it will return them in an array
+			if(is_array($primary))
+			{
+				//Loop through results
+				foreach($primary as $media)
+				{
+					$video_type = $media->get_types_and_meta_as_array();
+					$combine_obj->video_id = $media->id;
+					//$combine_obj->video_title =  $media->name;
+					$combine_obj->video_thumb = $media->thumbs;
+					$combine_obj->post_date =  "Waiting for Mike add this column to meida table"; //TODO,
+					$num_tags = Model_Site_Tag::getNumTags($media);
+					$num_votes = Model_Site_Vote::getNumVotes($media);
+					$num_comments = Model_Site_Comment::getNumComments($media);
+					$num_views = Model_Site_View::getNumViews($media);
+					$combine_obj->tags_count =  $num_tags;
+					$combine_obj->num_votes =  $num_votes;
+					$combine_obj->num_views =  $num_views;
+					$combine_obj->num_comments =  $num_comments;
+					$combine_obj->video_type = $video_type;
+					$arr[] = $combine_obj;
+				}
+			}
+			else
+			{
+				$media = clone($primary);
+				$video_type = $media->get_types_and_meta_as_array();
+				$combine_obj->video_id = $media->id;
+				//$combine_obj->video_title =  $media->name;
+				$combine_obj->video_thumb = $media->thumbs;
+				$combine_obj->post_date =  "Waiting for Mike add this column to meida table"; //TODO,
+				$num_tags = Model_Site_Tag::getNumTags($media);
+				$num_votes = Model_Site_Vote::getNumVotes($media);
+				$num_comments = Model_Site_Comment::getNumComments($media);
+				$num_views = Model_Site_View::getNumViews($media);
+				$combine_obj->tags_count =  $num_tags;
+				$combine_obj->num_votes =  $num_votes;
+				$combine_obj->num_views =  $num_views;
+				$combine_obj->num_comments =  $num_comments;
+				$combine_obj->video_type = $video_type;
+				$arr[] = $combine_obj;
+			}
+		}
+		$results = new stdClass();
+		$results->result = $arr;
+		return $results;
+	}
 
-		$media_video->join('media', 'RIGHT')->on('media_video.media_id', '=','media.id')
-			->where('media.subject_type_id', '=', $enttypeID)
-			->and_where('media.subject_id', '=', $games_model->id);
-		return $media_video;
+	public static function getVideos($obj)
+	{
+		if ($obj instanceof Model_Sportorg_Games_Base){
+			$enttype_id = Model_Site_Enttype::getMyEntTypeID($obj);
+			$media = ORM::factory("Media_Base");
+			$media->where('subject_type_id', '=', $enttype_id);
+			$media->where('subject_id', '=', $obj->id);
+			$media->where('media_type','=','video');
+		}else{
+			$media = $obj->media->where('media_type','=','video');
+		}
+		$result_arr = null;
+
+		foreach($media->find_all() as $single_media){
+			$combine_object = new stdClass();
+			$typelink = $single_media->video->get_types_and_meta_as_array();
+			$video_id = $single_media->video->id;
+			$video_thumb = $single_media->video->thumbs;
+			$video_title = $single_media->name;
+
+			$combine_object->video_type = $typelink;
+
+			$num_tags = Model_Site_Tag::getNumTags($single_media->video);
+			$num_votes = Model_Site_Vote::getNumVotes($single_media->video);
+			$num_comments = Model_Site_Comment::getNumComments($single_media->video);
+			$num_views = Model_Site_View::getNumViews($single_media->video);
+			if ($obj instanceof Model_User_Base){
+				$username = $obj->getBasics();
+				$combine_object->user_name = $username['name'];
+			}
+
+			if ($obj instanceof Model_Sportorg_Games_Base){
+				//Add some game related elements if necessary
+			}
+			$tags = Model_Site_Tag::who_taged_media($single_media->id);
+			$combine_object->tags = $tags;
+			$combine_object->video_id =  $video_id;
+			$combine_object->video_title =  $video_title;
+			$combine_object->video_thumb = $video_thumb;
+			$combine_object->post_date =  "Waiting for Mike add this column to meida table"; //TODO,
+			$combine_object->tags_count =  $num_tags;
+			$combine_object->num_votes =  $num_votes;
+			$combine_object->num_views =  $num_views;
+			$combine_object->num_comments =  $num_comments;
+			$result_arr[] = $combine_object;
+		}
+		$return_obj = new stdClass();
+		$return_obj->result = $result_arr;
+		return $return_obj;
 	}
 
 	public function getSearch($args = array()){

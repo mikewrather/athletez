@@ -134,7 +134,7 @@
 				$this->modelNotSetError();
 				return false;
 			}
-			return $this->mainModel->getVideos();			
+			return $this->mainModel->getVideos($this->mainModel);
 		
 		}
 		

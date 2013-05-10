@@ -108,8 +108,7 @@
 				$this->modelNotSetError();
 				return false;
 			}
-			$video_model = ORM::factory("Media_Video");
-			return $video_model->getVideos($this->mainModel->id);
+			return Model_Media_Video::getTagedVideos($this->mainModel);
 		}
 		
 		/**

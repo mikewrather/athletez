@@ -405,62 +405,31 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 	{
 		//loop through teams and get positions for each.
 	}
-
-	public function getVideos()
+	public function getVideos($obj)
 	{
-		$media = $this->media->where('media_type','=','video');
-		$result_arr = array();
-		$combine_object = new stdClass();
+		return Model_Media_Video::getVideos($obj);
+	}
+
+	public function getImages()
+	{
+		$media = $this->media->where('media_type','=','image');
+		$result_arr = null;
+
 		foreach($media->find_all() as $single_media){
-
-			$typelink = $single_media->video->get_types_and_meta_as_array();
-			$video_id = $single_media->video->id;
-			$video_thumb = $single_media->video->thumbs;
-			$video_title = $single_media->name;
-
-			$combine_object->video_type = $typelink;
-			/*foreach($typelink as $name => $a){
-				$meta_obj = new stdClass();
-				if ($a['vid_prop'] != ""){
-					$meta_obj->{$a['vid_prop']} = $a['vid_val'];
-					$combine_object->{$name} = $meta_obj;
-				}
-			}*/
-
-			//Below I will do it tomorrow
-			/*
-			The data from Ma's test file
-			$combine_object->video_quality =  1;
-
-			$combine_object->video_desc =  1;
-			*/
-			$username = $this->getBasics();
-
-			$num_tags = Model_Site_Tag::getNumTags($single_media->video);
-			$num_votes = Model_Site_Vote::getNumVotes($single_media->video);
-			$num_comments = Model_Site_Comment::getNumComments($single_media->video);
-			$num_views = Model_Site_View::getNumViews($single_media->video);
-			$combine_object->video_id =  $video_id;
-			$tags = Model_Site_Tag::who_taged_media($single_media->id);
-			$combine_object->video_title =  $video_title;
-			$combine_object->video_thumb = $video_thumb;
-			$combine_object->user_name = $username['name'];
-			$combine_object->post_date =  "Waiting for Mike add this column to meida table"; //TODO,
-			$combine_object->tags_count =  $num_tags;
-			$combine_object->tags = $tags;
-			$combine_object->num_votes =  $num_votes;
-			$combine_object->num_views =  $num_views;
-			$combine_object->num_comments =  $num_comments;
+			$combine_object = new stdClass();
+			$num_votes = Model_Site_Vote::getNumVotes($single_media->image);
+			$image_meta = $single_media->image->get_meta_as_array();
+			$image_id = $single_media->image->id;
+			$image_title = $image_meta['title'];
+			$combine_object->image_id = $image_id;
+			$combine_object->image_path = $image_meta['thumb_url'];
+			$combine_object->image_title = $image_title;
+			$combine_object->num_votes = $num_votes;
 			$result_arr[] = $combine_object;
 		}
 		$return_obj = new stdClass();
 		$return_obj->result = $result_arr;
 		return $return_obj;
-	}
-
-	public function getImages()
-	{
-		return $this->media->where('media_type','=','image');
 	}
 
 	public function getOrgs()

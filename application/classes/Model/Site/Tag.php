@@ -90,10 +90,12 @@ class Model_Site_Tag extends Model_Site_Entdir
 			->group_by('subject_id');
 
 		$res = $tags->execute();
+		$users = null;
+		$teams = null;
+		$games = null;
+		$combine_obj = new stdClass();
 		if($res->count() > 0)
 		{
-			$users = null;
-			$teams = null;
 
 			foreach($res as $row){
 				$entity = Model_Site_Enttype::eFact($row['subject_enttypes_id'], $row['subject_id']);
@@ -101,13 +103,20 @@ class Model_Site_Tag extends Model_Site_Entdir
 					$users[] = $entity->getBasics();
 				}else if ($entity instanceof Model_Sportorg_Team){
 					$teams[] = $entity->getBasics();
+				}else if ($entity instanceof Model_Sportorg_Games_Base){
+					$games[] = $entity->getBasics();
 				}
 			}
-			$combine_obj = new stdClass();
 			$combine_obj->users = $users;
 			$combine_obj->teams = $teams;
-			return $combine_obj;
+			$combine_obj->games = $games;
+
+		}else{
+			$combine_obj->users = $users;
+			$combine_obj->teams = $teams;
+			$combine_obj->games = $games;
 		}
+		return $combine_obj;
 	}
 
 	public function owner(){
