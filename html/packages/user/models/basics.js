@@ -11,12 +11,12 @@ define( ["facade", "models/base"], function (facade, BaseModel) {
     UserBasicsModel = BaseModel.extend({
         url: function() {
             if ('undefined' == typeof this.id) {
-                //if (testpath)
-                //    return testpath + '/user/basics/';
+                if (testpath)
+                    return testpath + '/user/basics/101';
                 return '/api/user/basics/';
             } else {
-                //if (testpath)
-                //    return testpath + '/user/basics/' + this.id;
+                if (testpath)
+                    return testpath + '/user/basics/' + this.id;
                 return '/api/user/basics/' + this.id;
             }            
         }        

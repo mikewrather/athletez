@@ -1,0 +1,505 @@
+{
+    "payload": {
+        "46": {
+            "sport_id": "46",
+            "sport_name": "Baseball",
+            "male": "1",
+            "female": "0",
+            "sport_type_id": null,
+            "sport_type": {
+                "id": null,
+                "name": null
+            }
+        },
+        "47": {
+            "sport_id": "47",
+            "sport_name": "Basketball",
+            "male": "1",
+            "female": "0",
+            "sport_type_id": null,
+            "sport_type": {
+                "id": null,
+                "name": null
+            }
+        },
+        "48": {
+            "sport_id": "48",
+            "sport_name": "Cross Country",
+            "male": "1",
+            "female": "0",
+            "sport_type_id": null,
+            "sport_type": {
+                "id": null,
+                "name": null
+            }
+        },
+        "49": {
+            "sport_id": "49",
+            "sport_name": "Football",
+            "male": "1",
+            "female": "0",
+            "sport_type_id": null,
+            "sport_type": {
+                "id": null,
+                "name": null
+            }
+        },
+        "50": {
+            "sport_id": "50",
+            "sport_name": "Rugby",
+            "male": "1",
+            "female": "0",
+            "sport_type_id": null,
+            "sport_type": {
+                "id": null,
+                "name": null
+            }
+        },
+        "51": {
+            "sport_id": "51",
+            "sport_name": "Golf",
+            "male": "1",
+            "female": "0",
+            "sport_type_id": null,
+            "sport_type": {
+                "id": null,
+                "name": null
+            }
+        },
+        "52": {
+            "sport_id": "52",
+            "sport_name": "Hockey",
+            "male": "1",
+            "female": "0",
+            "sport_type_id": null,
+            "sport_type": {
+                "id": null,
+                "name": null
+            }
+        },
+        "53": {
+            "sport_id": "53",
+            "sport_name": "Lacrosse",
+            "male": "1",
+            "female": "0",
+            "sport_type_id": null,
+            "sport_type": {
+                "id": null,
+                "name": null
+            }
+        },
+        "54": {
+            "sport_id": "54",
+            "sport_name": "Soccer",
+            "male": "1",
+            "female": "0",
+            "sport_type_id": null,
+            "sport_type": {
+                "id": null,
+                "name": null
+            }
+        },
+        "55": {
+            "sport_id": "55",
+            "sport_name": "Swimming",
+            "male": "1",
+            "female": "0",
+            "sport_type_id": null,
+            "sport_type": {
+                "id": null,
+                "name": null
+            }
+        },
+        "56": {
+            "sport_id": "56",
+            "sport_name": "Tennis",
+            "male": "1",
+            "female": "0",
+            "sport_type_id": null,
+            "sport_type": {
+                "id": null,
+                "name": null
+            }
+        },
+        "57": {
+            "sport_id": "57",
+            "sport_name": "Track and Field",
+            "male": "1",
+            "female": "0",
+            "sport_type_id": null,
+            "sport_type": {
+                "id": null,
+                "name": null
+            }
+        },
+        "58": {
+            "sport_id": "58",
+            "sport_name": "Volleyball",
+            "male": "1",
+            "female": "0",
+            "sport_type_id": null,
+            "sport_type": {
+                "id": null,
+                "name": null
+            }
+        },
+        "59": {
+            "sport_id": "59",
+            "sport_name": "Water Polo",
+            "male": "1",
+            "female": "0",
+            "sport_type_id": null,
+            "sport_type": {
+                "id": null,
+                "name": null
+            }
+        },
+        "60": {
+            "sport_id": "60",
+            "sport_name": "Wrestling",
+            "male": "1",
+            "female": "0",
+            "sport_type_id": null,
+            "sport_type": {
+                "id": null,
+                "name": null
+            }
+        },
+        "61": {
+            "sport_id": "61",
+            "sport_name": "Crew",
+            "male": "1",
+            "female": "0",
+            "sport_type_id": null,
+            "sport_type": {
+                "id": null,
+                "name": null
+            }
+        },
+        "62": {
+            "sport_id": "62",
+            "sport_name": "Basketball",
+            "male": "0",
+            "female": "1",
+            "sport_type_id": null,
+            "sport_type": {
+                "id": null,
+                "name": null
+            }
+        },
+        "63": {
+            "sport_id": "63",
+            "sport_name": "Cross Country",
+            "male": "0",
+            "female": "1",
+            "sport_type_id": null,
+            "sport_type": {
+                "id": null,
+                "name": null
+            }
+        },
+        "64": {
+            "sport_id": "64",
+            "sport_name": "Cheerleading",
+            "male": "0",
+            "female": "1",
+            "sport_type_id": null,
+            "sport_type": {
+                "id": null,
+                "name": null
+            }
+        },
+        "65": {
+            "sport_id": "65",
+            "sport_name": "Golf",
+            "male": "0",
+            "female": "1",
+            "sport_type_id": null,
+            "sport_type": {
+                "id": null,
+                "name": null
+            }
+        },
+        "66": {
+            "sport_id": "66",
+            "sport_name": "Hockey",
+            "male": "0",
+            "female": "1",
+            "sport_type_id": null,
+            "sport_type": {
+                "id": null,
+                "name": null
+            }
+        },
+        "67": {
+            "sport_id": "67",
+            "sport_name": "Lacrosse",
+            "male": "0",
+            "female": "1",
+            "sport_type_id": null,
+            "sport_type": {
+                "id": null,
+                "name": null
+            }
+        },
+        "68": {
+            "sport_id": "68",
+            "sport_name": "Softball",
+            "male": "0",
+            "female": "1",
+            "sport_type_id": null,
+            "sport_type": {
+                "id": null,
+                "name": null
+            }
+        },
+        "69": {
+            "sport_id": "69",
+            "sport_name": "Soccer",
+            "male": "0",
+            "female": "1",
+            "sport_type_id": null,
+            "sport_type": {
+                "id": null,
+                "name": null
+            }
+        },
+        "70": {
+            "sport_id": "70",
+            "sport_name": "Swimming",
+            "male": "0",
+            "female": "1",
+            "sport_type_id": null,
+            "sport_type": {
+                "id": null,
+                "name": null
+            }
+        },
+        "71": {
+            "sport_id": "71",
+            "sport_name": "Rifle",
+            "male": "0",
+            "female": "1",
+            "sport_type_id": null,
+            "sport_type": {
+                "id": null,
+                "name": null
+            }
+        },
+        "72": {
+            "sport_id": "72",
+            "sport_name": "Tennis",
+            "male": "0",
+            "female": "1",
+            "sport_type_id": null,
+            "sport_type": {
+                "id": null,
+                "name": null
+            }
+        },
+        "73": {
+            "sport_id": "73",
+            "sport_name": "Track and Field",
+            "male": "0",
+            "female": "1",
+            "sport_type_id": null,
+            "sport_type": {
+                "id": null,
+                "name": null
+            }
+        },
+        "74": {
+            "sport_id": "74",
+            "sport_name": "Volleyball",
+            "male": "0",
+            "female": "1",
+            "sport_type_id": null,
+            "sport_type": {
+                "id": null,
+                "name": null
+            }
+        },
+        "75": {
+            "sport_id": "75",
+            "sport_name": "Water Polo",
+            "male": "0",
+            "female": "1",
+            "sport_type_id": null,
+            "sport_type": {
+                "id": null,
+                "name": null
+            }
+        },
+        "76": {
+            "sport_id": "76",
+            "sport_name": "Field Hockey",
+            "male": "0",
+            "female": "1",
+            "sport_type_id": null,
+            "sport_type": {
+                "id": null,
+                "name": null
+            }
+        },
+        "77": {
+            "sport_id": "77",
+            "sport_name": "Crew",
+            "male": "0",
+            "female": "1",
+            "sport_type_id": null,
+            "sport_type": {
+                "id": null,
+                "name": null
+            }
+        },
+        "78": {
+            "sport_id": "78",
+            "sport_name": "Gymnastics",
+            "male": "1",
+            "female": "0",
+            "sport_type_id": null,
+            "sport_type": {
+                "id": null,
+                "name": null
+            }
+        },
+        "79": {
+            "sport_id": "79",
+            "sport_name": "Rifle",
+            "male": "1",
+            "female": "0",
+            "sport_type_id": null,
+            "sport_type": {
+                "id": null,
+                "name": null
+            }
+        },
+        "80": {
+            "sport_id": "80",
+            "sport_name": "Skiing",
+            "male": "1",
+            "female": "0",
+            "sport_type_id": null,
+            "sport_type": {
+                "id": null,
+                "name": null
+            }
+        },
+        "81": {
+            "sport_id": "81",
+            "sport_name": "Diving",
+            "male": "1",
+            "female": "0",
+            "sport_type_id": null,
+            "sport_type": {
+                "id": null,
+                "name": null
+            }
+        },
+        "82": {
+            "sport_id": "82",
+            "sport_name": "Indoor Track",
+            "male": "1",
+            "female": "0",
+            "sport_type_id": null,
+            "sport_type": {
+                "id": null,
+                "name": null
+            }
+        },
+        "83": {
+            "sport_id": "83",
+            "sport_name": "Fencing",
+            "male": "1",
+            "female": "0",
+            "sport_type_id": null,
+            "sport_type": {
+                "id": null,
+                "name": null
+            }
+        },
+        "84": {
+            "sport_id": "84",
+            "sport_name": "Fencing",
+            "male": "0",
+            "female": "1",
+            "sport_type_id": null,
+            "sport_type": {
+                "id": null,
+                "name": null
+            }
+        },
+        "85": {
+            "sport_id": "85",
+            "sport_name": "Gymnastics",
+            "male": "0",
+            "female": "1",
+            "sport_type_id": null,
+            "sport_type": {
+                "id": null,
+                "name": null
+            }
+        },
+        "86": {
+            "sport_id": "86",
+            "sport_name": "Skiing",
+            "male": "0",
+            "female": "1",
+            "sport_type_id": null,
+            "sport_type": {
+                "id": null,
+                "name": null
+            }
+        },
+        "87": {
+            "sport_id": "87",
+            "sport_name": "Indoor Track",
+            "male": "0",
+            "female": "1",
+            "sport_type_id": null,
+            "sport_type": {
+                "id": null,
+                "name": null
+            }
+        },
+        "88": {
+            "sport_id": "88",
+            "sport_name": "Diving",
+            "male": "0",
+            "female": "1",
+            "sport_type_id": null,
+            "sport_type": {
+                "id": null,
+                "name": null
+            }
+        },
+        "89": {
+            "sport_id": "89",
+            "sport_name": "Squash",
+            "male": "1",
+            "female": "0",
+            "sport_type_id": null,
+            "sport_type": {
+                "id": null,
+                "name": null
+            }
+        },
+        "90": {
+            "sport_id": "90",
+            "sport_name": "Squash",
+            "male": "0",
+            "female": "1",
+            "sport_type_id": null,
+            "sport_type": {
+                "id": null,
+                "name": null
+            }
+        }
+    },
+    "desc": "Retrives a list of all sports narrowed by a number of optional criteria",
+    "exec_data": {
+        "exec_time": 0.178442,
+        "exec_error": false,
+        "error_array": null
+    }
+}

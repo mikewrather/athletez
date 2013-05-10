@@ -2,7 +2,7 @@
 // --------------
 
 define(['facade','views', 'utils', 'media/views/state-item'], 
-function(facade,  views,   utils,   ImageItemView) {
+function(facade,  views,   utils,   StateItemView) {
 
     var StateListView, 
         StateListAbstract,
@@ -46,5 +46,5 @@ function(facade,  views,   utils,   ImageItemView) {
         
     });
 
-    return ImageListView;
+    return StateListView;
 });

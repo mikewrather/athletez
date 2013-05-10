@@ -1,0 +1,378 @@
+{
+    "payload": {
+        "1": {
+            "org_id": "1",
+            "divisions_id": "1",
+            "leagues_id": "1",
+            "locations_id": "1",
+            "complevel_profiles_id": "1",
+            "org_name": "Crossroads School",
+            "season_profiles_id": "1",
+            "sports_club": "0",
+            "season_profile": {
+                "id": "1",
+                "name": "High School"
+            },
+            "complevel_profile": {
+                "id": "1",
+                "name": "High School"
+            },
+            "locations": {
+                "id": "1",
+                "address": "2317 Hill St.",
+                "city": {
+                    "id": "1713",
+                    "name": "Santa Monica",
+                    "county_id": "2990",
+                    "county": {
+                        "id": "2990",
+                        "state": {
+                            "id": "5",
+                            "name": "California",
+                            "countries_id": "1",
+                            "country": {
+                                "id": "1",
+                                "name": "United States"
+                            }
+                        },
+                        "name": "Los Angeles",
+                        "states_id": "5"
+                    }
+                },
+                "cities_id": "1713",
+                "lon": "0.00000000000000000000",
+                "lat": "0.00000000000000000000",
+                "location_type": "High School",
+                "loc_point": null
+            }
+        },
+        "2": {
+            "org_id": "2",
+            "divisions_id": "1",
+            "leagues_id": "1",
+            "locations_id": "1",
+            "complevel_profiles_id": "1",
+            "org_name": "Anarchist Acadamy",
+            "season_profiles_id": "1",
+            "sports_club": "0",
+            "season_profile": {
+                "id": "1",
+                "name": "High School"
+            },
+            "complevel_profile": {
+                "id": "1",
+                "name": "High School"
+            },
+            "locations": {
+                "id": "1",
+                "address": "2317 Hill St.",
+                "city": {
+                    "id": "1713",
+                    "name": "Santa Monica",
+                    "county_id": "2990",
+                    "county": {
+                        "id": "2990",
+                        "state": {
+                            "id": "5",
+                            "name": "California",
+                            "countries_id": "1",
+                            "country": {
+                                "id": "1",
+                                "name": "United States"
+                            }
+                        },
+                        "name": "Los Angeles",
+                        "states_id": "5"
+                    }
+                },
+                "cities_id": "1713",
+                "lon": "0.00000000000000000000",
+                "lat": "0.00000000000000000000",
+                "location_type": "High School",
+                "loc_point": null
+            }
+        },
+        "6": {
+            "org_id": "6",
+            "divisions_id": null,
+            "leagues_id": null,
+            "locations_id": "1",
+            "complevel_profiles_id": "1",
+            "org_name": "Blair Academy",
+            "season_profiles_id": "1",
+            "sports_club": "0",
+            "season_profile": {
+                "id": "1",
+                "name": "High School"
+            },
+            "complevel_profile": {
+                "id": "1",
+                "name": "High School"
+            },
+            "locations": {
+                "id": "1",
+                "address": "2317 Hill St.",
+                "city": {
+                    "id": "1713",
+                    "name": "Santa Monica",
+                    "county_id": "2990",
+                    "county": {
+                        "id": "2990",
+                        "state": {
+                            "id": "5",
+                            "name": "California",
+                            "countries_id": "1",
+                            "country": {
+                                "id": "1",
+                                "name": "United States"
+                            }
+                        },
+                        "name": "Los Angeles",
+                        "states_id": "5"
+                    }
+                },
+                "cities_id": "1713",
+                "lon": "0.00000000000000000000",
+                "lat": "0.00000000000000000000",
+                "location_type": "High School",
+                "loc_point": null
+            }
+        },
+        "7": {
+            "org_id": "7",
+            "divisions_id": "2",
+            "leagues_id": "1",
+            "locations_id": "1",
+            "complevel_profiles_id": "2",
+            "org_name": "Mike Academy",
+            "season_profiles_id": "2",
+            "sports_club": "0",
+            "season_profile": {
+                "id": "2",
+                "name": "Year Round"
+            },
+            "complevel_profile": {
+                "id": "2",
+                "name": "Standard Club"
+            },
+            "locations": {
+                "id": "1",
+                "address": "2317 Hill St.",
+                "city": {
+                    "id": "1713",
+                    "name": "Santa Monica",
+                    "county_id": "2990",
+                    "county": {
+                        "id": "2990",
+                        "state": {
+                            "id": "5",
+                            "name": "California",
+                            "countries_id": "1",
+                            "country": {
+                                "id": "1",
+                                "name": "United States"
+                            }
+                        },
+                        "name": "Los Angeles",
+                        "states_id": "5"
+                    }
+                },
+                "cities_id": "1713",
+                "lon": "0.00000000000000000000",
+                "lat": "0.00000000000000000000",
+                "location_type": "High School",
+                "loc_point": null
+            }
+        },
+        "8": {
+            "org_id": "8",
+            "divisions_id": "4",
+            "leagues_id": "3",
+            "locations_id": "1",
+            "complevel_profiles_id": "2",
+            "org_name": "Another One",
+            "season_profiles_id": "1",
+            "sports_club": "1",
+            "season_profile": {
+                "id": "1",
+                "name": "High School"
+            },
+            "complevel_profile": {
+                "id": "2",
+                "name": "Standard Club"
+            },
+            "locations": {
+                "id": "1",
+                "address": "2317 Hill St.",
+                "city": {
+                    "id": "1713",
+                    "name": "Santa Monica",
+                    "county_id": "2990",
+                    "county": {
+                        "id": "2990",
+                        "state": {
+                            "id": "5",
+                            "name": "California",
+                            "countries_id": "1",
+                            "country": {
+                                "id": "1",
+                                "name": "United States"
+                            }
+                        },
+                        "name": "Los Angeles",
+                        "states_id": "5"
+                    }
+                },
+                "cities_id": "1713",
+                "lon": "0.00000000000000000000",
+                "lat": "0.00000000000000000000",
+                "location_type": "High School",
+                "loc_point": null
+            }
+        },
+        "9": {
+            "org_id": "9",
+            "divisions_id": "4",
+            "leagues_id": "3",
+            "locations_id": "1",
+            "complevel_profiles_id": "2",
+            "org_name": "Another Two",
+            "season_profiles_id": "1",
+            "sports_club": "1",
+            "season_profile": {
+                "id": "1",
+                "name": "High School"
+            },
+            "complevel_profile": {
+                "id": "2",
+                "name": "Standard Club"
+            },
+            "locations": {
+                "id": "1",
+                "address": "2317 Hill St.",
+                "city": {
+                    "id": "1713",
+                    "name": "Santa Monica",
+                    "county_id": "2990",
+                    "county": {
+                        "id": "2990",
+                        "state": {
+                            "id": "5",
+                            "name": "California",
+                            "countries_id": "1",
+                            "country": {
+                                "id": "1",
+                                "name": "United States"
+                            }
+                        },
+                        "name": "Los Angeles",
+                        "states_id": "5"
+                    }
+                },
+                "cities_id": "1713",
+                "lon": "0.00000000000000000000",
+                "lat": "0.00000000000000000000",
+                "location_type": "High School",
+                "loc_point": null
+            }
+        },
+        "10": {
+            "org_id": "10",
+            "divisions_id": "4",
+            "leagues_id": "4",
+            "locations_id": "1",
+            "complevel_profiles_id": "2",
+            "org_name": "asdfasdfasdf",
+            "season_profiles_id": "1",
+            "sports_club": "1",
+            "season_profile": {
+                "id": "1",
+                "name": "High School"
+            },
+            "complevel_profile": {
+                "id": "2",
+                "name": "Standard Club"
+            },
+            "locations": {
+                "id": "1",
+                "address": "2317 Hill St.",
+                "city": {
+                    "id": "1713",
+                    "name": "Santa Monica",
+                    "county_id": "2990",
+                    "county": {
+                        "id": "2990",
+                        "state": {
+                            "id": "5",
+                            "name": "California",
+                            "countries_id": "1",
+                            "country": {
+                                "id": "1",
+                                "name": "United States"
+                            }
+                        },
+                        "name": "Los Angeles",
+                        "states_id": "5"
+                    }
+                },
+                "cities_id": "1713",
+                "lon": "0.00000000000000000000",
+                "lat": "0.00000000000000000000",
+                "location_type": "High School",
+                "loc_point": null
+            }
+        },
+        "11": {
+            "org_id": "11",
+            "divisions_id": "4",
+            "leagues_id": "5",
+            "locations_id": "1",
+            "complevel_profiles_id": "2",
+            "org_name": "asdfasdfasdf",
+            "season_profiles_id": "2",
+            "sports_club": "0",
+            "season_profile": {
+                "id": "2",
+                "name": "Year Round"
+            },
+            "complevel_profile": {
+                "id": "2",
+                "name": "Standard Club"
+            },
+            "locations": {
+                "id": "1",
+                "address": "2317 Hill St.",
+                "city": {
+                    "id": "1713",
+                    "name": "Santa Monica",
+                    "county_id": "2990",
+                    "county": {
+                        "id": "2990",
+                        "state": {
+                            "id": "5",
+                            "name": "California",
+                            "countries_id": "1",
+                            "country": {
+                                "id": "1",
+                                "name": "United States"
+                            }
+                        },
+                        "name": "Los Angeles",
+                        "states_id": "5"
+                    }
+                },
+                "cities_id": "1713",
+                "lon": "0.00000000000000000000",
+                "lat": "0.00000000000000000000",
+                "location_type": "High School",
+                "loc_point": null
+            }
+        }
+    },
+    "desc": "Used to auto-narrow a list of organizations based on passed parameters and partial search strings.",
+    "exec_data": {
+        "exec_time": 0.667973,
+        "exec_error": false,
+        "error_array": null
+    }
+}

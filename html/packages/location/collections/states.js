@@ -18,6 +18,10 @@ function(facade, collections, LocationStateModel, utils) {
         // Reference to this collection's model.
         model: LocationStateModel,
         
+        url: function() {
+            
+        },
+        
         // **Method:** `fetchSuccess` - resolve the deferred here in success
         fetchSuccess: function (collection, response) {
             collection.reset();
