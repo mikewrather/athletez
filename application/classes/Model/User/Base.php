@@ -394,8 +394,11 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 	 
 	public function getPrimaryVideo()
 	{
-		//TODO, add by Jeffrey,profile is removed.
-		return "TODO, b/c profile is remove from system,video need rebuild";
+		if($primary = Model_Media_Base::find_most_voted_tag($this,'video',1))
+		{
+			$video_meta = $primary->get_types_and_meta_as_array();
+		}
+		return $video_meta;
 	}
 	
 	public function getPositions()

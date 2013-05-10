@@ -310,10 +310,11 @@
 		{
 			$retArr = array(); 
 			// Scaffolding Code For Single:
-			$comments = $this->obj->find_all();
-			foreach($comments as $comment)
+			$video_meta = $this->obj;
+
+			foreach($video_meta as $name => $meta)
 			{
-				$retArr[$comment->id] = $comment->getBasics();
+				$retArr[$name] = $meta;
 			}
 			 
 			return $retArr;
