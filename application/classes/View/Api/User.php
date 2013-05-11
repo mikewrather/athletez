@@ -510,6 +510,7 @@
 		 */
 		public function post_fbreg()
 		{
+		//	print_r($this->obj);
 			// Get user facebook task
 			$retArr =  $this->obj->get_user();
 			return $retArr;

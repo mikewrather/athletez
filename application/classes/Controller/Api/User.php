@@ -223,7 +223,7 @@
 		public function  action_get_fbreg()
 		{
 			$this->payloadDesc = "Get user facebook basic information";
-			$this->action_post_fbreg();
+			return $this->action_post_fbreg();
 		}
 
 		/**
@@ -312,7 +312,10 @@
 		{
 			$facebook = FacebookAuth::factory();
 
+		//	print_r($facebook);
 			$retArr =  $facebook->get_user();
+
+		//	print_r($retArr);
 
 			if($retArr['message'])
 			{
@@ -332,6 +335,7 @@
 			}
 			else
 			{
+				print_r($facebook);
 				return $facebook;
 			}
 		}

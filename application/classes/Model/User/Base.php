@@ -941,7 +941,7 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 	}
 
 	/**
-	 * Wrapper method for self::can() but throws an exception instead of bool
+	 * Wrapper method for self::can() but throws an exceptiofuncn instead of bool
 	 * @param string $policy_name the policy to run
 	 * @param array $args arguments to pass to the rule
 	 * @throws Policy_Exception

@@ -81,14 +81,13 @@ define([
         
         createData: function () {
             this.basics = new GameBasicsModel();
-            this.basics.id = '101';            
+            this.basics.id = '425983';
             this.basics.fetch();
             this.id = this.basics.id;
             
             this.addmedia = new GameAddMediaModel();
-            this.addmedia.id = this.id;            
-            
-            this.teamrosters = new GameTeamRosterList();
+            this.addmedia.id = this.id;
+	        this.teamrosters = new GameTeamRosterList();
             this.teamrosters.id = this.id;
             this.teamrosters.fetch();
             
