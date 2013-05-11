@@ -59,9 +59,11 @@ class Model_Media_Video extends ORM
 	public function getBasics()
 	{
 		return array(
-			"id" => $this->id,			
+			"id" => $this->id,
+			"thumbs" => $this->thumbs,
+			"media_id" => $this->media_id,
 			"media" => $this->media->getBasics(),
-			'media_type' => $this->get_types_and_meta_as_array(),
+			'video_type' => $this->get_types_and_meta_as_array(),
 			"video_services" => $this->videoservice->getBasics(),
 		);
 	}
