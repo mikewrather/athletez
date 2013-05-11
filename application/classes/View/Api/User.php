@@ -523,7 +523,7 @@
 		 */
 		public function get_fbreg()
 		{
-			$this->post_fbreg();
+			return $this->post_fbreg();
 		}
 
 

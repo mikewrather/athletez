@@ -317,12 +317,12 @@
 
 		//	print_r($retArr);
 
-			if($retArr['message'])
+			if(isset($retArr['message']))
 			{
 
 				//Error message array
 				$error_array = array(
-					"error" => $retArr['message']
+					"error" => $retArr['message']."..."
 				);
 
 				// Set whether it is a fatal error

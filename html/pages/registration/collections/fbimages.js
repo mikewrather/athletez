@@ -16,8 +16,8 @@ function(facade, MediaImageList, utils) {
         
         url: function() {
             if (testpath)
-                return testpath + '/user/fbimages';
-            return '/api/user/fbimages';
+                return testpath + '/user/fbpics';
+            return '/api/user/fbpics';
         }
         
     });
