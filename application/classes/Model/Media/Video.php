@@ -60,7 +60,8 @@ class Model_Media_Video extends ORM
 	{
 		return array(
 			"id" => $this->id,			
-			"media" => $this->media->getBasics(),	 
+			"media" => $this->media->getBasics(),
+			'media_type' => $this->get_types_and_meta_as_array(),
 			"video_services" => $this->videoservice->getBasics(),
 		);
 	}
