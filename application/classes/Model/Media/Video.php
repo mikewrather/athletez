@@ -100,6 +100,7 @@ class Model_Media_Video extends ORM
 					$combine_obj->num_views =  $num_views;
 					$combine_obj->num_comments =  $num_comments;
 					$combine_obj->video_type = $video_type;
+
 					$arr[] = $combine_obj;
 				}
 			}
@@ -331,7 +332,10 @@ class Model_Media_Video extends ORM
 
 		foreach($vid_types_res as $type_link)
 		{
-			$retArr[$type_link->type->name] = $type_link->get_meta_as_array();
+			$obj = new stdClass();
+			$obj->video_type_name = $type_link->type->name;
+			$obj->meta_details = $type_link->get_meta_as_array();
+			$retArr[] = $obj;
 		}
 
 		return $retArr;

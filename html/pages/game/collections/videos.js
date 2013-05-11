@@ -13,11 +13,11 @@ function(facade, MediaVideoList, utils) {
         Channel = utils.lib.Channel;
 
     GameVideoList = MediaVideoList.extend({
-        
+
         url: function() {
-            if (testpath)
+	        if (testpath)
                 return testpath + '/game/videos/' + this.id;
-            return '/api/game/videos?game_id=' + this.id;
+            return '/api/game/videos/1';//TODO, changed by Jeffrey + this.id;
         }
 
     });

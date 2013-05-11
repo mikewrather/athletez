@@ -15,9 +15,9 @@ function(facade, MediaImageList, utils) {
     GameImageList = MediaImageList.extend({
         
         url: function() {
-            if (testpath)
+	        if (testpath)
                 return testpath + '/game/images/' + this.id;
-            return '/api/game/images?game_id=' + this.id;            
+            return '/api/game/images/1';//TODO,Add by Jeffrey + this.id;
         }
         
     });
