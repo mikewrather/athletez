@@ -335,7 +335,7 @@
 			}
 			else
 			{
-				print_r($facebook);
+		//		print_r($facebook);
 				return $facebook;
 			}
 		}
