@@ -46,7 +46,9 @@ function(require, registrationFacebookTemplate) {
             if (!this.model) {
                 throw new Error("RegistrationFacebookView expected options.model.");
             }
-            
+
+	        self.parseFBData(this.model.get('payload'));
+
             SectionView.prototype.initialize.call(this, options); 
             
             function changeUserPicture(picture) {
@@ -92,6 +94,15 @@ function(require, registrationFacebookTemplate) {
             event.preventDefault();
             this.initUploadImage();
         },
+
+	    parseFBData: function(payload)
+	    {
+		    payload.hs_exists = payload.high_school ? true : false;
+		    payload.dob_exists = payload.birthday ? true : false;
+		    payload.email_exists = payload.email ? true : false;
+
+		    this.model.set('payload',payload);
+	    },
         
         initFBPictures: function () {
             var self = this;

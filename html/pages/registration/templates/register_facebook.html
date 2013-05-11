@@ -1,46 +1,52 @@
-
 {{#payload}}
 <h1>Register with Facebook</h1>
 <div class="row-fluid">
-    <div class="span4">
-        <img class="picture" src="{{user_picture}}" alt="{{name}}"/><br/>
-        <a href="#" class="diff_fb_pic">Different Facebook Pic</a><br/>
-        <a href="#" class="upload_new_image">Upload a New Image</a><br/>
-    </div>
-    <div class="span8">
-        <h3>{{name}}</h3>
-        <div class="field">
-            Born: 
-            <span class="value" data-name="birthday" data-value="{{birthday}}">
-                <input type="hidden" name="birthday" value="{{birthday}}"/>
-                {{birthday}} <a href="#" class="change-field">change</a>
-            </span>
-        </div>
-        <div class="field">
-            High School: 
-            <span class="value" data-name="high_school" data-value="{{high_school}}">
-                <input type="hidden" name="high_school" value="{{high_school}}"/>
-                {{high_school}} <a href="#" class="change-field">change</a>
-            </span>
-        </div>
-        <div class="field">
-            Email: 
-            <span class="value" data-name="email" data-value="{{email}}">
-                <input type="hidden" name="email" value="{{email}}"/>
-                {{email}} <a href="#" class="change-field">change</a>
-            </span>
-        </div>
-        <div class="field">
-            Password: <input type="password" class="password" name="password"/>
-        </div>
-        <div class="field">
-            Again: <input type="password" name="password-again"/>
-        </div>
-        <div class="password-error"></div>
-    </div>
+	<div class="span4">
+		<img class="picture" src="{{profile_picture}}" alt="{{name}}"/><br/>
+		<a href="#" class="diff_fb_pic">Different Facebook Pic</a><br/>
+		<a href="#" class="upload_new_image">Upload a New Image</a><br/>
+	</div>
+	<div class="span8">
+		<h3>{{name}}</h3>
+
+		<div class="field">
+			Born:
+			<span class="value" data-name="birthday" data-value="{{birthday}}">
+				<input type="hidden" name="birthday" value="{{birthday}}"/>
+				{{birthday}} <a href="#" class="change-field">change</a>
+			</span>
+		</div>
+		<div class="field">
+			High School:
+			<span class="value" data-name="high_school" data-value="{{high_school}}">
+				{{#hs_exists}}
+					<input type="hidden" name="high_school" value="{{high_school}}"/>
+					{{high_school}} <a href="#" class="change-field">change</a>
+				{{/hs_exists}}
+				{{^hs_exists}}
+					<input type="text" id="high_school" name="high_school" value=""/>
+				{{/hs_exists}}
+
+			</span>
+		</div>
+		<div class="field">
+			Email:
+			<span class="value" data-name="email" data-value="{{email}}">
+				<input type="hidden" name="email" value="{{email}}"/>
+				{{email}} <a href="#" class="change-field">change</a>
+			</span>
+		</div>
+		<div class="field">
+			Password: <input type="password" class="password" name="password"/>
+		</div>
+		<div class="field">
+			Again: <input type="password" name="password-again"/>
+		</div>
+		<div class="password-error"></div>
+	</div>
 </div>
 <div class="row-fluid">
-    <label for="agree"><input type="checkbox" id="agree" name="agree"/>I have read and agree to the <a href="#">Terms of Service</a></label>
-    <a href="#" class="next">What's Next</a>
+	<label for="agree"><input type="checkbox" id="agree" name="agree"/>I have read and agree to the <a href="#">Terms of Service</a></label>
+	<a href="#" class="next">What's Next</a>
 </div>
 {{/payload}}
