@@ -87,17 +87,18 @@ class Model_Media_Video extends ORM
 			if(is_array($primary))
 			{
 				//Loop through results
-				foreach($primary as $media)
+				foreach($primary as $media_id => $video)
 				{
-					$video_type = $media->get_types_and_meta_as_array();
-					$combine_obj->video_id = $media->id;
+					$media_obj = ORM::factory("Media_Base", $media_id);
+					$video_type = $video->get_types_and_meta_as_array();
+					$combine_obj->video_id = $video->id;
 					//$combine_obj->video_title =  $media->name;
-					$combine_obj->video_thumb = $media->thumbs;
-					$combine_obj->post_date =  "Waiting for Mike add this column to meida table"; //TODO,
-					$num_tags = Model_Site_Tag::getNumTags($media);
-					$num_votes = Model_Site_Vote::getNumVotes($media);
-					$num_comments = Model_Site_Comment::getNumComments($media);
-					$num_views = Model_Site_View::getNumViews($media);
+					$combine_obj->video_thumb = $video->thumbs;
+					$combine_obj->post_date =  $media_obj->timePosted;
+					$num_tags = Model_Site_Tag::getNumTags($video);
+					$num_votes = Model_Site_Vote::getNumVotes($video);
+					$num_comments = Model_Site_Comment::getNumComments($video);
+					$num_views = Model_Site_View::getNumViews($video);
 					$combine_obj->tags_count =  $num_tags;
 					$combine_obj->num_votes =  $num_votes;
 					$combine_obj->num_views =  $num_views;
@@ -109,16 +110,16 @@ class Model_Media_Video extends ORM
 			}
 			else
 			{
-				$media = clone($primary);
-				$video_type = $media->get_types_and_meta_as_array();
-				$combine_obj->video_id = $media->id;
+				$video = clone($primary);
+				$video_type = $video->get_types_and_meta_as_array();
+				$combine_obj->video_id = $video->id;
 				//$combine_obj->video_title =  $media->name;
-				$combine_obj->video_thumb = $media->thumbs;
-				$combine_obj->post_date =  "Waiting for Mike add this column to meida table"; //TODO,
-				$num_tags = Model_Site_Tag::getNumTags($media);
-				$num_votes = Model_Site_Vote::getNumVotes($media);
-				$num_comments = Model_Site_Comment::getNumComments($media);
-				$num_views = Model_Site_View::getNumViews($media);
+				$combine_obj->video_thumb = $video->thumbs;
+				$combine_obj->post_date =  $video->timePosted;
+				$num_tags = Model_Site_Tag::getNumTags($video);
+				$num_votes = Model_Site_Vote::getNumVotes($video);
+				$num_comments = Model_Site_Comment::getNumComments($video);
+				$num_views = Model_Site_View::getNumViews($video);
 				$combine_obj->tags_count =  $num_tags;
 				$combine_obj->num_votes =  $num_votes;
 				$combine_obj->num_views =  $num_views;
@@ -171,7 +172,7 @@ class Model_Media_Video extends ORM
 			$combine_object->video_id =  $video_id;
 			$combine_object->video_title =  $video_title;
 			$combine_object->video_thumb = $video_thumb;
-			$combine_object->post_date =  "Waiting for Mike add this column to meida table"; //TODO,
+			$combine_object->post_date =  $single_media->timePosted;
 			$combine_object->tags_count =  $num_tags;
 			$combine_object->num_votes =  $num_votes;
 			$combine_object->num_views =  $num_views;
