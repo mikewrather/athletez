@@ -41,6 +41,7 @@ class Model_Sportorg_Position extends ORM
 
 			// sports_id (int)
 			'sports_id'=>array(
+				array('not_empty'),
 				array('sports_id_exist')
 			),
 
@@ -71,20 +72,20 @@ class Model_Sportorg_Position extends ORM
 			->on('stats_tab.id', '=', 'positions.stattab_id');
 
 		$stattab_model->where('positions.id', '=', $id);
-
+		//print_r($stattab_model->find_all());
 		return $stattab_model;
 	}
 	
 	public function getSport($args = array())
 	{
 		extract($args);
-		$stattab_model = ORM::factory("Sportorg_Sport");
-		$stattab_model->join('positions')
+		$sport_model = ORM::factory("Sportorg_Sport");
+		$sport_model->join('positions')
 			->on('sports.id', '=', 'positions.sport_id');
 
-		$stattab_model->where('positions.id', '=', $id);
+		$sport_model->where('positions.id', '=', $id);
 
-		return $stattab_model;
+		return $sport_model;
 	}
 		
 	public function getMedia($args = array())
@@ -108,18 +109,25 @@ class Model_Sportorg_Position extends ORM
 			$medias->join('users')->on('users.id', '=', 'media_base.users_id')
 					->where('users.cities_id', '=', $cities_id );
 		}	
-		 
-		if ( $type == 'image')
-			return $medias->image;
-		else if($type == 'video') {
-			return $medias->video;
+		$arr = array();
+		if ( $type == 'image'){
+			foreach($medias->find_all() as $m){
+				$arr[] = $m->image;
+			}
 		}
+		else if($type == 'video') {
+			foreach($medias->find_all() as $m){
+				$arr[] = $m->video;
+			}
+		}
+		$result = new stdClass();
+		$result->result = $arr;
+		return $result;
 	}
 	public function getListall($args = array())
 	{
 		extract($args);	
-		$positions = ORM::factory('Sportorg_Position')->distinct(TRUE)		
-						->join('user_sport_link')->on('user_sport_link.sports_id', '=', 'sportorg_position.sports_id');						
+		$positions = ORM::factory('Sportorg_Position');
 		// sports_id 
 		// Filter list of positions to a given sport.
 		if(isset($sports_id))
@@ -130,6 +138,8 @@ class Model_Sportorg_Position extends ORM
 		// Filter positions to a list of all positions for a given user
 		if(isset($users_id))
 		{
+			$positions->distinct(TRUE)
+			->join('user_sport_link')->on('user_sport_link.sports_id', '=', 'sportorg_position.sports_id');
 			$positions->where('user_sport_link.users_id', '=', $users_id);
 		}
 		
@@ -207,8 +217,12 @@ class Model_Sportorg_Position extends ORM
 		{
 			$this->stattab_id = $stattab_id;
 		}
-		
-		$this->save();
+		try{
+			$this->save();
+		}catch(ORM_Validation_Exception $e)
+		{
+			return $e;
+		}
 		return $this;
 	}
 }

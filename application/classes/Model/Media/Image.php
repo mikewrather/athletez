@@ -40,10 +40,12 @@ class Model_Media_Image extends ORM
 	public function getBasics()
 	{
 		$num_votes = Model_Site_Vote::getNumVotes($this);
+
 		return array(
 			"id" => $this->id,
 			"media" => $this->media->getBasics(),
-			"num_votes" => $num_votes
+			"num_votes" => $num_votes,
+			"meta_details" => $this->get_meta_as_array()
 		);
 	}
 
@@ -142,7 +144,7 @@ class Model_Media_Image extends ORM
 		if(!$this->loaded()) return;
 		$image_meta_res = $this->metadata->find_all();
 
-		$retArr = array();
+		$retArr = null;
 
 		foreach($image_meta_res as $data)
 		{

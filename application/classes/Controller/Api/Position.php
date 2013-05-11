@@ -217,23 +217,6 @@
 				$args['name'] = trim($this->request->post('name'));
 			}
 
-			else // THIS WAS A REQUIRED PARAMETER
-			{
-				// Create Array for Error Data
-				$error_array = array(
-					"error" => "Required Parameter Missing",
-					"param_name" => "name",
-					"param_desc" => "Name of the Posititon to be added"
-				);
-
-				// Set whether it is a fatal error
-				$is_fatal = true;
-
-				// Call method to throw an error
-				$this->addError($error_array,$is_fatal);
-
-			}
-			
 			// sports_id 
 			// Sport the position belongs to
 				
@@ -251,7 +234,17 @@
 			}
 			
 			$position_obj = ORM::factory("Sportorg_Position");
-			return $position_obj->addPosition($args);			
+			$result = $position_obj->addPosition($args);
+			if(get_class($result) == get_class($position_obj))
+			{
+				return $result;
+			}
+			elseif(get_class($result) == 'ORM_Validation_Exception')
+			{
+				//parse error and add to error array
+				$this->processValidationError($result,$this->mainModel->error_message_path);
+				return false;
+			}
 		}
 		
 		############################################################################

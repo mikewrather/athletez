@@ -22,7 +22,7 @@
 		 */
 		public function get_listall()
 		{
-			$retArr = array();
+			$retArr = null;
 
 			// Scaffolding Code For Array:
 			$objs = $this->obj->find_all();
@@ -41,7 +41,7 @@
 		 */
 		public function get_players()
 		{
-			$retArr = array();
+			$retArr = null;
 
 			// Scaffolding Code For Array:
 			$objs = $this->obj->find_all();
@@ -60,9 +60,12 @@
 		 */
 		public function get_defaultstattab()
 		{
-			$retArr = array();
- 			// Scaffolding Code For Single:
-			$retArr = $this->obj; 
+			$retArr = null;
+			$objs = $this->obj->find_all();
+			foreach($objs as $obj)
+			{
+				$retArr[$obj->id] = $obj->getBasics();
+			}
 
 			return $retArr;
 		}
@@ -74,9 +77,13 @@
 		 */
 		public function get_sport()
 		{
-			$retArr = array();
+			$retArr = null;
+			$objs = $this->obj->find_all();
+			foreach($objs as $obj)
+			{
+				$retArr[$obj->id] = $obj->getBasics();
+			}
 
-			$retArr = $this->obj; 
 			return $retArr;
 		}
 		
@@ -87,13 +94,12 @@
 		 */
 		public function get_images()
 		{
-			$retArr = array();
-
+			$retArr = null;
+			$objs = $this->obj->result;
 			// Scaffolding Code For Array:
-			$objs = $this->obj->find_all();
 			foreach($objs as $obj)
 			{
-				$retArr[$obj->id] = $obj->getBasics();
+				$retArr[] = $obj->getBasics();
 			}
 
 			return $retArr;
@@ -106,7 +112,7 @@
 		 */
 		public function get_videos()
 		{
-			$retArr = array();
+			$retArr = null;
 
 			// Scaffolding Code For Array:
 			$objs = $this->obj->find_all();
