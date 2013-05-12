@@ -70,7 +70,8 @@ class Model_Media_Videotypelink extends ORM
 
 		foreach($vid_meta_res as $data)
 		{
-			$retArr[$data->vid_prop] = $data->vid_val;
+			if ($data->vid_val != "" && $data->vid_val != nulll)
+				$retArr[$data->vid_prop] = $data->vid_val;
 		}
 
 		return $retArr;

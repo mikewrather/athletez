@@ -148,7 +148,8 @@ class Model_Media_Image extends ORM
 
 		foreach($image_meta_res as $data)
 		{
-			$retArr[$data->image_prop] = $data->image_val;
+			if ($data->image_val != "" && $data->image_val != nulll)
+				$retArr[$data->image_prop] = $data->image_val;
 		}
 
 		return $retArr;
