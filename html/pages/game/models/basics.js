@@ -13,7 +13,7 @@ define( ["facade", "sportorg/models/game"], function (facade, SportorgGameModel)
         url: function() {
             if (testpath)
                 return testpath + '/game/basics/' + this.id;
-            return '/api/game/basics?game_id=' + this.id;
+            return '/api/game/basics/' + this.id;
         }
         
     });

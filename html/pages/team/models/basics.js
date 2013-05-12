@@ -13,7 +13,7 @@ define( ["facade", "sportorg/models/team"], function (facade, SportorgTeamModel)
         url: function() {
             if (testpath)
                 return testpath + '/team/basics/' + this.id;
-            return '/api/team/basics/?team_id=' + this.id;
+            return '/api/team/basics/' + this.id;
         }
         
     });

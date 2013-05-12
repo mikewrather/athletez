@@ -17,7 +17,7 @@ function(facade, MediaVideoList, utils) {
         url: function() {
             if (testpath)
                 return testpath + '/user/videos/' + this.id + '/' + this.sport_id;
-            return '/api/user/videos?user_id=' + this.id + '&sport_id=' + this.sport_id;            
+            return '/api/user/videos/' + this.id + '?sport_id=' + this.sport_id;
         }
 
     });

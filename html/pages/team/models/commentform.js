@@ -14,7 +14,7 @@ define( ["facade", "site/models/comment", "utils"], function (facade, SiteCommen
         url: function() {
             if (testpath)
                 return testpath + '/team/commentform/' + this.id + '/' + this.sport_id + '/' + this.complevel_id + '/' + this.season_id;
-            return '/api/team/commentform?game_id=' + this.id + '&sport_id=' + this.sport_id + '&complevel_id=' + this.complevel_id + '&season_id=' + this.season_id;         
+            return '/api/team/commentform/'+this.id+'?id1=' + this.id + '&sport_id=' + this.sport_id + '&complevel_id=' + this.complevel_id + '&season_id=' + this.season_id;
         },
         
         initialize: function (attributes, options) {

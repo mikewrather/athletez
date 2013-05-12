@@ -17,7 +17,7 @@ function(facade, UserRelatedList, utils) {
         url: function() {
             if (testpath)
                 return '/test/user/related/' + this.id + '/' + this.sport_id;
-            return '/api/user/related?user_id=' + this.id + '&sport_id=' + this.sport_id;            
+            return '/api/user/related/' + this.id + '?sport_id=' + this.sport_id;
         }
 
     });

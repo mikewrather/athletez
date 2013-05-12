@@ -14,7 +14,7 @@ define( ["facade", "site/models/comment", "utils"], function (facade, SiteCommen
         url: function() {
             if (testpath)
                 return testpath + '/user/commentonform/' + this.id;
-            return '/api/user/commentonform?user_id=' + this.id;
+            return '/api/user/commentonform/' + this.id;
         },
         
         initialize: function (attributes, options) {

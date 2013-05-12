@@ -17,7 +17,7 @@ function(facade, SiteCommentList, utils) {
         url: function() {
             if (testpath)
                 return testpath + '/game/comments/' + this.id;
-            return '/api/game/comments?game_id=' + this.id;            
+            return '/api/game/comments/' + this.id;
         }
 
     });

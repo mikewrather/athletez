@@ -14,9 +14,9 @@ define( ["facade", "site/models/comment", "utils"], function (facade, SiteCommen
         url: function() {
             if (testpath)
                 return testpath + '/game/commentform/' + this.id;
-            return '/api/game/commentform?game_id=' + this.id;
+            return '/api/game/commentform/' + this.id;
         },
-        
+
         initialize: function (attributes, options) {
             SiteCommentModel.prototype.initialize.call(attributes, options);            
         },

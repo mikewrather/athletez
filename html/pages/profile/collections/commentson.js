@@ -16,7 +16,7 @@ function(facade, SiteCommentList, utils) {
         url: function() {
             if (testpath)
                 return testpath + '/user/commentson/' + this.id;
-            return '/api/user/commentson?user_id=' + this.id;            
+            return '/api/user/commentson/' + this.id;
         }
 
     });
