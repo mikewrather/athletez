@@ -369,8 +369,8 @@ class Model_Sportorg_Org extends ORM
 			$this->name = $name;
 		}
 
-		if (isset($signle_sport)){
-			$this->signle_sport = $signle_sport;
+		if (isset($sports_club)){
+			$this->sports_club = $sports_club;
 		}
 
 		if (isset($season_profiles_id)){
