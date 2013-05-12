@@ -123,8 +123,8 @@
             {
                 $error_array = array(
                     "error" => "This season already exists",
-                    "param_name" => "season name and season profile",
-                    "param_desc" => "Name of the Season to create"
+                    "param_name" => "name",
+                    "param_desc" => "This season already exists"
                 );
 
                 // Set whether it is a fatal error
@@ -174,7 +174,7 @@
                 $error_array = array(
                     "error" => "This season profile already exists",
                     "param_name" => "name",
-                    "param_desc" => "Name of the Season Profile to create"
+                    "param_desc" => "This season profile already exists"
                 );
 
                 // Set whether it is a fatal error
@@ -213,9 +213,20 @@
 				$this->modelNotSetError();
 				return false;
 			}
-			 
-			
-			return $this->mainModel->addSeasonprofile($name);
+
+			$result =  $this->mainModel->addSeasonprofile($name);
+			//Check for success / error
+			if(get_class($result) == get_class($this->mainModel))
+			{
+				return $result;
+			}
+			elseif(get_class($result) == 'ORM_Validation_Exception')
+			{
+				//parse error and add to error array
+				$this->processValidationError($result,$this->mainModel->error_message_path);
+				return false;
+
+			}
 		}
 		
 		############################################################################

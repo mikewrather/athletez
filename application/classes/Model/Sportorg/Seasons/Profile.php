@@ -64,14 +64,14 @@ class Model_Sportorg_Seasons_Profile extends ORM
 	
 	public function addSeasonprofile($name)
 	{
-		if(isset($name))
+		if(isset($name) && $name != "")
 		{
 			$this->name = $name;
 		}
 		
          try {
-          $this->save();
-            return $this;
+         	$this->save();
+         	return $this;
         } catch(ORM_Validation_Exception $e){
             return $e;
         } 
