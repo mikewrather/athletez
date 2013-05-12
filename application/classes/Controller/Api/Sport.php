@@ -93,7 +93,7 @@
 				$this->modelNotSetError();
 				return false;
 			}
-			$this->mainModel->getSportType();
+			return $this->mainModel->getSportType();
 		}
 		
 		/**

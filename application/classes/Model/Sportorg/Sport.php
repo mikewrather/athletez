@@ -73,7 +73,7 @@ class Model_Sportorg_Sport extends ORM
 
 			// sport_type_id (int)
 			'sport_type_id'=>array(
-				array('digit'),
+				array('not_empty'),
 				array('sport_type_id_exist'),
 			),
 		);
