@@ -188,7 +188,7 @@
 		     // CHECK FOR PARAMETERS:
 			// name 
 			// Change the name of the Season
-				
+
 			if(trim($this->put('name')) != "")
 			{
 				$name = trim($this->put('name'));
@@ -218,7 +218,12 @@
 		{
 			$this->payloadDesc = "Delete a Season";
 
-		
+			if(!$this->mainModel->id)
+			{
+				$this->modelNotSetError();
+				return false;
+			}
+			return $this->mainModel->delete();
 		}
 		
 	}

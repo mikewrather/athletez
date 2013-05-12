@@ -134,7 +134,8 @@ class Model_Sportorg_Seasons_Base extends ORM
 		{
 			$orgs->where('orgs.divisions_id', '=', $divisions_id);
 		}
-		$orgs->join('leagues')->on('leagues.id', '=', 'orgs.leagues_id');
+		if (isset($leagues_id) || isset($sections_id) || isset($states_id))
+			$orgs->join('leagues')->on('leagues.id', '=', 'orgs.leagues_id');
 		// leagues_id
 		// Filter teams for a certain season to only show those for a specific league
 		if ( isset($leagues_id) )
@@ -155,7 +156,6 @@ class Model_Sportorg_Seasons_Base extends ORM
 		{
 			$orgs->where('leagues.states_id', '=', $states_id);
 		}
-		 
 		return $teams;
 	}
 	
