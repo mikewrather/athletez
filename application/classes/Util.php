@@ -23,9 +23,17 @@ class Util {
 				return 0;
 			}
 		}
-
+		// male/female
 		if (in_array($value, array('f', 'm'))){
 			if ($value == 'm'){
+				return 1;
+			}else{
+				return 0;
+			}
+		}
+		//yes/no
+		if (in_array($value, array('y', 'n'))){
+			if ($value == 'y'){
 				return 1;
 			}else{
 				return 0;
