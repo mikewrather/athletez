@@ -82,8 +82,15 @@ class Model_Sportorg_Sport extends ORM
 
 	public function updateType($sport_type_id)
 	{
-		$this->sport_type_id = $sport_type_id;
-		return $this->update();
+		if ($sport_type_id != "")
+			$this->sport_type_id = $sport_type_id;
+		try{
+			$this->update();
+			return $this;
+		} catch(ORM_Validation_Exception $e)
+		{
+			return $e;
+		}
 	}
 	
 	public function updateSport($args)

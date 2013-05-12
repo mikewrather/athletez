@@ -78,9 +78,9 @@
 			// is_winner 
 			// Filter games associated with a given team to only show those where the team either won or lost the game
 				
-			if((int)trim($this->request->query('is_winner')) > 0)
+			if( trim($this->request->query('is_winner')) != "")
 			{
-				$args['is_winner'] = (int)trim($this->request->query('is_winner'));
+				$args['isWinner'] = Util::convert_to_boolean(trim($this->request->query('is_winner')));
 			}
 			if(!$this->mainModel->id)
 			{
@@ -268,7 +268,6 @@
 				//parse error and add to error array
 				$this->processValidationError($result,$this->mainModel->error_message_path);
 				return false;
-
 			}
 		}
 		
@@ -490,7 +489,7 @@
 			if($this->put('isWinner') != "")
 			{
 				//convert isWinner to a boolean
-				$args['isWinner'] = (bool)$this->put('isWinner');
+				$args['isWinner'] = Util::convert_to_boolean($this->put('isWinner'));
 			}
 
 			// is_home_team 
@@ -499,7 +498,7 @@
 			if($this->put('is_home_team') != "")
 			{
 				//convert is_home_team to a boolean
-				$args['is_home_team'] = (bool)$this->put('is_home_team');
+				$args['is_home_team'] = Util::convert_to_boolean($this->put('is_home_team'));
 			}
 
 			if((int)trim($this->put('games_id')) > 0)

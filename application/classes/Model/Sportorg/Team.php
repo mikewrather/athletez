@@ -117,36 +117,35 @@ class Model_Sportorg_Team extends ORM
 
 		if (!isset($sports_id))
 			$post_values['sports_id'] = 0;
-
-		if ($org_sport_link_id == ""){
-			$external_validate = Validation::factory($post_values)
-				->rule('orgs_id', 'orgs_id_exist')
-				->rule('sports_id', 'sports_id_exist');
-			//if check pass,add org_id,sports_id to db,generate org_sport_id for use
-			if ($external_validate->check()){
-				//check org_sport in db.
-				$org_sport_link_model = ORM::factory("Sportorg_Orgsportlink");
-				$result = $org_sport_link_model->getOrgSportId($orgs_id, $sports_id);
-				if(!$result->loaded())
-				{
-					unset($org_sport_link_model);
-					$org_sport_link_model = ORM::factory("Sportorg_Orgsportlink");
-					//Insert new row to org_sport_link
-					$org_sport_link_model->orgs_id = $orgs_id;//already extracted
-					$org_sport_link_model->sports_id = $sports_id;//already extracted
-					$org_sport_link_model->save();
-					$org_sport_pk = $org_sport_link_model->pk();
-					$this->org_sport_link_id = $org_sport_pk;
-				}else{
-					$this->org_sport_link_id = $result->id;
-				}
-			}
-		}else{
-			$external_validate = Validation::factory($this->as_array())
-				->rule('org_sport_link_id', 'check_org_sport_id_exist');
-		}
-
 		try {
+			if ($org_sport_link_id == ""){
+				$external_validate = Validation::factory($post_values)
+					->rule('orgs_id', 'orgs_id_exist')
+					->rule('sports_id', 'sports_id_exist');
+				//if check pass,add org_id,sports_id to db,generate org_sport_id for use
+				if ($external_validate->check()){
+					//check org_sport in db.
+					$org_sport_link_model = ORM::factory("Sportorg_Orgsportlink");
+					$result = $org_sport_link_model->getOrgSportId($orgs_id, $sports_id);
+					if(!$result->loaded())
+					{
+						unset($org_sport_link_model);
+						$org_sport_link_model = ORM::factory("Sportorg_Orgsportlink");
+						//Insert new row to org_sport_link
+						$org_sport_link_model->orgs_id = $orgs_id;//already extracted
+						$org_sport_link_model->sports_id = $sports_id;//already extracted
+						$org_sport_link_model->save();
+						$org_sport_pk = $org_sport_link_model->pk();
+						$this->org_sport_link_id = $org_sport_pk;
+					}else{
+						$this->org_sport_link_id = $result->id;
+					}
+				}
+			}else{
+				$external_validate = Validation::factory($this->as_array())
+					->rule('org_sport_link_id', 'check_org_sport_id_exist');
+			}
+
 			$this->save($external_validate);
 			return $this;
 		} catch(ORM_Validation_Exception $e){
@@ -205,7 +204,7 @@ class Model_Sportorg_Team extends ORM
 	public function getBasics()
 	{
 		$athletesArray = array();
-		foreach($this->athletes->find_all() as $athlete) { $athletesArray[$athlete->id] = $athlete->getBasics(); }
+		foreach($this->athletes->find_all() as $athlete) { $athletesArray[] = $athlete->getBasics(); }
 		$num_followers = Model_User_Followers::num_followers($this);
 		$num_votes = Model_Site_Vote::getNumVotes($this);
 
@@ -295,6 +294,7 @@ class Model_Sportorg_Team extends ORM
 		{
 			$games->where('games_teams_link.isWinner', '=', $isWinner);
 		}
+		print_r($games->find_all());
 		return $games;
 	}
 
@@ -315,9 +315,14 @@ class Model_Sportorg_Team extends ORM
 			$this->where('sportorg_team.complevels_id', '=', $complevels_id);
 		}
 		$enttype_id = Model_Site_Enttype::getMyEntTypeID($this);
+
+		$counts = DB::select(array(DB::expr('COUNT(id)'),'num_votes'))
+				->select(array('subject_id', 'teams_id'))
+				->from('votes')
+			->where('subject_enttypes_id','=',$enttype_id);
+
 		if (!isset($orderby)){
-			$this->join('votes')->on('votes.subject_id', '=', 'sportorg_team.id');
-			$this->where('votes.subject_enttypes_id', '=', $enttype_id);
+			$this->join(array($counts,'filtered'))->on('filtered.teams_id', '=', 'sportorg_team.id');
 			$this->order_by('num_votes', 'asc');
 		}else{
 			$this->order_by($orderby, 'asc');
@@ -330,11 +335,18 @@ class Model_Sportorg_Team extends ORM
 		if (isset($zipcode)){
 			$this->where('locations.zip', '=', $zipcode);
 		}
-		//TODO, Add by Jeffrey,Need to complete the loc_name after ask Mike.
-		if (isset($loc_name)){
-			//$this->where('locations.zip', '=', $zipcode);
-		}
 
+		if (isset($loc_name)){
+			$this->and_where_open();
+			//$this->join('locations')->on('locations.id', '=', 'orgs.locations_id');
+			$this->join('cities')->on('locations.cities_id', '=', 'cities.id');
+			$this->or_where('cities.name', 'like', "%".$loc_name."%");
+			$this->join('counties')->on('cities.county_id', '=', 'counties.id');
+			$this->or_where('counties.name', 'like', "%".$loc_name."%");
+			$this->join('states')->on('states.id', '=', 'counties.states_id');
+			$this->or_where('states.name', 'like', "%".$loc_name."%");
+			$this->and_where_close();
+		}
 		return $this;
 	}
 	

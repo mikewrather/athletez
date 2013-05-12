@@ -36,13 +36,13 @@
 		 */
 		public function get_games()
 		{
-			$retArr = array(); 
+			$retArr = null;
 			// Scaffolding Code For Single:
 			$objs = $this->obj->find_all();
 			
 			foreach($objs as $obj)
 			{
-				$retArr[$obj->id] = $obj->getBasics();
+				$retArr[] = $obj->getBasics();
 			}
 
 			if (empty($retArr)){
@@ -59,7 +59,7 @@
 		 */
 		public function get_roster()
 		{
-			$retArr = array();			
+			$retArr = null;
 			// Scaffolding Code For Array:
 			$objs = $this->obj->find_all();
 			 
@@ -81,10 +81,6 @@
 				$retArr[] = $combine_obj;
 			}
 
-			if (empty($retArr)){
-				return null;
-			}
-			 
 			return $retArr;
 		}
 
@@ -95,7 +91,7 @@
 		 */
 		public function get_search()
 		{
-			$retArr = array();
+			$retArr = null;
 
 			// Scaffolding Code For Array:
 			$objs = $this->obj->find_all();
