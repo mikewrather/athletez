@@ -24,6 +24,14 @@ class Util {
 			}
 		}
 
+		if (in_array($value, array('f', 'm'))){
+			if ($value == 'm'){
+				return 1;
+			}else{
+				return 0;
+			}
+		}
+
 		if (in_array($value, array(0, 1))){
 			return $value;
 		}

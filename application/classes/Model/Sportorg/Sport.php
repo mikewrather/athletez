@@ -168,8 +168,8 @@ class Model_Sportorg_Sport extends ORM
 		{
 			$athletes = $athletes->where('org_sport_link.orgs_id', '=', $orgs_id);
 		}
-
-		$athletes->join('teams')->on('teams.org_sport_link_id', '=', 'org_sport_link.id');
+		if ($teams_id != "" || $seasons_id != "" || $complevels_id != "")
+			$athletes->join('teams')->on('teams.org_sport_link_id', '=', 'org_sport_link.id');
 
 		if ( isset($teams_id) && $teams_id != "")
 		{
@@ -190,6 +190,7 @@ class Model_Sportorg_Sport extends ORM
 	public function getStat(){
 		$stat = ORM::factory("Stats_Base");
 		$stat->where('sports_id', '=', $this->id)->or_where('sports_id2','=',$this->id);
+		print_r($stat->find_all());
 		return $stat;
 	}
 
@@ -220,6 +221,8 @@ class Model_Sportorg_Sport extends ORM
 		if ( isset($complevels_id) && $complevels_id != ""){
 			$video->where('teams.complevels_id', '=', $complevels_id);
 		}
+
+		print_r($video->find_all());
 		return $video;
 	}
 
@@ -248,7 +251,6 @@ class Model_Sportorg_Sport extends ORM
 	}
 
 	public function getResumeData($args = array()){
-		$retArr = array();
 		extract($args);
 		$resumeData = ORM::factory("User_Resume_Data_Vals");
 		$resumeData
@@ -275,18 +277,9 @@ class Model_Sportorg_Sport extends ORM
 			$resumeData->where('sports.id', '=', $sports_id);
 
 			if (isset($users_id)){
-				$resumeData->where('user_resume_data_vals.users_id','=',$this->id);
+				$resumeData->where('user_resume_data_vals.users_id','=', $users_id);
 			}
-			print_r($resumeData);
+
 			return $resumeData;
-//
-//		$res = $resumeData->execute();
-//
-//		foreach($res as $data)
-//		{
-//			$retArr[$data['id']] = $data;
-//		}
-//
-//		return (object)$retArr;
 	}
 }

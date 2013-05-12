@@ -486,7 +486,7 @@
 			if($this->put('male') != "")
 			{
 				//convert male to a boolean
-				$args['male'] =  $this->put('male');
+				$args['male'] = Util::convert_to_boolean($this->put('male'));
 			}
 
 			// female 
@@ -495,7 +495,7 @@
 			if($this->put('female') != "")
 			{
 				//convert female to a boolean
-				$args['female'] = $this->put('female');
+				$args['female'] = Util::convert_to_boolean($this->put('female'));
 			}
 
 			// sport_type_id 
