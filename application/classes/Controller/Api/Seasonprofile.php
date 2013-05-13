@@ -151,6 +151,19 @@
 			if(trim($this->request->post('name')) != "")
 			{
 				$name = trim($this->request->post('name'));
+			}else{
+				$error_array = array(
+					"error" => "Name required",
+					"param_name" => "name",
+					"param_desc" => "Name required"
+				);
+
+				// Set whether it is a fatal error
+				$is_fatal = true;
+
+				// Call method to throw an error
+				$this->addError($error_array,$is_fatal);
+				return false;
 			}
 			 
             

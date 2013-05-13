@@ -41,17 +41,4 @@ class Model_Scrape_Sport extends ORM
 			'name' => $this->name
 		);
 	}
-
-	//custom validation.
-	public static function check_sport_type_exist($sport_type_id){
-		$sport_type_model = ORM::factory("Sportorg_Sporttype");
-		$sport_type_model->select("id")
-			->where('id', '=', $sport_type_id)
-			->find();
-		if ($sport_type_model->loaded()){
-			return true;
-		}
-		return false;
-	}
-
 }

@@ -341,27 +341,7 @@
 			{
 				$name = trim($this->request->post('name'));
 			}
-			/*
-			else // THIS WAS A REQUIRED PARAMETER
-			{
-				// Create Array for Error Data
-				$error_array = array(
-					"error" => "Required Parameter Missing",
-					"param_name" => "name",
-					"param_desc" => "Name of the Sport to add"
-				);
 
-				// Set whether it is a fatal error
-				$is_fatal = true;
-
-				// Call method to throw an error
-				$this->addError($error_array,$is_fatal);
-
-			}
-			*/
-			// male 
-			// True if this sport is for men
-				
 			if($this->request->post('male') != "")
 			{
 				//convert male to a boolean
@@ -384,49 +364,22 @@
 			{
 				$sporttype = (int)trim($this->request->post('sporttype'));
 			}
+			$args['name'] = $name;
+			$args['male'] = $male;
+			$args['female'] = $female;
+			$args['sport_type_id'] = $sporttype;
+			$result = $this->mainModel->addSport($args);
+			if(get_class($result) == get_class($this->mainModel))
+			{
+				return $result;
+			}
+			elseif(get_class($result) == 'ORM_Validation_Exception')
+			{
+				//parse error and add to error array
+				$this->processValidationError($result,$this->mainModel->error_message_path);
+				return false;
 
-			//add validation & save logic here.
-			$sports_obj = ORM::factory("Scrape_Sport");
-			$sports_obj->name = $name;
-			$sports_obj->male = $male;
-			$sports_obj->female = $female;
-			$sports_obj->sport_type_id = $sporttype;
-
-				$sport_validate = Validation::factory($sports_obj->as_array())
-					->rule('name', 'not_empty')
-					->rule('male', 'not_empty')
-					->rule('female', 'not_empty')
-					->rule('male', 'in_array', array(":value",array(0, 1)))
-					->rule('female', 'in_array', array(":value", array(0, 1)))
-					->rule('sport_type_id', 'not_empty')
-					->rule('sport_type_id', 'Model_Scrape_Sport::check_sport_type_exist');
-
-				if (!$sport_validate->check()){
-					$validate_errors = $sport_validate->errors('models/scrape/sport');
-					$error_array = array(
-						"error" => implode('\n', $validate_errors),
-						"param_name" => "name",
-						"param_desc" => "Name of the Sport to add"
-					);
-
-					// Set whether it is a fatal error
-					$is_fatal = true;
-					$this->addError($error_array,$is_fatal);
-				}
-				if (strtolower($male) == 'true'){
-					$sports_obj->male = 1;
-				}else{
-					$sports_obj->male = 0;
-				}
-
-				if (strtolower($female) == 'true'){
-					$sports_obj->female = 1;
-				}else{
-					$sports_obj->female = 0;
-				}
-
-				$sports_obj->save();
-			return $sports_obj;
+			}
 		}
 		
 		/**

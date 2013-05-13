@@ -37,7 +37,7 @@
 		 */
 		public function get_seasons()
 		{
-			$retArr = array();
+			$retArr = null;
 
 			// Scaffolding Code For Array:
 			$objs = $this->obj->find_all();
@@ -104,12 +104,7 @@
 		 */
 		public function delete_base()
 		{
-			$retArr = array();
-
 			// Scaffolding Code For Array:
-			$objs = $this->obj;
-
-			return $retArr;
+			return $this->obj->getBasics();
 		}
-		
 	}
