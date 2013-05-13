@@ -390,24 +390,47 @@
 		public function action_post_position()
 		{
 			$this->payloadDesc = "Add a new position for a given sport";
-
-		     // CHECK FOR PARAMETERS:
-			// name 
+			$arguments = array();
+			// CHECK FOR PARAMETERS:
+			// name
 			// Name of the position to add
-				
+
 			if(trim($this->request->post('name')) != "")
 			{
-				$name = trim($this->request->post('name'));
+				$arguments["name"] = trim($this->request->post('name'));
 			}
 
-			// stattab_id 
+			// stattab_id
 			// ID of the default statistics tab for the position
-				
+
 			if((int)trim($this->request->post('stattab_id')) > 0)
 			{
-				$stattab_id = (int)trim($this->request->post('stattab_id'));
+				$arguments["stattab_id"] = (int)trim($this->request->post('stattab_id'));
 			}
 
+			if(!$this->mainModel->id)
+			{
+				$this->modelNotSetError();
+				return false;
+			}
+
+			$arguments['sports_id'] = $this->mainModel->id;
+
+			$position_model = ORM::factory("Sportorg_Position");
+
+			$result = $position_model->addPosition($arguments);
+
+			if(get_class($result) == get_class($result))
+			{
+				return $result;
+			}
+			elseif(get_class($result) == 'ORM_Validation_Exception')
+			{
+				//parse error and add to error array
+				$this->processValidationError($result,$this->mainModel->error_message_path);
+				return false;
+
+			}
 		}
 		
 		############################################################################
