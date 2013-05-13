@@ -177,23 +177,41 @@
 		{
 			$this->payloadDesc = "Update the basic information about a season";
 
-		     // CHECK FOR PARAMETERS:
-			// name 
+			if(!$this->mainModel->id)
+			{
+				$this->modelNotSetError();
+				return false;
+			}
+
+			$arguments = array();
+			// CHECK FOR PARAMETERS:
+			// name
 			// Change the name of the Season
 
 			if(trim($this->put('name')) != "")
 			{
-				$name = trim($this->put('name'));
+				$arguments["name"] = trim($this->put('name'));
 			}
 
-			// seasons_profiles_id 
+			// seasons_profiles_id
 			// Change the Season Profile this season belongs to
-				
+
 			if((int)trim($this->put('seasons_profiles_id')) > 0)
 			{
-				$seasons_profiles_id = (int)trim($this->put('seasons_profiles_id'));
+				$arguments["seasons_profiles_id"] = (int)trim($this->put('seasons_profiles_id'));
 			}
 
+			$result = $this->mainModel->addSeasons($arguments);
+			if(get_class($result) == get_class($this->mainModel))
+			{
+				return $result;
+			}
+			elseif(get_class($result) == 'ORM_Validation_Exception')
+			{
+				//parse error and add to error array
+				$this->processValidationError($result,$this->mainModel->error_message_path);
+				return false;
+			}
 		}
 		
 		############################################################################
