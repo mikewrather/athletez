@@ -10,6 +10,8 @@ class Model_Sportorg_Seasons_Base extends ORM
 	
 	protected $_table_name = 'seasons';
 
+	public $error_message_path = 'models/sportorg/seasons';
+
 	protected $_belongs_to = array(
 		'seasonprofile' => array(
 			'model' => 'Sportorg_Seasons_Profile',
