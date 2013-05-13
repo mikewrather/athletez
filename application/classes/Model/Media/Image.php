@@ -98,9 +98,13 @@ class Model_Media_Image extends ORM
 		}
 
 		$enttype_id = Model_Site_Enttype::getMyEntTypeID($this);
+		$counts = DB::select(array(DB::expr('COUNT(id)'),'num_votes'))
+			->select(array('subject_id', 'users_id'))
+			->from('votes')
+			->where('subject_enttypes_id','=',$enttype_id);
+
 		if (!isset($orderby)){
-			$this->join('votes')->on('votes.subject_id', '=', 'users.id');
-			$this->where('votes.subject_enttypes_id', '=', $enttype_id);
+			$this->join(array($counts,'filtered'))->on('filtered.users_id', '=', 'users.id');
 			$this->order_by('num_votes', 'asc');
 		}else{
 			$this->order_by($orderby, 'asc');
