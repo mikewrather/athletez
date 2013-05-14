@@ -36,10 +36,10 @@
 			// Scaffolding Code For Array:
 			$objs = $this->obj->find_all();
 			 
-			foreach($objs as $obj)
+			foreach($objs as $index => $obj)
 			{
-				$retArr[$obj->id] = $obj->getBasics();
-				$retArr[$obj->id]['team_location'] = array();
+				$retArr[$index] = $obj->getBasics();
+				$retArr[$index]['team_location'] = array();
 			}
 
 			if (empty($retArr)){

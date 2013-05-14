@@ -54,14 +54,33 @@
 		public function action_get_listall()
 		{
 			$this->payloadDesc = "Retrives a list of all sports narrowed by a number of optional criteria";
+			$arguments = array();
+			// CHECK FOR PARAMETERS:
+			// male
+			// Male
 
-//			if(!$this->mainModel->id)
-//			{
-//				$this->modelNotSetError();
-//				return false;
-//			}
-			$args['id'] = $this->mainModel->id;
-			return $this->mainModel->getListall($args);
+			if((int)trim($this->request->query('male')) > 0)
+			{
+				$arguments["male"] = (int)trim($this->request->query('male'));
+			}
+
+			// sport_type_id
+			// Sport type
+
+			if((int)trim($this->request->query('sport_type_id')) > 0)
+			{
+				$arguments["sport_type_id"] = (int)trim($this->request->query('sport_type_id'));
+			}
+
+			// female
+			// Female
+
+			if((int)trim($this->request->query('female')) > 0)
+			{
+				$arguments["female"] = (int)trim($this->request->query('female'));
+			}
+
+			return $this->mainModel->getListall($arguments);
 		}
 		
 		/**

@@ -162,9 +162,16 @@ class Model_Sportorg_Sport extends ORM
 	public function getListall($args = array()){
 		extract($args);
 		$sports = ORM::factory('Sportorg_Sport');
-		if ($id != 0){
-			$sports->where('id', '=', $this->id);
+		if (isset($male)){
+			$sports->where('male', '=', $male);
 		}
+		if (isset($female)){
+			$sports->where('female', '=', $female);
+		}
+		if (isset($sport_type_id)){
+			$sports->where('sport_type_id', '=', $sport_type_id);
+		}
+
 		return $sports;
 	}
 
