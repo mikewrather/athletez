@@ -75,7 +75,7 @@ class Model_Media_Base extends ORM
 */
 		);
 	}
-
+	/* Comment by Jeffrey, Invalid now
 	public function getMediaForObject(ORM $object)
 	{
 		// Get Ent Type ID
@@ -83,7 +83,7 @@ class Model_Media_Base extends ORM
 		$result = $this->where('subject_type_id','=',$enttypeID);
 		return $result;
 	}
-
+	*/
 	/**
 	 * getTaggedObjects should get all tagged objects and return them each with their getBasics data
 	 * this method should select from the tags table where media_id = $this->id
@@ -99,10 +99,9 @@ class Model_Media_Base extends ORM
 			"id" => $this->id,
 			"name" => $this->name,
 			"media_type" => $this->media_type,
-			"subject_type_id" => $this->subject_type_id,
-			"subject_id" => $this->subject_id,
 			"sport" => $this->sport->getBasics(),
 			"user" => $this->user->getBasics(),
+			"image" => $this->image->getBasics()
 		);
 	}
 

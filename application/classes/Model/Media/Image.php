@@ -43,7 +43,8 @@ class Model_Media_Image extends ORM
 
 		return array(
 			"id" => $this->id,
-			"media" => $this->media->getBasics(),
+			//Comment by Jeffrey, There is loop when from media to get image info
+			"media" => $this->media,//->getBasics(),
 			"num_votes" => $num_votes,
 			"meta_details" => $this->get_meta_as_array()
 		);
@@ -55,9 +56,9 @@ class Model_Media_Image extends ORM
 		$media_image = ORM::factory("Media_Image");
 		$enttypeID = Ent::getMyEntTypeID($games_model);
 
-		$media_image->join('media', 'RIGHT')->on('media_image.media_id', '=','media.id')
-			->where('media.subject_type_id', '=', $enttypeID)
-			->and_where('media.subject_id', '=', $games_id);
+		$media_image->join('tags', 'RIGHT')->on('media_image.media_id', '=','tags.media_id')
+			->where('tags.subject_enttypes_id', '=', $enttypeID)
+			->and_where('tags.subject_id', '=', $games_id);
 		return $media_image;
 	}
 

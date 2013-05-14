@@ -45,7 +45,7 @@ class Model_Media_Videoservice extends ORM
 		{
 			$sports->join('media')->on('media.id', '=','media_video.media_id')
 					->where('media.sports_id', '=', $sports_id);
-		}  
+		}
 		 
 		return $sports;
 	}

@@ -71,8 +71,8 @@ class Model_Media_Video extends ORM
 	public static function getVideoCounts($obj){
 		$enttype_id = Model_Site_Enttype::getMyEntTypeID($obj);
 		$subject_id = $obj->id;
-		$res = DB::select(array(DB::expr('COUNT(*)'), 'total_count'))->from('media')
-			->where('subject_type_id', '=', $enttype_id)
+		$res = DB::select(array(DB::expr('COUNT(*)'), 'total_count'))->from('tags')
+			->where('subject_enttypes_id', '=', $enttype_id)
 			->where('subject_id', '=',$subject_id);
 		return $res->execute()->get('total_count');
 	}
@@ -135,17 +135,10 @@ class Model_Media_Video extends ORM
 
 	public static function getVideos($obj)
 	{
-		if ($obj instanceof Model_Sportorg_Games_Base){
-			$enttype_id = Model_Site_Enttype::getMyEntTypeID($obj);
-			$media = ORM::factory("Media_Base");
-			$media->where('subject_type_id', '=', $enttype_id);
-			$media->where('subject_id', '=', $obj->id);
-			$media->where('media_type','=','video');
-		}else{
-			$media = $obj->media->where('media_type','=','video');
-		}
-		$result_arr = null;
 
+		$media = $obj->media->where('media_type','=','video');
+		$media->where('users_id', '=', $obj->id);
+		$result_arr = null;
 		foreach($media->find_all() as $single_media){
 			$combine_object = new stdClass();
 			$typelink = $single_media->video->get_types_and_meta_as_array();

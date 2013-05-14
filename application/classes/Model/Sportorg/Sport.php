@@ -239,8 +239,9 @@ class Model_Sportorg_Sport extends ORM
 	public function getVideos($args = array()){
 		$video_model = ORM::factory("Media_Video");
 		$video = $this->media;
-		$video->getMediaForObject($video_model);
-
+		$enttypeID = Model_Site_Enttype::getMyEntTypeID($video_model);
+		$video->join('tags', 'RIGHT')->on('media_base.id', '=','tags.media_id')
+			->where('tags.subject_enttypes_id', '=', $enttypeID);
 		extract($args);
 
 		$video->join('org_sport_link')->on('org_sport_link.sports_id', '=', 'media_base.sports_id');
@@ -258,15 +259,15 @@ class Model_Sportorg_Sport extends ORM
 			$video->where('teams.complevels_id', '=', $complevels_id);
 		}
 
-		print_r($video->find_all());
 		return $video;
 	}
 
 	public function getImages($args = array()){
 		$image_model = ORM::factory("Media_Image");
 		$image = $this->media;
-		$image->getMediaForObject($image_model);
-
+		$enttypeID = Model_Site_Enttype::getMyEntTypeID($image_model);
+		$image->join('tags', 'RIGHT')->on('media_base.id', '=','tags.media_id')
+			->where('tags.subject_enttypes_id', '=', $enttypeID);
 		extract($args);
 
 		$image->join('org_sport_link')->on('org_sport_link.sports_id', '=', 'media_base.sports_id');
