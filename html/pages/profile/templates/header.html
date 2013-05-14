@@ -3,13 +3,14 @@
 <div class="row-fluid">
     <div class="span4 textcenter">
         {{#user_picture}}
-        <img src="{{base_url}}{{user_picture}}" alt="{{user_name}}" />
+        <img src="{{base_url}}{{user_picture}}" alt="{{name}}" />
         {{/user_picture}}
     </div>
+
     <div class="span8">
         <div>
-            <h3 class="username">{{user_name}} '{{grad_year}}</h3>
-            <div class="running">Running Back <span class="userheight">{{user_height}}</span> <span class="userweight">{{user_weight}}</span> </div>
+            <h3 class="username">{{name}} '{{grad_year}}</h3>
+            <div class="running">{{position}} <span class="userheight">{{user_height}}</span> <span class="userweight">{{user_weight}}</span> </div>
             <div class="votes">Votes: {{num_votes}}</div>
             <div class="followers">Followers: {{num_followers}}</div>
         </div>

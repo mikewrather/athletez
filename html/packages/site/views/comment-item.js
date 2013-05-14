@@ -27,6 +27,7 @@ function (
         className: "comment",
           
         initialize: function (options) {
+	        console.log("test");
             this.template = commentItemTemplate;
         },
 
