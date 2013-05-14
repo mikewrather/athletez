@@ -544,8 +544,17 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 	*/
 	}
 	
-	public function getTeams()
+	public function getTeams($args = array())
 	{
+		extract($args);
+		if (isset($sport_id)){
+			$team = $this->teams;
+			$team->join('org_sport_link')
+				->on('org_sport_link.id', '=', 'sportorg_team.org_sport_link_id')
+				->where('org_sport_link.sports_id', '=', $sport_id);
+			return $team;
+		}
+
 		return $this->teams;
 	}
 	public function getResumeData()

@@ -60,12 +60,18 @@
 		{
 			$this->requireID();
 			$this->payloadDesc = "List of teams the user is associated with";
+			$arguments = array();
 			if(!$this->mainModel->id)
 			{
 				$this->modelNotSetError();
 				return false;
 			}
-			return $this->mainModel->getTeams();
+
+			if((int)trim($this->request->query('sport_id')) > 0)
+			{
+				$arguments["sport_id"] = (int)trim($this->request->query('sport_id'));
+			}
+			return $this->mainModel->getTeams($arguments);
 		}
 		
 		/**
