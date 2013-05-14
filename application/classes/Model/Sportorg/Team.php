@@ -406,9 +406,12 @@ class Model_Sportorg_Team extends ORM
 		return $game_list_obj->find_all();
 	}
 
-	public function deleteGamelink()
+	public function deleteGamelink($games_id)
 	{
-		$game_link_obj = DB::delete('games_teams_link')->where('teams_id','=', $this->id)->execute();
+		$game_link_obj = DB::delete('games_teams_link')
+			->where('teams_id','=', $this->id)
+			->where('games_id','=', $games_id)
+			->execute();
 		return $game_link_obj;
 	}
 	

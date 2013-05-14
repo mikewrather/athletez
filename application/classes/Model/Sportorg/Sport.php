@@ -79,6 +79,28 @@ class Model_Sportorg_Sport extends ORM
 		);
 	}
 
+	function addSport($args = array()){
+		extract($args);
+		if (isset($name) && $name != ""){
+			$this->name = $name;
+		}
+		if (isset($male) && $male != ""){
+			$this->male = $male;
+		}
+		if (isset($female) && $female != ""){
+			$this->female = $female;
+		}
+		if (isset($sporttype) && $sporttype != ""){
+			$this->sport_type_id = $sporttype;
+		}
+		try{
+			$this->save();
+			return $this;
+		}catch(ORM_Validation_Exception $e)
+		{
+			return $e;
+		}
+	}
 
 	public function updateType($sport_type_id)
 	{

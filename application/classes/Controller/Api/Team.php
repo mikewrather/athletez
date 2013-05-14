@@ -573,7 +573,20 @@
 				$this->modelNotSetError();
 				return false;
 			}
-			return $this->mainModel->deleteGamelink();
+
+			if((int)trim($this->delete('games_id')) > 0)
+			{
+				$games_id  = (int)trim($this->delete('games_id'));
+			}else{
+				$error_array = array(
+					"error" => "Games id required",
+					"desc" => "Games id required"
+				);
+				$this->modelNotSetError($error_array);
+				return false;
+			}
+
+			return $this->mainModel->deleteGamelink($games_id);
 		}
 		
 	}

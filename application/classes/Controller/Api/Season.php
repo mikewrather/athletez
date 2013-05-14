@@ -135,40 +135,32 @@
 		{
 			$this->payloadDesc = "Add a new season";
 
-		     // CHECK FOR PARAMETERS:
-			// name 
-			// Name of the season to add
-			$new_season = ORM::factory('Sportorg_Seasons_Base');
+		     $arguments = array();
 			if(trim($this->request->post('name')) != "")
 			{
-				$name = trim($this->request->post('name'));
+				$arguments["name"] = trim($this->request->post('name'));
 			}
 
-			$season_profiles_id = trim($this->request->post('season_profiles_id'));
-			$new_season->name = $name;
-			$new_season->season_profiles_id = $season_profiles_id;
+			// season_profiles_id
+			// The ID of the season profile this season belongs to
 
-			//add validation & save logic here
-			$season_validate = Validation::factory($new_season->as_array())
-				->rule('name', 'not_empty')
-				->rule('season_profiles_id', 'not_empty')
-				->rule('season_profiles_id', 'season_profiles_id_exist');
-
-			if (!$season_validate->check()){
-				$validate_errors_arr = $season_validate->errors('models/sportorg/seasons/base');
-				$error_array = array(
-					"error" => implode('\n', $validate_errors_arr),
-					"param_name" => "name",
-					"param_desc" => "Name of the Season to add"
-				);
-				// Set whether it is a fatal error
-				$is_fatal = true;
-				$this->addError($error_array,$is_fatal);
-				return $new_season;
+			if((int)trim($this->request->post('season_profiles_id')) > 0)
+			{
+				$arguments["season_profiles_id"] = (int)trim($this->request->post('season_profiles_id'));
 			}
-			//validate already pass
-			$new_season->save();
-			return $new_season;
+
+			$result = $this->mainModel->addSeasons($arguments);
+			if(get_class($result) == get_class($this->mainModel))
+			{
+				return $result;
+			}
+			elseif(get_class($result) == 'ORM_Validation_Exception')
+			{
+				//parse error and add to error array
+				$this->processValidationError($result,$this->mainModel->error_message_path);
+				return false;
+			}
+
 		}
 		
 		############################################################################
@@ -185,23 +177,41 @@
 		{
 			$this->payloadDesc = "Update the basic information about a season";
 
-		     // CHECK FOR PARAMETERS:
-			// name 
+			if(!$this->mainModel->id)
+			{
+				$this->modelNotSetError();
+				return false;
+			}
+
+			$arguments = array();
+			// CHECK FOR PARAMETERS:
+			// name
 			// Change the name of the Season
 
 			if(trim($this->put('name')) != "")
 			{
-				$name = trim($this->put('name'));
+				$arguments["name"] = trim($this->put('name'));
 			}
 
-			// seasons_profiles_id 
+			// seasons_profiles_id
 			// Change the Season Profile this season belongs to
-				
+
 			if((int)trim($this->put('seasons_profiles_id')) > 0)
 			{
-				$seasons_profiles_id = (int)trim($this->put('seasons_profiles_id'));
+				$arguments["seasons_profiles_id"] = (int)trim($this->put('seasons_profiles_id'));
 			}
 
+			$result = $this->mainModel->addSeasons($arguments);
+			if(get_class($result) == get_class($this->mainModel))
+			{
+				return $result;
+			}
+			elseif(get_class($result) == 'ORM_Validation_Exception')
+			{
+				//parse error and add to error array
+				$this->processValidationError($result,$this->mainModel->error_message_path);
+				return false;
+			}
 		}
 		
 		############################################################################
