@@ -36,9 +36,7 @@
 		 */
 		public function get_teams()
 		{
-			$retArr = array();
-			// Scaffolding Code For Single:
-			$retArr = $this->obj->getBasics();
+			$retArr = $this->obj->result;
 
 			return $retArr;
 		}
@@ -89,7 +87,7 @@
 		 */
 		public function get_images()
 		{
-			$retArr = array();
+			$retArr = null;
 			// Scaffolding Code For Array:
 			$objs = $this->obj->find_all();
 			foreach($objs as $obj)
@@ -109,9 +107,7 @@
 				$object->num_votes = $basic_info['num_votes'];
 				$retArr[] = $object;
 			}
-			if (empty($retArr)){
-				return null;
-			}
+
 			return $retArr;
 		}
 

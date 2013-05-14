@@ -112,7 +112,7 @@ class Model_Sportorg_Games_Base extends ORM
 	}
 
 	public function getTeams(){
-		$teams_arr = array();
+		$teams_arr = null;
 		$teams = $this->teams->find_all();
 		foreach($teams as $team){
 			$new_obj = new stdClass();
@@ -122,7 +122,10 @@ class Model_Sportorg_Games_Base extends ORM
 			$new_obj->points_scored = $team->getTeamPointsScore($this->id);
 			$teams_arr[] = $new_obj;
 		}
-		return $teams_arr;
+
+		$result_obj = new stdClass();
+		$result_obj->result = $teams_arr;
+		return $result_obj;
 	}
 
 	public function name()
