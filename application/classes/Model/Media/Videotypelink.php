@@ -1,7 +1,5 @@
 <?php defined('SYSPATH') or die('No direct script access.');
 /**
- * $description
- *
  * Date: 5/5/13
  * Time: 11:33 PM
  *

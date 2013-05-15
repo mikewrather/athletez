@@ -164,4 +164,61 @@ class Controller_Updateimages extends Controller
 
 	}
 
+	public function action_updateWithMeta()
+	{
+		// Step 1 shit - transfer everything from meta to the image table struct
+		/*
+		$qry = DB::select()->from('images_meta')->execute();
+
+		print_r($qry);
+
+		foreach($qry as $meta)
+		{
+			if($meta['image_prop']=='url')
+			{
+				$image = ORM::factory('Media_Image',$meta['images_id']);
+				$image->original_url = $meta['image_val'];
+				$image->save();
+			}
+			elseif($meta['image_prop']=='original_url')
+			{
+				$image = ORM::factory('Media_Image',$meta['images_id']);
+				$image->original_url = $meta['image_val'];
+				$image->save();
+			}
+			elseif($meta['image_prop']=='mm_id')
+			{
+				$image = ORM::factory('Media_Image',$meta['images_id']);
+				$image->moviemasher_id = $meta['image_val'];
+				$image->save();
+			}
+		}
+		*/
+
+		//step 2 populate linking table.
+
+		$subqry = DB::select(array(DB::expr('COUNT(id)'),'num'))->from('image_type_link')->where('image_type_link.images_id','=',DB::expr('`images`.`id`'));
+		$qry = DB::select()
+			->from('images')
+			->where($subqry,'=',0)
+			->execute();
+
+		print_r($qry);
+
+		//$qry = ORM::factory('Media_Image')->limit(1000)->find_all();
+
+		foreach($qry as $img)
+		{
+			$img = ORM::factory('Media_Image',$img['id']);
+
+			if($imgobj = $img->pull_to_local($img->original_url))
+			{
+				DB::insert('image_type_link',array('images_id','image_types_id','url','width','height','file_size_bytes'))
+					->values(array($img->id,1,$img->original_url,$imgobj->width,$imgobj->height,filesize($imgobj->file)))->execute();
+				unlink($imgobj->file);
+			}
+		}
+
+	}
+
 }

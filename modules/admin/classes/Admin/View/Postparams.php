@@ -54,6 +54,10 @@ class Admin_View_Postparams
 
 		foreach($methods as $method)
 		{
+
+			$file_check = $method->params->where('param_type','=','file')->find_all();
+			$file_upload = $file_check->count() > 0 ? true : false;
+
 			$paramArr = array();
 			$params = $method->params->find_all();
 			foreach($params as $param)
@@ -75,6 +79,7 @@ class Admin_View_Postparams
 					"id" => $param->id,
 					"name" => $param->param_name,
 					"type" => $param->param_type,
+					"is_file" => $param->param_type=='file' ? true : false,
 					"desc" => $param->description,
 					"objs" => $param_list_arr,
 					"hasobjs" => sizeof($param_list_arr) > 0 ? true : false,
@@ -97,6 +102,7 @@ class Admin_View_Postparams
 
 			$templateArr["method"][] = array(
 				"id" => $method->id,
+				"file_upload" => $file_upload,
 				"complete" => $method->done,
 				"status" => $method->current_status,
 				"api_method" => $method->api_method,

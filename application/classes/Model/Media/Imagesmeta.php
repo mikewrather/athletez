@@ -24,4 +24,5 @@ class Model_Media_Imagesmeta extends ORM
 			"image_val" => $this->image_val
 		);
 	}
+
 }

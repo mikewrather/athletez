@@ -13,3 +13,6 @@
 [submodule "orm"]
 	path = modules/orm
 	url = git://github.com/kohana/orm.git
+[submodule "modules/image"]
+	path = modules/image
+	url = git://github.com/kohana/image.git

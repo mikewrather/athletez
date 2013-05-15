@@ -21,7 +21,7 @@
 <h2>{{desc}}</h2>
 {{#method}}
 <a name="method{{id}}"></a><a href="#top"><span>Go To Top</span></a>
-<form id="form_{{id}}">
+<form id="form_{{id}}" enctype="multipart/form-data">
 <ul class="methods" style="margin-bottom: 10px; border: 1px solid #333; padding: 10px; list-style: none;">
 
 		<li class="firstmethod"><h1>{{id}} - {{shortname}} ({{api_method}})</h1>  <span class="delete" onclick="delMethod({{id}},{{ent_id}},'{{verb}}');">DELETE METHOD</span></li>
@@ -48,22 +48,29 @@
 			{{/hasparams}}
 			{{#params}}
 			<span class="paramname">{{name}} ({{type}})</span> - <span class="description">{{desc}}</span> - <span class="delete" onclick="delParam({{id}},{{ent_id}},'{{verb}}');">Delete</span><br />
-			{{#hasobjs}}
+			{{#is_file}}
+				<input type="file" name="{{name}}" id="{{name}}" />
+				<progress></progress>
+			{{/is_file}}
+			{{^is_file}}
+				{{#hasobjs}}
 				<select  name="{{name}}" id="{{name}}">
 					<option value="0">No Value</option>
 					{{#objs}}<option value="{{id}}">{{name}}</option>{{/objs}}
 				</select>
-			{{/hasobjs}}
-			{{^hasobjs}}
+				{{/hasobjs}}
+				{{^hasobjs}}
 				<input type="text" name="{{name}}" id="{{name}}" />
-			{{/hasobjs}}
+				{{/hasobjs}}
+			{{/is_file}}
+
 			<br /><br />
 
 			{{/params}}
 			{{#hasparams}}
 
 		{{/hasparams}}
-			<input type="submit">
+			<button id="submit_{{id}}">Go</button>
 
             <div>
                 <input type="checkbox" name="saveRequest" id="chk_save_{{id}}" onclick="markSave(this,'#save_title_{{id}}');" />&nbsp;Save This Request For Later
@@ -162,17 +169,31 @@
 <hr /><br />
 <script type="text/javascript">
 	$(document).ready(function(){
-		$('form#form_{{id}}').submit(function(){
+
+		$('button#submit_{{id}}').click(function(){
 
 			var $me = $(this);
+			var thisform = document.getElementById('form_{{id}}');
+			var fd = new FormData(thisform);
 
-			console.log($me.serialize());
+			console.log(thisform);
+
+			console.log(fd);
 			var id1 = $me.find('input[name="id1"], select[name="id1"]').val();
+			id1 = id1==undefined ? '' : id1;
+
+			console.log(id1);
+
+		//	{{#file_upload}}
+			console.log("File Upload");
+		//	{{/file_upload}}
 
 			$.ajax({
 				type : '{{api_method}}',
 				url : '{{usage}}' + id1,
-				data : $(this).serialize(),
+				data : fd,
+				processData:false,
+				contentType:false,
 				success : function(data)
 				{
 					console.log(data);
@@ -180,6 +201,7 @@
 					$me.find('input[type="text"]').val('');
 				}
 			});
+
 			return false;
 		});
 

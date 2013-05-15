@@ -19,8 +19,14 @@ class Model_Media_Image extends ORM
 	);
 	
 	protected $_has_many = array(
-		'metadata' => array(
-			'model' => 'Media_Imagesmeta',
+		'typelinks' => array(
+			'model' => 'Media_Imagetypelink',
+			'foreign_key' => 'images_id'
+		),
+		'types' => array(
+			'model' => 'Media_Imagetype',
+			'through' => 'image_type_link',
+			'far_key' => 'image_types_id',
 			'foreign_key' => 'images_id'
 		),
 	);
@@ -141,24 +147,58 @@ class Model_Media_Image extends ORM
 	}
 
 	/**
-	 * This method will return an array of metadata for this image with key/value pairs
+	 * get_meta_as_array This method will return an array of metadata for this image with key/value pairs
+	 * @param $type int is the ID of the type we want to pull data from
 	 * @return array of metadata for the image
 	 */
-	public function get_meta_as_array()
+	public function get_meta_as_array($type=NULL)
 	{
+		//TODO: This needs to be updated to take an optional type ID and if none is provided return data for every image type
 		if(!$this->loaded()) return;
-		$image_meta_res = $this->metadata->find_all();
 
-		$retArr = null;
+		$meta = $this->typelinks;
 
-		foreach($image_meta_res as $data)
+		if($type===NULL)
 		{
-			if ($data->image_val != "" && $data->image_val != nulll)
-				$retArr[$data->image_prop] = $data->image_val;
+			$res = $meta->find_all();
+			$retArr = array();
+			foreach($res as $type)
+			{
+				$retArr[$type->image_types_id] = $this->get_meta_as_array($type->image_types_id);
+			}
+			return $retArr;
+		}
+		else
+		{
+			$typelink = $meta->where('image_types_id','=',$type)->find();
+			if(!$typelink->loaded()) return;
+			return $typelink->get_meta_as_array();
 		}
 
-		return $retArr;
 	}
 
+	public function pull_to_local($offsite_path)
+	{
+	//	if($types_id===NULL) return false;
+
+		try
+		{
+			$local_copy = file_get_contents($offsite_path);
+			$local_path  = DOCROOT . '../files_temp/' . md5(rand());
+			file_put_contents($local_path, $local_copy);
+
+			$image = Image::factory($local_path);
+
+			if(!is_object($image)) return false;
+			else return $image;
+		}
+		catch(ErrorException $e)
+		{
+			return false;
+		}
+
+
+
+	}
 
 }

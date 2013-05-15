@@ -116,6 +116,9 @@
 		 */
 		public function action_post_add()
 		{
+
+			print_r($_FILES);
+
 			$this->payloadDesc = "Post a new image";
 
 		     // CHECK FOR PARAMETERS:
