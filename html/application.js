@@ -61,9 +61,15 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
             
             $('body').empty();
             chromeBootstrap();
-            var profileController = new ProfileController({
-                "route": "resume"
-            });
+            
+            function initProfile(id) {
+                var profileController = new ProfileController({
+                    "route": "resume", 
+                    "id": id
+                });
+            }
+            
+            Channel('app-inited').subscribe(initProfile);
         },
         
         showGame: function () {
@@ -71,9 +77,14 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
             
             $('body').empty();
             chromeBootstrap();
-            var gameController = new GameController({
-                "route": ""
-            });
+            
+            function initGame(id) {
+                var gameController = new GameController({
+                    "route": ""
+                });
+            }
+            
+            Channel('app-inited').subscribe(initGame);
         },
         
         showTeam: function() {
@@ -81,9 +92,14 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
             
             $('body').empty();
             chromeBootstrap();
-            var teamController = new TeamController({
-                "route": ""
-            })
+            
+            function initTeam(id) {
+                var teamController = new TeamController({
+                    "route": ""
+                })
+            }
+            
+            Channel('app-inited').subscribe(initTeam);
         },
         
         showRegistration: function() {
@@ -91,9 +107,14 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
             
             $('body').empty();
             chromeBootstrap();
-            var registrationController = new RegistrationController({
-                "route": ""
-            })
+            
+            function initRegistration() {
+                var registrationController = new RegistrationController({
+                    "route": ""
+                })
+            }
+            
+            Channel('app-inited').subscribe(initRegistration);
         },
 
         // load style sheets

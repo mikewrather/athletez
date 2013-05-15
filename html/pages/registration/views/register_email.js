@@ -57,7 +57,7 @@ define([
             nextStep: function (event) {
                 event.preventDefault();
                 // for test
-                //Channel('registration-uploadimage-email').publish();
+                Channel('registration-uploadimage-email').publish();
                 var fields = this.$(":input").serializeArray();
                 var payload = {};
                 $.each(fields, function(i, field){

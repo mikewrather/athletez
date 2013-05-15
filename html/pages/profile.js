@@ -79,7 +79,10 @@ define([
 
             this.handleOptions(options);
             
-            this.init();
+            if (options.id) {
+                this.id = options.id;
+                this.init();
+            }
             
             return this;
         },
@@ -91,7 +94,6 @@ define([
         },
         
         createData: function () {
-            this.id = '425983';
             this.basics = new ProfileBasicsModel();
             this.basics.id = this.id;
             this.basics.fetch();

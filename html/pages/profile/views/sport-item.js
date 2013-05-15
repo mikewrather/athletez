@@ -32,13 +32,12 @@ function (
 
         className: "sport",
         
-        rendered: false,
-        
-        initialize: function (options) {
+        initialize: function (options) {console.log(1);
             this.template = sportItemTemplate;
             var self = this;
             this.id = options.model.collection.id;            
             var sport_id = this.model.get('payload')['sport_id'];
+            
             function callback() {
                 self.initTeamList();
                 Channel('refresh-profilepage').publish(sport_id);
@@ -54,7 +53,7 @@ function (
             this.teams.fetch();
             $.when(this.teams.request).done(function() {
                 self.setupTeamListView();
-                Channel('gameteams:fetch').publish();
+                Channel('profileteams:fetch' + self.teams.id+ '-' + self.teams.sport_id).publish();
             });
         },
         
@@ -68,7 +67,7 @@ function (
                 teamListView.render();
                 self.$el.find('.teams-info').html(teamListView.el);
             }
-            Channel('gameteams:fetch').subscribe(callback);
+            Channel('profileteams:fetch' + self.teams.id+ '-' + self.teams.sport_id).subscribe(callback);
         },
 
         render: function () {
