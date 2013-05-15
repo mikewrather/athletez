@@ -20,10 +20,10 @@ define( ["models/base"], function (BaseModel) {
                 placeholder: "Search"
             },
             
-            login_url: "/login",
+            login_url: "/user/login",
             login_label: "Log In",
             
-            logout_url: "/logout",
+            logout_url: "/user/logout",
             logout_label: "Log Out",
             
             signup_social_label: "Sign up for Free",

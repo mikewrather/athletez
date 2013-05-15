@@ -70,6 +70,7 @@ define([
         
         init: function() {
             this.setupLayout().render();
+            this.refreshPage();
             this.createData();
             this.handleDeferreds();            
         },
@@ -138,7 +139,6 @@ define([
                 name: "Select Registration Type",
                 destination: "#main-content"
             });
-
             this.scheme.push(this.selectTypeView);
             this.layout.render();
         },
@@ -231,6 +231,9 @@ define([
         
         setupLayout: function () {
             var pageLayout;
+            
+            if (this.layout)
+                return this.layout;
 
             pageLayout = new LayoutView({
                 scheme: this.scheme,
