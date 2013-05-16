@@ -405,9 +405,16 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 	{
 		//loop through teams and get positions for each.
 	}
-	public function getVideos($obj)
+	public function getUploadedVideos($obj)
 	{
 		return Model_Media_Video::getVideos($obj);
+	}
+
+	public function getVideos($obj=NULL)
+	{
+		if($obj===NULL) $obj = $this;
+		$video = ORM::factory('Media_Video');
+		return $video->getTagedVideos($obj);
 	}
 
 	public function getImages()
