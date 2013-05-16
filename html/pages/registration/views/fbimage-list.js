@@ -52,13 +52,14 @@ function(facade,  utils,   FBImageItemView,                    BaseImageListView
                 var board = listView.childViews.board;
                 board.getImageInfo();
                 var payload = board.model.get('payload');
-                var saveImage = new BaseModel(payload);
-                saveImage.url = function() {
+                var saveInfo = new BaseModel(payload);
+                saveInfo.url = function() {
                     if (testpath)
                         return testpath + '/user/savecrop';
                     return '/api/user/savecrop';
                 }
-                saveImage.saveSuccess = function(model, response) {
+                saveInfo.saveSuccess = function(model, response) {
+                    BaseModel.prototype.saveSuccess.call(this, model, response);
                     var exec_data = model.get('exec_data');
                     var payload = model.get('payload');
                     if (!exec_data['exec_error'] && payload) {
@@ -66,10 +67,11 @@ function(facade,  utils,   FBImageItemView,                    BaseImageListView
                     }
                     $('#' + listView.id).dialog('close');
                 }                
-                saveImage.saveError = function(model, response) {
+                saveInfo.saveError = function(model, response) {
+                    BaseModel.prototype.saveError.call(this, model, response);
                     $('#' + listView.id).dialog('close');
                 }
-                saveImage.save();                
+                saveInfo.save();                
             }
             
             Channel("registration-use-image").subscribe(fbUseThisImage);

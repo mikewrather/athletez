@@ -68,19 +68,6 @@ define([
             var comment = this.input.val();
             if (comment != '') {                
                 
-                date = new Date();
-                
-                var payload = this.model.get('payload');
-                payload['comment'] = this.input.val();
-                payload['comment_date'] = date.toDateString();
-                this.model.set('payload', payload);
-                
-                this.model.save();
-                
-                var new_comment = this.model.clone();
-                new_comment.id = Math.ceil(Math.random() * 100000);
-                this.collection.push(new_comment);
-                
                 this.input.val('');
             }
         }
