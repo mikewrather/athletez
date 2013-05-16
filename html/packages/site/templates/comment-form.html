@@ -3,8 +3,7 @@
 
 <form>
 <div class="row-fluid">
-    <img src="{{base_url}}{{poster_picture}}" alt="{{poster}}" style="float:left;"/>
-    {{poster}}<br/>
+    <div class="user-photo"><img src="{{base_url}}{{user_picture}}" alt="{{name}}" />{{name}}</div>
     <textarea cols="100" rows="5" id="new-comment" placeholder="{{comment_placeholder}}"></textarea>    
     <input type="button" id="comment-submit" value="Submit"/>
 </div>

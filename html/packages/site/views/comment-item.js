@@ -27,12 +27,23 @@ function (
         className: "comment",
           
         initialize: function (options) {
-            this.template = commentItemTemplate;
+	        this.template = commentItemTemplate;
         },
 
         render: function () {
             var markup = Mustache.to_html(this.template, this.model.toJSON());
             this.$el.html(markup);
+            
+            var payload = this.model.get('payload');
+            var self = this;
+            if (payload) {
+                var user_photo = payload['poster_picture'];
+                var user_email = payload['poster_email'];
+                if (!user_photo && user_email) {
+                    self.$('.user-photo img').attr("src","http://www.gravatar.com/avatar/" + MD5(user_email) + "&s=29");
+                }
+            }
+            
             return this;
         }        
         

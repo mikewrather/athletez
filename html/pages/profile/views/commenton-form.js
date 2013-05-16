@@ -23,6 +23,7 @@ function(require,   ProfileCommentFormModel,        BaseCommentFormView) {
                 this.model.fetch();
             }            
         }
+        
     });
 
     return CommentOnFormView;

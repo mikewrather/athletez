@@ -24,6 +24,8 @@ require.config({
         'jquery.pstrength' : '/vendor/plugins/jquery.pstrength-min.1.2',
         'jqueryui'     : '/vendor/plugins/jquery-ui-1.10.2.custom.min',
         'jquery.jrac'  : '/vendor/plugins/jquery.jrac',
+        
+        'custom'       : '/vendor/custom',
 
         // RequireJS
         'domready'     : '/vendor/plugins/domReady',
@@ -76,7 +78,7 @@ require.config({
             exports: '_'
         },
         'backbone': {
-            deps: ['underscore', 'jquery', 'json2', 'html5', 'jqueryui'],
+            deps: ['underscore', 'jquery', 'json2', 'html5', 'jqueryui', 'custom'],
             exports: 'Backbone'
         }
     },

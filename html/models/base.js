@@ -114,9 +114,9 @@ define(['facade', 'utils'], function (facade, utils) {
                     model.request = model.deferred.promise();
                 }
                 model.deferred.resolve();                
+                model.showSuccess(model, response);
             }
-            debug.log(response);
-            model.showSuccess(model, response);
+            debug.log(response);            
         },
 
         // **Method:** `fetchError` - log response on error

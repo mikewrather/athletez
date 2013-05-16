@@ -220,6 +220,7 @@
 				$retArr[$comment->id] = $comment->getBasics();
 				$retArr[$comment->id]['poster']	= $retArr[$comment->id]['user']['user_name'];
 				$retArr[$comment->id]['poster_picture']	= $retArr[$comment->id]['user']['user_picture'];
+                $retArr[$comment->id]['poster_email']    = $retArr[$comment->id]['user']['email'];
 				$retArr[$comment->id]['comment_date'] = NULL;
 			}
 
@@ -241,6 +242,7 @@
 				$retArr[$comment->id] = $comment->getBasics();
 				$retArr[$comment->id]['poster'] = $retArr[$comment->id]['user']['name'];
 				$retArr[$comment->id]['poster_picture'] = $retArr[$comment->id]['user']['user_picture'];
+                $retArr[$comment->id]['poster_email']    = $retArr[$comment->id]['user']['email'];
 			}
 
 			return $retArr;
