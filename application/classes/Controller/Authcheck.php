@@ -23,7 +23,7 @@ class Controller_Authcheck extends AuthController
 		if(!$this->user) return $retArr;
 
 		$retArr['id'] = $this->user->id;
-		$retArr['user_photo'] = $this->user->getAvatar();
+	//	$retArr['user_photo'] = $this->user->getAvatar();
 		$retArr['user_name'] = $this->user->name();
 
 		$retArr['nav'][] = array(
