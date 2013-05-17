@@ -32,6 +32,19 @@ class Model_Media_Imagetypelink extends ORM
 		),
 	);
 
+	public function getBasics()
+	{
+		return array(
+			"id" => $this->id,
+			"images_id" => $this->images_id,
+			"image_type" => $this->type->getBasics(),
+			"url" => $this->url,
+			"width" => $this->width,
+			"height" => $this->height,
+			"file_size_bytes" => $this->file_size_bytes,
+		);
+	}
+
 	public function addLink($types_id,$images_id)
 	{
 		$find_existing = $this

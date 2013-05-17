@@ -8,7 +8,7 @@
 class Model_Media_Imagetype extends ORM
 {
 
-	protected $_table_name = 'video_types';
+	protected $_table_name = 'image_types';
 
 
 	protected $_has_many = array(
@@ -30,7 +30,7 @@ class Model_Media_Imagetype extends ORM
 		return array(
 			"id" => $this->id,
 			"name" => $this->name,
-			"img_extension" => $this->vid_extension,
+			"img_extension" => $this->img_extension,
 			"height" => $this->height,
 			"width" => $this->width,
 			"active" => $this->active

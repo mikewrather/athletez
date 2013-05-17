@@ -441,7 +441,6 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 
 	public function getOrgs()
 	{
-		$retArr = array();
 		$org_sport_link_obj = DB::select(
 				array('users.id', 'user_id'), array('orgs.id', 'org_id'), array('orgs.name', 'org_name'),
 				'teams.*', array('teams.id', 'team_id'), array('complevels.name', 'complevel_name'),
@@ -458,7 +457,36 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 			->where('users.id','=',$this->id)
 			->group_by('teams.id');
 
-		return $org_sport_link_obj;
+		$res = $org_sport_link_obj->execute();
+
+		$orgs = array();
+
+		foreach($res as $team)
+		{
+			if(!array_key_exists($team['org_id'],$orgs))
+			{
+				// Create the org array
+				$orgs[$team['org_id']] = array(
+					'org_id' => $team['org_id'],
+					'org_name' => $team['org_name'],
+					'teams' => array()
+				);
+			}
+
+			$orgs[$team['org_id']]['teams'][] = array(
+				'team_id' => $team['team_id'],
+				'team_name' => $team['unique_ident'],
+				'year' => $team['year'],
+				'complevel' => $team['complevel_name'],
+				'season' => $team['season'],
+				'statval' => $team['statval'],
+				'stats' => array(),
+			);
+		}
+
+		$orgs = Util::obj_arr_toggle($orgs);
+
+		return (object)$orgs;
 		
 	}
 	

@@ -50,7 +50,7 @@
 			<span class="paramname">{{name}} ({{type}})</span> - <span class="description">{{desc}}</span> - <span class="delete" onclick="delParam({{id}},{{ent_id}},'{{verb}}');">Delete</span><br />
 			{{#is_file}}
 				<input type="file" name="{{name}}" id="{{name}}" />
-				<progress></progress>
+				<progress id="progress_{{id}}"></progress>
 			{{/is_file}}
 			{{^is_file}}
 				{{#hasobjs}}
@@ -193,8 +193,10 @@
 				type : '{{api_method}}',
 				url : '{{usage}}' + id1,
 				data : fd,
-			//	processData:false,
-			//	contentType:false,
+				//	{{#file_upload}}
+				processData:false,
+				contentType:false,
+				//	{{/file_upload}}
 				success : function(data)
 				{
 					console.log(data);

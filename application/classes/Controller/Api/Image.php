@@ -117,9 +117,8 @@
 		public function action_post_add()
 		{
 
-			print_r($_FILES);
-
 			$this->payloadDesc = "Post a new image";
+
 
 		     // CHECK FOR PARAMETERS:
 			// name (REQUIRED)
@@ -127,16 +126,25 @@
 				
 			if(trim($this->request->post('name')) != "")
 			{
-				$name = trim($this->request->post('name'));
+				$args['name'] = trim($this->request->post('name'));
 			}
 
+
+			
+			// sports_id 
+			// The sport that this image is associated with
+				
+			if((int)trim($this->request->post('sports_id')) > 0)
+			{
+				$args['sports_id'] = (int)trim($this->request->post('sports_id'));
+			}
 			else // THIS WAS A REQUIRED PARAMETER
 			{
 				// Create Array for Error Data
 				$error_array = array(
 					"error" => "Required Parameter Missing",
-					"param_name" => "name",
-					"param_desc" => "The name of the image"
+					"param_name" => "sports_id",
+					"param_desc" => "The sport this image is associated with"
 				);
 
 				// Set whether it is a fatal error
@@ -146,14 +154,14 @@
 				$this->addError($error_array,$is_fatal);
 
 			}
-			
-			// sports_id 
-			// The sport that this image is associated with
-				
-			if((int)trim($this->request->post('sports_id')) > 0)
+
+			if(sizeof($_FILES) > 0)
 			{
-				$sports_id = (int)trim($this->request->post('sports_id'));
+				$args['files'] = $_FILES;
 			}
+
+			return $this->mainModel->addImage($args);
+
 
 		}
 		

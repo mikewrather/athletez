@@ -77,36 +77,30 @@
 		}
 		
 		/**
-		 * get_orgs() List of organizations the user is associated with
+		 * get_orgs() List of organizations the user is associated with team and schedule data
 		 *
 		 * @retun array
 		 */
 		public function get_orgs()
 		{
-			$retArr = array();
-		
-			$objs = $this->obj->execute();
-			
-			foreach($objs as $data)
+			$orgs_obj = $this->obj;
+			foreach($orgs_obj as $org_obj)
 			{
-				$orgArr = array('org_id' => $data['org_id'], 'org_name' => $data['org_name']);
-				$teamArr = array('team_id' => $data['team_id'], 'team_name' => $data['unique_ident'], 'year' => $data['year'], 'complevel' => $data['complevel_name'], 'season' => $data['season'], 'statval' => $data['statval'], 'stats' => array(), 'schedules' => array());
-				$team = ORM::factory('Sportorg_Team', $data['team_id']);
-
-				$schedule = $team->getSchedule(3,false);
-				$sArr = array();
-				foreach($schedule as $game)	{ $sArr[$game->id] = $game->getBasics(); }
-				if(array_key_exists($data['org_id'], $retArr)) {
-					$teamArr['schedule'] = $sArr;
-					$retArr[$data['org_id']]['teams'][$data['team_id']] = $teamArr;
-				} else {
-					$teamArr['schedule'] = $sArr;
-					$retArr[$data['org_id']] = $orgArr;
-					$retArr[$data['org_id']]['teams'][$data['team_id']] = $teamArr;
+				foreach($org_obj->teams as $team_obj)
+				{
+					$team = ORM::factory('Sportorg_Team', $team_obj->team_id);
+					$schedule = $team->getSchedule(3,false);
+					$schedule[] = array(); //I put this in because I kept getting an error from the foreach if i didn't do this.
+					$sArr = array();
+					foreach($schedule as $game)
+					{
+						if(is_object($game)) $sArr[] = Util::obj_arr_toggle($team->getBasics());
+					}
+					$team_obj->schedules = $sArr;
 				}
 			}
 		 	
-			return $retArr; 
+			return Util::obj_arr_toggle($orgs_obj);
 		}
 		
 		/**

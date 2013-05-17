@@ -152,6 +152,7 @@ Kohana::modules(array(
 	"admin"         => MODPATH . 'admin',
 	"postmark"		=> MODPATH . 'postmark',
 	"facebookauth"	=> MODPATH . 'facebookauth',
+	"s3"	        => MODPATH . 's3',
 	"custom404"		=> MODPATH . 'custom404',
 ));
 

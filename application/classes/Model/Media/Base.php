@@ -101,7 +101,7 @@ class Model_Media_Base extends ORM
 			"media_type" => $this->media_type,
 			"sport" => $this->sport->getBasics(),
 			"user" => $this->user->getBasics(),
-			"image" => $this->image->getBasics()
+		//	"image" => $this->image->getBasics()
 		);
 	}
 

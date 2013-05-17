@@ -403,7 +403,10 @@ class Model_Sportorg_Team extends ORM
 				->and_where_close();
 		}		
 		$game_list_obj->where_close();
-		return $game_list_obj->find_all();
+
+		$games = $game_list_obj->find_all()->as_array();
+		return $games;
+
 	}
 
 	public function deleteGamelink($games_id)
