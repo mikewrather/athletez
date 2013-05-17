@@ -247,6 +247,13 @@
 		{
 			$this->payloadDesc = "Add a new team to this game";
 
+			$error_array = array(
+				"error" => "This function can be realized in team's add_game action",
+				"desc" => "This function can be realized in team's add_game action"
+			);
+			$this->modelNotSetError($error_array);
+			return false;
+			/*
 		     // CHECK FOR PARAMETERS:
 			// teams_id 
 			// ID of the team to add
@@ -289,7 +296,7 @@
 			{
 				$points_agains = (int)trim($this->request->post('points_agains'));
 			}
-
+			*/
 		}
 		
 		/**
