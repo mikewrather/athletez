@@ -158,11 +158,14 @@ class Model_Media_Video extends ORM
 	}
 
 
-	public static function getVideos($obj)
+	public static function getVideos($obj, $sports_id = null)
 	{
 
 		$media = $obj->media->where('media_type','=','video');
 		$media->where('users_id', '=', $obj->id);
+		if ($sports_id){
+			$media->where('sports_id', '=', $sports_id);
+		}
 		$result_arr = null;
 		foreach($media->find_all() as $single_media){
 			$combine_object = new stdClass();
@@ -196,6 +199,7 @@ class Model_Media_Video extends ORM
 			$combine_object->num_views =  $num_views;
 			$combine_object->num_comments =  $num_comments;
 			$result_arr[] = $combine_object;
+			unset($combine_object);
 		}
 		$return_obj = new stdClass();
 		$return_obj->result = $result_arr;
