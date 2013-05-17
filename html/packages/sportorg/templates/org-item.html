@@ -13,9 +13,22 @@
             <table class="table team-schedule">
             {{#schedules}}
                 <tr>
-                    <td>{{schedule_date}}</td>
-                    <td>{{other_team}}</td>
-                    <td>{{schedule_summary}}</td>
+                    <td>
+                    {{#complevel}}
+                        {{name}}
+                    {{/complevel}}
+                    </td>
+                    <td>
+                    {{#season}}
+                        {{name}}
+                    {{/season}}
+                    </td>
+                    <td>{{team_name}}</td>
+                    <td>{{team_location}}</td>
+                    <td>{{year}}</td>
+                    <td>{{mascot}}</td>
+                    <td>{{num_votes}}</td>
+                    <td>{{num_followers}}</td>
                 </tr>
             {{/schedules}}
             </table>
@@ -25,17 +38,17 @@
                     <td></td>
                     {{#stats}}
                         <td>{{name}}</td>
-                    {{/stats}}
+                    {{/stats}}        
                 </tr>
                 <tr>
                     <td>{{statval}}</td>
                     {{#stats}}
                         <td>{{value}}</td>
-                    {{/stats}}
+                    {{/stats}}        
                 </tr>
             </table>
             <a href="team/stats/{{team_id}}">View complete stats</a>
-        </div>
+        </div>                    
     {{/teams}}
     </div>
 </div>
