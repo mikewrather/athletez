@@ -21,15 +21,33 @@ function(facade, collections, SportorgOrgModel, utils) {
         // **Method:** `fetchSuccess` - resolve the deferred here in success
         fetchSuccess: function (collection, response) {
             collection.reset();
-            var payload = response.payload;
-            for (i = 0; i < payload.length; i++) {
+            
+            var payload = response.payload;            
+            for (var key in payload) {
                 var item = new SportorgOrgModel();
                 item.id = Math.ceil(Math.random() * 100000);
-                item.set('payload', payload[i]);
+                var subpayload = payload[key];
+                var teamsObj = subpayload['teams'];
+                var teams = [];
+                for (var teamKey in teamsObj) {
+                    var team = teamsObj[teamKey];
+                    /*var schedulesObj = team['schedule'];
+                    var schedules = [];
+                    for (var scheduleKey in schedulesObj) {
+                        var schedule = schedulesObj[scheduleKey];
+                        schedules.push(schedule);
+                    }
+                    team['schedule'] = schedules;*/
+                    teams.push(team);
+                }
+                subpayload['teams'] = teams;
+                item.set('payload', payload[key]);
+                console.log(payload[key]);
                 item.set('desc', response.desc);
                 item.set('exec_data', response.exec_data);
                 collection.push(item);
             }
+            
             collection.deferred.resolve(response);            
         }
 

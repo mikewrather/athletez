@@ -21,11 +21,12 @@ function(facade, collections, MediaImageModel, utils) {
         // **Method:** `fetchSuccess` - resolve the deferred here in success
         fetchSuccess: function (collection, response) {
             collection.reset();
-            var payload = response.payload;
-            for (i = 0; i < payload.length; i++) {
+            
+            var payload = response.payload;            
+            for (var key in payload) {
                 var item = new MediaImageModel();
                 item.id = Math.ceil(Math.random() * 100000);
-                item.set('payload', payload[i]);
+                item.set('payload', payload[key]);
                 item.set('desc', response.desc);
                 item.set('exec_data', response.exec_data);
                 collection.push(item);

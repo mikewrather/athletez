@@ -8,9 +8,7 @@
 define(['facade', 'user/collections/relateds', 'utils'], 
 function(facade, UserRelatedList, utils) {
 
-    var ProfileRelatedList,
-        _ = facade._,
-        Channel = utils.lib.Channel;
+    var ProfileRelatedList;
 
     ProfileRelatedList = UserRelatedList.extend({
         

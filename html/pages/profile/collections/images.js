@@ -8,8 +8,7 @@
 define(['facade', 'media/collections/images', 'utils'], 
 function(facade, MediaImageList, utils) {
 
-    var ProfileImageList,
-        Channel = utils.lib.Channel;
+    var ProfileImageList;
 
     ProfileImageList = MediaImageList.extend({
         

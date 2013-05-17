@@ -4,8 +4,7 @@
 define(['facade', 'utils', 'site/views/comment-list'],
 function(facade,   utils,   BaseCommentListView) {
 
-    var ProfileCommentOfListView, 
-        Channel = utils.lib.Channel;
+    var ProfileCommentOfListView;
 
     ProfileCommentOfListView = BaseCommentListView.extend({
         

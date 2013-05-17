@@ -8,9 +8,7 @@
 define(['facade', 'sportorg/collections/sports', 'utils'], 
 function(facade, SportorgSportList, utils) {
 
-    var ProfileSportList,
-        _ = facade._,
-        Channel = utils.lib.Channel;
+    var ProfileSportList;
 
     ProfileSportList = SportorgSportList.extend({
         

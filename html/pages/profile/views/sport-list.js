@@ -6,9 +6,7 @@ function(facade,  views,   utils,   ProfileSportItemView) {
 
     var ProfileSportListView, 
         ProfileSportListAbstract,
-        $ = facade.$,
         _ = facade._,
-        Channel = utils.lib.Channel,
         CollectionView = views.CollectionView,
         SectionView = views.SectionView;
 
