@@ -29,8 +29,7 @@ function(require, profileHeaderTemplate, selectSportTemplate) {
         Channel = utils.lib.Channel,
         vendor = require('vendor'),
         Mustache = vendor.Mustache,
-        $ = facade.$,
-        _ = facade._;
+        $ = facade.$;
         
 
     ProfileHeaderView = SectionView.extend({
@@ -57,7 +56,6 @@ function(require, profileHeaderTemplate, selectSportTemplate) {
             this.sports.fetch();
             $.when(this.sports.request).done(function() {
                 self.setupSportListView();
-                Channel('gamesports:fetch').publish();
                 self.select_sport = self.$('#select-sport');
                 self.selectSport();
             });
@@ -73,24 +71,21 @@ function(require, profileHeaderTemplate, selectSportTemplate) {
             this.childViews.sportListView = sportListView;
             this.callbacks.add(function () {
                 renderSportListView();                
-            });            
+            });  
             
-            function callback () {
-                sportListView.render();                
-                self.$el.find('#sports-info').html(sportListView.el);
-                var data = {"payload": []};
-                var collection = sportListView.collection;
-                if (collection.length) {
-                    for (i = 0; i < collection.length; i++) {
-                        data["payload"][i] = collection.at(i).get('payload');
-                    }
-                    var markup = Mustache.to_html(self.selectSportTemplate, data);                                
-                    self.$el.find('#sports-info').prepend(markup);
-                } else {
-                    self.$el.find('#sports-info').html('');
-                }                
-            }
-            Channel('gamesports:fetch').subscribe(callback);      
+            self.$el.find('#sports-info').html(sportListView.el);
+            var data = {"payload": []};
+            var collection = sportListView.collection;
+            if (collection.length) {
+                for (i = 0; i < collection.length; i++) {
+                    data["payload"][i] = collection.at(i).get('payload');
+                }
+                var markup = Mustache.to_html(self.selectSportTemplate, data);                                
+                self.$el.find('#sports-info').prepend(markup);
+            } else {
+                self.$el.find('#sports-info').html('');
+            }                
+            sportListView.render();
         },
         
         // **Method** `setOptions` - called by BaseView's initialize method

@@ -8,9 +8,7 @@
 define(['facade', 'media/collections/videos', 'utils'], 
 function(facade, MediaVideoList, utils) {
 
-    var ProfileVideoList,
-        _ = facade._,
-        Channel = utils.lib.Channel;
+    var ProfileVideoList;
 
     ProfileVideoList = MediaVideoList.extend({
         

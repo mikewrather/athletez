@@ -66,6 +66,9 @@ function(facade,  views,   utils,   VideoItemView,            VideoPlayerView,  
         },
         
         setupPlayerView: function() {
+            if (this.collection.size() == 0)
+                return;
+                
             var listView = this,
                 addView = new VideoPlayerView({collection: this.collection, model: this.collection.at(0)}),
                 renderAddView = this.addChildView(addView);

@@ -8,8 +8,7 @@
 define(['facade', 'site/collections/comments', 'utils'], 
 function(facade, SiteCommentList, utils) {
 
-    var ProfileCommentOnList,
-        Channel = utils.lib.Channel;
+    var ProfileCommentOnList;
 
     ProfileCommentOnList = SiteCommentList.extend({
         

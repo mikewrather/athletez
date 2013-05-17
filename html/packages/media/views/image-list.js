@@ -66,6 +66,9 @@ function(facade,  views,   utils,   ImageItemView,            ImageBoardView,   
         },
         
         setupBoardView: function() {
+            if (this.collection.size() == 0)
+                return;
+                
             var listView = this,
                 addView = new ImageBoardView({collection: this.collection, model: this.collection.at(0)}),
                 renderAddView = this.addChildView(addView);
