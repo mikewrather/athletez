@@ -82,13 +82,13 @@ class Model_Media_Video extends ORM
 		$limit = Model_Media_Video::getVideoCounts($obj);
 		if($primary = Model_Media_Base::find_most_voted_tag($obj,'video', $limit))
 		{
-			$combine_obj = new stdClass();
 			//if the third parameter is more than one and it finds more than one result then it will return them in an array
 			if(is_array($primary))
 			{
 				//Loop through results
 				foreach($primary as $media_id => $video)
 				{
+					$combine_obj = new stdClass(); //moved into this loop because it must be unset and redeclared with each loop
 					$media_obj = ORM::factory("Media_Base", $media_id);
 					$video_type = $video->get_types_and_meta_as_array();
 					$combine_obj->video_id = $video->id;
@@ -106,16 +106,18 @@ class Model_Media_Video extends ORM
 					$combine_obj->video_type = $video_type;
 
 					$arr[] = $combine_obj;
+					unset($combine_obj); // This needs to be unset because it will be updated by reference with each iteration.
 				}
 			}
 			else
 			{
+				$combine_obj = new stdClass();
 				$video = clone($primary);
 				$video_type = $video->get_types_and_meta_as_array();
 				$combine_obj->video_id = $video->id;
 				//$combine_obj->video_title =  $media->name;
 				$combine_obj->video_thumb = $video->thumbs;
-				$combine_obj->post_date =  $video->timePosted;
+				$combine_obj->post_date =  $video->media->timePosted;
 				$num_tags = Model_Site_Tag::getNumTags($video);
 				$num_votes = Model_Site_Vote::getNumVotes($video);
 				$num_comments = Model_Site_Comment::getNumComments($video);
@@ -128,10 +130,12 @@ class Model_Media_Video extends ORM
 				$arr[] = $combine_obj;
 			}
 		}
+
 		$results = new stdClass();
 		$results->result = $arr;
 		return $results;
 	}
+
 
 	public static function getVideos($obj)
 	{

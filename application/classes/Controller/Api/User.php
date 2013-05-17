@@ -140,7 +140,7 @@
 				$this->modelNotSetError();
 				return false;
 			}
-			return $this->mainModel->getVideos($this->mainModel);
+			return $this->mainModel->getVideos();
 		
 		}
 		

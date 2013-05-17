@@ -43,9 +43,9 @@ define(['facade', 'utils'], function (facade, utils) {
             var exec_data = model.get('exec_data');
             var desc = model.get('desc');
             if (!exec_data['exec_error']) {
-                $('.global-alert').addClass('alert-info').html(desc).stop().fadeIn();
+                //$('.global-alert').addClass('alert-info').html(desc).stop().fadeIn();
             } else {
-                $('.global-alert').addClass('alert-error').html(desc).stop().fadeIn();
+                //$('.global-alert').addClass('alert-error').html(desc).stop().fadeIn();
             }
             var errorsArr = exec_data['error_array'];
             if (errorsArr) {
@@ -114,9 +114,9 @@ define(['facade', 'utils'], function (facade, utils) {
                     model.request = model.deferred.promise();
                 }
                 model.deferred.resolve();                
+                model.showSuccess(model, response);
             }
-            debug.log(response);
-            model.showSuccess(model, response);
+            debug.log(response);            
         },
 
         // **Method:** `fetchError` - log response on error

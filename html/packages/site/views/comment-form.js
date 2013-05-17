@@ -45,6 +45,16 @@ define([
         render: function () {
             BaseView.prototype.render.call(this);
             this.input = this.$("#new-comment");            
+            
+            var payload = this.model.get('payload');
+            var self = this;
+            if (payload) {
+                var user_photo = payload['user_picture'];
+                var user_email = payload['email'];
+                if (!user_photo && user_email) {
+                    self.$('.user-photo img').attr("src","http://www.gravatar.com/avatar/" + MD5(user_email) + "&s=29");
+                }
+            }
         },
 
         submitHandler: function (e) {
@@ -57,19 +67,6 @@ define([
         createOnEnter: function(e) {
             var comment = this.input.val();
             if (comment != '') {                
-                
-                date = new Date();
-                
-                var payload = this.model.get('payload');
-                payload['comment'] = this.input.val();
-                payload['comment_date'] = date.toDateString();
-                this.model.set('payload', payload);
-                
-                this.model.save();
-                
-                var new_comment = this.model.clone();
-                new_comment.id = Math.ceil(Math.random() * 100000);
-                this.collection.push(new_comment);
                 
                 this.input.val('');
             }

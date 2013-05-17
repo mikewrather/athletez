@@ -32,7 +32,7 @@ function (
 
         className: "sport",
         
-        initialize: function (options) {console.log(1);
+        initialize: function (options) {
             this.template = sportItemTemplate;
             var self = this;
             this.id = options.model.collection.id;            

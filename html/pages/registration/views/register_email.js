@@ -64,11 +64,11 @@ define([
                         payload[field.name] = field.value;
                 });
                 
-                var register = new BaseModel(payload);
-                register.url = function() {
+                var saveInfo = new BaseModel(payload);
+                saveInfo.url = function() {
                     return '/api/user/register';                            
                 }
-                register.saveSuccess = function(model, response) {
+                saveInfo.saveSuccess = function(model, response) {
                     BaseModel.prototype.saveSuccess.call(this, model, response);
                     var exec_data = model.get('exec_data');
                     var payload = model.get('payload');
@@ -76,7 +76,7 @@ define([
                         Channel('registration-uploadimage-email').publish();
                     }
                 }
-                register.save();                                        
+                saveInfo.save();                                        
                 
             }
 

@@ -47,6 +47,11 @@ function (
                 var markup = Mustache.to_html(self.template, model.toJSON());
                 self.$el.html(markup);
                 
+                var user_photo = model.get('user_photo');
+                var user_email = model.get('user_email');
+                if (!user_photo && user_email) {
+                    self.$('.photo img').attr("src","http://www.gravatar.com/avatar/" + MD5(user_email) + "&s=29");
+                }
                 var authorized = model.get('authorized');
                 if (authorized) {
                     var id = model.get('id');

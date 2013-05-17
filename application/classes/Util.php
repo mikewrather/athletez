@@ -54,4 +54,25 @@ class Util {
 	public static function format_time($time){
 		return date("g:i A", strtotime($time));
 	}
+
+	public static function obj_arr_toggle($value) {
+		if (is_object($value)) {
+			// Gets the properties of the given object
+			// with get_object_vars function
+			$value = get_object_vars($value);
+		}
+
+		if (is_array($value)) {
+			$replica = new stdClass();
+			foreach($value as $key => $val)
+			{
+				$replica->$key = is_array($val) ? Util::obj_arr_toggle($val) : $val;
+			}
+			return $replica;
+		}
+		else {
+			// Return array
+			return $value;
+		}
+	}
 }

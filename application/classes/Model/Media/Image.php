@@ -49,11 +49,23 @@ class Model_Media_Image extends ORM
 
 		return array(
 			"id" => $this->id,
+			"original_url" => $this->original_url,
+			"moviemasher_id" => $this->moviemasher_id,
 			//Comment by Jeffrey, There is loop when from media to get image info
-			"media" => $this->media,//->getBasics(),
+			"media" => $this->media->getBasics(),//->getBasics(),
 			"num_votes" => $num_votes,
-			"meta_details" => $this->get_meta_as_array()
+			"types" => $this->getTypes(),
 		);
+	}
+
+	public function getTypes()
+	{
+		$retArr = array();
+		foreach($this->typelinks->find_all() as $tl)
+		{
+			$retArr[] = $tl->getBasics();
+		}
+		return $retArr;
 	}
 
 	public function getGameImages($games_id){
@@ -71,20 +83,71 @@ class Model_Media_Image extends ORM
 	public function addImage($args = array())
 	{
 
+	//	print_r($args);
+
 		$args["media_type"] = "image";
 		$this->media_id = ORM::factory('Media_Base')->addMedia($args);
 		if(!$this->loaded()) $this->create();
 
-		foreach($args as $metaprop => $metaval)
+		foreach($args['files'] as $key=>$img_data)
 		{
-			$metaObj = ORM::factory('Media_Imagesmeta');
-			$metaObj->images_id = $this->id;
-			$metaObj->image_prop = $metaprop;
-			$metaObj->image_val = $metaval;
-			$metaObj->save();
+			if(!strstr($img_data['type'],'image')) return false;
+			else
+			{
+				$user = Auth::instance()->get_user();
+				$this->original_url = s3::upload($img_data['tmp_name'],$user->id);
+				$tmp_image = $img_data['tmp_name'];
 
+				/* This stuff is for getting metadata from the image
+				$local_copy = file_get_contents($tmp_image);
+				$local_path  = DOCROOT . '../files_temp/' . md5(rand());
+				file_put_contents($local_path, $local_copy);
+				print_r(exif_read_data($local_path));
+				*/
+
+				$this->save();
+			}
+		//	break; //we only want the first image for now.  Each image should be sent in its own thread
 		}
 
+		// generate types
+		$this->generate_types($tmp_image);
+
+		return $this;
+
+	}
+
+	private function generate_types($local_url=NULL)
+	{
+		$user = Auth::instance()->get_user();
+		//retrive active types
+		$types = ORM::factory('Media_Imagetype')->where('active','=',1)->find_all();
+
+		$image = $local_url==NULL ? $this->pull_to_local($this->original_url) : Image::factory($local_url);
+
+		foreach($types as $type)
+		{
+
+			$this_img = $image;
+			$local_path  = DOCROOT . '../files_temp/' . md5(rand()) . '.' . $type->img_extension;
+			$this_img->resize($type->width,$type->height,Image::AUTO)->save($local_path,$type->quality);
+
+			$this_type = ORM::factory('Media_Imagetypelink');
+			$this_type->image_types_id = $type->id;
+			$this_type->images_id = $this->id;
+			$this_type->width = $this_img->width;
+			$this_type->height = $this_img->height;
+			$this_type->file_size_bytes = filesize($local_path);
+			$this_type->url = s3::upload($local_path,$user->id);
+			$this_type->save();
+
+		//	print_r(exif_read_data($local_path,NULL,true,true));
+			unlink($local_path);
+
+			unset($this_img);
+			unset($this_type);
+			unset($local_path);
+		}
 	}
 
 	public function getSearch($args = array()){

@@ -50,7 +50,7 @@
 			<span class="paramname">{{name}} ({{type}})</span> - <span class="description">{{desc}}</span> - <span class="delete" onclick="delParam({{id}},{{ent_id}},'{{verb}}');">Delete</span><br />
 			{{#is_file}}
 				<input type="file" name="{{name}}" id="{{name}}" />
-				<progress></progress>
+				<progress id="progress_{{id}}"></progress>
 			{{/is_file}}
 			{{^is_file}}
 				{{#hasobjs}}
@@ -172,28 +172,31 @@
 
 		$('button#submit_{{id}}').click(function(){
 
-			var $me = $(this);
-			var thisform = document.getElementById('form_{{id}}');
-			var fd = new FormData(thisform);
-
-			console.log(thisform);
+			var $me = $('form#form_{{id}}');
 
 			console.log(fd);
 			var id1 = $me.find('input[name="id1"], select[name="id1"]').val();
+			console.log(id1);
 			id1 = id1==undefined ? '' : id1;
 
 			console.log(id1);
 
 		//	{{#file_upload}}
 			console.log("File Upload");
-		//	{{/file_upload}}
+			var thisform = document.getElementById('form_{{id}}');
+			var fd = new FormData(thisform);
+		//	{{/file_upload}}{{^file_upload}}
+			var fd = $me.serialize();
+		//  {{/file_upload}}
 
 			$.ajax({
 				type : '{{api_method}}',
 				url : '{{usage}}' + id1,
 				data : fd,
+				//	{{#file_upload}}
 				processData:false,
 				contentType:false,
+				//	{{/file_upload}}
 				success : function(data)
 				{
 					console.log(data);
