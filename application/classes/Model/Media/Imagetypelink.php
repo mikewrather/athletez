@@ -25,12 +25,7 @@ class Model_Media_Imagetypelink extends ORM
 		)
 	);
 
-	protected $_has_many = array(
-		'meta' => array(
-			'model' => 'Media_Imagesmeta',
-			'foreign_key' => 'image_type_link_id'
-		),
-	);
+
 
 	public function getBasics()
 	{
@@ -70,37 +65,4 @@ class Model_Media_Imagetypelink extends ORM
 
 	}
 
-	/**
-	 * get_meta_as_array() will get all metadata for this video/type link and return an array of metadata with key/value pairs
-	 * @return array
-	 */
-	public function get_meta_as_array()
-	{
-		if(!$this->loaded()) return;
-		$img_meta_res = $this->meta->find_all();
-
-		$retArr = array();
-
-		foreach($img_meta_res as $data)
-		{
-			if ($data->image_val != "" && $data->image_val != nulll)
-				$retArr[$data->image_prop] = $data->image_val;
-		}
-
-		return $retArr;
-	}
-
-	/**
-	 * get_meta_val retrieves a single value of metadata referenced by the property passed in as a parameter
-	 * @param string $prop is the name of the property you want to retrive the value for
-	 * @return string/bool either false or the value of the property being retrieved
-	 */
-	public function get_meta_val($prop="url")
-	{
-		if(!$this->loaded()) return;
-		$img_meta = $this->meta->where('image_prop','=',$prop)->find();
-
-		if(!$img_meta->loaded()) return false;
-		return $img_meta->image_val;
-	}
 }

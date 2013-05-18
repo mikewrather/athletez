@@ -80,74 +80,129 @@ class Model_Media_Image extends ORM
 		return $media_image;
 	}
 
+	/**
+	 * This method will add a new image to the media table, the image table, save an original,
+	 * and then trigger the function to generate all image types based off of the original
+	 *
+	 * @param array $args includes name, sports_id and files which have been uploaded and retrived from $_FILES array
+	 * @return $this|bool which can be used in chaining if it doesn't fail and return false
+	 */
 	public function addImage($args = array())
 	{
 
-	//	print_r($args);
-
+		// create a row in the media table and store the ID of that row in this table
 		$args["media_type"] = "image";
 		$this->media_id = ORM::factory('Media_Base')->addMedia($args);
+
+		// Create this object in DB if not already loaded with an ID
 		if(!$this->loaded()) $this->create();
 
+		// Loop through files which are being added or uploaded
 		foreach($args['files'] as $key=>$img_data)
 		{
+			// check to make sure it's an image.  If it's not terminate this function
 			if(!strstr($img_data['type'],'image')) return false;
 			else
 			{
-				$user = Auth::instance()->get_user();
-				$this->original_url = s3::upload($img_data['tmp_name'],$user->id);
+				// Save to variable because it will be used outside loop
 				$tmp_image = $img_data['tmp_name'];
 
-				/* This stuff is for getting metadata from the image
-				$local_copy = file_get_contents($tmp_image);
-				$local_path  = DOCROOT . '../files_temp/' . md5(rand());
-				file_put_contents($local_path, $local_copy);
-				print_r(exif_read_data($local_path));
-				*/
+				// Create an image object for image data and save data to table
+				$img_obj = Image::factory($tmp_image);
 
+				// user is used to generate url for s3
+				$user = Auth::instance()->get_user();
+
+				// save to s3 and save s3 url to database
+				$this->original_url = s3::upload($tmp_image,$user->id);
+
+				// save all other information to database
+				$this->original_x = $img_obj->width;
+				$this->original_y = $img_obj->height;
+				$this->original_mime = $img_obj->mime;
+				$this->original_size = filesize($tmp_image);
 				$this->save();
 			}
-		//	break; //we only want the first image for now.  Each image should be sent in its own thread
 		}
 
-		// generate types
+		// generate images for each size / quality type
 		$this->generate_types($tmp_image);
 
 		return $this;
 
 	}
 
+	/**
+	 * generate_types method loops through all the different types stored in the db
+	 * and generates an image of a given size / quality for each then saves that
+	 * to s3 and stores the reference in the database
+	 *
+	 * @param null $local_url is the local path of the image we are using to generate types for.  If not available the original will be downloaded.
+	 * @return $this used for possible chaining.
+	 */
 	private function generate_types($local_url=NULL)
 	{
+		// UserID is used to generate the url for the image
 		$user = Auth::instance()->get_user();
-		//retrive active types
+
+		// retrieve all active image types to generate
 		$types = ORM::factory('Media_Imagetype')->where('active','=',1)->find_all();
 
+		// If local path is not provided the image will be pulled from the url in order to have a local copy to manipulate
 		$image = $local_url==NULL ? $this->pull_to_local($this->original_url) : Image::factory($local_url);
 
+		// Loop through types and generate image for each
 		foreach($types as $type)
 		{
+			// Image must be cloned so that resizing does not alter the original object
+			$this_img = clone($image);
 
-			$this_img = $image;
+			// This is where we will temporarily store the new image before we upload to s3
 			$local_path  = DOCROOT . '../files_temp/' . md5(rand()) . '.' . $type->img_extension;
-			$this_img->resize($type->width,$type->height,Image::AUTO)->save($local_path,$type->quality);
 
+			// only resize if we are resizing down.  because the db col can be null we also have to check to make sure > 0
+			if(((int)$type->width > 0 && $type->width < $image->width) || ((int)$type->height > 0 && $type->height < $image->height))
+			{
+				// If the height or width is blank in the database, NULL will be passed to the function so it is ignored
+				$this_img->resize(
+					$type->width != '' ? $type->width : NULL,
+					$type->height != '' ? $type->height : NULL,
+					Image::AUTO // this is the resizing instruction
+				);
+			}
+
+			// Save with new quality
+			$this_img->save($local_path,$type->quality);
+
+			// Delete any existing links
+			DB::delete('image_type_link')->where('images_id','=',$this->id)->and_where('image_types_id','=',$type->id)->execute();
+
+			// Set up the image type link and set all relevant properties
 			$this_type = ORM::factory('Media_Imagetypelink');
 			$this_type->image_types_id = $type->id;
 			$this_type->images_id = $this->id;
 			$this_type->width = $this_img->width;
 			$this_type->height = $this_img->height;
 			$this_type->file_size_bytes = filesize($local_path);
-			$this_type->url = s3::upload($local_path,$user->id);
+			$this_type->url = s3::upload($local_path,$user->id); // upload to s3 and set new url
+			$this_type->mime = $this_img->mime;
 			$this_type->save();
 
-		//	print_r(exif_read_data($local_path,NULL,true,true));
+			// Delete the temporary file
 			unlink($local_path);
 
+			// Unset all variables for use in the next iteration
 			unset($this_img);
 			unset($this_type);
 			unset($local_path);
 		}
+
+		// Clean up locally pulled file (if it was not already local
+		if($local_url===NULL) unlink($image->file);
+		unset($image);
+
+		return $this;
+
 	}
 
 	public function getSearch($args = array()){
@@ -200,45 +255,6 @@ class Model_Media_Image extends ORM
 		return "Image ".$this->id;
 	}
 
-	public static function get_user_image_meta($image_id){
-		if (empty($image_id)){
-			return "";
-		}
-		$media_image = ORM::factory("Media_Image", $image_id);
-
-		return $media_image->metadata->find_all();
-	}
-
-	/**
-	 * get_meta_as_array This method will return an array of metadata for this image with key/value pairs
-	 * @param $type int is the ID of the type we want to pull data from
-	 * @return array of metadata for the image
-	 */
-	public function get_meta_as_array($type=NULL)
-	{
-		//TODO: This needs to be updated to take an optional type ID and if none is provided return data for every image type
-		if(!$this->loaded()) return;
-
-		$meta = $this->typelinks;
-
-		if($type===NULL)
-		{
-			$res = $meta->find_all();
-			$retArr = array();
-			foreach($res as $type)
-			{
-				$retArr[$type->image_types_id] = $this->get_meta_as_array($type->image_types_id);
-			}
-			return $retArr;
-		}
-		else
-		{
-			$typelink = $meta->where('image_types_id','=',$type)->find();
-			if(!$typelink->loaded()) return;
-			return $typelink->get_meta_as_array();
-		}
-
-	}
 
 	public function pull_to_local($offsite_path)
 	{
@@ -259,8 +275,6 @@ class Model_Media_Image extends ORM
 		{
 			return false;
 		}
-
-
 
 	}
 
