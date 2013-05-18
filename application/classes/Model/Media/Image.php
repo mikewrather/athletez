@@ -89,20 +89,20 @@ class Model_Media_Image extends ORM
 			if(is_array($primary))
 			{
 				//Loop through results
-				foreach($primary as $media_id => $single_media)
+				foreach($primary as $media_id => $single_image)
 				{
 					$media_obj = ORM::factory("Media_Base", $media_id);
 					if ($sports_id){ //only get videos related to one sports_id
 
 						if ($media_obj->sports_id == $sports_id){
 							$combine_object = new stdClass();
-							$num_votes = Model_Site_Vote::getNumVotes($single_media->image);
-							$image_meta = $single_media->image->get_meta_as_array();
-							$image_id = $single_media->image->id;
-							$image_title = $image_meta['title'];
+							$num_votes = Model_Site_Vote::getNumVotes($single_image);
+							//$image_meta = $single_image->get_meta_as_array();
+							$image_id = $single_image->id;
+							//$image_title = $image_meta['title'];
 							$combine_object->image_id = $image_id;
-							$combine_object->image_path = $image_meta['thumb_url'];
-							$combine_object->image_title = $image_title;
+							//$combine_object->image_path = $image_meta['thumb_url'];
+							//$combine_object->image_title = $image_title;
 							$combine_object->num_votes = $num_votes;
 							$result_arr[] = $combine_object;
 							unset($combine_object);
@@ -110,28 +110,28 @@ class Model_Media_Image extends ORM
 
 					}else{
 						$combine_object = new stdClass();
-						$num_votes = Model_Site_Vote::getNumVotes($single_media->image);
-						$image_meta = $single_media->image->get_meta_as_array();
-						$image_id = $single_media->image->id;
-						$image_title = $image_meta['title'];
+						$num_votes = Model_Site_Vote::getNumVotes($single_image);
+						//$image_meta = $single_image->get_meta_as_array();
+						$image_id = $single_image->id;
+						//$image_title = $image_meta['title'];
 						$combine_object->image_id = $image_id;
-						$combine_object->image_path = $image_meta['thumb_url'];
-						$combine_object->image_title = $image_title;
+						//$combine_object->image_path = $image_meta['thumb_url'];
+						//$combine_object->image_title = $image_title;
 						$combine_object->num_votes = $num_votes;
 						$result_arr[] = $combine_object;
 						unset($combine_object);
 					}
 				}
 			}else{
-				$single_media = clone $primary;
+				$single_image = clone $primary;
 				$combine_object = new stdClass();
-				$num_votes = Model_Site_Vote::getNumVotes($single_media->image);
-				$image_meta = $single_media->image->get_meta_as_array();
-				$image_id = $single_media->image->id;
-				$image_title = $image_meta['title'];
+				$num_votes = Model_Site_Vote::getNumVotes($single_image);
+				//$image_meta = $single_image->get_meta_as_array();
+				$image_id = $single_image->id;
+				//$image_title = $image_meta['title'];
 				$combine_object->image_id = $image_id;
-				$combine_object->image_path = $image_meta['thumb_url'];
-				$combine_object->image_title = $image_title;
+				//$combine_object->image_path = $image_meta['thumb_url'];
+				//$combine_object->image_title = $image_title;
 				$combine_object->num_votes = $num_votes;
 				$result_arr[] = $combine_object;
 				unset($combine_object);

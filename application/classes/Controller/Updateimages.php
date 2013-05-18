@@ -110,19 +110,19 @@ class Controller_Updateimages extends Controller
 				foreach($primary as $media)
 				{
 					// This calls an image method that will load all of the images meta data into an array with key/value pairs
-					$image_meta = $media->get_meta_as_array();
+					//$image_meta = $media->get_meta_as_array();
 
 					// each of these can also be called individually
-					print_r($image_meta);
+					//print_r($image_meta);
 				}
 			}
 			else
 			{
 				// This calls an image method that will load all of the images meta data into an array with key/value pairs
-				$image_meta = $primary->get_meta_as_array();
+				//$image_meta = $primary->get_meta_as_array();
 
 				// each of these can also be called individually
-				print_r($image_meta);
+				//print_r($image_meta);
 			}
 		}
 		else
