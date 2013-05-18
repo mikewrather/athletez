@@ -417,7 +417,13 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 		return $video->getTagedVideos($obj, $sports_id);
 	}
 
-	public function getImages($sports_id = null)
+	public function getImages($obj, $sports_id = null){
+		if($obj===NULL) $obj = $this;
+		$image = ORM::factory('Media_Image');
+		return $image->getTagedImages($obj, $sports_id);
+	}
+
+	public function getUploadedImages($sports_id = null)
 	{
 		$media = $this->media->where('media_type','=','image');
 		if ($sports_id){

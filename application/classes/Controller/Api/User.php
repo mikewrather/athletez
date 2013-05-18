@@ -173,7 +173,7 @@
 				$sports_id = null;
 			}
 
-			return $this->mainModel->getImages($sports_id);
+			return $this->mainModel->getImages($this->mainModel, $sports_id);
 		}
 		
 		/**

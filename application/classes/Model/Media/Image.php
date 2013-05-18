@@ -80,6 +80,68 @@ class Model_Media_Image extends ORM
 		return $media_image;
 	}
 
+	public function getTagedImages($obj, $sports_id = null){
+		$result_arr = null;
+		$limit = Model_Media_Image::getImageCounts($obj);
+		if($primary = Model_Media_Base::find_most_voted_tag($obj,'image', $limit))
+		{
+			//if the third parameter is more than one and it finds more than one result then it will return them in an array
+			if(is_array($primary))
+			{
+				//Loop through results
+				foreach($primary as $media_id => $single_media)
+				{
+					$media_obj = ORM::factory("Media_Base", $media_id);
+					if ($sports_id){ //only get videos related to one sports_id
+
+						if ($media_obj->sports_id == $sports_id){
+							$combine_object = new stdClass();
+							$num_votes = Model_Site_Vote::getNumVotes($single_media->image);
+							$image_meta = $single_media->image->get_meta_as_array();
+							$image_id = $single_media->image->id;
+							$image_title = $image_meta['title'];
+							$combine_object->image_id = $image_id;
+							$combine_object->image_path = $image_meta['thumb_url'];
+							$combine_object->image_title = $image_title;
+							$combine_object->num_votes = $num_votes;
+							$result_arr[] = $combine_object;
+							unset($combine_object);
+						}
+
+					}else{
+						$combine_object = new stdClass();
+						$num_votes = Model_Site_Vote::getNumVotes($single_media->image);
+						$image_meta = $single_media->image->get_meta_as_array();
+						$image_id = $single_media->image->id;
+						$image_title = $image_meta['title'];
+						$combine_object->image_id = $image_id;
+						$combine_object->image_path = $image_meta['thumb_url'];
+						$combine_object->image_title = $image_title;
+						$combine_object->num_votes = $num_votes;
+						$result_arr[] = $combine_object;
+						unset($combine_object);
+					}
+				}
+			}else{
+				$single_media = clone $primary;
+				$combine_object = new stdClass();
+				$num_votes = Model_Site_Vote::getNumVotes($single_media->image);
+				$image_meta = $single_media->image->get_meta_as_array();
+				$image_id = $single_media->image->id;
+				$image_title = $image_meta['title'];
+				$combine_object->image_id = $image_id;
+				$combine_object->image_path = $image_meta['thumb_url'];
+				$combine_object->image_title = $image_title;
+				$combine_object->num_votes = $num_votes;
+				$result_arr[] = $combine_object;
+				unset($combine_object);
+			}
+		}
+		$results = new stdClass();
+		$results->result = $result_arr;
+		return $results;
+	}
+
 	public function addImage($args = array())
 	{
 
@@ -238,6 +300,15 @@ class Model_Media_Image extends ORM
 			return $typelink->get_meta_as_array();
 		}
 
+	}
+
+	public static function getImageCounts($obj){
+		$enttype_id = Model_Site_Enttype::getMyEntTypeID($obj);
+		$subject_id = $obj->id;
+		$res = DB::select(array(DB::expr('COUNT(*)'), 'total_count'))->from('tags')
+			->where('subject_enttypes_id', '=', $enttype_id)
+			->where('subject_id', '=',$subject_id);
+		return $res->execute()->get('total_count');
 	}
 
 	public function pull_to_local($offsite_path)
