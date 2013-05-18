@@ -498,12 +498,15 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 			);
 		}
 		//Return null as result if not value
+		$std = new stdClass();
 		if (empty($orgs)){
-			return null;
+			$std->result = null;
+			return $std;
 		}
 
 		$orgs = Util::obj_arr_toggle($orgs);
-		return (object)$orgs;
+		$std->result = (object)$orgs;
+		return $std;
 	}
 	
 	public function getSports()
