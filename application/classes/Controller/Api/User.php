@@ -148,7 +148,7 @@
 				$sports_id = null;
 			}
 
-			return $this->mainModel->getUploadedVideos($this->mainModel, $sports_id);
+			return $this->mainModel->getVideos($this->mainModel, $sports_id);
 		}
 		
 		/**
