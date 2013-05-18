@@ -104,11 +104,14 @@ class Model_Media_Video extends ORM
 							$num_votes = Model_Site_Vote::getNumVotes($video);
 							$num_comments = Model_Site_Comment::getNumComments($video);
 							$num_views = Model_Site_View::getNumViews($video);
+							$tags = Model_Site_Tag::who_taged_media($media_id);
 							$combine_obj->tags_count =  $num_tags;
 							$combine_obj->num_votes =  $num_votes;
 							$combine_obj->num_views =  $num_views;
 							$combine_obj->num_comments =  $num_comments;
 							$combine_obj->video_type = $video_type;
+							$combine_obj->tags = $tags;
+
 							$arr[] = $combine_obj;
 							unset($combine_obj);
 						}
@@ -128,6 +131,8 @@ class Model_Media_Video extends ORM
 						$combine_obj->num_views =  $num_views;
 						$combine_obj->num_comments =  $num_comments;
 						$combine_obj->video_type = $video_type;
+						$tags = Model_Site_Tag::who_taged_media($media_id);
+						$combine_obj->tags = $tags;
 						$arr[] = $combine_obj;
 						unset($combine_obj);
 					}

@@ -89,9 +89,17 @@ class Model_Sportorg_Games_Base extends ORM
 		}
 	}
 
+	public function getPrimaryImage()
+	{
+		if($primary = Model_Media_Base::find_most_voted_tag($this,'image',1))
+		{
+			return $primary->original_url;
+		}
+		return null;
+	}
+
 	public function getBasics()
 	{
-
 		return array(
 			"locations_id" => $this->locations_id,
 			"location" => $this->location->getBasics(),
@@ -105,8 +113,8 @@ class Model_Sportorg_Games_Base extends ORM
 			"game_name" => $this->name(),
 			"game_day" => Util::format_date($this->gameDay), //"Sept 14, 2002",
 			"game_time" => Util::format_time($this->gameTime), //"09:00 AM",
-			"game_picture" => "TODO, add by Jeffrey",//"images/game_medium.png",
-			"teams" => $this->getTeams(),
+			"game_picture" => $this->getPrimaryImage(),
+			"teams" => $this->getTeams()->result,
 			"game_location" => $this->location->address
 		);
 	}

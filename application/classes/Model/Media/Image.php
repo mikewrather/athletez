@@ -52,7 +52,10 @@ class Model_Media_Image extends ORM
 			"original_url" => $this->original_url,
 			"moviemasher_id" => $this->moviemasher_id,
 			"media" => $this->media->getBasics(),//->getBasics(),
+			"image_title" => $this->media->name,
+			"image_path" => $this->original_url,
 			"num_votes" => $num_votes,
+			"image_id" => $this->id,
 			"types" => $this->getTypes(),
 		);
 	}

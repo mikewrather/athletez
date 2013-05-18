@@ -108,7 +108,8 @@
 				$this->modelNotSetError();
 				return false;
 			}
-			return Model_Media_Video::getTagedVideos($this->mainModel);
+			$video_model = ORM::factory("Media_Video");
+			return $video_model->getTagedVideos($this->mainModel);
 		}
 		
 		/**
@@ -126,7 +127,7 @@
 			}
 
 			$image_model = ORM::factory("Media_Image");
-			return $image_model->getGameImages($this->mainModel->id);
+			return $image_model->getTagedImages($this->mainModel);
 		}
 
 		/**
@@ -415,9 +416,6 @@
 				return false;
 
 			}
-
-
-
 		}
 		
 		############################################################################

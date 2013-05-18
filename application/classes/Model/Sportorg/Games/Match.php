@@ -43,7 +43,7 @@ class Model_Sportorg_Games_Match extends ORM
 	{
 		$playerArr = array();
 		foreach($this->players->find_all() as $player){
-			$playerArr[$player->id] = $player->getBasics();
+			$playerArr[] = $player->getBasics();
 		}
 		return array(
 			"id" => $this->id,
