@@ -12,7 +12,7 @@
         <div class="team-info team-info-{{team_id}}" style="display:none">
             <table class="table team-schedule">
             {{#schedules}}
-                <tr>
+                <tr><!--
                     <td>
                     {{#complevel}}
                         {{name}}
@@ -22,13 +22,13 @@
                     {{#season}}
                         {{name}}
                     {{/season}}
-                    </td>
-                    <td>{{team_name}}</td>
-                    <td>{{team_location}}</td>
-                    <td>{{year}}</td>
+                    </td>-->
+                    <td>{{game_name}}</td>
+                    <td>{{game_location}}</td>
+                    <td>{{game_day}}</td>
                     <td>{{mascot}}</td>
-                    <td>{{num_votes}}</td>
-                    <td>{{num_followers}}</td>
+                    <!--<td>{{num_votes}}</td>
+                    <td>{{num_followers}}</td>-->
                 </tr>
             {{/schedules}}
             </table>
