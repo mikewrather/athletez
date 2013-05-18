@@ -198,6 +198,7 @@
 		 */
 		public function get_images()
 		{
+		//	print_r($this->obj);
 			$images = $this->obj->result;
 			return $images;
 		}
@@ -334,19 +335,17 @@
 
 			return $retArr;
 		}
-		
+
 		/**
-		 * post_addidentity() Add an aditional identity to this user's profile
+		 * post_addcomment() This will add a comment to the "fanboard" for this user's profile page.
 		 *
 		 * @retun array
 		 */
-		public function post_addidentity()
+		public function post_addcomment()
 		{
-			$retArr = array();
- 
-			return $retArr;
+			return $this->obj->getBasics();
 		}
-		
+
 		/**
 		 * put_basics() Update basic information about the user
 		 *

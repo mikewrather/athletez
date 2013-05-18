@@ -927,6 +927,25 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 		}
 	}
 
+	public function addComment($comment,$poster_id)
+	{
+		if(!$this->loaded()) return false;
+
+		$subject_enttypes_id = Ent::getMyEntTypeID($this);
+
+		$args = array(
+			"comment" => $comment,
+			"subject_enttypes_id" => $subject_enttypes_id,
+			"subject_id" => $this->id,
+			"users_id" => $poster_id
+		);
+
+		$comment = ORM::factory('Site_Comment');
+		$comment->addComment($args);
+		return $comment;
+
+	}
+
 	public function getCommentsOn()
 	{
 		return Model_Site_Comment::getCommentsOn($this);

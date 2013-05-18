@@ -1213,6 +1213,45 @@
 
 
 		}
+
+		/**
+		 * action_post_addcomment() This will add a comment to the "fanboard" for this user's profile page.
+		 * via /api/user/addcomment/{users_id}
+		 *
+		 */
+		public function action_post_addcomment()
+		{
+			$this->payloadDesc = "This will add a comment to the \"fanboard\" for this user\'s profile page.";
+			$arguments = array();
+			// CHECK FOR PARAMETERS:
+			// comment (REQUIRED)
+			// This is the actual comment being added to the user's fanboard.
+
+			if(trim($this->request->post('comment')) != "")
+			{
+				$arguments["comment"] = trim($this->request->post('comment'));
+			}
+			else // THIS WAS A REQUIRED PARAMETER
+			{
+				// Create Array for Error Data
+				$error_array = array(
+					"error" => "Required Parameter Missing",
+					"param_name" => "comment",
+					"param_desc" => "This is the actual comment being added to the user's fanboard."
+				);
+
+				// Set whether it is a fatal error
+				$is_fatal = true;
+
+				// Call method to throw an error
+				$this->addError($error_array,$is_fatal);
+				return false;
+
+			}
+
+			return $this->mainModel->addComment($arguments['comment'],$this->user->id);
+
+		}
 		
 		############################################################################
 		############################    PUT METHODS    #############################

@@ -51,7 +51,6 @@ class Model_Media_Image extends ORM
 			"id" => $this->id,
 			"original_url" => $this->original_url,
 			"moviemasher_id" => $this->moviemasher_id,
-			//Comment by Jeffrey, There is loop when from media to get image info
 			"media" => $this->media->getBasics(),//->getBasics(),
 			"num_votes" => $num_votes,
 			"types" => $this->getTypes(),
@@ -63,7 +62,7 @@ class Model_Media_Image extends ORM
 		$retArr = array();
 		foreach($this->typelinks->find_all() as $tl)
 		{
-			$retArr[] = $tl->getBasics();
+			$retArr[$tl->type->name] = $tl->getBasics();
 		}
 		return $retArr;
 	}
@@ -94,47 +93,21 @@ class Model_Media_Image extends ORM
 					$media_obj = ORM::factory("Media_Base", $media_id);
 					if ($sports_id){ //only get videos related to one sports_id
 
-						if ($media_obj->sports_id == $sports_id){
-							$combine_object = new stdClass();
-							$num_votes = Model_Site_Vote::getNumVotes($single_image);
-							//$image_meta = $single_image->get_meta_as_array();
-							$image_id = $single_image->id;
-							//$image_title = $image_meta['title'];
-							$combine_object->image_id = $image_id;
-							//$combine_object->image_path = $image_meta['thumb_url'];
-							//$combine_object->image_title = $image_title;
-							$combine_object->num_votes = $num_votes;
-							$result_arr[] = $combine_object;
-							unset($combine_object);
+						if ($media_obj->sports_id == $sports_id)
+						{
+							$result_arr[] = $single_image->getBasics();
 						}
-
-					}else{
-						$combine_object = new stdClass();
-						$num_votes = Model_Site_Vote::getNumVotes($single_image);
-						//$image_meta = $single_image->get_meta_as_array();
-						$image_id = $single_image->id;
-						//$image_title = $image_meta['title'];
-						$combine_object->image_id = $image_id;
-						//$combine_object->image_path = $image_meta['thumb_url'];
-						//$combine_object->image_title = $image_title;
-						$combine_object->num_votes = $num_votes;
-						$result_arr[] = $combine_object;
-						unset($combine_object);
+					}
+					else
+					{
+						$result_arr[] = $single_image->getBasics();
 					}
 				}
-			}else{
+			}
+			else
+			{
 				$single_image = clone $primary;
-				$combine_object = new stdClass();
-				$num_votes = Model_Site_Vote::getNumVotes($single_image);
-				//$image_meta = $single_image->get_meta_as_array();
-				$image_id = $single_image->id;
-				//$image_title = $image_meta['title'];
-				$combine_object->image_id = $image_id;
-				//$combine_object->image_path = $image_meta['thumb_url'];
-				//$combine_object->image_title = $image_title;
-				$combine_object->num_votes = $num_votes;
-				$result_arr[] = $combine_object;
-				unset($combine_object);
+				$result_arr[] = $single_image->getBasics();
 			}
 		}
 		$results = new stdClass();

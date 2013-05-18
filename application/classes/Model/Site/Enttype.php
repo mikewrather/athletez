@@ -35,7 +35,7 @@ class Model_Site_Enttype extends ORM
 
 	/**
 	 * @static
-	 * @param $class can be an object or a classname
+	 * @param $class - can be an object or a classname
 	 * @return mixed
 	 */
 	static function getMyEntTypeID($class)

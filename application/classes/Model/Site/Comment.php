@@ -125,7 +125,7 @@ class Model_Site_Comment extends Model_Site_Entdir
 			"user" => $this->user->getBasics(),
 			"subject" => $subject->getBasics(),
 			"comment" => $this->comment,
-			"comment_date" => $this->timePosted
+			"comment_date" => isset($this->timePosted) ? date('M jS, g:i a',strtotime($this->timePosted)) : date('M jS, g:i a')
 		);
 	}
 

@@ -112,6 +112,11 @@ class Model_Media_Base extends ORM
 		{
 			$this->users_id = $args['user_id'];
 		}
+		else
+		{
+			$user = Auth::instance()->get_user();
+			$this->users_id = $user->id;
+		}
 
 		if(isset($args['media_type']))
 		{
