@@ -317,10 +317,6 @@ class Model_Media_Image extends ORM
 		return "Image ".$this->id;
 	}
 
-
-		return $media_image->metadata->find_all();
-	}
-
 	/**
 	 * get_meta_as_array This method will return an array of metadata for this image with key/value pairs
 	 * @param $type int is the ID of the type we want to pull data from
