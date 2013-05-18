@@ -140,8 +140,15 @@
 				$this->modelNotSetError();
 				return false;
 			}
-			return $this->mainModel->getVideos();
-		
+
+			if((int)trim($this->request->query('sports_id')) > 0)
+			{
+				$sports_id = $arguments["sports_id"] = (int)trim($this->request->query('sports_id'));
+			}else{
+				$sports_id = null;
+			}
+
+			return $this->mainModel->getUploadedVideos($this->mainModel, $sports_id);
 		}
 		
 		/**
@@ -158,7 +165,15 @@
 				$this->modelNotSetError();
 				return false;
 			}
-			return $this->mainModel->getImages();		
+
+			if((int)trim($this->request->query('sports_id')) > 0)
+			{
+				$sports_id = $arguments["sports_id"] = (int)trim($this->request->query('sports_id'));
+			}else{
+				$sports_id = null;
+			}
+
+			return $this->mainModel->getImages($sports_id);
 		}
 		
 		/**

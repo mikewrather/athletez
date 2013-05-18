@@ -405,21 +405,24 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 	{
 		//loop through teams and get positions for each.
 	}
-	public function getUploadedVideos($obj)
+	public function getUploadedVideos($obj, $sports_id = null)
 	{
-		return Model_Media_Video::getVideos($obj);
+		return Model_Media_Video::getVideos($obj, $sports_id);
 	}
 
-	public function getVideos($obj=NULL)
+	public function getVideos($obj=NULL, $sports_id = null)
 	{
 		if($obj===NULL) $obj = $this;
 		$video = ORM::factory('Media_Video');
-		return $video->getTagedVideos($obj);
+		return $video->getTagedVideos($obj, $sports_id);
 	}
 
-	public function getImages()
+	public function getImages($sports_id = null)
 	{
 		$media = $this->media->where('media_type','=','image');
+		if ($sports_id){
+			$media->where('sports_id', '=', $sports_id);
+		}
 		$result_arr = null;
 
 		foreach($media->find_all() as $single_media){
@@ -433,6 +436,7 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 			$combine_object->image_title = $image_title;
 			$combine_object->num_votes = $num_votes;
 			$result_arr[] = $combine_object;
+			unset($combine_object);
 		}
 		$return_obj = new stdClass();
 		$return_obj->result = $result_arr;

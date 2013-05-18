@@ -77,7 +77,7 @@ class Model_Media_Video extends ORM
 		return $res->execute()->get('total_count');
 	}
 
-	public function getTagedVideos($obj){
+	public function getTagedVideos($obj, $sports_id = null){
 		$arr = null;
 		$limit = Model_Media_Video::getVideoCounts($obj);
 		if($primary = Model_Media_Base::find_most_voted_tag($obj,'video', $limit))
@@ -88,25 +88,46 @@ class Model_Media_Video extends ORM
 				//Loop through results
 				foreach($primary as $media_id => $video)
 				{
-					$combine_obj = new stdClass(); //moved into this loop because it must be unset and redeclared with each loop
 					$media_obj = ORM::factory("Media_Base", $media_id);
-					$video_type = $video->get_types_and_meta_as_array();
-					$combine_obj->video_id = $video->id;
-					//$combine_obj->video_title =  $media->name;
-					$combine_obj->video_thumb = $video->thumbs;
-					$combine_obj->post_date =  $media_obj->timePosted;
-					$num_tags = Model_Site_Tag::getNumTags($video);
-					$num_votes = Model_Site_Vote::getNumVotes($video);
-					$num_comments = Model_Site_Comment::getNumComments($video);
-					$num_views = Model_Site_View::getNumViews($video);
-					$combine_obj->tags_count =  $num_tags;
-					$combine_obj->num_votes =  $num_votes;
-					$combine_obj->num_views =  $num_views;
-					$combine_obj->num_comments =  $num_comments;
-					$combine_obj->video_type = $video_type;
-
-					$arr[] = $combine_obj;
-					unset($combine_obj); // This needs to be unset because it will be updated by reference with each iteration.
+					if ($sports_id){ //only get videos related to one sports_id
+						$combine_obj = new stdClass();
+						if ($media_obj->sports_id == $sports_id){
+							$video_type = $video->get_types_and_meta_as_array();
+							$combine_obj->video_id = $video->id;
+							//$combine_obj->video_title =  $media->name;
+							$combine_obj->video_thumb = $video->thumbs;
+							$combine_obj->post_date =  $media_obj->timePosted;
+							$num_tags = Model_Site_Tag::getNumTags($video);
+							$num_votes = Model_Site_Vote::getNumVotes($video);
+							$num_comments = Model_Site_Comment::getNumComments($video);
+							$num_views = Model_Site_View::getNumViews($video);
+							$combine_obj->tags_count =  $num_tags;
+							$combine_obj->num_votes =  $num_votes;
+							$combine_obj->num_views =  $num_views;
+							$combine_obj->num_comments =  $num_comments;
+							$combine_obj->video_type = $video_type;
+							$arr[] = $combine_obj;
+							unset($combine_obj);
+						}
+					}else{
+						$combine_obj = new stdClass(); //moved into this loop because it must be unset and redeclared with each loop
+						$video_type = $video->get_types_and_meta_as_array();
+						$combine_obj->video_id = $video->id;
+						//$combine_obj->video_title =  $media->name;
+						$combine_obj->video_thumb = $video->thumbs;
+						$combine_obj->post_date =  $media_obj->timePosted;
+						$num_tags = Model_Site_Tag::getNumTags($video);
+						$num_votes = Model_Site_Vote::getNumVotes($video);
+						$num_comments = Model_Site_Comment::getNumComments($video);
+						$num_views = Model_Site_View::getNumViews($video);
+						$combine_obj->tags_count =  $num_tags;
+						$combine_obj->num_votes =  $num_votes;
+						$combine_obj->num_views =  $num_views;
+						$combine_obj->num_comments =  $num_comments;
+						$combine_obj->video_type = $video_type;
+						$arr[] = $combine_obj;
+						unset($combine_obj);
+					}
 				}
 			}
 			else
@@ -137,11 +158,14 @@ class Model_Media_Video extends ORM
 	}
 
 
-	public static function getVideos($obj)
+	public static function getVideos($obj, $sports_id = null)
 	{
 
 		$media = $obj->media->where('media_type','=','video');
 		$media->where('users_id', '=', $obj->id);
+		if ($sports_id){
+			$media->where('sports_id', '=', $sports_id);
+		}
 		$result_arr = null;
 		foreach($media->find_all() as $single_media){
 			$combine_object = new stdClass();
@@ -175,6 +199,7 @@ class Model_Media_Video extends ORM
 			$combine_object->num_views =  $num_views;
 			$combine_object->num_comments =  $num_comments;
 			$result_arr[] = $combine_object;
+			unset($combine_object);
 		}
 		$return_obj = new stdClass();
 		$return_obj->result = $result_arr;
