@@ -317,10 +317,6 @@ class Model_Media_Image extends ORM
 		return "Image ".$this->id;
 	}
 
-
-		return $media_image->metadata->find_all();
-	}
-
 	/**
 	 * get_meta_as_array This method will return an array of metadata for this image with key/value pairs
 	 * @param $type int is the ID of the type we want to pull data from
@@ -374,4 +370,12 @@ class Model_Media_Image extends ORM
 
 	}
 
+	public static function getImageCounts($obj){
+		$enttype_id = Model_Site_Enttype::getMyEntTypeID($obj);
+		$subject_id = $obj->id;
+		$res = DB::select(array(DB::expr('COUNT(*)'), 'total_count'))->from('tags')
+			->where('subject_enttypes_id', '=', $enttype_id)
+			->where('subject_id', '=',$subject_id);
+		return $res->execute()->get('total_count');
+	}
 }
