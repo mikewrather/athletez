@@ -104,7 +104,15 @@
 				$this->modelNotSetError();
 				return false;
 			}
-			return $this->mainModel->getOrgs($this->myID);			
+
+			if((int)trim($this->request->query('sports_id')) > 0)
+			{
+				$sports_id = $arguments["sports_id"] = (int)trim($this->request->query('sports_id'));
+			}else{
+				$sports_id = null;
+			}
+
+			return $this->mainModel->getOrgs($sports_id);
 		}
 		
 		/**

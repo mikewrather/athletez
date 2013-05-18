@@ -434,12 +434,12 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 		foreach($media->find_all() as $single_media){
 			$combine_object = new stdClass();
 			$num_votes = Model_Site_Vote::getNumVotes($single_media->image);
-			$image_meta = $single_media->image->get_meta_as_array();
+			//$image_meta = $single_media->image->get_meta_as_array();
 			$image_id = $single_media->image->id;
-			$image_title = $image_meta['title'];
+			//$image_title = $image_meta['title'];
 			$combine_object->image_id = $image_id;
-			$combine_object->image_path = $image_meta['thumb_url'];
-			$combine_object->image_title = $image_title;
+			//$combine_object->image_path = $image_meta['thumb_url'];
+			//$combine_object->image_title = $image_title;
 			$combine_object->num_votes = $num_votes;
 			$result_arr[] = $combine_object;
 			unset($combine_object);
@@ -449,7 +449,7 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 		return $return_obj;
 	}
 
-	public function getOrgs()
+	public function getOrgs($sports_id)
 	{
 		$org_sport_link_obj = DB::select(
 				array('users.id', 'user_id'), array('orgs.id', 'org_id'), array('orgs.name', 'org_name'),
@@ -464,8 +464,12 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 			->join('complevels', 'LEFT')->on('complevels.id','=','teams.complevels_id')
 			->join('seasons', 'LEFT')->on('seasons.id','=','teams.seasons_id')
 			->join('statvals', 'LEFT')->on('statvals.teams_id','=','teams.id')
-			->where('users.id','=',$this->id)
-			->group_by('teams.id');
+			->where('users.id','=',$this->id);
+		if ($sports_id){
+			$org_sport_link_obj->where('org_sport_link.sports_id', '=', $sports_id);
+		}
+
+		$org_sport_link_obj->group_by('teams.id');
 
 		$res = $org_sport_link_obj->execute();
 
@@ -493,11 +497,16 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 				'stats' => array(),
 			);
 		}
+		//Return null as result if not value
+		$std = new stdClass();
+		if (empty($orgs)){
+			$std->result = null;
+			return $std;
+		}
 
 		$orgs = Util::obj_arr_toggle($orgs);
-
-		return (object)$orgs;
-		
+		$std->result = (object)$orgs;
+		return $std;
 	}
 	
 	public function getSports()

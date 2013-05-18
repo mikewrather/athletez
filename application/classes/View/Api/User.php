@@ -83,7 +83,10 @@
 		 */
 		public function get_orgs()
 		{
-			$orgs_obj = $this->obj;
+			$orgs_obj = $this->obj->result;
+			if ($orgs_obj === null){
+				return null;
+			}
 			foreach($orgs_obj as $org_obj)
 			{
 				foreach($org_obj->teams as $team_obj)
