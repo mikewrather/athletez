@@ -88,8 +88,11 @@ class Model_Media_Video extends ORM
 				//Loop through results
 				foreach($primary as $media_id => $video)
 				{
+
 					$media_obj = ORM::factory("Media_Base", $media_id);
+
 					if ($sports_id){ //only get videos related to one sports_id
+
 						$combine_obj = new stdClass();
 						if ($media_obj->sports_id == $sports_id){
 							$video_type = $video->get_types_and_meta_as_array();

@@ -108,7 +108,13 @@
 			if((int)trim($this->request->query('sports_id')) > 0)
 			{
 				$sports_id = $arguments["sports_id"] = (int)trim($this->request->query('sports_id'));
-			}else{
+			}
+			elseif((int)trim($this->request->query('sport_id')) > 0)
+			{
+				$sports_id = $arguments["sports_id"] = (int)trim($this->request->query('sport_id'));
+			}
+			else
+			{
 				$sports_id = null;
 			}
 
@@ -152,7 +158,13 @@
 			if((int)trim($this->request->query('sports_id')) > 0)
 			{
 				$sports_id = $arguments["sports_id"] = (int)trim($this->request->query('sports_id'));
-			}else{
+			}
+			elseif((int)trim($this->request->query('sport_id')) > 0)
+			{
+				$sports_id = $arguments["sports_id"] = (int)trim($this->request->query('sport_id'));
+			}
+			else
+			{
 				$sports_id = null;
 			}
 
@@ -177,7 +189,13 @@
 			if((int)trim($this->request->query('sports_id')) > 0)
 			{
 				$sports_id = $arguments["sports_id"] = (int)trim($this->request->query('sports_id'));
-			}else{
+			}
+			elseif((int)trim($this->request->query('sport_id')) > 0)
+			{
+				$sports_id = $arguments["sports_id"] = (int)trim($this->request->query('sport_id'));
+			}
+			else
+			{
 				$sports_id = null;
 			}
 
