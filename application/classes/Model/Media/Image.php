@@ -370,4 +370,12 @@ class Model_Media_Image extends ORM
 
 	}
 
+	public static function getImageCounts($obj){
+		$enttype_id = Model_Site_Enttype::getMyEntTypeID($obj);
+		$subject_id = $obj->id;
+		$res = DB::select(array(DB::expr('COUNT(*)'), 'total_count'))->from('tags')
+			->where('subject_enttypes_id', '=', $enttype_id)
+			->where('subject_id', '=',$subject_id);
+		return $res->execute()->get('total_count');
+	}
 }
