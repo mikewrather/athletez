@@ -46110,3 +46110,7 @@ INSERT INTO `apiparams` (`apiaccess_id`, `param_name`, `param_type`, `param_req`
 INSERT INTO `apiaccess` (`entlist_id`, `api_method`, `shortname`, `description`) VALUES ('8', 'GET', 'comments', 'Game comments');
 -- team comments
 INSERT INTO `apiaccess` (`entlist_id`, `api_method`, `shortname`, `description`) VALUES ('5', 'GET', 'comments', 'Team comments');
+
+INSERT INTO `apiaccess` (`entlist_id`, `api_method`, `shortname`, `description`) VALUES ('5', 'GET', 'recent_schedules', 'Recent schedules');
+
+INSERT INTO `apiaccess` (`entlist_id`, `api_method`, `shortname`, `description`) VALUES ('5', 'GET', 'upcoming_schedules', 'Upcoming schedules');
