@@ -144,13 +144,27 @@
 		public function action_get_complevels()
 		{
 			$this->payloadDesc = "List of possible competition levels for this organization";
-
+			/*
 			if(!$this->mainModel->id)
 			{
 				$this->modelNotSetError();
 				return false;
 			}
+			*/
 			$args['id'] = $this->mainModel->id;
+			if((int)trim($this->request->query('sports_id')) > 0)
+			{
+				$args["sports_id"] = (int)trim($this->request->query('sports_id'));
+			}
+
+			if (!isset($args["sports_id"])){
+				$error_array = array(
+					"error" => "Sports id required",
+					"desc" => "Sports id required"
+				);
+				$this->modelNotSetError($error_array);
+				return false;
+			}
 			return $this->mainModel->getComplevels($args);
 		}
 		
@@ -162,13 +176,35 @@
 		public function action_get_seasons()
 		{
 			$this->payloadDesc = "List of all seasons this organization plays";
-
+			/*
 			if(!$this->mainModel->id)
 			{
 				$this->modelNotSetError();
 				return false;
 			}
+			*/
+
 			$args['id'] = $this->mainModel->id;
+			if((int)trim($this->request->query('sports_id')) > 0)
+			{
+				$args["sports_id"] = (int)trim($this->request->query('sports_id'));
+			}else{
+				$error_array = array(
+					"error" => "Sports id required",
+					"desc" => "Sports id required"
+				);
+				$this->modelNotSetError($error_array);
+				return false;
+			}
+
+			// complevels_id
+			// Complevels ID
+
+			if((int)trim($this->request->query('complevels_id')) > 0)
+			{
+				$args["complevels_id"] = (int)trim($this->request->query('complevels_id'));
+			}
+
 			return $this->mainModel->getSeasons($args);
 		}
 

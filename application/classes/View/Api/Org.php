@@ -80,17 +80,15 @@
 		 */
 		public function get_division()
 		{
-			$retArr = array();
+			$retArr = null;
 
 			// Scaffolding Code For Array:
 			$objs = $this->obj->find_all();
 			foreach($objs as $obj)
 			{
-				$retArr[$obj->id] = $obj->getBasics();
+				$retArr[] = $obj->getBasics();
 			}
-			if (empty($retArr)){
-				return null;
-			}
+
 			return $retArr;
 		}
 		
@@ -101,19 +99,14 @@
 		 */
 		public function get_sports()
 		{
-			$retArr = array();
+			$retArr = null;
 
 			// Scaffolding Code For Array:
 			$objs = $this->obj->find_all();
 			foreach($objs as $obj)
 			{
-				$retArr[$obj->id] = $obj->getBasics();
+				$retArr[] = $obj->getBasics();
 			}
-
-			if (empty($retArr)){
-				return null;
-			}
-
 			return $retArr;
 		}
 		
@@ -124,16 +117,14 @@
 		 */
 		public function get_complevels()
 		{
-			$retArr = array();
+			$retArr = null;
 			// Scaffolding Code For Array:
 			$objs = $this->obj->find_all();
 			foreach($objs as $obj)
 			{
-				$retArr[$obj->id] = $obj->getBasics();
+				$retArr[] = $obj->getBasics();
 			}
-			if (empty($retArr)){
-				return null;
-			}
+
 			return $retArr;
 		}
 		
@@ -144,33 +135,29 @@
 		 */
 		public function get_seasons()
 		{
-			$retArr = array();
+			$retArr = null;
 
 			// Scaffolding Code For Array:
 			$objs = $this->obj->find_all();
 			foreach($objs as $obj)
 			{
-				$retArr[$obj->id] = $obj->getBasics();
+				$retArr[] = $obj->getBasics();
 			}
-			if (empty($retArr)){
-				return null;
-			}
+
 			return $retArr;
 		}
 
 		public function get_search()
 		{
-			$retArr = array();
+			$retArr = null;
 
 			// Scaffolding Code For Array:
 			$objs = $this->obj->find_all();
 			foreach($objs as $obj)
 			{
-				$retArr[$obj->id] = $obj->getBasics();
+				$retArr[] = $obj->getBasics();
 			}
-			if (empty($retArr)){
-				return null;
-			}
+
 			return $retArr;
 		}
 
@@ -182,17 +169,15 @@
 		 */
 		public function get_section()
 		{
-			$retArr = array();
+			$retArr = null;
 
 			// Scaffolding Code For Array:
 			$objs = $this->obj->find_all();
 			foreach($objs as $obj)
 			{
-				$retArr[$obj->id] = $obj->getBasics();
+				$retArr[] = $obj->getBasics();
 			}
-			if (empty($retArr)){
-				return null;
-			}
+
 			return $retArr;
 		}
 		
