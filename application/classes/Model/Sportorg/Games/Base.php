@@ -136,6 +136,10 @@ class Model_Sportorg_Games_Base extends ORM
 		return $result_obj;
 	}
 
+	public function getComments(){
+		return Model_Site_Comment::getCommentsOn($this);
+	}
+
 	public function name()
 	{
 		$name = "";

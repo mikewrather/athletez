@@ -62,6 +62,16 @@
 			}
 			return $this->mainModel->getTeams();
 		}
+
+		public function action_get_comments(){
+			$this->payloadDesc = "All comments in the game";
+			if(!$this->mainModel->id)
+			{
+				$this->modelNotSetError();
+				return false;
+			}
+			return $this->mainModel->getComments();
+		}
 		
 		/**
 		 * action_get_location() Returns the location of a game

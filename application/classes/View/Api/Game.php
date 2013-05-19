@@ -110,6 +110,20 @@
 			return $retArr;
 		}
 
+		public function get_comments()
+		{
+			$retArr = null;
+
+			// Scaffolding Code For Array:
+			$objs = $this->obj->find_all();
+			foreach($objs as $obj)
+			{
+				$retArr[] = $obj->getBasics();
+			}
+
+			return $retArr;
+		}
+
 		/**
 		 * post_add() Add a new game
 		 *
