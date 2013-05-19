@@ -236,6 +236,7 @@ class Model_Sportorg_Team extends ORM
 	{
 		$title = "";
 		$title .= $this->getOrg()->name;
+		$title .= " ".$this->complevel->name;
 		$title .= " ".$this->getSport()->name;
 		$title .= " ".$this->season->name;
 		$title .= " ".$this->year;

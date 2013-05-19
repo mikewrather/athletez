@@ -97,7 +97,7 @@
 					$sArr = array();
 					foreach($schedule as $game)
 					{
-						if(is_object($game)) $sArr[] = Util::obj_arr_toggle($team->getBasics());
+						if(is_object($game)) $sArr[] = $game->getBasics();
 					}
 					$team_obj->schedules = $sArr;
 				}
