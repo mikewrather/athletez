@@ -46106,3 +46106,7 @@ INSERT INTO `votes` VALUES ('4', '19', '1229', '3', '2013-05-08 18:08:58');
 INSERT INTO `apiparams` (`apiaccess_id`, `param_name`, `param_type`, `param_req`, `description`) VALUES (17, 'sports_id', 'int', 0, 'Sports ID');
 INSERT INTO `apiparams` (`apiaccess_id`, `param_name`, `param_type`, `param_req`, `description`) VALUES (18, 'sports_id', 'int', 0, 'Sports ID');
 INSERT INTO `apiparams` (`apiaccess_id`, `param_name`, `param_type`, `param_req`, `description`) VALUES (18, 'complevels_id', 'int', 0, 'Complevels ID');
+-- game comments
+INSERT INTO `apiaccess` (`entlist_id`, `api_method`, `shortname`, `description`) VALUES ('8', 'GET', 'comments', 'Game comments');
+-- team comments
+INSERT INTO `apiaccess` (`entlist_id`, `api_method`, `shortname`, `description`) VALUES ('5', 'GET', 'comments', 'Team comments');
