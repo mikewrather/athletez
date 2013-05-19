@@ -392,20 +392,26 @@ class Model_Sportorg_Team extends ORM
 		{
 			$game_list_obj->limit($count);
 		}
-		
+		// Format as date
+		$gameDay = date("Y-m-d");
+
 		// if the user wanted to get the past games,
 		if( $past_games )
 		{
-			// Format as date
-			$gameDay = date("Y-m-d");
 			$game_list_obj
 				->and_where_open()
-				->where('gameDay','>',$gameDay)		
+				->where('gameDay','<',$gameDay)
 				->and_where_close();
-		}		
+		}else{
+			$game_list_obj
+				->and_where_open()
+				->where('gameDay','>',$gameDay)
+				->and_where_close();
+		}
 		$game_list_obj->where_close();
 
 		$games = $game_list_obj->find_all()->as_array();
+
 		return $games;
 
 	}

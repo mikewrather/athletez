@@ -189,6 +189,36 @@
 			}
 			return $this->mainModel->getComments();
 		}
+
+		public function action_get_recent_schedules()
+		{
+			$this->payloadDesc = "Recent schedule";
+			if(!$this->mainModel->id)
+			{
+				$this->modelNotSetError();
+				return false;
+			}
+			$std = new stdClass();
+			$std->result = $this->mainModel->getSchedule(10, true);
+
+			return $std;
+		}
+
+		public function action_get_upcoming_schedules()
+		{
+			$this->payloadDesc = "Upcoming schedule";
+			if(!$this->mainModel->id)
+			{
+				$this->modelNotSetError();
+				return false;
+			}
+			$std = new stdClass();
+			$std->result = $this->mainModel->getSchedule(10);
+
+			return $std;
+		}
+
+
 		
 		############################################################################
 		###########################    POST METHODS    #############################

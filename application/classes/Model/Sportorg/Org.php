@@ -171,17 +171,14 @@ class Model_Sportorg_Org extends ORM
 	public function getComplevels($args = array())
 	{
 		extract($args);
-		/*
-		$complevels_model = ORM::factory("Sportorg_Complevel_Base");
-		$complevels_model->join('orgs')->on('orgs.complevel_profiles_id', '=', 'sportorg_complevel_base.complevel_profiles_id');
-		$complevels_model->where('orgs.id', '=', $id);
-		return $complevels_model;
-		*/
+
 		$complevels_model = ORM::factory("Sportorg_Complevel_Base");
 		$complevels_model->join('teams')->on('teams.complevels_id', '=', 'sportorg_complevel_base.id');
 		$complevels_model->join('org_sport_link')->on('org_sport_link.id', '=', 'teams.org_sport_link_id');
-
-		$complevels_model->where('org_sport_link.sports_id', '=', $sports_id);
+		$complevels_model->join('orgs')->on('orgs.complevel_profiles_id', '=', 'sportorg_complevel_base.complevel_profiles_id');
+		$complevels_model->where('orgs.id', '=', $id);
+		if (isset($sports_id))
+			$complevels_model->where('org_sport_link.sports_id', '=', $sports_id);
 		return $complevels_model;
 	}
 	
@@ -204,7 +201,10 @@ class Model_Sportorg_Org extends ORM
 	{
 		extract($args);
 		$seasons_model = ORM::factory("Sportorg_Seasons_Base");
+		$seasons_model->join('orgs')->on('orgs.season_profiles_id', '=', 'sportorg_seasons_base.season_profiles_id');
 		$seasons_model->join('teams')->on('teams.seasons_id', '=', 'Sportorg_Seasons_Base.id');
+		$seasons_model->where('orgs.id', '=', $id);
+
 		if (isset($sports_id)){
 			$seasons_model->join('org_sport_link')->on('org_sport_link.id', '=', 'teams.org_sport_link_id');
 			$seasons_model->where('org_sport_link.sports_id', '=', $sports_id);

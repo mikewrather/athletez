@@ -104,6 +104,34 @@
 			return $retArr;
 		}
 
+		public function get_recent_schedules()
+		{
+			$retArr = null;
+
+			// Scaffolding Code For Array:
+			$objs = $this->obj->result;
+			foreach($objs as $obj)
+			{
+				$retArr[] = $obj->getBasics();
+			}
+
+			return $retArr;
+		}
+
+		public function get_upcoming_schedules()
+		{
+			$retArr = null;
+
+			// Scaffolding Code For Array:
+			$objs = $this->obj->result;
+			foreach($objs as $obj)
+			{
+				$retArr[] = $obj->getBasics();
+			}
+
+			return $retArr;
+		}
+
 		public function get_comments()
 		{
 			$retArr = null;
