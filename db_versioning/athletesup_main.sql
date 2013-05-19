@@ -46101,3 +46101,8 @@ INSERT INTO `votes` VALUES ('1', '19', '1229', '101', '2013-05-08 18:08:37');
 INSERT INTO `votes` VALUES ('2', '19', '1229', '1', '2013-05-08 18:08:37');
 INSERT INTO `votes` VALUES ('3', '19', '1229', '2', '2013-05-08 18:08:38');
 INSERT INTO `votes` VALUES ('4', '19', '1229', '3', '2013-05-08 18:08:58');
+
+--
+INSERT INTO `apiparams` (`apiaccess_id`, `param_name`, `param_type`, `param_req`, `description`) VALUES (17, 'sports_id', 'int', 0, 'Sports ID');
+INSERT INTO `apiparams` (`apiaccess_id`, `param_name`, `param_type`, `param_req`, `description`) VALUES (18, 'sports_id', 'int', 0, 'Sports ID');
+INSERT INTO `apiparams` (`apiaccess_id`, `param_name`, `param_type`, `param_req`, `description`) VALUES (18, 'complevels_id', 'int', 0, 'Complevels ID');
