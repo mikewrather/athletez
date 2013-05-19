@@ -190,7 +190,7 @@ class Model_Sportorg_Sport extends ORM
 		extract($args);
 
 		$athletes = $this->athletes;
-
+		$athletes->select(DB::expr("distinct(user_base.id) as id"));
 		$athletes->join('org_sport_link')->on('org_sport_link.sports_id', '=', 'user_sport_link.sports_id');
 
 		$athletes->join('positions')->on('positions.sports_id', '=', 'user_sport_link.sports_id');

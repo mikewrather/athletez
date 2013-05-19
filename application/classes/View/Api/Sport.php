@@ -188,6 +188,7 @@
 			foreach($objs as $obj)
 			{
 				$retArr[] = $obj->getBasics();
+				unset($obj);
 			}
 			return $retArr;
 		}
