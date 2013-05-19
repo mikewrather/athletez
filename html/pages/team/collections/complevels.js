@@ -15,8 +15,8 @@ function(facade, SportorgComplevelList, utils) {
         
         url: function() {
             if (testpath)
-                return testpath + '/team/complevels/' + this.id + '/' + this.sport_id;
-            return '/api/team/complevels/' + this.id + '?sport_id=' + this.sport_id;
+                return testpath + '/org/complevels/' + this.id + '/' + this.sport_id;
+            return '/api/org/complevels/' + this.id + '?sports_id=' + this.sport_id;
         }
 
     });

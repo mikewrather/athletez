@@ -91,7 +91,7 @@ define([
         
         createData: function () {
             this.basics = new TeamBasicsModel();
-            this.basics.id = '101';            
+            this.basics.id = '1';
             this.basics.fetch();
             this.id = this.basics.id;
             
