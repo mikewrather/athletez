@@ -551,4 +551,8 @@ class Model_Sportorg_Team extends ORM
 		}
 		return 0;
 	}
+
+	public function getComments(){
+		return Model_Site_Comment::getCommentsOn($this);
+	}
 }

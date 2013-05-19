@@ -179,6 +179,16 @@
 
 			return $teams_model->getSearch($arguments);
 		}
+
+		public function action_get_comments(){
+			$this->payloadDesc = "All comments in the team";
+			if(!$this->mainModel->id)
+			{
+				$this->modelNotSetError();
+				return false;
+			}
+			return $this->mainModel->getComments();
+		}
 		
 		############################################################################
 		###########################    POST METHODS    #############################
