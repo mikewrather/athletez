@@ -59,6 +59,27 @@ class Model_Sportorg_Games_Base extends ORM
 		);
 	}
 
+	public function getTeamRosters(){
+		$rosters = array();
+		$return_obj = new stdClass();
+
+		$results = null;
+		foreach($this->teams->find_all() as $team){
+			$std = new stdClass();
+
+			$std->team_id = $team->id;
+			$std->team_name = $team->name();
+			foreach($team->getRoster()->find_all() as $teamuser)
+			    $rosters[] = $teamuser->user->getBasics();
+			$std->rosters = $rosters;
+			$results[] = $std;
+			unset($std);
+		}
+
+		$return_obj->result = $results;
+		return $return_obj;
+	}
+
 	public function addGame($args = array()){
 		extract($args);
 

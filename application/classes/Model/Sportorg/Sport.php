@@ -236,6 +236,36 @@ class Model_Sportorg_Sport extends ORM
 		return $stattabs;
 	}
 
+	public function get_search($args = array()){
+		extract($args);
+
+		$sport_model = ORM::factory("Sportorg_Sport");
+		if(isset($sport_name)){
+			$sport_model->where('name', 'like', '%'.$sport_name.'%');
+		}
+
+		if(isset($orgs_id)){
+			$sport_model->join('org_sport_link');
+			$sport_model->on('org_sport_link.sports_id' ,'=', 'sportorg_sport.id');
+			$sport_model->where('org_sport_link.orgs_id', '=', $orgs_id);
+		}
+
+		if(isset($gender)){
+			if ($gender == 'm')
+				$sport_model->where('male', '=', 1);
+			if ($gender == 'f')
+				$sport_model->where('female', '=', 1);
+			else{
+				$sport_model->and_where_open();
+				$sport_model->or_where('female', '=', 1);
+				$sport_model->or_where('male', '=', 1);
+				$sport_model->and_where_close();
+			}
+		}
+
+		return $sport_model;
+	}
+
 	public function getVideos($args = array()){
 		$video_model = ORM::factory("Media_Video");
 		$video = $this->media;

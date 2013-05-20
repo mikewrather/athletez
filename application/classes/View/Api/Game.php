@@ -52,6 +52,10 @@
 
 			return $retArr;
 		}
+
+		public function get_teamrosters(){
+			return $this->obj->result;
+		}
 		
 		/**
 		 * get_matches() List of all matches within a given game

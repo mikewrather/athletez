@@ -121,6 +121,17 @@
 			$video_model = ORM::factory("Media_Video");
 			return $video_model->getTagedVideos($this->mainModel);
 		}
+
+		public function action_get_teamrosters(){
+			$this->payloadDesc = "Get all team rosters";
+			if(!$this->mainModel->id)
+			{
+				$this->modelNotSetError();
+				return false;
+			}
+
+			return $this->mainModel->getTeamRosters();
+		}
 		
 		/**
 		 * action_get_images() Get all images associated with a certain game

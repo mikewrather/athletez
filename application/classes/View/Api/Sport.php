@@ -174,6 +174,20 @@
 
 			return $retArr;
 		}
+
+		public function get_search()
+		{
+			$retArr = null;
+
+			// Scaffolding Code For Array:
+			$objs = $this->obj->find_all();
+			foreach($objs as $obj)
+			{
+				$retArr[] = $obj->getBasics();
+			}
+
+			return $retArr;
+		}
 		
 		/**
 		 * get_users() Gets all users for a given sport

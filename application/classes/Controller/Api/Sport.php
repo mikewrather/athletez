@@ -163,6 +163,54 @@
 
 
 		}
+
+		public function action_get_search()
+		{
+			$this->payloadDesc = "Used to auto-narrow a list of sports based on passed parameters and partial search strings.";
+			$arguments = array();
+			// CHECK FOR PARAMETERS:
+			// sport_name (REQUIRED)
+			// This string will search the beginning of the sport name.  Results will be provided after a single character is given.
+
+			if(trim($this->request->query('sport_name')) != "")
+			{
+				$arguments["sport_name"] = trim($this->request->query('sport_name'));
+			}
+			// gender
+			// This can be m/f or "user", which will use the gender of the logged in user (if available).
+
+			if(trim($this->request->query('gender')) != "")
+			{
+				$arguments["gender"] = strtolower(trim($this->request->query('gender')));
+				if (!in_array($arguments["gender"], array('f', 'm', 'all'))){
+					$error_array = array(
+						"error" => "Gender invalid",
+						"desc" => "Gender invalid"
+					);
+					$this->modelNotSetError($error_array);
+					return false;
+				}
+			}else{
+				$error_array = array(
+					"error" => "Gender required",
+					"desc" => "Gender required"
+				);
+				$this->modelNotSetError($error_array);
+				return false;
+			}
+
+			// orgs_id
+			// If the orgs_id is provided, the list of sports will be narrowed to those with rows in org_sport_link.
+
+			if((int)trim($this->request->query('orgs_id')) > 0)
+			{
+				$arguments["orgs_id"] = (int)trim($this->request->query('orgs_id'));
+			}
+
+			return $this->mainModel->get_search($arguments);
+
+
+		}
 		
 		/**
 		 * action_get_images() Images associated with a given sport
