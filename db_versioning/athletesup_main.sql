@@ -46114,3 +46114,5 @@ INSERT INTO `apiaccess` (`entlist_id`, `api_method`, `shortname`, `description`)
 INSERT INTO `apiaccess` (`entlist_id`, `api_method`, `shortname`, `description`) VALUES ('5', 'GET', 'recent_schedules', 'Recent schedules');
 
 INSERT INTO `apiaccess` (`entlist_id`, `api_method`, `shortname`, `description`) VALUES ('5', 'GET', 'upcoming_schedules', 'Upcoming schedules');
+
+INSERT INTO `apiaccess` (`entlist_id`, `api_method`, `shortname`, `description`) VALUES ('8', 'GET', 'teamrosters', 'Team rosters for a game');
