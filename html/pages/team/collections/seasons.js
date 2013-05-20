@@ -16,7 +16,7 @@ function(facade, SportorgSeasonList, utils) {
         url: function() {
             if (testpath)
                 return testpath + '/org/seasons/' + this.id + '/' + this.sport_id + '/' + this.complevel_id;
-            return '/api/team/ors/' + this.id + '?sports_id=' + this.sport_id + '&complevels_id=' + this.complevel_id;
+            return '/api/org/seasons/' + this.id + '?sports_id=' + this.sport_id + '&complevels_id=' + this.complevel_id;
         }
 
     });

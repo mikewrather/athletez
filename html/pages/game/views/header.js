@@ -26,7 +26,7 @@ function(require, gameHeaderTemplate) {
         
         initialize: function (options) {
             SectionView.prototype.initialize.call(this, options);                        
-        },
+        }
         
                 
     });

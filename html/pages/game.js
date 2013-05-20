@@ -81,7 +81,7 @@ define([
         
         createData: function () {
             this.basics = new GameBasicsModel();
-            this.basics.id = '425983';
+            this.basics.id = '1';
             this.basics.fetch();
             this.id = this.basics.id;
             

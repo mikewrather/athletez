@@ -3,20 +3,22 @@
 <div class="row-fluid">
     <div class="span4 textcenter">
         {{#game_picture}}
-        <img src="{{base_url}}{{game_picture}}" alt="{{game_name}}" />
+        <img src="{{game_picture}}" alt="{{game_name}}" />
         {{/game_picture}}
     </div>
-    <div class="span8">
+    <div class="span8" style="border: 1px solid red;">
         <div>
-            <h3 class="gametitle">{{game_name}}</h3>
+            <h3 class="gametitle">Game Name:{{game_name}}</h3>
             Date: {{game_day}} {{game_time}}<br/>
             Location: {{game_location}}<br/>
             Teams: <br/>
+			<ul>
             {{#teams}}
-                {{team_name}}<br/>
-                {{team_location}}<br/>
-                {{points_scored}}<br/>
-            {{/teams}}            
+				<li style="margin-top: 5px; background: #a9a9a9;">
+                Team Name:{{team_name}} - Location:{{team_location}} - Points scored:{{points_scored}}
+				</li>
+            {{/teams}}
+			</ul>
         </div>
     </div>
 </div>
