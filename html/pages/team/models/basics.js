@@ -11,7 +11,7 @@ define( ["facade", "sportorg/models/team"], function (facade, SportorgTeamModel)
     TeamBasicsModel = SportorgTeamModel.extend({
         
         url: function() {
-            if (testpath)
+	        if (testpath)
                 return testpath + '/team/basics/' + this.id;
             return '/api/team/basics/' + this.id;
         }

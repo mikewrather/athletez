@@ -14,7 +14,7 @@ function(facade, SportorgSportList, utils) {
     TeamSportList = SportorgSportList.extend({
         
         url: function() {
-            if (testpath)
+	        if (testpath)
                 return testpath + '/org/sports/' + this.id;
             return '/api/org/sports/' + this.id;
         }

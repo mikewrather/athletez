@@ -541,8 +541,7 @@ class Model_Sportorg_Team extends ORM
 	public function getImage(){
 		if($primary = Model_Media_Base::find_most_voted_tag($this,'image',1))
 		{
-				//$image_meta = $primary->get_meta_as_array();
-				return "b/c we removed image meta table,the value should be retrieved from image_type_link table";//$image_meta['url'];
+			return $primary->original_url;
 		}
 		return null;
 	}

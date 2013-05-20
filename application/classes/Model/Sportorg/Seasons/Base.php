@@ -91,9 +91,9 @@ class Model_Sportorg_Seasons_Base extends ORM
 	public function getBasics()
 	{
 		return array(
-			"id" => $this->id,
+			"season_id" => $this->id,
 			"seasonprofile" => $this->seasonprofile->getBasics(),			 
-			"name" => $this->name,
+			"season_name" => $this->name,
 			"season_profiles_id" => $this->season_profiles_id,
 		);
 	}
