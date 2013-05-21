@@ -133,4 +133,6 @@ class Model_Site_Tag extends Model_Site_Entdir
 			return invtal($user) == $this->owner();
 		}
 	}
+
+	public function name(){ return ""; }
 }

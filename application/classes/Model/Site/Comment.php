@@ -59,7 +59,7 @@ class Model_Site_Comment extends Model_Site_Entdir
 
 	public function addComment( $args = array()){
 		extract($args);
-		if(isset($comment))
+		if(isset($comment) && $comment != "")
 		{
 			$this->comment = $comment;
 		}
@@ -69,12 +69,12 @@ class Model_Site_Comment extends Model_Site_Entdir
 			$this->id = $id;
 		}
 
-		if(isset($subject_enttypes_id))
+		if(isset($subject_enttypes_id) && $subject_enttypes_id != "")
 		{
 			$this->subject_enttypes_id = $subject_enttypes_id;
 		}
 
-		if(isset($subject_id))
+		if(isset($subject_id) && $subject_id != "")
 		{
 			$this->subject_id = $subject_id;
 		}
@@ -90,7 +90,6 @@ class Model_Site_Comment extends Model_Site_Entdir
 		} catch(ORM_Validation_Exception $e){
 			return $e;
 		}
-
 	}
 
 	public static function getCommentsOn($ent)

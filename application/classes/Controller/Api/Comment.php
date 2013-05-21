@@ -221,7 +221,7 @@
 			$args['comment'] = $comment;
 			$args['subject_enttypes_id'] = $subject_type_id;
 			$args['subject_id'] = $subject_id;
-			$args['users_id'] = $this->user;
+			$args['users_id'] = $this->user->id;
 
 			$result =  $this->mainModel->addComment($args);
 

@@ -92,4 +92,6 @@ class Model_Site_Vote extends Model_Site_Entdir
 			return invtal($user) == $this->owner();
 		}
 	}
+
+	public function name(){ return ""; }
 }
