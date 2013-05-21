@@ -47,6 +47,24 @@ class Model_User_Identity extends ORM
 		parent::__construct($id);
 	}
 
+	public function find_by_identity($identity,$force_login=true,$provider='facebook')
+	{
+		$user_identity = $this->where('provider','=',$provider)->and_where('identity','=',$identity)->find();
+		if($user_identity->loaded())
+		{
+			$user = ORM::factory("User_Base", $user_identity->user_id);
 
+			if ($user->loaded() && $user->id == $user_identity->user_id && is_numeric($user->id))
+			{
+				if($force_login) Auth::instance()->force_login($user);
+				return $user;
+			}
+			else
+			{
+				return false;
+			}
+		}
+		return false;
+	}
 
 }

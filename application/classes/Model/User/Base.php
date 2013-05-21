@@ -289,7 +289,6 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 			$this->dob = $dob;
 		}
 
-//		print_r($args);
 		try {
 			$extra_validate = Validation::factory($args);
 			if ($email != ""){
@@ -308,6 +307,8 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 				$this->password = Auth::instance()->hash($password);
 				$this->create();
 			}
+
+			print_r($this);
 
 			return $this;
 		} catch(ORM_Validation_Exception $e){
@@ -727,6 +728,67 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 		return $this->first_name." ".$this->lastName();
 	}
 
+	public function addIdentity($uid,$provider)
+	{
+		if(!$this->loaded()) return false;
+		$user_identity = ORM::factory('User_Identity')
+			->where('provider','=',$provider)
+			->and_where('user_id','=',$this->id)
+			->find();
+
+		if($user_identity->loaded())
+		{
+			$user_identity->identity = $uid;
+			$user_identity->save();
+		}
+		else
+		{
+		//	DB::delete('user_identities')
+		//		->where('provider','=',$provider)
+		//		->and_where('identity','=',$uid)
+		//		->execute();
+
+			unset($user_identity);
+			$user_identity = ORM::factory('User_Identity');
+			$user_identity->provider = $provider;
+			$user_identity->identity = $uid;
+			$user_identity->user_id = $this->id;
+			$user_identity->save();
+		}
+		return $user_identity;
+	}
+
+	public function add_from_facebook($facebook)
+	{
+		if($this->loaded()) return false;
+
+		$args['firstname'] = $facebook['first_name'];
+		$args['lastname'] = $facebook['last_name'];
+	//	$args['username'] = $facebook['email'];
+		$args['email'] = $facebook['email'];
+		$args['gender'] = $facebook['gender']=="female" ? "F" : "M";
+		$args['dob'] = date('Y-m-d',strtotime($facebook['birthday']));
+		$args['password'] = $args['re_password'] = Text::random('alpha',16);
+
+		$result = $this->addRegister($args);
+
+		if(get_class($result) == get_class($this))
+		{
+			echo "SUCCESS";
+		}
+		else
+		{
+			echo "FAIL";
+		}
+
+		if($this->loaded())
+		{
+			$this->addIdentity($facebook['id'],'facebook');
+		}
+
+		return $result;
+	}
+
 	/** Modified by Jeffrey
 	 * @param $args
 	 * @return Model_User_Base|ORM_Validation_Exception
@@ -890,17 +952,17 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 		{
 			$this->dob = date('Y-m-d',strtotime($dob));
 		}
-//		print_r($args);
+
 		try {
 			$extra_validate = Validation::factory($args);
 			$extra_validate->rule('email','unique_email');
 			$extra_validate->rule('password','not_empty');
 			$extra_validate->rule('password','min_length', array(':value', 4));
-			$extra_validate->rule('password','max_length', array(':value', 8));
+			$extra_validate->rule('password','max_length', array(':value', 16));
 
 			$extra_validate->rule('re_password','not_empty');
 			$extra_validate->rule('re_password','min_length', array(':value', 4));
-			$extra_validate->rule('re_password','max_length', array(':value', 8));
+			$extra_validate->rule('re_password','max_length', array(':value', 16));
 			$extra_validate->rule('re_password','matches', array(':validation', ':field', 'password'));
 
 			$extra_validate->rule('gender', 'in_array', array(':value', array('M', 'F')));
@@ -920,9 +982,9 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 				//Auth::instance()->login($this->email,$password,TRUE);
 
 			}
-
 			return $this;
 		} catch(ORM_Validation_Exception $e){
+			echo "CALLED ERROR";
 			return $e;
 		}
 	}

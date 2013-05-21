@@ -98,7 +98,9 @@ class Kohana_FacebookAuth {
 
             throw new FacebookApiException('User is not logged in.');
         }
-        
+
+	    print_r($this->data);
+
         if(empty($this->data))
         {
             $fql_query = array(

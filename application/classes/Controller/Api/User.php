@@ -389,6 +389,7 @@
 		 */
 		public function action_post_fbreg()
 		{
+
 			$facebook = FacebookAuth::factory();
 
 		//	print_r($facebook);
@@ -414,7 +415,68 @@
 			}
 			else
 			{
-				//TODO: This should save the user here I think
+				if (isset($retArr['id']))
+				{
+					$this->populateAuthVars();
+					$user_identity = ORM::factory('User_Identity');
+
+					//Check if already logged in.  If so, we will link them up.
+					if($this->is_logged_in)
+					{
+						if($user = $user_identity->find_by_identity($retArr['id'],false))
+						{
+							if($user->id != $this->user->id)
+							{
+								// a user with this facebook identity already exists
+								// because this is the
+								//Error message array
+								$error_array = array(
+									"error" => "This Facebook account is already linked up with a different AthletesUp account than the one you're logged in to now.  Try logging out and logging back in using facebook."
+								);
+
+								// Set whether it is a fatal error
+								$is_fatal = true;
+
+								// Call method to throw an error
+								$this->addError($error_array,$is_fatal);
+
+								return false;
+							}
+						}
+						else
+						{
+							//relationship does not exist... add it
+							$this->user->addIdentity($retArr['id'],'facebook');
+						}
+
+					}
+					else
+					{
+
+						// check for user for this facebook identity and force a login
+						if(!$user = $user_identity->find_by_identity($retArr['id']))
+						{
+							// create a user here based on fb data
+							$user = ORM::factory('User_Base');
+							$result = $user->add_from_facebook($retArr);
+
+							//Check for success / error
+							if(get_class($result) == get_class($this->mainModel))
+							{
+								//	this indicates success
+								//  facebook data will be returned at the end of this method
+							}
+							elseif(get_class($result) == 'ORM_Validation_Exception')
+							{
+								//parse error and add to error array
+								$this->processValidationError($result,$this->mainModel->error_message_path);
+								return false;
+							}
+						}
+					}
+
+
+				}
 				return (object)$retArr;
 			}
 		}
