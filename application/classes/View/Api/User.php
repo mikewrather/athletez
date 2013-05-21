@@ -510,7 +510,7 @@
 		{
 		//	print_r($this->obj);
 			// Get user facebook task
-			$retArr =  $this->obj->get_user();
+			$retArr =  $this->obj;
 			return $retArr;
 		}
 

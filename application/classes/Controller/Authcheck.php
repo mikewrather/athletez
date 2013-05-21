@@ -17,10 +17,49 @@ class Controller_Authcheck extends AuthController
 	{
 		$this->populateAuthVars();
 
-		$retArr = array();
+		$facebook = FacebookAuth::factory();
+
+		//	print_r($facebook);
+		$retArr["facebook"] =  $facebook->get_user();
+
+		$facebook->extend_auth_token();
+
 		$retArr['authorized'] = $this->user ? true : false;
 
-		if(!$this->user) return $retArr;
+		if(!$this->user)
+		{
+			if (isset($retArr['facebook']['id']))
+			{
+				// check for previously connected user
+				$uid = $retArr['facebook']['id'];
+				$user_identity = ORM::factory('User_Identity')
+					->where('provider', '=', 'facebook')
+					->and_where('identity', '=', $uid)
+					->find();
+
+				if ($user_identity->loaded())
+				{
+
+					$user = ORM::factory("User_Base", $user_identity->user_id);
+
+					if ($user->loaded() && $user->id == $user_identity->user_id && is_numeric($user->id))
+					{
+						// found, log user in
+						Auth::instance()->force_login($user);
+					}
+				}
+				else
+				{
+					echo json_encode($retArr);
+					return;
+				}
+			}
+			else
+			{
+				echo json_encode($retArr);
+				return;
+			}
+		}
 
 		$retArr['id'] = $this->user->id;
 	//	$retArr['user_photo'] = $this->user->getAvatar();

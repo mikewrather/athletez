@@ -379,4 +379,9 @@ class Model_Media_Video extends ORM
 
 		return $retArr;
 	}
+
+	public function name()
+	{
+		return $this->media->name;
+	}
 }

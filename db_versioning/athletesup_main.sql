@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50525
 File Encoding         : 65001
 
-Date: 2013-05-17 19:36:48
+Date: 2013-05-21 00:42:16
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -44,7 +44,7 @@ CREATE TABLE `apiaccess` (
   `id2` varchar(25) CHARACTER SET latin1 COLLATE latin1_german1_ci DEFAULT NULL,
   `current_status` text,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=442 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=443 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of apiaccess
@@ -321,6 +321,7 @@ INSERT INTO `apiaccess` VALUES ('438', '21', 'GET', 'search', 'Search for images
 INSERT INTO `apiaccess` VALUES ('439', '23', 'GET', 'search', 'Search for videos', '0', null, null, null);
 INSERT INTO `apiaccess` VALUES ('440', '5', 'GET', 'search', 'Search for a team', '0', null, null, null);
 INSERT INTO `apiaccess` VALUES ('441', '8', 'GET', 'search', 'Search for a game based on several parameters', '0', null, null, null);
+INSERT INTO `apiaccess` VALUES ('442', '1', 'POST', 'addcomment', 'This will add a comment to the \"fanboard\" for this user\'s profile page.', '0', null, null, null);
 
 -- ----------------------------
 -- Table structure for `apiparams`
@@ -335,7 +336,7 @@ CREATE TABLE `apiparams` (
   `description` varchar(255) DEFAULT NULL,
   `enttypes_id` int(10) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=383 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=384 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of apiparams
@@ -704,6 +705,7 @@ INSERT INTO `apiparams` VALUES ('379', '27', 'sport_type_id', 'int', '0', 'Sport
 INSERT INTO `apiparams` VALUES ('380', '2', 'sport_id', 'int', '0', 'Sport ID', null);
 INSERT INTO `apiparams` VALUES ('381', '190', 'video_file', 'file', '0', 'File upload for video', null);
 INSERT INTO `apiparams` VALUES ('382', '189', 'image_file', 'file', '0', 'File for Image Upload', null);
+INSERT INTO `apiparams` VALUES ('383', '442', 'comment', 'string', '1', 'This is the actual comment being added to the user\'s fanboard.', '0');
 
 -- ----------------------------
 -- Table structure for `apitest`
@@ -31481,7 +31483,7 @@ CREATE TABLE `comments` (
   `comment` text NOT NULL,
   `timePosted` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of comments
@@ -31495,6 +31497,13 @@ INSERT INTO `comments` VALUES ('6', '1', '425983', '425983', 'Butt fg', '2013-05
 INSERT INTO `comments` VALUES ('7', '1', '425983', '425983', 'test', '2013-05-16 13:54:15');
 INSERT INTO `comments` VALUES ('8', '1', '425983', '101', 'test comment on user', '2013-05-16 13:54:14');
 INSERT INTO `comments` VALUES ('9', '1', '425983', '425984', 'Blah Blah Blah', '2013-05-06 22:27:21');
+INSERT INTO `comments` VALUES ('10', '1', '425983', '425983', 'asdfasdfasdf', '2013-05-18 00:53:18');
+INSERT INTO `comments` VALUES ('11', '1', '425983', '425983', 'a;sldkfja;sldkfja;lskdfja;lskdjf;alskdjf', '2013-05-18 00:59:14');
+INSERT INTO `comments` VALUES ('12', '1', '425983', '425983', 'asdf', '2013-05-18 01:01:26');
+INSERT INTO `comments` VALUES ('13', '1', '425983', '425983', 'asdf', '2013-05-18 01:24:23');
+INSERT INTO `comments` VALUES ('14', '1', '425983', '425983', 'asdfasdf', '2013-05-18 01:26:36');
+INSERT INTO `comments` VALUES ('15', '1', '425983', '425983', 'asdf', '2013-05-21 00:40:06');
+INSERT INTO `comments` VALUES ('16', '1', '425983', '425983', 'test', '2013-05-21 00:40:14');
 
 -- ----------------------------
 -- Table structure for `complevels`
@@ -35246,9 +35255,9 @@ CREATE TABLE `games_teams_link` (
 -- ----------------------------
 -- Records of games_teams_link
 -- ----------------------------
-INSERT INTO `games_teams_link` VALUES ('1', '1', null, null, null, null);
 INSERT INTO `games_teams_link` VALUES ('1', '2', null, null, null, null);
 INSERT INTO `games_teams_link` VALUES ('1', '3', null, null, null, null);
+INSERT INTO `games_teams_link` VALUES ('1', '6', null, null, null, null);
 INSERT INTO `games_teams_link` VALUES ('2', '1', null, null, null, null);
 INSERT INTO `games_teams_link` VALUES ('2', '2', null, null, null, null);
 INSERT INTO `games_teams_link` VALUES ('2', '3', null, null, null, null);
@@ -35257,14 +35266,10 @@ INSERT INTO `games_teams_link` VALUES ('3', '2', null, null, null, null);
 INSERT INTO `games_teams_link` VALUES ('3', '3', null, null, null, null);
 INSERT INTO `games_teams_link` VALUES ('4', '1', null, null, null, null);
 INSERT INTO `games_teams_link` VALUES ('4', '2', null, null, null, null);
-INSERT INTO `games_teams_link` VALUES ('4', '3', null, null, null, null);
 INSERT INTO `games_teams_link` VALUES ('5', '1', null, null, null, null);
-INSERT INTO `games_teams_link` VALUES ('5', '2', null, null, null, null);
 INSERT INTO `games_teams_link` VALUES ('5', '3', null, null, null, null);
-INSERT INTO `games_teams_link` VALUES ('6', '1', null, null, null, null);
 INSERT INTO `games_teams_link` VALUES ('6', '2', null, null, null, null);
 INSERT INTO `games_teams_link` VALUES ('6', '3', null, null, null, null);
-INSERT INTO `games_teams_link` VALUES ('7', '3', null, null, null, null);
 
 -- ----------------------------
 -- Table structure for `game_matches`
@@ -35345,7 +35350,7 @@ CREATE TABLE `images` (
   `original_size` int(11) DEFAULT NULL,
   `original_mime` varchar(20) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1269 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=1270 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of images
@@ -36618,6 +36623,7 @@ INSERT INTO `images` VALUES ('1265', '1298', null, 'http://athletesup.s3.amazona
 INSERT INTO `images` VALUES ('1266', '1299', null, 'http://athletesup.s3.amazonaws.com/upload/425983/5196e75d7d1d3/media.jpg', '1024', '1024', '170447', 'image/jpeg');
 INSERT INTO `images` VALUES ('1267', '1300', null, 'http://athletesup.s3.amazonaws.com/upload/425983/5196e829dbced/media.jpg', '1024', '1024', '170447', 'image/jpeg');
 INSERT INTO `images` VALUES ('1268', '1301', null, 'http://athletesup.s3.amazonaws.com/upload/425983/5196e8908960e/media.jpg', '1024', '1024', '170447', 'image/jpeg');
+INSERT INTO `images` VALUES ('1269', '1302', null, 'http://athletesup.s3.amazonaws.com/upload/425983/519731838417d/media.jpg', '3230', '500', '153085', 'image/jpeg');
 
 -- ----------------------------
 -- Table structure for `image_types`
@@ -36637,12 +36643,12 @@ CREATE TABLE `image_types` (
 -- ----------------------------
 -- Records of image_types
 -- ----------------------------
-INSERT INTO `image_types` VALUES ('1', 'Original Image', null, null, null, '100', '0');
-INSERT INTO `image_types` VALUES ('2', 'Large Format', 'jpg', '768', '1024', '75', '1');
-INSERT INTO `image_types` VALUES ('3', 'Smaller', 'jpg', '400', '400', '60', '1');
-INSERT INTO `image_types` VALUES ('4', 'Thumbnail', 'jpg', '200', '200', '50', '1');
-INSERT INTO `image_types` VALUES ('5', 'Tiny', 'jpg', '20', '20', '50', '1');
-INSERT INTO `image_types` VALUES ('6', 'Huge', 'jpg', null, '3000', '90', '1');
+INSERT INTO `image_types` VALUES ('1', 'original', null, null, null, '100', '0');
+INSERT INTO `image_types` VALUES ('2', 'large_format', 'jpg', '768', '1024', '75', '1');
+INSERT INTO `image_types` VALUES ('3', 'large_thumb', 'jpg', '400', '400', '60', '1');
+INSERT INTO `image_types` VALUES ('4', 'standard_thumb', 'jpg', '200', '200', '50', '1');
+INSERT INTO `image_types` VALUES ('5', 'small_thumb', 'jpg', '30', '30', '50', '1');
+INSERT INTO `image_types` VALUES ('6', 'huge', 'jpg', null, '3000', '90', '1');
 
 -- ----------------------------
 -- Table structure for `image_type_link`
@@ -36658,7 +36664,7 @@ CREATE TABLE `image_type_link` (
   `file_size_bytes` int(11) DEFAULT NULL,
   `mime` varchar(20) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1342 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB AUTO_INCREMENT=1347 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
 
 -- ----------------------------
 -- Records of image_type_link
@@ -37989,6 +37995,11 @@ INSERT INTO `image_type_link` VALUES ('1338', '1268', '3', 'http://athletesup.s3
 INSERT INTO `image_type_link` VALUES ('1339', '1268', '4', 'http://athletesup.s3.amazonaws.com/upload/425983/5196e894065b4/media.jpg', '200', '200', '4955', 'image/jpeg');
 INSERT INTO `image_type_link` VALUES ('1340', '1268', '5', 'http://athletesup.s3.amazonaws.com/upload/425983/5196e8945fc30/media.jpg', '20', '20', '780', 'image/jpeg');
 INSERT INTO `image_type_link` VALUES ('1341', '1268', '6', 'http://athletesup.s3.amazonaws.com/upload/425983/5196e894bb8aa/media.jpg', '1024', '1024', '194568', 'image/jpeg');
+INSERT INTO `image_type_link` VALUES ('1342', '1269', '2', 'http://athletesup.s3.amazonaws.com/upload/425983/51973185201ab/media.jpg', '1024', '159', '18965', 'image/jpeg');
+INSERT INTO `image_type_link` VALUES ('1343', '1269', '3', 'http://athletesup.s3.amazonaws.com/upload/425983/51973185b9c32/media.jpg', '400', '62', '4488', 'image/jpeg');
+INSERT INTO `image_type_link` VALUES ('1344', '1269', '4', 'http://athletesup.s3.amazonaws.com/upload/425983/5197318629ea7/media.jpg', '200', '31', '1803', 'image/jpeg');
+INSERT INTO `image_type_link` VALUES ('1345', '1269', '5', 'http://athletesup.s3.amazonaws.com/upload/425983/519731868028e/media.jpg', '20', '3', '721', 'image/jpeg');
+INSERT INTO `image_type_link` VALUES ('1346', '1269', '6', 'http://athletesup.s3.amazonaws.com/upload/425983/519731874c194/media.jpg', '3000', '464', '114566', 'image/jpeg');
 
 -- ----------------------------
 -- Table structure for `leagues`
@@ -38055,15 +38066,15 @@ CREATE TABLE `media` (
   `sports_id` int(11) DEFAULT NULL,
   `timePosted` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1302 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=1303 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of media
 -- ----------------------------
-INSERT INTO `media` VALUES ('1', '', '424494', 'image', null, null);
-INSERT INTO `media` VALUES ('2', '', '424495', 'image', null, null);
-INSERT INTO `media` VALUES ('3', '', '424496', 'image', null, null);
-INSERT INTO `media` VALUES ('4', '', '424497', 'image', null, null);
+INSERT INTO `media` VALUES ('1', '', '425983', 'image', '46', null);
+INSERT INTO `media` VALUES ('2', '', '425983', 'image', '46', null);
+INSERT INTO `media` VALUES ('3', '', '425983', 'image', '46', null);
+INSERT INTO `media` VALUES ('4', '', '425983', 'image', '46', null);
 INSERT INTO `media` VALUES ('5', '', '424498', 'image', null, null);
 INSERT INTO `media` VALUES ('6', '', '424499', 'image', null, null);
 INSERT INTO `media` VALUES ('7', '', '424500', 'image', null, null);
@@ -39280,19 +39291,19 @@ INSERT INTO `media` VALUES ('1217', '', '426128', 'image', null, null);
 INSERT INTO `media` VALUES ('1218', '', '426128', 'image', null, null);
 INSERT INTO `media` VALUES ('1219', '', '426129', 'image', null, null);
 INSERT INTO `media` VALUES ('1220', '', '425998', 'image', null, null);
-INSERT INTO `media` VALUES ('1226', 'Look at #13 in Red- Adrian Butler with AAU Team', '425662', 'video', '47', null);
-INSERT INTO `media` VALUES ('1227', 'Marcus Floyd Sophomore Highlights Bryan Station', '425615', 'video', '49', null);
-INSERT INTO `media` VALUES ('1228', 'Freshmen Year Highlights', '425720', 'video', '49', null);
-INSERT INTO `media` VALUES ('1229', 'Kellen\'s 2012 Football Highlights', '425090', 'video', '49', null);
-INSERT INTO `media` VALUES ('1230', 'Aaron Welch #41 Rb/Fb', '424621', 'video', '49', null);
-INSERT INTO `media` VALUES ('1231', '#72 Sophomore Highlights Defense and Offense', '425771', 'video', '49', null);
-INSERT INTO `media` VALUES ('1232', 'Jalen Jackson Junior Year Highlights', '425504', 'video', '49', null);
-INSERT INTO `media` VALUES ('1233', 'LaKedric Lee Junior Highlights', '425823', 'video', '49', null);
-INSERT INTO `media` VALUES ('1234', ' junior year highlights', '424813', 'video', '45', null);
-INSERT INTO `media` VALUES ('1235', 'junior year highlights', '424813', 'video', '45', null);
-INSERT INTO `media` VALUES ('1236', 'hightlight', '425838', 'video', '49', null);
-INSERT INTO `media` VALUES ('1237', 'Taylor McCartney #27 Pennsbury vs Bishop Shanhan-ATTACKS', '425109', 'video', '75', null);
-INSERT INTO `media` VALUES ('1238', 'Taylor McCartney #22 Infinity VB Club 17 Blue MLK Classic- Attacks', '425109', 'video', '75', null);
+INSERT INTO `media` VALUES ('1226', 'Look at #13 in Red- Adrian Butler with AAU Team', '425662', 'video', '46', null);
+INSERT INTO `media` VALUES ('1227', 'Marcus Floyd Sophomore Highlights Bryan Station', '425615', 'video', '46', null);
+INSERT INTO `media` VALUES ('1228', 'Freshmen Year Highlights', '425720', 'video', '46', null);
+INSERT INTO `media` VALUES ('1229', 'Kellen\'s 2012 Football Highlights', '425090', 'video', '46', null);
+INSERT INTO `media` VALUES ('1230', 'Aaron Welch #41 Rb/Fb', '424621', 'video', '46', null);
+INSERT INTO `media` VALUES ('1231', '#72 Sophomore Highlights Defense and Offense', '425771', 'video', '46', null);
+INSERT INTO `media` VALUES ('1232', 'Jalen Jackson Junior Year Highlights', '425504', 'video', '46', null);
+INSERT INTO `media` VALUES ('1233', 'LaKedric Lee Junior Highlights', '425823', 'video', '46', null);
+INSERT INTO `media` VALUES ('1234', ' junior year highlights', '424813', 'video', '46', null);
+INSERT INTO `media` VALUES ('1235', 'junior year highlights', '424813', 'video', '46', null);
+INSERT INTO `media` VALUES ('1236', 'hightlight', '425838', 'video', '46', null);
+INSERT INTO `media` VALUES ('1237', 'Taylor McCartney #27 Pennsbury vs Bishop Shanhan-ATTACKS', '425109', 'video', '46', null);
+INSERT INTO `media` VALUES ('1238', 'Taylor McCartney #22 Infinity VB Club 17 Blue MLK Classic- Attacks', '425109', 'video', '46', null);
 INSERT INTO `media` VALUES ('1239', 'Jay Scroggins QB/LB highlight video ', '425865', 'video', '49', null);
 INSERT INTO `media` VALUES ('1240', 'Shawn Antoine II Class of 2014 Defensive Back Cardinal Hayes Junior highlights ', '425811', 'video', '45', null);
 INSERT INTO `media` VALUES ('1241', 'Taylor McCartney Skills Video', '425109', 'video', '75', null);
@@ -39350,12 +39361,13 @@ INSERT INTO `media` VALUES ('1292', 'asdf', null, 'image', '46', '2013-05-17 18:
 INSERT INTO `media` VALUES ('1293', 'asdf', null, 'image', '46', '2013-05-17 18:48:18');
 INSERT INTO `media` VALUES ('1294', 'asdf', null, 'image', '46', '2013-05-17 18:48:50');
 INSERT INTO `media` VALUES ('1295', 'asdf', null, 'image', '46', '2013-05-17 18:55:56');
-INSERT INTO `media` VALUES ('1296', 'asdfasdf', null, 'image', '52', '2013-05-17 19:24:14');
-INSERT INTO `media` VALUES ('1297', 'asdfasdf', null, 'image', '52', '2013-05-17 19:24:28');
-INSERT INTO `media` VALUES ('1298', '234', null, 'image', '50', '2013-05-17 19:26:38');
-INSERT INTO `media` VALUES ('1299', 'asdf', null, 'image', '48', '2013-05-17 19:28:45');
-INSERT INTO `media` VALUES ('1300', 'asdf', null, 'image', '48', '2013-05-17 19:32:09');
-INSERT INTO `media` VALUES ('1301', 'asdf', null, 'image', '48', '2013-05-17 19:33:52');
+INSERT INTO `media` VALUES ('1296', 'asdfasdf', null, 'image', '46', '2013-05-17 19:24:14');
+INSERT INTO `media` VALUES ('1297', 'asdfasdf', null, 'image', '46', '2013-05-17 19:24:28');
+INSERT INTO `media` VALUES ('1298', '234', null, 'image', '46', '2013-05-17 19:26:38');
+INSERT INTO `media` VALUES ('1299', 'asdf', null, 'image', '46', '2013-05-17 19:28:45');
+INSERT INTO `media` VALUES ('1300', 'asdf', null, 'image', '46', '2013-05-17 19:32:09');
+INSERT INTO `media` VALUES ('1301', 'asdf', null, 'image', '46', '2013-05-17 19:33:52');
+INSERT INTO `media` VALUES ('1302', 'asdf', '425983', 'image', '46', '2013-05-18 00:45:07');
 
 -- ----------------------------
 -- Table structure for `orgs`
@@ -42036,7 +42048,7 @@ CREATE TABLE `tags` (
   `users_id` int(11) DEFAULT NULL,
   `timePosted` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of tags
@@ -42049,6 +42061,10 @@ INSERT INTO `tags` VALUES ('6', '1228', '5', '3', null, '2013-05-08 23:32:54');
 INSERT INTO `tags` VALUES ('7', '1227', '5', '3', '101', '2013-05-16 13:25:32');
 INSERT INTO `tags` VALUES ('8', '1227', '1', '425983', null, '2013-05-16 13:31:46');
 INSERT INTO `tags` VALUES ('9', '1228', '1', '425983', null, '2013-05-16 13:38:47');
+INSERT INTO `tags` VALUES ('10', '1302', '1', '425983', null, '2013-05-18 02:10:58');
+INSERT INTO `tags` VALUES ('11', '1301', '1', '425983', null, '2013-05-18 02:11:01');
+INSERT INTO `tags` VALUES ('12', '1300', '1', '425983', null, '2013-05-18 02:11:05');
+INSERT INTO `tags` VALUES ('13', '1299', '1', '425983', null, '2013-05-18 02:11:11');
 
 -- ----------------------------
 -- Table structure for `teams`
@@ -42069,10 +42085,9 @@ CREATE TABLE `teams` (
 -- Records of teams
 -- ----------------------------
 INSERT INTO `teams` VALUES ('1', '1', '1', '1', '2013', 'Nothing', null);
-INSERT INTO `teams` VALUES ('2', '2', '2', '1', null, null, null);
-INSERT INTO `teams` VALUES ('3', null, null, null, null, null, null);
-INSERT INTO `teams` VALUES ('4', '2', '1', '1', null, null, null);
-INSERT INTO `teams` VALUES ('5', '2', '1', '1', null, null, null);
+INSERT INTO `teams` VALUES ('2', '2', '2', '1', '2013', null, null);
+INSERT INTO `teams` VALUES ('4', '2', '1', '1', '2013', null, null);
+INSERT INTO `teams` VALUES ('5', '2', '1', '1', '2013', null, null);
 INSERT INTO `teams` VALUES ('6', '8', '2', '1', '2013', null, null);
 INSERT INTO `teams` VALUES ('7', '9', '2', '1', '2013', null, null);
 
@@ -42107,7 +42122,7 @@ CREATE TABLE `users` (
 -- Records of users
 -- ----------------------------
 INSERT INTO `users` VALUES ('1', 'kamil.symanski@gmail.com_', 'kamil', '896850b3f3929cbeff81d0ff8c98bee1931d42505d782915974c015472fca4cc', '2', '1362780207', null, null, null, null, null, null, null, null, null, null, null);
-INSERT INTO `users` VALUES ('101', 'mike@testStuff.com', 'mike@testStuff.com', '896850b3f3929cbeff81d0ff8c98bee1931d42505d782915974c015472fca4cc', '0', null, 'Mike', 'Wrather', '2462', null, null, null, null, null, null, null, null);
+INSERT INTO `users` VALUES ('101', 'mike@testStuff.com', 'mike@testStuff.com', '896850b3f3929cbeff81d0ff8c98bee1931d42505d782915974c015472fca4cc', '0', null, 'Ted', 'Wrather', '2462', null, null, null, null, null, null, null, null);
 INSERT INTO `users` VALUES ('424322', 'max@dhjpartnersllc.com_', 'max@dhjpartnersllc.com', '5893122cf860f9093416f88beef8a394d6c860fcc51c10f216', '1144', '1362492159', 'Maxwell', 'Doyle', '16152', null, null, '1987-12-27', '65', '210', '2005', null, null);
 INSERT INTO `users` VALUES ('424490', 'mike.wrather_@gmail.com_', 'administrator', 'cf243078a5968a55e257f052e7264f77c8c269fa7feb0f5a67', '130', '1361876933', 'Admin', 'Jones', '404', null, null, null, null, null, null, null, null);
 INSERT INTO `users` VALUES ('424494', 'shawnbranch1@aol.com_', 'shawnbranch1@aol.com', '100a529361a50190e328d2f8ed61eb5e2ba54b90acd5fbd820', '8', '1341470254', 'Shawn', 'Branch', '17086', null, null, null, null, null, null, null, null);
@@ -43527,7 +43542,7 @@ INSERT INTO `users` VALUES ('425979', 'clay_gorham@yahoo.com_', 'clay_gorham@yah
 INSERT INTO `users` VALUES ('425980', 'cavellobrick@yahoo.com_', 'pete.cavello', 'd5d845c15751d7bda5d9101d28fbcc13e22cba20c06e057132', '1', '1362980726', 'Pete', 'Cavello', '1771', null, null, null, null, null, null, null, null);
 INSERT INTO `users` VALUES ('425981', 'treythornburg@gmail.com_', 'treythornburg@gmail.com', '8e720bbf5b8e4e4587e627e599f79741f68ac2e3a9ed470260', '1', '1363024849', 'Trey', 'Thornburg', '0', null, null, null, null, null, null, null, null);
 INSERT INTO `users` VALUES ('425982', 'nicolette.elliott@yahoo.com_', 'nicolette.elliott@yahoo.com', '9cc3931c59b143ab87bece75e1d280cb3d1033e4d2a5b8f375', '1', '1363064186', 'Nicolette Amber', 'Elliott', '2462', null, null, null, null, null, null, null, null);
-INSERT INTO `users` VALUES ('425983', 'mike.wrather@gmail.com', 'mike', '896850b3f3929cbeff81d0ff8c98bee1931d42505d782915974c015472fca4cc', '2', '1368774224', 'Mike', 'Wrather', null, null, null, '2013-05-19', '72', '190', '2014', null, '100');
+INSERT INTO `users` VALUES ('425983', 'mike.wrather@gmail.com', 'mike', '896850b3f3929cbeff81d0ff8c98bee1931d42505d782915974c015472fca4cc', '2', '1369116651', 'Mike', 'Wrather', null, null, null, '2013-05-19', '72', '190', '2014', null, '100');
 INSERT INTO `users` VALUES ('425984', 'admin@mail.com', 'admin', '896850b3f3929cbeff81d0ff8c98bee1931d42505d782915974c015472fca4cc', '0', '1367963355', 'Mike', 'Wrather', null, null, null, null, null, null, null, null, null);
 INSERT INTO `users` VALUES ('425985', 'jack@word.com', '', '896850b3f3929cbeff81d0ff8c98bee1931d42505d782915974c015472fca4cc', '0', null, 'Jack', 'Brock', null, null, null, null, null, null, null, null, null);
 INSERT INTO `users` VALUES ('425987', 'mike@poopyfartface.com', 'mike@poopyfartface.com', '555156e5fddaa4461ff439c27d0989a1c0062552829a89997aa34988c02118a0', '0', null, 'Mike', 'Wrather', null, null, null, null, null, null, null, null, null);
@@ -43582,139 +43597,12 @@ CREATE TABLE `user_identities` (
   `provider` varchar(255) NOT NULL,
   `identity` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=152 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=200 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of user_identities
 -- ----------------------------
-INSERT INTO `user_identities` VALUES ('24', '424552', 'facebook', '100001446657956');
-INSERT INTO `user_identities` VALUES ('25', '424322', 'facebook', '3430619');
-INSERT INTO `user_identities` VALUES ('26', '424571', 'facebook', '100000161830160');
-INSERT INTO `user_identities` VALUES ('27', '425039', 'facebook', '1337423614');
-INSERT INTO `user_identities` VALUES ('28', '424589', 'facebook', '100002439451628');
-INSERT INTO `user_identities` VALUES ('29', '424647', 'facebook', '100003302619971');
-INSERT INTO `user_identities` VALUES ('30', '424596', 'facebook', '100004057517859');
-INSERT INTO `user_identities` VALUES ('31', '424599', 'facebook', '100004052312383');
-INSERT INTO `user_identities` VALUES ('32', '424601', 'facebook', '100001883415479');
-INSERT INTO `user_identities` VALUES ('33', '424521', 'facebook', '100000714818167');
-INSERT INTO `user_identities` VALUES ('34', '424607', 'facebook', '100002023249569');
-INSERT INTO `user_identities` VALUES ('35', '424610', 'facebook', '1567544712');
-INSERT INTO `user_identities` VALUES ('36', '424611', 'facebook', '1477990691');
-INSERT INTO `user_identities` VALUES ('37', '424628', 'facebook', '100000481086437');
-INSERT INTO `user_identities` VALUES ('38', '424639', 'facebook', '100000577002344');
-INSERT INTO `user_identities` VALUES ('39', '424667', 'facebook', '100000254529657');
-INSERT INTO `user_identities` VALUES ('40', '424683', 'facebook', '100000107513786');
-INSERT INTO `user_identities` VALUES ('41', '424688', 'facebook', '100001413171219');
-INSERT INTO `user_identities` VALUES ('42', '424695', 'facebook', '100001042643820');
-INSERT INTO `user_identities` VALUES ('43', '424708', 'facebook', '100000012171948');
-INSERT INTO `user_identities` VALUES ('44', '424709', 'facebook', '1824430772');
-INSERT INTO `user_identities` VALUES ('45', '424715', 'facebook', '1410341053');
-INSERT INTO `user_identities` VALUES ('46', '424718', 'facebook', '100000150590377');
-INSERT INTO `user_identities` VALUES ('47', '424721', 'facebook', '1745202545');
-INSERT INTO `user_identities` VALUES ('48', '424723', 'facebook', '100002527849715');
-INSERT INTO `user_identities` VALUES ('49', '424729', 'facebook', '100001784482861');
-INSERT INTO `user_identities` VALUES ('50', '424730', 'facebook', '100001644504323');
-INSERT INTO `user_identities` VALUES ('51', '424731', 'facebook', '100001872970182');
-INSERT INTO `user_identities` VALUES ('52', '424743', 'facebook', '100001813051978');
-INSERT INTO `user_identities` VALUES ('53', '424751', 'facebook', '100001292870973');
-INSERT INTO `user_identities` VALUES ('54', '424753', 'facebook', '1079014694');
-INSERT INTO `user_identities` VALUES ('55', '424759', 'facebook', '100000545239109');
-INSERT INTO `user_identities` VALUES ('56', '424763', 'facebook', '100000995945190');
-INSERT INTO `user_identities` VALUES ('57', '424825', 'facebook', '100002457484451');
-INSERT INTO `user_identities` VALUES ('58', '424770', 'facebook', '100001302785359');
-INSERT INTO `user_identities` VALUES ('59', '424784', 'facebook', '100002464493212');
-INSERT INTO `user_identities` VALUES ('60', '424787', 'facebook', '100003140160132');
-INSERT INTO `user_identities` VALUES ('61', '424795', 'facebook', '100000183953706');
-INSERT INTO `user_identities` VALUES ('62', '424797', 'facebook', '100000762650010');
-INSERT INTO `user_identities` VALUES ('63', '424804', 'facebook', '1259929063');
-INSERT INTO `user_identities` VALUES ('64', '424808', 'facebook', '593837385');
-INSERT INTO `user_identities` VALUES ('65', '424811', 'facebook', '100003365769710');
-INSERT INTO `user_identities` VALUES ('66', '424817', 'facebook', '100002713897674');
-INSERT INTO `user_identities` VALUES ('67', '424850', 'facebook', '747598386');
-INSERT INTO `user_identities` VALUES ('68', '424883', 'facebook', '100002107746344');
-INSERT INTO `user_identities` VALUES ('69', '425059', 'facebook', '100004436970626');
-INSERT INTO `user_identities` VALUES ('70', '424911', 'facebook', '100000629872987');
-INSERT INTO `user_identities` VALUES ('71', '424940', 'facebook', '100002605932128');
-INSERT INTO `user_identities` VALUES ('72', '424855', 'facebook', '1096887905');
-INSERT INTO `user_identities` VALUES ('73', '424966', 'facebook', '100001238079078');
-INSERT INTO `user_identities` VALUES ('74', '424969', 'facebook', '100002422611914');
-INSERT INTO `user_identities` VALUES ('75', '424983', 'facebook', '100001600504931');
-INSERT INTO `user_identities` VALUES ('76', '425002', 'facebook', '100001642247206');
-INSERT INTO `user_identities` VALUES ('77', '425004', 'facebook', '100001375580390');
-INSERT INTO `user_identities` VALUES ('78', '425008', 'facebook', '100001732557360');
-INSERT INTO `user_identities` VALUES ('79', '425752', 'facebook', '641244973');
-INSERT INTO `user_identities` VALUES ('80', '425058', 'facebook', '100004404283580');
-INSERT INTO `user_identities` VALUES ('81', '425078', 'facebook', '646360187');
-INSERT INTO `user_identities` VALUES ('82', '425086', 'facebook', '100000467718257');
-INSERT INTO `user_identities` VALUES ('83', '425092', 'facebook', '100000188475753');
-INSERT INTO `user_identities` VALUES ('84', '425101', 'facebook', '100004121490940');
-INSERT INTO `user_identities` VALUES ('85', '425106', 'facebook', '100001250269701');
-INSERT INTO `user_identities` VALUES ('86', '425107', 'facebook', '100000135906739');
-INSERT INTO `user_identities` VALUES ('87', '425051', 'facebook', '100004503339017');
-INSERT INTO `user_identities` VALUES ('88', '425129', 'facebook', '631752916');
-INSERT INTO `user_identities` VALUES ('89', '425148', 'facebook', '1333724860');
-INSERT INTO `user_identities` VALUES ('90', '425169', 'facebook', '100001723696348');
-INSERT INTO `user_identities` VALUES ('91', '425189', 'facebook', '100000330919744');
-INSERT INTO `user_identities` VALUES ('92', '425205', 'facebook', '100000832912204');
-INSERT INTO `user_identities` VALUES ('93', '425224', 'facebook', '644744789');
-INSERT INTO `user_identities` VALUES ('94', '425232', 'facebook', '100004506633491');
-INSERT INTO `user_identities` VALUES ('95', '425235', 'facebook', '49407040');
-INSERT INTO `user_identities` VALUES ('96', '425253', 'facebook', '100001622444047');
-INSERT INTO `user_identities` VALUES ('97', '425271', 'facebook', '100000170162980');
-INSERT INTO `user_identities` VALUES ('98', '425274', 'facebook', '709199020');
-INSERT INTO `user_identities` VALUES ('99', '425275', 'facebook', '100000634654847');
-INSERT INTO `user_identities` VALUES ('100', '425289', 'facebook', '100001423803945');
-INSERT INTO `user_identities` VALUES ('101', '425303', 'facebook', '100000031260314');
-INSERT INTO `user_identities` VALUES ('102', '425328', 'facebook', '100001024540346');
-INSERT INTO `user_identities` VALUES ('103', '425333', 'facebook', '100000638523629');
-INSERT INTO `user_identities` VALUES ('104', '425342', 'facebook', '100001189202170');
-INSERT INTO `user_identities` VALUES ('105', '425352', 'facebook', '1737712586');
-INSERT INTO `user_identities` VALUES ('106', '425110', 'facebook', '100000189979338');
-INSERT INTO `user_identities` VALUES ('107', '425383', 'facebook', '100000103016522');
-INSERT INTO `user_identities` VALUES ('108', '425394', 'facebook', '100001642126857');
-INSERT INTO `user_identities` VALUES ('109', '425410', 'facebook', '100001257237905');
-INSERT INTO `user_identities` VALUES ('110', '425414', 'facebook', '100001343038740');
-INSERT INTO `user_identities` VALUES ('111', '425442', 'facebook', '100001532961710');
-INSERT INTO `user_identities` VALUES ('112', '425445', 'facebook', '100000445453845');
-INSERT INTO `user_identities` VALUES ('113', '425449', 'facebook', '1406537751');
-INSERT INTO `user_identities` VALUES ('114', '425451', 'facebook', '100001491890617');
-INSERT INTO `user_identities` VALUES ('115', '425284', 'facebook', '100002677629249');
-INSERT INTO `user_identities` VALUES ('116', '425499', 'facebook', '100000850626761');
-INSERT INTO `user_identities` VALUES ('117', '425513', 'facebook', '100002365836530');
-INSERT INTO `user_identities` VALUES ('118', '425519', 'facebook', '100000719582613');
-INSERT INTO `user_identities` VALUES ('119', '425539', 'facebook', '100000886494883');
-INSERT INTO `user_identities` VALUES ('120', '425548', 'facebook', '100000018655437');
-INSERT INTO `user_identities` VALUES ('121', '425550', 'facebook', '100002232080865');
-INSERT INTO `user_identities` VALUES ('122', '425571', 'facebook', '100002422193540');
-INSERT INTO `user_identities` VALUES ('123', '425573', 'facebook', '100001285753296');
-INSERT INTO `user_identities` VALUES ('124', '425585', 'facebook', '545258477');
-INSERT INTO `user_identities` VALUES ('125', '425602', 'facebook', '652256240');
-INSERT INTO `user_identities` VALUES ('126', '425603', 'facebook', '100000493384977');
-INSERT INTO `user_identities` VALUES ('127', '425614', 'facebook', '1194637493');
-INSERT INTO `user_identities` VALUES ('128', '425615', 'facebook', '100003810583192');
-INSERT INTO `user_identities` VALUES ('129', '425619', 'facebook', '100001237231972');
-INSERT INTO `user_identities` VALUES ('130', '425638', 'facebook', '1596916912');
-INSERT INTO `user_identities` VALUES ('131', '425656', 'facebook', '519929232');
-INSERT INTO `user_identities` VALUES ('132', '425664', 'facebook', '100003132470852');
-INSERT INTO `user_identities` VALUES ('133', '425677', 'facebook', '100000409282641');
-INSERT INTO `user_identities` VALUES ('134', '425697', 'facebook', '100001785159416');
-INSERT INTO `user_identities` VALUES ('135', '425730', 'facebook', '100002278621267');
-INSERT INTO `user_identities` VALUES ('136', '425753', 'facebook', '1776530263');
-INSERT INTO `user_identities` VALUES ('137', '425760', 'facebook', '1037754698');
-INSERT INTO `user_identities` VALUES ('138', '425761', 'facebook', '100003391216380');
-INSERT INTO `user_identities` VALUES ('139', '425767', 'facebook', '100004424371690');
-INSERT INTO `user_identities` VALUES ('140', '425822', 'facebook', '100002237360978');
-INSERT INTO `user_identities` VALUES ('141', '425841', 'facebook', '100003570127574');
-INSERT INTO `user_identities` VALUES ('142', '425858', 'facebook', '100000641951256');
-INSERT INTO `user_identities` VALUES ('143', '425901', 'facebook', '100001033038978');
-INSERT INTO `user_identities` VALUES ('144', '425910', 'facebook', '1124384395');
-INSERT INTO `user_identities` VALUES ('145', '425918', 'facebook', '100000049914882');
-INSERT INTO `user_identities` VALUES ('146', '425925', 'facebook', '100000509577817');
-INSERT INTO `user_identities` VALUES ('147', '425934', 'facebook', '100004659581116');
-INSERT INTO `user_identities` VALUES ('148', '425939', 'facebook', '1233241044');
-INSERT INTO `user_identities` VALUES ('149', '425948', 'facebook', '100000734216365');
-INSERT INTO `user_identities` VALUES ('150', '425965', 'facebook', '1848365456');
-INSERT INTO `user_identities` VALUES ('151', '425980', 'facebook', '100001201131612');
+INSERT INTO `user_identities` VALUES ('199', '425983', 'facebook', '641244973');
 
 -- ----------------------------
 -- Table structure for `user_sport_link`
@@ -46101,18 +45989,3 @@ INSERT INTO `votes` VALUES ('1', '19', '1229', '101', '2013-05-08 18:08:37');
 INSERT INTO `votes` VALUES ('2', '19', '1229', '1', '2013-05-08 18:08:37');
 INSERT INTO `votes` VALUES ('3', '19', '1229', '2', '2013-05-08 18:08:38');
 INSERT INTO `votes` VALUES ('4', '19', '1229', '3', '2013-05-08 18:08:58');
-
---
-INSERT INTO `apiparams` (`apiaccess_id`, `param_name`, `param_type`, `param_req`, `description`) VALUES (17, 'sports_id', 'int', 0, 'Sports ID');
-INSERT INTO `apiparams` (`apiaccess_id`, `param_name`, `param_type`, `param_req`, `description`) VALUES (18, 'sports_id', 'int', 0, 'Sports ID');
-INSERT INTO `apiparams` (`apiaccess_id`, `param_name`, `param_type`, `param_req`, `description`) VALUES (18, 'complevels_id', 'int', 0, 'Complevels ID');
--- game comments
-INSERT INTO `apiaccess` (`entlist_id`, `api_method`, `shortname`, `description`) VALUES ('8', 'GET', 'comments', 'Game comments');
--- team comments
-INSERT INTO `apiaccess` (`entlist_id`, `api_method`, `shortname`, `description`) VALUES ('5', 'GET', 'comments', 'Team comments');
-
-INSERT INTO `apiaccess` (`entlist_id`, `api_method`, `shortname`, `description`) VALUES ('5', 'GET', 'recent_schedules', 'Recent schedules');
-
-INSERT INTO `apiaccess` (`entlist_id`, `api_method`, `shortname`, `description`) VALUES ('5', 'GET', 'upcoming_schedules', 'Upcoming schedules');
-
-INSERT INTO `apiaccess` (`entlist_id`, `api_method`, `shortname`, `description`) VALUES ('8', 'GET', 'teamrosters', 'Team rosters for a game');

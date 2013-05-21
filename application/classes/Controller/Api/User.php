@@ -347,46 +347,6 @@
 
 			}
         }
-		
-		############################################################################
-		###########################    POST METHODS    #############################
-		############################################################################
-
-		/**
-		 *
-		 */
-		public function action_post_fbreg()
-		{
-			$facebook = FacebookAuth::factory();
-
-		//	print_r($facebook);
-			$retArr =  $facebook->get_user();
-
-		//	print_r($retArr);
-
-			if(isset($retArr['message']))
-			{
-
-				//Error message array
-				$error_array = array(
-					"error" => $retArr['message']."..."
-				);
-
-				// Set whether it is a fatal error
-				$is_fatal = true;
-
-				// Call method to throw an error
-				$this->addError($error_array,$is_fatal);
-
-				return false;
-			}
-			else
-			{
-		//		print_r($facebook);
-				return $facebook;
-			}
-		}
-
 
 		/**
 		 * action_get_fbpics() Get Facebook all user profile photo(s)
@@ -419,6 +379,48 @@
 				return $facebook;
 			}
 		}
+
+		############################################################################
+		###########################    POST METHODS    #############################
+		############################################################################
+
+		/**
+		 *
+		 */
+		public function action_post_fbreg()
+		{
+			$facebook = FacebookAuth::factory();
+
+		//	print_r($facebook);
+			$retArr =  $facebook->get_user();
+
+		//	print_r($retArr);
+
+			if(isset($retArr['message']))
+			{
+
+				//Error message array
+				$error_array = array(
+					"error" => $retArr['message']
+				);
+
+				// Set whether it is a fatal error
+				$is_fatal = true;
+
+				// Call method to throw an error
+				$this->addError($error_array,$is_fatal);
+
+				return false;
+			}
+			else
+			{
+				//TODO: This should save the user here I think
+				return (object)$retArr;
+			}
+		}
+
+
+
 
 		/**
 		 * action_post_add() Create a new user with all necessary basic information (possibly first step of registration)

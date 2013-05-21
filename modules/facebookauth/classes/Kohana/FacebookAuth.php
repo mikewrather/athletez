@@ -199,4 +199,9 @@ class Kohana_FacebookAuth {
 		}
 		return $me;
 	}
+
+	public function extend_auth_token()
+	{
+		print_r($this->fb->setExtendedAccessToken());
+	}
 }

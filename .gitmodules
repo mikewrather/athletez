@@ -16,3 +16,6 @@
 [submodule "modules/image"]
 	path = modules/image
 	url = git://github.com/kohana/image.git
+[submodule "modules/OAuth2"]
+	path = modules/OAuth2
+	url = https://github.com/Qballinternet/kohana-oauth2.git
