@@ -10,10 +10,12 @@ class Model_Site_Tag extends Model_Site_Entdir
 	
 	protected $_table_name = 'tags';
 
+	public $error_message_path = 'models/site';
+
 	protected $_belongs_to = array(
 		'tagger' => array(
 			'model' => 'User_Base',
-			'foreign_key' => 'voter_users_id'
+			'foreign_key' => 'users_id'
 		),
 		'enttype' => array(
 			'model' => 'Site_Enttype',
@@ -38,14 +40,15 @@ class Model_Site_Tag extends Model_Site_Entdir
 				array('subject_id_exist',array( ':validation', 'subject_enttypes_id', 'subject_id'))
 			),
 
-			// users_id (int)
-			//TODO, add by jeffrey, this user id validation need developer do manually.
-			/*
 			'users_id'=>array(
 				array('not_empty'),
-				array('digit'),
+				array('users_id_exist'),
 			),
-			*/
+
+			'media_id'=>array(
+				array('not_empty'),
+				array('media_id_exist'),
+			)
 		);
 	}
 
@@ -61,8 +64,8 @@ class Model_Site_Tag extends Model_Site_Entdir
 
 		return array(
 			"id" => $this->id,
-			"voter_users_id" => $this->voter_users_id,
-			"voter" => $this->voter->getBasics(),
+			"voter_users_id" => $this->users_id,
+			"voter" => $this->tagger->getBasics(),
 			"subject" => $subject->getBasics(),
 		);
 	}
@@ -132,6 +135,37 @@ class Model_Site_Tag extends Model_Site_Entdir
 		}else{
 			return invtal($user) == $this->owner();
 		}
+	}
+
+	public function addTag($args = array()){
+		extract($args);
+		if(isset($subject_type_id))
+		{
+			$this->subject_enttypes_id = $subject_type_id;
+		}
+
+		if(isset($subject_id))
+		{
+			$this->subject_id = $subject_id;
+		}
+
+		if(isset($users_id))
+		{
+			$this->users_id = $users_id;
+		}
+
+		if(isset($media_id))
+		{
+			$this->media_id = $media_id;
+		}
+
+		try {
+			$this->save();
+			return $this;
+		} catch(ORM_Validation_Exception $e){
+			return $e;
+		}
+
 	}
 
 	public function name(){ return ""; }

@@ -37,6 +37,9 @@ class Model_Sportorg_Complevel_Profile extends ORM
 
 	function addComplevelprofile($args){
 		extract($args);
+		if (isset($id)){
+			$this->id = $id;
+		}
 		if (isset($name)){
 			$this->name = $name;
 		}
@@ -46,8 +49,6 @@ class Model_Sportorg_Complevel_Profile extends ORM
 		} catch(ORM_Validation_Exception $e){
 			return $e;
 		}
-		$this->save();
-		return $this;
 	}
 
 	public function getBasics()

@@ -56,6 +56,15 @@
 		public function get_teamrosters(){
 			return $this->obj->result;
 		}
+
+		public function post_addcomments()
+		{
+			$retArr = array();
+			// Scaffolding Code For Single:
+			$retArr = $this->obj->getBasics();
+
+			return $retArr;
+		}
 		
 		/**
 		 * get_matches() List of all matches within a given game

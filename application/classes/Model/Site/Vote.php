@@ -10,6 +10,8 @@ class Model_Site_Vote extends Model_Site_Entdir
 	
 	protected $_table_name = 'votes';
 
+	public $error_message_path = 'models/site';
+
 	protected $_belongs_to = array(
 		'voter' => array(
 			'model' => 'User_Base',
@@ -38,11 +40,9 @@ class Model_Site_Vote extends Model_Site_Entdir
 				array('subject_id_exist',array( ':validation', 'subject_enttypes_id', 'subject_id'))
 			),
 
-			// voter_users_id (int)
-			/*TODO, add by Jeffrey, developer need to set the value manually from the session*/
 			'voter_users_id'=>array(
 				array('not_empty'),
-				array('digit'),
+				array('users_id_exist'),
 			),
 		);
 	}
@@ -63,6 +63,36 @@ class Model_Site_Vote extends Model_Site_Entdir
 			"voter_users_id" => $this->voter_users_id,
 			"voter" => $this->voter->getBasics()
 		);
+	}
+
+	public function addVote($args = array()){
+		extract($args);
+		if(isset($subject_type_id))
+		{
+			$this->subject_enttypes_id = $subject_type_id;
+		}
+
+		if(isset($subject_id))
+		{
+			$this->subject_id = $subject_id;
+		}
+
+		if(isset($voter_users_id))
+		{
+			$this->voter_users_id = $voter_users_id;
+		}
+
+		if(isset($media_id))
+		{
+			$this->media_id = $media_id;
+		}
+
+		try {
+			$this->save();
+			return $this;
+		} catch(ORM_Validation_Exception $e){
+			return $e;
+		}
 	}
 
 	public static function getNumVotes($obj){

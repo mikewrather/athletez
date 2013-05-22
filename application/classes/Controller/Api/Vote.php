@@ -79,58 +79,30 @@
 		public function action_post_add()
 		{
 			$this->payloadDesc = "Add a new Vote";
+			$arguments = array();
 
-		     // CHECK FOR PARAMETERS:
-			// subject_type_id (REQUIRED)
-			// The ID of the subject type / entity type of the vote's subject (this is a row from the enttypes table) 
-				
 			if((int)trim($this->request->post('subject_type_id')) > 0)
 			{
-				$subject_type_id = (int)trim($this->request->post('subject_type_id'));
+				$arguments["subject_type_id"] = (int)trim($this->request->post('subject_type_id'));
 			}
 
-			else // THIS WAS A REQUIRED PARAMETER
-			{
-				// Create Array for Error Data
-				$error_array = array(
-					"error" => "Required Parameter Missing",
-					"param_name" => "subject_type_id",
-					"param_desc" => "The ID of the subject type / entity type of the vote's subject (this is a row from the enttypes table) "
-				);
-
-				// Set whether it is a fatal error
-				$is_fatal = true;
-
-				// Call method to throw an error
-				$this->addError($error_array,$is_fatal);
-
-			}
-			
-			// subject_id (REQUIRED)
-			// This is the ID of the subject whos type is specified in the enttypes table
-				
 			if((int)trim($this->request->post('subject_id')) > 0)
 			{
-				$subject_id = (int)trim($this->request->post('subject_id'));
+				$arguments["subject_id"] = (int)trim($this->request->post('subject_id'));
 			}
+			$arguments['voter_users_id'] = $this->user->id;
 
-			else // THIS WAS A REQUIRED PARAMETER
+			$result = $this->mainModel->addVote($arguments);
+			if(get_class($result) == get_class($this->mainModel))
 			{
-				// Create Array for Error Data
-				$error_array = array(
-					"error" => "Required Parameter Missing",
-					"param_name" => "subject_id",
-					"param_desc" => "This is the ID of the subject whos type is specified in the enttypes table"
-				);
-
-				// Set whether it is a fatal error
-				$is_fatal = true;
-
-				// Call method to throw an error
-				$this->addError($error_array,$is_fatal);
-
+				return $result;
 			}
-			
+			elseif(get_class($result) == 'ORM_Validation_Exception')
+			{
+				//parse error and add to error array
+				$this->processValidationError($result,$this->mainModel->error_message_path);
+				return false;
+			}
 		}
 		
 		############################################################################
@@ -152,7 +124,12 @@
 		{
 			$this->payloadDesc = "Delete a Vote";
 
-		
+			if(!$this->mainModel->id)
+			{
+				$this->modelNotSetError();
+				return false;
+			}
+			return $this->mainModel->delete();
 		}
 		
 	}

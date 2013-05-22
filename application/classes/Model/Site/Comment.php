@@ -36,21 +36,16 @@ class Model_Site_Comment extends Model_Site_Entdir
 				array('not_empty'),
 				array('not_equals', array(':value', 0))
 			),
-
 			// subject_id (int)
 			'subject_id'=>array(
 				array('not_empty'),
 				array('digit'),
 				array('subject_id_exist',array( ':validation', 'subject_enttypes_id', 'subject_id'))
 			),
-			/* TODO, add by Jeffrey. need to confirm
-			// users_id (int)
 			'users_id'=>array(
 				array('not_empty'),
-				array('digit'),
+				array('users_id_exist'),
 			),
-			*/
-			// comment (text)
 			'comment'=>array(
 				array('not_empty'),
 			),

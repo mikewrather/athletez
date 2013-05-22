@@ -14,5 +14,6 @@
 			'admin' => 'admin',
 			'moderator' => 'moderator',
 			'recruiter' => 'recruiter',
-		)
+		),
+		'defaultCommentsToDisplay' => 10
 	);

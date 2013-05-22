@@ -38,21 +38,27 @@
 		public function action_get_basics()
 		{
 			$this->payloadDesc = "Basic information on a given tag";
+			if(!$this->mainModel->id)
+			{
+				$this->modelNotSetError();
+				return false;
+			}
 
-		
+			return $this->mainModel;
 		}
 		
 		/**
 		 * action_get_user() Gets the user being tagged
 		 * via /api/tag/user/{tags_id}
 		 *
-		 */
+
 		public function action_get_user()
 		{
 			$this->payloadDesc = "Gets the user being tagged";
 
 		
 		}
+		 */
 		
 		############################################################################
 		###########################    POST METHODS    #############################
@@ -67,92 +73,44 @@
 		public function action_post_add()
 		{
 			$this->payloadDesc = "Add a new tag";
+			$arguments = array();
+			// CHECK FOR PARAMETERS:
+			// subject_type_id (REQUIRED)
+			// The ID of the subject type / entity type of the tag's subject (this is a row from the enttypes table)
 
+			if((int)trim($this->request->post('subject_type_id')) > 0)
+			{
+				$arguments["subject_type_id"] = (int)trim($this->request->post('subject_type_id'));
+			}
 
-			// media_id (REQUIRED)
-			// This is the ID of the row in the media table that we are tagging something in.
+			if((int)trim($this->request->post('subject_id')) > 0)
+			{
+				$arguments["subject_id"] = (int)trim($this->request->post('subject_id'));
+			}
+
+			if((int)trim($this->request->post('users_id')) > 0)
+			{
+				$arguments["users_id"] = (int)trim($this->request->post('users_id'));
+			}else{
+				$arguments["users_id"] = $this->user->id;
+			}
 
 			if((int)trim($this->request->post('media_id')) > 0)
 			{
 				$arguments["media_id"] = (int)trim($this->request->post('media_id'));
 			}
-			else // THIS WAS A REQUIRED PARAMETER
+
+			$result = $this->mainModel->addTag($arguments);
+			if(get_class($result) == get_class($this->mainModel))
 			{
-				// Create Array for Error Data
-				$error_array = array(
-					"error" => "Required Parameter Missing",
-					"param_name" => "media_id",
-					"param_desc" => "This is the ID of the row in the media table that we are tagging something in."
-				);
-
-				// Set whether it is a fatal error
-				$is_fatal = true;
-
-				// Call method to throw an error
-				$this->addError($error_array,$is_fatal);
+				return $result;
+			}
+			elseif(get_class($result) == 'ORM_Validation_Exception')
+			{
+				//parse error and add to error array
+				$this->processValidationError($result,$this->mainModel->error_message_path);
 				return false;
-
 			}
-
-		     // CHECK FOR PARAMETERS:
-			// subject_type_id (REQUIRED)
-			// The ID of the subject type / entity type of the tag's subject (this is a row from the enttypes table) 
-				
-			if((int)trim($this->request->post('subject_type_id')) > 0)
-			{
-				$subject_type_id = (int)trim($this->request->post('subject_type_id'));
-			}
-
-			else // THIS WAS A REQUIRED PARAMETER
-			{
-				// Create Array for Error Data
-				$error_array = array(
-					"error" => "Required Parameter Missing",
-					"param_name" => "subject_type_id",
-					"param_desc" => "The ID of the subject type / entity type of the tag's subject (this is a row from the enttypes table) "
-				);
-
-				// Set whether it is a fatal error
-				$is_fatal = true;
-
-				// Call method to throw an error
-				$this->addError($error_array,$is_fatal);
-
-			}
-			
-			// subject_id (REQUIRED)
-			// This is the ID of the subject whos type is specified in the enttypes table
-				
-			if((int)trim($this->request->post('subject_id')) > 0)
-			{
-				$subject_id = (int)trim($this->request->post('subject_id'));
-			}
-
-			else // THIS WAS A REQUIRED PARAMETER
-			{
-				// Create Array for Error Data
-				$error_array = array(
-					"error" => "Required Parameter Missing",
-					"param_name" => "subject_id",
-					"param_desc" => "This is the ID of the subject whos type is specified in the enttypes table"
-				);
-
-				// Set whether it is a fatal error
-				$is_fatal = true;
-
-				// Call method to throw an error
-				$this->addError($error_array,$is_fatal);
-
-			}
-			
-			// users_id 
-			// User Being Tagged (If not set, the authenticated user will be used)
-				
-			if((int)trim($this->request->post('users_id')) > 0)
-			{
-				$users_id = (int)trim($this->request->post('users_id'));
-			}
-
 		}
 		
 		############################################################################
@@ -172,9 +130,13 @@
 		 */
 		public function action_delete_base()
 		{
-			$this->payloadDesc = "Delete Tab";
-
-		
+			$this->payloadDesc = "Delete Tag";
+			if(!$this->mainModel->id)
+			{
+				$this->modelNotSetError();
+				return false;
+			}
+			return $this->mainModel->delete();
 		}
 		
 	}

@@ -79,8 +79,7 @@
 
 			$args['name'] = $name;
 
-			$complevelprofile = ORM::factory("Sportorg_Complevel_Profile");
-			$result = $complevelprofile->addComplevelprofile($args);
+			$result = $this->mainModel->addComplevelprofile($args);
 
 			if(get_class($result) == get_class($this->mainModel))
 			{
@@ -153,11 +152,31 @@
 		     // CHECK FOR PARAMETERS:
 			// name 
 			// Change the name of the Competition Level Profile
-				
+			if(!$this->mainModel->id)
+			{
+				$this->modelNotSetError();
+				return false;
+			}
+
 			if(trim($this->put('name')) != "")
 			{
-				$name = trim($this->put('name'));
+				$args['name'] = trim(urldecode($this->put('name')));
 			}
+			$args['id'] = $this->mainModel->id;
+			$result = $this->mainModel->addComplevelprofile($args);
+
+			if(get_class($result) == get_class($this->mainModel))
+			{
+				return $result;
+			}
+			elseif(get_class($result) == 'ORM_Validation_Exception')
+			{
+				//parse error and add to error array
+				$this->processValidationError($result,$this->mainModel->error_message_path);
+				return false;
+			}
+
+
 
 		}
 		
@@ -174,8 +193,12 @@
 		public function action_delete_base()
 		{
 			$this->payloadDesc = "Delete Competition Level Profile";
-
-		
+			if(!$this->mainModel->id)
+			{
+				$this->modelNotSetError();
+				return false;
+			}
+			return $this->mainModel->delete();
 		}
 		
 	}
