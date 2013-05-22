@@ -45997,3 +45997,18 @@ INSERT INTO `votes` VALUES ('1', '19', '1229', '101', '2013-05-08 18:08:37');
 INSERT INTO `votes` VALUES ('2', '19', '1229', '1', '2013-05-08 18:08:37');
 INSERT INTO `votes` VALUES ('3', '19', '1229', '2', '2013-05-08 18:08:38');
 INSERT INTO `votes` VALUES ('4', '19', '1229', '3', '2013-05-08 18:08:58');
+
+-- limit
+INSERT INTO `apiparams` (`apiaccess_id`, `param_name`, `description`) VALUES ('444', 'display_qty', 'How many comments to display');
+INSERT INTO `apiparams` (`apiaccess_id`, `param_name`, `description`) VALUES ('445', 'display_qty', 'How many comments to display');
+INSERT INTO `apiaccess` (`entlist_id`, `shortname`, `description`) VALUES ('8', 'addcomments', 'Add comments for a game');
+INSERT INTO `apiaccess` (`entlist_id`, `shortname`, `description`) VALUES ('5', 'addcomments', 'Add comments for a team');
+
+INSERT INTO `apiparams` (`apiaccess_id`, `param_name`, `param_type`, `param_req`, `description`) VALUES (447, 'subject_type_id', 'int', 0, 'The ID of the subject type / entity type of the comment\'s subject (this is a row from the enttypes table) ');
+INSERT INTO `apiparams` (`apiaccess_id`, `param_name`, `param_type`, `param_req`, `description`) VALUES (447, 'subject_id', 'int', 0, 'This is the ID of the subject whos type is specified in the enttypes table');
+INSERT INTO `apiparams` (`apiaccess_id`, `param_name`, `param_type`, `param_req`, `description`) VALUES (447, 'comment', 'string', 0, 'The text of the comment');
+
+INSERT INTO `apiparams` (`apiaccess_id`, `param_name`, `param_type`, `param_req`, `description`) VALUES (448, 'subject_type_id', 'int', 0, 'The ID of the subject type / entity type of the comment\'s subject (this is a row from the enttypes table) ');
+INSERT INTO `apiparams` (`apiaccess_id`, `param_name`, `param_type`, `param_req`, `description`) VALUES (448, 'subject_id', 'int', 0, 'This is the ID of the subject whos type is specified in the enttypes table');
+INSERT INTO `apiparams` (`apiaccess_id`, `param_name`, `param_type`, `param_req`, `description`) VALUES (448, 'comment', 'string', 0, 'The text of the comment');
+
