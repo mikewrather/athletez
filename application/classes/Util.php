@@ -75,4 +75,9 @@ class Util {
 			return $value;
 		}
 	}
+
+	public static function random_password($length=16)
+	{
+		return Text::random('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890`~@#%^&*()-_=+[]{}\|;:\'",.<>/?',$length);
+	}
 }

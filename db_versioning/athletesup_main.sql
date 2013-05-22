@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50525
 File Encoding         : 65001
 
-Date: 2013-05-21 00:42:16
+Date: 2013-05-21 17:50:43
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -44,7 +44,7 @@ CREATE TABLE `apiaccess` (
   `id2` varchar(25) CHARACTER SET latin1 COLLATE latin1_german1_ci DEFAULT NULL,
   `current_status` text,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=443 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=447 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of apiaccess
@@ -321,7 +321,11 @@ INSERT INTO `apiaccess` VALUES ('438', '21', 'GET', 'search', 'Search for images
 INSERT INTO `apiaccess` VALUES ('439', '23', 'GET', 'search', 'Search for videos', '0', null, null, null);
 INSERT INTO `apiaccess` VALUES ('440', '5', 'GET', 'search', 'Search for a team', '0', null, null, null);
 INSERT INTO `apiaccess` VALUES ('441', '8', 'GET', 'search', 'Search for a game based on several parameters', '0', null, null, null);
-INSERT INTO `apiaccess` VALUES ('442', '1', 'POST', 'addcomment', 'This will add a comment to the \"fanboard\" for this user\'s profile page.', '0', null, null, null);
+INSERT INTO `apiaccess` VALUES ('442', '8', 'GET', 'comments', 'Game comments', '0', null, null, null);
+INSERT INTO `apiaccess` VALUES ('443', '5', 'GET', 'comments', 'Team comments', '0', null, null, null);
+INSERT INTO `apiaccess` VALUES ('444', '5', 'GET', 'recent_schedules', 'Recent schedules', '0', null, null, null);
+INSERT INTO `apiaccess` VALUES ('445', '5', 'GET', 'upcoming_schedules', 'Upcoming schedules', '0', null, null, null);
+INSERT INTO `apiaccess` VALUES ('446', '8', 'GET', 'teamrosters', 'Team rosters for a game', '0', null, null, null);
 
 -- ----------------------------
 -- Table structure for `apiparams`
@@ -336,7 +340,7 @@ CREATE TABLE `apiparams` (
   `description` varchar(255) DEFAULT NULL,
   `enttypes_id` int(10) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=384 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=386 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of apiparams
@@ -698,14 +702,16 @@ INSERT INTO `apiparams` VALUES ('372', '440', 'zipcode', 'int', '0', 'This will 
 INSERT INTO `apiparams` VALUES ('373', '440', 'loc_name', 'string', '0', 'This will search the org\'s location\'s city, county and state.', '0');
 INSERT INTO `apiparams` VALUES ('374', '441', 'loc_search', 'string', '0', 'This will search the city, county, state of the game\'s location as well as the zipcode.', '0');
 INSERT INTO `apiparams` VALUES ('375', '183', 'media_id', 'int', '1', 'This is the ID of the row in the media table that we are tagging something in.', '19');
-INSERT INTO `apiparams` VALUES ('376', '383', 'games_id', 'int', '0', 'Games ID', null);
+INSERT INTO `apiparams` VALUES ('376', '383', 'games_id', 'int', '0', 'Games ID', '8');
 INSERT INTO `apiparams` VALUES ('377', '27', 'male', 'int', '0', 'Male', null);
 INSERT INTO `apiparams` VALUES ('378', '27', 'female', 'int', '0', 'Female', null);
 INSERT INTO `apiparams` VALUES ('379', '27', 'sport_type_id', 'int', '0', 'Sport type', null);
-INSERT INTO `apiparams` VALUES ('380', '2', 'sport_id', 'int', '0', 'Sport ID', null);
+INSERT INTO `apiparams` VALUES ('380', '2', 'sport_id', 'int', '0', 'Sport ID', '4');
 INSERT INTO `apiparams` VALUES ('381', '190', 'video_file', 'file', '0', 'File upload for video', null);
 INSERT INTO `apiparams` VALUES ('382', '189', 'image_file', 'file', '0', 'File for Image Upload', null);
-INSERT INTO `apiparams` VALUES ('383', '442', 'comment', 'string', '1', 'This is the actual comment being added to the user\'s fanboard.', '0');
+INSERT INTO `apiparams` VALUES ('383', '17', 'sports_id', 'int', '0', 'Sports ID', '4');
+INSERT INTO `apiparams` VALUES ('384', '18', 'sports_id', 'int', '0', 'Sports ID', '4');
+INSERT INTO `apiparams` VALUES ('385', '18', 'complevels_id', 'int', '0', 'Complevels ID', '11');
 
 -- ----------------------------
 -- Table structure for `apitest`
@@ -42116,7 +42122,7 @@ CREATE TABLE `users` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `uniq_username` (`username`),
   UNIQUE KEY `uniq_email` (`email`)
-) ENGINE=InnoDB AUTO_INCREMENT=426004 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=426008 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of users
@@ -43542,14 +43548,14 @@ INSERT INTO `users` VALUES ('425979', 'clay_gorham@yahoo.com_', 'clay_gorham@yah
 INSERT INTO `users` VALUES ('425980', 'cavellobrick@yahoo.com_', 'pete.cavello', 'd5d845c15751d7bda5d9101d28fbcc13e22cba20c06e057132', '1', '1362980726', 'Pete', 'Cavello', '1771', null, null, null, null, null, null, null, null);
 INSERT INTO `users` VALUES ('425981', 'treythornburg@gmail.com_', 'treythornburg@gmail.com', '8e720bbf5b8e4e4587e627e599f79741f68ac2e3a9ed470260', '1', '1363024849', 'Trey', 'Thornburg', '0', null, null, null, null, null, null, null, null);
 INSERT INTO `users` VALUES ('425982', 'nicolette.elliott@yahoo.com_', 'nicolette.elliott@yahoo.com', '9cc3931c59b143ab87bece75e1d280cb3d1033e4d2a5b8f375', '1', '1363064186', 'Nicolette Amber', 'Elliott', '2462', null, null, null, null, null, null, null, null);
-INSERT INTO `users` VALUES ('425983', 'mike.wrather@gmail.com', 'mike', '896850b3f3929cbeff81d0ff8c98bee1931d42505d782915974c015472fca4cc', '2', '1369116651', 'Mike', 'Wrather', null, null, null, '2013-05-19', '72', '190', '2014', null, '100');
+INSERT INTO `users` VALUES ('425983', 'mike.wrather@gmail.com', 'mike.wrather@gmail.com', '896850b3f3929cbeff81d0ff8c98bee1931d42505d782915974c015472fca4cc', '2', '1369133329', 'Mike', 'Wrather', null, null, null, '2013-05-19', '72', '190', '2014', null, '100');
 INSERT INTO `users` VALUES ('425984', 'admin@mail.com', 'admin', '896850b3f3929cbeff81d0ff8c98bee1931d42505d782915974c015472fca4cc', '0', '1367963355', 'Mike', 'Wrather', null, null, null, null, null, null, null, null, null);
 INSERT INTO `users` VALUES ('425985', 'jack@word.com', '', '896850b3f3929cbeff81d0ff8c98bee1931d42505d782915974c015472fca4cc', '0', null, 'Jack', 'Brock', null, null, null, null, null, null, null, null, null);
 INSERT INTO `users` VALUES ('425987', 'mike@poopyfartface.com', 'mike@poopyfartface.com', '555156e5fddaa4461ff439c27d0989a1c0062552829a89997aa34988c02118a0', '0', null, 'Mike', 'Wrather', null, null, null, null, null, null, null, null, null);
 INSERT INTO `users` VALUES ('425988', 'mike.wrather2@gmail.com', 'mike.wrather2@gmail.com', '896850b3f3929cbeff81d0ff8c98bee1931d42505d782915974c015472fca4cc', '0', null, 'Mike', 'Wrather', null, null, null, '1982-06-18', null, null, null, null, null);
 INSERT INTO `users` VALUES ('425989', 'mike.wrather3@gmail.com', 'mike.wrather3@gmail.com', '896850b3f3929cbeff81d0ff8c98bee1931d42505d782915974c015472fca4cc', '0', null, 'Mike', 'Wrather', null, null, null, '1982-06-18', null, null, null, null, null);
 INSERT INTO `users` VALUES ('425990', 'mike.wrather4@gmail.com', 'mike.wrather4@gmail.com', '896850b3f3929cbeff81d0ff8c98bee1931d42505d782915974c015472fca4cc', '0', null, 'Mike', 'Wrather', null, null, null, '1982-06-18', null, null, null, null, null);
-INSERT INTO `users` VALUES ('425991', 'mike.wrather@gmail.com____', 'mike.wrather@gmail.com', '896850b3f3929cbeff81d0ff8c98bee1931d42505d782915974c015472fca4cc', '0', null, 'Mike', 'Wrather', null, null, null, '1982-06-18', null, null, null, null, null);
+INSERT INTO `users` VALUES ('425991', 'mike.wrather@gmail.com____', 'MIKEw', '896850b3f3929cbeff81d0ff8c98bee1931d42505d782915974c015472fca4cc', '0', null, 'Mike', 'Wrather', null, null, null, '1982-06-18', null, null, null, null, null);
 INSERT INTO `users` VALUES ('425992', 'mike.wrather23@gmail.com', 'mike.wrather23@gmail.com', '896850b3f3929cbeff81d0ff8c98bee1931d42505d782915974c015472fca4cc', '0', null, 'Mike', 'Wrather', null, null, null, '1982-06-18', null, null, null, null, null);
 INSERT INTO `users` VALUES ('425993', 'mike.wrather22@gmail.com', 'mike.wrather22@gmail.com', '896850b3f3929cbeff81d0ff8c98bee1931d42505d782915974c015472fca4cc', '0', null, 'Mike', 'Wrather', null, null, null, '1982-06-18', null, null, null, null, null);
 INSERT INTO `users` VALUES ('425994', 'mike.wrather233@gmail.com', 'mike.wrather233@gmail.com', '896850b3f3929cbeff81d0ff8c98bee1931d42505d782915974c015472fca4cc', '0', null, 'Mike', 'Wrather', null, null, null, '1982-06-18', null, null, null, null, null);
@@ -43597,12 +43603,14 @@ CREATE TABLE `user_identities` (
   `provider` varchar(255) NOT NULL,
   `identity` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=200 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=205 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of user_identities
 -- ----------------------------
-INSERT INTO `user_identities` VALUES ('199', '425983', 'facebook', '641244973');
+INSERT INTO `user_identities` VALUES ('199', '425983', 'facebook_', '641244973');
+INSERT INTO `user_identities` VALUES ('203', '425983', 'facebook_', '641244973');
+INSERT INTO `user_identities` VALUES ('204', '425983', 'facebook', '641244973');
 
 -- ----------------------------
 -- Table structure for `user_sport_link`

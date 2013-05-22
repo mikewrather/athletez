@@ -428,7 +428,7 @@
 							if($user->id != $this->user->id)
 							{
 								// a user with this facebook identity already exists
-								// because this is the
+								// throw an error
 								//Error message array
 								$error_array = array(
 									"error" => "This Facebook account is already linked up with a different AthletesUp account than the one you're logged in to now.  Try logging out and logging back in using facebook."

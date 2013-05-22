@@ -295,12 +295,12 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 				$extra_validate->rule('email','unique_email');
 			}
 			$extra_validate->rule('password','not_empty');
-			$extra_validate->rule('password','min_length', array(':value', 4));
-			$extra_validate->rule('password','max_length', array(':value', 8));
+			$extra_validate->rule('password','min_length', array(':value', 6));
+			$extra_validate->rule('password','max_length', array(':value', 16));
 
 			$extra_validate->rule('re_password','not_empty');
-			$extra_validate->rule('re_password','min_length', array(':value', 4));
-			$extra_validate->rule('re_password','max_length', array(':value', 8));
+			$extra_validate->rule('re_password','min_length', array(':value', 6));
+			$extra_validate->rule('re_password','max_length', array(':value', 16));
 			$extra_validate->rule('re_password','matches', array(':validation', ':field', 'password'));
 
 			if ($this->check($extra_validate)){
@@ -764,25 +764,25 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 
 		$args['firstname'] = $facebook['first_name'];
 		$args['lastname'] = $facebook['last_name'];
-	//	$args['username'] = $facebook['email'];
 		$args['email'] = $facebook['email'];
 		$args['gender'] = $facebook['gender']=="female" ? "F" : "M";
 		$args['dob'] = date('Y-m-d',strtotime($facebook['birthday']));
-		$args['password'] = $args['re_password'] = Text::random('alpha',16);
-
+		$args['password'] = $args['re_password'] = Util::random_password();
 		$result = $this->addRegister($args);
 
+		/* this is a check that we can use to do something later
 		if(get_class($result) == get_class($this))
 		{
-			echo "SUCCESS";
+			// worked
 		}
 		else
 		{
-			echo "FAIL";
+			// failed
 		}
-
+		*/
 		if($this->loaded())
 		{
+			//TODO: get facebook city and match to our DB ID
 			$this->addIdentity($facebook['id'],'facebook');
 		}
 
@@ -957,11 +957,11 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 			$extra_validate = Validation::factory($args);
 			$extra_validate->rule('email','unique_email');
 			$extra_validate->rule('password','not_empty');
-			$extra_validate->rule('password','min_length', array(':value', 4));
+			$extra_validate->rule('password','min_length', array(':value', 6));
 			$extra_validate->rule('password','max_length', array(':value', 16));
 
 			$extra_validate->rule('re_password','not_empty');
-			$extra_validate->rule('re_password','min_length', array(':value', 4));
+			$extra_validate->rule('re_password','min_length', array(':value', 6));
 			$extra_validate->rule('re_password','max_length', array(':value', 16));
 			$extra_validate->rule('re_password','matches', array(':validation', ':field', 'password'));
 
