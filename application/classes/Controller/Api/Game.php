@@ -381,60 +381,15 @@
 
 		}
 
-		public function action_post_addcomments()
-		{
-			$this->payloadDesc = "Add comments for a game";
-			$arguments = array();
-			// CHECK FOR PARAMETERS:
-			// subject_type_id
-			// The ID of the subject type / entity type of the comment's subject (this is a row from the enttypes table)
-			if((int)trim($this->request->post('subject_type_id')) > 0)
-			{
-				$arguments["subject_enttypes_id"] = (int)trim($this->request->post('subject_type_id'));
-			}
+		/**
+		 *  action_post_addcomment is in parent class
+		 */
 
-			// subject_id
-			// This is the ID of the subject whos type is specified in the enttypes table
-
-			if((int)trim($this->request->post('subject_id')) > 0)
-			{
-				$arguments["subject_id"] = (int)trim($this->request->post('subject_id'));
-			}
-			//only create games's comments if have games_id
-			if ($this->mainModel->id){
-				$arguments["subject_enttypes_id"] = $ent_types_id = Ent::getMyEntTypeID($this->mainModel);
-				$arguments["subject_id"] = $subject_id = $this->mainModel->id;
-			}
-
-			// comment
-			// The text of the comment
-
-			if(trim($this->request->post('comment')) != "")
-			{
-				$arguments["comment"] = trim($this->request->post('comment'));
-			}
-
-			$arguments['users_id'] = $this->user->id;
-
-			$comment_model = ORM::factory("Site_Comment");
-			$result = $comment_model->addComment($arguments);
-			if(get_class($result) == get_class($comment_model))
-			{
-				return $result;
-			}
-			elseif(get_class($result) == 'ORM_Validation_Exception')
-			{
-				//parse error and add to error array
-				$this->processValidationError($result,$this->mainModel->error_message_path);
-				return false;
-			}
-		}
-		
 		############################################################################
 		############################    PUT METHODS    #############################
 		############################################################################
 
-		
+
 		/**
 		 * action_put_basics() Update Basic information about the game
 		 * via /api/game/basics/{games_id}

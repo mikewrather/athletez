@@ -498,4 +498,43 @@ class Controller_Api_Base extends AuthController
 		$this->modelNotSetError($error_array);
 		return false;
 	}
+
+	/*****************************************************************
+	 *                UNIVERSAL ACTION METHODS
+	 ****************************************************************/
+
+	public function action_post_addcomment()
+	{
+		$this->payloadDesc = "Add comments for a team";
+		$arguments = array();
+		// CHECK FOR PARAMETERS:
+
+		//only create team's comments if have games_id
+		if ($this->mainModel->id){
+			$arguments["subject_enttypes_id"] = $ent_types_id = Ent::getMyEntTypeID($this->mainModel);
+			$arguments["subject_id"] = $subject_id = $this->mainModel->id;
+		}
+
+		// The text of the comment
+		if(trim($this->request->post('comment')) != "")
+		{
+			$arguments["comment"] = trim($this->request->post('comment'));
+		}
+
+		$arguments['users_id'] = $this->user->id;
+
+		$comment_model = ORM::factory("Site_Comment");
+		$result = $comment_model->addComment($arguments);
+
+		if(get_class($result) == get_class($comment_model))
+		{
+			return $result;
+		}
+		elseif(get_class($result) == 'ORM_Validation_Exception')
+		{
+			//parse error and add to error array
+			$this->processValidationError($result,$this->mainModel->error_message_path);
+			return false;
+		}
+	}
 }

@@ -64,8 +64,8 @@ class Model_Site_Tag extends Model_Site_Entdir
 
 		return array(
 			"id" => $this->id,
-			"voter_users_id" => $this->users_id,
-			"voter" => $this->tagger->getBasics(),
+			"tagger_users_id" => $this->users_id,
+			"tagger" => $this->tagger->getBasics(),
 			"subject" => $subject->getBasics(),
 		);
 	}

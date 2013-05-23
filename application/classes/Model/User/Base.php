@@ -162,17 +162,26 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
     public function updateUser($args = array())
     {
         extract($args);
+
         // email 
         // Updated Email Address
         if(isset($email))
         {
             //$this->email = $email;
         }
+	    else
+	    {
+		    $args['email'] = $this->email;
+	    }
         // firstname 
         // Updated First Name
         if(isset($firstname))
         {
             $this->first_name  = $firstname;
+        }
+        else
+        {
+	        $args['firstname'] = $this->first_name;
         }
         
         // lastname 
@@ -181,29 +190,23 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
         {
             $this->last_name  = $lastname;
         }
-        
-        // password 
-        // New Password
-        if(isset($lastname))
+        else
         {
-            $this->last_name  = $lastname;
+	        $args['lastname'] = $this->last_name;
         }
+
+
         // cities_id 
         // User's Home City
         if(isset($cities_id))
         {
             $this->cities_id  = $cities_id ;
         }
+        else
+        {
+	        $args['cities_id'] = $this->cities_id;
+        }
 
-	    if(isset($password))
-	    {
-		    $this->password = $password;
-	    }
-
-		if(isset($id) && $id != "")
-		{
-			$this->id = $id;
-		}
 
         try {
 			$extra_validate = Validation::factory($args);
