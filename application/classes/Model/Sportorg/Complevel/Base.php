@@ -63,6 +63,7 @@ class Model_Sportorg_Complevel_Base extends ORM
 			"complevel_profiles_id" => $this->complevel_profiles_id
 		);
 	}
+
 	public function getTeamsBasics()
 	{
 		return array(

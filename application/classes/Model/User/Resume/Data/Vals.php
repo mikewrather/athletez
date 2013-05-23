@@ -38,12 +38,11 @@ class Model_User_Resume_Data_Vals extends ORM
 				array('resume_data_id_exist'),
 			),
 
-			/*TODO, add by Jeffrey, developer need to validate this element manually
 			'users_id'=>array(
 				array('not_empty'),
-				array('digit'),
+				array('users_id_exist'),
 			),
-			*/
+
 			// user_value (varchar)
 			'user_value'=>array(
 				array('not_empty'),
@@ -93,6 +92,7 @@ class Model_User_Resume_Data_Vals extends ORM
 	{
 		return $this->delete();
 	}
+
 	public function addValue($args = array())
 	{
 		extract($args);
@@ -105,9 +105,14 @@ class Model_User_Resume_Data_Vals extends ORM
 		if(isset($users_id))
 		{
 			$this->users_id = $users_id;
-		} 
-		$this->save();
-		return $this;
+		}
+
+		try {
+			$this->save();
+			return $this;
+		} catch(ORM_Validation_Exception $e){
+			return $e;
+		}
 	}
 	
 	public function addResumeDataVal($args = array())

@@ -265,11 +265,18 @@
 				return false;
 			}
 
-				$update_obj = $this->mainModel->updateComplevel($args);
-
-
-
-
+			$result = $this->mainModel->updateComplevel($args);
+			//Check for success / error
+			if(get_class($result) == get_class($this->mainModel))
+			{
+				return $result;
+			}
+			elseif(get_class($result) == 'ORM_Validation_Exception')
+			{
+				//parse error and add to error array
+				$this->processValidationError($result,$this->mainModel->error_message_path);
+				return false;
+			}
 		}
 		
 		############################################################################

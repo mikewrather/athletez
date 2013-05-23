@@ -69,58 +69,19 @@
 				$args['resume_data_id'] = (int)trim($this->request->post('resume_data_id'));
 			}
 
-			else // THIS WAS A REQUIRED PARAMETER
-			{
-				// Create Array for Error Data
-				$error_array = array(
-					"error" => "Required Parameter Missing",
-					"param_name" => "resume_data_id",
-					"param_desc" => "The ID of the resume data you are adding"
-				);
-
-				// Set whether it is a fatal error
-				$is_fatal = true;
-
-				// Call method to throw an error
-				$this->addError($error_array,$is_fatal);
-
-			}
-			
-			// user_value (REQUIRED)
-			// The Value the user entered for this resume data
-				
 			if(trim($this->request->post('user_value')) != "")
 			{
 				$args['user_value'] = trim($this->request->post('user_value'));
 			}
 
-			else // THIS WAS A REQUIRED PARAMETER
-			{
-				// Create Array for Error Data
-				$error_array = array(
-					"error" => "Required Parameter Missing",
-					"param_name" => "user_value",
-					"param_desc" => "The Value the user entered for this resume data"
-				);
-
-				// Set whether it is a fatal error
-				$is_fatal = true;
-
-				// Call method to throw an error
-				$this->addError($error_array,$is_fatal);
-
-			}
-			
-			// users_id 
-			// This will default to the logged in user if left blank
-				
 			if((int)trim($this->request->post('users_id')) > 0)
 			{
 				$args['users_id'] = (int)trim($this->request->post('users_id'));
+			}else{
+				$args['users_id'] = $this->user->id;
 			}
 			
-			 
-			$result = $this->mainModel->addResumeDataVal($args);             
+			$result = $this->mainModel->addResumeDataVal($args);
             //Check for success / error
             if(get_class($result) == get_class($this->mainModel))
             {

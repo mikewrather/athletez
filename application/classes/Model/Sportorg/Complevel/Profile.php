@@ -51,6 +51,17 @@ class Model_Sportorg_Complevel_Profile extends ORM
 		}
 	}
 
+	public function getComplevels($args = array()){
+		extract($args);
+		$complevels_model = $this->complevels;
+		if (isset($orgs_id)){
+			$complevels_model->join('orgs')
+				->on('orgs.complevel_profiles_id', '=', 'sportorg_complevel_base.complevel_profiles_id');
+			$complevels_model->where('orgs.id', '=', $orgs_id);
+		}
+		return $complevels_model;
+	}
+
 	public function getBasics()
 	{
 		return array(

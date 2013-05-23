@@ -88,7 +88,7 @@
 		 */
 		public function action_get_vals()
 		{
-			$this->payloadDesc = "Retrieves the values for a peice of resume data narrowed by supplied parameters, most noteably userID";
+			$this->payloadDesc = "Retrieves the values for a piece of resume data narrowed by supplied parameters, most noteably userID";
 			if(!$this->mainModel->id)
 			{
 				$this->modelNotSetError();

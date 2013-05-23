@@ -33,14 +33,14 @@
 		 */
 		public function get_listall()
 		{
-			$retArr = array();
+			$retArr = null;
 
 			// Scaffolding Code For Array:
 			$objs = $this->obj->find_all();
 			 
 			foreach($objs as $obj)
 			{
-				$retArr[$obj->id] = $obj->getBasics();
+				$retArr[] = $obj->getBasics();
 			}
  
 			return $retArr;
@@ -53,14 +53,14 @@
 		 */
 		public function get_vals()
 		{
-			$retArr = array();
+			$retArr = null;
 
 			// Scaffolding Code For Array:
 			$objs = $this->obj->find_all();
 			 
 			foreach($objs as $obj)
 			{
-				$retArr[$obj->id] = $obj->getBasics();
+				$retArr[] = $obj->getBasics();
 			} 
 
 			return $retArr;
@@ -102,15 +102,6 @@
 		public function delete_base()
 		{
 			$retArr = array();
-
-			// Scaffolding Code For Array:
-			$objs = $this->obj->find_all();
-			foreach($objs as $obj)
-			{
-				$retArr[$obj->id] = $obj->getBasics();
-			}
-
-			// Scaffolding Code For Single:
 			$retArr = $this->obj->getBasics();
 
 			return $retArr;

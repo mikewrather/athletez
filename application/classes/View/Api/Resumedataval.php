@@ -69,7 +69,7 @@
 			$retArr = array();
 
 			// Scaffolding Code For Array:
-			$objs = $this->obj; 
+			$retArr = $this->obj->getBasics();
 			return $retArr;
 		}
 		

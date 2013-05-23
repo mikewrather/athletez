@@ -38,8 +38,13 @@
 		public function action_get_basics()
 		{
 			$this->payloadDesc = "Basic information about the competition level profile";
+			if(!$this->mainModel->id)
+			{
+				$this->modelNotSetError();
+				return false;
+			}
 
-		
+			return $this->mainModel;
 		}
 		
 		/**
@@ -50,8 +55,20 @@
 		public function action_get_complevels()
 		{
 			$this->payloadDesc = "List the competition levels for this profile";
+			$arguments = array();
 
-		
+			if(!$this->mainModel->id)
+			{
+				$this->modelNotSetError();
+				return false;
+			}
+
+			if((int)trim($this->request->query('orgs_id')) > 0)
+			{
+				$arguments["orgs_id"] = (int)trim($this->request->query('orgs_id'));
+			}
+
+			return $this->mainModel->getComplevels($arguments);
 		}
 		
 		############################################################################
