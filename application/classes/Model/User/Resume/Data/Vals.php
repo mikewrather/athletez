@@ -107,6 +107,11 @@ class Model_User_Resume_Data_Vals extends ORM
 			$this->users_id = $users_id;
 		}
 
+		if(isset($resume_data_id))
+		{
+			$this->resume_data_id = $resume_data_id;
+		}
+
 		try {
 			$this->save();
 			return $this;

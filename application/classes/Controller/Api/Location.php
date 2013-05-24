@@ -60,6 +60,11 @@
 			// CHECK FOR PARAMETERS:
 			// games_before
 			// Filter games associated with a given location to only show those before a given date
+			if(!$this->mainModel->id)
+			{
+				$this->modelNotSetError();
+				return false;
+			}
 
 			if($this->request->query('games_before') != "")
 			{

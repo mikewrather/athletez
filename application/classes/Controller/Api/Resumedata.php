@@ -73,12 +73,7 @@
 				$args['resume_data_profiles'] = (int)trim($this->request->query('resume_data_profiles'));
 			}
 			
-//			if(!$this->mainModel->id)
-//			{
-//				$this->modelNotSetError();
-//				return false;
-//			}
-			return $this->mainModel->getListall($args); 
+			return $this->mainModel->getListall($args);
 		}
 		
 		/**
@@ -127,6 +122,13 @@
 			{
 				$args['user_value'] = trim($this->request->post('user_value'));
 			}
+
+			if(!$this->mainModel->id)
+			{
+				$this->modelNotSetError();
+				return false;
+			}
+			$args['resume_data_id'] = $this->mainModel->id;
 
 			$resume_data = ORM::factory("User_Resume_Data_Vals");
 			return $resume_data->addValue($args);			 
