@@ -46012,3 +46012,8 @@ INSERT INTO `apiparams` (`apiaccess_id`, `param_name`, `param_type`, `param_req`
 INSERT INTO `apiparams` (`apiaccess_id`, `param_name`, `param_type`, `param_req`, `description`) VALUES (448, 'subject_id', 'int', 0, 'This is the ID of the subject whos type is specified in the enttypes table');
 INSERT INTO `apiparams` (`apiaccess_id`, `param_name`, `param_type`, `param_req`, `description`) VALUES (448, 'comment', 'string', 0, 'The text of the comment');
 
+--
+INSERT INTO `apiparams` (`apiaccess_id`, `param_name`, `description`) VALUES ('97', 'display_qty', 'Limit the results');
+INSERT INTO `apiaccess` (`entlist_id`, `shortname`, `description`) VALUES ('25', 'value', 'Add a new Resume Data Value for a given Resume Data field');
+INSERT INTO `apiparams` (`apiaccess_id`, `param_name`, `param_type`, `param_req`, `description`) VALUES (449, 'users_id', 'int', 0, 'User ID');
+INSERT INTO `apiparams` (`apiaccess_id`, `param_name`, `param_type`, `param_req`, `description`) VALUES (449, 'user_value', 'string', 0, 'User value');
