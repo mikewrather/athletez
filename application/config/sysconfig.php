@@ -15,5 +15,6 @@
 			'moderator' => 'moderator',
 			'recruiter' => 'recruiter',
 		),
-		'defaultCommentsToDisplay' => 10
+		'defaultCommentsToDisplay' => 10,
+		'defaultGamesToDisplay' => 10
 	);

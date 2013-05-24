@@ -195,5 +195,39 @@ class Model_Location_Base extends ORM
         	return $e;
 		} 	
 	}
+
+	public function getGames($args = array()){
+		extract($args);
+		$games_model = $this->games;
+		if (isset($games_before)){
+			$games_model->where(DB::expr("concat( gameDay , ' ',  gameTime )"), '<', $games_before);
+		}
+		if (isset($games_after)){
+			$games_model->where(DB::expr("concat( gameDay , ' ',  gameTime )"), '>', $games_after);
+		}
+		if (isset($sports_id) || isset($complevels_id) || isset($teams_id)){
+			$games_model->join('games_teams_link')->on('games_teams_link.games_id', '=', 'sportorg_games_base.id');
+		}
+		if (isset($sports_id) || isset($complevels_id)){
+			$games_model->join('teams')->on('games_teams_link.teams_id', '=', 'teams.id');
+			$games_model->join('org_sport_link')->on('teams.org_sport_link_id', '=', 'org_sport_link.id');
+		}
+		if (isset($sports_id)){
+			$games_model->where('org_sport_link.sports_id', '=', $sports_id);
+		}
+		if (isset($complevels_id)){
+			$games_model->where('teams.complevels_id', '=', $complevels_id);
+		}
+		if (isset($teams_id)){
+			$games_model->where('games_teams_link.teams_id', '=', $teams_id);
+		}
+		if (!isset($limit)){
+			$e = Kohana::$config->load('sysconfig');
+			$display_qty = $e->get('defaultGamesToDisplay');
+			$limit = $display_qty;
+		}
+		$games_model->limit($limit);
+		return $games_model;
+	}
 	
 }

@@ -43,10 +43,6 @@
 			{
 				$retArr[] = $obj->getBasics();
 			}
-
-			// Scaffolding Code For Single:
-			$retArr = $this->obj->getBasics();
-
 			return $retArr;
 		}
 		
