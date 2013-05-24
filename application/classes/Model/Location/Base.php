@@ -42,9 +42,9 @@ class Model_Location_Base extends ORM
 			),
 
 			// zip (varchar)
-			'zip'=>array(
-				array('not_empty'),
-			),
+//			'zip'=>array(
+//				array('not_empty'),
+//			),
 
 /*			// lon (float)
 			'lon'=>array(
@@ -200,10 +200,10 @@ class Model_Location_Base extends ORM
 		extract($args);
 		$games_model = $this->games;
 		if (isset($games_before)){
-			$games_model->where(DB::expr("concat( gameDay , ' ',  gameTime )"), '<', $games_before);
+			$games_model->where(DB::expr("concat( gameDay , ' ',  gameTime')"), '<', $games_before);
 		}
 		if (isset($games_after)){
-			$games_model->where(DB::expr("concat( gameDay , ' ',  gameTime )"), '>', $games_after);
+			$games_model->where(DB::expr("concat('gameDay', ' ', 'gameTime')"), '>', $games_after);
 		}
 		if (isset($sports_id) || isset($complevels_id) || isset($teams_id)){
 			$games_model->join('games_teams_link')->on('games_teams_link.games_id', '=', 'sportorg_games_base.id');

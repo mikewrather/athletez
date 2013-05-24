@@ -320,7 +320,7 @@
 				
 			if(trim($this->put('address')) != "")
 			{
-				$args['address'] = trim($this->put('address'));
+				$args['address'] = urldecode(trim($this->put('address')));
 			}
 
 			// cities_id 
