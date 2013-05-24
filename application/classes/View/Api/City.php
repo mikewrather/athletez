@@ -31,12 +31,12 @@
 		 */
 		public function get_locations()
 		{
-			$retArr = array();
+			$retArr = null;
 
 			$locs = $this->obj->find_all();
 			foreach($locs as $loc)
 			{
-				$retArr[$loc->id] = $loc->getBasics();
+				$retArr[] = $loc->getBasics();
 			}
 
 			return $retArr;
@@ -49,13 +49,13 @@
 		 */
 		public function get_orgs()
 		{
-			$retArr = array();
+			$retArr = null;
 
 			$orgs = $this->obj->find_all();
 
 			foreach($orgs as $org)
 			{
-				$retArr[$org->id] = $org->getBasics();
+				$retArr[] = $org->getBasics();
 			}
 
 			return $retArr;
@@ -69,7 +69,7 @@
 		public function get_games()
 		{
 
-			$retArr = array();
+			$retArr = null;
 
 
 			$games = $this->obj->execute();
@@ -77,7 +77,7 @@
 			foreach($games as $game_array)
 			{
 				$game_obj = ORM::factory('Sportorg_Games_Base')->where('id','=',$game_array['id'])->find();
-				$retArr[$game_obj->id] = $game_obj->getBasics();
+				$retArr[] = $game_obj->getBasics();
 			}
 
 			return $retArr;
@@ -85,12 +85,12 @@
 
 		public function get_search()
 		{
-			$retArr = array();
+			$retArr = null;
 
 			$cities = $this->obj->find_all();
 			foreach($cities as $loc)
 			{
-				$retArr[$loc->id] = $loc->getBasics();
+				$retArr[] = $loc->getBasics();
 			}
 
 			return $retArr;

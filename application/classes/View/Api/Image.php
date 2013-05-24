@@ -44,17 +44,13 @@
 		 */
 		public function get_search()
 		{
-			$retArr = array();
+			$retArr = null;
 
 			// Scaffolding Code For Array:
 			$objs = $this->obj->find_all();
 			foreach($objs as $obj)
 			{
-				$retArr[$obj->id] = $obj->getBasics();
-			}
-
-			if (empty($retArr)){
-				return null;
+				$retArr[] = $obj->getBasics();
 			}
 
 			return $retArr;
