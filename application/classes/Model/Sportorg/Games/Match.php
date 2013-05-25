@@ -79,11 +79,15 @@ class Model_Sportorg_Games_Match extends ORM
 			return $e;
 		}
 	}
-	
-	public function updateGamematch($match_num)
+
+	public function updateGamematch($args = array())
 	{
-		// match_num 
-		// Change the Match Num for this match
+		extract($args);
+		if ( isset($id))
+		{
+			$this->id = $id;
+		}
+
 		if ( isset($match_num))
 		{
 			$this->match_num = $match_num;

@@ -120,58 +120,59 @@
 		public function action_post_addplayer()
 		{
 			$this->payloadDesc = "Add a new player to this match";
-
-		     // CHECK FOR PARAMETERS:
+			$arguments = array();
+			// CHECK FOR PARAMETERS:
 			// users_id (REQUIRED)
 			// ID of the player to add
-				
+
 			if((int)trim($this->request->post('users_id')) > 0)
 			{
-				$users_id = (int)trim($this->request->post('users_id'));
+				$arguments["users_id"] = (int)trim($this->request->post('users_id'));
 			}
 
-			else // THIS WAS A REQUIRED PARAMETER
-			{
-				// Create Array for Error Data
-				$error_array = array(
-					"error" => "Required Parameter Missing",
-					"param_name" => "users_id",
-					"param_desc" => "ID of the player to add"
-				);
-
-				// Set whether it is a fatal error
-				$is_fatal = true;
-
-				// Call method to throw an error
-				$this->addError($error_array,$is_fatal);
-
-			}
-			
-			// points_awarded 
-			// Number of Points earned (if applicable)
-				
 			if((int)trim($this->request->post('points_awarded')) > 0)
 			{
-				$points_awarded = (int)trim($this->request->post('points_awarded'));
+				$arguments["points_awarded"] = (int)trim($this->request->post('points_awarded'));
 			}
 
-			// match_won 
+			// match_won
 			// True if the player won the match in question
-				
+
 			if($this->request->post('match_won') != "")
 			{
 				//convert match_won to a boolean
-				$match_won = (bool)$this->request->post('match_won');
+				$arguments["match_winner"] = Util::convert_to_boolean($this->request->post('match_won'));
 			}
 
-			// result_time 
+			// result_time
 			// Result time (if applicable)
-				
+
 			if(trim($this->request->post('result_time')) != "")
 			{
-				$result_time = trim($this->request->post('result_time'));
+				$arguments["result_time"] = trim($this->request->post('result_time'));
 			}
 
+			if(!$this->mainModel->id)
+			{
+				$this->modelNotSetError();
+				return false;
+			}
+
+			$arguments["game_matches_id"] = $this->mainModel->id;
+			$matchplayer_model = ORM::factory("Sportorg_Games_Matchplayer");
+			$result = $matchplayer_model->addPlayer($arguments);
+
+			if(get_class($result) == get_class($matchplayer_model))
+			{
+				return $result;
+			}
+			elseif(get_class($result) == 'ORM_Validation_Exception')
+			{
+				//parse error and add to error array
+				$this->processValidationError($result,$this->mainModel->error_message_path);
+				return false;
+
+			}
 		}
 		
 		############################################################################
@@ -187,39 +188,30 @@
 		public function action_put_basics()
 		{
 			$this->payloadDesc = "Update Basic info for a game match";
+			$arguments = array();
 
-		     // CHECK FOR PARAMETERS:
-			// match_num 
-			// Change the Match Num for this match
-				
 			if(trim($this->put('match_num')) != "")
 			{
-				$match_num = trim($this->put('match_num'));
+				$arguments["match_num"] = urldecode(trim($this->put('match_num')));
 			}
 			if(!$this->mainModel->id)
 			{
 				$this->modelNotSetError();
 				return false;
 			}
-			try
-			{
-				$update_obj = $this->mainModel->updateGamematch($match_num);
-				return $update_obj->save();					
-			}catch(Exception $e)
-			{
-				// Create Array for Error Data
-				$error_array = array(
-					"error" => "Unable to save county",
-					"desc" => $e->getMessage()
-				);
-				 
-				// Set whether it is a fatal error
-				$is_fatal = true;
+			$arguments["id"] = $this->mainModel->id;
 
-				// Call method to throw an error
-				$this->addError($error_array,$is_fatal);
-				 
-				return $this;
+			$result = $this->mainModel->updateGamematch($arguments);
+			if(get_class($result) == get_class($this->mainModel))
+			{
+				return $result;
+			}
+			elseif(get_class($result) == 'ORM_Validation_Exception')
+			{
+				//parse error and add to error array
+				$this->processValidationError($result,$this->mainModel->error_message_path);
+				return false;
+
 			}
 		}
 		

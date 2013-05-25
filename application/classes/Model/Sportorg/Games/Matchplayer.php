@@ -10,7 +10,7 @@ class Model_Sportorg_Games_Matchplayer extends ORM
 	
 	protected $_table_name = 'game_match_players';
 
-	public $error_message_path = 'models/sportorg/games/sportorg_games_matchplayer';
+	public $error_message_path = 'models/sportorg/games';
 
 	protected $_belongs_to = array(
 		'user' => array(
@@ -97,7 +97,41 @@ class Model_Sportorg_Games_Matchplayer extends ORM
 		} catch(ORM_Validation_Exception $e){
 			return $e;
 		}
-		return $this;
+
+	}
+
+	public function addPlayer($args = array()){
+		extract($args);
+		if (isset($points_awarded)){
+			$this->points_awarded = $points_awarded;
+		}
+
+		if (isset($match_winner)){
+			$this->match_winner = $match_winner;
+		}
+
+		if (isset($points_awarded)){
+			$this->points_awarded = $points_awarded;
+		}
+
+		if (isset($users_id)){
+			$this->users_id = $users_id;
+		}
+
+		if (isset($game_matches_id)){
+			$this->game_matches_id = $game_matches_id;
+		}
+
+		if (isset($result_time)){
+			$this->result_time = $result_time;
+		}
+
+		try{
+			$this->save();
+			return $this;
+		}catch (ORM_Validation_Exception $e){
+			return $e;
+		}
 	}
 
 }
