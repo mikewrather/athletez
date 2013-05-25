@@ -131,7 +131,19 @@
 			$args['resume_data_id'] = $this->mainModel->id;
 
 			$resume_data = ORM::factory("User_Resume_Data_Vals");
-			return $resume_data->addValue($args);			 
+			$result = $resume_data->addValue($args);
+
+			if(get_class($result) == get_class($resume_data))
+			{
+				return $result;
+			}
+			elseif(get_class($result) == 'ORM_Validation_Exception')
+			{
+				//parse error and add to error array
+				$this->processValidationError($result,$this->mainModel->error_message_path);
+				return false;
+
+			}
 		}
 		
 		############################################################################

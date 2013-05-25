@@ -21,7 +21,7 @@ class Model_Location_County extends ORM
 	protected $_has_many = array(
 		'cities' => array(
 			'model' => 'Location_City',
-			'foreign_key' => 'counties_id'
+			'foreign_key' => 'county_id'
 		)
 	);
 	
@@ -42,6 +42,12 @@ class Model_Location_County extends ORM
             return true;
         }    
     }
+
+	public function getCities(){
+		$cities_model = $this->cities;
+		return $cities_model;
+	}
+
 	public function addCounty($args = array())	
 	{
 		extract($args);
@@ -115,5 +121,9 @@ class Model_Location_County extends ORM
 		} catch(ORM_Validation_Exception $e){
 			return $e;
 		}
+	}
+
+	public function name(){
+		return "";
 	}
 }

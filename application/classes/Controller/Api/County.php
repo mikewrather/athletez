@@ -60,7 +60,7 @@
 				$this->modelNotSetError();
 				return false;
 			}
-			return $this->mainModel;
+			return $this->mainModel->getCities();
 		}
 		
 		/**
