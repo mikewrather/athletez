@@ -10,6 +10,7 @@ class Model_Location_City extends ORM
 	
 	protected $_table_name = 'cities';
 
+	public $error_message_path = 'models/location/city';
 
 	protected $_belongs_to = array(
 		'county' => array(
@@ -25,9 +26,6 @@ class Model_Location_City extends ORM
 		)
 	);
 
-	public $error_message_path = 'models/location/city';
-
-## Rules For Location_City -- City
 	public function rules(){
 
 		return array
@@ -36,6 +34,8 @@ class Model_Location_City extends ORM
 			'name'=>array(
 				array('not_empty'),
 			),
+
+
 
 			// county_id (int)
 			'county_id'=>array(
@@ -206,7 +206,7 @@ class Model_Location_City extends ORM
 		return $locations;
 	}
 
-	public function getOrgs($args = array())
+	public function getOrgs()
 	{
 		$orgs = ORM::factory('Sportorg_Org')
 			->join('locations','LEFT')

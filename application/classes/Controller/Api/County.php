@@ -152,7 +152,7 @@
 		{
 			$this->payloadDesc = "Add a new County";
 
-			$new_county = ORM::factory('Location_County');
+
 
 			if(trim($this->request->post('name')) != "")
 			{
@@ -160,7 +160,7 @@
 			}
 
 			$states_id = trim($this->request->post('states_id'));
-
+			$new_county = ORM::factory('Location_County');
 			$new_county->name = $name;
 			$new_county->states_id = $states_id;
 			//add validation & save logics here
@@ -204,7 +204,7 @@
 				
 			if(trim($this->put('name')) != "")
 			{
-				$args['name'] = trim($this->put('name'));
+				$args['name'] = urldecode(trim($this->put('name')));
 			}
 
 			// states_id 

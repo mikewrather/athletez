@@ -68,10 +68,7 @@
 		 */
 		public function get_games()
 		{
-
 			$retArr = null;
-
-
 			$games = $this->obj->execute();
 		//	print_r($games);
 			foreach($games as $game_array)
