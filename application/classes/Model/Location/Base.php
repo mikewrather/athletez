@@ -46,15 +46,17 @@ class Model_Location_Base extends ORM
 //				array('not_empty'),
 //			),
 
-/*			// lon (float)
+			// lon (float)
 			'lon'=>array(
 				array('not_empty'),
+				array('digit'),
 			),
 
 			// lat (float)
 			'lat'=>array(
 				array('not_empty'),
-			), */
+				array('digit'),
+			),
 
 			// loc_point (point), Comment by jeffrey, no this field in page, ignore
 			/*
@@ -179,17 +181,17 @@ class Model_Location_Base extends ORM
 		{
 			$this->location_type = $location_type;
 		}
+
+		$this->loc_point = DB::expr("GeomFromText('POINT(".$lat." ".$lon.")')");
 		         
 		try{		 
-            //$new_location = $this->save();    
-            //return $new_location;
-			$db = Database::instance();
-			
-			$result = $db->query(Database::INSERT, "insert into locations (address, cities_id, lon, lat, loc_point, location_type, zip)
-				values('".$address."',".$cities_id.", ".$lon.", ".$lat.", Point(".$lat.", ".$lon."), '".$location_type."', ".$zip.") ");
-            
+//			$db = Database::instance();
+//
+//			$result = $db->query(Database::INSERT, "insert into locations (address, cities_id, lon, lat, loc_point, location_type, zip)
+//				values('".$address."',".$cities_id.", ".$lon.", ".$lat.", Point(".$lat.", ".$lon."), '".$location_type."', ".$zip.") ");
+//
+			$this->save();
 			return $this;
-			
 		} catch(ORM_Validation_Exception $e)
 		{
         	return $e;
