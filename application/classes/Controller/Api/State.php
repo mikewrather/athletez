@@ -241,8 +241,8 @@
                 // Create Array for Error Data
                 $error_array = array(
                     "error" => "This county already exists",
-                    "param_name" => "name and state_id",
-                    "param_desc" => "name and state_id"
+                    "param_name" => "county",
+                    "param_desc" => "This county already exists"
                 );
 
                 // Set whether it is a fatal error
@@ -326,8 +326,8 @@
                 // Create Array for Error Data
                 $error_array = array(
                     "error" => "This division already exists",
-                    "param_name" => "name and state_id",
-                    "param_desc" => "name and state_id"
+                    "param_name" => "division",
+                    "param_desc" => "This division already exists"
                 );
 
                 // Set whether it is a fatal error
@@ -428,8 +428,8 @@
                 // Create Array for Error Data
                 $error_array = array(
                     "error" => "This section already exists",
-                    "param_name" => "name,state_id, sports_id",
-                    "param_desc" => "name,state_id, sports_id"
+                    "param_name" => "section",
+                    "param_desc" => "This section already exists"
                 );
 
                 // Set whether it is a fatal error
@@ -544,7 +544,7 @@
 				
 			if(trim($this->put('name')) != "")
 			{
-				$args['name'] = trim($this->put('name'));
+				$args['name'] = urldecode(trim($this->put('name')));
 			}
 
 			// countries_id 

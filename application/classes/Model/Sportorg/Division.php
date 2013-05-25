@@ -53,9 +53,9 @@ class Model_Sportorg_Division extends ORM
 
 	public function getBasics()
 	{
-		$orgsArray = array();
+		$orgsArray = null;
 		foreach($this->orgs->find_all() as $org){
-			$orgsArray[$org->id] = $org->getBasics();
+			$orgsArray[] = $org->getBasics();
 		}
 		return array(
 			"id" => $this->id,
@@ -118,9 +118,7 @@ class Model_Sportorg_Division extends ORM
             return true;
         }       
     }
-    
-          
-     
+
 	public function addDivision($args = array() )
 	{
 		extract($args);

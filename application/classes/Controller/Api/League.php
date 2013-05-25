@@ -142,7 +142,7 @@
 				
 			if(trim($this->put('name')) != "")
 			{
-				$args['name'] = trim($this->put('name'));
+				$args['name'] = urldecode(trim($this->put('name')));
 			}
 
 			// states_id 

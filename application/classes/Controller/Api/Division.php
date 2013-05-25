@@ -176,7 +176,6 @@
 				return false;
 			}
 			return $this->mainModel->deleteDivision();
-		
 		}
 		
 	}

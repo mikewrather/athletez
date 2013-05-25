@@ -128,7 +128,7 @@
 		 */
 		public function action_delete_base()
 		{
-			$this->payloadDesc = "Delete  sport type";
+			$this->payloadDesc = "Delete sport type";
 
 			if(!$this->mainModel->id)
 			{
