@@ -31,4 +31,3 @@ define( ["facade", "media/models/video", "utils"], function (facade, MediaVideoM
 
     return ProfileAddVideoModel;
 });
-

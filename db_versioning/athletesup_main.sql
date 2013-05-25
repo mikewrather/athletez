@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50525
 File Encoding         : 65001
 
-Date: 2013-05-21 17:50:43
+Date: 2013-05-25 00:36:00
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -44,7 +44,7 @@ CREATE TABLE `apiaccess` (
   `id2` varchar(25) CHARACTER SET latin1 COLLATE latin1_german1_ci DEFAULT NULL,
   `current_status` text,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=447 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=450 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of apiaccess
@@ -326,6 +326,9 @@ INSERT INTO `apiaccess` VALUES ('443', '5', 'GET', 'comments', 'Team comments', 
 INSERT INTO `apiaccess` VALUES ('444', '5', 'GET', 'recent_schedules', 'Recent schedules', '0', null, null, null);
 INSERT INTO `apiaccess` VALUES ('445', '5', 'GET', 'upcoming_schedules', 'Upcoming schedules', '0', null, null, null);
 INSERT INTO `apiaccess` VALUES ('446', '8', 'GET', 'teamrosters', 'Team rosters for a game', '0', null, null, null);
+INSERT INTO `apiaccess` VALUES ('447', '8', 'POST', 'addcomments', 'Add comments for a game', '0', null, null, null);
+INSERT INTO `apiaccess` VALUES ('448', '5', 'POST', 'addcomments', 'Add comments for a team', '0', null, null, null);
+INSERT INTO `apiaccess` VALUES ('449', '25', 'POST', 'value', 'Add a new Resume Data Value for a given Resume Data field', '0', null, null, null);
 
 -- ----------------------------
 -- Table structure for `apiparams`
@@ -340,7 +343,7 @@ CREATE TABLE `apiparams` (
   `description` varchar(255) DEFAULT NULL,
   `enttypes_id` int(10) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=386 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=397 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of apiparams
@@ -712,6 +715,17 @@ INSERT INTO `apiparams` VALUES ('382', '189', 'image_file', 'file', '0', 'File f
 INSERT INTO `apiparams` VALUES ('383', '17', 'sports_id', 'int', '0', 'Sports ID', '4');
 INSERT INTO `apiparams` VALUES ('384', '18', 'sports_id', 'int', '0', 'Sports ID', '4');
 INSERT INTO `apiparams` VALUES ('385', '18', 'complevels_id', 'int', '0', 'Complevels ID', '11');
+INSERT INTO `apiparams` VALUES ('386', '444', 'display_qty', 'int', '0', 'How many comments to display', null);
+INSERT INTO `apiparams` VALUES ('387', '445', 'display_qty', 'int', '0', 'How many comments to display', null);
+INSERT INTO `apiparams` VALUES ('388', '447', 'subject_type_id', 'int', '0', 'The ID of the subject type / entity type of the comment\'s subject (this is a row from the enttypes table) ', null);
+INSERT INTO `apiparams` VALUES ('389', '447', 'subject_id', 'int', '0', 'This is the ID of the subject whos type is specified in the enttypes table', null);
+INSERT INTO `apiparams` VALUES ('390', '447', 'comment', 'string', '0', 'The text of the comment', null);
+INSERT INTO `apiparams` VALUES ('391', '448', 'subject_type_id', 'int', '0', 'The ID of the subject type / entity type of the comment\'s subject (this is a row from the enttypes table) ', null);
+INSERT INTO `apiparams` VALUES ('392', '448', 'subject_id', 'int', '0', 'This is the ID of the subject whos type is specified in the enttypes table', null);
+INSERT INTO `apiparams` VALUES ('393', '448', 'comment', 'string', '0', 'The text of the comment', null);
+INSERT INTO `apiparams` VALUES ('394', '97', 'display_qty', 'int', '0', 'Limit the results', null);
+INSERT INTO `apiparams` VALUES ('395', '449', 'users_id', 'int', '0', 'User ID', null);
+INSERT INTO `apiparams` VALUES ('396', '449', 'user_value', 'string', '0', 'User value', null);
 
 -- ----------------------------
 -- Table structure for `apitest`
@@ -31489,7 +31503,7 @@ CREATE TABLE `comments` (
   `comment` text NOT NULL,
   `timePosted` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of comments
@@ -31510,6 +31524,7 @@ INSERT INTO `comments` VALUES ('13', '1', '425983', '425983', 'asdf', '2013-05-1
 INSERT INTO `comments` VALUES ('14', '1', '425983', '425983', 'asdfasdf', '2013-05-18 01:26:36');
 INSERT INTO `comments` VALUES ('15', '1', '425983', '425983', 'asdf', '2013-05-21 00:40:06');
 INSERT INTO `comments` VALUES ('16', '1', '425983', '425983', 'test', '2013-05-21 00:40:14');
+INSERT INTO `comments` VALUES ('17', '1', '425983', '425983', 'yo yo yo', '2013-05-22 22:31:40');
 
 -- ----------------------------
 -- Table structure for `complevels`
@@ -31538,7 +31553,7 @@ CREATE TABLE `complevel_profiles` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of complevel_profiles
@@ -39853,12 +39868,39 @@ CREATE TABLE `resume_data` (
   `name` varchar(255) NOT NULL,
   `resume_data_type` enum('number','string','time') DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of resume_data
 -- ----------------------------
 INSERT INTO `resume_data` VALUES ('1', '1', '40 Yard Dash', 'time');
+INSERT INTO `resume_data` VALUES ('2', '2', '1 Mile Time', 'time');
+INSERT INTO `resume_data` VALUES ('3', '2', '6K Time', 'time');
+INSERT INTO `resume_data` VALUES ('4', '2', '10K Time', 'time');
+INSERT INTO `resume_data` VALUES ('5', '2', '100 Meter Sprint', 'time');
+INSERT INTO `resume_data` VALUES ('6', '3', 'Vertical Leap (Two Hand Touch)', 'number');
+INSERT INTO `resume_data` VALUES ('7', '1', '1 Minute of Situps', 'number');
+INSERT INTO `resume_data` VALUES ('8', '1', 'Pull Ups (Hands Facing Forward)', 'number');
+INSERT INTO `resume_data` VALUES ('9', '3', 'Vertical Leap (One Hand Touch)', 'number');
+INSERT INTO `resume_data` VALUES ('10', '3', 'Standing Forward Jump', 'number');
+INSERT INTO `resume_data` VALUES ('11', '1', 'Max Push-Ups', 'number');
+INSERT INTO `resume_data` VALUES ('12', '4', '10K Run Time', 'time');
+INSERT INTO `resume_data` VALUES ('13', '4', 'VO2 Max', 'string');
+INSERT INTO `resume_data` VALUES ('14', '2', '200 Meter Sprint', 'time');
+INSERT INTO `resume_data` VALUES ('15', '2', '300 Meter Sprint', 'time');
+INSERT INTO `resume_data` VALUES ('16', '2', '400 Meter Sprint', 'time');
+INSERT INTO `resume_data` VALUES ('17', '5', 'Max 6-rep Bench Press', 'number');
+INSERT INTO `resume_data` VALUES ('18', '5', 'Max 3-rep Bench Press', 'number');
+INSERT INTO `resume_data` VALUES ('19', '5', 'Max 1-rep Bench Press', 'number');
+INSERT INTO `resume_data` VALUES ('20', '5', 'Max 6-rep Squat', 'number');
+INSERT INTO `resume_data` VALUES ('21', '5', 'Max 3-rep Squat', 'number');
+INSERT INTO `resume_data` VALUES ('22', '5', 'Max 1-rep Squat', 'number');
+INSERT INTO `resume_data` VALUES ('23', '5', 'Max 6-rep Dead Lift', 'number');
+INSERT INTO `resume_data` VALUES ('24', '5', 'Max 3-rep Dead Lift', 'number');
+INSERT INTO `resume_data` VALUES ('25', '5', 'Max 1-rep Dead Lift', 'number');
+INSERT INTO `resume_data` VALUES ('26', '5', 'Max 6-rep Military Press', 'number');
+INSERT INTO `resume_data` VALUES ('27', '5', 'Max 3-rep Military Press', 'number');
+INSERT INTO `resume_data` VALUES ('28', '5', 'Max 1-rep Military Press', 'number');
 
 -- ----------------------------
 -- Table structure for `resume_data_groups`
@@ -39869,12 +39911,16 @@ CREATE TABLE `resume_data_groups` (
   `name` varchar(255) NOT NULL,
   `description` varchar(1000) NOT NULL DEFAULT '',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of resume_data_groups
 -- ----------------------------
-INSERT INTO `resume_data_groups` VALUES ('1', 'test name change', '');
+INSERT INTO `resume_data_groups` VALUES ('1', 'Basic Fitness', 'General Fitness Tests Applicable to Many Sports');
+INSERT INTO `resume_data_groups` VALUES ('2', 'Running', 'Running Tests of Various Distances');
+INSERT INTO `resume_data_groups` VALUES ('3', 'Hops', 'Jumping Tests');
+INSERT INTO `resume_data_groups` VALUES ('4', 'Endurance', 'General Endurance Testing');
+INSERT INTO `resume_data_groups` VALUES ('5', 'Strength', 'Manly Things');
 
 -- ----------------------------
 -- Table structure for `resume_data_profiles`
@@ -42054,7 +42100,7 @@ CREATE TABLE `tags` (
   `users_id` int(11) DEFAULT NULL,
   `timePosted` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of tags
@@ -42071,6 +42117,7 @@ INSERT INTO `tags` VALUES ('10', '1302', '1', '425983', null, '2013-05-18 02:10:
 INSERT INTO `tags` VALUES ('11', '1301', '1', '425983', null, '2013-05-18 02:11:01');
 INSERT INTO `tags` VALUES ('12', '1300', '1', '425983', null, '2013-05-18 02:11:05');
 INSERT INTO `tags` VALUES ('13', '1299', '1', '425983', null, '2013-05-18 02:11:11');
+INSERT INTO `tags` VALUES ('14', '1226', '1', '425983', '101', '2013-05-22 22:13:59');
 
 -- ----------------------------
 -- Table structure for `teams`
@@ -42128,7 +42175,7 @@ CREATE TABLE `users` (
 -- Records of users
 -- ----------------------------
 INSERT INTO `users` VALUES ('1', 'kamil.symanski@gmail.com_', 'kamil', '896850b3f3929cbeff81d0ff8c98bee1931d42505d782915974c015472fca4cc', '2', '1362780207', null, null, null, null, null, null, null, null, null, null, null);
-INSERT INTO `users` VALUES ('101', 'mike@testStuff.com', 'mike@testStuff.com', '896850b3f3929cbeff81d0ff8c98bee1931d42505d782915974c015472fca4cc', '0', null, 'Ted', 'Wrather', '2462', null, null, null, null, null, null, null, null);
+INSERT INTO `users` VALUES ('101', 'mike@testStuff.com', 'mike@testStuff.com', '896850b3f3929cbeff81d0ff8c98bee1931d42505d782915974c015472fca4cc', '0', null, 'Albert', 'Wrather', '2462', null, null, null, null, null, null, null, null);
 INSERT INTO `users` VALUES ('424322', 'max@dhjpartnersllc.com_', 'max@dhjpartnersllc.com', '5893122cf860f9093416f88beef8a394d6c860fcc51c10f216', '1144', '1362492159', 'Maxwell', 'Doyle', '16152', null, null, '1987-12-27', '65', '210', '2005', null, null);
 INSERT INTO `users` VALUES ('424490', 'mike.wrather_@gmail.com_', 'administrator', 'cf243078a5968a55e257f052e7264f77c8c269fa7feb0f5a67', '130', '1361876933', 'Admin', 'Jones', '404', null, null, null, null, null, null, null, null);
 INSERT INTO `users` VALUES ('424494', 'shawnbranch1@aol.com_', 'shawnbranch1@aol.com', '100a529361a50190e328d2f8ed61eb5e2ba54b90acd5fbd820', '8', '1341470254', 'Shawn', 'Branch', '17086', null, null, null, null, null, null, null, null);
@@ -43548,7 +43595,7 @@ INSERT INTO `users` VALUES ('425979', 'clay_gorham@yahoo.com_', 'clay_gorham@yah
 INSERT INTO `users` VALUES ('425980', 'cavellobrick@yahoo.com_', 'pete.cavello', 'd5d845c15751d7bda5d9101d28fbcc13e22cba20c06e057132', '1', '1362980726', 'Pete', 'Cavello', '1771', null, null, null, null, null, null, null, null);
 INSERT INTO `users` VALUES ('425981', 'treythornburg@gmail.com_', 'treythornburg@gmail.com', '8e720bbf5b8e4e4587e627e599f79741f68ac2e3a9ed470260', '1', '1363024849', 'Trey', 'Thornburg', '0', null, null, null, null, null, null, null, null);
 INSERT INTO `users` VALUES ('425982', 'nicolette.elliott@yahoo.com_', 'nicolette.elliott@yahoo.com', '9cc3931c59b143ab87bece75e1d280cb3d1033e4d2a5b8f375', '1', '1363064186', 'Nicolette Amber', 'Elliott', '2462', null, null, null, null, null, null, null, null);
-INSERT INTO `users` VALUES ('425983', 'mike.wrather@gmail.com', 'mike.wrather@gmail.com', '896850b3f3929cbeff81d0ff8c98bee1931d42505d782915974c015472fca4cc', '2', '1369133329', 'Mike', 'Wrather', null, null, null, '2013-05-19', '72', '190', '2014', null, '100');
+INSERT INTO `users` VALUES ('425983', 'mike.wrather@gmail.com', 'mike.wrather@gmail.com', '896850b3f3929cbeff81d0ff8c98bee1931d42505d782915974c015472fca4cc', '2', '1369207837', 'Mike', 'Wrather', null, null, null, '2013-05-19', '72', '190', '2014', null, '100');
 INSERT INTO `users` VALUES ('425984', 'admin@mail.com', 'admin', '896850b3f3929cbeff81d0ff8c98bee1931d42505d782915974c015472fca4cc', '0', '1367963355', 'Mike', 'Wrather', null, null, null, null, null, null, null, null, null);
 INSERT INTO `users` VALUES ('425985', 'jack@word.com', '', '896850b3f3929cbeff81d0ff8c98bee1931d42505d782915974c015472fca4cc', '0', null, 'Jack', 'Brock', null, null, null, null, null, null, null, null, null);
 INSERT INTO `users` VALUES ('425987', 'mike@poopyfartface.com', 'mike@poopyfartface.com', '555156e5fddaa4461ff439c27d0989a1c0062552829a89997aa34988c02118a0', '0', null, 'Mike', 'Wrather', null, null, null, null, null, null, null, null, null);
@@ -43646,7 +43693,7 @@ CREATE TABLE `user_tokens` (
   KEY `fk_user_id` (`user_id`),
   KEY `expires` (`expires`),
   CONSTRAINT `user_tokens_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=56 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=57 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of user_tokens
@@ -43673,6 +43720,7 @@ INSERT INTO `user_tokens` VALUES ('52', '425984', 'b25818855b31f99cdb1f68c063a49
 INSERT INTO `user_tokens` VALUES ('53', '425984', 'c684dac400b46ad86a9d16c66fb9ad1ce80746ba', '68f7bd795e1711959e67c3dcfa2848afd522f73e', '1367904318', '1369113918');
 INSERT INTO `user_tokens` VALUES ('54', '425983', '8ecdbea805a7f2a8c7989ddeaed52d8d227892bf', 'c9e86eaed0553a644461d990e0daa743136a7c21', '1368423922', '1369633522');
 INSERT INTO `user_tokens` VALUES ('55', '425983', 'ed731afe458f3d5643c551f633f7d745d55730ae', '09e8e7993532b87843c298cc736caa7c9bf9793a', '1368774224', '1369983824');
+INSERT INTO `user_tokens` VALUES ('56', '425983', '1b10abbdbdf0abc49ecae783eb0ec1fc9abfab7d', 'c947631deadd002c69e403ac50acc41b3d4a79b1', '1369207837', '1370417437');
 
 -- ----------------------------
 -- Table structure for `usl_game_link`
@@ -45997,23 +46045,3 @@ INSERT INTO `votes` VALUES ('1', '19', '1229', '101', '2013-05-08 18:08:37');
 INSERT INTO `votes` VALUES ('2', '19', '1229', '1', '2013-05-08 18:08:37');
 INSERT INTO `votes` VALUES ('3', '19', '1229', '2', '2013-05-08 18:08:38');
 INSERT INTO `votes` VALUES ('4', '19', '1229', '3', '2013-05-08 18:08:58');
-
--- limit
-INSERT INTO `apiparams` (`apiaccess_id`, `param_name`, `description`) VALUES ('444', 'display_qty', 'How many comments to display');
-INSERT INTO `apiparams` (`apiaccess_id`, `param_name`, `description`) VALUES ('445', 'display_qty', 'How many comments to display');
-INSERT INTO `apiaccess` (`entlist_id`, `shortname`, `description`) VALUES ('8', 'addcomments', 'Add comments for a game');
-INSERT INTO `apiaccess` (`entlist_id`, `shortname`, `description`) VALUES ('5', 'addcomments', 'Add comments for a team');
-
-INSERT INTO `apiparams` (`apiaccess_id`, `param_name`, `param_type`, `param_req`, `description`) VALUES (447, 'subject_type_id', 'int', 0, 'The ID of the subject type / entity type of the comment\'s subject (this is a row from the enttypes table) ');
-INSERT INTO `apiparams` (`apiaccess_id`, `param_name`, `param_type`, `param_req`, `description`) VALUES (447, 'subject_id', 'int', 0, 'This is the ID of the subject whos type is specified in the enttypes table');
-INSERT INTO `apiparams` (`apiaccess_id`, `param_name`, `param_type`, `param_req`, `description`) VALUES (447, 'comment', 'string', 0, 'The text of the comment');
-
-INSERT INTO `apiparams` (`apiaccess_id`, `param_name`, `param_type`, `param_req`, `description`) VALUES (448, 'subject_type_id', 'int', 0, 'The ID of the subject type / entity type of the comment\'s subject (this is a row from the enttypes table) ');
-INSERT INTO `apiparams` (`apiaccess_id`, `param_name`, `param_type`, `param_req`, `description`) VALUES (448, 'subject_id', 'int', 0, 'This is the ID of the subject whos type is specified in the enttypes table');
-INSERT INTO `apiparams` (`apiaccess_id`, `param_name`, `param_type`, `param_req`, `description`) VALUES (448, 'comment', 'string', 0, 'The text of the comment');
-
---
-INSERT INTO `apiparams` (`apiaccess_id`, `param_name`, `description`) VALUES ('97', 'display_qty', 'Limit the results');
-INSERT INTO `apiaccess` (`entlist_id`, `shortname`, `description`) VALUES ('25', 'value', 'Add a new Resume Data Value for a given Resume Data field');
-INSERT INTO `apiparams` (`apiaccess_id`, `param_name`, `param_type`, `param_req`, `description`) VALUES (449, 'users_id', 'int', 0, 'User ID');
-INSERT INTO `apiparams` (`apiaccess_id`, `param_name`, `param_type`, `param_req`, `description`) VALUES (449, 'user_value', 'string', 0, 'User value');
