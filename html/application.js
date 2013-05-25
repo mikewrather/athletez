@@ -24,7 +24,7 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
             
             'profile': 'showProfile',
             'profile/': 'showProfile',
-            'profile/:action': 'showProfile',
+            'profile/:userid': 'showProfile',
             
             'game': 'showGame',
             'game/': 'showGame',
@@ -56,16 +56,16 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
             this.showRegistration();
         },
         
-        showProfile: function () {
+        showProfile: function (userid) {
             this.loadStyles();
             
             $('body').empty();
             chromeBootstrap();
-            
+
             function initProfile(id) {
                 var profileController = new ProfileController({
                     "route": "resume", 
-                    "id": id
+                    "id": userid==undefined ? id : userid
                 });
             }
             

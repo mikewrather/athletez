@@ -77,6 +77,8 @@ define([
 
             _.bindAll(this);
 
+	        console.log("Profile Options: ",options);
+
             this.handleOptions(options);
             
             if (options.id) {
