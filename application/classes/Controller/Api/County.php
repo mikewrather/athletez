@@ -76,7 +76,8 @@
 				$this->modelNotSetError();
 				return false;
 			}
-			return $this->mainModel;
+			$county_id = $this->mainModel->id;
+			return $this->mainModel->getOrgs($county_id);
 		}
 		
 		/**
@@ -151,37 +152,34 @@
 		public function action_post_add()
 		{
 			$this->payloadDesc = "Add a new County";
-
-
+			$arguments = array();
+			// CHECK FOR PARAMETERS:
+			// name (REQUIRED)
+			// The name of the County to add
 
 			if(trim($this->request->post('name')) != "")
 			{
-				$name = trim($this->request->post('name'));
+				$arguments["name"] = trim($this->request->post('name'));
 			}
 
-			$states_id = trim($this->request->post('states_id'));
-			$new_county = ORM::factory('Location_County');
-			$new_county->name = $name;
-			$new_county->states_id = $states_id;
-			//add validation & save logics here
-			$county_validate = Validation::factory($new_county->as_array())
-				->rule('name', 'not_empty')
-				->rule('states_id', 'states_id_exist');
-
-			if (!$county_validate->check()){
-				$validate_errors = $county_validate->errors('models/location/county');
-				$error_array = array(
-					"error" => implode('\n', $validate_errors),
-					"param_name" => "name",
-					"param_desc" => "Name of the County to add"
-				);
-				// Set whether it is a fatal error
-				$is_fatal = true;
-				$this->addError($error_array, $is_fatal);
-				return $new_county;
+			if((int)trim($this->request->post('states_id')) > 0)
+			{
+				$arguments["states_id"] = (int)trim($this->request->post('states_id'));
 			}
-			$new_county->save();
-			return $new_county;
+
+			$result = $this->mainModel->addCounty($arguments);
+			//Check for success / error
+			if(get_class($result) == get_class($this->mainModel))
+			{
+				return $result;
+			}
+			elseif(get_class($result) == 'ORM_Validation_Exception')
+			{
+				//parse error and add to error array
+				$this->processValidationError($result,$this->mainModel->error_message_path);
+				return false;
+
+			}
 		}
 		
 		############################################################################

@@ -230,9 +230,6 @@
 
 			$args = array(); //This will get passed to the add method
 
-		     // CHECK FOR PARAMETERS:
-			// name (REQUIRED)
-			// Name of the city to add
 			if(trim($this->request->post('name')) != "")
 			{
 				$args['name'] = trim($this->request->post('name'));
@@ -269,4 +266,68 @@
 			}
 
 		}
+
+		public function action_put_basics()
+		{
+			$this->payloadDesc = "Update city";
+			$args = array(); //This will get passed to the add method
+
+			if(trim($this->put('name')) != "")
+			{
+				$args['name'] = urldecode(trim($this->put('name')));
+			}
+
+			// states_id
+			// State the city belongs to
+			/*
+			if((int)trim($this->request->post('states_id')) > 0)
+			{
+				$args['states_id'] = (int)trim($this->request->post('states_id'));
+			}
+			*/
+
+			// counties_id (REQUIRED)
+			// The county the city belongs to
+			if((int)trim($this->put('counties_id')) > 0)
+			{
+				$args['counties_id'] = (int)trim($this->put('counties_id'));
+			}
+
+			if(!$this->mainModel->id)
+			{
+				$this->modelNotSetError();
+				return false;
+			}
+			$args['id'] = $this->mainModel->id;
+
+			$result =  $this->mainModel->addCity($args);
+
+			//Check for success / error
+			if(get_class($result) == get_class($this->mainModel))
+			{
+				return $result;
+			}
+			elseif(get_class($result) == 'ORM_Validation_Exception')
+			{
+				//parse error and add to error array
+				$this->processValidationError($result,$this->mainModel->error_message_path);
+				return false;
+			}
+
+		}
+
+		public function action_delete_basics()
+		{
+			$this->payloadDesc = "Delete city";
+			if(!$this->mainModel->id)
+			{
+				$this->modelNotSetError();
+				return false;
+			}
+
+			$this->mainModel->delete();
+
+		}
+
+
 	}

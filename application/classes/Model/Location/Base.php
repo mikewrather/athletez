@@ -22,6 +22,10 @@ class Model_Location_Base extends ORM
 		'games' => array(
 			'model' => 'Sportorg_Games_Base',
 			'foreign_key' => 'locations_id'
+		),
+		'orgs' => array(
+			'model' => 'Sportorg_Org',
+			'foreign_key' => 'locations_id'
 		)
 	);
 

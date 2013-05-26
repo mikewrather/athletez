@@ -10,7 +10,7 @@ class Model_Location_City extends ORM
 	
 	protected $_table_name = 'cities';
 
-	public $error_message_path = 'models/location/city';
+	public $error_message_path = 'models/location';
 
 	protected $_belongs_to = array(
 		'county' => array(
@@ -34,9 +34,6 @@ class Model_Location_City extends ORM
 			'name'=>array(
 				array('not_empty'),
 			),
-
-
-
 			// county_id (int)
 			'county_id'=>array(
 				array('not_empty'),
@@ -73,8 +70,6 @@ class Model_Location_City extends ORM
 			$this->name = $name;
 		}
 
-		// counties_id (REQUIRED)
-		// The county the city belongs to
 		if(isset($counties_id))
 		{
 			$this->county_id = $counties_id;
@@ -82,6 +77,10 @@ class Model_Location_City extends ORM
 
 			// Get State for County
 			$this->state_id = $county->state->id;
+		}
+
+		if(isset($id)){
+			$this->id = $id;
 		}
 
 		try

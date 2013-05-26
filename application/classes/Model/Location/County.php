@@ -9,7 +9,8 @@ class Model_Location_County extends ORM
 {
 	
 	protected $_table_name = 'counties';
-	
+
+	public $error_message_path = "models/location";
 
 	protected $_belongs_to = array(
 		'state' => array(
@@ -24,6 +25,22 @@ class Model_Location_County extends ORM
 			'foreign_key' => 'county_id'
 		)
 	);
+
+	public function rules(){
+		return array
+		(
+			// name (varchar)
+			'name'=>array(
+				array('not_empty'),
+			),
+
+			// states_id (int)
+			'states_id'=>array(
+				array('digit'),
+				array('states_id_exist')
+			),
+		);
+	}
 	
     public static function check_county_exist($args = array())
     {
@@ -40,7 +57,7 @@ class Model_Location_County extends ORM
         }else
         {
             return true;
-        }    
+        }
     }
 
 	public function getCities(){
@@ -80,23 +97,6 @@ class Model_Location_County extends ORM
 		);
 	}
 	
-	public function rules(){
-
-		return array
-		(
-			// name (varchar)
-			'name'=>array(
-				array('not_empty'),
-			),
-
-			// states_id (int)
-			'states_id'=>array(
-				array('digit'),
-				array('states_id_exist')
-			),
-		);
-	}
-
 	public function updateCounty($args = array()){
 		extract($args);
 		if(isset($name))
@@ -121,6 +121,14 @@ class Model_Location_County extends ORM
 		} catch(ORM_Validation_Exception $e){
 			return $e;
 		}
+	}
+
+	public function getOrgs($county_id){
+		$org_model = ORM::factory("Sportorg_Org");
+		$org_model->join('locations')->on('sportorg_org.locations_id', '=', 'locations.id');
+		$org_model->join('cities')->on('cities.id', '=', 'locations.cities_id');
+		$org_model->where('cities.county_id', '=', $county_id);
+		return $org_model;
 	}
 
 	public function name(){

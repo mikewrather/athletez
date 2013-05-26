@@ -275,67 +275,26 @@
 			{
 				$args['name'] = trim($this->request->post('name'));
 			}
-
-			else // THIS WAS A REQUIRED PARAMETER
-			{
-				// Create Array for Error Data
-				$error_array = array(
-					"error" => "Required Parameter Missing",
-					"param_name" => "name",
-					"param_desc" => "Name of the Division to add"
-				);
-
-				// Set whether it is a fatal error
-				$is_fatal = true;
-
-				// Call method to throw an error
-				$this->addError($error_array,$is_fatal);
-
-			}
-			
-			// sections_id 
-			// The ID of the Section (if applicable)
 				
 			if((int)trim($this->request->post('sections_id')) > 0)
 			{
 				$args['sections_id'] = (int)trim($this->request->post('sections_id'));
 			}
+
 			$args['states_id'] = $this->mainModel->id;
 			  
-			$division = ORM::factory('Sportorg_Division');			
-            
-            if($division->check_division_exist($args))
-            {
-                unset($division);
-                $division = ORM::factory('Sportorg_Division');
-                $result = $division->addDivision($args);
-                //Check for success / error
-                if(get_class($result) == get_class($this->mainModel))
-                {
-                    return $result;
-                }
-                elseif(get_class($result) == 'ORM_Validation_Exception')
-                {
-                    //parse error and add to error array
-                    $this->processValidationError($result,$this->mainModel->error_message_path);
-                    return false;
-
-                }  
-            } else
-            {
-                // Create Array for Error Data
-                $error_array = array(
-                    "error" => "This division already exists",
-                    "param_name" => "division",
-                    "param_desc" => "This division already exists"
-                );
-
-                // Set whether it is a fatal error
-                $is_fatal = true;
-
-                // Call method to throw an error
-                $this->addError($error_array,$is_fatal);
-            }
+			$division = ORM::factory('Sportorg_Division');
+      		$result = $division->addDivision($args);
+			if(get_class($result) == get_class($division))
+			{
+				return $result;
+			}
+			elseif(get_class($result) == 'ORM_Validation_Exception')
+			{
+				//parse error and add to error array
+				$this->processValidationError($result,$this->mainModel->error_message_path);
+				return false;
+			}
 		}
 		
 		/**

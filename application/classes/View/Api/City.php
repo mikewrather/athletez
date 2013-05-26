@@ -103,5 +103,23 @@
 			$retArr = $this->obj->getBasics();
 			return $retArr;
 		}
+
+		public function put_basics()
+		{
+			$retArr = array();
+
+			$retArr = $this->obj->getBasics();
+
+			return $retArr;
+		}
+
+		public function delete_basics()
+		{
+			$retArr = array();
+
+			$retArr = $this->obj->getBasics();
+
+			return $retArr;
+		}
 		
 	}

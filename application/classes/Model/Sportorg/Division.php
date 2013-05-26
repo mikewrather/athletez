@@ -10,6 +10,8 @@ class Model_Sportorg_Division extends ORM
 	
 	protected $_table_name = 'divisions';
 
+	public $error_message_path = "models/sportorg";
+
 	protected $_belongs_to = array(
 		'state' => array(
 			'model' => 'Location_State',
@@ -71,7 +73,11 @@ class Model_Sportorg_Division extends ORM
 	public function updateDivision($args = array())
 	{
 		extract($args);
-		
+
+		if(isset($id))
+		{
+			$this->id = $id;
+		}
 		// name column
 		if(isset($name))
 		{
@@ -90,8 +96,16 @@ class Model_Sportorg_Division extends ORM
 			$this->states_id = $states_id;	
 		}
 		
-		$this->save();
-		return $this;
+		try{
+			$validate_array = array('name'=>$name, 'states_id'=>$states_id);
+			$external_validate = Validation::factory($validate_array);
+			$external_validate->rule('name', 'division_exist', array($name, $states_id));
+			if ($this->check($external_validate))
+				$this->update();
+			return $this;
+		}catch (ORM_Validation_Exception $e){
+			return $e;
+		}
 	}
 	
 	public function deleteDivision()
@@ -99,26 +113,6 @@ class Model_Sportorg_Division extends ORM
 		return $this->delete();
 	}
 	
-    public static function check_division_exist($args = array())
-    {
-        extract($args);
-        if(isset($name) && isset($states_id) && isset($sections_id))
-        {            
-            $exists_obj = ORM::factory('Sportorg_Division')
-                        ->where('name', '=', $name)
-                        ->and_where('states_id', '=', $states_id)
-                        ->and_where('sections_id', '=', $sections_id)->find();
-            
-             if (!$exists_obj->loaded())
-                return true;
-            else
-                return false;  
-        }else
-        {
-            return true;
-        }       
-    }
-
 	public function addDivision($args = array() )
 	{
 		extract($args);
@@ -141,8 +135,12 @@ class Model_Sportorg_Division extends ORM
 			$this->states_id = $states_id;	
 		}
 		
-        try {         
-            $this->save();
+        try {
+			$validate_array = array('name'=>$name, 'states_id'=>$states_id);
+			$external_validate = Validation::factory($validate_array);
+			$external_validate->rule('name', 'division_exist', array($name, $states_id));
+			if ($this->check($external_validate))
+            	$this->save();
             return $this;
         } catch(ORM_Validation_Exception $e){
             return $e;

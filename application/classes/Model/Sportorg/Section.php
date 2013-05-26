@@ -72,10 +72,22 @@ class Model_Sportorg_Section extends ORM
 			"states" => $this->state->getBasics()
 		);
 	}
+
+	function getSports($args = array()){
+		extract($args);
+		$sport_model = ORM::factory("Sportorg_Sport");
+		$sport_model->join('sections')->on('sportorg_sport.id', '=', 'sections.sports_id');
+		$sport_model->where('sections.id', '=', $section_id);
+		return $sport_model;
+	}
 	
 	public function updateSection($args = array())
 	{
 		extract($args);
+		if(isset($id))
+		{
+			$this->id = $id;
+		}
 		// name column
 		if(isset($name))
 		{
@@ -92,8 +104,14 @@ class Model_Sportorg_Section extends ORM
 		{
 			$this->sports_id = $sports_id;
 		}
-		
-		$this->save();
+
+		try {
+			$this->update();
+			return $this;
+		} catch(ORM_Validation_Exception $e){
+			return $e;
+		}
+
 		return $this;
 	}
 	

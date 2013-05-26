@@ -61,7 +61,10 @@
 				$this->modelNotSetError();
 				return false;
 			}
-			return $this->mainModel;
+
+			$args['section_id'] = $this->mainModel->id;
+
+			return $this->mainModel->getSports($args);
 		}
 		
 		############################################################################
@@ -113,7 +116,20 @@
 				$this->modelNotSetError();
 				return false;
 			}
-			return $this->mainModel->updateSection($args);
+
+			$args['id'] = $this->mainModel->id;
+
+			$result = $this->mainModel->updateSection($args);
+			if(get_class($result) == get_class($this->mainModel))
+			{
+				return $result;
+			}
+			elseif(get_class($result) == 'ORM_Validation_Exception')
+			{
+				//parse error and add to error array
+				$this->processValidationError($result,$this->mainModel->error_message_path);
+				return false;
+			}
 		}
 		
 		############################################################################

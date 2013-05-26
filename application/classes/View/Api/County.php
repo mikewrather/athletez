@@ -51,18 +51,23 @@
 		 */
 		public function get_orgs()
 		{
-			$retArr = array();
-			// Scaffolding Code For Single:
-			$retArr = $this->obj->getBasics();
+			$retArr = null;
+
+			// Scaffolding Code For Array:
+			$objs = $this->obj->find_all();
+			foreach($objs as $obj)
+			{
+				$retArr[] = $obj->getBasics();
+			}
 
 			return $retArr;
 		}
 		
 		/**
-		 * get_games() All games that take place within a county
+		 * Invalid function.b/c it can be retrieved from other sections
 		 *
 		 * @retun array
-		 */
+
 		public function get_games()
 		{
 			$retArr = array();
@@ -71,7 +76,7 @@
 
 			return $retArr;
 		}
-		
+		 */
 		/**
 		 * post_add() Add a new County
 		 *

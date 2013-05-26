@@ -166,6 +166,5 @@ class Model_Sportorg_League extends ORM
         } catch(ORM_Validation_Exception $e){
             return $e;
         } 
-	}	
-	
+	}
 }
