@@ -275,50 +275,6 @@
 			);
 			$this->modelNotSetError($error_array);
 			return false;
-			/*
-		     // CHECK FOR PARAMETERS:
-			// teams_id 
-			// ID of the team to add
-				
-			if((int)trim($this->request->post('teams_id')) > 0)
-			{
-				$teams_id = (int)trim($this->request->post('teams_id'));
-			}
-
-			// home_team 
-			// True if this is the home team at the game
-				
-			if($this->request->post('home_team') != "")
-			{
-				//convert home_team to a boolean
-				$home_team = (bool)$this->request->post('home_team');
-			}
-
-			// isWinner 
-			// This is set to false if the team lost or if the game has not yet taken place
-				
-			if($this->request->post('isWinner') != "")
-			{
-				//convert isWinner to a boolean
-				$isWinner = (bool)$this->request->post('isWinner');
-			}
-
-			// points_scored 
-			// Number of points scored
-				
-			if((int)trim($this->request->post('points_scored')) > 0)
-			{
-				$points_scored = (int)trim($this->request->post('points_scored'));
-			}
-
-			// points_agains 
-			// Number of points scored against this team
-				
-			if((int)trim($this->request->post('points_agains')) > 0)
-			{
-				$points_agains = (int)trim($this->request->post('points_agains'));
-			}
-			*/
 		}
 		
 		/**
@@ -336,7 +292,29 @@
 				
 			if(trim($this->request->post('match_num')) != "")
 			{
-				$match_num = trim($this->request->post('match_num'));
+				$args['match_num'] = trim($this->request->post('match_num'));
+			}
+
+			if(!$this->mainModel->id)
+			{
+				$this->modelNotSetError();
+				return false;
+			}
+			$game_match_model = ORM::factory("Sportorg_Games_Match");
+
+			$args['games_id'] = $this->mainModel->id;
+			$result = $game_match_model->addGamematch($args);
+			//Check for success / error
+			if(get_class($result) == get_class($game_match_model))
+			{
+				return $result;
+			}
+			elseif(get_class($result) == 'ORM_Validation_Exception')
+			{
+				//parse error and add to error array
+				$this->processValidationError($result,$this->mainModel->error_message_path);
+				return false;
+
 			}
 
 		}

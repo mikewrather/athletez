@@ -45,4 +45,5 @@
 		'sports_id_exist' => $e->get('sports_id_exist'),
 		'teams_id_exist' => $e->get('teams_id_exist'),
 		'cities_id_exist' => $e->get('cities_id_exist'),
+		'division_exist' => $e->get('division_exist'),
 	);

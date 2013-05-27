@@ -32,6 +32,17 @@
 			}
 		}
 
+		public static function division_exist($name, $states_id){
+			$exists_obj = ORM::factory('Sportorg_Division')
+				->where('name', '=', $name)
+				->and_where('states_id', '=', $states_id)->find();
+
+			if (!$exists_obj->loaded())
+				return true;
+			else
+				return false;
+		}
+
 		public static function users_sports_exist($users_id, $sports_id){
 			$user_sport_link = ORM::factory("User_Sportlink");
 			$user_sport_link->where('users_id', '=', $users_id)

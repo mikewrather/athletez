@@ -9,7 +9,8 @@ class Model_Sportorg_Games_Match extends ORM
 {
 	
 	protected $_table_name = 'game_matches';
-	
+
+	public $error_message_path = 'models/sportorg/games';
 
 	protected $_belongs_to = array(
 		'game' => array(
@@ -27,6 +28,9 @@ class Model_Sportorg_Games_Match extends ORM
 
 	public function rules(){
 		return array(
+			'match_num' => array(
+				array('not_empty')
+			),
 			'games_id' => array(
 				array('not_empty'),
 				array('games_id_exist')
@@ -41,7 +45,7 @@ class Model_Sportorg_Games_Match extends ORM
 
 	public function getBasics()
 	{
-		$playerArr = array();
+		$playerArr = null;
 		foreach($this->players->find_all() as $player){
 			$playerArr[] = $player->getBasics();
 		}
@@ -53,17 +57,50 @@ class Model_Sportorg_Games_Match extends ORM
 			"players" => $playerArr
 		);
 	}
-	
-	public function updateGamematch($match_num)
+
+	public function addGamematch($args = array())
 	{
-		// match_num 
-		// Change the Match Num for this match
+		extract($args);
+		if ( isset($games_id))
+		{
+			$this->games_id = $games_id;
+		}
+
 		if ( isset($match_num))
 		{
 			$this->match_num = $match_num;
 		}
-		return $this;
+
+		try{
+			$this->save();
+			return $this;
+		} catch(ORM_Validation_Exception $e)
+		{
+			return $e;
+		}
 	}
+
+	public function updateGamematch($args = array())
+	{
+		extract($args);
+		if ( isset($id))
+		{
+			$this->id = $id;
+		}
+
+		if ( isset($match_num))
+		{
+			$this->match_num = $match_num;
+		}
+		try{
+			$this->update();
+			return $this;
+		} catch(ORM_Validation_Exception $e)
+		{
+			return $e;
+		}
+	}
+
 	public function deletePlayers()
 	{		
 		$players = $this->players->find();	

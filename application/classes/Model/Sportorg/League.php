@@ -62,9 +62,9 @@ class Model_Sportorg_League extends ORM
 	public function getBasics()
 	{
 		//TODO, add by Jeffrey. Here need to align with Mike
-		$orgsArray = array();
+		$orgsArray = null;
 		foreach($this->orgs->find_all() as $org){
-			$orgsArray[$org->id] = $org->getBasics();
+			$orgsArray[] = $org->getBasics();
 		}
 		return array(
 			"id" => $this->id,
@@ -166,6 +166,5 @@ class Model_Sportorg_League extends ORM
         } catch(ORM_Validation_Exception $e){
             return $e;
         } 
-	}	
-	
+	}
 }

@@ -77,37 +77,44 @@
 		public function action_post_add()
 		{
 			$this->payloadDesc = "Add a new Division";
-			$division_obj = ORM::factory('Sportorg_Division');
-			$name = trim($this->request->post('name'));
+			$arguments = array();
+			// CHECK FOR PARAMETERS:
+			// name (REQUIRED)
+			// Name of the Division to add
 
-			$states_id = (int)trim($this->request->post('states_id'));
-
-			$sections_id = (int)trim($this->request->post('sections_id'));
-
-			$division_obj->name = $name;
-			$division_obj->states_id = $states_id;
-			$division_obj->sections_id = $sections_id;
-
-			//add validation & save logics here
-			$division_validate = Validation::factory($division_obj->as_array())
-				->rule('name', 'not_empty')
-				->rule('states_id', 'states_id_exist')
-				->rule('sections_id', 'sections_id_exist');
-
-			if (!$division_validate->check()){
-				$validate_errors = $division_validate->errors('models/sportorg/division');
-				$error_array = array(
-					"error" => implode('\n', $validate_errors),
-					"param_name" => "name",
-					"param_desc" => "Name of the County to add"
-				);
-				// Set whether it is a fatal error
-				$is_fatal = true;
-				$this->addError($error_array, $is_fatal);
-				return $division_obj;
+			if(trim($this->request->post('name')) != "")
+			{
+				$arguments["name"] = trim($this->request->post('name'));
 			}
-			$division_obj->save();
-			return $division_obj;
+
+			// states_id (REQUIRED)
+			// ID of the state this division belongs to
+
+			if((int)trim($this->request->post('states_id')) > 0)
+			{
+				$arguments["states_id"] = (int)trim($this->request->post('states_id'));
+			}
+
+			// sections_id
+			// The ID of the Section this division belongs to (if applicable)
+
+			if((int)trim($this->request->post('sections_id')) > 0)
+			{
+				$arguments["sections_id"] = (int)trim($this->request->post('sections_id'));
+			}
+
+			$division = ORM::factory('Sportorg_Division');
+			$result = $division->addDivision($arguments);
+			if(get_class($result) == get_class($division))
+			{
+				return $result;
+			}
+			elseif(get_class($result) == 'ORM_Validation_Exception')
+			{
+				//parse error and add to error array
+				$this->processValidationError($result,$this->mainModel->error_message_path);
+				return false;
+			}
 		}
 		
 		############################################################################
@@ -154,7 +161,19 @@
 				$this->modelNotSetError();
 				return false;
 			}
-			return $this->mainModel->updateDivision($args);
+			$args['id'] = $this->mainModel->id;
+			$result = $this->mainModel->updateDivision($args);
+
+			if(get_class($result) == get_class($this->mainModel))
+			{
+				return $result;
+			}
+			elseif(get_class($result) == 'ORM_Validation_Exception')
+			{
+				//parse error and add to error array
+				$this->processValidationError($result,$this->mainModel->error_message_path);
+				return false;
+			}
 		}
 		
 		############################################################################
@@ -176,7 +195,6 @@
 				return false;
 			}
 			return $this->mainModel->deleteDivision();
-		
 		}
 		
 	}

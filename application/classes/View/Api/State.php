@@ -37,13 +37,13 @@
 		 */
 		public function get_counties()
 		{
-			$retArr = array();
+			$retArr = null;
 
 			// Scaffolding Code For Array:
 			$objs = $this->obj->find_all();
 			foreach($objs as $obj)
 			{
-				$retArr[$obj->id] = $obj->getBasics();
+				$retArr[] = $obj->getBasics();
 			}
  
 			return $retArr;
@@ -56,13 +56,13 @@
 		 */
 		public function get_divisions()
 		{
-			$retArr = array();
+			$retArr = null;
 
 			// Scaffolding Code For Array:
 			$objs = $this->obj->find_all();
 			foreach($objs as $obj)
 			{
-				$retArr[$obj->id] = $obj->getBasics();
+				$retArr[] = $obj->getBasics();
 			} 
 			return $retArr;
 		}
@@ -74,13 +74,13 @@
 		 */
 		public function get_sections()
 		{
-			$retArr = array();
+			$retArr = null;
 
 			// Scaffolding Code For Array:
 			$objs = $this->obj->find_all();
 			foreach($objs as $obj)
 			{
-				$retArr[$obj->id] = $obj->getBasics();
+				$retArr[] = $obj->getBasics();
 			}
  
 			return $retArr;
@@ -107,13 +107,13 @@
 		 */
 		public function get_leagues()
 		{
-			$retArr = array();
+			$retArr = null;
 
 			// Scaffolding Code For Array:
 			$objs = $this->obj->find_all();
 			foreach($objs as $obj)
 			{
-				$retArr[$obj->id] = $obj->getBasics();
+				$retArr[] = $obj->getBasics();
 			}
  
 			return $retArr;
@@ -141,10 +141,6 @@
 		public function post_addcounty()
 		{
 			$retArr = array();
-
-			// Scaffolding Code For Array:
-			 
-			// Scaffolding Code For Single:
 			$retArr = $this->obj->getBasics();
 
 			return $retArr;
@@ -215,9 +211,8 @@
 		public function delete_base()
 		{
 			$retArr = array();
-
 			// Scaffolding Code For Array:
-			$objs = $this->obj;
+			$retArr = $this->obj->getBasics();
 			return $retArr;
 		}
 		

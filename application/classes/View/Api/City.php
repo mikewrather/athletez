@@ -68,10 +68,7 @@
 		 */
 		public function get_games()
 		{
-
 			$retArr = null;
-
-
 			$games = $this->obj->execute();
 		//	print_r($games);
 			foreach($games as $game_array)
@@ -104,6 +101,24 @@
 		public function post_add()
 		{
 			$retArr = $this->obj->getBasics();
+			return $retArr;
+		}
+
+		public function put_basics()
+		{
+			$retArr = array();
+
+			$retArr = $this->obj->getBasics();
+
+			return $retArr;
+		}
+
+		public function delete_basics()
+		{
+			$retArr = array();
+
+			$retArr = $this->obj->getBasics();
+
 			return $retArr;
 		}
 		
