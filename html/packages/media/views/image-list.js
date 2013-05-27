@@ -22,6 +22,8 @@ function(facade,  views,   utils,   ImageItemView,            ImageBoardView,   
         name: "Image List",
         tagName: "ul",
 
+	    imagetype: 'large_thumb',
+
         // Tag for the child views
         _tagName: "li",
         _className: "image",
