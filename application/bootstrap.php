@@ -155,6 +155,7 @@ Kohana::modules(array(
 	"facebookauth"	=> MODPATH . 'facebookauth',
 	"s3"	        => MODPATH . 's3',
 	"custom404"		=> MODPATH . 'custom404',
+	"zencoder"      => MODPATH . 'zencoder',
 ));
 
 /**

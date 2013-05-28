@@ -30,7 +30,7 @@ class Model_Media_Videotypelink extends ORM
 		),
 	);
 
-	public function addLink($types_id,$videos_id)
+	public function addLink($types_id,$videos_id,$url='')
 	{
 		$find_existing = $this
 			->where('videos_id','=',$videos_id)
@@ -42,6 +42,7 @@ class Model_Media_Videotypelink extends ORM
 		{
 			$this->video_types_id = $types_id;
 			$this->videos_id = $videos_id;
+			$this->url = $url;
 			try
 			{
 				$this->save();
