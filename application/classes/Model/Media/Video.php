@@ -332,7 +332,7 @@ class Model_Media_Video extends ORM
 		$randID = md5(time() + rand(1, 1000));
 		$baseOutURL = "s3://highlightvids/post/" . $user->id . "/" . $randID . "/";
 		$zencoder = new Services_Zencoder('492b54895636addb1f3411d55ab7ea03');
-		$notificationURL = "http://dev75.highlightfront.com/vidlistener/index/";
+		$notificationURL = "http://athletesup.com/vidlistener";
 
 		// The zencoder command for each video to encode is kept in the
 		// video types table.  So we use that table to construct the
