@@ -167,7 +167,7 @@
 
 			// Settings
 			//	$targetDir = ini_get("upload_tmp_dir") . DIRECTORY_SEPARATOR . "plupload";
-			$targetDir = DOCROOT . '../files_temp/';
+			$targetDir = DOCROOT . '../files_temp';
 //$targetDir = 'uploads';
 
 			$cleanupTargetDir = true; // Remove old files

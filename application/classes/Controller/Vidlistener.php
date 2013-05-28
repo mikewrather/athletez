@@ -1,27 +1,20 @@
 <?php
 
-
-
 class Controller_VidListener extends Controller
 {
 
 	function action_index($data = null)
 	{
-
-		ob_start();
 		echo $body = file_get_contents("php://input");
 
 		$arr = json_decode($body);
 
-		$out = ob_get_contents();
-		ob_end_clean();
-
-	//	echo $out;
-
 		$video = Model::factory('Media_Video')
 			->where('jobID','=',$arr->job->id)
+			->and_where('is_ready','=',0)
 			->find();
 
+		if(!$video->loaded()) return;
 
 		if(isset($arr->output->thumbnails)){
 			
@@ -51,33 +44,18 @@ class Controller_VidListener extends Controller
 		// Check if all types are complete and send notification if they are
 		$sendEmail = $video->_check_ready() ? true : false;
 
-		if($sendEmail)
-		{
-		/*
-			$user = ORM::factory("user", $queue->user_id);
-			$data = array(
-				'first_name' => $user->first_name,
-				'last_name' => $user->last_name,
-				'username' => $user->username,
-				'linkurl' => 'http://'.$_SERVER['SERVER_NAME'].'/video/edit/' . $video->id
-			);
+		if($sendEmail) $this->sendEmail();
 
-			$emailBody = new View("dummy/user_profile/video_email", $data) . "";
-			$sndemail = new Postmark();
-			$sndemail->to($user->email, $user->first_name . " " . $user->last_name)
-					->subject('New Video Posted on HighlightFront!')
-					->tag('video')
-					->messageHtml($emailBody)
-					->send();
-		*/
-		}
+	}
+
+	protected function sendEmail()
+	{
 
 	}
 
 	protected function sendToMM($video)
 	{
-/*
-		$input = array(
+/*		$input = array(
 			"id"=>$video->mm_id,
 			"url"=>$video->original,
 			"label"=>$video->title
@@ -92,7 +70,6 @@ class Controller_VidListener extends Controller
 		print('php /home/webdata/html/moviemasher_3-2-14/media/php/start.php \''.$input.'\' \''.$output.'\'');
 		exec('php /home/webdata/html/moviemasher_3-2-14/media/php/start.php \''.$input.'\' \''.$output.'\'',$out);
 
-		echo $newID = $out[0];
-*/
+		echo $newID = $out[0];  */
 	}
 }
