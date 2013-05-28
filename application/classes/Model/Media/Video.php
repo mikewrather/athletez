@@ -266,6 +266,8 @@ class Model_Media_Video extends ORM
 
 		extract($args);
 
+		// UserID is used to generate the url for the video
+		$user = Auth::instance()->get_user();
 
 		$media = ORM::factory('Media_Base');
 
@@ -296,24 +298,19 @@ class Model_Media_Video extends ORM
 			$mediaArr['name'] = $name;
 		}
 
-		print_r($mediaArr);
-
 		$this->media_id = $media->addMedia($mediaArr);
-
-		if(isset($moviemasher_id))
-		{
-			$this->moviemasher_id = $moviemasher_id;
-		}
 
 		if(isset($video_services_id))
 		{
 			$this->video_services_id = $video_services_id;
 		}
 
-		if(isset($thumbs))
-		{
-			$this->thumbs = $thumbs;
-		}
+		$cloudRaw = s3::uploads3($args['video_file'], $user->id);
+		$zenres = $this->_zencode($cloudRaw);
+		$this->mm_encode = $args['mm']=='true' ? 1 : 0;
+		$this->moviemasher_id = $zenres['randID'];
+		$this->jobID = $zenres['encoding_job']->id;
+		$this->original_url = $cloudRaw;
 
 		try
 		{
@@ -324,18 +321,63 @@ class Model_Media_Video extends ORM
 			return $e;
 		}
 
-		if(!isset($types) || !is_array($types)) return $this->id;
-
-		foreach($types as $types_id=>$meta)
-		{
-			$this->addType($types_id,$meta);
-		}
-
-		return $this->id;
 
 	}
 
-	public function addType($types_id,$meta)
+	protected function _zencode($cloudRaw)
+	{
+		// UserID is used to generate the url for the image
+		$user = Auth::instance()->get_user();
+
+		$randID = md5(time() + rand(1, 1000));
+		$baseOutURL = "s3://highlightvids/post/" . $user->id . "/" . $randID . "/";
+		$zencoder = new Services_Zencoder('492b54895636addb1f3411d55ab7ea03');
+		$notificationURL = "http://dev75.highlightfront.com/vidlistener/index/";
+
+		// The zencoder command for each video to encode is kept in the
+		// video types table.  So we use that table to construct the
+		// zencoder string.
+		$types = ORM::factory('Media_Videotype')
+			->where('active','=',1)
+			->find_all();
+
+		// this is the string that we are going to build for the command
+		$all_types = '';
+
+		//Set up array of strings to search for
+		$search_array = array(
+			'{{base_out}}',
+			'{{notification_url}}',
+		);
+
+		//Set up array of strings to replace with
+		$replace_array = array(
+			$baseOutURL,
+			$notificationURL,
+		);
+
+		// Loop through types in order to set up the zencoder string
+		foreach($types as $type)
+		{
+			$all_types .= str_replace($search_array,$replace_array,$type->zencoder_command).',';
+		}
+		// get rid of the trailing comma
+		$all_types = rtrim($all_types,',');
+
+		$reqstr = '
+		{
+		    "input": "' . $cloudRaw . '",
+		    "region": "us",
+		    "download_connections": 10,
+		    "private": true,
+		    "output": [' . $all_types . ']
+		}';
+
+		return array("encoding_job"=>$zencoder->jobs->create($reqstr),"randID"=>$randID);
+	}
+
+
+	public function addType($types_id,$meta,$url='')
 	{
 		if((int)$types_id == 0) return false;
 
@@ -346,7 +388,7 @@ class Model_Media_Video extends ORM
 			return false;
 		}
 
-		$linkID = ORM::factory('Media_Videotypelink')->addLink($types_id,$this->id);
+		$linkID = ORM::factory('Media_Videotypelink')->addLink($types_id,$this->id,$url);
 		foreach($meta as $property=>$val)
 		{
 			$thismeta = ORM::factory('Media_Videometa');
@@ -355,6 +397,7 @@ class Model_Media_Video extends ORM
 			$thismeta->vid_val = $val;
 			$thismeta->save();
 		}
+
 	}
 
 	/**
@@ -383,5 +426,21 @@ class Model_Media_Video extends ORM
 	public function name()
 	{
 		return $this->media->name;
+	}
+
+	public function _check_ready()
+	{
+		// Get total number of video types
+		$vt_num = ORM::factory('Media_Videotype')
+			->where('active','=',1)
+			->find_all()
+			->count();
+
+		$total_vt = $this->typelink->find_all()->count();
+
+		if($total_vt >= $vt_num) $this->is_ready = 1;
+
+		$this->save();
+		return $this->is_ready;
 	}
 }

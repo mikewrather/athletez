@@ -3,10 +3,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
 	<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
-	<meta name="description" content="Example Auth with ORM for Kohana 3.1" />
-	<meta name="author" content="JDStraughan" />
-	<meta name="copyright" content="Copyright 2011. JDStraughan.com" />
 	<meta name="language" content="en-us" />
+	<script type="text/javascript" src="vendor/jquery-2.0.0.min.js"></script>
 	<title>Athletes UP</title>
 	<style type="text/css">
 		.error {
