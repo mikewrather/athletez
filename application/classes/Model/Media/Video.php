@@ -312,6 +312,8 @@ class Model_Media_Video extends ORM
 		$this->jobID = $zenres['encoding_job']->id;
 		$this->original_url = $cloudRaw;
 
+
+
 		try
 		{
 			$this->save();

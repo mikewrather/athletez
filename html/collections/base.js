@@ -37,8 +37,10 @@ define(['facade', 'utils'], function (facade, utils) {
         // **Method:** `fetch`  
         // Wrap Backbone.Collection.prototype.fetch with support for deferreds
         fetch: function (options) {
+
             options = options || {};
-            if (!options.success) {
+
+	        if (!options.success) {
                 options.success = this.fetchSuccess;
             }
             if (!options.error) {

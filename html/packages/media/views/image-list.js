@@ -22,8 +22,6 @@ function(facade,  views,   utils,   ImageItemView,            ImageBoardView,   
         name: "Image List",
         tagName: "ul",
 
-	    imagetype: 'large_thumb',
-
         // Tag for the child views
         _tagName: "li",
         _className: "image",
@@ -32,7 +30,12 @@ function(facade,  views,   utils,   ImageItemView,            ImageBoardView,   
         _view: ImageItemView,
 
         initialize: function(options) {
+
+	        console.log(options);
+	        console.log(this);
+
             CollectionView.prototype.initialize.call(this, options);
+
             if (!this.collection) {
                 throw new Error("ImageListView expected options.collection.");
             }
@@ -49,10 +52,11 @@ function(facade,  views,   utils,   ImageItemView,            ImageBoardView,   
 
         // Add Views
         setupAddView: function() {
+
             var listView = this,
                 addView = new AddImageView({collection: this.collection}),
                 renderAddView = this.addChildView(addView);
-            
+
             this.childViews.form = addView;
             this.callbacks.add(function() {
                 renderAddView();
@@ -69,22 +73,28 @@ function(facade,  views,   utils,   ImageItemView,            ImageBoardView,   
 
 	    filterWithImageType: function(type) {
 		    var c = this.collection;
+		    console.log("this collection: ",c);
 			$.each(c.models, function(i, field){
+				console.log(i,field);
+				console.log(field.get("payload").types);
+
 				_.each(field.get("payload").types, function(element, index){
 					if (index == type){
-						field.image_path = element.url;
+						field.attributes.payload.image_path = element.url;
 					}
 				});
 		    });
+
 		    return c;
+
 		},
 
         setupBoardView: function() {
             if (this.collection.size() == 0)
                 return;
-            var filterd_images = this.filterWithImageType( this.imagetype );
+            var filtered_images = this.filterWithImageType( this.imagetype );
             var listView = this,
-                addView = new ImageBoardView({collection: filterd_images, model: this.collection.at(0)}),
+                addView = new ImageBoardView({collection: filtered_images, model: filtered_images.at(0)}),
                 renderAddView = this.addChildView(addView);
             this.childViews.board = addView;
             this.callbacks.add(function() {

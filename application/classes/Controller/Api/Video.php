@@ -163,11 +163,10 @@
 			 * until the chunked uploading is complete and the temp file is saved...
 			 ***********************************************************************/
 
-
-
 			// Settings
 			//	$targetDir = ini_get("upload_tmp_dir") . DIRECTORY_SEPARATOR . "plupload";
 			$targetDir = DOCROOT . '../files_temp';
+			//$targetDir = '/var/www/files_temp';
 //$targetDir = 'uploads';
 
 			$cleanupTargetDir = true; // Remove old files

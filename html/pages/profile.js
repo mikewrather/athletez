@@ -85,7 +85,6 @@ define([
                 this.id = options.id;
                 this.init();
             }
-            
             return this;
         },
         
@@ -216,7 +215,8 @@ define([
                 controller.setupVideoListView();
             });
             
-            $.when(this.images.request).done(function() {
+            $.when(this.images.request).done(function(x) {
+	            console.log("Images Ready (called in profile.js handleDeferredDynamic)",x);
                 controller.setupImageListView();
             });
         },
@@ -297,11 +297,17 @@ define([
         
         setupImageListView: function() {
             var imageListView;
-            
+
+
             this.imageListView = new ProfileImageListView({
                 collection: this.images,
                 destination: "#image-wrap"
             });
+
+	        console.log("Profile.js setupImageListView: ",this.imageListView);
+
+
+	        //needs to be updated here.
             
             this.scheme.push(this.imageListView);
             this.layout.render();
@@ -340,6 +346,8 @@ define([
                 template: pageLayoutTemplate,
                 displayWhen: "ready"
             });
+
+	        console.log("setupLayout Results: ",pageLayout);
             this.layout = pageLayout;
 
             return this.layout;

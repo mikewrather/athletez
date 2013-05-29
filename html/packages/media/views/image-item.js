@@ -37,12 +37,14 @@ function (
         },
 
         render: function () {
+	        console.log("Called Image Render",this.model);
             var markup = Mustache.to_html(this.template, this.model.toJSON());
             this.$el.html(markup);
             return this;
         },
         
         changeImage: function() {
+
             Channel('changeimage' + this.model.collection.id).publish(this.model);
         }        
         
