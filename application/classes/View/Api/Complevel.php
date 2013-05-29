@@ -36,14 +36,14 @@
 		 */
 		public function get_teams()
 		{
-			$retArr = array();
+			$retArr = null;
 			// Scaffolding Code For Array:
 			$objs = $this->obj->find_all();
 
 			foreach($objs as $obj)
 			{
 				$basics = $obj->getBasics();
-				$retArr[$obj->id] = $basics;
+				$retArr[] = $basics;
 			}
 
 			return $retArr;

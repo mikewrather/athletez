@@ -33,14 +33,14 @@
 		 */
 		public function get_datagroups()
 		{
-			$retArr = array();
+			$retArr = null;
 			
 			// Scaffolding Code For Array:
 			$objs = $this->obj->find_all();
 			
 			foreach($objs as $obj)
 			{
-				$retArr[$obj->id] = $obj->getBasics();
+				$retArr[] = $obj->getBasics();
 			}
  
 			return $retArr;
@@ -53,13 +53,13 @@
 		 */
 		public function get_sports()
 		{
-			$retArr = array();
+			$retArr = null;
 
 			// Scaffolding Code For Array:
 			$objs = $this->obj->find_all();
 			foreach($objs as $obj)
 			{
-				$retArr[$obj->id] = $obj->getBasics();
+				$retArr[] = $obj->getBasics();
 			} 
 			return $retArr;
 		}

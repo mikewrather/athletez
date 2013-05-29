@@ -22,8 +22,8 @@ function(facade, collections, MediaImageModel, utils) {
         fetchSuccess: function (collection, response) {
             collection.reset();
 
-	        console.log("Collection: ",collection);
-	        console.log("Response: ",response);
+	        //console.log("Collection: ",collection);
+	        //console.log("Response: ",response);
 
             var payload = response.payload;            
             for (var key in payload) {

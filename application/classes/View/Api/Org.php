@@ -34,19 +34,15 @@
 		 */
 		public function get_teams()
 		{
-			$retArr = array();
+			$retArr = null;
 
 			// Scaffolding Code For Array:
 			$objs = $this->obj->find_all();
 			foreach($objs as $obj)
 			{
-				$retArr[$obj->id] = $obj->getBasics();
+				$retArr[] = $obj->getBasics();
 			}
 
-			if (empty($retArr)){
-				return null;
-			}
-  
 			return $retArr;
 		}
 		
@@ -57,19 +53,15 @@
 		 */
 		public function get_league()
 		{
-			$retArr = array();
+			$retArr = null;
 
 			// Scaffolding Code For Array:
 			$objs = $this->obj->find_all();
 			foreach($objs as $obj)
 			{
-				$retArr[$obj->id] = $obj->getBasics();
+				$retArr[] = $obj->getBasics();
 			}
 
-			if (empty($retArr)){
-				return null;
-			}
- 
 			return $retArr;
 		}
 		
