@@ -73,14 +73,10 @@ function(facade,  views,   utils,   ImageItemView,            ImageBoardView,   
 
 	    filterWithImageType: function(type) {
 		    var c = this.collection;
-		    console.log("this collection: ",c);
 			$.each(c.models, function(i, field){
-				console.log(i,field);
-				console.log(field.get("payload").types);
-
 				_.each(field.get("payload").types, function(element, index){
 					if (index == type){
-						field.attributes.payload.image_path = element.url;
+						field.get("payload").image_path = element.url;
 					}
 				});
 		    });
