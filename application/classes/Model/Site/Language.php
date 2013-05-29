@@ -27,4 +27,8 @@ class Model_Site_Language extends ORM
 		parent::__construct($id);
 	}
 
+	public function name(){
+		return "";
+	}
+
 }

@@ -20,6 +20,17 @@
 			}
 		}
 
+		public static function languages_id_exist($value){
+			$positions = ORM::factory("Site_Language");
+			$positions->where('id', '=', $value)->find();
+
+			if ($positions->loaded()){
+				return true;
+			}else{
+				return false;
+			}
+		}
+
 		public static function users_teams_exist($users_id, $teams_id){
 			$user_team_link = ORM::factory("User_Teamslink");
 			$user_team_link->where('users_id', '=', $users_id)

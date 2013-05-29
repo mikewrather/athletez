@@ -39,8 +39,9 @@
 		{
 			$this->payloadDesc = "This method pulls the entire phrases table (all non-deleted) and will store it on the front end for fast access.";
 			$arguments = array();
-		
+			$arguments['deleted'] = 0;
 
+			return $this->mainModel->getAll($arguments);
 		}
 		
 		/**
@@ -52,8 +53,14 @@
 		{
 			$this->payloadDesc = "Retrieve a single phrase by ID";
 			$arguments = array();
-		
 
+			if(!$this->mainModel->id)
+			{
+				$this->modelNotSetError();
+				return false;
+			}
+
+			return $this->mainModel;
 		}
 		
 		/**
@@ -72,27 +79,18 @@
 			if((int)trim($this->request->query('languages_id')) > 0)
 			{
 				$arguments["languages_id"] = (int)trim($this->request->query('languages_id'));
-			}
-
-			else // THIS WAS A REQUIRED PARAMETER
-			{
-				// Create Array for Error Data
+			}else{
 				$error_array = array(
-					"error" => "Required Parameter Missing",
-					"param_name" => "languages_id",
-					"param_desc" => "This is the language that we want to get the phrases in."
+					"error" => "Language ID required",
+					"desc" => "Language ID required"
 				);
-
-				// Set whether it is a fatal error
-				$is_fatal = true;
-
-				// Call method to throw an error
-				$this->addError($error_array,$is_fatal);
+				$this->modelNotSetError($error_array);
 				return false;
-
 			}
 			
-
+			$tanslation = ORM::factory("Site_Phrases_Translation");
+			$results = $tanslation->getAll($arguments);
+			return $results;
 		}
 		
 		############################################################################
@@ -117,11 +115,12 @@
 			{
 				$arguments["phrase"] = trim($this->request->post('phrase'));
 			}
-
+			//set default value
+			$arguments['deleted'] = 0;
 			$result = $this->mainModel->savePhrase($arguments);
 			if(get_class($result) == get_class($this->mainModel))
 			{
-				return $result;
+                return $result;
 			}
 			elseif(get_class($result) == 'ORM_Validation_Exception')
 			{
@@ -150,76 +149,28 @@
 				$arguments["phrases_id"] = (int)trim($this->request->post('phrases_id'));
 			}
 
-			else // THIS WAS A REQUIRED PARAMETER
-			{
-				// Create Array for Error Data
-				$error_array = array(
-					"error" => "Required Parameter Missing",
-					"param_name" => "phrases_id",
-					"param_desc" => "This is the ID of the phrase we are adding the translation for."
-				);
-
-				// Set whether it is a fatal error
-				$is_fatal = true;
-
-				// Call method to throw an error
-				$this->addError($error_array,$is_fatal);
-				return false;
-
-			}
-			
-			// translation (REQUIRED)
-			// This is the translated text
-				
 			if(trim($this->request->post('translation')) != "")
 			{
 				$arguments["translation"] = trim($this->request->post('translation'));
 			}
 
-			else // THIS WAS A REQUIRED PARAMETER
-			{
-				// Create Array for Error Data
-				$error_array = array(
-					"error" => "Required Parameter Missing",
-					"param_name" => "translation",
-					"param_desc" => "This is the translated text"
-				);
-
-				// Set whether it is a fatal error
-				$is_fatal = true;
-
-				// Call method to throw an error
-				$this->addError($error_array,$is_fatal);
-				return false;
-
-			}
-			
-			// languages_id (REQUIRED)
-			// This is the language of the translated text.
-				
 			if((int)trim($this->request->post('languages_id')) > 0)
 			{
 				$arguments["languages_id"] = (int)trim($this->request->post('languages_id'));
 			}
-
-			else // THIS WAS A REQUIRED PARAMETER
+			$phrase_transaction = ORM::factory("Site_Phrases_Translation");
+			$result = $phrase_transaction->addTransaction($arguments);
+			if(get_class($result) == get_class($phrase_transaction))
 			{
-				// Create Array for Error Data
-				$error_array = array(
-					"error" => "Required Parameter Missing",
-					"param_name" => "languages_id",
-					"param_desc" => "This is the language of the translated text."
-				);
-
-				// Set whether it is a fatal error
-				$is_fatal = true;
-
-				// Call method to throw an error
-				$this->addError($error_array,$is_fatal);
+				return $result;
+			}
+			elseif(get_class($result) == 'ORM_Validation_Exception')
+			{
+				//parse error and add to error array
+				$this->processValidationError($result,$this->mainModel->error_message_path);
 				return false;
 
 			}
-			
 
 		}
 		
@@ -246,25 +197,24 @@
 				$arguments["phrase"] = trim($this->put('phrase'));
 			}
 
-			else // THIS WAS A REQUIRED PARAMETER
+			if(!$this->mainModel->id)
 			{
-				// Create Array for Error Data
-				$error_array = array(
-					"error" => "Required Parameter Missing",
-					"param_name" => "phrase",
-					"param_desc" => "This is the updated text"
-				);
+				$this->modelNotSetError();
+				return false;
+			}
 
-				// Set whether it is a fatal error
-				$is_fatal = true;
-
-				// Call method to throw an error
-				$this->addError($error_array,$is_fatal);
+			$result = $this->mainModel->updatePhrase($arguments);
+			if(get_class($result) == get_class($this->mainModel))
+			{
+				return $result;
+			}
+			elseif(get_class($result) == 'ORM_Validation_Exception')
+			{
+				//parse error and add to error array
+				$this->processValidationError($result,$this->mainModel->error_message_path);
 				return false;
 
 			}
-			
-
 		}
 		
 		############################################################################

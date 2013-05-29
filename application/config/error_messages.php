@@ -52,5 +52,6 @@ return array(
 	"sports_id_exist" => "Sports id doesn't exist",
 	"teams_id_exist" => "teams id doesn't exist",
 	"cities_id_exist" => "City id doesn't exist",
-	"division_exist" => "Division already exist"
+	"division_exist" => "Division already exist",
+	"languages_id_exist" => "Language id doesn't exist",
 );

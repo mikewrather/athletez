@@ -14,7 +14,7 @@ class Model_Site_Phrase extends ORM
 	
 	protected $_table_name = 'phrases';
 
-	public $error_message_path = 'models/sportorg/complevel';
+	public $error_message_path = 'models/site';
 
 	protected $_has_many = array(
 		'translations' => array(
@@ -33,22 +33,62 @@ class Model_Site_Phrase extends ORM
 		);
 	}
 
-	public function __construct($id=NULL)
-	{
-		parent::__construct($id);
+	public function getAll($args = array()){
+		extract($args);
+		$phrases = ORM::factory('Site_Phrase');;
+		if (isset($deleted)){
+			$phrases->where('deleted', '=', $deleted);
+		}
+		print_r($phrases->find_all());
+		return $phrases;
 	}
 
 	public function savePhrase($args = array()){
 		extract($args);
 		if(isset($phrase)){
-			$this->save();
+			$this->phrase = $phrase;
 		}
 
 		try{
 			$this->save();
-		}catch (Kohana_ORM_Validation_Exception $e){
+			return $this;
+		}catch (ORM_Validation_Exception $e){
 			return $e;
 		}
+	}
+
+	public function updatePhrase($args = array()){
+		extract($args);
+		if(isset($id)){
+			$this->id = $id;
+		}
+
+		if(isset($deleted)){
+			$this->deleted = $deleted;
+		}
+
+		if(isset($phrase)){
+			$this->phrase = $phrase;
+		}
+
+		try{
+			$this->update();
+			return $this;
+		}catch (ORM_Validation_Exception $e){
+			return $e;
+		}
+	}
+
+	public function getBasics()
+	{
+		return array(
+			"phrase" => $this->phrase,
+			"deleted" => $this->deleted,
+		);
+	}
+
+	public function name(){
+		return "";
 	}
 
 }
