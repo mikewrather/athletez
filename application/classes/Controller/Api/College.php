@@ -39,134 +39,59 @@
 		{
 			$this->payloadDesc = "Search for a list of colleges based on several filtering criteria";
 			$arguments = array();
-		     // CHECK FOR PARAMETERS:
-			// sports_id (REQUIRED)
-			// This is the ID of the sport you are searching for a coach for.
-				
+
 			if((int)trim($this->request->query('sports_id')) > 0)
 			{
-				$arguments["sports_id"] = (int)trim($this->request->query('sports_id'));
+				$arguments["sports_id"] = trim($this->request->query('sports_id'));
 			}
 
-			else // THIS WAS A REQUIRED PARAMETER
+			if(trim($this->request->query('regions')) != "")
 			{
-				// Create Array for Error Data
-				$error_array = array(
-					"error" => "Required Parameter Missing",
-					"param_name" => "sports_id",
-					"param_desc" => "This is the ID of the sport you are searching for a coach for."
-				);
-
-				// Set whether it is a fatal error
-				$is_fatal = true;
-
-				// Call method to throw an error
-				$this->addError($error_array,$is_fatal);
-				return false;
-
+				$arguments["regions"] = explode(',', $this->request->query('regions'));
+//				foreach($arguments["regions"] as $regions_key =>$regions_val)
+//				{
+//					// Access each item in the array through the $regions_val variable
+//				}
 			}
-			
-			// regions 
-			// This is an array of region IDs either comma separated or coming back from an array of checkboxes
-				
-			if(isset($this->request->query('regions')))
+
+			if(trim($this->request->query('divisions')) != "")
 			{
-				$arguments["regions"] = $this->request->query('regions');
-				foreach($arguments["regions"] as $regions_key =>$regions_val)
-				{
-					// Access each item in the array through the $regions_val variable
-				}
+				$arguments["divisions"] = explode(',', $this->request->query('divisions'));
+//				foreach($arguments["divisions"] as $divisions_key =>$divisions_val)
+//				{
+//					// Access each item in the array through the $divisions_val variable
+//				}
 			}
 
-			// divisions 
-			// This is an array of division IDs either comma separated or coming back from an array of checkboxes
-				
-			if(isset($this->request->query('divisions')))
+			if(trim($this->request->query('academics')) != "")
 			{
-				$arguments["divisions"] = $this->request->query('divisions');
-				foreach($arguments["divisions"] as $divisions_key =>$divisions_val)
-				{
-					// Access each item in the array through the $divisions_val variable
-				}
+				$arguments["academics"] = explode(',', $this->request->query('academics'));
+//				foreach($arguments["academics"] as $academics_key =>$academics_val)
+//				{
+//					// Access each item in the array through the $academics_val variable
+//				}
 			}
 
-			// academics 
-			// This is an array of Academic Levels (1-6) either comma separated or coming back from an array of checkboxes
-				
-			if(isset($this->request->query('academics')))
-			{
-				$arguments["academics"] = $this->request->query('academics');
-				foreach($arguments["academics"] as $academics_key =>$academics_val)
-				{
-					// Access each item in the array through the $academics_val variable
-				}
-			}
-
-			// public (REQUIRED)
-			// Preference to search for public institutions
-				
-			if($this->request->query('public') != "")
+			if(trim($this->request->query('public')) != "")
 			{
 				//convert public to a boolean
-				$arguments["public"] = (bool)$this->request->query('public');
+				$arguments["public"] = Util::convert_to_boolean($this->request->query('public'));
 			}
-
-			else // THIS WAS A REQUIRED PARAMETER
-			{
-				// Create Array for Error Data
-				$error_array = array(
-					"error" => "Required Parameter Missing",
-					"param_name" => "public",
-					"param_desc" => "Preference to search for public institutions"
-				);
-
-				// Set whether it is a fatal error
-				$is_fatal = true;
-
-				// Call method to throw an error
-				$this->addError($error_array,$is_fatal);
-				return false;
-
-			}
-			
-			// private (REQUIRED)
-			// Preference to search for private institutions
 				
-			if($this->request->query('private') != "")
+			if(trim($this->request->query('private')) != "")
 			{
 				//convert private to a boolean
-				$arguments["private"] = (bool)$this->request->query('private');
-			}
-
-			else // THIS WAS A REQUIRED PARAMETER
-			{
-				// Create Array for Error Data
-				$error_array = array(
-					"error" => "Required Parameter Missing",
-					"param_name" => "private",
-					"param_desc" => "Preference to search for private institutions"
-				);
-
-				// Set whether it is a fatal error
-				$is_fatal = true;
-
-				// Call method to throw an error
-				$this->addError($error_array,$is_fatal);
-				return false;
-
+				$arguments["private"] = Util::convert_to_boolean($this->request->query('private'));
 			}
 			
-			// states_id 
-			// If provided will narrow the list of colleges to a single state
-				
 			if((int)trim($this->request->query('states_id')) > 0)
 			{
-				$arguments["states_id"] = (int)trim($this->request->query('states_id'));
+				$arguments["state_id"] = (int)trim($this->request->query('states_id'));
 			}
 
-
+			return $this->mainModel->getSearch($arguments);
 		}
-		
+
 		############################################################################
 		###########################    POST METHODS    #############################
 		############################################################################
