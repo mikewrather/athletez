@@ -173,14 +173,7 @@
 			return $retArr;
 		}
 
-		public function post_addcomments()
-		{
-			$retArr = array();
-			// Scaffolding Code For Single:
-			$retArr = $this->obj->getBasics();
 
-			return $retArr;
-		}
 		
 		/**
 		 * post_player() Add a new player to the roster

@@ -27,7 +27,7 @@ function(facade,   utils,   BaseCommentListView,       ProfileCommentFormView) {
                 listView.$el.prepend(formView.el);
             }
             
-            Channel('gamecommentonform:fetch').subscribe(callback);
+            Channel('profilecommentonform:fetch').subscribe(callback);
         }
 
     });

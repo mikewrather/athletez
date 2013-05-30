@@ -380,6 +380,27 @@
 			}
 		}
 
+		/**
+		 * action_get_sent_resumes() Retrieve all resumes this user has sent to college coaches.
+		 * via /api/user/sent_resumes/{users_id}
+		 *
+		 */
+		public function action_get_sent_resumes()
+		{
+			$this->payloadDesc = "Retrieve all resumes this user has sent to college coaches.";
+			$arguments = array();
+			// CHECK FOR PARAMETERS:
+			// sports_id
+			// The sport associated with the resume.
+
+			if((int)trim($this->request->query('sports_id')) > 0)
+			{
+				$arguments["sports_id"] = (int)trim($this->request->query('sports_id'));
+			}
+
+
+		}
+
 		############################################################################
 		###########################    POST METHODS    #############################
 		############################################################################

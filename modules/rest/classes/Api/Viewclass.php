@@ -53,4 +53,11 @@ class Api_Viewclass
 		$this->putParams = $paramsArr;
 	}
 
+	public function post_addcomment()
+	{
+		$retArr = $this->obj->getBasics();
+
+		return $retArr;
+	}
+
 }

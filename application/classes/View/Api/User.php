@@ -287,6 +287,24 @@
 			 
 			return $retArr;
 		}
+
+		/**
+		 * get_sent_resumes() Retrieve all resumes this user has sent to college coaches.
+		 *
+		 * @retun array
+		 */
+		public function get_sent_resumes()
+		{
+			$retArr = array();
+
+			// Scaffolding Code For Array:
+			$objs = $this->obj->find_all();
+			foreach($objs as $obj)
+			{
+				$retArr[$obj->id] = $obj->getBasics();
+			}
+			return $retArr;
+		}
 		
 		/**
 		 * post_add() Create a new user with all necessary basic information (possibly first step of registration)

@@ -515,6 +515,8 @@ class Controller_Api_Base extends AuthController
 			$arguments["subject_id"] = $subject_id = $this->mainModel->id;
 		}
 
+		print_r($arguments);
+
 		// The text of the comment
 		if(trim($this->request->post('comment')) != "")
 		{

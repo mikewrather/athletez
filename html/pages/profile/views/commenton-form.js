@@ -39,10 +39,12 @@ function(require,   ProfileCommentFormModel,        BaseCommentFormView,      Ba
                                 
                 var saveInfo = new BaseModel(payload);
                 saveInfo.url = function() {
+	                debug.log(self);
                     if (testpath)
-                        return testpath + '/user/addcomment';
-                    return '/api/user/addcomment';
+                        return testpath + '/user/addcomment' + self.model.id;
+                    return '/api/user/addcomment/' + self.model.id;
                 }
+
                 saveInfo.saveSuccess = function(model, response) {
                     BaseModel.prototype.saveSuccess.call(this, model, response);
                     var exec_data = model.get('exec_data');
@@ -53,6 +55,7 @@ function(require,   ProfileCommentFormModel,        BaseCommentFormView,      Ba
                     } else {
                         $('.global-alert').addClass('alert-error').html(desc).stop().fadeIn();
                     }
+	                Channel('profilecommentonform:fetch').publish();
                 }
                 saveInfo.save();
                 
