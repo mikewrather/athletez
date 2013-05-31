@@ -339,7 +339,7 @@
 
 				if(trim($this->request->post('name')) != "")
 				{
-					$args['$name'] = trim($this->request->post('name'));
+					$args['name'] = trim($this->request->post('name'));
 				}
 
 				else // THIS WAS A REQUIRED PARAMETER
@@ -364,7 +364,7 @@
 
 				if((int)trim($this->request->post('sports_id')) > 0)
 				{
-					$$args['sports_id'] = (int)trim($this->request->post('sports_id'));
+					$args['sports_id'] = (int)trim($this->request->post('sports_id'));
 				}
 
 				// video_services_id
@@ -376,6 +376,17 @@
 				}
 
 				$result = $this->mainModel->addVideo($args);
+
+				if(get_class($result) == get_class($this->mainModel))
+				{
+					return $result;
+				}
+				elseif(get_class($result) == 'ORM_Validation_Exception')
+				{
+					//parse error and add to error array
+					$this->processValidationError($result,$this->mainModel->error_message_path);
+					return false;
+				}
 			}
 
 		}

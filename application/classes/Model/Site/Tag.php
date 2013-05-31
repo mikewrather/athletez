@@ -153,6 +153,10 @@ class Model_Site_Tag extends Model_Site_Entdir
 		{
 			$this->users_id = $users_id;
 		}
+		else
+		{
+			$this->users_id = Auth::instance()->get_user()->id;
+		}
 
 		if(isset($media_id))
 		{

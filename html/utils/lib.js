@@ -118,6 +118,8 @@ define(["facade", "utils/debug"], function(facade, debug) {
             }
         }
 
+	    debug.log(topic);
+
         return topic;
     };
 

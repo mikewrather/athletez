@@ -306,6 +306,7 @@ class Controller_Api_Base extends AuthController
 			$this->mainModel->where('id','=',$this->myID)->find();
 			if(!$this->mainModel->loaded())	unset($this->mainModel);
 		}
+	//	print_r($this->mainModel);
 	}
 
 
@@ -538,5 +539,72 @@ class Controller_Api_Base extends AuthController
 			$this->processValidationError($result,$this->mainModel->error_message_path);
 			return false;
 		}
+	}
+
+	public function action_post_addvideo()
+	{
+		$valid_object_types = array(
+			"Model_Sportorg_Games_Base",
+			"Model_Sportorg_Match",
+			"Model_User_Base",
+			"Model_User_Resume_Data_Vals",
+			"Model_Sportorg_Org",
+			"Model_Sportorg_Team",
+		);
+
+		//only create team's comments if have games_id
+		if ($this->mainModel->id && in_array(get_class($this->mainModel),$valid_object_types)){
+			$arguments["subject_type_id"] = $ent_types_id = Ent::getMyEntTypeID($this->mainModel);
+			$arguments["subject_id"] = $subject_id = $this->mainModel->id;
+		}
+		elseif(!in_array(get_class($this->mainModel),$valid_object_types))
+		{
+			$ent_types_id = Ent::getMyEntTypeID($this->mainModel);
+			$ent_type = ORM::factory('Site_Enttype',$ent_types_id);
+
+			//create error because the model isn't the correct type
+			// Create Array for Error Data
+			$error_array = array(
+				"error" => "You can't upload a video for a ".$ent_type->name,
+			);
+
+			// Set whether it is a fatal error
+			$is_fatal = true;
+
+			// Call method to throw an error
+			$this->addError($error_array,$is_fatal);
+		}
+		else
+		{
+			$this->modelNotSetError();
+			return false;
+		}
+
+		// cannot send this request because it will try to instantiate video with this model's id
+		$req = new Request('/api/video/add');
+		$req->method($this->request->method());
+		$req->post($this->request->post());
+
+		$resp = new Response();
+
+		$video_controller = new Controller_Api_Video($req,$resp);
+		$result = $video_controller->action_post_add();
+
+		if(get_class($result) == 'Model_Media_Video')
+		{
+			$arguments['media_id'] = $result->media_id;
+			$tag = ORM::factory('Site_Tag');
+			$tag->addTag($arguments);
+
+			return $result;
+		}
+		elseif(get_class($result) == 'ORM_Validation_Exception')
+		{
+			//parse error and add to error array
+			$this->processValidationError($result,$this->mainModel->error_message_path);
+			return false;
+		}
+
+
 	}
 }

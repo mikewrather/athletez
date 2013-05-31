@@ -323,22 +323,15 @@
 		 * action_post_addvideo() Post a new video for this game
 		 * via /api/game/addvideo/{games_id}
 		 *
-		 */
+
 		public function action_post_addvideo()
 		{
 			$this->payloadDesc = "Post a new video for this game";
 
-		     // CHECK FOR PARAMETERS:
-			// name 
-			// Video Title
-				
-			if(trim($this->request->post('name')) != "")
-			{
-				$name = trim($this->request->post('name'));
-			}
+		     parent::action_post_addvideo();
 
 		}
-		
+	*/
 		/**
 		 * action_post_addimage() Post a new image for this game
 		 * via /api/game/addimage/{games_id}

@@ -10,7 +10,7 @@
 			max_file_size:'500mb',
 			max_file_count:1,
 			chunk_size:'5mb',
-			url:'/api/video/add',
+			url:'/api/user/addvideo/425983',
 			unique_names:true,
 			flash_swf_url:'/plupload/js/plupload.flash.swf',
 			silverlight_xap_url:'/plupload/js/plupload.silverlight.xap',
@@ -49,9 +49,9 @@
 			}
 			else
 			{
-				uploader.settings.multipart_params.title = $('input#title').val();
+				uploader.settings.multipart_params.name = $('input#title').val();
 				uploader.settings.multipart_params.mm = $('input#mm').is(':checked');
-				uploader.settings.multipart_params.sport = $('select#sport').val();
+				uploader.settings.multipart_params.sports_id = $('select#sports_id').val();
 				$('#uploadfiles').addClass('isUploading');
 				uploader.start();
 			}
@@ -112,7 +112,7 @@
 		<label>Title:</label>
 		<input type="text" id="title" name="title" style="width:95%" placeholder="Enter a Title"/>
 		<label style="margin-bottom: 2px;">Sport</label>
-		<select name="title" id="sport" style="width:95%;" class="">
+		<select name="sports_id" id="sports_id" style="width:95%;" class="">
 			<?php
 			foreach ($sports as $sport)
 			{
