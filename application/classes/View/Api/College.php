@@ -11,13 +11,6 @@
 
 	class View_Api_College extends Api_Viewclass
 	{
-
-		public function __construct()
-		{
-			parent::__construct();
-		}
-
-	
 		/**
 		 * get_search() Search for a list of colleges based on several filtering criteria
 		 *
@@ -25,17 +18,14 @@
 		 */
 		public function get_search()
 		{
-			$retArr = array();
+			$retArr = null;
 
 			// Scaffolding Code For Array:
 			$objs = $this->obj->find_all();
 			foreach($objs as $obj)
 			{
-				$retArr[$obj->id] = $obj->getBasics();
+				$retArr[] = $obj->getBasics();
 			}
-
-			// Scaffolding Code For Single:
-			$retArr = $this->obj->getBasics();
 
 			return $retArr;
 		}
