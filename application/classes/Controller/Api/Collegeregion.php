@@ -9,7 +9,7 @@
  *
  */
 
-	class Controller_Api_College_region extends Controller_Api_Base
+	class Controller_Api_Collegeregion extends Controller_Api_Base
 	{
 
 		public function __construct($request,$response)

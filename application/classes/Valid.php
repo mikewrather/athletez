@@ -608,6 +608,17 @@
 			return false;
 		}
 
+		public static function coaches_id_exist($value){
+			$coaches_data = ORM::factory("College_Coach");
+			$coaches_data->select("id")
+				->where('id', '=', $value)
+				->find();
+			if ($coaches_data->loaded()){
+				return true;
+			}
+			return false;
+		}
+
 		public static function unique_email($value){
 			$user_model = ORM::factory("User_Base");
 			$user_model->select("id")
