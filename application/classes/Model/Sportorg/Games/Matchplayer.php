@@ -59,7 +59,7 @@ class Model_Sportorg_Games_Matchplayer extends ORM
 				array('not_empty'),
 				array('users_id_exist')
 			),
-
+			/*
 			// points_awarded (int)
 			'points_awarded'=>array(
 				array('digit'),
@@ -75,6 +75,7 @@ class Model_Sportorg_Games_Matchplayer extends ORM
 				array('not_empty'),
 				array('in_array', array(':value', array(0, 1))),
 			),
+			*/
 		);
 	}
 
