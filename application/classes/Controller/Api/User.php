@@ -389,16 +389,21 @@
 		{
 			$this->payloadDesc = "Retrieve all resumes this user has sent to college coaches.";
 			$arguments = array();
-			// CHECK FOR PARAMETERS:
-			// sports_id
-			// The sport associated with the resume.
 
 			if((int)trim($this->request->query('sports_id')) > 0)
 			{
 				$arguments["sports_id"] = (int)trim($this->request->query('sports_id'));
 			}
 
+			if(!$this->mainModel->id)
+			{
+				$this->modelNotSetError();
+				return false;
+			}
+			$arguments['users_id'] = $this->mainModel->id;
+			$resume_sent_model = ORM::factory("User_Resume_Sent");
 
+			return $resume_sent_model->getSentResumes($arguments);
 		}
 
 		############################################################################

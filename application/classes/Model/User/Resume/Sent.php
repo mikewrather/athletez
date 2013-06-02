@@ -112,28 +112,16 @@ class Model_User_Resume_Sent extends ORM
 			return $e;
 		}
 	}
-	/*
-	public function getListall($args = array())
+
+	public function getSentResumes($args = array())
 	{
 		extract($args);
-		$resumedata = ORM::factory('User_Resume_Data')
-		 		->join('rdg_rdp_link')->on('rdg_rdp_link.resume_data_groups_id', '=', 'user_resume_data.resume_data_groups_id')
-				->where('user_resume_data.id', '=', $this->id);
-				
-		if ( isset($resume_data_groups_id) )
-		{
-			
-			$resumedata->where('rdg_rdp_link.resume_data_groups_id', '=', $resume_data_groups_id );
-		}
-		
-		if ( isset($resume_data_profiles) )
-		{
-			
-			$resumedata->where('rdg_rdp_link.resume_data_profiles_id', '=', $resume_data_profiles );
-		}
-		
-		return $resumedata; 
-	}
-	*/
+		$resumesent = ORM::factory('User_Resume_Sent');
+		if (isset($users_id))
+			$resumesent->where('users_id', '=', $users_id);
 
+		if (isset($sports_id))
+			$resumesent->where('sports_id', '=', $sports_id);
+		return $resumesent;
+	}
 }
