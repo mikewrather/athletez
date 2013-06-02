@@ -138,29 +138,36 @@
 			{
 				$args['sports_id'] = (int)trim($this->request->post('sports_id'));
 			}
-			else // THIS WAS A REQUIRED PARAMETER
-			{
-				// Create Array for Error Data
-				$error_array = array(
-					"error" => "Required Parameter Missing",
-					"param_name" => "sports_id",
-					"param_desc" => "The sport this image is associated with"
-				);
-
-				// Set whether it is a fatal error
-				$is_fatal = true;
-
-				// Call method to throw an error
-				$this->addError($error_array,$is_fatal);
-
-			}
+//			else // THIS WAS A REQUIRED PARAMETER
+//			{
+//				$error_array = array(
+//					"error" => "Required Parameter Missing",
+//					"param_name" => "sports_id",
+//					"param_desc" => "The sport this image is associated with"
+//				);
+//
+//				$is_fatal = true;
+//
+//				$this->addError($error_array,$is_fatal);
+//			}
 
 			if(sizeof($_FILES) > 0)
 			{
 				$args['files'] = $_FILES;
 			}
 
-			return $this->mainModel->addImage($args);
+			$result = $this->mainModel->addImage($args);
+
+			if(get_class($result) == get_class($this->mainModel))
+			{
+				return $result;
+			}
+			elseif(get_class($result) == 'ORM_Validation_Exception')
+			{
+				//parse error and add to error array
+				$this->processValidationError($result,$this->mainModel->error_message_path);
+				return false;
+			}
 
 
 		}

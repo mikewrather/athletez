@@ -159,15 +159,22 @@ class Model_Media_Image extends ORM
 				$this->original_y = $img_obj->height;
 				$this->original_mime = $img_obj->mime;
 				$this->original_size = filesize($tmp_image);
-				$this->save();
+				try
+				{
+					$this->save();
+					// generate images for each size / quality type
+					$this->generate_types($tmp_image);
+					return $this;
+				}
+				catch(ORM_Validation_Exception $e)
+				{
+					return $e;
+				}
+
 			}
 		}
 
-		// generate images for each size / quality type
-		$this->generate_types($tmp_image);
-
 		return $this;
-
 	}
 
 	/**

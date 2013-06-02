@@ -503,6 +503,75 @@ class Controller_Api_Base extends AuthController
 	/*****************************************************************
 	 *                UNIVERSAL ACTION METHODS
 	 ****************************************************************/
+	public function action_post_addtag(){
+		$this->payloadDesc = "Add a new tag";
+		$arguments = array();
+		// CHECK FOR PARAMETERS:
+		// subject_type_id (REQUIRED)
+		// The ID of the subject type / entity type of the tag's subject (this is a row from the enttypes table)
+
+		if((int)trim($this->request->post('subject_type_id')) > 0)
+		{
+			$arguments["subject_type_id"] = (int)trim($this->request->post('subject_type_id'));
+		}
+
+		if((int)trim($this->request->post('subject_id')) > 0)
+		{
+			$arguments["subject_id"] = (int)trim($this->request->post('subject_id'));
+		}
+
+		if((int)trim($this->request->post('users_id')) > 0)
+		{
+			$arguments["users_id"] = (int)trim($this->request->post('users_id'));
+		}else{
+			$arguments["users_id"] = $this->user->id;
+		}
+
+		if((int)trim($this->request->post('media_id')) > 0)
+		{
+			$arguments["media_id"] = (int)trim($this->request->post('media_id'));
+		}
+
+		$result = $this->mainModel->addTag($arguments);
+		if(get_class($result) == get_class($this->mainModel))
+		{
+			return $result;
+		}
+		elseif(get_class($result) == 'ORM_Validation_Exception')
+		{
+			//parse error and add to error array
+			$this->processValidationError($result,$this->mainModel->error_message_path);
+			return false;
+		}
+	}
+
+	public function action_post_addvote(){
+		$this->payloadDesc = "Add a new Vote";
+		$arguments = array();
+
+		if((int)trim($this->request->post('subject_type_id')) > 0)
+		{
+		$arguments["subject_type_id"] = (int)trim($this->request->post('subject_type_id'));
+		}
+
+		if((int)trim($this->request->post('subject_id')) > 0)
+		{
+			$arguments["subject_id"] = (int)trim($this->request->post('subject_id'));
+		}
+		$arguments['voter_users_id'] = $this->user->id;
+
+		$result = $this->mainModel->addVote($arguments);
+		if(get_class($result) == get_class($this->mainModel))
+		{
+			return $result;
+		}
+		elseif(get_class($result) == 'ORM_Validation_Exception')
+		{
+			//parse error and add to error array
+			$this->processValidationError($result,$this->mainModel->error_message_path);
+			return false;
+		}
+	}
 
 	public function action_post_addcomment()
 	{
@@ -515,8 +584,6 @@ class Controller_Api_Base extends AuthController
 			$arguments["subject_enttypes_id"] = $ent_types_id = Ent::getMyEntTypeID($this->mainModel);
 			$arguments["subject_id"] = $subject_id = $this->mainModel->id;
 		}
-
-		print_r($arguments);
 
 		// The text of the comment
 		if(trim($this->request->post('comment')) != "")
@@ -607,4 +674,65 @@ class Controller_Api_Base extends AuthController
 
 
 	}
+
+	public function action_post_addimage()
+	{
+		$valid_object_types = array(
+			"Model_Sportorg_Games_Base",
+		);
+
+		//only create team's comments if have games_id
+		if ($this->mainModel->id && in_array(get_class($this->mainModel),$valid_object_types)){
+			$arguments["subject_type_id"] = $ent_types_id = Ent::getMyEntTypeID($this->mainModel);
+			$arguments["subject_id"] = $subject_id = $this->mainModel->id;
+		}
+		elseif(!in_array(get_class($this->mainModel),$valid_object_types))
+		{
+			$ent_types_id = Ent::getMyEntTypeID($this->mainModel);
+			$ent_type = ORM::factory('Site_Enttype',$ent_types_id);
+
+			//create error because the model isn't the correct type
+			// Create Array for Error Data
+			$error_array = array(
+				"error" => "You can't upload a image for a ".$ent_type->name,
+			);
+
+			// Set whether it is a fatal error
+			$is_fatal = true;
+
+			// Call method to throw an error
+			$this->addError($error_array,$is_fatal);
+		}
+		else
+		{
+			$this->modelNotSetError();
+			return false;
+		}
+
+		// cannot send this request because it will try to instantiate video with this model's id
+		$req = new Request('/api/image/add');
+		$req->method($this->request->method());
+		$req->post($this->request->post());
+
+		$resp = new Response();
+
+		$image_controller = new Controller_Api_Image($req,$resp);
+		$result = $image_controller->action_post_add();
+
+		if(get_class($result) == 'Model_Media_Image')
+		{
+			$arguments['media_id'] = $result->media_id;
+			$tag = ORM::factory('Site_Tag');
+			$tag->addTag($arguments);
+
+			return $result;
+		}
+		elseif(get_class($result) == 'ORM_Validation_Exception')
+		{
+			//parse error and add to error array
+			$this->processValidationError($result,$this->mainModel->error_message_path);
+			return false;
+		}
+	}
+
 }

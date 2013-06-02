@@ -336,7 +336,7 @@
 		 * action_post_addimage() Post a new image for this game
 		 * via /api/game/addimage/{games_id}
 		 *
-		 */
+
 		public function action_post_addimage()
 		{
 			$this->payloadDesc = "Post a new image for this game";
@@ -351,7 +351,7 @@
 			}
 
 		}
-
+		 */
 		/**
 		 *  action_post_addcomment is in parent class
 		 */

@@ -78,31 +78,7 @@
 		 */
 		public function action_post_add()
 		{
-			$this->payloadDesc = "Add a new Vote";
-			$arguments = array();
-
-			if((int)trim($this->request->post('subject_type_id')) > 0)
-			{
-				$arguments["subject_type_id"] = (int)trim($this->request->post('subject_type_id'));
-			}
-
-			if((int)trim($this->request->post('subject_id')) > 0)
-			{
-				$arguments["subject_id"] = (int)trim($this->request->post('subject_id'));
-			}
-			$arguments['voter_users_id'] = $this->user->id;
-
-			$result = $this->mainModel->addVote($arguments);
-			if(get_class($result) == get_class($this->mainModel))
-			{
-				return $result;
-			}
-			elseif(get_class($result) == 'ORM_Validation_Exception')
-			{
-				//parse error and add to error array
-				$this->processValidationError($result,$this->mainModel->error_message_path);
-				return false;
-			}
+			$this->action_post_addvote();
 		}
 		
 		############################################################################
