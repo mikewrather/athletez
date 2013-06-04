@@ -60,9 +60,11 @@ class Model_College_Base extends ORM
 	public function getSearch($args = array()){
 		extract($args);
 		$college_model =  ORM::factory("College_Base");
+		$college_model->select(DB::expr("distinct('college_base.id')"));
+		$college_model->join('college_coaches')->on('college_coaches.college_id', '=', 'college_base.id');
 		if (isset($sports_id)){
-			$college_model->join('college_coaches')->on('college_coaches.college_id', '=', 'college_base.id')
-				->where('college_coaches.sport_id', '=', $sports_id);
+			$college_model->where('college_coaches.sport_id', '=', $sports_id);
+			//$college_model->where('college_coaches.id', 'is not', null);
 		}
 
 		if(isset($divisions)){
