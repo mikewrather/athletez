@@ -63,23 +63,7 @@
 			return $retArr;
 		}
 		
-		/**
-		 * get_followers() Get followers on a specific subject
-		 *
-		 * @retun array
-		 */
-		public function get_followers()
-		{
-			$retArr = null;
 
-			// Scaffolding Code For Array:
-			$objs = $this->obj->find_all();
-			foreach($objs as $obj)
-			{
-				$retArr[] = $obj->getBasics();
-			}
-			return $retArr;
-		}
 		
 		/**
 		 * get_tags() Get tags for a specific subject

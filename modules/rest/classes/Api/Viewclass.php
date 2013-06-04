@@ -65,4 +65,26 @@ class Api_Viewclass
 		return $this->obj->getBasics();
 	}
 
+	public function post_addimage()
+	{
+		return $this->obj->getBasics();
+	}
+
+	/**
+	 * get_followers() Get followers on a specific subject
+	 *
+	 * @retun array
+	 */
+	public function get_followers()
+	{
+		$retArr = null;
+
+	//	print_r($this->obj);
+
+		foreach($this->obj as $user)
+		{
+			if(is_object($user)) $retArr[] = $user->getBasics();
+		}
+		return $retArr;
+	}
 }

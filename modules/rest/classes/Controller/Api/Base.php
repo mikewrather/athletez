@@ -679,6 +679,11 @@ class Controller_Api_Base extends AuthController
 	{
 		$valid_object_types = array(
 			"Model_Sportorg_Games_Base",
+			"Model_Sportorg_Match",
+			"Model_User_Base",
+			"Model_User_Resume_Data_Vals",
+			"Model_Sportorg_Org",
+			"Model_Sportorg_Team",
 		);
 
 		//only create team's comments if have games_id
@@ -733,6 +738,49 @@ class Controller_Api_Base extends AuthController
 			$this->processValidationError($result,$this->mainModel->error_message_path);
 			return false;
 		}
+	}
+
+	/**
+	 * action_get_followers() Get followers on a specific subject
+	 * via /api/ent/followers/{subject_type_id}/subject_id
+	 *
+	 */
+	public function action_get_followers()
+	{
+		$this->payloadDesc = "Get followers on a specific subject";
+
+		$valid_object_types = array(
+			"Model_User_Base",
+			"Model_Sportorg_Team",
+		);
+
+
+		if($this->mainModel->loaded() && !in_array(get_class($this->mainModel),$valid_object_types))
+		{
+			$ent_types_id = Ent::getMyEntTypeID($this->mainModel);
+			$ent_type = ORM::factory('Site_Enttype',$ent_types_id);
+
+			//create error because the model isn't the correct type
+			// Create Array for Error Data
+			$error_array = array(
+				"error" => "You get followers of a ".$ent_type->name,
+			);
+
+			// Set whether it is a fatal error
+			$is_fatal = true;
+
+			// Call method to throw an error
+			$this->addError($error_array,$is_fatal);
+			return false;
+		}
+		elseif(!$this->mainModel->loaded())
+		{
+			$this->modelNotSetError();
+			return false;
+		}
+
+		return $followers = Model_User_Followers::get_followers($this->mainModel);
+
 	}
 
 }

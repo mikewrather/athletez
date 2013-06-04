@@ -14,8 +14,6 @@
 
 		public function post_send_email()
 		{
-			$retArr = array();
-
 			$retArr = $this->obj->result;
 
 			return $retArr;

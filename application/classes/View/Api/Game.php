@@ -197,7 +197,7 @@
 		 * post_addimage() Post a new image for this game
 		 *
 		 * @retun array
-		 */
+
 		public function post_addimage()
 		{
 			$retArr = array();
@@ -206,7 +206,8 @@
 
 			return $retArr;
 		}
-		
+		*/
+
 		/**
 		 * put_basics() Update Basic information about the game
 		 *
