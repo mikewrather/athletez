@@ -679,6 +679,11 @@ class Controller_Api_Base extends AuthController
 	{
 		$valid_object_types = array(
 			"Model_Sportorg_Games_Base",
+			"Model_Sportorg_Match",
+			"Model_User_Base",
+			"Model_User_Resume_Data_Vals",
+			"Model_Sportorg_Org",
+			"Model_Sportorg_Team",
 		);
 
 		//only create team's comments if have games_id

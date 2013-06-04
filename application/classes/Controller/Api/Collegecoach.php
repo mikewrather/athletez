@@ -70,7 +70,7 @@
 				return false;
 			}
 
-			if((int)trim($this->request->post('users_id')) > 0)
+			if((int)trim($this->request->post('users_id')) > 0 && $this->is_admin)
 			{
 				$arguments["users_id"] = (int)trim($this->request->post('users_id'));
 			}else{

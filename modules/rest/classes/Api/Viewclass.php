@@ -65,4 +65,9 @@ class Api_Viewclass
 		return $this->obj->getBasics();
 	}
 
+	public function post_addimage()
+	{
+		return $this->obj->getBasics();
+	}
+
 }

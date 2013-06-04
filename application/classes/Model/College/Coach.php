@@ -24,7 +24,6 @@ class Model_College_Coach extends ORM
 	public function sendMail($args = array()){
 		extract($args);
 
-
 		try{
 			$message_arr = array();
 			foreach($coaches as $coach){
