@@ -76,7 +76,7 @@ if (isset($_SERVER['KOHANA_ENV']))
 	Kohana::$environment = constant('Kohana::' . strtoupper($_SERVER['KOHANA_ENV']));
 }
 
-if (strpos($_SERVER['HTTP_HOST'], 'newsite') !== FALSE || strpos($_SERVER['HTTP_HOST'], 'aup.dev') !== FALSE)
+if (strpos($_SERVER['HTTP_HOST'], 'newsite') !== FALSE || strpos($_SERVER['HTTP_HOST'], 'aup.dev') !== FALSE || strpos($_SERVER['HTTP_HOST'], 'localhost') !== FALSE)
 {
 	// Localhost
 	Kohana::$environment = Kohana::LOCALHOST;

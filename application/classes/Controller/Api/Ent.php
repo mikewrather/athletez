@@ -66,17 +66,7 @@
 		
 		}
 		
-		/**
-		 * action_get_followers() Get followers on a specific subject
-		 * via /api/ent/followers/{subject_type_id}/subject_id
-		 *
-		 */
-		public function action_get_followers()
-		{
-			$this->payloadDesc = "Get followers on a specific subject";
 
-		
-		}
 		
 		/**
 		 * action_get_tags() Get tags for a specific subject
