@@ -12,6 +12,16 @@ function(require,   ProfileCommentFormModel,        BaseCommentFormView,      Ba
     var CommentOnFormView;
         
     CommentOnFormView = BaseCommentFormView.extend({
+		/*
+	    initialize : function(options){
+
+		    console.log("initializing xxxcomments list view");
+		    //
+		    //this.collection.on('add', this.render, this);
+		    //this.collection.on('reset', this.render, this);
+		    //this.setupFormView();
+		    // /CollectionView.prototype.initialize.call(this, options);
+	    },*/
 
         // **Method** `setOptions` - called by BaseView's initialize method
         setOptions: function (options) {
@@ -23,6 +33,10 @@ function(require,   ProfileCommentFormModel,        BaseCommentFormView,      Ba
                 this.model.fetch();
             }            
         },
+
+	    refreshComments: function(e) {
+		    this.collection.on('add', this.render, this);
+	    },
         
         // If you hit return in the main input field, create new **CommentForm** model,
         // persisting it to *localStorage*.
@@ -55,6 +69,8 @@ function(require,   ProfileCommentFormModel,        BaseCommentFormView,      Ba
                     } else {
                         $('.global-alert').addClass('alert-error').html(desc).stop().fadeIn();
                     }
+	                self.collection.push(model);
+	                //self.collection.on('add', self.render, self);
 	                Channel('profilecommentonform:fetch').publish();
                 }
                 saveInfo.save();
@@ -69,6 +85,7 @@ function(require,   ProfileCommentFormModel,        BaseCommentFormView,      Ba
                 */
                 
                 this.input.val('');
+
             }
         }
         

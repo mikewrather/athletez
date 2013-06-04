@@ -219,7 +219,7 @@ define([
 	            console.log("Images Ready (called in profile.js handleDeferredDynamic)",x);
                 controller.setupImageListView();
             });
-        },
+		},
         
         setupHeaderView: function() {
             var headerView;

@@ -60,6 +60,7 @@ define([
         submitHandler: function (e) {
             e.preventDefault();
             this.createOnEnter(e);
+	        this.refreshComments(e);
         },
 
         // If you hit return in the main input field, create new **CommentForm** model,
@@ -70,7 +71,10 @@ define([
                 
                 this.input.val('');
             }
-        }
+        },
+	    refreshComments: function(e){
+
+	    }
 
     });
 
