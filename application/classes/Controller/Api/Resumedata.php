@@ -113,8 +113,8 @@
 			if((int)trim($this->request->post('users_id')) > 0)
 			{
 				$args['users_id'] = (int)trim($this->request->post('users_id'));
-			}
-
+			}else
+				$args['users_id'] = $this->user->id;
 			// user_value 
 			// The user's Value
 				
@@ -130,10 +130,10 @@
 			}
 			$args['resume_data_id'] = $this->mainModel->id;
 
-			$resume_data = ORM::factory("User_Resume_Data_Vals");
-			$result = $resume_data->addValue($args);
+			$resume_data_vals = ORM::factory("User_Resume_Data_Vals");
+			$result = $resume_data_vals->addValue($args);
 
-			if(get_class($result) == get_class($resume_data))
+			if(get_class($result) == get_class($resume_data_vals))
 			{
 				return $result;
 			}
