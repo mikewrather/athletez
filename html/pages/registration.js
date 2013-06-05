@@ -143,19 +143,22 @@ define([
             this.layout.render();
         },
         
-        initRegisterFacebook: function() {
-            var controller = this;
+        initRegisterFacebook: function() {    
+    //    	alert("Init facebook");
+             var controller = this;             
+             this.refreshPage();
+             this.register_facebook = new RegistrationFacebookModel();
+             this.register_facebook.fetch();
+             
+             $.when(this.register_facebook.request).done(function () {
+                 controller.setupRegisterFacebookView();
+             });
             
-            this.refreshPage();
-            this.register_facebook = new RegistrationFacebookModel();
-            this.register_facebook.fetch();
-            
-            $.when(this.register_facebook.request).done(function () {
-                controller.setupRegisterFacebookView();
-            });
-        },
+         },
         
         setupRegisterFacebookView: function() {
+        	
+     //   	alert("Setup facebook");
             this.registerFacebookView = new RegistrationFacebookView({
                 model: this.register_facebook,
                 name: "Registration with Facebook",
@@ -163,6 +166,8 @@ define([
             });
 
             this.scheme.push(this.registerFacebookView);
+            console.log("this.registerFacebookView");
+            console.log(this.registerFacebookView);
             this.layout.render();
         },
         
