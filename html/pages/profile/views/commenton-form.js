@@ -35,8 +35,9 @@ function(require,   ProfileCommentFormModel,        BaseCommentFormView,      Ba
         },
 
 	    refreshComments: function(e) {
-		    this.collection.on('add', this.render, this);
-	    },
+		    this.model.on('change', this.render, this);
+		    this.$("#new-comment").val("");
+		},
         
         // If you hit return in the main input field, create new **CommentForm** model,
         // persisting it to *localStorage*.
@@ -47,7 +48,7 @@ function(require,   ProfileCommentFormModel,        BaseCommentFormView,      Ba
             self.$('.submit-result').stop().fadeOut();
             if (comment != '') {                
                 date = new Date();
-                var payload = this.model.get('payload');
+                var payload = new Array;
                 payload['comment'] = this.input.val();
                 payload['comment_date'] = date.toDateString();
                                 
@@ -57,10 +58,10 @@ function(require,   ProfileCommentFormModel,        BaseCommentFormView,      Ba
                     if (testpath)
                         return testpath + '/user/addcomment' + self.model.id;
                     return '/api/user/addcomment/' + self.model.id;
-                }
+                };
 
-                saveInfo.saveSuccess = function(model, response) {
-                    BaseModel.prototype.saveSuccess.call(this, model, response);
+            saveInfo.saveSuccess = function(model, response) {
+	                BaseModel.prototype.saveSuccess.call(this, model, response);
                     var exec_data = model.get('exec_data');
                     var payload = model.get('payload');
                     var desc = model.get('desc');
@@ -70,21 +71,25 @@ function(require,   ProfileCommentFormModel,        BaseCommentFormView,      Ba
                         $('.global-alert').addClass('alert-error').html(desc).stop().fadeIn();
                     }
 	                self.collection.push(model);
-	                //self.collection.on('add', self.render, self);
+	                //this.model.set('payload', payload);
+	                //this.model.set('exec_data', exec_data);
+	                //this.model.set('desc', desc);
+	                //this.collection.add(model);
+	                self.collection.on('add', self.render, self);
+	                this.refreshComments();
 	                Channel('profilecommentonform:fetch').publish();
-                }
-                saveInfo.save();
-                
-                /*
-                this.model.set('payload', payload);
-                this.model.save();
-                
+                };
+
+	            saveInfo.save();
+
+                //this.model.set('payload', payload);
+                //this.model.save();
+/*
                 var new_comment = this.model.clone();
                 new_comment.id = Math.ceil(Math.random() * 100000);
                 this.collection.push(new_comment);
-                */
-                
-                this.input.val('');
+
+ */
 
             }
         }
