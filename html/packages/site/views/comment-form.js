@@ -47,21 +47,22 @@ define([
             this.input = this.$("#new-comment");            
             
             var payload = this.model.get('payload');
+	        console.log("return payloady", payload);
             var self = this;
             if (payload) {
-                var user_photo = payload['user_picture'];
-                var user_email = payload['email'];
-                if (!user_photo && user_email) {
-                    self.$('.user-photo img').attr("src","http://www.gravatar.com/avatar/" + MD5(user_email) + "&s=29");
+                var user_photo = payload.user_picture;
+                var user_email = payload.email;
+	            if (!user_photo && user_email) {
+	                self.$('.user-photo img').attr("src","http://www.gravatar.com/avatar/" + MD5(user_email) + "&s=29");
                 }
             }
+	        return this;
         },
 
         submitHandler: function (e) {
             e.preventDefault();
             this.createOnEnter(e);
-	        this.refreshComments(e);
-        },
+	    },
 
         // If you hit return in the main input field, create new **CommentForm** model,
         // persisting it to *localStorage*.
@@ -71,10 +72,8 @@ define([
                 
                 this.input.val('');
             }
-        },
-	    refreshComments: function(e){
+        }
 
-	    }
 
     });
 

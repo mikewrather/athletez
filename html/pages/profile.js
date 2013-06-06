@@ -347,7 +347,7 @@ define([
                 displayWhen: "ready"
             });
 
-	        console.log("setupLayout Results: ",pageLayout);
+	        console.log("Profile page setupLayout Results: ",pageLayout);
             this.layout = pageLayout;
 
             return this.layout;

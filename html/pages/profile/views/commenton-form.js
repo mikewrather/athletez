@@ -6,22 +6,25 @@
 // Requires define
 // Returns {CommentOnFormView} constructor
 
-define(['require', 'profile/models/commentonform', 'site/views/comment-form', 'models/base'], 
-function(require,   ProfileCommentFormModel,        BaseCommentFormView,      BaseModel) {
+define(['require',  'text!site/templates/comment-form.html', 'profile/models/commentonform', 'site/views/comment-form', 'models/base',  'views'],
+function(require, commentFormTemplate,    ProfileCommentFormModel,        BaseCommentFormView,      BaseModel) {
 
     var CommentOnFormView;
-        
-    CommentOnFormView = BaseCommentFormView.extend({
-		/*
-	    initialize : function(options){
+	var  views = require('views'),
+		BaseView = views.BaseView;
 
-		    console.log("initializing xxxcomments list view");
-		    //
-		    //this.collection.on('add', this.render, this);
-		    //this.collection.on('reset', this.render, this);
-		    //this.setupFormView();
-		    // /CollectionView.prototype.initialize.call(this, options);
-	    },*/
+    CommentOnFormView = BaseView.extend({
+	    initialize: function (options) {
+             _.bindAll(this);
+             this.setOptions();
+             BaseView.prototype.initialize.call(this, options);
+         },
+
+	    template: commentFormTemplate,
+
+	    events: {
+		    "click #comment-submit": "submitHandler"
+	    },
 
         // **Method** `setOptions` - called by BaseView's initialize method
         setOptions: function (options) {
@@ -34,8 +37,14 @@ function(require,   ProfileCommentFormModel,        BaseCommentFormView,      Ba
             }            
         },
 
+	    submitHandler: function (e) {
+		    e.preventDefault();
+		    this.createOnEnter(e);
+	    },
+
 	    refreshComments: function(e) {
-		    this.model.on('change', this.render, this);
+		    this.collection.on('change', this.render, this);
+		    console.log("xxxxxx", this.render);
 		    this.$("#new-comment").val("");
 		},
         
@@ -44,7 +53,7 @@ function(require,   ProfileCommentFormModel,        BaseCommentFormView,      Ba
         createOnEnter: function(e) {
             var comment = this.input.val();
             var self = this;
-            
+
             self.$('.submit-result').stop().fadeOut();
             if (comment != '') {                
                 date = new Date();
@@ -56,8 +65,8 @@ function(require,   ProfileCommentFormModel,        BaseCommentFormView,      Ba
                 saveInfo.url = function() {
 	                debug.log(self);
                     if (testpath)
-                        return testpath + '/user/addcomment' + self.model.id;
-                    return '/api/user/addcomment/' + self.model.id;
+                        return testpath + '/user/addcomment';
+                    return '/api/user/addcomment';
                 };
 
             saveInfo.saveSuccess = function(model, response) {
@@ -70,13 +79,15 @@ function(require,   ProfileCommentFormModel,        BaseCommentFormView,      Ba
                     } else {
                         $('.global-alert').addClass('alert-error').html(desc).stop().fadeIn();
                     }
+	                console.log('this = ', this);
+	                this.model = model;
 	                self.collection.push(model);
 	                //this.model.set('payload', payload);
 	                //this.model.set('exec_data', exec_data);
 	                //this.model.set('desc', desc);
 	                //this.collection.add(model);
-	                self.collection.on('add', self.render, self);
-	                this.refreshComments();
+
+	                self.refreshComments();
 	                Channel('profilecommentonform:fetch').publish();
                 };
 
@@ -92,7 +103,24 @@ function(require,   ProfileCommentFormModel,        BaseCommentFormView,      Ba
  */
 
             }
-        }
+        },
+
+	    render: function () {
+		    BaseView.prototype.render.call(this);
+		    this.input = this.$("#new-comment");
+
+		    var payload = this.model.get('payload');
+		    console.log("from profile modelxx ", payload);
+		    var self = this;
+		    if (payload) {
+			    var user_photo = payload.user_picture;
+			    var user_email = payload.email;
+			    if (!user_photo && user_email) {
+				    self.$('.user-photo img').attr("src","http://www.gravatar.com/avatar/" + MD5(user_email) + "&s=29");
+			    }
+		    }
+		    //return this;
+	    }
         
     });
 
