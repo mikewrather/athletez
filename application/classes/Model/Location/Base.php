@@ -53,13 +53,13 @@ class Model_Location_Base extends ORM
 			// lon (float)
 			'lon'=>array(
 				array('not_empty'),
-				array('digit'),
+				array('numeric'),
 			),
 
 			// lat (float)
 			'lat'=>array(
 				array('not_empty'),
-				array('digit'),
+				array('numeric'),
 			),
 
 			// loc_point (point), Comment by jeffrey, no this field in page, ignore
@@ -150,15 +150,104 @@ class Model_Location_Base extends ORM
 	
 	public function addLocation($args = array())
 	{
-		extract($args);
-		if(isset($address))
+		//TODO: This shit should all be moved to a validation method.  Also, we want to store the formatted results from google, not the user's info.
+		$address = urlencode($args['address']);
+
+		$json = file_get_contents("http://maps.google.com/maps/api/geocode/json?address=$address&sensor=false");
+		$json = json_decode($json);
+
+		if($json->{status} == 'OK')
 		{
-			$this->address = $address;
+
+			$json = get_object_vars($json);
+			foreach($json["results"] as $key=>$res)
+			{
+				if(is_object($res)) $res = get_object_vars($res);
+
+				// Get full address, longitude and latitude
+				$args['full_address'] = $res['formatted_address'];
+				$args['lon'] = $res['geometry']->location->lng;
+				$args['lat'] = $res['geometry']->location->lat;
+
+				// Parse Address components and assign to correct array keys
+				foreach($res['address_components'] as $subkey=>$comp)
+				{
+					if(is_object($comp)) $comp = get_object_vars($comp);
+
+					foreach($comp['types'] as $ckey=>$cval)
+					{
+						switch ($cval)
+						{
+							case "street_number":
+								$args['number'] = $comp['long_name'];
+								break;
+							case "route":
+								$args['street'] = $comp['long_name'];
+								break;
+							case "country":
+								$args['country'] = $comp['long_name'];
+								break;
+							case "postal_code":
+								$args['zip'] = $comp['long_name'];
+								break;
+							case "locality":
+								$args['city'] = $comp['long_name'];
+								break;
+							case "neighborhood":
+								$args['neighborhood'] = $comp['long_name'];
+								break;
+							case "administrative_area_level_1":
+								$args['state'] = $comp['long_name'];
+								break;
+							case "administrative_area_level_2":
+								$args['county'] = $comp['long_name'];
+								break;
+							case "colloquial_area":
+								$args['colloquial_area'] = $comp['long_name'];
+								break;
+							case "park":
+								$args['park'] = $comp['long_name'];
+								break;
+							case "intersection":
+								$args['intersection'] = $comp['long_name'];
+								break;
+							default:
+								break;
+						}
+					}
+				}
+
+				foreach($res['types'] as $type)
+				{
+
+				}
+			}
+		}
+		else
+		{
+			throw new Kohana_Exception("That address could not be verified");
 		}
 
-		if(isset($cities_id))
+		print_r($args);
+
+		extract($args);
+
+		if(isset($number) && isset($street))
 		{
-			$this->cities_id = $cities_id;
+			$this->address = $number." ".$street;
+		}
+
+		if(isset($full_address))
+		{
+			$this->full_address = $full_address;
+		}
+
+		$city = ORM::factory('Location_City');
+		$city_res = $city->getCityIDFromName($args);
+
+		if(is_array($city_res))
+		{
+			$this->cities_id = $city_res['cities_id'];
 		}
 
 		if(isset($lon))
@@ -171,11 +260,6 @@ class Model_Location_Base extends ORM
 			$this->lat = $lat;
 		}
 
-		if(isset($loc_point))
-		{
-			$this->loc_point = $loc_point;
-		}
-
 		if(isset($zip))
 		{
 			$this->zip = $zip;
@@ -185,15 +269,14 @@ class Model_Location_Base extends ORM
 		{
 			$this->location_type = $location_type;
 		}
+		else
+		{
+			$this->location_type = 'Other';
+		}
 
-		$this->loc_point = DB::expr("GeomFromText('POINT(".$lat." ".$lon.")')");
+		$this->loc_point = DB::expr("(POINTFROMTEXT('POINT($lat $lon)'))");
 		         
-		try{		 
-//			$db = Database::instance();
-//
-//			$result = $db->query(Database::INSERT, "insert into locations (address, cities_id, lon, lat, loc_point, location_type, zip)
-//				values('".$address."',".$cities_id.", ".$lon.", ".$lat.", Point(".$lat.", ".$lon."), '".$location_type."', ".$zip.") ");
-//
+		try{
 			$this->save();
 			return $this;
 		} catch(ORM_Validation_Exception $e)
@@ -235,5 +318,82 @@ class Model_Location_Base extends ORM
 		$games_model->limit($limit);
 		return $games_model;
 	}
-	
+
+	public function gmapsParse($address)
+	{
+		$final = array();
+
+		$address = urlencode($address);
+
+		$json = file_get_contents("http://maps.google.com/maps/api/geocode/json?address=$address&sensor=false");
+		$json = get_object_vars(json_decode($json));
+
+
+		if(empty($json["results"])) return false;
+
+		print_r($json);
+
+		foreach($json["results"] as $key=>$res)
+		{
+			if(is_object($res)) $res = get_object_vars($res);
+
+			// Get full address, longitude and latitude
+			$final['full_address'] = $res['formatted_address'];
+			$final['lon'] = $res['geometry']->location->lng;
+			$final['lat'] = $res['geometry']->location->lat;
+
+			// Parse Address components and assign to correct array keys
+			foreach($res['address_components'] as $subkey=>$comp)
+			{
+				if(is_object($comp)) $comp = get_object_vars($comp);
+
+				foreach($comp['types'] as $ckey=>$cval)
+				{
+					switch ($cval)
+					{
+						case "street_number":
+							$final['number'] = $comp['long_name'];
+							break;
+						case "route":
+							$final['street'] = $comp['long_name'];
+							break;
+						case "country":
+							$final['country'] = $comp['long_name'];
+							break;
+						case "postal_code":
+							$final['zip'] = $comp['long_name'];
+							break;
+						case "locality":
+							$final['city'] = $comp['long_name'];
+							break;
+						case "neighborhood":
+							$final['neighborhood'] = $comp['long_name'];
+							break;
+						case "administrative_area_level_1":
+							$final['state'] = $comp['long_name'];
+							break;
+						case "administrative_area_level_2":
+							$final['county'] = $comp['long_name'];
+							break;
+						case "colloquial_area":
+							$final['colloquial_area'] = $comp['long_name'];
+							break;
+						case "park":
+							$final['park'] = $comp['long_name'];
+							break;
+						case "intersection":
+							$final['intersection'] = $comp['long_name'];
+							break;
+						default:
+							break;
+					}
+				}
+			}
+		}
+		print_r($final);
+	}
+
+	//order by distance
+	//SELECT id, lon,lat, ( 3959 * acos( cos( radians(39) ) * cos( radians( lat ) ) * cos( radians( lon ) - radians(-73) ) + sin( radians(39) ) * sin( radians( lat ) ) ) ) AS distance FROM locations;
+
 }

@@ -224,4 +224,51 @@ class Model_Location_City extends ORM
 
 		return $cities;
 	}
+
+	public function getCityIDFromName($args,$autoAdd=FALSE)
+	{
+		extract($args);
+		if(empty($args["city"]) || empty($args['county']) || empty($args['state']))
+		{
+			return false;
+		}
+
+
+		$qry = DB::select(array('cities.id','cities_id'),array('states.id','state_id'),array('counties.id','county_id'))
+			->from('cities')
+			->join('counties','LEFT')
+				->on('cities.county_id','=','counties.id')
+			->join('states','LEFT')
+				->on('counties.states_id','=','states.id')
+			->where('cities.name','=',$args['city'])
+			->and_where('counties.name','LIKE','%'.$args['county'].'%')
+			->and_where('states.name','LIKE','%'.$args['state'].'%');
+
+		$res = $qry->execute();
+
+		print_r($res);
+		print_r($res[0]);
+
+		if($res->count()==1)
+		{
+			return array(
+				"cities_id" => $res[0]['cities_id'],
+			);
+		}
+		elseif($res->count>1)
+		{
+			return "More Than One Match Exists.";
+		}
+		else
+		{
+			if($autoAdd)
+			{
+				//add the city, county and state
+			}
+			else
+			{
+				return "No Matching Cities/Counties/States Exist.";
+			}
+		}
+	}
 }
