@@ -987,7 +987,6 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 			}
 			return $this;
 		} catch(ORM_Validation_Exception $e){
-			echo "CALLED ERROR";
 			return $e;
 		}
 	}

@@ -15,31 +15,89 @@ class Controller_Test extends Controller_Template
 
 	public function action_index()
 	{
-
 		set_time_limit(0);
+		ini_set('max_execution_time', 3600*12);
 
-		ini_set('upload_max_filesize', '500M');
-		ini_set('post_max_size', '500M');
-		ini_set('max_execution_time', 3800);
+	//	ini_set('max_input_time', 1800);
+		@ini_set('track_errors', 1);
 
-		ini_set('max_input_time', 1800);
+		$this->action_sportsdata_schools();
+		$this->action_orig_schools();
+		$this->action_scraped_schools();
+	}
+
+	public function action_sportsdata_schools()
+	{
+		set_time_limit(0);
+		ini_set('max_execution_time', 3600*12);
+
+		//	ini_set('max_input_time', 1800);
 		@ini_set('track_errors', 1);
 
 		$qry = DB::select()
 			->from('sportsdata.schools')
-			->limit(2100)->offset(2100)
+			->where('google_address','=','')
+			->or_where('google_address','IS','NULL')
+		//	->limit(25000)->offset(3418)
 			->execute();
 
 		foreach($qry as $row)
 		{
 			print_r($row);
-			$this->geo($row);
+			$this->geo($row,0);
 		}
 	}
 
-	protected function geo($arr)
+	public function action_orig_schools()
 	{
-		$address = $arr["name"].", ".$arr['address'];
+		set_time_limit(0);
+		ini_set('max_execution_time', 3600*12);
+
+		//	ini_set('max_input_time', 1800);
+		@ini_set('track_errors', 1);
+
+		$qry = DB::select()
+			->from('sportsdata.schools_orig')
+			->where('google_address','=','')
+			->or_where('google_address','IS','NULL')
+		//	->limit(10)->offset(0)
+			->execute();
+
+		foreach($qry as $row)
+		{
+			print_r($row);
+			$this->geo($row,0,'sportsdata.schools_orig');
+		}
+	}
+
+	public function action_scraped_schools()
+	{
+		set_time_limit(0);
+		ini_set('max_execution_time', 3600*12);
+
+		//	ini_set('max_input_time', 1800);
+		@ini_set('track_errors', 1);
+
+		$qry = DB::select()
+			->from('schools.schools')
+			->where('google_address','=','')
+			->or_where('google_address','IS','NULL')
+		//	->limit(100)->offset(0)
+			->execute();
+
+		foreach($qry as $row)
+		{
+			print_r($row);
+			$this->geo($row,0,'schools.schools');
+		}
+	}
+
+	protected function geo($arr,$attempt,$table="sportsdata.schools")
+	{
+		if($attempt==0 && isset($arr["county"])) $address = $arr["name"].", ".$arr['county'].", ".$arr['city'].", ".$arr["state"];
+		elseif($attempt==0) $address = $arr["name"].", ".$arr['city'].", ".$arr["state"];
+		elseif($attempt==1 && isset($arr["address"])) $address = $arr["name"].", ".$arr['address'];
+		elseif($attempt>1 && isset($arr['address'])) $address = $arr['address'];
 
 		$address = urlencode($address);
 
@@ -111,11 +169,41 @@ class Controller_Test extends Controller_Template
 		print_r($final);
 		if(isset($final['number']))
 		{
-			DB::update('sportsdata.schools')
-				->set(array('google_address'=>$final['full_address']))
-				->where('mp_school_id','=',$arr['mp_school_id'])
-				->execute();
+			if($table=='sportsdata.schools')
+			{
+				DB::update($table)
+					->set(array('google_address'=>$final['full_address']))
+					->where('mp_school_id','=',$arr['mp_school_id'])
+					->execute();
+			}
+			elseif($table=='sportsdata.schools_orig')
+			{
+				DB::update($table)
+					->set(array('google_address'=>$final['full_address']))
+					->where('id','=',$arr['id'])
+					->execute();
+			}
+			elseif($table=='schools.schools')
+			{
+				DB::update($table)
+					->set(array('google_address'=>$final['full_address']))
+					->where('school_id','=',$arr['school_id'])
+					->and_where('source','=',$arr['source'])
+					->execute();
+			}
+
 		}
+		elseif($attempt<=2)
+		{
+			$attempt++;
+			$this->geo($arr,$attempt);
+		}
+
+
+	}
+
+	public function action_make_games()
+	{
 
 	}
 	
