@@ -144,12 +144,14 @@ define(['facade', 'utils'], function (facade, utils) {
 
 		// **Method:** `saveSuccess` - resolve the deferred here in success
 		saveSuccess: function (model, response) {
+			debug.log("Success");
 			debug.log(response);
-			model.showSuccess(model, response);
+		//	model.showSuccess(model, response);
 		},
 
 		// **Method:** `fetchError` - log response on error
 		saveError: function (model, response) {
+			debug.log("Error");
 			debug.log(response);
 			model.showError(model, response);
 		},
