@@ -22,6 +22,16 @@ class Model_User_Followers extends ORM
 		return 0;
 	}
 
+	/**
+	 * This method takes in any type of object defined in enttypes
+	 * and will find all users who are following.
+	 * The controller that gets followers limits the use of this function
+	 * to users and games, but this function makes no distinction, so you
+	 * could technically have people following a single "follow" instance (nonsense)
+	 *
+	 * @param $obj is an ORM implementation of a specific instantiated enttype
+	 * @return bool|stdClass returns false if object is not loaded and returns an object of
+	 */
 	public static function get_followers($obj)
 	{
 		if(!$obj->loaded()) return false;

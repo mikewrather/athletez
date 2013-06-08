@@ -35,6 +35,7 @@ function (
             this.$el.html(markup);
             
             var payload = this.model.get('payload');
+	        console.log("profile payload = ", payload);
             var self = this;
             if (payload) {
                 var user_photo = payload['poster_picture'];

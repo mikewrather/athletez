@@ -123,6 +123,7 @@ define(['facade', 'utils'], function (facade, utils) {
 
 		// **Method:** `fetchError` - log response on error
 		fetchError: function (model, response) {
+			console.log("why fetch error? ", model);
 			model.deferred.reject();
 			debug.log(response);
 			model.showError(model, response);
@@ -144,15 +145,13 @@ define(['facade', 'utils'], function (facade, utils) {
 
 		// **Method:** `saveSuccess` - resolve the deferred here in success
 		saveSuccess: function (model, response) {
-			debug.log("Success");
-			debug.log(response);
-		//	model.showSuccess(model, response);
+			debug.log("Save success log = ", model);
+			model.showSuccess(model, response);
 		},
 
 		// **Method:** `fetchError` - log response on error
 		saveError: function (model, response) {
-			debug.log("Error");
-			debug.log(response);
+			debug.log("Save error log = ", model);
 			model.showError(model, response);
 		},
 
