@@ -233,6 +233,10 @@ class Model_Sportorg_Org extends ORM
 			$orgs_model->where('sportorg_org.sports_club', '=', $sports_club);
 		}
 
+		if (isset($name)){
+			$orgs_model->where('sportorg_org.name', 'like', "%$name%");
+		}
+
 		$orgs_model->where('sportorg_org.states_id', '=', $states_id);
 
 		return $orgs_model;
