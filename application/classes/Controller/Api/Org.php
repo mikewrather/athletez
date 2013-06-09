@@ -260,6 +260,11 @@
 				$arguments["cities_id"] = (int)trim($this->request->query('cities_id'));
 			}
 
+			if(trim($this->request->query('org_name')) != "")
+			{
+				$arguments["name"] = trim($this->request->query('org_name'));
+			}
+
 			//get results here.
 			return $this->mainModel->get_search($arguments);
 		}
