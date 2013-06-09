@@ -266,8 +266,10 @@ class Model_Sportorg_Org extends ORM
 			"org_name" => $this->name,
 			"season_profiles_id" => $this->season_profiles_id,
 			"sports_club" => $this->sports_club,
-			"season_profile" => $this->season_profile->getBasics(),			
+			"season_profile" => $this->season_profile->getBasics(),
+			"seasons" => $this->season_profile->getSeasons_as_array(),
 			"complevel_profile" => $this->complevel_profile->getBasics(),
+			"complevels" => $this->complevel_profile->getComplevels_as_array(),
 			"locations" => $this->location->getBasics()
 		);
 	}
