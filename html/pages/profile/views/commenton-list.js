@@ -23,12 +23,13 @@ function(facade,   utils,   BaseCommentListView,       ProfileCommentFormView) {
             
             function callback (data) {
                 formView.model = data;
-                formView.render();
-                listView.$el.prepend(formView.el);
+	            formView.render();
             }
-            
+
             Channel('profilecommentonform:fetch').subscribe(callback);
         }
+
+
 
     });
 

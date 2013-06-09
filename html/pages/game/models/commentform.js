@@ -10,6 +10,9 @@ define( ["facade", "site/models/comment", "utils"], function (facade, SiteCommen
         Channel = utils.lib.Channel;
 
     GameCommentFormModel = SiteCommentModel.extend({
+	    defaults: {
+		     payload: {}
+	    },
         
         url: function() {
             if (testpath)

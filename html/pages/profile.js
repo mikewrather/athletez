@@ -156,6 +156,7 @@ define([
             $.when(this.commentsof.request).done(function() {
                 controller.setupCommentOfListView();
             });
+
             
             $.when(this.commentson.request).done(function() {
                 controller.setupCommentOnListView();
@@ -194,6 +195,13 @@ define([
                 position = $.inArray(this.imageListView, this.scheme);
                 if ( ~position ) this.scheme.splice(position, 1);
             }
+
+	        if (this.commentOnListView) {
+		        $(this.commentOnListView.destination).html('');
+		        position = $.inArray(this.commentOnListView, this.scheme);
+		        if ( ~position ) this.scheme.splice(position, 1);
+	        }
+
         },
         
         handleDeferredsDynamic: function() {
@@ -214,6 +222,10 @@ define([
             $.when(this.videos.request).done(function() {
                 controller.setupVideoListView();
             });
+
+	        $.when(this.commentson.request).done(function() {
+		        controller.setupCommentOnListView();
+	        });
             
             $.when(this.images.request).done(function(x) {
 	            console.log("Images Ready (called in profile.js handleDeferredDynamic)",x);
@@ -328,12 +340,12 @@ define([
         setupCommentOnListView: function() {
             var commentOnListView;
             
-            commentOnListView = new ProfileCommentOnListView({
+            this.commentOnListView = new ProfileCommentOnListView({
                 collection: this.commentson,
                 destination: "#commenton-wrap"
             });
             
-            this.scheme.push(commentOnListView);
+            this.scheme.push(this.commentOnListView);
             this.layout.render();
         },
         

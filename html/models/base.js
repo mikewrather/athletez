@@ -96,6 +96,7 @@ define(['facade', 'utils'], function (facade, utils) {
 		// **Method:** `fetch`
 		// Wrap Backbone.Model.prototype.fetch with support for deferreds
 		fetch: function (options) {
+			console.log("fetch options here", options);
 			options = options || {};
 			if (!options.success) {
 				options.success = this.fetchSuccess;
@@ -104,6 +105,9 @@ define(['facade', 'utils'], function (facade, utils) {
 				options.error = this.fetchError;
 			}
 			_.extend(options, ajaxOptions);
+			console.log("start fetching now this", this);
+			console.log("start fetching  options", options);
+			console.log("start fetching  results", Backbone.Model.prototype.fetch.call(this, options));
 			return this.request = Backbone.Model.prototype.fetch.call(this, options);
 		},
 
@@ -111,6 +115,8 @@ define(['facade', 'utils'], function (facade, utils) {
 
 		// **Method:** `fetchSuccess` - resolve the deferred here in success
 		fetchSuccess: function (model, response) {
+			console.log("fetch success? ", model);
+
 			if (model.deferred) {
 				if (!model.request) {
 					model.request = model.deferred.promise();
@@ -123,9 +129,11 @@ define(['facade', 'utils'], function (facade, utils) {
 
 		// **Method:** `fetchError` - log response on error
 		fetchError: function (model, response) {
-			console.log("why fetch error? ", model);
-			model.deferred.reject();
-			debug.log(response);
+			if (model.deferred) {
+				model.deferred.reject();
+			}
+			//TODO, add by jeffrey
+			console.log("Alert:fetchError");
 			model.showError(model, response);
 		},
 

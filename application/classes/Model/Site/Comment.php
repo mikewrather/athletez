@@ -113,11 +113,18 @@ class Model_Site_Comment extends Model_Site_Entdir
 		//This gets the subject of the vote.  It will be used to pull basic information
 		$subject = $this->getSubject();
 
+		$detail = $subject->getBasics();
+		$user_picture = $detail['user_picture'];
+		$name = $detail['name'];
+		$email = $detail['email'];
 		return array(
 			"id" => $this->id,
 			"users_id" => $this->users_id,
 			"user" => $this->user->getBasics(),
 			"subject" => $subject->getBasics(),
+			"user_picture" => $user_picture,
+			"name" => $name,
+			'email' => $email,
 			"comment" => $this->comment,
 			"comment_date" => isset($this->timePosted) ? date('M jS, g:i a',strtotime($this->timePosted)) : date('M jS, g:i a')
 		);

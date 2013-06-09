@@ -11,6 +11,7 @@ define( ["user/models/basics"], function (UserBasicsModel) {
 
         fetchSuccess: function(model, response) {
             UserBasicsModel.prototype.fetchSuccess.call(this, model, response);
+	        console.log("model in select_org", model);
             var dob = new Date(model.get('payload')['dob']);
             var now = new Date();
             var diff = now.getFullYear() - dob.getFullYear();

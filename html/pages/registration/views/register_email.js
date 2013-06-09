@@ -57,7 +57,9 @@ define([
             nextStep: function (event) {
                 event.preventDefault();
                 // for test
-                Channel('registration-uploadimage-email').publish();
+	            //comment by jeffrey Channel('registration-uploadimage-email').publish();
+
+
                 var fields = this.$(":input").serializeArray();
                 var payload = {};
                 $.each(fields, function(i, field){
@@ -73,11 +75,12 @@ define([
                     var exec_data = model.get('exec_data');
                     var payload = model.get('payload');
                     if (!exec_data['exec_error']) {
-                        Channel('registration-uploadimage-email').publish();
+                        //comment by jeffrey Channel('registration-uploadimage-email').publish();
+	                    Channel("registration-select-org").publish(payload);
                     }
                 }
-                saveInfo.save();                                        
-                
+                saveInfo.save();
+
             }
 
         });

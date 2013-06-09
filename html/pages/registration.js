@@ -43,7 +43,6 @@ define([
         RegistrationEmailView = require("registration/views/register_email"),
         RegistrationUploadImageView = require("registration/views/upload_image"),
         RegistrationSelectOrgView = require("registration/views/select_org"),
-        
         LayoutView = views.LayoutView,
         $ = facade.$,
         _ = facade._,
@@ -99,8 +98,8 @@ define([
             }
             Channel('registration-uploadimage-email').subscribe(uploadImage);
             
-            function selectOrg() {
-                controller.selectOrg();
+            function selectOrg(data) {
+                controller.selectOrg(data);
             }
             Channel('registration-select-org').subscribe(selectOrg);
         },
@@ -211,14 +210,15 @@ define([
             this.layout.render();
         },
         
-        selectOrg: function() {
+        selectOrg: function(data) {
             var controller = this;
-            
+			console.log("passed data in selectOrg = ", data);
             this.refreshPage();
             this.select_org = new RegistrationSelectOrgModel();
-            this.select_org.fetch();
-            
-            $.when(this.select_org.request).done(function() {
+            this.select_org.id = data.id;
+	        this.select_org.fetch();
+
+	        $.when(this.select_org.request).done(function() {
                 controller.setupSelectOrgView();
             });
         },
