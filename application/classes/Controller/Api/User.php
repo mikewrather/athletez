@@ -406,6 +406,21 @@
 			return $resume_sent_model->getSentResumes($arguments);
 		}
 
+		/**
+		 * action_get_rdtree() rdtree sands for Resume Data Tree.  This method will retrieve all resume data groups  that a specific user should fill out based on his / her sports and positions.  Each group has a list of profiles and data values for the user.
+		 * via /api/user/rdtree/{users_id}
+		 *
+		 */
+		public function action_get_rdtree()
+		{
+			$this->payloadDesc = "rdtree stands for Resume Data Tree.  This method will retrieve all resume data groups  that a specific user should fill out based on his / her sports and positions.  Each group has a list of profiles and data values for the user.";
+			if(!$this->mainModel->id)
+			{
+				$this->modelNotSetError();
+				return false;
+			}
+		}
+
 		############################################################################
 		###########################    POST METHODS    #############################
 		############################################################################

@@ -305,7 +305,18 @@
 			}
 			return $retArr;
 		}
-		
+
+		/**
+		 * get_rdtree() rdtree sands for Resume Data Tree.  This method will retrieve all resume data groups  that a specific user should fill out based on his / her sports and positions.  Each group has a list of profiles and data values for the user.
+		 *
+		 * @retun array
+		 */
+		public function get_rdtree()
+		{
+			return $this->obj->getResumeDataTree();
+		}
+
+
 		/**
 		 * post_add() Create a new user with all necessary basic information (possibly first step of registration)
 		 *
