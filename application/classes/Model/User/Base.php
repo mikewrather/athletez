@@ -120,6 +120,16 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 			'far_key' => 'social_types_id'
 		),
 
+		'testscores' => array(
+			'model' => 'Academics_Tests_Scores',
+			'foreign_key' => 'users_id',
+		),
+
+		'gpa' => array(
+			'model' => 'Academics_Gpa',
+			'foreign_key' => 'users_id',
+		),
+
 	);
 
     public function deleteTeam($args)
@@ -659,6 +669,7 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 			"num_votes" => $num_votes,
 			"city" => $this->city->getBasics(),
 			"dob" => $this->dob,
+			"ncaa" => $this->ncaa,
 			//"utl" =>$results
 		);
 
