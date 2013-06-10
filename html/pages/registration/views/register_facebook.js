@@ -111,6 +111,8 @@ function(require, registrationFacebookTemplate) {
 				this.fbimages = new RegistrationFBImageList();
 				this.fbimages.fetch();
 				$.when(this.fbimages.request).done(function() {
+					debug.log("this.fbimages are as follows");
+				debug.log(self.fbimages.toJSON());
 					self.setupFBPictures();
 				});
 			} else {
@@ -129,7 +131,6 @@ function(require, registrationFacebookTemplate) {
 				collection: this.fbimages
 			});
 			var renderFBImageListView = this.addChildView(this.fbImageListView);
-
 			this.childViews.fbImageListView = this.fbImageListView;
 			this.callbacks.add(function () {
 				renderFBImageListView();

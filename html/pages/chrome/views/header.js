@@ -65,8 +65,7 @@ function (
         
         signupFacebook: function(event) {
             event.preventDefault();
-           
-            alert("signupFaceook-header registration-with-facebook");
+          
           //  Channel('registration-with-facebook').publish();
           
           // event.preventDefault();

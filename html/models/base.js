@@ -37,6 +37,7 @@ define(['facade', 'utils'], function (facade, utils) {
 		},
 
 		showSuccess: function (model, response) {
+			debug.log("ShowSuccess called in base.js");
 			$('.global-alert').stop().fadeOut().removeClass('alert-error').removeClass('alert-info');
 			$('.global-messages').stop().fadeOut();
 			$('.global-errors').stop().fadeOut();
@@ -82,11 +83,55 @@ define(['facade', 'utils'], function (facade, utils) {
 			}
 		},
 
-		showError: function (model, repsonse) {
-			$('.global-alert').addClass('alert-error').html('Hold on. There were problems. See sad faces above.').stop().fadeIn();
+		showError: function (model, response) {
+			debug.log("ShowError called in base.js");
+			debug.log(model);
+			debug.log(response);
+			//$('.global-alert').addClass('alert-error').html('Hold on. There were problems. See sad faces above.').stop().fadeIn();
 			$('.global-messages').stop().fadeOut();
 			$('.global-errors').stop().fadeOut();
 			$('.field-error').stop().fadeOut();
+			
+			var resultJson = $.parseJSON(response.responseText);
+			var exec_data = resultJson.exec_data;
+			var desc = resultJson.desc;
+			if (!exec_data['exec_error']) {
+				$('.global-alert').addClass('alert-info').html(desc).stop().fadeIn();
+			} else {
+				$('.global-alert').addClass('alert-error').html('Hold on. There were problems. See sad faces above.').stop().fadeIn();
+				//$('.global-alert').addClass('alert-error').html(desc).stop().fadeIn();
+			}
+			var errorsArr = exec_data['error_array'];
+			if (errorsArr) {
+				var errors = '';
+				for (var i = 0; i < errorsArr.length; i++) {
+					var item = errorsArr[i];
+					if (item['field'] != '') {
+						var field = item['field'];
+						$('#' + field).parent().find('.field-error').html(item['error']).stop().fadeIn();
+					} else {
+						errors += item['error'] + '<br/>';
+					}
+				}
+				if (errors != '')
+					$('.global-errors').html(messages).stop().fadeIn();
+			}
+
+			var messagesArr = exec_data['message_array'];
+			if (messagesArr) {
+				var messages = '';
+				for (var i = 0; i < messagesArr.length; i++) {
+					var item = messagesArr[i];
+					if (item['field'] != '') {
+						var field = item['field'];
+						$('#' + field).parent().find('.field-message').html(item['message']).stop().fadeIn();
+					} else {
+						messages += item['message'] + '<br/>';
+					}
+				}
+				if (messages != '')
+					$('.global-messages').html(messages).stop().fadeIn();
+			}
 		},
 
 		// **Property:** `request` - assign fetch return value to this.request property,
@@ -146,12 +191,15 @@ define(['facade', 'utils'], function (facade, utils) {
 		// **Method:** `saveSuccess` - resolve the deferred here in success
 		saveSuccess: function (model, response) {
 			debug.log("Save success log = ", model);
+			debug.log(model);
 			model.showSuccess(model, response);
 		},
 
 		// **Method:** `fetchError` - log response on error
 		saveError: function (model, response) {
 			debug.log("Save error log = ", model);
+			debug.log(model);
+			debug.log(response);
 			model.showError(model, response);
 		},
 

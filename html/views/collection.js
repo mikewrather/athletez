@@ -70,6 +70,7 @@ define(['facade','views/base','utils'], function (facade, BaseView, utils) {
         // Param {Model} `model` object that extends Backbone.Model
         // Creates a new view for models added to the collection
         add : function(model) {
+        	console.log("collection.js add");
             var view;
 
             view = new this._view({
@@ -103,6 +104,8 @@ define(['facade','views/base','utils'], function (facade, BaseView, utils) {
         // Iterates over collection appending views to this.$el
         // When a {Function} decorator option is available manipulte views' this.$el
         render : function() {
+        	debug.log("views/collection render");
+        	console.log(this._views);
             this.confirmElement.call(this);
             this._rendered = true;
             this.$el.empty();

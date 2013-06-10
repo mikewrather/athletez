@@ -10,8 +10,10 @@
 
 .fbimage {
     float:left;
-    width:150px;
+    /* width:150px; */
 }
 .picture-buttons {
     clear:both;
 }
+.fbimagecontainer img { display:none; }
+.fbimagecontainer jrac_viewport img {display:block}

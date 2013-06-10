@@ -39,6 +39,9 @@ function(require, imageBoardTemplate) {
         },
 
         render: function () {
+        	console.log("fb image board render");
+        	console.log("fb image board collection");
+        	console.log(this.collection);
             var self = this;
             
             BaseView.prototype.render.call(this);            

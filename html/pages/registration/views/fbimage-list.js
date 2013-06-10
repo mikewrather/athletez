@@ -20,6 +20,7 @@ function(facade,  utils,   FBImageItemView,                    BaseImageListView
         _view: FBImageItemView,
         
         setupAddView: function() {
+        	console.log("setup Addview");
             var listView = this,
                 buttonsView = new RegistrationPicButtonsView(),
                 renderButtonsView = this.addChildView(buttonsView);
@@ -33,17 +34,27 @@ function(facade,  utils,   FBImageItemView,                    BaseImageListView
         },
         
         setupBoardView: function() {
+        	console.log("setup Board View");
+        	console.log(this.collection);
+        	console.log(this.collection.at(0));
+        	var tempmodels = this.collection.models[0].toJSON();
+        	console.log(tempmodels.payload);
+        	this.collection.models[0].payload.splice(0,1);
+        	console.log(this.collection.models[0].payload);
+        	
             var listView = this,
                 addView = new FBImageBoardView({collection: this.collection, model: this.collection.at(0)}),
                 renderAddView = this.addChildView(addView);
             
             this.childViews.board = addView;
             this.callbacks.add(function() {
-                renderAddView();
+
+   //             renderAddView();
                 addView.render();
                 listView.$el.prepend(addView.el);
                 _.delay(addView.initCropView, 400);
             });
+            
             
             Channel('changeimage' + this.collection.id).subscribe(this.changeBoard);
             
@@ -85,6 +96,8 @@ function(facade,  utils,   FBImageItemView,                    BaseImageListView
         },
         
         changeBoard: function(data){
+        	console.log("changeBoard");
+        	console.log(data);
             this.removeCropView();
             this.childViews.board.model = data;
             this.childViews.board.render();

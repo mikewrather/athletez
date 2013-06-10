@@ -60,7 +60,8 @@ define(['facade', 'utils'], function (facade, utils) {
 
         // **Method:** `initialize`  
         // Param {Object} `options`  
-        initialize: function (options) {
+        initialize: function (options) { 
+        	console.log("base.js initialize");
             if (options) {
                 this.setOptions(options);
             }
@@ -92,6 +93,7 @@ define(['facade', 'utils'], function (facade, utils) {
         // Param {Function} `dataDecorator` - accepts arg for {Object} `data`  
         // Returns the same (mutated) {Object} `data`
         render: function (domInsertion, dataDecorator, partials) {
+        	console.log("base render");
             var markup;
 
             if (_.isFunction(this.confirmElement)) {
@@ -111,7 +113,7 @@ define(['facade', 'utils'], function (facade, utils) {
         // Resolve the view's deferred object after all callbacks are fired once.
         resolve: function () {
             var view = this;
-
+		console.log("base.js resolve");
             if (view.deferred.state() !== 'resolved') {
                 this.callbacks.add(view.deferred.resolve);
             } else {
@@ -143,6 +145,8 @@ define(['facade', 'utils'], function (facade, utils) {
             var markup, data, args;
 
             data = (this.model) ? this.model.toJSON() : null;
+            console.log("data");
+            console.log(data);
             if (dataDecorator && _.isFunction(dataDecorator)) {
                 data = dataDecorator.call(this, data);
             }
@@ -153,6 +157,8 @@ define(['facade', 'utils'], function (facade, utils) {
             } else {
                 markup = _toHTML(this.template, data, partials);
             }
+            console.log("markup");
+            console.log(markup);
             return markup;
         },
 

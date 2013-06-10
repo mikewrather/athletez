@@ -78,7 +78,6 @@ function(require, registrationSelectTypeTemplate) {
 
             // Load the SDK Asynchronously
             function loadFBLogin(){
-            	alert("load fb");
                 var js, id = 'facebook-jssdk', ref = document.getElementsByTagName('script')[0];
                 if (document.getElementById(id)) {
                     login();
