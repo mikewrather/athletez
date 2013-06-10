@@ -72,8 +72,8 @@ define([
                 }
                 saveInfo.saveSuccess = function(model, response) {
                     BaseModel.prototype.saveSuccess.call(this, model, response);
-                    var exec_data = model.get('exec_data');
-                    var payload = model.get('payload');
+                    var exec_data = response.exec_data;
+                    var payload = response.payload;
                     if (!exec_data['exec_error']) {
                         //comment by jeffrey Channel('registration-uploadimage-email').publish();
 	                    Channel("registration-select-org").publish(payload);

@@ -37,10 +37,10 @@ function(facade,  utils,   FBImageItemView,                    BaseImageListView
         	console.log("setup Board View");
         	console.log(this.collection);
         	console.log(this.collection.at(0));
-        	var tempmodels = this.collection.models[0].toJSON();
-        	console.log(tempmodels.payload);
-        	this.collection.models[0].payload.splice(0,1);
-        	console.log(this.collection.models[0].payload);
+        	// var tempmodels = this.collection.models[0].toJSON();
+        	// console.log(tempmodels.payload);
+        	// this.collection.models[0].payload.splice(0,1);
+        	// console.log(this.collection.models[0].payload);
         	
             var listView = this,
                 addView = new FBImageBoardView({collection: this.collection, model: this.collection.at(0)}),
