@@ -22,10 +22,24 @@ class Model_Academics_Tests extends ORM
 		),
 
 	);
-
+	/*
 	public function __construct($id=NULL)
 	{
 		parent::__construct($id);
+	}*/
+
+
+
+	public function getListall(){
+		return $this;
 	}
 
+	public function getBasics(){
+		return array(
+			'id' => $this->id,
+			'name' => $this->name,
+			'test_type' => $this->test_type,
+			'description' => $this->description
+		);
+	}
 }

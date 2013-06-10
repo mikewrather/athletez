@@ -12,12 +12,6 @@
 	class View_Api_Academictest extends Api_Viewclass
 	{
 
-		public function __construct()
-		{
-			parent::__construct();
-		}
-
-	
 		/**
 		 * get_topics() Get All topics for a given Academic Test
 		 *
@@ -25,17 +19,14 @@
 		 */
 		public function get_topics()
 		{
-			$retArr = array();
+			$retArr = null;
 
 			// Scaffolding Code For Array:
 			$objs = $this->obj->find_all();
 			foreach($objs as $obj)
 			{
-				$retArr[$obj->id] = $obj->getBasics();
+				$retArr[] = $obj->getBasics();
 			}
-
-			// Scaffolding Code For Single:
-			$retArr = $this->obj->getBasics();
 
 			return $retArr;
 		}
@@ -47,17 +38,14 @@
 		 */
 		public function get_listall()
 		{
-			$retArr = array();
+			$retArr = null;
 
 			// Scaffolding Code For Array:
 			$objs = $this->obj->find_all();
 			foreach($objs as $obj)
 			{
-				$retArr[$obj->id] = $obj->getBasics();
+				$retArr[] = $obj->getBasics();
 			}
-
-			// Scaffolding Code For Single:
-			$retArr = $this->obj->getBasics();
 
 			return $retArr;
 		}

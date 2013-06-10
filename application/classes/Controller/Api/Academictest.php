@@ -46,9 +46,16 @@
 			if((int)trim($this->request->query('test_id')) > 0)
 			{
 				$arguments["test_id"] = (int)trim($this->request->query('test_id'));
+			}else{
+				$error_array = array(
+					"error" => "test id required",
+					"desc" => "test id required"
+				);
+				$this->modelNotSetError($error_array);
+				return false;
 			}
-
-
+			$topics = ORM::factory("Academics_Tests_Topics");
+			return $topics->getAllTopics($arguments);
 		}
 		
 		/**
@@ -60,8 +67,8 @@
 		{
 			$this->payloadDesc = "Get All Academic Tests";
 			$arguments = array();
-		
 
+			return $this->mainModel->getListall($arguments);
 		}
 		
 		############################################################################

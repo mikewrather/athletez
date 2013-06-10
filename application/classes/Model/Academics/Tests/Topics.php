@@ -30,9 +30,20 @@ class Model_Academics_Tests_Topics extends ORM
 
 	);
 
-	public function __construct($id=NULL)
-	{
-		parent::__construct($id);
+	public function getAllTopics($args = array()){
+		extract($args);
+		if (isset($test_id)){
+			$this->where('academics_tests_id', '=', $test_id);
+		}
+		return $this;
+	}
+
+	public function getBasics(){
+		return array(
+			'id' =>$this->id,
+			'academics_tests_id' => $this->academics_tests_id,
+			'subtopic' => $this->subtopic,
+		);
 	}
 
 	public function name()
