@@ -233,6 +233,10 @@ class Model_Sportorg_Org extends ORM
 			$orgs_model->where('sportorg_org.sports_club', '=', $sports_club);
 		}
 
+		if (isset($name)){
+			$orgs_model->where('sportorg_org.name', 'like', "%$name%");
+		}
+
 		$orgs_model->where('sportorg_org.states_id', '=', $states_id);
 
 		return $orgs_model;
@@ -266,8 +270,10 @@ class Model_Sportorg_Org extends ORM
 			"org_name" => $this->name,
 			"season_profiles_id" => $this->season_profiles_id,
 			"sports_club" => $this->sports_club,
-			"season_profile" => $this->season_profile->getBasics(),			
+			"season_profile" => $this->season_profile->getBasics(),
+			"seasons" => $this->season_profile->getSeasons_as_array(),
 			"complevel_profile" => $this->complevel_profile->getBasics(),
+			"complevels" => $this->complevel_profile->getComplevels_as_array(),
 			"locations" => $this->location->getBasics()
 		);
 	}

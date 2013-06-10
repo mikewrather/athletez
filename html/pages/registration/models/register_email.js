@@ -12,7 +12,7 @@ define( ["user/models/basics"], function (UserBasicsModel) {
         url: function() {
             if (testpath)
                 return testpath + '/user/basics';
-            return '/api/user/basics';
+            return '/api/user/basics/'+this.id;
         }
 
     });

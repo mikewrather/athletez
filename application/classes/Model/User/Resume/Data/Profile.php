@@ -28,7 +28,13 @@ class Model_User_Resume_Data_Profile extends ORM
 			'through' => 'rdp_sports_link',
 			'foreign_key' => 'resume_data_profiles_id',
 			'far_key' => 'sports_id'
-		)
+		),
+		'positions' => array(
+			'model' => 'Sportorg_Position',
+			'through' => 'rdp_sports_link',
+			'foreign_key' => 'resume_data_profiles_id',
+			'far_key' => 'positions_id'
+		),
 	);
 
 	public function rules(){
@@ -82,6 +88,61 @@ class Model_User_Resume_Data_Profile extends ORM
 	{
 		$sports = $this->sports;
 		return $sports;
+	}
+
+	public function getPositions()
+	{
+		$positions = $this->positions;
+		return $positions;
+	}
+
+	/**
+	 * This method retrieves a list of resume data profiles for a given user.
+	 * It can return either the DB result (res) or a fully populated array.
+	 *
+	 * This method relies on the getPositions and getSports methods of the
+	 * user class.
+	 *
+	 * @param Model_User_Base $user
+	 * @param string $format is either res or something else.
+	 * @return array|object depending on format
+	 */
+	public function getRDPForUser(Model_User_Base $user,$format='res')
+	{
+		//get positions for user
+		$pos_arr = $user->getPositions();
+
+		//get sports for user
+		$sports_arr = $user->getSports('array');
+
+		//select profiles and sports
+		$qry = DB::select()->from('rdp_sports_link')
+			->where_open();
+
+		if(sizeof($pos_arr) > 0)
+		foreach($pos_arr as $positions_id => $position)
+		{
+			$qry->or_where('positions_id','=',$positions_id);
+		}
+		$qry->where_close()->or_where_open();
+
+		if(sizeof($sports_arr) > 0)
+			foreach($sports_arr as $sports_id => $sport)
+			{
+				$qry->or_where('sports_id','=',$sports_id);
+			}
+		$res = $qry->or_where_close()->execute();
+
+		if($format=='res') return $res;
+
+		$rdps = array();
+		foreach($res as $rs)
+		{
+			$rdp = ORM::factory('User_Resume_Data_Profile',$rs['resume_data_profiles_id']);
+			if($rdp->loaded()) $rdps[$rdp->id] = $rdp;
+		}
+
+		return $rdps;
 	}
 	
 	public function addLinksport($args = array())

@@ -305,7 +305,75 @@
 			}
 			return $retArr;
 		}
-		
+
+		/**
+		 * get_rdtree() rdtree sands for Resume Data Tree.  This method will retrieve all resume data groups  that a specific user should fill out based on his / her sports and positions.  Each group has a list of profiles and data values for the user.
+		 *
+		 * @retun array
+		 */
+		public function get_rdtree()
+		{
+			return $this->obj->getResumeDataTree();
+		}
+
+		/**
+		 * get_gpa() Get this user's GPA for all years there are values for.
+		 *
+		 * @retun array
+		 */
+		public function get_gpa()
+		{
+			$retArr = array();
+
+			// Scaffolding Code For Array:
+			$objs = $this->obj->find_all();
+			foreach($objs as $obj)
+			{
+				$retArr[$obj->id] = $obj->getBasics();
+			}
+			return $retArr;
+		}
+
+		/**
+		 * get_tests() Get all academic tests that the user has scores for.  Tests can be filtered by "Standardized" and "AP" formats.
+		 *
+		 * @retun array
+		 */
+		public function get_tests()
+		{
+			$retArr = array();
+
+			// Scaffolding Code For Array:
+			$objs = $this->obj->find_all();
+			foreach($objs as $obj)
+			{
+				$retArr[$obj->id] = $obj->getBasics();
+			}
+			return $retArr;
+		}
+
+		/**
+		 * post_addtestscore() This will allow a user to add a score for an Academic Test Topic
+		 *
+		 * @retun array
+		 */
+		public function post_addtestscore()
+		{
+			$retArr = $this->obj->getBasics();
+			return $retArr;
+		}
+
+		/**
+		 * post_addgpa() Add a GPA for a given year
+		 *
+		 * @retun array
+		 */
+		public function post_addgpa()
+		{
+			$retArr = $this->obj->getBasics();
+			return $retArr;
+		}
+
 		/**
 		 * post_add() Create a new user with all necessary basic information (possibly first step of registration)
 		 *
@@ -589,4 +657,49 @@
 
 			return $retArr;
 		}
+
+		/**
+		 * put_testscore() Update a given test score for a user.
+		 *
+		 * @retun array
+		 */
+		public function put_testscore()
+		{
+			$retArr = $this->obj->getBasics();
+
+			return $retArr;
+		}
+
+		/**
+		 * put_gpa() Update the Grade Point Average for a user for a given year.
+		 *
+		 * @retun array
+		 */
+		public function put_gpa()
+		{
+			$retArr = $this->obj->getBasics();
+
+			return $retArr;
+		}
+
+		/**
+		 * delete_testscore() Delete a Test Score for a user.
+		 *
+		 * @retun array
+		 */
+		public function delete_testscore()
+		{
+			return false;
+		}
+
+		/**
+		 * delete_gpa() Delete a GPA for a given user / year
+		 *
+		 * @retun array
+		 */
+		public function delete_gpa()
+		{
+			return false;
+		}
+
 	}

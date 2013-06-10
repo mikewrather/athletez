@@ -62,6 +62,16 @@ class Model_Sportorg_Complevel_Profile extends ORM
 		return $complevels_model;
 	}
 
+	public function getComplevels_as_array($args = array()){
+		$retArr = array();
+		$complevels = ORM::factory('Sportorg_Complevel_Base')->where('complevel_profiles_id','=',$this->id)->find_all();
+		foreach($complevels as $comp_level)
+		{
+			$retArr[] = $comp_level->getBasics();
+		}
+		return $retArr;
+	}
+
 	public function getBasics()
 	{
 		return array(

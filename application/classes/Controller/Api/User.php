@@ -406,12 +406,203 @@
 			return $resume_sent_model->getSentResumes($arguments);
 		}
 
+		/**
+		 * action_get_rdtree() rdtree sands for Resume Data Tree.  This method will retrieve all resume data groups  that a specific user should fill out based on his / her sports and positions.  Each group has a list of profiles and data values for the user.
+		 * via /api/user/rdtree/{users_id}
+		 *
+		 */
+		public function action_get_rdtree()
+		{
+			$this->payloadDesc = "rdtree stands for Resume Data Tree.  This method will retrieve all resume data groups  that a specific user should fill out based on his / her sports and positions.  Each group has a list of profiles and data values for the user.";
+			if(!$this->mainModel->id)
+			{
+				$this->modelNotSetError();
+				return false;
+			}
+		}
+
+		/**
+		 * action_get_gpa() Get this user's GPA for all years there are values for.
+		 * via /api/user/gpa/{users_id}
+		 *
+		 */
+		public function action_get_gpa()
+		{
+			$this->payloadDesc = "Get this user\'s GPA for all years there are values for.";
+			$arguments = array();
+
+
+		}
+
+		/**
+		 * action_get_tests() Get all academic tests that the user has scores for.  Tests can be filtered by "Standardized" and "AP" formats.
+		 * via /api/user/tests/{users_id}
+		 *
+		 */
+		public function action_get_tests()
+		{
+			$this->payloadDesc = "Get all academic tests that the user has scores for.  Tests can be filtered by \"Standardized\" and \"AP\" formats.";
+			$arguments = array();
+			// CHECK FOR PARAMETERS:
+			// standardized
+			// Return results for standardized tests.  True by default.
+
+			if($this->request->query('standardized') != "")
+			{
+				//convert standardized to a boolean
+				$arguments["standardized"] = (bool)$this->request->query('standardized');
+			}
+
+			// ap
+			// Return results for AP tests.  True by default.
+
+			if($this->request->query('ap') != "")
+			{
+				//convert ap to a boolean
+				$arguments["ap"] = (bool)$this->request->query('ap');
+			}
+
+
+		}
+
 		############################################################################
 		###########################    POST METHODS    #############################
 		############################################################################
 
+
 		/**
+		 * action_post_addtestscore() This will allow a user to add a score for an Academic Test Topic
+		 * via /api/user/addtestscore/{users_id}
 		 *
+		 */
+		public function action_post_addtestscore()
+		{
+			$this->payloadDesc = "This will allow a user to add a score for an Academic Test Topic";
+			$arguments = array();
+			// CHECK FOR PARAMETERS:
+			// academics_topics_id (REQUIRED)
+			// This is the ID of the Test Topic we are adding the score for
+
+			if((int)trim($this->request->post('academics_topics_id')) > 0)
+			{
+				$arguments["academics_topics_id"] = (int)trim($this->request->post('academics_topics_id'));
+			}
+
+			else // THIS WAS A REQUIRED PARAMETER
+			{
+				// Create Array for Error Data
+				$error_array = array(
+					"error" => "Required Parameter Missing",
+					"param_name" => "academics_topics_id",
+					"param_desc" => "This is the ID of the Test Topic we are adding the score for"
+				);
+
+				// Set whether it is a fatal error
+				$is_fatal = true;
+
+				// Call method to throw an error
+				$this->addError($error_array,$is_fatal);
+				return false;
+
+			}
+
+			// score (REQUIRED)
+			// This is the score the user got on the test.  It is a string type, but should be converted to a decimal on the server.
+
+			if(trim($this->request->post('score')) != "")
+			{
+				$arguments["score"] = trim($this->request->post('score'));
+			}
+
+			else // THIS WAS A REQUIRED PARAMETER
+			{
+				// Create Array for Error Data
+				$error_array = array(
+					"error" => "Required Parameter Missing",
+					"param_name" => "score",
+					"param_desc" => "This is the score the user got on the test.  It is a string type, but should be converted to a decimal on the server."
+				);
+
+				// Set whether it is a fatal error
+				$is_fatal = true;
+
+				// Call method to throw an error
+				$this->addError($error_array,$is_fatal);
+				return false;
+
+			}
+
+
+		}
+
+
+		/**
+		 * action_post_addgpa() Add a GPA for a given year
+		 * via /api/user/addgpa/{users_id}
+		 *
+		 */
+		public function action_post_addgpa()
+		{
+			$this->payloadDesc = "Add a GPA for a given year";
+			$arguments = array();
+			// CHECK FOR PARAMETERS:
+			// year (REQUIRED)
+			// This is a 4 digit integer like 2013.
+
+			if((int)trim($this->request->post('year')) > 0)
+			{
+				$arguments["year"] = (int)trim($this->request->post('year'));
+			}
+
+			else // THIS WAS A REQUIRED PARAMETER
+			{
+				// Create Array for Error Data
+				$error_array = array(
+					"error" => "Required Parameter Missing",
+					"param_name" => "year",
+					"param_desc" => "This is a 4 digit integer like 2013."
+				);
+
+				// Set whether it is a fatal error
+				$is_fatal = true;
+
+				// Call method to throw an error
+				$this->addError($error_array,$is_fatal);
+				return false;
+
+			}
+
+			// gpa (REQUIRED)
+			// This is a decimal value of the Grade Point Average.
+
+			if(trim($this->request->post('gpa')) != "")
+			{
+				$arguments["gpa"] = trim($this->request->post('gpa'));
+			}
+
+			else // THIS WAS A REQUIRED PARAMETER
+			{
+				// Create Array for Error Data
+				$error_array = array(
+					"error" => "Required Parameter Missing",
+					"param_name" => "gpa",
+					"param_desc" => "This is a decimal value of the Grade Point Average."
+				);
+
+				// Set whether it is a fatal error
+				$is_fatal = true;
+
+				// Call method to throw an error
+				$this->addError($error_array,$is_fatal);
+				return false;
+
+			}
+
+
+		}
+
+		/**
+		 * @return bool|object
 		 */
 		public function action_post_fbreg()
 		{
@@ -1546,6 +1737,136 @@
 
 			}
 		}
+
+		/**
+		 * action_put_gpa() Update the Grade Point Average for a user for a given year.
+		 * via /api/user/gpa/{users_id}
+		 *
+		 */
+		public function action_put_gpa()
+		{
+			$this->payloadDesc = "Update the Grade Point Average for a user for a given year.";
+			$arguments = array();
+			// CHECK FOR PARAMETERS:
+			// year (REQUIRED)
+			// A 4 digit integer for the year.
+
+			if((int)trim($this->put('year')) > 0)
+			{
+				$arguments["year"] = (int)trim($this->put('year'));
+			}
+
+			else // THIS WAS A REQUIRED PARAMETER
+			{
+				// Create Array for Error Data
+				$error_array = array(
+					"error" => "Required Parameter Missing",
+					"param_name" => "year",
+					"param_desc" => "A 4 digit integer for the year."
+				);
+
+				// Set whether it is a fatal error
+				$is_fatal = true;
+
+				// Call method to throw an error
+				$this->addError($error_array,$is_fatal);
+				return false;
+
+			}
+
+			// gpa (REQUIRED)
+			// Decimal Grade Point Average we are updating the value to.
+
+			if(trim($this->put('gpa')) != "")
+			{
+				$arguments["gpa"] = trim($this->put('gpa'));
+			}
+
+			else // THIS WAS A REQUIRED PARAMETER
+			{
+				// Create Array for Error Data
+				$error_array = array(
+					"error" => "Required Parameter Missing",
+					"param_name" => "gpa",
+					"param_desc" => "Decimal Grade Point Average we are updating the value to."
+				);
+
+				// Set whether it is a fatal error
+				$is_fatal = true;
+
+				// Call method to throw an error
+				$this->addError($error_array,$is_fatal);
+				return false;
+
+			}
+
+
+		}
+
+		/**
+		 * action_put_testscore() Update a given test score for a user.
+		 * via /api/user/testscore/{users_id}
+		 *
+		 */
+		public function action_put_testscore()
+		{
+			$this->payloadDesc = "Update a given test score for a user.";
+			$arguments = array();
+			// CHECK FOR PARAMETERS:
+			// test_score_id (REQUIRED)
+			// The ID of the test score to update
+
+			if((int)trim($this->put('test_score_id')) > 0)
+			{
+				$arguments["test_score_id"] = (int)trim($this->put('test_score_id'));
+			}
+
+			else // THIS WAS A REQUIRED PARAMETER
+			{
+				// Create Array for Error Data
+				$error_array = array(
+					"error" => "Required Parameter Missing",
+					"param_name" => "test_score_id",
+					"param_desc" => "The ID of the test score to update"
+				);
+
+				// Set whether it is a fatal error
+				$is_fatal = true;
+
+				// Call method to throw an error
+				$this->addError($error_array,$is_fatal);
+				return false;
+
+			}
+
+			// score (REQUIRED)
+			// The new score being added.
+
+			if(trim($this->put('score')) != "")
+			{
+				$arguments["score"] = trim($this->put('score'));
+			}
+
+			else // THIS WAS A REQUIRED PARAMETER
+			{
+				// Create Array for Error Data
+				$error_array = array(
+					"error" => "Required Parameter Missing",
+					"param_name" => "score",
+					"param_desc" => "The new score being added."
+				);
+
+				// Set whether it is a fatal error
+				$is_fatal = true;
+
+				// Call method to throw an error
+				$this->addError($error_array,$is_fatal);
+				return false;
+
+			}
+
+
+		}
 		
 		############################################################################
 		###########################    DELETE METHODS    ###########################
@@ -1743,6 +2064,81 @@
 			}
 
             return $this->mainModel->deleteIdentity($arguments);
+		}
+
+		/**
+		 * action_delete_gpa() Delete a GPA for a given user / year
+		 * via /api/user/gpa/{users_id}
+		 *
+		 */
+		public function action_delete_gpa()
+		{
+			$this->payloadDesc = "Delete a GPA for a given user / year";
+			$arguments = array();
+			// CHECK FOR PARAMETERS:
+			// year (REQUIRED)
+			// A 4 digit integer for the year.
+
+			if((int)trim($this->delete('year')) > 0)
+			{
+				$arguments["year"] = (int)trim($this->delete('year'));
+			}
+
+			else // THIS WAS A REQUIRED PARAMETER
+			{
+				// Create Array for Error Data
+				$error_array = array(
+					"error" => "Required Parameter Missing",
+					"param_name" => "year",
+					"param_desc" => "A 4 digit integer for the year."
+				);
+
+				// Set whether it is a fatal error
+				$is_fatal = true;
+
+				// Call method to throw an error
+				$this->addError($error_array,$is_fatal);
+				return false;
+
+			}
+		}
+
+		/**
+		 * action_delete_testscore() Delete a Test Score for a user.
+		 * via /api/user/testscore/{users_id}
+		 *
+		 */
+		public function action_delete_testscore()
+		{
+			$this->payloadDesc = "Delete a Test Score for a user.";
+			$arguments = array();
+			// CHECK FOR PARAMETERS:
+			// test_score_id (REQUIRED)
+			// The ID of the test score to delete
+
+			if((int)trim($this->delete('test_score_id')) > 0)
+			{
+				$arguments["test_score_id"] = (int)trim($this->delete('test_score_id'));
+			}
+
+			else // THIS WAS A REQUIRED PARAMETER
+			{
+				// Create Array for Error Data
+				$error_array = array(
+					"error" => "Required Parameter Missing",
+					"param_name" => "test_score_id",
+					"param_desc" => "The ID of the test score to delete"
+				);
+
+				// Set whether it is a fatal error
+				$is_fatal = true;
+
+				// Call method to throw an error
+				$this->addError($error_array,$is_fatal);
+				return false;
+
+			}
+
 		}
 		
 	}

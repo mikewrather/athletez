@@ -63,6 +63,16 @@ class Model_Sportorg_Seasons_Profile extends ORM
 
 		return $seasons;
 	}
+
+	public function getSeasons_as_array($args = array())
+	{
+		$seasons = ORM::factory('Sportorg_Seasons_Base')->where('season_profiles_id','=',$this->id)->find_all();
+		foreach($seasons as $season)
+		{
+			$retArr[] = $season->getBasics();
+		}
+		return $retArr;
+	}
 	
 	public function addSeasonprofile($name)
 	{

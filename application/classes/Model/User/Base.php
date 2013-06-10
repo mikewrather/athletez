@@ -120,6 +120,16 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 			'far_key' => 'social_types_id'
 		),
 
+		'testscores' => array(
+			'model' => 'Academics_Tests_Scores',
+			'foreign_key' => 'users_id',
+		),
+
+		'gpa' => array(
+			'model' => 'Academics_Gpa',
+			'foreign_key' => 'users_id',
+		),
+
 	);
 
     public function deleteTeam($args)
@@ -407,7 +417,72 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 	
 	public function getPositions()
 	{
+		$pos_arr = array();
+		if(!$this->loaded()) return array();
 		//loop through teams and get positions for each.
+
+		foreach($this->utl->find_all() as $link)
+		{
+			$positions = $link->positions->find_all();
+			foreach($positions as $position)
+			{
+				$pos_arr[$position->id] = $position;
+			}
+		}
+		return $pos_arr;
+	}
+
+	public function getResumeDataTree()
+	{
+		if(!$this->loaded()) return false;
+
+		$rdp = ORM::factory('User_Resume_Data_Profile');
+		$rdps = $rdp->getRDPForUser($this,'array');
+
+		$profiles = array();
+		foreach($rdps as $rdp_id => $rdp)
+		{
+
+			$datagroups = $rdp->datagroups->find_all();
+			foreach($datagroups as $group)
+			{
+
+				if(array_key_exists($group->id,$profiles))
+				{
+					if(!array_key_exists($rdp_id,$profiles[$group->id]["profiles"]))
+					{
+						$profiles[$group->id]["profiles"][$rdp_id] = array(
+							"name" => $rdp->name
+						);
+					}
+				}
+				else
+				{
+					$profiles[$group->id] = array(
+						"name" => $group->name,
+						"description" => $group->description,
+						"profiles" => array(
+							$rdp_id=>array(
+								"name" => $rdp->name
+							)
+						),
+					);
+
+					$resdata = $group->resdata->find_all();
+					foreach($resdata as $data)
+					{
+						$val = $data->datavals->where('users_id','=',$this->id)->find();
+						$profiles[$group->id]["data"][$data->id] = array(
+							"name" => $data->name,
+							"type" => $data->resume_data_type,
+							"val" => $val->loaded() ? $val->user_value : false,
+						);
+					}
+				}
+			}
+		}
+		return $profiles;
+
 	}
 	public function getUploadedVideos($obj, $sports_id = null)
 	{
@@ -513,7 +588,7 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 		return $std;
 	}
 	
-	public function getSports()
+	public function getSports($format='select')
 	{
 		$positions_qry = DB::select('positions_id')
 			->from('utl_position_link')
@@ -533,7 +608,25 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 			->where('users_id','=',$this->id);
 
 
-		return $isports;
+		if($format=='select') return $isports;
+		elseif($format=='array')
+		{
+			$sports_arr = array();
+			$res = $isports->execute();
+			foreach($res as $rs)
+			{
+				$sport = ORM::factory('Sportorg_Sport',$rs['sports_id']);
+				if($sport->loaded())
+				{
+					if(!array_key_exists($sport->id,$sports_arr))
+					{
+						$sports_arr[$sport->id] = $sport;
+					}
+				}
+
+			}
+			return $sports_arr;
+		}
 	}
 	
 	public function getRelated()
@@ -576,6 +669,7 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 			"num_votes" => $num_votes,
 			"city" => $this->city->getBasics(),
 			"dob" => $this->dob,
+			"ncaa" => $this->ncaa,
 			//"utl" =>$results
 		);
 

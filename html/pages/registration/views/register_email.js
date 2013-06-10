@@ -56,8 +56,10 @@ define([
 
             nextStep: function (event) {
                 event.preventDefault();
-                // for test this code hides the registration form
-                //Channel('registration-uploadimage-email').publish();
+                // for test
+	            //comment by jeffrey Channel('registration-uploadimage-email').publish();
+
+
                 var fields = this.$(":input").serializeArray();
                 var payload = {};
                 $.each(fields, function(i, field){
@@ -69,18 +71,16 @@ define([
                     return '/api/user/register';                            
                 }
                 saveInfo.saveSuccess = function(model, response) {
-                	debug.log("saveinfo.saveSuccess Called");
-                	debug.log(model);
-                	debug.log(response);
                     BaseModel.prototype.saveSuccess.call(this, model, response);
-					var exec_data = response.exec_data;
-                    var payload = response.payload;
+                    var exec_data = model.get('exec_data');
+                    var payload = model.get('payload');
                     if (!exec_data['exec_error']) {
-                        Channel('registration-uploadimage-email').publish();
+                        //comment by jeffrey Channel('registration-uploadimage-email').publish();
+	                    Channel("registration-select-org").publish(payload);
                     }
                 }
-                saveInfo.save();                                        
-                
+                saveInfo.save();
+
             }
 
         });

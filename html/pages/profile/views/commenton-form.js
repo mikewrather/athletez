@@ -19,7 +19,7 @@ function(require, commentFormTemplate,    ProfileCommentFormModel,        BaseCo
              this.setOptions();
              BaseView.prototype.initialize.call(this, options);
          },
-
+	    el: "#comment_div",
 	    template: commentFormTemplate,
 
 	    events: {
@@ -51,14 +51,14 @@ function(require, commentFormTemplate,    ProfileCommentFormModel,        BaseCo
         // If you hit return in the main input field, create new **CommentForm** model,
         // persisting it to *localStorage*.
         createOnEnter: function(e) {
-            var comment = this.input.val();
+	        var comment = this.$el.find("#new-comment").val();
             var self = this;
 
             self.$('.submit-result').stop().fadeOut();
             if (comment != '') {                
                 date = new Date();
                 var payload = new Array;
-                payload['comment'] = this.input.val();
+                payload['comment'] = comment;
                 payload['comment_date'] = date.toDateString();
                                 
                 var saveInfo = new BaseModel(payload);
@@ -88,7 +88,7 @@ function(require, commentFormTemplate,    ProfileCommentFormModel,        BaseCo
 	                //this.collection.add(model);
 
 	                self.refreshComments();
-	                Channel('profilecommentonform:fetch').publish();
+	                //Channel('profilecommentonform:fetch').publish();
                 };
 
 	            saveInfo.save();
@@ -108,9 +108,11 @@ function(require, commentFormTemplate,    ProfileCommentFormModel,        BaseCo
 	    render: function () {
 		    BaseView.prototype.render.call(this);
 		    this.input = this.$("#new-comment");
-
+		    console.log("run here now", this.el);
+		    //this.el.render();
+			/*
 		    var payload = this.model.get('payload');
-		    console.log("from profile modelxx ", payload);
+		    console.log("el value", this.$el);
 		    var self = this;
 		    if (payload) {
 			    var user_photo = payload.user_picture;
@@ -119,7 +121,8 @@ function(require, commentFormTemplate,    ProfileCommentFormModel,        BaseCo
 				    self.$('.user-photo img').attr("src","http://www.gravatar.com/avatar/" + MD5(user_email) + "&s=29");
 			    }
 		    }
-		    //return this;
+			 */
+		    return this;
 	    }
         
     });
