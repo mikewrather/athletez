@@ -12,10 +12,39 @@
 	class View_Api_Gpa extends Api_Viewclass
 	{
 
-		public function __construct()
+		/**
+		 * post_addgpa() Add a GPA for a given year
+		 *
+		 * @retun array
+		 */
+		public function post_addgpa()
 		{
-			parent::__construct();
+			$retArr = $this->obj->getBasics();
+			return $retArr;
 		}
 
+		/**
+		 * put_gpa() Update the Grade Point Average for a user for a given year.
+		 *
+		 * @retun array
+		 */
+		public function put_gpa()
+		{
+			$retArr = $this->obj->getBasics();
+
+			return $retArr;
+		}
+
+		/**
+		 * delete_gpa() Delete a GPA for a given user / year
+		 *
+		 * @retun array
+		 */
+		public function delete_gpa()
+		{
+			$retArr = $this->obj->getBasics();
+
+			return $retArr;
+		}
 	
 	}

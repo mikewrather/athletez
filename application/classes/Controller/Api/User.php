@@ -430,8 +430,14 @@
 		{
 			$this->payloadDesc = "Get this user\'s GPA for all years there are values for.";
 			$arguments = array();
-
-
+			if(!$this->mainModel->id)
+			{
+				$this->modelNotSetError();
+				return false;
+			}
+			$args['users_id'] = $this->mainModel->id;
+			$gpa_model = ORM::factory("Academics_Gpa");
+			return $gpa_model->getGpa($args);
 		}
 
 		/**
@@ -485,53 +491,34 @@
 
 			if((int)trim($this->request->post('academics_topics_id')) > 0)
 			{
-				$arguments["academics_topics_id"] = (int)trim($this->request->post('academics_topics_id'));
+				$arguments["academics_tests_topics_id"] = (int)trim($this->request->post('academics_topics_id'));
 			}
-
-			else // THIS WAS A REQUIRED PARAMETER
-			{
-				// Create Array for Error Data
-				$error_array = array(
-					"error" => "Required Parameter Missing",
-					"param_name" => "academics_topics_id",
-					"param_desc" => "This is the ID of the Test Topic we are adding the score for"
-				);
-
-				// Set whether it is a fatal error
-				$is_fatal = true;
-
-				// Call method to throw an error
-				$this->addError($error_array,$is_fatal);
-				return false;
-
-			}
-
-			// score (REQUIRED)
-			// This is the score the user got on the test.  It is a string type, but should be converted to a decimal on the server.
 
 			if(trim($this->request->post('score')) != "")
 			{
 				$arguments["score"] = trim($this->request->post('score'));
 			}
 
-			else // THIS WAS A REQUIRED PARAMETER
+			if(!$this->mainModel->id)
 			{
-				// Create Array for Error Data
-				$error_array = array(
-					"error" => "Required Parameter Missing",
-					"param_name" => "score",
-					"param_desc" => "This is the score the user got on the test.  It is a string type, but should be converted to a decimal on the server."
-				);
+				$this->modelNotSetError();
+				return false;
+			}
 
-				// Set whether it is a fatal error
-				$is_fatal = true;
-
-				// Call method to throw an error
-				$this->addError($error_array,$is_fatal);
+			$arguments['users_id'] = $this->mainModel->id;
+			$score_model = ORM::factory("Academics_Tests_Scores");
+			$result = $score_model->addTestScore($arguments);
+			if(get_class($result) == get_class($score_model))
+			{
+				return $result;
+			}
+			elseif(get_class($result) == 'ORM_Validation_Exception')
+			{
+				//parse error and add to error array
+				$this->processValidationError($result,$this->mainModel->error_message_path);
 				return false;
 
 			}
-
 
 		}
 
@@ -554,50 +541,31 @@
 				$arguments["year"] = (int)trim($this->request->post('year'));
 			}
 
-			else // THIS WAS A REQUIRED PARAMETER
-			{
-				// Create Array for Error Data
-				$error_array = array(
-					"error" => "Required Parameter Missing",
-					"param_name" => "year",
-					"param_desc" => "This is a 4 digit integer like 2013."
-				);
-
-				// Set whether it is a fatal error
-				$is_fatal = true;
-
-				// Call method to throw an error
-				$this->addError($error_array,$is_fatal);
-				return false;
-
-			}
-
-			// gpa (REQUIRED)
-			// This is a decimal value of the Grade Point Average.
-
 			if(trim($this->request->post('gpa')) != "")
 			{
 				$arguments["gpa"] = trim($this->request->post('gpa'));
 			}
 
-			else // THIS WAS A REQUIRED PARAMETER
+			if(!$this->mainModel->id)
 			{
-				// Create Array for Error Data
-				$error_array = array(
-					"error" => "Required Parameter Missing",
-					"param_name" => "gpa",
-					"param_desc" => "This is a decimal value of the Grade Point Average."
-				);
+				$this->modelNotSetError();
+				return false;
+			}
 
-				// Set whether it is a fatal error
-				$is_fatal = true;
-
-				// Call method to throw an error
-				$this->addError($error_array,$is_fatal);
+			$arguments['users_id'] = $this->mainModel->id;
+			$gpa_model = ORM::factory("Academics_Gpa");
+			$result = $gpa_model->addGpa($arguments);
+			if(get_class($result) == get_class($gpa_model))
+			{
+				return $result;
+			}
+			elseif(get_class($result) == 'ORM_Validation_Exception')
+			{
+				//parse error and add to error array
+				$this->processValidationError($result,$this->mainModel->error_message_path);
 				return false;
 
 			}
-
 
 		}
 
@@ -1749,46 +1717,28 @@
 				$arguments["year"] = (int)trim($this->put('year'));
 			}
 
-			else // THIS WAS A REQUIRED PARAMETER
-			{
-				// Create Array for Error Data
-				$error_array = array(
-					"error" => "Required Parameter Missing",
-					"param_name" => "year",
-					"param_desc" => "A 4 digit integer for the year."
-				);
-
-				// Set whether it is a fatal error
-				$is_fatal = true;
-
-				// Call method to throw an error
-				$this->addError($error_array,$is_fatal);
-				return false;
-
-			}
-
-			// gpa (REQUIRED)
-			// Decimal Grade Point Average we are updating the value to.
-
 			if(trim($this->put('gpa')) != "")
 			{
 				$arguments["gpa"] = trim($this->put('gpa'));
 			}
 
-			else // THIS WAS A REQUIRED PARAMETER
+			if(!$this->mainModel->id)
 			{
-				// Create Array for Error Data
-				$error_array = array(
-					"error" => "Required Parameter Missing",
-					"param_name" => "gpa",
-					"param_desc" => "Decimal Grade Point Average we are updating the value to."
-				);
+				$this->modelNotSetError();
+				return false;
+			}
 
-				// Set whether it is a fatal error
-				$is_fatal = true;
-
-				// Call method to throw an error
-				$this->addError($error_array,$is_fatal);
+			$arguments['users_id'] = $this->mainModel->id;
+			$gpa_model = ORM::factory("Academics_Gpa");
+			$result = $gpa_model->updateGpa($arguments);
+			if(get_class($result) == get_class($gpa_model))
+			{
+				return $result;
+			}
+			elseif(get_class($result) == 'ORM_Validation_Exception')
+			{
+				//parse error and add to error array
+				$this->processValidationError($result,$this->mainModel->error_message_path);
 				return false;
 
 			}
@@ -1805,60 +1755,37 @@
 		{
 			$this->payloadDesc = "Update a given test score for a user.";
 			$arguments = array();
-			// CHECK FOR PARAMETERS:
-			// test_score_id (REQUIRED)
-			// The ID of the test score to update
 
 			if((int)trim($this->put('test_score_id')) > 0)
 			{
-				$arguments["test_score_id"] = (int)trim($this->put('test_score_id'));
+				$arguments["academics_tests_topics_id"] = (int)trim($this->put('test_score_id'));
 			}
-
-			else // THIS WAS A REQUIRED PARAMETER
-			{
-				// Create Array for Error Data
-				$error_array = array(
-					"error" => "Required Parameter Missing",
-					"param_name" => "test_score_id",
-					"param_desc" => "The ID of the test score to update"
-				);
-
-				// Set whether it is a fatal error
-				$is_fatal = true;
-
-				// Call method to throw an error
-				$this->addError($error_array,$is_fatal);
-				return false;
-
-			}
-
-			// score (REQUIRED)
-			// The new score being added.
 
 			if(trim($this->put('score')) != "")
 			{
 				$arguments["score"] = trim($this->put('score'));
 			}
 
-			else // THIS WAS A REQUIRED PARAMETER
+			if(!$this->mainModel->id)
 			{
-				// Create Array for Error Data
-				$error_array = array(
-					"error" => "Required Parameter Missing",
-					"param_name" => "score",
-					"param_desc" => "The new score being added."
-				);
+				$this->modelNotSetError();
+				return false;
+			}
 
-				// Set whether it is a fatal error
-				$is_fatal = true;
-
-				// Call method to throw an error
-				$this->addError($error_array,$is_fatal);
+			$arguments['users_id'] = $this->mainModel->id;
+			$score_model = ORM::factory("Academics_Tests_Scores");
+			$result = $score_model->updateTestScore($arguments);
+			if(get_class($result) == get_class($score_model))
+			{
+				return $result;
+			}
+			elseif(get_class($result) == 'ORM_Validation_Exception')
+			{
+				//parse error and add to error array
+				$this->processValidationError($result,$this->mainModel->error_message_path);
 				return false;
 
 			}
-
-
 		}
 		
 		############################################################################

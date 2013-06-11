@@ -20,6 +20,17 @@
 			}
 		}
 
+		public static function academics_tests_topics_id_exist($value){
+			$topics = ORM::factory("Academics_Tests_Topics");
+			$topics->where('id', '=', $value)->find();
+
+			if ($topics->loaded()){
+				return true;
+			}else{
+				return false;
+			}
+		}
+
 		public static function languages_id_exist($value){
 			$positions = ORM::factory("Site_Language");
 			$positions->where('id', '=', $value)->find();

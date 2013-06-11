@@ -48,4 +48,5 @@
 		'division_exist' => $e->get('division_exist'),
 		'languages_id_exist' => $e->get('languages_id_exist'),
 		'coaches_id_exist' => $e->get('coaches_id_exist'),
+		'academics_tests_topics_id_exist' => $e->get('academics_tests_topics_id_exist'),
 	);

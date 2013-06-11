@@ -323,13 +323,13 @@
 		 */
 		public function get_gpa()
 		{
-			$retArr = array();
+			$retArr = null;
 
 			// Scaffolding Code For Array:
 			$objs = $this->obj->find_all();
 			foreach($objs as $obj)
 			{
-				$retArr[$obj->id] = $obj->getBasics();
+				$retArr[] = $obj->getBasics();
 			}
 			return $retArr;
 		}
@@ -341,13 +341,13 @@
 		 */
 		public function get_tests()
 		{
-			$retArr = array();
+			$retArr = null;
 
 			// Scaffolding Code For Array:
 			$objs = $this->obj->find_all();
 			foreach($objs as $obj)
 			{
-				$retArr[$obj->id] = $obj->getBasics();
+				$retArr[] = $obj->getBasics();
 			}
 			return $retArr;
 		}
@@ -358,17 +358,6 @@
 		 * @retun array
 		 */
 		public function post_addtestscore()
-		{
-			$retArr = $this->obj->getBasics();
-			return $retArr;
-		}
-
-		/**
-		 * post_addgpa() Add a GPA for a given year
-		 *
-		 * @retun array
-		 */
-		public function post_addgpa()
 		{
 			$retArr = $this->obj->getBasics();
 			return $retArr;
@@ -657,49 +646,4 @@
 
 			return $retArr;
 		}
-
-		/**
-		 * put_testscore() Update a given test score for a user.
-		 *
-		 * @retun array
-		 */
-		public function put_testscore()
-		{
-			$retArr = $this->obj->getBasics();
-
-			return $retArr;
-		}
-
-		/**
-		 * put_gpa() Update the Grade Point Average for a user for a given year.
-		 *
-		 * @retun array
-		 */
-		public function put_gpa()
-		{
-			$retArr = $this->obj->getBasics();
-
-			return $retArr;
-		}
-
-		/**
-		 * delete_testscore() Delete a Test Score for a user.
-		 *
-		 * @retun array
-		 */
-		public function delete_testscore()
-		{
-			return false;
-		}
-
-		/**
-		 * delete_gpa() Delete a GPA for a given user / year
-		 *
-		 * @retun array
-		 */
-		public function delete_gpa()
-		{
-			return false;
-		}
-
 	}
