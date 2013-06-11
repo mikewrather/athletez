@@ -4,43 +4,25 @@
 // Requires `define`, `require`
 // Returns {RegistrationFacebookView} constructor
 
-define([
-		'require',
-		'text!registration/templates/register_facebook.html',
-		'facade',
-		'views',
-		'utils',
-		'jquery.pstrength',
-		'registration/collections/fbimages',
-		'registration/views/fbimage-list'
-		],
-function(require, registrationFacebookTemplate) {
+define(['require', 'text!registration/templates/register_facebook.html', 'facade', 'views', 'utils', 'jquery.pstrength', 'registration/collections/fbimages', 'registration/views/fbimage-list'], function(require, registrationFacebookTemplate) {
 
-	var RegistrationFacebookView,
-		facade = require('facade'),
-		views = require('views'),
-		utils = require('utils'),
-		Channel = utils.lib.Channel,
-		SectionView = views.SectionView,
-		RegistrationFBImageList = require('registration/collections/fbimages'),
-		RegistrationFBImageView = require('registration/views/fbimage-list');
-
+	var RegistrationFacebookView, facade = require('facade'), views = require('views'), utils = require('utils'), Channel = utils.lib.Channel, SectionView = views.SectionView, RegistrationFBImageList = require('registration/collections/fbimages'), RegistrationFBImageView = require('registration/views/fbimage-list');
 
 	RegistrationFacebookView = SectionView.extend({
 
-		id: 'main-content',
+		id : 'main-content',
 
-		events: {
-			"keypress": "stopSubmit",
-			"click .change-field": "changeField",
-			"click .diff_fb_pic": "diffFBPicture",
-			"click .upload_new_image": "uploadNewImage",
-			"click .next": "nextStep"
+		events : {
+			"keypress" : "stopSubmit",
+			"click .change-field" : "changeField",
+			"click .diff_fb_pic" : "diffFBPicture",
+			"click .upload_new_image" : "uploadNewImage",
+			"click .next" : "nextStep"
 		},
 
-		template: registrationFacebookTemplate,
+		template : registrationFacebookTemplate,
 
-		initialize: function (options) {
+		initialize : function(options) {
 			var self = this;
 
 			if (!this.model) {
@@ -55,11 +37,13 @@ function(require, registrationFacebookTemplate) {
 				self.$('.picture').attr('src', picture);
 			}
 
+
 			Channel("registration-change-picture").subscribe(changeUserPicture);
 
 			function showDiffFBPicture() {
 				self.initFBPictures();
 			}
+
 
 			Channel("registration-diff-fbpicture").subscribe(showDiffFBPicture);
 
@@ -67,44 +51,44 @@ function(require, registrationFacebookTemplate) {
 				self.initUploadImage();
 			}
 
+
 			Channel("registration-upload-image").subscribe(showUploadImage);
 		},
 
 		// Child views...
-		childViews: {},
+		childViews : {},
 
-		render: function (domInsertion, dataDecorator, partials) {
+		render : function(domInsertion, dataDecorator, partials) {
 			SectionView.prototype.render.call(this, domInsertion, dataDecorator, partials);
 			this.$('.password').pstrength();
 		},
 
-		stopSubmit: function (event) {
+		stopSubmit : function(event) {
 			var code = (event.keyCode ? event.keyCode : event.which);
 			if (code == 13) {
 				event.preventDefault();
 			}
 		},
 
-		diffFBPicture: function(event) {
+		diffFBPicture : function(event) {
 			event.preventDefault();
 			this.initFBPictures();
 		},
 
-		uploadNewImage: function(event) {
+		uploadNewImage : function(event) {
 			event.preventDefault();
 			this.initUploadImage();
 		},
 
-		parseFBData: function(payload)
-		{
+		parseFBData : function(payload) {
 			payload.hs_exists = payload.high_school ? true : false;
 			payload.dob_exists = payload.birthday ? true : false;
 			payload.email_exists = payload.email ? true : false;
 
-			this.model.set('payload',payload);
+			this.model.set('payload', payload);
 		},
 
-		initFBPictures: function () {
+		initFBPictures : function() {
 			var self = this;
 
 			if (!this.fbimages) {
@@ -112,47 +96,47 @@ function(require, registrationFacebookTemplate) {
 				this.fbimages.fetch();
 				$.when(this.fbimages.request).done(function() {
 					debug.log("this.fbimages are as follows");
-				debug.log(self.fbimages.toJSON());
+					debug.log(self.fbimages.toJSON());
 					self.setupFBPictures();
 				});
 			} else {
 				$('#' + this.fbImageListView.id).dialog({
-					width: '80%',
-					close: self.removeListView
+					width : '80%',
+					close : self.removeListView
 				});
 				this.fbImageListView.initCropView();
 			}
 		},
 
-		setupFBPictures: function() {
+		setupFBPictures : function() {
 			var self = this;
 
 			this.fbImageListView = new RegistrationFBImageView({
-				collection: this.fbimages
+				collection : this.fbimages
 			});
 			var renderFBImageListView = this.addChildView(this.fbImageListView);
 			this.childViews.fbImageListView = this.fbImageListView;
-			this.callbacks.add(function () {
+			this.callbacks.add(function() {
 				renderFBImageListView();
 			});
 
 			this.fbImageListView.render();
 			this.$el.append(self.fbImageListView.el);
 			$('#' + this.fbImageListView.id).dialog({
-				width: '80%',
-				close: self.removeListView
+				width : '80%',
+				close : self.removeListView
 			});
 		},
 
-		removeListView: function() {
+		removeListView : function() {
 			this.childViews.fbImageListView.removeCropView();
 		},
 
-		initUploadImage: function() {
+		initUploadImage : function() {
 			alert('Upload Image');
 		},
 
-		changeField: function(event) {
+		changeField : function(event) {
 			event.preventDefault();
 			$parent = this.$(event.target).parent();
 			id = $parent.attr('data-name');
@@ -160,11 +144,11 @@ function(require, registrationFacebookTemplate) {
 			$parent.html('<input type="text" id="' + id + '" name="' + id + '" value="' + value + '"/>');
 		},
 
-		nextStep: function(event) {
+		nextStep : function(event) {
 			event.preventDefault();
 			var fields = this.$(":input").serializeArray();
 			var payload = this.model.get('payload');
-			$.each(fields, function(i, field){
+			$.each(fields, function(i, field) {
 				payload[field.name] = field.value;
 			});
 			console.log(payload);
@@ -182,10 +166,17 @@ function(require, registrationFacebookTemplate) {
 			}
 			this.model.set('payload', payload);
 			console.log(this.model.toJSON());
+			console.log("Facebook Registration url changed from user/fbreg to user/basics");
+			this.model.url = function() {
+				if (testpath)
+					return testpath + '/user/basics';
+				return '/api/user/basics';
+			}
+			console.log(this.model.url());
 			this.model.save();
 			Channel('registration-select-org').publish();
 		}
 	});
 
 	return RegistrationFacebookView;
-});
+}); 

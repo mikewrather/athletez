@@ -152,7 +152,7 @@ define(['facade', 'utils'], function (facade, utils) {
 			_.extend(options, ajaxOptions);
 			console.log("start fetching now this", this);
 			console.log("start fetching  options", options);
-			console.log("start fetching  results", Backbone.Model.prototype.fetch.call(this, options));
+		//	console.log("start fetching  results", Backbone.Model.prototype.fetch.call(this, options));
 			return this.request = Backbone.Model.prototype.fetch.call(this, options);
 		},
 

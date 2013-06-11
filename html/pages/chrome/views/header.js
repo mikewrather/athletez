@@ -64,10 +64,8 @@ function (
         },
         
         signupFacebook: function(event) {
+        	
             event.preventDefault();
-          
-          //  Channel('registration-with-facebook').publish();
-          
           // event.preventDefault();
             // Additional JS functions here
             window.fbAsyncInit = function() {
@@ -101,8 +99,6 @@ function (
                         Channel('registration-with-facebook').publish();
                     } else {
                         alert('Cancelled');
-                        // for test
-                        //Channel('registration-with-facebook').publish();
                     }
                 },{scope: 'email, user_birthday, user_photos'});
             }

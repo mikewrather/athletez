@@ -10,6 +10,7 @@
 
 .fbimage {
     float:left;
+    margin-right: 4px;
     /* width:150px; */
 }
 .picture-buttons {
