@@ -184,9 +184,9 @@ class Kohana_FacebookAuth {
 					//Get album photos
 					$photos = $this->fb->api("/$album_id/photos/all",'GET');
 					foreach($photos['data'] as $photo){
-						$me['photos'][$i]['original'] = $photo['images'][0]['source'];
+						$me[$i]['original'] = $photo['images'][0]['source'];
 						$last = end($photo['images']);
-						$me['photos'][$i]['thumbnail'] = $last['source'];
+						$me[$i]['thumbnail'] = $last['source'];
 						$i++;
 					}
 				}
