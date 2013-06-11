@@ -74,7 +74,7 @@ function(facade,  utils,   FBImageItemView,                    BaseImageListView
                     var exec_data = model.get('exec_data');
                     var payload = model.get('payload');
                     if (!exec_data['exec_error'] && payload) {
-                        Channel("registration-change-picture").publish(payload['picture']);
+                        Channel("registration-change-picture").publish(payload['image_path']);
                     }
                     $('#' + listView.id).dialog('close');
                 }                

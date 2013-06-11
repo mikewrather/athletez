@@ -177,6 +177,47 @@ class Model_Media_Image extends ORM
 		return $this;
 	}
 
+	public function saveCrop($args,$user)
+	{
+		$request = Request::factory($args['image_url']);
+
+		$request->client()->options(array(
+			CURLOPT_SSL_VERIFYHOST => 0,
+			CURLOPT_SSL_VERIFYPEER => 0
+		));
+
+		$response = $request->execute();
+		//print_r($response);
+
+		$local_path  = DOCROOT . '../files_temp/' . md5(rand());
+		file_put_contents($local_path, $response->body());
+
+		$image = Image::factory($local_path);
+
+		$image->resize($args['image_width'],$args['image_height']);
+		$image->crop($args['crop_width'],$args['crop_height'],$args['crop_x'],$args['crop_y']);
+		$image->save();
+
+		$media_args = array(
+			'name' => $user->name().' Userpic',
+			'files' => array(
+				array(
+					'tmp_name'=>$image->file,
+					'type'=>$image->mime,
+				)
+			)
+		);
+
+		$result = $this->addImage($media_args);
+
+		$user->user_picture = $result->id;
+		$user->save();
+
+		unlink($local_path);
+
+		return $result;
+	}
+
 	/**
 	 * generate_types method loops through all the different types stored in the db
 	 * and generates an image of a given size / quality for each then saves that

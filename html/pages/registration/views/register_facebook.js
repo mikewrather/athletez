@@ -52,7 +52,7 @@ function(require, registrationFacebookTemplate) {
 			SectionView.prototype.initialize.call(this, options);
 
 			function changeUserPicture(picture) {
-				self.$('.picture').attr('src', base_url + picture);
+				self.$('.picture').attr('src', picture);
 			}
 
 			Channel("registration-change-picture").subscribe(changeUserPicture);

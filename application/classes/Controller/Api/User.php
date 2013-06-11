@@ -1305,9 +1305,9 @@
 			// image_url (REQUIRED)
 			// This is the url of the image being cropped.  It will be downloaded from this url and the crop data will be used to save a new version.
 
-			if(trim($this->request->post('image_url')) != "")
+			if(trim($this->request->post('original')) != "")
 			{
-				$arguments["image_url"] = trim($this->request->post('image_url'));
+				$arguments["image_url"] = trim($this->request->post('original'));
 			}
 
 			else // THIS WAS A REQUIRED PARAMETER
@@ -1331,9 +1331,9 @@
 			// crop_x (REQUIRED)
 			// The x axis of the top left corner of the crop box.
 
-			if((int)trim($this->request->post('crop_x')) > 0)
+			if(is_numeric($this->request->post('crop-x')))
 			{
-				$arguments["crop_x"] = (int)trim($this->request->post('crop_x'));
+				$arguments["crop_x"] = (int)trim($this->request->post('crop-x'));
 			}
 
 			else // THIS WAS A REQUIRED PARAMETER
@@ -1341,7 +1341,7 @@
 				// Create Array for Error Data
 				$error_array = array(
 					"error" => "Required Parameter Missing",
-					"param_name" => "crop_x",
+					"param_name" => "crop-x",
 					"param_desc" => "The x axis of the top left corner of the crop box."
 				);
 
@@ -1357,17 +1357,16 @@
 			// crop_y (REQUIRED)
 			// The y axis of the top left corner of the cropping box.
 
-			if((int)trim($this->request->post('crop_y')) > 0)
+			if(is_numeric($this->request->post('crop-y')))
 			{
-				$arguments["crop_y"] = (int)trim($this->request->post('crop_y'));
+				$arguments["crop_y"] = (int)trim($this->request->post('crop-y'));
 			}
-
 			else // THIS WAS A REQUIRED PARAMETER
 			{
 				// Create Array for Error Data
 				$error_array = array(
 					"error" => "Required Parameter Missing",
-					"param_name" => "crop_y",
+					"param_name" => "crop-y",
 					"param_desc" => "The y axis of the top left corner of the cropping box."
 				);
 
@@ -1383,9 +1382,9 @@
 			// crop_width (REQUIRED)
 			// The width of the crop box.
 
-			if((int)trim($this->request->post('crop_width')) > 0)
+			if(is_numeric($this->request->post('crop-width')))
 			{
-				$arguments["crop_width"] = (int)trim($this->request->post('crop_width'));
+				$arguments["crop_width"] = (int)trim($this->request->post('crop-width'));
 			}
 
 			else // THIS WAS A REQUIRED PARAMETER
@@ -1409,9 +1408,9 @@
 			// crop_height (REQUIRED)
 			// The height of the crop box.
 
-			if((int)trim($this->request->post('crop_height')) > 0)
+			if(is_numeric($this->request->post('crop-height')))
 			{
-				$arguments["crop_height"] = (int)trim($this->request->post('crop_height'));
+				$arguments["crop_height"] = (int)trim($this->request->post('crop-height'));
 			}
 
 			else // THIS WAS A REQUIRED PARAMETER
@@ -1435,9 +1434,9 @@
 			// image_width (REQUIRED)
 			// The width of the image after it has been resized with zoom.
 
-			if((int)trim($this->request->post('image_width')) > 0)
+			if((int)trim($this->request->post('image-width')) > 0)
 			{
-				$arguments["image_width"] = (int)trim($this->request->post('image_width'));
+				$arguments["image_width"] = (int)trim($this->request->post('image-width'));
 			}
 
 			else // THIS WAS A REQUIRED PARAMETER
@@ -1461,9 +1460,9 @@
 			// image_height (REQUIRED)
 			// The height of the image after it has been resized with zoom.
 
-			if((int)trim($this->request->post('image_height')) > 0)
+			if((int)trim($this->request->post('image-height')) > 0)
 			{
-				$arguments["image_height"] = (int)trim($this->request->post('image_height'));
+				$arguments["image_height"] = (int)trim($this->request->post('image-height'));
 			}
 
 			else // THIS WAS A REQUIRED PARAMETER
@@ -1484,15 +1483,8 @@
 
 			}
 
-			// lock-proportion
-			// Not exactly sure what this does.
-
-			if($this->request->post('lock-proportion') != "")
-			{
-				//convert lock-proportion to a boolean
-				$arguments["lock-proportion"] = (bool)$this->request->post('lock-proportion');
-			}
-
+			$image = ORM::factory('Media_Image');
+			return $image->saveCrop($arguments,$this->mainModel);
 
 		}
 
