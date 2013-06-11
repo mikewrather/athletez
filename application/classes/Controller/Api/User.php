@@ -694,6 +694,7 @@
 
 
 				}
+				$retArr["users_id"] = $this->mainModel->id;
 				return (object)$retArr;
 			}
 		}

@@ -15,5 +15,5 @@
 .picture-buttons {
     clear:both;
 }
-.fbimagecontainer img { display:none; }
+/* .fbimagecontainer img { display:none; } */
 .fbimagecontainer jrac_viewport img {display:block}
