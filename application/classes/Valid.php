@@ -42,6 +42,17 @@
 			}
 		}
 
+		public static function users_gpa_exist($users_id, $year){
+			$user_gpa = ORM::factory("Academics_Gpa");
+			$user_gpa->where('users_id', '=', $users_id)
+				->and_where('year', '=', $year)->find();
+			if ($user_gpa->users_id != ""){
+				return false;
+			}else{
+				return true;
+			}
+		}
+
 		public static function users_teams_exist($users_id, $teams_id){
 			$user_team_link = ORM::factory("User_Teamslink");
 			$user_team_link->where('users_id', '=', $users_id)

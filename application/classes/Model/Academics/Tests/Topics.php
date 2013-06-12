@@ -13,7 +13,6 @@ class Model_Academics_Tests_Topics extends ORM
 {
 	
 	protected $_table_name = 'academics_tests_topics';
-	
 
 	protected $_belongs_to = array(
 		'test' => array(

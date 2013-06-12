@@ -559,9 +559,9 @@
 			// year (REQUIRED)
 			// This is a 4 digit integer like 2013.
 
-			if((int)trim($this->request->post('year')) > 0)
+			if(trim($this->request->post('year')) != "")
 			{
-				$arguments["year"] = (int)trim($this->request->post('year'));
+				$arguments["year"] = strtolower(trim($this->request->post('year')));
 			}
 
 			if(trim($this->request->post('gpa')) != "")
@@ -578,6 +578,7 @@
 			$arguments['users_id'] = $this->mainModel->id;
 			$gpa_model = ORM::factory("Academics_Gpa");
 			$result = $gpa_model->addGpa($arguments);
+
 			if(get_class($result) == get_class($gpa_model))
 			{
 				return $result;
@@ -1735,9 +1736,9 @@
 			// year (REQUIRED)
 			// A 4 digit integer for the year.
 
-			if((int)trim($this->put('year')) > 0)
+			if(trim($this->put('year')) != "")
 			{
-				$arguments["year"] = (int)trim($this->put('year'));
+				$arguments["year"] = strtolower(trim($this->put('year')));
 			}
 
 			if(trim($this->put('gpa')) != "")
@@ -1765,8 +1766,6 @@
 				return false;
 
 			}
-
-
 		}
 
 		/**
@@ -2022,9 +2021,17 @@
 			// year (REQUIRED)
 			// A 4 digit integer for the year.
 
-			if((int)trim($this->delete('year')) > 0)
+			if(trim($this->delete('year')) != "")
 			{
-				$arguments["year"] = (int)trim($this->delete('year'));
+				$arguments["year"] = trim($this->delete('year'));
+				if (!in_array(ucfirst($arguments["year"]), array('Junior', 'Senior', 'Freshman', 'Sophomore'))){
+					$error_array = array(
+						"error" => "Invalid year",
+						"desc" => "Invalid year"
+					);
+					$this->modelNotSetError($error_array);
+					return false;
+				}
 			}
 
 			else // THIS WAS A REQUIRED PARAMETER
@@ -2044,6 +2051,16 @@
 				return false;
 
 			}
+
+			if(!$this->mainModel->id)
+			{
+				$this->modelNotSetError();
+				return false;
+			}
+
+			$arguments['users_id'] = $this->mainModel->id;
+
+			return $this->mainModel->delete_gpa($arguments);
 		}
 
 		/**
@@ -2064,24 +2081,14 @@
 				$arguments["test_score_id"] = (int)trim($this->delete('test_score_id'));
 			}
 
-			else // THIS WAS A REQUIRED PARAMETER
+			if(!$this->mainModel->id)
 			{
-				// Create Array for Error Data
-				$error_array = array(
-					"error" => "Required Parameter Missing",
-					"param_name" => "test_score_id",
-					"param_desc" => "The ID of the test score to delete"
-				);
-
-				// Set whether it is a fatal error
-				$is_fatal = true;
-
-				// Call method to throw an error
-				$this->addError($error_array,$is_fatal);
+				$this->modelNotSetError();
 				return false;
-
 			}
 
+			$arguments['users_id'] = $this->mainModel->id;
+			$this->mainModel->delete_tests($arguments);
 		}
 		
 	}

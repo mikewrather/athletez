@@ -28,16 +28,17 @@ class Model_Academics_Gpa extends ORM
 		(
 			'year'=>array(
 				array('not_empty'),
+				array('in_array', array(':value', array('Junior', 'Senior', 'Freshman', 'Sophomore'))),
 			),
-
+//
 			'users_id'=>array(
 				array('not_empty'),
 				array('users_id_exist')
 			),
-
+//
 			'gpa'=>array(
 				array('not_empty'),
-				array('numeric')
+				array('numeric'),
 			),
 		);
 	}
@@ -52,19 +53,26 @@ class Model_Academics_Gpa extends ORM
 
 	public function addGpa($args = array()){
 		extract($args);
-		if (isset($year)){
-			$this->year = $year;
-		}
 
-		if (isset($users_id)){
-			$this->users_id = $users_id;
-		}
-
-		if (isset($gpa)){
-			$this->gpa = $gpa;
-		}
 		try{
-			$this->save();
+			$gpa_model = ORM::factory("Academics_Gpa");
+			$gpa_model->gpa = $gpa_model;
+			$result = $gpa_model->where('users_id', '=', $users_id);
+			$result->where('year', '=', ucfirst($year));
+			$re = $result->find()->as_array();
+			if (empty($re)){
+				//add new row
+				$new_gpa_model = ORM::factory("Academics_Gpa");
+				$new_gpa_model->year = $year;
+				$new_gpa_model->users_id = $users_id;
+				$new_gpa_model->gpa = $gpa;
+				$new_gpa_model->save();
+				return $new_gpa_model;
+			}else{
+				$result->gpa = $gpa;
+				$result->update();
+				return $result;
+			}
 		}catch (ORM_Validation_Exception $e){
 			return $e;
 		}
@@ -73,23 +81,28 @@ class Model_Academics_Gpa extends ORM
 	public function updateGpa($args = array()){
 		extract($args);
 
-		if (isset($id)){
-			$this->id = $id;
-		}
+		$gpa_model = ORM::factory("Academics_Gpa");
+		$gpa_model->gpa = $gpa_model;
+		$result = $gpa_model->where('users_id', '=', $users_id);
+		$result->where('year', '=', ucfirst($year));
+		$re = $result->find()->as_array();
 
-		if (isset($year)){
-			$this->year = $year;
-		}
 
-		if (isset($users_id)){
-			$this->users_id = $users_id;
-		}
-
-		if (isset($gpa)){
-			$this->gpa = $gpa;
-		}
 		try{
-			$this->update();
+			$year = ucfirst($year);
+			if (empty($re['id'])){
+				//add new row
+				$new_gpa_model = ORM::factory("Academics_Gpa");
+				$new_gpa_model->year = $year;
+				$new_gpa_model->users_id = $users_id;
+				$new_gpa_model->gpa = $gpa;
+				$new_gpa_model->save();
+				return $new_gpa_model;
+			}else{
+				$result->gpa = $gpa;
+				$result->update();
+				return $result;
+			}
 		}catch (ORM_Validation_Exception $e){
 			return $e;
 		}
