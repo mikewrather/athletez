@@ -456,19 +456,42 @@
 			if($this->request->query('standardized') != "")
 			{
 				//convert standardized to a boolean
-				$arguments["standardized"] = (bool)$this->request->query('standardized');
+				$arguments["standardized"] = Util::convert_to_boolean($this->request->query('standardized'));
+				if ($arguments["standardized"] == null){
+					$error_array = array(
+						"error" => "True/false required",
+						"desc" => "Invalid test type value"
+					);
+					$this->modelNotSetError($error_array);
+				}
+			}else{
+				$arguments["standardized"] = 1;
 			}
-
-			// ap
-			// Return results for AP tests.  True by default.
 
 			if($this->request->query('ap') != "")
 			{
 				//convert ap to a boolean
-				$arguments["ap"] = (bool)$this->request->query('ap');
+				$arguments["ap"] = Util::convert_to_boolean($this->request->query('ap'));
+				if ($arguments["ap"] == null){
+					$error_array = array(
+						"error" => "True/false required",
+						"desc" => "Invalid test type value"
+					);
+					$this->modelNotSetError($error_array);
+				}
+			}else{
+				$arguments["ap"] = 1;
 			}
 
+			if(!$this->mainModel->id)
+			{
+				$this->modelNotSetError();
+				return false;
+			}
 
+			$arguments['users_id'] = $this->mainModel->id;
+			$test_model = ORM::factory("Academics_Tests");
+			return $tests = $test_model->getTestsByType($arguments);
 		}
 
 		############################################################################

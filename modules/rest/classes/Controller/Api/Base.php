@@ -353,7 +353,7 @@ class Controller_Api_Base extends AuthController
 		if($is_fatal)
 		{
 			$this->fatalErrorThrown = true;
-			$this->response->status($code);
+			//$this->response->status($code);
 		}
 	}
 
