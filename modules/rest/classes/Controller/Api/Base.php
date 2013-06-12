@@ -222,11 +222,19 @@ class Controller_Api_Base extends AuthController
 		// If the action doesn't exist, it's a 404
 		if (!method_exists($this, $action))
 		{
+
 			$action_no_verb = 'action_' . $this->request->action();
 			if (!method_exists($this, $action_no_verb))
 			{
-				$uriArr = array(':uri' => $this->request->uri());
-				throw HTTP_Exception::factory(404,'The requested URL :uri was not found on this server.',$uriArr)->request($this->request);
+				//throw HTTP_Exception::factory(404,'The requested URL :uri was not found on this server.',$uriArr)->request($this->request);
+				// Create Array for Error Data
+				$error_array = array(
+					"error" => $this->request->action(). " Method Does Not Exist for a ".$this->request->method()." Request. Please check the API documentation.",
+					"field" => false,
+				);
+
+				// Call method to throw an error
+				$this->addError($error_array,true,404);
 			}
 			else
 			{
@@ -353,7 +361,7 @@ class Controller_Api_Base extends AuthController
 		if($is_fatal)
 		{
 			$this->fatalErrorThrown = true;
-			//$this->response->status($code);
+			$this->response->status($code);
 		}
 	}
 
