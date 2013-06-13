@@ -650,11 +650,16 @@
 
 								return false;
 							}
+							else
+							{
+								$retArr["users_id"] = $user->id;
+							}
 						}
 						else
 						{
 							//relationship does not exist... add it
 							$this->user->addIdentity($retArr['id'],'facebook');
+							$retArr["users_id"] = $this->user->id;
 						}
 
 					}
@@ -673,6 +678,7 @@
 							{
 								//	this indicates success
 								//  facebook data will be returned at the end of this method
+								$retArr["users_id"] = $user->id;
 							}
 							elseif(get_class($result) == 'ORM_Validation_Exception')
 							{
@@ -685,7 +691,6 @@
 
 
 				}
-				$retArr["users_id"] = $this->mainModel->id;
 				return (object)$retArr;
 			}
 		}
