@@ -53,8 +53,9 @@ define(['facade','views/base','utils'], function (facade, BaseView, utils) {
         // bindings for adding and removing of models within the collection
         setupCollection: function () {
             var collection = this.options.collection || this.collection;
-
-            collection.on('add', this.add);
+	        console.log('this.options.collection', this.options.collection);
+	        console.log('this.collection', this.collection);
+	        collection.on('add', this.add);
             collection.on('remove', this.remove);
             if (!collection.length && !collection.request) {
                 collection.request = collection.fetch();

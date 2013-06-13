@@ -28,6 +28,9 @@ function(facade,  views,   utils,   CommentItemView,    CommentFormView) {
         _view: CommentItemView,
 
         initialize: function(options) {
+	        //this.limitResults(4);
+	        //console.log("options herebb",this.collection);
+	        //options = {collection: this.collection.first(3)};
             CollectionView.prototype.initialize.call(this, options);
             if (!this.collection) {
                 throw new Error("CommentListView expected options.collection.");
@@ -35,9 +38,16 @@ function(facade,  views,   utils,   CommentItemView,    CommentFormView) {
             _.bindAll(this);
             this.addSubscribers();
             this.setupFormView();
+
         },
 
-        // Child views...
+	    limitResults: function(qty){
+		    console.log("before this.collection.first1(qty);", this.collection.first(qty));
+		    this.collection =  this.collection.first(qty);
+		    console.log("after this.collection.first1(qty);", this.collection);
+	    },
+
+	    // Child views...
         childViews: {},
 
         // Event handlers...

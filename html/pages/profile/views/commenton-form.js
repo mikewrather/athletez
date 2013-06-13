@@ -43,8 +43,8 @@ function(require, commentFormTemplate,    ProfileCommentFormModel,        BaseCo
 	    },
 
 	    refreshComments: function(e) {
-		    this.collection.on('change', this.render, this);
-		    console.log("xxxxxx", this.render);
+		    //this.collection.on('change', this.render, this);
+		    console.log("yyyy", this.render);
 		    this.$("#new-comment").val("");
 		},
         
@@ -79,14 +79,13 @@ function(require, commentFormTemplate,    ProfileCommentFormModel,        BaseCo
                     } else {
                         $('.global-alert').addClass('alert-error').html(desc).stop().fadeIn();
                     }
-	                console.log('this = ', this);
-	                this.model = model;
+	                //set the value to fit the page variable.
+		            payload.poster = payload.name;
+		            payload.poster_picture = payload.user_picture;
+		            payload.poster_email = payload.email;
+	                console.log('thiszz = ', model);
+	                //this.model = model;
 	                self.collection.push(model);
-	                //this.model.set('payload', payload);
-	                //this.model.set('exec_data', exec_data);
-	                //this.model.set('desc', desc);
-	                //this.collection.add(model);
-
 	                self.refreshComments();
 	                //Channel('profilecommentonform:fetch').publish();
                 };
@@ -109,19 +108,6 @@ function(require, commentFormTemplate,    ProfileCommentFormModel,        BaseCo
 		    BaseView.prototype.render.call(this);
 		    this.input = this.$("#new-comment");
 		    console.log("run here now", this.el);
-		    //this.el.render();
-			/*
-		    var payload = this.model.get('payload');
-		    console.log("el value", this.$el);
-		    var self = this;
-		    if (payload) {
-			    var user_photo = payload.user_picture;
-			    var user_email = payload.email;
-			    if (!user_photo && user_email) {
-				    self.$('.user-photo img').attr("src","http://www.gravatar.com/avatar/" + MD5(user_email) + "&s=29");
-			    }
-		    }
-			 */
 		    return this;
 	    }
         
