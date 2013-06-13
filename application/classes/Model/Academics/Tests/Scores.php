@@ -62,6 +62,7 @@ class Model_Academics_Tests_Scores extends ORM
 		}
 		try{
 			$this->save();
+			return $this;
 		}catch (ORM_Validation_Exception $e){
 			return $e;
 		}
@@ -70,23 +71,25 @@ class Model_Academics_Tests_Scores extends ORM
 	public function updateTestScore($args = array()){
 		extract($args);
 
-		if (isset($id)){
-			$this->id = $id;
-		}
+		$score_model = ORM::factory("Academics_Tests_Scores");
+		$result = $score_model->where('academics_tests_topics_id', '=', $academics_tests_topics_id);
+		$result->where('users_id', '=', $users_id);
+		$re = $result->find()->as_array();
 
-		if (isset($academics_tests_topics_id)){
-			$this->academics_tests_topics_id = $academics_tests_topics_id;
-		}
-
-		if (isset($users_id)){
-			$this->users_id = $users_id;
-		}
-
-		if (isset($score)){
-			$this->score = $score;
-		}
 		try{
-			$this->update();
+			if (empty($re['id'])){
+				//do create new row action
+				$new_score_model = ORM::factory("Academics_Tests_Scores");
+				$new_score_model->academics_tests_topics_id = $academics_tests_topics_id;
+				$new_score_model->users_id = $users_id;
+				$new_score_model->score = $score;
+				$new_score_model->save();
+				return $new_score_model;
+			}else{
+				$result->score = $score;
+				$result->update();
+				return $result;
+			}
 		}catch (ORM_Validation_Exception $e){
 			return $e;
 		}
@@ -104,8 +107,8 @@ class Model_Academics_Tests_Scores extends ORM
 	public function name()
 	{
 		if(!$this->loaded()) return "";
-		$topic = $this->topic->find();
-		$user = $this->user->find();
+		$topic = $this->topic;
+		$user = $this->user;
 		$score = number_format($this->score,2);
 
 		return $user->name().", ".$topic->name().": ".$score;

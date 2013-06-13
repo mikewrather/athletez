@@ -1205,4 +1205,22 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 			);
 		}
 	}
+
+	public function delete_tests($args){
+		$tests_scores = DB::delete('academics_tests_scores')
+			->where('id', '=', $args['test_score_id'])
+			->where('users_id', '=', $args['users_id'])
+			->execute();
+
+		return $tests_scores;
+	}
+
+	public function delete_gpa($args){
+		$gpa = DB::delete('academics_gpa')
+			->where('year', '=', $args['year'])
+			->where('users_id', '=', $args['users_id'])
+			->execute();
+
+		return $gpa;
+	}
 }

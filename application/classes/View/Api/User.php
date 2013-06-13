@@ -232,12 +232,13 @@
 		 */
 		public function get_commentson()
 		{
-			$retArr = array();
+			$retArr = null;
 
 			$comments = $this->obj->find_all();
+
 			foreach($comments as $comment)
 			{
-				$retArr[$comment->id] = $comment->getBasics();
+				$retArr[] = $comment->getBasics();
 				$retArr[$comment->id]['poster'] = $retArr[$comment->id]['user']['name'];
 				$retArr[$comment->id]['poster_picture'] = $retArr[$comment->id]['user']['user_picture'];
                 $retArr[$comment->id]['poster_email']    = $retArr[$comment->id]['user']['email'];
@@ -643,6 +644,65 @@
 			{
 				$retArr[] = $obj->getBasics();
 			}
+
+			return $retArr;
+		}
+
+		/**
+		 * post_addgpa() Add a GPA for a given year
+		 *
+		 * @retun array
+		 */
+		public function post_addgpa()
+		{
+			$retArr = $this->obj->getBasics();
+			return $retArr;
+		}
+
+		/**
+		 * put_testscore() Update a given test score for a user.
+		 *
+		 * @retun array
+		 */
+		public function put_testscore()
+		{
+			$retArr = $this->obj->getBasics();
+
+			return $retArr;
+		}
+
+		/**
+		 * put_gpa() Update the Grade Point Average for a user for a given year.
+		 *
+		 * @retun array
+		 */
+		public function put_gpa()
+		{
+			$retArr = $this->obj->getBasics();
+
+			return $retArr;
+		}
+
+		/**
+		 * delete_testscore() Delete a Test Score for a user.
+		 *
+		 * @retun array
+		 */
+		public function delete_testscore()
+		{
+			$retArr = $this->obj->getBasics();
+
+			return $retArr;
+		}
+
+		/**
+		 * delete_gpa() Delete a GPA for a given user / year
+		 *
+		 * @retun array
+		 */
+		public function delete_gpa()
+		{
+			$retArr = $this->obj->getBasics();
 
 			return $retArr;
 		}

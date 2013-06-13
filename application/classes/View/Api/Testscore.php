@@ -18,29 +18,4 @@
 			return $retArr;
 		}
 
-		/**
-		 * put_testscore() Update a given test score for a user.
-		 *
-		 * @retun array
-		 */
-		public function put_testscore()
-		{
-			$retArr = $this->obj->getBasics();
-
-			return $retArr;
-		}
-
-		/**
-		 * delete_testscore() Delete a Test Score for a user.
-		 *
-		 * @retun array
-		 */
-		public function delete_testscore()
-		{
-			$retArr = $this->obj->getBasics();
-
-			return $retArr;
-		}
-
-	
 	}
