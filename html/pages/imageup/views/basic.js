@@ -16,7 +16,9 @@ function(require, imageBasicTemplate) {
         facade = require('facade'),
         views = require('views'),
         SectionView = views.SectionView;
-        
+
+	console.log("SectionView: ",SectionView);
+
 
     ImageBasicView = SectionView.extend({
 
@@ -35,6 +37,8 @@ function(require, imageBasicTemplate) {
         }
                 
     });
+
+	console.log(ImageBasicView);
 
     return ImageBasicView;
 });

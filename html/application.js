@@ -3,7 +3,7 @@
 // Requires define
 // Return {Object} App
 
-define( ["facade", "utils", "collections", "chrome", "controller", "profile", "imagesup", "game", "team", "registration"], 
+define( ["facade", "utils", "collections", "chrome", "controller", "profile", "imageup", "game", "team", "registration"],
 function (facade, utils, collections, chromeBootstrap, Controller, ProfileController, ImageController, GameController, TeamController, RegistrationController) {
 
     var App,

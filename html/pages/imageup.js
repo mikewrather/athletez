@@ -11,12 +11,9 @@ define([
     "models",
     "views",
     "utils",
-
     "imageup/models/basic",
     "imageup/collections/basics",
-
-    "imageup/views/basic",
-    
+    "imageup/views/basic"
     ], function (require, pageLayoutTemplate) {
 
     var ImageController,
@@ -27,10 +24,8 @@ define([
         utils = require("utils"),
         
         ImageBasicModel = require("imageup/models/basic"),
-        ImageBasicList = require("imageup/collections/basics");
-        
+        ImageBasicList = require("imageup/collections/basics"),
         ImageBasicView = require("imageup/views/basic"),
-        
         
         LayoutView = views.LayoutView,
         $ = facade.$,
@@ -63,6 +58,9 @@ define([
         
         showuploader: function () {
             //this.basics = new ImageBasicModel();
+	        debug.log(ImageBasicView);
+	        debug.log(ImageBasicModel);
+
             addBasicView = new ImageBasicView({
                 name: "Add Media",
                 destination: "body"

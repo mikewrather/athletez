@@ -3,7 +3,7 @@
 // Requires define
 // Return {GameBasicsModel} model constructor object
 
-define( ["facade","media/models/image"], function (facade, "utils") {
+define( ["facade","media/models/image"], function (facade,MediaImageModel) {
 
     var ImageBasicsModel,
         _ = facade._;
