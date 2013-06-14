@@ -21,39 +21,24 @@ $dbconfig = array
 			'hostname'   => 'localhost',
 			'database'   => 'athletesup_main',
 			'username'   => 'root',
-			'password'   => '',//R370ad3d
+			'password'   => '', //PASSWORD SET BELOW
 			'persistent' => FALSE,
 		),
 		'table_prefix' => '',
 		'charset'      => 'utf8',
 		'caching'      => FALSE,
 	),
-	'scraping' => array
-	(
-		'type'       => 'MySQL',
-		'connection' => array(
-			'hostname'   => 'localhost',
-			'database'   => 'sportsdata',
-			'username'   => 'root',
-			'password'   => 'R370ad3d',
-			'persistent' => FALSE,
-		),
-		'table_prefix' => '',
-		'charset'      => 'utf8',
-		'caching'      => FALSE,
-	),
-
 );
 
 //SET UP CASE FOR ENV
 if(Kohana::$environment == Kohana::LOCALHOST)
 {
-	$dbconfig['default']['connection']['password'] = '  qmi!#j';
-	$dbconfig['scraping']['connection']['password'] = '  qmi!#j';
+	$dbconfig['default']['connection']['password'] = 'LOCALHOST PASSWORD';
+	$dbconfig['scraping']['connection']['password'] = 'LOCALHOST PASSWORD';
 }
 elseif(Kohana::$environment == Kohana::PRODUCTION)
 {
-	$dbconfig['default']['connection']['password'] = 'R370ad3d';
+	$dbconfig['default']['connection']['password'] = 'PRODUCTION PASSWORD';
 }
 
 return $dbconfig;
