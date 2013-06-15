@@ -157,6 +157,7 @@ define(['facade','views/base','utils'], function (facade, BaseView, utils) {
         // **Method:** `render`  
         // Calls the strategy for rendering the layout: deferred or ready
         render: function (callback) {
+        	
             var options = this.options;
 
             if (options.displayWhen) {

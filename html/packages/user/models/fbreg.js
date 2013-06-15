@@ -22,8 +22,8 @@ define( ["facade", "models/base"], function (facade, BaseModel) {
             "exec_data": {
                 "exec_time": 0,
                 "exec_error": false
-            }
-
+            },
+            "id" : 1
         })
         
     });

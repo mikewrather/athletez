@@ -4,10 +4,10 @@
 // Requires `define`, `require`
 // Returns {RegistrationFacebookView} constructor
 
-define(['require', 'text!registration/templates/register_facebook.html', 'facade', 'views', 'utils', 'jquery.pstrength', 'registration/collections/fbimages', 'registration/views/fbimage-list'], function(require, registrationFacebookTemplate) {
+define(['require', 'text!registration/templates/register_facebook.html', 'facade', 'views', 'utils', 'jquery.pstrength', 'registration/collections/fbimages', 'registration/views/fbimage-list',], function(require, registrationFacebookTemplate) {
 
+	
 	var RegistrationFacebookView, facade = require('facade'), views = require('views'), utils = require('utils'), Channel = utils.lib.Channel, SectionView = views.SectionView, RegistrationFBImageList = require('registration/collections/fbimages'), RegistrationFBImageView = require('registration/views/fbimage-list');
-
 	RegistrationFacebookView = SectionView.extend({
 
 		id : 'main-content',
@@ -164,7 +164,8 @@ define(['require', 'text!registration/templates/register_facebook.html', 'facade
 				alert('Please agree to the Terms of Service');
 				return;
 			}
-			this.model.set('payload', payload);
+			this.model.attributes.id = false;
+			this.model.set({'payload': payload, id : 1});
 			console.log(this.model.toJSON());
 			console.log("Facebook Registration url changed from user/fbreg to user/basics");
 			this.model.url = function() {
@@ -172,6 +173,7 @@ define(['require', 'text!registration/templates/register_facebook.html', 'facade
 					return testpath + '/user/basics';
 				return '/api/user/basics';
 			}
+			console.log(this.model);
 			console.log(this.model.url());
 			this.model.save();
 			Channel('registration-select-org').publish();
