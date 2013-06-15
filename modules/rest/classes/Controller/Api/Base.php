@@ -352,7 +352,7 @@ class Controller_Api_Base extends AuthController
 		if(!isset($error_array['field']))
 		{
 			$error_array['field'] = $error_array['param_name'];
-			$error_array['error'] = $error_array['param_desc'];
+			$error_array['error'] = isset($error_array['error']) ? $error_array['error'] : $error_array['param_desc'];
 			unset($error_array['param_name']);
 			unset($error_array['param_desc']);
 		}

@@ -3,8 +3,8 @@
 // Requires define
 // Return {Object} App
 
-define( ["facade", "utils", "collections", "chrome", "controller", "profile", "game", "team", "registration"], 
-function (facade, utils, collections, chromeBootstrap, Controller, ProfileController, GameController, TeamController, RegistrationController) {
+define( ["facade", "utils", "collections", "chrome", "controller", "profile", "imageup", "game", "team", "registration"],
+function (facade, utils, collections, chromeBootstrap, Controller, ProfileController, ImageController, GameController, TeamController, RegistrationController) {
 
     var App,
         ApplicationStates = collections.ApplicationStates,
@@ -25,6 +25,8 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
             'profile': 'showProfile',
             'profile/': 'showProfile',
             'profile/:userid': 'showProfile',
+
+			'imageup': 'imageUp',
             
             'game': 'showGame',
             'game/': 'showGame',
@@ -36,7 +38,7 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
             
             'registration': 'showRegistration',
             'registration/': 'showRegistration',
-            'registration/:action': 'showRegistration'
+            'registration/:action': 'showRegistration' 
         },
 
         initialize: function (options) {
@@ -51,7 +53,7 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
         
         initApp: function (action) {
             //this.showProfile();
-            //this.showGame();
+           	//this.showGame();
             //this.showTeam();
             this.showRegistration();
         },
@@ -71,6 +73,21 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
             
             Channel('app-inited').subscribe(initProfile);
         },
+		imageUp: function () {
+			console.log("router");
+			this.loadStyles();
+            
+            $('body').empty();
+            new ImageController();
+            function initImage(id) {
+				console.log("inside router");
+                var imageController = new ImageController({
+                    "route": ""
+                });
+            }
+            
+            Channel('app-inited').subscribe(initImage);
+		},
         
         showGame: function () {
             this.loadStyles();
@@ -183,7 +200,6 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
                 }
             }
         }
-
     });
 
     return App;

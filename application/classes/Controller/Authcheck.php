@@ -60,9 +60,6 @@ class Controller_Authcheck extends AuthController
 				"link"=>"/team"
 			);
 		}
-
 		echo json_encode($retArr);
-
 	}
-	
 }

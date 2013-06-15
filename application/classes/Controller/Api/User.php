@@ -641,6 +641,7 @@
 								//Error message array
 								$error_array = array(
 									"error" => "This Facebook account is already linked up with a different AthletesUp account than the one you're logged in to now.  Try logging out and logging back in using facebook."
+
 								);
 
 								// Set whether it is a fatal error

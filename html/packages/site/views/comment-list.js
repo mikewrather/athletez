@@ -41,12 +41,6 @@ function(facade,  views,   utils,   CommentItemView,    CommentFormView) {
 
         },
 
-	    limitResults: function(qty){
-		    console.log("before this.collection.first1(qty);", this.collection.first(qty));
-		    this.collection =  this.collection.first(qty);
-		    console.log("after this.collection.first1(qty);", this.collection);
-	    },
-
 	    // Child views...
         childViews: {},
 
