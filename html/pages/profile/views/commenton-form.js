@@ -87,20 +87,9 @@ function(require, commentFormTemplate,    ProfileCommentFormModel,        BaseCo
 	                //this.model = model;
 	                self.collection.push(model);
 	                self.refreshComments();
-	                //Channel('profilecommentonform:fetch').publish();
+	                //Channel('profilecommentonlist:refresh').publish();
                 };
-
 	            saveInfo.save();
-
-                //this.model.set('payload', payload);
-                //this.model.save();
-/*
-                var new_comment = this.model.clone();
-                new_comment.id = Math.ceil(Math.random() * 100000);
-                this.collection.push(new_comment);
-
- */
-
             }
         },
 
@@ -110,7 +99,6 @@ function(require, commentFormTemplate,    ProfileCommentFormModel,        BaseCo
 		    console.log("run here now", this.el);
 		    return this;
 	    }
-        
     });
 
     return CommentOnFormView;

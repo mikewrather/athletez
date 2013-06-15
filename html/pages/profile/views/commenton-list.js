@@ -12,24 +12,28 @@ function(facade,   utils,   BaseCommentListView,       ProfileCommentFormView, S
         name: "Commenton List",
 	    initialize: function (options) {
 		    _.bindAll(this);
-		    //options = {collection: this.collection.first(3)};
+
+		    this.limitResults();
+		    this.options.collection = this.collection;
 		    BaseCommentListView.prototype.initialize.call(this, options);
-		    var ab  = this.collection.first(3);
-		    var a = new SiteCommentList();
-		    a.push(ab[0]);
-		    a.push(ab[1]);
-		    this.collection = a;
-		    console.log("init here", this.collection);
-		    //this.collection.deferred.resolve(response);
-	    },
+		},
+
+		limitResults: function () {
+			var origin_collection = this.collection;
+			var subset = origin_collection.last(5);
+			var new_collectoin = new SiteCommentList();
+			_.each(subset, function(element, index){
+				new_collectoin.push(element);
+			});
+			this.collection.reset();
+			this.collection = new_collectoin;
+		},
 
         setupFormView: function () {
             var listView = this,
 	            formView = new ProfileCommentFormView({collection: this.collection}),
                 renderAddView = this.addChildView(formView);
-//	        console.log("aabbcc = ", this.collection);
-//	        listView.setOptions({collection: this.collection.first(3)});
-//	        console.log("abccceee = ", this.collection);
+
 	        this.childViews.form = formView;
             this.callbacks.add(function() {
                 renderAddView();
@@ -40,11 +44,27 @@ function(facade,   utils,   BaseCommentListView,       ProfileCommentFormView, S
 	            formView.render();
             }
 
-            Channel('profilecommentonform:fetch').subscribe(callback);
+	        function callcommentslist(){
+		        console.log("i didyzzz");
+		        var collection = listView.collection;
+		        console.log("previous collection1", collection);
+
+		        var model = collection.at(collection.length - 3);
+		        console.log("new model", model);
+		        collection.remove(model, {});
+		        console.log("after listView", listView);
+		        listView.collection = collection;
+
+		        console.log("before render executed");
+		        var a = listView.toHTML();
+		        listView.$el.append(a);
+		        listView.render();
+		        console.log("render executed");
+		    }
+
+	        Channel('profilecommentonform:fetch').subscribe(callback);
+            //Channel('profilecommentonlist:refresh').subscribe(callcommentslist);
         }
-
-
-
     });
 
     return ProfileCommentOnListView;
