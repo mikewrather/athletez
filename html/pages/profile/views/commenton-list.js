@@ -42,24 +42,24 @@ function(facade,   utils,   BaseCommentListView,       ProfileCommentFormView, S
             function callback (data) {
                 formView.model = data;
 	            formView.render();
-            }
+	        }
 
 	        function callcommentslist(){
-		        console.log("i didyzzz");
-		        var collection = listView.collection;
-		        console.log("previous collection1", collection);
-
-		        var model = collection.at(collection.length - 3);
-		        console.log("new model", model);
-		        collection.remove(model, {});
-		        console.log("after listView", listView);
-		        listView.collection = collection;
-
-		        console.log("before render executed");
-		        var a = listView.toHTML();
-		        listView.$el.append(a);
-		        listView.render();
-		        console.log("render executed");
+//		        console.log("i didyzzz");
+//		        var collection = listView.collection;
+//		        console.log("previous collection1", collection);
+//
+//		        var model = collection.at(collection.length - 3);
+//		        console.log("new model", model);
+//		        collection.remove(model, {});
+//		        console.log("after listView", listView);
+//		        listView.collection = collection;
+//
+//		        console.log("before render executed");
+//		        var a = listView.toHTML();
+//		        listView.$el.append(a);
+//		        listView.render();
+//		        console.log("render executed");
 		    }
 
 	        Channel('profilecommentonform:fetch').subscribe(callback);
