@@ -165,13 +165,14 @@ define(['require', 'text!registration/templates/register_facebook.html', 'facade
 				return;
 			}
 			this.model.attributes.id = false;
+			//payload.id1 = 426047;
 			this.model.set({'payload': payload, id : 1});
 			console.log(this.model.toJSON());
 			console.log("Facebook Registration url changed from user/fbreg to user/basics");
 			this.model.url = function() {
 				if (testpath)
 					return testpath + '/user/basics';
-				return '/api/user/basics';
+				return '/api/user/basics/' + payload['users_id'];
 			}
 			console.log(this.model);
 			console.log(this.model.url());

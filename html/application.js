@@ -3,8 +3,8 @@
 // Requires define
 // Return {Object} App
 
-define( ["facade", "utils", "collections", "chrome", "controller", "profile", "imageup", "game", "team", "registration"],
-function (facade, utils, collections, chromeBootstrap, Controller, ProfileController, ImageController, GameController, TeamController, RegistrationController) {
+define( ["facade", "utils", "collections", "chrome", "controller", "profile", "imageup", "game", "team", "registration","profilesetting"],
+function (facade, utils, collections, chromeBootstrap, Controller, ProfileController, ImageController, GameController, TeamController, RegistrationController,ProfileSetting) {
 
     var App,
         ApplicationStates = collections.ApplicationStates,
@@ -25,6 +25,10 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
             'profile': 'showProfile',
             'profile/': 'showProfile',
             'profile/:userid': 'showProfile',
+
+ 			// 'profile': 'showProfileSetting',
+            // 'profile/': 'showProfileSetting',
+            // 'profile/:userid': 'showProfileSetting',
 
 			'imageup': 'imageUp',
             
@@ -59,6 +63,7 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
         },
         
         showProfile: function (userid) {
+        	alert("showProfile");
             this.loadStyles();
             
             $('body').empty();
@@ -73,6 +78,23 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
             
             Channel('app-inited').subscribe(initProfile);
         },
+        showProfileSetting: function (userid) {
+        	console.log("showProfile setting");
+            this.loadStyles();
+            
+            $('body').empty();
+            chromeBootstrap();
+
+            function initProfileSetting(id) {
+                var profileSetting = new ProfileSetting({
+                	//TODO: REMOVE HARDCODED ID
+                	id : 426004
+                });
+            }
+            
+            Channel('app-inited').subscribe(initProfileSetting);
+        },
+        
 		imageUp: function () {
 			console.log("router");
 			this.loadStyles();
@@ -187,6 +209,8 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
         cssLoaded: [],
 
         loadCss: function (arr) {
+        	console.log("Load CSS");
+        	console.log(arr);
             var i, cssUrl;
 
             if (!_.isArray(arr)) {

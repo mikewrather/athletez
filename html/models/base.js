@@ -38,14 +38,14 @@ define(['facade', 'utils'], function(facade, utils) {
 
 		showSuccess : function(model, response) {
 			debug.log("ShowSuccess called in base.js");
-			this.hideMessages();
+			model.hideMessages();
 
 			var exec_data = model.get('exec_data');
 			var desc = model.get('desc');
 			if (!exec_data['exec_error']) {
-				//$('.global-alert').addClass('alert-info').html(desc).stop().fadeIn();
+				$('.global-alert').addClass('alert-info').html(desc).stop().fadeIn();
 			} else {
-				//$('.global-alert').addClass('alert-error').html(desc).stop().fadeIn();
+				$('.global-alert').addClass('alert-error').html(desc).stop().fadeIn();
 			}
 			var errorsArr = exec_data['error_array'];
 			if (errorsArr) {
@@ -171,6 +171,7 @@ define(['facade', 'utils'], function(facade, utils) {
 
 		// **Method:** `fetchSuccess` - resolve the deferred here in success
 		fetchSuccess : function(model, response) {
+			var self = this;
 			console.log("fetch success? ", model);
 
 			if (model.deferred) {
@@ -180,6 +181,7 @@ define(['facade', 'utils'], function(facade, utils) {
 				model.deferred.resolve();
 			}
 			debug.log(response);
+			
 			model.hideMessages();
 		},
 

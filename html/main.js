@@ -69,7 +69,7 @@ require.config({
         'game'         : '/pages/game',
         'team'         : '/pages/team',
         'registration' : '/pages/registration',
-        
+        'profilesetting' : '/pages/profilesetting',
         // Application - bootstrap for frontend app 
         'application'  : '/application'
 
