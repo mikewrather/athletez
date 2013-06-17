@@ -49,19 +49,19 @@ function(require, registrationSelectOrgTemplate) {
         
         findMyClub: function(event) {
             event.preventDefault();
-            
-            if (this.step != 1)
+
+	        if (this.step != 1)
                 return;
                 
             var self = this;
-            if (!this.myclub) {
-                this.myclub = new RegistrationMyClubModel();
+	        if (!this.myclub) {
+	            this.myclub = new RegistrationMyClubModel();
                 this.myclub.fetch();
                 $.when(this.myclub.request).done(function() {
                     self.setupFindMyClub();
                 });
             } else {
-                this.myclub.fetch();
+	            this.myclub.fetch();
                 this.findMyClubView.render();
                 $('#' + this.findMyClubView.id).dialog({
                     width: '80%',
