@@ -140,8 +140,12 @@ function(require, findMyClubTemplate) {
         
         keyupSport: function(event) {
             var self = this;
-            
-            var sport_name = this.$('#sports_id').val();
+            var user_model = self.model;
+	        var gender = 'all';
+	        if (user_model.get("payload")['gender']){
+		        gender = user_model.get("payload")['gender'];
+	        }
+			var sport_name = this.$('#sports_id').val();
             var sportArr = [];
             
             if (sport_name != '') {
@@ -149,7 +153,7 @@ function(require, findMyClubTemplate) {
                 sportList.url = function() {
                     if (testpath)
                         return testpath + '/sport_search';
-                    return '/api/sport/search/?sport_name=' + sport_name;
+                    return '/api/sport/search/?sport_name=' + sport_name + '&gender=' + gender;
                 }
                 sportList.fetch();
                 $.when(sportList.request).done(function() {
