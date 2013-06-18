@@ -67,7 +67,7 @@ function(require, profileHeaderTemplate) {
             var self = this;
            // self.render();
             
-            var markup = Mustache.to_html(self.template, this.basicInfoModel.toJSON().payload);
+            var markup = Mustache.to_html(self.template, this.basicInfoModel.toJSON());
             console.log(this.basicInfoModel.toJSON());
             console.log(markup);
             $('#section-basics-prof-setting').html(markup);
