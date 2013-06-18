@@ -26,9 +26,9 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
             'profile/': 'showProfile',
             'profile/:userid': 'showProfile',
 
- 			// 'profile': 'showProfileSetting',
-            // 'profile/': 'showProfileSetting',
-            // 'profile/:userid': 'showProfileSetting',
+ 			 'usersettings': 'showProfileSetting',
+             'usersettings/': 'showProfileSetting',
+         /*    'usersettings/:userid': 'showProfileSetting', This is not necessary because we will only be seeing settings for currently logged in user*/
 
 			'imageup': 'imageUp',
             

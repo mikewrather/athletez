@@ -94,7 +94,10 @@ function(require, registrationSelectTypeTemplate) {
         
         registerWithEmail: function(event) {
             event.preventDefault();
+
             Channel('registration-with-email').publish();
+
+
         }
                 
     });

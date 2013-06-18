@@ -24,9 +24,8 @@ function(require, findMyClubTemplate) {
         _ = facade._,
         $ = facade.$,
         Channel = utils.lib.Channel;
-		SectionView = views.SectionView,
 
-    RegistrationFindMyClubView = SectionView.extend({
+    RegistrationFindMyClubView = BaseView.extend({
 
         id: "find-my-club",
         
@@ -63,24 +62,15 @@ function(require, findMyClubTemplate) {
         },
         
         initialize: function (options) {
-	        if (!this.model) {
-		        throw new Error("RegistrationEmailView expected options.model.");
-	        }
-	        SectionView.prototype.initialize.call(this, options);
-            //jeffrey comment it. BaseView.prototype.initialize.call(this, options);
+            BaseView.prototype.initialize.call(this, options);            
         },
-	    /*Jeffrey new one*/
-	    render: function (domInsertion, dataDecorator, partials) {
-		    SectionView.prototype.render.call(this, domInsertion, dataDecorator, partials);
-		    this.$('#password').pstrength();
-	    },
-	    /* jeffrey,old one
+        
         render: function () {
             var self = this;
-
-            BaseView.prototype.render.call(this);
+            
+            BaseView.prototype.render.call(this);            
         },
-	     */
+        
         closeView: function(event) {
             event.preventDefault();
             Channel('registration-close-clubview').publish();
@@ -150,8 +140,12 @@ function(require, findMyClubTemplate) {
         
         keyupSport: function(event) {
             var self = this;
-            
-            var sport_name = this.$('#sports_id').val();
+            var user_model = self.model;
+	        var gender = 'all';
+	        if (user_model.get("payload")['gender']){
+		        gender = user_model.get("payload")['gender'];
+	        }
+			var sport_name = this.$('#sports_id').val();
             var sportArr = [];
             
             if (sport_name != '') {
@@ -159,7 +153,7 @@ function(require, findMyClubTemplate) {
                 sportList.url = function() {
                     if (testpath)
                         return testpath + '/sport_search';
-                    return '/api/sport/search/?sport_name=' + sport_name;
+                    return '/api/sport/search/?sport_name=' + sport_name + '&gender=' + gender;
                 }
                 sportList.fetch();
                 $.when(sportList.request).done(function() {
