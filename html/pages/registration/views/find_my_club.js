@@ -42,8 +42,8 @@ function(require, findMyClubTemplate) {
             "keyup #states_id": "keyupState",
             "keyup #sports_id": "keyupSport",
             "keyup #orgs_id": "keyupClub",
-            "change #states_id": "changeState",
-            "change #sports_id": "changeSport",
+            "blur #states_id": "changeState",
+            "blur #sports_id": "changeSport",
             "change #orgs_id": "changeClub"
         },
         
@@ -129,11 +129,13 @@ function(require, findMyClubTemplate) {
         changeState: function(event) {
             var state_name = this.$('#states_id').val();
             var self = this;
-            
             self.states_id = '';
             self.states.forEach(function(value, index) {
-                if (value['name'] == state_name)
-                    self.states_id = value['id'];
+
+                if (value['name'] == state_name){
+	                self.states_id = value['id'];
+                }
+
             });
             this.keyupClub();            
         },
@@ -179,11 +181,11 @@ function(require, findMyClubTemplate) {
         changeSport: function(event) {
             var sport_name = this.$('#sports_id').val();
             var self = this;
-            
             self.sports_id = '';
             self.sports.forEach(function(value, index) {
-                if (value['name'] == sport_name)
-                    self.sports_id = value['id'];
+                if (value['sport_name'] == sport_name){
+                    self.sports_id = value['sport_id'];
+                }
             });
             this.keyupClub();
         },
@@ -199,7 +201,7 @@ function(require, findMyClubTemplate) {
                 clubList.url = function() {
                     if (testpath)
                         return testpath + '/club_search';
-                    return '/api/org/search/?sports_club=1&states_id=' + self.states_id + '&sports_id' + self.sports_id;
+                    return '/api/org/search/?sports_club=1&states_id=' + self.states_id + '&sports_id=' + self.sports_id + '&org_name=' + club_name;
                 }
                 clubList.fetch();
                 $.when(clubList.request).done(function() {

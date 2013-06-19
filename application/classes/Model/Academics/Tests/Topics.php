@@ -40,7 +40,6 @@ class Model_Academics_Tests_Topics extends ORM
 	}
 
 	public function getBasics(){
-		//$test_obj = $this->test->getBasics();
 		return array(
 			'id' =>$this->id,
 			'academics_tests_id' => $this->academics_tests_id,
