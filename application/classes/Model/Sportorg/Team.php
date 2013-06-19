@@ -240,6 +240,7 @@ class Model_Sportorg_Team extends ORM
 		$title .= " ".$this->getSport()->name;
 		$title .= " ".$this->season->name;
 		$title .= " ".$this->year;
+		$title .= $this->unique_ident=='' ? '' : ' '.$this->unique_ident;
 		return $title;
 	}
 

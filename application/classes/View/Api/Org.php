@@ -127,13 +127,38 @@
 		 */
 		public function get_seasons()
 		{
+			return $this->get_seasonteams();
 			$retArr = null;
 
 			// Scaffolding Code For Array:
-			$objs = $this->obj->find_all();
+			$objs = $this->obj->execute();
+			//print_r($objs);
+
 			foreach($objs as $obj)
 			{
-				$retArr[] = $obj->getBasics();
+				$season = ORM::factory('Sportorg_Seasons_Base',$obj['season_id']);
+				$retArr[] = $season->getBasics();
+			}
+
+			return $retArr;
+		}
+
+		/**
+		 * get_seasons() List of all seasons this organization plays
+		 *
+		 * @retun array
+		 */
+		public function get_seasonteams()
+		{
+			// Scaffolding Code For Array:
+			$objs = $this->obj->execute();
+		//	print_r($objs);
+			foreach($objs as $obj)
+			{
+		//		print_r($obj);
+				$team = ORM::factory('Sportorg_Team',$obj['team_id']);
+
+				$retArr[] = $team->getBasics();
 			}
 
 			return $retArr;

@@ -8,8 +8,9 @@ define([
         'views',
         'utils', 
         'text!team/templates/complevel-item.html',
-        'text!team/templates/season-select.html',
+        'text!team/templates/seasonteam-select.html',
         'team/collections/seasons',
+		'team/collections/seasonteams',
         'team/views/season-list'
         ], 
 function (
@@ -27,6 +28,7 @@ function (
       Channel = utils.lib.Channel,
       SeasonListView = require('team/views/season-list'),
       SeasonList = require('team/collections/seasons');
+	  SeasonTeamList = require('team/collections/seasonteams');
 
       TeamComplevelItemView = BaseView.extend({
 
@@ -59,7 +61,8 @@ function (
         
         initList: function() {
             var self = this;
-            this.seasons = new SeasonList();
+        //  this.seasons = new SeasonList();
+	        this.seasons = new SeasonTeamList();
             this.seasons.id = this.id;
             this.seasons.sport_id = this.model.collection.sport_id;
             this.seasons.complevel_id = this.model.get('payload')['complevel_id'];
