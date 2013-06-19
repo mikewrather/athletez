@@ -660,6 +660,17 @@
 		}
 
 		/**
+		 * post_gpa() Add a GPA for a given year
+		 * It is an alias for addgpa
+		 *
+		 * @retun array
+		 */
+		public function post_gpa()
+		{
+			return $this->post_addgpa();
+		}
+
+		/**
 		 * put_testscore() Update a given test score for a user.
 		 *
 		 * @retun array

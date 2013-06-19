@@ -594,6 +594,15 @@
 		}
 
 		/**
+		 * This is an alias for post_addgpa()
+		 * @return bool
+		 */
+		public function action_post_gpa()
+		{
+			return $this->action_post_addgpa();
+		}
+
+		/**
 		 * @return bool|object
 		 */
 		public function action_post_fbreg()
