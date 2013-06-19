@@ -63,6 +63,35 @@
 			$this->payloadDesc = "Get All Academic Tests";
 			$arguments = array();
 
+			if($this->request->query('standardized') != "")
+			{
+				//convert standardized to a boolean
+				$arguments["standardized"] = Util::convert_to_boolean($this->request->query('standardized'));
+				if ($arguments["standardized"] === null){
+					$error_array = array(
+						"error" => "True/false required",
+						"desc" => "Invalid test type value"
+					);
+					$this->modelNotSetError($error_array);
+				}
+			}else{
+				$arguments["standardized"] = 1;
+			}
+
+			if($this->request->query('ap') != "")
+			{
+				//convert ap to a boolean
+				$arguments["ap"] = Util::convert_to_boolean($this->request->query('ap'));
+				if ($arguments["ap"] === null){
+					$error_array = array(
+						"error" => "True/false required",
+						"desc" => "Invalid test type value"
+					);
+					$this->modelNotSetError($error_array);
+				}
+			}else{
+				$arguments["ap"] = 1;
+			}
 			return $this->mainModel->getListall($arguments);
 		}
 		

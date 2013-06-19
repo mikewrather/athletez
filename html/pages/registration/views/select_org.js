@@ -55,10 +55,11 @@ function(require, registrationSelectOrgTemplate) {
                 
             var self = this;
 	        if (!this.myclub) {
-	            this.myclub = new RegistrationMyClubModel();
-                this.myclub.fetch();
+		        this.myclub = new RegistrationMyClubModel();
+		        this.myclub.id = self.model.get("payload")['id'];
+		        this.myclub.fetch();
                 $.when(this.myclub.request).done(function() {
-                    self.setupFindMyClub();
+	                self.setupFindMyClub();
                 });
             } else {
 	            this.myclub.fetch();

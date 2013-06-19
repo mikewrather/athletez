@@ -457,7 +457,7 @@
 			{
 				//convert standardized to a boolean
 				$arguments["standardized"] = Util::convert_to_boolean($this->request->query('standardized'));
-				if ($arguments["standardized"] == null){
+				if ($arguments["standardized"] === null){
 					$error_array = array(
 						"error" => "True/false required",
 						"desc" => "Invalid test type value"
@@ -472,7 +472,7 @@
 			{
 				//convert ap to a boolean
 				$arguments["ap"] = Util::convert_to_boolean($this->request->query('ap'));
-				if ($arguments["ap"] == null){
+				if ($arguments["ap"] === null){
 					$error_array = array(
 						"error" => "True/false required",
 						"desc" => "Invalid test type value"

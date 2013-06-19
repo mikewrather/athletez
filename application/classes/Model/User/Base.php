@@ -671,6 +671,7 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 			"city" => $this->city->getBasics(),
 			"dob" => $this->dob,
 			"ncaa" => $this->ncaa,
+			"gender" => $this->gender
 			//"utl" =>$results
 		);
 
