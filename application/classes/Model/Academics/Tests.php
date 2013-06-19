@@ -13,8 +13,8 @@ class Model_Academics_Tests extends ORM
 {
 	
 	protected $_table_name = 'academics_tests';
-	
 
+	public $error_message_path = 'models/academics';
 
 	protected $_has_many = array(
 		'topics' => array(
@@ -41,8 +41,20 @@ class Model_Academics_Tests extends ORM
 	}
 
 
-	public function getListall(){
-		return $this;
+	public function getListall($args = array()){
+		extract($args);
+		$model = ORM::factory("Academics_Tests");
+		if (isset($standardized) && $standardized == 1){
+			$model->or_where('test_type', '= ','standardized');
+		}else{
+			$model->or_where('test_type', '= ','unknown');//return null results
+		}
+		if (isset($ap) && $ap == 1){
+			$model->or_where('test_type', '= ', 'AP');
+		}else{
+			$model->or_where('test_type', '= ','unknown');//return null results
+		}
+		return $model;
 	}
 
 	public function getTestsByType($args = array()){
@@ -52,11 +64,16 @@ class Model_Academics_Tests extends ORM
 		$this->and_where_open();
 		if (isset($standardized) && $standardized == 1){
 			$this->or_where('test_type', '= ','standardized');
+		}else{
+			$this->or_where('test_type', '= ','unknown');//return null results
 		}
 
 		if (isset($ap) && $ap == 1){
 			$this->or_where('test_type', '= ', 'AP');
+		}else{
+			$this->or_where('test_type', '= ','unknown');//return null results
 		}
+
 		$this->and_where_close();
 
 		$this->join("academics_tests_topics", "RIGHT")->on("academics_tests_topics.academics_tests_id", "=", 'academics_tests.id');
@@ -66,12 +83,22 @@ class Model_Academics_Tests extends ORM
 		return $this;
 	}
 
+	public function getTopics(){
+		$arrs = $this->topics->find_all();
+		$results = null;
+		foreach($arrs as $topic){
+		$results[] = $topic->getBasics();
+		}
+		return $results;
+	}
+
 	public function getBasics(){
 		return array(
 			'id' => $this->id,
 			'name' => $this->name,
 			'test_type' => $this->test_type,
-			'description' => $this->description
+			'description' => $this->description,
+			'topics' => $this->getTopics()
 		);
 	}
 }

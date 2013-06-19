@@ -14,6 +14,8 @@ class Model_Academics_Tests_Topics extends ORM
 	
 	protected $_table_name = 'academics_tests_topics';
 
+	public $error_message_path = 'models/academics/tests';
+
 	protected $_belongs_to = array(
 		'test' => array(
 			'model' => 'Academics_Tests',
@@ -38,11 +40,22 @@ class Model_Academics_Tests_Topics extends ORM
 	}
 
 	public function getBasics(){
+		//$test_obj = $this->test->getBasics();
 		return array(
 			'id' =>$this->id,
 			'academics_tests_id' => $this->academics_tests_id,
 			'subtopic' => $this->subtopic,
+			'scores' => $this->getScore()
 		);
+	}
+
+	private function getScore(){
+		$score_obj = $this->scores->find_all();
+		$results = null;
+		foreach($score_obj as $score){
+			$results[] = $score->as_array();
+		}
+		return $results;
 	}
 
 	public function name()
