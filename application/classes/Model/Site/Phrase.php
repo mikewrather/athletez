@@ -35,11 +35,7 @@ class Model_Site_Phrase extends ORM
 
 	public function getAll($args = array()){
 		extract($args);
-		$phrases = ORM::factory('Site_Phrase');;
-		if (isset($deleted)){
-			$phrases->where('deleted', '=', $deleted);
-		}
-		print_r($phrases->find_all());
+		$phrases = ORM::factory('Site_Phrase')->where('deleted','=',0);
 		return $phrases;
 	}
 

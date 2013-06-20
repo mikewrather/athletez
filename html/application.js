@@ -3,8 +3,8 @@
 // Requires define
 // Return {Object} App
 
-define( ["facade", "utils", "collections", "chrome", "controller", "profile", "imageup", "game", "team", "registration","profilesetting"],
-function (facade, utils, collections, chromeBootstrap, Controller, ProfileController, ImageController, GameController, TeamController, RegistrationController,ProfileSetting) {
+define( ["facade", "utils", "collections", "chrome", "controller", "profile", "imageup", "game", "team", "registration","profilesetting","packages/site/collections/phrases"],
+function (facade, utils, collections, chromeBootstrap, Controller, ProfileController, ImageController, GameController, TeamController, RegistrationController,ProfileSetting,SitePhraseList) {
 
     var App,
         ApplicationStates = collections.ApplicationStates,
@@ -48,7 +48,9 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
         initialize: function (options) {
             _.bindAll(this);
             this.addSubscribers();
-            Controller.prototype.appStates = new ApplicationStates();
+	        Controller.prototype.appStates = new ApplicationStates();
+	        this.getPhrases();
+
         },
 
         defaultRoute: function () {
@@ -61,6 +63,12 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
             //this.showTeam();
             this.showRegistration();
         },
+
+	    getPhrases: function(){
+		    debug.log("**************");
+		    var phrases = new SitePhraseList();
+		    phrases.fetch();
+	    },
         
         showProfile: function (userid) {
         	alert("showProfile");

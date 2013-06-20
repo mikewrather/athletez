@@ -28,7 +28,7 @@
 			$objs = $this->obj->find_all();
 			foreach($objs as $obj)
 			{
-				$retArr[] = $obj->getBasics();
+				$retArr[$obj->id] = $obj->getBasics();
 			}
 
 			return $retArr;
