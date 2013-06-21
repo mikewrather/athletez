@@ -397,6 +397,11 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 		);
 	}
 
+	public function follow($object)
+	{
+
+	}
+
 	public function filters()
 	{
 		return array(

@@ -241,7 +241,27 @@
 		###########################    POST METHODS    #############################
 		############################################################################
 
-		
+
+		/**
+		 *
+		 */
+		public function action_post_images()
+		{
+			if(!$this->mainModel->id)
+			{
+				$this->modelNotSetError();
+				return false;
+			}
+			else
+			{
+				$sport = $this->mainModel->getSport();
+				$this->request->post('sports_id', $sport->id);
+			}
+
+			return $this->action_post_addimage();
+		}
+
+
 		/**
 		 * action_post_add() Add a new team
 		 * via /api/team/add/{0}

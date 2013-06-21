@@ -87,4 +87,9 @@ class Api_Viewclass
 		}
 		return $retArr;
 	}
+
+	public function post_follow()
+	{
+		return $this->obj->getBasics();
+	}
 }
