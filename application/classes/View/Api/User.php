@@ -348,6 +348,7 @@
 			$objs = $this->obj->find_all();
 			foreach($objs as $obj)
 			{
+				$obj->setUserID($this->obj->getUserID());
 				$retArr[] = $obj->getBasics();
 			}
 			return $retArr;
@@ -657,6 +658,17 @@
 		{
 			$retArr = $this->obj->getBasics();
 			return $retArr;
+		}
+
+		/**
+		 * post_gpa() Add a GPA for a given year
+		 * It is an alias for addgpa
+		 *
+		 * @retun array
+		 */
+		public function post_gpa()
+		{
+			return $this->post_addgpa();
 		}
 
 		/**

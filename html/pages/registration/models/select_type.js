@@ -3,13 +3,14 @@
 // Requires define
 // Return {RegistrationSelectTypeModel} model constructor object
 
-define( ["models/base"], function (BaseModel) {
+define( ["user/models/basics"], function (UserBasicsModel) {
 
     var RegistrationSelectTypeModel;
 
-    RegistrationSelectTypeModel = BaseModel.extend({
-
-        
+    RegistrationSelectTypeModel = UserBasicsModel.extend({
+	    fetchSuccess: function(model, response) {
+		    UserBasicsModel.prototype.fetchSuccess.call(this, model, response);
+		}
     });
 
     return RegistrationSelectTypeModel;

@@ -5,13 +5,14 @@
 // Returns {RegistrationSelectTypeView} constructor
 
 define([
-        'require', 
+        'require',
+		'registration/models/select_type',
         'text!registration/templates/select_type.html', 
         'facade', 
         'views',
-        'utils',
+        'utils'
         ], 
-function(require, registrationSelectTypeTemplate) {
+function(require, RegistrationSelectTypeModel, registrationSelectTypeTemplate) {
 
     var RegistrationSelectTypeView,
         facade = require('facade'),
@@ -27,13 +28,15 @@ function(require, registrationSelectTypeTemplate) {
         
         events: {
             "click .register_facebook": "registerWithFacebook",
-            "click .register_email": "registerWithEmail"
+            "click .register_email": "registerWithEmail",
+	        "click .go_club": "selectOrg"
         },
 
         template: registrationSelectTypeTemplate,
         
         initialize: function (options) {
-            SectionView.prototype.initialize.call(this, options);                        
+            SectionView.prototype.initialize.call(this, options);
+	        this.initModel();
         },
         
         registerWithFacebook: function(event) {                                
@@ -94,12 +97,30 @@ function(require, registrationSelectTypeTemplate) {
         
         registerWithEmail: function(event) {
             event.preventDefault();
-
             Channel('registration-with-email').publish();
+		},
 
+		initModel: function(){
+			var self = this;
+			function loggedUserInfo (id){
+				self.select_type = new RegistrationSelectTypeModel();
+				self.select_type.id = id;
+				self.select_type.fetch();
 
-        }
-                
+				$.when(self.select_type.request).done(function() {
+					self.model = self.select_type;
+				});
+			}
+
+			Channel('app-inited').subscribe(loggedUserInfo);
+		},
+
+	    selectOrg: function (event){
+		    event.preventDefault();
+		    var self = this;
+		    var payload = self.model.get("payload");
+		    Channel('registration-select-org').publish(payload);
+	    }
     });
 
     return RegistrationSelectTypeView;

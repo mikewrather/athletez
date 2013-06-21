@@ -38,8 +38,7 @@ function (
         
         events: {
             "click .signup-facebook": "signupFacebook",
-            "click .signup-email": "signupEmail",
-	        "click .go_club" : "go_club_now"
+            "click .signup-email": "signupEmail"
         },
 
         render: function () {
@@ -137,22 +136,7 @@ function (
             }
 
             Channel('registration-with-email').publish();
-        },
-	    go_club_now: function(event) {
-			event.preventDefault();
-
-			if (!this.registrationController) {
-				this.registrationController = new RegistrationController({
-					"route": ""
-				});
-			}
-			//jeffrey added start
-		    //init test data
-			payload = {};
-			payload.id = 425983;
-			Channel("registration-select-org").publish(payload);
-			//jeffrey added end
-		}
+        }
 
       });
 

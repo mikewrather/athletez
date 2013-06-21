@@ -190,6 +190,37 @@
 			return $this->mainModel->getSeasons($args);
 		}
 
+		/**
+		 * action_get_seasonteams() List of all seasons this organization plays
+		 * via /api/org/seasons/{orgs_id}
+		 *
+		 */
+		public function action_get_seasonteams()
+		{
+			$this->payloadDesc = "List of all seasons this organization plays";
+
+			if(!$this->mainModel->id)
+			{
+				$this->modelNotSetError();
+				return false;
+			}
+
+			$args['id'] = $this->mainModel->id;
+			if((int)trim($this->request->query('sports_id')) > 0)
+			{
+				$args["sports_id"] = (int)trim($this->request->query('sports_id'));
+			}
+			// complevels_id
+			// Complevels ID
+
+			if((int)trim($this->request->query('complevels_id')) > 0)
+			{
+				$args["complevels_id"] = (int)trim($this->request->query('complevels_id'));
+			}
+
+			return $this->mainModel->getSeasonTeams($args);
+		}
+
 		public function action_get_search()
 		{
 			$this->payloadDesc = "Used to auto-narrow a list of organizations based on passed parameters and partial search strings.";
