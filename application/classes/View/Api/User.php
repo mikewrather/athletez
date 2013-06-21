@@ -348,6 +348,7 @@
 			$objs = $this->obj->find_all();
 			foreach($objs as $obj)
 			{
+				$obj->setUserID($this->obj->getUserID());
 				$retArr[] = $obj->getBasics();
 			}
 			return $retArr;

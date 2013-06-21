@@ -23,7 +23,7 @@ function(facade, collections, SitePhraseModel, utils,controller) {
 			return base_url + 'api/phrase/listall';
 		},
 
-		saveData: function (collection) {
+		saveToLocalStorage: function (collection) {
 			var appStates = controller.prototype.appStates;
 			if (appStates) {
 				appStates.add({
@@ -52,7 +52,7 @@ function(facade, collections, SitePhraseModel, utils,controller) {
                 collection.push(item);
             }
             collection.deferred.resolve(response);
-			collection.saveData(collection);
+			collection.saveToLocalStorage(collection);
 
 		//	console.log("SAVEDATA: ",collection.saveData);
         },

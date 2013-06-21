@@ -16,6 +16,8 @@ class Model_Academics_Tests_Topics extends ORM
 
 	public $error_message_path = 'models/academics/tests';
 
+	protected $_current_user_id = FALSE;
+
 	protected $_belongs_to = array(
 		'test' => array(
 			'model' => 'Academics_Tests',
@@ -48,13 +50,30 @@ class Model_Academics_Tests_Topics extends ORM
 		);
 	}
 
-	private function getScore(){
-		$score_obj = $this->scores->find_all();
-		$results = null;
-		foreach($score_obj as $score){
-			$results[] = $score->as_array();
+	public function getUserID()
+	{
+		return $this->_current_user_id;
+	}
+
+	public function setUserID($users_id)
+	{
+		return $this->_current_user_id = $users_id;
+	}
+
+	public function getScore($users_id = FALSE){
+
+		if(!$users_id)
+		{
+			if($this->_current_user_id) $users_id = $this->_current_user_id;
+			else return false;
 		}
-		return $results;
+
+		$score_obj = $this->scores->where('users_id','=',$users_id)->find();
+		if($score_obj->loaded())
+		{
+			return $score_obj->score;
+		}
+		return false;
 	}
 
 	public function name()
