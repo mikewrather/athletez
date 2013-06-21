@@ -8,7 +8,7 @@
 define(["require", "text!profilesetting/templates/layout.html", "facade", "controller", "models", "views", "utils",
  "profilesetting/models/basic_info",
   "profilesetting/views/basic_info",
-  "profilesetting/views/school",
+  "profilesetting/views/highschool",
   "profilesetting/views/club",
   "profilesetting/views/sport"], function(require, pageLayoutTemplate){
 	
@@ -32,7 +32,7 @@ define(["require", "text!profilesetting/templates/layout.html", "facade", "contr
 	
 	/*VIEW SECTION*/
 	BasicInfoView = require("profilesetting/views/basic_info"),
-	HighSchoolView = require("profilesetting/views/school");           
+	HighSchoolView = require("profilesetting/views/highschool");           
 	ClubView = require("profilesetting/views/club");           
 	SportView = require("profilesetting/views/sport");           
 	
@@ -42,6 +42,10 @@ define(["require", "text!profilesetting/templates/layout.html", "facade", "contr
 	ProfileSettingController = Controller.extend({
 		/*CSS SECTION*/
 		cssArr : ["/pages/profilesetting/profilesettings.css"],
+	
+	events:{
+		"Click .div-add-dotted" : "addHighSchool",
+	},
 	
 		initialize: function(options){
 			
@@ -90,7 +94,13 @@ define(["require", "text!profilesetting/templates/layout.html", "facade", "contr
 			id: self.id
 		});	
 		},
-		
+		addHighSchool : function(){
+			alert("Add School");
+			console.log("Add High School Information");
+			this.schoolView = new HighSchoolView({});
+			//this.schoolView.render();
+			
+		}
 		
 	});
 	return ProfileSettingController;

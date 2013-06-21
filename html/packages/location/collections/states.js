@@ -18,14 +18,23 @@ function(facade, collections, LocationStateModel, utils) {
         // Reference to this collection's model.
         model: LocationStateModel,
         
+        //Default URL for fetching states to autocomplete 
         url: function() {
-            
+        	if (testpath)
+                        return testpath + '/state_search';
+            if(this.state_name == undefined){
+            // Incase any api to hit without state_name , add here
+            	
+            }   
+                     
+                    return '/api/state/search/?state_name=' + this.state_name;            
         },
         
         // **Method:** `fetchSuccess` - resolve the deferred here in success
         fetchSuccess: function (collection, response) {
             collection.reset();
             var payload = response.payload;
+            if(payload != null){
             for (i = 0; i < payload.length; i++) {
                 var item = new LocationStateModel();
                 item.id = Math.ceil(Math.random() * 100000);
@@ -34,8 +43,15 @@ function(facade, collections, LocationStateModel, utils) {
                 item.set('exec_data', response.exec_data);
                 collection.push(item);
             }
+            }
             collection.deferred.resolve(response);            
-        }
+        },
+        
+        /*Method to return if any error occured in data fetching*/
+       isError : function(){
+       	//TODO: implement function as we get errors
+       	return false;
+       }
 
     });
 

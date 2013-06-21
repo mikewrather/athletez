@@ -11,7 +11,9 @@ define([
         'views',
         'utils',
         'models/base',
-        'jqueryui'
+        'jqueryui',
+        'registration/collections/states',
+        'registration/collections/sports'
         ], 
 function(require, findMyClubTemplate) {
 
@@ -23,7 +25,9 @@ function(require, findMyClubTemplate) {
         BaseView = views.BaseView,
         _ = facade._,
         $ = facade.$,
-        Channel = utils.lib.Channel;
+        Channel = utils.lib.Channel,
+        RegistrationStatesCollection = require('registration/collections/states'),
+        RegistrationSportsCollection = require('registration/collections/sports');;
 
     RegistrationFindMyClubView = BaseView.extend({
 
@@ -95,30 +99,31 @@ function(require, findMyClubTemplate) {
         keyupState: function(event) {
             var self = this;
             
-            var state_name = this.$('#states_id').val();
+            var state = this.$('#states_id').val();
             var stateArr = [];
             
-            if (state_name != '') {
-                var stateList = new BaseModel();
-                stateList.url = function() {
-                    if (testpath)
-                        return testpath + '/state_search';
-                    return '/api/state/search/?state_name=' + state_name;
-                }
+            if (state != '') {
+                var stateList = new RegistrationStatesCollection();
+                stateList.state_name = state;
                 stateList.fetch();
                 $.when(stateList.request).done(function() {
+                	/*Don't Show Auto Complete In Case Of Error*/
                     if (stateList.isError())
                         return;
-                    var payload = stateList.get('payload');
-                    if (payload == null)
+                    
+                    var models = stateList.toJSON();
+                    if (models == null  || models.length < 1)
                         self.$('#states_id').parent().find('.field-message').html('Data not exist').stop().fadeIn();
+                    
                     self.states = [];
-                    for (var key in payload) {
-                        self.states.push(payload[key]);
+                    for (var key in models) {
+                        self.states.push(models[key].payload);
                     }
+                    debug.log("self.states", self.states);
                     self.states.forEach(function(value, index) {
                         stateArr.push(value['name']);
                     });
+                    debug.log("stateArr",stateArr);
                     self.$('#states_id').autocomplete({
                         source: stateArr
                     });
@@ -137,7 +142,7 @@ function(require, findMyClubTemplate) {
             });
             this.keyupClub();            
         },
-        
+        /*Auto Complete For Sports Text Box*/        
         keyupSport: function(event) {
             var self = this;
             var user_model = self.model;
@@ -149,26 +154,27 @@ function(require, findMyClubTemplate) {
             var sportArr = [];
             
             if (sport_name != '') {
-                var sportList = new BaseModel();
-                sportList.url = function() {
-                    if (testpath)
-                        return testpath + '/sport_search';
-                    return '/api/sport/search/?sport_name=' + sport_name + '&gender=' + gender;
-                }
+                var sportList = new RegistrationSportsCollection();
+                sportList.sport_name = sport_name;
+                sportList.gender = gender;
                 sportList.fetch();
                 $.when(sportList.request).done(function() {
                     if (sportList.isError())
                         return;
-                    var payload = sportList.get('payload');
-                    if (payload == null)
+                    var models = sportList.toJSON();
+                    console.log("Sports Model", models);
+                    if (models == null  || models.length < 1)
                         self.$('#sports_id').parent().find('.field-message').html('Data not exist').stop().fadeIn();
                     self.sports = [];
-                    for (var key in payload) {
-                        self.sports.push(payload[key]);
+                    
+                    for (var key in models) {
+                        self.sports.push(models[key].payload);
                     }
+                    console.log("sports", self.sports);
                     self.sports.forEach(function(value, index) {
                         sportArr.push(value['sport_name']);
                     });
+                    console.log("sportArr", sportArr);
                     self.$('#sports_id').autocomplete({
                         source: sportArr
                     });

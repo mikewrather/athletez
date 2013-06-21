@@ -18,6 +18,18 @@ function(facade, collections, SportorgSportModel, utils) {
         // Reference to this collection's model.
         model: SportorgSportModel,
         
+        /*Url to fetch sports for aut complete*/
+       /*If complete list required add a if condition and return the complete url list in case its different*/
+      url: function(){
+                    if (testpath)
+                        return testpath + '/sport_search';
+                        
+                    if(this.state_name == undefined) {
+                    	//Incase to Hit Api without any parameter, Add Url here
+                    } 
+                    return '/api/sport/search/?sport_name=' + this.sport_name + '&gender=' + this.gender;
+      },
+        
         // **Method:** `fetchSuccess` - resolve the deferred here in success
         fetchSuccess: function (collection, response) {
             collection.reset();

@@ -74,7 +74,13 @@ define(['facade', 'utils'], function (facade, utils) {
         // **Method:** `fetchError` - log response on error
         fetchError: function (collection, response) {
             debug.log(response);
-        }
+        },
+        
+        /*Method to return if any error occured in data fetching*/
+       isError : function(){
+       	//TODO: implement function as we get errors
+       	return false;
+       }
 
     });
 

@@ -37,15 +37,11 @@ function(require, profileHeaderTemplate) {
 
         template: profileHeaderTemplate,
         
-        //selectSportTemplate: selectSportTemplate,
-        
         events: {
-          //  "change #select-sport": "selectSport"
           "click .btn-prof-setting-h" : "initialize"
         },
 
         initialize: function (options) {
-          //  SectionView.prototype.initialize.call(this, options);
             this.initBasicView();            
         },
         
@@ -57,8 +53,6 @@ function(require, profileHeaderTemplate) {
             this.basicInfoModel.fetch();
             $.when(this.basicInfoModel.request).done(function() {
                 self.setupBasicView();
-               // self.select_sport = self.$('#select-sport');
-               // self.selectSport();
             });
         },
         
@@ -71,30 +65,6 @@ function(require, profileHeaderTemplate) {
             console.log(this.basicInfoModel.toJSON());
             console.log(markup);
             $('#section-basics-prof-setting').html(markup);
-            
-            // sportListView = new SportListView({
-                    // collection: this.sports
-                // }),
-                // renderSportListView = this.addChildView(sportListView);
-// 
-            // this.childViews.sportListView = sportListView;
-            // this.callbacks.add(function () {
-                // renderSportListView();                
-            // });  
-//             
-            // self.$el.find('#sports-info').html(sportListView.el);
-            // var data = {"payload": []};
-            // var collection = sportListView.collection;
-            // if (collection.length) {
-                // for (i = 0; i < collection.length; i++) {
-                    // data["payload"][i] = collection.at(i).get('payload');
-                // }
-                // var markup = Mustache.to_html(self.selectSportTemplate, data);                                
-                // self.$el.find('#sports-info').prepend(markup);
-            // } else {
-                // self.$el.find('#sports-info').html('');
-            // }                
-          //  sportListView.render();
         },
         
         // **Method** `setOptions` - called by BaseView's initialize method
@@ -103,12 +73,6 @@ function(require, profileHeaderTemplate) {
                 throw new Error("HeaderView expects option with model property.");
             }            
         },
-        
-        // render: function (domInsertion, dataDecorator, partials) {
-            // SectionView.prototype.render.call(this, domInsertion, dataDecorator, partials); 
-        // },
-        
-        
                 
     });
 
