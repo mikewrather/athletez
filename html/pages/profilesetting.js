@@ -10,7 +10,7 @@ define(["require", "text!profilesetting/templates/layout.html", "facade", "contr
   "profilesetting/views/basic_info",
   "profilesetting/views/highschool",
   "profilesetting/views/club",
-  "profilesetting/views/sport"], function(require, pageLayoutTemplate){
+  "profilesetting/views/sport","profilesetting/models/high_school"], function(require, pageLayoutTemplate){
 	
 	var ProfileSettingController,
 	facade = require("facade"),
@@ -36,7 +36,7 @@ define(["require", "text!profilesetting/templates/layout.html", "facade", "contr
 	ClubView = require("profilesetting/views/club");           
 	SportView = require("profilesetting/views/sport");           
 	
-	
+	var HighSchoolModel = require("profilesetting/models/high_school");
 	             
 	                 
 	ProfileSettingController = Controller.extend({
@@ -100,7 +100,12 @@ define(["require", "text!profilesetting/templates/layout.html", "facade", "contr
 		addHighSchool : function(){
 		//	alert("Add School");
 			console.log("Add High School Information");
-			this.schoolView = new HighSchoolView({});
+			this.schoolView = new HighSchoolView(
+			{
+				model : new HighSchoolModel(),
+				name : "Registration with Email Address",
+				destination : "#content-school-prof-setting"
+			});
 			//this.schoolView.render();
 			
 		}

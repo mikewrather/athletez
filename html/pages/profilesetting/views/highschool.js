@@ -8,7 +8,7 @@ define(['require', 'text!profilesetting/templates/highschool.html', 'facade', 'v
 'profilesetting/collections/states', 
 'profilesetting/collections/schools',
 'profilesetting/collections/sports',
-'profilesetting/collections/complevel',
+'profilesetting/collections/complevel'
  ], function(require, highSchoolTemplate) {
 
 
@@ -23,7 +23,7 @@ define(['require', 'text!profilesetting/templates/highschool.html', 'facade', 'v
 		template : highSchoolTemplate,
 /*Bind Events on controls present in current view template*/
 		events : {
-			"click #txt-school-state" : "keyupState",
+			"click #txt-school-state" : "keyupState"
 			// "keyup #sports_id" : "keyupSport",
 			// "keyup #txt-school-state" : "keyupSchool",
 			// "blur #states_id" : "changeState",
@@ -39,7 +39,7 @@ define(['require', 'text!profilesetting/templates/highschool.html', 'facade', 'v
 			txtSchools : '#txt-school-school',
 			content : '#content-school-prof-setting',
 			fieldMessage : '.field-message',
-			ddlSports : '#ddl-school-sports',
+			ddlSports : '#ddl-school-sports'
 
 		},
 		/*Messages Holds the messages, warning, alerts, errors, information variables*/
@@ -52,41 +52,44 @@ define(['require', 'text!profilesetting/templates/highschool.html', 'facade', 'v
 
 		/*initialize gets called by default when constructor is initialized*/
 		initialize : function(options) {
+			SectionView.prototype.initialize.call(this, options);
 			self = this;
 			_.bindAll(this);
 			this.init();
+
 		},
 
 		init : function() {
 			self.setupView();
-			self.bindEvents();
+
+			//self.bindEvents();
 		},
 
 		/*function used to bind events on controls not present in current $el
 		 Always use on so that dynamic creation of controls could be handled
 		 * */
-		bindEvents : function() {
-			$(self.controls.txtStates).on('keyup', function(e) {
-				self.keyupState(e);
-			});
-
-			$(self.controls.txtStates).on('blur', function(e) {
-				self.changeState(e);
-			});
-
-			$(self.controls.txtSchools).on('keyup', function(e) {
-				self.keyupSchool(e);
-			});	
-
-			$(self.controls.txtSchools).on('blur', function(e) {
-				self.changeSchool(e);
-			});
-
-			$(self.controls.ddlSports).on('change', function(e) {
-				self.changeSports(e);
-			});
-
-		},
+//		bindEvents : function() {
+//			$(self.controls.txtStates).on('keyup', function(e) {
+//				self.keyupState(e);
+//			});
+//
+//			$(self.controls.txtStates).on('blur', function(e) {
+//				self.changeState(e);
+//			});
+//
+//			$(self.controls.txtSchools).on('keyup', function(e) {
+//				self.keyupSchool(e);
+//			});
+//
+//			$(self.controls.txtSchools).on('blur', function(e) {
+//				self.changeSchool(e);
+//			});
+//
+//			$(self.controls.ddlSports).on('change', function(e) {
+//				self.changeSports(e);
+//			});
+//
+//		},
 
 		/*Set complete view like template rendering, default data bindings*/
 		setupView : function() {
@@ -236,7 +239,13 @@ define(['require', 'text!profilesetting/templates/highschool.html', 'facade', 'v
 				
 				
 			});
-		}	});
+		},
+		render: function () {
+			var self = this;
+
+			SectionView.prototype.render.call(this);
+		}
+	});
 
 	return HighSchoolView;
 });
