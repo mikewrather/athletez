@@ -34,7 +34,7 @@ function(facade,   utils,   BaseCommentListView,       ProfileCommentFormView, S
 	            formView = new ProfileCommentFormView({collection: this.collection}),
                 renderAddView = this.addChildView(formView);
 
-	        this.childViews.form = formView;
+	        //this.childViews.form = formView;
             this.callbacks.add(function() {
                 renderAddView();
             });
@@ -44,26 +44,26 @@ function(facade,   utils,   BaseCommentListView,       ProfileCommentFormView, S
 	            formView.render();
 	        }
 
-	        function callcommentslist(){
-//		        console.log("i didyzzz");
-//		        var collection = listView.collection;
-//		        console.log("previous collection1", collection);
-//
-//		        var model = collection.at(collection.length - 3);
-//		        console.log("new model", model);
-//		        collection.remove(model, {});
-//		        console.log("after listView", listView);
-//		        listView.collection = collection;
-//
-//		        console.log("before render executed");
-//		        var a = listView.toHTML();
-//		        listView.$el.append(a);
-//		        listView.render();
-//		        console.log("render executed");
+	        function callcommentslist(collection){
+		        console.log("i refresh comment on");
+		        //listView.collection.reset();
+		        listView.collection = collection;
+		        console.log("new collection", listView.collection);
+		        var current_collections = listView.collection;
+		            current_collections.each(function(imodel, index) {
+			            console.log("imodel", imodel);
+			            if (index == 0){
+				            listView.collection.remove(imodel);
+				            console.log("I removed one modelx");
+			            }
+			        });
+		        console.log("updated collection", listView.collection);
+		        listView.render();
+		        console.log("comment on render executed");
 		    }
 
 	        Channel('profilecommentonform:fetch').subscribe(callback);
-            //Channel('profilecommentonlist:refresh').subscribe(callcommentslist);
+            Channel('profilecommentonlist:refresh').subscribe(callcommentslist);
         }
     });
 
