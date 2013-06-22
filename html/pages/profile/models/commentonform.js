@@ -22,7 +22,7 @@ define( ["facade", "site/models/comment", "utils"], function (facade, SiteCommen
         },
         
         fetchSuccess: function (model, response) {
-            SiteCommentModel.prototype.fetchSuccess.call(model, response);
+            SiteCommentModel.prototype.fetchSuccess.call(this, model, response);
             Channel('profilecommentonform:fetch').publish(model);
         }
         

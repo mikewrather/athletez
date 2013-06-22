@@ -19,7 +19,8 @@ function(require,  TeamCommentFormModel,          BaseCommentFormView) {
                 throw new Error("CommentFormView expected options.collection.");
             }
             if (!this.model) {
-                this.model = new TeamCommentFormModel({id: this.collection.id, sport_id: this.collection.sport_id, complevel_id: this.collection.complevel_id, season_id: this.collection.season_id});
+                this.model = new TeamCommentFormModel({id: this.collection.id, sport_id: this.collection.sport_id,
+	                complevel_id: this.collection.complevel_id, season_id: this.collection.season_id});
                 this.model.fetch();
             }            
         }

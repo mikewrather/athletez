@@ -32,6 +32,7 @@ function(require, commentFormTemplate,    ProfileCommentFormModel,        BaseCo
                 throw new Error("ProfileCommentOnFormView expected options.collection.");
             }
             if (!this.model) {
+	            console.log("this.collection.id =", this.collection.id);
                 this.model = new ProfileCommentFormModel({id: this.collection.id});
                 this.model.fetch();
             }            
@@ -43,8 +44,7 @@ function(require, commentFormTemplate,    ProfileCommentFormModel,        BaseCo
 	    },
 
 	    refreshComments: function(e) {
-		    //this.collection.on('change', this.render, this);
-		    console.log("yyyy", this.render);
+		    console.log("yyyy=", this.collection);
 		    this.$("#new-comment").val("");
 		},
         
@@ -83,11 +83,13 @@ function(require, commentFormTemplate,    ProfileCommentFormModel,        BaseCo
 		            payload.poster = payload.name;
 		            payload.poster_picture = payload.user_picture;
 		            payload.poster_email = payload.email;
-	                console.log('thiszz = ', model);
+	                console.log('thisresponse = ', response);
 	                //this.model = model;
+
 	                self.collection.push(model);
+	                console.log("latest collectionsx", self.collection);
 	                self.refreshComments();
-	                //Channel('profilecommentonlist:refresh').publish();
+	                Channel('profilecommentonlist:refresh').publish(self.collection);
                 };
 	            saveInfo.save();
             }

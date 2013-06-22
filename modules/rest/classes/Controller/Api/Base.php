@@ -751,7 +751,6 @@ class Controller_Api_Base extends AuthController
 
 	/**
 	 * action_get_followers() Get followers on a specific subject
-	 * via /api/ent/followers/{subject_type_id}/subject_id
 	 *
 	 */
 	public function action_get_followers()
@@ -772,7 +771,7 @@ class Controller_Api_Base extends AuthController
 			//create error because the model isn't the correct type
 			// Create Array for Error Data
 			$error_array = array(
-				"error" => "You get followers of a ".$ent_type->name,
+				"error" => "You can't get followers of a(n) ".$ent_type->name,
 			);
 
 			// Set whether it is a fatal error
@@ -789,6 +788,66 @@ class Controller_Api_Base extends AuthController
 		}
 
 		return $followers = Model_User_Followers::get_followers($this->mainModel);
+
+	}
+
+	/**
+	 * action_post_follow() Get followers on a specific subject
+	 *
+	 */
+	public function action_post_follow()
+	{
+		// This requires that the user is logged in
+		$this->populateAuthVars();
+		if(!$this->is_logged_in)
+		{
+			$error_array = array(
+				"error" => "You must be logged in in order to follow something."
+			);
+
+			// Set whether it is a fatal error
+			$is_fatal = true;
+
+			// Call method to throw an error
+			$this->addError($error_array,$is_fatal);
+			return false;
+		}
+
+		$this->payloadDesc = "Become a Follower";
+
+		$valid_object_types = array(
+			"Model_User_Base",
+			"Model_Sportorg_Team",
+		);
+
+
+		if($this->mainModel->loaded() && !in_array(get_class($this->mainModel),$valid_object_types))
+		{
+			$ent_types_id = Ent::getMyEntTypeID($this->mainModel);
+			$ent_type = ORM::factory('Site_Enttype',$ent_types_id);
+
+			//create error because the model isn't the correct type
+			// Create Array for Error Data
+			$error_array = array(
+				"error" => "You can't follow a(n) ".$ent_type->name,
+			);
+
+			// Set whether it is a fatal error
+			$is_fatal = true;
+
+			// Call method to throw an error
+			$this->addError($error_array,$is_fatal);
+			return false;
+		}
+		elseif(!$this->mainModel->loaded())
+		{
+			$this->modelNotSetError();
+			return false;
+		}
+
+		$follow = ORM::factory('User_Followers');
+		$follow->addFollower($this->user,$this->mainModel);
+		return $follow;
 
 	}
 

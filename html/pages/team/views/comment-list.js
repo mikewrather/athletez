@@ -14,7 +14,7 @@ function(facade,   utils,   BaseCommentListView,       TeamCommentFormView) {
                 formView = new TeamCommentFormView({collection: this.collection}),
                 renderAddView = this.addChildView(formView);
             
-            this.childViews.form = formView;
+            //this.childViews.form = formView;
             this.callbacks.add(function() {
                 renderAddView();
             });

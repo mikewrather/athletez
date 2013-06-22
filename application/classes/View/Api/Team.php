@@ -147,6 +147,11 @@
 		}
 
 
+		public function post_images()
+		{
+			return $this->post_addimage();
+		}
+
 		/**
 		 * post_add() Add a new team
 		 *

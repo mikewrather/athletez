@@ -71,8 +71,7 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
 	    },
         
         showProfile: function (userid) {
-        	alert("showProfile");
-            this.loadStyles();
+        	this.loadStyles();
             
             $('body').empty();
             chromeBootstrap();

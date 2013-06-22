@@ -23,7 +23,7 @@ define( ["facade", "media/models/video", "utils"], function (facade, MediaVideoM
         },
         
         fetchSuccess: function (model, response) {
-            MediaVideoModel.prototype.fetchSuccess.call(model, response);
+            MediaVideoModel.prototype.fetchSuccess.call(this, model, response);
             Channel('gameaddvideo:fetch').publish(model);
         }
         

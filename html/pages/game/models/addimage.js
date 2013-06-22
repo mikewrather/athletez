@@ -23,7 +23,7 @@ define( ["facade", "media/models/image", "utils"], function (facade, MediaImageM
         },
         
         fetchSuccess: function (model, response) {
-            MediaImageModel.prototype.fetchSuccess.call(model, response);
+            MediaImageModel.prototype.fetchSuccess.call(this, model, response);
             Channel('gameaddimage:fetch').publish(model);
         }
         
