@@ -13,7 +13,7 @@ require.config({
         'json2'        : '/vendor/json2',
         'modernizr'    : '/vendor/modernizr-2.6.2.min',
         'html5'        : '/vendor/html5',
-        'jquery'       : '/vendor/jquery-2.0.0',
+        'jquery'       : '/vendor/jquery-2.0.0.min',
         'zepto'        : '/vendor/zepto',
         'underscore'   : '/vendor/underscore',
         'mustache'     : '/vendor/mustache',
@@ -81,7 +81,10 @@ require.config({
         'backbone': {
             deps: ['underscore', 'jquery', 'json2', 'html5', 'jqueryui', 'custom'],
             exports: 'Backbone'
-        }
+        },
+	    'bootstrap': {
+		    deps: ['jquery']
+	    }
     },
     priority: ['text', 'modernizr', 'json2', 'vendor', 'utils', 'facade', 'syncs', 'models', 'views', 'collections', 'controller'],
     jquery: '1.9.0',
