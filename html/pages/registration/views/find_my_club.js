@@ -13,7 +13,8 @@ define([
         'models/base',
         'jqueryui',
         'registration/collections/states',
-        'registration/collections/sports'
+        'registration/collections/sports',
+        'registration/collections/clubs',
         ], 
 function(require, findMyClubTemplate) {
 
@@ -27,7 +28,8 @@ function(require, findMyClubTemplate) {
         $ = facade.$,
         Channel = utils.lib.Channel,
         RegistrationStatesCollection = require('registration/collections/states'),
-        RegistrationSportsCollection = require('registration/collections/sports');;
+        RegistrationSportsCollection = require('registration/collections/sports'),
+        RegistrationClubsCollection = require('registration/collections/clubs');
 
     RegistrationFindMyClubView = BaseView.extend({
 
@@ -203,30 +205,33 @@ function(require, findMyClubTemplate) {
             var clubArr = [];
             
             if (club_name != '') {
-                var clubList = new BaseModel();
-                clubList.url = function() {
-                    if (testpath)
-                        return testpath + '/club_search';
-                    return '/api/org/search/?sports_club=1&states_id=' + self.states_id + '&sports_id=' + self.sports_id + '&org_name=' + club_name;
-                }
+                var clubList = new RegistrationClubsCollection();
+                console.log(self.states_id,self.sports_id,club_name);
+                clubList.states_id = self.states_id;
+                clubList.sports_id = self.sports_id;
+                clubList.club_name = club_name;
                 clubList.fetch();
+
                 $.when(clubList.request).done(function() {
                     if (clubList.isError())
                         return;
-                    var payload = clubList.get('payload');
-                    if (payload == null)
+                        var models = clubList.toJSON();
+                        console.log("models",models);
+                    if (models == null || models.length < 1)
                         self.$('#orgs_id').parent().find('.field-message').html('Data not exist').stop().fadeIn();
                     self.clubs = [];
-                    for (var key in payload) {
-                        self.clubs.push(payload[key]);
+                    for (var key in models) {
+                        self.clubs.push(models[key].payload);
                     }
                     self.clubs.forEach(function(value, index) {
                         clubArr.push(value['org_name']);
                     });
+                    console.log("clubArr",clubArr);
                     self.$('#orgs_id').autocomplete({
                         source: clubArr
                     });
                 });
+                
             }
         },
         

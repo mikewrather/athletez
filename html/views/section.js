@@ -177,7 +177,24 @@ define(['facade','views/base','utils'], function (facade, BaseView, utils) {
                 });
             }
             return this._meta;
-        }
+        },
+        /**Method** Fills the options in a dropdown
+         * Parameter Description:
+         * data : Json data source to fill dropdown
+         * textField : string/int, key or index in array to be used to display in dropdown
+         * valueField : string/int, key or index in array to be used as value of displayed option in dropdown
+         * control : jquery selector for the html control in which data has to be filled
+         *  */
+        setDropdownOptions : function(data, textField, valueField, control) {
+			var tempHtml = '<option value="">Select<option>';
+			if (data != null && data.length > 0) {
+				for (var i = 0; i < data.length; i++) {
+					tempHtml += '<option value="' + data[i][valueField] + '">' + data[i][textField] + '<option>';
+
+				}
+			}
+			$(control).html(tempHtml);
+		}
 
     });
 

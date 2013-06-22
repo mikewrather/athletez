@@ -68,6 +68,9 @@ define(["require", "text!profilesetting/templates/layout.html", "facade", "contr
 			this.setupLayout().render();
 			this.setupView();
 			this.handleDeferreds();
+			
+			//TODO: For Testing Purpose Remove following Lines as soon as AddSchool divs event gets bind
+			this.addHighSchool();
 
 		},
 		setupLayout : function() {
@@ -95,7 +98,7 @@ define(["require", "text!profilesetting/templates/layout.html", "facade", "contr
 		});	
 		},
 		addHighSchool : function(){
-			alert("Add School");
+		//	alert("Add School");
 			console.log("Add High School Information");
 			this.schoolView = new HighSchoolView({});
 			//this.schoolView.render();

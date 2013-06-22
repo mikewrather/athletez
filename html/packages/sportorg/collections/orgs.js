@@ -49,6 +49,10 @@ function(facade, collections, SportorgOrgModel, utils) {
             }
             
             collection.deferred.resolve(response);            
+        },
+        isError : function(){
+        	//TODO: retun true in case of any error
+        return false;	
         }
 
     });
