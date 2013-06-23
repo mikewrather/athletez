@@ -23,7 +23,13 @@ define(["facade", "models/base"], function (facade, BaseModel) {
                 "exec_time": 0,
                 "exec_error": false
             }
-        })        
+        }),
+        
+        /*Modify response as per the requirements*/
+        fetchSuccess : function(model,response){
+        	
+        	
+        }        
         
     });
 

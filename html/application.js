@@ -86,7 +86,6 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
             Channel('app-inited').subscribe(initProfile);
         },
         showProfileSetting: function (userid) {
-        	console.log("showProfile setting");
             this.loadStyles();
             
             $('body').empty();
@@ -216,8 +215,6 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
         cssLoaded: [],
 
         loadCss: function (arr) {
-        	console.log("Load CSS");
-        	console.log(arr);
             var i, cssUrl;
 
             if (!_.isArray(arr)) {

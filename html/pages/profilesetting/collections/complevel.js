@@ -22,8 +22,24 @@ function(facade, collections, SportsOrgCollection, utils) {
                     if(this.orgs_id == undefined) {
                     	//Incase to Hit Api without any parameter, Add Url here
                     } 
-                    return '/api/org/basics/?orgs_id=' + this.orgs_id;
+                    return '/api/org/basics/' + this.orgs_id + '?id1=' + this.orgs_id;
       },
+      
+       // **Method:** `fetchSuccess` - resolve the deferred here in success
+       /*Over ride function in sportorg/collection/complevels to modify data as per our requirement*/
+        fetchSuccess: function (collection, response) {
+            collection.reset();
+            var payload = response.payload;
+            for (i = 0; i < payload.length; i++) {
+                var item = new SportorgComplevelModel();
+                item.id = Math.ceil(Math.random() * 100000);
+                item.set('payload', payload[i]);
+                item.set('desc', response.desc);
+                item.set('exec_data', response.exec_data);
+                collection.push(item);
+            }
+            collection.deferred.resolve(response);            
+        }
     });
 
     return List;

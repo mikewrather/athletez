@@ -152,7 +152,6 @@ define(['facade', 'utils'], function(facade, utils) {
 		// **Method:** `fetch`
 		// Wrap Backbone.Model.prototype.fetch with support for deferreds
 		fetch : function(options) {
-			console.log("fetch options here", options);
 			options = options || {};
 			if (!options.success) {
 				options.success = this.fetchSuccess;
@@ -161,8 +160,6 @@ define(['facade', 'utils'], function(facade, utils) {
 				options.error = this.fetchError;
 			}
 			_.extend(options, ajaxOptions);
-			console.log("start fetching now this", this);
-			console.log("start fetching  options", options);
 			//	console.log("start fetching  results", Backbone.Model.prototype.fetch.call(this, options));
 			return this.request = Backbone.Model.prototype.fetch.call(this, options);
 		},
@@ -172,7 +169,6 @@ define(['facade', 'utils'], function(facade, utils) {
 		// **Method:** `fetchSuccess` - resolve the deferred here in success
 		fetchSuccess : function(model, response) {
 			var self = this;
-			console.log("fetch success? ", model);
 
 			if (model.deferred) {
 				if (!model.request) {
@@ -206,9 +202,6 @@ define(['facade', 'utils'], function(facade, utils) {
 				options.error = this.saveError;
 			}
 			_.extend(options, ajaxOptions);
-			console.log("save called in base.js");
-			console.log(options);
-			console.log(ajaxOptions);
 			return this.request = Backbone.Model.prototype.save.call(this, attrs, options);
 		},
 

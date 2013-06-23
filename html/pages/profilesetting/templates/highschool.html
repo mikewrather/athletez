@@ -1,20 +1,22 @@
 <div>
 	<span class="span2">What State?</span>
-	<input type="text" id="txt-school-state" value="" />
+	<input type="text" id="txt-school-state" placeholder="Just Start Typing"/>
 	<p class="field-error"></p>
 	<p class="field-message"></p>
 </div>
 
 <div>
 	<span class="span2">What School?</span>
-	<input type="text" id="txt-school-school" />
+	<input type="text" id="txt-school-school" placeholder="Just Start Typing"/>
 	<p class="field-error"></p>
 	<p class="field-message"></p>
 </div>
 
 <div>
 	<span class="span2">Add Sport</span>
-	<select id="ddl-school-sports"></select>
+	<select id="ddl-school-sports">
+		<option value="">Select</option>
+	</select>
 	<p class="field-error"></p>
 	<p class="field-message"></p>
 </div>
@@ -23,45 +25,13 @@
 	<div class="clearfix sub-section-prof-setting well">
 		<div>
 			<div class="well-small span12">
-				<select id="ddl-school-level">
-					<option>Test</option>
-					<option>Test</option>
-					<option>Test</option>
-					<option>Test</option>
-					<option>Test</option>
-					<option>Test</option>
-					<option>Test</option>
-					<option>Test</option>
+				<select id="ddl-school-complevel">
+					<option value="">Select Level</option>
 				</select>
+				<p class="field-error"></p>
+				<p class="field-message"></p>
 			</div>
-			<div class="span12">
-				<span class="span3"><strong>2013</strong></span>
-				<span class="span3">
-					<input type="checkbox" />
-					<label>Spring </label> </span><span class="span3">
-					<input type="checkbox" />
-					<label>Spring </label> </span><span class="span3">
-					<input type="checkbox" />
-					<label>Spring </label> </span>
-			</div>
-			<div class="span12">
-				<span class="span3"><strong>2012</strong></span>
-				<span class="span3">
-					<input type="checkbox" />
-					<label>Spring </label> </span><span class="span3">
-					<input type="checkbox" />
-					<label>Spring </label> </span><span class="span3">
-					<input type="checkbox" />
-					<label>Spring </label> </span>
-			</div>
-			<div class="span12">
-				<span class="span3"><strong>2011</strong></span>
-				<span class="span3">
-					<input type="checkbox" />
-					<label>Spring </label> </span><span class="span3">
-					<input type="checkbox" />
-					<label>Spring </label> </span>
-			</div>
+			<div id="div-school-seasons"></div>
 		</div>
 		<div class="row-fluid clearfix">
 			<span class="floatLeft"><a href="javascript:void(0)">Add Level</a> </span>
@@ -162,4 +132,9 @@
 		<span class="floatLeft"><a href="javascript:void(0)">Add Level</a> </span>
 		<span class="floatRight"><a href="javascript:void(0)" class="well-small btn-primary" >Finish</a> </span>
 	</div>
+</div>
+
+<!--	Modal Section to display positions	-->
+<div id="modal-school-positions" class="modal hide fade position-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+
 </div>

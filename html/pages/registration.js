@@ -129,8 +129,6 @@ define(["require", "text!registration/templates/layout.html", "facade", "control
 				destination : "#main-content"
 			});
 			this.scheme.push(this.registerFacebookView);
-			console.log("this.registerFacebookView");
-			console.log(this.registerFacebookView);
 			this.layout.render();
 		},
 
@@ -172,8 +170,6 @@ define(["require", "text!registration/templates/layout.html", "facade", "control
 
 		selectOrg : function(data) {
 			var controller = this;
-			console.log("passed data in selectOrg = ");
-			console.log(data);
 			this.refreshPage();
 			this.select_org = new RegistrationSelectOrgModel();
 			this.select_org.id = data.id;

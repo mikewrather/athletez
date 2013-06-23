@@ -151,7 +151,6 @@ define(['require', 'text!registration/templates/register_facebook.html', 'facade
 			$.each(fields, function(i, field) {
 				payload[field.name] = field.value;
 			});
-			console.log(payload);
 			if (payload['password'] == '' || payload['password-again'] == '') {
 				alert('Please input a password');
 				return;
@@ -167,15 +166,11 @@ define(['require', 'text!registration/templates/register_facebook.html', 'facade
 			this.model.attributes.id = false;
 			//payload.id1 = 426047;
 			this.model.set({'payload': payload, id : 1});
-			console.log(this.model.toJSON());
-			console.log("Facebook Registration url changed from user/fbreg to user/basics");
 			this.model.url = function() {
 				if (testpath)
 					return testpath + '/user/basics';
 				return '/api/user/basics/' + payload['users_id'];
 			}
-			console.log(this.model);
-			console.log(this.model.url());
 			this.model.save();
 			Channel('registration-select-org').publish();
 		}

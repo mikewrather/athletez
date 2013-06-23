@@ -184,16 +184,22 @@ define(['facade','views/base','utils'], function (facade, BaseView, utils) {
          * textField : string/int, key or index in array to be used to display in dropdown
          * valueField : string/int, key or index in array to be used as value of displayed option in dropdown
          * control : jquery selector for the html control in which data has to be filled
+         * defaultText : the heading which will be inserted as first optopn of a drop down
          *  */
-        setDropdownOptions : function(data, textField, valueField, control) {
-			var tempHtml = '<option value="">Select<option>';
+        setDropdownOptions : function(data, textField, valueField, control,defaultText) {
+			var tempHtml = '';
+			if(defaultText){
+				tempHtml +='<option value="">'+defaultText+'</option>';
+			}else{
+			 tempHtml += '<option value="">Select</option>';
+			}
 			if (data != null && data.length > 0) {
-				for (var i = 0; i < data.length; i++) {
-					tempHtml += '<option value="' + data[i][valueField] + '">' + data[i][textField] + '<option>';
+				for (var key in data) {
+					tempHtml += '<option value="' + data[key][valueField] + '">' + data[key][textField] + '</option>';
 
 				}
 			}
-			$(control).html(tempHtml);
+			this.$el.find(control).html(tempHtml);
 		}
 
     });

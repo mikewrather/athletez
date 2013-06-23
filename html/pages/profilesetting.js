@@ -10,7 +10,8 @@ define(["require", "text!profilesetting/templates/layout.html", "facade", "contr
   "profilesetting/views/basic_info",
   "profilesetting/views/highschool",
   "profilesetting/views/club",
-  "profilesetting/views/sport","profilesetting/models/high_school"], function(require, pageLayoutTemplate){
+  "profilesetting/views/sport",
+  "profilesetting/models/high_school"], function(require, pageLayoutTemplate){
 	
 	var ProfileSettingController,
 	facade = require("facade"),
@@ -44,15 +45,13 @@ define(["require", "text!profilesetting/templates/layout.html", "facade", "contr
 		cssArr : ["/pages/profilesetting/profilesettings.css"],
 	
 	events:{
-		"Click .div-add-dotted" : "addHighSchool",
+		"click #btn-Add-School" : "addHighSchool",
 	},
-	
+	/*Actions to be performed on the first time the object is created*/
 		initialize: function(options){
 			
 			/*Load CSS File*/
-			console.log("Load CSS by ");
 			Channel('load:css').publish(this.cssArr);
-			console.log(cssArr);
 			/*Bind Class with all events*/
 			_.bindAll(this);
 			
@@ -64,6 +63,7 @@ define(["require", "text!profilesetting/templates/layout.html", "facade", "contr
 			return this;
 
 		},
+		/*To reduce initialize methods length and all the view related functions */
 		init: function(){
 			this.setupLayout().render();
 			this.setupView();
@@ -73,6 +73,9 @@ define(["require", "text!profilesetting/templates/layout.html", "facade", "contr
 			this.addHighSchool();
 
 		},
+		/*Method renders the page layout for user setting page*/
+		/*pageLayoutTemplate is just the skeleton for user setting page modules like High School,Clubs,Individual Sports,
+		 *  Their respective implementation is done in their own view respectively*/
 		setupLayout : function() {
 			var pageLayout;
 
@@ -89,25 +92,26 @@ define(["require", "text!profilesetting/templates/layout.html", "facade", "contr
 
 			return this.layout;
 		},
-		
+		/*Creates objects for different child views used in the page like header, HighSchool, ClubView, IndividualSports*/
 		setupView : function(){
-			console.log("Setup View");
 			var self = this;
 		this.basicView = new BasicInfoView({
 			id: self.id
 		});	
 		},
+		
+		/*Add School View if user clicks on Add School*/
 		addHighSchool : function(){
-		//	alert("Add School");
-			console.log("Add High School Information");
+			var self = this;
 			this.schoolView = new HighSchoolView(
 			{
 				model : new HighSchoolModel(),
-				name : "Registration with Email Address",
-				destination : "#content-school-prof-setting"
+				name : "settings-high-school",
+				destination : "#content-school-prof-setting",
+				user_id : self.id
 			});
-			//this.schoolView.render();
-			
+			this.scheme.push(this.schoolView);
+			this.layout.render();
 		}
 		
 	});

@@ -42,7 +42,6 @@ function(facade, collections, SportorgOrgModel, utils) {
                 }
                 subpayload['teams'] = teams;
                 item.set('payload', payload[key]);
-                console.log(payload[key]);
                 item.set('desc', response.desc);
                 item.set('exec_data', response.exec_data);
                 collection.push(item);

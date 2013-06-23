@@ -12,8 +12,6 @@ define([
         'views',
         'utils',
         'vendor',
-       // 'profilesetting/collections/sports',
-       // 'profile/views/sport-list'
         ], 
 function(require, profileHeaderTemplate) {
 
@@ -22,8 +20,6 @@ function(require, profileHeaderTemplate) {
         views = require('views'),
         BasicsInfoModel = require('profilesetting/models/basic_info'),
         SectionView = views.SectionView,
-       // SportListView = require('profile/views/sport-list'),
-       // SportList = require('profile/collections/sports'),
         utils = require('utils'),
         Channel = utils.lib.Channel,
         vendor = require('vendor'),
@@ -57,13 +53,10 @@ function(require, profileHeaderTemplate) {
         },
         
         setupBasicView: function() {
-        	console.log("setup basic view called in basic_info.js view");
             var self = this;
            // self.render();
             
             var markup = Mustache.to_html(self.template, this.basicInfoModel.toJSON());
-            console.log(this.basicInfoModel.toJSON());
-            console.log(markup);
             $('#section-basics-prof-setting').html(markup);
         },
         

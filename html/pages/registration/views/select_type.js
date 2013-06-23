@@ -56,11 +56,9 @@ function(require, RegistrationSelectTypeModel, registrationSelectTypeTemplate) {
                 FB.getLoginStatus(function(response) {
                     if (response.status === 'connected') {
                         FB.api('/me', function(response) {
-                            console.log(response);
                             Channel('registration-with-facebook').publish();
                         });
                     } else if (response.status === 'not_authorized') {
-                        console.log('not_authorized');
                         login();
                     } else {
                         login();
