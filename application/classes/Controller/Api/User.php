@@ -118,7 +118,9 @@
 				$sports_id = null;
 			}
 
-			return $this->mainModel->getOrgs($sports_id);
+			$groupby = ($this->request->query('groupby') != '') ? $this->request->query('groupby') : NULL;
+			
+			return $this->mainModel->getOrgs($sports_id,$groupby);
 		}
 		
 		/**

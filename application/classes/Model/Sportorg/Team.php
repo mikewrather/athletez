@@ -376,7 +376,9 @@ class Model_Sportorg_Team extends ORM
 	}
 	
 	public function getSchedule($count = NULL, $past_games = false )
-	{ 
+	{
+//		print_r($this);
+
 		 if(!$this->loaded()) return false;
 		 
 		 // get game list		 

@@ -534,7 +534,8 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 		return $return_obj;
 	}
 
-	public function getOrgs($sports_id)
+
+	public function getOrgs($sports_id,$groupby=NULL)
 	{
 		$org_sport_link_obj = DB::select(
 				array('users_teams_link.id', 'utl_id'),
@@ -563,7 +564,9 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 
 		$res = $org_sport_link_obj->execute();
 
-		$orgs = array();
+		$orgs = array(
+			"groupby" => $groupby
+		);
 
 		foreach($res as $team)
 		{
@@ -588,7 +591,7 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 				$positions_array[$position->id] = $position->getBasics();
 			}
 
-			$orgs[$team['org_id']]['teams'][$team['complevel_name']][] = array(
+			$this_org_item = array(
 				'team_id' => $team['team_id'],
 				'team_name' => $team['unique_ident'],
 				'year' => $team['year'],
@@ -596,6 +599,16 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 				'season' => $team['season'],
 				'positions' => $positions_array,
 			);
+
+			if($groupby == 'complevel')
+			{
+				$orgs[$team['org_id']]['teams'][$team['complevel_name']][] = $this_org_item;
+			}
+			else
+			{
+				$orgs[$team['org_id']]['teams'][] = $this_org_item;
+			}
+
 		}
 		//Return null as result if not value
 		$std = new stdClass();
