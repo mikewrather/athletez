@@ -89,17 +89,22 @@
 			}
 			foreach($orgs_obj as $org_obj)
 			{
-				foreach($org_obj->teams as $team_obj)
+			//	print_r($org_obj);
+				foreach($org_obj->teams as $complevel=>$teams)
 				{
-					$team = ORM::factory('Sportorg_Team', $team_obj->team_id);
-					$schedule = $team->getSchedule(3,false);
-					$schedule[] = array(); //I put this in because I kept getting an error from the foreach if i didn't do this.
-					$sArr = array();
-					foreach($schedule as $game)
+				//	print_r($complevel);
+					foreach($teams as $team_obj)
 					{
-						if(is_object($game)) $sArr[] = $game->getBasics();
+						$team = ORM::factory('Sportorg_Team', $team_obj->team_id);
+						$schedule = $team->getSchedule(3,false);
+						$schedule[] = array(); //I put this in because I kept getting an error from the foreach if i didn't do this.
+						$sArr = array();
+						foreach($schedule as $game)
+						{
+							if(is_object($game)) $sArr[] = $game->getBasics();
+						}
+						$team_obj->schedules = $sArr;
 					}
-					$team_obj->schedules = $sArr;
 				}
 			}
 		 	

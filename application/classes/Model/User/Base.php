@@ -588,7 +588,7 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 				$positions_array[$position->id] = $position->getBasics();
 			}
 
-			$orgs[$team['org_id']]['teams'][] = array(
+			$orgs[$team['org_id']]['teams'][$team['complevel_name']][] = array(
 				'team_id' => $team['team_id'],
 				'team_name' => $team['unique_ident'],
 				'year' => $team['year'],
