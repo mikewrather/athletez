@@ -534,11 +534,17 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 		return $return_obj;
 	}
 
-	public function getOrgs($sports_id)
+
+	public function getOrgs($sports_id,$groupby=NULL)
 	{
 		$org_sport_link_obj = DB::select(
-				array('users.id', 'user_id'), array('orgs.id', 'org_id'), array('orgs.name', 'org_name'),
-				'teams.*', array('teams.id', 'team_id'), array('complevels.name', 'complevel_name'),
+				array('users_teams_link.id', 'utl_id'),
+				array('users.id', 'user_id'),
+				array('orgs.id', 'org_id'),
+				array('orgs.name', 'org_name'),
+				'teams.*',
+				array('teams.id', 'team_id'),
+				array('complevels.name', 'complevel_name'),
 				array('seasons.name', 'season'), 'statvals.statval'
 			)
 			->from('users')
@@ -558,7 +564,9 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 
 		$res = $org_sport_link_obj->execute();
 
-		$orgs = array();
+		$orgs = array(
+			"groupby" => $groupby
+		);
 
 		foreach($res as $team)
 		{
@@ -572,15 +580,35 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 				);
 			}
 
-			$orgs[$team['org_id']]['teams'][] = array(
+			$positions = ORM::factory('Sportorg_Position')
+				->join('utl_position_link','LEFT')->on('sportorg_position.id','=','utl_position_link.positions_id')
+				->where('users_teams_link_id','=',$team['utl_id'])
+				->find_all();
+
+			$positions_array = NULL;
+			foreach($positions as $position)
+			{
+				$positions_array[$position->id] = $position->getBasics();
+			}
+
+			$this_org_item = array(
 				'team_id' => $team['team_id'],
 				'team_name' => $team['unique_ident'],
 				'year' => $team['year'],
 				'complevel' => $team['complevel_name'],
 				'season' => $team['season'],
-				'statval' => $team['statval'],
-				'stats' => array(),
+				'positions' => $positions_array,
 			);
+
+			if($groupby == 'complevel')
+			{
+				$orgs[$team['org_id']]['teams'][$team['complevel_name']][] = $this_org_item;
+			}
+			else
+			{
+				$orgs[$team['org_id']]['teams'][] = $this_org_item;
+			}
+
 		}
 		//Return null as result if not value
 		$std = new stdClass();

@@ -149,6 +149,22 @@
 		public function action_post_add()
 		{
 
+			$this->populateAuthVars();
+			if(!$this->is_logged_in)
+			{
+				// Create Array for Error Data
+				$error_array = array(
+					"error" => "You must be logged in in order to upload a video",
+				);
+
+				// Set whether it is a fatal error
+				$is_fatal = true;
+
+				// Call method to throw an error
+				$this->addError($error_array,$is_fatal);
+				return false;
+			}
+
 			set_time_limit(0);
 
 			ini_set('upload_max_filesize', '500M');
@@ -381,12 +397,13 @@
 				{
 					return $result;
 				}
-				elseif(get_class($result) == 'ORM_Validation_Exception')
+				elseif(is_subclass_of($result,'Exception'))
 				{
 					//parse error and add to error array
 					$this->processValidationError($result,$this->mainModel->error_message_path);
-					return false;
+					return $result;
 				}
+
 			}
 
 		}

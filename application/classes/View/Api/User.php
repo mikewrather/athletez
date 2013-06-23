@@ -87,23 +87,44 @@
 			if ($orgs_obj === null){
 				return null;
 			}
-			foreach($orgs_obj as $org_obj)
+
+			foreach($orgs_obj as $key=>$org_obj)
 			{
-				foreach($org_obj->teams as $team_obj)
+				if($key=='groupby') continue;
+
+				if($orgs_obj->groupby=='complevel')
 				{
-					$team = ORM::factory('Sportorg_Team', $team_obj->team_id);
-					$schedule = $team->getSchedule(3,false);
-					$schedule[] = array(); //I put this in because I kept getting an error from the foreach if i didn't do this.
-					$sArr = array();
-					foreach($schedule as $game)
+					foreach($org_obj->teams as $complevel=>$teams)
 					{
-						if(is_object($game)) $sArr[] = $game->getBasics();
+						$teams = $this->_team_loop($teams);
 					}
-					$team_obj->schedules = $sArr;
 				}
+				else
+				{
+					$org_obj->teams = $this->_team_loop($org_obj->teams);
+				}
+
 			}
-		 	
+		 	unset($orgs_obj->groupby);
 			return Util::obj_arr_toggle($orgs_obj);
+		}
+
+		protected function _team_loop($teams)
+		{
+			foreach($teams as $team_obj)
+			{
+				$team = ORM::factory('Sportorg_Team', $team_obj->team_id);
+
+				$schedule = $team->getSchedule(3,true);
+				$schedule[] = array(); //I put this in because I kept getting an error from the foreach if i didn't do this.
+				$sArr = array();
+				foreach($schedule as $game)
+				{
+					if(is_object($game)) $sArr[] = $game->getBasics();
+				}
+				$team_obj->schedules = $sArr;
+			}
+			return $teams;
 		}
 		
 		/**
