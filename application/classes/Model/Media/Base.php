@@ -10,6 +10,8 @@ class Model_Media_Base extends ORM
 	
 	protected $_table_name = 'media';
 
+	public $error_message_path = 'models/media/base';
+
 	protected $_belongs_to = array(
 		'sport' => array(
 			'model' => 'Sportorg_Sport',
@@ -37,6 +39,11 @@ class Model_Media_Base extends ORM
 
 		return array
 		(
+			'users_id' => array(
+				array('not_empty'),
+				array('digit'),
+				array('users_id_exist'),
+			),
 			/*
 			// name (varchar)
 			'name'=>array(

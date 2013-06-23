@@ -85,6 +85,11 @@ class Model_Sportorg_Games_Base extends ORM
 
 		if (isset($id) && $id != ""){
 			$this->id = $id;
+			$feed_action = "update";
+		}
+		else
+		{
+			$feed_action = "add";
 		}
 
 		if (isset($locations_id))
@@ -104,6 +109,8 @@ class Model_Sportorg_Games_Base extends ORM
 			}
 
 			$this->save();
+			Model_Site_Feed::addToFeed($this,$feed_action);
+
 			return $this;
 		} catch(ORM_Validation_Exception $e){
 			return $e;

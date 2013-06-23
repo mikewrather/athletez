@@ -10,6 +10,8 @@ class Model_Media_Video extends ORM
 	
 	protected $_table_name = 'videos';
 
+	public $error_message_path = 'models/media/video';
+
 	protected $_belongs_to = array(
 		'media' => array(
 			'model' => 'Media_Base',
@@ -280,18 +282,7 @@ class Model_Media_Video extends ORM
 			$mediaArr['sports_id'] = $sports_id;
 		}
 
-		if(!isset($user_id))
-		{
-			if(!Auth::instance()->logged_in()) return false;
-			else
-			{
-				$mediaArr['user_id'] = Auth::instance()->get_user()->id;
-			}
-		}
-		else
-		{
-			$mediaArr['user_id'] = $user_id;
-		}
+		$mediaArr['user_id'] = (isset($user_id) && $user_id > 0) ? $user_id : Auth::instance()->get_user()->id;
 
 		if(isset($name))
 		{
@@ -321,8 +312,6 @@ class Model_Media_Video extends ORM
 		{
 			return $e;
 		}
-
-
 	}
 
 	protected function _zencode($cloudRaw)

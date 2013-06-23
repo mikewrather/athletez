@@ -42,9 +42,13 @@ class Controller_VidListener extends Controller
 		$video->addType($video_types_id,$meta,$arr->output->url);
 
 		// Check if all types are complete and send notification if they are
-		$sendEmail = $video->_check_ready() ? true : false;
+		$all_done = $video->_check_ready() ? true : false;
 
-		if($sendEmail) $this->sendEmail();
+		if($all_done)
+		{
+			Model_Site_Feed::addToFeed($this,'add');
+			$this->sendEmail();
+		}
 
 	}
 

@@ -247,7 +247,7 @@ class Controller_Api_Base extends AuthController
 			$retObj = $this->{$action}();
 
 		if(!$this->fatalErrorThrown) //if at any point this property is set to true it will skip this action
-			$result = is_object($retObj) ? $this->getDataFromView($retObj) : $this->getDataFromView();
+			$result = is_object($retObj) && !is_subclass_of($retObj,'Exception') ? $this->getDataFromView($retObj) : $this->getDataFromView();
 
 		$this->response->headers('Content-Type','application/json');
 
@@ -436,7 +436,6 @@ class Controller_Api_Base extends AuthController
 			$errors = array_merge($errors, $external_errors);
 			unset($errors['_external']);
 		}
-
 		foreach($errors as $field => $msg)
 		{
 			// Create Array for Error Data
@@ -619,6 +618,22 @@ class Controller_Api_Base extends AuthController
 
 	public function action_post_addvideo()
 	{
+		$this->populateAuthVars();
+		if(!$this->is_logged_in)
+		{
+			// Create Array for Error Data
+			$error_array = array(
+				"error" => "You must be logged in in order to upload a video",
+			);
+
+			// Set whether it is a fatal error
+			$is_fatal = true;
+
+			// Call method to throw an error
+			$this->addError($error_array,$is_fatal);
+			return false;
+		}
+
 		$valid_object_types = array(
 			"Model_Sportorg_Games_Base",
 			"Model_Sportorg_Match",
@@ -660,6 +675,7 @@ class Controller_Api_Base extends AuthController
 		$req = new Request('/api/video/add');
 		$req->method($this->request->method());
 		$req->post($this->request->post());
+		$req->cookie($this->request->cookie());
 
 		$resp = new Response();
 
