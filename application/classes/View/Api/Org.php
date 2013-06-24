@@ -127,7 +127,22 @@
 		 */
 		public function get_seasons()
 		{
+			/*
 			return $this->get_seasonteams();
+			$retArr = null;
+
+			// Scaffolding Code For Array:
+			$objs = $this->obj->execute();
+			//print_r($objs);
+
+			foreach($objs as $obj)
+			{
+				$season = ORM::factory('Sportorg_Seasons_Base',$obj['season_id']);
+				$retArr[] = $season->getBasics();
+			}
+
+			return $retArr;
+			*/
 			$retArr = null;
 
 			// Scaffolding Code For Array:
