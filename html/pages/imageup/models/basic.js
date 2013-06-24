@@ -16,7 +16,7 @@ define( ["facade","media/models/image"], function (facade,MediaImageModel) {
 	    },
 	    initialize: function (attributes, options) {
             MediaImageModel.prototype.initialize.call(attributes, options);
-            //this.fetch();
+            this.fetch();
         }
 	
 	});
