@@ -68,12 +68,6 @@ define([
             debug.log("Imagecontroller Show");
             this.scheme.push(addBasicView);
             this.layout.render();
-			debug.log("this.scheme(((((((((((())))))))))))");
-			debug.log(addBasicView);
-			debug.log("this.scheme(((((((((((())))))))))))");
-			debug.log(this.scheme);
-			debug.log("this.scheme(((((((((((())))))))))))");
-			debug.log(this.layout);
         },
 		setupLayout: function () {
             var pageLayout;
