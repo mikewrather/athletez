@@ -51,38 +51,42 @@ define([
         },
         
         init: function() {
-			console.log("Imagecontroller Init");
-            this.setupLayout().render();
+			debug.log("Imagecontroller Init");
+            this.setupLayout();
             this.showuploader();            
-        },
-        
+        }, 
         showuploader: function () {
             //this.basics = new ImageBasicModel();
 	        debug.log(ImageBasicView);
 	        debug.log(ImageBasicModel);
-
+			imgModel= new ImageBasicModel();
             addBasicView = new ImageBasicView({
                 name: "Add Media",
-                destination: "body"
+				model :imgModel,
+				destination : "#main-content"
             });
-            console.log("Imagecontroller Show");
+            debug.log("Imagecontroller Show");
             this.scheme.push(addBasicView);
             this.layout.render();
+			debug.log("this.scheme(((((((((((())))))))))))");
+			debug.log(addBasicView);
+			debug.log("this.scheme(((((((((((())))))))))))");
+			debug.log(this.scheme);
+			debug.log("this.scheme(((((((((((())))))))))))");
+			debug.log(this.layout);
         },
 		setupLayout: function () {
             var pageLayout;
-			console.log("Imagecontroller Layout");
+			debug.log("Imagecontroller Layout");
             pageLayout = new LayoutView({
                 scheme: this.scheme,
                 destination: "body",
-                template: pageLayoutTemplate,
-                displayWhen: "ready"
+				template : pageLayoutTemplate,
+				displayWhen : "ready"
             });
             this.layout = pageLayout;
-
             return this.layout;
         }
-
 
     });
 
