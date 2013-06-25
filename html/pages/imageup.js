@@ -116,14 +116,16 @@ define([
 			    url: '/api/image/add/'+id,
 			    data: dataum,
 			    cache: false,
-			    contentType: 'multipart/form-data',
 			    processData: false,
+				contentType:false,
 			    type: 'POST',
 			    success: function(data){
+					debug.log(data);
 					msg={"msg":"File Uploaded Succesfully","color":"green"};
 					Channel("imageup-error").publish(msg);
 			    },
 				error:function(data){
+					debug.log(data);
 					msg={"msg":data.statusText,"color":"red"};
 					Channel("imageup-error").publish(msg);
 				}
