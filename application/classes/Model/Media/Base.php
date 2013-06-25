@@ -143,7 +143,6 @@ class Model_Media_Base extends ORM
 		{
 			$this->name = "";
 		}
-
 		$this->save();
 
 		return $this->id;

@@ -32,8 +32,8 @@ $dbconfig = array
 //SET UP CASE FOR ENV
 if(Kohana::$environment == Kohana::LOCALHOST)
 {
-	$dbconfig['default']['connection']['password'] ='';// 'LOCALHOST PASSWORD';
-	$dbconfig['scraping']['connection']['password'] ='';// 'LOCALHOST PASSWORD';
+	$dbconfig['default']['connection']['password'] ='  qmi!#j';// 'LOCALHOST PASSWORD';
+	$dbconfig['scraping']['connection']['password'] ='  qmi!#j';// 'LOCALHOST PASSWORD';
 }
 elseif(Kohana::$environment == Kohana::PRODUCTION)
 {

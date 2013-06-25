@@ -130,6 +130,7 @@ class Model_Media_Image extends ORM
 
 		// create a row in the media table and store the ID of that row in this table
 		$args["media_type"] = "image";
+	//	$args['user_id'] = (isset($$args['user_id']) && $$args['user_id'] > 0) ? $$args['user_id'] : Auth::instance()->get_user()->id;
 		$this->media_id = ORM::factory('Media_Base')->addMedia($args);
 
 		// Create this object in DB if not already loaded with an ID
