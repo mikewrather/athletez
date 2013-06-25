@@ -10,7 +10,8 @@ define([
         'facade', 
         'views',
         'utils',
-        'vendor'
+        'vendor',
+    	"imageup/models/basic"
         ], 
 function(require, imageBasicTemplate) {
 
@@ -21,6 +22,7 @@ function(require, imageBasicTemplate) {
         Channel = utils.lib.Channel,
         vendor = require('vendor'), 
         SectionView = views.SectionView,
+		ImageBasicModel = require("imageup/models/basic"),
         $ = facade.$,
         _ = facade._,
         debug = utils.debug;
@@ -46,8 +48,16 @@ function(require, imageBasicTemplate) {
 
         imageUploadClick: function(event) {
             event.preventDefault();
-            Channel("imageup-add-image").publish();
-        }
+			var data = new FormData();
+			jQuery.each($('#image_file')[0].files, function(i, file) {
+				debug.log(file);
+			    data.append('image_file', file);
+				data.append('name', file.name);
+				data.append('sports_id', '46');
+				Channel("imageup-add-image").publish(data);
+			});
+
+        }	
                 
     });
 

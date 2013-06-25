@@ -24,6 +24,9 @@ require.config({
         'jquery.pstrength' : '/vendor/plugins/jquery.pstrength-min.1.2',
         'jqueryui'     : '/vendor/plugins/jquery-ui-1.10.2.custom.min',
         'jquery.jrac'  : '/vendor/plugins/jquery.jrac',
+		'iframe-transport' : '/vendor/plugins/jquery.iframe-transport',
+		'fileupload'   :'/vendor/plugins/jquery.fileupload',
+		'jquery.ui.widget'	:'/vendor/plugins/jquery.ui.widget',
         
         'custom'       : '/vendor/custom',
 
@@ -59,6 +62,7 @@ require.config({
         'site'         : '/packages/site',
         'sportorg'     : '/packages/sportorg',
         'location'     : '/packages/location',
+	
         
         // Pages
 

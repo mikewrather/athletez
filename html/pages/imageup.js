@@ -11,7 +11,11 @@ define([
     "models",
     "views",
     "utils",
+	"jquery.ui.widget",
+	"iframe-transport",
+	"fileupload",
     "imageup/models/basic",
+	"imageup/models/imageupload",
     "imageup/collections/basics",
     "imageup/views/basic"
     ], function (require, pageLayoutTemplate) {
@@ -22,8 +26,11 @@ define([
         models = require("models"),
         views = require("views"),
         utils = require("utils"),
-        
+        iframetransport= require("iframe-transport"),
+		fileupload= require("fileupload"),
+		widget= require("jquery.ui.widget"),
         ImageBasicModel = require("imageup/models/basic"),
+		ImageUploadModel = require("imageup/models/imageupload"),
         ImageBasicList = require("imageup/collections/basics"),
         ImageBasicView = require("imageup/views/basic"),
         
@@ -53,8 +60,16 @@ define([
         init: function() {
 			debug.log("Imagecontroller Init");
             this.setupLayout();
+			this.handleDeferreds();
             this.showuploader();            
         }, 
+		handleDeferreds : function() {
+			var controller = this;
+			function imageuploader(dataum) {
+				controller.imageUpload(dataum);
+			}
+			Channel('imageup-add-image').subscribe(imageuploader);
+		},
         showuploader: function () {
             //this.basics = new ImageBasicModel();
 	        debug.log(ImageBasicView);
@@ -68,6 +83,25 @@ define([
             debug.log("Imagecontroller Show");
             this.scheme.push(addBasicView);
             this.layout.render();
+			/*$("#image_file").fileupload({
+		        dataType: 'json',
+				url:'/api/image/add/123',
+				type:'POST',
+				autoUpload:'false',
+				paramName:'image_file[]',
+		        done: function (e, data) {
+		            $.each(data.result.files, function (index, file) {
+		                $('<p/>').text(file.name).appendTo(document.body);
+		            });
+		        },
+				progressall: function (e, data) {
+				        var progress = parseInt(data.loaded / data.total * 100, 10);
+				        $('#progress .bar').css(
+				            'width',
+				            progress + '%'
+				        );
+				    }
+		    });*/
         },
 		setupLayout: function () {
             var pageLayout;
@@ -80,7 +114,23 @@ define([
             });
             this.layout = pageLayout;
             return this.layout;
-        }
+        },
+		imageUpload: function (dataum) {
+			debug.log("image uploading starts");
+			//imguploadModel= new ImageUploadModel();
+			//imguploadModel.save();
+			$.ajax({
+			    url: '/api/image/add/'+123,
+			    data: dataum,
+			    cache: false,
+			    contentType: 'multipart/form-data',
+			    processData: false,
+			    type: 'POST',
+			    success: function(data){
+			        alert(data);
+			    }
+			});
+		}
 
     });
 

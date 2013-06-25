@@ -1,24 +1,24 @@
-// basics.js Model
+// imageupload.js Model
 // ------------
 // Requires define
-// Return {GameBasicsModel} model constructor object
+// Return {ImageUploadModel} model constructor object
 
 define( ["facade","media/models/image"], function (facade,MediaImageModel) {
 
     var ImageBasicsModel,
         _ = facade._;
 
-    ImageBasicsModel =  MediaImageModel.extend({
+    ImageUploadModel =  MediaImageModel.extend({
 		url: function() {
 	            if (testpath)
-	                return testpath + '/user/images/' + this.id;
-	            return '/api/user/images/' + this.id;
+	                return testpath + '/image/add/' + this.images_id;
+	            return '/api/image/add/' + this.images_id;
 	    },
 	    initialize: function (attributes, options) {
-			this.id="426004";
-			console.log("hi");
+			this.user_id="426004";
+			this.images_id="426004";
+			this.sports_id="46";
             MediaImageModel.prototype.initialize.call(attributes, options);
-            this.fetch();
         }
 	
 	});
