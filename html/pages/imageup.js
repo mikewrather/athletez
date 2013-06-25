@@ -104,28 +104,37 @@ define([
             this.layout = pageLayout;
             return this.layout;
         },
-		imageUpload: function (dataum) {
+		imageUpload: function (data) {
 			debug.log("image uploading starts");
 			//imguploadModel= new ImageUploadModel();
 			//imguploadModel.save();
 			$("#errormsg").hide();
+			var id=data.id,
+				dataum=data.dataum,
+				msg="";
 			$.ajax({
-			    url: '/api/image/add/'+123,
+			    url: '/api/image/add/'+id,
 			    data: dataum,
 			    cache: false,
 			    contentType: 'multipart/form-data',
 			    processData: false,
 			    type: 'POST',
 			    success: function(data){
-			        alert(data);
-			    }
+					msg={"msg":"File Uploaded Succesfully","color":"green"};
+					Channel("imageup-error").publish(msg);
+			    },
+				error:function(data){
+					msg={"msg":data.statusText,"color":"red"};
+					Channel("imageup-error").publish(msg);
+				}
 			});
 		},
 		errorShowup: function (dataum) {
 			debug.log(dataum);
+			$("#errormsg").show();
 			errorShowModel= new ErrorShowModel(dataum);
             addErrorView = new ErrorShowView({
-                name: "File Upload Error",
+                name: "File Upload Msg",
 				model :errorShowModel,
 				destination : "#errormsg"
             });

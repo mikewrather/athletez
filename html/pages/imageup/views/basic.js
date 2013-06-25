@@ -51,18 +51,21 @@ function(require, imageBasicTemplate) {
         imageUploadClick: function(event) {
             event.preventDefault();
 			var data = new FormData();
+			var msg="";
 			if(!$('#image_file').val())
 			{
-				var msg={"msg":"Image Field Empty","color":"red"}
+				msg={"msg":"Image Field Empty","color":"red"};
 				Channel("imageup-error").publish(msg);	
 			}
 			else
 			{
 				jQuery.each($('#image_file')[0].files, function(i, file) {
-				    data.append('image_file', file);
-					data.append('name', file.name);
-					data.append('sports_id', '46');
-					Channel("imageup-add-image").publish(data);
+					data = new FormData();
+					data.append('name',file.name);
+					data.append('sports_id','46');
+					data.append('image_file',file);
+					var dataum={"dataum":data,"id":i}
+					Channel("imageup-add-image").publish(dataum);
 				});
 			}
 
