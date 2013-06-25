@@ -11,7 +11,8 @@ define([
         'views',
         'utils',
         'vendor',
-    	"imageup/models/basic"
+    	"imageup/models/basic",
+    	"imageup/views/errors"
         ], 
 function(require, imageBasicTemplate) {
 
@@ -23,6 +24,7 @@ function(require, imageBasicTemplate) {
         vendor = require('vendor'), 
         SectionView = views.SectionView,
 		ImageBasicModel = require("imageup/models/basic"),
+		ErrorDispView = require("imageup/views/errors"),
         $ = facade.$,
         _ = facade._,
         debug = utils.debug;
@@ -31,7 +33,7 @@ function(require, imageBasicTemplate) {
 
     ImageBasicView = SectionView.extend({
 	
-        id: 'main-content',
+        id: 'imageuploadForm',
 
         events: {
 	            "click #imageup": "imageUploadClick"
@@ -49,13 +51,20 @@ function(require, imageBasicTemplate) {
         imageUploadClick: function(event) {
             event.preventDefault();
 			var data = new FormData();
-			jQuery.each($('#image_file')[0].files, function(i, file) {
-				debug.log(file);
-			    data.append('image_file', file);
-				data.append('name', file.name);
-				data.append('sports_id', '46');
-				Channel("imageup-add-image").publish(data);
-			});
+			if(!$('#image_file').val())
+			{
+				var msg={"msg":"Image Field Empty","color":"red"}
+				Channel("imageup-error").publish(msg);	
+			}
+			else
+			{
+				jQuery.each($('#image_file')[0].files, function(i, file) {
+				    data.append('image_file', file);
+					data.append('name', file.name);
+					data.append('sports_id', '46');
+					Channel("imageup-add-image").publish(data);
+				});
+			}
 
         }	
                 

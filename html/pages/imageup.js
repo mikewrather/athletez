@@ -16,8 +16,10 @@ define([
 	"fileupload",
     "imageup/models/basic",
 	"imageup/models/imageupload",
+	"imageup/models/errorshow",
     "imageup/collections/basics",
-    "imageup/views/basic"
+    "imageup/views/basic",
+	"imageup/views/errors"
     ], function (require, pageLayoutTemplate) {
 
     var ImageController,
@@ -31,8 +33,10 @@ define([
 		widget= require("jquery.ui.widget"),
         ImageBasicModel = require("imageup/models/basic"),
 		ImageUploadModel = require("imageup/models/imageupload"),
+		ErrorShowModel = require("imageup/models/errorshow"),
         ImageBasicList = require("imageup/collections/basics"),
         ImageBasicView = require("imageup/views/basic"),
+		ErrorShowView = require("imageup/views/errors"),
         
         LayoutView = views.LayoutView,
         $ = facade.$,
@@ -68,7 +72,11 @@ define([
 			function imageuploader(dataum) {
 				controller.imageUpload(dataum);
 			}
+			function errorShow(dataum) {
+				controller.errorShowup(dataum);
+			}
 			Channel('imageup-add-image').subscribe(imageuploader);
+			Channel('imageup-error').subscribe(errorShow);
 		},
         showuploader: function () {
             //this.basics = new ImageBasicModel();
@@ -83,25 +91,6 @@ define([
             debug.log("Imagecontroller Show");
             this.scheme.push(addBasicView);
             this.layout.render();
-			/*$("#image_file").fileupload({
-		        dataType: 'json',
-				url:'/api/image/add/123',
-				type:'POST',
-				autoUpload:'false',
-				paramName:'image_file[]',
-		        done: function (e, data) {
-		            $.each(data.result.files, function (index, file) {
-		                $('<p/>').text(file.name).appendTo(document.body);
-		            });
-		        },
-				progressall: function (e, data) {
-				        var progress = parseInt(data.loaded / data.total * 100, 10);
-				        $('#progress .bar').css(
-				            'width',
-				            progress + '%'
-				        );
-				    }
-		    });*/
         },
 		setupLayout: function () {
             var pageLayout;
@@ -119,6 +108,7 @@ define([
 			debug.log("image uploading starts");
 			//imguploadModel= new ImageUploadModel();
 			//imguploadModel.save();
+			$("#errormsg").hide();
 			$.ajax({
 			    url: '/api/image/add/'+123,
 			    data: dataum,
@@ -130,6 +120,18 @@ define([
 			        alert(data);
 			    }
 			});
+		},
+		errorShowup: function (dataum) {
+			debug.log(dataum);
+			errorShowModel= new ErrorShowModel(dataum);
+            addErrorView = new ErrorShowView({
+                name: "File Upload Error",
+				model :errorShowModel,
+				destination : "#errormsg"
+            });
+            debug.log("Error View Show");
+            this.scheme.push(addErrorView);
+            this.showuploader();
 		}
 
     });
