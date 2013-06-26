@@ -5,18 +5,16 @@
 
 define( ["facade","models/base"], function (facade,BaseModel) {
 
-    var ErrorShowModel,
+    var PreviewShowModel,
         _ = facade._;
 
-    ErrorShowModel =  BaseModel.extend({
-		defaults: _.extend({}, (new BaseModel).attributes, {
-                "msg": null,
-                "color": "yellow"        }),
+    PreviewShowModel =  BaseModel.extend({
+
 	    initialize: function (attributes, options) {
         }
 	
 	});
 
-    return ErrorShowModel;
+    return PreviewShowModel;
 });
 

@@ -50,7 +50,27 @@ function(require, imageBasicTemplate) {
         },
 		imagePreview: function(event) {
 			debug.log("Image preview view");
-			Channel("imageup-preview").publish(event);
+			var files = $('#image_file')[0].files; 
+			var dataum=[];var i = 0, f,k=0;
+		    for (; f = files[i]; i++) {
+
+		      if (!f.type.match('image.*')) {
+		        continue;
+		      }
+		      var reader = new FileReader();
+		      reader.onload = (function(theFile) {
+		        return function(e) {
+				  k++;
+				  dataum.push({"width":"150","height":"150","filesrc":e.target.result,"title":escape(theFile.name)}); 
+				  if(k==files.length)
+				  {
+					data={"data":dataum};
+					Channel("imageup-preview").publish(data);
+				  }
+				};
+		      })(f);
+		      reader.readAsDataURL(f);
+		    }
 		},
         imageUploadClick: function(event) {
             event.preventDefault();
