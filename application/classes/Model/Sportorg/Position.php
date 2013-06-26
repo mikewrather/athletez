@@ -127,7 +127,9 @@ class Model_Sportorg_Position extends ORM
 	public function getListall($args = array())
 	{
 		extract($args);	
-		$positions = ORM::factory('Sportorg_Position');
+	//	$positions = ORM::factory('Sportorg_Position');
+
+		$positions = DB::select()->from(array('positions','sportorg_position'));
 		// sports_id 
 		// Filter list of positions to a given sport.
 		if(isset($sports_id))
@@ -138,10 +140,17 @@ class Model_Sportorg_Position extends ORM
 		// Filter positions to a list of all positions for a given user
 		if(isset($users_id))
 		{
-			$positions->distinct(TRUE)
-			->join('user_sport_link')->on('user_sport_link.sports_id', '=', 'sportorg_position.sports_id');
-			$positions->where('user_sport_link.users_id', '=', $users_id);
+			$positions->join('org_sport_link')->on('org_sport_link.sports_id', '=', 'sportorg_position.sports_id');
+			$positions->join('teams')->on('teams.org_sport_link_id', '=', 'org_sport_link.id');
+			$positions->join('users_teams_link')->on('users_teams_link.teams_id', '=', 'teams.id');
+			$positions->join('utl_position_link')->on('utl_position_link.users_teams_link_id', '=', 'users_teams_link.id');
+
+			$positions->and_where_open()
+				->where('users_teams_link.users_id', '=', $users_id)
+				->and_where('utl_position_link.positions_id','=',DB::expr('sportorg_position.id'))
+				->and_where_close();
 		}
+		$positions->group_by('sportorg_position.id');
 		
 		return $positions;
 	}
