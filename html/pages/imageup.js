@@ -75,8 +75,12 @@ define([
 			function errorShow(dataum) {
 				controller.errorShowup(dataum);
 			}
+			function previewShow(dataum) {
+				controller.previewShowup(dataum);
+			}
 			Channel('imageup-add-image').subscribe(imageuploader);
 			Channel('imageup-error').subscribe(errorShow);
+			Channel('imageup-preview').subscribe(previewShow);
 		},
         showuploader: function () {
             //this.basics = new ImageBasicModel();
@@ -104,6 +108,34 @@ define([
             this.layout = pageLayout;
             return this.layout;
         },
+		previewShowup: function (evt) {
+			    var files = $('#image_file')[0].files; // FileList object
+
+			    // Loop through the FileList and render image files as thumbnails.
+			    for (var i = 0, f; f = files[i]; i++) {
+
+			      // Only process image files.
+			      if (!f.type.match('image.*')) {
+			        continue;
+			      }
+
+			      var reader = new FileReader();
+
+			      // Closure to capture the file information.
+			      reader.onload = (function(theFile) {
+			        return function(e) {
+			          // Render thumbnail.
+			          var span = document.createElement('span');
+			          span.innerHTML = ['<img class="thumb" src="', e.target.result,
+			                            '" title="', escape(theFile.name), '" width="150" height="150"/>'].join('');
+			          document.getElementById('preview').insertBefore(span, null);
+			        };
+			      })(f);
+
+			      // Read in the image file as a data URL.
+			      reader.readAsDataURL(f);
+			    }
+		},
 		imageUpload: function (data) {
 			debug.log("image uploading starts");
 			//imguploadModel= new ImageUploadModel();

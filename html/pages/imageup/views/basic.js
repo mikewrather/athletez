@@ -36,7 +36,8 @@ function(require, imageBasicTemplate) {
         id: 'imageuploadForm',
 
         events: {
-	            "click #imageup": "imageUploadClick"
+	            "click #imageup": "imageUploadClick",
+				"change #image_file" : "imagePreview"
 	    },
 	
         template: imageBasicTemplate,
@@ -47,10 +48,12 @@ function(require, imageBasicTemplate) {
 			debug.log("Image upload basic view");   
 			debug.log(imageBasicTemplate);                  
         },
-
+		imagePreview: function(event) {
+			debug.log("Image preview view");
+			Channel("imageup-preview").publish(event);
+		},
         imageUploadClick: function(event) {
             event.preventDefault();
-			var data = new FormData();
 			var msg="";
 			if(!$('#image_file').val())
 			{
@@ -59,14 +62,14 @@ function(require, imageBasicTemplate) {
 			}
 			else
 			{
+				var data = new FormData();
 				jQuery.each($('#image_file')[0].files, function(i, file) {
-					data = new FormData();
-					data.append('name',file.name);
-					data.append('sports_id','46');
 					data.append('image_file',file);
-					var dataum={"dataum":data,"id":i}
-					Channel("imageup-add-image").publish(dataum);
 				});
+				data.append('name',"testimg");
+				data.append('sports_id','46');
+				var dataum={"dataum":data,"id":"0"}
+				Channel("imageup-add-image").publish(dataum);
 			}
 
         }	
