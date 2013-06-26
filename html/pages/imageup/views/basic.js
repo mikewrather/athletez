@@ -50,6 +50,7 @@ function(require, imageBasicTemplate) {
         },
 		imagePreview: function(event) {
 			debug.log("Image preview view");
+			$("#preview").hide();
 			var files = $('#image_file')[0].files; 
 			var dataum=[];var i = 0, f,k=0;
 		    for (; f = files[i]; i++) {

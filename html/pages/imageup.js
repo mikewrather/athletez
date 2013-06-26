@@ -113,17 +113,20 @@ define([
             return this.layout;
         },
 		previewShowup: function (dataum) {
-
-				var previewShowList = new PreviewShowList(dataum);
-				    previewShowView = new PreviewShowView({
-				                name: "Preview Show View",
-								model :previewShowList,
-								destination : "#preview"
-				            });
-				            debug.log("Preview View Show");
-					     this.scheme.push(previewShowView);
-						Channel("imageup-rerender").publish();
-					  
+			var previewShowList = new PreviewShowList(dataum);
+			for( var x in this.scheme) {
+			    if( this.scheme[x].id=="imgpreview") delete this.scheme[x];
+			}
+		    previewShowView = new PreviewShowView({
+		                name: "Preview Show View",
+						model :previewShowList,
+						destination : "#preview",
+						displayWhen : "ready"
+		            });
+		    debug.log("Preview View Show");
+			this.scheme.push(previewShowView);
+			$("#preview").show();
+		    Channel("imageup-rerender").publish();		  
 		},
 		rerender: function(){
 			    this.showuploader();	
