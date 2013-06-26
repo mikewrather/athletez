@@ -25,12 +25,17 @@
 			$retArr = null;
 
 			// Scaffolding Code For Array:
-			$objs = $this->obj->find_all();
-			foreach($objs as $obj)
+			$rows = $this->obj->execute();
+
+			foreach($rows as $row)
 			{
-				$retArr[] = $obj->getBasics();
+				$retArr[] = array(
+					"id" => $row['id'],
+					"name" => $row['name'],
+					"sports_id" => $row['sports_id'],
+				);
 			}
- 
+
 			return $retArr;
 		}
 		
