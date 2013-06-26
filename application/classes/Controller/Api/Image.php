@@ -156,8 +156,6 @@
 				$args['files'] = $_FILES;
 			}
 
-			print_r($_FILES);
-
 			$result = $this->mainModel->addImage($args);
 			if(get_class($result) == get_class($this->mainModel))
 			{

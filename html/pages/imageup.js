@@ -113,7 +113,7 @@ define([
 				dataum=data.dataum,
 				msg="";
 			$.ajax({
-			    url: '/api/image/add/'+id,
+			    url: '/api/image/add/',
 			    data: dataum,
 			    cache: false,
 			    processData: false,
