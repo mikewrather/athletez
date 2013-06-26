@@ -798,9 +798,11 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 		//$this->select();
 		//$this->select(array(concat('user_base.first_name',' ','user_base.last_name'), 'full_name'));
 
-		$this->join('users_teams_link')->on('users_teams_link.users_id', '=', 'user_base.id');
-		$this->join('teams')->on('users_teams_link.teams_id', '=', 'teams.id');
-
+		if (isset($sports_id) || isset($complevels_id) || isset($positions_id))
+		{
+			$this->join('users_teams_link')->on('users_teams_link.users_id', '=', 'user_base.id');
+			$this->join('teams')->on('users_teams_link.teams_id', '=', 'teams.id');
+		}
 
 		if (isset($sports_id)){
 			$this->join('org_sport_link')->on('org_sport_link.id', '=', 'teams.org_sport_link_id');
@@ -831,7 +833,7 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 			->where('subject_enttypes_id','=',$enttype_id);
 
 		if (!isset($orderby)){
-			$this->join(array($counts,'filtered'))->on('filtered.users_id', '=', 'user_base.id');
+			$this->join(array($counts,'filtered'),'LEFT')->on('filtered.users_id', '=', 'user_base.id');
 			$this->order_by('num_votes', 'asc');
 		}else{
 			$this->order_by($orderby, 'asc');
@@ -840,6 +842,8 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 		if (isset($searchtext)){
 			$this->where(array(Db::expr('CONCAT(user_base.first_name," ",user_base.last_name)'), 'full_name'), 'like ','%'.$searchtext.'%');
 		}
+
+		$this->limit(50);
 
 		return $this;
 	}
