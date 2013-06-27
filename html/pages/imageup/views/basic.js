@@ -59,7 +59,7 @@ function(require, imageBasicTemplate) {
 		drop: function(event) {
 			event.stopPropagation();
 			event.preventDefault();
-			
+			$("#errormsg").hide();
 			var files = event.originalEvent.dataTransfer.files;
 			this.files_drag=event.originalEvent.dataTransfer.files;
 		    var output = [];var dataum=[];var k=0;
@@ -86,6 +86,7 @@ function(require, imageBasicTemplate) {
 		imagePreview: function(event) {
 			debug.log("Image preview view");
 			$("#preview").hide();
+			$("#errormsg").hide();
 			var files = $('#image_file')[0].files; 
 			var dataum=[];var i = 0, f,k=0;
 		    for (; f = files[i]; i++) {
@@ -112,6 +113,7 @@ function(require, imageBasicTemplate) {
             event.preventDefault();
 			console.log(this.files_drag.length)
 			var msg="";
+			$("#errormsg").hide();
 			if(!$('#image_file').val() &&this.files_drag.length==0)
 			{
 				msg={"msg":"Image Field Empty","color":"red"};
