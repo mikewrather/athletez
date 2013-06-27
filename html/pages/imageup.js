@@ -11,15 +11,14 @@ define([
     "models",
     "views",
     "utils",
-	"jquery.ui.widget",
-	"iframe-transport",
-	"fileupload",
     "imageup/models/basic",
 	"imageup/models/imageupload",
 	"imageup/models/errorshow",
     "imageup/collections/basics",
+	"imageup/models/preview",
     "imageup/views/basic",
-	"imageup/views/errors"
+	"imageup/views/errors",
+	"imageup/views/preview"
     ], function (require, pageLayoutTemplate) {
 
     var ImageController,
@@ -28,15 +27,14 @@ define([
         models = require("models"),
         views = require("views"),
         utils = require("utils"),
-        iframetransport= require("iframe-transport"),
-		fileupload= require("fileupload"),
-		widget= require("jquery.ui.widget"),
         ImageBasicModel = require("imageup/models/basic"),
 		ImageUploadModel = require("imageup/models/imageupload"),
 		ErrorShowModel = require("imageup/models/errorshow"),
         ImageBasicList = require("imageup/collections/basics"),
+		PreviewShowList = require("imageup/models/preview"),
         ImageBasicView = require("imageup/views/basic"),
 		ErrorShowView = require("imageup/views/errors"),
+		PreviewShowView = require("imageup/views/preview"),
         
         LayoutView = views.LayoutView,
         $ = facade.$,
@@ -78,9 +76,14 @@ define([
 			function previewShow(dataum) {
 				controller.previewShowup(dataum);
 			}
+			function rerenderShow() {
+				controller.rerender();
+			}
+			
 			Channel('imageup-add-image').subscribe(imageuploader);
 			Channel('imageup-error').subscribe(errorShow);
 			Channel('imageup-preview').subscribe(previewShow);
+			Channel('imageup-rerender').subscribe(rerenderShow);
 		},
         showuploader: function () {
             //this.basics = new ImageBasicModel();
@@ -94,6 +97,7 @@ define([
             });
             debug.log("Imagecontroller Show");
             this.scheme.push(addBasicView);
+			debug.log(this.layout);
             this.layout.render();
         },
 		setupLayout: function () {
@@ -108,38 +112,27 @@ define([
             this.layout = pageLayout;
             return this.layout;
         },
-		previewShowup: function (evt) {
-			    var files = $('#image_file')[0].files; // FileList object
-
-			    // Loop through the FileList and render image files as thumbnails.
-			    for (var i = 0, f; f = files[i]; i++) {
-
-			      // Only process image files.
-			      if (!f.type.match('image.*')) {
-			        continue;
-			      }
-
-			      var reader = new FileReader();
-
-			      // Closure to capture the file information.
-			      reader.onload = (function(theFile) {
-			        return function(e) {
-			          // Render thumbnail.
-			          var span = document.createElement('span');
-			          span.innerHTML = ['<img class="thumb" src="', e.target.result,
-			                            '" title="', escape(theFile.name), '" width="150" height="150"/>'].join('');
-			          document.getElementById('preview').insertBefore(span, null);
-			        };
-			      })(f);
-
-			      // Read in the image file as a data URL.
-			      reader.readAsDataURL(f);
-			    }
+		previewShowup: function (dataum) {
+			var previewShowList = new PreviewShowList(dataum);
+			for( var x in this.scheme) {
+			    if( this.scheme[x].id=="imgpreview") delete this.scheme[x];
+			}
+		    previewShowView = new PreviewShowView({
+		                name: "Preview Show View",
+						model :previewShowList,
+						destination : "#preview",
+						displayWhen : "ready"
+		            });
+		    debug.log("Preview View Show");
+			this.scheme.push(previewShowView);
+			$("#preview").show();
+		    Channel("imageup-rerender").publish();		  
+		},
+		rerender: function(){
+			    this.showuploader();	
 		},
 		imageUpload: function (data) {
 			debug.log("image uploading starts");
-			//imguploadModel= new ImageUploadModel();
-			//imguploadModel.save();
 			$("#errormsg").hide();
 			var id=data.id,
 				dataum=data.dataum,
@@ -174,7 +167,7 @@ define([
             });
             debug.log("Error View Show");
             this.scheme.push(addErrorView);
-            this.showuploader();
+            this.rerender();
 		}
 
     });
