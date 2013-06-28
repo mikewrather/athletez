@@ -73,10 +73,10 @@ require.config({
         'game'         : '/pages/game',
         'team'         : '/pages/team',
         'registration' : '/pages/registration',
-        'home'         : '/pages/home'
+        'home'         : '/pages/home',
         'profilesetting' : '/pages/profilesetting', 
         // Application - bootstrap for frontend app 
-        'application'  : '/application'
+        'application'  : '/application',
 
     },
     shim: {
