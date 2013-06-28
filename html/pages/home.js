@@ -2,7 +2,7 @@
 
 define([
 	"require",
-	"text!/home/templates/layou.html"
+	"text!/home/templates/layout.html"
 	"facade",
 	"controller",
 	"models",
