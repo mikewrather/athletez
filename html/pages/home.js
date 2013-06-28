@@ -2,7 +2,7 @@
 
 define([
 	"require",
-	"text!/home/templates/layout.html"
+	"text!/home/templates/layout.html",
 	"facade",
 	"controller",
 	"models",
@@ -72,4 +72,4 @@ define([
 	});
 	
 	return HomeController;
-	}
+});
