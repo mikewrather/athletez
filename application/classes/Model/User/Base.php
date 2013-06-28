@@ -444,9 +444,11 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 		$rdp = ORM::factory('User_Resume_Data_Profile');
 		$rdps = $rdp->getRDPForUser($this,'array');
 
+
 		$profiles = array();
 		foreach($rdps as $rdp_id => $rdp)
 		{
+		//	print_r($rdp->as_array());
 
 			$datagroups = $rdp->datagroups->find_all();
 			foreach($datagroups as $group)
@@ -487,6 +489,7 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 				}
 			}
 		}
+
 		return $profiles;
 
 	}
