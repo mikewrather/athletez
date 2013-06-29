@@ -78,12 +78,9 @@
 		 */
 		public function action_post_add()
 		{
-			if (!$this->is_logged_in){
-				$error_array = array(
-					"error" => "This action requires authentication",
-					"desc" => "Please login first"
-				);
-				$this->modelNotSetError($error_array);
+			//Must logged user can do action
+			if (!$this->is_logged_user()){
+				return $this->throw_authentication_error();
 			}
 
 			$this->action_post_addvote();
