@@ -54,12 +54,14 @@ define([
 
             this.handleOptions(options);
             
-            this.init();
+            this.init(options);
             
             return this;
         },
         
-        init: function() {
+        init: function(option) {
+			this.url=option.url;
+			this.attr=option.attr;
 			debug.log("Imagecontroller Init");
             this.setupLayout();
 			this.handleDeferreds();
@@ -135,10 +137,10 @@ define([
 			debug.log("image uploading starts");
 			$("#errormsg").hide();
 			var id=data.id,
-				dataum=data.dataum,
+				dataum= $.merge(data.dataum, this.attr),
 				msg="";
 			$.ajax({
-			    url: '/api/image/add/',
+			    url: this.url,
 			    data: dataum,
 			    cache: false,
 			    processData: false,
