@@ -834,9 +834,9 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 			$this->where('user_base.cities_id', '=', $cities_id);
 		}
 
-        if (isset($dob)){
-            $this->where('user_base.dob', '=', $dob);
-        }
+//        if (isset($dob)){
+//            $this->where('user_base.dob', '=', $dob);
+//        }
 
 		$enttype_id = Model_Site_Enttype::getMyEntTypeID($this);
 		$counts = DB::select(array(DB::expr('COUNT(id)'),'num_votes'))
@@ -844,11 +844,18 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 			->from('votes')
 			->where('subject_enttypes_id','=',$enttype_id);
 
-		if (!isset($orderby)){
+		if (!isset($orderby) || $orderby == 'votes'){
 			$this->join(array($counts,'filtered'),'LEFT')->on('filtered.users_id', '=', 'user_base.id');
 			$this->order_by('num_votes', 'asc');
-		}else{
-			$this->order_by($orderby, 'asc');
+		}else if ($orderby == 'followers'){
+			$followers = DB::select(array(DB::expr('COUNT(id)'),'num_followers'))
+				->select(array('subject_id', 'users_id'))
+				->from('followers')
+				->where('subject_enttypes_id','=',$enttype_id);
+			$this->join(array($followers,'followers'),'LEFT')->on('followers.users_id', '=', 'user_base.id');
+			$this->order_by('num_followers', 'asc');
+		}else if ($orderby == 'regist_time'){
+			$this->order_by('user_base.id', 'asc');
 		}
 
 		if (isset($searchtext)){
@@ -856,7 +863,7 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 		}
 
 		$this->limit(50);
-
+		print_r($this->find_all());
 		return $this;
 	}
 
