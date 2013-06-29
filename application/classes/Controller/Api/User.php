@@ -662,7 +662,7 @@
 			{
 				if (isset($retArr['id']))
 				{
-					$this->populateAuthVars();
+					//$this->populateAuthVars();
 					$user_identity = ORM::factory('User_Identity');
 
 					//Check if already logged in.  If so, we will link them up.

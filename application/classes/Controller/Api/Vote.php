@@ -78,6 +78,11 @@
 		 */
 		public function action_post_add()
 		{
+			//Must logged user can do action
+			if (!$this->is_logged_user()){
+				return $this->throw_authentication_error();
+			}
+
 			$this->action_post_addvote();
 		}
 		
@@ -105,7 +110,15 @@
 				$this->modelNotSetError();
 				return false;
 			}
-			return $this->mainModel->delete();
+			if (!$this->mainModel->is_owner($this->user)){
+				$error_array = array(
+					"error" => "Permission denied",
+					"desc" => "Permission denied"
+				);
+				$this->modelNotSetError($error_array);
+			}
+
+			return $this->mainModel->deleteVote();
 		}
 		
 	}

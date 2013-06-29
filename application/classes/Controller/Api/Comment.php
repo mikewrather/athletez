@@ -175,12 +175,21 @@
 
 		
 		/**
-		 * action_post_add() Add a new comment
-		 * via /api/comment/add/{0}
-		 *
+		 * Invalid now
 		 */
 		public function action_post_add()
 		{
+			//prompt frontend user to use the new one.
+			$error_array = array(
+				"error" => "Invalid now, please use '/api/comment/addcomment' instead "
+			);
+
+			// Set whether it is a fatal error
+			$is_fatal = true;
+
+			// Call method to throw an error
+			$this->addError($error_array,$is_fatal);
+			/* comment by Jeffrey, b/c we use the common one in parent class
 			$this->payloadDesc = "Add a new comment";
 
 			if(!$this->user)
@@ -237,6 +246,7 @@
 				return false;
 
 			}
+			*/
         }
 		
 		############################################################################

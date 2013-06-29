@@ -126,6 +126,11 @@
 		 */
 		public function action_post_add()
 		{
+			//Must logged user can do action
+			if (!$this->is_logged_user()){
+				return $this->throw_authentication_error();
+			}
+
 			$this->payloadDesc = "Add a new location";
 			$args = array(); //This will get passed to the add method
 		    
