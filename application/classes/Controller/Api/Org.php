@@ -479,6 +479,11 @@
 		 */
 		public function action_put_basics()
 		{
+			//Must logged user can do action
+			if (!$this->is_logged_user()){
+				return $this->throw_authentication_error();
+			}
+
 			if(!$this->user->can('Orgcontent', array('action'=>'modify'))){
 				$error_array = array(
 					"error" => "Sorry, You don't have permission to modify",

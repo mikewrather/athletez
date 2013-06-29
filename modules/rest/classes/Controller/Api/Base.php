@@ -583,7 +583,12 @@ class Controller_Api_Base extends AuthController
 
 	public function action_post_addcomment()
 	{
-		$this->payloadDesc = "Add comments for a team";
+		//Must logged user can do action
+		if (!$this->is_logged_user()){
+			return $this->throw_authentication_error();
+		}
+
+		$this->payloadDesc = "Add comments";
 		$arguments = array();
 		// CHECK FOR PARAMETERS:
 
@@ -618,20 +623,10 @@ class Controller_Api_Base extends AuthController
 
 	public function action_post_addvideo()
 	{
-		$this->populateAuthVars();
-		if(!$this->is_logged_in)
-		{
-			// Create Array for Error Data
-			$error_array = array(
-				"error" => "You must be logged in in order to upload a video",
-			);
-
-			// Set whether it is a fatal error
-			$is_fatal = true;
-
-			// Call method to throw an error
-			$this->addError($error_array,$is_fatal);
-			return false;
+		//$this->populateAuthVars();
+		//Must logged user can do action
+		if (!$this->is_logged_user()){
+			return $this->throw_authentication_error();
 		}
 
 		$valid_object_types = array(
@@ -702,6 +697,11 @@ class Controller_Api_Base extends AuthController
 
 	public function action_post_addimage()
 	{
+		//Must logged user can do action
+		if (!$this->is_logged_user()){
+			return $this->throw_authentication_error();
+		}
+
 		$valid_object_types = array(
 			"Model_Sportorg_Games_Base",
 			"Model_Sportorg_Match",
@@ -814,19 +814,10 @@ class Controller_Api_Base extends AuthController
 	public function action_post_follow()
 	{
 		// This requires that the user is logged in
-		$this->populateAuthVars();
-		if(!$this->is_logged_in)
-		{
-			$error_array = array(
-				"error" => "You must be logged in in order to follow something."
-			);
-
-			// Set whether it is a fatal error
-			$is_fatal = true;
-
-			// Call method to throw an error
-			$this->addError($error_array,$is_fatal);
-			return false;
+		//$this->populateAuthVars();
+		//Must logged user can do action
+		if (!$this->is_logged_user()){
+			return $this->throw_authentication_error();
 		}
 
 		$this->payloadDesc = "Become a Follower";

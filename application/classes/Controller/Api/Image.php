@@ -116,40 +116,20 @@
 		 */
 		public function action_post_add()
 		{
+			//Must logged user can do action
+			if (!$this->is_logged_user()){
+				return $this->throw_authentication_error();
+			}
 
 			$this->payloadDesc = "Post a new image";
-
-
-		     // CHECK FOR PARAMETERS:
-			// name (REQUIRED)
-			// The name of the image
-				
 			if(trim($this->request->post('name')) != "")
 			{
 				$args['name'] = trim($this->request->post('name'));
 			}
-
-
-			
-			// sports_id 
-			// The sport that this image is associated with
-				
 			if((int)trim($this->request->post('sports_id')) > 0)
 			{
 				$args['sports_id'] = (int)trim($this->request->post('sports_id'));
 			}
-//			else // THIS WAS A REQUIRED PARAMETER
-//			{
-//				$error_array = array(
-//					"error" => "Required Parameter Missing",
-//					"param_name" => "sports_id",
-//					"param_desc" => "The sport this image is associated with"
-//				);
-//
-//				$is_fatal = true;
-//
-//				$this->addError($error_array,$is_fatal);
-//			}
 
 			if(sizeof($_FILES) > 0)
 			{
@@ -167,8 +147,6 @@
 				$this->processValidationError($result,$this->mainModel->error_message_path);
 				return false;
 			}
-
-
 		}
 		
 		############################################################################
