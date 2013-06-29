@@ -812,6 +812,11 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 			$this->where('org_sport_link.sports_id', '=', $sports_id);
 		}
 
+		if (isset($states_id)){
+			$this->join('cities')->on('user_base.cities_id', '=', 'cities.id');
+			$this->where('cities.state_id', '=', $states_id);
+		}
+
 		if (isset($complevels_id)){
 			$this->where('teams.complevels_id', '=', $complevels_id);
 		}
@@ -823,6 +828,10 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 
 		if (isset($gradyear)){
 			$this->where('user_base.grad_year', '=', $gradyear);
+		}
+
+		if (isset($cities_id)){
+			$this->where('user_base.cities_id', '=', $cities_id);
 		}
 
         if (isset($dob)){
