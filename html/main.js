@@ -68,14 +68,15 @@ require.config({
 
         'pages'        : '/pages',
         'chrome'       : '/pages/chrome',
-		'imageup'     : '/pages/imageup',
+		'imageup'      : '/pages/imageup',
         'profile'      : '/pages/profile',
         'game'         : '/pages/game',
         'team'         : '/pages/team',
         'registration' : '/pages/registration',
-        'profilesetting' : '/pages/profilesetting',
+        'home'         : '/pages/home',
+        'profilesetting' : '/pages/profilesetting', 
         // Application - bootstrap for frontend app 
-        'application'  : '/application'
+        'application'  : '/application',
 
     },
     shim: {
