@@ -78,6 +78,14 @@
 		 */
 		public function action_post_add()
 		{
+			if (!$this->is_logged_in){
+				$error_array = array(
+					"error" => "This action requires authentication",
+					"desc" => "Please login first"
+				);
+				$this->modelNotSetError($error_array);
+			}
+
 			$this->action_post_addvote();
 		}
 		
@@ -105,7 +113,15 @@
 				$this->modelNotSetError();
 				return false;
 			}
-			return $this->mainModel->delete();
+			if (!$this->mainModel->is_owner($this->user)){
+				$error_array = array(
+					"error" => "Permission denied",
+					"desc" => "Permission denied"
+				);
+				$this->modelNotSetError($error_array);
+			}
+
+			return $this->mainModel->deleteVote();
 		}
 		
 	}
