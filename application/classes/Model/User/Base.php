@@ -863,7 +863,6 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 		}
 
 		$this->limit(50);
-		print_r($this->find_all());
 		return $this;
 	}
 
