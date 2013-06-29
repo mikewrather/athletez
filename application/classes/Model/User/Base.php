@@ -444,9 +444,11 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 		$rdp = ORM::factory('User_Resume_Data_Profile');
 		$rdps = $rdp->getRDPForUser($this,'array');
 
+
 		$profiles = array();
 		foreach($rdps as $rdp_id => $rdp)
 		{
+		//	print_r($rdp->as_array());
 
 			$datagroups = $rdp->datagroups->find_all();
 			foreach($datagroups as $group)
@@ -487,6 +489,7 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 				}
 			}
 		}
+
 		return $profiles;
 
 	}
@@ -798,13 +801,20 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 		//$this->select();
 		//$this->select(array(concat('user_base.first_name',' ','user_base.last_name'), 'full_name'));
 
-		$this->join('users_teams_link')->on('users_teams_link.users_id', '=', 'user_base.id');
-		$this->join('teams')->on('users_teams_link.teams_id', '=', 'teams.id');
-
+		if (isset($sports_id) || isset($complevels_id) || isset($positions_id))
+		{
+			$this->join('users_teams_link')->on('users_teams_link.users_id', '=', 'user_base.id');
+			$this->join('teams')->on('users_teams_link.teams_id', '=', 'teams.id');
+		}
 
 		if (isset($sports_id)){
 			$this->join('org_sport_link')->on('org_sport_link.id', '=', 'teams.org_sport_link_id');
 			$this->where('org_sport_link.sports_id', '=', $sports_id);
+		}
+
+		if (isset($states_id)){
+			$this->join('cities')->on('user_base.cities_id', '=', 'cities.id');
+			$this->where('cities.state_id', '=', $states_id);
 		}
 
 		if (isset($complevels_id)){
@@ -820,9 +830,13 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 			$this->where('user_base.grad_year', '=', $gradyear);
 		}
 
-        if (isset($dob)){
-            $this->where('user_base.dob', '=', $dob);
-        }
+		if (isset($cities_id)){
+			$this->where('user_base.cities_id', '=', $cities_id);
+		}
+
+//        if (isset($dob)){
+//            $this->where('user_base.dob', '=', $dob);
+//        }
 
 		$enttype_id = Model_Site_Enttype::getMyEntTypeID($this);
 		$counts = DB::select(array(DB::expr('COUNT(id)'),'num_votes'))
@@ -830,17 +844,25 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 			->from('votes')
 			->where('subject_enttypes_id','=',$enttype_id);
 
-		if (!isset($orderby)){
-			$this->join(array($counts,'filtered'))->on('filtered.users_id', '=', 'user_base.id');
+		if (!isset($orderby) || $orderby == 'votes'){
+			$this->join(array($counts,'filtered'),'LEFT')->on('filtered.users_id', '=', 'user_base.id');
 			$this->order_by('num_votes', 'asc');
-		}else{
-			$this->order_by($orderby, 'asc');
+		}else if ($orderby == 'followers'){
+			$followers = DB::select(array(DB::expr('COUNT(id)'),'num_followers'))
+				->select(array('subject_id', 'users_id'))
+				->from('followers')
+				->where('subject_enttypes_id','=',$enttype_id);
+			$this->join(array($followers,'followers'),'LEFT')->on('followers.users_id', '=', 'user_base.id');
+			$this->order_by('num_followers', 'asc');
+		}else if ($orderby == 'regist_time'){
+			$this->order_by('user_base.id', 'asc');
 		}
 
 		if (isset($searchtext)){
 			$this->where(array(Db::expr('CONCAT(user_base.first_name," ",user_base.last_name)'), 'full_name'), 'like ','%'.$searchtext.'%');
 		}
 
+		$this->limit(50);
 		return $this;
 	}
 

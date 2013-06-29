@@ -307,14 +307,13 @@
 			if(trim($this->request->query('gradyear')) != "")
 			{
 				$arguments["gradyear"] = trim($this->request->query('gradyear'));
-			}
-
-			// orderby
-			// Default will be to order by votes.
-
-			if(trim($this->request->query('orderby')) != "")
-			{
-				$arguments["orderby"] = trim($this->request->query('orderby'));
+				if (!Valid::date($arguments["gradyear"])){
+					$error_array = array(
+						"error" => "Invalid graduate year",
+						"desc" => "Invalid graduate year"
+					);
+					$this->modelNotSetError($error_array);
+				}
 			}
 
 			// positions_id
@@ -331,6 +330,32 @@
 			if(trim($this->request->query('searchtext')) != "")
 			{
 				$arguments["searchtext"] = trim($this->request->query('searchtext'));
+			}
+
+			if((int)trim($this->request->query('cities_id')) > 0)
+			{
+				$arguments["cities_id"] = trim($this->request->query('cities_id'));
+			}
+
+			if((int)trim($this->request->query('states_id')) > 0)
+			{
+				$arguments["states_id"] = trim($this->request->query('states_id'));
+			}
+
+			$legal_orderby = array('votes', 'followers', 'regist_time');
+			// orderby
+			// Default will be to order by votes.
+
+			if(trim($this->request->query('orderby')) != "")
+			{
+				$arguments["orderby"] = trim($this->request->query('orderby'));
+				if (!in_array($arguments["orderby"], $legal_orderby)){
+					$error_array = array(
+						"error" => "Invalid order by column",
+						"desc" => "Currently only support 'votes', 'followers', 'regist_time'"
+					);
+					$this->modelNotSetError($error_array);
+				}
 			}
 
 			$user_obj = ORM::factory('User_Base');
