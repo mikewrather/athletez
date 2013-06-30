@@ -11,15 +11,14 @@ define([
     "models",
     "views",
     "utils",
-	"jquery.ui.widget",
-	"iframe-transport",
-	"fileupload",
     "imageup/models/basic",
 	"imageup/models/imageupload",
 	"imageup/models/errorshow",
     "imageup/collections/basics",
+	"imageup/models/preview",
     "imageup/views/basic",
-	"imageup/views/errors"
+	"imageup/views/errors",
+	"imageup/views/preview"
     ], function (require, pageLayoutTemplate) {
 
     var ImageController,
@@ -28,15 +27,14 @@ define([
         models = require("models"),
         views = require("views"),
         utils = require("utils"),
-        iframetransport= require("iframe-transport"),
-		fileupload= require("fileupload"),
-		widget= require("jquery.ui.widget"),
         ImageBasicModel = require("imageup/models/basic"),
 		ImageUploadModel = require("imageup/models/imageupload"),
 		ErrorShowModel = require("imageup/models/errorshow"),
         ImageBasicList = require("imageup/collections/basics"),
+		PreviewShowList = require("imageup/models/preview"),
         ImageBasicView = require("imageup/views/basic"),
 		ErrorShowView = require("imageup/views/errors"),
+		PreviewShowView = require("imageup/views/preview"),
         
         LayoutView = views.LayoutView,
         $ = facade.$,
@@ -56,12 +54,14 @@ define([
 
             this.handleOptions(options);
             
-            this.init();
+            this.init(options);
             
             return this;
         },
         
-        init: function() {
+        init: function(option) {
+			this.url=option.url;
+			this.attr=option.attr;
 			debug.log("Imagecontroller Init");
             this.setupLayout();
 			this.handleDeferreds();
@@ -75,8 +75,17 @@ define([
 			function errorShow(dataum) {
 				controller.errorShowup(dataum);
 			}
+			function previewShow(dataum) {
+				controller.previewShowup(dataum);
+			}
+			function rerenderShow() {
+				controller.rerender();
+			}
+			
 			Channel('imageup-add-image').subscribe(imageuploader);
 			Channel('imageup-error').subscribe(errorShow);
+			Channel('imageup-preview').subscribe(previewShow);
+			Channel('imageup-rerender').subscribe(rerenderShow);
 		},
         showuploader: function () {
             //this.basics = new ImageBasicModel();
@@ -90,6 +99,7 @@ define([
             });
             debug.log("Imagecontroller Show");
             this.scheme.push(addBasicView);
+			debug.log(this.layout);
             this.layout.render();
         },
 		setupLayout: function () {
@@ -104,16 +114,33 @@ define([
             this.layout = pageLayout;
             return this.layout;
         },
+		previewShowup: function (dataum) {
+			var previewShowList = new PreviewShowList(dataum);
+			for( var x in this.scheme) {
+			    if( this.scheme[x].id=="imgpreview") delete this.scheme[x];
+			}
+		    previewShowView = new PreviewShowView({
+		                name: "Preview Show View",
+						model :previewShowList,
+						destination : "#preview",
+						displayWhen : "ready"
+		            });
+		    debug.log("Preview View Show");
+			this.scheme.push(previewShowView);
+			$("#preview").show();
+		    Channel("imageup-rerender").publish();		  
+		},
+		rerender: function(){
+			    this.showuploader();	
+		},
 		imageUpload: function (data) {
 			debug.log("image uploading starts");
-			//imguploadModel= new ImageUploadModel();
-			//imguploadModel.save();
 			$("#errormsg").hide();
 			var id=data.id,
-				dataum=data.dataum,
+				dataum= $.merge(data.dataum, this.attr),
 				msg="";
 			$.ajax({
-			    url: '/api/image/add/',
+			    url: this.url,
 			    data: dataum,
 			    cache: false,
 			    processData: false,
@@ -142,7 +169,7 @@ define([
             });
             debug.log("Error View Show");
             this.scheme.push(addErrorView);
-            this.showuploader();
+            this.rerender();
 		}
 
     });

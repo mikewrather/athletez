@@ -106,12 +106,15 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
 			this.loadStyles();
             
             $('body').empty();
-            new ImageController();
+			//URL to which it has to be passed
+			this.posturl="/api/image/add/";
+			//Extra attributes need to be posted
+			this.attribute={'sports_id':'46',"id":"0",'name':"testimg"};
+			//pass those attributes to the controller
+            new ImageController({"route": "","url":this.posturl,"attr":this.attribute});
             function initImage(id) {
 				console.log("inside router");
-                var imageController = new ImageController({
-                    "route": ""
-                });
+                var imageController = new ImageController({"route": "","url":this.posturl,"attr":this.attribute});
             }
             
             Channel('app-inited').subscribe(initImage);

@@ -79,6 +79,11 @@
 		 */
 		public function action_post_add()
 		{
+			//Must logged user can do action
+			if (!$this->is_logged_user()){
+				return $this->throw_authentication_error();
+			}
+
 			$this->payloadDesc = "Add a new League";
 			$arguments = array();
 			// CHECK FOR PARAMETERS:
@@ -130,6 +135,16 @@
 		 */
 		public function action_put_basics()
 		{
+
+			if(!$this->user->can('Leaguecontent', array('action'=>'modify'))){
+				$error_array = array(
+					"error" => "Sorry, You don't have permission to modify",
+					"desc" => "In order to modify this action, please contact your adminstrator"
+				);
+				$this->modelNotSetError($error_array);
+				return false;
+			}
+
 			$this->payloadDesc = "Update basics on a League";
 			$args = array();
 		     // CHECK FOR PARAMETERS:
@@ -188,6 +203,10 @@
 		 */
 		public function action_delete_base()
 		{
+			if (!$this->is_admin_user()){
+				$this->throw_permission_error();
+			}
+
 			$this->payloadDesc = "Delete  League";
 
 			if(!$this->mainModel->id)

@@ -94,18 +94,12 @@
 		{
 			$this->payloadDesc = "Post a new comment about a given subject";
 
-			if(!$this->user)
-			{
-				// Create Array for Error Data
+			if (!$this->is_logged_in){
 				$error_array = array(
-					"error" => "This action requires authentication"
+					"error" => "This action requires authentication",
+					"desc" => "Please login first"
 				);
-
-				// Set whether it is a fatal error
-				$is_fatal = true;
-
-				// Call method to throw an error
-				$this->addError($error_array,$is_fatal);
+				$this->modelNotSetError($error_array);
 			}
 
 			$comment_obj = ORM::factory('Site_Comment');
@@ -157,7 +151,6 @@
 				// Call method to throw an error
 				$this->addError($error_array,$is_fatal);
 			}
-
 		}
 		
 		/**

@@ -14,3 +14,9 @@
 {
 	background: green;
 }
+.imageholder {
+  height: 75px;
+  border: 2px dashed #ccc;
+  margin: 10px 5px 0 0;
+
+}

@@ -247,6 +247,18 @@
 		 */
 		public function action_post_images()
 		{
+
+			//prompt frontend user to use the new one.
+			$error_array = array(
+				"error" => "Invalid now, please use '/api/team/addimage' instead "
+			);
+
+			// Set whether it is a fatal error
+			$is_fatal = true;
+
+			// Call method to throw an error
+			$this->addError($error_array,$is_fatal);
+			/*
 			if(!$this->mainModel->id)
 			{
 				$this->modelNotSetError();
@@ -259,6 +271,7 @@
 			}
 
 			return $this->action_post_addimage();
+			*/
 		}
 
 
@@ -269,21 +282,16 @@
 		 */
 		public function action_post_add()
 		{
-			$this->payloadDesc = "Add a new team";
+			//Must logged user can do action
+			if (!$this->is_logged_user()){
+				return $this->throw_authentication_error();
+			}
 
-		     // CHECK FOR PARAMETERS:
-			// org_sport_link_id
-			// ID of the linking row for Organization / Sport (Optional alternative to providing sport / org separately)
+			$this->payloadDesc = "Add a new team";
 
 			$org_sport_link_id = (int)trim($this->request->post('org_sport_link_id'));
 
-			// orgs_id
-			// Organization ID (If Org_Sport_Link not provided)
-
 			$orgs_id = (int)trim($this->request->post('orgs_id'));
-
-			// sports_id
-			// Sport ID (If Org_Sport_Link not provided)
 
 			$sports_id = (int)trim($this->request->post('sports_id'));
 
@@ -296,8 +304,6 @@
 			// Season ID
 
 			$seasons_id = (int)trim($this->request->post('seasons_id'));
-
-
 			// year
 			// The Year of the Season
 
@@ -305,7 +311,6 @@
 			{
 				$year = trim($this->request->post('year'));
 			}
-
 			// mascot
 			// An optional mascot for the team
 
@@ -637,6 +642,10 @@
 		 */
 		public function action_delete_base()
 		{
+			if (!$this->is_admin_user()){
+				$this->throw_permission_error();
+			}
+
 			$this->payloadDesc = "Delete a team";
 
 			if(!$this->mainModel->id)

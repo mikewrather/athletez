@@ -175,12 +175,21 @@
 
 		
 		/**
-		 * action_post_add() Add a new comment
-		 * via /api/comment/add/{0}
-		 *
+		 * Invalid now
 		 */
 		public function action_post_add()
 		{
+			//prompt frontend user to use the new one.
+			$error_array = array(
+				"error" => "Invalid now, please use '/api/comment/addcomment' instead "
+			);
+
+			// Set whether it is a fatal error
+			$is_fatal = true;
+
+			// Call method to throw an error
+			$this->addError($error_array,$is_fatal);
+			/* comment by Jeffrey, b/c we use the common one in parent class
 			$this->payloadDesc = "Add a new comment";
 
 			if(!$this->user)
@@ -237,6 +246,7 @@
 				return false;
 
 			}
+			*/
         }
 		
 		############################################################################
@@ -253,28 +263,14 @@
 		{
 			$this->payloadDesc = "Update basic info on a specific comment";
 
-			/* TODO, add by Jeffrey, Here need to do persmission check in next milestone
-			if(!$this->user)
-			{
-				return false;
-			}
-			else
-			{
-				if($this->user->can('EditComment'))
-				{
-					echo "Can Edit";
-				}
-				else
-				{
-					echo "Cannot Edit";
-				}
-			}
-			*/
-
 			if(!$this->mainModel->id)
 			{
 				$this->modelNotSetError();
 				return false;
+			}
+
+			if (!$this->mainModel->is_owner()){
+				$this->throw_permission_error(Constant::NOT_OWNER);
 			}
 
 			if(trim($this->put('comment')) != "")
@@ -315,6 +311,7 @@
 		 */
 		public function action_delete_base()
 		{
+
 			$this->payloadDesc = "Delete Comment";
 
 			if(!$this->mainModel->id)
@@ -322,6 +319,11 @@
 				$this->modelNotSetError();
 				return false;
 			}
+
+			if (!$this->mainModel->is_owner()){
+				$this->throw_permission_error(Constant::NOT_OWNER);
+			}
+
 			return $this->mainModel->delete();
 		}
 		

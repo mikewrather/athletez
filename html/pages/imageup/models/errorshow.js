@@ -13,7 +13,6 @@ define( ["facade","models/base"], function (facade,BaseModel) {
                 "msg": null,
                 "color": "yellow"        }),
 	    initialize: function (attributes, options) {
-			console.log(attributes);
         }
 	
 	});

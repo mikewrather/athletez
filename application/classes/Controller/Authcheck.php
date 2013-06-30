@@ -53,13 +53,18 @@ class Controller_Authcheck extends AuthController
 			"link"=>"/profile"
 		);
 
-		if($this->user->teams->find_all()->count() > 0)
+		$retArr['nav'][] = array(
+			"page"=>"Sports / Teams Settings",
+			"link"=>"/usersettings"
+		);
+
+	/*	if($this->user->teams->find_all()->count() > 0)
 		{
 			$retArr['nav'][] = array(
 				"page"=>"My Teams",
 				"link"=>"/team"
 			);
-		}
+		}   */
 		echo json_encode($retArr);
 	}
 }

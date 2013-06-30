@@ -498,6 +498,20 @@
 
 			return $retArr;
 		}
+
+		/**
+		 * put_teamseasons() Update basic fitness data for the user
+		 *
+		 * @retun array
+		 */
+		public function put_teamseasons()
+		{
+			$retArr = array();
+			// Scaffolding Code For Single:
+			$retArr = $this->obj->getBasics();
+
+			return $retArr;
+		}
 		
 		/**
 		 * delete_base() Delete a User
@@ -662,6 +676,7 @@
 
 			// Scaffolding Code For Array:
 			$objs = $this->obj->find_all();
+
 			foreach($objs as $obj)
 			{
 				$retArr[] = $obj->getBasics();
