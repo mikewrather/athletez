@@ -43,11 +43,6 @@ define(['require', 'text!profilesetting/templates/positions.html', 'facade', 'vi
 		 Always use on so that dynamic creation of controls could be handled
 		 * */
 		bindEvents : function() {
-			$(self.controls.spnPositionTitle).unbind('click');
-			$(self.controls.spnPositionTitle).on('click',function() {
-				self.MarkPosition(this);
-
-			});
 
 		},
 

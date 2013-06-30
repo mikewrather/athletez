@@ -94,7 +94,7 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
             function initProfileSetting(id) {
                 var profileSetting = new ProfileSetting({
                 	//TODO: REMOVE HARDCODED ID
-                	id : 426004
+                	"id": userid==undefined ? id : userid
                 });
             }
             
