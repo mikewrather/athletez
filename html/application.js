@@ -61,7 +61,7 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
             //this.showProfile();
            	//this.showGame();
             //this.showTeam();
-            this.showRegistration();
+            this.showHome();
         },
 
 	    getPhrases: function(){
@@ -71,18 +71,21 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
 	    },
 	    
 	    showHome: function (action) {
+	    	debug.log("show Home called");
 	    	this.loadStyles();
 	    	
 	    	$('body').empty();
 	    	chromeBootstrap();
 	    	
 	    	function initHome() {
+	    		debug.log("Inside initHome");
 	    		var homeController = new HomeController({
-	    			"route" : ""
+	    			"route" : "home"
 	    		});
 	    	}
 	    	
 	    	Channel('app-inited').subscribe(initHome);
+	    	initHome();
 	    },
 	    
         showProfile: function (userid) {
