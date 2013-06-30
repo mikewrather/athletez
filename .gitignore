@@ -1,2 +1,4 @@
 .idea
 .idea/*
+files_temp/*
+application/config/database.php
