@@ -59,6 +59,10 @@
 		 */
 		public function action_put_basics()
 		{
+			if (!$this->is_admin_user()){
+				$this->throw_permission_error();
+			}
+
 			$this->payloadDesc = "Update basic info on a Statistics Context";
 
 		     // CHECK FOR PARAMETERS:
@@ -84,9 +88,10 @@
 		 */
 		public function action_delete_base()
 		{
+			if (!$this->is_admin_user()){
+				$this->throw_permission_error();
+			}
 			$this->payloadDesc = "Delete  Statistics Context";
-
-		
 		}
 		
 	}

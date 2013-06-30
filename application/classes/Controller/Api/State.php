@@ -143,6 +143,10 @@
 		 */
 		public function action_post_add()
 		{
+			if (!$this->is_admin_user()){
+				$this->throw_permission_error();
+			}
+
 			$this->payloadDesc = "Add a new State";
 			$args = array();
 		     // CHECK FOR PARAMETERS:
@@ -183,6 +187,10 @@
 		 */
 		public function action_post_addcounty()
 		{
+			if (!$this->is_admin_user()){
+				$this->throw_permission_error();
+			}
+
 			$this->payloadDesc = "Add a county within the state";
 			$args = array();
 			if(!$this->mainModel->id)
@@ -495,6 +503,10 @@
 		 */
 		public function action_put_basics()
 		{
+			if (!$this->is_admin_user()){
+				$this->throw_permission_error();
+			}
+
 			$this->payloadDesc = "Update basic info on a given state";
 			$args = array();
 		     // CHECK FOR PARAMETERS:
@@ -546,6 +558,10 @@
 		 */
 		public function action_delete_base()
 		{
+			if (!$this->is_admin_user()){
+				$this->throw_permission_error();
+			}
+
 			$this->payloadDesc = "Delete  state";
 
 			if(!$this->mainModel->id)

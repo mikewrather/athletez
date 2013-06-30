@@ -105,6 +105,10 @@
 		 */
 		public function action_post_add()
 		{
+			if (!$this->is_admin_user()){
+				$this->throw_permission_error();
+			}
+
 			$this->payloadDesc = "Add a new phrase";
 			$arguments = array();
 		     // CHECK FOR PARAMETERS:
@@ -138,6 +142,10 @@
 		 */
 		public function action_post_addtranslation()
 		{
+			if (!$this->is_admin_user()){
+				$this->throw_permission_error();
+			}
+
 			$this->payloadDesc = "Add a translation for a given phrase.";
 			$arguments = array();
 		     // CHECK FOR PARAMETERS:
@@ -186,6 +194,10 @@
 		 */
 		public function action_put_basics()
 		{
+			if (!$this->is_admin_user()){
+				$this->throw_permission_error();
+			}
+
 			$this->payloadDesc = "Update the basic info for a row in the phrases table.";
 			$arguments = array();
 		     // CHECK FOR PARAMETERS:

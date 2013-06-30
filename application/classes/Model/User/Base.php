@@ -320,9 +320,6 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 				$this->password = Auth::instance()->hash($password);
 				$this->create();
 			}
-
-			print_r($this);
-
 			return $this;
 		} catch(ORM_Validation_Exception $e){
 			return $e;

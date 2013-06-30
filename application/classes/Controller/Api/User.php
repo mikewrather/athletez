@@ -743,6 +743,10 @@
 		 */
 		public function action_post_add()
 		{
+			if (!$this->is_admin_user()){
+				$this->throw_permission_error();
+			}
+
 			$this->payloadDesc = "Create a new user with all necessary basic information (possibly first step of registration)";
 
 			$args = array();
@@ -1864,6 +1868,10 @@
 		 */
 		public function action_delete_base()
 		{
+			if (!$this->is_admin_user()){
+				$this->throw_permission_error();
+			}
+
 			$this->payloadDesc = "Delete a User";
 
 		    if(!$this->mainModel->id)
