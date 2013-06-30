@@ -135,6 +135,16 @@
 		 */
 		public function action_put_basics()
 		{
+
+			if(!$this->user->can('Leaguecontent', array('action'=>'modify'))){
+				$error_array = array(
+					"error" => "Sorry, You don't have permission to modify",
+					"desc" => "In order to modify this action, please contact your adminstrator"
+				);
+				$this->modelNotSetError($error_array);
+				return false;
+			}
+
 			$this->payloadDesc = "Update basics on a League";
 			$args = array();
 		     // CHECK FOR PARAMETERS:

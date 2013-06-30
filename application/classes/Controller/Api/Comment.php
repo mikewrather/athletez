@@ -263,28 +263,14 @@
 		{
 			$this->payloadDesc = "Update basic info on a specific comment";
 
-			/* TODO, add by Jeffrey, Here need to do persmission check in next milestone
-			if(!$this->user)
-			{
-				return false;
-			}
-			else
-			{
-				if($this->user->can('EditComment'))
-				{
-					echo "Can Edit";
-				}
-				else
-				{
-					echo "Cannot Edit";
-				}
-			}
-			*/
-
 			if(!$this->mainModel->id)
 			{
 				$this->modelNotSetError();
 				return false;
+			}
+
+			if (!$this->mainModel->is_owner()){
+				$this->throw_permission_error(Constant::NOT_OWNER);
 			}
 
 			if(trim($this->put('comment')) != "")
@@ -325,6 +311,7 @@
 		 */
 		public function action_delete_base()
 		{
+
 			$this->payloadDesc = "Delete Comment";
 
 			if(!$this->mainModel->id)
@@ -332,6 +319,11 @@
 				$this->modelNotSetError();
 				return false;
 			}
+
+			if (!$this->mainModel->is_owner()){
+				$this->throw_permission_error(Constant::NOT_OWNER);
+			}
+
 			return $this->mainModel->delete();
 		}
 		

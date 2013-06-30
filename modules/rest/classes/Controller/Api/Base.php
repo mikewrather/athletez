@@ -503,12 +503,20 @@ class Controller_Api_Base extends AuthController
 		return $this->is_admin;
 	}
 
-	function throw_permission_error($permission_code = ""){
+	function throw_permission_error($permission_error_code = ""){
 		//add more $permission_code to manage all the error message here
-		$error_array = array(
-			"error" => "This action requires admin permission",
-			"desc" => "Please contact your administrator"
-		);
+		if($permission_error_code == Constant::NOT_OWNER){
+			$error_array = array(
+				"error" => "Owner required",
+				"desc" => "Please make sure your are the owner"
+			);
+		}else{
+			$error_array = array(
+				"error" => "This action requires admin permission",
+				"desc" => "Please contact your administrator"
+			);
+		}
+
 		$this->modelNotSetError($error_array);
 		return false;
 	}
