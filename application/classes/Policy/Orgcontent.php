@@ -26,7 +26,7 @@ class Policy_OrgContent extends Policy
 					return $have_permission;
 					break;
 				case 'delete':
-					if($has_admin){
+					if($has_admin || $has_org_admin){
 						$have_permission = true;
 					}
 					return $have_permission;
