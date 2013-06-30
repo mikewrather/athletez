@@ -268,6 +268,11 @@
 		 */
 		public function action_post_division()
 		{
+			//Must logged user can do action
+			if (!$this->is_logged_user()){
+				return $this->throw_authentication_error();
+			}
+
 			$this->payloadDesc = "Add a division within the state";
 			$args = array();
 		    if(!$this->mainModel->id)
@@ -312,6 +317,11 @@
 		 */
 		public function action_post_section()
 		{
+			//Must logged user can do action
+			if (!$this->is_logged_user()){
+				return $this->throw_authentication_error();
+			}
+
 			$this->payloadDesc = "Add a section within the state";
 			if(!$this->mainModel->id)
 			{
@@ -414,6 +424,11 @@
 		 */
 		public function action_post_league()
 		{
+			//Must logged user can do action
+			if (!$this->is_logged_user()){
+				return $this->throw_authentication_error();
+			}
+
 			$this->payloadDesc = "Add a league within the state";
 			$args = array();
 			if(!$this->mainModel->id)
