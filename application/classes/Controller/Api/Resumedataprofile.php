@@ -92,6 +92,10 @@
 		 */
 		public function action_post_linksport()
 		{
+			if (!$this->is_admin_user()){
+				$this->throw_permission_error();
+			}
+
 			$this->payloadDesc = "Link this RDP to a Sport";
 			$args = array();
 		     // CHECK FOR PARAMETERS:
@@ -164,6 +168,10 @@
 		 */
 		public function action_post_linkrdg()
 		{
+			if (!$this->is_admin_user()){
+				$this->throw_permission_error();
+			}
+
 			$this->payloadDesc = "Link to a Resume Data Group";
 			$args = array();
 		     // CHECK FOR PARAMETERS:
@@ -235,6 +243,10 @@
 		 */
 		public function action_post_add()
 		{
+			if (!$this->is_admin_user()){
+				$this->throw_permission_error();
+			}
+
 			$this->payloadDesc = "Add a new Resume Data Profile";
 			$args = array();
 		     // CHECK FOR PARAMETERS:
@@ -324,6 +336,10 @@
 		 */
 		public function action_put_basics()
 		{
+			if (!$this->is_admin_user()){
+				$this->throw_permission_error();
+			}
+
 			$this->payloadDesc = "Updates basic info for a given Resume Data Profile";
 
 		     // CHECK FOR PARAMETERS:
@@ -366,6 +382,10 @@
 		 */
 		public function action_delete_base()
 		{
+			if (!$this->is_admin_user()){
+				$this->throw_permission_error();
+			}
+
 			$this->payloadDesc = "Delete Resume Data Profile";
 
 			if(!$this->mainModel->id)

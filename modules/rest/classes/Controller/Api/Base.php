@@ -499,6 +499,20 @@ class Controller_Api_Base extends AuthController
 		return true;
 	}
 
+	function is_admin_user(){
+		return $this->is_admin;
+	}
+
+	function throw_permission_error($permission_code = ""){
+		//add more $permission_code to manage all the error message here
+		$error_array = array(
+			"error" => "This action requires admin permission",
+			"desc" => "Please contact your administrator"
+		);
+		$this->modelNotSetError($error_array);
+		return false;
+	}
+
 	function throw_authentication_error(){
 		$error_array = array(
 			"error" => "This action requires authentication",

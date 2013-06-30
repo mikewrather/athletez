@@ -158,6 +158,10 @@
 		 */
 		public function action_put_basics()
 		{
+			if (!$this->is_admin_user()){
+				$this->throw_permission_error();
+			}
+
 			$this->payloadDesc = "Update the basics about a given peice of resume data";
 			$args = array();
 		     // CHECK FOR PARAMETERS:
@@ -214,6 +218,10 @@
 		 */
 		public function action_delete_base()
 		{
+			if (!$this->is_admin_user()){
+				$this->throw_permission_error();
+			}
+
 			$this->payloadDesc = "Delete Resume Data";
 			if(!$this->mainModel->id)
 			{

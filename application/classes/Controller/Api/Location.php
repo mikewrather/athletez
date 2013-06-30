@@ -218,6 +218,10 @@
 		 */
 		public function action_put_basics()
 		{
+			if (!$this->is_admin_user()){
+				$this->throw_permission_error();
+			}
+
 			$this->payloadDesc = "Updates basic info about this location";
 			$args = array();
 		     // CHECK FOR PARAMETERS:
@@ -295,6 +299,10 @@
 		 */
 		public function action_delete_base()
 		{
+			if (!$this->is_admin_user()){
+				$this->throw_permission_error();
+			}
+
 			$this->payloadDesc = "Delete  location";
 			if(!$this->mainModel->id)
 			{
