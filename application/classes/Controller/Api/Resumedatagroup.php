@@ -92,6 +92,10 @@
 		 */
 		public function action_post_addtordp()
 		{
+			if (!$this->is_admin_user()){
+				$this->throw_permission_error();
+			}
+
 			$this->payloadDesc = "Link this RDG to an RDP";
 			$args = array();
 		     // CHECK FOR PARAMETERS:
@@ -166,6 +170,10 @@
 		 */
 		public function action_put_basics()
 		{
+			if (!$this->is_admin_user()){
+				$this->throw_permission_error();
+			}
+
 			$this->payloadDesc = "Updates basic information for a resume data group";
 
 		     // CHECK FOR PARAMETERS:
@@ -219,6 +227,10 @@
 		 */
 		public function action_delete_base()
 		{
+			if (!$this->is_admin_user()){
+				$this->throw_permission_error();
+			}
+
 			$this->payloadDesc = "Delete Resume Data Group";
 			if(!$this->mainModel->id)
 			{

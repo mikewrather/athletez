@@ -76,6 +76,11 @@
 		 */
 		public function action_post_add()
 		{
+			//Must logged user can do action
+			if (!$this->is_logged_user()){
+				return $this->throw_authentication_error();
+			}
+
 			$this->payloadDesc = "Add a new Division";
 			$arguments = array();
 			// CHECK FOR PARAMETERS:
@@ -129,6 +134,10 @@
 		 */
 		public function action_put_basics()
 		{
+			if (!$this->is_admin_user()){
+				$this->throw_permission_error();
+			}
+
 			$this->payloadDesc = "Update basic information about a division";
 			$args = array();
 		     // CHECK FOR PARAMETERS:
@@ -188,6 +197,10 @@
 		 */
 		public function action_delete_base()
 		{
+			if (!$this->is_admin_user()){
+				$this->throw_permission_error();
+			}
+
 			$this->payloadDesc = "Delete  division";
 			if(!$this->mainModel->id)
 			{

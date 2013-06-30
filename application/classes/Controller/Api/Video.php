@@ -149,7 +149,7 @@
 		public function action_post_add()
 		{
 
-			$this->populateAuthVars();
+			//$this->populateAuthVars();
 			if(!$this->is_logged_in)
 			{
 				// Create Array for Error Data

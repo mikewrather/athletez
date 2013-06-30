@@ -134,9 +134,7 @@ function(require, imageBasicTemplate) {
 				jQuery.each($('#image_file')[0].files, function(i, file) {
 					data.append('image_file',file);
 				});
-				data.append('name',"testimg");
-				data.append('sports_id','46');
-				var dataum={"dataum":data,"id":"0"}
+				var dataum={"dataum":data}
 				Channel("imageup-add-image").publish(dataum);
 			}
 
