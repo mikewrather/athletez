@@ -100,6 +100,16 @@
 				$arguments["searchtext"] = trim($this->request->query('searchtext'));
 			}
 
+			if((int)trim($this->request->query('states_id')) > 0)
+			{
+				$arguments["states_id"] = (int)trim($this->request->query('states_id'));
+			}
+
+			if((int)trim($this->request->query('cities_id')) > 0)
+			{
+				$arguments["cities_id"] = (int)trim($this->request->query('cities_id'));
+			}
+
 			$image_model = ORM::factory('Media_Image');
 			return $image_model->getSearch($arguments);
 		}
