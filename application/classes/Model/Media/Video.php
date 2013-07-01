@@ -240,7 +240,7 @@ class Model_Media_Video extends ORM
 			->where('subject_enttypes_id','=',$enttype_id);
 
 		if (!isset($orderby)){
-			$this->join(array($counts,'filtered'))->on('filtered.users_id', '=', 'users.id');
+			$this->join(array($counts,'filtered'), 'left')->on('filtered.users_id', '=', 'users.id');
 			$this->order_by('num_votes', 'asc');
 
 		}else{

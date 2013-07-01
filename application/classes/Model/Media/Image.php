@@ -433,8 +433,28 @@ class Model_Media_Image extends ORM
 		}
 
 		$imageModel = ORM::factory("Media_Image");
-		$imageModel->where('id', 'in', $image_ids);
-		//TODO, need to order by here
+
+
+		if (!isset($orderby) || $orderby == 'votes'){
+			$enttype_id = Model_Site_Enttype::getMyEntTypeID($imageModel);
+			$image_votes = DB::select(array(DB::expr('COUNT(id)'),'num_votes'))
+				->select(array('subject_id', 'images_id'))
+				->from('votes')
+				->where('subject_enttypes_id','=',$enttype_id);
+
+			$imageModel->join(array($image_votes, 'image_votes'), 'left')->on('image_votes.images_id', '=', 'media_image.id');
+			$imageModel->order_by('num_votes', 'asc');
+		}else if ($orderby == 'followers'){
+			$enttype_id = Model_Site_Enttype::getMyEntTypeID($imageModel);
+			$followers = DB::select(array(DB::expr('COUNT(id)'),'num_followers'))
+				->select(array('subject_id', 'images_id'))
+				->from('followers')
+				->where('subject_enttypes_id','=',$enttype_id);
+			$imageModel->join(array($followers,'followers'), 'LEFT')->on('followers.images_id', '=', 'media_image.id');
+			$imageModel->order_by('num_followers', 'asc');
+		}
+
+		$imageModel->where('media_image.id', 'in', $image_ids);
 		return $imageModel;
 	/*
 		if (isset($sports_id)){
