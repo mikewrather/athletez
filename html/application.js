@@ -4,7 +4,7 @@
 // Return {Object} App
 
 define( ["facade", "utils", "collections", "chrome", "controller", "profile", "imageup", 'home', "game", "team", "registration","profilesetting","packages/site/collections/phrases"],
-function (facade, utils, collections, chromeBootstrap, Controller, ProfileController, ImageController, HomeController, GameController, TeamController, RegistrationController,ProfileSetting,SitePhraseList) {
+function (facade, utils, collections, chromeBootstrap, Controller, ProfileController, ImageController, HomeController, GameController, TeamController, RegistrationController, ProfileSetting, SitePhraseList) {
 
     var App,
         ApplicationStates = collections.ApplicationStates,
