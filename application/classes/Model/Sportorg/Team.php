@@ -324,7 +324,7 @@ class Model_Sportorg_Team extends ORM
 			->where('subject_enttypes_id','=',$enttype_id);
 
 		if (!isset($orderby)){
-			$this->join(array($counts,'filtered'))->on('filtered.teams_id', '=', 'sportorg_team.id');
+			$this->join(array($counts,'filtered'), 'left')->on('filtered.teams_id', '=', 'sportorg_team.id');
 			$this->order_by('num_votes', 'asc');
 		}else{
 			$this->order_by($orderby, 'asc');

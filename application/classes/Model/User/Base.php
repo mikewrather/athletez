@@ -851,14 +851,14 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 			->where('subject_enttypes_id','=',$enttype_id);
 
 		if (!isset($orderby) || $orderby == 'votes'){
-			$this->join(array($counts,'filtered'),'LEFT')->on('filtered.users_id', '=', 'user_base.id');
+			$this->join(array($counts,'filtered'), 'LEFT')->on('filtered.users_id', '=', 'user_base.id');
 			$this->order_by('num_votes', 'asc');
 		}else if ($orderby == 'followers'){
 			$followers = DB::select(array(DB::expr('COUNT(id)'),'num_followers'))
 				->select(array('subject_id', 'users_id'))
 				->from('followers')
 				->where('subject_enttypes_id','=',$enttype_id);
-			$this->join(array($followers,'followers'),'LEFT')->on('followers.users_id', '=', 'user_base.id');
+			$this->join(array($followers,'followers'), 'LEFT')->on('followers.users_id', '=', 'user_base.id');
 			$this->order_by('num_followers', 'asc');
 		}else if ($orderby == 'regist_time'){
 			$this->order_by('user_base.id', 'asc');
