@@ -134,11 +134,13 @@ define([
 			    this.showuploader();	
 		},
 		imageUpload: function (data) {
+			debug.log(data);
 			debug.log("image uploading starts");
 			$("#errormsg").hide();
 			var id=data.id,
 				dataum= $.merge(data.dataum, this.attr),
 				msg="";
+			debug.log(dataum);
 			$.ajax({
 			    url: this.url,
 			    data: dataum,

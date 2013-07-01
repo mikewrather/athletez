@@ -136,11 +136,13 @@ class Model_Media_Image extends ORM
 		// Create this object in DB if not already loaded with an ID
 		if(!$this->loaded()) $this->create();
 
+		print_r($args['files']);
+
 		// Loop through files which are being added or uploaded
 		foreach($args['files'] as $key=>$img_data)
 		{
 			// check to make sure it's an image.  If it's not terminate this function
-			if(!strstr($img_data['type'],'image')) return false;
+			if(!strstr($img_data['type'],'image')) continue;
 			else
 			{
 				// Save to variable because it will be used outside loop
