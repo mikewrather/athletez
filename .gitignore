@@ -1,4 +1,9 @@
 .idea
 .idea/*
+<<<<<<< HEAD
+/application/config/database.php
+/files_temp
+=======
 files_temp/*
 application/config/database.php
+>>>>>>> b59fc432ad72ef3e459241f9767407aa40ea21c3
