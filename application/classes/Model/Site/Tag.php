@@ -163,6 +163,8 @@ class Model_Site_Tag extends Model_Site_Entdir
 			$this->media_id = $media_id;
 		}
 
+		$this->setLocation($subject_type_id,$subject_id);
+
 		try {
 			$this->save();
 			Model_Site_Feed::addToFeed($this);
@@ -170,6 +172,39 @@ class Model_Site_Tag extends Model_Site_Entdir
 			return $this;
 		} catch(ORM_Validation_Exception $e){
 			return $e;
+		}
+
+	}
+
+	protected function setLocation($subject_type_id,$subject_id)
+	{
+		$ent = Ent::eFact($subject_type_id,$subject_id);
+
+		$className = get_class($ent);
+		switch ($className){
+			case "Model_User_Base":
+				$cities_id = $ent->cities_id;
+				break;
+			case "Model_Sportorg_Team":
+				$org = $ent->getOrg();
+				$cities_id = $org->location->cities_id;
+				break;
+			case "Model_Sportorg_Games_Base":
+				$cities_id = $ent->location->cities_id;
+				break;
+			case "Model_Sportorg_Org":
+				$cities_id = $ent->location->cities_id;
+				break;
+			default:
+				break;
+		}
+
+		if((int)$cities_id > 0)
+		{
+			$city = ORM::factory('Location_City')->where('id','=',$cities_id)->find();
+			if(!$city->loaded()) return false;
+			$this->cities_id = $cities_id;
+			$this->states_id = $city->state_id;
 		}
 
 	}
