@@ -20,7 +20,7 @@ class Policy_LeagueContent extends Policy
 				case 'create':
 					break;
 				case 'modify':
-					if($has_admin || $has_league_admin || $has_moderator){
+					if($has_admin || $has_league_admin){
 						$have_permission = true;
 					}
 					return $have_permission;

@@ -83,6 +83,10 @@
 		 */
 		public function action_post_add()
 		{
+			if (!$this->is_admin_user()){
+				$this->throw_permission_error();
+			}
+
 			$this->payloadDesc = "Add a new Competition Level Profile";
 
 		     // CHECK FOR PARAMETERS:
@@ -117,6 +121,10 @@
 		 */
 		public function action_post_addlevel()
 		{
+			if (!$this->is_admin_user()){
+				$this->throw_permission_error();
+			}
+
 			$this->payloadDesc = "Add a new Competition Level for this Profile";
 
 		     // CHECK FOR PARAMETERS:
@@ -164,6 +172,10 @@
 		 */
 		public function action_put_basics()
 		{
+			if (!$this->is_admin_user()){
+				$this->throw_permission_error();
+			}
+
 			$this->payloadDesc = "Update Basic information about the competition level profile";
 
 		     // CHECK FOR PARAMETERS:
@@ -209,6 +221,10 @@
 		 */
 		public function action_delete_base()
 		{
+			if (!$this->is_admin_user()){
+				$this->throw_permission_error();
+			}
+
 			$this->payloadDesc = "Delete Competition Level Profile";
 			if(!$this->mainModel->id)
 			{

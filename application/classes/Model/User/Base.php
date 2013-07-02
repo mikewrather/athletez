@@ -320,9 +320,6 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 				$this->password = Auth::instance()->hash($password);
 				$this->create();
 			}
-
-			print_r($this);
-
 			return $this;
 		} catch(ORM_Validation_Exception $e){
 			return $e;
@@ -538,7 +535,7 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 	}
 
 
-	public function getOrgs($sports_id,$groupby=NULL)
+	public function getOrgs($sports_id,$groupby=NULL,$org_type=NULL)
 	{
 		$org_sport_link_obj = DB::select(
 				array('users_teams_link.id', 'utl_id'),
@@ -561,6 +558,15 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 			->where('users.id','=',$this->id);
 		if ($sports_id){
 			$org_sport_link_obj->where('org_sport_link.sports_id', '=', $sports_id);
+		}
+
+		if($org_type=='club')
+		{
+			$org_sport_link_obj->where('orgs.sports_club','=',1);
+		}
+		elseif(strstr($org_type,'school'))
+		{
+			$org_sport_link_obj->where('orgs.sports_club','=',0);
 		}
 
 		$org_sport_link_obj->group_by('teams.id');
@@ -845,14 +851,14 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 			->where('subject_enttypes_id','=',$enttype_id);
 
 		if (!isset($orderby) || $orderby == 'votes'){
-			$this->join(array($counts,'filtered'),'LEFT')->on('filtered.users_id', '=', 'user_base.id');
+			$this->join(array($counts,'filtered'), 'LEFT')->on('filtered.users_id', '=', 'user_base.id');
 			$this->order_by('num_votes', 'asc');
 		}else if ($orderby == 'followers'){
 			$followers = DB::select(array(DB::expr('COUNT(id)'),'num_followers'))
 				->select(array('subject_id', 'users_id'))
 				->from('followers')
 				->where('subject_enttypes_id','=',$enttype_id);
-			$this->join(array($followers,'followers'),'LEFT')->on('followers.users_id', '=', 'user_base.id');
+			$this->join(array($followers,'followers'), 'LEFT')->on('followers.users_id', '=', 'user_base.id');
 			$this->order_by('num_followers', 'asc');
 		}else if ($orderby == 'regist_time'){
 			$this->order_by('user_base.id', 'asc');
@@ -954,109 +960,117 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 		$teams_obj = ORM::factory('Sportorg_Team');
 		$org_sport_link = ORM::factory('Sportorg_Orgsportlink');
 
-		if(isset($orgs_id) && $orgs_id !=""){
+		if (isset($orgs_id) && $orgs_id != "")
+		{
 			$org_sport_link->orgs_id = $orgs_id;
 		}
 
-		if(isset($sports_id) && $sports_id !=""){
+		if (isset($sports_id) && $sports_id != "")
+		{
 			$org_sport_link->sports_id = $sports_id;
 		}
 
-		if(isset($complevels_id) && $complevels_id !=""){
+		if (isset($complevels_id) && $complevels_id != "")
+		{
 			$teams_obj->complevels_id = $complevels_id;
 		}
 
-		if(isset($seasons_arr)){
+		if (isset($seasons_arr))
+		{
 			//$teams_obj->seasons_id = $seasons_id;
 		}
 
-		if(isset($year) && $year !=""){
+		if (isset($year) && $year != "")
+		{
 			$teams_obj->year = $year;
 		}
 
-		if(isset($teams_id) && $teams_id != 0) // If team ID is provided add team
+		if (isset($teams_id) && $teams_id != 0) // If team ID is provided add team
 		{
 			try
 			{
 				$user_teams_link = ORM::factory("User_Teamslink");
-				$user_teams_link->users_id = $users_id;
+				$user_teams_link->users_id = $this->id;
 				$user_teams_link->teams_id = $teams_id;
-				$validate_array = array('users_id'=>$users_id, 'teams_id'=>$teams_id);
+				$validate_array = array('users_id' => $users_id, 'teams_id' => $teams_id);
 				$external_validate = Validation::factory($validate_array);
 				$external_validate->rule('users_id', 'users_teams_exist', array($users_id, $teams_id));
 				if ($user_teams_link->check($external_validate))
 					$user_teams_link->save();
-			}
-			catch(ORM_Validation_Exception $e)
+			} catch (ORM_Validation_Exception $e)
 			{
 				return $e;
 			}
 			return $this;
-		}else{
-			foreach($seasons_arr as $seasons_id){
+		} else
+		{
+
+			//		print_r($args);
+
+			foreach ($seasons_arr as $seasons_id)
+			{
 				try
 				{
-				//$org_sport_link->seasons_id = $seasons_id;
-				$args = array('orgs_id' => $orgs_id, 'sports_id' => $sports_id);
-				//Add new logic here.new teams validation
-				//$args1 = array('complevels_id' => $complevels_id, 'seasons_id' => $seasons_id);
-				//$a = array_merge($args, $args1);
-				$combine_validate = Validation::factory($args);
-				$combine_validate->rule('orgs_id', 'orgs_id_exist')
-					->rule('sports_id', 'sports_id_exist');
-					//->rule('complevels_id', 'complevels_id_exist')
-					//->rule('seasons_id', 'seasons_id_exist');
+					//$org_sport_link->seasons_id = $seasons_id;
+					$args = array('orgs_id' => $orgs_id, 'sports_id' => $sports_id);
+
+					$combine_validate = Validation::factory($args);
+					$combine_validate->rule('orgs_id', 'orgs_id_exist')
+						->rule('sports_id', 'sports_id_exist');
 
 					$org_sport_link->check($combine_validate);
 
 
-				//Find Org / Sport link
-				$org_sport_link = ORM::factory('Sportorg_Orgsportlink')
-					->where('orgs_id','=',$orgs_id)
-					->and_where('sports_id','=',$sports_id)
-					->find();
 
-				if(!$org_sport_link->loaded()) // This means the organization does not have this sport
-				{
+					//Find Org / Sport link
+					$org_sport_link = ORM::factory('Sportorg_Orgsportlink')
+						->where('orgs_id', '=', $orgs_id)
+						->and_where('sports_id', '=', $sports_id)
+						->find();
 
-					unset($org_sport_link);
-					//Add the Association
-					$org_sport_link = ORM::factory('Sportorg_Orgsportlink');
-					$org_sport_link->orgs_id = $orgs_id;
-					$org_sport_link->sports_id = $sports_id;
-					$org_sport_link->save();
-				}
-
-				$new_team = ORM::factory('Sportorg_Team')
-					->where('org_sport_link_id','=',$org_sport_link->id)
-					->and_where('seasons_id','=',$seasons_id)
-					->and_where('complevels_id','=',$complevels_id)
-					->and_where('year','=',$year)
-					->find();
-
-				// CHECK IF TEAM EXISTS AND CREATE IT IF IT DOESN'T
-				if(!$new_team->loaded())
-				{
-					unset($new_team);
-					$new_team = ORM::factory('Sportorg_Team');
-					$new_team->org_sport_link_id = $org_sport_link->id;
-					$new_team->complevels_id = $complevels_id;
-					$new_team->seasons_id = $seasons_id;
-					$new_team->year = $year;
-					$new_team->save();
-				}
-
-				if(!$this->has('teams', $new_team)) // CHECK IF USER ALREADY HAS TEAM ASSOCIATION
-				{
-					$user_teams_link = ORM::factory("User_Teamslink");
-					$user_teams_link->users_id = $users_id;
-					$user_teams_link->teams_id = $new_team->id;
-					$user_teams_link->save();
-				}
-			}catch(ORM_Validation_Exception $e)
+					if (!$org_sport_link->loaded()) // This means the organization does not have this sport
 					{
-						return $e;
+
+						unset($org_sport_link);
+						//Add the Association
+						$org_sport_link = ORM::factory('Sportorg_Orgsportlink');
+						$org_sport_link->orgs_id = $orgs_id;
+						$org_sport_link->sports_id = $sports_id;
+						$org_sport_link->save();
 					}
+
+					$new_team = ORM::factory('Sportorg_Team')
+						->where('org_sport_link_id', '=', $org_sport_link->id)
+						->and_where('seasons_id', '=', $seasons_id)
+						->and_where('complevels_id', '=', $complevels_id)
+						->and_where('year', '=', $year)
+						->find();
+
+					// CHECK IF TEAM EXISTS AND CREATE IT IF IT DOESN'T
+					if (!$new_team->loaded())
+					{
+						unset($new_team);
+						$new_team = ORM::factory('Sportorg_Team');
+						$new_team->org_sport_link_id = $org_sport_link->id;
+						$new_team->complevels_id = $complevels_id;
+						$new_team->seasons_id = $seasons_id;
+						$new_team->year = $year;
+						$new_team->save();
+					}
+
+					if (!$this->has('teams', $new_team)) // CHECK IF USER ALREADY HAS TEAM ASSOCIATION
+					{
+						$user_teams_link = ORM::factory("User_Teamslink");
+						$user_teams_link->users_id = $this->id;
+						$user_teams_link->teams_id = $new_team->id;
+						$user_teams_link->save();
+					}
+
+
+				} catch (ORM_Validation_Exception $e)
+				{
+					return $e;
+				}
 			}
 			return $this;
 		}

@@ -583,7 +583,6 @@
 		 */
 		public function action_put_division()
 		{
-
 			if(!$this->user->can('Orgcontent', array('action'=>'modify'))){
 				$error_array = array(
 					"error" => "Sorry, You don't have permission to modify",

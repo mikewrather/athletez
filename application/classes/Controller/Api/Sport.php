@@ -398,6 +398,10 @@
 		 */
 		public function action_post_add()
 		{
+			if (!$this->is_admin_user()){
+				$this->throw_permission_error();
+			}
+
 			$this->payloadDesc = "Add a new Sport";
 
 		     // CHECK FOR PARAMETERS:
@@ -456,6 +460,10 @@
 		 */
 		public function action_post_position()
 		{
+			if (!$this->is_admin_user()){
+				$this->throw_permission_error();
+			}
+
 			$this->payloadDesc = "Add a new position for a given sport";
 			$arguments = array();
 			// CHECK FOR PARAMETERS:
@@ -512,6 +520,10 @@
 		 */
 		public function action_put_basics()
 		{
+			if (!$this->is_admin_user()){
+				$this->throw_permission_error();
+			}
+
 			$this->payloadDesc = "Update basic information about a sport";
 			$args = array();
 		     // CHECK FOR PARAMETERS:
@@ -576,6 +588,10 @@
 		 */
 		public function action_put_type()
 		{
+			if (!$this->is_admin_user()){
+				$this->throw_permission_error();
+			}
+
 			$this->payloadDesc = "Update the type of sport";
 
 		     // CHECK FOR PARAMETERS:

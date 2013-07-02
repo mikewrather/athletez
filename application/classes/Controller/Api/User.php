@@ -118,9 +118,13 @@
 				$sports_id = null;
 			}
 
+			if(trim($this->request->query('org_type')) != "")
+			{
+				$org_type = trim($this->request->query('org_type')) != "" ? trim($this->request->query('org_type')) : NULL;
+			}
 			$groupby = ($this->request->query('groupby') != '') ? $this->request->query('groupby') : NULL;
 
-			return $this->mainModel->getOrgs($sports_id,$groupby);
+			return $this->mainModel->getOrgs($sports_id,$groupby,$org_type);
 		}
 		
 		/**
@@ -743,6 +747,10 @@
 		 */
 		public function action_post_add()
 		{
+			if (!$this->is_admin_user()){
+				$this->throw_permission_error();
+			}
+
 			$this->payloadDesc = "Create a new user with all necessary basic information (possibly first step of registration)";
 
 			$args = array();
@@ -1851,6 +1859,99 @@
 
 			}
 		}
+
+		public function action_put_teamseasons()
+		{
+			if(!$this->mainModel->id)
+			{
+				$this->modelNotSetError();
+				return false;
+			}
+
+			if((int)trim($this->put('orgs_id')) > 0)
+			{
+				$orgs_id = $this->put('orgs_id');
+			}
+			else
+			{
+				$error_array = array(
+					"error" => "Organization ID is a required field",
+				);
+				$this->addError($error_array,true);
+				return false;
+			}
+
+			if((int)trim($this->put('sports_id')) > 0)
+			{
+				$sports_id = $this->put('sports_id');
+			}
+			else
+			{
+				$error_array = array(
+					"error" => "Sports ID is a required field",
+				);
+				$this->addError($error_array,true);
+				return false;
+			}
+
+			$osl = ORM::factory('Sportorg_Orgsportlink')
+				->where('orgs_id','=',$orgs_id)
+				->where('sports_id','=',$sports_id)
+				->find();
+
+			if(!$osl->loaded())
+			{
+				unset($osl);
+				$osl = ORM::factory('Sportorg_Orgsportlink');
+				$osl->orgs_id = $orgs_id;
+				$osl->sports_id = $sports_id;
+				$osl->save();
+			}
+
+			foreach($this->put('comp_levels') as $cl_obj)
+			{
+				$complevel_id = $cl_obj->complevel_id;
+
+				foreach($cl_obj->seasons as $season_obj)
+				{
+
+					//Set up args array for addteam
+					$args = array(
+						'orgs_id' => $orgs_id,
+						'sports_id' => $sports_id,
+						'complevels_id' => $complevel_id,
+						'seasons_arr' => array($season_obj->season_id), // this has to be an array to be handled by addTeam method
+						'year'=>$season_obj->year,
+						'positions' => Util::obj_arr_toggle($season_obj->positions),
+					);
+
+					if(isset($season_obj->unique_ident))
+					{
+						$args['unique_ident'] = $season_obj->unique_ident;
+					}
+
+					$result = $this->mainModel->addTeam($args);
+					if(get_class($result) == 'ORM_Validation_Exception')
+					{
+						print_r($args);
+						//parse error and add to error array
+						$this->processValidationError($result,$this->mainModel->error_message_path);
+						return false;
+
+					}
+
+				}
+
+				// Get Team:
+				/*
+
+
+
+				*/
+
+			}
+
+		}
 		
 		############################################################################
 		###########################    DELETE METHODS    ###########################
@@ -1864,6 +1965,10 @@
 		 */
 		public function action_delete_base()
 		{
+			if (!$this->is_admin_user()){
+				$this->throw_permission_error();
+			}
+
 			$this->payloadDesc = "Delete a User";
 
 		    if(!$this->mainModel->id)

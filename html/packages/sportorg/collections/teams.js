@@ -20,6 +20,8 @@ function(facade, collections, SportorgTeamModel, utils) {
         
         // **Method:** `fetchSuccess` - resolve the deferred here in success
         fetchSuccess: function (collection, response) {
+        	console.log("Teams Collection",collection);
+        	console.log("Teams Response",response);
             collection.reset();
             
             var payload = response.payload;            
