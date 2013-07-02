@@ -62,6 +62,7 @@ define([
         init: function(option) {
 			this.url=option.url;
 			this.attr=option.attr;
+			this.count=0;
 			debug.log("Imagecontroller Init");
             this.setupLayout();
 			this.handleDeferreds();
@@ -72,8 +73,8 @@ define([
 			function imageuploader(dataum) {
 				controller.imageUpload(dataum);
 			}
-			function errorShow(dataum) {
-				controller.errorShowup(dataum);
+			function msgShow(dataum) {
+				controller.msgShowup(dataum);
 			}
 			function previewShow(dataum) {
 				controller.previewShowup(dataum);
@@ -83,7 +84,7 @@ define([
 			}
 			
 			Channel('imageup-add-image').subscribe(imageuploader);
-			Channel('imageup-error').subscribe(errorShow);
+			Channel('imageup-msg').subscribe(msgShow);
 			Channel('imageup-preview').subscribe(previewShow);
 			Channel('imageup-rerender').subscribe(rerenderShow);
 		},
@@ -136,11 +137,11 @@ define([
 		imageUpload: function (data) {
 			debug.log(data);
 			debug.log("image uploading starts");
-			$("#errormsg").hide();
 			var id=data.id,
+				length=data.len,
 				dataum= $.merge(data.dataum, this.attr),
-				msg="";
-			debug.log(dataum);
+				msg="",thiss=this;
+			$("#preview_"+id).html("<progress></progress>")
 			$.ajax({
 			    url: this.url,
 			    data: dataum,
@@ -149,29 +150,51 @@ define([
 				contentType:false,
 			    type: 'POST',
 			    success: function(data){
+					$("#preview_"+id).fadeOut("slow");
 					debug.log(data);
-					msg={"msg":"File Uploaded Succesfully","color":"green"};
-					Channel("imageup-error").publish(msg);
+					$("imageup").attr("disabled", "disabled");
+					thiss.count=thiss.count+1;
+					if(thiss.count == length)
+					{
+						msg={"msg":" File Uploaded Succesfully","color":"alert-success"};
+						Channel("imageup-msg").publish(msg);
+						$("#imageup").removeAttr("disabled");
+					}
 			    },
 				error:function(data){
+					$("#preview_"+id).fadeOut("slow");
+					$("#preview_"+id).fadeIn("slow").html("Upload Error!");
 					debug.log(data);
-					msg={"msg":data.statusText,"color":"red"};
-					Channel("imageup-error").publish(msg);
+					msg={"msg":data.statusText,"color":"alert-error"};
+					thiss.count=thiss.count+1;
+					if(thiss.count == length)
+					{
+						Channel("imageup-msg").publish(msg);
+						$("#imageup").removeAttr("disabled");
+					}
 				}
 			});
 		},
-		errorShowup: function (dataum) {
+		msgShowup: function (dataum) {
 			debug.log(dataum);
-			$("#errormsg").show();
+			for( var x in this.scheme) {
+			    if( this.scheme[x].destination=="#errormsg") delete this.scheme[x];
+			}
 			errorShowModel= new ErrorShowModel(dataum);
             addErrorView = new ErrorShowView({
                 name: "File Upload Msg",
 				model :errorShowModel,
-				destination : "#errormsg"
+				destination : "#errormsg",
+				displayWhen: "ready"
             });
             debug.log("Error View Show");
+			for(var i=0;i<this.scheme.length;i++)
+			{
+				console.log(this.scheme[i])
+			}
             this.scheme.push(addErrorView);
-            this.rerender();
+			$("#errormsg").show();
+            Channel("imageup-rerender").publish();	
 		}
 
     });

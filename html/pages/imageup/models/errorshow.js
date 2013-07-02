@@ -11,7 +11,7 @@ define( ["facade","models/base"], function (facade,BaseModel) {
     ErrorShowModel =  BaseModel.extend({
 		defaults: _.extend({}, (new BaseModel).attributes, {
                 "msg": null,
-                "color": "yellow"        }),
+                "color": null        }),
 	    initialize: function (attributes, options) {
         }
 	

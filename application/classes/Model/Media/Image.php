@@ -127,7 +127,6 @@ class Model_Media_Image extends ORM
 	 */
 	public function addImage($args = array())
 	{
-
 		// create a row in the media table and store the ID of that row in this table
 		$args["media_type"] = "image";
 	//	$args['user_id'] = (isset($$args['user_id']) && $$args['user_id'] > 0) ? $$args['user_id'] : Auth::instance()->get_user()->id;
@@ -135,8 +134,6 @@ class Model_Media_Image extends ORM
 
 		// Create this object in DB if not already loaded with an ID
 		if(!$this->loaded()) $this->create();
-
-		print_r($args['files']);
 
 		// Loop through files which are being added or uploaded
 		foreach($args['files'] as $key=>$img_data)

@@ -149,10 +149,6 @@
 				$args['sports_id'] = (int)trim($this->request->post('sports_id'));
 			}
 
-			print_r($_FILES);
-
-			print_r($this->request);
-
 			if(sizeof($_FILES) > 0)
 			{
 				$args['files'] = $_FILES;
