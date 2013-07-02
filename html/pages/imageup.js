@@ -135,6 +135,7 @@ define([
 			    this.showuploader();	
 		},
 		imageUpload: function (data) {
+			debug.log(data);
 			debug.log("image uploading starts");
 			var id=data.id,
 				length=data.len,
