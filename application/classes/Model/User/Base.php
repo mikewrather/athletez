@@ -543,10 +543,109 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 				array('orgs.id', 'org_id'),
 				array('orgs.name', 'org_name'),
 				'teams.*',
+				array('sports.name','sport'),
+				array('sports.id','sports_id'),
 				array('teams.id', 'team_id'),
 				array('complevels.name', 'complevel_name'),
 				array('seasons.name', 'season'), 'statvals.statval'
 			)
+			->from('users')
+			->join('users_teams_link')->on('users.id','=','users_teams_link.users_id')
+			->join('teams')->on('teams.id','=','users_teams_link.teams_id')
+			->join('org_sport_link')->on('org_sport_link.id','=','teams.org_sport_link_id')
+			->join('sports')->on('org_sport_link.sports_id','=','sports.id')
+			->join('orgs')->on('orgs.id','=','org_sport_link.orgs_id')
+			->join('complevels', 'LEFT')->on('complevels.id','=','teams.complevels_id')
+			->join('seasons', 'LEFT')->on('seasons.id','=','teams.seasons_id')
+			->join('statvals', 'LEFT')->on('statvals.teams_id','=','teams.id')
+			->where('users.id','=',$this->id);
+		if ($sports_id){
+			$org_sport_link_obj->where('org_sport_link.sports_id', '=', $sports_id);
+		}
+
+		if($org_type=='club')
+		{
+			$org_sport_link_obj->where('orgs.sports_club','=',1);
+		}
+		elseif(strstr($org_type,'school'))
+		{
+			$org_sport_link_obj->where('orgs.sports_club','=',0);
+		}
+
+		$org_sport_link_obj->group_by('teams.id');
+
+		$res = $org_sport_link_obj->execute();
+
+		$orgs = array(
+			"groupby" => $groupby
+		);
+
+		foreach($res as $team)
+		{
+			if(!array_key_exists($team['org_id'],$orgs))
+			{
+				// Create the org array
+				$orgs[$team['org_id']] = array(
+					'org_id' => $team['org_id'],
+					'org_name' => $team['org_name'],
+				//	'teams' => array()
+				);
+			}
+
+			$positions = ORM::factory('Sportorg_Position')
+				->join('utl_position_link','LEFT')->on('sportorg_position.id','=','utl_position_link.positions_id')
+				->where('users_teams_link_id','=',$team['utl_id'])
+				->find_all();
+
+			$positions_array = NULL;
+			foreach($positions as $position)
+			{
+				$positions_array[$position->id] = $position->getBasics();
+			}
+
+			$this_org_item = array(
+				'team_id' => $team['team_id'],
+				'team_name' => $team['unique_ident'],
+				'year' => $team['year'],
+				'complevel' => $team['complevel_name'],
+				'season' => $team['season'],
+				'positions' => $positions_array,
+			);
+
+			if($sports_id)
+			{
+				$orgs[$team['org_id']]["teams"][$team['team_id']] = $this_org_item;
+			}
+			else
+			{
+				$orgs[$team['org_id']]["sports"][$team['sport']][$team['complevel_name']][$team['team_id']] = $this_org_item;
+			}
+
+		}
+		//Return null as result if not value
+		$std = new stdClass();
+		if (empty($orgs)){
+			$std->result = null;
+			return $std;
+		}
+
+		$orgs = Util::obj_arr_toggle($orgs);
+		$std->result = (object)$orgs;
+		return $std;
+	}
+
+	public function getOrgs_bak($sports_id,$groupby=NULL,$org_type=NULL)
+	{
+		$org_sport_link_obj = DB::select(
+			array('users_teams_link.id', 'utl_id'),
+			array('users.id', 'user_id'),
+			array('orgs.id', 'org_id'),
+			array('orgs.name', 'org_name'),
+			'teams.*',
+			array('teams.id', 'team_id'),
+			array('complevels.name', 'complevel_name'),
+			array('seasons.name', 'season'), 'statvals.statval'
+		)
 			->from('users')
 			->join('users_teams_link')->on('users.id','=','users_teams_link.users_id')
 			->join('teams')->on('teams.id','=','users_teams_link.teams_id')

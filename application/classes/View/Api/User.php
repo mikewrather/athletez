@@ -92,17 +92,24 @@
 			{
 				if($key=='groupby') continue;
 
-				if($orgs_obj->groupby=='complevel')
+
+				if(isset($org_obj->sports))
 				{
-					foreach($org_obj->teams as $complevel=>$teams)
+					foreach($org_obj->sports as $sport=>$complevels)
 					{
-						$teams = $this->_team_loop($teams);
+						foreach($complevels as $teams)
+						{
+							$teams = $this->_team_loop($teams);
+						}
 					}
 				}
-				else
+				elseif(isset($org_obj->teams))
 				{
 					$org_obj->teams = $this->_team_loop($org_obj->teams);
+
 				}
+
+
 
 			}
 		 	unset($orgs_obj->groupby);
