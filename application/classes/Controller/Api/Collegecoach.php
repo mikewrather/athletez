@@ -77,6 +77,10 @@
 				$arguments["users_id"] = $this->user->id;
 			}
 
+			if(!$this->user->can('Assumeownership', array('owner' => $arguments['users_id']))){
+				$this->throw_permission_error(Constant::NOT_OWNER);
+			}
+
 			if((int)trim($this->request->post('sports_id')) > 0)
 			{
 				$arguments["sports_id"] = (int)trim($this->request->post('sports_id'));

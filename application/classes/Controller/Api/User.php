@@ -432,6 +432,15 @@
 				return false;
 			}
 			$arguments['users_id'] = $this->mainModel->id;
+
+			if(!$this->user->can('Assumeownership', array('owner' => $arguments['users_id']))){
+				$this->throw_permission_error(Constant::NOT_OWNER);
+			}
+
+			if(!$this->user->can('Assumeownership', array('owner' => $arguments['users_id']))){
+				$this->throw_permission_error(Constant::NOT_OWNER);
+			}
+
 			$resume_sent_model = ORM::factory("User_Resume_Sent");
 
 			return $resume_sent_model->getSentResumes($arguments);
@@ -467,6 +476,11 @@
 				return false;
 			}
 			$args['users_id'] = $this->mainModel->id;
+
+			if(!$this->user->can('Assumeownership', array('owner' => $args['users_id']))){
+				$this->throw_permission_error(Constant::NOT_OWNER);
+			}
+
 			$gpa_model = ORM::factory("Academics_Gpa");
 			return $gpa_model->getGpa($args);
 		}
@@ -483,6 +497,13 @@
 			// CHECK FOR PARAMETERS:
 			// standardized
 			// Return results for standardized tests.  True by default.
+			if(!$this->mainModel->id)
+			{
+				$this->modelNotSetError();
+				return false;
+			}
+
+			$arguments['users_id'] = $this->mainModel->id;
 
 			if($this->request->query('standardized') != "")
 			{
@@ -514,13 +535,10 @@
 				$arguments["ap"] = 1;
 			}
 
-			if(!$this->mainModel->id)
-			{
-				$this->modelNotSetError();
-				return false;
+			if(!$this->user->can('Assumeownership', array('owner' => $arguments['users_id']))){
+				$this->throw_permission_error(Constant::NOT_OWNER);
 			}
 
-			$arguments['users_id'] = $this->mainModel->id;
 			$test_model = ORM::factory("Academics_Tests");
 			return $tests = $test_model->getTestsByType($arguments);
 		}
@@ -543,6 +561,16 @@
 			// academics_topics_id (REQUIRED)
 			// This is the ID of the Test Topic we are adding the score for
 
+			if(!$this->mainModel->id)
+			{
+				$this->modelNotSetError();
+				return false;
+			}
+
+			if(!$this->user->can('Assumeownership', array('owner' => $this->mainModel->id))){
+				$this->throw_permission_error(Constant::NOT_OWNER);
+			}
+
 			if((int)trim($this->request->post('academics_topics_id')) > 0)
 			{
 				$arguments["academics_tests_topics_id"] = (int)trim($this->request->post('academics_topics_id'));
@@ -551,12 +579,6 @@
 			if(trim($this->request->post('score')) != "")
 			{
 				$arguments["score"] = trim($this->request->post('score'));
-			}
-
-			if(!$this->mainModel->id)
-			{
-				$this->modelNotSetError();
-				return false;
 			}
 
 			$arguments['users_id'] = $this->mainModel->id;
@@ -590,6 +612,16 @@
 			// year (REQUIRED)
 			// This is a 4 digit integer like 2013.
 
+			if(!$this->mainModel->id)
+			{
+				$this->modelNotSetError();
+				return false;
+			}
+
+			if(!$this->user->can('Assumeownership', array('owner' => $this->mainModel->id))){
+				$this->throw_permission_error(Constant::NOT_OWNER);
+			}
+
 			if(trim($this->request->post('year')) != "")
 			{
 				$arguments["year"] = strtolower(trim($this->request->post('year')));
@@ -598,12 +630,6 @@
 			if(trim($this->request->post('gpa')) != "")
 			{
 				$arguments["gpa"] = trim($this->request->post('gpa'));
-			}
-
-			if(!$this->mainModel->id)
-			{
-				$this->modelNotSetError();
-				return false;
 			}
 
 			$arguments['users_id'] = $this->mainModel->id;
@@ -1153,6 +1179,10 @@
 				return false;
 			}
 
+			if(!$this->user->can('Assumeownership', array('owner' => $this->mainModel->id))){
+				$this->throw_permission_error(Constant::NOT_OWNER);
+			}
+
 			$teams_link = ORM::factory("User_Teamslink");
 			// get users_teams_link_id
 			$users_teams_id = "";
@@ -1637,6 +1667,11 @@
                 $this->modelNotSetError();
                 return false;
             }
+
+			if(!$this->user->can('Assumeownership', array('owner' => $this->mainModel->id))){
+				$this->throw_permission_error(Constant::NOT_OWNER);
+			}
+
 			$arguments['id'] =  $this->mainModel->id;
 
                 $result = $this->mainModel->updateUser($arguments);
@@ -1994,6 +2029,11 @@
                 return false;
             }
 
+			//permission check
+			if(!$this->user->can('Assumeownership', array('owner' => $this->mainModel->id))){
+				$this->throw_permission_error(Constant::NOT_OWNER);
+			}
+
 			$arguments = array();
 
 			if((int)trim($this->delete('teams_id')) > 0)
@@ -2031,6 +2071,11 @@
                 $this->modelNotSetError();
                 return false;
             }
+
+			//permission check
+			if(!$this->user->can('Assumeownership', array('owner' => $this->mainModel->id))){
+				$this->throw_permission_error(Constant::NOT_OWNER);
+			}
 
 			$arguments = array();
 			// CHECK FOR PARAMETERS:
@@ -2113,6 +2158,11 @@
                 return false;
             }
 
+			//permission check
+			if(!$this->user->can('Assumeownership', array('owner' => $this->mainModel->id))){
+				$this->throw_permission_error(Constant::NOT_OWNER);
+			}
+
 			$arguments = array();
 
 			if( trim($this->delete('identity_id')) != "")
@@ -2164,9 +2214,17 @@
 		{
 			$this->payloadDesc = "Delete a GPA for a given user / year";
 			$arguments = array();
-			// CHECK FOR PARAMETERS:
-			// year (REQUIRED)
-			// A 4 digit integer for the year.
+
+			if(!$this->mainModel->id)
+			{
+				$this->modelNotSetError();
+				return false;
+			}
+
+			//permission check
+			if(!$this->user->can('Assumeownership', array('owner' => $this->mainModel->id))){
+				$this->throw_permission_error(Constant::NOT_OWNER);
+			}
 
 			if(trim($this->delete('year')) != "")
 			{
@@ -2199,12 +2257,6 @@
 
 			}
 
-			if(!$this->mainModel->id)
-			{
-				$this->modelNotSetError();
-				return false;
-			}
-
 			$arguments['users_id'] = $this->mainModel->id;
 
 			return $this->mainModel->delete_gpa($arguments);
@@ -2223,16 +2275,23 @@
 			// test_score_id (REQUIRED)
 			// The ID of the test score to delete
 
-			if((int)trim($this->delete('test_score_id')) > 0)
-			{
-				$arguments["test_score_id"] = (int)trim($this->delete('test_score_id'));
-			}
-
 			if(!$this->mainModel->id)
 			{
 				$this->modelNotSetError();
 				return false;
 			}
+
+			//permission check
+			if(!$this->user->can('Assumeownership', array('owner' => $this->mainModel->id))){
+				$this->throw_permission_error(Constant::NOT_OWNER);
+			}
+
+			if((int)trim($this->delete('test_score_id')) > 0)
+			{
+				$arguments["test_score_id"] = (int)trim($this->delete('test_score_id'));
+			}
+
+
 
 			$arguments['users_id'] = $this->mainModel->id;
 			$this->mainModel->delete_tests($arguments);

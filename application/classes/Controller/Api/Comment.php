@@ -269,7 +269,7 @@
 				return false;
 			}
 
-			if (!$this->mainModel->is_owner()){
+			if(!$this->user->can('Assumeownership', array('owner'=>$this->mainModel->owner()))){
 				$this->throw_permission_error(Constant::NOT_OWNER);
 			}
 
@@ -319,8 +319,8 @@
 				$this->modelNotSetError();
 				return false;
 			}
-
-			if (!$this->mainModel->is_owner()){
+			//permission check
+			if(!$this->user->can('Assumeownership', array('owner' => $this->mainModel->owner()))){
 				$this->throw_permission_error(Constant::NOT_OWNER);
 			}
 

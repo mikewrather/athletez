@@ -123,5 +123,20 @@ class Model_User_Resume_Data extends ORM
 	public function getVals()
 	{
 		return $this->datavals;
-	} 
+	}
+
+	public function owner(){
+		if(!$this->id){
+			return "";
+		}
+		return intval($this->users_id);
+	}
+
+	public function is_owner($user){
+		if (is_object($user)){
+			return intval($user->id) == $this->owner();
+		}else{
+			return intval($user) == $this->owner();
+		}
+	}
 }

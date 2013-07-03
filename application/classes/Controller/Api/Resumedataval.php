@@ -80,6 +80,10 @@
 			}else{
 				$args['users_id'] = $this->user->id;
 			}
+
+			if(!$this->user->can('Assumeownership', array('owner' => $args['users_id']))){
+				$this->throw_permission_error(Constant::NOT_OWNER);
+			}
 			
 			$result = $this->mainModel->addResumeDataVal($args);
             //Check for success / error
@@ -122,6 +126,11 @@
 			{
 				$this->modelNotSetError();
 				return false;
+			}
+
+			//permission check
+			if(!$this->user->can('Assumeownership', array('owner' => $this->mainModel->owner()))){
+				$this->throw_permission_error(Constant::NOT_OWNER);
 			}
 			
 			$result = $this->mainModel->updateResumeDataVal($user_value);

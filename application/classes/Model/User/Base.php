@@ -224,6 +224,7 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 
 			}else{
 				if ($this->email != $email){
+					$this->email = $email;
 					$extra_validate->rule('email','unique_email');
 				}
 			}
@@ -302,9 +303,14 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 			$this->dob = $dob;
 		}
 
+		if(isset($email) && $email != ""){
+			$this->email = $email;
+		}
+
 		try {
 			$extra_validate = Validation::factory($args);
 			if ($email != ""){
+
 				$extra_validate->rule('email','unique_email');
 			}
 			$extra_validate->rule('password','not_empty');
@@ -1393,4 +1399,6 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 
 		return $gpa;
 	}
+
+
 }
