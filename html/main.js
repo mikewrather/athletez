@@ -37,6 +37,10 @@ require.config({
         // Touch events
         'touch'        : '/vendor/plugins/touch',
 
+		// Create a rotate effect events
+        'rotate'        : '/vendor/plugins/jQueryRotate',
+		
+
         // Vendor libs, packaged group of common dependencies
         'vendor'       : '/vendor',
 

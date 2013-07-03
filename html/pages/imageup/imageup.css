@@ -12,7 +12,7 @@
 .previewimg{
 	display:inline;
 	float: left;
-	margin: 10px 10px 10px;
+	margin: 10px 10px 50px;
 	height: 100px;
 }
 #preview
@@ -34,7 +34,7 @@
 	height :inherit;
 	position: relative;
 }
-.blur
+.previewrotate
 {
-	 opacity 0.4;
+	margin-top:25px;
 }
