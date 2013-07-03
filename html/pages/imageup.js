@@ -90,17 +90,14 @@ define([
 		},
         showuploader: function () {
             //this.basics = new ImageBasicModel();
-	        debug.log(ImageBasicView);
-	        debug.log(ImageBasicModel);
 			imgModel= new ImageBasicModel();
             addBasicView = new ImageBasicView({
                 name: "Add Media",
 				model :imgModel,
 				destination : "#main-content"
-            });
+            },this.attr);
             debug.log("Imagecontroller Show");
             this.scheme.push(addBasicView);
-			debug.log(this.layout);
             this.layout.render();
         },
 		setupLayout: function () {
@@ -139,8 +136,9 @@ define([
 			debug.log("image uploading starts");
 			var id=data.id,
 				length=data.len,
-				dataum= $.merge(data.dataum, this.attr),
-				msg="",thiss=this;
+				dataum= [],
+				msg="",thiss=this,
+				dataum=data.dataum;
 			$("#preview_"+id).html("<progress></progress>")
 			$.ajax({
 			    url: this.url,
@@ -151,6 +149,7 @@ define([
 			    type: 'POST',
 			    success: function(data){
 					$("#preview_"+id).fadeOut("slow");
+					$("#preview_"+id+"rot").fadeOut("slow");
 					debug.log(data);
 					$("imageup").attr("disabled", "disabled");
 					thiss.count=thiss.count+1;
@@ -159,24 +158,22 @@ define([
 						msg={"msg":" File Uploaded Succesfully","color":"alert-success"};
 						Channel("imageup-msg").publish(msg);
 						$("#imageup").removeAttr("disabled");
+						$("#image_file").removeAttr("disabled");
+						
 					}
 			    },
 				error:function(data){
 					$("#preview_"+id).fadeOut("slow");
-					$("#preview_"+id).fadeIn("slow").html("Upload Error!");
+					$("#preview_"+id).fadeIn("slow").html("<b>Upload Error!</b>");
 					debug.log(data);
-					msg={"msg":data.statusText,"color":"alert-error"};
-					thiss.count=thiss.count+1;
-					if(thiss.count == length)
-					{
+						msg={"msg":data.statusText,"color":"alert-error"};
 						Channel("imageup-msg").publish(msg);
 						$("#imageup").removeAttr("disabled");
-					}
+						$("#image_file").removeAttr("disabled");
 				}
 			});
 		},
 		msgShowup: function (dataum) {
-			debug.log(dataum);
 			for( var x in this.scheme) {
 			    if( this.scheme[x].destination=="#errormsg") delete this.scheme[x];
 			}
@@ -188,10 +185,6 @@ define([
 				displayWhen: "ready"
             });
             debug.log("Error View Show");
-			for(var i=0;i<this.scheme.length;i++)
-			{
-				console.log(this.scheme[i])
-			}
             this.scheme.push(addErrorView);
 			$("#errormsg").show();
             Channel("imageup-rerender").publish();	

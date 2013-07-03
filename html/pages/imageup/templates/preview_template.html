@@ -1,3 +1,10 @@
 {{#data}} 
-	<div class="previewimg"><img src="{{filesrc}}" class="img-polaroid" width="{{width}}" height="{{height}}" title="{{title}}"><div id="{{preview_id}}"></div></div>
+	<div class="previewimg">
+		<div class="previewimgsrc" id="{{preview_id}}pre">
+			<img src="{{filesrc}}" class="img-polaroid" width="{{width}}" height="{{height}}" title="{{title}}" draggable="false">
+			<input type="hidden" id="{{preview_id}}rotang" value="0">
+		</div>
+		<div id="{{preview_id}}" class="previewprogress"></div>
+		<div id="{{preview_id}}rot" class="previewrotate"><button id="{{preview_id}}pre img" value="{{preview_id}}" class="btn rotate">Rotate</button></div>
+	</div>
 {{/data}} 
