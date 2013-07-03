@@ -40,9 +40,10 @@ function(require, previewBasicTemplate) {
 			this.degree=0;       
         },	
 		imageRotate: function (event) {
-			this.degree=this.degree+90;
 			id=event.currentTarget.id;
 			val=event.currentTarget.value;
+			this.degree=$("#"+val+"rotang").val();
+			this.degree=parseInt(this.degree)+90;
 			if(this.degree>360)  this.degree=0;
 			$("#"+id).css({
 			                        '-webkit-transform': 'rotate(' + this.degree + 'deg)',
@@ -52,7 +53,7 @@ function(require, previewBasicTemplate) {
 			                        'transform': 'rotate(' + this.degree + 'deg)',
 			                        'zoom': 1
 			           });
-			$("#"+val+"rotang").val(this.degree)
+			$("#"+val+"rotang").val(this.degree);
 		}
                 
     });
