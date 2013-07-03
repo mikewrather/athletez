@@ -70,8 +70,9 @@ function(require, imageBasicTemplate) {
 		      var reader = new FileReader();
 		      reader.onload = (function(theFile) {
 		        return function(e) {
+					var preview_id="preview_"+k;
 				  k++;
-				  dataum.push({"width":"150","height":"150","filesrc":e.target.result,"title":escape(theFile.name)}); 
+				  dataum.push({"preview_id":preview_id,"width":"150","height":"150","filesrc":e.target.result,"title":escape(theFile.name)}); 
 				  if(k==files.length)
 				  {
 					data={"data":dataum};
@@ -123,11 +124,11 @@ function(require, imageBasicTemplate) {
 			}
 			else if(this.files_drag.length>=1)
 			{
-				var thiss=this;
-				jQuery.each(thiss.files_drag, function(i, file) {
+				var len=this.files_drag.length;
+				jQuery.each(this.files_drag, function(i, file) {
 					var data = new FormData();
 					data.append('image_file',file);
-					var dataum={"dataum":data,"id":i,"len":thiss.files_drag.length};
+					var dataum={"dataum":data,"id":i,"len":len};
 					Channel("imageup-add-image").publish(dataum);
 				});
 			}

@@ -159,6 +159,8 @@ define([
 						msg={"msg":" File Uploaded Succesfully","color":"alert-success"};
 						Channel("imageup-msg").publish(msg);
 						$("#imageup").removeAttr("disabled");
+						$("#image_file").removeAttr("disabled");
+						
 					}
 			    },
 				error:function(data){
@@ -171,6 +173,7 @@ define([
 					{
 						Channel("imageup-msg").publish(msg);
 						$("#imageup").removeAttr("disabled");
+						$("#image_file").removeAttr("disabled");
 					}
 				}
 			});
