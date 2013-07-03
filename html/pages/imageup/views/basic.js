@@ -131,6 +131,7 @@ function(require, imageBasicTemplate) {
 					var dataum={"dataum":data,"id":i,"len":len};
 					Channel("imageup-add-image").publish(dataum);
 				});
+				this.files_drag=[];
 			}
 			else
 			{
