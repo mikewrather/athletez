@@ -12,13 +12,29 @@
 .previewimg{
 	display:inline;
 	float: left;
-	margin: 10px;
+	margin: 10px 10px 10px;
+	height: 100px;
 }
 #preview
 {
 	display:inline-block;
+	position:inherit;
 }
 .fileuploader
 {
 	margin: 10px 5px 0 10px;
+}
+.previewprogress
+{
+	margin: -56px 0 0 12px;
+    position: absolute;
+}
+.previewimgsrc 
+{
+	height :inherit;
+	position: relative;
+}
+.blur
+{
+	 opacity 0.4;
 }
