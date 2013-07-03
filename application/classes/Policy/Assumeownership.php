@@ -21,6 +21,6 @@
 		}
 
 		private function is_owner($user, $owner_id){
-			return invtal($user->id) == inval($owner_id);
+			return intval($user->id) == intval($owner_id);
 		}
 	}
