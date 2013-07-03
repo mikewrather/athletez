@@ -141,6 +141,8 @@ define([
 				length=data.len,
 				dataum= $.merge(data.dataum, this.attr),
 				msg="",thiss=this;
+				var blurid="#preview_"+id+"pre";
+			$(blurid).css({overlay: 'rgba(255,255,255,0.4)' });
 			$("#preview_"+id).html("<progress></progress>")
 			$.ajax({
 			    url: this.url,
@@ -165,16 +167,12 @@ define([
 			    },
 				error:function(data){
 					$("#preview_"+id).fadeOut("slow");
-					$("#preview_"+id).fadeIn("slow").html("Upload Error!");
+					$("#preview_"+id).fadeIn("slow").html("<b>Upload Error!</b>");
 					debug.log(data);
-					msg={"msg":data.statusText,"color":"alert-error"};
-					thiss.count=thiss.count+1;
-					if(thiss.count == length)
-					{
+						msg={"msg":data.statusText,"color":"alert-error"};
 						Channel("imageup-msg").publish(msg);
 						$("#imageup").removeAttr("disabled");
 						$("#image_file").removeAttr("disabled");
-					}
 				}
 			});
 		},

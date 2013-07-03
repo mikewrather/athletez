@@ -1,3 +1,8 @@
 {{#data}} 
-	<div class="previewimg"><img src="{{filesrc}}" class="img-polaroid" width="{{width}}" height="{{height}}" title="{{title}}"><div id="{{preview_id}}"></div></div>
+	<div class="previewimg">
+		<div class="previewimgsrc" id="{{preview_id}}pre">
+			<img src="{{filesrc}}" class="img-polaroid" width="{{width}}" height="{{height}}" title="{{title}}">
+		</div>
+		<div id="{{preview_id}}" class="previewprogress"></div>
+	</div>
 {{/data}} 
