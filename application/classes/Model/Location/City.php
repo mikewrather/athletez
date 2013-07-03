@@ -16,7 +16,11 @@ class Model_Location_City extends ORM
 		'county' => array(
 			'model' => 'Location_County',
 			'foreign_key' => 'county_id'
-		)
+		),
+		'state' => array(
+			'model' => 'Location_State',
+			'foreign_key' => 'state_id'
+		),
 	);
 
 	protected $_has_many = array(
@@ -44,11 +48,6 @@ class Model_Location_City extends ORM
 	}
 	// end rules for Location_City
 
-
-	public function __construct()
-	{
-		parent::__construct();
-	}
 	
 	public function getBasics()
 	{

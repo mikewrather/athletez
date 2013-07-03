@@ -92,4 +92,9 @@ class Api_Viewclass
 	{
 		return $this->obj->getBasics();
 	}
+
+	public function post_flag()
+	{
+		return $this->obj->getBasics();
+	}
 }

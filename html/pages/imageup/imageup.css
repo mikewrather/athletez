@@ -2,21 +2,39 @@
     height: 18px;
     background: green;
 }
-.yellow
-{
-	background: yellow;
-}
-.red
-{
-	background: red;
-}
-.green
-{
-	background: green;
-}
 .imageholder {
-  height: 75px;
+  height: 200px;
   border: 2px dashed #ccc;
   margin: 10px 5px 0 0;
+  vertical-align: middle;
 
+}
+.previewimg{
+	display:inline;
+	float: left;
+	margin: 10px 10px 50px;
+	height: 100px;
+}
+#preview
+{
+	display:inline-block;
+	position:inherit;
+}
+.fileuploader
+{
+	margin: 10px 5px 0 10px;
+}
+.previewprogress
+{
+	margin: -56px 0 0 12px;
+    position: absolute;
+}
+.previewimgsrc 
+{
+	height :inherit;
+	position: relative;
+}
+.previewrotate
+{
+	margin-top:25px;
 }

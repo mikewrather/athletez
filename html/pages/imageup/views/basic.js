@@ -45,10 +45,10 @@ function(require, imageBasicTemplate) {
         template: imageBasicTemplate,
 		data :imageBasicTemplate,
 
-        initialize: function (options) {
+        initialize: function (options,attr) {
             SectionView.prototype.initialize.call(this, options);   
 			debug.log("Image upload basic view");   
-			debug.log(imageBasicTemplate);       
+			this.attr=attr;      
 			this.files_drag=[];           
         },
 		drag: function(event) {
@@ -70,8 +70,9 @@ function(require, imageBasicTemplate) {
 		      var reader = new FileReader();
 		      reader.onload = (function(theFile) {
 		        return function(e) {
+					var preview_id="preview_"+k;
 				  k++;
-				  dataum.push({"width":"150","height":"150","filesrc":e.target.result,"title":escape(theFile.name)}); 
+				  dataum.push({"preview_id":preview_id,"width":"150","height":"150","filesrc":e.target.result,"title":escape(theFile.name)}); 
 				  if(k==files.length)
 				  {
 					data={"data":dataum};
@@ -97,8 +98,9 @@ function(require, imageBasicTemplate) {
 		      var reader = new FileReader();
 		      reader.onload = (function(theFile) {
 		        return function(e) {
+					var preview_id="preview_"+k;
 				  k++;
-				  dataum.push({"width":"150","height":"150","filesrc":e.target.result,"title":escape(theFile.name)}); 
+				  dataum.push({"preview_id":preview_id,"width":"150","height":"150","filesrc":e.target.result,"title":escape(theFile.name)}); 
 				  if(k==files.length)
 				  {
 					data={"data":dataum};
@@ -111,31 +113,48 @@ function(require, imageBasicTemplate) {
 		},
         imageUploadClick: function(event) {
             event.preventDefault();
-			console.log(this.files_drag.length)
-			var msg="";
+			var thiss=this;			
 			$("#errormsg").hide();
+			$("#imageup").attr("disabled", "disabled");
 			if(!$('#image_file').val() &&this.files_drag.length==0)
 			{
-				msg={"msg":"Image Field Empty","color":"red"};
-				Channel("imageup-error").publish(msg);	
+				var msg={"msg":"Image Field Empty","color":"alert-error"};
+				Channel( "imageup-msg").publish(msg);	
+				$("#imageup").removeAttr("disabled");
 			}
 			else if(this.files_drag.length>=1)
 			{
-				var data = new FormData();
+				var len=this.files_drag.length;
 				jQuery.each(this.files_drag, function(i, file) {
+					var data = new FormData();
 					data.append('image_file',file);
+					if($('#preview_'+i+'rotang').val()>0)
+						data.append('rotate',$('#preview_'+i+'rotang').val());
+					else
+						data.append('rotate',"false");
+					for(var attrname in thiss.attr) {
+						data.append(attrname,thiss.attr[attrname]);
+					}
+					var dataum={"dataum":data,"id":i,"len":len};
+					Channel("imageup-add-image").publish(dataum);
 				});
-				var dataum={"dataum":data}
-				Channel("imageup-add-image").publish(dataum);
+				this.files_drag=[];
 			}
 			else
 			{
-				var data = new FormData();
 				jQuery.each($('#image_file')[0].files, function(i, file) {
+					var data = new FormData();
 					data.append('image_file',file);
+					if($('#preview_'+i+'rotang').val()>0)
+						data.append('rotate',$('#preview_'+i+'rotang').val());
+					else
+						data.append('rotate',"false");
+					for(var attrname in thiss.attr) {
+						data.append(attrname,thiss.attr[attrname]);
+					}	
+					var dataum={"dataum":data,"id":i,"len":$('#image_file')[0].files.length};
+					Channel("imageup-add-image").publish(dataum);
 				});
-				var dataum={"dataum":data}
-				Channel("imageup-add-image").publish(dataum);
 			}
 
         }	

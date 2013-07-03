@@ -167,9 +167,9 @@ class Model_Site_Comment extends Model_Site_Entdir
 
 	public function is_owner($user){
 		if (is_object($user)){
-			return invtal($user->id) == $this->owner();
+			return intval($user->id) == $this->owner();
 		}else{
-			return invtal($user) == $this->owner();
+			return intval($user) == $this->owner();
 		}
 	}
 }

@@ -81,7 +81,15 @@
 
 			if(trim($this->request->query('orderby')) != "")
 			{
+				$legal_orderby = array('votes', 'followers');
 				$arguments["orderby"] = trim($this->request->query('orderby'));
+				if (!in_array($arguments["orderby"], $legal_orderby)){
+					$error_array = array(
+						"error" => "Invalid order by column",
+						"desc" => "Currently only support 'votes', 'followers'"
+					);
+					$this->modelNotSetError($error_array);
+				}
 			}
 
 			// positions_id

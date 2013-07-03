@@ -127,7 +127,6 @@ class Model_Media_Image extends ORM
 	 */
 	public function addImage($args = array())
 	{
-
 		// create a row in the media table and store the ID of that row in this table
 		$args["media_type"] = "image";
 	//	$args['user_id'] = (isset($$args['user_id']) && $$args['user_id'] > 0) ? $$args['user_id'] : Auth::instance()->get_user()->id;
@@ -140,7 +139,7 @@ class Model_Media_Image extends ORM
 		foreach($args['files'] as $key=>$img_data)
 		{
 			// check to make sure it's an image.  If it's not terminate this function
-			if(!strstr($img_data['type'],'image')) return false;
+			if(!strstr($img_data['type'],'image')) continue;
 			else
 			{
 				// Save to variable because it will be used outside loop
@@ -431,8 +430,28 @@ class Model_Media_Image extends ORM
 		}
 
 		$imageModel = ORM::factory("Media_Image");
-		$imageModel->where('id', 'in', $image_ids);
-		//TODO, need to order by here
+
+
+		if (!isset($orderby) || $orderby == 'votes'){
+			$enttype_id = Model_Site_Enttype::getMyEntTypeID($imageModel);
+			$image_votes = DB::select(array(DB::expr('COUNT(id)'),'num_votes'))
+				->select(array('subject_id', 'images_id'))
+				->from('votes')
+				->where('subject_enttypes_id','=',$enttype_id);
+
+			$imageModel->join(array($image_votes, 'image_votes'), 'left')->on('image_votes.images_id', '=', 'media_image.id');
+			$imageModel->order_by('num_votes', 'asc');
+		}else if ($orderby == 'followers'){
+			$enttype_id = Model_Site_Enttype::getMyEntTypeID($imageModel);
+			$followers = DB::select(array(DB::expr('COUNT(id)'),'num_followers'))
+				->select(array('subject_id', 'images_id'))
+				->from('followers')
+				->where('subject_enttypes_id','=',$enttype_id);
+			$imageModel->join(array($followers,'followers'), 'LEFT')->on('followers.images_id', '=', 'media_image.id');
+			$imageModel->order_by('num_followers', 'asc');
+		}
+
+		$imageModel->where('media_image.id', 'in', $image_ids);
 		return $imageModel;
 	/*
 		if (isset($sports_id)){

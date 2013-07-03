@@ -89,6 +89,12 @@
 				$this->modelNotSetError();
 				return false;
 			}
+
+			//permission check
+			if(!$this->user->can('Assumeownership', array('owner' => $this->mainModel->owner()))){
+				$this->throw_permission_error(Constant::NOT_OWNER);
+			}
+
 			return $this->mainModel->getVals();  
 		}
 		
@@ -128,6 +134,11 @@
 				$this->modelNotSetError();
 				return false;
 			}
+
+			if(!$this->user->can('Assumeownership', array('owner' => $args['users_id']))){
+				$this->throw_permission_error(Constant::NOT_OWNER);
+			}
+
 			$args['resume_data_id'] = $this->mainModel->id;
 
 			$resume_data_vals = ORM::factory("User_Resume_Data_Vals");

@@ -3,8 +3,8 @@
 // Requires define
 // Return {Object} App
 
-define( ["facade", "utils", "collections", "chrome", "controller", "profile", "imageup", "game", "team", "registration","profilesetting","packages/site/collections/phrases"],
-function (facade, utils, collections, chromeBootstrap, Controller, ProfileController, ImageController, GameController, TeamController, RegistrationController,ProfileSetting,SitePhraseList) {
+define( ["facade", "utils", "collections", "chrome", "controller", "profile", "imageup", 'home', "game", "team", "registration","profilesetting","packages/site/collections/phrases"],
+function (facade, utils, collections, chromeBootstrap, Controller, ProfileController, ImageController, HomeController, GameController, TeamController, RegistrationController, ProfileSetting, SitePhraseList) {
 
     var App,
         ApplicationStates = collections.ApplicationStates,
@@ -18,8 +18,8 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
 
         routes: {
             '': 'defaultRoute',
-            'home': 'initApp',
-            'home/': 'initApp',
+            'home': 'showHome',
+            'home/': 'showHome',
             'home/:action': 'initApp',
             
             'profile': 'showProfile',
@@ -61,7 +61,7 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
             //this.showProfile();
            	//this.showGame();
             //this.showTeam();
-            this.showRegistration();
+            this.showHome();
         },
 
 	    getPhrases: function(){
@@ -69,7 +69,25 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
 		    var phrases = new SitePhraseList();
 		    phrases.fetch();
 	    },
-        
+	    
+	    showHome: function (action) {
+	    	debug.log("show Home called");
+	    	this.loadStyles();
+	    	
+	    	$('body').empty();
+	    	chromeBootstrap();
+	    	
+	    	function initHome() {
+	    		debug.log("Inside initHome");
+	    		var homeController = new HomeController({
+	    			"route" : "home"
+	    		});
+	    	}
+	    	
+	    	Channel('app-inited').subscribe(initHome);
+	    	initHome();
+	    },
+	    
         showProfile: function (userid) {
         	this.loadStyles();
             

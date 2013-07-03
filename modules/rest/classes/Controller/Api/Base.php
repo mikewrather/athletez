@@ -880,4 +880,31 @@ class Controller_Api_Base extends AuthController
 
 	}
 
+	public function action_post_flag()
+	{
+		if (!$this->is_logged_user())
+		{
+			return $this->throw_authentication_error();
+		}
+
+		if(!$this->mainModel->loaded())
+		{
+			$this->modelNotSetError();
+			return false;
+		}
+
+		$flag = ORM::factory('Site_Flag');
+		$result = $flag->addFlag($this->mainModel);
+		if(get_class($result) == get_class($this->mainModel))
+		{
+			return $result;
+		}
+		elseif(get_class($result) == 'ORM_Validation_Exception')
+		{
+			//parse error and add to error array
+			$this->processValidationError($result,$this->mainModel->error_message_path);
+			return false;
+		}
+	}
+
 }
