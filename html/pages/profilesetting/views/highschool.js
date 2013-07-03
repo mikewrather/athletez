@@ -39,17 +39,19 @@ define(['require', 'text!profilesetting/templates/highschool.html',
 			"keyup #txt-school-school" : "keyupSchool",
 			"blur #txt-school-school" : "changeSchool",
 
-			"change .ddl-school-sports" : "changeSports",
-			
-			"change .ddl-school-complevel" : "changeCompLevel",
-			
+			//"change .ddl-school-sports" : "changeSports",
+			"change .ddl-sports" : "changeSports",
+			//"change .ddl-school-complevel" : "changeCompLevel",
+			"change .ddl-complevel" : "changeCompLevel",
 			"change .chkSeasons" : "displayPositionPopup",
 			
 			"click .btn-add-level" : "AddLevel",
 			
 			"click .spn-position-title_h" : "MarkPosition",
 			
-			"click .btn-add-sports" : "AddSports"
+			"click .btn-add-sports" : "AddSports",
+			
+			"click .btn-Remove-Sport" : "RemoveSports"
 		},
 		/*Holds */
 
@@ -61,18 +63,23 @@ define(['require', 'text!profilesetting/templates/highschool.html',
 			content : '#content-school-prof-setting',
 			fieldMessage : '.field-message',
 			fieldError :'.field-error',
-			ddlSports : '#ddl-school-sports',
-			ddlCompLevel : '#ddl-school-complevel',
-			divSchoolSeasons :'#div-school-seasons',
-			modalPosition : '.modal-school-positions',
+			ddlSports : '.ddl-sports',
+		//	ddlSports : '#ddl-school-sports',
+		//	ddlCompLevel : '#ddl-school-complevel',
+		//	divSchoolSeasons :'#div-school-seasons',
+		//	modalPosition : '.modal-school-positions',
+			modalPosition : '.modal-positions',
 			modalPositionBody : '.modal-position-body',
 			divSportsNameHeading : ".spn-sport-name",
 			divMainSportsSection : "#def-school-sports-section",
-			divLevels: ".div-school-sports-level",
+			divLevels: ".div-sports-level",
+		//	divLevels: ".div-school-sports-level",
 			divsportsLevel : ".section-sportslevel",
 			divSubLevels : ".div-levels",
 			divSchoolSportsSection : ".school-sports-section",
-			divSportsWrapper :".div-sports-wrapper"
+			divSportsWrapper :".div-sports-wrapper",
+			/*Buttons And Links Used*/
+			btnRemoveSports : ".btn-Remove-Sport"
 		},
 		
 		/*Messages Holds the messages, warning, alerts, errors, information variables*/
@@ -92,7 +99,7 @@ define(['require', 'text!profilesetting/templates/highschool.html',
 			},
 		/*Selected States By API*/
 		states :[],
-		/*Seletec Schools By API*/
+		/*Seleted Schools By API*/
 		schools :[],
 		/*initialize gets called by default when constructor is initialized*/
 		initialize : function(options) {
@@ -165,7 +172,7 @@ define(['require', 'text!profilesetting/templates/highschool.html',
 					});
 					// Destroy existing autocomplete from text box before attaching it again
 					// try catch as for the first time it gives error
-					try{self.$el.find(self.controls.txtStates).autocomplete("destroy");}catch(ex){}
+					//try{self.$el.find(self.controls.txtStates).autocomplete("destroy");}catch(ex){}
 					
 					self.$el.find(self.controls.txtStates).autocomplete({
 						source : stateArr
@@ -204,6 +211,7 @@ define(['require', 'text!profilesetting/templates/highschool.html',
 							self.RemoveSportsSection();
 			
 				var List = new SchoolCollection();
+				List.sports_club = 0;
 				List.states_id = self.states_id;
 				List.org_name = name;
 				List.fetch();
@@ -423,11 +431,16 @@ define(['require', 'text!profilesetting/templates/highschool.html',
 			var destination = self.$(event.target).parents(self.controls.divSportsWrapper).find(self.controls.divSchoolSportsSection);
 			self.fillSports(self.orgs_id,destination);
 		},
+		/*Removes Sports From HTML As Well As From Json*/
+		RemoveSports : function(event){
+			
+			self.$(event.target).parents(self.controls.divsportsLevel).remove();
+		},
 		/*SHOW EXISTING TEAM SECTION AT THE BOTTOM OF HIGHSCHOOL SECTION*/
 		SetUpTeamsView : function(){
-			
+			console.log("self.user_id;",self.user_id);
 			this.teamsView = new TeamsView();
-			this.teamsView.users_id = self.user_id;
+			this.teamsView.user_id = self.user_id;
 			this.teamsView.fetch();
 		}
 			});

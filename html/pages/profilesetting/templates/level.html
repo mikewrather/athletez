@@ -1,6 +1,7 @@
 <div class="div-levels">
 	<div class="well-small span12">
-		<select class="ddl-school-complevel">
+		<!-- class="ddl-school-complevel"-->
+		<select class="ddl-complevel">
 			<option value="">Select Level</option>
 			{{#levels}}
 			<option value="{{complevel_id}}">{{complevel_name}}</option>
@@ -9,7 +10,8 @@
 		<p class="field-error"></p>
 		<p class="field-message"></p>
 	</div>
-	<div id="div-school-seasons">
+	<!-- id="div-school-seasons"-->
+	<div>
 		<div class="span12 well-small">
 			<a href="javascript:void(0)" class="down arrow">&uarr;</a>
 		</div>
@@ -30,7 +32,8 @@
 	</div>
 	
 	<!--	Modal Section to display positions	-->
-<div class="modal hide fade position-modal modal-school-positions" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<!--modal-school-positions-->
+<div class="modal hide fade position-modal modal-positions" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 <div class="modal-header">
 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
 <h3 id="myModalLabel">Positions</h3>

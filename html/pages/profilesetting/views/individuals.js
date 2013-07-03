@@ -27,7 +27,7 @@ define(['require',
 		/*Holds */
 
 		/*Controls Holds all the html controls used in the view and template*/
-		/*Jquery Selectors {#,. etc} must be preixed so that it could be directly used with $ Sign*/
+		/*Jquery Selectors {#,. etc} must be prefixed so that it could be directly used with $ Sign*/
 		controls : {
 			content : '#section-individual-prof-setting',
 			sportslist : '.sports-list-individial-sports',
