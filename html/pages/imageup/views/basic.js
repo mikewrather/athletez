@@ -123,10 +123,11 @@ function(require, imageBasicTemplate) {
 			}
 			else if(this.files_drag.length>=1)
 			{
-				jQuery.each(this.files_drag, function(i, file) {
+				var thiss=this;
+				jQuery.each(thiss.files_drag, function(i, file) {
 					var data = new FormData();
 					data.append('image_file',file);
-					var dataum={"dataum":data,"id":i,"len":this.files_drag.length};
+					var dataum={"dataum":data,"id":i,"len":thiss.files_drag.length};
 					Channel("imageup-add-image").publish(dataum);
 				});
 			}
