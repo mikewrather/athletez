@@ -620,7 +620,7 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 				'team_id' => $team['team_id'],
 				'team_name' => $team['unique_ident'],
 				'year' => $team['year'],
-				'name' => $team['complevel_name'],
+				'complevel' => $team['complevel_name'],
 				'season' => $team['season'],
 				'seasons_id' => $team['seasons_id'],
 				'positions' => is_array($positions_array) ? array_values($positions_array) : null,
@@ -641,26 +641,20 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 						"complevels" => array(),
 					);
 				}
-
 				array_push($orgs[$team['org_id']]["sports"][$team['sports_id']]["complevels"],$this_org_item);
 			}
 		}
 
-	//	$orgs = Util::strip_array_keys($orgs);
-
-		foreach($orgs as $key => &$org)
+		// Get rid of unnecessary keys
+		foreach($orgs as &$org)
 		{
 			if(!isset($org['sports'])) continue;
-			foreach($org['sports'] as $key2 => &$sport)
+			foreach($org['sports'] as &$sport)
 			{
 				$sport["complevels"] = Util::strip_array_keys($sport["complevels"]);
 			}
 			$org["sports"] = Util::strip_array_keys($org["sports"]);
 		}
-//		$org = Util::strip_array_keys($org);
-
-
-	//	print_r($orgs);
 
 		//Return null as result if not value
 		$std = new stdClass();

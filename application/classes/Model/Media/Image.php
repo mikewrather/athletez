@@ -148,22 +148,35 @@ class Model_Media_Image extends ORM
 				// Create an image object for image data and save data to table
 				$img_obj = Image::factory($tmp_image);
 
+				$type = image_type_to_extension($img_obj->type, FALSE);
+
+				// This is where we will temporarily store the new image before we upload to s3
+				$local_path  = DOCROOT . '../files_temp/' . md5(rand()) . '.' .$type;
+
+				//check for rotation
+				if(isset($args['rotate']))
+				{
+					$img_obj->rotate($args['rotate']);
+				}
+
+				$img_obj->save($local_path);
+
 				// user is used to generate url for s3
 				$user = Auth::instance()->get_user();
 
 				// save to s3 and save s3 url to database
-				$this->original_url = s3::upload($tmp_image,$user->id);
+				$this->original_url = s3::upload($local_path,$user->id);
 
 				// save all other information to database
 				$this->original_x = $img_obj->width;
 				$this->original_y = $img_obj->height;
 				$this->original_mime = $img_obj->mime;
-				$this->original_size = filesize($tmp_image);
+				$this->original_size = filesize($local_path);
 				try
 				{
 					$this->save();
 					// generate images for each size / quality type
-					$this->generate_types($tmp_image);
+					$this->generate_types($local_path);
 					return $this;
 				}
 				catch(ORM_Validation_Exception $e)
@@ -281,6 +294,7 @@ class Model_Media_Image extends ORM
 			unset($this_img);
 			unset($this_type);
 			unset($local_path);
+			if($local_url !== NULL) unset($local_url);
 		}
 
 		// Clean up locally pulled file (if it was not already local
