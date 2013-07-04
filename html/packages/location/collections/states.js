@@ -23,8 +23,9 @@ function(facade, collections, LocationStateModel, utils) {
         	if (testpath)
                         return testpath + '/state_search';
             if(this.state_name == undefined){
-            // Incase any api to hit without state_name , add here
-            	
+            // Added by Rishabh(alphanso)
+            // for getting list of states for homepage
+            	return '/api/state/search';
             }   
                      
                     return '/api/state/search/?state_name=' + this.state_name;            

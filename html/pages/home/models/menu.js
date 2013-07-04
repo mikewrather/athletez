@@ -1,15 +1,34 @@
-define(['models'], function (models) {
+//Menu Model
 
-    var MenuModel,
-        BaseModel = models.BaseModel;
+define([ 'models' ], function(models) {
 
-    MenuModel = BaseModel.extend({
+	var MenuModel, BaseModel = models.BaseModel;
 
-        defaults: {
-            name: null
-        }
+	MenuModel = BaseModel.extend({
 
-    });
+		defaults : {
+			name : null,
+			views : {
+				browse : [ {
+					name : 'Up Votes'
+				}, {
+					name : 'Newest'
+				}, {
+					name : 'Fans'
+				} ],
+				time : [ {
+					name : 'Today'
+				}, {
+					name : 'Week'
+				}, {
+					name : 'Month'
+				}, {
+					name : 'Year'
+				} ]
+			}
+		}
 
-    return MenuModel;
+	});
+
+	return MenuModel;
 });

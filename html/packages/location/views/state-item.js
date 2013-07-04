@@ -7,7 +7,7 @@ define([
         'vendor', 
         'views',
         'utils', 
-        'text!media/templates/state-item.html'
+        'text!packages/location/templates/state-item.html'
         ], 
 function (
         vendor,
