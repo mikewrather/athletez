@@ -12,7 +12,7 @@
 .previewimg{
 	display:inline;
 	float: left;
-	margin: 10px 10px 50px;
+	margin: 10px 10px 90px;
 	height: 100px;
 }
 #preview
@@ -36,5 +36,5 @@
 }
 .previewrotate
 {
-	margin-top:25px;
+	margin-bottom: 25%;
 }
