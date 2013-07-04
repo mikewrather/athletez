@@ -32,7 +32,8 @@ function(require, previewBasicTemplate) {
 
         template: previewBasicTemplate,
 		events: {
-	            "click .rotate": "imageRotate"
+	            "click .rotate": "imageRotate",
+				"click .close": "closePreview"
 	    },
         initialize: function (options) {
             SectionView.prototype.initialize.call(this, options);   
@@ -54,6 +55,11 @@ function(require, previewBasicTemplate) {
 			                        'zoom': 1
 			           });
 			$("#"+val+"rotang").val(this.degree);
+		},
+		closePreview: function (event) {
+			id=event.currentTarget.value+"group";
+			var elem = document.getElementById(id);
+			elem.parentNode.removeChild(elem);
 		}
                 
     });
