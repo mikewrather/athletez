@@ -26,7 +26,7 @@ define(['require', 'text!profilesetting/templates/highschool.html',
 	    CompLevelModel = require('profilesetting/models/complevel'),
 	    SeasonsView = require('profilesetting/views/seasons'),
 	    PositionsView = require('profilesetting/views/positions'),
-	    TeamsView = require('profilesetting/collections/teams');
+	    TeamsCollection = require('profilesetting/collections/teams');
 
 	HighSchoolView = SectionView.extend({
 
@@ -172,7 +172,7 @@ define(['require', 'text!profilesetting/templates/highschool.html',
 					});
 					// Destroy existing autocomplete from text box before attaching it again
 					// try catch as for the first time it gives error
-					//try{self.$el.find(self.controls.txtStates).autocomplete("destroy");}catch(ex){}
+					try{self.$el.find(self.controls.txtStates).autocomplete("destroy");}catch(ex){}
 					
 					self.$el.find(self.controls.txtStates).autocomplete({
 						source : stateArr
@@ -439,9 +439,35 @@ define(['require', 'text!profilesetting/templates/highschool.html',
 		/*SHOW EXISTING TEAM SECTION AT THE BOTTOM OF HIGHSCHOOL SECTION*/
 		SetUpTeamsView : function(){
 			console.log("self.user_id;",self.user_id);
-			this.teamsView = new TeamsView();
-			this.teamsView.user_id = self.user_id;
-			this.teamsView.fetch();
+			var teamsCollection = new TeamsCollection();
+			teamsCollection.user_id = self.user_id;
+			teamsCollection.fetch();
+			
+			// $.when(teamsCollection.request).done(function() {
+				// if (teamsCollection.isError())
+					// return;
+// 
+				// var models = teamsCollection.toJSON();
+				// console.log("Teams Collection highschool js",teamsCollection);
+				// console.log("Teams Models",models);
+				// console.log(models['payload')]);
+				// console.log(models.payload.length);
+				// if (models != null && models.payload != null){
+// 				
+				// for (var key in models.payload) {
+					// models.payload[key].sports = [];
+					// for (var sportskey in key.sports) {
+						// var c = {
+							// sports_name	: sportskey,
+							// details : key.sports[sportskey]
+					// }
+					// models.payload[key].sports.push(c);
+				// }
+				// console.log("Modifies Models",models);
+				// }
+				// }
+// 				
+			// });
 		}
 			});
 

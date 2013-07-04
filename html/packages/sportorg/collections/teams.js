@@ -33,7 +33,7 @@ function(facade, collections, SportorgTeamModel, utils) {
                 item.set('exec_data', response.exec_data);
                 collection.push(item);
             }
-            
+            console.log("Updtaed Collection",collection);
             collection.deferred.resolve(response);            
         }
 

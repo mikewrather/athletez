@@ -444,7 +444,7 @@ define(['require', 'text!profilesetting/templates/club.html',
 		SetUpTeamsView : function(){
 			
 			this.teamsView = new TeamsView();
-			this.teamsView.users_id = self.user_id;
+			this.teamsView.user_id = self.user_id;
 			this.teamsView.fetch();
 		}
 			});
