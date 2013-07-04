@@ -247,7 +247,8 @@ class Controller_Api_Base extends AuthController
 			$retObj = $this->{$action}();
 
 		if(!$this->fatalErrorThrown) //if at any point this property is set to true it will skip this action
-			$result = is_object($retObj) && !is_subclass_of($retObj,'Exception') ? $this->getDataFromView($retObj) : $this->getDataFromView();
+			$result = (is_object($retObj) && !is_subclass_of($retObj,'Exception')) || is_array($retObj) ?
+				$this->getDataFromView($retObj) : $this->getDataFromView();
 
 		$this->response->headers('Content-Type','application/json');
 

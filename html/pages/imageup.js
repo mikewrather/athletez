@@ -159,7 +159,7 @@ define([
 						Channel("imageup-msg").publish(msg);
 						$("#imageup").removeAttr("disabled");
 						$("#image_file").removeAttr("disabled");
-						
+						$(".closepreview").removeAttr("disabled");	
 					}
 			    },
 				error:function(data){
@@ -170,6 +170,7 @@ define([
 						Channel("imageup-msg").publish(msg);
 						$("#imageup").removeAttr("disabled");
 						$("#image_file").removeAttr("disabled");
+						$(".closepreview").removeAttr("disabled");
 				}
 			});
 		},

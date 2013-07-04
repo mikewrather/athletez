@@ -25,7 +25,7 @@ define(['require', 'text!profilesetting/templates/season-item.html', 'facade', '
 		/*Controls Holds all the html controls used in the view and template*/
 		/*Jquery Selectors {#,. etc} must be preixed so that it could be directly used with $ Sign*/
 		controls : {
-			mainSection : '#div-school-seasons',
+		//	mainSection : '#div-school-seasons',
 			chkSeasons : '.chkSeasons',
 		},
 		
