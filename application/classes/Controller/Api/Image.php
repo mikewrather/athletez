@@ -148,6 +148,10 @@
 			{
 				$args['sports_id'] = (int)trim($this->request->post('sports_id'));
 			}
+			if((int)trim($this->request->post('rotate')) > 0)
+			{
+				$args['rotate'] = (int)trim($this->request->post('rotate'));
+			}
 
 			if(sizeof($_FILES) > 0)
 			{
