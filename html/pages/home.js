@@ -3,14 +3,16 @@
 define(
 		[ "require", "text!pages/home/templates/layout.html", "facade",
 				"controller", "models", "views", "utils",
-				"pages/home/models/menu.js", "pages/home/views/menu.js",
-				"pages/home/views/image-list.js",
-				"pages/home/collections/image.js" ],
+				"pages/home/models/menu", "pages/home/views/menu",
+				"pages/home/views/image-list",
+				"pages/home/collections/image",
+				"packages/location/collections/states.js",
+				"pages/home/views/state-list"],
 		function(require, pageLayoutTemplate) {
 
 			var HomeController, facade = require("facade"), Controller = require("controller"), models = require("models"), views = require("views"), utils = require("utils"),
 
-			HomeImageList = require('pages/home/collections/image.js'), MenuModel = require("pages/home/models/menu.js"), MenuView = require("pages/home/views/menu.js"), HomeImageListView = require("pages/home/views/image-list.js"),
+			HomeStateListView = require('pages/home/views/state-list'), LocationStateList = require('packages/location/collections/states.js'), HomeImageList = require('pages/home/collections/image'), MenuModel = require("pages/home/models/menu"), MenuView = require("pages/home/views/menu"), HomeImageListView = require("pages/home/views/image-list"),
 
 			LayoutView = views.LayoutView, $ = facade.$, _ = facade._, Channel = utils.lib.Channel, cssArr = [ "/pages/home/home.css" ];
 
@@ -36,9 +38,11 @@ define(
 
 				createData : function() {
 					this.homeImageList = new HomeImageList([], {
-						url : '/api/user/search?orderby=followers',
+						url : '/api/image/search',
 						num : '12'
 					});
+					this.locationStateList = new LocationStateList();
+					this.locationStateList.request = this.locationStateList.fetch();
 					this.homeImageList.request = this.homeImageList.fetch();
 					this.topratedImageList = new HomeImageList([], {
 						url : '/api/user/search',
@@ -51,6 +55,9 @@ define(
 					// TODO after creating building blocks, write this function
 					var controller = this;
 					this.setupMenuView();
+					$.when(this.locationStateList.request).done(function() {
+						controller.setupDropDownMenuView();
+					});
 					$.when(this.homeImageList.request).done(function() {
 						controller.setupResultView();
 					});
@@ -99,6 +106,18 @@ define(
 					});
 
 					this.scheme.push(menuView);
+					this.layout.render();
+				},
+				
+				setupDropDownMenuView : function() {
+					var homeStateListView;
+					
+					homeStateListView = new HomeStateListView({
+						collection : this.locationStateList,
+						destination : "#location-dd"
+					});
+					
+					this.scheme.push(homeStateListView);
 					this.layout.render();
 				},
 

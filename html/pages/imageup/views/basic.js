@@ -116,7 +116,10 @@ function(require, imageBasicTemplate) {
 			var thiss=this;			
 			$("#errormsg").hide();
 			$("#imageup").attr("disabled", "disabled");
-			if(!$('#image_file').val() &&this.files_drag.length==0)
+			$(".closepreview").attr("disabled", "disabled");
+			$(".rotate").attr("disabled", "disabled");
+			
+			if((!$('#image_file').val() && this.files_drag.length==0) || $(".previewimg").length==0)
 			{
 				var msg={"msg":"Image Field Empty","color":"alert-error"};
 				Channel( "imageup-msg").publish(msg);	
@@ -127,34 +130,41 @@ function(require, imageBasicTemplate) {
 				var len=this.files_drag.length;
 				jQuery.each(this.files_drag, function(i, file) {
 					var data = new FormData();
-					data.append('image_file',file);
-					if($('#preview_'+i+'rotang').val()>0)
-						data.append('rotate',$('#preview_'+i+'rotang').val());
-					else
-						data.append('rotate',"false");
-					for(var attrname in thiss.attr) {
-						data.append(attrname,thiss.attr[attrname]);
+					if ($('#preview_'+i+"group").length > 0) {
+						data.append('image_file',file);
+						if($('#preview_'+i+'rotang').val()>0)
+							data.append('rotate',$('#preview_'+i+'rotang').val());
+						else
+							data.append('rotate',"false");
+						for(var attrname in thiss.attr) {
+							data.append(attrname,thiss.attr[attrname]);
+						}
+						var dataum={"dataum":data,"id":i,"len":len};
+						Channel("imageup-add-image").publish(dataum);
 					}
-					var dataum={"dataum":data,"id":i,"len":len};
-					Channel("imageup-add-image").publish(dataum);
 				});
 				this.files_drag=[];
+				$("#imageup").removeAttr("disabled");
 			}
 			else
 			{
 				jQuery.each($('#image_file')[0].files, function(i, file) {
 					var data = new FormData();
-					data.append('image_file',file);
-					if($('#preview_'+i+'rotang').val()>0)
-						data.append('rotate',$('#preview_'+i+'rotang').val());
-					else
-						data.append('rotate',"false");
-					for(var attrname in thiss.attr) {
-						data.append(attrname,thiss.attr[attrname]);
-					}	
-					var dataum={"dataum":data,"id":i,"len":$('#image_file')[0].files.length};
-					Channel("imageup-add-image").publish(dataum);
+					if ($('#preview_'+i+"group").length > 0) {
+						data.append('image_file',file);
+						if($('#preview_'+i+'rotang').val()>0)
+							data.append('rotate',$('#preview_'+i+'rotang').val());
+						else
+							data.append('rotate',"false");
+						for(var attrname in thiss.attr) {
+							data.append(attrname,thiss.attr[attrname]);
+						}	
+						var dataum={"dataum":data,"id":i,"len":$('#image_file')[0].files.length};
+						Channel("imageup-add-image").publish(dataum);
+					}
 				});
+				$('#image_file').val("");
+				$("#imageup").removeAttr("disabled");
 			}
 
         }	

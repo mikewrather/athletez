@@ -553,7 +553,8 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 				array('sports.id','sports_id'),
 				array('teams.id', 'team_id'),
 				array('complevels.name', 'complevel_name'),
-				array('seasons.name', 'season'), 'statvals.statval'
+				array('seasons.name', 'season'), 'statvals.statval',
+				array('seasons.id', 'seasons_id')
 			)
 			->from('users')
 			->join('users_teams_link')->on('users.id','=','users_teams_link.users_id')
@@ -578,9 +579,14 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 			$org_sport_link_obj->where('orgs.sports_club','=',0);
 		}
 
-		$org_sport_link_obj->group_by('teams.id');
+		$org_sport_link_obj->group_by('teams.id')
+			->order_by('org_id')
+			->order_by('sports_id')
+			->order_by('complevels_id');
 
 		$res = $org_sport_link_obj->execute();
+
+	//	print_r($res);
 
 		$orgs = array(
 			"groupby" => $groupby
@@ -594,7 +600,6 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 				$orgs[$team['org_id']] = array(
 					'org_id' => $team['org_id'],
 					'org_name' => $team['org_name'],
-				//	'teams' => array()
 				);
 			}
 
@@ -606,7 +611,7 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 			$positions_array = NULL;
 			foreach($positions as $position)
 			{
-				$positions_array[$position->id] = $position->getBasics();
+				$positions_array[] = $position->getBasics();
 			}
 
 			$this_org_item = array(
@@ -615,7 +620,8 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 				'year' => $team['year'],
 				'complevel' => $team['complevel_name'],
 				'season' => $team['season'],
-				'positions' => $positions_array,
+				'seasons_id' => $team['seasons_id'],
+				'positions' => is_array($positions_array) ? array_values($positions_array) : null,
 			);
 
 			if($sports_id)
@@ -624,10 +630,37 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 			}
 			else
 			{
-				$orgs[$team['org_id']]["sports"][$team['sport']][$team['complevel_name']][$team['team_id']] = $this_org_item;
+				if(!isset($orgs[$team['org_id']]["sports"][$team['sports_id']]))
+				{
+					$orgs[$team['org_id']]["sports"][$team['sports_id']] = array(
+						"sports_name" => $team['sport'],
+						"sports_id" => $team['sports_id'],
+						"complevels" => array(),
+					);
+				}
+				if(!isset($orgs[$team['org_id']]["sports"][$team['sports_id']]["complevels"][$team['complevels_id']]))
+				{
+					$orgs[$team['org_id']]["sports"][$team['sports_id']]["complevels"][$team['complevels_id']] =array(
+						"name" => $team['complevel_name'],
+						"complevels_id" => $team['complevels_id'],
+						"seasons" => array(),
+					);
+				}
+				$orgs[$team['org_id']]["sports"][$team['sports_id']]["complevels"][$team['complevels_id']]["seasons"][] = $this_org_item;
 			}
-
 		}
+
+		// Get rid of unnecessary keys
+		foreach($orgs as &$org)
+		{
+			if(!isset($org['sports'])) continue;
+			foreach($org['sports'] as &$sport)
+			{
+				$sport["complevels"] = Util::strip_array_keys($sport["complevels"]);
+			}
+			$org["sports"] = Util::strip_array_keys($org["sports"]);
+		}
+
 		//Return null as result if not value
 		$std = new stdClass();
 		if (empty($orgs)){
@@ -635,9 +668,9 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 			return $std;
 		}
 
-		$orgs = Util::obj_arr_toggle($orgs);
-		$std->result = (object)$orgs;
-		return $std;
+		//$orgs = Util::obj_arr_toggle($orgs);
+		//$std->result = (object)$orgs;
+		return array("result" =>$orgs);
 	}
 
 	public function getOrgs_bak($sports_id,$groupby=NULL,$org_type=NULL)

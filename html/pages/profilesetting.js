@@ -75,7 +75,6 @@ var IndividualSportsCollection = require("profilesetting/collections/individuals
 			var self = this;
 			this.basicInfoModel = new BasicInfoModel();
 			this.basicInfoModel.id = self.id;
-			//;
 			this.basicInfoModel.fetch();
 
 			//Set Up different views when you have all userinfo about user
@@ -92,7 +91,7 @@ var IndividualSportsCollection = require("profilesetting/collections/individuals
 				self.setUpBasicView();
 				//TODO: For Testing Purpose Remove following Lines as soon as AddSchool divs event gets bind
 				self.addHighSchool();
-				
+				self.SetUpClubView();
 				self.setUpIndividualView();
 			});
 
@@ -134,7 +133,19 @@ var IndividualSportsCollection = require("profilesetting/collections/individuals
 			this.layout.render();
 			
 		},
-		
+		/*Add School View if user clicks on Add School*/
+		SetUpClubView : function() {
+			var self = this;
+			this.clubView = new ClubView({
+				model : new HighSchoolModel(),
+				name : "settings-club",
+				destination : "#content-club-prof-setting",
+				user_id : self.id,
+				gender : self.gender
+			});
+			this.scheme.push(this.clubView);
+			this.layout.render();
+		},
 	});
 	return ProfileSettingController;
 

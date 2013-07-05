@@ -1,7 +1,7 @@
 // The State List
 // --------------
 
-define(['facade','views', 'utils', 'media/views/state-item'], 
+define(['facade','views', 'utils', 'packages/location/views/state-item'], 
 function(facade,  views,   utils,   StateItemView) {
 
     var StateListView, 

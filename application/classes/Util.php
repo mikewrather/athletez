@@ -76,6 +76,26 @@ class Util {
 		}
 	}
 
+	public static function strip_array_keys(&$arr,$is_recursive=false)
+	{
+		if(!is_array($arr)) return false;
+		$arr = array_values($arr);
+
+		if($is_recursive)
+		{
+			foreach($arr as &$item)
+			{
+				if($result = self::strip_array_keys($item))
+				{
+					$item = $result;
+				}
+			}
+		}
+
+		return $arr;
+
+	}
+
 	public static function random_password($length=16)
 	{
 		return Text::random('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890`~@#%^&*()-_=+[]{}\|;:\'",.<>/?',$length);

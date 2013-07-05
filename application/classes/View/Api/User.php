@@ -35,7 +35,7 @@
 
 			// Scaffolding Code For Array:
 			$objs = $this->obj->find_all();
-			 
+
 			foreach($objs as $index => $obj)
 			{
 				$retArr[$index] = $obj->getBasics();
@@ -83,55 +83,69 @@
 		 */
 		public function get_orgs()
 		{
-			$orgs_obj = $this->obj->result;
-			if ($orgs_obj === null){
+
+			if(is_array($this->obj['result']))
+			{
+				$orgs = $this->obj['result'];
+			}
+			elseif(is_object($this->obj->result))
+			{
+				$orgs = Util::obj_arr_toggle($this->obj->result);
+			}
+			else
+			{
 				return null;
 			}
 
-			foreach($orgs_obj as $key=>$org_obj)
+		//	print_r($orgs);
+
+			$neworgs = array();
+			foreach($orgs as $key=>&$org)
 			{
+			//	print_r($org);
 				if($key=='groupby') continue;
 
-
-				if(isset($org_obj->sports))
+				if(isset($org['sports']))
 				{
-					foreach($org_obj->sports as $sport=>$complevels)
+					foreach($org['sports'] as &$sport)
 					{
-						foreach($complevels as $teams)
+						$new_complevels = array();
+						foreach($sport['complevels'] as &$team)
 						{
-							$teams = $this->_team_loop($teams);
+						//	$new_complevels[] = $this->_team_loop($team);
 						}
+						//$sport['complevels'] = $new_complevels;
 					}
 				}
-				elseif(isset($org_obj->teams))
+				elseif(isset($org['teams']))
 				{
-					$org_obj->teams = $this->_team_loop($org_obj->teams);
-
+					foreach($org['teams'] as &$team)
+					{
+						$team = $this->_team_loop($team);
+					}
 				}
-
-
-
+				$neworgs[] = $org;
 			}
-		 	unset($orgs_obj->groupby);
-			return Util::obj_arr_toggle($orgs_obj);
+			return $neworgs;
 		}
 
-		protected function _team_loop($teams)
+		protected function _team_loop(&$team)
 		{
-			foreach($teams as $team_obj)
-			{
-				$team = ORM::factory('Sportorg_Team', $team_obj->team_id);
 
-				$schedule = $team->getSchedule(3,true);
-				$schedule[] = array(); //I put this in because I kept getting an error from the foreach if i didn't do this.
-				$sArr = array();
-				foreach($schedule as $game)
-				{
-					if(is_object($game)) $sArr[] = $game->getBasics();
-				}
-				$team_obj->schedules = $sArr;
+			$team_obj = is_object($team) ? ORM::factory('Sportorg_Team', $team->team_id) :  ORM::factory('Sportorg_Team', $team['team_id']);
+
+			$schedule = $team_obj->getSchedule(3,true);
+
+		//	$schedule[] = array(); //I put this in because I kept getting an error from the foreach if i didn't do this.
+			$sArr = array();
+			foreach($schedule as $game)
+			{
+				if(is_object($game)) $sArr[] = $game->getBasics();
 			}
-			return $teams;
+
+			$team['schedules'] = $sArr;
+
+			return $team;
 		}
 		
 		/**
