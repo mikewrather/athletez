@@ -592,8 +592,6 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 			"groupby" => $groupby
 		);
 
-
-		$current_org = false;
 		foreach($res as $team)
 		{
 			if(!array_key_exists($team['org_id'],$orgs))
@@ -632,7 +630,6 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 			}
 			else
 			{
-
 				if(!isset($orgs[$team['org_id']]["sports"][$team['sports_id']]))
 				{
 					$orgs[$team['org_id']]["sports"][$team['sports_id']] = array(
@@ -641,7 +638,15 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 						"complevels" => array(),
 					);
 				}
-				array_push($orgs[$team['org_id']]["sports"][$team['sports_id']]["complevels"],$this_org_item);
+				if(!isset($orgs[$team['org_id']]["sports"][$team['sports_id']]["complevels"][$team['complevels_id']]))
+				{
+					$orgs[$team['org_id']]["sports"][$team['sports_id']]["complevels"][$team['complevels_id']] =array(
+						"name" => $team['complevel_name'],
+						"complevels_id" => $team['complevels_id'],
+						"seasons" => array(),
+					);
+				}
+				$orgs[$team['org_id']]["sports"][$team['sports_id']]["complevels"][$team['complevels_id']]["seasons"][] = $this_org_item;
 			}
 		}
 

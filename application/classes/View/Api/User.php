@@ -112,9 +112,9 @@
 						$new_complevels = array();
 						foreach($sport['complevels'] as &$team)
 						{
-							$new_complevels[] = $this->_team_loop($team);
+						//	$new_complevels[] = $this->_team_loop($team);
 						}
-						$sport['complevels'] = $new_complevels;
+						//$sport['complevels'] = $new_complevels;
 					}
 				}
 				elseif(isset($org['teams']))
