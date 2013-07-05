@@ -153,6 +153,7 @@ class Model_Sportorg_Games_Base extends ORM
 		foreach($teams as $team){
 			$new_obj = new stdClass();
 			$teamBasicInfo = $team->getBasics();
+			$new_obj->id = $teamBasicInfo['id'];
 			$new_obj->team_name = $teamBasicInfo['team_name'];
 			$new_obj->team_location = $teamBasicInfo['team_location'];
 			$new_obj->points_scored = $team->getTeamPointsScore($this->id);

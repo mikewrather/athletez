@@ -11,6 +11,18 @@ class Policy_Games extends Policy
 		$has_user = $user->has('roles', ORM::factory('Role', array('name' => $roles['user'])));
 		$has_coach = $user->has('roles', ORM::factory('Role', array('name' => $roles['coach'])));
 		$has_moderator = $user->has('roles', ORM::factory('Role', array('name' => $roles['moderator'])));
+		$obj = $extra['obj'];
+		$is_follower = $obj->user_is_follower_on($obj->getMainModel());
+		$is_team_member = false;
+		$teams = $obj->getMainModel()->getTeams()->result;
+		//print_r($teams);
+		foreach($teams as $team){
+			if($obj->is_member_of_team($user->id, $team->id)){
+				$is_team_member = true;
+				break;
+			}
+		}
+
 		$have_permission = false;
 		if(isset($extra["action"]))
 		{
@@ -25,7 +37,8 @@ class Policy_Games extends Policy
 					return $have_permission;
 					break;
 				case 'modify':
-					if($has_admin || $has_user || $has_coach){
+					//TODO, add by Jeffrey, maybe we need add coach later
+					if($has_admin || ($is_follower || $is_team_member)){
 						$have_permission = true;
 					}
 					return $have_permission;

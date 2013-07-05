@@ -379,6 +379,15 @@
 				return false;
 			}
 
+			if(!$this->user->can('Games', array('action'=>'modify', 'obj' => $this))){
+				$error_array = array(
+					"error" => "Sorry, You don't have permission to modify",
+					"desc" => "In order to modify this action, please contact your adminstrator"
+				);
+				$this->modelNotSetError($error_array);
+				return false;
+			}
+
 			if($this->put('game_datetime') != "")
 			{
 				// Format as date
