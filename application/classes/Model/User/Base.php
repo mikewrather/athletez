@@ -1433,5 +1433,28 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 		return $gpa;
 	}
 
+	function is_member_of_team($user_id, $team_id){
+		//allowed enttypes
+		$utl_link = ORM::factory("User_Teamslink");
+		$utl_link->where('teams_id', '=', $team_id);
+		$utl_link->where('users_id', '=', $user_id)->find();
+
+		if ($utl_link->loaded()){
+			return true;
+		}
+		return false;
+	}
+
+	function is_member_of_sport($user_id, $sport_id){
+		$usl_link = ORM::factory("User_Sportlink");
+		$usl_link->where('sports_id', '=', $sport_id);
+		$usl_link->where('users_id', '=', $user_id)->find();
+
+		if ($usl_link->loaded()){
+			return true;
+		}
+		return false;
+	}
+
 
 }
