@@ -48,10 +48,12 @@ class Policy_Games extends Policy
 				case 'read':
 					break;
 				case 'create':
-					if($has_admin || $is_team_member || $is_follower){
-						$have_permission = true;
-					}
-					return $have_permission;
+//					if($has_admin || $is_team_member || $is_follower){
+//						$have_permission = true;
+//					}
+//					return $have_permission;
+					//currently allow all to add game
+					return true;
 					break;
 				case 'addMatch':
 					if($has_admin || $is_team_member || $is_follower){
