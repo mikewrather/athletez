@@ -100,6 +100,7 @@ class Model_Sportorg_Games_Base extends ORM
 			$external_validate->rule("game_datetime", 'not_empty');
 			$external_validate->rule("game_datetime", 'correct_date_format');
 			if ($this->check($external_validate)){
+				$game_datetime = date("Y-m-d H:i:s", strtotime($game_datetime));
 				$arr = explode(' ', $game_datetime);
 				$gameDay = $arr[0];
 				$gameTime = $arr[1];
