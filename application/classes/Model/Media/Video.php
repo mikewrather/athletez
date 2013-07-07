@@ -216,52 +216,52 @@ class Model_Media_Video extends ORM
 		return $return_obj;
 	}
 
-	public function getSearch($args = array()){
-		extract($args);
-		$this->join('media')->on('media_video.media_id', '=', 'media.id');
-		$this->join('sports')->on('media.sports_id', '=', 'sports.id');
-		$this->join('org_sport_link')->on('sports.id', '=', 'org_sport_link.sports_id');
-		$this->join('teams')->on('org_sport_link.id', '=', 'teams.org_sport_link_id');
-		$this->join('users_teams_link')->on('users_teams_link.teams_id', '=', 'teams.id');
-		$this->join('users')->on('users_teams_link.users_id', '=', 'users.id');
-		//$this->join('orgs')->on('orgs.id', '=', 'org_sport_link.orgs_id');
-		if (isset($sports_id)){
-			$this->where('org_sport_link.sports_id', '=', $sports_id);
-		}
-
-		if (isset($complevels_id)){
-			$this->where('teams.complevels_id', '=', $complevels_id);
-		}
-
-		$enttype_id = Model_Site_Enttype::getMyEntTypeID($this);
-		$counts = DB::select(array(DB::expr('COUNT(id)'),'num_votes'))
-			->select(array('subject_id', 'users_id'))
-			->from('votes')
-			->where('subject_enttypes_id','=',$enttype_id);
-
-		if (!isset($orderby)){
-			$this->join(array($counts,'filtered'), 'left')->on('filtered.users_id', '=', 'users.id');
-			$this->order_by('num_votes', 'asc');
-
-		}else{
-			$this->order_by($orderby, 'asc');
-		}
-
-		if (isset($gradyear)){
-			$this->where('users.grad_year', '=', $gradyear);
-		}
-
-		if (isset($positions_id)){
-			$this->join('positions')->on('positions.sports_id', '=', 'sports.id');
-			$this->where('positions.id', '=', $positions_id);
-		}
-
-		if (isset($searchtext))
-			$this->where(array(Db::expr('CONCAT(users.first_name," ",users.last_name)'), 'full_name'), 'like ','%'.$searchtext.'%');
-			//$this->where('users.name', 'like', "%".$searchtext."%");
-
-		return $this;
-	}
+//	public function getSearch($args = array()){
+//		extract($args);
+//		$this->join('media')->on('media_video.media_id', '=', 'media.id');
+//		$this->join('sports')->on('media.sports_id', '=', 'sports.id');
+//		$this->join('org_sport_link')->on('sports.id', '=', 'org_sport_link.sports_id');
+//		$this->join('teams')->on('org_sport_link.id', '=', 'teams.org_sport_link_id');
+//		$this->join('users_teams_link')->on('users_teams_link.teams_id', '=', 'teams.id');
+//		$this->join('users')->on('users_teams_link.users_id', '=', 'users.id');
+//		//$this->join('orgs')->on('orgs.id', '=', 'org_sport_link.orgs_id');
+//		if (isset($sports_id)){
+//			$this->where('org_sport_link.sports_id', '=', $sports_id);
+//		}
+//
+//		if (isset($complevels_id)){
+//			$this->where('teams.complevels_id', '=', $complevels_id);
+//		}
+//
+//		$enttype_id = Model_Site_Enttype::getMyEntTypeID($this);
+//		$counts = DB::select(array(DB::expr('COUNT(id)'),'num_votes'))
+//			->select(array('subject_id', 'users_id'))
+//			->from('votes')
+//			->where('subject_enttypes_id','=',$enttype_id);
+//
+//		if (!isset($orderby)){
+//			$this->join(array($counts,'filtered'), 'left')->on('filtered.users_id', '=', 'users.id');
+//			$this->order_by('num_votes', 'asc');
+//
+//		}else{
+//			$this->order_by($orderby, 'asc');
+//		}
+//
+//		if (isset($gradyear)){
+//			$this->where('users.grad_year', '=', $gradyear);
+//		}
+//
+//		if (isset($positions_id)){
+//			$this->join('positions')->on('positions.sports_id', '=', 'sports.id');
+//			$this->where('positions.id', '=', $positions_id);
+//		}
+//
+//		if (isset($searchtext))
+//			$this->where(array(Db::expr('CONCAT(users.first_name," ",users.last_name)'), 'full_name'), 'like ','%'.$searchtext.'%');
+//			//$this->where('users.name', 'like', "%".$searchtext."%");
+//
+//		return $this;
+//	}
 
 	public function addVideo($args=array())
 	{
@@ -433,4 +433,133 @@ class Model_Media_Video extends ORM
 		$this->save();
 		return $this->is_ready;
 	}
+
+	private function assemblingSql($class_name, $condition = array()){
+
+		$enttypes_id = Ent::getMyEntTypeID($class_name);
+		extract($condition);
+
+		$video = DB::select('videos.id', 'media.sports_id')
+			->from('tags')
+			->join('media')->on('media.id', '=', 'tags.media_id')
+			->where('media.media_type', '=', 'video')
+			->join('videos')->on('videos.media_id', '=', 'media.id')
+			->and_where('tags.subject_enttypes_id', '=', $enttypes_id);
+		if (isset($sports_id)){
+			$video->where('media.sports_id', '=', $sports_id);
+		}
+
+		if (isset($states_id)){
+			$video->where('tags.states_id', '=', $states_id);
+		}
+
+		if (isset($cities_id)){
+			$video->where('tags.cities_id', '=', $cities_id);
+		}
+
+		if ($class_name == 'User_Base'){
+			if (isset($searchtext) || isset($states_id) || isset($cities_id)){
+				$video->join(array('users', 'user_base'))->on('user_base.id', '=', 'tags.subject_id');
+			}
+			if (isset($searchtext)){
+				$video->where(array(Db::expr('CONCAT(user_base.first_name," ",user_base.last_name)'), 'full_name'), 'like ','%'.$searchtext.'%');
+			}
+		}
+
+		if ($class_name == 'Sportorg_Team'){
+			if (isset($searchtext) || isset($states_id) || isset($cities_id)){
+				$video->join('teams')->on('teams.id', '=', 'tags.subject_id');
+				$video->join('org_sport_link')->on('teams.org_sport_link_id', '=', 'org_sport_link.id');
+				$video->join('orgs')->on('orgs.id', '=', 'org_sport_link.orgs_id');
+			}
+
+			if (isset($searchtext)){
+				$video->where('orgs.name', 'like', '%'.$searchtext.'%');
+			}
+		}
+
+		if ($class_name == 'Sportorg_Games_Base'){
+			if (isset($searchtext) || isset($states_id) || isset($cities_id)){
+				$video->join('teams')->on('teams.id', '=', 'tags.subject_id');
+				$video->join('org_sport_link')->on('teams.org_sport_link_id', '=', 'org_sport_link.id');
+				$video->join('orgs')->on('orgs.id', '=', 'org_sport_link.orgs_id');
+			}
+
+			if (isset($searchtext)){
+				$video->where('orgs.name', 'like', '%'.$searchtext.'%');
+			}
+		}
+
+		if ($class_name == 'Sportorg_Org'){
+			if (isset($searchtext) || isset($states_id) || isset($cities_id)){
+				$video->join('teams')->on('teams.id', '=', 'tags.subject_id');
+				$video->join('org_sport_link')->on('teams.org_sport_link_id', '=', 'org_sport_link.id');
+				$video->join('orgs')->on('orgs.id', '=', 'org_sport_link.orgs_id');
+			}
+
+			if (isset($searchtext)){
+				$video->where('orgs.name', 'like', '%'.$searchtext.'%');
+			}
+		}
+
+		return $video;
+	}
+
+	public function getSearch($args = array()){
+		extract($args);
+
+		//get four types
+		//user section
+		$user_video = $this->assemblingSql('User_Base', $args);
+		//team section
+		$team_video = $this->assemblingSql('Sportorg_Team', $args);
+		//org section
+		$org_video = $this->assemblingSql('Sportorg_Org', $args);
+		//game section
+		$game_video = $this->assemblingSql('Sportorg_Games_Base', $args);
+
+		$results = DB::select('videos.id', array(DB::expr('NULL'),'sports_id'))->from('videos')
+			->where('videos.id', '=', '-1')  // 0 rows returned plus below results
+			->union($user_video, false)
+			->union($team_video, false)
+			->union($org_video, false)
+			->union($game_video, false)->execute()->as_array();
+		if (empty($results)){
+			$video_ids[] = -1; //avoid sql error
+		}
+
+		foreach($results as $arr){
+			$video_ids[] = $arr['id'];
+		}
+
+		$videoModel = ORM::factory("Media_Video");
+
+
+		if (!isset($orderby) || $orderby == 'votes'){
+			$enttype_id = Model_Site_Enttype::getMyEntTypeID($videoModel);
+			$video_votes = DB::select(array(DB::expr('COUNT(id)'),'num_votes'))
+				->select(array('subject_id', 'videos_id'))
+				->from('votes')
+				->where('subject_enttypes_id','=',$enttype_id);
+
+			$videoModel->join(array($video_votes, 'video_votes'), 'left')->on('video_votes.videos_id', '=', 'media_video.id');
+			$videoModel->order_by('num_votes', 'desc');
+		}else if ($orderby == 'followers'){
+			$enttype_id = Model_Site_Enttype::getMyEntTypeID($videoModel);
+			$followers = DB::select(array(DB::expr('COUNT(id)'),'num_followers'))
+				->select(array('subject_id', 'videos_id'))
+				->from('followers')
+				->where('subject_enttypes_id','=',$enttype_id);
+			$videoModel->join(array($followers,'followers'), 'LEFT')->on('followers.videos_id', '=', 'media_video.id');
+			$videoModel->order_by('num_followers', 'desc');
+		}else if ($orderby == 'postTime'){
+			$videoModel->join('media' ,'left')->on('media_video.media_id', '=', 'media.id');
+			$videoModel->order_by('media.timePosted', 'desc');
+		}
+
+		$videoModel->where('media_video.id', 'in', $video_ids);
+
+		return $videoModel;
+	}
+
 }

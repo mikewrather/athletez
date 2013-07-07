@@ -382,16 +382,12 @@ class Model_Media_Image extends ORM
 
 		//get four types
 		//user section
-		//$user_condition = array();
 		$user_image = $this->assemblingSql('User_Base', $args);
 		//team section
-		//$team_condition = array();
 		$team_image = $this->assemblingSql('Sportorg_Team', $args);
 		//org section
-		//$org_condition = array();
 		$org_image = $this->assemblingSql('Sportorg_Org', $args);
 		//game section
-		//$game_condition = array();
 		$game_image = $this->assemblingSql('Sportorg_Games_Base', $args);
 
 		$results = DB::select('images.id', array(DB::expr('NULL'),'sports_id'))->from('images')
