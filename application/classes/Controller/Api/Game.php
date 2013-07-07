@@ -219,6 +219,16 @@
 		 */
 		public function action_post_add()
 		{
+
+			if(!$this->user->can('Games', array('action'=>'create', 'obj' => $this->mainModel))){
+				$error_array = array(
+					"error" => "Sorry, You don't have permission to create",
+					"desc" => "In order to create this action, please contact your adminstrator"
+				);
+				$this->modelNotSetError($error_array);
+				return false;
+			}
+
 			$this->payloadDesc = "Add a new game";
 
 		     // CHECK FOR PARAMETERS:
@@ -297,9 +307,9 @@
 				return false;
 			}
 
-			if(!$this->user->can('Games', array('action'=>'create', 'obj' => $this->mainModel))){
+			if(!$this->user->can('Games', array('action'=>'addMatch', 'obj' => $this->mainModel))){
 				$error_array = array(
-					"error" => "Sorry, You don't have permission to create",
+					"error" => "Sorry, You don't have permission to add game match",
 					"desc" => "In order to create this action, please contact your adminstrator"
 				);
 				$this->modelNotSetError($error_array);

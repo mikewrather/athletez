@@ -860,19 +860,10 @@
 				$this->modelNotSetError();
 				return false;
 			}
-			//TODO, add by Jeffrey, Here need to add ACL control.
-			if(!$this->user || !($this->user->id == $this->mainModel->id || $this->user->has('roles','2')))
-			{
-				// Create Array for Error Data
-				$error_array = array(
-					"error" => "This action requires authentication"
-				);
 
-				// Set whether it is a fatal error
-				$is_fatal = true;
-
-				// Call method to throw an error
-				$this->addError($error_array,$is_fatal);
+			$users_id = $this->mainModel->id;
+			if(!$this->user->can('Assumeownership', array('owner' => $users_id))){
+				$this->throw_permission_error(Constant::NOT_OWNER);
 			}
 
 			// CHECK WHAT PARAMETERS WERE PROVIDED IN POST DATA:
@@ -991,13 +982,17 @@
 			}
 
 			$arguments = array();
+			$arguments['users_id'] = $this->mainModel->id;
+
+			if(!$this->user->can('Assumeownership', array('owner' => $arguments['users_id']))){
+				$this->throw_permission_error(Constant::NOT_OWNER);
+			}
 
 			if((int)trim($this->request->post('sports_id')) > 0)
 			{
 				$arguments["sports_id"] = (int)trim($this->request->post('sports_id'));
 			}
 
-			$arguments['users_id'] = $this->mainModel->id;
 			$new_user_sport_link_obj = ORM::factory("User_Sportlink");
 			$result = $new_user_sport_link_obj->addSport($arguments);
 
@@ -1372,6 +1367,11 @@
 		public function action_post_savecrop()
 		{
 			$this->payloadDesc = "This is the method that can save the cropping information for an image being used as userpic.  It differs from those in the media controller in that it assumes this is going to be a userpic.";
+
+			if(!$this->user->can('Assumeownership', array('owner' => $this->mainModel->id))){
+				$this->throw_permission_error(Constant::NOT_OWNER);
+			}
+
 			$arguments = array();
 			// CHECK FOR PARAMETERS:
 			// image_url (REQUIRED)
@@ -1838,6 +1838,10 @@
 			}
 
 			$arguments['users_id'] = $this->mainModel->id;
+			if(!$this->user->can('Assumeownership', array('owner' => $arguments['users_id']))){
+				$this->throw_permission_error(Constant::NOT_OWNER);
+			}
+
 			$gpa_model = ORM::factory("Academics_Gpa");
 			$result = $gpa_model->updateGpa($arguments);
 			if(get_class($result) == get_class($gpa_model))
@@ -1880,6 +1884,10 @@
 			}
 
 			$arguments['users_id'] = $this->mainModel->id;
+			if(!$this->user->can('Assumeownership', array('owner' => $arguments['users_id']))){
+				$this->throw_permission_error(Constant::NOT_OWNER);
+			}
+
 			$score_model = ORM::factory("Academics_Tests_Scores");
 			$result = $score_model->updateTestScore($arguments);
 			if(get_class($result) == get_class($score_model))
@@ -2130,6 +2138,10 @@
 				$this->modelNotSetError($error_array);
 				return false;
 
+			}
+			//permission check
+			if (!$this->is_admin_user()){
+				$this->throw_permission_error();
 			}
 
 			if($this->mainModel->id)

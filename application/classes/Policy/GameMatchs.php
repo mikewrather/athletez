@@ -1,6 +1,6 @@
 <?php defined('SYSPATH') or die('No direct script access.');
 
-class Policy_Games extends Policy
+class Policy_GameMatchs extends Policy
 {
 
 	public function execute(Model_ACL_User $user, array $extra = NULL)
@@ -12,13 +12,16 @@ class Policy_Games extends Policy
 		//$has_coach = $user->has('roles', ORM::factory('Role', array('name' => $roles['coach'])));
 		//$has_moderator = $user->has('roles', ORM::factory('Role', array('name' => $roles['moderator'])));
 		$obj = $extra['obj'];
+		if (get_class($obj) == 'Model_Sportorg_Games_Match'){
+			$mainModel = $obj->game;
+		}
+		if (get_class($obj) == 'Model_Sportorg_Games_Base'){
+			$mainModel = $obj;
+		}
+
 		$is_follower = false;
 		$is_team_member = false;
-		if (!isset($extra['data'])){
-			$teams = $obj->getTeams()->result;
-		}else{
-			$teams = $extra['data'];
-		}
+		$teams = $mainModel->getTeams()->result;
 
 		$user_model = ORM::factory("User_Base");
 
@@ -45,28 +48,26 @@ class Policy_Games extends Policy
 		{
 			switch($extra["action"])
 			{
-				case 'read':
-					break;
+//				case 'read':
+//					break;
 				case 'create':
 					if($has_admin || $is_team_member || $is_follower){
 						$have_permission = true;
 					}
 					return $have_permission;
 					break;
-				case 'addMatch':
+				case 'modify':
+					if($has_admin || $is_team_member || $is_follower){
+						$have_permission = true;
+					}
+					return $have_permission;
+				case 'delete':
 					if($has_admin || $is_team_member || $is_follower){
 						$have_permission = true;
 					}
 					return $have_permission;
 					break;
-				case 'modify':
-					//TODO, add by Jeffrey, maybe we need add coach later
-					if($has_admin || ( $is_follower || $is_team_member )){
-						$have_permission = true;
-					}
-					return $have_permission;
-					break;
-				case 'delete':
+				case 'addPlayer':
 					if($has_admin || $is_team_member || $is_follower){
 						$have_permission = true;
 					}
