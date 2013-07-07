@@ -219,7 +219,8 @@
 		 */
 		public function action_post_add()
 		{
-
+			/*
+			For now, allow everyone can add game
 			if(!$this->user->can('Games', array('action'=>'create', 'obj' => $this->mainModel))){
 				$error_array = array(
 					"error" => "Sorry, You don't have permission to create",
@@ -227,7 +228,7 @@
 				);
 				$this->modelNotSetError($error_array);
 				return false;
-			}
+			}*/
 
 			$this->payloadDesc = "Add a new game";
 

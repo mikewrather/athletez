@@ -113,7 +113,7 @@
 			}
 
 			// No mainModel->id in add function. we need to get it from games
-			if(!$this->user->can('GameMatchs', array('action'=>'create', 'obj' => $mainModel))){
+			if(!$this->user->can('GameMatches', array('action'=>'create', 'obj' => $mainModel))){
 				$error_array = array(
 					"error" => "Sorry, You don't have permission to create",
 					"desc" => "In order to create this action, please contact your adminstrator"
@@ -158,7 +158,7 @@
 				return false;
 			}
 
-			if(!$this->user->can('GameMatchs', array('action'=>'addPlayer', 'obj' => $this->mainModel))){
+			if(!$this->user->can('GameMatches', array('action'=>'addPlayer', 'obj' => $this->mainModel))){
 				$error_array = array(
 					"error" => "Sorry, You don't have permission to create",
 					"desc" => "In order to create this action, please contact your adminstrator"
@@ -237,7 +237,7 @@
 			}
 			$arguments["id"] = $this->mainModel->id;
 
-			if(!$this->user->can('GameMatchs', array('action'=>'modify', 'obj' => $this->mainModel))){
+			if(!$this->user->can('GameMatches', array('action'=>'modify', 'obj' => $this->mainModel))){
 				$error_array = array(
 					"error" => "Sorry, You don't have permission to modify",
 					"desc" => "In order to modify this action, please contact your adminstrator"
@@ -280,7 +280,7 @@
 				return false;
 			}
 
-			if(!$this->user->can('GameMatchs', array('action'=>'delete', 'obj' => $this->mainModel))){
+			if(!$this->user->can('GameMatches', array('action'=>'delete', 'obj' => $this->mainModel))){
 				$error_array = array(
 					"error" => "Sorry, You don't have permission to delete",
 					"desc" => "In order to delete this action, please contact your adminstrator"
@@ -307,7 +307,7 @@
 				return false;
 			}
 
-			if(!$this->user->can('GameMatchs', array('action'=>'delete', 'obj' => $this->mainModel))){
+			if(!$this->user->can('GameMatches', array('action'=>'delete', 'obj' => $this->mainModel))){
 				$error_array = array(
 					"error" => "Sorry, You don't have permission to delete",
 					"desc" => "In order to delete this action, please contact your adminstrator"
