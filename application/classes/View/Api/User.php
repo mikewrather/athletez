@@ -577,6 +577,18 @@
 
 			return $retArr;
 		}
+
+		/**
+		 * delete_position() Delete a position for a user / team association
+		 *
+		 * @retun array
+		 */
+		public function delete_position()
+		{
+			$retArr = $this->obj->getBasics();
+			return $retArr;
+		}
+
 		
 		/**
 		 * delete_role() Delete a user's Role

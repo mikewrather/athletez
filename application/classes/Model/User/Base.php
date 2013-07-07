@@ -1425,6 +1425,29 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 		return $tests_scores;
 	}
 
+	public function delete_position($args)
+	{
+		$teamlink = ORM::factory('User_Teamslink')
+			->where('users_id','=',$args['users_id'])
+			->where('teams_id','=',$args['teams_id'])
+			->find();
+
+		if($teamlink->loaded())
+		{
+			$position_link = DB::delete('utl_position_link')
+				->where('users_teams_link_id','=',$teamlink->id)
+				->where('positions_id','=',$args['positions_id'])
+				->execute();
+
+			return $position_link;
+		}
+		else
+		{
+			return false;
+		}
+
+	}
+
 	public function delete_gpa($args){
 		$gpa = DB::delete('academics_gpa')
 			->where('year', '=', $args['year'])
