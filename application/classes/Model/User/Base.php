@@ -592,8 +592,6 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 			"groupby" => $groupby
 		);
 
-
-		$current_org = false;
 		foreach($res as $team)
 		{
 			if(!array_key_exists($team['org_id'],$orgs))
@@ -632,7 +630,6 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 			}
 			else
 			{
-
 				if(!isset($orgs[$team['org_id']]["sports"][$team['sports_id']]))
 				{
 					$orgs[$team['org_id']]["sports"][$team['sports_id']] = array(
@@ -641,7 +638,15 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 						"complevels" => array(),
 					);
 				}
-				array_push($orgs[$team['org_id']]["sports"][$team['sports_id']]["complevels"],$this_org_item);
+				if(!isset($orgs[$team['org_id']]["sports"][$team['sports_id']]["complevels"][$team['complevels_id']]))
+				{
+					$orgs[$team['org_id']]["sports"][$team['sports_id']]["complevels"][$team['complevels_id']] =array(
+						"name" => $team['complevel_name'],
+						"complevels_id" => $team['complevels_id'],
+						"seasons" => array(),
+					);
+				}
+				$orgs[$team['org_id']]["sports"][$team['sports_id']]["complevels"][$team['complevels_id']]["seasons"][] = $this_org_item;
 			}
 		}
 
@@ -703,6 +708,7 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 		}
 
 		$org_sport_link_obj->group_by('teams.id');
+
 
 		$res = $org_sport_link_obj->execute();
 
@@ -782,7 +788,6 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 			->union($utl)
 			->from('user_sport_link')
 			->where('users_id','=',$this->id);
-
 
 		if($format=='select') return $isports;
 		elseif($format=='array')
@@ -906,7 +911,8 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 
 			->where('resume_data_vals.users_id','=',$this->id);
 
-		$res = $usersFitnessData->execute();
+
+
 
 		foreach($res as $data)
 		{
@@ -1426,6 +1432,29 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 			->execute();
 
 		return $gpa;
+	}
+
+	function is_member_of_team($user_id, $team_id){
+		//allowed enttypes
+		$utl_link = ORM::factory("User_Teamslink");
+		$utl_link->where('teams_id', '=', $team_id);
+		$utl_link->where('users_id', '=', $user_id)->find();
+
+		if ($utl_link->loaded()){
+			return true;
+		}
+		return false;
+	}
+
+	function is_member_of_sport($user_id, $sport_id){
+		$usl_link = ORM::factory("User_Sportlink");
+		$usl_link->where('sports_id', '=', $sport_id);
+		$usl_link->where('users_id', '=', $user_id)->find();
+
+		if ($usl_link->loaded()){
+			return true;
+		}
+		return false;
 	}
 
 

@@ -609,7 +609,13 @@
 		 * @author Jeffrey
 		 */
 		public static function correct_date_format($value){
-
+			$value = date("Y-m-d H:i:s",strtotime($value));
+			$year = substr($value,0, 4);
+			$month = substr($value,5, 2);
+			$day = substr($value,8, 2);
+			if (!checkdate($month, $day, $year)){
+				return false;
+			}
 			$reg= "/\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}/";
 			$return = preg_match($reg, $value);
 			if ($return == 0){

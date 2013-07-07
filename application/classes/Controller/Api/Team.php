@@ -371,6 +371,15 @@
 				return false;
 			}
 
+			if(!$this->user->can('Teams', array('action'=>'addGame', 'obj' => $this->mainModel))){
+				$error_array = array(
+					"error" => "Sorry, You don't have permission to add",
+					"desc" => "In order to add this action, please contact your adminstrator"
+				);
+				$this->modelNotSetError($error_array);
+				return false;
+			}
+
 			if((int)trim($this->request->post('games_id')) > 0)
 			{
 				$games_id = (int)trim($this->request->post('games_id'));
@@ -498,6 +507,21 @@
 			$this->payloadDesc = "Update Basic info on a given team";
 			$args = array();
 
+			if(!$this->mainModel->id)
+			{
+				$this->modelNotSetError();
+				return false;
+			}
+
+			if(!$this->user->can('Teams', array('action'=>'modify', 'obj' => $this->mainModel))){
+				$error_array = array(
+					"error" => "Sorry, You don't have permission to modify",
+					"desc" => "In order to modify this action, please contact your adminstrator"
+				);
+				$this->modelNotSetError($error_array);
+				return false;
+			}
+
 			$args['complevels_id'] = (int)trim($this->put('complevels_id'));
 
 			$args['seasons_id'] = (int)trim($this->put('seasons_id'));
@@ -526,12 +550,6 @@
 				$args['unique_ident'] = trim($this->put('unique_ident'));
 			}
 			
-			if(!$this->mainModel->id)
-			{
-				$this->modelNotSetError();
-				return false;
-			}
-
 			$args['id']  = $this->mainModel->id;
 
 			$result =  $this->mainModel->updateTeam($args);
@@ -558,9 +576,20 @@
 		{
 			$this->payloadDesc = "Update the link between teams and games which contains score information";
 			$args = array();
-		     // CHECK FOR PARAMETERS:
-			// points_scored 
-			// Change the number of points scored for this team in this game
+			if(!$this->mainModel->id)
+			{
+				$this->modelNotSetError();
+				return false;
+			}
+
+			if(!$this->user->can('Teams', array('action'=>'modify', 'obj' => $this->mainModel))){
+				$error_array = array(
+					"error" => "Sorry, You don't have permission to modify",
+					"desc" => "In order to modify this action, please contact your adminstrator"
+				);
+				$this->modelNotSetError($error_array);
+				return false;
+			}
 				
 			if((int)trim($this->put('points_scored')) > 0)
 			{
@@ -596,12 +625,6 @@
 			if((int)trim($this->put('games_id')) > 0)
 			{
 				$args["games_id"] = (int)trim($this->put('games_id'));
-			}
-
-			if(!$this->mainModel->id)
-			{
-				$this->modelNotSetError();
-				return false;
 			}
 
 			$args['teams_id'] = $this->mainModel->id;
@@ -667,6 +690,16 @@
 			if(!$this->mainModel->id)
 			{
 				$this->modelNotSetError();
+				return false;
+			}
+
+			//
+			if(!$this->user->can('Teams', array('action'=>'deleteGameLink', 'obj' => $this->mainModel))){
+				$error_array = array(
+					"error" => "Sorry, You don't have permission to delete",
+					"desc" => "In order to delete this action, please contact your adminstrator"
+				);
+				$this->modelNotSetError($error_array);
 				return false;
 			}
 

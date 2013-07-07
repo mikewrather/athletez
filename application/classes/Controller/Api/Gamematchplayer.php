@@ -60,12 +60,31 @@
 		public function action_post_add()
 		{
 			$this->payloadDesc = "Add a player to a Game Match";
+			$game_matches_id = (int)trim($this->request->post('game_matches_id'));
+
+			if (!Valid::game_match_id_exist($game_matches_id)){
+				$error_array = array(
+					"error" => "Game match doesn't exist",
+					"desc" => "Game match doesn't exist"
+				);
+				$this->modelNotSetError($error_array);
+				return false;
+			}
+
+			$gameMatchModel = ORM::factory('Sportorg_Games_Match', $game_matches_id);
+
+			if(!$this->user->can('GameMatchs', array('action'=>'addPlayer', 'obj' => $gameMatchModel))){
+				$error_array = array(
+					"error" => "Sorry, You don't have permission to modify",
+					"desc" => "In order to modify this action, please contact your adminstrator"
+				);
+				$this->modelNotSetError($error_array);
+				return false;
+			}
+
 			$game_match_player_obj = ORM::factory("Sportorg_Games_Matchplayer");
 
 			$users_id = (int)trim($this->request->post('users_id'));
-
-			$game_matches_id = (int)trim($this->request->post('game_matches_id'));
-
 			$points_awarded = (int)trim($this->request->post('points_awarded'));
 
 			//convert match_won to a boolean
@@ -128,9 +147,20 @@
 		{
 			$this->payloadDesc = "Update basic information about a player in a match";
 
-		     // CHECK FOR PARAMETERS:
-			// points_awarded 
-			// Update the number of points awarded to this player during this match
+			if(!$this->mainModel->id)
+			{
+				$this->modelNotSetError();
+				return false;
+			}
+
+			if(!$this->user->can('GameMatchs', array('action'=>'modify', 'obj' => $this->mainModel->game_matches))){
+				$error_array = array(
+					"error" => "Sorry, You don't have permission to modify",
+					"desc" => "In order to modify this action, please contact your adminstrator"
+				);
+				$this->modelNotSetError($error_array);
+				return false;
+			}
 				
 			if((int)trim($this->put('points_awarded')) > 0)
 			{
@@ -153,12 +183,6 @@
 						$match_winner = 0;
 					}
 				}
-			}
-
-			if(!$this->mainModel->id)
-			{
-				$this->modelNotSetError();
-				return false;
 			}
 
 			$args['id']  = $this->mainModel->id;

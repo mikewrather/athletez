@@ -58,6 +58,25 @@ class Model_Site_Enttype extends ORM
 		return ORM::factory(self::getMyClass($enttypeID));
 	}
 
+	static function is_follower($obj, $user_id = ""){
+		$follower = ORM::factory('User_Followers');
+		$subject_enttypes_id = Model_Site_Enttype::getMyEntTypeID($obj);
+		$subject_id = $obj->id;
+		if ($user_id == ""){
+			$user = Auth::instance()->get_user();
+			$user_id = $user->id;
+		}
+
+		$follower->where('subject_enttypes_id', '=', $subject_enttypes_id);
+		$follower->and_where('subject_id', '=', $subject_id);
+		$follower->and_where('follower_users_id', '=', $user_id)->find();
+		if ($follower->loaded()){
+			return true;
+		}else{
+			return false;
+		}
+	}
+
 	public function getBasics()
 	{
 		return array(

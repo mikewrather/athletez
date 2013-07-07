@@ -219,6 +219,16 @@
 		 */
 		public function action_post_add()
 		{
+
+			if(!$this->user->can('Games', array('action'=>'create', 'obj' => $this->mainModel))){
+				$error_array = array(
+					"error" => "Sorry, You don't have permission to create",
+					"desc" => "In order to create this action, please contact your adminstrator"
+				);
+				$this->modelNotSetError($error_array);
+				return false;
+			}
+
 			$this->payloadDesc = "Add a new game";
 
 		     // CHECK FOR PARAMETERS:
@@ -270,7 +280,7 @@
 			$this->payloadDesc = "Add a new team to this game";
 
 			$error_array = array(
-				"error" => "This function can be realized in team's add_game action",
+				"error" => "Duplicate now, this function can be realized in team's add_game action",
 				"desc" => "This function can be realized in team's add_game action"
 			);
 			$this->modelNotSetError($error_array);
@@ -286,10 +296,6 @@
 		{
 			$this->payloadDesc = "Add a new match to this game";
 
-		     // CHECK FOR PARAMETERS:
-			// match_num 
-			// A number or unique identifier for the match (can be 1st, Last, or any string)
-				
 			if(trim($this->request->post('match_num')) != "")
 			{
 				$args['match_num'] = trim($this->request->post('match_num'));
@@ -300,6 +306,16 @@
 				$this->modelNotSetError();
 				return false;
 			}
+
+			if(!$this->user->can('Games', array('action'=>'addMatch', 'obj' => $this->mainModel))){
+				$error_array = array(
+					"error" => "Sorry, You don't have permission to add game match",
+					"desc" => "In order to create this action, please contact your adminstrator"
+				);
+				$this->modelNotSetError($error_array);
+				return false;
+			}
+
 			$game_match_model = ORM::factory("Sportorg_Games_Match");
 
 			$args['games_id'] = $this->mainModel->id;
@@ -379,6 +395,15 @@
 				return false;
 			}
 
+			if(!$this->user->can('Games', array('action'=>'modify', 'obj' => $this->mainModel))){
+				$error_array = array(
+					"error" => "Sorry, You don't have permission to modify",
+					"desc" => "In order to modify this action, please contact your adminstrator"
+				);
+				$this->modelNotSetError($error_array);
+				return false;
+			}
+
 			if($this->put('game_datetime') != "")
 			{
 				// Format as date
@@ -430,6 +455,15 @@
 			if(!$this->mainModel->id)
 			{
 				$this->modelNotSetError();
+				return false;
+			}
+
+			if(!$this->user->can('Games', array('action'=>'delete', 'obj' => $this->mainModel))){
+				$error_array = array(
+					"error" => "Sorry, You don't have permission to delete",
+					"desc" => "In order to delete this action, please contact your adminstrator"
+				);
+				$this->modelNotSetError($error_array);
 				return false;
 			}
 

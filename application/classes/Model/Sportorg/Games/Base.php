@@ -100,6 +100,7 @@ class Model_Sportorg_Games_Base extends ORM
 			$external_validate->rule("game_datetime", 'not_empty');
 			$external_validate->rule("game_datetime", 'correct_date_format');
 			if ($this->check($external_validate)){
+				$game_datetime = date("Y-m-d H:i:s", strtotime($game_datetime));
 				$arr = explode(' ', $game_datetime);
 				$gameDay = $arr[0];
 				$gameTime = $arr[1];
@@ -153,6 +154,7 @@ class Model_Sportorg_Games_Base extends ORM
 		foreach($teams as $team){
 			$new_obj = new stdClass();
 			$teamBasicInfo = $team->getBasics();
+			$new_obj->id = $teamBasicInfo['id'];
 			$new_obj->team_name = $teamBasicInfo['team_name'];
 			$new_obj->team_location = $teamBasicInfo['team_location'];
 			$new_obj->points_scored = $team->getTeamPointsScore($this->id);
