@@ -2108,6 +2108,48 @@
 			}
             return $this->mainModel->deleteSport($arguments);
 		}
+
+		/**
+		 * action_delete_position() Delete a position for a user / team association
+		 * via /api/user/position/{users_id}
+		 *
+		 */
+		public function action_delete_position()
+		{
+			$this->payloadDesc = "Delete a position for a user / team association";
+			$this->populateAuthVars();
+
+			// Must be owner
+			if(!$this->is_admin && !($this->mainModel->id == Auth::instance()->get_user()->id) )
+			{
+				$this->throw_permission_error(Constant::NOT_OWNER);
+				return false;
+			}
+
+			$arguments = array();
+
+			// CHECK FOR PARAMETERS:
+
+			// teams_id
+			// This is the ID of the Team we are deleting the position from.
+			if((int)trim($this->delete('teams_id')) > 0)
+			{
+				$arguments["teams_id"] = (int)trim($this->delete('teams_id'));
+			}
+
+			// positions_id
+			// the ID of the position
+			if((int)trim($this->delete('positions_id')) > 0)
+			{
+				$arguments["positions_id"] = (int)trim($this->delete('positions_id'));
+			}
+
+			$arguments["users_id"] = $this->mainModel->id;
+
+			$result = $this->mainModel->delete_position($arguments);
+			return $result;
+
+		}
 		
 		/**
 		 * action_delete_role() Delete a user's Role
