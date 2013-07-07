@@ -73,7 +73,7 @@
 
 			$gameMatchModel = ORM::factory('Sportorg_Games_Match', $game_matches_id);
 
-			if(!$this->user->can('GameMatchs', array('action'=>'addPlayer', 'obj' => $gameMatchModel))){
+			if(!$this->user->can('GameMatches', array('action'=>'addPlayer', 'obj' => $gameMatchModel))){
 				$error_array = array(
 					"error" => "Sorry, You don't have permission to modify",
 					"desc" => "In order to modify this action, please contact your adminstrator"
@@ -153,7 +153,7 @@
 				return false;
 			}
 
-			if(!$this->user->can('GameMatchs', array('action'=>'modify', 'obj' => $this->mainModel->game_matches))){
+			if(!$this->user->can('GameMatches', array('action'=>'modify', 'obj' => $this->mainModel->game_matches))){
 				$error_array = array(
 					"error" => "Sorry, You don't have permission to modify",
 					"desc" => "In order to modify this action, please contact your adminstrator"

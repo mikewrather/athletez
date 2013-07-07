@@ -262,6 +262,7 @@ class Model_Sportorg_Org extends ORM
 
 		$orgs_model->where('sportorg_org.states_id', '=', $states_id);
 
+
 		return $orgs_model;
 	}
 
@@ -279,6 +280,17 @@ class Model_Sportorg_Org extends ORM
 			->on('org_sport_link.id','=','team.org_sport_link_id')
 
 			->where('org_sport_link.orgs_id','=',$this->id);
+
+		// This is an array of all of the classes we are checking for deleted
+		// We also provide the table name that it will be referenced by
+		$classes_arr = array(
+			'Sportorg_Games_Base' => 'sportorg_games_base',
+			'Sportorg_Orgsportlink' => 'org_sport_link',
+			'Sportorg_Team' => 'teams'
+		);
+
+		$games = ORM::_sql_exclude_deleted($classes_arr,$games);
+
 		return $games;
 	}
 	
