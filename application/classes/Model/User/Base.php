@@ -709,6 +709,7 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 
 		$org_sport_link_obj->group_by('teams.id');
 
+
 		$res = $org_sport_link_obj->execute();
 
 		$orgs = array(
@@ -787,7 +788,6 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 			->union($utl)
 			->from('user_sport_link')
 			->where('users_id','=',$this->id);
-
 
 		if($format=='select') return $isports;
 		elseif($format=='array')
@@ -911,7 +911,8 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 
 			->where('resume_data_vals.users_id','=',$this->id);
 
-		$res = $usersFitnessData->execute();
+
+
 
 		foreach($res as $data)
 		{
