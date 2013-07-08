@@ -42,7 +42,7 @@ define(
 				},
 				
 				createData : function() {
-					var imageListUrl = url();
+					//var imageListUrl = this.url();
 					this.homeImageList = new HomeImageList([], {
 						url : '/api/image/search',
 						num : '12'
