@@ -1,29 +1,35 @@
-<div id="views" class="dropdown span2">
-	<a class="dropdown-toggle" data-toggle="dropdown" href="javascript:void(0)"> VIEWS <span
-		class="caret"></span>
+<div id="views" class="menu span2">
+	<a href="javascript:void(0)"> VIEWS <span class="caret"></span>
 	</a>
-	<ul class="dropdown-menu">
-		{{#views.browse}}
-			<li><a href="javascript:void(0)">{{name}}</a></li> 
-		{{/views.browse}} 
-		{{#views.time}}
-			<li><a href="javascript:void(0)">{{name}}</a></li> 
-		{{/views.time}}
-	</ul>
-</div>
-<div id="sport" class="dropdown span2">
-	<a class="dropdown-toggle" data-toggle="dropdown" href="javascript:void(0)"> SPORT <span
-		class="caret"></span>
-	</a>
-	<div id="sport-dd">
+	<div class="dd">
+		<div class="dropdown">
+			<a href="javascript:void(0)"> Browse <span class="caret"></span></a>
+			<div class="clearfix"></div>
+			<ul class="dropdown-menu" style="display:block;position:relative;">
+				{{#views.browse}}
+				<li ><a class="browse" href="javascript:void(0)">{{name}}</a></li> {{/views.browse}}
+			</ul>
+		</div>
+		<br />
+		<div class="clearfix">
+			<a href="javascript:void(0)"> Time <span class="caret"></span></a>
+			<div class="clearfix"></div>
+			<ul class="dropdown-menu" style="display:block;position:relative;">
+				{{#views.time}}
+				<li><a class="time" href="javascript:void(0)">{{name}}</a></li> {{/views.time}}
+			</ul>
+		</div>
+		<br/>
 	</div>
 </div>
-<div id="location" class="dropdown span2">
-	<a class="dropdown-toggle" data-toggle="dropdown" href="javascript:void(0)">
-		LOCATION <span class="caret"></span>
+<div id="sport" class="menu span2">
+	<a href="javascript:void(0)"> SPORT <span class="caret"></span>
 	</a>
-	<div id="location-dd" class="dropdown-menu">
-	</div>
+	<div class="dd"></div>
+</div>
+<div id="location" class="menu span2">
+	<a href="javascript:void(0)"> LOCATION <span class="caret"></span></a>
+	<div class="dd"></div>
 </div>
 <div class="span5">
 	<div class="span2">SEARCH</div>
