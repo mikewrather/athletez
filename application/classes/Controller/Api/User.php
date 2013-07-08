@@ -2158,7 +2158,7 @@
 		 */
 		public function action_delete_role()
 		{
-			$this->payloadDesc = "Delete a user\'s Role";
+			$this->payloadDesc = "Delete a user's Role";
 
 			$arguments = array();
 			// CHECK FOR PARAMETERS:

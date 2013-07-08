@@ -36,4 +36,61 @@ class ORM extends Kohana_ORM
 
 		return $qry;
 	}
+
+	public function phantom_delete()
+	{
+		if(!$this->loaded()) return false;
+
+		echo get_class($this);
+		echo "\n";
+
+		$qry = DB::insert('deleted',array(
+			'subject_enttypes_id',
+			'subject_id',
+			'users_id'
+			)
+		)->values(
+			array(
+				Ent::getMyEntTypeID($this),
+				$this->id,
+				Auth::instance()->get_user()->id
+			)
+		)->execute();
+		return;
+	}
+
+	public function delete_with_deps()
+	{
+		$this->delete_deps();
+		$this->phantom_delete(); // this method will add the row to the deleted table
+	}
+
+	protected function delete_deps()
+	{
+		//Get My Class Name Minus Model_
+		$classname = str_replace('Model_','',get_class($this));
+
+		// Get the dependencies for my class
+		$deps = Kohana::$config->load('dependencies')->get($classname);
+
+		// Check if there are any results
+		if(is_array($deps))
+		{
+			// Loop through all dependencies
+			foreach($deps as $model => $fkey)
+			{
+				// instantiate ORM model for all dependent rows
+				$orm_models = ORM::factory($model)
+					->where($fkey,'=',$this->id)
+					->find_all();
+
+				// For each row, recursively execute the delete_with_deps method
+				foreach($orm_models as $orm_model)
+				{
+					$orm_model->delete_with_deps();
+				}
+			}
+		}
+
+	}
 }

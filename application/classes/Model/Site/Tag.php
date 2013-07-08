@@ -178,6 +178,7 @@ class Model_Site_Tag extends Model_Site_Entdir
 
 	protected function setLocation($subject_type_id,$subject_id)
 	{
+
 		$ent = Ent::eFact($subject_type_id,$subject_id);
 
 		$className = get_class($ent);

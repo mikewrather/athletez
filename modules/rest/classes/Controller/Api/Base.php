@@ -661,7 +661,6 @@ class Controller_Api_Base extends AuthController
 			"Model_Sportorg_Team",
 		);
 
-		//only create team's comments if have games_id
 		if ($this->mainModel->id && in_array(get_class($this->mainModel),$valid_object_types)){
 			$arguments["subject_type_id"] = $ent_types_id = Ent::getMyEntTypeID($this->mainModel);
 			$arguments["subject_id"] = $subject_id = $this->mainModel->id;
@@ -734,7 +733,6 @@ class Controller_Api_Base extends AuthController
 			"Model_Sportorg_Team",
 		);
 
-		//only create team's comments if have games_id
 		if ($this->mainModel->id && in_array(get_class($this->mainModel),$valid_object_types)){
 			$arguments["subject_type_id"] = $ent_types_id = Ent::getMyEntTypeID($this->mainModel);
 			$arguments["subject_id"] = $subject_id = $this->mainModel->id;
@@ -766,6 +764,7 @@ class Controller_Api_Base extends AuthController
 		$req = new Request('/api/image/add');
 		$req->method($this->request->method());
 		$req->post($this->request->post());
+		$req->cookie($this->request->cookie());
 
 		$resp = new Response();
 
