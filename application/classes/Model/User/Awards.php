@@ -23,7 +23,21 @@ class Model_User_Awards extends ORM
 	);
 
 	public function rules(){
-		return array();
+		return array(
+			// states_id (int)
+			'name'=>array(
+				array('not_empty'),
+			),
+			'users_id'=>array(
+				array('not_empty'),
+				array('users_id_exist')
+			),
+			// sports_id (int)
+			'sports_id'=>array(
+				array('not_empty'),
+				array('sports_id_exist')
+			),
+		);
 	}
 
 	public function addAwards($args = array()){
@@ -53,7 +67,7 @@ class Model_User_Awards extends ORM
 			$this->users_id = $users_id;
 		}
 		try{
-			$this->update();
+			$this->save();
 		}catch(ORM_Validation_Exception $e)
 		{
 			return $e;
@@ -67,10 +81,10 @@ class Model_User_Awards extends ORM
 			"id" => $this->id,
 			"name" => $this->name,
 			"users_id" => $this->users_id,
+			"user" => $this->user->getBasics(),
 			"sports_id" => $this->sports_id,
+			"sport" => $this->sport->getBasics(),
 			"description" => $this->description
 		);
 	}
-
-
 }

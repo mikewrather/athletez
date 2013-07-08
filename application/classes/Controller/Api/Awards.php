@@ -129,7 +129,7 @@
 
 		}
 
-		public function action_delete_basics()
+		public function action_delete_base()
 		{
 			$this->payloadDesc = "Delete award";
 			if(!$this->mainModel->id)
@@ -138,8 +138,7 @@
 				return false;
 			}
 
-			$this->mainModel->delete();
-
+			return $this->mainModel->delete();
 		}
 
 	}
