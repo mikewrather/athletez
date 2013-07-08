@@ -14,7 +14,7 @@ define(
 
 			HomeStateListView = require('pages/home/views/state-list'), LocationStateList = require('packages/location/collections/states.js'), HomeImageList = require('pages/home/collections/image'), MenuModel = require("pages/home/models/menu"), MenuView = require("pages/home/views/menu"), HomeImageListView = require("pages/home/views/image-list"),
 
-			LayoutView = views.LayoutView, $ = facade.$, _ = facade._, Channel = utils.lib.Channel, cssArr = [ "/pages/home/home.css" ];
+			LayoutView = views.LayoutView, $ = facade.$, _ = facade._, Channel = utils.lib.Channel, cssArr = [ base_url + "/pages/home/home.css" ];
 
 			HomeController = Controller.extend({
 
@@ -26,7 +26,12 @@ define(
 					this.handleOptions(options);
 
 					this.init();
-
+					this.urlOptions = {
+						'states_id' : '',
+						'sports_id' : '0',
+						'order_by' : 'votes',
+						'states_id' : ''
+					};
 					return this;
 				},
 
@@ -35,8 +40,9 @@ define(
 					this.createData();
 					this.handleDeferreds();
 				},
-
+				
 				createData : function() {
+					//var imageListUrl = this.url();
 					this.homeImageList = new HomeImageList([], {
 						url : '/api/image/search',
 						num : '12'
@@ -65,7 +71,18 @@ define(
 						controller.setupTopRatedView();
 					});
 				},
-
+				
+				url : function(options) {
+					var relativeUrl = '/api/image/search';
+					var urlOptions = this.urlOptions;
+					urlOptions.states_id = options.states_id || urlOptions.states_id;
+					urlOptions.sports_id = options.sports_id || urlOptions.sports_id;
+					urlOptions.order_by = options.order_by || urlOptions.order_by;
+					this.urlOptions = urlOptions;
+					relativeUrl = relativeUrl + '?' + 'states_id=' + urlOptions.states_id + '&' + 'sports_id=' + urlOptions.sports_id + '&' + 'order_by=' + urlOptions.order_by; 
+					return relativeUrl;
+				},
+				
 				setupTopRatedView : function() {
 					debug.log('set top-rated view');
 					var topratedImageListView;
@@ -114,7 +131,7 @@ define(
 					
 					homeStateListView = new HomeStateListView({
 						collection : this.locationStateList,
-						destination : "#location-dd"
+						destination : "#location .dd"
 					});
 					
 					this.scheme.push(homeStateListView);
