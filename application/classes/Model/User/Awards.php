@@ -43,7 +43,6 @@ class Model_User_Awards extends ORM
 	public function addAwards($args = array()){
 		extract($args);
 		if (isset($id)){
-			echo "id = ".$id;
 			$this->id = $id;
 		}
 
