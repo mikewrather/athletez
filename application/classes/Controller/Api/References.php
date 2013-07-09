@@ -132,7 +132,7 @@
 
 			if(trim($this->put('relation')) != "")
 			{
-				$args['relation'] = trim($this->put('relation'));
+				$args['relation'] = urldecode(trim($this->put('relation')));
 			}
 
 			if(!$this->mainModel->id)
