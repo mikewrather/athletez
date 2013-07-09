@@ -201,6 +201,16 @@
 				$arguments["loc_search"] = trim($this->request->query('loc_search'));
 			}
 
+			if((int)trim($this->request->query('states_id')) > 0)
+			{
+				$arguments["states_id"] = (int)trim($this->request->query('states_id'));
+			}
+
+			if((int)trim($this->request->query('cities_id')) > 0)
+			{
+				$arguments["cities_id"] = (int)trim($this->request->query('cities_id'));
+			}
+
 			$game = ORM::factory('Sportorg_Games_Base');
 			$result = $game->getSearch($arguments);
 

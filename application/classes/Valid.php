@@ -610,6 +610,14 @@
 		 */
 		public static function correct_date_format($value){
 			$value = date("Y-m-d H:i:s",strtotime($value));
+			if ($value === false) {
+				return false;
+			}
+
+			if (substr($value,0,10) == '1969-12-31' || substr($value,0,10) == '0000-00-00') {
+				return false;
+			}
+
 			$year = substr($value,0, 4);
 			$month = substr($value,5, 2);
 			$day = substr($value,8, 2);
