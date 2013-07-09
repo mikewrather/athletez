@@ -37,6 +37,10 @@ class Model_User_References extends ORM
 				array('not_empty'),
 				array('sports_id_exist')
 			),
+			'email'=>array(
+				array('not_empty'),
+				array('email')
+			),
 		);
 	}
 
