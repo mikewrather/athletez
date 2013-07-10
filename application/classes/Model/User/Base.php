@@ -1114,9 +1114,16 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 			$teams_obj->complevels_id = $complevels_id;
 		}
 
-		if (isset($seasons_arr))
+		if (isset($seasons_id))
 		{
-			//$teams_obj->seasons_id = $seasons_id;
+			if(is_array($seasons_arr))
+			{
+				array_push($seasons_arr,$seasons_id);
+			}
+			else
+			{
+				$seasons_arr = array($seasons_id);
+			}
 		}
 
 		if (isset($year) && $year != "")
@@ -1141,10 +1148,11 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 				return $e;
 			}
 			return $this;
-		} else
+		}
+		else
 		{
 
-			//		print_r($args);
+			$result = array();
 
 			foreach ($seasons_arr as $seasons_id)
 			{
@@ -1205,13 +1213,16 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 						$user_teams_link->save();
 					}
 
+					$result[] = $new_team;
+
 
 				} catch (ORM_Validation_Exception $e)
 				{
 					return $e;
 				}
 			}
-			return $this;
+			if(sizeof($result) == 1) return $result[0];
+			return $result;
 		}
 	}
 

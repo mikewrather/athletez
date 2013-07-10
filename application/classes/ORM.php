@@ -37,12 +37,55 @@ class ORM extends Kohana_ORM
 		return $qry;
 	}
 
+	public function undo_delete_with_deps()
+	{
+		$this->undo_delete_deps();
+		$this->undo_delete(); // this method will add the row to the deleted table
+	}
+
+	public function undo_delete()
+	{
+		if(!$this->loaded()) return false;
+		DB::delete('deleted')
+			->where('subject_enttypes_id','=',Ent::getMyEntTypeID($this))
+			->where('subject_id','=',$this->id)
+			->where('users_id','=',Auth::instance()->get_user()->id)
+			->execute();
+
+		return true;
+	}
+
+	protected function undo_delete_deps()
+	{
+		//Get My Class Name Minus Model_
+		$classname = str_replace('Model_','',get_class($this));
+
+		// Get the dependencies for my class
+		$deps = Kohana::$config->load('dependencies')->get($classname);
+
+		// Check if there are any results
+		if(is_array($deps))
+		{
+			// Loop through all dependencies
+			foreach($deps as $model => $fkey)
+			{
+				// instantiate ORM model for all dependent rows
+				$orm_models = ORM::factory($model)
+					->where($fkey,'=',$this->id)
+					->find_all();
+
+				// For each row, recursively execute the delete_with_deps method
+				foreach($orm_models as $orm_model)
+				{
+					$orm_model->undo_delete_with_deps();
+				}
+			}
+		}
+	}
+
 	public function phantom_delete()
 	{
 		if(!$this->loaded()) return false;
-
-		echo get_class($this);
-		echo "\n";
 
 		$qry = DB::insert('deleted',array(
 			'subject_enttypes_id',

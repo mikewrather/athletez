@@ -1,7 +1,5 @@
 <?php
 /**
- * $description
- *
  * Date: 7/8/13
  * Time: 3:34 AM
  *

@@ -899,13 +899,20 @@
 			$seasons_arr = array();
 
 			if (!intval($teams_id) > 0){
-				if(trim($this->request->post('seasons_arr')) != "")
+
+				if(trim($this->request->post('seasons_id')) != "")
+				{
+					$seasons_id = (int)trim($this->request->post('seasons_id'));
+				}
+				elseif(trim($this->request->post('seasons_arr')) != "")
 				{
 					$seasons_arr = explode(',' , trim($this->request->post('seasons_arr')));
-				}else{
+				}
+				else
+				{
 					$error_array = array(
 						"error" => "Seasons id invalid",
-						"desc" => "Multiple seasons id should be like 1,2"
+						"desc" => "Include either a single seasons_id parameter or multiple seasons as seasons_arr comma separated"
 					);
 					$this->modelNotSetError($error_array);
 					return false;
@@ -929,23 +936,24 @@
 				'orgs_id' => $orgs_id,
 				'sports_id' => $sports_id,
 				'complevels_id' => $complevels_id,
-				'seasons_arr' => $seasons_arr,
+				'seasons_id' => isset($seasons_id) ? $seasons_id : NULL,
+				'seasons_arr' => isset($seasons_arr) ? $seasons_arr : NULL,
 				'year' => $year,
 				'users_id' => $this->mainModel->id
 			);
 
 			$result = $this->mainModel->addTeam($args);
-
+			
 			//Check for success / error
-			if(get_class($result) == get_class($this->mainModel))
-			{
-				return $result;
-			}
-			elseif(get_class($result) == 'ORM_Validation_Exception')
+			if(is_object($result) && ($result) == 'ORM_Validation_Exception')
 			{
 				//parse error and add to error array
 				$this->processValidationError($result,$this->mainModel->error_message_path);
 				return false;
+			}
+			else
+			{
+				return $result;
 			}
 
 		}
