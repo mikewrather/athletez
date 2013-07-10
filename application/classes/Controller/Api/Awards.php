@@ -50,6 +50,11 @@
 				$args['name'] = trim($this->request->post('name'));
 			}
 
+			if(trim($this->request->post('year')) != "")
+			{
+				$args['year'] = trim($this->request->post('year'));
+			}
+
 			if((int)trim($this->request->post('users_id')) > 0)
 			{
 				$args['users_id'] = (int)trim($this->request->post('users_id'));
@@ -89,6 +94,11 @@
 			if(trim($this->put('name')) != "")
 			{
 				$args['name'] = urldecode(trim($this->put('name')));
+			}
+
+			if(trim($this->put('year')) != "")
+			{
+				$args['year'] = trim($this->put('year'));
 			}
 
 			if(trim($this->put('description')) != "")

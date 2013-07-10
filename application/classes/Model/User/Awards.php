@@ -51,6 +51,11 @@ class Model_User_Awards extends ORM
 			$this->name = $name;
 		}
 
+		if(isset($year))
+		{
+			$this->year = $year;
+		}
+
 		if(isset($description))
 		{
 			$this->description = $description;
@@ -79,6 +84,7 @@ class Model_User_Awards extends ORM
 		return array(
 			"id" => $this->id,
 			"name" => $this->name,
+			"year" => $this->year,
 			"users_id" => $this->users_id,
 			"user" => $this->user->getBasics(),
 			"sports_id" => $this->sports_id,
