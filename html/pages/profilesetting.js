@@ -26,7 +26,7 @@ var IndividualSportsCollection = require("profilesetting/collections/individuals
 		cssArr : ["/pages/profilesetting/profilesettings.css"],
 
 		events : {
-			"click #btn-Add-School" : "addHighSchool",
+			//"click #btn-Add-School" : "addHighSchool",
 		},
 		/*Actions to be performed on the first time the object is created*/
 		initialize : function(options) {
@@ -81,11 +81,9 @@ var IndividualSportsCollection = require("profilesetting/collections/individuals
 			$.when(this.basicInfoModel.request).done(function() {
 
 				var data = self.basicInfoModel.toJSON()
-				console.log("Data from basic info in profile setting view", data);
 
 				// Assign Properties From Data
 				self.gender = data.payload.gender;
-				console.log(self.gender);
 
 				// Call All The Views
 				self.setUpBasicView();

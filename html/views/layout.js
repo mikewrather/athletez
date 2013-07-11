@@ -45,7 +45,6 @@ define(['facade','views/base','utils'], function (facade, BaseView, utils) {
         // First calls method to setup options and also add a controller when arg is present
         // no need to call ...BaseView.prototype.initialize.apply(this, slice.call(arguments));
         initialize: function (options, controller) {
-            debug.log('LayoutView initialize');
             if (options) {
                 this.setOptions(options);
             }
@@ -108,7 +107,6 @@ define(['facade','views/base','utils'], function (facade, BaseView, utils) {
                     names.push(view.name);
                 });
                 this.schemeViewNames = names;
-                debug.log('LayoutView scheme views: ' + names.join(' '));
             }
             $(this.destination).html(this.template);
         },
@@ -142,7 +140,6 @@ define(['facade','views/base','utils'], function (facade, BaseView, utils) {
             } else {
                 options.transitionMethod = 'showHide';
             }
-            debug.log('LayoutView transitionMethod: ' + options.transitionMethod);
         },
 
         // **Method:** `section`  
@@ -167,7 +164,6 @@ define(['facade','views/base','utils'], function (facade, BaseView, utils) {
                     this.displayWhenResolved(callback);
                 }
             }
-            debug.log('LayoutView render');
         },
 
         // **Method:** `displayViews`  
@@ -178,7 +174,6 @@ define(['facade','views/base','utils'], function (facade, BaseView, utils) {
                 layout = this;
 
             _.each(views, function (view) {
-                debug.log('LayoutView displayViews ' + view.name);
                 layout.section(view.name).display(true);
             });
         },
@@ -204,7 +199,6 @@ define(['facade','views/base','utils'], function (facade, BaseView, utils) {
             $.when.apply($, deferreds).then(
                 function passed() {
                     layout.displayViews();
-                    debug.log("LayoutView scheme views all rendered.");
                     if (callback && _.isFunction(callback)) {
                         callback();
                     }
@@ -235,7 +229,6 @@ define(['facade','views/base','utils'], function (facade, BaseView, utils) {
                         childView.display(true);
                     });
                 }
-                debug.log("LayoutView displayWhenReady: " + view.name);
             });
             if (callback && _.isFunction(callback)) {
                 callback();
@@ -250,7 +243,6 @@ define(['facade','views/base','utils'], function (facade, BaseView, utils) {
         transition: function (sectionName, sectionView) {
             var msg;
             if (!_.contains(this.schemeViewNames, sectionName)) {
-                debug.log('LayoutView transition has no view named: ' + sectionName);
             } else {
                 if (!sectionView || (sectionView && (!sectionView.state || !sectionView.display))) {
                     msg = "LayoutView transition for " + sectionName;

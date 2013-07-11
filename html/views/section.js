@@ -50,7 +50,6 @@ define(['facade', 'views/base', 'utils'], function(facade, BaseView, utils) {
 				}
 				msg = 'view ' + this.name + ' (' + this.cid + ')';
 				msg += ' state was: [' + lastState + '], state set to: [' + state + ']';
-				debug.log(msg);
 			}
 		} else {
 			// Get state value
@@ -103,7 +102,6 @@ define(['facade', 'views/base', 'utils'], function(facade, BaseView, utils) {
 				this.destination = options.destination;
 				this.name = options.name;
 				this.state(options.state || 'not-rendered');
-				debug.log('SectionView initialize: ' + this.name + ' (' + this.cid + ')');
 				this.__super__.initialize.call(this, options);
 			}
 		},
@@ -120,7 +118,6 @@ define(['facade', 'views/base', 'utils'], function(facade, BaseView, utils) {
 
 
 			this.callbacks.add(setRenderedState);
-			debug.log('SectionView render: ' + this.name + ' (' + this.cid + ')');
 			this.__super__.render.call(this, domInsertion, dataDecorator, partials);
 		},
 
@@ -144,12 +141,10 @@ define(['facade', 'views/base', 'utils'], function(facade, BaseView, utils) {
 				if (toDisplay /*&& this.state() !== 'displayed'*/) {
 					section.html(this.$el);
 					this.state('displayed');
-					debug.log('SectionView display: ' + this.name + ' (' + this.cid + '): ' + toDisplay);
 				}
 				if (!toDisplay && this.state() === 'displayed') {
 					section.html('');
 					this.state('not-displayed');
-					debug.log('SectionView display: ' + this.name + ' (' + this.cid + '): ' + toDisplay);
 				}
 			}
 		},
@@ -218,7 +213,33 @@ define(['facade', 'views/base', 'utils'], function(facade, BaseView, utils) {
 				}
 			}
 			return false;
-		}
+		},
+		/**METHOD** sort collection by the property sent, Developed for the collections/arrays which are modified on frontend not in collections
+		 Parameters:
+		 collection : array of elements
+		 property : property of element to sort with
+		 isDesc : boolean Pass true if data required in descending order
+		 Returns:
+		 boolean true will continues auto complete and stops in false
+		 * */
+		sort : function(collection, property, isDesc) {
+			collection.sort(function(a, b) {
+				if (isDesc == true) {
+					if (a[property] < b[property])
+						return 1;
+					if (b[property] < a[property])
+						return -1;
+					return 0;
+				} else {
+					if (a[property] < b[property])
+						return -1;
+					if (b[property] < a[property])
+						return 1;
+					return 0;
+				}
+			});
+
+		},
 	});
 
 	// Mix-in `Section` object

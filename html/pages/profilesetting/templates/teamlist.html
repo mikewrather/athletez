@@ -1,28 +1,31 @@
 {{#orgs}}
-
+<div class="div-sports-wrapper">
+	
 <div class="clearfix">
-	<h3>{{org_name}}</h3><a href="javascript:void(0)" org_id="{{org_id}}">Add Sport</a>
+	<h3>{{org_name}}</h3><a class="btn-add-sports" href="javascript:void(0)" org_id="{{org_id}}">Add Sport</a>
+</div>
+<div class="school-sports-section">
+		</div>
 </div>
 {{#sports}}
 <div class="clearfix">
-	<h4> Basketball</h4>
+	<h4> {{sports_name}}</h4>
 </div>
 <div class="sub-section-prof-setting well well-large">
+	{{#complevels}}
+	{{#seasons}}
 	<div class="row-fluid">
-		<span class="span3"><strong>Winter 2013</strong></span>
-		<span class="span3">Varsity</span>
-		<span class="span3">Power Forward</span>
+		<span class="span3"><strong>{{season}} {{year}}</strong></span>
+		<span class="span3">{{complevel}}</span>
+		<span class="span3">
+			{{#positions}}
+			{{name}}
+			{{/positions}}
+			
+		</span>
 	</div>
-	<div class="row-fluid">
-		<span class="span3"><strong>Winter 2012</strong></span>
-		<span class="span3">Varsity</span>
-		<span class="span3">Power Forward</span>
-	</div>
-	<div class="row-fluid">
-		<span class="span3"><strong>Winter 2011</strong></span>
-		<span class="span3">Junior Varsity</span>
-		<span class="span3">Power Forward, Center, Small Forward</span>
-	</div>
+	{{/seasons}}
+	{{/complevels}}
 </div>
 {{/sports}}
 {{/orgs}}

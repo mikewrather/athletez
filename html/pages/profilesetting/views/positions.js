@@ -33,7 +33,6 @@ define(['require', 'text!profilesetting/templates/positions.html', 'facade', 'vi
 
 		/*initialize gets called by default when constructor is initialized*/
 		initialize : function(options) {
-			console.log("Positions options", options);
 			self = this;
 			self.setOptions(options);
 			self.BindPositions();
@@ -48,7 +47,6 @@ define(['require', 'text!profilesetting/templates/positions.html', 'facade', 'vi
 
 		/*Mark Selected Position as Active ot inactive*/
 		MarkPosition : function(control) {
-			console.log("Mark Active In Position");
 			if ($(control).hasClass('active')) {
 				$(control).addClass('active');
 			} else {
@@ -57,7 +55,6 @@ define(['require', 'text!profilesetting/templates/positions.html', 'facade', 'vi
 		},
 		/*Set All the Options set at the time of creating instance*/
 		setOptions : function(options) {
-			console.log("Set Options in Season", options);
 			if (!options.sport_id)
 				throw new Error("Sport_id is missing for Positions View", options);
 			else {
@@ -69,7 +66,6 @@ define(['require', 'text!profilesetting/templates/positions.html', 'facade', 'vi
 
 		/*Returns the consolidated data to bind with template */
 		BindPositions : function() {
-			console.log(self.sport_id);
 			if (self.sport_id) {
 				var List = new Collection();
 				List.sport_id = self.sport_id;
@@ -80,7 +76,6 @@ define(['require', 'text!profilesetting/templates/positions.html', 'facade', 'vi
 						return;
 
 					var models = List.toJSON();
-					console.log("Models", models);
 					self.positions = [];
 					if (models != null && models.length) {
 
@@ -88,7 +83,6 @@ define(['require', 'text!profilesetting/templates/positions.html', 'facade', 'vi
 						for (var key in models) {
 							self.positions.push(models[key].payload);
 						}
-						console.log("Positions", self.positions);
 
 					} else {
 						self.positions = [];
@@ -105,7 +99,6 @@ define(['require', 'text!profilesetting/templates/positions.html', 'facade', 'vi
 			var markup = Mustache.to_html(self.template, {
 				Data : self.positions || []
 			});
-			console.log(self.destination);
 			$(self.destination).html(markup);
 		}
 	});
