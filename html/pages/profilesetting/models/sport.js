@@ -8,7 +8,7 @@ define(["facade", "sportorg/models/sport"], function(facade, SportsOrgModel) {
 	var Model, _ = facade._;
 
 	Model = SportsOrgModel.extend({
-		idAttribute : 'sports_id',
+		idAttribute : 'user_id',
 		url : function() {
 			if (testpath)
 				return testpath + '/api/org/basics/';
@@ -20,10 +20,13 @@ define(["facade", "sportorg/models/sport"], function(facade, SportsOrgModel) {
 			if (this.type == "save")
 				return '/api/user/addsport/' + this.user_id;
 			if (this.type == "delete")
-				return '/api/user/sport/' + this.user_id + '?sports_id=' + this.sports_id;
+				return '/api/user/sport/' + this.user_id + '?sports_id=' + this.sports_id + '&sport_id=' + this.sports_id + 
+				'&user_id=' + this.user_id;
 		},
 		data : {
 			sports_id : this.sports_id,
+			sport_id : this.sports_id,
+			user_id : this.user_id,
 		}
 	});
 

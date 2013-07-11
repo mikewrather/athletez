@@ -161,11 +161,16 @@ define(['require',
 			var sportsId = $(event.target).attr('sportid');
 			console.log(sportsId);
 			if(sportsId){
-				var sportsModel = new SportsModel();
+				var payload = {};
+				payload.user_id = self.user_id;
+				payload.sports_id = sportsId;
+				
+				var sportsModel = new SportsModel(payload);
 				sportsModel.user_id = self.user_id;
 				sportsModel.sports_id = sportsId;
 				sportsModel.type = "delete";
 				sportsModel.destroy({
+					user_id : self.user_id,
 					sports_id : sportsId
 				});
 				$.when(sportsModel.request).done(function() {

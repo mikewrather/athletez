@@ -6,9 +6,7 @@
  */
 define(['require', 'text!profilesetting/templates/highschool.html', 'text!profilesetting/templates/sportslevel.html', 'text!profilesetting/templates/level.html', 'facade', 'views', 'utils', 'vendor', 'profilesetting/collections/states', 'profilesetting/collections/schools', 'profilesetting/collections/sports', 'profilesetting/views/teams', 'profilesetting/models/complevel', 'profilesetting/views/seasons', 'profilesetting/views/positions', 'profilesetting/models/team'], function(require, highSchoolTemplate, sportsLevelTemplate, levelTemplate) {
 
-	var self, HighSchoolView, facade = require('facade'), views = require('views'), SectionView = views.SectionView, utils = require('utils'), Channel = utils.lib.Channel, vendor = require('vendor'), Mustache = vendor.Mustache, $ = facade.$, StatesCollection = require('profilesetting/collections/states'), SchoolCollection = require('profilesetting/collections/schools'), SportsCollection = require('profilesetting/collections/sports'), CompLevelModel = require('profilesetting/models/complevel'), SeasonsView = require('profilesetting/views/seasons'), PositionsView = require('profilesetting/views/positions'), TeamsView = require('profilesetting/views/teams'),
-	TeamModel = require('profilesetting/models/team'),
-	HighSchoolView = SectionView.extend({
+	var self, HighSchoolView, facade = require('facade'), views = require('views'), SectionView = views.SectionView, utils = require('utils'), Channel = utils.lib.Channel, vendor = require('vendor'), Mustache = vendor.Mustache, $ = facade.$, StatesCollection = require('profilesetting/collections/states'), SchoolCollection = require('profilesetting/collections/schools'), SportsCollection = require('profilesetting/collections/sports'), CompLevelModel = require('profilesetting/models/complevel'), SeasonsView = require('profilesetting/views/seasons'), PositionsView = require('profilesetting/views/positions'), TeamsView = require('profilesetting/views/teams'), TeamModel = require('profilesetting/models/team'), HighSchoolView = SectionView.extend({
 
 		template : highSchoolTemplate,
 		/*Bind Events on controls present in current view template*/
@@ -434,22 +432,25 @@ define(['require', 'text!profilesetting/templates/highschool.html', 'text!profil
 		},
 		AddSportsItem : function(event) {
 			if ($(event.target).is(':checked') && $(event.target).attr('seasonid')) {
-				var teamsModel = new TeamModel();
+
+				var payload = {};
+				payload.teams_id = 0;
+				payload.id1 = self.user_id;
+				payload.user_id = self.user_id;
+				payload.orgs_id = self.orgs_id;
+				payload.sports_id = self.sport_id;
+				payload.complevels_id = self.compLevel_id;
+				payload.seasons_id = $(event.target).attr('seasonid');
+				payload.year = 2013;
+
+				var teamsModel = new TeamModel(payload);
 				teamsModel.type = "add";
-				teamsModel.teams_id = 0;
-				teamsModel.id1	= self.user_id;
 				teamsModel.user_id = self.user_id;
-				teamsModel.orgs_id = self.orgs_id;
-				teamsModel.sports_id = self.sport_id;
-				teamsModel.complevels_id = self.compLevel_id;
-				teamsModel.seasons_id = $(event.target).attr('seasonid');
-				teamsModel.year = 2013;
-				
 				teamsModel.save();
-				$.when(teamsModel.request).done(function(){
-					self.displayPositionPopup();
+				$.when(teamsModel.request).done(function() {
+					self.displayPositionPopup(event);
 				});
-				
+
 			} else {
 
 			}
