@@ -53,7 +53,6 @@ define([
             _.bindAll(this);
 
             this.handleOptions(options);
-            
             this.init(options);
             
             return this;
@@ -94,22 +93,24 @@ define([
             addBasicView = new ImageBasicView({
                 name: "Add Media",
 				model :imgModel,
-				destination : "#main-content"
+				destination : "#main-content-img"
             },this.attr);
             debug.log("Imagecontroller Show");
             this.scheme.push(addBasicView);
+			console.log(this.scheme);
             this.layout.render();
         },
 		setupLayout: function () {
             var pageLayout;
 			debug.log("Imagecontroller Layout");
+			this.scheme=[];
             pageLayout = new LayoutView({
                 scheme: this.scheme,
-                destination: "body",
+                destination: "#main-footer",
 				template : pageLayoutTemplate,
 				displayWhen : "ready"
             });
-            this.layout = pageLayout;
+            this.layout=pageLayout;
             return this.layout;
         },
 		previewShowup: function (dataum) {
@@ -139,7 +140,7 @@ define([
 				dataum= [],
 				msg="",thiss=this,
 				dataum=data.dataum;
-			this.url="/api/"+$("#url_tag").val()+"/addimage/"+$("#id_tag").val();
+			//this.url="/api/"+$("#url_tag").val()+"/addimage/"+$("#id_tag").val();
 			$("#preview_"+id).html("<progress></progress>")
 			$.ajax({
 			    url: this.url,
@@ -161,6 +162,8 @@ define([
 						$("#imageup").removeAttr("disabled");
 						$("#image_file").removeAttr("disabled");
 						$(".closepreview").removeAttr("disabled");	
+						Channel('app-inited').publish('1');
+						return;
 					}
 			    },
 				error:function(data){
@@ -172,6 +175,7 @@ define([
 						$("#imageup").removeAttr("disabled");
 						$("#image_file").removeAttr("disabled");
 						$(".closepreview").removeAttr("disabled");
+						return;
 				}
 			});
 		},
@@ -189,7 +193,7 @@ define([
             debug.log("Error View Show");
             this.scheme.push(addErrorView);
 			$("#errormsg").show();
-            Channel("imageup-rerender").publish();	
+			Channel("imageup-rerender").publish();	
 		}
 
     });

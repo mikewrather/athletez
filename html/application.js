@@ -3,8 +3,8 @@
 // Requires define
 // Return {Object} App
 
-define( ["facade", "utils", "collections", "chrome", "controller", "profile", "imageup", 'home', "game", "team", "registration","profilesetting","packages/site/collections/phrases"],
-function (facade, utils, collections, chromeBootstrap, Controller, ProfileController, ImageController, HomeController, GameController, TeamController, RegistrationController, ProfileSetting, SitePhraseList) {
+define( ["facade", "utils", "collections", "chrome", "controller", "profile", "imageup", 'test','home', "game", "team", "registration","profilesetting","packages/site/collections/phrases"],
+function (facade, utils, collections, chromeBootstrap, Controller, ProfileController, ImageController, TestController, HomeController, GameController, TeamController, RegistrationController, ProfileSetting, SitePhraseList) {
 
     var App,
         ApplicationStates = collections.ApplicationStates,
@@ -31,6 +31,7 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
          /*    'usersettings/:userid': 'showProfileSetting', This is not necessary because we will only be seeing settings for currently logged in user*/
 
 			'imageup': 'imageUp',
+			'imgtestd': 'testsd',
             
             'game': 'showGame',
             'game/': 'showGame',
@@ -90,15 +91,40 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
             
             $('body').empty();
             chromeBootstrap();
-
+			 var profileController=new ProfileController({
+                "route": "resume", 
+                "id": userid==undefined ? 1 : userid
+            });
             function initProfile(id) {
-                var profileController = new ProfileController({
-                    "route": "resume", 
-                    "id": userid==undefined ? id : userid
-                });
+				Channel('refresh-profilepage').publish();
+				return;
             }
-            
+            function showImage(url,attr) {
+                var imageController = new ImageController({"route": "","url":url,"attr":attr});
+            }
+            Channel('add-image').subscribe(showImage);
             Channel('app-inited').subscribe(initProfile);
+			
+        },
+		testsd: function () {
+        	this.loadStyles();
+            
+            $('body').empty();
+            chromeBootstrap();
+			console.log("t");
+			 var testController=new TestController({
+                "route": ""
+            });
+            function initTest() {
+                var testController=new TestController({
+	                "route": ""
+	            });
+            }
+            function showImage(url,attr) {
+                var imageController = new ImageController({"route": "","url":url,"attr":attr});
+            }
+            Channel('add-image').subscribe(showImage);
+            Channel('app-inited').subscribe(initTest);
         },
         showProfileSetting: function (userid) {
             this.loadStyles();
@@ -121,6 +147,7 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
 			this.loadStyles();
             
             $('body').empty();
+			chromeBootstrap();
 			//URL to which it has to be passed
 			//this.posturl="/api/image/add/";
 			this.posturl="";
@@ -131,9 +158,9 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
             new ImageController({"route": "","url":this.posturl,"attr":this.attribute});
             function initImage(id) {
 				console.log("inside router");
-                var imageController = new ImageController({"route": "","url":this.posturl,"attr":this.attribute});
+                //var imageController = new ImageController({"route": "","url":this.posturl,"attr":this.attribute});
             }
-            
+			
             Channel('app-inited').subscribe(initImage);
 		},
         
@@ -142,7 +169,9 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
             
             $('body').empty();
             chromeBootstrap();
-            
+             var gameController = new GameController({
+                    "route": ""
+                });
             function initGame(id) {
                 var gameController = new GameController({
                     "route": ""

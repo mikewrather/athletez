@@ -73,6 +73,7 @@ require.config({
         'pages'        : '/pages',
         'chrome'       : '/pages/chrome',
 		'imageup'      : '/pages/imageup',
+		'test'         : '/pages/test',
         'profile'      : '/pages/profile',
         'game'         : '/pages/game',
         'team'         : '/pages/team',
