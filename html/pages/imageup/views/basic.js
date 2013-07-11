@@ -55,7 +55,7 @@ function(require, imageBasicTemplate) {
 		    keyboard: false
 		    });
 		    $('#imgUploadModal').on('hidden', function () {
-		    	Channel('app-inited').publish('1');
+		    	Channel('refresh-onImageUpload').publish();
 		    })
         },
 		drag: function(event) {

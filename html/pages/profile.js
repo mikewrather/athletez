@@ -161,8 +161,26 @@ define([
 	            console.log("i run how many times");
                 controller.setupCommentOnListView();
             });
+			function imagelistRefresh(id)
+			{
+				controller.refreshImageList(id);
+			}
+			Channel('refresh-imagelist').subscribe(imagelistRefresh);
         },
-        
+        refreshImageList: function(sport_id) {
+			if (this.imageListView) {
+                $(this.imageListView.destination).html('');
+                position = $.inArray(this.imageListView, this.scheme);
+                if ( ~position ) this.scheme.splice(position, 1);
+            }
+            this.images = new ProfileImageList();
+            this.images.id = this.id;
+            this.images.sport_id = sport_id;
+            this.images.fetch();
+			$.when(this.images.request).done(function(x) {
+                this.setupImageListView();
+            });
+		},
         refreshPage: function() {
             var position;
             
