@@ -426,11 +426,18 @@
 		 */
 		public function post_addteam()
 		{
-			$retArr = array();
-			// Scaffolding Code For Array:
-			$retArr = $this->obj->getBasics();
-
-			return $retArr;
+			if(is_array($this->obj))
+			{
+				$retArr = array();
+				foreach($this->obj as $team)
+				{
+					$retArr[] = $team->getBasics();
+				}
+			}
+			elseif(is_object($this->obj))
+			{
+				return $this->obj->getBasics();
+			}
 		}
 		
 		/**
@@ -577,6 +584,18 @@
 
 			return $retArr;
 		}
+
+		/**
+		 * delete_position() Delete a position for a user / team association
+		 *
+		 * @retun array
+		 */
+		public function delete_position()
+		{
+			$retArr = $this->obj->getBasics();
+			return $retArr;
+		}
+
 		
 		/**
 		 * delete_role() Delete a user's Role

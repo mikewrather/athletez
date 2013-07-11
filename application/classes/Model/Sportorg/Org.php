@@ -178,6 +178,17 @@ class Model_Sportorg_Org extends ORM
 		$complevels_model->join('orgs')->on('orgs.complevel_profiles_id', '=', 'sportorg_complevel_base.complevel_profiles_id');
 		$complevels_model->where('orgs.id', '=', $id);
 
+		// This is an array of all of the classes we are checking for deleted
+		// We also provide the table name that it will be referenced by
+		$classes_arr = array(
+			'Sportorg_Complevel_Base' => 'sportorg_complevel_base',
+			'Sportorg_Org' => 'orgs',
+			'Sportorg_Orgsportlink' => 'org_sport_link',
+			'Sportorg_Team' => 'teams'
+		);
+
+		$complevels_model = ORM::_sql_exclude_deleted($classes_arr,$complevels_model);
+
 		if (isset($sports_id))
 			$complevels_model->where('org_sport_link.sports_id', '=', $sports_id);
 		$complevels_model->group_by('sportorg_complevel_base.id');
@@ -251,6 +262,7 @@ class Model_Sportorg_Org extends ORM
 
 		$orgs_model->where('sportorg_org.states_id', '=', $states_id);
 
+
 		return $orgs_model;
 	}
 
@@ -268,6 +280,17 @@ class Model_Sportorg_Org extends ORM
 			->on('org_sport_link.id','=','team.org_sport_link_id')
 
 			->where('org_sport_link.orgs_id','=',$this->id);
+
+		// This is an array of all of the classes we are checking for deleted
+		// We also provide the table name that it will be referenced by
+		$classes_arr = array(
+			'Sportorg_Games_Base' => 'sportorg_games_base',
+			'Sportorg_Orgsportlink' => 'org_sport_link',
+			'Sportorg_Team' => 'teams'
+		);
+
+		$games = ORM::_sql_exclude_deleted($classes_arr,$games);
+
 		return $games;
 	}
 	

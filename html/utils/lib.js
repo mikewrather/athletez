@@ -142,7 +142,7 @@ define(["facade", "utils/debug"], function(facade, debug) {
                 link.title = url.title;
             }
         }
-        debug.log("loadCss url: " + url.href || url);
+        debug.log("loadCss url: " + url || url.href);
         document.getElementsByTagName("head")[0].appendChild(link);
     };
 

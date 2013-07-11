@@ -91,6 +91,35 @@
 			if((int)trim($this->request->post('games_id')) > 0)
 			{
 				$arguments["games_id"] = (int)trim($this->request->post('games_id'));
+			}else{
+				$error_array = array(
+					"error" => "Games id required",
+					"desc" => "Games id required"
+				);
+				$this->modelNotSetError($error_array);
+				return false;
+			}
+
+			//check games_id is exist in system
+			if (!Valid::games_id_exist($arguments["games_id"])){
+				$error_array = array(
+					"error" => "Games id doesn't exist",
+					"desc" => "Games id doesn't exist"
+				);
+				$this->modelNotSetError($error_array);
+				return false;
+			}else{
+				$mainModel = ORM::factory('Sportorg_Games_Base', $arguments["games_id"]);
+			}
+
+			// No mainModel->id in add function. we need to get it from games
+			if(!$this->user->can('GameMatches', array('action'=>'create', 'obj' => $mainModel))){
+				$error_array = array(
+					"error" => "Sorry, You don't have permission to create",
+					"desc" => "In order to create this action, please contact your adminstrator"
+				);
+				$this->modelNotSetError($error_array);
+				return false;
 			}
 
 			if(trim($this->request->post('match_num')) != "")
@@ -121,9 +150,22 @@
 		{
 			$this->payloadDesc = "Add a new player to this match";
 			$arguments = array();
-			// CHECK FOR PARAMETERS:
-			// users_id (REQUIRED)
-			// ID of the player to add
+
+
+			if(!$this->mainModel->id)
+			{
+				$this->modelNotSetError();
+				return false;
+			}
+
+			if(!$this->user->can('GameMatches', array('action'=>'addPlayer', 'obj' => $this->mainModel))){
+				$error_array = array(
+					"error" => "Sorry, You don't have permission to create",
+					"desc" => "In order to create this action, please contact your adminstrator"
+				);
+				$this->modelNotSetError($error_array);
+				return false;
+			}
 
 			if((int)trim($this->request->post('users_id')) > 0)
 			{
@@ -150,12 +192,6 @@
 			if(trim($this->request->post('result_time')) != "")
 			{
 				$arguments["result_time"] = trim($this->request->post('result_time'));
-			}
-
-			if(!$this->mainModel->id)
-			{
-				$this->modelNotSetError();
-				return false;
 			}
 
 			$arguments["game_matches_id"] = $this->mainModel->id;
@@ -201,6 +237,15 @@
 			}
 			$arguments["id"] = $this->mainModel->id;
 
+			if(!$this->user->can('GameMatches', array('action'=>'modify', 'obj' => $this->mainModel))){
+				$error_array = array(
+					"error" => "Sorry, You don't have permission to modify",
+					"desc" => "In order to modify this action, please contact your adminstrator"
+				);
+				$this->modelNotSetError($error_array);
+				return false;
+			}
+
 			$result = $this->mainModel->updateGamematch($arguments);
 			if(get_class($result) == get_class($this->mainModel))
 			{
@@ -234,6 +279,16 @@
 				$this->modelNotSetError();
 				return false;
 			}
+
+			if(!$this->user->can('GameMatches', array('action'=>'delete', 'obj' => $this->mainModel))){
+				$error_array = array(
+					"error" => "Sorry, You don't have permission to delete",
+					"desc" => "In order to delete this action, please contact your adminstrator"
+				);
+				$this->modelNotSetError($error_array);
+				return false;
+			}
+
 			return $this->mainModel->delete();
 		}
 		
@@ -249,6 +304,15 @@
 			if(!$this->mainModel->id)
 			{
 				$this->modelNotSetError();
+				return false;
+			}
+
+			if(!$this->user->can('GameMatches', array('action'=>'delete', 'obj' => $this->mainModel))){
+				$error_array = array(
+					"error" => "Sorry, You don't have permission to delete",
+					"desc" => "In order to delete this action, please contact your adminstrator"
+				);
+				$this->modelNotSetError($error_array);
 				return false;
 			}
 			

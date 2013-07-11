@@ -139,6 +139,7 @@ define([
 				dataum= [],
 				msg="",thiss=this,
 				dataum=data.dataum;
+			this.url="/api/"+$("#url_tag").val()+"/addimage/"+$("#id_tag").val();
 			$("#preview_"+id).html("<progress></progress>")
 			$.ajax({
 			    url: this.url,

@@ -320,21 +320,20 @@ class Model_Media_Image extends ORM
 			$image->where('media.sports_id', '=', $sports_id);
 		}
 
+		if (isset($states_id)){
+			$image->where('tags.states_id', '=', $states_id);
+		}
+
+		if (isset($cities_id)){
+			$image->where('tags.cities_id', '=', $cities_id);
+		}
+
 		if ($class_name == 'User_Base'){
 			if (isset($searchtext) || isset($states_id) || isset($cities_id)){
 				$image->join(array('users', 'user_base'))->on('user_base.id', '=', 'tags.subject_id');
 			}
 			if (isset($searchtext)){
 				$image->where(array(Db::expr('CONCAT(user_base.first_name," ",user_base.last_name)'), 'full_name'), 'like ','%'.$searchtext.'%');
-			}
-
-			if (isset($states_id)){
-				$image->join('cities')->on('user_base.cities_id', '=', 'cities.id');
-				$image->where('cities.state_id', '=', $states_id);
-			}
-
-			if (isset($cities_id)){
-				$image->where('user_base.cities_id',  '=', $cities_id);
 			}
 		}
 
@@ -348,17 +347,6 @@ class Model_Media_Image extends ORM
 			if (isset($searchtext)){
 				$image->where('orgs.name', 'like', '%'.$searchtext.'%');
 			}
-
-			if (isset($states_id)){
-				//TODO, add by Jeffrey
-				//$image->join('cities')->on('user_base.cities_id', '=', 'cities.id');
-				//$image->where('cities.state_id', '=', $states_id);
-			}
-
-			if (isset($cities_id)){
-				//TODO, add by Jeffrey
-				//$image->where('user_base.cities_id',  '=', $cities_id);
-			}
 		}
 
 		if ($class_name == 'Sportorg_Games_Base'){
@@ -370,17 +358,6 @@ class Model_Media_Image extends ORM
 
 			if (isset($searchtext)){
 				$image->where('orgs.name', 'like', '%'.$searchtext.'%');
-			}
-
-			if (isset($states_id)){
-				//TODO, add by Jeffrey
-				//$image->join('cities')->on('user_base.cities_id', '=', 'cities.id');
-				//$image->where('cities.state_id', '=', $states_id);
-			}
-
-			if (isset($cities_id)){
-				//TODO, add by Jeffrey
-				//$image->where('user_base.cities_id',  '=', $cities_id);
 			}
 		}
 
@@ -394,17 +371,6 @@ class Model_Media_Image extends ORM
 			if (isset($searchtext)){
 				$image->where('orgs.name', 'like', '%'.$searchtext.'%');
 			}
-
-			if (isset($states_id)){
-				//TODO, add by Jeffrey
-				//$image->join('cities')->on('user_base.cities_id', '=', 'cities.id');
-				//$image->where('cities.state_id', '=', $states_id);
-			}
-
-			if (isset($cities_id)){
-				//TODO, add by Jeffrey
-				//$image->where('user_base.cities_id',  '=', $cities_id);
-			}
 		}
 
 		return $image;
@@ -416,16 +382,12 @@ class Model_Media_Image extends ORM
 
 		//get four types
 		//user section
-		//$user_condition = array();
 		$user_image = $this->assemblingSql('User_Base', $args);
 		//team section
-		//$team_condition = array();
 		$team_image = $this->assemblingSql('Sportorg_Team', $args);
 		//org section
-		//$org_condition = array();
 		$org_image = $this->assemblingSql('Sportorg_Org', $args);
 		//game section
-		//$game_condition = array();
 		$game_image = $this->assemblingSql('Sportorg_Games_Base', $args);
 
 		$results = DB::select('images.id', array(DB::expr('NULL'),'sports_id'))->from('images')
@@ -454,7 +416,7 @@ class Model_Media_Image extends ORM
 				->where('subject_enttypes_id','=',$enttype_id);
 
 			$imageModel->join(array($image_votes, 'image_votes'), 'left')->on('image_votes.images_id', '=', 'media_image.id');
-			$imageModel->order_by('num_votes', 'asc');
+			$imageModel->order_by('num_votes', 'desc');
 		}else if ($orderby == 'followers'){
 			$enttype_id = Model_Site_Enttype::getMyEntTypeID($imageModel);
 			$followers = DB::select(array(DB::expr('COUNT(id)'),'num_followers'))
@@ -462,55 +424,15 @@ class Model_Media_Image extends ORM
 				->from('followers')
 				->where('subject_enttypes_id','=',$enttype_id);
 			$imageModel->join(array($followers,'followers'), 'LEFT')->on('followers.images_id', '=', 'media_image.id');
-			$imageModel->order_by('num_followers', 'asc');
+			$imageModel->order_by('num_followers', 'desc');
+		}else if ($orderby == 'postTime'){
+			$imageModel->join('media' ,'left')->on('media_image.media_id', '=', 'media.id');
+			$imageModel->order_by('media.timePosted', 'desc');
 		}
 
 		$imageModel->where('media_image.id', 'in', $image_ids);
+
 		return $imageModel;
-	/*
-		if (isset($sports_id)){
-			$this->where('org_sport_link.sports_id', '=', $sports_id);
-		}
-		$this->join('media')->on('media_image.media_id', '=', 'media.id');
-		$this->join('sports')->on('media.sports_id', '=', 'sports.id');
-		$this->join('org_sport_link')->on('sports.id', '=', 'org_sport_link.sports_id');
-		$this->join('teams')->on('org_sport_link.id', '=', 'teams.org_sport_link_id');
-		$this->join('users_teams_link')->on('users_teams_link.teams_id', '=', 'teams.id');
-		$this->join('users')->on('users_teams_link.users_id', '=', 'users.id');
-		$this->join('orgs')->on('orgs.id', '=', 'org_sport_link.orgs_id');
-
-
-		if (isset($complevels_id)){
-			$this->where('teams.complevels_id', '=', $complevels_id);
-		}
-
-		$enttype_id = Model_Site_Enttype::getMyEntTypeID($this);
-		$counts = DB::select(array(DB::expr('COUNT(id)'),'num_votes'))
-			->select(array('subject_id', 'users_id'))
-			->from('votes')
-			->where('subject_enttypes_id','=',$enttype_id);
-
-		if (!isset($orderby)){
-			$this->join(array($counts,'filtered'))->on('filtered.users_id', '=', 'users.id');
-			$this->order_by('num_votes', 'asc');
-		}else{
-			$this->order_by($orderby, 'asc');
-		}
-
-		if (isset($gradyear)){
-			$this->where('users.grad_year', '=', $gradyear);
-		}
-
-		if (isset($positions_id)){
-			$this->join('positions')->on('positions.sports_id', '=', 'sports.id');
-			$this->where('positions.id', '=', $positions_id);
-		}
-
-		if (isset($searchtext))
-			$this->where('orgs.name', 'like', "%".$searchtext."%");
-
-		return $this;
-		*/
 	}
 
 	public function name()

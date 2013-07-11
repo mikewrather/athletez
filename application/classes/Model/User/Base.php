@@ -709,6 +709,7 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 
 		$org_sport_link_obj->group_by('teams.id');
 
+
 		$res = $org_sport_link_obj->execute();
 
 		$orgs = array(
@@ -787,7 +788,6 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 			->union($utl)
 			->from('user_sport_link')
 			->where('users_id','=',$this->id);
-
 
 		if($format=='select') return $isports;
 		elseif($format=='array')
@@ -911,7 +911,8 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 
 			->where('resume_data_vals.users_id','=',$this->id);
 
-		$res = $usersFitnessData->execute();
+
+
 
 		foreach($res as $data)
 		{
@@ -1113,9 +1114,16 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 			$teams_obj->complevels_id = $complevels_id;
 		}
 
-		if (isset($seasons_arr))
+		if (isset($seasons_id))
 		{
-			//$teams_obj->seasons_id = $seasons_id;
+			if(is_array($seasons_arr))
+			{
+				array_push($seasons_arr,$seasons_id);
+			}
+			else
+			{
+				$seasons_arr = array($seasons_id);
+			}
 		}
 
 		if (isset($year) && $year != "")
@@ -1140,10 +1148,11 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 				return $e;
 			}
 			return $this;
-		} else
+		}
+		else
 		{
 
-			//		print_r($args);
+			$result = array();
 
 			foreach ($seasons_arr as $seasons_id)
 			{
@@ -1204,13 +1213,16 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 						$user_teams_link->save();
 					}
 
+					$result[] = $new_team;
+
 
 				} catch (ORM_Validation_Exception $e)
 				{
 					return $e;
 				}
 			}
-			return $this;
+			if(sizeof($result) == 1) return $result[0];
+			return $result;
 		}
 	}
 
@@ -1424,6 +1436,29 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 		return $tests_scores;
 	}
 
+	public function delete_position($args)
+	{
+		$teamlink = ORM::factory('User_Teamslink')
+			->where('users_id','=',$args['users_id'])
+			->where('teams_id','=',$args['teams_id'])
+			->find();
+
+		if($teamlink->loaded())
+		{
+			$position_link = DB::delete('utl_position_link')
+				->where('users_teams_link_id','=',$teamlink->id)
+				->where('positions_id','=',$args['positions_id'])
+				->execute();
+
+			return $position_link;
+		}
+		else
+		{
+			return false;
+		}
+
+	}
+
 	public function delete_gpa($args){
 		$gpa = DB::delete('academics_gpa')
 			->where('year', '=', $args['year'])
@@ -1431,6 +1466,29 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 			->execute();
 
 		return $gpa;
+	}
+
+	function is_member_of_team($user_id, $team_id){
+		//allowed enttypes
+		$utl_link = ORM::factory("User_Teamslink");
+		$utl_link->where('teams_id', '=', $team_id);
+		$utl_link->where('users_id', '=', $user_id)->find();
+
+		if ($utl_link->loaded()){
+			return true;
+		}
+		return false;
+	}
+
+	function is_member_of_sport($user_id, $sport_id){
+		$usl_link = ORM::factory("User_Sportlink");
+		$usl_link->where('sports_id', '=', $sport_id);
+		$usl_link->where('users_id', '=', $user_id)->find();
+
+		if ($usl_link->loaded()){
+			return true;
+		}
+		return false;
 	}
 
 

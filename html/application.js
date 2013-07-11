@@ -122,9 +122,11 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
             
             $('body').empty();
 			//URL to which it has to be passed
-			this.posturl="/api/image/add/";
+			//this.posturl="/api/image/add/";
+			this.posturl="";
 			//Extra attributes need to be posted
-			this.attribute={'sports_id':'46',"id":"0",'name':"testimg"};
+			//this.attribute={'sports_id':'46',"id":"0",'name':"testimg"};
+			this.attribute={};
 			//pass those attributes to the controller
             new ImageController({"route": "","url":this.posturl,"attr":this.attribute});
             function initImage(id) {

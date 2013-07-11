@@ -860,19 +860,10 @@
 				$this->modelNotSetError();
 				return false;
 			}
-			//TODO, add by Jeffrey, Here need to add ACL control.
-			if(!$this->user || !($this->user->id == $this->mainModel->id || $this->user->has('roles','2')))
-			{
-				// Create Array for Error Data
-				$error_array = array(
-					"error" => "This action requires authentication"
-				);
 
-				// Set whether it is a fatal error
-				$is_fatal = true;
-
-				// Call method to throw an error
-				$this->addError($error_array,$is_fatal);
+			$users_id = $this->mainModel->id;
+			if(!$this->user->can('Assumeownership', array('owner' => $users_id))){
+				$this->throw_permission_error(Constant::NOT_OWNER);
 			}
 
 			// CHECK WHAT PARAMETERS WERE PROVIDED IN POST DATA:
@@ -908,13 +899,20 @@
 			$seasons_arr = array();
 
 			if (!intval($teams_id) > 0){
-				if(trim($this->request->post('seasons_arr')) != "")
+
+				if(trim($this->request->post('seasons_id')) != "")
+				{
+					$seasons_id = (int)trim($this->request->post('seasons_id'));
+				}
+				elseif(trim($this->request->post('seasons_arr')) != "")
 				{
 					$seasons_arr = explode(',' , trim($this->request->post('seasons_arr')));
-				}else{
+				}
+				else
+				{
 					$error_array = array(
 						"error" => "Seasons id invalid",
-						"desc" => "Multiple seasons id should be like 1,2"
+						"desc" => "Include either a single seasons_id parameter or multiple seasons as seasons_arr comma separated"
 					);
 					$this->modelNotSetError($error_array);
 					return false;
@@ -938,23 +936,24 @@
 				'orgs_id' => $orgs_id,
 				'sports_id' => $sports_id,
 				'complevels_id' => $complevels_id,
-				'seasons_arr' => $seasons_arr,
+				'seasons_id' => isset($seasons_id) ? $seasons_id : NULL,
+				'seasons_arr' => isset($seasons_arr) ? $seasons_arr : NULL,
 				'year' => $year,
 				'users_id' => $this->mainModel->id
 			);
 
 			$result = $this->mainModel->addTeam($args);
-
+			
 			//Check for success / error
-			if(get_class($result) == get_class($this->mainModel))
-			{
-				return $result;
-			}
-			elseif(get_class($result) == 'ORM_Validation_Exception')
+			if(is_object($result) && ($result) == 'ORM_Validation_Exception')
 			{
 				//parse error and add to error array
 				$this->processValidationError($result,$this->mainModel->error_message_path);
 				return false;
+			}
+			else
+			{
+				return $result;
 			}
 
 		}
@@ -991,13 +990,17 @@
 			}
 
 			$arguments = array();
+			$arguments['users_id'] = $this->mainModel->id;
+
+			if(!$this->user->can('Assumeownership', array('owner' => $arguments['users_id']))){
+				$this->throw_permission_error(Constant::NOT_OWNER);
+			}
 
 			if((int)trim($this->request->post('sports_id')) > 0)
 			{
 				$arguments["sports_id"] = (int)trim($this->request->post('sports_id'));
 			}
 
-			$arguments['users_id'] = $this->mainModel->id;
 			$new_user_sport_link_obj = ORM::factory("User_Sportlink");
 			$result = $new_user_sport_link_obj->addSport($arguments);
 
@@ -1372,6 +1375,11 @@
 		public function action_post_savecrop()
 		{
 			$this->payloadDesc = "This is the method that can save the cropping information for an image being used as userpic.  It differs from those in the media controller in that it assumes this is going to be a userpic.";
+
+			if(!$this->user->can('Assumeownership', array('owner' => $this->mainModel->id))){
+				$this->throw_permission_error(Constant::NOT_OWNER);
+			}
+
 			$arguments = array();
 			// CHECK FOR PARAMETERS:
 			// image_url (REQUIRED)
@@ -1838,6 +1846,10 @@
 			}
 
 			$arguments['users_id'] = $this->mainModel->id;
+			if(!$this->user->can('Assumeownership', array('owner' => $arguments['users_id']))){
+				$this->throw_permission_error(Constant::NOT_OWNER);
+			}
+
 			$gpa_model = ORM::factory("Academics_Gpa");
 			$result = $gpa_model->updateGpa($arguments);
 			if(get_class($result) == get_class($gpa_model))
@@ -1880,6 +1892,10 @@
 			}
 
 			$arguments['users_id'] = $this->mainModel->id;
+			if(!$this->user->can('Assumeownership', array('owner' => $arguments['users_id']))){
+				$this->throw_permission_error(Constant::NOT_OWNER);
+			}
+
 			$score_model = ORM::factory("Academics_Tests_Scores");
 			$result = $score_model->updateTestScore($arguments);
 			if(get_class($result) == get_class($score_model))
@@ -2100,6 +2116,48 @@
 			}
             return $this->mainModel->deleteSport($arguments);
 		}
+
+		/**
+		 * action_delete_position() Delete a position for a user / team association
+		 * via /api/user/position/{users_id}
+		 *
+		 */
+		public function action_delete_position()
+		{
+			$this->payloadDesc = "Delete a position for a user / team association";
+			$this->populateAuthVars();
+
+			// Must be owner
+			if(!$this->is_admin && !($this->mainModel->id == Auth::instance()->get_user()->id) )
+			{
+				$this->throw_permission_error(Constant::NOT_OWNER);
+				return false;
+			}
+
+			$arguments = array();
+
+			// CHECK FOR PARAMETERS:
+
+			// teams_id
+			// This is the ID of the Team we are deleting the position from.
+			if((int)trim($this->delete('teams_id')) > 0)
+			{
+				$arguments["teams_id"] = (int)trim($this->delete('teams_id'));
+			}
+
+			// positions_id
+			// the ID of the position
+			if((int)trim($this->delete('positions_id')) > 0)
+			{
+				$arguments["positions_id"] = (int)trim($this->delete('positions_id'));
+			}
+
+			$arguments["users_id"] = $this->mainModel->id;
+
+			$result = $this->mainModel->delete_position($arguments);
+			return $result;
+
+		}
 		
 		/**
 		 * action_delete_role() Delete a user's Role
@@ -2108,7 +2166,7 @@
 		 */
 		public function action_delete_role()
 		{
-			$this->payloadDesc = "Delete a user\'s Role";
+			$this->payloadDesc = "Delete a user's Role";
 
 			$arguments = array();
 			// CHECK FOR PARAMETERS:
@@ -2130,6 +2188,10 @@
 				$this->modelNotSetError($error_array);
 				return false;
 
+			}
+			//permission check
+			if (!$this->is_admin_user()){
+				$this->throw_permission_error();
 			}
 
 			if($this->mainModel->id)

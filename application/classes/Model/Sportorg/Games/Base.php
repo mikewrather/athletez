@@ -100,6 +100,7 @@ class Model_Sportorg_Games_Base extends ORM
 			$external_validate->rule("game_datetime", 'not_empty');
 			$external_validate->rule("game_datetime", 'correct_date_format');
 			if ($this->check($external_validate)){
+				$game_datetime = date("Y-m-d H:i:s", strtotime($game_datetime));
 				$arr = explode(' ', $game_datetime);
 				$gameDay = $arr[0];
 				$gameTime = $arr[1];
@@ -195,20 +196,23 @@ class Model_Sportorg_Games_Base extends ORM
 		$this->join('games_teams_link')->on('games_teams_link.games_id', '=', 'sportorg_games_base.id');
 		$this->join('teams')->on('games_teams_link.teams_id', '=', 'teams.id');
 
+		if (isset($sports_id) || isset($searchtext)){
+			$this->join('org_sport_link')->on('org_sport_link.id', '=', 'teams.org_sport_link_id');
+
+		}
 
 		if (isset($sports_id)){
-			$this->join('org_sport_link')->on('org_sport_link.id', '=', 'teams.org_sport_link_id');
 			$this->where('org_sport_link.sports_id', '=', $sports_id);
 		}
 
-		if (isset($complevels_id)){
-			$this->where('teams.complevels_id', '=', $complevels_id);
-		}
+//		if (isset($complevels_id)){
+//			$this->where('teams.complevels_id', '=', $complevels_id);
+//		}
 
 		if (!isset($orderby)){
-			$this->order_by('gameDay', 'asc');
+			$this->order_by('gameDay', 'desc');
 		}else{
-			$this->order_by($orderby, 'asc');
+			//$this->order_by($orderby, 'asc');
 		}
 
 		if (isset($searchtext)){
@@ -216,18 +220,30 @@ class Model_Sportorg_Games_Base extends ORM
 			$this->where('orgs.name', 'like', "%".$searchtext."%");
 		}
 
-		if (isset($loc_search)){
-			$this->and_where_open();
-			$this->join('locations')->on('locations.id', '=', 'orgs.locations_id');
-			$this->join('cities')->on('locations.cities_id', '=', 'cities.id');
-			$this->or_where('cities.name', 'like', "%".$loc_search."%");
-			$this->join('counties')->on('cities.county_id', '=', 'counties.id');
-			$this->or_where('counties.name', 'like', "%".$loc_search."%");
-			$this->join('states')->on('states.id', '=', 'counties.states_id');
-			$this->or_where('states.name', 'like', "%".$loc_search."%");
-			$this->and_where_close();
+		if (isset($cities_id) || isset($states_id)){
+			$this->join('locations')->on('locations.id', '=', 'sportorg_games_base.locations_id');
 		}
 
+		if (isset($cities_id)){
+			$this->where('locations.cities_id', '=', $cities_id);
+		}
+
+		if (isset($states_id)){
+			$this->join('cities')->on('locations.cities_id', '=', 'cities.id');
+			$this->where('cities.state_id', '=', $states_id);
+		}
+
+//		if (isset($loc_search)){
+//			$this->and_where_open();
+//			$this->join('locations')->on('locations.id', '=', 'orgs.locations_id');
+//			$this->join('cities')->on('locations.cities_id', '=', 'cities.id');
+//			$this->or_where('cities.name', 'like', "%".$loc_search."%");
+//			$this->join('counties')->on('cities.county_id', '=', 'counties.id');
+//			$this->or_where('counties.name', 'like', "%".$loc_search."%");
+//			$this->join('states')->on('states.id', '=', 'counties.states_id');
+//			$this->or_where('states.name', 'like', "%".$loc_search."%");
+//			$this->and_where_close();
+//		}
 		return $this;
 	}
 

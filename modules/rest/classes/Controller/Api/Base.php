@@ -500,50 +500,6 @@ class Controller_Api_Base extends AuthController
 		return true;
 	}
 
-	function getMainModel(){
-		return $this->mainModel;
-	}
-
-	//it can be used in all entities
-	function user_is_follower_on($obj, $user_id = ""){ //$user_id: support user is not the logged user
-		$follower = ORM::factory('User_Followers');
-		$subject_enttypes_id = Model_Site_Enttype::getMyEntTypeID($obj);
-		$subject_id = $obj->id;
-		if ($user_id == "")
-			$user_id = $this->user->id;
-		$follower->where('subject_enttypes_id', '=', $subject_enttypes_id);
-		$follower->and_where('subject_id', '=', $subject_id);
-		$follower->and_where('follower_users_id', '=', $user_id)->find();
-		if ($follower->loaded()){
-			return true;
-		}else{
-			return false;
-		}
-	}
-
-	function is_member_of_team($user_id, $team_id){
-		//allowed enttypes
-		$utl_link = ORM::factory("User_Teamslink");
-		$utl_link->where('teams_id', '=', $team_id);
-		$utl_link->where('users_id', '=', $user_id)->find();
-
-		if ($utl_link->loaded()){
-			return true;
-		}
-		return false;
-	}
-
-	function is_member_of_sport($user_id, $sport_id){
-		$usl_link = ORM::factory("User_Sportlink");
-		$usl_link->where('sports_id', '=', $sport_id);
-		$usl_link->where('users_id', '=', $user_id)->find();
-
-		if ($usl_link->loaded()){
-			return true;
-		}
-		return false;
-	}
-
 	function is_admin_user(){
 		return $this->is_admin;
 	}
@@ -705,7 +661,6 @@ class Controller_Api_Base extends AuthController
 			"Model_Sportorg_Team",
 		);
 
-		//only create team's comments if have games_id
 		if ($this->mainModel->id && in_array(get_class($this->mainModel),$valid_object_types)){
 			$arguments["subject_type_id"] = $ent_types_id = Ent::getMyEntTypeID($this->mainModel);
 			$arguments["subject_id"] = $subject_id = $this->mainModel->id;
@@ -778,7 +733,6 @@ class Controller_Api_Base extends AuthController
 			"Model_Sportorg_Team",
 		);
 
-		//only create team's comments if have games_id
 		if ($this->mainModel->id && in_array(get_class($this->mainModel),$valid_object_types)){
 			$arguments["subject_type_id"] = $ent_types_id = Ent::getMyEntTypeID($this->mainModel);
 			$arguments["subject_id"] = $subject_id = $this->mainModel->id;
@@ -810,6 +764,7 @@ class Controller_Api_Base extends AuthController
 		$req = new Request('/api/image/add');
 		$req->method($this->request->method());
 		$req->post($this->request->post());
+		$req->cookie($this->request->cookie());
 
 		$resp = new Response();
 
