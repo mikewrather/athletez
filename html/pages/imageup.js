@@ -53,7 +53,6 @@ define([
             _.bindAll(this);
 
             this.handleOptions(options);
-            this.scheme=[];
             this.init(options);
             
             return this;
@@ -94,7 +93,7 @@ define([
             addBasicView = new ImageBasicView({
                 name: "Add Media",
 				model :imgModel,
-				destination : "#main-content"
+				destination : "#main-content-img"
             },this.attr);
             debug.log("Imagecontroller Show");
             this.scheme.push(addBasicView);
@@ -104,9 +103,10 @@ define([
 		setupLayout: function () {
             var pageLayout;
 			debug.log("Imagecontroller Layout");
+			this.scheme=[];
             pageLayout = new LayoutView({
                 scheme: this.scheme,
-                destination: "body",
+                destination: "#main-footer",
 				template : pageLayoutTemplate,
 				displayWhen : "ready"
             });
@@ -163,6 +163,7 @@ define([
 						$("#image_file").removeAttr("disabled");
 						$(".closepreview").removeAttr("disabled");	
 						Channel('app-inited').publish('1');
+						return;
 					}
 			    },
 				error:function(data){
@@ -174,6 +175,7 @@ define([
 						$("#imageup").removeAttr("disabled");
 						$("#image_file").removeAttr("disabled");
 						$(".closepreview").removeAttr("disabled");
+						return;
 				}
 			});
 		},

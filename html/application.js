@@ -99,13 +99,8 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
                 "id": userid==undefined ? 1 : userid
             });
             function initProfile(id) {
-	            $('body').empty();
-	            chromeBootstrap();
-                var profileController = new ProfileController({
-                    "route": "resume", 
-                    "id": userid==undefined ? id : userid
-                });
 				Channel('refresh-profilepage').publish();
+				return;
             }
             function showImage(url,attr) {
                 var imageController = new ImageController({"route": "","url":url,"attr":attr});
@@ -166,7 +161,7 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
             new ImageController({"route": "","url":this.posturl,"attr":this.attribute});
             function initImage(id) {
 				console.log("inside router");
-                var imageController = new ImageController({"route": "","url":this.posturl,"attr":this.attribute});
+                //var imageController = new ImageController({"route": "","url":this.posturl,"attr":this.attribute});
             }
 			
             Channel('app-inited').subscribe(initImage);
@@ -177,7 +172,9 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
             
             $('body').empty();
             chromeBootstrap();
-            
+             var gameController = new GameController({
+                    "route": ""
+                });
             function initGame(id) {
                 var gameController = new GameController({
                     "route": ""
