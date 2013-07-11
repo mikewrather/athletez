@@ -49,7 +49,14 @@ function(require, imageBasicTemplate) {
             SectionView.prototype.initialize.call(this, options);   
 			debug.log("Image upload basic view");   
 			this.attr=attr;      
-			this.files_drag=[];           
+			this.files_drag=[];  
+			$('#imgUploadModal').modal('show') ;
+			$('#imgUploadModal').modal({
+		    keyboard: false
+		    });
+		    $('#imgUploadModal').on('hidden', function () {
+		    	Channel('app-inited').publish('1');
+		    })
         },
 		drag: function(event) {
 			event.stopPropagation();
@@ -112,14 +119,16 @@ function(require, imageBasicTemplate) {
 		    }
 		},
         imageUploadClick: function(event) {
-            event.preventDefault();
+            
 			var thiss=this;			
 			$("#errormsg").hide();
 			$("#imageup").attr("disabled", "disabled");
 			$(".closepreview").attr("disabled", "disabled");
 			$(".rotate").attr("disabled", "disabled");
-			
-			if((!$('#image_file').val() && this.files_drag.length==0) || $(".previewimg").length==0)
+			console.log($('#image_file')[0].files.length)
+			console.log(this.files_drag.length)
+			console.log($(".previewimg").length)
+			if($(".previewimg").length==0)
 			{
 				var msg={"msg":"Image Field Empty","color":"alert-error"};
 				Channel( "imageup-msg").publish(msg);	
@@ -163,7 +172,6 @@ function(require, imageBasicTemplate) {
 						Channel("imageup-add-image").publish(dataum);
 					}
 				});
-				$('#image_file').val("");
 				$("#imageup").removeAttr("disabled");
 			}
 

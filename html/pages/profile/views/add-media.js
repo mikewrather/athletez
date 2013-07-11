@@ -25,6 +25,16 @@ function(require, profileAddMediaTemplate) {
 
         template: profileAddMediaTemplate,
         
+		events: {
+	            "click a": "mediaUploadClick"
+	    },
+		
+		mediaUploadClick: function (event) {
+			var url="/api/user/addimage/1";
+			var attr={};
+			Channel("add-image").publish(url,attr);
+		},
+		
         // **Method** `setOptions` - called by BaseView's initialize method
         setOptions: function (options) {
             if (!this.model) {

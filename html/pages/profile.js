@@ -78,11 +78,12 @@ define([
             _.bindAll(this);
 
             this.handleOptions(options);
-            
+            this.scheme=[];
             if (options.id) {
                 this.id = options.id;
                 this.init();
             }
+			console.log(this)
             return this;
         },
         
@@ -239,10 +240,12 @@ define([
             
             addMediaView = new ProfileAddMediaView({
                 model: this.addmedia,
-                name: "Add Media",
+                name: "Add Medias",
                 destination: "#add-media"
             });
-            
+            for( var x in this.scheme) {
+			    if( this.scheme[x].id=="add-media") delete this.scheme[x];
+			}
             this.scheme.push(addMediaView);
             this.layout.render();
         },
