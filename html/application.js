@@ -99,14 +99,14 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
                 "id": userid==undefined ? 1 : userid
             });
             function refreshProfile() {
-				Channel('refresh-imagelist').publish(userid);
-				return;
+				Channel('refresh-profilepage').publish(userid);
             }
 			function initProfile(id) {
 				var profileController=new ProfileController({
 	                "route": "resume", 
 	                "id": userid==undefined ? 1 : userid
 	            });
+				refreshProfile()
             }
             function showImage(url,attr) {
                 var imageController = new ImageController({"route": "","url":url,"attr":attr});

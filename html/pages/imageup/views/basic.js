@@ -51,10 +51,10 @@ function(require, imageBasicTemplate) {
 			this.attr=attr;      
 			this.files_drag=[];  
 			$('#imgUploadModal').modal('show') ;
-			$('#imgUploadModal').modal({
-		    keyboard: false
-		    });
 		    $('#imgUploadModal').on('hidden', function () {
+		    	Channel('refresh-onImageUpload').publish();
+		    });
+			$('#imgUploadModal').on('hide', function () {
 		    	Channel('refresh-onImageUpload').publish();
 		    })
         },

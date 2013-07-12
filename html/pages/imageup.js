@@ -162,7 +162,6 @@ define([
 						$("#imageup").removeAttr("disabled");
 						$("#image_file").removeAttr("disabled");
 						$(".closepreview").removeAttr("disabled");	
-						return;
 					}
 			    },
 				error:function(data){
