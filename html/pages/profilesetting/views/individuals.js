@@ -7,22 +7,25 @@
 define(['require', 
 'text!profilesetting/templates/individualsports.html',
 'text!profilesetting/templates/sportscheckbox.html',
- 'facade', 'views', 'utils', 'vendor', 
- 'profilesetting/collections/individualsports',
- 
-  
-   ], function(require, individualSportsTemplate,sportsCheckboxes) {
+'text!profilesetting/templates/sportitem.html',
+'facade', 'views', 'utils', 'vendor', 
+'profilesetting/collections/individualsports',
+'profilesetting/models/sport',
+   ], function(require, individualSportsTemplate,sportsCheckboxes,sportsItem) {
 
 	var self, HighSchoolView, facade = require('facade'), views = require('views'), SectionView = views.SectionView, utils = require('utils'), Channel = utils.lib.Channel, vendor = require('vendor'), Mustache = vendor.Mustache, $ = facade.$,
-	   SportsCollection = require('profilesetting/collections/individualsports'),
+	   IndividualSportsCollection = require('profilesetting/collections/individualsports'),SportsModel = require('profilesetting/models/sport'),
 
+  	SportsCollection = require('profilesetting/collections/sports'),
 	HighSchoolView = SectionView.extend({
 
 		template : individualSportsTemplate,
 		/*Bind Events on controls present in current view template*/
 		events : {
 			"change .select-all" : "CheckAll",
-			"change .chk-single" : "CheckSelectAll"
+		//	"change .chk-single" : "CheckSelectAll"
+		"change .chk-single" : "SaveSport",
+		"click .delete-individualsport" : "DeleteSport"
 		},
 		/*Holds */
 
@@ -33,7 +36,8 @@ define(['require',
 			sportslist : '.sports-list-individial-sports',
 			btnSave: '.btn-Save-Individual-Sports',
 			chkAll : '.select-all',
-			chkSingle : '.chk-single'
+			chkSingle : '.chk-single',
+			userSportsList : ".sports-list-user-individual-sports"
 		},
 		
 		/*Messages Holds the messages, warning, alerts, errors, information variables*/
@@ -47,14 +51,12 @@ define(['require',
 			SectionView.prototype.initialize.call(this, options);
 			self = this;
 			self.setOptions(options)
-
 			this.init();
-
 		},
 		/*initialize must be a wrapper so any function definitions and calles must be called in init*/
 		init : function() {
 			self.setupSportsView();
-
+			self.setUpUsersSports();
 		},
 		/*render displays the view in browser*/
 		render : function() {
@@ -68,11 +70,16 @@ define(['require',
 			this.destination = options.destination
 		},
 		
-		/*Set complete view like template rendering, default data bindings*/
-		setupSportsView : function() {
-		var List = new SportsCollection();
+		/*Set User Sports View*/
+		setUpUsersSports : function(){
+		console.log("setUpSportsView Individual View");
+		var List = new IndividualSportsCollection();
 		List.user_id = self.user_id;
-			List.fetch();
+		//TODO:  Gender is missing in API so need to update code
+		List.male = 1;
+		List.female = 0;
+		List.type = "get";
+		List.fetch();
 
 			$.when(List.request).done(function() {
 				if (List.isError())
@@ -87,26 +94,101 @@ define(['require',
 				for (var key in models) {
 					self.sports.push(models[key].payload);
 				}
+				// Sort Sports According To The Names, false because the result required in asc form
+				self.sort(self.sports,'sport_name',false);
+				var markup = Mustache.to_html(sportsItem, {sports: self.sports});
+            	console.log("Users Own Sports",self.sports);
+            	self.$(self.controls.userSportsList).html(markup);
+			});
+		},
+		/*Set complete view like template rendering, default data bindings*/
+		setupSportsView : function() {
+		console.log("setUpSportsView Individual View");
+		var List = new SportsCollection();
+		List.user_id = self.user_id;
+		//TODO:  Gender is missing in API so need to update code
+			List.male = 1;
+			List.female = 0;
+			if(self.gender == "male"){
+				List.male = 1;
+			}else if (self.gender == "famale")
+			{
+				List.female = 0;	
+			}
+		List.type = "get";
+		List.fetch();
+
+			$.when(List.request).done(function() {
 				
+				if (List.isError())
+					return;
+
+				var models = List.toJSON();
+				if (models == null || models.length < 1){
+					return;
+				}
+				
+				self.sports = [];
+				for (var key in models) {
+					self.sports.push(models[key].payload);
+				}
+				// Sort Sports According To The Names, false because the result required in asc form
+				self.sort(self.sports,'sport_name',false);
 				var markup = Mustache.to_html(sportsCheckboxes, {sports: self.sports});
             	self.$(self.controls.sportslist).html(markup);
 			});
 		},
+		/*SAVE SELECTED SPORT ON SERVER*/
+		SaveSport : function(event){
+			console.log("Save Sport");
+			var sportsId = $(event.target).attr('sportid');
+			console.log(sportsId);
+			if(sportsId){
+				var sportsModel = new SportsModel();
+				sportsModel.user_id = self.user_id;
+				sportsModel.sports_id = sportsId;
+				sportsModel.type = "save";
+				sportsModel.save({
+					sports_id : sportsId
+				});
+				$.when(sportsModel.request).done(function() {
+					self.setUpUsersSports();
+				});
+			}
+		},
+		DeleteSport : function(event){
+			console.log("Delete Sport");
+			var sportsId = $(event.target).attr('sportid');
+			console.log(sportsId);
+			if(sportsId){
+				var payload = {};
+				payload.user_id = self.user_id;
+				payload.sports_id = sportsId;
+				
+				var sportsModel = new SportsModel(payload);
+				sportsModel.user_id = self.user_id;
+				sportsModel.sports_id = sportsId;
+				sportsModel.type = "delete";
+				sportsModel.destroy({
+					user_id : self.user_id,
+					sports_id : sportsId
+				});
+				$.when(sportsModel.request).done(function() {
+					self.setUpUsersSports();
+				});
+			}
+		},
 		/*SELECT ALL SPORTS IF A USER CLICKS ON SELECT ALL*/
 		CheckAll : function(e){
-			console.log("Check All");
 			if($(e.target).is(':checked')){
 				self.$(self.controls.chkSingle).attr('checked','checked');
 			}
 			else {
 				self.$(self.controls.chkSingle).removeAttr('checked','checked');
-				
 			}
 		},
 		/*CHECK UNCHECK SELECT ALL AS PER THE NUMBER OF SELECTED SPORTS, IF ALL ARE SELECTED THEN CHECKED ELSE UNCHECKED*/
 		CheckSelectAll: function(e){
-			console.log("Check Select All Called ");
-			
 			if($(e.target).is(':checked')){
 				var isAllChecked = true;
 				self.$(self.controls.chkSingle).each(function(){

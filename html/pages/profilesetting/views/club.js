@@ -12,7 +12,7 @@ define(['require', 'text!profilesetting/templates/club.html',
 'profilesetting/collections/states', 
 'profilesetting/collections/schools',
  'profilesetting/collections/sports',
- 'profilesetting/collections/teams',
+'profilesetting/views/teams',
   'profilesetting/models/complevel',
   'profilesetting/views/seasons',
   'profilesetting/views/positions',
@@ -26,7 +26,7 @@ define(['require', 'text!profilesetting/templates/club.html',
 	    CompLevelModel = require('profilesetting/models/complevel'),
 	    SeasonsView = require('profilesetting/views/seasons'),
 	    PositionsView = require('profilesetting/views/positions'),
-	    TeamsView = require('profilesetting/collections/teams');
+	    TeamsViewClub = require('profilesetting/views/teams'),
 
 	ClubView = SectionView.extend({
 
@@ -51,7 +51,8 @@ define(['require', 'text!profilesetting/templates/club.html',
 			
 			"click .btn-add-sports" : "AddSports",
 			
-			"click .btn-Remove-Sport" : "RemoveSports"
+			"click .btn-Remove-Sport" : "RemoveSports",
+			"click #btn-Add-club" : "SetUpAddClub"
 		},
 		/*Holds */
 
@@ -76,10 +77,12 @@ define(['require', 'text!profilesetting/templates/club.html',
 		//	divLevels: ".div-school-sports-level",
 			divsportsLevel : ".section-sportslevel",
 			divSubLevels : ".div-levels",
-			divClubSportsSection : ".club-sports-section",
+			divClubSportsSection : ".school-sports-section",
 			divSportsWrapper :".div-sports-wrapper",
 			/*Buttons And Links Used*/
-			btnRemoveSports : ".btn-Remove-Sport"
+			btnRemoveSports : ".btn-Remove-Sport",
+			divTeamListDetail : ".section-team-list-detail-club",
+			divAddSportSection : "#section-Add-Sports-club"
 		},
 		
 		/*Messages Holds the messages, warning, alerts, errors, information variables*/
@@ -116,7 +119,7 @@ define(['require', 'text!profilesetting/templates/club.html',
 			self.SetUpTeamsView();
 
 			//self.bindEvents();
-		},
+		}, 
 		/*render displays the view in browser*/
 		render : function() {
 			var self = this;
@@ -266,8 +269,6 @@ define(['require', 'text!profilesetting/templates/club.html',
 		
 		/*Fill Sports dropdown with sports on basis of gender and sports_club type*/
 		fillSports : function(orgs_id,destination) {
-			console.log("fill club");
-			console.log("orgs_id,destination",orgs_id, destination);
 			if(self.sports && self.sports.length > 0 ){
 				self.SetupSportsView(orgs_id,destination);
 			}
@@ -317,13 +318,13 @@ define(['require', 'text!profilesetting/templates/club.html',
 		SetupSportsView : function(orgs_id,destination){
 			var markup = Mustache.to_html(sportsLevelTemplate, {sports: self.sports});
             self.$(destination).append(markup);
+            $(destination).parents(self.controls.divSportsWrapper).fadeIn();
 		},
 		/*Fills CompLevel DropDown after fetching data from API*/
 		/*PARAMETER: 
 		 * orgs_id : int, Club Id selected from changeClub function,
 		 * destination : jquery selecter, where we have to append complevel item */
 		fillCompLevel : function(orgs_id,destination) {
-			console.log("fillCompLevel",orgs_id,destination);
 			self.compLevel_id = undefined; // Destroy complevel id if request received to refill the comp level
 			
 			if(orgs_id && orgs_id > 0){
@@ -435,6 +436,7 @@ define(['require', 'text!profilesetting/templates/club.html',
 		AddSports : function(event){
 			var destination = self.$(event.target).parents(self.controls.divSportsWrapper).find(self.controls.divClubSportsSection);
 			self.fillSports(self.orgs_id,destination);
+			$(destination).parents(self.controls.divSportsWrapper).fadeIn();
 		},
 		/*Removes Sports From HTML As Well As From Json*/
 		RemoveSports : function(event){
@@ -443,9 +445,15 @@ define(['require', 'text!profilesetting/templates/club.html',
 		/*SHOW EXISTING TEAM SECTION AT THE BOTTOM OF HIGHSCHOOL SECTION*/
 		SetUpTeamsView : function(){
 			
-			this.teamsView = new TeamsView();
-			this.teamsView.user_id = self.user_id;
-			this.teamsView.fetch();
+			this.teamsView = new TeamsViewClub({
+				user_id : self.user_id,
+				destination : self.controls.divTeamListDetail,
+				sports_club : 1
+			 });
+
+		},
+		SetUpAddClub: function() {
+			self.$el.find(self.controls.divAddSportSection).fadeIn();
 		}
 			});
 

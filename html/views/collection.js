@@ -103,8 +103,6 @@ define(['facade','views/base','utils'], function (facade, BaseView, utils) {
         // Iterates over collection appending views to this.$el
         // When a {Function} decorator option is available manipulte views' this.$el
         render : function() {
-        	debug.log("views/collection render");
-        	console.log(this._views);
             this.confirmElement.call(this);
             this._rendered = true;
             this.$el.empty();

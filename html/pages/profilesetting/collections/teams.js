@@ -23,8 +23,6 @@ function(facade, utils, TeamsList, TeamModel) {
         
         // **Method:** `fetchSuccess` - resolve the deferred here in success
         fetchSuccess: function (collection, response) {
-        	console.log("Teams Collection",collection);
-        	console.log("Teams Response",response);
             collection.reset();
             
             var payload = response.payload;            
@@ -36,7 +34,6 @@ function(facade, utils, TeamsList, TeamModel) {
                 item.set('exec_data', response.exec_data);
                 collection.push(item);
             }
-            console.log("Updtaed Collection",collection);
             collection.deferred.resolve(response);            
         }
     });

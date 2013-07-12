@@ -66,20 +66,17 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
         },
 
 	    getPhrases: function(){
-		    debug.log("**************");
 		    var phrases = new SitePhraseList();
 		    phrases.fetch();
 	    },
 	    
 	    showHome: function (action) {
-	    	debug.log("show Home called");
 	    	this.loadStyles();
 	    	
 	    	$('body').empty();
 	    	chromeBootstrap();
 	    	
 	    	function initHome() {
-	    		debug.log("Inside initHome");
 	    		var homeController = new HomeController({
 	    			"route" : "home"
 	    		});
@@ -233,12 +230,10 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
 
         addSubscribers: function () {
             Channel('load:css').subscribe(this.loadCss);
-            debug.log("app subscribers added");
         },
 
         removeSubscribers: function () {
             Channel('load:css').unsubscribe(this.loadCss);
-            debug.log("removeSubscribers from app");
         },
 
         // Helpers

@@ -4,6 +4,7 @@
 .floatRight {
 	float: right;
 }
+.displayNone{display:none}
 .section-teams-prof-setting .spn-black-heading {
 	background-color: #444;
 	color: #FFF;
