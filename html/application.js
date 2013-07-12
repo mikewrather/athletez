@@ -91,26 +91,13 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
             
             $('body').empty();
             chromeBootstrap();
-			 var profileController=new ProfileController({
-                "route": "resume", 
-                "id": userid==undefined ? 1 : userid
-            });
-            function refreshProfile() {
-				Channel('refresh-profilepage').publish(userid);
-            }
 			function initProfile(id) {
 				var profileController=new ProfileController({
 	                "route": "resume", 
 	                "id": userid==undefined ? 1 : userid
 	            });
-				refreshProfile()
             }
-            function showImage(url,attr) {
-                var imageController = new ImageController({"route": "","url":url,"attr":attr});
-            }
-            Channel('add-image').subscribe(showImage);
             Channel('app-inited').subscribe(initProfile);
-			Channel('refresh-onImageUpload').subscribe(refreshProfile);
 			
         },
 		testsd: function () {
