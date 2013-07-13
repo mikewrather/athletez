@@ -943,7 +943,7 @@
 			);
 
 			$result = $this->mainModel->addTeam($args);
-			
+
 			//Check for success / error
 			if(is_object($result) && ($result) == 'ORM_Validation_Exception')
 			{

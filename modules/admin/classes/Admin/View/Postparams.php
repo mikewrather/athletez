@@ -60,6 +60,7 @@ class Admin_View_Postparams
 
 			$paramArr = array();
 			$params = $method->params->find_all();
+
 			foreach($params as $param)
 			{
 				$param_list_arr = array();
@@ -67,6 +68,7 @@ class Admin_View_Postparams
 				{
 
 					$list = Ent::getObjectList($param->enttypes_id)->find_all();
+				//	print_r($list);
 					foreach($list as $obj)
 					{
 						$param_list_arr[] = array(

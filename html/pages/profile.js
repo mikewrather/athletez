@@ -162,7 +162,6 @@ define([
                 controller.setupCommentOnListView();
             });
         },
-        
         refreshPage: function() {
             var position;
             

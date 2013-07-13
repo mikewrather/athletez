@@ -162,8 +162,6 @@ define([
 						$("#imageup").removeAttr("disabled");
 						$("#image_file").removeAttr("disabled");
 						$(".closepreview").removeAttr("disabled");	
-						Channel('app-inited').publish('1');
-						return;
 					}
 			    },
 				error:function(data){

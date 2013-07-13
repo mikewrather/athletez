@@ -91,18 +91,12 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
             
             $('body').empty();
             chromeBootstrap();
-			 var profileController=new ProfileController({
-                "route": "resume", 
-                "id": userid==undefined ? 1 : userid
-            });
-            function initProfile(id) {
-				Channel('refresh-profilepage').publish();
-				return;
+			function initProfile(id) {
+				var profileController=new ProfileController({
+	                "route": "resume", 
+	                "id": userid==undefined ? 1 : userid
+	            });
             }
-            function showImage(url,attr) {
-                var imageController = new ImageController({"route": "","url":url,"attr":attr});
-            }
-            Channel('add-image').subscribe(showImage);
             Channel('app-inited').subscribe(initProfile);
 			
         },
