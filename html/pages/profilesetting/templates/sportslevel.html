@@ -3,7 +3,7 @@
 <div>
 	<span class="span2">Choose Sport</span>
 	<!-- class="ddl-school-sports"-->
-	<select class="ddl-sports">
+	<select class="ddl-sports" orgsid="{{orgsId}}">
 		<option value="">Select Sport</option>
 		{{#sports}}
 			<option value="{{sport_id}}">{{sport_name}}</option>
@@ -28,8 +28,8 @@
 			
 		</div>
 		<div class="row-fluid clearfix">
-			<span class="floatLeft"><a href="javascript:void(0)" class="btn-add-level">Add Level</a> </span>
-		<!--	<span class="floatRight"><a href="javascript:void(0)" class=" well-small btn-primary" >Finish</a> </span> -->
+			<span class="floatLeft"><a href="javascript:void(0)" class="btn-add-level" orgsid="{{orgsId}}">Add Level</a> </span>
+			<span class="floatRight"><a href="javascript:void(0)" class=" well-small btn-primary btn-Finish-Sports" >Finish</a> </span>
 		</div>
 	</div>
 	</div>

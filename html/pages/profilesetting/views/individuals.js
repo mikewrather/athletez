@@ -20,6 +20,7 @@ define(['require',
 	HighSchoolView = SectionView.extend({
 
 		template : individualSportsTemplate,
+
 		/*Bind Events on controls present in current view template*/
 		events : {
 			"change .select-all" : "CheckAll",
@@ -27,8 +28,8 @@ define(['require',
 		"change .chk-single" : "SaveSport",
 		"click .delete-individualsport" : "DeleteSport"
 		},
-		/*Holds */
 
+		/*Holds */
 		/*Controls Holds all the html controls used in the view and template*/
 		/*Jquery Selectors {#,. etc} must be prefixed so that it could be directly used with $ Sign*/
 		controls : {
@@ -46,6 +47,7 @@ define(['require',
 			dataNotExist : 'Data not exist.',
 			optionsMissing : 'HeaderView expects option with model property.',
 		},
+
 		/*FUNCTION TO BE CALLED AS SOON AS INTANCE CREATED SHOULD BE CALLED HERE*/
 		initialize : function(options) {
 			SectionView.prototype.initialize.call(this, options);
@@ -53,11 +55,13 @@ define(['require',
 			self.setOptions(options)
 			this.init();
 		},
+
 		/*initialize must be a wrapper so any function definitions and calles must be called in init*/
 		init : function() {
 			self.setupSportsView();
 			self.setUpUsersSports();
 		},
+
 		/*render displays the view in browser*/
 		render : function() {
 			SectionView.prototype.render.call(this);
@@ -92,6 +96,7 @@ define(['require',
 				
 				self.sports = [];
 				for (var key in models) {
+					if(models[key].payload.team_type == "individual")
 					self.sports.push(models[key].payload);
 				}
 				// Sort Sports According To The Names, false because the result required in asc form
@@ -101,6 +106,7 @@ define(['require',
             	self.$(self.controls.userSportsList).html(markup);
 			});
 		},
+
 		/*Set complete view like template rendering, default data bindings*/
 		setupSportsView : function() {
 		console.log("setUpSportsView Individual View");
@@ -138,6 +144,7 @@ define(['require',
             	self.$(self.controls.sportslist).html(markup);
 			});
 		},
+
 		/*SAVE SELECTED SPORT ON SERVER*/
 		SaveSport : function(event){
 			console.log("Save Sport");
@@ -156,6 +163,7 @@ define(['require',
 				});
 			}
 		},
+
 		DeleteSport : function(event){
 			console.log("Delete Sport");
 			var sportsId = $(event.target).attr('sportid');
@@ -167,17 +175,14 @@ define(['require',
 				
 				var sportsModel = new SportsModel(payload);
 				sportsModel.user_id = self.user_id;
-				sportsModel.sports_id = sportsId;
 				sportsModel.type = "delete";
-				sportsModel.destroy({
-					user_id : self.user_id,
-					sports_id : sportsId
-				});
-				$.when(sportsModel.request).done(function() {
-					self.setUpUsersSports();
-				});
+				sportsModel.destroy({data: { user_id : self.user_id, sports_id : sportsId}, processData: true,
+					success : function(){
+						self.setUpUsersSports();
+					}});
 			}
 		},
+
 		/*SELECT ALL SPORTS IF A USER CLICKS ON SELECT ALL*/
 		CheckAll : function(e){
 			if($(e.target).is(':checked')){
@@ -187,6 +192,7 @@ define(['require',
 				self.$(self.controls.chkSingle).removeAttr('checked','checked');
 			}
 		},
+
 		/*CHECK UNCHECK SELECT ALL AS PER THE NUMBER OF SELECTED SPORTS, IF ALL ARE SELECTED THEN CHECKED ELSE UNCHECKED*/
 		CheckSelectAll: function(e){
 			if($(e.target).is(':checked')){
@@ -204,7 +210,6 @@ define(['require',
 			}
 			else {
 				self.$(self.controls.chkAll).removeAttr('checked','checked');
-				
 			}
 		},
 			});

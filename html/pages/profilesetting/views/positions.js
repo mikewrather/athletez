@@ -14,7 +14,7 @@ define(['require', 'text!profilesetting/templates/positions.html', 'facade', 'vi
 		events : {
 		},
 
-		/*Holds */
+		/*Holds */	
 
 		/*Controls Holds all the html controls used in the view and template*/
 		/*Jquery Selectors {#,. etc} must be preixed so that it could be directly used with $ Sign*/
@@ -38,6 +38,7 @@ define(['require', 'text!profilesetting/templates/positions.html', 'facade', 'vi
 			self.BindPositions();
 			self.bindEvents();
 		},
+		
 		/*function used to bind events on controls not present in current $el
 		 Always use on so that dynamic creation of controls could be handled
 		 * */
@@ -53,6 +54,7 @@ define(['require', 'text!profilesetting/templates/positions.html', 'facade', 'vi
 				$(control).removeClass('active');
 			}
 		},
+		
 		/*Set All the Options set at the time of creating instance*/
 		setOptions : function(options) {
 			if (!options.sport_id)
@@ -93,6 +95,7 @@ define(['require', 'text!profilesetting/templates/positions.html', 'facade', 'vi
 				});
 			}
 		},
+		
 		/* Displays the data view*/
 		render : function() {
 

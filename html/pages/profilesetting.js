@@ -61,7 +61,7 @@ var IndividualSportsCollection = require("profilesetting/collections/individuals
 				return this.layout;
 
 			pageLayout = new LayoutView({
-				scheme : this.scheme,
+						scheme : this.scheme,
 				destination : "#main",
 				template : pageLayoutTemplate,
 				displayWhen : "ready"
