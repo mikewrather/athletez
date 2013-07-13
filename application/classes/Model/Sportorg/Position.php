@@ -149,8 +149,17 @@ class Model_Sportorg_Position extends ORM
 				->where('users_teams_link.users_id', '=', $users_id)
 				->and_where('utl_position_link.positions_id','=',DB::expr('sportorg_position.id'))
 				->and_where_close();
+			$classes_arr = array(
+				'Sportorg_Orgsportlink' => 'org_sport_link',
+				'Sportorg_Team' => 'teams',
+				'User_Teamslink' => 'users_teams_link',
+				'User_Teamslink_Positionlink' => 'utl_position_link'
+			);
+			$positions = ORM::_sql_exclude_deleted($classes_arr,$positions);
 		}
+		$positions = ORM::_sql_exclude_deleted(array('Sportorg_Position' => 'sportorg_position'), $positions);
 		$positions->group_by('sportorg_position.id');
+		print_r($positions->execute());
 		
 		return $positions;
 	}

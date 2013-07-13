@@ -2,7 +2,7 @@
 <div class="div-sports-wrapper">
 	
 <div class="clearfix">
-	<h3>{{org_name}}</h3><a class="btn-add-sports" href="javascript:void(0)" org_id="{{org_id}}">Add Sport</a>
+	<h3>{{org_name}}</h3><a class="btn-add-sports" href="javascript:void(0)" orgsId="{{org_id}}">Add Sport</a>
 </div>
 <div class="school-sports-section">
 		</div>
@@ -22,6 +22,9 @@
 			{{name}}
 			{{/positions}}
 			
+		</span>
+		<span class="span3">
+			<a href="javascript:void(0)" class="delete-team" teamid="{{team_id}}">Delete</a>
 		</span>
 	</div>
 	{{/seasons}}

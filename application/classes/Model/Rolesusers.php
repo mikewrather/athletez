@@ -9,7 +9,7 @@
  *
  */
 
-class Model_RolesUsers extends ORM
+class Model_Rolesusers extends ORM
 {
 	protected $_table_name = 'roles_users';
 

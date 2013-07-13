@@ -18,7 +18,7 @@ define(['facade', 'collections', 'sportorg/collections/sports', 'utils'], functi
 				return testpath + '/api/user/sports';
 
 			if (this.type == "get")
-				return '/api/user/sports/' + this.user_id;
+				return '/api/user/sports/' + this.user_id +'?team_type="individual"';
 
 		},
 		data : {

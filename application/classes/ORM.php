@@ -18,6 +18,10 @@ class ORM extends Kohana_ORM
 		return false;
 	}
 
+	/*
+	 * $class_names should include the obj itself, comment by Jeffrey
+	 *
+	 * */
 	public static function _sql_exclude_deleted($class_names,$qry)
 	{
 		$enttypes = array();
@@ -26,7 +30,7 @@ class ORM extends Kohana_ORM
 		{
 			$this_ent = Ent::getMyEntTypeID($class);
 
-			$del_subqry = DB::select(array(DB::expr("COUNT('id')"),'deleted'))->from('deleted')
+			$del_subqry = DB::select(array(DB::expr("COUNT('*')"),'deleted'))->from('deleted')
 				->where('subject_enttypes_id','=',$this_ent)
 				->and_where('subject_id','=',DB::expr($table_name.'.id'));
 
@@ -134,6 +138,5 @@ class ORM extends Kohana_ORM
 				}
 			}
 		}
-
 	}
 }

@@ -943,7 +943,7 @@
 			);
 
 			$result = $this->mainModel->addTeam($args);
-			
+
 			//Check for success / error
 			if(is_object($result) && ($result) == 'ORM_Validation_Exception')
 			{
@@ -2027,7 +2027,8 @@
                 $this->modelNotSetError();
                 return false;
             }
-            return $this->mainModel->delete();
+            //return $this->mainModel->delete();
+			return $this->mainModel->delete_with_deps();
 		}
 		
 		/**

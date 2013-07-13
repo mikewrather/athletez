@@ -27,7 +27,7 @@ class Admin_View_Postparams
 		$methods = $this->ent->apimethods->where('api_method','=',$this->httpverb)->find_all();
 
 		$siblings_arr = array();
-		$entity_list = Ent::eFactORMList($this->ent->id)->find_all();
+		$entity_list = Ent::getObjectList($this->ent->id)->find_all();
 
 
 		foreach($entity_list as $entity)
@@ -60,6 +60,7 @@ class Admin_View_Postparams
 
 			$paramArr = array();
 			$params = $method->params->find_all();
+
 			foreach($params as $param)
 			{
 				$param_list_arr = array();
@@ -67,6 +68,7 @@ class Admin_View_Postparams
 				{
 
 					$list = Ent::getObjectList($param->enttypes_id)->find_all();
+				//	print_r($list);
 					foreach($list as $obj)
 					{
 						$param_list_arr[] = array(

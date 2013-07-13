@@ -11,8 +11,8 @@ define(['require', 'text!profilesetting/templates/teamlist.html', 'facade', 'vie
 	SectionView = views.SectionView, utils = require('utils'), 
 	Channel = utils.lib.Channel, vendor = require('vendor'),
 	Mustache = vendor.Mustache, $ = facade.$,
-	TeamsCollection = require('profilesetting/collections/teams'),
-	View = SectionView.extend({
+	TeamsCollection = require('profilesetting/collections/teams');
+	var teamsView = SectionView.extend({
 
 		template : template,
 		
@@ -55,20 +55,20 @@ define(['require', 'text!profilesetting/templates/teamlist.html', 'facade', 'vie
 		
 		/*Returns the consolidated data to bind with template */
 		GetData :function(){
-			console.log("sports_club",self.sports_club);
-			console.log("Teams View Self El",self.el)
+//			console.log("sports_club",self.sports_club);
+	//		console.log("Teams View Self El",self.el)
 			var teamsCollection = new TeamsCollection();
 			teamsCollection.user_id = self.user_id;
 			teamsCollection.fetch();
 			
 			 $.when(teamsCollection.request).done(function() {
 			 	console.log("teams collection",teamsCollection);
-			 	console.log("Teams View Self El",self.el)
+		//	 	console.log("Teams View Self El",self.el)
 				 if (teamsCollection.isError())
 					 return;
  
 				var models = teamsCollection.toJSON();
-			console.log("Teams Collection Models Are",models);
+				console.log("Teams Collection Models Are",models);
 				if(models.length){
 					var d = [];
 					for(var i = 0; i < models.length; i++){
@@ -77,7 +77,7 @@ define(['require', 'text!profilesetting/templates/teamlist.html', 'facade', 'vie
 					
 					var markup = Mustache.to_html(self.template, {orgs : d});
             			$(self.el).html(markup);
-            			console.log("Teams View Self El",self.el)
+            	//		console.log("Teams View Self El",self.el)
 				}
 				else {
 					$(self.el).html(self.messages.dataNotExist);
@@ -92,5 +92,5 @@ define(['require', 'text!profilesetting/templates/teamlist.html', 'facade', 'vie
 		}
 	});
 
-	return View;
+	return teamsView;
 });

@@ -19,7 +19,6 @@ define(['facade', 'utils'], function(facade, utils) {
 		// Param {Object} `attributes` set on model when creating an instance
 		// Param {Object} `options`
 		initialize : function(attributes, options) {
-			// debug.log("BaseModel init called");
 
 			if (options) {
 				this.options = options;
@@ -27,7 +26,6 @@ define(['facade', 'utils'], function(facade, utils) {
 			}
 			this.deferred = new $.Deferred();
 			// Backbone.Model.prototype.initialize.call(this, arguments);
-
 		},
 		hideMessages :function(){
 			$('.global-alert').stop().fadeOut().removeClass('alert-error').removeClass('alert-info');
