@@ -20,6 +20,10 @@ class Model_Sportorg_Division extends ORM
 		'section' => array(
 			'model' => 'Sportorg_Section',
 			'foreign_key' => 'sections_id'
+		),
+		'org' => array(
+			'model' => 'Sportorg_Org',
+			'foreign_key' => 'divisions_id'
 		)
 	);
 	
