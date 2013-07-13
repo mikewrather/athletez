@@ -27,7 +27,7 @@ class Admin_View_Postparams
 		$methods = $this->ent->apimethods->where('api_method','=',$this->httpverb)->find_all();
 
 		$siblings_arr = array();
-		$entity_list = Ent::eFactORMList($this->ent->id)->find_all();
+		$entity_list = Ent::getObjectList($this->ent->id)->find_all();
 
 
 		foreach($entity_list as $entity)
