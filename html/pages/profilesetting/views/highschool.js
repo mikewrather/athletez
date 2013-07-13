@@ -4,9 +4,9 @@
  // Requires `define`, `require`
  // Returns {basic_info} constructor
  */
-define(['require', 'text!profilesetting/templates/highschool.html', 'text!profilesetting/templates/sportslevel.html', 'text!profilesetting/templates/level.html', 'facade', 'views', 'utils', 'vendor', 'profilesetting/collections/states', 'profilesetting/collections/schools', 'profilesetting/collections/sports', 'profilesetting/views/teams', 'profilesetting/models/complevel', 'profilesetting/views/seasons', 'profilesetting/views/positions', 'profilesetting/models/team'], function(require, highSchoolTemplate, sportsLevelTemplate, levelTemplate) {
+define(['require', 'text!profilesetting/templates/highschool.html', 'text!profilesetting/templates/sportslevel.html', 'text!profilesetting/templates/level.html', 'facade', 'views', 'utils', 'vendor', 'profilesetting/collections/states', 'profilesetting/collections/schools', 'profilesetting/collections/sports', 'profilesetting/views/teams', 'profilesetting/models/complevel', 'profilesetting/views/seasons', 'profilesetting/views/positions', 'profilesetting/models/team', 'profilesetting/models/position'], function(require, highSchoolTemplate, sportsLevelTemplate, levelTemplate) {
 
-	var self, HighSchoolView, facade = require('facade'), views = require('views'), SectionView = views.SectionView, utils = require('utils'), Channel = utils.lib.Channel, vendor = require('vendor'), Mustache = vendor.Mustache, $ = facade.$, StatesCollection = require('profilesetting/collections/states'), SchoolCollection = require('profilesetting/collections/schools'), SportsCollection = require('profilesetting/collections/sports'), CompLevelModel = require('profilesetting/models/complevel'), SeasonsView = require('profilesetting/views/seasons'), PositionsView = require('profilesetting/views/positions'), TeamsView = require('profilesetting/views/teams'), TeamModel = require('profilesetting/models/team'), HighSchoolView = SectionView.extend({
+	var self, HighSchoolView, facade = require('facade'), views = require('views'), SectionView = views.SectionView, utils = require('utils'), Channel = utils.lib.Channel, vendor = require('vendor'), Mustache = vendor.Mustache, $ = facade.$, StatesCollection = require('profilesetting/collections/states'), SchoolCollection = require('profilesetting/collections/schools'), SportsCollection = require('profilesetting/collections/sports'), CompLevelModel = require('profilesetting/models/complevel'), SeasonsView = require('profilesetting/views/seasons'), PositionsView = require('profilesetting/views/positions'), TeamsView = require('profilesetting/views/teams'), TeamModel = require('profilesetting/models/team'), PositionModel = require('profilesetting/models/position'), HighSchoolView = SectionView.extend({
 
 		template : highSchoolTemplate,
 		/*Bind Events on controls present in current view template*/
@@ -30,10 +30,14 @@ define(['require', 'text!profilesetting/templates/highschool.html', 'text!profil
 			"click .btn-add-sports" : "AddSports",
 
 			"click .btn-Remove-Sport" : "RemoveSports",
-			"click #btn-Add-School" : "SetUpAddSchool"
+			"click #btn-Add-School" : "SetUpAddSchool",
+			"click .delete-team" : "DeleteTeam",
+			"click .btn-Save-Positions" : "SavePositions",
+			"click .btn-Close-Positions" : "ClosePositions",
+			"click .btn-Finish-Sports" : "FinishSports"
 		},
-		/*Holds */
 
+		/*Holds */
 		/*Controls Holds all the html controls used in the view and template*/
 		/*Jquery Selectors {#,. etc} must be preixed so that it could be directly used with $ Sign*/
 		controls : {
@@ -43,12 +47,14 @@ define(['require', 'text!profilesetting/templates/highschool.html', 'text!profil
 			fieldMessage : '.field-message',
 			fieldError : '.field-error',
 			ddlSports : '.ddl-sports',
+			ddlComplevel : '.ddl-complevel',
 			//	ddlSports : '#ddl-school-sports',
 			//	ddlCompLevel : '#ddl-school-complevel',
 			//	divSchoolSeasons :'#div-school-seasons',
 			//	modalPosition : '.modal-school-positions',
 			modalPosition : '.modal-positions',
 			modalPositionBody : '.modal-position-body',
+			modalPositionsTitle : '.spn-position-title_h',
 			divSportsNameHeading : ".spn-sport-name",
 			divMainSportsSection : "#def-school-sports-section",
 			divLevels : ".div-sports-level",
@@ -60,7 +66,11 @@ define(['require', 'text!profilesetting/templates/highschool.html', 'text!profil
 			/*Buttons And Links Used*/
 			btnRemoveSports : ".btn-Remove-Sport",
 			divTeamListDetail : ".section-team-list-detail",
-			divAddSportSection : "#section-Add-Sports-school"
+			divAddSportSection : "#section-Add-Sports-school",
+			btnAddSports : ".btn-add-sports",
+			//btnSavePositions : ".btn-Save-Positions",
+			btnClosePositions : ".btn-Close-Positions",
+			btnFinishSports : ".btn-Finish-Sports"
 		},
 
 		/*Messages Holds the messages, warning, alerts, errors, information variables*/
@@ -71,26 +81,28 @@ define(['require', 'text!profilesetting/templates/highschool.html', 'text!profil
 
 			selectSport : 'Please select sport',
 			selectState : 'Please insert state',
-			selectSchool : 'Please insert School'
-
+			selectSchool : 'Please insert School',
+			SelectLevel : 'Plesae Select Comp Level'
 		},
 
 		properties : {
 			show_prev_year : 2
 		},
+
 		/*Selected States By API*/
 		states : [],
+
 		/*Seleted Schools By API*/
 		schools : [],
+
 		/*initialize gets called by default when constructor is initialized*/
 		initialize : function(options) {
 			SectionView.prototype.initialize.call(this, options);
 			self = this;
-			self.setOptions(options)
-
+			self.setOptions(options);
 			this.init();
-
 		},
+
 		/*initialize must be a wrapper so any function definitions and calles must be called in init*/
 		init : function() {
 			self.setupView();
@@ -98,6 +110,7 @@ define(['require', 'text!profilesetting/templates/highschool.html', 'text!profil
 
 			//self.bindEvents();
 		},
+
 		/*render displays the view in browser*/
 		render : function() {
 			var self = this;
@@ -166,6 +179,7 @@ define(['require', 'text!profilesetting/templates/highschool.html', 'text!profil
 				});
 			}
 		},
+
 		/*Change state_id as per the selected record from auto complete for state created in keyupState*/
 		changeState : function(event) {
 			var state_name = $(self.controls.txtStates).val();
@@ -177,10 +191,10 @@ define(['require', 'text!profilesetting/templates/highschool.html', 'text!profil
 					self.states_id = value['id'];
 					self.$(self.controls.txtSchools).removeAttr('disabled');
 				}
-
 			});
 			self.keyupSchool();
 		},
+
 		/*Event Called when a key is pressed
 		 Fetch data from api and populate it in auto complete dropdown
 		 */
@@ -226,9 +240,9 @@ define(['require', 'text!profilesetting/templates/highschool.html', 'text!profil
 					//Trigger keydown to display the autocomplete dropdown just created
 					self.$el.find(self.controls.txtSchools).trigger('keydown');
 				});
-
 			}
 		},
+
 		/*Change school_id as per the selected record from auto complete for state created in keyupSchool*/
 		changeSchool : function(event) {
 			var name = this.$(self.controls.txtSchools).val();
@@ -239,8 +253,8 @@ define(['require', 'text!profilesetting/templates/highschool.html', 'text!profil
 					self.fillSports(self.orgs_id, self.controls.divMainSportsSection);
 				}
 			});
-
 		},
+
 		/*IN CASE USER CHANGES SCHOOL OR STATE THE SPORT SECTION MUST BE DESTROYED AND RECONSTRUCTED*/
 		RemoveSportsSection : function() {
 			self.$el.find(self.controls.divMainSportsSection).html('');
@@ -248,6 +262,7 @@ define(['require', 'text!profilesetting/templates/highschool.html', 'text!profil
 
 		/*Fill Sports dropdown with sports on basis of gender and sports_club type*/
 		fillSports : function(orgs_id, destination) {
+			console.log("Fill Sports", orgs_id);
 			if (self.sports && self.sports.length > 0) {
 				self.SetupSportsView(orgs_id, destination);
 			} else {
@@ -282,29 +297,33 @@ define(['require', 'text!profilesetting/templates/highschool.html', 'text!profil
 		/*Change sport_id when a sport is selected from dropdown*/
 		changeSports : function(event) {
 			var sportId = $(event.target).val();
-			if (sportId != 0 && sportId != null && sportId != '') {
+			var orgsId = $(event.target).attr('orgsid');
+			if ((sportId != 0 && sportId != null && sportId != '') && (orgsId && orgsId != 0 && orgsId != null && orgsId != '')) {
 				self.sport_id = sportId;
 
 				var controlToAppend = self.$(event.target).parents(self.controls.divsportsLevel).find(self.controls.divLevels);
-				self.fillCompLevel(self.orgs_id, controlToAppend);
+				controlToAppend.html('');
+				self.fillCompLevel(orgsId, controlToAppend, sportId);
 			} else
 				self.sport_id = 0;
 		},
 		/*Set up sports section as per the destination wehether default or updation case*/
 		SetupSportsView : function(orgs_id, destination) {
 			var markup = Mustache.to_html(sportsLevelTemplate, {
-				sports : self.sports
+				sports : self.sports,
+				orgsId : orgs_id
 			});
 			self.$(destination).append(markup);
+			$(destination).parents(self.controls.divSportsWrapper).find(self.controls.btnAddSports).attr('orgsid', orgs_id);
 			$(destination).parents(self.controls.divSportsWrapper).fadeIn();
 		},
 		/*Fills CompLevel DropDown after fetching data from API*/
 		/*PARAMETER:
 		 * orgs_id : int, School Id selected from changeSchool function */
-		fillCompLevel : function(orgs_id, destination) {
+		fillCompLevel : function(orgs_id, destination, sportsId) {
 			self.compLevel_id = undefined;
 			// Destroy complevel id if request received to refill the comp level
-
+			console.log("Fill Comp Level High School");
 			if (orgs_id && orgs_id > 0) {
 				var List = new CompLevelModel();
 				List.orgs_id = orgs_id;
@@ -323,7 +342,7 @@ define(['require', 'text!profilesetting/templates/highschool.html', 'text!profil
 							self.compLevel.push(models.payload.complevels[key]);
 						}
 
-						self.SetUpCompLevelView(orgs_id, destination);
+						self.SetUpCompLevelView(orgs_id, destination, sportsId);
 					} else {
 					}
 				});
@@ -344,8 +363,9 @@ define(['require', 'text!profilesetting/templates/highschool.html', 'text!profil
 			}
 		},
 		/*SET UP LEVEL VIEW AS PER THE DESTINATION WHERE TO APPEND THE VIEW*/
-		SetUpCompLevelView : function(orgs_id, destination) {
-			var data = self.GetSeasonsData(self.seasons);
+		SetUpCompLevelView : function(orgs_id, destination, sports_id) {
+			var data = self.GetSeasonsData(self.seasons, orgs_id, sports_id);
+			console.log("Data", data);
 			var markup = Mustache.to_html(levelTemplate, {
 				levels : self.compLevel,
 				Data : data
@@ -354,16 +374,17 @@ define(['require', 'text!profilesetting/templates/highschool.html', 'text!profil
 
 			var controlPositions = self.$(destination).find(self.controls.modalPositionBody);
 			self.fillPositions(self.sport_id, controlPositions);
-
 		},
 		/*FETCH SEASONS AS PER THE SCHOOL AND DISPLAY ACCORDINGLY*/
-		GetSeasonsData : function(collection) {
+		GetSeasonsData : function(collection, orgs_id, sports_id) {
 			var data = [];
 			var y = (new Date).getFullYear();
 			for (var i = self.properties.show_prev_year; i >= 0; i--) {
 				var temp = {
 					year : y,
-					seasons : collection
+					seasons : collection,
+					orgsId : orgs_id,
+					sportsId : sports_id
 				};
 				data.push(temp);
 				y--;
@@ -385,9 +406,9 @@ define(['require', 'text!profilesetting/templates/highschool.html', 'text!profil
 		/*Called on Checkbox click to show Positions PopUp to select Positions*/
 		/*PARAMETERS:
 		 e: event, checkbox click event consisting of all information of event triggered*/
-		displayPositionPopup : function(event) {
+		displayPositionPopup : function(event, teamId) {
 			if ($(event.target).is(':checked')) {
-
+				self.$(event.target).parents(self.controls.divSubLevels).find(self.controls.modalPositionsTitle).attr('teamid', teamId);
 				self.$(event.target).parents(self.controls.divSubLevels).find(self.controls.modalPosition).modal('show')
 			}
 		},
@@ -398,6 +419,23 @@ define(['require', 'text!profilesetting/templates/highschool.html', 'text!profil
 				control.removeClass('active');
 			} else {
 				control.addClass('active');
+				var teamId = $(event.target).attr('teamid');
+				var positionId = $(event.target).attr('positionId');
+
+				var payload = {
+					id1 : self.user_id,
+					user_id : self.user_id,
+					positions_id : positionId,
+					teams_id : teamId,
+				};
+				var positionModel = new PositionModel(payload);
+				positionModel.type = "save";
+				positionModel.user_id = self.user_id;
+				positionModel.save();
+				$.when(positionModel.request).done(function() {
+					console.log("positionModel", positionModel);
+					console.log("positionModel", positionModel.toJSON());
+				});
 			}
 		},
 
@@ -405,13 +443,23 @@ define(['require', 'text!profilesetting/templates/highschool.html', 'text!profil
 		AddLevel : function(event) {
 
 			var destination = self.$(event.target).parents(self.controls.divsportsLevel).find(self.controls.divLevels);
-			self.fillCompLevel(self.orgs_id, destination);
+			var orgsId = $(event.target).attr('orgsid');
+			var sportsId = self.$(event.target).parents(self.controls.divsportsLevel).find(self.controls.ddlSports).attr('sportsid');
+			if (orgsId && orgsId != 0 && orgsId != null && orgsId != '') {
+				self.fillCompLevel(orgsId, destination, sportsId);
+			} else {
+				console.error("Orgs Id is ", orgsId);
+			}
 		},
 		/*ADD SPORT WHEN A USER CLICKS ON ADD SPORTS BUTTON*/
 		AddSports : function(event) {
 			var destination = self.$(event.target).parents(self.controls.divSportsWrapper).find(self.controls.divSchoolSportsSection);
-			self.fillSports(self.orgs_id, destination);
-			$(destination).parents(self.controls.divSportsWrapper).fadeIn();
+			var orgsId = self.$(event.target).attr('orgsid');
+			if (orgsId && orgsId != 0 && orgsId != null && orgsId != '') {
+				self.fillSports(orgsId, destination);
+				$(destination).parents(self.controls.divSportsWrapper).fadeIn();
+			}
+
 		},
 		/*Removes Sports From HTML As Well As From Json*/
 		RemoveSports : function(event) {
@@ -427,33 +475,89 @@ define(['require', 'text!profilesetting/templates/highschool.html', 'text!profil
 				sports_club : 0
 			});
 		},
+		/*Show Add Sport Section */
 		SetUpAddSchool : function() {
 			self.$el.find(self.controls.divAddSportSection).fadeIn();
 		},
+		/*Save Selected Sport To Database */
 		AddSportsItem : function(event) {
-			if ($(event.target).is(':checked') && $(event.target).attr('seasonid')) {
+			if ($(event.target).is(':checked') && $(event.target).attr('seasonid') && $(event.target).attr('year')) {
+				var orgsId = $(event.target).attr('orgsid');
+				var compLevelId = $(event.target).parents(self.controls.divLevels).find(self.controls.ddlComplevel).val();
+				if ((orgsId && orgsId != 0 && orgsId != null && orgsId != '') && ((compLevelId && compLevelId != 0 && compLevelId != null && compLevelId != ''))) {
 
-				var payload = {};
-				payload.teams_id = 0;
-				payload.id1 = self.user_id;
-				payload.user_id = self.user_id;
-				payload.orgs_id = self.orgs_id;
-				payload.sports_id = self.sport_id;
-				payload.complevels_id = self.compLevel_id;
-				payload.seasons_id = $(event.target).attr('seasonid');
-				payload.year = 2013;
+					var payload = {
+						orgs_id : orgsId,
+						teams_id : 0,
+						id1 : self.user_id,
+						user_id : self.user_id,
+						sports_id : $(event.target).attr('sportsid'),
+						complevels_id : compLevelId,
+						seasons_id : $(event.target).attr('seasonid'),
+						year : $(event.target).attr('year')
+					};
+					var teamsModel = new TeamModel(payload);
+					teamsModel.type = "add";
+					teamsModel.user_id = self.user_id;
+					teamsModel.save();
+					$.when(teamsModel.request).done(function() {
+						console.log("teamsModel", teamsModel);
+						console.log("teamsModel", teamsModel.toJSON());
 
-				var teamsModel = new TeamModel(payload);
-				teamsModel.type = "add";
-				teamsModel.user_id = self.user_id;
-				teamsModel.save();
-				$.when(teamsModel.request).done(function() {
-					self.displayPositionPopup(event);
-				});
+						if (teamsModel.isError())
+							return;
+
+						var model = teamsModel.toJSON();
+						if (model != null && model.payload != null || model.payload.team_id != null) {
+							self.displayPositionPopup(event, model.payload.team_id);
+						}
+					});
+				} else {
+					console.error("OrgsId is ", orgsId);
+					var cont = $(event.target).parents(self.controls.divLevels).find(self.controls.ddlComplevel);
+					console.log($(cont).parent().find(self.controls.fieldError));
+					$(cont).parent().find(self.controls.fieldError).html(self.messages.SelectLevel).stop().fadeIn();
+				}
 
 			} else {
+			}
+		},
+
+		DeleteTeam : function(event) {
+			console.log("Delete Team High School");
+			var teamId = $(event.target).attr('teamid');
+			console.log(teamId);
+			if (teamId) {
+				var payload = {};
+				payload.user_id = self.user_id;
+				payload.team_id = teamId;
+
+				var teamsModel = new TeamModel(payload);
+				teamsModel.user_id = self.user_id;
+				teamsModel.team_id = teamId;
+				teamsModel.type = "delete";
+				teamsModel.destroy({
+					data : {
+						user_id : self.user_id,
+						teams_id : teamId
+					},
+					processData : true,
+					success : function() {
+						self.SetUpTeamsView();
+					}
+				});
 
 			}
+		},
+		SavePositions : function(event) {
+			//self.SetUpTeamsView();
+			//alert($(event.target).attr('teamid'))
+		},
+		ClosePositions : function(event) {
+			//self.SetUpTeamsView();
+		},
+		FinishSports : function() {
+			self.SetUpTeamsView();
 		}
 	});
 

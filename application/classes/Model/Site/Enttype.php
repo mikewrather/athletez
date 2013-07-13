@@ -28,9 +28,29 @@ class Model_Site_Enttype extends ORM
 		return $oneofme->class_name;
 	}
 
+	static function getMyTable($enttypeID)
+	{
+		$oneofme = ORM::factory('Site_Enttype',$enttypeID);
+		return $oneofme->db_table;
+	}
+
+
 	static function getObjectList($enttypeID)
 	{
-		return ORM::factory(self::getMyClass($enttypeID));
+		$my_class = self::getMyClass($enttypeID);
+		$result = ORM::factory($my_class);
+
+		$classes_arr = array(
+			$my_class => self::getMyTable($enttypeID)
+		);
+
+		$classes_arr = array(
+			$my_class => strtolower($my_class)
+		);
+
+		$result = ORM::_sql_exclude_deleted($classes_arr,$result);
+		return $result;
+
 	}
 
 	/**

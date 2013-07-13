@@ -305,18 +305,21 @@ define(['require', 'text!profilesetting/templates/club.html',
 		/*Change sport_id when a sport is selected from dropdown*/
 		changeSports : function(event) {
 			var sportId = $(event.target).val();
-			if (sportId != 0 && sportId != null && sportId != ''){
+			var orgsId = $(event.target).attr('orgsid');
+			if ((sportId != 0 && sportId != null && sportId != '') && (orgsId && orgsId != 0 && orgsId != null && orgsId != '')) {
 				self.sport_id = sportId;
 			
 			var controlToAppend = self.$(event.target).parents(self.controls.divsportsLevel).find(self.controls.divLevels);
-			self.fillCompLevel(self.orgs_id,controlToAppend);
+			self.fillCompLevel(orgsId,controlToAppend);
 			}
 			else
 				self.sport_id = 0;
 		},
 		/*Set up sports section as per the destination wehether default or updation case*/
 		SetupSportsView : function(orgs_id,destination){
-			var markup = Mustache.to_html(sportsLevelTemplate, {sports: self.sports});
+			var markup = Mustache.to_html(sportsLevelTemplate, {
+				sports: self.sports,
+				orgsId : orgs_id});
             self.$(destination).append(markup);
             $(destination).parents(self.controls.divSportsWrapper).fadeIn();
 		},
@@ -355,6 +358,7 @@ define(['require', 'text!profilesetting/templates/club.html',
 				$(destination).html('');
 				}
 		},
+		
 		/*On CompLevel DropDown Change Its value is to be assigned into a variable*/
 		changeCompLevel : function(event){
 			var value = $(event.target).val();
@@ -435,8 +439,11 @@ define(['require', 'text!profilesetting/templates/club.html',
 		/*ADD SPORT WHEN A USER CLICKS ON ADD SPORTS BUTTON*/
 		AddSports : function(event){
 			var destination = self.$(event.target).parents(self.controls.divSportsWrapper).find(self.controls.divClubSportsSection);
+			var orgsId = $(event.target).attr('orgsid');
+			if (orgsId && orgsId != 0 && orgsId != null && orgsId != '') {
 			self.fillSports(self.orgs_id,destination);
 			$(destination).parents(self.controls.divSportsWrapper).fadeIn();
+			}
 		},
 		/*Removes Sports From HTML As Well As From Json*/
 		RemoveSports : function(event){
@@ -445,11 +452,11 @@ define(['require', 'text!profilesetting/templates/club.html',
 		/*SHOW EXISTING TEAM SECTION AT THE BOTTOM OF HIGHSCHOOL SECTION*/
 		SetUpTeamsView : function(){
 			
-			this.teamsView = new TeamsViewClub({
-				user_id : self.user_id,
-				destination : self.controls.divTeamListDetail,
-				sports_club : 1
-			 });
+			// this.teamsView = new TeamsViewClub({
+				// user_id : self.user_id,
+				// destination : self.controls.divTeamListDetail,
+				// sports_club : 1
+			 // });
 
 		},
 		SetUpAddClub: function() {
