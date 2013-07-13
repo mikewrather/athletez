@@ -147,7 +147,6 @@ define(
 					});
 					
 					this.scheme.push(homeStateListView);
-					this.layout.render();
 					this.scheme.push(cityView);
 					this.layout.render();
 				},
