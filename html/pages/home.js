@@ -91,18 +91,21 @@ define(
 								controller.setupSportDDView(
 										controller.BoysSportList, 'Guys',
 										'#sport #boys');
+								Channel('SportListView').publish();
 							});
 					$.when(this.GirlsSportList.request).done(
 							function() {
 								controller.setupSportDDView(
 										controller.GirlsSportList, 'Girls',
 										'#sport #girls');
+								Channel('SportListView').publish();
 							});
 					$.when(this.CommonSportList.request).done(
 							function() {
 								controller.setupSportDDView(
 										controller.CommonSportList, 'Both',
 										'#sport #both');
+								Channel('SportListView').publish();
 							});
 				},
 
