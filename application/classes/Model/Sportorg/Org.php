@@ -161,7 +161,12 @@ class Model_Sportorg_Org extends ORM
 	
 	public function getLeague()
 	{
-		return $this->leagues;
+		$leagues = $this->leagues;
+		$classes_arr = array(
+			'Sportorg_League' =>  'sportorg_league'
+		);
+		$leagues = ORM::_sql_exclude_deleted($classes_arr, $leagues);
+		return $leagues;
 	}
 	
 	public function getDivisions()
@@ -170,18 +175,17 @@ class Model_Sportorg_Org extends ORM
 		//extract($args);
 		//$this->where('id', '=', $orgs_id);
 		$divisions = $this->divisions;
-		$classes_arr = array(
-			'Sportorg_Division' => 'sportorg_division'
-		);
-
-		$divisions = ORM::_sql_exclude_deleted($classes_arr, $divisions);
+//		$classes_arr = array(
+//			'Sportorg_Division' => 'sportorg_division'
+//		);
+//
+//		$divisions = ORM::_sql_exclude_deleted($classes_arr, $divisions);
 		print_r($divisions->find_all());
 		return $divisions;
 	} 
 	
 	public function getSports()
 	{
-		print_r($this);
 		$sports = $this->sports;
 		$classes_arr = array(
 			'Sportorg_Sport' => 'sportorg_sport'
@@ -229,6 +233,12 @@ class Model_Sportorg_Org extends ORM
 		$sections_model->join('orgs')
 			->on('orgs.leagues_id', '=', 'leagues.id');
 		$sections_model->where('orgs.id', '=', $id);
+		$classes_arr = array(
+			'Sportorg_League' => 'leagues',
+			'Sportorg_Org' => 'orgs',
+			'Sportorg_Section' => 'sportorg_section'
+		);
+		$sections_model = ORM::_sql_exclude_deleted($classes_arr, $sections_model);
 
 		return $sections_model;
 	}
@@ -521,7 +531,12 @@ class Model_Sportorg_Org extends ORM
 	public function deleteSport($org_id, $sports_id){
 		$oslink = ORM::factory("Sportorg_Orgsportlink");
 		$results = $oslink->where('orgs_id', '=', $org_id)
-			->where('sports_id', '=', $sports_id)->find_all();
+			->where('sports_id', '=', $sports_id);
+		$classes_arr = array(
+			'Sportorg_Orgsportlink' => 'sportorg_orgsportlink'
+		);
+		$results = ORM::_sql_exclude_deleted($classes_arr, $results);
+		$results = $results->find_all();
 		foreach($results as $result){
 			$result->delete();
 		}
