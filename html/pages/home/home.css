@@ -3,9 +3,7 @@
 	z-index: 1000;
 	display: none;
 	float: left;
-	min-width: 160px;
-	min-height : 100px;
-	padding: 5px 0;
+	padding: 15px;
 	margin: 2px 0 0;
 	list-style: none;
 	background-color: #ffffff;
@@ -40,4 +38,10 @@
     background-repeat: repeat-x;
     color: #FFFFFF;
     text-decoration: none;
+}
+
+.sport-list {
+	border-radius : 5px;
+	background-color : #FEFEFE;
+	margin : 0 15px 0 0;
 }

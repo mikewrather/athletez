@@ -45,6 +45,9 @@ define(
 					var off_top = off.top + 40;
 					var off_left = off.left + 10;
 					var selector = target.attr('id');
+					if(selector === 'sport') {
+						Channel('SportListView').publish();
+					}
 					selector = '#'+ selector + ' .dd';
 					console.log(selector);
 					$(selector).css('top', off_top).css('left', off_left);
