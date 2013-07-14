@@ -19,7 +19,7 @@ define(
 				template : menuTemplate,
 
 				intialize : function(options) {
-					SectionView.prototype.intialize.call(this, options);
+					SectionView.prototype.initialize.call(this, options);
 				},
 				
 				doNothing : function(e) {

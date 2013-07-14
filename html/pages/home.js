@@ -7,6 +7,8 @@ define(
 				"pages/home/views/image-list",
 				"pages/home/collections/image",
 				"packages/location/collections/states.js",
+				"packages/location/models/city",
+				"packages/location/views/city",
 				"pages/home/views/state-list"],
 		function(require, pageLayoutTemplate) {
 
@@ -14,7 +16,7 @@ define(
 
 			HomeStateListView = require('pages/home/views/state-list'), LocationStateList = require('packages/location/collections/states.js'), HomeImageList = require('pages/home/collections/image'), MenuModel = require("pages/home/models/menu"), MenuView = require("pages/home/views/menu"), HomeImageListView = require("pages/home/views/image-list"),
 
-			LayoutView = views.LayoutView, $ = facade.$, _ = facade._, Channel = utils.lib.Channel, cssArr = [ base_url + "/pages/home/home.css" ];
+			CityModel = require('packages/location/models/city'), CityView = require('packages/location/views/city'), LayoutView = views.LayoutView, $ = facade.$, _ = facade._, Channel = utils.lib.Channel, cssArr = [ base_url + "/pages/home/home.css" ];
 
 			HomeController = Controller.extend({
 
@@ -114,7 +116,7 @@ define(
 				setupMenuView : function() {
 					var menuView;
 
-					menuModel = new MenuModel();
+					var menuModel = new MenuModel();
 
 					menuView = new MenuView({
 						model : menuModel,
@@ -128,13 +130,24 @@ define(
 				
 				setupDropDownMenuView : function() {
 					var homeStateListView;
+					var cityView;
 					
 					homeStateListView = new HomeStateListView({
 						collection : this.locationStateList,
-						destination : "#location .dd"
+						name : 'State',
+						destination : "#location .state"
+					});
+					
+					cityModel = new CityModel();
+					
+					cityView = new CityView({
+						model : cityModel,
+						name : "City",
+						destination : "#location .city"
 					});
 					
 					this.scheme.push(homeStateListView);
+					this.scheme.push(cityView);
 					this.layout.render();
 				},
 
