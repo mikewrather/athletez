@@ -296,7 +296,7 @@ class Model_Sportorg_Team extends ORM
 		{
 			$games->where('games_teams_link.isWinner', '=', $isWinner);
 		}
-		print_r($games->find_all());
+
 		return $games;
 	}
 

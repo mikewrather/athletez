@@ -45,8 +45,11 @@ return array(
 
 	//postion
 	'Sportorg_Position' => array(
-		'User_Teamslink_Positionlink' => 'positions_id'
+		'User_Teamslink_Positionlink' => 'positions_id',
+		'User_Resume_Data_Profile_Sportslink' => 'positions_id'
 	),
+
+
 
 
 

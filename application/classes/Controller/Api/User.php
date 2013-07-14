@@ -1984,7 +1984,7 @@
 					$result = $this->mainModel->addTeam($args);
 					if(get_class($result) == 'ORM_Validation_Exception')
 					{
-						print_r($args);
+						//print_r($args);
 						//parse error and add to error array
 						$this->processValidationError($result,$this->mainModel->error_message_path);
 						return false;
