@@ -171,15 +171,22 @@ class Model_Sportorg_Sport extends ORM
 		if (isset($sport_type_id)){
 			$sports->where('sport_type_id', '=', $sport_type_id);
 		}
-
+		$classes_arr = array(
+			'Sportorg_Sport' => 'sportorg_sport',
+		);
+		$sports = ORM::_sql_exclude_deleted($classes_arr, $sports);
 		return $sports;
 	}
 
 	public function getPositions(){
 		$positions = $this->positions;
+		$classes_arr = array(
+			'Sportorg_Position' => 'sportorg_position'
+		);
+		$positions = ORM::_sql_exclude_deleted($classes_arr, $positions);
 		return $positions;
 	}
-
+	//TODO, _sql_exclude_deleted for single row
 	public function getSportType(){
 		$type = $this->type;
 		return $type;
@@ -289,6 +296,14 @@ class Model_Sportorg_Sport extends ORM
 			$video->where('teams.complevels_id', '=', $complevels_id);
 		}
 
+		$classes_arr = array(
+			'Media_Base' => 'media_base',
+			'Site_Tag' => 'tags',
+			'Sportorg_Orgsportlink' => 'org_sport_link',
+			'Sportorg_Team' => 'teams'
+		);
+
+		$video = ORM::_sql_exclude_deleted($classes_arr, $video);
 		return $video;
 	}
 
@@ -314,6 +329,15 @@ class Model_Sportorg_Sport extends ORM
 		if ( isset($complevels_id) && $complevels_id != ""){
 			$image->where('teams.complevels_id', '=', $complevels_id);
 		}
+
+		$classes_arr = array(
+			'Media_Base' => 'media_base',
+			'Site_Tag' => 'tags',
+			'Sportorg_Orgsportlink' => 'org_sport_link',
+			'Sportorg_Team' => 'teams'
+		);
+
+		$image = ORM::_sql_exclude_deleted($classes_arr, $image);
 		return $image;
 	}
 
@@ -346,7 +370,15 @@ class Model_Sportorg_Sport extends ORM
 			if (isset($users_id)){
 				$resumeData->where('user_resume_data_vals.users_id','=', $users_id);
 			}
-
+			$classes_arr = array(
+				'User_Resume_Data' => 'resume_data',
+				'User_Resume_Data_Group' => 'resume_data_groups',
+				'User_Resume_Data_Group_Profilelink' => 'rdg_rdp_link',
+				'User_Resume_Data_Profile' => 'resume_data_profiles',
+				'User_Resume_Data_Profile_Sportslink' => 'rdp_sports_link',
+				'Sportorg_Sport' => 'sports'
+			);
+			$resumeData = ORM::_sql_exclude_deleted($classes_arr, $resumeData);
 			return $resumeData;
 	}
 }
