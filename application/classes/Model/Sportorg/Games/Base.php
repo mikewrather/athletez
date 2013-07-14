@@ -198,7 +198,10 @@ class Model_Sportorg_Games_Base extends ORM
 
 		if (isset($sports_id) || isset($searchtext)){
 			$this->join('org_sport_link')->on('org_sport_link.id', '=', 'teams.org_sport_link_id');
+		}
 
+		if (isset($teams_id)){
+			$this->where('teams.id', '=', $teams_id);
 		}
 
 		if (isset($sports_id)){

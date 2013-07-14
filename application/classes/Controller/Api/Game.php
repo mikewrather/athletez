@@ -169,6 +169,11 @@
 				$arguments["sports_id"] = (int)trim($this->request->query('sports_id'));
 			}
 
+			if((int)trim($this->request->query('teams_id')) > 0)
+			{
+				$arguments["teams_id"] = (int)trim($this->request->query('teams_id'));
+			}
+
 			// complevels_id
 			// Narrow user list to users of a comp level
 
