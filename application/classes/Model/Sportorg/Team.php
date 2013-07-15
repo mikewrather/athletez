@@ -313,6 +313,10 @@ class Model_Sportorg_Team extends ORM
 			$this->where('org_sport_link.sports_id', '=', $sports_id);
 		}
 
+		if (isset($orgs_id)){
+			$this->where('org_sport_link.orgs_id', '=', $orgs_id);
+		}
+
 		if (isset($complevels_id)){
 			$this->where('sportorg_team.complevels_id', '=', $complevels_id);
 		}

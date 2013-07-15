@@ -31,7 +31,7 @@ class Policy_Standarduseractivity extends Policy
 				case 'create':
 					break;
 				case 'modify':
-					if($is_owner){
+					if($has_admin || $has_moderator || $is_owner){
 						$have_permission = true;
 					}
 					return $have_permission;

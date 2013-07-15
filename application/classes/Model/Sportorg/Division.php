@@ -29,7 +29,7 @@ class Model_Sportorg_Division extends ORM
 	
 	protected $_has_many = array(
 		'orgs' => array(
-			'model' => 'Sportorg_org',
+			'model' => 'Sportorg_Org',
 			'foreign_key' => 'divisions_id'
 		)
 	);
