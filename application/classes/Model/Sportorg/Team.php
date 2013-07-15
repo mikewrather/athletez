@@ -313,6 +313,12 @@ class Model_Sportorg_Team extends ORM
 		$this->join('org_sport_link')->on('org_sport_link.id', '=', 'sportorg_team.org_sport_link_id');
 		$this->join('orgs')->on('orgs.id', '=', 'org_sport_link.orgs_id');
 		$this->join('locations')->on('locations.id', '=', 'orgs.locations_id');
+		$classes_arr = array(
+			'Sportorg_Team' => 'sportorg_team',
+			'Sportorg_Orgsportlink' => 'org_sport_link',
+			'Sportorg_Org' => 'orgs',
+			'Location_Base' => 'locations'
+		);
 		if (isset($sports_id)){
 			$this->where('org_sport_link.sports_id', '=', $sports_id);
 		}
@@ -331,7 +337,8 @@ class Model_Sportorg_Team extends ORM
 			$this->join(array($counts,'filtered'), 'left')->on('filtered.teams_id', '=', 'sportorg_team.id');
 			$this->order_by('num_votes', 'asc');
 		}else{
-			$this->order_by($orderby, 'asc');
+			//TODO, add by jeffrey
+			//$this->order_by($orderby, 'asc');
 		}
 
 		if (isset($searchtext)){
@@ -345,13 +352,16 @@ class Model_Sportorg_Team extends ORM
 		if (isset($loc_name)){
 			$this->and_where_open();
 			//$this->join('locations')->on('locations.id', '=', 'orgs.locations_id');
-			$this->join('cities')->on('locations.cities_id', '=', 'cities.id');
+			$this->join('cities', 'left')->on('locations.cities_id', '=', 'cities.id');
 			$this->or_where('cities.name', 'like', "%".$loc_name."%");
-			$this->join('counties')->on('cities.county_id', '=', 'counties.id');
+			$this->join('counties', 'left')->on('cities.county_id', '=', 'counties.id');
 			$this->or_where('counties.name', 'like', "%".$loc_name."%");
-			$this->join('states')->on('states.id', '=', 'counties.states_id');
+			$this->join('states', 'left')->on('states.id', '=', 'counties.states_id');
 			$this->or_where('states.name', 'like', "%".$loc_name."%");
 			$this->and_where_close();
+			$classes_arr['Location_City'] = 'cities';
+			$classes_arr['Location_County'] = 'counties';
+			$classes_arr['Location_State'] = 'states';
 		}
 
 		$search = ORM::_sql_exclude_deleted($classes_arr, $this);
@@ -428,10 +438,14 @@ class Model_Sportorg_Team extends ORM
 		}
 		$game_list_obj->where_close();
 
+		$classes_arr = array(
+			'Sportorg_Games_Teamslink' => 'games_teams_link',
+			'Sportorg_Games_Base' => 'sportorg_games_base'
+		);
+		$game_list_obj = ORM::_sql_exclude_deleted($classes_arr, $game_list_obj);
 		$games = $game_list_obj->find_all()->as_array();
 
 		return $games;
-
 	}
 
 	public function deleteGamelink($games_id)
