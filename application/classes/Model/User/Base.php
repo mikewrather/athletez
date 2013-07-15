@@ -1006,7 +1006,7 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 		if (isset($searchtext)){
 			$this->where(array(Db::expr('CONCAT(user_base.first_name," ",user_base.last_name)'), 'full_name'), 'like ','%'.$searchtext.'%');
 		}
-
+		$this->distinct(TRUE);
 		$this->limit(50);
 		return $this;
 	}
