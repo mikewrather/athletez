@@ -25,7 +25,7 @@ define(
 				doNothing : function(e) {
 					e.preventDefault();
 					e.stopPropagation();
-					console.log('we came here.');
+					//console.log('we came here.');
 				},
 				
 				select : function(e) {
@@ -35,7 +35,7 @@ define(
 					var targetClass = target.attr('class');
 					$('.dropdown-menu > li > a'+'.'+targetClass).removeClass('select');
 					$(target).addClass('select');
-					console.log($(target).text());
+					//console.log($(target).text());
 				},
 				
 				toggle : function(e) {
@@ -46,7 +46,7 @@ define(
 					var off_left = off.left + 10;
 					var selector = target.attr('id');
 					selector = '#'+ selector + ' .dd';
-					console.log(selector);
+					//console.log(selector);
 					$(selector).css('top', off_top).css('left', off_left);
 					$(selector).toggle();
 				}

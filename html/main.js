@@ -27,6 +27,7 @@ require.config({
 		'iframe-transport' : '/vendor/plugins/jquery.iframe-transport',
 		'fileupload'   :'/vendor/plugins/jquery.fileupload',
 		'jquery.ui.widget'	:'/vendor/plugins/jquery.ui.widget',
+        'jquery.slimscroll' : '/vendor/plugins/jquery.slimscroll.min',
         
         'custom'       : '/vendor/custom',
 
@@ -66,6 +67,7 @@ require.config({
         'site'         : '/packages/site',
         'sportorg'     : '/packages/sportorg',
         'location'     : '/packages/location',
+        'sport'        : '/packages/sport',
 	
         
         // Pages

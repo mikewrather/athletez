@@ -5,7 +5,7 @@
 		<div class="dropdown">
 			<a href="javascript:void(0)"> Browse <span class="caret"></span></a>
 			<div class="clearfix"></div>
-			<ul class="dropdown-menu" style="display: block; position: relative;">
+			<ul class="dropdown-menu" style="display: block; position: relative; margin-bottom:15px;">
 				{{#views.browse}}
 				<li><a class="browse" href="javascript:void(0)">{{name}}</a></li>
 				{{/views.browse}}
@@ -21,13 +21,25 @@
 				{{/views.time}}
 			</ul>
 		</div>
-		<br />
 	</div>
 </div>
 <div id="sport" class="menu span2">
 	<a href="javascript:void(0)"> SPORT <span class="caret"></span>
 	</a>
-	<div class="dd"></div>
+	<div class="dd">
+		<div class="left text-center">
+			<strong>Guys</strong>
+			<div id="boys" class="text-left sport-list"></div>
+		</div>
+		<div class="left text-center">
+			<strong>Girls</strong>
+			<div id=girls class="text-left sport-list"></div>
+		</div>
+		<div class="left text-center">
+			<strong>Both</strong>
+			<div id="both" class="text-left sport-list"></div>
+		</div>
+	</div>
 </div>
 <div id="location" class="menu span2">
 	<a href="javascript:void(0)"> LOCATION <span class="caret"></span></a>
