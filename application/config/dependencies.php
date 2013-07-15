@@ -49,6 +49,51 @@ return array(
 		'User_Resume_Data_Profile_Sportslink' => 'positions_id'
 	),
 
+	//sport
+	'Sportorg_Sport' => array(
+		'Sportorg_Section' => 'sports_id',
+		'Sportorg_Orgsportlink' => 'sports_id',
+		'Sportorg_Position' => 'sports_id',
+		//'Stats_Tab' TODO, add by jeffrey
+		//'Stats_Base' TODO, add by jeffrey
+		'Media_Base' => 'sports_id'
+	),
+
+	'Sportorg_Section' => array(
+		'Sportorg_League' => 'sections_id',
+		'Sportorg_Division' => 'sections_id'
+	),
+
+	'Sportorg_League' => array(
+		'Sportorg_Org' => 'leagues_id',
+	),
+
+	'Sportorg_Division' => array(
+		'Sportorg_Org' => 'divisions_id',
+	),
+
+	'Sportorg_Orgsportlink' => array(
+		'Sportorg_Team' => 'org_sport_link_id',
+	),
+
+	'Sportorg_Position' => array(
+		'User_Resume_Data_Profile_Sportslink' => 'positions_id',
+		'User_Teamslink_Positionlink' => 'positions_id',
+	),
+
+	//team
+	'Sportorg_Team' => array(
+		'Sportorg_Games_Teamslink' => 'teams_id',
+		'Stats_Vals' => 'teams_id',
+		'User_Teamslink' => 'teams_id',
+	),
+
+	'User_Teamslink' => array(
+		'User_Teamslink_Positionlink' => 'users_teams_link_id',
+	),
+
+	//
+
 
 
 
