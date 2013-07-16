@@ -94,7 +94,7 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
 			function initProfile(id) {
 				var profileController=new ProfileController({
 	                "route": "resume", 
-	                "id": userid==undefined ? 1 : userid
+	                "id": userid==undefined ? null : userid
 	            });
             }
             Channel('app-inited').subscribe(initProfile);

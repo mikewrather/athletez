@@ -72,16 +72,26 @@ class Model_Sportorg_Position extends ORM
 			->on('stats_tab.id', '=', 'positions.stattab_id');
 
 		$stattab_model->where('positions.id', '=', $id);
+		$classes_arr = array(
+			'Sportorg_Position' => 'positions',
+			'Stats_Tab' => 'stats_tab'
+		);
+		$stattab_model = ORM::_sql_exclude_deleted($classes_arr, $stattab_model);
 		//print_r($stattab_model->find_all());
 		return $stattab_model;
 	}
-	
+
 	public function getSport($args = array())
 	{
 		extract($args);
 		$sport_model = ORM::factory("Sportorg_Sport");
 		$sport_model->join('positions')
-			->on('sports.id', '=', 'positions.sport_id');
+			->on('sportorg_sport.id', '=', 'positions.sports_id');
+		$classes_arr = array(
+			'Sportorg_Position' => 'positions',
+			'Sportorg_Sport' => 'sportorg_sport'
+		);
+		$sport_model = ORM::_sql_exclude_deleted($classes_arr, $sport_model);
 
 		$sport_model->where('positions.id', '=', $id);
 
@@ -94,13 +104,18 @@ class Model_Sportorg_Position extends ORM
 		$medias = ORM::factory('Media_Base')
 				->join('positions')->on('positions.sports_id', '=', 'media_base.sports_id')
 				->where('positions.id', '=', $this->id );
-				
+
+		$classes_arr = array(
+			'Media_Base' => 'media_base',
+			'Sportorg_Position' => 'positions',
+		);
 		// orgs_id 
 		// Filter images to those for players who play a certain position within a specific organization.
 		if(isset($orgs_id))
 		{
 			$medias->join('org_sport_link')->on('org_sport_link.sports_id', '=', 'positions.sports_id')
 					->where('org_sport_link.orgs_id', '=', $orgs_id );
+			$classes_arr['Sportorg_Orgsportlink'] = 'org_sport_link';
 		}
 		// cities_id 
 		// Filter images to players of a certain position within a certain city.
@@ -108,7 +123,10 @@ class Model_Sportorg_Position extends ORM
 		{
 			$medias->join('users')->on('users.id', '=', 'media_base.users_id')
 					->where('users.cities_id', '=', $cities_id );
-		}	
+			$classes_arr['User_Base'] = 'users';
+		}
+
+		$medias = ORM::_sql_exclude_deleted($classes_arr, $medias);
 		$arr = array();
 		if ( $type == 'image'){
 			foreach($medias->find_all() as $m){
@@ -149,9 +167,16 @@ class Model_Sportorg_Position extends ORM
 				->where('users_teams_link.users_id', '=', $users_id)
 				->and_where('utl_position_link.positions_id','=',DB::expr('sportorg_position.id'))
 				->and_where_close();
+			$classes_arr = array(
+				'Sportorg_Orgsportlink' => 'org_sport_link',
+				'Sportorg_Team' => 'teams',
+				'User_Teamslink' => 'users_teams_link',
+				'User_Teamslink_Positionlink' => 'utl_position_link'
+			);
+			$positions = ORM::_sql_exclude_deleted($classes_arr,$positions);
 		}
+		$positions = ORM::_sql_exclude_deleted(array('Sportorg_Position' => 'sportorg_position'), $positions);
 		$positions->group_by('sportorg_position.id');
-		
 		return $positions;
 	}
 	
@@ -161,14 +186,19 @@ class Model_Sportorg_Position extends ORM
 		$players = ORM::factory('User_Base')->distinct(TRUE)
 						->join('user_sport_link')->on('user_sport_link.users_id', '=', 'user_base.id')
 						->join('positions')->on('positions.sports_id', '=', 'user_sport_link.sports_id')
-						->where('positions.id', '=', $this->id );	
-		
+						->where('positions.id', '=', $this->id );
+		$classes_arr = array(
+			'Sportorg_Position' => 'positions',
+			'User_Sportlink' => 'user_sport_link'
+		);
+
 		// orgs_id 
 		// Filter the players for a given position to a specific organization
 		if(isset($orgs_id))
 		{
 			$players->join('org_sport_link')->on('org_sport_link.sports_id', '=', 'positions.sports_id')
 					->where('org_sport_link.orgs_id','=', $orgs_id);
+			$classes_arr['Sportorg_Orgsportlink'] = 'org_sport_link';
 		}
 		// cities_id 
 		// Filter the players for a given position to players within a certain city
@@ -176,7 +206,8 @@ class Model_Sportorg_Position extends ORM
 		{
 			$players->where('user_base.cities_id', '=', $cities_id );
 		}
-		
+
+		$players = ORM::_sql_exclude_deleted($classes_arr, $players);
 		return $players;
 	}
 	

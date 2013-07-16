@@ -72,16 +72,7 @@
 		 */
 		public function get_division()
 		{
-			$retArr = null;
-
-			// Scaffolding Code For Array:
-			$objs = $this->obj->find_all();
-			foreach($objs as $obj)
-			{
-				$retArr[] = $obj->getBasics();
-			}
-
-			return $retArr;
+			return $this->obj->getBasics();
 		}
 		
 		/**

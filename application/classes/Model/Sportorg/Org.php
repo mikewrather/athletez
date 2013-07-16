@@ -27,7 +27,11 @@ class Model_Sportorg_Org extends ORM
 		"state" => array(
 			"model" => "Location_State",
 			"foreign_key" => "states_id"
-		)
+		),
+		'divisions' => array(
+			'model' => 'Sportorg_Division',
+			'foreign_key' => 'divisions_id',
+		),
 	);
 
 	protected $_has_many = array(
@@ -40,10 +44,6 @@ class Model_Sportorg_Org extends ORM
 			'foreign_key' => 'orgs_id',
 			'through' => 'org_sport_link',
 			'far_key' => 'sports_id'
-		),
-		'divisions' => array(
-			'model' => 'Sportorg_Division',
-			'foreign_key' => 'divisions_id',
 		),
 		'leagues' => array(
 			'model' => 'Sportorg_League',
@@ -140,6 +140,11 @@ class Model_Sportorg_Org extends ORM
 			->on("orgs.id", '=', "org_sport_link.orgs_id");
 
 		$teams_model->where('orgs.id', '=', $id);
+		$classes_arr = array(
+			'Sportorg_Orgsportlink' => 'org_sport_link',
+			'Sportorg_Org' => 'orgs',
+			'Sportorg_Team' => 'sportorg_team'
+		);
 		if ( isset($sports_id))
 		{
 			$teams_model->where('org_sport_link.sports_id', '=', $sports_id);
@@ -149,22 +154,44 @@ class Model_Sportorg_Org extends ORM
 		{
 			$teams_model->where('sportorg_team.complevels_id', '=', $complevels_id);
 		}
+
+		$teams_model = ORM::_sql_exclude_deleted($classes_arr, $teams_model);
 		return $teams_model;
 	}
 	
 	public function getLeague()
 	{
-		return $this->leagues;
+		$leagues = $this->leagues;
+		$classes_arr = array(
+			'Sportorg_League' =>  'sportorg_league'
+		);
+		$leagues = ORM::_sql_exclude_deleted($classes_arr, $leagues);
+		return $leagues;
 	}
 	
 	public function getDivisions()
 	{
-		return $this->divisions;
+		//$a = $this->join('divisions')->on('divisions_id', '=', 'divisions.id' );
+		//extract($args);
+		//$this->where('id', '=', $orgs_id);
+		$division = $this->divisions;
+//		$classes_arr = array(
+//			'Sportorg_Division' => 'sportorg_division'
+//		);
+//
+//		$divisions = ORM::_sql_exclude_deleted($classes_arr, $divisions);
+		print_r($division);
+		return $division;
 	} 
 	
 	public function getSports()
 	{
 		$sports = $this->sports;
+		$classes_arr = array(
+			'Sportorg_Sport' => 'sportorg_sport'
+		);
+
+		$sports = ORM::_sql_exclude_deleted($classes_arr, $sports);
 		return $sports;
 	}
 	
@@ -192,7 +219,6 @@ class Model_Sportorg_Org extends ORM
 		if (isset($sports_id))
 			$complevels_model->where('org_sport_link.sports_id', '=', $sports_id);
 		$complevels_model->group_by('sportorg_complevel_base.id');
-
 		return $complevels_model;
 	}
 	
@@ -207,6 +233,12 @@ class Model_Sportorg_Org extends ORM
 		$sections_model->join('orgs')
 			->on('orgs.leagues_id', '=', 'leagues.id');
 		$sections_model->where('orgs.id', '=', $id);
+		$classes_arr = array(
+			'Sportorg_League' => 'leagues',
+			'Sportorg_Org' => 'orgs',
+			'Sportorg_Section' => 'sportorg_section'
+		);
+		$sections_model = ORM::_sql_exclude_deleted($classes_arr, $sections_model);
 
 		return $sections_model;
 	}
@@ -218,15 +250,20 @@ class Model_Sportorg_Org extends ORM
 		$seasons_model->join('orgs')->on('orgs.season_profiles_id', '=', 'seasons.season_profiles_id');
 		$seasons_model->join('teams')->on('teams.seasons_id', '=', 'seasons.id');
 		$seasons_model->where('orgs.id', '=', $id);
-
+		$classes_arr = array(
+			'Sportorg_Org' => 'orgs',
+			'Sportorg_Team' => 'teams',
+			'Sportorg_Seasons_Base' => 'seasons'
+		);
 		if (isset($sports_id)){
 			$seasons_model->join('org_sport_link')->on('org_sport_link.id', '=', 'teams.org_sport_link_id');
 			$seasons_model->where('org_sport_link.sports_id', '=', $sports_id);
+			$classes_arr['Sportorg_Orgsportlink'] = 'org_sport_link';
 		}
 		if (isset($complevels_id))
 			$seasons_model->where('teams.complevels_id', '=', $complevels_id);
+		$seasons_model = ORM::_sql_exclude_deleted($classes_arr, $seasons_model);
 
-	//	print_r($seasons_model->find_all());
 		return $seasons_model;
 	}
 
@@ -494,7 +531,12 @@ class Model_Sportorg_Org extends ORM
 	public function deleteSport($org_id, $sports_id){
 		$oslink = ORM::factory("Sportorg_Orgsportlink");
 		$results = $oslink->where('orgs_id', '=', $org_id)
-			->where('sports_id', '=', $sports_id)->find_all();
+			->where('sports_id', '=', $sports_id);
+		$classes_arr = array(
+			'Sportorg_Orgsportlink' => 'sportorg_orgsportlink'
+		);
+		$results = ORM::_sql_exclude_deleted($classes_arr, $results);
+		$results = $results->find_all();
 		foreach($results as $result){
 			$result->delete();
 		}

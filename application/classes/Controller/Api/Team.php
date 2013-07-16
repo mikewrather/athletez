@@ -135,6 +135,11 @@
 				$arguments["sports_id"] = (int)trim($this->request->query('sports_id'));
 			}
 
+			if((int)trim($this->request->query('orgs_id')) > 0)
+			{
+				$arguments["orgs_id"] = (int)trim($this->request->query('orgs_id'));
+			}
+
 			// complevels_id
 			// Narrow user list to teams of a specific comp level
 
@@ -676,7 +681,8 @@
 				$this->modelNotSetError();
 				return false;
 			}
-			return $this->mainModel->delete();
+			$this->mainModel->delete_with_deps();
+			return $this->mainModel;
 		}
 		
 		/**

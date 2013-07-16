@@ -18,6 +18,10 @@ class ORM extends Kohana_ORM
 		return false;
 	}
 
+	/*
+	 * $class_names should include the obj itself, comment by Jeffrey
+	 *
+	 * */
 	public static function _sql_exclude_deleted($class_names,$qry)
 	{
 		$enttypes = array();

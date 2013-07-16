@@ -304,8 +304,7 @@
 			if(get_class($result) == get_class($this->mainModel))
 			{
 				return $result;
-			}
-			elseif(get_class($result) == 'ORM_Validation_Exception')
+			}elseif(get_class($result) == 'ORM_Validation_Exception')
 			{
 				//parse error and add to error array
 				$this->processValidationError($result,$this->mainModel->error_message_path);
@@ -335,7 +334,8 @@
 				$this->modelNotSetError();
 				return false;
 			}
-			return $this->mainModel->delete();
+			$this->mainModel->delete_with_deps();
+			return $this->mainModel;
 		
 		}
 		

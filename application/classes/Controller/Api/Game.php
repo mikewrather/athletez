@@ -169,6 +169,11 @@
 				$arguments["sports_id"] = (int)trim($this->request->query('sports_id'));
 			}
 
+			if((int)trim($this->request->query('teams_id')) > 0)
+			{
+				$arguments["teams_id"] = (int)trim($this->request->query('teams_id'));
+			}
+
 			// complevels_id
 			// Narrow user list to users of a comp level
 
@@ -182,7 +187,15 @@
 
 			if(trim($this->request->query('orderby')) != "")
 			{
+				$legal_orderby = array('votes', 'followers', 'postTime');
 				$arguments["orderby"] = trim($this->request->query('orderby'));
+				if (!in_array($arguments["orderby"], $legal_orderby)){
+					$error_array = array(
+						"error" => "Invalid order by column",
+						"desc" => "Currently only support 'votes', 'followers', 'postTime'"
+					);
+					$this->modelNotSetError($error_array);
+				}
 			}
 
 			// searchtext
@@ -209,6 +222,11 @@
 			if((int)trim($this->request->query('cities_id')) > 0)
 			{
 				$arguments["cities_id"] = (int)trim($this->request->query('cities_id'));
+			}
+
+			if((int)trim($this->request->query('teams_id')) > 0)
+			{
+				$arguments["teams_id"] = (int)trim($this->request->query('teams_id'));
 			}
 
 			$game = ORM::factory('Sportorg_Games_Base');

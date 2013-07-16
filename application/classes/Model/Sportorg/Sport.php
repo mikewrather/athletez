@@ -171,15 +171,22 @@ class Model_Sportorg_Sport extends ORM
 		if (isset($sport_type_id)){
 			$sports->where('sport_type_id', '=', $sport_type_id);
 		}
-
+		$classes_arr = array(
+			'Sportorg_Sport' => 'sportorg_sport',
+		);
+		$sports = ORM::_sql_exclude_deleted($classes_arr, $sports);
 		return $sports;
 	}
 
 	public function getPositions(){
 		$positions = $this->positions;
+		$classes_arr = array(
+			'Sportorg_Position' => 'sportorg_position'
+		);
+		$positions = ORM::_sql_exclude_deleted($classes_arr, $positions);
 		return $positions;
 	}
-
+	//TODO, _sql_exclude_deleted for single row
 	public function getSportType(){
 		$type = $this->type;
 		return $type;
@@ -194,7 +201,11 @@ class Model_Sportorg_Sport extends ORM
 		$athletes->join('org_sport_link')->on('org_sport_link.sports_id', '=', 'user_sport_link.sports_id');
 
 		$athletes->join('positions')->on('positions.sports_id', '=', 'user_sport_link.sports_id');
-
+		$classes_arr = array(
+			'Sportorg_Orgsportlink' => 'org_sport_link',
+			'Sportorg_Position' => 'positions',
+			'User_Base' => 'user_base'
+		);
 		if ( isset($positions_id) && $positions_id !="")
 		{
 			$athletes = $athletes->where('positions.id', '=', $positions_id);
@@ -204,8 +215,10 @@ class Model_Sportorg_Sport extends ORM
 		{
 			$athletes = $athletes->where('org_sport_link.orgs_id', '=', $orgs_id);
 		}
-		if ($teams_id != "" || $seasons_id != "" || $complevels_id != "")
+		if ($teams_id != "" || $seasons_id != "" || $complevels_id != ""){
 			$athletes->join('teams')->on('teams.org_sport_link_id', '=', 'org_sport_link.id');
+			$classes_arr['Sportorg_Team'] = 'teams';
+		}
 
 		if ( isset($teams_id) && $teams_id != "")
 		{
@@ -219,20 +232,24 @@ class Model_Sportorg_Sport extends ORM
 		if ( isset($complevels_id) && $complevels_id != ""){
 			$athletes->where('teams.complevels_id', '=', $complevels_id);
 		}
-
+		$athletes = ORM::_sql_exclude_deleted($classes_arr, $athletes);
 		return $athletes;
 	}
 
+	//TODO, _sql_exclude_deleted, add by jeffrey
 	public function getStat(){
 		$stat = ORM::factory("Stats_Base");
 		$stat->where('sports_id', '=', $this->id)->or_where('sports_id2','=',$this->id);
-		print_r($stat->find_all());
 		return $stat;
 	}
 
 	public function getStatTabs(){
 		$stattabs = ORM::factory("Stats_Tab");
 		$stattabs->where('sport_id', '=', $this->id)->or_where('sport_id2','=',$this->id);
+		$classes_arr = array(
+			'Stats_Tab' => 'stats_tab'
+		);
+		$stattabs = ORM::_sql_exclude_deleted($classes_arr, $stattabs);
 		return $stattabs;
 	}
 
@@ -243,11 +260,14 @@ class Model_Sportorg_Sport extends ORM
 		if(isset($sport_name)){
 			$sport_model->where('name', 'like', '%'.$sport_name.'%');
 		}
-
+		$classes_arr = array(
+			'Sportorg_Sport' => 'sportorg_sport'
+		);
 		if(isset($orgs_id)){
 			$sport_model->join('org_sport_link');
 			$sport_model->on('org_sport_link.sports_id' ,'=', 'sportorg_sport.id');
 			$sport_model->where('org_sport_link.orgs_id', '=', $orgs_id);
+			$classes_arr['Sportorg_Orgsportlink'] = 'org_sport_link';
 		}
 
 		if(isset($gender)){
@@ -262,7 +282,7 @@ class Model_Sportorg_Sport extends ORM
 				$sport_model->and_where_close();
 			}
 		}
-
+		$sport_model = ORM::_sql_exclude_deleted($classes_arr, $sport_model);
 		return $sport_model;
 	}
 
@@ -289,6 +309,14 @@ class Model_Sportorg_Sport extends ORM
 			$video->where('teams.complevels_id', '=', $complevels_id);
 		}
 
+		$classes_arr = array(
+			'Media_Base' => 'media_base',
+			'Site_Tag' => 'tags',
+			'Sportorg_Orgsportlink' => 'org_sport_link',
+			'Sportorg_Team' => 'teams'
+		);
+
+		$video = ORM::_sql_exclude_deleted($classes_arr, $video);
 		return $video;
 	}
 
@@ -314,6 +342,15 @@ class Model_Sportorg_Sport extends ORM
 		if ( isset($complevels_id) && $complevels_id != ""){
 			$image->where('teams.complevels_id', '=', $complevels_id);
 		}
+
+		$classes_arr = array(
+			'Media_Base' => 'media_base',
+			'Site_Tag' => 'tags',
+			'Sportorg_Orgsportlink' => 'org_sport_link',
+			'Sportorg_Team' => 'teams'
+		);
+
+		$image = ORM::_sql_exclude_deleted($classes_arr, $image);
 		return $image;
 	}
 
@@ -346,7 +383,15 @@ class Model_Sportorg_Sport extends ORM
 			if (isset($users_id)){
 				$resumeData->where('user_resume_data_vals.users_id','=', $users_id);
 			}
-
+			$classes_arr = array(
+				'User_Resume_Data' => 'resume_data',
+				'User_Resume_Data_Group' => 'resume_data_groups',
+				'User_Resume_Data_Group_Profilelink' => 'rdg_rdp_link',
+				'User_Resume_Data_Profile' => 'resume_data_profiles',
+				'User_Resume_Data_Profile_Sportslink' => 'rdp_sports_link',
+				'Sportorg_Sport' => 'sports'
+			);
+			$resumeData = ORM::_sql_exclude_deleted($classes_arr, $resumeData);
 			return $resumeData;
 	}
 }
