@@ -24,8 +24,7 @@ define(['require',
 		/*Bind Events on controls present in current view template*/
 		events : {
 			"change .select-all" : "CheckAll",
-		//	"change .chk-single" : "CheckSelectAll"
-		"change .chk-single" : "SaveSport",
+		"change .chk-single" : "CheckSingle",
 		"click .delete-individualsport" : "DeleteSport"
 		},
 
@@ -59,7 +58,7 @@ define(['require',
 		/*initialize must be a wrapper so any function definitions and calles must be called in init*/
 		init : function() {
 			self.setupSportsView();
-			self.setUpUsersSports();
+			//self.setUpUsersSports();
 		},
 
 		/*render displays the view in browser*/
@@ -106,7 +105,38 @@ define(['require',
             	self.$(self.controls.userSportsList).html(markup);
 			});
 		},
+	setUpUsersSportsCheck : function(){
+	console.log("setUpSportsView Individual View Check");
+		var List = new IndividualSportsCollection();
+		List.user_id = self.user_id;
+		//TODO:  Gender is missing in API so need to update code
+		List.male = 1;
+		List.female = 0;
+		List.type = "get";
+		List.fetch();
 
+			$.when(List.request).done(function() {
+				if (List.isError())
+					return;
+
+				var models = List.toJSON();
+				if (models == null || models.length < 1){
+					return;
+				}
+				
+				self.sports = [];
+				for (var key in models) {
+					if(models[key].payload.team_type == "individual")
+					self.sports.push(models[key].payload);
+				}
+				// Sort Sports According To The Names, false because the result required in asc form
+				self.sort(self.sports,'sport_name',false);
+		    	$.each(self.sports,function(index,sport){
+		    		self.$el.find("#chk-ind-" + sport.sport_id).attr('checked','checked');
+		    		
+		    	});
+			});
+},
 		/*Set complete view like template rendering, default data bindings*/
 		setupSportsView : function() {
 		console.log("setUpSportsView Individual View");
@@ -142,6 +172,8 @@ define(['require',
 				self.sort(self.sports,'sport_name',false);
 				var markup = Mustache.to_html(sportsCheckboxes, {sports: self.sports});
             	self.$(self.controls.sportslist).html(markup);
+            	
+            	self.setUpUsersSportsCheck();
 			});
 		},
 
@@ -159,7 +191,8 @@ define(['require',
 					sports_id : sportsId
 				});
 				$.when(sportsModel.request).done(function() {
-					self.setUpUsersSports();
+					self.setUpUsersSportsCheck();
+					//self.setUpUsersSports();
 				});
 			}
 		},
@@ -178,7 +211,8 @@ define(['require',
 				sportsModel.type = "delete";
 				sportsModel.destroy({data: { user_id : self.user_id, sports_id : sportsId}, processData: true,
 					success : function(){
-						self.setUpUsersSports();
+						self.setUpUsersSportsCheck();
+						//self.setUpUsersSports();
 					}});
 			}
 		},
@@ -194,24 +228,14 @@ define(['require',
 		},
 
 		/*CHECK UNCHECK SELECT ALL AS PER THE NUMBER OF SELECTED SPORTS, IF ALL ARE SELECTED THEN CHECKED ELSE UNCHECKED*/
-		CheckSelectAll: function(e){
+		CheckSingle: function(e){
 			if($(e.target).is(':checked')){
-				var isAllChecked = true;
-				self.$(self.controls.chkSingle).each(function(){
-					if(! $(this).is(':checked')){
-						isAllChecked = false;
-					}
-				});
-				
-				if(isAllChecked)
-					self.$(self.controls.chkAll).attr('checked','checked');	
-				else
-						self.$(self.controls.chkAll).removeAttr('checked','checked');
+				self.SaveSport(e);
 			}
 			else {
-				self.$(self.controls.chkAll).removeAttr('checked','checked');
+				self.DeleteSport(e);
 			}
-		},
+		}
 			});
 
 	return HighSchoolView;

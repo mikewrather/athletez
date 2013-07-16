@@ -170,6 +170,7 @@ define(['facade', 'views/base', 'utils'], function(facade, BaseView, utils) {
 			}
 			return this._meta;
 		},
+		
 		/**Method** Fills the options in a dropdown
 		 * Parameter Description:
 		 * data : Json data source to fill dropdown
@@ -177,7 +178,7 @@ define(['facade', 'views/base', 'utils'], function(facade, BaseView, utils) {
 		 * valueField : string/int, key or index in array to be used as value of displayed option in dropdown
 		 * control : jquery selector for the html control in which data has to be filled
 		 * defaultText : the heading which will be inserted as first optopn of a drop down
-		 *  */
+		 **/
 		setDropdownOptions : function(data, textField, valueField, control, defaultText) {
 			var tempHtml = '';
 			if (defaultText) {
@@ -188,7 +189,6 @@ define(['facade', 'views/base', 'utils'], function(facade, BaseView, utils) {
 			if (data != null && data.length > 0) {
 				for (var key in data) {
 					tempHtml += '<option value="' + data[key][valueField] + '">' + data[key][textField] + '</option>';
-
 				}
 			}
 			this.$el.find(control).html(tempHtml);
@@ -199,7 +199,7 @@ define(['facade', 'views/base', 'utils'], function(facade, BaseView, utils) {
 		 key-code : key code of the key just pressed
 		 Returns:
 		 boolean true will continues auto complete and stops in false
-		 * */
+		 **/
 		isValidAutoCompleteKey : function(event) {
 			if (event) {
 				var code = (event.keyCode ? event.keyCode : e.which);
@@ -214,6 +214,7 @@ define(['facade', 'views/base', 'utils'], function(facade, BaseView, utils) {
 			}
 			return false;
 		},
+		
 		/**METHOD** sort collection by the property sent, Developed for the collections/arrays which are modified on frontend not in collections
 		 Parameters:
 		 collection : array of elements

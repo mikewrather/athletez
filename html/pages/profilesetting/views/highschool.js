@@ -9,6 +9,7 @@ define(['require', 'text!profilesetting/templates/highschool.html', 'text!profil
 	var self, HighSchoolView, facade = require('facade'), views = require('views'), SectionView = views.SectionView, utils = require('utils'), Channel = utils.lib.Channel, vendor = require('vendor'), Mustache = vendor.Mustache, $ = facade.$, StatesCollection = require('profilesetting/collections/states'), SchoolCollection = require('profilesetting/collections/schools'), SportsCollection = require('profilesetting/collections/sports'), CompLevelModel = require('profilesetting/models/complevel'), SeasonsView = require('profilesetting/views/seasons'), PositionsView = require('profilesetting/views/positions'), TeamsView = require('profilesetting/views/teams'), TeamModel = require('profilesetting/models/team'), PositionModel = require('profilesetting/models/position'), HighSchoolView = SectionView.extend({
 
 		template : highSchoolTemplate,
+
 		/*Bind Events on controls present in current view template*/
 		events : {
 			"keyup #txt-school-state" : "keyupState",
@@ -58,6 +59,7 @@ define(['require', 'text!profilesetting/templates/highschool.html', 'text!profil
 			divSportsNameHeading : ".spn-sport-name",
 			divMainSportsSection : "#def-school-sports-section",
 			divLevels : ".div-sports-level",
+			divSeasons : ".div-seasons",
 			//	divLevels: ".div-school-sports-level",
 			divsportsLevel : ".section-sportslevel",
 			divSubLevels : ".div-levels",
@@ -135,63 +137,76 @@ define(['require', 'text!profilesetting/templates/highschool.html', 'text!profil
 			var state = $(self.controls.txtStates).val();
 			var stateArr = [];
 			var isValidKey = self.isValidAutoCompleteKey(event);
-			if (state != '' && isValidKey == true) {
-				// Disable Schools Text Box
-				self.$(self.controls.txtSchools).attr('disabled', 'disabled');
+			if (state != '') {
+				if (isValidKey == true) {
+					// Disable Schools Text Box
+					self.$(self.controls.txtSchools).attr('disabled', 'disabled');
 
-				//// Remove Sports Section Html
-				self.RemoveSportsSection();
+					//// Remove Sports Section Html
+					self.RemoveSportsSection();
 
-				var stateList = new StatesCollection();
-				stateList.state_name = state;
-				stateList.fetch();
-				$.when(stateList.request).done(function() {
-					/*Don't Show Auto Complete In Case Of Error*/
-					if (stateList.isError())
-						return;
+					var stateList = new StatesCollection();
+					stateList.state_name = state;
+					stateList.fetch();
+					$.when(stateList.request).done(function() {
+						/*Don't Show Auto Complete In Case Of Error*/
+						if (stateList.isError())
+							return;
 
-					var models = stateList.toJSON();
-					if (models == null || models.length < 1)
-						self.$el.find(self.controls.txtStates).parent().find(self.controls.fieldMessage).html(self.messages.dataNotExist).stop().fadeIn();
-					else
-						self.$el.find(self.controls.txtStates).parent().find(self.controls.fieldMessage).html('').fadeOut();
+						var models = stateList.toJSON();
+						if (models == null || models.length < 1)
+							self.$el.find(self.controls.txtStates).parent().find(self.controls.fieldMessage).html(self.messages.dataNotExist).stop().fadeIn();
+						else
+							self.$el.find(self.controls.txtStates).parent().find(self.controls.fieldMessage).html('').fadeOut();
 
-					self.states = [];
-					for (var key in models) {
-						self.states.push(models[key].payload);
-					}
-					self.states.forEach(function(value, index) {
-						stateArr.push(value['name']);
+						self.states = [];
+						for (var key in models) {
+							self.states.push(models[key].payload);
+						}
+						self.states.forEach(function(value, index) {
+							stateArr.push(value['name']);
+						});
+						// Destroy existing autocomplete from text box before attaching it again
+						// try catch as for the first time it gives error
+						try {
+							self.$el.find(self.controls.txtStates).autocomplete("destroy");
+						} catch(ex) {
+						}
+
+						self.$el.find(self.controls.txtStates).autocomplete({
+							source : stateArr
+						});
+
+						//Trigger keydown to display the autocomplete dropdown just created
+						self.$el.find(self.controls.txtStates).trigger('keydown');
 					});
-					// Destroy existing autocomplete from text box before attaching it again
-					// try catch as for the first time it gives error
-					try {
-						self.$el.find(self.controls.txtStates).autocomplete("destroy");
-					} catch(ex) {
-					}
-
-					self.$el.find(self.controls.txtStates).autocomplete({
-						source : stateArr
-					});
-
-					//Trigger keydown to display the autocomplete dropdown just created
-					self.$el.find(self.controls.txtStates).trigger('keydown');
-				});
+				} else {
+					console.log("Change State From else Called");
+					self.changeState();
+				}
 			}
 		},
 
 		/*Change state_id as per the selected record from auto complete for state created in keyupState*/
 		changeState : function(event) {
 			var state_name = $(self.controls.txtStates).val();
+			var isStateValid = false;
 			self.states_id = '';
 
 			self.states.forEach(function(value, index) {
 
 				if (value['name'] == state_name) {
+					isStateValid = true;
 					self.states_id = value['id'];
 					self.$(self.controls.txtSchools).removeAttr('disabled');
 				}
+
 			});
+
+			if (!isStateValid) {
+				self.states_id = 0;
+				self.$(self.controls.txtSchools).attr('disabled', 'disabled');
+			}
 			self.keyupSchool();
 		},
 
@@ -220,6 +235,7 @@ define(['require', 'text!profilesetting/templates/highschool.html', 'text!profil
 					var models = List.toJSON();
 					if (models == null || models.length < 1)
 						self.$(self.controls.txtSchools).parent().find(self.controls.fieldMessage).html(self.messages.dataNotExist).stop().fadeIn();
+
 					self.schools = [];
 					for (var key in models) {
 						self.schools.push(models[key].payload);
@@ -240,6 +256,9 @@ define(['require', 'text!profilesetting/templates/highschool.html', 'text!profil
 					//Trigger keydown to display the autocomplete dropdown just created
 					self.$el.find(self.controls.txtSchools).trigger('keydown');
 				});
+			} else {
+				self.RemoveSportsSection();
+				self.changeSchool();
 			}
 		},
 
@@ -250,7 +269,8 @@ define(['require', 'text!profilesetting/templates/highschool.html', 'text!profil
 			self.schools.forEach(function(value, index) {
 				if (value['org_name'] == name) {
 					self.orgs_id = value['org_id'];
-					self.fillSports(self.orgs_id, self.controls.divMainSportsSection);
+					if ($(self.controls.divMainSportsSection).find(self.controls.ddlSports).length < 1)
+						self.fillSports(self.orgs_id, self.controls.divMainSportsSection);
 				}
 			});
 		},
@@ -358,9 +378,16 @@ define(['require', 'text!profilesetting/templates/highschool.html', 'text!profil
 			for (var key in self.compLevel) {
 				if (self.compLevel[key].complevel_id == value) {
 					self.compLevel_id = value;
+					console.log("if");
+					self.$(event.target).attr('disabled', 'disabled');
+					self.$(event.target).parents(self.controls.divSubLevels).find(self.controls.divSeasons).fadeIn();
 					return;
 				}
 			}
+			console.log("else");
+			console.log(self.compLevel_id);
+			console.log(self.$(event.target).parents(self.controls.divSubLevels).find(self.controls.divSeasons));
+			self.$(event.target).parents(self.controls.divSubLevels).find(self.controls.divSeasons).fadeOut();
 		},
 		/*SET UP LEVEL VIEW AS PER THE DESTINATION WHERE TO APPEND THE VIEW*/
 		SetUpCompLevelView : function(orgs_id, destination, sports_id) {
@@ -415,22 +442,33 @@ define(['require', 'text!profilesetting/templates/highschool.html', 'text!profil
 		/*Mark Selected Position as Active ot inactive*/
 		MarkPosition : function(event) {
 			var control = self.$(event.target);
+			var teamId = $(event.target).attr('teamid');
+			var positionId = $(event.target).attr('positionId');
+			var payload = {
+				id1 : self.user_id,
+				user_id : self.user_id,
+				positions_id : positionId,
+				teams_id : teamId,
+			};
+			
+			
 			if (control.hasClass('active')) {
-				control.removeClass('active');
-			} else {
-				control.addClass('active');
-				var teamId = $(event.target).attr('teamid');
-				var positionId = $(event.target).attr('positionId');
+				payload.position_id = positionId;
+			var positionModel = new PositionModel(payload);
+			positionModel.user_id = self.user_id;	
+				positionModel.type = "delete";
+				positionModel.destroy();
+				$.when(positionModel.request).done(function() {
+					control.removeClass('active');
+					console.log("positionModel", positionModel);
+					console.log("positionModel", positionModel.toJSON());
+				});
 
-				var payload = {
-					id1 : self.user_id,
-					user_id : self.user_id,
-					positions_id : positionId,
-					teams_id : teamId,
-				};
+			} else {
 				var positionModel = new PositionModel(payload);
-				positionModel.type = "save";
 				positionModel.user_id = self.user_id;
+				control.addClass('active');
+				positionModel.type = "save";
 				positionModel.save();
 				$.when(positionModel.request).done(function() {
 					console.log("positionModel", positionModel);
@@ -518,7 +556,6 @@ define(['require', 'text!profilesetting/templates/highschool.html', 'text!profil
 					console.log($(cont).parent().find(self.controls.fieldError));
 					$(cont).parent().find(self.controls.fieldError).html(self.messages.SelectLevel).stop().fadeIn();
 				}
-
 			} else {
 			}
 		},
@@ -557,7 +594,17 @@ define(['require', 'text!profilesetting/templates/highschool.html', 'text!profil
 			//self.SetUpTeamsView();
 		},
 		FinishSports : function() {
-			self.SetUpTeamsView();
+			console.log("SetUpTeamsView");
+			self.ClearAddNewForm();
+			self.init();
+		},
+		ClearAddNewForm : function() {
+			self.RemoveSportsSection();
+			self.$(self.controls.txtStates).val('');
+			self.states_id = undefined;
+			self.$(self.controls.txtSchools).attr('disabled', 'disabled').val('');
+			self.orgs_id = undefined;
+			self.$el.find(self.controls.divAddSportSection).fadeOut();
 		}
 	});
 

@@ -3,7 +3,7 @@
 <div>
 	<span class="span2">Choose Sport</span>
 	<!-- class="ddl-school-sports"-->
-	<select class="ddl-sports" orgsid="{{orgsId}}">
+	<select class="ddl-sports" orgsid="{{orgsId}}" tabindex="0">
 		<option value="">Select Sport</option>
 		{{#sports}}
 			<option value="{{sport_id}}">{{sport_name}}</option>
@@ -12,7 +12,7 @@
 	<p class="field-error"></p>
 	<p class="field-message"></p>
 	
-<span ><a href="javascript:void(0)" class="btn-Remove-Sport">Remove</a> </span>
+<span ><a href="javascript:void(0)" class="btn-Remove-Sport" tabindex="0">Remove</a> </span>
 </div>
 
 <div class="clearfix inner-section">
@@ -28,8 +28,8 @@
 			
 		</div>
 		<div class="row-fluid clearfix">
-			<span class="floatLeft"><a href="javascript:void(0)" class="btn-add-level" orgsid="{{orgsId}}">Add Level</a> </span>
-			<span class="floatRight"><a href="javascript:void(0)" class=" well-small btn-primary btn-Finish-Sports" >Finish</a> </span>
+			<span class="floatLeft"><a href="javascript:void(0)" class="btn-add-level" orgsid="{{orgsId}}" tabindex="0">Add Level</a> </span>
+			<span class="floatRight"><a href="javascript:void(0)" class=" well-small btn-primary btn-Finish-Sports" tabindex="0">Finish</a> </span>
 		</div>
 	</div>
 	</div>
