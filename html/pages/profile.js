@@ -79,11 +79,11 @@ define([
 
             this.handleOptions(options);
             this.scheme=[];
-            if (options.id) {
-                this.id = options.id;
+            if (options.userId) {
+                this.id = options.userId;
                 this.init();
             }
-			console.log(this)
+			//console.log(this)
             return this;
         },
         
@@ -94,8 +94,8 @@ define([
         },
         
         createData: function () {
-            this.basics = new ProfileBasicsModel();
-            this.basics.id = this.id;
+            this.basics = new ProfileBasicsModel({id: this.id});
+            //this.basics.id = this.id;
             this.basics.fetch();
             
             this.addmedia = new ProfileAddMediaModel();

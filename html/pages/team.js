@@ -83,6 +83,10 @@ define([
             return this;
         },
         
+        handleOptions: function(options) {
+        	this.id = options.teamId;
+        },
+        
         init: function() {
             this.setupLayout().render();
             this.createData();
@@ -90,10 +94,10 @@ define([
         },
         
         createData: function () {
-            this.basics = new TeamBasicsModel();
-            this.basics.id = '1';
+            this.basics = new TeamBasicsModel({id:this.id});
+            //this.basics.id = '1';
             this.basics.fetch();
-            this.id = this.basics.id;
+            //this.id = this.basics.id;
             
             this.addmedia = new TeamAddMediaModel();
             this.addmedia.id = this.id;

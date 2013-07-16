@@ -35,11 +35,13 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
             
             'game': 'showGame',
             'game/': 'showGame',
-            'game/:action': 'showGame',
+            //'game/:action': 'showGame',
+            'game/:id' : 'showGame',
             
             'team': 'showTeam',
             'team/': 'showTeam',
-            'team/:action': 'showTeam',
+            //'team/:action': 'showTeam',
+            'team/:id' : 'showTeam',
             
             'registration': 'showRegistration',
             'registration/': 'showRegistration',
@@ -91,10 +93,10 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
             
             $('body').empty();
             chromeBootstrap();
-			function initProfile(id) {
+			function initProfile(headerModelId) {
 				var profileController=new ProfileController({
 	                "route": "resume", 
-	                "id": userid==undefined ? null : userid
+	                "userId": userid==undefined ? null : userid
 	            });
             }
             Channel('app-inited').subscribe(initProfile);
@@ -158,32 +160,37 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
             Channel('app-inited').subscribe(initImage);
 		},
         
-        showGame: function () {
+        showGame: function (id) {
             this.loadStyles();
             
             $('body').empty();
             chromeBootstrap();
-             var gameController = new GameController({
+             /*var gameController = new GameController({
                     "route": ""
-                });
-            function initGame(id) {
+                });*/
+            //this callback function is called from /pages/chrom/views/header.js
+            //it getting headerModelId
+            if(!id) id=1;
+            function initGame(headerModelId) {
                 var gameController = new GameController({
-                    "route": ""
+                    "route": "",
+                    "gameId" : id
                 });
             }
             
             Channel('app-inited').subscribe(initGame);
         },
         
-        showTeam: function() {
+        showTeam: function(id) {
             this.loadStyles();
             
             $('body').empty();
             chromeBootstrap();
-            
-            function initTeam(id) {
+            if(!id) id = 1;
+            function initTeam(headerModelId) {
                 var teamController = new TeamController({
-                    "route": ""
+                    "route": "",
+                    "teamId": id
                 })
             }
             

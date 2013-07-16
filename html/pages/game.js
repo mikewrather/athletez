@@ -73,6 +73,10 @@ define([
             return this;
         },
         
+        handleOptions : function(options) {
+        	this.id = options.gameId;
+        },
+        
         init: function() {
             this.setupLayout().render();
             this.createData();
@@ -80,10 +84,10 @@ define([
         },
         
         createData: function () {
-            this.basics = new GameBasicsModel();
-            this.basics.id = '1';
+            this.basics = new GameBasicsModel({id:this.id});
+            //this.basics.id = '425983';
             this.basics.fetch();
-            this.id = this.basics.id;
+            //this.id = this.basics.id;
             
             this.addmedia = new GameAddMediaModel();
             this.addmedia.id = this.id;

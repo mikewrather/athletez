@@ -17,7 +17,7 @@ function(facade, MediaImageList, utils) {
         url: function() {
 	        if (testpath)
                 return testpath + '/game/images/' + this.id;
-            return '/api/game/images/1';//TODO,Add by Jeffrey + this.id;
+            return '/api/game/images/' + this.id;
         }
         
     });

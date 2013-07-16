@@ -17,7 +17,7 @@ function(facade, MediaVideoList, utils) {
         url: function() {
 	        if (testpath)
                 return testpath + '/game/videos/' + this.id;
-            return '/api/game/videos/1';//TODO, changed by Jeffrey + this.id;
+            return '/api/game/videos/' + this.id;
         }
 
     });
