@@ -60,7 +60,7 @@
 			// Scaffolding Code For Array:
 
 			$objs = $this->obj->execute();
-
+			print_r($objs);
 			foreach($objs as $obj)
 			{
 				$sport = ORM::factory('Sportorg_Sport',$obj['sports_id']);

@@ -772,12 +772,13 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 		return $std;
 	}
 	
-	public function getSports($format='select')
+	public function getSports($format='select',$sport_type_id=NULL)
 	{
 		$positions_qry = DB::select('positions_id')
 			->from('utl_position_link')
 			->where('is_primary','=','1')
 			->and_where('users_teams_link_id', '=', DB::expr('`users_teams_link`.`id`'));
+
 
 		$utl = DB::select('org_sport_link.sports_id',array($positions_qry,'positions_id'),array(DB::expr('"team"'),'sport_type'))
 			->from('users_teams_link')
@@ -786,10 +787,20 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 			->group_by('org_sport_link.sports_id')
 			->where('users_teams_link.users_id', '=', $this->id);
 
+		if($sport_type_id != NULL)
+		{
+			$utl->join('sports')->on('sports.id','=','org_sport_link.sports_id')->where('sports.sport_type_id','=',$sport_type_id);
+		}
+
 		$isports = DB::select('sports_id',array(DB::expr('NULL'),'positions_id'),array(DB::expr('"individual"'),'sport_type'))
 			->union($utl)
 			->from('user_sport_link')
 			->where('users_id','=',$this->id);
+
+		if($sport_type_id != NULL)
+		{
+			$isports->join('sports')->on('sports.id','=','sports_id')->where('sports.sport_type_id','=',$sport_type_id);
+		}
 
 		if($format=='select') return $isports;
 		elseif($format=='array')
