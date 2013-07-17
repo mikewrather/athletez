@@ -649,16 +649,18 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 				$orgs[$team['org_id']]["sports"][$team['sports_id']]["complevels"][$team['complevels_id']]["seasons"][] = $this_org_item;
 			}
 		}
-
 		// Get rid of unnecessary keys
-		foreach($orgs as &$org)
+		foreach($orgs as $key => &$org)
 		{
-			if(!isset($org['sports'])) continue;
-			foreach($org['sports'] as &$sport)
-			{
-				$sport["complevels"] = Util::strip_array_keys($sport["complevels"]);
+			if($key=='groupby') continue;
+			if(isset($org['sports']) && sizeof($org['sports']) > 0){
+				foreach($org['sports'] as &$sport)
+				{
+					$sport["complevels"] = Util::strip_array_keys($sport["complevels"]);
+				}
+				$org["sports"] = Util::strip_array_keys($org["sports"]);
 			}
-			$org["sports"] = Util::strip_array_keys($org["sports"]);
+
 		}
 
 		//Return null as result if not value
