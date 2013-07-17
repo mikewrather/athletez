@@ -75,6 +75,7 @@ define(['require', 'text!profilesetting/templates/teamlist.html', 'facade', 'vie
 						d.push(models[i].payload);
 					}
 					
+					self.Teams = models;
 					var markup = Mustache.to_html(self.template, {orgs : d});
             			$(self.el).html(markup);
             	//		console.log("Teams View Self El",self.el)

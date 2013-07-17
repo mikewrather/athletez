@@ -10,8 +10,10 @@
 {{#sports}}
 <div class="clearfix">
 	<h4> {{sports_name}}</h4>
+	
 </div>
 <div class="sub-section-prof-setting well well-large">
+	<a href="javascript:void(0)" class="edit-team"  orgsId="{{org_id}}" sportId="{{sports_id}}">Edit</a>
 	{{#complevels}}
 	{{#seasons}}
 	<div class="row-fluid">
@@ -24,7 +26,7 @@
 			
 		</span>
 		<span class="span3">
-			<a href="javascript:void(0)" class="delete-team" teamid="{{team_id}}">Delete</a>
+		<!--	<a href="javascript:void(0)" class="delete-team" teamid="{{team_id}}">Delete</a> -->
 		</span>
 	</div>
 	{{/seasons}}

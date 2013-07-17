@@ -35,7 +35,8 @@ define(['require', 'text!profilesetting/templates/highschool.html', 'text!profil
 			"click .delete-team" : "DeleteTeam",
 			"click .btn-Save-Positions" : "SavePositions",
 			"click .btn-Close-Positions" : "ClosePositions",
-			"click .btn-Finish-Sports" : "FinishSports"
+			"click .btn-Finish-Sports" : "FinishSports",
+			"click .edit-team" : "EditTeam"
 		},
 
 		/*Holds */
@@ -450,12 +451,11 @@ define(['require', 'text!profilesetting/templates/highschool.html', 'text!profil
 				positions_id : positionId,
 				teams_id : teamId,
 			};
-			
-			
+
 			if (control.hasClass('active')) {
 				payload.position_id = positionId;
-			var positionModel = new PositionModel(payload);
-			positionModel.user_id = self.user_id;	
+				var positionModel = new PositionModel(payload);
+				positionModel.user_id = self.user_id;
 				positionModel.type = "delete";
 				positionModel.destroy();
 				$.when(positionModel.request).done(function() {
@@ -521,7 +521,7 @@ define(['require', 'text!profilesetting/templates/highschool.html', 'text!profil
 		AddSportsItem : function(event) {
 			if ($(event.target).is(':checked') && $(event.target).attr('seasonid') && $(event.target).attr('year')) {
 				var orgsId = $(event.target).attr('orgsid');
-				var compLevelId = $(event.target).parents(self.controls.divLevels).find(self.controls.ddlComplevel).val();
+				var compLevelId = $(event.target).parents(self.controls.divSubLevels).find(self.controls.ddlComplevel).val();
 				if ((orgsId && orgsId != 0 && orgsId != null && orgsId != '') && ((compLevelId && compLevelId != 0 && compLevelId != null && compLevelId != ''))) {
 
 					var payload = {
@@ -547,16 +547,21 @@ define(['require', 'text!profilesetting/templates/highschool.html', 'text!profil
 
 						var model = teamsModel.toJSON();
 						if (model != null && model.payload != null || model.payload.team_id != null) {
+							$(event.target).attr('teamid',model.payload.team_id);
 							self.displayPositionPopup(event, model.payload.team_id);
 						}
 					});
 				} else {
-					console.error("OrgsId is ", orgsId);
+					console.error("OrgsId & ComplevelIds are", orgsId,compLevelId);
 					var cont = $(event.target).parents(self.controls.divLevels).find(self.controls.ddlComplevel);
 					console.log($(cont).parent().find(self.controls.fieldError));
 					$(cont).parent().find(self.controls.fieldError).html(self.messages.SelectLevel).stop().fadeIn();
 				}
-			} else {
+			}
+			else if(!$(event.target).is(':checked') && $(event.target).attr('teamid')){
+				self.DeleteTeam(event);
+			}
+			 else {
 			}
 		},
 
@@ -580,7 +585,8 @@ define(['require', 'text!profilesetting/templates/highschool.html', 'text!profil
 					},
 					processData : true,
 					success : function() {
-						self.SetUpTeamsView();
+						$(event.target).removeAttr('teamid');
+						//self.SetUpTeamsView();
 					}
 				});
 
@@ -605,7 +611,83 @@ define(['require', 'text!profilesetting/templates/highschool.html', 'text!profil
 			self.$(self.controls.txtSchools).attr('disabled', 'disabled').val('');
 			self.orgs_id = undefined;
 			self.$el.find(self.controls.divAddSportSection).fadeOut();
-		}
+		},
+		EditTeam : function(event) {
+			console.log('self.teamsView.Teams', self.teamsView.Teams);
+			//fillCompLevel : function(orgs_id, destination, sportsId) {
+			var orgId = $(event.target).attr('orgsId');
+			var sportId = $(event.target).attr('sportId');
+			var destination = $(event.target).parent();
+			$(destination).html('<span class="floatRight"><a href="javascript:void(0)" class=" well-small btn-primary btn-Finish-Sports" tabindex="0">Finish</a> </span>');
+			$.each(self.teamsView.Teams, function(index, team) {
+				console.log("team", team);
+				if (orgId == team.payload.org_id) {
+					$.each(team.payload.sports, function(index, sport) {
+						console.log("sport", sport);
+						if (sport.sports_id == sportId) {
+							self.SetUpEditTeamView(orgId, destination, sportId, sport);
+							return;
+						}
+					});
+				}
+			});
+
+		},
+		SetUpEditTeamView : function(orgId, destination, sportId, sport) {
+
+			self.compLevel_id = undefined;
+			// Destroy complevel id if request received to refill the comp level
+			if (orgId && orgId > 0) {
+				var List = new CompLevelModel();
+				List.orgs_id = orgId;
+				List.fetch();
+
+				$.when(List.request).done(function() {
+					if (List.isError())
+						return;
+
+					var models = List.toJSON();
+					self.compLevel = [];
+					if (models != null && models.payload != null || models.payload.complevels != null && models.payload.complevels.length) {
+
+						self.seasons = models.payload.seasons || [];
+						for (var key in models.payload.complevels) {
+							self.compLevel.push(models.payload.complevels[key]);
+						}
+
+						console.log(sport.complevels);
+					$.each(sport.complevels, function(index, complevel) {
+					self.SetUpCompLevelView(orgId, destination, sportId);
+					console.log("complevel", complevel);
+					
+					var currDestinations = self.$(destination).find(self.controls.divSubLevels);
+					
+					
+					console.log("currDestinations", currDestinations);
+					if (currDestinations[index]) {
+					var ddl = self.$(currDestinations[index]).find(self.controls.ddlComplevel);
+						$(ddl).val(complevel.complevels_id).attr('disabled', 'disabled');
+						$(currDestinations[index]).find(self.controls.divSeasons).fadeIn();
+						
+						$.each(complevel.seasons,function(i,season){
+							console.log(".chkSeasons-"+ season.seasons_id + "-" +season.year);
+							console.log("Checkbox",$(currDestinations[index]).find(".chkSeasons-"+ season.seasons_id + "-" +season.year));
+							$(currDestinations[index]).find(".chkSeasons-"+ season.seasons_id + "-" +season.year).attr('checked','checked').attr('teamid',season.team_id);	
+						});
+						
+					}
+				});
+					} else {
+					}
+				});
+
+				
+
+			} else {
+				//	$(destination).html('');
+			}
+
+		},
 	});
 
 	return HighSchoolView;

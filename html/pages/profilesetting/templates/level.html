@@ -20,7 +20,7 @@
 			<span class="span3"><strong>{{year}}</strong></span>
 			{{#seasons}}
 			<span class="span3">
-				<input type="checkbox" class="chkSeasons" seasonId = '{{season_id}}' year='{{year}}' orgsid="{{orgsId}}" sportsid="{{sportsId}}"/>
+				<input type="checkbox" class="chkSeasons chkSeasons-{{season_id}}-{{year}}" seasonId = '{{season_id}}' year='{{year}}' orgsid="{{orgsId}}" sportsid="{{sportsId}}"/>
 				<label>&nbsp;{{season_name}} </label> </span>
 			{{/seasons}}
 		</div>
