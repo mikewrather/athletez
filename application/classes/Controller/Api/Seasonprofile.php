@@ -277,7 +277,9 @@
 				$this->modelNotSetError();
 				return false;
 			}
-			return $this->mainModel->deleteSeasonprofile();
+
+			$this->mainModel->delete_with_deps();
+			return $this->mainModel;
 		}
 		
 	}
