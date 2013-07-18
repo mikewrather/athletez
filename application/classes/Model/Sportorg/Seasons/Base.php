@@ -162,8 +162,10 @@ class Model_Sportorg_Seasons_Base extends ORM
 		{
 			$orgs->where('leagues.states_id', '=', $states_id);
 		}
-
+		//exclude team itself once is deleted
+		$classes_arr['Sportorg_Team'] = 'sportorg_team';
 		$teams = ORM::_sql_exclude_deleted($classes_arr, $teams);
+		print_r($teams->find_all());
 		return $teams;
 	}
 	

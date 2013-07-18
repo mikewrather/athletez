@@ -56,6 +56,8 @@ class Model_Sportorg_Seasons_Profile extends ORM
 			$seasons->where('orgs.id', '=', $orgs_id);
 			$classes_arr['Sportorg_Org'] = 'orgs';
 		}
+		//exclude season itself
+		$classes_arr['Sportorg_Seasons_Base'] = 'sportorg_seasons_base';
 		$seasons = ORM::_sql_exclude_deleted($classes_arr, $seasons);
 		return $seasons;
 	}
