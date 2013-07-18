@@ -142,6 +142,9 @@ class Model_Site_Comment extends Model_Site_Entdir
 
 	public function getUser(){
 		$user = $this->user;
+		//$classes_arr = array('User_Base' => 'users');
+		//$user = ORM::_sql_exclude_deleted($classes_arr, $user);
+		//print_r($user->find_all());
 		return $user;
 	}
 

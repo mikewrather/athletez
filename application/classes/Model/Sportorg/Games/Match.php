@@ -103,8 +103,8 @@ class Model_Sportorg_Games_Match extends ORM
 
 	public function deletePlayers()
 	{		
-		$players = $this->players->find();	
-					
+		$players = $this->players->find();
+
 		return $players->delete();
 	}
 	
@@ -118,10 +118,15 @@ class Model_Sportorg_Games_Match extends ORM
 							->join('utl_position_link')->on('utl_position_link.users_teams_link_id', '=', 'users_teams_link.id')
 							->join('positions')->on('positions.id','=', 'utl_position_link.positions_id')
 							->where('positions.id', '=', $positions_id);
+			$classes_arr['User_Teamslink'] = 'users_teams_link';
+			$classes_arr['User_Teamslink_Positionlink'] = 'utl_position_link';
+			$classes_arr['Sportorg_Position'] = 'positions';
 		} else {
 			$result = $players;		
 		}
-		 
+		//exclude itself
+		$classes_arr['Sportorg_Games_Matchplayer'] = 'sportorg_games_matchplayer';
+		$result = ORM::_sql_exclude_deleted($classes_arr, $result);
 		return $result;
 	}
 }
