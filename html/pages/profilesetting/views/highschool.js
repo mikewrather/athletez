@@ -36,7 +36,8 @@ define(['require', 'text!profilesetting/templates/highschool.html', 'text!profil
 			"click .btn-Save-Positions" : "SavePositions",
 			"click .btn-Close-Positions" : "ClosePositions",
 			"click .btn-Finish-Sports" : "FinishSports",
-			"click .edit-team" : "EditTeam"
+			"click .edit-team" : "EditTeam",
+			"click .btnOpenPositions" : "displayPositionPopup"
 		},
 
 		/*Holds */
@@ -73,7 +74,9 @@ define(['require', 'text!profilesetting/templates/highschool.html', 'text!profil
 			btnAddSports : ".btn-add-sports",
 			//btnSavePositions : ".btn-Save-Positions",
 			btnClosePositions : ".btn-Close-Positions",
-			btnFinishSports : ".btn-Finish-Sports"
+			btnFinishSports : ".btn-Finish-Sports",
+			btnOpenPositions : ".btnOpenPositions",
+			chkSeasons : ".chkSeasons"
 		},
 
 		/*Messages Holds the messages, warning, alerts, errors, information variables*/
@@ -401,7 +404,7 @@ define(['require', 'text!profilesetting/templates/highschool.html', 'text!profil
 			self.$(destination).append(markup);
 
 			var controlPositions = self.$(destination).find(self.controls.modalPositionBody);
-			self.fillPositions(self.sport_id, controlPositions);
+			self.fillPositions(sports_id, controlPositions);
 		},
 		/*FETCH SEASONS AS PER THE SCHOOL AND DISPLAY ACCORDINGLY*/
 		GetSeasonsData : function(collection, orgs_id, sports_id) {
@@ -421,11 +424,12 @@ define(['require', 'text!profilesetting/templates/highschool.html', 'text!profil
 		},
 		/*Calls Positions View To Fill Data In Positions PopUp*/
 		fillPositions : function(sport_id, destination) {
-			if (self.sport_id) {
+			if (sport_id) {
+				console.log("sport_id",sport_id,"destination",destination);
 				this.positionView = new PositionsView({
 					name : "settings-high-school-positions",
 					destination : destination,
-					sport_id : self.sport_id,
+					sport_id : sport_id,
 				});
 			} else {
 				self.$el.find(self.controls.ddlSports).parent().find(self.controls.fieldError).html(self.messages.selectSport).stop().fadeIn();
@@ -434,10 +438,30 @@ define(['require', 'text!profilesetting/templates/highschool.html', 'text!profil
 		/*Called on Checkbox click to show Positions PopUp to select Positions*/
 		/*PARAMETERS:
 		 e: event, checkbox click event consisting of all information of event triggered*/
-		displayPositionPopup : function(event, teamId) {
-			if ($(event.target).is(':checked')) {
-				self.$(event.target).parents(self.controls.divSubLevels).find(self.controls.modalPositionsTitle).attr('teamid', teamId);
-				self.$(event.target).parents(self.controls.divSubLevels).find(self.controls.modalPosition).modal('show')
+		displayPositionPopup : function(event) {
+			if ($(event.target).parent().find(self.controls.chkSeasons).is(':checked')) {
+				var teamId = $(event.target).attr('teamid');
+				console.log($(event.target).parents(self.controls.divSubLevels).find(self.controls.modalPositionsTitle));
+				if($(event.target).parents(self.controls.divSubLevels).find(self.controls.modalPositionsTitle).length > 0){
+					
+				self.$(event.target).parents(self.controls.divSubLevels).find(self.controls.modalPositionsTitle).attr('teamid', teamId).removeClass('active');
+				
+				// Iterate through the existing positions and mark them active 
+				var ids = $(event.target).attr('positions');
+				console.log("ids",ids);
+				if(ids){
+					var array = ids.split(',');
+					$.each(array,function(index,id){
+						self.$(event.target).parents(self.controls.divSubLevels).find("#pos-"+id).addClass("active");
+					});	
+				}
+					self.$(event.target).parents(self.controls.divSubLevels).find(self.controls.modalPosition).modal('show');
+				}
+				else{
+					alert("No Positions exists for the sport");
+				}
+			}else{
+				alert("Select Season");
 			}
 		},
 		/*Mark Selected Position as Active ot inactive*/
@@ -473,6 +497,7 @@ define(['require', 'text!profilesetting/templates/highschool.html', 'text!profil
 				$.when(positionModel.request).done(function() {
 					console.log("positionModel", positionModel);
 					console.log("positionModel", positionModel.toJSON());
+					
 				});
 			}
 		},
@@ -548,7 +573,8 @@ define(['require', 'text!profilesetting/templates/highschool.html', 'text!profil
 						var model = teamsModel.toJSON();
 						if (model != null && model.payload != null || model.payload.team_id != null) {
 							$(event.target).attr('teamid',model.payload.team_id);
-							self.displayPositionPopup(event, model.payload.team_id);
+							$(event.target).parent().find(self.controls.btnOpenPositions).attr('teamid',model.payload.team_id);
+						//	self.displayPositionPopup(event, model.payload.team_id);
 						}
 					});
 				} else {
@@ -586,6 +612,7 @@ define(['require', 'text!profilesetting/templates/highschool.html', 'text!profil
 					processData : true,
 					success : function() {
 						$(event.target).removeAttr('teamid');
+						$(event.target).parent().find(self.controls.btnOpenPositions).removeAttr('teamid');
 						//self.SetUpTeamsView();
 					}
 				});
@@ -647,6 +674,7 @@ define(['require', 'text!profilesetting/templates/highschool.html', 'text!profil
 						return;
 
 					var models = List.toJSON();
+					console.log("models",models);
 					self.compLevel = [];
 					if (models != null && models.payload != null || models.payload.complevels != null && models.payload.complevels.length) {
 
@@ -673,6 +701,18 @@ define(['require', 'text!profilesetting/templates/highschool.html', 'text!profil
 							console.log(".chkSeasons-"+ season.seasons_id + "-" +season.year);
 							console.log("Checkbox",$(currDestinations[index]).find(".chkSeasons-"+ season.seasons_id + "-" +season.year));
 							$(currDestinations[index]).find(".chkSeasons-"+ season.seasons_id + "-" +season.year).attr('checked','checked').attr('teamid',season.team_id);	
+						$(currDestinations[index]).find(".chkSeasons-"+ season.seasons_id + "-" +season.year).parent().find(self.controls.btnOpenPositions).attr('teamid',season.team_id);
+						
+						 var positionIds = "";
+						 if(season.positions){
+						 $.each(season.positions,function(j,position){
+						 	if(position){
+							 				positionIds += position.id ;
+							 				} 
+						 				}); 				
+						 }		
+						 $(currDestinations[index]).find(".chkSeasons-"+ season.seasons_id + "-" +season.year).parent().find(self.controls.btnOpenPositions).attr('positions',positionIds);
+						
 						});
 						
 					}
