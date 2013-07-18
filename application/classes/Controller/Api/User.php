@@ -87,7 +87,17 @@
 				$this->modelNotSetError();
 				return false;
 			}
-			return $this->mainModel->getSports();
+
+			if((int)trim($this->request->query('sport_type_id')) > 0)
+			{
+				$sport_type_id = (int)trim($this->request->query('sport_type_id'));
+			}
+			else
+			{
+				$sport_type_id = null;
+			}
+
+			return $this->mainModel->getSports('select',$sport_type_id);
 		}
 		
 		/**

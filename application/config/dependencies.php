@@ -92,6 +92,15 @@ return array(
 		'User_Teamslink_Positionlink' => 'users_teams_link_id',
 	),
 
+	'Sportorg_Seasons_Base' => array(
+		'Sportorg_Team' => 'seasons_id'
+	),
+
+	'Sportorg_Seasons_Profile' => array(
+		'Sportorg_Seasons_Base' => 'season_profiles_id',
+		'Sportorg_Org' => 'season_profiles_id',
+	),
+
 	//
 
 

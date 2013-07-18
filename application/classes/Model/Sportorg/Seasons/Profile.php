@@ -42,11 +42,6 @@ class Model_Sportorg_Seasons_Profile extends ORM
 		);
 	}
 	
-	public function deleteSeasonprofile()
-	{
-		return $this->delete();
-	}
-	
 	public function getSeasons($args = array())
 	{
 		extract($args);
@@ -54,13 +49,16 @@ class Model_Sportorg_Seasons_Profile extends ORM
 
 		$seasons->join("season_profiles", 'LEFT')
 			->on('season_profiles.id', '=', 'sportorg_seasons_base.season_profiles_id');
-
+		$classes_arr['Sportorg_Seasons_Profile'] = 'season_profiles';
 		if (isset($orgs_id) && $orgs_id != ""){
 			$seasons->join("orgs", 'LEFT')
 				->on('orgs.season_profiles_id', '=', 'season_profiles.id');
 			$seasons->where('orgs.id', '=', $orgs_id);
+			$classes_arr['Sportorg_Org'] = 'orgs';
 		}
-
+		//exclude season itself
+		$classes_arr['Sportorg_Seasons_Base'] = 'sportorg_seasons_base';
+		$seasons = ORM::_sql_exclude_deleted($classes_arr, $seasons);
 		return $seasons;
 	}
 

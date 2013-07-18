@@ -114,7 +114,8 @@ class Model_Sportorg_Seasons_Base extends ORM
         {
             $orgs = $teams;
         } 	
-		$orgs->join('org_sport_link')->on('org_sport_link.id', '=', 'sportorg_team.org_sport_link_id');	
+		$orgs->join('org_sport_link')->on('org_sport_link.id', '=', 'sportorg_team.org_sport_link_id');
+		$classes_arr['Sportorg_Orgsportlink'] = 'org_sport_link';
 		// orgs_id
 		// Filter teams for a certain season to only show those for a specific organization
 		if ( isset($orgs_id) )
@@ -130,14 +131,17 @@ class Model_Sportorg_Seasons_Base extends ORM
 		}
 		
 		$orgs->join('orgs')->on('orgs.id', '=', 'org_sport_link.orgs_id');
+		$classes_arr['Sportorg_Org'] = 'orgs';
 		// divisions_id
 		// Filter teams for a certain season to only show those for a specific division
 		if ( isset( $divisions_id ) )
 		{
 			$orgs->where('orgs.divisions_id', '=', $divisions_id);
 		}
-		if (isset($leagues_id) || isset($sections_id) || isset($states_id))
+		if (isset($leagues_id) || isset($sections_id) || isset($states_id)){
 			$orgs->join('leagues')->on('leagues.id', '=', 'orgs.leagues_id');
+			$classes_arr['Sportorg_League'] = 'leagues';
+		}
 		// leagues_id
 		// Filter teams for a certain season to only show those for a specific league
 		if ( isset($leagues_id) )
@@ -158,6 +162,10 @@ class Model_Sportorg_Seasons_Base extends ORM
 		{
 			$orgs->where('leagues.states_id', '=', $states_id);
 		}
+		//exclude team itself once is deleted
+		$classes_arr['Sportorg_Team'] = 'sportorg_team';
+		$teams = ORM::_sql_exclude_deleted($classes_arr, $teams);
+		print_r($teams->find_all());
 		return $teams;
 	}
 	

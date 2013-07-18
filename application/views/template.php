@@ -4,7 +4,7 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 	<meta name="language" content="en-us" />
-	<script type="text/javascript" src="vendor/jquery-2.0.0.min.js"></script>
+	<script type="text/javascript" src="/vendor/jquery-2.0.0.min.js"></script>
 	<title>Athletes UP</title>
 	<style type="text/css">
 		.error {

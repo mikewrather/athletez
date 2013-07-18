@@ -80,11 +80,10 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
 	    	
 	    	function initHome() {
 	    		var homeController = new HomeController({
-	    			"route" : "home"
+	    			"route" : ""
 	    		});
 	    	}
 	    	
-	    	Channel('app-inited').subscribe(initHome);
 	    	initHome();
 	    },
 	    
