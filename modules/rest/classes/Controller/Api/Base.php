@@ -346,7 +346,7 @@ class Controller_Api_Base extends AuthController
 		return $vc->$method();
 	}
 
-	protected function addError($error_array,$is_fatal=FALSE,$code=406)
+	protected function addError($error_array,$is_fatal=FALSE,$code=406 )
 	{
 
 		//format error array to match what Ma is expecting for client side error parsing
