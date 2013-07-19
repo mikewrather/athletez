@@ -164,12 +164,14 @@ class Model_Sportorg_Complevel_Base extends ORM
 		//always join tables
 		$teams_obj->join($org_sport_link_tb_alias, 'LEFT')
 			->on($teams_tb_alias.'.org_sport_link_id', '=', $org_sport_link_tb_alias.'.id');
+		$classes_arr['Sportorg_Orgsportlink'] = 'org_sport_link';
 
 		$teams_obj->join($orgs_tb_alias, 'left')
 			->on($org_sport_link_tb_alias.'.orgs_id', '=', $orgs_tb_alias.'.id');
-
+		$classes_arr['Sportorg_Org'] = 'orgs';
 		$teams_obj->join($divisions_tb_alias, 'left')
 			->on($orgs_tb_alias.'.divisions_id', '=', $divisions_tb_alias.".id");
+		$classes_arr['Sportorg_Division'] = 'divisions';
 
 		if (isset($complevels_id) && $complevels_id !=""){
 			$teams_obj->and_where($teams_tb_alias.'.complevels_id', '=', $complevels_id);
@@ -206,6 +208,9 @@ class Model_Sportorg_Complevel_Base extends ORM
 		}
 
 		$teams_obj->and_where_close();
+		//exclude itself
+		$classes_arr['Sportorg_Team'] = 'sportorg_team';
+		$teams_obj = ORM::_sql_exclude_deleted($classes_arr, $teams_obj);
 		return $teams_obj;
 	}
 
@@ -217,6 +222,12 @@ class Model_Sportorg_Complevel_Base extends ORM
 		{
 			$complevels->where('complevel_profiles_id', '=', $complevel_profiles_id);
 		}
+		//exclude itself
+		$classes_arr = array('Sportorg_Complevel_Base' => 'sportorg_complevel_base');
+		$complevels = ORM::_sql_exclude_deleted($classes_arr, $complevels);
+
 		return $complevels;
 	}
+
+
 }

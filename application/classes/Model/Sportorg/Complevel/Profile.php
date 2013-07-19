@@ -58,7 +58,14 @@ class Model_Sportorg_Complevel_Profile extends ORM
 			$complevels_model->join('orgs')
 				->on('orgs.complevel_profiles_id', '=', 'sportorg_complevel_base.complevel_profiles_id');
 			$complevels_model->where('orgs.id', '=', $orgs_id);
+
+			$classes_arr['Sportorg_Org'] = 'orgs';
 		}
+
+		//exclude itself
+		$classes_arr['Sportorg_Complevel_Base'] = 'sportorg_complevel_base';
+		$complevels_model = ORM::_sql_exclude_deleted($classes_arr, $complevels_model);
+
 		return $complevels_model;
 	}
 

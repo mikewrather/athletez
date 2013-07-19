@@ -101,6 +101,15 @@ return array(
 		'Sportorg_Org' => 'season_profiles_id',
 	),
 
+	'Sportorg_Complevel_Base' => array(
+		'Sportorg_Team' => 'complevels_id',
+	),
+
+	'Sportorg_Complevel_Profile' => array(
+		'Sportorg_Complevel_Base' => 'complevel_profiles_id',
+		'Sportorg_Org' => 'complevel_profiles_id'
+	),
+
 	//
 
 
