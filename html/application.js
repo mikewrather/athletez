@@ -99,7 +99,7 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
 	            });
             }
             Channel('app-inited').subscribe(initProfile);
-			
+            initProfile(userid);
         },
 		testsd: function () {
         	this.loadStyles();
