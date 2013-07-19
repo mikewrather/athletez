@@ -25,7 +25,7 @@ function(facade, collections, SportsOrgCollection, utils) {
                     if(this.gender == undefined) {
                     	//Incase to Hit Api without any parameter, Add Url here
                     } 
-                    return '/api/sport/listall/?sport_type=' + this.sport_type + '&male=' + this.male + '&female=' + this.female;
+                    return '/api/sport/listall/?sport_type=' + this.sport_type + '&male=' + this.male + '&female=' + this.female + '&sport_type_id='+this.sport_type_id;
       },
     });
 

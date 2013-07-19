@@ -18,7 +18,7 @@ function(facade, utils, TeamsList, TeamModel) {
         	var self = this;
             if (testpath)
                 return testpath + ' /api/user/orgs/' + self.user_id + '?groupby=complevel ';
-            return ' /api/user/orgs/' + self.user_id + '?groupby=complevel ';
+            return ' /api/user/orgs/' + self.user_id + '?groupby=complevel&sports_club=' + self.sports_club;
         },
         
         // **Method:** `fetchSuccess` - resolve the deferred here in success
@@ -35,6 +35,10 @@ function(facade, utils, TeamsList, TeamModel) {
                 collection.push(item);
             }
             collection.deferred.resolve(response);            
+        },
+        data : {
+        	user_id : self.user_id,
+        	sports_club : self.sports_club
         }
     });
 
