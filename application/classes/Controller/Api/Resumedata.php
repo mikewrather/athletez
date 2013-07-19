@@ -37,7 +37,7 @@
 		 */
 		public function action_get_basics()
 		{
-			$this->payloadDesc = "Return the basics about a given peice of resume data";
+			$this->payloadDesc = "Return the basics about a given piece of resume data";
 
 			if(!$this->mainModel->id)
 			{
@@ -239,8 +239,8 @@
 				$this->modelNotSetError();
 				return false;
 			}
-			
-			return $this->mainModel->delete(); 
+			$this->mainModel->delete_with_deps();
+			return $this->mainModel;
 		}
 		
 	}

@@ -101,10 +101,12 @@ class Model_User_Resume_Data extends ORM
 	public function getListall($args = array())
 	{
 		extract($args);
-		$resumedata = ORM::factory('User_Resume_Data')
-		 		->join('rdg_rdp_link')->on('rdg_rdp_link.resume_data_groups_id', '=', 'user_resume_data.resume_data_groups_id')
-				->where('user_resume_data.id', '=', $this->id);
-				
+		$resumedata = ORM::factory('User_Resume_Data');
+		if ( isset($resume_data_groups_id) || isset($resume_data_profiles)){
+			$resumedata->join('rdg_rdp_link')->on('rdg_rdp_link.resume_data_groups_id', '=', 'user_resume_data.resume_data_groups_id');
+		}
+
+		$classes_arr['User_Resume_Data_Group_Profilelink'] = 'rdg_rdp_link';
 		if ( isset($resume_data_groups_id) )
 		{
 			
@@ -113,11 +115,12 @@ class Model_User_Resume_Data extends ORM
 		
 		if ( isset($resume_data_profiles) )
 		{
-			
 			$resumedata->where('rdg_rdp_link.resume_data_profiles_id', '=', $resume_data_profiles );
 		}
-		
-		return $resumedata; 
+		//exclude itself
+		$classes_arr['User_Resume_Data'] = 'user_resume_data';
+		$resumedata = ORM::_sql_exclude_deleted($classes_arr, $resumedata);
+		return $resumedata;
 	}
 	
 	public function getVals()

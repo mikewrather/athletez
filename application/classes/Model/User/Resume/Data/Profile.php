@@ -80,7 +80,8 @@ class Model_User_Resume_Data_Profile extends ORM
 	public function getDatagroups()
 	{
 		// get the data groups		 
-		$datagroups = $this->datagroups;		
+		$datagroups = $this->datagroups;
+		//print_r($datagroups->find_all());
 		return $datagroups;
 	}
 	
