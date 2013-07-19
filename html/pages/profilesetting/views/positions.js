@@ -19,7 +19,9 @@ define(['require', 'text!profilesetting/templates/positions.html', 'facade', 'vi
 		/*Controls Holds all the html controls used in the view and template*/
 		/*Jquery Selectors {#,. etc} must be preixed so that it could be directly used with $ Sign*/
 		controls : {
-			spnPositionTitle : '.spn-position-title_h'
+			spnPositionTitle : '.spn-position-title_h',
+			divLevels : '.div-levels',
+			btnPositions : '.btnOpenPositions'
 		},
 
 		/*Messages Holds the messages, warning, alerts, errors, information variables*/
@@ -103,6 +105,14 @@ define(['require', 'text!profilesetting/templates/positions.html', 'facade', 'vi
 				Data : self.positions || []
 			});
 			$(self.destination).html(markup);
+			
+			// Show Positions Button Only If Positions Exists
+			if(self.positions != null && self.positions.length > 0){
+				$(self.destination).parents(self.controls.divLevels).find(self.controls.btnPositions).fadeIn();
+			}else
+			{
+				$(self.destination).parents(self.controls.divLevels).find(self.controls.btnPositions).fadeOut();
+			}
 		}
 	});
 

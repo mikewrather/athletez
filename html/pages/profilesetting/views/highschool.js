@@ -14,22 +14,14 @@ define(['require', 'text!profilesetting/templates/highschool.html', 'text!profil
 		events : {
 			"keyup #txt-school-state" : "keyupState",
 			"blur #txt-school-state" : "changeState",
-
 			"keyup #txt-school-school" : "keyupSchool",
 			"blur #txt-school-school" : "changeSchool",
-
-			//"change .ddl-school-sports" : "changeSports",
 			"change .ddl-sports" : "changeSports",
-			//"change .ddl-school-complevel" : "changeCompLevel",
 			"change .ddl-complevel" : "changeCompLevel",
 			"change .chkSeasons" : "AddSportsItem",
-
 			"click .btn-add-level" : "AddLevel",
-
 			"click .spn-position-title_h" : "MarkPosition",
-
 			"click .btn-add-sports" : "AddSports",
-
 			"click .btn-Remove-Sport" : "RemoveSports",
 			"click #btn-Add-School" : "SetUpAddSchool",
 			"click .delete-team" : "DeleteTeam",
@@ -51,10 +43,6 @@ define(['require', 'text!profilesetting/templates/highschool.html', 'text!profil
 			fieldError : '.field-error',
 			ddlSports : '.ddl-sports',
 			ddlComplevel : '.ddl-complevel',
-			//	ddlSports : '#ddl-school-sports',
-			//	ddlCompLevel : '#ddl-school-complevel',
-			//	divSchoolSeasons :'#div-school-seasons',
-			//	modalPosition : '.modal-school-positions',
 			modalPosition : '.modal-positions',
 			modalPositionBody : '.modal-position-body',
 			modalPositionsTitle : '.spn-position-title_h',
@@ -62,17 +50,14 @@ define(['require', 'text!profilesetting/templates/highschool.html', 'text!profil
 			divMainSportsSection : "#def-school-sports-section",
 			divLevels : ".div-sports-level",
 			divSeasons : ".div-seasons",
-			//	divLevels: ".div-school-sports-level",
 			divsportsLevel : ".section-sportslevel",
 			divSubLevels : ".div-levels",
 			divSchoolSportsSection : ".school-sports-section",
 			divSportsWrapper : ".div-sports-wrapper",
-			/*Buttons And Links Used*/
 			btnRemoveSports : ".btn-Remove-Sport",
 			divTeamListDetail : ".section-team-list-detail",
 			divAddSportSection : "#section-Add-Sports-school",
 			btnAddSports : ".btn-add-sports",
-			//btnSavePositions : ".btn-Save-Positions",
 			btnClosePositions : ".btn-Close-Positions",
 			btnFinishSports : ".btn-Finish-Sports",
 			btnOpenPositions : ".btnOpenPositions",
@@ -185,7 +170,6 @@ define(['require', 'text!profilesetting/templates/highschool.html', 'text!profil
 						self.$el.find(self.controls.txtStates).trigger('keydown');
 					});
 				} else {
-					console.log("Change State From else Called");
 					self.changeState();
 				}
 			}
@@ -292,6 +276,8 @@ define(['require', 'text!profilesetting/templates/highschool.html', 'text!profil
 			} else {
 				var List = new SportsCollection();
 				List.sport_type = 1;
+				List.sport_type_id = 1;
+				// For Sports Not associated With Individuals
 				//TODO:  Gender is missing in API so need to update code
 				List.male = 1;
 				List.female = 0;
@@ -314,6 +300,9 @@ define(['require', 'text!profilesetting/templates/highschool.html', 'text!profil
 					for (var key in models) {
 						self.sports.push(models[key].payload);
 					}
+					// Sort Sports Before Filling Up Into Drop-Down
+					self.sort(self.sports, 'sport_name', false);
+
 					self.SetupSportsView(orgs_id, destination);
 				});
 			}
@@ -388,15 +377,13 @@ define(['require', 'text!profilesetting/templates/highschool.html', 'text!profil
 					return;
 				}
 			}
-			console.log("else");
-			console.log(self.compLevel_id);
-			console.log(self.$(event.target).parents(self.controls.divSubLevels).find(self.controls.divSeasons));
 			self.$(event.target).parents(self.controls.divSubLevels).find(self.controls.divSeasons).fadeOut();
 		},
 		/*SET UP LEVEL VIEW AS PER THE DESTINATION WHERE TO APPEND THE VIEW*/
 		SetUpCompLevelView : function(orgs_id, destination, sports_id) {
 			var data = self.GetSeasonsData(self.seasons, orgs_id, sports_id);
 			console.log("Data", data);
+			console.log(destination);
 			var markup = Mustache.to_html(levelTemplate, {
 				levels : self.compLevel,
 				Data : data
@@ -425,7 +412,7 @@ define(['require', 'text!profilesetting/templates/highschool.html', 'text!profil
 		/*Calls Positions View To Fill Data In Positions PopUp*/
 		fillPositions : function(sport_id, destination) {
 			if (sport_id) {
-				console.log("sport_id",sport_id,"destination",destination);
+				console.log("sport_id", sport_id, "destination", destination);
 				this.positionView = new PositionsView({
 					name : "settings-high-school-positions",
 					destination : destination,
@@ -442,25 +429,25 @@ define(['require', 'text!profilesetting/templates/highschool.html', 'text!profil
 			if ($(event.target).parent().find(self.controls.chkSeasons).is(':checked')) {
 				var teamId = $(event.target).attr('teamid');
 				console.log($(event.target).parents(self.controls.divSubLevels).find(self.controls.modalPositionsTitle));
-				if($(event.target).parents(self.controls.divSubLevels).find(self.controls.modalPositionsTitle).length > 0){
-					
-				self.$(event.target).parents(self.controls.divSubLevels).find(self.controls.modalPositionsTitle).attr('teamid', teamId).removeClass('active');
-				
-				// Iterate through the existing positions and mark them active 
-				var ids = $(event.target).attr('positions');
-				console.log("ids",ids);
-				if(ids){
-					var array = ids.split(',');
-					$.each(array,function(index,id){
-						self.$(event.target).parents(self.controls.divSubLevels).find("#pos-"+id).addClass("active");
-					});	
-				}
+				if ($(event.target).parents(self.controls.divSubLevels).find(self.controls.modalPositionsTitle).length > 0) {
+
+					self.$(event.target).parents(self.controls.divSubLevels).find(self.controls.modalPositionsTitle).attr('teamid', teamId).removeClass('active');
+
+					// Iterate through the existing positions and mark them active
+					var ids = $(event.target).attr('positions');
+					console.log("ids", ids);
+					if (ids) {
+						var array = ids.split(',');
+						$.each(array, function(index, id) {
+							self.$(event.target).parents(self.controls.divSubLevels).find("#pos-" + id).addClass("active");
+						});
+					}
 					self.$(event.target).parents(self.controls.divSubLevels).find(self.controls.modalPosition).modal('show');
-				}
-				else{
+				} else {
+					// Alert Message If No Positions Exists For The Sport Selected
 					alert("No Positions exists for the sport");
 				}
-			}else{
+			} else {
 				alert("Select Season");
 			}
 		},
@@ -476,29 +463,26 @@ define(['require', 'text!profilesetting/templates/highschool.html', 'text!profil
 				teams_id : teamId,
 			};
 
-			if (control.hasClass('active')) {
+			if (control.hasClass('active')) {//If the positions is already added then remove it
 				payload.position_id = positionId;
-				var positionModel = new PositionModel(payload);
 				positionModel.user_id = self.user_id;
+				var positionModel = new PositionModel(payload);
 				positionModel.type = "delete";
-				positionModel.destroy();
-				$.when(positionModel.request).done(function() {
-					control.removeClass('active');
-					console.log("positionModel", positionModel);
-					console.log("positionModel", positionModel.toJSON());
+				console.log("positionModel", positionModel);
+				positionModel.destroy({
+					data : payload
 				});
 
-			} else {
+				$.when(positionModel.request).done(function() {
+					control.removeClass('active');
+				});
+
+			} else {//If the positions inactive add it on server
 				var positionModel = new PositionModel(payload);
 				positionModel.user_id = self.user_id;
 				control.addClass('active');
 				positionModel.type = "save";
 				positionModel.save();
-				$.when(positionModel.request).done(function() {
-					console.log("positionModel", positionModel);
-					console.log("positionModel", positionModel.toJSON());
-					
-				});
 			}
 		},
 
@@ -572,29 +556,24 @@ define(['require', 'text!profilesetting/templates/highschool.html', 'text!profil
 
 						var model = teamsModel.toJSON();
 						if (model != null && model.payload != null || model.payload.team_id != null) {
-							$(event.target).attr('teamid',model.payload.team_id);
-							$(event.target).parent().find(self.controls.btnOpenPositions).attr('teamid',model.payload.team_id);
-						//	self.displayPositionPopup(event, model.payload.team_id);
+							$(event.target).attr('teamid', model.payload.team_id);
+							$(event.target).parent().find(self.controls.btnOpenPositions).attr('teamid', model.payload.team_id);
+							//	self.displayPositionPopup(event, model.payload.team_id);
 						}
 					});
 				} else {
-					console.error("OrgsId & ComplevelIds are", orgsId,compLevelId);
+					console.error("OrgsId & ComplevelIds are", orgsId, compLevelId);
 					var cont = $(event.target).parents(self.controls.divLevels).find(self.controls.ddlComplevel);
-					console.log($(cont).parent().find(self.controls.fieldError));
 					$(cont).parent().find(self.controls.fieldError).html(self.messages.SelectLevel).stop().fadeIn();
 				}
-			}
-			else if(!$(event.target).is(':checked') && $(event.target).attr('teamid')){
+			} else if (!$(event.target).is(':checked') && $(event.target).attr('teamid')) {
+				// IN CASE TEAM IS ALREADY ADDED INTO DATABASE DELETE IT
 				self.DeleteTeam(event);
 			}
-			 else {
-			}
 		},
-
+		// DELETE TEAM FROM DATABASE
 		DeleteTeam : function(event) {
-			console.log("Delete Team High School");
 			var teamId = $(event.target).attr('teamid');
-			console.log(teamId);
 			if (teamId) {
 				var payload = {};
 				payload.user_id = self.user_id;
@@ -613,24 +592,18 @@ define(['require', 'text!profilesetting/templates/highschool.html', 'text!profil
 					success : function() {
 						$(event.target).removeAttr('teamid');
 						$(event.target).parent().find(self.controls.btnOpenPositions).removeAttr('teamid');
-						//self.SetUpTeamsView();
 					}
 				});
 
 			}
 		},
-		SavePositions : function(event) {
-			//self.SetUpTeamsView();
-			//alert($(event.target).attr('teamid'))
-		},
-		ClosePositions : function(event) {
-			//self.SetUpTeamsView();
-		},
+		//REFRESH TEAM LIST AS SOON AS USER IS DONE WITH THE CHANGES AND CLICKS FINISH
 		FinishSports : function() {
 			console.log("SetUpTeamsView");
 			self.ClearAddNewForm();
 			self.init();
 		},
+		// CLEAR THE COMPLEE FORM WHICH IS USED TO ADD NEW ORGANIZATION AND RELATED DATA
 		ClearAddNewForm : function() {
 			self.RemoveSportsSection();
 			self.$(self.controls.txtStates).val('');
@@ -639,13 +612,14 @@ define(['require', 'text!profilesetting/templates/highschool.html', 'text!profil
 			self.orgs_id = undefined;
 			self.$el.find(self.controls.divAddSportSection).fadeOut();
 		},
+		// EDIT VIEW FOR A TEAM IF USER CLICKS EDIT LINK FOR TEAMS
 		EditTeam : function(event) {
 			console.log('self.teamsView.Teams', self.teamsView.Teams);
 			//fillCompLevel : function(orgs_id, destination, sportsId) {
 			var orgId = $(event.target).attr('orgsId');
 			var sportId = $(event.target).attr('sportId');
 			var destination = $(event.target).parent();
-			$(destination).html('<span class="floatRight"><a href="javascript:void(0)" class=" well-small btn-primary btn-Finish-Sports" tabindex="0">Finish</a> </span>');
+			$(destination).html('<a tabindex="0" orgsid="' + orgId + '" class="btn-add-level" href="javascript:void(0)">Add Level</a> <span class="floatRight"><a href="javascript:void(0)" class=" well-small btn-primary btn-Finish-Sports" tabindex="0">Finish</a> </span>');
 			$.each(self.teamsView.Teams, function(index, team) {
 				console.log("team", team);
 				if (orgId == team.payload.org_id) {
@@ -660,6 +634,13 @@ define(['require', 'text!profilesetting/templates/highschool.html', 'text!profil
 			});
 
 		},
+		// DISPLAY THE SPORT AS FETCHED FROM RECORDS IN FUNTION "EDITTEAM" AS PER THE VIEW
+		/*PARAMETERS:
+		 orgId :int, schoolId,
+		 destination: jquery selector to add created markup 
+		 sportId : selected sport for which edit button is clicked
+		 sport : single object of sports
+		 * */
 		SetUpEditTeamView : function(orgId, destination, sportId, sport) {
 
 			self.compLevel_id = undefined;
@@ -674,7 +655,6 @@ define(['require', 'text!profilesetting/templates/highschool.html', 'text!profil
 						return;
 
 					var models = List.toJSON();
-					console.log("models",models);
 					self.compLevel = [];
 					if (models != null && models.payload != null || models.payload.complevels != null && models.payload.complevels.length) {
 
@@ -683,48 +663,38 @@ define(['require', 'text!profilesetting/templates/highschool.html', 'text!profil
 							self.compLevel.push(models.payload.complevels[key]);
 						}
 
-						console.log(sport.complevels);
-					$.each(sport.complevels, function(index, complevel) {
-					self.SetUpCompLevelView(orgId, destination, sportId);
-					console.log("complevel", complevel);
-					
-					var currDestinations = self.$(destination).find(self.controls.divSubLevels);
-					
-					
-					console.log("currDestinations", currDestinations);
-					if (currDestinations[index]) {
-					var ddl = self.$(currDestinations[index]).find(self.controls.ddlComplevel);
-						$(ddl).val(complevel.complevels_id).attr('disabled', 'disabled');
-						$(currDestinations[index]).find(self.controls.divSeasons).fadeIn();
-						
-						$.each(complevel.seasons,function(i,season){
-							console.log(".chkSeasons-"+ season.seasons_id + "-" +season.year);
-							console.log("Checkbox",$(currDestinations[index]).find(".chkSeasons-"+ season.seasons_id + "-" +season.year));
-							$(currDestinations[index]).find(".chkSeasons-"+ season.seasons_id + "-" +season.year).attr('checked','checked').attr('teamid',season.team_id);	
-						$(currDestinations[index]).find(".chkSeasons-"+ season.seasons_id + "-" +season.year).parent().find(self.controls.btnOpenPositions).attr('teamid',season.team_id);
-						
-						 var positionIds = "";
-						 if(season.positions){
-						 $.each(season.positions,function(j,position){
-						 	if(position){
-							 				positionIds += position.id ;
-							 				} 
-						 				}); 				
-						 }		
-						 $(currDestinations[index]).find(".chkSeasons-"+ season.seasons_id + "-" +season.year).parent().find(self.controls.btnOpenPositions).attr('positions',positionIds);
-						
+						$.each(sport.complevels, function(index, complevel) {
+							self.SetUpCompLevelView(orgId, destination, sportId);
+
+							var currDestinations = self.$(destination).find(self.controls.divSubLevels);
+
+							if (currDestinations[index]) {
+								var ddl = self.$(currDestinations[index]).find(self.controls.ddlComplevel);
+								$(ddl).val(complevel.complevels_id).attr('disabled', 'disabled');
+								$(currDestinations[index]).find(self.controls.divSeasons).fadeIn();
+
+								$.each(complevel.seasons, function(i, season) {
+									$(currDestinations[index]).find(".chkSeasons-" + season.seasons_id + "-" + season.year).attr('checked', 'checked').attr('teamid', season.team_id);
+									$(currDestinations[index]).find(".chkSeasons-" + season.seasons_id + "-" + season.year).parent().find(self.controls.btnOpenPositions).attr('teamid', season.team_id);
+
+									var positionIds = "";
+									if (season.positions) {
+										$.each(season.positions, function(j, position) {
+											if (position) {
+												positionIds += position.id;
+											}
+										});
+									}
+									$(currDestinations[index]).find(".chkSeasons-" + season.seasons_id + "-" + season.year).parent().find(self.controls.btnOpenPositions).attr('positions', positionIds);
+
+								});
+
+							}
 						});
-						
-					}
-				});
 					} else {
 					}
 				});
-
-				
-
 			} else {
-				//	$(destination).html('');
 			}
 
 		},

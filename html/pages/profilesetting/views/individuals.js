@@ -142,6 +142,7 @@ define(['require',
 		console.log("setUpSportsView Individual View");
 		var List = new SportsCollection();
 		List.user_id = self.user_id;
+		List.sport_type_id = 2; // For Sports Only associated With Individuals
 		//TODO:  Gender is missing in API so need to update code
 			List.male = 1;
 			List.female = 0;
@@ -202,14 +203,15 @@ define(['require',
 			var sportsId = $(event.target).attr('sportid');
 			console.log(sportsId);
 			if(sportsId){
-				var payload = {};
-				payload.user_id = self.user_id;
-				payload.sports_id = sportsId;
+				var payload = {
+					user_id : self.user_id,
+				sports_id : sportsId
+				};
 				
 				var sportsModel = new SportsModel(payload);
 				sportsModel.user_id = self.user_id;
 				sportsModel.type = "delete";
-				sportsModel.destroy({data: { user_id : self.user_id, sports_id : sportsId}, processData: true,
+				sportsModel.destroy({data: payload, processData: true,
 					success : function(){
 						self.setUpUsersSportsCheck();
 						//self.setUpUsersSports();
