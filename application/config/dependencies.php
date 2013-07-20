@@ -152,10 +152,30 @@ return array(
 		'Location_Base' => 'cities_id',
 	),
 
-	'' => array(
-
+	'Location_County' => array(
+		'Location_City' => 'county_id'
 	),
-	//
+
+	//TODO, as to states_id, we may lose some line connection on states
+	'Location_State' => array(
+		'Location_County' => 'states_id',
+		'Sportorg_Section' => 'states_id',
+		'Sportorg_Division' => 'states_id',
+		'Sportorg_League' => 'states_id'
+	),
+
+	'Sportorg_Section' => array(
+		'Sportorg_Division' => 'sections_id',
+		'Sportorg_League' => 'sections_id',
+	),
+
+	'Sportorg_Division' => array(
+		'Sportorg_Org' => 'divisions_id',
+	),
+
+	'Sportorg_League' => array(
+		'Sportorg_Org' => 'leagues_id'
+	),
 
 
 

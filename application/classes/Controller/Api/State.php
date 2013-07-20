@@ -61,7 +61,7 @@
 				$this->modelNotSetError();
 				return false;
 			}
-			return $this->mainModel->getCountries();
+			return $this->mainModel->getCounties();
 		}
 
 		public function action_get_search()
@@ -584,7 +584,8 @@
 				$this->modelNotSetError();
 				return false;
 			}
-			return $this->mainModel->delete();
+			$this->mainModel->delete_with_deps();
+			return $this->mainModel;
 		}
 		
 	}
