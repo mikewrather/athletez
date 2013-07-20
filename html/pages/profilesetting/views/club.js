@@ -523,7 +523,8 @@ define(['require', 'text!profilesetting/templates/club.html', 'text!profilesetti
 			this.teamsView = new TeamsView({
 				user_id : self.user_id,
 				destination : self.controls.divTeamListDetail,
-				sports_club : 1
+				sports_club : 1,
+				org_type : "club"
 			});
 		},
 		/*Show Add Sport Section */

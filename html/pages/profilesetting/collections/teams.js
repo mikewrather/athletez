@@ -18,7 +18,7 @@ function(facade, utils, TeamsList, TeamModel) {
         	var self = this;
             if (testpath)
                 return testpath + ' /api/user/orgs/' + self.user_id + '?groupby=complevel ';
-            return ' /api/user/orgs/' + self.user_id + '?groupby=complevel&sports_club=' + self.sports_club;
+            return ' /api/user/orgs/' + self.user_id + '?groupby=complevel&org_type=' + self.org_type;
         },
         
         // **Method:** `fetchSuccess` - resolve the deferred here in success

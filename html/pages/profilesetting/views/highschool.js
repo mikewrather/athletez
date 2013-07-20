@@ -519,7 +519,8 @@ define(['require', 'text!profilesetting/templates/highschool.html', 'text!profil
 			this.teamsView = new TeamsView({
 				user_id : self.user_id,
 				destination : self.controls.divTeamListDetail,
-				sports_club : 0
+				sports_club : 0,
+				org_type : "school"
 			});
 		},
 		/*Show Add Sport Section */
