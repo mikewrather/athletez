@@ -39,8 +39,8 @@ define(['require', 'text!profilesetting/templates/teamlist.html', 'facade', 'vie
 				this.destination = options.destination;
 				this.user_id = options.user_id;
 				this.sports_club = options.sports_club;
-				this.org_type = options.org_type;
 				this.el = options.destination;
+				this.org_type = options.org_type;
 			}
 		},
 

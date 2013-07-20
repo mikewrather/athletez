@@ -205,7 +205,7 @@ define(['require',
 			if(sportsId){
 				var payload = {
 					user_id : self.user_id,
-				sports_id : sportsId
+					sports_id : sportsId
 				};
 				
 				var sportsModel = new SportsModel(payload);

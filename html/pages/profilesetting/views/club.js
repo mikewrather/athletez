@@ -5,10 +5,7 @@
  */
 define(['require', 'text!profilesetting/templates/club.html', 'text!profilesetting/templates/sportslevel.html', 'text!profilesetting/templates/level.html', 'facade', 'views', 'utils', 'vendor', 'profilesetting/collections/states', 'profilesetting/collections/schools', 'profilesetting/collections/sports', 'profilesetting/views/teams', 'profilesetting/models/complevel', 'profilesetting/views/seasons', 'profilesetting/views/positions', 'profilesetting/models/team', 'profilesetting/models/position'], function(require, highSchoolTemplate, sportsLevelTemplate, levelTemplate) {
 
-	var self, ClubView, facade = require('facade'), views = require('views'), SectionView = views.SectionView, utils = require('utils'), Channel = utils.lib.Channel, vendor = require('vendor'), Mustache = vendor.Mustache, $ = facade.$, StatesCollection = require('profilesetting/collections/states'), SchoolCollection = require('profilesetting/collections/schools'), SportsCollection = require('profilesetting/collections/sports'), CompLevelModel = require('profilesetting/models/complevel'), SeasonsView = require('profilesetting/views/seasons'), PositionsView = require('profilesetting/views/positions'), TeamsView = require('profilesetting/views/teams'), TeamModel = require('profilesetting/models/team'), PositionModel = require('profilesetting/models/position'),
-	
-	
-	 ClubView = SectionView.extend({
+	var self, ClubView, facade = require('facade'), views = require('views'), SectionView = views.SectionView, utils = require('utils'), Channel = utils.lib.Channel, vendor = require('vendor'), Mustache = vendor.Mustache, $ = facade.$, StatesCollection = require('profilesetting/collections/states'), SchoolCollection = require('profilesetting/collections/schools'), SportsCollection = require('profilesetting/collections/sports'), CompLevelModel = require('profilesetting/models/complevel'), SeasonsView = require('profilesetting/views/seasons'), PositionsView = require('profilesetting/views/positions'), TeamsView = require('profilesetting/views/teams'), TeamModel = require('profilesetting/models/team'), PositionModel = require('profilesetting/models/position'), ClubView = SectionView.extend({
 
 		template : highSchoolTemplate,
 
@@ -63,7 +60,8 @@ define(['require', 'text!profilesetting/templates/club.html', 'text!profilesetti
 			btnClosePositions : ".btn-Close-Positions",
 			btnFinishSports : ".btn-Finish-Sports",
 			btnOpenPositions : ".btnOpenPositions",
-			chkSeasons : ".chkSeasons"
+			chkSeasons : ".chkSeasons",
+			btnAddLevel : ".btn-add-level"
 		},
 
 		/*Messages Holds the messages, warning, alerts, errors, information variables*/
@@ -225,6 +223,8 @@ define(['require', 'text!profilesetting/templates/club.html', 'text!profilesetti
 					var models = List.toJSON();
 					if (models == null || models.length < 1)
 						self.$(self.controls.txtSchools).parent().find(self.controls.fieldMessage).html(self.messages.dataNotExist).stop().fadeIn();
+					else
+						self.$(self.controls.txtSchools).parent().find(self.controls.fieldMessage).html('').stop().fadeOut();
 
 					self.schools = [];
 					for (var key in models) {
@@ -295,7 +295,7 @@ define(['require', 'text!profilesetting/templates/club.html', 'text!profilesetti
 						return;
 
 					var models = List.toJSON();
-					console.log("Models",models);
+					console.log("Models", models);
 					if (models == null || models.length < 1)
 						self.$(self.controls.ddlSports).parent().find(self.controls.fieldMessage).html(self.messages.dataNotExist).stop().fadeIn();
 
@@ -318,13 +318,15 @@ define(['require', 'text!profilesetting/templates/club.html', 'text!profilesetti
 
 				var controlToAppend = self.$(event.target).parents(self.controls.divsportsLevel).find(self.controls.divLevels);
 				controlToAppend.html('');
+				self.$(event.target).parents(self.controls.divsportsLevel).find(self.controls.btnAddLevel).attr('sportid',sportId);
 				self.fillCompLevel(orgsId, controlToAppend, sportId);
+				
 			} else
 				self.sport_id = 0;
 		},
 		/*Set up sports section as per the destination wehether default or updation case*/
 		SetupSportsView : function(orgs_id, destination) {
-			console.log("self.sports",self.sports);
+			console.log("self.sports", self.sports);
 			console.log(destination);
 			var markup = Mustache.to_html(sportsLevelTemplate, {
 				sports : self.sports,
@@ -375,7 +377,6 @@ define(['require', 'text!profilesetting/templates/club.html', 'text!profilesetti
 			for (var key in self.compLevel) {
 				if (self.compLevel[key].complevel_id == value) {
 					self.compLevel_id = value;
-					console.log("if");
 					self.$(event.target).attr('disabled', 'disabled');
 					self.$(event.target).parents(self.controls.divSubLevels).find(self.controls.divSeasons).fadeIn();
 					return;
@@ -422,6 +423,7 @@ define(['require', 'text!profilesetting/templates/club.html', 'text!profilesetti
 					destination : destination,
 					sport_id : sport_id,
 				});
+				self.$el.find(self.controls.ddlSports).parent().find(self.controls.fieldError).html('').fadeOut();
 			} else {
 				self.$el.find(self.controls.ddlSports).parent().find(self.controls.fieldError).html(self.messages.selectSport).stop().fadeIn();
 			}
@@ -430,6 +432,7 @@ define(['require', 'text!profilesetting/templates/club.html', 'text!profilesetti
 		/*PARAMETERS:
 		 e: event, checkbox click event consisting of all information of event triggered*/
 		displayPositionPopup : function(event) {
+			self.clickedPositionTarget = $(event.target);
 			if ($(event.target).parent().find(self.controls.chkSeasons).is(':checked')) {
 				var teamId = $(event.target).attr('teamid');
 				console.log($(event.target).parents(self.controls.divSubLevels).find(self.controls.modalPositionsTitle));
@@ -495,7 +498,7 @@ define(['require', 'text!profilesetting/templates/club.html', 'text!profilesetti
 
 			var destination = self.$(event.target).parents(self.controls.divsportsLevel).find(self.controls.divLevels);
 			var orgsId = $(event.target).attr('orgsid');
-			var sportsId = self.$(event.target).parents(self.controls.divsportsLevel).find(self.controls.ddlSports).attr('sportsid');
+			var sportsId = $(event.target).attr('sportid');
 			if (orgsId && orgsId != 0 && orgsId != null && orgsId != '') {
 				self.fillCompLevel(orgsId, destination, sportsId);
 			} else {
@@ -596,7 +599,7 @@ define(['require', 'text!profilesetting/templates/club.html', 'text!profilesetti
 					processData : true,
 					success : function() {
 						$(event.target).removeAttr('teamid');
-						$(event.target).parent().find(self.controls.btnOpenPositions).removeAttr('teamid');
+						$(event.target).parent().find(self.controls.btnOpenPositions).removeAttr('teamid').removeAttr("positions");
 					}
 				});
 
@@ -624,8 +627,15 @@ define(['require', 'text!profilesetting/templates/club.html', 'text!profilesetti
 			var orgId = $(event.target).attr('orgsId');
 			var sportId = $(event.target).attr('sportId');
 			var destination = $(event.target).parent();
-			$(destination).html('<a tabindex="0" orgsid="' + orgId + '" class="btn-add-level" href="javascript:void(0)">Add Level</a> <span class="floatRight"><a href="javascript:void(0)" class=" well-small btn-primary btn-Finish-Sports" tabindex="0">Finish</a> </span>');
-			$.each(self.teamsView.Teams, function(index, team) {
+			var tempHtml = '<div class="section-sportslevel">';
+			tempHtml += '<a tabindex="0" orgsid="' + orgId + '" class="btn-add-level" href="javascript:void(0)">Add Level</a>';
+			 tempHtml += '<span class="floatRight"><a href="javascript:void(0)" class=" well-small btn-primary btn-Finish-Sports" tabindex="0">Finish</a> </span>';
+			 tempHtml += '<div class="div-sports-level"></div></div>';
+			 
+			$(destination).html(tempHtml);
+			var sportDestination = $(destination).find(self.controls.divLevels);
+			
+			 $.each(self.teamsView.Teams, function(index, team) {
 				console.log("team", team);
 				if (orgId == team.payload.org_id) {
 					$.each(team.payload.sports, function(index, sport) {
@@ -642,7 +652,7 @@ define(['require', 'text!profilesetting/templates/club.html', 'text!profilesetti
 		// DISPLAY THE SPORT AS FETCHED FROM RECORDS IN FUNTION "EDITTEAM" AS PER THE VIEW
 		/*PARAMETERS:
 		 orgId :int, schoolId,
-		 destination: jquery selector to add created markup 
+		 destination: jquery selector to add created markup
 		 sportId : selected sport for which edit button is clicked
 		 sport : single object of sports
 		 */
@@ -684,7 +694,7 @@ define(['require', 'text!profilesetting/templates/club.html', 'text!profilesetti
 									if (season.positions) {
 										$.each(season.positions, function(j, position) {
 											if (position) {
-												positionIds += position.id;
+												positionIds += position.id + ",";
 											}
 										});
 									}
@@ -696,10 +706,24 @@ define(['require', 'text!profilesetting/templates/club.html', 'text!profilesetti
 					} else {
 					}
 				});
+				self.$(destination).parents(self.controls.divsportsLevel).find(self.controls.btnAddLevel).attr('sportid',sportId);
 			} else {
 			}
 
 		},
+		ClosePositions: function(event){
+			if(self.clickedPositionTarget){
+				var titles = $(event.target).parents(self.controls.modalPosition).find(self.controls.modalPositionsTitle);
+				var positionIds = '';
+				titles.each(function(){
+					if($(this).hasClass("active"))
+						positionIds += $(this).attr("positionid") + ",";
+				});
+				$(self.clickedPositionTarget).attr('positions', positionIds);
+				self.clickedPositionTarget = undefined;
+			}
+			
+		}
 	});
 
 	return ClubView;

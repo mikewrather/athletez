@@ -237,7 +237,8 @@
 				$this->modelNotSetError();
 				return false;
 			}
-			$this->mainModel->deleteResumedataGroup();
+			$this->mainModel->delete_with_deps();
+			return $this->mainModel;
 		
 		}
 		

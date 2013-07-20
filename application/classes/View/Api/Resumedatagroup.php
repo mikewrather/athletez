@@ -102,7 +102,7 @@
 		public function delete_base()
 		{
 			$retArr = array();
- 			$retArr = $objs = $this->obj;
+ 			$retArr = $objs = $this->obj->getBasics();
 			return $retArr;
 		}
 		

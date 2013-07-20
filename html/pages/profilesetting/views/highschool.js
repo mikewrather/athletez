@@ -61,7 +61,8 @@ define(['require', 'text!profilesetting/templates/highschool.html', 'text!profil
 			btnClosePositions : ".btn-Close-Positions",
 			btnFinishSports : ".btn-Finish-Sports",
 			btnOpenPositions : ".btnOpenPositions",
-			chkSeasons : ".chkSeasons"
+			chkSeasons : ".chkSeasons",
+			btnAddLevel : ".btn-add-level"
 		},
 
 		/*Messages Holds the messages, warning, alerts, errors, information variables*/
@@ -223,7 +224,8 @@ define(['require', 'text!profilesetting/templates/highschool.html', 'text!profil
 					var models = List.toJSON();
 					if (models == null || models.length < 1)
 						self.$(self.controls.txtSchools).parent().find(self.controls.fieldMessage).html(self.messages.dataNotExist).stop().fadeIn();
-
+					else
+						self.$(self.controls.txtSchools).parent().find(self.controls.fieldMessage).html('').stop().fadeOut();
 					self.schools = [];
 					for (var key in models) {
 						self.schools.push(models[key].payload);
@@ -316,6 +318,7 @@ define(['require', 'text!profilesetting/templates/highschool.html', 'text!profil
 
 				var controlToAppend = self.$(event.target).parents(self.controls.divsportsLevel).find(self.controls.divLevels);
 				controlToAppend.html('');
+				self.$(event.target).parents(self.controls.divsportsLevel).find(self.controls.btnAddLevel).attr('sportid',sportId);
 				self.fillCompLevel(orgsId, controlToAppend, sportId);
 			} else
 				self.sport_id = 0;
@@ -335,6 +338,7 @@ define(['require', 'text!profilesetting/templates/highschool.html', 'text!profil
 		 * orgs_id : int, School Id selected from changeSchool function */
 		fillCompLevel : function(orgs_id, destination, sportsId) {
 			self.compLevel_id = undefined;
+			console.log("orgs_id, destination, sportsId",orgs_id, destination, sportsId)
 			// Destroy complevel id if request received to refill the comp level
 			console.log("Fill Comp Level High School");
 			if (orgs_id && orgs_id > 0) {
@@ -411,6 +415,7 @@ define(['require', 'text!profilesetting/templates/highschool.html', 'text!profil
 		},
 		/*Calls Positions View To Fill Data In Positions PopUp*/
 		fillPositions : function(sport_id, destination) {
+			console.log("fillpositions",sport_id,destination);
 			if (sport_id) {
 				console.log("sport_id", sport_id, "destination", destination);
 				this.positionView = new PositionsView({
@@ -418,6 +423,7 @@ define(['require', 'text!profilesetting/templates/highschool.html', 'text!profil
 					destination : destination,
 					sport_id : sport_id,
 				});
+				self.$el.find(self.controls.ddlSports).parent().find(self.controls.fieldError).html('').fadeOut();
 			} else {
 				self.$el.find(self.controls.ddlSports).parent().find(self.controls.fieldError).html(self.messages.selectSport).stop().fadeIn();
 			}
@@ -426,6 +432,7 @@ define(['require', 'text!profilesetting/templates/highschool.html', 'text!profil
 		/*PARAMETERS:
 		 e: event, checkbox click event consisting of all information of event triggered*/
 		displayPositionPopup : function(event) {
+			self.clickedPositionTarget = $(event.target);
 			if ($(event.target).parent().find(self.controls.chkSeasons).is(':checked')) {
 				var teamId = $(event.target).attr('teamid');
 				console.log($(event.target).parents(self.controls.divSubLevels).find(self.controls.modalPositionsTitle));
@@ -465,8 +472,8 @@ define(['require', 'text!profilesetting/templates/highschool.html', 'text!profil
 
 			if (control.hasClass('active')) {//If the positions is already added then remove it
 				payload.position_id = positionId;
-				positionModel.user_id = self.user_id;
 				var positionModel = new PositionModel(payload);
+				positionModel.user_id = self.user_id;
 				positionModel.type = "delete";
 				console.log("positionModel", positionModel);
 				positionModel.destroy({
@@ -491,8 +498,9 @@ define(['require', 'text!profilesetting/templates/highschool.html', 'text!profil
 
 			var destination = self.$(event.target).parents(self.controls.divsportsLevel).find(self.controls.divLevels);
 			var orgsId = $(event.target).attr('orgsid');
-			var sportsId = self.$(event.target).parents(self.controls.divsportsLevel).find(self.controls.ddlSports).attr('sportsid');
+			var sportsId = $(event.target).attr('sportid');
 			if (orgsId && orgsId != 0 && orgsId != null && orgsId != '') {
+				console.log("destination add level function", destination);
 				self.fillCompLevel(orgsId, destination, sportsId);
 			} else {
 				console.error("Orgs Id is ", orgsId);
@@ -521,6 +529,7 @@ define(['require', 'text!profilesetting/templates/highschool.html', 'text!profil
 				destination : self.controls.divTeamListDetail,
 				sports_club : 0,
 				org_type : "school"
+
 			});
 		},
 		/*Show Add Sport Section */
@@ -620,14 +629,21 @@ define(['require', 'text!profilesetting/templates/highschool.html', 'text!profil
 			var orgId = $(event.target).attr('orgsId');
 			var sportId = $(event.target).attr('sportId');
 			var destination = $(event.target).parent();
-			$(destination).html('<a tabindex="0" orgsid="' + orgId + '" class="btn-add-level" href="javascript:void(0)">Add Level</a> <span class="floatRight"><a href="javascript:void(0)" class=" well-small btn-primary btn-Finish-Sports" tabindex="0">Finish</a> </span>');
+			var tempHtml = '<div class="section-sportslevel">';
+			tempHtml += '<a tabindex="0" orgsid="' + orgId + '" class="btn-add-level" href="javascript:void(0)">Add Level</a>';
+			 tempHtml += '<span class="floatRight"><a href="javascript:void(0)" class=" well-small btn-primary btn-Finish-Sports" tabindex="0">Finish</a> </span>';
+			 tempHtml += '<div class="div-sports-level"></div></div>';
+			
+			$(destination).html(tempHtml);
+			var sportDestination = $(destination).find(self.controls.divLevels);
+			
 			$.each(self.teamsView.Teams, function(index, team) {
 				console.log("team", team);
 				if (orgId == team.payload.org_id) {
 					$.each(team.payload.sports, function(index, sport) {
 						console.log("sport", sport);
 						if (sport.sports_id == sportId) {
-							self.SetUpEditTeamView(orgId, destination, sportId, sport);
+							self.SetUpEditTeamView(orgId, sportDestination, sportId, sport);
 							return;
 						}
 					});
@@ -638,7 +654,7 @@ define(['require', 'text!profilesetting/templates/highschool.html', 'text!profil
 		// DISPLAY THE SPORT AS FETCHED FROM RECORDS IN FUNTION "EDITTEAM" AS PER THE VIEW
 		/*PARAMETERS:
 		 orgId :int, schoolId,
-		 destination: jquery selector to add created markup 
+		 destination: jquery selector to add created markup
 		 sportId : selected sport for which edit button is clicked
 		 sport : single object of sports
 		 * */
@@ -682,7 +698,7 @@ define(['require', 'text!profilesetting/templates/highschool.html', 'text!profil
 									if (season.positions) {
 										$.each(season.positions, function(j, position) {
 											if (position) {
-												positionIds += position.id;
+												positionIds += position.id + ",";
 											}
 										});
 									}
@@ -695,10 +711,25 @@ define(['require', 'text!profilesetting/templates/highschool.html', 'text!profil
 					} else {
 					}
 				});
+				
+				self.$(destination).parents(self.controls.divsportsLevel).find(self.controls.btnAddLevel).attr('sportid',sportId);
 			} else {
 			}
 
 		},
+		ClosePositions: function(event){
+			if(self.clickedPositionTarget){
+				var titles = $(event.target).parents(self.controls.modalPosition).find(self.controls.modalPositionsTitle);
+				var positionIds = '';
+				titles.each(function(){
+					if($(this).hasClass("active"))
+						positionIds += $(this).attr("positionid") + ",";
+				});
+				$(self.clickedPositionTarget).attr('positions', positionIds);
+				self.clickedPositionTarget = undefined;
+			}
+			
+		}
 	});
 
 	return HighSchoolView;

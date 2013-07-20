@@ -21,7 +21,8 @@ define(['require', 'text!profilesetting/templates/positions.html', 'facade', 'vi
 		controls : {
 			spnPositionTitle : '.spn-position-title_h',
 			divLevels : '.div-levels',
-			btnPositions : '.btnOpenPositions'
+			btnPositions : '.btnOpenPositions',
+			btnClose : '.btn-Close-Positions'
 		},
 
 		/*Messages Holds the messages, warning, alerts, errors, information variables*/
@@ -65,6 +66,7 @@ define(['require', 'text!profilesetting/templates/positions.html', 'facade', 'vi
 				this.destination = options.destination;
 				this.sport_id = options.sport_id;
 				this.el = options.destination;
+				this.target = options.target;
 			}
 		},
 

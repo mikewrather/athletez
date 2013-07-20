@@ -169,7 +169,6 @@ define(["require", "text!registration/templates/layout.html", "facade", "control
 		},
 
 		selectOrg : function(data) {
-			console.log("SelectOrgData",data);
 			var controller = this;
 			this.refreshPage();
 			this.select_org = new RegistrationSelectOrgModel();

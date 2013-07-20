@@ -59,12 +59,7 @@ class Model_User_Resume_Data_Profile extends ORM
 			return $e;
 		}
 	}
-	
-	public function deleteResumedataprofile()
-	{
-		return $this->delete();
-	}
-	
+
 	public function __construct($id=NULL)
 	{
 		parent::__construct($id);
@@ -80,13 +75,20 @@ class Model_User_Resume_Data_Profile extends ORM
 	public function getDatagroups()
 	{
 		// get the data groups		 
-		$datagroups = $this->datagroups;		
+		$datagroups = $this->datagroups;
+		$classes_arr = array('User_Resume_Data_Group' => 'user_resume_data_group');
+		//exclude itself
+		$datagroups = ORM::_sql_exclude_deleted($classes_arr, $datagroups);
 		return $datagroups;
 	}
 	
 	public function getSports()
 	{
 		$sports = $this->sports;
+
+		$classes_arr = array('Sportorg_Sport' => 'sportorg_sport');
+		//exclude itself
+		$sports = ORM::_sql_exclude_deleted($classes_arr, $sports);
 		return $sports;
 	}
 

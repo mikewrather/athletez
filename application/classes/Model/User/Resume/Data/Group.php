@@ -85,11 +85,6 @@ class Model_User_Resume_Data_Group extends ORM
 		}
 	}
 	
-	public function deleteResumedataGroup()
-	{
-		return $this->delete();
-	}
-
 	public function addToRdp($args = array())
 	{
 	   extract($args); 
@@ -138,11 +133,18 @@ class Model_User_Resume_Data_Group extends ORM
     }
 	public function getResumeprofile()
 	{
-		return $this->profiles;
+		$resumeProfiles = $this->profiles;
+		$classes_arr = array('User_Resume_Data_Profile' => 'user_resume_data_profile');
+		$resumeProfiles = ORM::_sql_exclude_deleted($classes_arr, $resumeProfiles);
+		return $resumeProfiles;
 	}
 	
 	public function getResumedata()
 	{
-		return $this->resdata;		
+		$resumedata = $this->resdata;
+		//exclude deleted one
+		$classes_arr['User_Resume_Data'] = 'user_resume_data';
+		$resumedata = ORM::_sql_exclude_deleted($classes_arr, $resumedata);
+		return $resumedata;
 	}
 }
