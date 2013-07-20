@@ -109,13 +109,11 @@ class Model_Location_City extends ORM
 				->join('cities','LEFT')
 					->on('locations.cities_id','=','cities.id')
 				->where('cities.id','=',$this->id);
+		$classes_arr['Location_Base'] = 'locations';
+		$classes_arr['Location_City'] = 'cities';
 
 		$games->where_open();
 		$games->where('games.id','>','0'); //This is added to solve an error of AND () if no params are provided
-
-		// CHECK FOR PARAMETERS:
-		// games_before
-		// Filter games associated with a given city to only show those before a given date
 
 		if(isset($games_before))
 		{
@@ -129,10 +127,7 @@ class Model_Location_City extends ORM
 			//	->and_where('gameTime','<',$gameTime)
 				->and_where_close();
 		}
-
 		// games_after
-		// Filter games associated with a given city to only show those before a given date
-
 		if(isset($games_after))
 		{
 			// Format as date
@@ -156,6 +151,10 @@ class Model_Location_City extends ORM
 				->on('games_teams_link.teams_id','=','teams.id')
 				->join('org_sport_link','LEFT')
 				->on('teams.org_sport_link_id','=','org_sport_link.id');
+
+			$classes_arr['Sportorg_Games_Teamslink'] = 'games_teams_link';
+			$classes_arr['Sportorg_Team'] = 'teams';
+			$classes_arr['Sportorg_Orgsportlink'] = 'org_sport_link';
 		}
 		// sports_id
 		// Filter games associated with a given city to only show those for a specific sport
@@ -182,8 +181,9 @@ class Model_Location_City extends ORM
 		}
 
 		$games->where_close();
-
-
+		//exclude itself
+		$classes_arr['Sportorg_Games_Base'] = 'games';
+		$games = ORM::_sql_exclude_deleted($classes_arr, $games);
 		return $games;
 	}
 
@@ -200,7 +200,9 @@ class Model_Location_City extends ORM
 		{
 			$locations->where('location_type','=',$args['loc_type']);
 		}
-
+		//exclude itself
+		$classes_arr['Location_Base'] = 'location_base';
+		$locations = ORM::_sql_exclude_deleted($classes_arr, $locations);
 		return $locations;
 	}
 
@@ -210,9 +212,12 @@ class Model_Location_City extends ORM
 			->join('locations','LEFT')
 				->on('sportorg_org.locations_id','=','locations.id')
 			->where('locations.cities_id','=',$this->id);
+		$classes_arr['Location_Base'] = 'locations';
 
+		//exclude itself
+		$classes_arr['Sportorg_Org'] = 'sportorg_org';
+		$orgs = ORM::_sql_exclude_deleted($classes_arr, $orgs);
 		return $orgs;
-
 	}
 
 	public function getCities($args = array()){

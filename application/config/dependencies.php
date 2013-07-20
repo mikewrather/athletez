@@ -124,6 +124,37 @@ return array(
 		'User_Resume_Data_Profile_Sportslink' => 'resume_data_profiles_id',
 	),
 
+	//No dependency table
+	'User_Resume_Data_Vals' => array(
+
+	),
+
+	'Sportorg_Games_Base' => array(
+		'Sportorg_Games_Match' => 'games_id',
+		'Sportorg_Games_Teamslink' => 'games_id',
+		'Stats_Vals' => 'games_id',
+		'Site_Pog' => 'games_id',
+		'User_Sportlink_Gamelink' => 'games_id'
+	),
+
+	//do game related
+	'Sportorg_Games_Match' => array(
+		'Sportorg_Games_Matchplayer' => 'game_matches_id',
+	),
+
+	'Location_Base' => array(
+		'Sportorg_Org' => 'locations_id',
+		'Sportorg_Games_Base' => 'locations_id'
+	),
+
+	//TODO, add by Jeffrey, like users stable ,there is cities_id there ,but no relationship line connected.
+	'Location_City' => array(
+		'Location_Base' => 'cities_id',
+	),
+
+	'' => array(
+
+	),
 	//
 
 

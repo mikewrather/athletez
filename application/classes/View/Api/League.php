@@ -86,7 +86,7 @@
 		{
 			$retArr = array();
 			// Scaffolding Code For Single:
-			$retArr = $this->obj; 
+			$retArr = $this->obj->getBasics();
 
 			return $retArr;
 		}
