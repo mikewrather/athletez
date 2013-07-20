@@ -87,11 +87,6 @@ class Model_User_Resume_Data_Vals extends ORM
 			return $e;
 		}
 	}
-	
-	public function deleteResumeDataVal()
-	{
-		return $this->delete();
-	}
 
 	public function addValue($args = array())
 	{

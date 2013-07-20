@@ -171,8 +171,8 @@
 				$this->modelNotSetError();
 				return false;
 			}
-			
-			return $this->mainModel->deleteResumeDataVal();
+			$this->mainModel->delete_with_deps();
+			return $this->mainModel;
 		}
 		
 	}

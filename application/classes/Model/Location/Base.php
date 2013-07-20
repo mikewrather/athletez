@@ -205,6 +205,7 @@ class Model_Location_Base extends ORM
 	public function getGames($args = array()){
 		extract($args);
 		$games_model = $this->games;
+
 		if (isset($games_before)){
 			$games_model->where(DB::expr("concat( gameDay , ' ',  gameTime')"), '<', $games_before);
 		}
@@ -213,10 +214,13 @@ class Model_Location_Base extends ORM
 		}
 		if (isset($sports_id) || isset($complevels_id) || isset($teams_id)){
 			$games_model->join('games_teams_link')->on('games_teams_link.games_id', '=', 'sportorg_games_base.id');
+			$classes_arr['Sportorg_Games_Teamslink'] = 'games_teams_link';
 		}
 		if (isset($sports_id) || isset($complevels_id)){
 			$games_model->join('teams')->on('games_teams_link.teams_id', '=', 'teams.id');
 			$games_model->join('org_sport_link')->on('teams.org_sport_link_id', '=', 'org_sport_link.id');
+			$classes_arr['Sportorg_Team'] = 'teams';
+			$classes_arr['Sportorg_Orgsportlink'] = 'org_sport_link';
 		}
 		if (isset($sports_id)){
 			$games_model->where('org_sport_link.sports_id', '=', $sports_id);
@@ -232,6 +236,9 @@ class Model_Location_Base extends ORM
 			$display_qty = $e->get('defaultGamesToDisplay');
 			$limit = $display_qty;
 		}
+		//exclude itself
+		$classes_arr['Sportorg_Games_Base'] = 'sportorg_games_base';
+		$games_model = ORM::_sql_exclude_deleted($classes_arr, $games_model);
 		$games_model->limit($limit);
 		return $games_model;
 	}

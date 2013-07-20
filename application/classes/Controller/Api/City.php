@@ -337,8 +337,8 @@
 				return false;
 			}
 
-			$this->mainModel->delete();
-
+			$this->mainModel->delete_with_deps();
+			return $this->mainModel;
 		}
 
 

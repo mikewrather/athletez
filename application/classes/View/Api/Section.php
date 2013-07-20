@@ -71,7 +71,7 @@
 			$retArr = array();
 
 			// Scaffolding Code For Array:
-			$objs = $this->obj; 
+			$objs = $this->obj->getBasics();
 			return $retArr;
 		}
 		
