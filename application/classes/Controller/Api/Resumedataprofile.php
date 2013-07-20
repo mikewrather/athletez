@@ -393,8 +393,8 @@
 				$this->modelNotSetError();
 				return false;
 			}
-			$this->mainModel->deleteResumedataprofile();
-			return $this;
+			$this->mainModel->delete_with_deps();
+			return $this->mainModel;
 		}
 		
 	}

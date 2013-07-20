@@ -126,11 +126,9 @@
 		 */
 		public function delete_base()
 		{
-			$retArr = array();
-
 			// Scaffolding Code For Array:
-			$objs = $this->obj; 
-			return $retArr;
+			$objs = $this->obj->getBasics();
+			return $objs;
 		}
 		
 	}

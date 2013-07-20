@@ -115,11 +115,13 @@ return array(
 	),
 
 	'User_Resume_Data_Group' => array(
-		'User_Resume_Data_Group_Profilelink' => 'resume_data_profiles_id'
+		'User_Resume_Data_Group_Profilelink' => 'resume_data_groups_id',
+		'User_Resume_Data' => 'resume_data_groups_id'
 	),
 
 	'User_Resume_Data_Profile' => array(
-		'User_Resume_Data_Group_Profilelink' => 'resume_data_profiles_id'
+		'User_Resume_Data_Group_Profilelink' => 'resume_data_profiles_id',
+		'User_Resume_Data_Profile_Sportslink' => 'resume_data_profiles_id',
 	),
 
 	//
