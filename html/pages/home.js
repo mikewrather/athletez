@@ -49,16 +49,11 @@ define(
 						url : '/api/image/search',
 						num : '12'
 					});
-					this.locationStateList = new LocationStateList();
-					this.locationStateList.request = this.locationStateList
-							.fetch();
-					this.homeImageList.request = this.homeImageList.fetch();
+					this.locationStateList = new LocationStateList(); 
 					this.topratedImageList = new HomeImageList([], {
 						url : '/api/user/search',
 						num : '3'
 					});
-					this.topratedImageList.request = this.topratedImageList
-							.fetch();
 					this.BoysSportList = new SportList([], {
 						url : '/api/sport/listall?male=1'
 					});
@@ -68,6 +63,9 @@ define(
 					this.CommonSportList = new SportList([], {
 						url : '/api/sport/listall?male=1&female=1'
 					});
+					this.topratedImageList.fetch();
+					this.homeImageList.fetch();
+					this.locationStateList.fetch();
 					this.BoysSportList.fetch();
 					this.GirlsSportList.fetch();
 					this.CommonSportList.fetch();
@@ -79,6 +77,7 @@ define(
 					this.setupMenuView();
 					$.when(this.locationStateList.request).done(function() {
 						controller.setupDropDownMenuView();
+						Channel('rendered').publish();
 					});
 					$.when(this.homeImageList.request).done(function() {
 						controller.setupResultView();
@@ -91,22 +90,22 @@ define(
 								controller.setupSportDDView(
 										controller.BoysSportList, 'Guys',
 										'#sport #boys');
-								Channel('SportListView').publish();
 							});
 					$.when(this.GirlsSportList.request).done(
 							function() {
 								controller.setupSportDDView(
 										controller.GirlsSportList, 'Girls',
 										'#sport #girls');
-								Channel('SportListView').publish();
 							});
 					$.when(this.CommonSportList.request).done(
 							function() {
 								controller.setupSportDDView(
 										controller.CommonSportList, 'Both',
 										'#sport #both');
-								Channel('SportListView').publish();
 							});
+					$.when(this.layout.deferred).done(function(){
+						Channel('rendered').publish();
+					});
 				},
 
 				url : function(options) {
@@ -219,7 +218,7 @@ define(
 						displayWhen : "ready"
 					});
 
-					console.log("Home page setupLayout Results: ", pageLayout);
+					//console.log("Home page setupLayout Results: ", pageLayout);
 					this.layout = pageLayout;
 
 					return this.layout;

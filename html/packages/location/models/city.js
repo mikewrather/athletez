@@ -1,9 +1,10 @@
 //City Model
 
-define([ 'models' ], function(models) {
+define([ 'models', 'facade' ], function(models, facade) {
 
 	var CityModel, BaseModel = models.BaseModel;
-
+	var $ = facade.$;
+	var _ = facade._;
 	CityModel = BaseModel.extend({
 
 		defaults : {
@@ -12,18 +13,28 @@ define([ 'models' ], function(models) {
 
 		initialize : function(attributes, options) {
 			this.id = this.id || _.uniqueId('m');
-			Channel('changeInput' + this.id).subscribe(this.search);
+			this.addSubscribers();
+			_.bindAll(this);
 		},
 
-		search : function(input_string) {
-			//console.log(input_string);
-			if (input_string.length > 2) {
-				$.ajax({
-					url : "/api/city/search?city_name=" + input_string
-				}).done(function(data, textStatus, jqXHR) {
-					//console.log(data);	
-				});
-			}
+		search : function(term) {
+			$.ajax({
+				url : "/api/city/search?city_name=" + term
+			}).done(function(data, textStatus, jqXHR) {
+				 var collection = [];
+				 var payload = data.payload;
+		         if(payload != null){
+		         	 for (i = 0; i < (payload.length > 10 ? 10 : payload.length) ; i++) {
+		         		 collection.push(payload[i].name);
+		         	 }
+		         }
+				Channel('response :'+term).publish(collection);
+			});
+		},
+		
+		addSubscribers : function() {
+			var mod = this;
+			Channel('changeInput' + this.id).subscribe(mod.search);
 		}
 
 	});

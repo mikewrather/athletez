@@ -9,6 +9,7 @@ function(facade,  views,   utils,   SportItemView) {
         $ = facade.$,
         _ = facade._,
         Channel = utils.lib.Channel,
+        debug = utils.debug;
         CollectionView = views.CollectionView,
         SectionView = views.SectionView;
 
@@ -18,7 +19,7 @@ function(facade,  views,   utils,   SportItemView) {
 
         __super__: CollectionView.prototype,
 
-        id: "sport-list",
+        className: "sport-list",
         name: "Sport List",
         tagName: "ul",
 
@@ -44,15 +45,15 @@ function(facade,  views,   utils,   SportItemView) {
             this.addSubscribers();
         },
         
-        scroll : function() {
-        	console.log(this.id);
-        	$('#'+this.id).slimScroll({
+        initScroll : function() {
+        	$('.'+this.className).slimScroll({
         		height : '200px'
         	});
         },
         
         addSubscribers : function() {
-        	Channel('SportListView').subscribe(this.scroll);
+        	var view = this;
+        	Channel('rendered').subscribe(view.initScroll);
         },
         // Child views...
         childViews: {},

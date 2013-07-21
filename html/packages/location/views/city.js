@@ -1,7 +1,7 @@
 //City View
 //Inserts auto-completing input tag for getting city name as input
 
-define([ 'require', 'text!location/templates/city.html', 'views', 'facade', 'utils'], function(require,
+define([ 'require', 'text!location/templates/city.html', 'views', 'facade', 'utils', 'jqueryui', 'controller'], function(require,
 		cityTemplate) {
 	var CityView,
 		views = require('views'),
@@ -10,35 +10,61 @@ define([ 'require', 'text!location/templates/city.html', 'views', 'facade', 'uti
 		SectionView = views.SectionView,
 		$ = facade.$,
 		_ = facade._,
-		debug = utils.debug;
+		debug = utils.debug,
+		controller = require('controller');
 	
 	CityView = SectionView.extend({
 		
-		className : 'city',
-		tagName : 'span',
-		attributes : {
-			"style" : "position:relative; display:inline-block;"
-		},
-		
-		events : {
-			"input .query" : 'changeInput'  //works for IE >= 9
-		},
-		
 		template : cityTemplate,
+		className : 'ui-front',
 		
 		initialize : function(options) {
-			//debug.log('City View Initialized');
-			//cssArr = [base_url + "/packages/location/city.css"];
 			SectionView.prototype.initialize.call(this, options);
-			//Channel('load:css').publish(cssArr);
+			this.id = options.id || this.id || _.unique('v');
+			this.addSubscribers();			
 		},
 		
-		//Subscribe to this event for capturing the input text
-		changeInput : function(e) {
-			var target = $(e.currentTarget);
-			//debug.log('Event'+ $(target).val());
-			var inputText = $(target).val();
-			Channel('changeInput' + this.model.id).publish(inputText);
+		initPlugin : function() {
+			//var input = this.$el.find('.city');
+			//console.log($);
+			var view = this;
+			$.when(view.deferred).done(function(){
+				$('.city').addClass('rishabh');	
+			});
+			var id = this.model.id;
+			$('#city').autocomplete({
+				minLength: 3,
+				source: function(request, response) {
+					var term = request.term;
+					var appStates = controller.prototype.appStates;
+					if (appStates) {
+						var collection = appStates.findByNameInStorage(term);
+						if(collection){response(collection.data);
+						return;}
+					}
+					var myResponse = function(collection) {
+						var appStates = controller.prototype.appStates;
+						if (appStates) {
+							appStates.add({
+								name: term,
+								data: collection,
+								storage: 'localStorage',
+								expires: new Date(Date.now() + 315400000)
+							});
+							appStates.save(term);
+						}
+						response(collection);
+						console.log(appStates.findByNameInStorage(term));
+					};
+					Channel('response :'+term).subscribe(myResponse);
+					Channel('changeInput'+id).publish(term);
+				}
+			});
+		},
+		
+		addSubscribers : function() {
+			var view = this;
+			Channel('rendered').subscribe(view.initPlugin);
 		}
 	
 	});
