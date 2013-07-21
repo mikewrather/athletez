@@ -201,13 +201,14 @@
 				$this->throw_permission_error();
 			}
 
-			$this->payloadDesc = "Delete  division";
+			$this->payloadDesc = "Delete division";
 			if(!$this->mainModel->id)
 			{
 				$this->modelNotSetError();
 				return false;
 			}
-			return $this->mainModel->deleteDivision();
+			$this->mainModel->delete_with_deps();
+			return $this->mainModel;
 		}
 		
 	}

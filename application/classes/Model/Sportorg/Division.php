@@ -111,12 +111,7 @@ class Model_Sportorg_Division extends ORM
 			return $e;
 		}
 	}
-	
-	public function deleteDivision()
-	{
-		return $this->delete();
-	}
-	
+
 	public function addDivision($args = array() )
 	{
 		extract($args);
@@ -154,6 +149,10 @@ class Model_Sportorg_Division extends ORM
 	public function getOrgs()
 	{
 		$orgs = $this->orgs;
+
+		//exclude itself
+		$classes_arr = array('Sportorg_Org' => 'sportorg_org');
+		$orgs = ORM::_sql_exclude_deleted($classes_arr, $orgs);
 		return $orgs;
 	} 
 }

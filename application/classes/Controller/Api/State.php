@@ -577,7 +577,7 @@
 				$this->throw_permission_error();
 			}
 
-			$this->payloadDesc = "Delete  state";
+			$this->payloadDesc = "Delete state";
 
 			if(!$this->mainModel->id)
 			{

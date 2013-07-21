@@ -159,7 +159,7 @@
 				$this->modelNotSetError();
 				return false;
 			}
-			return $this->mainModel->deleteSection();
+			$this->mainModel->delete_with_deps();
+			return $this->mainModel;
 		}
-		
 	}

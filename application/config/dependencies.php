@@ -164,10 +164,7 @@ return array(
 		'Sportorg_League' => 'states_id'
 	),
 
-	'Sportorg_Section' => array(
-		'Sportorg_Division' => 'sections_id',
-		'Sportorg_League' => 'sections_id',
-	),
+	// Sportorg_Section already have config in above line 62
 
 	'Sportorg_Division' => array(
 		'Sportorg_Org' => 'divisions_id',
@@ -176,6 +173,18 @@ return array(
 	'Sportorg_League' => array(
 		'Sportorg_Org' => 'leagues_id'
 	),
+
+	'Academics_Tests' => array(
+		'Academics_Tests_Topics' => 'academics_tests_id'
+	),
+
+	'Academics_Tests_Topics' => array(
+		'Academics_Tests_Scores' => 'academics_tests_topics_id'
+	),
+
+
+
+
 
 
 

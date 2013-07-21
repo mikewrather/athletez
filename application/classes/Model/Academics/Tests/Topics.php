@@ -35,10 +35,14 @@ class Model_Academics_Tests_Topics extends ORM
 
 	public function getAllTopics($args = array()){
 		extract($args);
+		$topics = $this;
 		if (isset($test_id)){
-			$this->where('academics_tests_id', '=', $test_id);
+			$topics->where('academics_tests_id', '=', $test_id);
 		}
-		return $this;
+		//exclude it self
+		$classes_arr = array('Academics_Tests_Topics' => 'academics_tests_topics');
+		$topics = ORM::_sql_exclude_deleted($classes_arr, $topics);
+		return $topics;
 	}
 
 	public function getBasics(){
