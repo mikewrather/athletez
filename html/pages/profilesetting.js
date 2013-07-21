@@ -15,8 +15,9 @@ define(["require", "text!profilesetting/templates/layout.html", "facade", "contr
 	/*COLLECTIONS SECTIONS*/
 
 	/*VIEW SECTION*/
-	BasicInfoView = require("profilesetting/views/basic_info"), HighSchoolView = require("profilesetting/views/highschool");
-	ClubView = require("profilesetting/views/club");
+	BasicInfoView = require("profilesetting/views/basic_info"), 
+	HighSchoolView = require("profilesetting/views/highschool");
+	ClubView = require("profilesetting/views/club"),
 	IndividualSportsView = require("profilesetting/views/individuals");
 
 	var HighSchoolModel = require("profilesetting/models/high_school");
@@ -61,7 +62,7 @@ var IndividualSportsCollection = require("profilesetting/collections/individuals
 				return this.layout;
 
 			pageLayout = new LayoutView({
-						scheme : this.scheme,
+				scheme : this.scheme,
 				destination : "#main",
 				template : pageLayoutTemplate,
 				displayWhen : "ready"

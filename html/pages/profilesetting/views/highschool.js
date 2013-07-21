@@ -89,6 +89,7 @@ define(['require', 'text!profilesetting/templates/highschool.html', 'text!profil
 
 		/*initialize gets called by default when constructor is initialized*/
 		initialize : function(options) {
+		//	debugger;
 			SectionView.prototype.initialize.call(this, options);
 			self = this;
 			self.setOptions(options);
@@ -99,8 +100,6 @@ define(['require', 'text!profilesetting/templates/highschool.html', 'text!profil
 		init : function() {
 			self.setupView();
 			self.SetUpTeamsView();
-
-			//self.bindEvents();
 		},
 
 		/*render displays the view in browser*/

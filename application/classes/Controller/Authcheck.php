@@ -57,7 +57,10 @@ class Controller_Authcheck extends AuthController
 			"page"=>"Sports / Teams Settings",
 			"link"=>"/usersettings"
 		);
-
+		$retArr['nav'][] = array(
+			"page"=>"User Resume",
+			"link"=>"/resume"
+		);
 	/*	if($this->user->teams->find_all()->count() > 0)
 		{
 			$retArr['nav'][] = array(

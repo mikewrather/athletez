@@ -81,7 +81,8 @@ require.config({
         'team'         : '/pages/team',
         'registration' : '/pages/registration',
         'home'         : '/pages/home',
-        'profilesetting' : '/pages/profilesetting', 
+        'profilesetting' : '/pages/profilesetting',
+        'userresume' : '/pages/userresume',
         // Application - bootstrap for frontend app 
         'application'  : '/application',
 
