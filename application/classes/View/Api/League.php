@@ -11,10 +11,6 @@
 
 	class View_Api_League extends Api_Viewclass
 	{
-
-
-
-	
 		/**
 		 * get_basics() Basics on a League
 		 *
@@ -36,7 +32,7 @@
 		 */
 		public function get_orgs()
 		{
-			$retArr = array();
+			$retArr = null;
 
 			// Scaffolding Code For Array:
 			$objs = $this->obj->find_all();

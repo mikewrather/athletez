@@ -207,7 +207,7 @@
 				$this->throw_permission_error();
 			}
 
-			$this->payloadDesc = "Delete  League";
+			$this->payloadDesc = "Delete League";
 
 			if(!$this->mainModel->id)
 			{
@@ -215,15 +215,8 @@
 				return false;
 			}
 			
-			if (!$this->mainModel->deleteBasic()){
-				$error_array = array(
-					"error" => "Leagues can't delete",
-					"desc" => "Leagues can't delete, b/c already in use"
-				);
-				$this->modelNotSetError($error_array);
-				return false;
-			}
-			return $this;
+			$this->mainModel->delete_with_deps();
+			return $this->mainModel;
 		}
 		
 	}

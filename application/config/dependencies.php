@@ -152,10 +152,39 @@ return array(
 		'Location_Base' => 'cities_id',
 	),
 
-	'' => array(
-
+	'Location_County' => array(
+		'Location_City' => 'county_id'
 	),
-	//
+
+	//TODO, as to states_id, we may lose some line connection on states
+	'Location_State' => array(
+		'Location_County' => 'states_id',
+		'Sportorg_Section' => 'states_id',
+		'Sportorg_Division' => 'states_id',
+		'Sportorg_League' => 'states_id'
+	),
+
+	// Sportorg_Section already have config in above line 62
+
+	'Sportorg_Division' => array(
+		'Sportorg_Org' => 'divisions_id',
+	),
+
+	'Sportorg_League' => array(
+		'Sportorg_Org' => 'leagues_id'
+	),
+
+	'Academics_Tests' => array(
+		'Academics_Tests_Topics' => 'academics_tests_id'
+	),
+
+	'Academics_Tests_Topics' => array(
+		'Academics_Tests_Scores' => 'academics_tests_topics_id'
+	),
+
+
+
+
 
 
 

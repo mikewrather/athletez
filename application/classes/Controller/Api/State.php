@@ -61,7 +61,7 @@
 				$this->modelNotSetError();
 				return false;
 			}
-			return $this->mainModel->getCountries();
+			return $this->mainModel->getCounties();
 		}
 
 		public function action_get_search()
@@ -577,14 +577,15 @@
 				$this->throw_permission_error();
 			}
 
-			$this->payloadDesc = "Delete  state";
+			$this->payloadDesc = "Delete state";
 
 			if(!$this->mainModel->id)
 			{
 				$this->modelNotSetError();
 				return false;
 			}
-			return $this->mainModel->delete();
+			$this->mainModel->delete_with_deps();
+			return $this->mainModel;
 		}
 		
 	}

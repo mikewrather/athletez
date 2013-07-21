@@ -54,18 +54,21 @@ class Model_Academics_Tests extends ORM
 
 	public function getListall($args = array()){
 		extract($args);
-		$model = ORM::factory("Academics_Tests");
+		$tests_model = ORM::factory("Academics_Tests");
 		if (isset($standardized) && $standardized == 1){
-			$model->or_where('test_type', '= ','standardized');
+			$tests_model->or_where('test_type', '= ','standardized');
 		}else{
-			$model->or_where('test_type', '= ','unknown');//return null results
+			$tests_model->or_where('test_type', '= ','unknown');//return null results
 		}
 		if (isset($ap) && $ap == 1){
-			$model->or_where('test_type', '= ', 'AP');
+			$tests_model->or_where('test_type', '= ', 'AP');
 		}else{
-			$model->or_where('test_type', '= ','unknown');//return null results
+			$tests_model->or_where('test_type', '= ','unknown');//return null results
 		}
-		return $model;
+		//exclude itself
+		$classes_arr = array('Academics_Tests' => 'academics_tests');
+		$tests_model = ORM::_sql_exclude_deleted($classes_arr, $tests_model);
+		return $tests_model;
 	}
 
 	public function getTestsByType($args = array()){

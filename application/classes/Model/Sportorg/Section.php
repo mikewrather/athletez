@@ -78,6 +78,10 @@ class Model_Sportorg_Section extends ORM
 		$sport_model = ORM::factory("Sportorg_Sport");
 		$sport_model->join('sections')->on('sportorg_sport.id', '=', 'sections.sports_id');
 		$sport_model->where('sections.id', '=', $section_id);
+		$classes_arr['Sportorg_Section'] = 'sections';
+		//exclude itself
+		$classes_arr['Sportorg_Sport'] = 'sportorg_sport';
+		$sport_model = ORM::_sql_exclude_deleted($classes_arr, $sport_model);
 		return $sport_model;
 	}
 	

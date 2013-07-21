@@ -26,16 +26,6 @@ class Model_Sportorg_League extends ORM
 		)
 	);
 
-	public function deleteBasic(){
-		$result = $this->orgs->find_all()->as_array();
-		if (count($result) > 0){
-			return false;
-		}else{
-			$this->delete();
-			return true;
-		}
-	}
-
 	public function rules(){
 
 		return array
@@ -82,7 +72,10 @@ class Model_Sportorg_League extends ORM
 			->join('leagues','LEFT')
 				->on('leagues.id','=','sportorg_org.leagues_id')
 			->where('sportorg_org.leagues_id','=',$this->id);
-		 
+		$classes_arr['Sportorg_League'] = 'leagues';
+
+		$classes_arr['Sportorg_Org'] = 'sportorg_org';
+		$orgs = ORM::_sql_exclude_deleted($classes_arr, $orgs);
 		return $orgs;
 	}
 	

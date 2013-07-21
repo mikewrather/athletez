@@ -54,17 +54,31 @@ class Model_Location_State extends ORM
     
 	public function getSections()
 	{
-		return $this->sections;
+		$sections = $this->sections;
+
+		//exclude itself
+		$classes_arr = array('Sportorg_Section' => 'sportorg_section');
+		$sections = ORM::_sql_exclude_deleted($classes_arr, $sections);
+		return $sections;
 	}
 	
-	public function getCountries()
+	public function getCounties()
 	{
-		return $this->counties;
+		$counties = $this->counties;
+		//exclude itself
+		$classes_arr = array('Location_County' => 'location_county');
+		$counties = ORM::_sql_exclude_deleted($classes_arr, $counties);
+		return $counties;
 	}
 	
 	public function getDivisions()
 	{
-		return $this->divisions;
+		$divisions = $this->divisions;
+
+		//exclude itself
+		$classes_arr = array('Sportorg_Division' => 'sportorg_division');
+		$divisions = ORM::_sql_exclude_deleted($classes_arr, $divisions);
+		return $divisions;
 	}
 	
 	public function getLeagues()
@@ -73,6 +87,11 @@ class Model_Location_State extends ORM
 					->join('states')
 					->on('states.id', '=', 'sportorg_league.states_id')
 					->where('states.id', '=', $this->id);
+		$classes_arr['Location_State'] = 'states';
+
+		//exclude itself
+		$classes_arr['Sportorg_League'] = 'sportorg_league';
+		$leagues = ORM::_sql_exclude_deleted($classes_arr, $leagues);
 		return $leagues;
 	}
 
