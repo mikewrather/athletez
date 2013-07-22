@@ -487,6 +487,7 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 							"type" => $data->resume_data_type,
 							"val" => $val->loaded() ? $val->user_value : false,
 							"id" => $val->loaded() ? $val->id : 0,
+							"resume_data_id" => $data->id,
 						);
 					}
 				}
