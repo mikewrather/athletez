@@ -276,10 +276,13 @@
 			$retArr = null;
 
 			$comments = $this->obj->find_all();
+			print_r($comments);
 
 			foreach($comments as $comment)
 			{
-				$retArr[] = $comment->getBasics();
+				$gb = $comment->getBasics();
+
+				$retArr[$comment->id] = $gb;
 				$retArr[$comment->id]['poster'] = $retArr[$comment->id]['user']['name'];
 				$retArr[$comment->id]['poster_picture'] = $retArr[$comment->id]['user']['user_picture'];
                 $retArr[$comment->id]['poster_email']    = $retArr[$comment->id]['user']['email'];

@@ -41,6 +41,37 @@ class ORM extends Kohana_ORM
 		return $qry;
 	}
 
+
+	public static function _sql_exclude_deleted_abstract($class_names,$qry)
+	{
+		$enttypes = array();
+		$qry->and_where_open();
+		foreach($class_names as $class => $search_field)
+		{
+			if(is_object($search_field))
+			{
+				if($search_field->loaded())
+				{
+					$enttype = ORM::factory('Site_Enttype',Ent::getMyEntTypeID($search_field));
+					$search_field = $enttype->id1;
+				}
+			}
+
+			$this_ent = Ent::getMyEntTypeID($class);
+
+			$del_subqry = DB::select(array(DB::expr("COUNT('*')"),'deleted'))->from('deleted')
+				->where('subject_enttypes_id','=',$this_ent)
+				->and_where('subject_id','=',DB::expr($search_field));
+
+			$qry->where($del_subqry,'=',0);
+
+		}
+		$qry->and_where_close();
+
+		return $qry;
+	}
+
+
 	public function undo_delete_with_deps()
 	{
 		$this->undo_delete_deps();
@@ -138,5 +169,10 @@ class ORM extends Kohana_ORM
 				}
 			}
 		}
+	}
+
+	public function getTableName()
+	{
+		return $this->_table_name;
 	}
 }

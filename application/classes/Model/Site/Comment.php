@@ -92,9 +92,16 @@ class Model_Site_Comment extends Model_Site_Entdir
 	{
 		if(!$ent->loaded()) return false;
 
+		$classes_arr = array();
+		$entClassStr = str_replace('Model_','',get_class($ent));
+		$classes_arr[$entClassStr] = $ent;
+		$classes_arr['Site_Comment'] = 'site_comment.id';
+
 		$comments = ORM::factory('Site_Comment')
 			->where('subject_enttypes_id','=',Ent::getMyEntTypeID($ent))
 			->and_where('subject_id','=',$ent->id);
+
+		$comments = ORM::_sql_exclude_deleted_abstract($classes_arr, $comments);
 
 		return $comments;
 	}
