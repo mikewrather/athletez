@@ -2081,7 +2081,16 @@
 
 			}
 
-            return $this->mainModel->deleteTeam($arguments);
+            if (!$this->mainModel->deleteTeam($arguments)){
+				$error_array = array(
+					"error" => "User teams link doesn't exist",
+					"desc" => "User teams link doesn't exist."
+				);
+
+				$this->modelNotSetError($error_array);
+				return false;
+			}
+			return null;
 		}
 		
 		/**

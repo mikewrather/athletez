@@ -561,12 +561,7 @@
 		 */
 		public function delete_team()
 		{
-			$retArr = array();
- 
-			// Scaffolding Code For Single:
-			$retArr = $this->obj->getBasics();
-
-			return $retArr;
+			return null;
 		}
 		
 		/**
