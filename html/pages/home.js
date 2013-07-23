@@ -16,7 +16,7 @@ define(
 			HomeStateListView = require('pages/home/views/state-list'), LocationStateList = require('packages/location/collections/states.js'), HomeImageList = require('pages/home/collections/image'), MenuModel = require("pages/home/models/menu"), MenuView = require("pages/home/views/menu"), HomeImageListView = require("pages/home/views/image-list"),
 
 			SportListView = require('packages/sport/views/sport-list'), SportList = require('sport/collections/sports'), CityModel = require('packages/location/models/city'), CityView = require('packages/location/views/city'), LayoutView = views.LayoutView, $ = facade.$, _ = facade._, Channel = utils.lib.Channel, cssArr = [ base_url
-					+ "/pages/home/home.css" ];
+					+ "pages/home/home.css" ];
 
 			HomeController = Controller.extend({
 

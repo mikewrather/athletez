@@ -40,6 +40,13 @@
     text-decoration: none;
 }
 
+li.sport:hover {
+	background-color: #0081C2;
+    background-image: linear-gradient(to bottom, #0088CC, #0077B3);
+    background-repeat: repeat-x;
+    color: #FFFFFF;
+    text-decoration: none;
+}
 .sport-list {
 	border-radius : 5px;
 	background-color : #FEFEFE;

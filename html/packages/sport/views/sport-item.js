@@ -41,6 +41,8 @@ function (
         
         selectSport: function() {
         	console.log(this.model);
+        	$('li.sport').removeClass('select');
+        	this.$el.addClass('select');
             Channel('selectSport' + this.model.collection.cid).publish(this.model);
         }        
         

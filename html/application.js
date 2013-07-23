@@ -3,8 +3,10 @@
 // Requires define
 // Return {Object} App
 
-define( ["facade", "utils", "collections", "chrome", "controller", "profile", "imageup", 'test','home', "game", "team", "registration","profilesetting","packages/site/collections/phrases"],
-function (facade, utils, collections, chromeBootstrap, Controller, ProfileController, ImageController, TestController, HomeController, GameController, TeamController, RegistrationController, ProfileSetting, SitePhraseList) {
+define( ["facade", "utils", "collections", "chrome", "controller", "profile", "imageup", 'test','home',
+ "game", "team", "registration","profilesetting","userresume","packages/site/collections/phrases"],
+function (facade, utils, collections, chromeBootstrap, Controller, ProfileController, ImageController, TestController, HomeController, 
+	GameController, TeamController, RegistrationController, ProfileSetting,UserResume, SitePhraseList) {
 
     var App,
         ApplicationStates = collections.ApplicationStates,
@@ -29,6 +31,9 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
  			 'usersettings': 'showProfileSetting',
              'usersettings/': 'showProfileSetting',
          /*    'usersettings/:userid': 'showProfileSetting', This is not necessary because we will only be seeing settings for currently logged in user*/
+
+ 			 'resume': 'ShowUserResume',
+             'resume/': 'ShowUserResume',
 
 			'imageup': 'imageUp',
 			'imgtestd': 'testsd',
@@ -129,12 +134,26 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
 
             function initProfileSetting(id) {
                 var profileSetting = new ProfileSetting({
-                	//TODO: REMOVE HARDCODED ID
                 	"id": userid==undefined ? id : userid
                 });
             }
             
             Channel('app-inited').subscribe(initProfileSetting);
+        },
+        
+        ShowUserResume: function (userid) {
+            this.loadStyles();
+            $('body').empty();
+            chromeBootstrap();
+
+            function initUserResume(id) {
+            	
+                var resume = new UserResume({
+                	"id": userid==undefined ? id : userid
+                });
+            }
+            
+            Channel('app-inited').subscribe(initUserResume);
         },
         
 		imageUp: function () {

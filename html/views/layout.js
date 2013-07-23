@@ -220,6 +220,7 @@ define(['facade','views/base','utils'], function (facade, BaseView, utils) {
                 layout = this;
 
             _.each(views, function (view) {
+            	console.log("view.name",view.name);
                 var childView = layout.section(view.name);
                 if (childView.isRendered()) {
                     childView.display(true);
