@@ -108,23 +108,8 @@
 				return false;
 			}
 
-			//TODO: This works, but I don't like having to construct the sql here because if the table changes we'll have to find all the places we get comments.
-
-			$classes_arr = array();
-
-			$entClassStr = Ent::getMyClass($arguments['subject_enttypes_id']);
-			$classes_arr[$entClassStr] = $subject->getTableName();
-
-			print_r($classes_arr);
-
-			$comments = ORM::factory('Site_Comment')
-				->where('subject_enttypes_id','=',$arguments['subject_enttypes_id'])
-				->and_where('subject_id','=',$arguments['subject_id']);
-
-			$comments = ORM::_sql_exclude_deleted($classes_arr, $comments);
-
+			$comments = Model_Site_Comment::getCommentsOn($subject);
 			return $comments;
-
 
 		}
 
