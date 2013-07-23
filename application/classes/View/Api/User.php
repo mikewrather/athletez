@@ -276,8 +276,6 @@
 			$retArr = null;
 
 			$comments = $this->obj->find_all();
-			print_r($comments);
-
 			foreach($comments as $comment)
 			{
 				$gb = $comment->getBasics();
