@@ -134,12 +134,20 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 
     public function deleteTeam($args)
     {
-        $teams = DB::delete('users_teams_link')
-			->where('users_id','=', $this->id)
-			->and_where('teams_id', '=', $args['teams_id'])
-			->execute();
-    
-        return $teams;
+		$ut_link = ORM::factory('User_Teamslink');
+		$result = $ut_link->where('users_id','=', $this->id)
+			->and_where('teams_id', '=', $args['teams_id'])->find();
+		if (!$result->id){
+			return false;
+		}else{
+//			$teams = DB::delete('users_teams_link')
+//				->where('users_id','=', $this->id)
+//				->and_where('teams_id', '=', $args['teams_id'])
+//				->execute();
+			$user_team_link = ORM::factory('User_Teamslink', $result->id);
+			$user_team_link->delete_with_deps();
+			return true;
+		}
     }
     
     public function deleteSport($args)
