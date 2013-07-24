@@ -293,10 +293,10 @@
 		}
 
 		/**
-		 * get_commentson() Get a list of comments related to the user
-		 *
-		 * @retun array
-		 */
+		* get_commentson() Get a list of comments related to the user
+		*
+		* @retun array
+		*/
 		public function get_commentson()
 		{
 			$retArr = null;
@@ -309,7 +309,7 @@
 				$retArr[$comment->id] = $gb;
 				$retArr[$comment->id]['poster'] = $retArr[$comment->id]['user']['name'];
 				$retArr[$comment->id]['poster_picture'] = $retArr[$comment->id]['user']['user_picture'];
-                $retArr[$comment->id]['poster_email']    = $retArr[$comment->id]['user']['email'];
+				$retArr[$comment->id]['poster_email']    = $retArr[$comment->id]['user']['email'];
 			}
 
 			return $retArr;
