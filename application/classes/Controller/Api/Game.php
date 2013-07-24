@@ -278,9 +278,15 @@
 				$locations_id = (int)trim($this->request->post('locations_id'));
 			}
 
+			if( trim($this->request->post('event_name')) != "")
+			{
+				$event_name = trim($this->request->post('event_name'));
+			}
+
 			$args = array(
 				'game_datetime' => $game_datetime,
-				'locations_id' => $locations_id
+				'locations_id' => $locations_id,
+				'event_name' => $event_name
 			);
 
 			$result =  $this->mainModel->addGame($args);
@@ -446,10 +452,16 @@
 				$locations_id = (int)trim($this->put('locations_id'));
 			}
 
+			if(trim($this->put('event_name')) != "")
+			{
+				$event_name = urldecode(trim($this->put('event_name')));
+			}
+
 			$args = array(
 				'id' => $this->mainModel->id,
 				'game_datetime' => $game_datetime,
-				'locations_id' => $locations_id
+				'locations_id' => $locations_id,
+				'event_name' => $event_name
 			);
 
 			$result =  $this->mainModel->addGame($args);
