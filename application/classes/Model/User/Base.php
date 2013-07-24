@@ -831,6 +831,34 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 			return $sports_arr;
 		}
 	}
+
+	public function getAwards($args = array()){
+		extract($args);
+		$awards_model = ORM::factory('User_Awards');
+		if (isset($users_id)){
+			$awards_model->where('users_id', '=', $users_id);
+		}
+
+		if (isset($sports_id)){
+			$awards_model->where('sports_id', '=', $sports_id);
+		}
+
+		return $awards_model;
+	}
+
+	public function getReferences($args = array()){
+		extract($args);
+		$references_model = ORM::factory('User_References');
+		if (isset($users_id)){
+			$references_model->where('users_id', '=', $users_id);
+		}
+
+		if (isset($sports_id)){
+			$references_model->where('sports_id', '=', $sports_id);
+		}
+
+		return $references_model;
+	}
 	
 	public function getRelated()
 	{

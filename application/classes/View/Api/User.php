@@ -231,6 +231,32 @@
 			$videos = $this->obj->result;
 			return $videos;
 		}
+
+		public function get_references(){
+			$retArr = null;
+
+			// Scaffolding Code For Array:
+			$objs = $this->obj->find_all();
+			foreach($objs as $obj)
+			{
+				$retArr[] = $obj->getBasics();
+			}
+
+			return $retArr;
+		}
+
+		public function get_awards(){
+			$retArr = null;
+
+			// Scaffolding Code For Array:
+			$objs = $this->obj->find_all();
+			foreach($objs as $obj)
+			{
+				$retArr[] = $obj->getBasics();
+			}
+
+			return $retArr;
+		}
 		
 		/**
 		 * get_images() List of images uploaded by the user
