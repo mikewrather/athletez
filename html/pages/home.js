@@ -26,6 +26,8 @@ define(
 					_.bindAll(this);
 
 					this.handleOptions(options);
+					this.searchUrls = ['/api/video/search', '/api/image/search', '/api/user/search', '/api/game/search'];
+					this.baseUrl = this.searchUrls[1];
 					this.urlOptions = {
 						'sports_id' : '0',
 						'city_id' : '0',
@@ -50,6 +52,8 @@ define(
 					Channel('sportChanged:'+this.BoysSportList.cid).subscribe(this.changeSportFilter);
 					Channel('sportChanged:'+this.GirlsSportList.cid).subscribe(this.changeSportFilter);
 					Channel('sportChanged:'+this.CommonSportList.cid).subscribe(this.changeSportFilter);
+					Channel('textChanged').subscribe(this.updateText);
+					Channel('baseUrlChanged').subscribe(this.updateBaseUrl);
 				},
 				
 				setupScheme: function () {
@@ -72,12 +76,20 @@ define(
 		        	this.setupLayout().render();
 		        },
 		        
+		        updateBaseUrl : function(urlNumber) {
+		        	this.baseUrl = this.searchUrls[urlNumber];
+		        	this.transitionView();
+		        },
+		        
+		        updateText : function(text) {
+		        	this.urlOptions.searchtext = text;
+		        },
+		        
 		        changeViewFilter : function(str) {
-		        	var result = str.split(' '), options;
-		        	if(result[0] === 'browse') {
-		        		options = {'order_by': result[1]};
+		        	if(str.submenu === 'browse') {
+		        		options = {'order_by': str.value};
 		        	} else {
-		        		options = {'time' : result[1]};
+		        		options = {'time' : str.value};
 		        	}
 		        	this.transitionView(options);
 		        },
@@ -101,10 +113,7 @@ define(
 				
 				transitionView : function(options) {
 					console.log(options);
-					this.homeImageList = new HomeImageList([], {
-						url : this.url(options),
-						num : '15'
-					});
+					this.homeImageList.url = this.url(options);
 					this.homeImageList.fetch();
 					var controller = this;
 					$.when(this.homeImageList.request).done(function() {
@@ -118,7 +127,7 @@ define(
 				},
 				
 				url : function(options) {
-					var relativeUrl = '/api/image/search';
+					var relativeUrl = this.baseUrl;
 					_.extend(this.urlOptions, options);
 					var urlOptions = this.urlOptions;
 					relativeUrl = relativeUrl + '?' + 'sports_id='

@@ -11,15 +11,29 @@ define(
 				id : 'menu',
 
 				events : {
+					"input #search" : "updateText",
+					"click .searchBtn" : "changeBaseUrl",
 					"click .dropdown-menu > li > a" : "select",
 					"click .dd" : "doNothing",
-					"click .menu" : "toggle"
+					"click .menu" : "toggle",
 				},
 
 				template : menuTemplate,
 
 				intialize : function(options) {
 					SectionView.prototype.initialize.call(this, options);
+				},
+				
+				updateText : function(e) {
+					var target = $(e.currentTarget);
+					var text = $(target).val();
+					Channel('textChanged').publish(text);
+				},
+				
+				changeBaseUrl : function(e) {
+					var target = $(e.currentTarget);
+					var num = target.data("number");
+					Channel('baseUrlChanged').publish(num);
 				},
 				
 				doNothing : function(e) {
@@ -35,7 +49,10 @@ define(
 					$('.dropdown-menu > li > a'+'.'+targetClass).removeClass('select');
 					targetClass = target.attr('class').split(' ')[0];
 					$(target).addClass('select');
-					var ret = targetClass + ' ' + $(target).text();
+					var ret = {
+							'submenu' : targetClass,
+							'value' :  $(target).text()
+							};
 					Channel('viewFilterChanged').publish(ret);
 					debug.log(ret);
 				},
