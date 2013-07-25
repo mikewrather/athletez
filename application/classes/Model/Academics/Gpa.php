@@ -54,26 +54,31 @@ class Model_Academics_Gpa extends ORM
 	public function addGpa($args = array()){
 		extract($args);
 
-		try{
+		try
+		{
 			$gpa_model = ORM::factory("Academics_Gpa");
-			$gpa_model->gpa = $gpa_model;
 			$result = $gpa_model->where('users_id', '=', $users_id);
 			$result->where('year', '=', ucfirst($year));
-			$re = $result->find()->as_array();
-			if (empty($re)){
+			$re = $result->find();
+			if (!$re->loaded())
+			{
 				//add new row
 				$new_gpa_model = ORM::factory("Academics_Gpa");
-				$new_gpa_model->year = $year;
+				$new_gpa_model->year = ucfirst($year);
 				$new_gpa_model->users_id = $users_id;
 				$new_gpa_model->gpa = $gpa;
 				$new_gpa_model->save();
 				return $new_gpa_model;
-			}else{
-				$result->gpa = $gpa;
-				$result->update();
+			}
+			else
+			{
+				$re->gpa = $gpa;
+				$re->update();
 				return $result;
 			}
-		}catch (ORM_Validation_Exception $e){
+		}
+		catch (ORM_Validation_Exception $e)
+		{
 			return $e;
 		}
 	}

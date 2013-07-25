@@ -693,7 +693,6 @@
 				//parse error and add to error array
 				$this->processValidationError($result,$this->mainModel->error_message_path);
 				return false;
-
 			}
 
 		}
