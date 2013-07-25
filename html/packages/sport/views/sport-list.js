@@ -53,7 +53,7 @@ function(facade,  views,   utils,   SportItemView) {
         
         addSubscribers : function() {
         	var view = this;
-        	Channel('rendered').subscribe(view.initScroll);
+        	Channel('layout:ready').subscribe(view.initScroll);
         },
         // Child views...
         childViews: {},

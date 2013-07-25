@@ -25,7 +25,10 @@ define([ 'models', 'facade' ], function(models, facade) {
 				 var payload = data.payload;
 		         if(payload != null){
 		         	 for (i = 0; i < (payload.length > 10 ? 10 : payload.length) ; i++) {
-		         		 collection.push(payload[i].name);
+		         		 var item = {};
+		         		 item.label = item.value = payload[i].name + ', ' + payload[i].county.state.name;
+		         		 item.id = payload[i].id;
+		         		 collection.push(item);
 		         	 }
 		         }
 				Channel('response :'+term).publish(collection);

@@ -26,27 +26,114 @@ define(
 					_.bindAll(this);
 
 					this.handleOptions(options);
-
-					this.init();
 					this.urlOptions = {
-						'states_id' : '',
 						'sports_id' : '0',
+						'city_id' : '0',
 						'order_by' : 'votes',
-						'states_id' : ''
+						'time' : 'today',
+						'state_id' : '0',
+						'searchtext' : ''
 					};
+					this.init();
 					return this;
 				},
 
 				init : function() {
-					this.setupLayout().render();
 					this.createData();
 					this.handleDeferreds();
 				},
+				
+				addSubscribers : function() {
+					Channel('cityChanged:'+ this.sections["city"].id).subscribe(this.changeCityFilter);
+					Channel('viewFilterChanged').subscribe(this.changeViewFilter);
+					Channel('stateChanged:'+ this.locationStateList.cid).subscribe(this.changeStateFilter);
+					Channel('sportChanged:'+this.BoysSportList.cid).subscribe(this.changeSportFilter);
+					Channel('sportChanged:'+this.GirlsSportList.cid).subscribe(this.changeSportFilter);
+					Channel('sportChanged:'+this.CommonSportList.cid).subscribe(this.changeSportFilter);
+				},
+				
+				setupScheme: function () {
+		            var i, params = this.params;
 
-				createData : function() {
-					// var imageListUrl = this.url();
+		            for (i = 0; i < this.meta.activeViews.length; i++) {
+		                this.scheme.push(this.sections[this.meta.activeViews[i]]);
+		            };
+		        },
+		        
+		        initSections : function () {
+		        	this.setupMenuView();
+		        	this.setupLocationDDView();
+		        	this.setupSportDDView(this.CommonSportList, 'Both', '#sport #both');
+		        	this.setupSportDDView(this.GirlsSportList, 'Girls',	'#sport #girls');
+		        	this.setupSportDDView(this.BoysSportList, 'Guys', '#sport #boys');
+		        	this.setupTopRatedView();
+		        	this.setupResultView();
+		        	this.setupScheme();
+		        	this.setupLayout().render();
+		        },
+		        
+		        changeViewFilter : function(str) {
+		        	var result = str.split(' '), options;
+		        	if(result[0] === 'browse') {
+		        		options = {'order_by': result[1]};
+		        	} else {
+		        		options = {'time' : result[1]};
+		        	}
+		        	this.transitionView(options);
+		        },
+		        
+		        changeSportFilter : function(model) {
+		        	debug.log(model);
+		        	debug.log(model.attributes.payload.sport_id);
+		        	var options = {'sports_id': model.attributes.payload.sport_id};
+		        	this.transitionView(options);
+		        },
+		        
+		        changeStateFilter : function(model) {
+		        	var options = {'state_id' : model.attributes.payload.id};
+		        	this.transitionView(options);
+		        },
+		        
+				changeCityFilter : function(item) {
+					var options = {'city_id':item.id};
+					this.transitionView(options);
+				},
+				
+				transitionView : function(options) {
+					console.log(options);
 					this.homeImageList = new HomeImageList([], {
-						url : '/api/image/search',
+						url : this.url(options),
+						num : '15'
+					});
+					this.homeImageList.fetch();
+					var controller = this;
+					$.when(this.homeImageList.request).done(function() {
+						var view = new HomeImageListView({
+							collection : controller.homeImageList,
+							name : "search-result",
+							destination : "#search-results"
+						});
+						controller.layout.transition("search-result", view);
+					});
+				},
+				
+				url : function(options) {
+					var relativeUrl = '/api/image/search';
+					_.extend(this.urlOptions, options);
+					var urlOptions = this.urlOptions;
+					relativeUrl = relativeUrl + '?' + 'sports_id='
+							+ urlOptions.sports_id + '&city_id='
+							+ urlOptions.city_id + '&order_by='
+							+ urlOptions.order_by + '&time='
+							+ urlOptions.time + '&state_id='
+							+ urlOptions.state_id + '&searchtext='
+							+ urlOptions.searchtext;
+					return relativeUrl;
+				},
+				
+				createData : function() {
+					this.homeImageList = new HomeImageList([], {
+						url : this.url(),
 						num : '12'
 					});
 					this.locationStateList = new LocationStateList(); 
@@ -63,72 +150,21 @@ define(
 					this.CommonSportList = new SportList([], {
 						url : '/api/sport/listall?male=1&female=1'
 					});
-					this.topratedImageList.fetch();
-					this.homeImageList.fetch();
-					this.locationStateList.fetch();
-					this.BoysSportList.fetch();
-					this.GirlsSportList.fetch();
-					this.CommonSportList.fetch();
+					var requests = this.requests = [];
+					requests.push(this.topratedImageList.fetch());
+					requests.push(this.homeImageList.fetch());
+					requests.push(this.locationStateList.fetch());
+					requests.push(this.BoysSportList.fetch());
+					requests.push(this.CommonSportList.fetch());
+					requests.push(this.GirlsSportList.fetch());
 				},
 
 				handleDeferreds : function() {
-					// TODO after creating building blocks, write this function
 					var controller = this;
-					this.setupMenuView();
-					$.when(this.locationStateList.request).done(function() {
-						controller.setupDropDownMenuView();
-						Channel('rendered').publish();
-					});
-					$.when(this.homeImageList.request).done(function() {
-						controller.setupResultView();
-					});
-					$.when(this.topratedImageList.request).done(function() {
-						controller.setupTopRatedView();
-					});
-					$.when(this.BoysSportList.request).done(
-							function() {
-								controller.setupSportDDView(
-										controller.BoysSportList, 'Guys',
-										'#sport #boys');
-							});
-					$.when(this.GirlsSportList.request).done(
-							function() {
-								controller.setupSportDDView(
-										controller.GirlsSportList, 'Girls',
-										'#sport #girls');
-							});
-					$.when(this.CommonSportList.request).done(
-							function() {
-								controller.setupSportDDView(
-										controller.CommonSportList, 'Both',
-										'#sport #both');
-							});
-					$.when(this.layout.deferred).done(function(){
-						Channel('rendered').publish();
-					});
-				},
-
-				url : function(options) {
-					var relativeUrl = '/api/image/search';
-					var urlOptions = this.urlOptions;
-					urlOptions.states_id = options.states_id
-							|| urlOptions.states_id;
-					urlOptions.sports_id = options.sports_id
-							|| urlOptions.sports_id;
-					urlOptions.order_by = options.order_by
-							|| urlOptions.order_by;
-					this.urlOptions = urlOptions;
-					relativeUrl = relativeUrl + '?' + 'states_id='
-							+ urlOptions.states_id + '&' + 'sports_id='
-							+ urlOptions.sports_id + '&' + 'order_by='
-							+ urlOptions.order_by;
-					return relativeUrl;
+					$.when.apply($, this.requests).done(controller.initSections, controller.addSubscribers);
 				},
 
 				setupSportDDView : function(c, n, d) {
-					debug.log('Setting up Sport DD View' + ': ' + n);
-					debug.log(c); // collection
-					debug.log(d); // destination
 					var sportListView;
 
 					sportListView = new SportListView({
@@ -138,12 +174,12 @@ define(
 						destination : d
 					});
 
-					this.scheme.push(sportListView);
-					this.layout.render();
+					sportListView.render();
+					this.sections[n] = sportListView;
+					this.meta.activeViews.push(n);
 				},
 
 				setupTopRatedView : function() {
-					debug.log('set top-rated view');
 					var topratedImageListView;
 
 					topratedImageListView = new HomeImageListView({
@@ -151,13 +187,13 @@ define(
 						name : "top-rated",
 						destination : "#top-rated"
 					});
-
-					this.scheme.push(topratedImageListView);
-					this.layout.render();
+					
+					topratedImageListView.render();
+					this.sections["top-rated"] = topratedImageListView;
+					this.meta.activeViews.push("top-rated");
 				},
 
 				setupResultView : function() {
-					debug.log('set search result view');
 					var homeImageListView;
 
 					homeImageListView = new HomeImageListView({
@@ -165,47 +201,50 @@ define(
 						name : "search-result",
 						destination : "#search-results"
 					});
-
-					this.scheme.push(homeImageListView);
-					this.layout.render();
+					
+					homeImageListView.render();
+					this.sections["search-result"] = homeImageListView;
+					this.meta.activeViews.push("search-result");					
 				},
 
 				setupMenuView : function() {
-					var menuView;
-
-					var menuModel = new MenuModel();
+					var menuModel = new MenuModel(),
+						menuView;
 
 					menuView = new MenuView({
 						model : menuModel,
-						name : "Menu",
+						name : "menu",
 						destination : "#menu"
 					});
-
-					this.scheme.push(menuView);
-					this.layout.render();
+					
+					menuView.render();
+					this.sections["menu"] = menuView;
+					this.meta.activeViews.push("menu");
 				},
 
-				setupDropDownMenuView : function() {
+				setupLocationDDView : function() {
 					var homeStateListView;
-					var cityView;
 
 					homeStateListView = new HomeStateListView({
 						collection : this.locationStateList,
-						name : 'State',
+						name : 'state',
 						destination : "#location .state"
 					});
 
-					cityModel = new CityModel();
+					var cityModel = new CityModel();
 
-					cityView = new CityView({
+					var cityView = new CityView({
 						model : cityModel,
-						name : "City",
+						name : "city",
 						destination : "#location .city"
 					});
-
-					this.scheme.push(homeStateListView);
-					this.scheme.push(cityView);
-					this.layout.render();
+					
+					homeStateListView.render();
+					cityView.render();
+					this.sections["city"] = cityView;
+					this.meta.activeViews.push("city");
+					this.sections["state"] = homeStateListView;
+					this.meta.activeViews.push("state");
 				},
 
 				setupLayout : function() {
@@ -214,11 +253,10 @@ define(
 					pageLayout = new LayoutView({
 						scheme : this.scheme,
 						destination : "#main",
-						template : pageLayoutTemplate,
-						displayWhen : "ready"
+						template : pageLayoutTemplate/*,
+						displayWhen : "ready"*/
 					});
 
-					//console.log("Home page setupLayout Results: ", pageLayout);
 					this.layout = pageLayout;
 
 					return this.layout;

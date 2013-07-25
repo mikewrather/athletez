@@ -33,8 +33,11 @@ define(
 					var target = $(e.currentTarget);
 					var targetClass = target.attr('class');
 					$('.dropdown-menu > li > a'+'.'+targetClass).removeClass('select');
+					targetClass = target.attr('class').split(' ')[0];
 					$(target).addClass('select');
-					console.log($(target).text());
+					var ret = targetClass + ' ' + $(target).text();
+					Channel('viewFilterChanged').publish(ret);
+					debug.log(ret);
 				},
 				
 				toggle : function(e) {

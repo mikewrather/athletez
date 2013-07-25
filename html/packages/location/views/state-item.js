@@ -43,8 +43,8 @@ function (
         },
         
         changeState: function() {
-        	console.log(this.model);
-            Channel('changestate' + this.model.collection.cid).publish(this.model);
+        	debug.log(this.model);
+            Channel('stateChanged:' + this.model.collection.cid).publish(this.model);
         }        
         
       });
