@@ -56,5 +56,8 @@ return array(
 	"languages_id_exist" => "As far as we can tell, that ID doesn't refer to a Language.",
 	"coaches_id_exist" => "As far as we can tell, that ID doesn't refer to a coach.",
 	"academics_tests_topics_id_exist" => "As far as we can tell, that ID doesn't refer to a academic test topic.",
-	"users_gpa_exist" => "user gpa already exist in this year"
+	"users_gpa_exist" => "user gpa already exist in this year",
+	"user_sport_link_exist" => "As far as we can tell, that ID doesn't refer to user sport link",
+	"uslgamelink_link_not_exist" => "As far as we can tell, that link already exist",
+	"users_id_exist" => "As far as we can tell, that ID doesn't refer to a user"
 );

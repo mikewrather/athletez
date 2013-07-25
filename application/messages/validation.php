@@ -50,4 +50,7 @@
 		'coaches_id_exist' => $e->get('coaches_id_exist'),
 		'academics_tests_topics_id_exist' => $e->get('academics_tests_topics_id_exist'),
 		'users_gpa_exist' => $e->get('users_gpa_exist'),
+		'user_sport_link_exist' => $e->get('user_sport_link_exist'),
+		'uslgamelink_link_not_exist' => $e->get('uslgamelink_link_not_exist'),
+		'users_id_exist' => $e->get('users_id_exist')
 	);

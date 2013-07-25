@@ -389,6 +389,44 @@
 			}
         }
 
+		public function action_get_awards()
+		{
+
+			$this->payloadDesc = "List of awards associated with user";
+			if(!$this->mainModel->id)
+			{
+				$this->modelNotSetError();
+				return false;
+			}
+
+			if((int)trim($this->request->query('sports_id')) > 0)
+			{
+				$arguments["sports_id"] = (int)trim($this->request->query('sports_id'));
+			}
+			$arguments["users_id"] = (int) $this->mainModel->id;
+
+			return $this->mainModel->getAwards($arguments);
+		}
+
+		public function action_get_references()
+		{
+			$this->payloadDesc = "List of references associated with user";
+			if(!$this->mainModel->id)
+			{
+				$this->modelNotSetError();
+				return false;
+			}
+
+			if((int)trim($this->request->query('sports_id')) > 0)
+			{
+				$arguments["sports_id"] = (int)trim($this->request->query('sports_id'));
+			}
+
+			$arguments["users_id"] = (int) $this->mainModel->id;
+
+			return $this->mainModel->getReferences($arguments);
+		}
+
 		/**
 		 * action_get_fbpics() Get Facebook all user profile photo(s)
 		 * via /api/user/fbpics/{0}
@@ -655,7 +693,6 @@
 				//parse error and add to error array
 				$this->processValidationError($result,$this->mainModel->error_message_path);
 				return false;
-
 			}
 
 		}
@@ -2081,7 +2118,16 @@
 
 			}
 
-            return $this->mainModel->deleteTeam($arguments);
+            if (!$this->mainModel->deleteTeam($arguments)){
+				$error_array = array(
+					"error" => "User teams link doesn't exist",
+					"desc" => "User teams link doesn't exist."
+				);
+
+				$this->modelNotSetError($error_array);
+				return false;
+			}
+			return null;
 		}
 		
 		/**

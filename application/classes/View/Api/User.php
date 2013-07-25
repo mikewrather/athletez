@@ -231,6 +231,32 @@
 			$videos = $this->obj->result;
 			return $videos;
 		}
+
+		public function get_references(){
+			$retArr = null;
+
+			// Scaffolding Code For Array:
+			$objs = $this->obj->find_all();
+			foreach($objs as $obj)
+			{
+				$retArr[] = $obj->getBasics();
+			}
+
+			return $retArr;
+		}
+
+		public function get_awards(){
+			$retArr = null;
+
+			// Scaffolding Code For Array:
+			$objs = $this->obj->find_all();
+			foreach($objs as $obj)
+			{
+				$retArr[] = $obj->getBasics();
+			}
+
+			return $retArr;
+		}
 		
 		/**
 		 * get_images() List of images uploaded by the user
@@ -267,22 +293,23 @@
 		}
 
 		/**
-		 * get_commentson() Get a list of comments related to the user
-		 *
-		 * @retun array
-		 */
+		* get_commentson() Get a list of comments related to the user
+		*
+		* @retun array
+		*/
 		public function get_commentson()
 		{
 			$retArr = null;
 
 			$comments = $this->obj->find_all();
-
 			foreach($comments as $comment)
 			{
-				$retArr[] = $comment->getBasics();
+				$gb = $comment->getBasics();
+
+				$retArr[$comment->id] = $gb;
 				$retArr[$comment->id]['poster'] = $retArr[$comment->id]['user']['name'];
 				$retArr[$comment->id]['poster_picture'] = $retArr[$comment->id]['user']['user_picture'];
-                $retArr[$comment->id]['poster_email']    = $retArr[$comment->id]['user']['email'];
+				$retArr[$comment->id]['poster_email']    = $retArr[$comment->id]['user']['email'];
 			}
 
 			return $retArr;
@@ -561,12 +588,7 @@
 		 */
 		public function delete_team()
 		{
-			$retArr = array();
- 
-			// Scaffolding Code For Single:
-			$retArr = $this->obj->getBasics();
-
-			return $retArr;
+			return null;
 		}
 		
 		/**

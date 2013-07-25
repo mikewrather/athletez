@@ -204,6 +204,30 @@
 				return false;
 		}
 
+		public static function user_sport_link_exist($users_id, $sports_id){
+			$usl_model = ORM::factory("User_Sportlink");
+			$usl_model->select("id")
+				->where('sports_id', '=', $sports_id)
+				->and_where('users_id', '=', $users_id)
+				->find();
+			if ($usl_model->loaded()){
+				return true;
+			}
+			return false;
+		}
+
+		public static function uslgamelink_link_not_exist($user_sport_link_id, $games_id){
+			$usl_games_model = ORM::factory("User_Sportlink_Gamelink");
+			$usl_games_model->select("id")
+				->where('user_sport_link_id', '=', $user_sport_link_id)
+				->and_where('games_id', '=', $games_id)
+				->find();
+			if (!$usl_games_model->loaded()){
+				return true;
+			}
+			return false;
+		}
+
 		public static function fitness_datavalue_exist($fitness_data_id, $users_id){
 
 			$games_match_model = ORM::factory("User_Fitness_Dataval");

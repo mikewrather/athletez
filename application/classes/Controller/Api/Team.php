@@ -416,12 +416,18 @@
 				$home_team = Util::convert_to_boolean(trim($this->request->post('home_team')));
 			}
 
+			if(trim($this->request->post('score') != ""))
+			{
+				$score = (int)trim($this->request->post('score'));
+			}
+
 			$args = array(
 				'teams_id' => $this->mainModel->id,
 				'games_id' => $games_id,
 				'game_datetime' => $game_datetime,
 				'locations_id' => $locations_id,
 				'is_home_team' => $home_team,
+				'score' => $score
 			);
 
 			$result = $this->mainModel->addGame($args);

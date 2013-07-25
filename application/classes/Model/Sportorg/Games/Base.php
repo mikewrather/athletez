@@ -108,7 +108,7 @@ class Model_Sportorg_Games_Base extends ORM
 				//$args['gameDay'] = $gameDay;
 				$this->gameTime = $gameTime;
 			}
-
+			$this->event_name = $event_name;
 			$this->save();
 			Model_Site_Feed::addToFeed($this,$feed_action);
 
@@ -135,7 +135,7 @@ class Model_Sportorg_Games_Base extends ORM
 			"gameDay" => $this->gameDay,
 			"gameTime" => $this->gameTime,
 			"teams" => $this->teams,
-
+			'event_name' => $this->event_name,
 			/* Required are required from Ma's test file*/
 			//TODO, add by Jeffrey, Clean up the unnecessary data.
 			"id" => $this->id,

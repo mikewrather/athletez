@@ -70,4 +70,16 @@ class Model_User_Sportlink extends ORM
 		}
 	}
 
+	public function getId($users_id, $sports_id){
+		$usl_model = ORM::factory("User_Sportlink");
+		$usl_model->select("id")
+			->where('sports_id', '=', $sports_id)
+			->and_where('users_id', '=', $users_id)
+			->find();
+		if ($usl_model->loaded()){
+			return $usl_model->id;
+		}
+		return null;
+	}
+
 }
