@@ -61,9 +61,24 @@
 				$arguments["sports_id"] = (int)trim($this->request->post('sports_id'));
 			}
 
-			//TODO: Put in call to usl_game_link model and error handling.
+			if((int)trim($this->request->post('users_id')) > 0)
+			{
+				$arguments["users_id"] = (int)trim($this->request->post('users_id'));
+			}
 
+			$result = $this->mainModel->addUslGamesLink($arguments);
 
+			if(get_class($result) == get_class($this->mainModel))
+			{
+				return $result;
+			}
+			elseif(get_class($result) == 'ORM_Validation_Exception')
+			{
+				//parse error and add to error array
+				$this->processValidationError($result,$this->mainModel->error_message_path);
+				return false;
+
+			}
 		}
 		
 		############################################################################
