@@ -6,6 +6,7 @@
 define([
     "require",
     "text!imageup/templates/basic.html",
+	"text!imageup/templates/uploader.html",
     "facade",
     "controller",
     "models",
@@ -106,7 +107,7 @@ define([
 			this.scheme=[];
             pageLayout = new LayoutView({
                 scheme: this.scheme,
-                destination: "#main-footer",
+                destination: "#main",
 				template : pageLayoutTemplate,
 				displayWhen : "ready"
             });
@@ -140,7 +141,10 @@ define([
 				dataum= [],
 				msg="",thiss=this,
 				dataum=data.dataum;
-			//this.url="/api/"+$("#url_tag").val()+"/addimage/"+$("#id_tag").val();
+
+			//url gets set
+			this.url="/api/"+$("#url_tag").val()+"/addimage/"+$("#id_tag").val();
+
 			$("#preview_"+id).html("<progress></progress>")
 			$.ajax({
 			    url: this.url,
