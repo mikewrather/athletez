@@ -37,7 +37,6 @@ function(facade,  views,   utils,   SportItemView) {
             }
             _.bindAll(this);
             this.name = options.name || this.name;
-            this.id = options.id || this.id;
             this._tagName = options._tagName || this._tagName;
             this.tagName = options.tagName || this.tagName;
             this._className = options._className || this._className;
