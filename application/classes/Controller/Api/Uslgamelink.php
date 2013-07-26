@@ -66,6 +66,21 @@
 				$arguments["users_id"] = (int)trim($this->request->post('users_id'));
 			}
 
+			if(trim($this->request->post('result_time')) != "")
+			{
+				$arguments["result_time"] = trim($this->request->post('result_time'));
+			}
+
+			if(trim($this->request->post('result_place')) != "")
+			{
+				$arguments["result_place"] = trim($this->request->post('result_place'));
+			}
+
+			if(trim($this->request->post('bib_number')) != "")
+			{
+				$arguments["bib_number"] = trim($this->request->post('bib_number'));
+			}
+
 			$result = $this->mainModel->addUslGamesLink($arguments);
 
 			if(get_class($result) == get_class($this->mainModel))
