@@ -14,7 +14,7 @@ define( ["models/base"], function (BaseModel) {
             "links": [{
                 "label": "Photo",
                 "link" : "#",
-				"id"   :"pic"
+				"id"   :"addPhoto"
             }, {
                 "label": "Video",
                 "link": "#",
@@ -24,7 +24,8 @@ define( ["models/base"], function (BaseModel) {
                 "link": "#",
 				"id"   :""
             }
-            ]
+            ],
+	        "userid" : null
             
         }
 

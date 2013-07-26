@@ -72,22 +72,34 @@ define([
 
     ProfileController = Controller.extend({
 
-        initialize: function (options) {
+        initialize: function (options)
+        {
+	        var self = this;
+	        debug.log("start initialize");
             Channel('load:css').publish(cssArr);
 
-            _.bindAll(this);
+            _.bindAll(self);
 
-            this.handleOptions(options);
-            this.scheme=[];
+	        self.handleOptions(options);
+
+	        self.scheme=[];
             if (options.userId) {
-                this.id = options.userId;
-                this.init();
+	            debug.log(options.userId);
+	            self.id = options.userId;
+	            self.init();
             }
-			//console.log(this)
-            return this;
+	        else
+            {
+	            self.init();
+            }
+
+
+            return self;
         },
         
-        init: function() {
+        init: function()
+        {
+	        debug.log("called profile.js init");
             this.setupLayout().render();
             this.createData();
             this.handleDeferreds();            
@@ -108,6 +120,10 @@ define([
             this.commentson = new ProfileCommentOnList();
             this.commentson.id = this.id;
             this.commentson.fetch();
+
+	        this.images = new ProfileImageList();
+	        this.images.id = this.id;
+	        this.images.fetch();
             
             var controller = this;
             
@@ -239,8 +255,9 @@ define([
             
             addMediaView = new ProfileAddMediaView({
                 model: this.addmedia,
-                name: "Add Medias",
-                destination: "#add-media"
+                name: "Add Media",
+                destination: "#add-media",
+	            "userid" : this.id
             });
             for( var x in this.scheme) {
 			    if( this.scheme[x].id=="add-media") delete this.scheme[x];

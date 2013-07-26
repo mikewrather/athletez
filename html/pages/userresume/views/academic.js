@@ -11,7 +11,7 @@ define(['require', 'text!userresume/templates/academic.html',
 	SectionView = views.SectionView, 
 	utils = require('utils'), Channel = utils.lib.Channel, 
 	vendor = require('vendor'), Mustache = vendor.Mustache, 
-	$ = facade.$, GPACollection = require('userresume/collections/rdtree'), AcedemicView = SectionView.extend({
+	$ = facade.$, GPACollection = require('userresume/collections/rdtree'), AcademicView = SectionView.extend({
 
 		template : academicTemplate,
 

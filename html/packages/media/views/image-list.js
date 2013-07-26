@@ -40,11 +40,7 @@ function(facade,  views,   utils,   ImageItemView,            ImageBoardView,   
             }
             _.bindAll(this);
             this.addSubscribers();
-            console.log("ngst");
-       //     debugger;
             this.setupBoardView();
-       //     debugger;
-            console.log("fghj");
             this.setupAddView();
         },
 
@@ -91,6 +87,9 @@ function(facade,  views,   utils,   ImageItemView,            ImageBoardView,   
 
         setupBoardView: function() {
         	debug.log("setupBoardView media/views/image-list.js");
+
+	        debug.log("image list collection: ");
+	        debug.log(this.collection);
             if (this.collection.size() == 0)
                 return;
             var filtered_images = this.filterWithImageType( this.imagetype );

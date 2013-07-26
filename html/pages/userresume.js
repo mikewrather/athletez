@@ -6,7 +6,7 @@
  */
 
 define(["require", "text!userresume/templates/layout.html", 
-	"text!userresume/templates/sentresume.html.html",
+	"text!userresume/templates/sentresume.html",
 	 'text!userresume/templates/basic_info_header.html',
 	  'text!userresume/templates/rdtree.html',
 	  'text!userresume/templates/academic.html',
@@ -36,7 +36,7 @@ define(["require", "text!userresume/templates/layout.html",
 	/*VIEW SECTION*/
 	BasicInfoView = require("userresume/views/basic_info"), SentResumeView = require("userresume/views/sentresumeview");
 	RDTreeView = require("userresume/views/rdtree");
-var AcademicView = require("userresume/views/academic");
+	var AcademicView = require("userresume/views/academic");
 	UserResumeController = Controller.extend({
 		/*CSS SECTION*/
 		cssArr : ["/pages/userresume/userresume.css"],

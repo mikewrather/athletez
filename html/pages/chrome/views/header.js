@@ -8,14 +8,16 @@ define([
         'views',
         'text!chrome/templates/header.html',
         'chrome/models/header',
-        'registration'
+        'registration',
+		'utils/storage'
         ], 
 function (
         vendor,
         views,
         headerTemplate,
         HeaderModel,
-        RegistrationController
+        RegistrationController,
+        Store
         ) {
 
     var HeaderView,
@@ -55,6 +57,7 @@ function (
                 var authorized = model.get('authorized');
                 if (authorized) {
                     var id = model.get('id');
+	                self.saveCookie();
                     Channel('app-inited').publish(id);
                 }
             };
@@ -62,6 +65,11 @@ function (
             this.model.fetch();
             return this;
         },
+
+	      saveCookie: function () {
+		      var appStates = new Store("user","cookie");
+			  appStates.create(this.model);
+	      },
         
         signupFacebook: function(event) {
         	
