@@ -85,7 +85,7 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
 	    	
 	    	function initHome() {
 	    		var homeController = new HomeController({
-	    			"route" : ""
+	    			"route" : "home"
 	    		});
 	    	}
 	    	

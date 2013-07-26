@@ -93,10 +93,9 @@ define(
 				},
 				
 				addSubscribers : function() {
-					var collections = this.collections;
 					_.each(this.genderTypes, function(viewName){
-						Channel('sportChanged:'+collections[viewName].cid).subscribe(this.changeSportFilter);						
-					});
+						Channel('sportChanged:'+this.collections[viewName].cid).subscribe(this.changeSportFilter);						
+					}, this);
 					Channel('cityChanged:'+ this.sections['city'].id).subscribe(this.changeCityFilter);
 					Channel('stateChanged:'+ this.collections['state'].cid).subscribe(this.changeStateFilter);
 					Channel('textChanged').subscribe(this.updateText);
@@ -140,6 +139,7 @@ define(
 		        },
 		        
 		        changeSportFilter : function(model) {
+		        	console.log(model);
 		        	var options = {'sports_id': model.attributes.payload.sport_id};
 		        	this.transitionView(options);
 		        },
@@ -197,6 +197,7 @@ define(
 					_.each(this.genderTypes, function(name) {
 						collections[name] = new SportList([], {name : name});
 					});
+					//console.log(collections);
 				},
 
 				handleDeferreds : function() {
@@ -206,20 +207,6 @@ define(
 							requests.push(value.fetch());
 					});
 					$.when.apply($, requests).done(controller.initSections, controller.addSubscribers);
-				},
-
-				setupSportListView : function(viewName) {
-					var sportListView;
-					debug.log(viewName);
-					sportListView = new SportListView({
-						collection : this.collections[viewName],
-						name : viewName,
-						destination : '#sports #'+ viewName
-					});
-
-					sportListView.render();
-					this.sections[viewName] = sportListView;
-					this.meta.activeViews.push(viewName);
 				},
 
 				setupImageListView : function(viewName) {
@@ -234,6 +221,21 @@ define(
 					imageListView.render();
 					this.sections[viewName] = imageListView;
 					this.meta.activeViews.push(viewName);					
+				},
+				
+				setupSportListView : function(viewName) {
+					var sportListView;
+					 
+					sportListView = new SportListView({
+						collection : this.collections[viewName],
+						name : viewName,
+						id : viewName,
+						destination : '#sport #'+ viewName
+					});
+
+					sportListView.render();
+					this.sections[viewName] = sportListView;
+					this.meta.activeViews.push(viewName);
 				},
 
 				setupMenuView : function() {
