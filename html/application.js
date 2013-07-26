@@ -160,19 +160,24 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
 			console.log("router");
 			this.loadStyles();
             
-            $('body').empty();
+         // $('body').empty();
 			chromeBootstrap();
 			//URL to which it has to be passed
-			//this.posturl="/api/image/add/";
-			this.posturl="";
+
+			//this.posturl="";
 			//Extra attributes need to be posted
-			//this.attribute={'sports_id':'46',"id":"0",'name':"testimg"};
-			this.attribute={};
+
+			//this.attribute={};
 			//pass those attributes to the controller
-            new ImageController({"route": "","url":this.posturl,"attr":this.attribute});
-            function initImage(id) {
+        //    new ImageController({"route": "","url":this.posturl,"attr":this.attribute});
+            function initImage(id)
+            {
+	        //    this.posturl="/api/image/add/";
+	        //    this.attribute={'sports_id':'46',"id":"0"};
+
 				console.log("inside router");
-                //var imageController = new ImageController({"route": "","url":this.posturl,"attr":this.attribute});
+                var imageController = new ImageController({"route": "","url":this.posturl,"attr":this.attribute});
+	            console.log("Image Controller",imageController);
             }
 			
             Channel('app-inited').subscribe(initImage);

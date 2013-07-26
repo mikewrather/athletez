@@ -558,6 +558,11 @@ class Controller_Api_Base extends AuthController
 			$arguments["users_id"] = $this->user->id;
 		}
 
+		if(trim($this->request->post('bib_number')) != "")
+		{
+			$arguments["bib_number"] = (int)trim($this->request->post('bib_number'));
+		}
+
 		if((int)trim($this->request->post('media_id')) > 0)
 		{
 			$arguments["media_id"] = (int)trim($this->request->post('media_id'));
