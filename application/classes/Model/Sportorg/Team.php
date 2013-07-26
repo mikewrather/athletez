@@ -176,7 +176,7 @@ class Model_Sportorg_Team extends ORM
 					$games_teams_link->teams_id = $teams_id;
 					$games_teams_link->games_id = $new_games_id;
 					$games_teams_link->is_home_team = $is_home_team;
-					$games_teams_link->score = $score;
+					$games_teams_link->points_scored = $points_scored;
 					$games_teams_link->save();
 
 			}else{
@@ -189,7 +189,7 @@ class Model_Sportorg_Team extends ORM
 				$games_teams_link->teams_id = $teams_id;
 				$games_teams_link->games_id = $games_id;
 				$games_teams_link->is_home_team = $is_home_team;
-				$games_teams_link->score = $score;
+				$games_teams_link->points_scored = $points_scored;
 
 				if ($games_teams_link->check($external_validate)){
 					$games_teams_link->save();

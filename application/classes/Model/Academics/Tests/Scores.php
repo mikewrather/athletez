@@ -60,8 +60,14 @@ class Model_Academics_Tests_Scores extends ORM
 		if (isset($score)){
 			$this->score = $score;
 		}
+
 		try{
-			$this->save();
+			$valid_array = array('users_id' => $users_id, 'academics_tests_topics_id' => $academics_tests_topics_id);
+			$external_validate_scores = Validation::factory($valid_array);
+			$external_validate_scores->rule('academics_tests_topics_id', 'user_score_not_exist', array($academics_tests_topics_id, $users_id));
+			if ($this->check($external_validate_scores)){
+				$this->save();
+			}
 			return $this;
 		}catch (ORM_Validation_Exception $e){
 			return $e;

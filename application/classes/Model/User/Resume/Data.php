@@ -123,9 +123,17 @@ class Model_User_Resume_Data extends ORM
 		return $resumedata;
 	}
 	
-	public function getVals()
+	public function getVals($args = array())
 	{
-		return $this->datavals;
+		extract($args);
+		$dataVals = $this->datavals;
+		if(isset($users_id)){
+			$dataVals->where('users_id', '=', $users_id);
+		}
+		//exclude itself
+		$classes_arr['User_Resume_Data_Vals'] = 'user_resume_data_vals';
+		$dataVals = ORM::_sql_exclude_deleted($classes_arr, $dataVals);
+		return $dataVals;
 	}
 
 	public function owner(){

@@ -53,5 +53,6 @@
 		'user_sport_link_exist' => $e->get('user_sport_link_exist'),
 		'uslgamelink_link_not_exist' => $e->get('uslgamelink_link_not_exist'),
 		'users_id_exist' => $e->get('users_id_exist'),
-		'valid_time' => $e->get('valid_time')
+		'valid_time' => $e->get('valid_time'),
+		'user_score_not_exist' => $e->get('user_score_not_exist')
 	);

@@ -228,6 +228,18 @@
 			return false;
 		}
 
+		public static function user_score_not_exist($topic_id, $users_id){
+			$test_score_model = ORM::factory("Academics_Tests_Scores");
+			$test_score_model->select("id")
+				->where('academics_tests_topics_id', '=', $topic_id)
+				->and_where('users_id', '=', $users_id)
+				->find();
+			if (!$test_score_model->loaded()){
+				return true;
+			}
+			return false;
+		}
+
 		public static function fitness_datavalue_exist($fitness_data_id, $users_id){
 
 			$games_match_model = ORM::factory("User_Fitness_Dataval");

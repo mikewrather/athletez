@@ -91,11 +91,13 @@
 			}
 
 			//permission check
-			if(!$this->user->can('Assumeownership', array('owner' => $this->mainModel->owner()))){
-				$this->throw_permission_error(Constant::NOT_OWNER);
-			}
+			//Comment by jeffrey, Sounds no users_id in resume data
+//			if(!$this->user->can('Assumeownership', array('owner' => $this->mainModel->owner()))){
+//				$this->throw_permission_error(Constant::NOT_OWNER);
+//			}
 
-			return $this->mainModel->getVals();  
+			$args['users_id'] = (int)trim($this->request->query('users_id'));
+			return $this->mainModel->getVals($args);
 		}
 		
 		############################################################################
