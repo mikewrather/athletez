@@ -27,12 +27,26 @@ class Model_User_Sportlink_Gamelink extends ORM
 		)
 	);
 
+	public function rules(){
+		return array(
+			'result_time' => array(
+				array('valid_time')
+			),
+			'result_place' => array(
+				array('numeric')
+			)
+		);
+	}
+
 	public function addUslGamesLink($args = array()){
 		extract($args);
 		//$this->users_id = $users_id;
 		$this->games_id = $games_id;
 		$post_values = array('users_id' => $users_id, 'sports_id' => $sports_id);
 
+		$this->result_place = $result_place;
+		$this->bib_number = $bib_number;
+		$this->result_time = $result_time;
 		try {
 			$external_validate = Validation::factory($post_values)
 					->rule('users_id', 'users_id_exist')
@@ -50,6 +64,7 @@ class Model_User_Sportlink_Gamelink extends ORM
 					$external_validate_games->rule('games_id', 'games_id_exist')
 						->rule('user_sport_link_id', 'uslgamelink_link_not_exist', array($user_sport_link_id, $games_id));
 					if ($this->check($external_validate_games)){
+
 						$this->save();
 					}
 				}
@@ -70,6 +85,10 @@ class Model_User_Sportlink_Gamelink extends ORM
 			"games_id" => $this->games_id,
 			"user_sport_link_id" => $this->user_sport_link_id
 		);
+	}
+
+	public function name(){
+		return null;
 	}
 
 }

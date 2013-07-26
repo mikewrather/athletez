@@ -434,6 +434,12 @@
 			return false;
 		}
 
+		public static function valid_time($val){
+			$regex = '/^([0-1][0-9]|[2][0-3]):([0-5][0-9]):([0-5][0-9])$/';
+
+			return (bool) preg_match($regex, $val);
+		}
+
 		public static function locations_id_exist($value){
 			if ($value == "" || $value == 0){
 				return false;
