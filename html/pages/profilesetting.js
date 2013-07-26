@@ -5,7 +5,7 @@
  // Returns {ProfileSettingController} constructor
  */
 
-define(["require", "text!profilesetting/templates/layout.html", "facade", "controller", "models", "views", "utils", "profilesetting/models/basic_info", "profilesetting/views/basic_info", "profilesetting/views/highschool", "profilesetting/views/club", "profilesetting/views/sport", "profilesetting/models/high_school","profilesetting/views/individuals"], function(require, pageLayoutTemplate) {
+define(["require", "text!profilesetting/templates/layout.html", "facade", "controller", "models", "views", "utils", "profilesetting/models/basic_info", "profilesetting/views/basic_info", "profilesetting/views/highschool", "profilesetting/views/club", "profilesetting/models/high_school","profilesetting/views/individuals"], function(require, pageLayoutTemplate) {
 
 	var ProfileSettingController, facade = require("facade"), Controller = require("controller"), models = require("models"), views = require("views"), utils = require("utils"), $ = facade.$, _ = facade._, debug = utils.debug, Channel = utils.lib.Channel, LayoutView = views.LayoutView,
 

@@ -51,7 +51,7 @@ function(require, imageBasicTemplate) {
 			this.attr=attr;      
 			this.files_drag=[];
 
-		//	$('#imgUploadModal').modal('show') ;
+			$('#imgUploadModal').modal('show') ;
 		    $('#imgUploadModal').on('hidden', function () {
 		    	Channel('refresh-onImageUpload').publish();
 		    });
