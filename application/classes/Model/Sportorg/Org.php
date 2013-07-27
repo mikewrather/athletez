@@ -50,7 +50,8 @@ class Model_Sportorg_Org extends ORM
 			'foreign_key' => 'orgs_id',
 			'through' => 'org_league_link',
 			'far_key' => 'leagues_id'
-		)
+		),
+
 	);
 
 	public function getLocationName(){
@@ -169,18 +170,18 @@ class Model_Sportorg_Org extends ORM
 		return $leagues;
 	}
 	
-	public function getDivisions()
+	public function getDivision($id)
 	{
-		//$a = $this->join('divisions')->on('divisions_id', '=', 'divisions.id' );
-		//extract($args);
-		//$this->where('id', '=', $orgs_id);
-		$division = $this->divisions;
-//		$classes_arr = array(
-//			'Sportorg_Division' => 'sportorg_division'
-//		);
-//
-//		$divisions = ORM::_sql_exclude_deleted($classes_arr, $divisions);
-		print_r($division);
+		$division = ORM::factory('Sportorg_Division');
+
+		$division->join('orgs', 'left')->on('orgs.divisions_id', '=', 'sportorg_division.id' );
+		$division->where('orgs.id', '=', $id);
+
+		//exclude itself
+		$classes_arr = array(
+			'Sportorg_Division' => 'sportorg_division'
+		);
+		$division = ORM::_sql_exclude_deleted($classes_arr, $division);
 		return $division;
 	} 
 	

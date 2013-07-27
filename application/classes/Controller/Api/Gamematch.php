@@ -12,8 +12,7 @@
 	class Controller_Api_Gamematch extends Controller_Api_Base
 	{
 
-		public function __construct($request,$response)
-		{
+		public function __construct($request,$response){
 			parent::__construct($request,$response);
 			$a = ORM::factory("Sportorg_Games_Match");
 			$this->setMainModel($a);
@@ -307,6 +306,18 @@
 				return false;
 			}
 
+			if((int)trim($this->delete('users_id')) > 0)
+			{
+				$arguments["users_id"] = (int)trim($this->delete('users_id'));
+			}else{
+				$error_array = array(
+					"error" => "user is required",
+					"desc" => "user is required"
+				);
+				$this->modelNotSetError($error_array);
+				return false;
+			}
+			$arguments['id'] = $this->mainModel->id;
 			if(!$this->user->can('GameMatches', array('action'=>'delete', 'obj' => $this->mainModel))){
 				$error_array = array(
 					"error" => "Sorry, You don't have permission to delete",
@@ -316,7 +327,7 @@
 				return false;
 			}
 			
-			return $this->mainModel->deletePlayers();
+			return $this->mainModel->deletePlayers($arguments);
 		}
 		
 	}

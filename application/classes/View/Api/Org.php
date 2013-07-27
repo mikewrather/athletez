@@ -72,7 +72,7 @@
 		 */
 		public function get_division()
 		{
-			return $this->obj->getBasics();
+			return $this->obj->find()->getBasics();
 		}
 		
 		/**

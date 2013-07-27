@@ -333,7 +333,8 @@ class Model_Media_Image extends ORM
 				$image->join(array('users', 'user_base'))->on('user_base.id', '=', 'tags.subject_id');
 			}
 			if (isset($searchtext)){
-				$image->where(array(Db::expr('CONCAT(user_base.first_name," ",user_base.last_name)'), 'full_name'), 'like ','%'.$searchtext.'%');
+				//$image->where(array(Db::expr('CONCAT(user_base.first_name," ",user_base.last_name)'), 'full_name'), 'like ','%'.$searchtext.'%');
+				$image->where('media.name', 'like', "%".$searchtext."%");
 			}
 		}
 
@@ -345,7 +346,8 @@ class Model_Media_Image extends ORM
 			}
 
 			if (isset($searchtext)){
-				$image->where('orgs.name', 'like', '%'.$searchtext.'%');
+				//$image->where('orgs.name', 'like', '%'.$searchtext.'%');
+				$image->where('media.name', 'like', "%".$searchtext."%");
 			}
 		}
 
@@ -357,7 +359,8 @@ class Model_Media_Image extends ORM
 			}
 
 			if (isset($searchtext)){
-				$image->where('orgs.name', 'like', '%'.$searchtext.'%');
+				//$image->where('orgs.name', 'like', '%'.$searchtext.'%');
+				$image->where('media.name', 'like', "%".$searchtext."%");
 			}
 		}
 
@@ -369,10 +372,10 @@ class Model_Media_Image extends ORM
 			}
 
 			if (isset($searchtext)){
-				$image->where('orgs.name', 'like', '%'.$searchtext.'%');
+				//$image->where('orgs.name', 'like', '%'.$searchtext.'%');
+				$image->where('media.name', 'like', "%".$searchtext."%");
 			}
 		}
-
 		return $image;
 	}
 

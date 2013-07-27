@@ -182,6 +182,10 @@ return array(
 		'Academics_Tests_Scores' => 'academics_tests_topics_id'
 	),
 
+	'Sportorg_Games_Matchplayer' => array(
+
+	)
+
 
 
 
