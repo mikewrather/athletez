@@ -1,0 +1,20 @@
+
+{{#data}}
+			<div class="row-fluid item-test-topic_h item-test-{{id}}">
+				<div>
+				<span class="span3"><h4>{{testname}} :</h4></span> <span class="span3"><a href="javascript:void(0)" class="edit-test">Edit</a></span>
+				<span class="span9">
+					{{#topics}}
+					<div class="row-fluid">
+						<span class="span4">{{name}}</span>
+						<span class="span5"><input type="text" class="txtTestScore_h" testId="{{id}}" value="{{score}}" disabled="disabled"/></span>
+					</div>
+					 {{/topics}}
+				</span>
+				</div>
+				<div>
+					</div>
+					<a href="javascript:void(0)" class="btn btn-primary btn-finish-test-topic_h displayNone" >Finish</a>
+				</div>
+			</div>
+		 {{/data}}

@@ -7,7 +7,7 @@
 
 define(['facade', 'collections', 'user/collections/rdtree', 'utils'], function(facade, collections, UserCollection, utils) {
 
-	var List, BaseCollection = collections.BaseCollection, _ = facade._, Channel = utils.lib.Channel;
+	var List, BaseCollection = collections.BaseCollection, _ = facade._, Channel = utils.lib.Channel,
 
 	List = UserCollection.extend({
 		url : function() {

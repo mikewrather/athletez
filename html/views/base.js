@@ -143,10 +143,7 @@ define(['facade', 'utils'], function (facade, utils) {
         // Param {Object} `partials` - see Mustache.js documentation.
         toHTML: function (dataDecorator, partials) {
             var markup, data, args;
-				console.log("****************************************************************");
             data = (this.model) ? this.model.toJSON() : null;
-            console.log("data");
-            console.log(data);
             if (dataDecorator && _.isFunction(dataDecorator)) {
                 data = dataDecorator.call(this, data);
             }
@@ -157,8 +154,6 @@ define(['facade', 'utils'], function (facade, utils) {
             } else {
                 markup = _toHTML(this.template, data, partials);
             }
-            console.log("markup");
-            console.log(markup);
             return markup;
         },
 
