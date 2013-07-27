@@ -24,6 +24,7 @@ define(['facade', 'collections', 'user/collections/tests', 'utils'], function(fa
 			var self = this;
 
 			var models = self.toJSON();
+			console.log("standard models",models);
 			var d = [];
 
 			if (models.length) {

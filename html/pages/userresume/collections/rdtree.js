@@ -19,7 +19,36 @@ define(['facade', 'collections', 'user/collections/rdtree', 'utils'], function(f
 			}
 			return 'api/user/rdtree/' + this.user_id + '?id1=' + this.user_id;
 		},
-		
+		parseAsRequired : function() {
+			var self = this;
+			var models = self.toJSON();
+				var d = [];
+				if (models.length) {
+					
+
+					$.each(models, function(index, load) {
+						var temp = {
+							title : load.payload.name
+						}
+						var data = [];
+						for (var key in load.payload.data) {
+							var t = load.payload.data[key];
+							var obj = {
+								name : t.name,
+								id : t.id,
+								type : t.type,
+								val : t.val || "",
+								resumeDataId : t.resume_data_id
+							}
+							data.push(obj);
+						}
+						temp.data = data;
+
+						d.push(temp);
+					});
+		}
+		return d;
+		}
 	});
 
 	return List;

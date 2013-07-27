@@ -35,6 +35,7 @@ define(['facade', 'utils'], function(facade, utils) {
 		},
 
 		showSuccess : function(model, response) {
+			var self = this;
 			debug.log("ShowSuccess called in base.js");
 			model.hideMessages();
 
@@ -57,8 +58,9 @@ define(['facade', 'utils'], function(facade, utils) {
 						errors += item['error'] + '<br/>';
 					}
 				}
-				if (errors != '')
-					$('.global-errors').html(messages).stop().fadeIn();
+				if (errors != ''){
+					self.showErrorMessage(errors);
+				}
 			}
 
 			var messagesArr = exec_data['message_array'];
@@ -73,15 +75,14 @@ define(['facade', 'utils'], function(facade, utils) {
 						messages += item['message'] + '<br/>';
 					}
 				}
+				console.log("messages",messages);
 				if (messages != '')
-					$('.global-messages').html(messages).stop().fadeIn();
+					self.showSuccessMessage(messages);
 			}
 		},
 
 		showError : function(model, response) {
-			debug.log("ShowError called in base.js");
-			debug.log(model);
-			debug.log(response);
+			var self = this;
 			//$('.global-alert').addClass('alert-error').html('Hold on. There were problems. See sad faces above.').stop().fadeIn();
 			$('.global-messages').stop().fadeOut();
 			$('.global-errors').stop().fadeOut();
@@ -122,8 +123,9 @@ define(['facade', 'utils'], function(facade, utils) {
 						errors += item['error'] + '<br/>';
 					}
 				}
+				console.log("errors",errors);
 				if (errors != '')
-					$('.global-errors').html(errors).stop().fadeIn();
+					self.showErrorMessage(errors);
 			}
 
 			var messagesArr = exec_data['message_array'];
@@ -139,10 +141,18 @@ define(['facade', 'utils'], function(facade, utils) {
 					}
 				}
 				if (messages != '')
-					$('.global-messages').html(messages).stop().fadeIn();
+					self.showSuccessMessage(messages);
 			}
 		},
-
+		
+		showSuccessMessage : function(messages){
+			console.log("showSuccessMessage");
+			$('.global-messages').html(messages).stop().fadeIn();
+		},
+		showErrorMessage : function(errors){
+			console.log("showErrorMessage");
+			$('.global-errors').html(errors).stop().fadeIn();
+		},
 		// **Property:** `request` - assign fetch return value to this.request property,
 		// fetch returns (jQuery) ajax promise object
 		request : null,

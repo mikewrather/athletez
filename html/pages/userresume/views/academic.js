@@ -4,9 +4,23 @@
  // Requires `define`, `require`
  // Returns {RDTREEVIEW} constructor
  */
-define(['require', 'text!userresume/templates/academic.html', 'text!userresume/templates/gpa.html', 'text!userresume/templates/test.html', 'text!userresume/templates/testtopics.html', 'text!userresume/templates/testlist.html', 'facade', 'views', 'utils', 'vendor', 'userresume/collections/gpa', 'userresume/collections/tests', 'userresume/collections/academictests'], function(require, academicTemplate, templateGpa, templateTests, templateTestTopics, templateTestsListAll) {
+define(['require', 'text!userresume/templates/academic.html', 'text!userresume/templates/gpa.html', 
+'text!userresume/templates/test.html', 'text!userresume/templates/testtopics.html', 'text!userresume/templates/testlist.html',
+ 'facade', 'views', 'utils', 'vendor', 'userresume/collections/gpa', 'userresume/collections/tests', 'userresume/collections/academictests',
+ 'userresume/models/gpa',
+ ], function(require, academicTemplate, templateGpa, templateTests, templateTestTopics, templateTestsListAll) {
 
-	var self, facade = require('facade'), views = require('views'), SectionView = views.SectionView, utils = require('utils'), Channel = utils.lib.Channel, vendor = require('vendor'), Mustache = vendor.Mustache, $ = facade.$, GPACollection = require('userresume/collections/gpa'), TestCollection = require('userresume/collections/tests'), AcademicTestsCollection = require("userresume/collections/academictests"), AcademicView = SectionView.extend({
+	var self, facade = require('facade'), views = require('views'), SectionView = views.SectionView, 
+	utils = require('utils'), Channel = utils.lib.Channel, vendor = require('vendor'), Mustache = vendor.Mustache,
+	 $ = facade.$, 
+	 GPACollection = require('userresume/collections/gpa'), 
+	 TestCollection = require('userresume/collections/tests'), 
+	 AcademicTestsCollection = require("userresume/collections/academictests"), 
+	 
+	 //Models
+	 GpaModel = require("userresume/models/gpa"),
+	 
+	 AcademicView = SectionView.extend({
 
 		template : academicTemplate,
 
@@ -17,7 +31,12 @@ define(['require', 'text!userresume/templates/academic.html', 'text!userresume/t
 			"click .btn-Add-test" : "OpenTestPopUp",
 			"change .chk-test-Standardized_h" : "AddStandardTest",
 			"change .chk-test-AP_h" : "AddAPTest",
-			"click .btn-finish-test-topic_h" : "FinishTest"
+			"click .btn-finish-test-topic_h" : "FinishTest",
+			"click .btn-finish-gpa_h" : "FinishGpa",
+			"blur .txtGpa_h" : "SaveGpa",
+			"click .btn-delete-gpa" : "DeleteGpa",
+			"click .btn-Add-gpa" : "AddGpa",
+			"click .btn-Save-Gpa" : "SaveNewGpa"
 		},
 
 		/*Holds */
@@ -27,6 +46,10 @@ define(['require', 'text!userresume/templates/academic.html', 'text!userresume/t
 			// Buttons
 			BtnFinishTestTopics : ".btn-finish-test-topic_h",
 			BtnEditTest : ".edit-test",
+			BtnFinishGpa : ".btn-finish-gpa_h",
+			BtnEditGpa : ".edit-gpa",
+			BtnSaveGpa : ".btn-Save-Gpa",
+			
 			// Containers
 			ContainerGpa : "#container-academic-gpa",
 			ContainerStandard : "#container-StandardizedTest",
@@ -34,10 +57,18 @@ define(['require', 'text!userresume/templates/academic.html', 'text!userresume/t
 			SectionModalTests : ".section-modal-academic-tests_h",
 			SectionTestTopics : ".section-test-topics_h",
 			ItemTestTopic : ".item-test-topic_h",
+			SectionAddGpa : ".section-Add-Gpa",
 
 			// TEXTBOXES
 			TxtScore : ".txtTestScore_h",
-			ModalBox : ".tests-modal_h"
+			ModalBox : ".tests-modal_h",
+			TxtGpa : ".txtGpa_h",
+			TxtGpaYear : ".txtGpaYear_h",
+			TxtGpaScore : ".txtGpaScore_h",
+			
+			// LABELS
+			lblError : '.error_h',
+			lblSuccess : ".success_h"
 
 		},
 
@@ -45,7 +76,8 @@ define(['require', 'text!userresume/templates/academic.html', 'text!userresume/t
 		/*In Case of similar message create only one object and key*/
 		messages : {
 			dataNotExistGPA : "Data Does Not Exists For GPA TESTS.",
-			dataNotExistTests : "Data Does Not Exist For Tests."
+			dataNotExistTests : "Data Does Not Exist For Tests.",
+			YearScoreIsRequired : "Year And Score Are Required."
 		},
 		/*initialize gets called by default when constructor is initialized*/
 		initialize : function(options) {
@@ -110,10 +142,88 @@ define(['require', 'text!userresume/templates/academic.html', 'text!userresume/t
 
 			});
 		},
-		EditGpa : function() {
-			alert("Edit GPA");
+		EditGpa : function(e) {
+			$(e.target).parent().find(self.controls.TxtGpa).removeAttr('disabled');
+			$(e.target).parent().find(self.controls.BtnFinishGpa).fadeIn();
+			$(e.target).fadeOut();
 		},
-
+		SaveGpa : function(e){
+			var year = $(e.target).attr('year');
+			var value = $(e.target).val();
+			
+			var payload = {
+				user_id : self.user_id,
+				gpa : value,
+				year : year
+			};
+			var gpaModel = new GpaModel(payload);
+			gpaModel.user_id = self.user_id;
+			gpaModel.target = $(e.target);
+			gpaModel.save();
+			
+		},
+		DeleteGpa : function(e){
+			var year = $(e.target).attr('year');
+			
+			var payload = {
+				user_id : self.user_id,
+				year : year,
+				id1 : 1
+			};
+			var gpaModel = new GpaModel(payload);
+			gpaModel.user_id = self.user_id;
+			gpaModel.id1 = 1;
+			gpaModel.action = "delete";
+			gpaModel.target = $(e.target);
+			gpaModel.idAttribute = 'year';
+			gpaModel.destroy({
+					data : {
+						user_id : self.user_id,
+						year : year
+					},
+					
+					success : function() {
+						self.setUpGpaView();						
+					}
+				});
+ 	
+				$.when(gpaModel.request).done(function() {									
+					$(e.target).parent().find(self.controls.TxtGpa).val('');
+				});
+		},
+		FinishGpa : function(e){
+				$(e.target).parent().find(self.controls.TxtGpa).attr('disabled','disabled');
+				$(e.target).parent().find(self.controls.BtnEditGpa).fadeIn();
+				$(e.target).fadeOut();		
+		},
+		AddGpa : function(e){
+			self.$(self.controls.SectionAddGpa).fadeIn();
+		},
+		SaveNewGpa : function(e){
+			var year = self.$(self.controls.SectionAddGpa).find(self.controls.TxtGpaYear).val();
+			var score = self.$(self.controls.SectionAddGpa).find(self.controls.TxtGpaScore).val();
+			if(year == '' || score == '')
+			{
+				self.$(self.controls.SectionAddGpa).find(self.controls.lblError).html(self.messages.YearScoreIsRequired).fadeIn();
+			}else{
+				
+				self.$(self.controls.SectionAddGpa).find(self.controls.lblError).html('').fadeOut();
+				var payload = {
+						user_id : self.user_id,
+						gpa : score,
+						year : year
+					};
+					var gpaModel = new GpaModel(payload);
+					gpaModel.user_id = self.user_id;
+					gpaModel.target = $(e.target).parent();
+					gpaModel.save();
+					
+					$.when(Collection.request).done(function() {
+						self.setUpGpaView();
+					});
+			}
+		},		
+		/**STANDARD TEST VIEW FUNCTION/
 		/*Set Test Views*/
 		setUpStandardTestView : function() {
 			var payload = {
