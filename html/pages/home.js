@@ -1,22 +1,60 @@
 //Home Controller
 
 define(
-		[ "require", "text!pages/home/templates/layout.html", "facade",
-				"controller", "models", "views", "utils",
-				"pages/home/models/menu", "pages/home/views/menu",
-				"pages/home/views/image-list", "pages/home/collections/image",
-				"packages/location/collections/states.js",
-				"packages/location/models/city",
-				"packages/location/views/city", "pages/home/views/state-list",
-				"sport/collections/sports", "packages/sport/views/sport-list" ],
+		[ "require", 
+		  "text!pages/home/templates/layout.html", 
+		  
+		  "facade",
+		  "controller", 
+		  "models", 
+		  "views", 
+		  "utils",
+
+		  //models
+		  "pages/home/models/menu",
+		  "packages/location/models/city",
+
+		  //collections
+		  "packages/sport/collections/sports",
+		  "pages/home/collections/image",
+		  "packages/location/collections/states.js",
+
+		  //views
+		  "pages/home/views/menu",
+		  "pages/home/views/image-list",
+		  "pages/home/views/state-list",
+		  "packages/sport/views/sport-list",
+		  "packages/location/views/city"],
 		function(require, pageLayoutTemplate) {
 
-			var HomeController, facade = require("facade"), Controller = require("controller"), models = require("models"), views = require("views"), utils = require("utils"),
-
-			HomeStateListView = require('pages/home/views/state-list'), LocationStateList = require('packages/location/collections/states.js'), HomeImageList = require('pages/home/collections/image'), MenuModel = require("pages/home/models/menu"), MenuView = require("pages/home/views/menu"), HomeImageListView = require("pages/home/views/image-list"),
-
-			SportListView = require('packages/sport/views/sport-list'), SportList = require('sport/collections/sports'), CityModel = require('packages/location/models/city'), CityView = require('packages/location/views/city'), LayoutView = views.LayoutView, $ = facade.$, _ = facade._, Channel = utils.lib.Channel, cssArr = [ base_url
-					+ "pages/home/home.css" ];
+			var HomeController, 
+				facade = require("facade"), 
+				Controller = require("controller"), 
+				models = require("models"), 
+				views = require("views"), 
+				utils = require("utils"),
+				
+				//collections
+				SportList = require('packages/sport/collections/sports'), 
+				StateList = require('packages/location/collections/states.js'), 
+				ImageList = require('pages/home/collections/image'), 
+	
+				//models
+				MenuModel = require("pages/home/models/menu"), 
+				CityModel = require('packages/location/models/city'), 
+				
+				//views
+				MenuView = require("pages/home/views/menu"), 
+				ImageListView = require("pages/home/views/image-list"),
+				StateListView = require('pages/home/views/state-list'), 
+				SportListView = require('packages/sport/views/sport-list'), 
+				CityView = require('packages/location/views/city'), 
+				LayoutView = views.LayoutView, 
+				
+				$ = facade.$, 
+				_ = facade._, 
+				Channel = utils.lib.Channel, 
+				cssArr = [ base_url + 'pages/home/home.css' ];
 
 			HomeController = Controller.extend({
 
@@ -26,186 +64,220 @@ define(
 					_.bindAll(this);
 
 					this.handleOptions(options);
-
+					this.genderTypes = ['boys', 'girls', 'both'];
 					this.init();
-					this.urlOptions = {
-						'states_id' : '',
-						'sports_id' : '0',
-						'order_by' : 'votes',
-						'states_id' : ''
-					};
+					
 					return this;
 				},
 
 				init : function() {
-					this.setupLayout().render();
+					this.initUrlOptions();
 					this.createData();
 					this.handleDeferreds();
 				},
+				
+				initUrlOptions : function() {
+					this.searchUrls = ['/api/video/search', 
+					                   '/api/image/search', 
+					                   '/api/user/search', 
+					                   '/api/game/search'];
+					this.baseUrl = this.searchUrls[1];
+					this.urlOptions = {
+						'sports_id' : '0',
+						'city_id' : '0',
+						'order_by' : 'votes',
+						'time' : 'today',
+						'state_id' : '0',
+						'searchtext' : ''
+					};
+				},
+				
+				addSubscribers : function() {
+					_.each(this.genderTypes, function(viewName){
+						Channel('sportChanged:'+this.collections[viewName].cid).subscribe(this.changeSportFilter);						
+					}, this);
+					Channel('cityChanged:'+ this.sections['city'].id).subscribe(this.changeCityFilter);
+					Channel('stateChanged:'+ this.collections['state'].cid).subscribe(this.changeStateFilter);
+					Channel('textChanged').subscribe(this.updateText);
+					Channel('viewFilterChanged').subscribe(this.changeViewFilter);
+					Channel('baseUrlChanged').subscribe(this.updateBaseUrl);
+				},
+				
+				setupScheme: function () {
+		            var i, params = this.params;
 
+		            for (i = 0; i < this.meta.activeViews.length; i++) {
+		                this.scheme.push(this.sections[this.meta.activeViews[i]]);
+		            };
+		        },
+		        
+		        initSections : function () {
+		        	this.setupMenuView();
+		        	this.setupLocationDDView();
+		        	_.each(this.genderTypes, this.setupSportListView);
+		        	_.each(['top-rated', 'search-result'], this.setupImageListView);
+		        	this.setupScheme();
+		        	this.setupLayout().render();
+		        },
+		        
+		        updateBaseUrl : function(urlNumber) {
+		        	this.baseUrl = this.searchUrls[urlNumber];
+		        	this.transitionView();
+		        },
+		        
+		        updateText : function(text) {
+		        	this.urlOptions.searchtext = text;
+		        },
+		        
+		        changeViewFilter : function(str) {
+		        	if(str.submenu === 'browse') {
+		        		options = {'order_by': str.value};
+		        	} else {
+		        		options = {'time' : str.value};
+		        	}
+		        	this.transitionView(options);
+		        },
+		        
+		        changeSportFilter : function(model) {
+		        	console.log(model);
+		        	var options = {'sports_id': model.attributes.payload.sport_id};
+		        	this.transitionView(options);
+		        },
+		        
+		        changeStateFilter : function(model) {
+		        	console.log(model.attributes.payload.id);
+		        	var options = {'state_id' : model.attributes.payload.id};
+		        	this.transitionView(options);
+		        },
+		        
+				changeCityFilter : function(item) {
+					var options = {'city_id':item.id};
+					this.transitionView(options);
+				},
+				
+				transitionView : function(options) {
+					var viewName = 'search-result',
+					    imageList = this.collections[viewName];
+					    controller = this;
+		
+					imageList.url = this.url(options);
+					imageList.fetch();
+
+					$.when(imageList.request).done(function() {
+						var view = new ImageListView({
+							collection : imageList,
+							name : viewName,
+							destination : '#'+viewName
+						});
+						controller.layout.transition(viewName, view);
+					});
+				},
+				
+				url : function(options) {
+					var base = this.baseUrl + '?';
+					_.extend(this.urlOptions, options);
+					var tail = [];
+					 $.each(this.urlOptions, function(key, value) {
+						    tail.push(key + "=" + encodeURIComponent(value));
+						  });
+					return base + tail.join('&');
+				},
+				
 				createData : function() {
-					// var imageListUrl = this.url();
-					this.homeImageList = new HomeImageList([], {
-						url : '/api/image/search',
+					var collections = this.collections = {};
+					collections['search-result'] = new ImageList([], {
+						url : this.url(),
 						num : '12'
 					});
-					this.locationStateList = new LocationStateList(); 
-					this.topratedImageList = new HomeImageList([], {
+					collections['state'] = new StateList(); 
+					collections['top-rated'] = new ImageList([], {
 						url : '/api/user/search',
 						num : '3'
 					});
-					this.BoysSportList = new SportList([], {
-						url : '/api/sport/listall?male=1'
+					_.each(this.genderTypes, function(name) {
+						collections[name] = new SportList([], {name : name});
 					});
-					this.GirlsSportList = new SportList([], {
-						url : '/api/sport/listall?female=1'
-					});
-					this.CommonSportList = new SportList([], {
-						url : '/api/sport/listall?male=1&female=1'
-					});
-					this.topratedImageList.fetch();
-					this.homeImageList.fetch();
-					this.locationStateList.fetch();
-					this.BoysSportList.fetch();
-					this.GirlsSportList.fetch();
-					this.CommonSportList.fetch();
+					//console.log(collections);
 				},
 
 				handleDeferreds : function() {
-					// TODO after creating building blocks, write this function
 					var controller = this;
-					this.setupMenuView();
-					$.when(this.locationStateList.request).done(function() {
-						controller.setupDropDownMenuView();
-						Channel('rendered').publish();
+					var requests = [];
+					_.each(this.collections, function(value, key, list){
+							requests.push(value.fetch());
 					});
-					$.when(this.homeImageList.request).done(function() {
-						controller.setupResultView();
-					});
-					$.when(this.topratedImageList.request).done(function() {
-						controller.setupTopRatedView();
-					});
-					$.when(this.BoysSportList.request).done(
-							function() {
-								controller.setupSportDDView(
-										controller.BoysSportList, 'Guys',
-										'#sport #boys');
-							});
-					$.when(this.GirlsSportList.request).done(
-							function() {
-								controller.setupSportDDView(
-										controller.GirlsSportList, 'Girls',
-										'#sport #girls');
-							});
-					$.when(this.CommonSportList.request).done(
-							function() {
-								controller.setupSportDDView(
-										controller.CommonSportList, 'Both',
-										'#sport #both');
-							});
-					$.when(this.layout.deferred).done(function(){
-						Channel('rendered').publish();
-					});
+					$.when.apply($, requests).done(controller.initSections, controller.addSubscribers);
 				},
 
-				url : function(options) {
-					var relativeUrl = '/api/image/search';
-					var urlOptions = this.urlOptions;
-					urlOptions.states_id = options.states_id
-							|| urlOptions.states_id;
-					urlOptions.sports_id = options.sports_id
-							|| urlOptions.sports_id;
-					urlOptions.order_by = options.order_by
-							|| urlOptions.order_by;
-					this.urlOptions = urlOptions;
-					relativeUrl = relativeUrl + '?' + 'states_id='
-							+ urlOptions.states_id + '&' + 'sports_id='
-							+ urlOptions.sports_id + '&' + 'order_by='
-							+ urlOptions.order_by;
-					return relativeUrl;
-				},
+				setupImageListView : function(viewName) {
+					var imageListView;
 
-				setupSportDDView : function(c, n, d) {
-					debug.log('Setting up Sport DD View' + ': ' + n);
-					debug.log(c); // collection
-					debug.log(d); // destination
+					imageListView = new ImageListView({
+						collection : this.collections[viewName],
+						name : viewName,
+						destination : '#'+viewName
+					});
+					
+					imageListView.render();
+					this.sections[viewName] = imageListView;
+					this.meta.activeViews.push(viewName);					
+				},
+				
+				setupSportListView : function(viewName) {
 					var sportListView;
-
+					 
 					sportListView = new SportListView({
-						collection : c,
-						name : n,
-						id : n,
-						destination : d
+						collection : this.collections[viewName],
+						name : viewName,
+						id : viewName,
+						destination : '#sport #'+ viewName
 					});
 
-					this.scheme.push(sportListView);
-					this.layout.render();
-				},
-
-				setupTopRatedView : function() {
-					debug.log('set top-rated view');
-					var topratedImageListView;
-
-					topratedImageListView = new HomeImageListView({
-						collection : this.topratedImageList,
-						name : "top-rated",
-						destination : "#top-rated"
-					});
-
-					this.scheme.push(topratedImageListView);
-					this.layout.render();
-				},
-
-				setupResultView : function() {
-					debug.log('set search result view');
-					var homeImageListView;
-
-					homeImageListView = new HomeImageListView({
-						collection : this.homeImageList,
-						name : "search-result",
-						destination : "#search-results"
-					});
-
-					this.scheme.push(homeImageListView);
-					this.layout.render();
+					sportListView.render();
+					this.sections[viewName] = sportListView;
+					this.meta.activeViews.push(viewName);
 				},
 
 				setupMenuView : function() {
-					var menuView;
-
-					var menuModel = new MenuModel();
+					var menuModel = new MenuModel(),
+						menuView,
+						viewName = 'menu';
 
 					menuView = new MenuView({
 						model : menuModel,
-						name : "Menu",
-						destination : "#menu"
+						name : viewName,
+						destination : '#'+viewName
 					});
-
-					this.scheme.push(menuView);
-					this.layout.render();
+					
+					menuView.render();
+					this.sections[viewName] = menuView;
+					this.meta.activeViews.push(viewName);
 				},
 
-				setupDropDownMenuView : function() {
-					var homeStateListView;
-					var cityView;
-
-					homeStateListView = new HomeStateListView({
-						collection : this.locationStateList,
-						name : 'State',
+				setupLocationDDView : function() {
+					var stateListView, cityView,
+					    stateViewName = 'state',
+					    cityModel = new CityModel(),
+					    cityViewName = 'city';
+					
+					stateListView = new StateListView({
+						collection : this.collections[stateViewName],
+						name : stateViewName,
 						destination : "#location .state"
 					});
 
-					cityModel = new CityModel();
-
 					cityView = new CityView({
 						model : cityModel,
-						name : "City",
+						name : cityViewName,
 						destination : "#location .city"
 					});
-
-					this.scheme.push(homeStateListView);
-					this.scheme.push(cityView);
-					this.layout.render();
+					
+					stateListView.render();
+					cityView.render();
+					this.sections[cityViewName] = cityView;
+					this.meta.activeViews.push(cityViewName);
+					this.sections[stateViewName] = stateListView;
+					this.meta.activeViews.push(stateViewName);
 				},
 
 				setupLayout : function() {
@@ -214,11 +286,10 @@ define(
 					pageLayout = new LayoutView({
 						scheme : this.scheme,
 						destination : "#main",
-						template : pageLayoutTemplate,
-						displayWhen : "ready"
+						template : pageLayoutTemplate/*,
+						displayWhen : "ready"*/
 					});
 
-					//console.log("Home page setupLayout Results: ", pageLayout);
 					this.layout = pageLayout;
 
 					return this.layout;

@@ -40,10 +40,10 @@ function (
         },
         
         selectSport: function() {
-        	console.log(this.model);
+        	debug.log(this.model);
         	$('li.sport').removeClass('select');
         	this.$el.addClass('select');
-            Channel('selectSport' + this.model.collection.cid).publish(this.model);
+            Channel('sportChanged:'+this.model.collection.cid).publish(this.model);
         }        
         
       });

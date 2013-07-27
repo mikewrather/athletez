@@ -20,15 +20,6 @@ function(facade,  views,   utils,   BaseStateListView) {
         initialize : function(options) {
         	BaseStateListView.prototype.initialize.call(this, options);
         	this.id = options.id || this.id || _.uniqueId('v');
-        },
-        
-        addSubscribers : function() {
-        	Channel('changestate' + this.collection.cid).subscribe(this.changeUrl);
-        },
-        
-        changeUrl : function(model) {
-        	var payload = model.get('payload');
-        	console.log(payload['id'] + ' ' + payload['name']);
         }
         	
     });

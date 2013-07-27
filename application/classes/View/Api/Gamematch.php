@@ -106,11 +106,7 @@
 		 */
 		public function delete_player()
 		{
-			$retArr = array();
-			// Scaffolding Code For Single:
-			$retArr = $this->obj->getBasics();
-
-			return $retArr;
+			return null;
 		}
 		
 	}

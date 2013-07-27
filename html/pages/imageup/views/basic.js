@@ -49,14 +49,15 @@ function(require, imageBasicTemplate) {
             SectionView.prototype.initialize.call(this, options);   
 			debug.log("Image upload basic view");   
 			this.attr=attr;      
-			this.files_drag=[];  
+			this.files_drag=[];
+
 			$('#imgUploadModal').modal('show') ;
 		    $('#imgUploadModal').on('hidden', function () {
 		    	Channel('refresh-onImageUpload').publish();
 		    });
 			$('#imgUploadModal').on('hide', function () {
 		    	Channel('refresh-onImageUpload').publish();
-		    })
+		    });
         },
 		drag: function(event) {
 			event.stopPropagation();
@@ -118,8 +119,10 @@ function(require, imageBasicTemplate) {
 		      reader.readAsDataURL(f);
 		    }
 		},
-        imageUploadClick: function(event) {
-            
+        imageUploadClick: function(event)
+        {
+	        event.preventDefault();
+
 			var thiss=this;			
 			$("#errormsg").hide();
 			$("#imageup").attr("disabled", "disabled");

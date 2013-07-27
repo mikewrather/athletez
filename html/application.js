@@ -3,9 +3,9 @@
 // Requires define
 // Return {Object} App
 
-define( ["facade", "utils", "collections", "chrome", "controller", "profile", "imageup", 'test','home',
+define( ["facade", "utils", "collections", "chrome", "controller", "profile", "imageup",'home',
  "game", "team", "registration","profilesetting","userresume","packages/site/collections/phrases"],
-function (facade, utils, collections, chromeBootstrap, Controller, ProfileController, ImageController, TestController, HomeController, 
+function (facade, utils, collections, chromeBootstrap, Controller, ProfileController, ImageController, HomeController,
 	GameController, TeamController, RegistrationController, ProfileSetting,UserResume, SitePhraseList) {
 
     var App,
@@ -36,8 +36,7 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
              'resume/': 'ShowUserResume',
 
 			'imageup': 'imageUp',
-			'imgtestd': 'testsd',
-            
+
             'game': 'showGame',
             'game/': 'showGame',
             //'game/:action': 'showGame',
@@ -58,7 +57,6 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
             this.addSubscribers();
 	        Controller.prototype.appStates = new ApplicationStates();
 	        this.getPhrases();
-
         },
 
         defaultRoute: function () {
@@ -69,7 +67,7 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
             //this.showProfile();
            	//this.showGame();
             //this.showTeam();
-            this.showHome();
+            this.showHome(null);
         },
 
 	    getPhrases: function(){
@@ -85,7 +83,7 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
 	    	
 	    	function initHome() {
 	    		var homeController = new HomeController({
-	    			"route" : ""
+	    			"route" : "home"
 	    		});
 	    	}
 	    	
@@ -93,38 +91,30 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
 	    },
 	    
         showProfile: function (userid) {
-        	this.loadStyles();
+        	var self = this;
+	        self.loadStyles();
             
             $('body').empty();
             chromeBootstrap();
 			function initProfile(headerModelId) {
-				var profileController=new ProfileController({
-	                "route": "resume", 
-	                "userId": userid==undefined ? null : userid
+
+				debug.log("Called initProfile with " + headerModelId);
+
+				var pCont = new ProfileController({
+	            //    "route": "resume",
+	                "userId": headerModelId==undefined ? null : headerModelId
 	            });
+				self.imageUpListeners();
             }
             Channel('app-inited').subscribe(initProfile);
-			
+
         },
-		testsd: function () {
+		imageUpListeners: function () {
         	this.loadStyles();
-            
-            $('body').empty();
-            chromeBootstrap();
-			console.log("t");
-			 var testController=new TestController({
-                "route": ""
-            });
-            function initTest() {
-                var testController=new TestController({
-	                "route": ""
-	            });
-            }
             function showImage(url,attr) {
                 var imageController = new ImageController({"route": "","url":url,"attr":attr});
             }
-            Channel('add-image').subscribe(showImage);
-            Channel('app-inited').subscribe(initTest);
+			Channel('add-image').subscribe(showImage);
         },
         showProfileSetting: function (userid) {
             this.loadStyles();
@@ -160,19 +150,24 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
 			console.log("router");
 			this.loadStyles();
             
-            $('body').empty();
+         // $('body').empty();
 			chromeBootstrap();
 			//URL to which it has to be passed
-			//this.posturl="/api/image/add/";
-			this.posturl="";
+
+			//this.posturl="";
 			//Extra attributes need to be posted
-			//this.attribute={'sports_id':'46',"id":"0",'name':"testimg"};
-			this.attribute={};
+
+			//this.attribute={};
 			//pass those attributes to the controller
-            new ImageController({"route": "","url":this.posturl,"attr":this.attribute});
-            function initImage(id) {
+        //    new ImageController({"route": "","url":this.posturl,"attr":this.attribute});
+            function initImage(id)
+            {
+	        //    this.posturl="/api/image/add/";
+	        //    this.attribute={'sports_id':'46',"id":"0"};
+
 				console.log("inside router");
-                //var imageController = new ImageController({"route": "","url":this.posturl,"attr":this.attribute});
+                var imageController = new ImageController({"route": "","url":this.posturl,"attr":this.attribute});
+	            console.log("Image Controller",imageController);
             }
 			
             Channel('app-inited').subscribe(initImage);

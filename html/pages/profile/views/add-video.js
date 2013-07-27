@@ -18,7 +18,7 @@ function(require,   ProfileAddVideoModel,      BaseAddVideoView) {
             }
             if (!this.model) {
                 this.model = new ProfileAddVideoModel({id: this.collection.id, sport_id: this.collection.sport_id});                
-                this.model.fetch();
+            //    this.model.fetch();
             }            
         }
     });

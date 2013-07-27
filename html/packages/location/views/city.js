@@ -28,9 +28,6 @@ define([ 'require', 'text!location/templates/city.html', 'views', 'facade', 'uti
 			//var input = this.$el.find('.city');
 			//console.log($);
 			var view = this;
-			$.when(view.deferred).done(function(){
-				$('.city').addClass('rishabh');	
-			});
 			var id = this.model.id;
 			$('#city').autocomplete({
 				minLength: 3,
@@ -58,13 +55,18 @@ define([ 'require', 'text!location/templates/city.html', 'views', 'facade', 'uti
 					};
 					Channel('response :'+term).subscribe(myResponse);
 					Channel('changeInput'+id).publish(term);
+				},
+				select: function(event, ui) {
+					Channel('cityChanged:'+view.id).publish(ui.item);
+					debug.log(ui.item);
 				}
 			});
 		},
 		
 		addSubscribers : function() {
 			var view = this;
-			Channel('rendered').subscribe(view.initPlugin);
+			console.log("Subscriber added");
+			Channel('layout:ready').subscribe(view.initPlugin);
 		}
 	
 	});

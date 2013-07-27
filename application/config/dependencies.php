@@ -165,14 +165,14 @@ return array(
 	),
 
 	// Sportorg_Section already have config in above line 62
-
-	'Sportorg_Division' => array(
-		'Sportorg_Org' => 'divisions_id',
-	),
-
-	'Sportorg_League' => array(
-		'Sportorg_Org' => 'leagues_id'
-	),
+	//division already have have config in above line 71
+//	'Sportorg_Division' => array(
+//		'Sportorg_Org' => 'divisions_id',
+//	),
+	//league already have config in above line 67
+//	'Sportorg_League' => array(
+//		'Sportorg_Org' => 'leagues_id'
+//	),
 
 	'Academics_Tests' => array(
 		'Academics_Tests_Topics' => 'academics_tests_id'
@@ -181,6 +181,37 @@ return array(
 	'Academics_Tests_Topics' => array(
 		'Academics_Tests_Scores' => 'academics_tests_topics_id'
 	),
+
+	'Sportorg_Games_Matchplayer' => array(
+		//No other dependency table
+	),
+
+	'User_Base' => array(
+		'User_Tokens' => 'user_id',
+		'User_Identity' => 'user_id',
+		'Sportorg_Games_Matchplayer' => 'users_id',
+		'Site_Pog' => 'player_users_id',
+		'Site_Flag' => 'flagger_users_id',
+		'Site_Tag' => 'users_id',
+		'Site_Comment' => 'users_id',
+		'Site_Vote' => 'voter_users_id',
+		'Site_View' => 'users_id',
+		'User_Followers' => 'follower_users_id',
+		'User_Sportlink' => 'users_id',
+		'Social_Links' => 'users_id',
+		'Academics_Tests_Scores' => 'users_id',
+		'Academics_Gpa' => 'users_id',
+		'User_Resume_Data_Vals' => 'users_id',
+		'Media_Base' => 'users_id',
+		'Media_Queuedvideo' => 'users_id',
+		'Stats_Vals' => 'users_id',
+		'User_Teamslink' => 'users_id',
+		'Rolesusers' => 'user_id'
+	),
+
+	'User_Sportlink' => array(
+		'User_Sportlink_Gamelink' => 'user_sport_link_id'
+	)
 
 
 

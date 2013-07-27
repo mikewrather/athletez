@@ -6,6 +6,7 @@
 define([
     "require",
     "text!imageup/templates/basic.html",
+	"text!imageup/templates/uploader.html",
     "facade",
     "controller",
     "models",
@@ -97,16 +98,17 @@ define([
             },this.attr);
             debug.log("Imagecontroller Show");
             this.scheme.push(addBasicView);
-			console.log(this.scheme);
             this.layout.render();
         },
 		setupLayout: function () {
             var pageLayout;
 			debug.log("Imagecontroller Layout");
 			this.scheme=[];
+			$('body').append('<div id="modalPopup"></div>');
+
             pageLayout = new LayoutView({
                 scheme: this.scheme,
-                destination: "#main-footer",
+                destination: "#modalPopup",
 				template : pageLayoutTemplate,
 				displayWhen : "ready"
             });
@@ -140,7 +142,10 @@ define([
 				dataum= [],
 				msg="",thiss=this,
 				dataum=data.dataum;
+
+			//url gets set
 			//this.url="/api/"+$("#url_tag").val()+"/addimage/"+$("#id_tag").val();
+
 			$("#preview_"+id).html("<progress></progress>")
 			$.ajax({
 			    url: this.url,

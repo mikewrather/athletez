@@ -114,8 +114,10 @@
 				$this->modelNotSetError();
 				return false;
 			}
+
+			$org_id = $this->mainModel->id;
 			 
-			return $this->mainModel->getDivisions();
+			return $this->mainModel->getDivision($org_id);
 		}
 		
 		/**

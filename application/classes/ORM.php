@@ -121,7 +121,6 @@ class ORM extends Kohana_ORM
 	public function phantom_delete()
 	{
 		if(!$this->loaded()) return false;
-
 		$qry = DB::insert('deleted',array(
 			'subject_enttypes_id',
 			'subject_id',

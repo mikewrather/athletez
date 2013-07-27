@@ -101,11 +101,14 @@ class Model_Sportorg_Games_Match extends ORM
 		}
 	}
 
-	public function deletePlayers()
-	{		
-		$players = $this->players->find();
-
-		return $players->delete();
+	public function deletePlayers($args = array())
+	{
+		extract($args);
+		$match_players = ORM::factory('Sportorg_Games_Matchplayer');
+		$match_players->where('game_matches_id', '=', $id);
+		$match_players->where('users_id', '=', $users_id)->find();
+		$match_players->delete_with_deps();
+		return null;
 	}
 	
 	public function getPlayers( $positions_id = "" )
