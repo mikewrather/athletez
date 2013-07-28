@@ -18,7 +18,7 @@ define(['facade', 'collections', 'user/collections/rdtree', 'utils'], function(f
 				//Incase to Hit Api without any parameter, Add Url here
 			}
 			return 'api/user/rdtree/' + this.user_id + '?id1=' + this.user_id;
-		},
+		}, 
 		parseAsRequired : function() {
 			var self = this;
 			var models = self.toJSON();
