@@ -118,15 +118,7 @@
 			// user_value 
 			// Update the user's entered value for this peice of resume data
 				
-			if(trim($this->put('user_value')) != "")
-			{
-				$user_value = trim(urldecode($this->put('user_value')));
-			}
-			if(!$this->mainModel->id)
-			{
-				$this->modelNotSetError();
-				return false;
-			}
+			$user_value = trim(urldecode($this->put('user_value')));
 
 			//permission check
 			if(!$this->user->can('Assumeownership', array('owner' => $this->mainModel->owner()))){

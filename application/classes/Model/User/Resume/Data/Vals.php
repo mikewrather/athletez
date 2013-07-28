@@ -42,10 +42,8 @@ class Model_User_Resume_Data_Vals extends ORM
 				array('not_empty'),
 				array('users_id_exist'),
 			),
-
 			// user_value (varchar)
 			'user_value'=>array(
-				array('not_empty'),
 			),
 		);
 	}

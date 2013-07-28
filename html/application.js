@@ -94,15 +94,14 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
         	var self = this;
 	        self.loadStyles();
             
-            $('body').empty();
+            $('#main').empty();
             chromeBootstrap();
 			function initProfile(headerModelId) {
 
 				debug.log("Called initProfile with " + headerModelId);
 
 				var pCont = new ProfileController({
-	            //    "route": "resume",
-	                "userId": headerModelId==undefined ? null : headerModelId
+	                "userId": userid==undefined ? headerModelId : userid
 	            });
 				self.imageUpListeners();
             }
@@ -147,29 +146,10 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
         },
         
 		imageUp: function () {
-			console.log("router");
 			this.loadStyles();
-            
-         // $('body').empty();
 			chromeBootstrap();
-			//URL to which it has to be passed
 
-			//this.posturl="";
-			//Extra attributes need to be posted
-
-			//this.attribute={};
-			//pass those attributes to the controller
-        //    new ImageController({"route": "","url":this.posturl,"attr":this.attribute});
-            function initImage(id)
-            {
-	        //    this.posturl="/api/image/add/";
-	        //    this.attribute={'sports_id':'46',"id":"0"};
-
-				console.log("inside router");
-                var imageController = new ImageController({"route": "","url":this.posturl,"attr":this.attribute});
-	            console.log("Image Controller",imageController);
-            }
-			
+            function initImage(id){ var imageController = new ImageController({"route": "","url":this.posturl,"attr":this.attribute}); }
             Channel('app-inited').subscribe(initImage);
 		},
         

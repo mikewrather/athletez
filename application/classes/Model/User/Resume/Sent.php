@@ -122,6 +122,12 @@ class Model_User_Resume_Sent extends ORM
 
 		if (isset($sports_id))
 			$resumesent->where('sports_id', '=', $sports_id);
+
+		$classes_arr = array(
+			'User_Resume_Sent' => 'user_resume_sent'
+		);
+
+		$resumesent = ORM::_sql_exclude_deleted($classes_arr, $resumesent);
 		return $resumesent;
 	}
 }

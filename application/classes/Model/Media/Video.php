@@ -190,7 +190,7 @@ class Model_Media_Video extends ORM
 			$num_votes = Model_Site_Vote::getNumVotes($single_media->video);
 			$num_comments = Model_Site_Comment::getNumComments($single_media->video);
 			$num_views = Model_Site_View::getNumViews($single_media->video);
-			if ($obj instanceof Model_User_Base){
+			if ($obj instanceof user_model){
 				$username = $obj->getBasics();
 				$combine_object->user_name = $username['name'];
 			}

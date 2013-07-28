@@ -15,7 +15,7 @@ class Controller_Deps extends Controller
 
 	public function action_index()
 	{
-		$media_item = ORM::factory('Sportorg_Sport',50);
+		$media_item = ORM::factory('User_Base',424322);
 		$media_item->delete_with_deps();
 	}
 

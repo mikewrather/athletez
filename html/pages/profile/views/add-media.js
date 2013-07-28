@@ -8,7 +8,7 @@ define([
         'require', 
         'text!media/templates/add-media.html',
         'profile/models/addmedia',
-        'facade', 
+        'facade',
         'views'
         ], 
 function(require, profileAddMediaTemplate) {

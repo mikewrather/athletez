@@ -31,8 +31,8 @@ define([
     "profile/views/image-list",
     "profile/views/commentof-list",
     "profile/views/commenton-list"
-    
-    ], function (require, pageLayoutTemplate) {
+    ],
+	function (require, pageLayoutTemplate) {
 
     var ProfileController,
         facade = require("facade"),
