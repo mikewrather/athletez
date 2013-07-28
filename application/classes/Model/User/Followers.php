@@ -65,6 +65,24 @@ class Model_User_Followers extends ORM
 
 		$qry = ORM::_sql_exclude_deleted_abstract($classes_arr, $qry);
 		$qry = $qry->execute();
+
+
+//		$classes_arr = array();
+//		$entClassStr = str_replace('Model_','',get_class($obj));
+//		$classes_arr[$entClassStr] = $obj;
+//
+//		$qry = ORM::_sql_exclude_deleted_abstract($classes_arr, $qry);
+
+
+		$classes_arr = array();
+		$entClassStr = str_replace('Model_','',get_class($obj));
+		$classes_arr[$entClassStr] = 'followers.subject_id';
+
+		$qry = ORM::_sql_exclude_deleted_abstract($classes_arr, $qry);
+
+		$qry = $qry->execute();
+		print_r($qry);
+
 		$retObj = new stdClass();
 
 		foreach($qry as $row)
@@ -149,7 +167,7 @@ class Model_User_Followers extends ORM
 
 	}
 
-	public function addFollower(Model_User_Base $user, ORM $object)
+	public function addFollower(user_model $user, ORM $object)
 	{
 		if(!$object->loaded()) return false;
 

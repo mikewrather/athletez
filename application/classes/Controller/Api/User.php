@@ -429,6 +429,20 @@
 			return $this->mainModel->getReferences($arguments);
 		}
 
+		public function action_get_contacts()
+		{
+			$this->payloadDesc = "List of contacts associated with user";
+			if(!$this->mainModel->id)
+			{
+				$this->modelNotSetError();
+				return false;
+			}
+
+			$arguments["users_id"] = (int) $this->mainModel->id;
+
+			return $this->mainModel->getContacts($arguments);
+		}
+
 		/**
 		 * action_get_fbpics() Get Facebook all user profile photo(s)
 		 * via /api/user/fbpics/{0}
@@ -482,10 +496,6 @@
 				return false;
 			}
 			$arguments['users_id'] = $this->mainModel->id;
-
-			if(!$this->user->can('Assumeownership', array('owner' => $arguments['users_id']))){
-				$this->throw_permission_error(Constant::NOT_OWNER);
-			}
 
 			if(!$this->user->can('Assumeownership', array('owner' => $arguments['users_id']))){
 				$this->throw_permission_error(Constant::NOT_OWNER);

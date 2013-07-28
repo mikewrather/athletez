@@ -874,6 +874,11 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 		if (isset($sports_id)){
 			$awards_model->where('sports_id', '=', $sports_id);
 		}
+		//exclude itself
+		$classes_arr = array(
+			'User_Awards' => 'user_awards'
+		);
+		$awards_model = ORM::_sql_exclude_deleted($classes_arr, $awards_model);
 
 		return $awards_model;
 	}
@@ -889,7 +894,27 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 			$references_model->where('sports_id', '=', $sports_id);
 		}
 
+		//exclude itself
+		$classes_arr = array(
+			'User_References' => 'user_references'
+		);
+		$references_model = ORM::_sql_exclude_deleted($classes_arr, $references_model);
+
 		return $references_model;
+	}
+
+	public function getContacts($args = array()){
+		extract($args);
+		$contacts_model = ORM::factory('User_Contact');
+		if (isset($users_id)){
+			$contacts_model->where('users_id', '=', $users_id);
+		}
+		//exclude itself
+		$classes_arr = array(
+			'User_Contact' => 'user_contact'
+		);
+		$contacts_model = ORM::_sql_exclude_deleted($classes_arr, $contacts_model);
+		return $contacts_model;
 	}
 	
 	public function getRelated()
@@ -1079,6 +1104,13 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 			->from('votes')
 			->where('subject_enttypes_id','=',$enttype_id);
 
+		//Here have issues to apply _sql_exclude_deleted_abstract
+		$classes_arr = array();
+		$entClassStr = str_replace('Model_','',get_class($ent));
+		$classes_arr[$entClassStr] = 'user_base.id';
+		$classes_arr['Site_Vote'] = 'site_vote.id';
+		$counts = ORM::_sql_exclude_deleted_abstract($classes_arr, $counts);
+		print_r($counts->execute());
 		if (!isset($orderby) || $orderby == 'votes'){
 			$user_model->join(array($counts,'filtered'), 'LEFT')->on('filtered.users_id', '=', 'user_base.id');
 			$user_model->order_by('num_votes', 'asc');
@@ -1100,6 +1132,7 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 		$user_model->limit(50);
 
 		$classes_arr["User_Base"] = 'user_base';
+
 		$user_model = ORM::_sql_exclude_deleted($classes_arr, $user_model);
 		return $user_model;
 	}
@@ -1183,7 +1216,7 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 
 	/** Modified by Jeffrey
 	 * @param $args
-	 * @return Model_User_Base|ORM_Validation_Exception
+	 * @return user_model|ORM_Validation_Exception
 	 */
 	public function addTeam($args)
 	{
