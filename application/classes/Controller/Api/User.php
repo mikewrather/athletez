@@ -429,9 +429,9 @@
 			return $this->mainModel->getReferences($arguments);
 		}
 
-		public function action_get_contacts()
+		public function action_get_contact()
 		{
-			$this->payloadDesc = "List of contacts associated with user";
+			$this->payloadDesc = "List of contact associated with user";
 			if(!$this->mainModel->id)
 			{
 				$this->modelNotSetError();
@@ -440,7 +440,7 @@
 
 			$arguments["users_id"] = (int) $this->mainModel->id;
 
-			return $this->mainModel->getContacts($arguments);
+			return $this->mainModel->getContact($arguments);
 		}
 
 		/**
