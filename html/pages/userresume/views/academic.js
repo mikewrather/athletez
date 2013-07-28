@@ -4,23 +4,12 @@
  // Requires `define`, `require`
  // Returns {RDTREEVIEW} constructor
  */
-define(['require', 'text!userresume/templates/academic.html', 'text!userresume/templates/gpa.html', 
-'text!userresume/templates/test.html', 'text!userresume/templates/testtopics.html', 'text!userresume/templates/testlist.html',
- 'facade', 'views', 'utils', 'vendor', 'userresume/collections/gpa', 'userresume/collections/tests', 'userresume/collections/academictests',
- 'userresume/models/gpa',
- ], function(require, academicTemplate, templateGpa, templateTests, templateTestTopics, templateTestsListAll) {
+define(['require', 'text!userresume/templates/academic.html', 'text!userresume/templates/gpa.html', 'text!userresume/templates/test.html', 'text!userresume/templates/testtopics.html', 'text!userresume/templates/testlist.html', 'facade', 'views', 'utils', 'vendor', 'userresume/collections/gpa', 'userresume/collections/tests', 'userresume/collections/academictests', 'userresume/models/gpa'], function(require, academicTemplate, templateGpa, templateTests, templateTestTopics, templateTestsListAll) {
 
-	var self, facade = require('facade'), views = require('views'), SectionView = views.SectionView, 
-	utils = require('utils'), Channel = utils.lib.Channel, vendor = require('vendor'), Mustache = vendor.Mustache,
-	 $ = facade.$, 
-	 GPACollection = require('userresume/collections/gpa'), 
-	 TestCollection = require('userresume/collections/tests'), 
-	 AcademicTestsCollection = require("userresume/collections/academictests"), 
-	 
-	 //Models
-	 GpaModel = require("userresume/models/gpa"),
-	 
-	 AcademicView = SectionView.extend({
+	var self, facade = require('facade'), views = require('views'), SectionView = views.SectionView, utils = require('utils'), Channel = utils.lib.Channel, vendor = require('vendor'), Mustache = vendor.Mustache, $ = facade.$, GPACollection = require('userresume/collections/gpa'), TestCollection = require('userresume/collections/tests'), AcademicTestsCollection = require("userresume/collections/academictests"),
+
+	//Models
+	GpaModel = require("userresume/models/gpa"), AcademicView = SectionView.extend({
 
 		template : academicTemplate,
 
@@ -49,7 +38,7 @@ define(['require', 'text!userresume/templates/academic.html', 'text!userresume/t
 			BtnFinishGpa : ".btn-finish-gpa_h",
 			BtnEditGpa : ".edit-gpa",
 			BtnSaveGpa : ".btn-Save-Gpa",
-			
+
 			// Containers
 			ContainerGpa : "#container-academic-gpa",
 			ContainerStandard : "#container-StandardizedTest",
@@ -65,7 +54,7 @@ define(['require', 'text!userresume/templates/academic.html', 'text!userresume/t
 			TxtGpa : ".txtGpa_h",
 			TxtGpaYear : ".txtGpaYear_h",
 			TxtGpaScore : ".txtGpaScore_h",
-			
+
 			// LABELS
 			lblError : '.error_h',
 			lblSuccess : ".success_h"
@@ -129,16 +118,16 @@ define(['require', 'text!userresume/templates/academic.html', 'text!userresume/t
 					return;
 
 				self.gpa = Collection.parseAsRequired();
-				console.log("self.gpa",self.gpa);
-				if (self.gpa.length > 0) {
+				console.log("self.gpa", self.gpa);
+			//	if (self.gpa.length > 0) {
 					var markup = Mustache.to_html(templateGpa, {
 						data : self.gpa
 					});
-					$(self.el).find(self.controls.ContainerGpa).html(markup);
-				} else {
-					self.$el(self.controls.ContainerGpa).html(self.messages.dataNotExistGPA);
-
-				}
+					// $(self.el).find(self.controls.ContainerGpa).html(markup);
+				// } else {
+					// self.$el(self.controls.ContainerGpa).html(self.messages.dataNotExistGPA);
+// 
+				// }
 
 			});
 		},
@@ -147,10 +136,10 @@ define(['require', 'text!userresume/templates/academic.html', 'text!userresume/t
 			$(e.target).parent().find(self.controls.BtnFinishGpa).fadeIn();
 			$(e.target).fadeOut();
 		},
-		SaveGpa : function(e){
+		SaveGpa : function(e) {
 			var year = $(e.target).attr('year');
 			var value = $(e.target).val();
-			
+
 			var payload = {
 				user_id : self.user_id,
 				gpa : value,
@@ -160,11 +149,11 @@ define(['require', 'text!userresume/templates/academic.html', 'text!userresume/t
 			gpaModel.user_id = self.user_id;
 			gpaModel.target = $(e.target);
 			gpaModel.save();
-			
+
 		},
-		DeleteGpa : function(e){
+		DeleteGpa : function(e) {
 			var year = $(e.target).attr('year');
-			
+
 			var payload = {
 				user_id : self.user_id,
 				year : year,
@@ -177,54 +166,53 @@ define(['require', 'text!userresume/templates/academic.html', 'text!userresume/t
 			gpaModel.target = $(e.target);
 			gpaModel.idAttribute = 'year';
 			gpaModel.destroy({
-					data : {
-						user_id : self.user_id,
-						year : year
-					},
-					
-					success : function() {
-						self.setUpGpaView();						
-					}
-				});
- 	
-				$.when(gpaModel.request).done(function() {									
-					$(e.target).parent().find(self.controls.TxtGpa).val('');
-				});
+				data : {
+					user_id : self.user_id,
+					year : year
+				},
+
+				success : function() {
+					self.setUpGpaView();
+				}
+			});
+
+			$.when(gpaModel.request).done(function() {
+				$(e.target).parent().find(self.controls.TxtGpa).val('');
+			});
 		},
-		FinishGpa : function(e){
-				$(e.target).parent().find(self.controls.TxtGpa).attr('disabled','disabled');
-				$(e.target).parent().find(self.controls.BtnEditGpa).fadeIn();
-				$(e.target).fadeOut();		
+		FinishGpa : function(e) {
+			$(e.target).parent().find(self.controls.TxtGpa).attr('disabled', 'disabled');
+			$(e.target).parent().find(self.controls.BtnEditGpa).fadeIn();
+			$(e.target).fadeOut();
 		},
-		AddGpa : function(e){
+		AddGpa : function(e) {
 			self.$(self.controls.SectionAddGpa).fadeIn();
 		},
-		SaveNewGpa : function(e){
+		SaveNewGpa : function(e) {
 			var year = self.$(self.controls.SectionAddGpa).find(self.controls.TxtGpaYear).val();
 			var score = self.$(self.controls.SectionAddGpa).find(self.controls.TxtGpaScore).val();
-			if(year == '' || score == '')
-			{
+			if (year == '' || score == '') {
 				self.$(self.controls.SectionAddGpa).find(self.controls.lblError).html(self.messages.YearScoreIsRequired).fadeIn();
-			}else{
-				
+			} else {
+
 				self.$(self.controls.SectionAddGpa).find(self.controls.lblError).html('').fadeOut();
 				var payload = {
-						user_id : self.user_id,
-						gpa : score,
-						year : year
-					};
-					var gpaModel = new GpaModel(payload);
-					gpaModel.user_id = self.user_id;
-					gpaModel.target = $(e.target).parent();
-					gpaModel.save();
-					
-					$.when(Collection.request).done(function() {
-						self.setUpGpaView();
-					});
+					user_id : self.user_id,
+					gpa : score,
+					year : year
+				};
+				var gpaModel = new GpaModel(payload);
+				gpaModel.user_id = self.user_id;
+				gpaModel.target = $(e.target).parent();
+				gpaModel.save();
+
+				$.when(Collection.request).done(function() {
+					self.setUpGpaView();
+				});
 			}
-		},		
+		},
 		/**STANDARD TEST VIEW FUNCTION/
-		/*Set Test Views*/
+		 /*Set Test Views*/
 		setUpStandardTestView : function() {
 			var payload = {
 				user_id : self.user_id
@@ -309,8 +297,8 @@ define(['require', 'text!userresume/templates/academic.html', 'text!userresume/t
 					data : d
 				});
 				$(self.el).find(self.controls.ContainerStandard).find(self.controls.SectionTestTopics).append(topicsHtml);
-			}else{
-				
+			} else {
+
 				$(self.el).find(self.controls.ContainerStandard).find(".item-test-" + testid).remove();
 			}
 		},
@@ -400,8 +388,8 @@ define(['require', 'text!userresume/templates/academic.html', 'text!userresume/t
 					data : d
 				});
 				$(self.el).find(self.controls.ContainerAP).find(self.controls.SectionTestTopics).append(topicsHtml);
-			}else{
-				
+			} else {
+
 				$(self.el).find(self.controls.ContainerAP).find(".item-test-" + testid).remove();
 			}
 		},
@@ -420,10 +408,10 @@ define(['require', 'text!userresume/templates/academic.html', 'text!userresume/t
 		OpenTestPopUp : function(e) {
 			var ids = $(e.target).attr('testids');
 			var array = ids.split(',');
-			$.each(array,function(index,id){
-				self.$(e.target).parent().find(self.controls.ModalBox).find(".chk-"+ id).attr('checked','checked');
+			$.each(array, function(index, id) {
+				self.$(e.target).parent().find(self.controls.ModalBox).find(".chk-" + id).attr('checked', 'checked');
 			});
-			
+
 			self.$(e.target).parent().find(self.controls.ModalBox).modal('show');
 		}
 	});
