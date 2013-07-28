@@ -575,6 +575,16 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 			->join('seasons', 'LEFT')->on('seasons.id','=','teams.seasons_id')
 			->join('statvals', 'LEFT')->on('statvals.teams_id','=','teams.id')
 			->where('users.id','=',$this->id);
+		$classes_arr['User_Base'] = 'users';
+		$classes_arr['User_Teamslink'] = 'users_teams_link';
+		$classes_arr['Sportorg_Team'] = 'teams';
+		$classes_arr['Sportorg_Orgsportlink'] = 'org_sport_link';
+		$classes_arr['Sportorg_Sport'] = 'sports';
+		$classes_arr['Sportorg_Org'] = 'orgs';
+		$classes_arr['Sportorg_Complevel_Base'] = 'complevels';
+		$classes_arr['Sportorg_Seasons_Base'] = 'seasons';
+		$classes_arr['Stats_Vals'] = 'statvals';
+
 		if ($sports_id){
 			$org_sport_link_obj->where('org_sport_link.sports_id', '=', $sports_id);
 		}
@@ -593,6 +603,7 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 			->order_by('sports_id')
 			->order_by('complevels_id');
 
+		$org_sport_link_obj = ORM::_sql_exclude_deleted($classes_arr, $org_sport_link_obj);
 		$res = $org_sport_link_obj->execute();
 
 	//	print_r($res);
@@ -612,11 +623,15 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 				);
 			}
 
-			$positions = ORM::factory('Sportorg_Position')
+			$org_position = ORM::factory('Sportorg_Position')
 				->join('utl_position_link','LEFT')->on('sportorg_position.id','=','utl_position_link.positions_id')
-				->where('users_teams_link_id','=',$team['utl_id'])
-				->find_all();
+				->where('users_teams_link_id','=',$team['utl_id']);
+			$classes_arr = array();
+			$classes_arr['Sportorg_Position'] = "sportorg_position";
+			$classes_arr['User_Teamslink_Positionlink'] = "utl_position_link";
 
+			$org_position = ORM::_sql_exclude_deleted($classes_arr, $org_position);
+			$positions = $org_position->find_all();
 			$positions_array = NULL;
 			foreach($positions as $position)
 			{
@@ -788,6 +803,8 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 			->where('is_primary','=','1')
 			->and_where('users_teams_link_id', '=', DB::expr('`users_teams_link`.`id`'));
 
+		$classes_arr = array('User_Teamslink_Positionlink' => 'utl_position_link');
+		$positions_qry = ORM::_sql_exclude_deleted($classes_arr, $positions_qry);
 
 		$utl = DB::select('org_sport_link.sports_id',array($positions_qry,'positions_id'),array(DB::expr('"team"'),'sport_type'))
 			->from('users_teams_link')
@@ -796,20 +813,35 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 			->group_by('org_sport_link.sports_id')
 			->where('users_teams_link.users_id', '=', $this->id);
 
+		$classes_arr = array();
+		$classes_arr['User_Teamslink'] = 'users_teams_link';
+		$classes_arr['Sportorg_Team'] = 'teams';
+		$classes_arr['Sportorg_Orgsportlink'] = 'org_sport_link';
+
+
 		if($sport_type_id != NULL)
 		{
 			$utl->join('sports')->on('sports.id','=','org_sport_link.sports_id')->where('sports.sport_type_id','=',$sport_type_id);
+			$classes_arr['Sportorg_Sport'] = 'sports';
 		}
+		$utl = ORM::_sql_exclude_deleted($classes_arr, $utl);
 
+		$classes_arr = array();
 		$isports = DB::select('sports_id',array(DB::expr('NULL'),'positions_id'),array(DB::expr('"individual"'),'sport_type'))
 			->union($utl)
 			->from('user_sport_link')
 			->where('users_id','=',$this->id);
+		$classes_arr['User_Sportlink'] = 'user_sport_link';
 
 		if($sport_type_id != NULL)
 		{
 			$isports->join('sports')->on('sports.id','=','sports_id')->where('sports.sport_type_id','=',$sport_type_id);
+			$classes_arr['Sportorg_Sport'] = 'sports';
 		}
+
+
+		//exclude sports itself
+		$isports = ORM::_sql_exclude_deleted($classes_arr, $isports);
 
 		if($format=='select') return $isports;
 		elseif($format=='array')
@@ -858,6 +890,15 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 		}
 
 		return $references_model;
+	}
+
+	public function getContacts($args = array()){
+		extract($args);
+		$contacts_model = ORM::factory('User_Contact');
+		if (isset($users_id)){
+			$contacts_model->where('users_id', '=', $users_id);
+		}
+		return $contacts_model;
 	}
 	
 	public function getRelated()
@@ -928,15 +969,17 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 	public function getTeams($args = array())
 	{
 		extract($args);
+		$team = $this->teams;
 		if (isset($sport_id)){
-			$team = $this->teams;
 			$team->join('org_sport_link')
 				->on('org_sport_link.id', '=', 'sportorg_team.org_sport_link_id')
 				->where('org_sport_link.sports_id', '=', $sport_id);
-			return $team;
+			$classes_arr['Sportorg_Orgsportlink'] = 'org_sport_link';
 		}
-
-		return $this->teams;
+		//exclude itself
+		$classes_arr['Sportorg_Team'] = 'sportorg_team';
+		$team = ORM::_sql_exclude_deleted($classes_arr, $team);
+		return $team;
 	}
 	public function getResumeData()
 	{

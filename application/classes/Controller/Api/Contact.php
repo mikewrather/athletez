@@ -1,7 +1,7 @@
 <?php defined('SYSPATH') or die('No direct script access.');
 
 /**
- * Club API controller class
+ * Contact API controller class
  *
  * Date: Auto-generated on Mar 18th, 2013 2:21 am
  *

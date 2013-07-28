@@ -71,6 +71,8 @@
 			{
 				$arguments["sport_id"] = (int)trim($this->request->query('sport_id'));
 			}
+
+
 			return $this->mainModel->getTeams($arguments);
 		}
 		
@@ -425,6 +427,20 @@
 			$arguments["users_id"] = (int) $this->mainModel->id;
 
 			return $this->mainModel->getReferences($arguments);
+		}
+
+		public function action_get_contacts()
+		{
+			$this->payloadDesc = "List of contacts associated with user";
+			if(!$this->mainModel->id)
+			{
+				$this->modelNotSetError();
+				return false;
+			}
+
+			$arguments["users_id"] = (int) $this->mainModel->id;
+
+			return $this->mainModel->getContacts($arguments);
 		}
 
 		/**
