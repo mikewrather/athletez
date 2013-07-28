@@ -37,11 +37,9 @@ define(['require', 'text!userresume/templates/rdtree.html', 'facade', 'views', '
 		},
 		/*initialize gets called by default when constructor is initialized*/
 		initialize : function(options) {
-			//	debugger;
 			SectionView.prototype.initialize.call(this, options);
 			self = this;
 			self.setOptions(options);
-			//debugger;
 
 			this.init();
 
