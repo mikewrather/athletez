@@ -45,10 +45,17 @@ class Model_Academics_Gpa extends ORM
 
 	public function getGpa($args = array()){
 		extract($args);
+		$gpa = $this;
 		if ($users_id){
-			$this->where('users_id', '=', $users_id);
+			$gpa->where('users_id', '=', $users_id);
 		}
-		return $this;
+
+		$classes_arr = array(
+			'Academics_Gpa' => 'academics_gpa'
+		);
+
+		$gpa = ORM::_sql_exclude_deleted($classes_arr, $gpa);
+		return $gpa;
 	}
 
 	public function addGpa($args = array()){

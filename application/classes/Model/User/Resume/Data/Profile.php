@@ -105,11 +105,11 @@ class Model_User_Resume_Data_Profile extends ORM
 	 * This method relies on the getPositions and getSports methods of the
 	 * user class.
 	 *
-	 * @param Model_User_Base $user
+	 * @param user_model $user
 	 * @param string $format is either res or something else.
 	 * @return array|object depending on format
 	 */
-	public function getRDPForUser(Model_User_Base $user,$format='res')
+	public function getRDPForUser(user_model $user,$format='res')
 	{
 		//get positions for user
 		$pos_arr = $user->getPositions();

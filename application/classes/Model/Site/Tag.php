@@ -102,7 +102,7 @@ class Model_Site_Tag extends Model_Site_Entdir
 
 			foreach($res as $row){
 				$entity = Model_Site_Enttype::eFact($row['subject_enttypes_id'], $row['subject_id']);
-				if ($entity instanceof Model_User_Base){
+				if ($entity instanceof user_model){
 					$users[] = $entity->getBasics();
 				}else if ($entity instanceof Model_Sportorg_Team){
 					$teams[] = $entity->getBasics();

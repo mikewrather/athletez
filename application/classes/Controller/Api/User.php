@@ -501,10 +501,6 @@
 				$this->throw_permission_error(Constant::NOT_OWNER);
 			}
 
-			if(!$this->user->can('Assumeownership', array('owner' => $arguments['users_id']))){
-				$this->throw_permission_error(Constant::NOT_OWNER);
-			}
-
 			$resume_sent_model = ORM::factory("User_Resume_Sent");
 
 			return $resume_sent_model->getSentResumes($arguments);

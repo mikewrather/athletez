@@ -73,38 +73,46 @@ class Model_Academics_Tests extends ORM
 
 	public function getTestsByType($args = array()){
 		extract($args);
-
+		$tests_model = $this;
 		if(!isset($users_id)) return false;
-		$this->_current_user_id = $users_id;
+		$tests_model->_current_user_id = $users_id;
 
-		$this->select(DB::expr('distinct(academics_tests.id) as test_id'));
-		$this->where('academics_tests_scores.users_id', '=',$this->_current_user_id);
-		$this->and_where_open();
+		$tests_model->select(DB::expr('distinct(academics_tests.id) as test_id'));
+		$tests_model->where('academics_tests_scores.users_id', '=',$this->_current_user_id);
+		$tests_model->and_where_open();
 
 		if (isset($standardized) && $standardized == 1)
 		{
-			$this->or_where('test_type', '= ','standardized');
+			$tests_model->or_where('test_type', '= ','standardized');
 		}
 		else
 		{
-			$this->or_where('test_type', '= ','unknown');//return null results
+			$tests_model->or_where('test_type', '= ','unknown');//return null results
 		}
 
 		if (isset($ap) && $ap == 1)
 		{
-			$this->or_where('test_type', '= ', 'AP');
+			$tests_model->or_where('test_type', '= ', 'AP');
 		}
 		else
 		{
-			$this->or_where('test_type', '= ','unknown');//return null results
+			$tests_model->or_where('test_type', '= ','unknown');//return null results
 		}
 
-		$this->and_where_close();
+		$tests_model->and_where_close();
 
-		$this->join("academics_tests_topics", "RIGHT")->on("academics_tests_topics.academics_tests_id", "=", 'academics_tests.id');
-		$this->join("academics_tests_scores", "RIGHT")->on("academics_tests_scores.academics_tests_topics_id", "=", 'academics_tests_topics.id');
+		$tests_model->join("academics_tests_topics", "RIGHT")->on("academics_tests_topics.academics_tests_id", "=", 'academics_tests.id');
+		$tests_model->join("academics_tests_scores", "RIGHT")->on("academics_tests_scores.academics_tests_topics_id", "=", 'academics_tests_topics.id');
 
-		return $this;
+		$classes_arr = array(
+			'Academics_Tests' => 'academics_tests',
+			'Academics_Tests_Topics' => 'academics_tests_topics',
+			'Academics_Tests_Scores' => 'academics_tests_scores',
+		);
+
+		$tests_model = ORM::_sql_exclude_deleted($classes_arr, $tests_model);
+		print_r($tests_model->find_all());
+		return $tests_model;
 	}
 
 	public function getTopics(){

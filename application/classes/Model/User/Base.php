@@ -874,6 +874,11 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 		if (isset($sports_id)){
 			$awards_model->where('sports_id', '=', $sports_id);
 		}
+		//exclude itself
+		$classes_arr = array(
+			'User_Awards' => 'user_awards'
+		);
+		$awards_model = ORM::_sql_exclude_deleted($classes_arr, $awards_model);
 
 		return $awards_model;
 	}
@@ -889,6 +894,12 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 			$references_model->where('sports_id', '=', $sports_id);
 		}
 
+		//exclude itself
+		$classes_arr = array(
+			'User_References' => 'user_references'
+		);
+		$references_model = ORM::_sql_exclude_deleted($classes_arr, $references_model);
+
 		return $references_model;
 	}
 
@@ -898,6 +909,11 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 		if (isset($users_id)){
 			$contacts_model->where('users_id', '=', $users_id);
 		}
+		//exclude itself
+		$classes_arr = array(
+			'User_Contact' => 'user_contact'
+		);
+		$contacts_model = ORM::_sql_exclude_deleted($classes_arr, $contacts_model);
 		return $contacts_model;
 	}
 	
@@ -1035,73 +1051,88 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 
 	public function getSearch($args = array()){
 		extract($args);
-
+		$user_model = $this;
 		//$this->select();
 		//$this->select(array(concat('user_base.first_name',' ','user_base.last_name'), 'full_name'));
-
+		//$user_modelx = $this;
+		$classes_arr['User_Base'] = 'user_base';
 		if (isset($sports_id) || isset($complevels_id) || isset($positions_id))
 		{
-			$this->join('users_teams_link')->on('users_teams_link.users_id', '=', 'user_base.id');
-			$this->join('teams')->on('users_teams_link.teams_id', '=', 'teams.id');
+			$user_model->join('users_teams_link')->on('users_teams_link.users_id', '=', 'user_base.id');
+			$user_model->join('teams')->on('users_teams_link.teams_id', '=', 'teams.id');
+			$classes_arr['User_Teamslink'] = 'users_teams_link';
+			$classes_arr['Sportorg_Team'] = 'teams';
 		}
 
 		if (isset($sports_id)){
-			$this->join('org_sport_link')->on('org_sport_link.id', '=', 'teams.org_sport_link_id');
-			$this->where('org_sport_link.sports_id', '=', $sports_id);
+			$user_model->join('org_sport_link')->on('org_sport_link.id', '=', 'teams.org_sport_link_id');
+			$user_model->where('org_sport_link.sports_id', '=', $sports_id);
+			$classes_arr['Sportorg_Orgsportlink'] = 'org_sport_link';
 		}
 
 		if (isset($states_id)){
-			$this->join('cities')->on('user_base.cities_id', '=', 'cities.id');
-			$this->where('cities.state_id', '=', $states_id);
+			$user_model->join('cities')->on('user_base.cities_id', '=', 'cities.id');
+			$user_model->where('cities.state_id', '=', $states_id);
+			$classes_arr['Location_City'] = 'cities';
 		}
 
 		if (isset($complevels_id)){
-			$this->where('teams.complevels_id', '=', $complevels_id);
+			$user_model->where('teams.complevels_id', '=', $complevels_id);
 		}
 
 		if (isset($positions_id)){
-			$this->join('utl_position_link')->on('utl_position_link.users_teams_link_id', '=', 'users_teams_link.id');
-			$this->where('utl_position_link.positions_id', '=', $positions_id);
+			$user_model->join('utl_position_link')->on('utl_position_link.users_teams_link_id', '=', 'users_teams_link.id');
+			$user_model->where('utl_position_link.positions_id', '=', $positions_id);
+			$classes_arr['User_Teamslink_Positionlink'] = 'utl_position_link';
 		}
 
 		if (isset($gradyear)){
-			$this->where('user_base.grad_year', '=', $gradyear);
+			$user_model->where('user_base.grad_year', '=', $gradyear);
 		}
 
 		if (isset($cities_id)){
-			$this->where('user_base.cities_id', '=', $cities_id);
+			$user_model->where('user_base.cities_id', '=', $cities_id);
 		}
 
 //        if (isset($dob)){
 //            $this->where('user_base.dob', '=', $dob);
 //        }
-
-		$enttype_id = Model_Site_Enttype::getMyEntTypeID($this);
+		$ent = $this;
+		$enttype_id = Model_Site_Enttype::getMyEntTypeID($ent);
 		$counts = DB::select(array(DB::expr('COUNT(id)'),'num_votes'))
 			->select(array('subject_id', 'users_id'))
 			->from('votes')
 			->where('subject_enttypes_id','=',$enttype_id);
 
+		//Here have issues to apply _sql_exclude_deleted_abstract
+		$classes_arr = array();
+		$entClassStr = str_replace('Model_','',get_class($ent));
+		$classes_arr[$entClassStr] = 'user_base.id';
+		$classes_arr['Site_Vote'] = 'site_vote.id';
+		$counts = ORM::_sql_exclude_deleted_abstract($classes_arr, $counts);
+		print_r($counts->execute());
 		if (!isset($orderby) || $orderby == 'votes'){
-			$this->join(array($counts,'filtered'), 'LEFT')->on('filtered.users_id', '=', 'user_base.id');
-			$this->order_by('num_votes', 'asc');
+			$user_model->join(array($counts,'filtered'), 'LEFT')->on('filtered.users_id', '=', 'user_base.id');
+			$user_model->order_by('num_votes', 'asc');
 		}else if ($orderby == 'followers'){
 			$followers = DB::select(array(DB::expr('COUNT(id)'),'num_followers'))
 				->select(array('subject_id', 'users_id'))
 				->from('followers')
 				->where('subject_enttypes_id','=',$enttype_id);
-			$this->join(array($followers,'followers'), 'LEFT')->on('followers.users_id', '=', 'user_base.id');
-			$this->order_by('num_followers', 'asc');
+			$user_model->join(array($followers,'followers'), 'LEFT')->on('followers.users_id', '=', 'user_base.id');
+			$user_model->order_by('num_followers', 'asc');
 		}else if ($orderby == 'regist_time'){
-			$this->order_by('user_base.id', 'asc');
+			$user_model->order_by('user_base.id', 'asc');
 		}
 
 		if (isset($searchtext)){
-			$this->where(array(Db::expr('CONCAT(user_base.first_name," ",user_base.last_name)'), 'full_name'), 'like ','%'.$searchtext.'%');
+			$user_model->where(array(Db::expr('CONCAT(user_base.first_name," ",user_base.last_name)'), 'full_name'), 'like ','%'.$searchtext.'%');
 		}
-		$this->distinct(TRUE);
-		$this->limit(50);
-		return $this;
+		$user_model->distinct(TRUE);
+		$user_model->limit(50);
+
+		$user_model = ORM::_sql_exclude_deleted($classes_arr, $user_model);
+		return $user_model;
 	}
 
 	public function lastName()
@@ -1183,7 +1214,7 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 
 	/** Modified by Jeffrey
 	 * @param $args
-	 * @return Model_User_Base|ORM_Validation_Exception
+	 * @return user_model|ORM_Validation_Exception
 	 */
 	public function addTeam($args)
 	{

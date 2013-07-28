@@ -102,7 +102,6 @@ class Model_Site_Comment extends Model_Site_Entdir
 			->and_where('subject_id','=',$ent->id);
 
 		$comments = ORM::_sql_exclude_deleted_abstract($classes_arr, $comments);
-
 		return $comments;
 	}
 
@@ -113,6 +112,11 @@ class Model_Site_Comment extends Model_Site_Entdir
 		$comments = ORM::factory('Site_Comment')
 			->where('users_id','=',$users_id);
 
+		$classes_arr = array(
+			'Site_Comment' => 'site_comment'
+		);
+
+		$comments = ORM::_sql_exclude_deleted($classes_arr, $comments);
 		return $comments;
 	}
 
