@@ -238,14 +238,23 @@
 			// Scaffolding Code For Array:
 			$objs = $this->obj->find_all();
 			$grouped_array = array();
+			$awards_arr = array();
+
 			foreach($objs as $obj)
 			{
 				$basic = $obj->getBasics();
 				$sports_id = $basic['sports_id'];
-				$grouped_array[$sports_id][] = $basic;
+				$obj = new stdClass();
+				$obj->name = $basic['sport']['sport_name'];
+				$awards_arr[] = $basic;
+				$obj->awards = $awards_arr;
+				$grouped_array[$sports_id] = $obj;
 
 				$retArr = $grouped_array;
+				if (!array_key_exists($sports_id, $grouped_array))
+					unset($awards_arr);
 			}
+
 			return $retArr;
 		}
 
@@ -260,14 +269,23 @@
 			// Scaffolding Code For Array:
 			$objs = $this->obj->find_all();
 			$grouped_array = array();
+			$awards_arr = array();
+
 			foreach($objs as $obj)
 			{
 				$basic = $obj->getBasics();
 				$sports_id = $basic['sports_id'];
-				$grouped_array[$sports_id][] = $basic;
+				$obj = new stdClass();
+				$obj->name = $basic['sport']['sport_name'];
+				$awards_arr[] = $basic;
+				$obj->awards = $awards_arr;
+				$grouped_array[$sports_id] = $obj;
 
 				$retArr = $grouped_array;
+				if (!array_key_exists($sports_id, $grouped_array))
+					unset($awards_arr);
 			}
+
 			return $retArr;
 		}
 		
