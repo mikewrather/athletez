@@ -198,12 +198,18 @@ class Model_Media_Base extends ORM
 			->where('tags.subject_id','=',$subjectID)
 			->where('media.media_type','=',strtolower($mediaType))
 			->group_by('media_id');
+		//exclude tags,  media
+		$classes_arr = array('Site_Tag' => 'tags', 'Media_Base' => 'media');
+		$tags = ORM::_sql_exclude_deleted($classes_arr, $tags);
 
 		// This sub query simply gets a count of votes for the current media ID
 		$count = DB::select(DB::expr('COUNT(id)'))
 			->from('votes')
 			->where('subject_enttypes_id','=',Ent::getMyEntTypeID('Media_Base'))
 			->and_where('subject_id','=',DB::expr('tagged.media_id'));
+
+		$classes_arr = array('Site_Vote' => 'votes');
+		$count = ORM::_sql_exclude_deleted($classes_arr, $count);
 
 		// This just puts it all together
 		$qry = DB::select(array($count,'num_votes'),DB::expr('tagged.media_id'))

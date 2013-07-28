@@ -245,6 +245,19 @@
 			return $retArr;
 		}
 
+		public function get_contacts(){
+			$retArr = null;
+
+			// Scaffolding Code For Array:
+			$objs = $this->obj->find_all();
+			foreach($objs as $obj)
+			{
+				$retArr[] = $obj->getBasics();
+			}
+
+			return $retArr;
+		}
+
 		public function get_awards(){
 			$retArr = null;
 

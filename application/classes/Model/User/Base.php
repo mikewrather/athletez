@@ -891,6 +891,15 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 
 		return $references_model;
 	}
+
+	public function getContacts($args = array()){
+		extract($args);
+		$contacts_model = ORM::factory('User_Contact');
+		if (isset($users_id)){
+			$contacts_model->where('users_id', '=', $users_id);
+		}
+		return $contacts_model;
+	}
 	
 	public function getRelated()
 	{
