@@ -111,7 +111,6 @@ class Model_Academics_Tests extends ORM
 		);
 
 		$tests_model = ORM::_sql_exclude_deleted($classes_arr, $tests_model);
-		print_r($tests_model->find_all());
 		return $tests_model;
 	}
 

@@ -234,38 +234,56 @@
 
 		public function get_references(){
 			$retArr = null;
-
+			//array('sports_id' => array('sport_name'));
 			// Scaffolding Code For Array:
 			$objs = $this->obj->find_all();
+			$grouped_array = array();
+			$awards_arr = array();
+
 			foreach($objs as $obj)
 			{
-				$retArr[] = $obj->getBasics();
+				$basic = $obj->getBasics();
+				$sports_id = $basic['sports_id'];
+				$obj = new stdClass();
+				$obj->name = $basic['sport']['sport_name'];
+				$awards_arr[] = $basic;
+				$obj->awards = $awards_arr;
+				$grouped_array[$sports_id] = $obj;
+
+				$retArr = $grouped_array;
+				if (!array_key_exists($sports_id, $grouped_array))
+					unset($awards_arr);
 			}
 
 			return $retArr;
 		}
 
-		public function get_contacts(){
-			$retArr = null;
-
-			// Scaffolding Code For Array:
-			$objs = $this->obj->find_all();
-			foreach($objs as $obj)
-			{
-				$retArr[] = $obj->getBasics();
-			}
-
+		public function get_contact(){
+			$retArr = $this->obj->find()->getBasics();
 			return $retArr;
 		}
 
 		public function get_awards(){
 			$retArr = null;
-
+			//array('sports_id' => array('sport_name'));
 			// Scaffolding Code For Array:
 			$objs = $this->obj->find_all();
+			$grouped_array = array();
+			$awards_arr = array();
+
 			foreach($objs as $obj)
 			{
-				$retArr[] = $obj->getBasics();
+				$basic = $obj->getBasics();
+				$sports_id = $basic['sports_id'];
+				$obj = new stdClass();
+				$obj->name = $basic['sport']['sport_name'];
+				$awards_arr[] = $basic;
+				$obj->awards = $awards_arr;
+				$grouped_array[$sports_id] = $obj;
+
+				$retArr = $grouped_array;
+				if (!array_key_exists($sports_id, $grouped_array))
+					unset($awards_arr);
 			}
 
 			return $retArr;
@@ -607,12 +625,7 @@
 		 */
 		public function delete_sport()
 		{
-			$retArr = array();
- 
-			// Scaffolding Code For Single:
-			$retArr = $this->obj->getBasics();
-
-			return $retArr;
+			return null;
 		}
 
 		/**
@@ -622,8 +635,7 @@
 		 */
 		public function delete_position()
 		{
-			$retArr = $this->obj->getBasics();
-			return $retArr;
+			return null;
 		}
 
 		
@@ -634,10 +646,7 @@
 		 */
 		public function delete_role()
 		{
-			// Scaffolding Code For Single:
-			$retArr = $this->obj->getBasics();
-
-			return $retArr;
+			return null;
 		}
 		
 		/**
@@ -647,12 +656,7 @@
 		 */
 		public function delete_identity()
 		{
-			$retArr = array();
- 
-			// Scaffolding Code For Single:
-			$retArr = $this->obj->getBasics();
-
-			return $retArr;
+			return null;
 		}
 		
 		/**
