@@ -551,6 +551,10 @@
 				return false;
 			}
 
+			if(!is_object($this->user)) $this->populateAuthVars();
+
+		//	print_r($this);
+
 			$arguments['users_id'] = $this->mainModel->id;
 
 			if($this->request->query('standardized') != "")

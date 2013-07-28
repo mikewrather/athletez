@@ -181,7 +181,6 @@
 			{
 				$arguments["city_name"] = trim($this->request->query('city_name'));
 			}
-
 			else // THIS WAS A REQUIRED PARAMETER
 			{
 				// Create Array for Error Data
@@ -209,6 +208,8 @@
 					return false;
 				}
 			}
+
+
 
 			$cities = $this->mainModel->getCities($arguments);
 			return $cities;

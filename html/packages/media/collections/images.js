@@ -53,4 +53,5 @@ function(facade, collections, MediaImageModel, utils) {
     });
 
     return MediaImageList;
+
 });
