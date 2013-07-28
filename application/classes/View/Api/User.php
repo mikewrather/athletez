@@ -98,7 +98,7 @@
 
 		//	print_r($orgs);
 
-			$neworgs = array();
+			$neworgs = null;
 			foreach($orgs as $key=>&$org)
 			{
 			//	print_r($org);

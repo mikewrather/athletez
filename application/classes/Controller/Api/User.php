@@ -71,6 +71,8 @@
 			{
 				$arguments["sport_id"] = (int)trim($this->request->query('sport_id'));
 			}
+
+
 			return $this->mainModel->getTeams($arguments);
 		}
 		
