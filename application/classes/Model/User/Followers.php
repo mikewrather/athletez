@@ -56,14 +56,19 @@ class Model_User_Followers extends ORM
 		$qry = DB::select('id','follower_users_id')
 			->from('followers')
 			->where('subject_enttypes_id','=',$subject_enttypes_id)
-			->and_where('subject_id','=',$subject_id)
-			->execute();
+			->and_where('subject_id','=',$subject_id);
 
+
+		$classes_arr = array();
+		$entClassStr = str_replace('Model_','',get_class($obj));
+		$classes_arr[$entClassStr] = 'followers.subject_id';
+
+		$qry = ORM::_sql_exclude_deleted_abstract($classes_arr, $qry);
+		$qry = $qry->execute();
 		$retObj = new stdClass();
 
 		foreach($qry as $row)
 		{
-
 			if($ret_type=='users')
 			{
 				$user = ORM::factory('User_Base',$row['follower_users_id']);
