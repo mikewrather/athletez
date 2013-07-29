@@ -916,10 +916,10 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 		$contacts_model = ORM::_sql_exclude_deleted($classes_arr, $contacts_model);
 		return $contacts_model;
 	}
-	
+
 	public function getRelated()
 	{
-		
+
 	}
 
 	public function getAvatar()
@@ -929,7 +929,7 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 			return $image->getBasics(array('user'));
 		}
 	}
-	
+
 	public function getBasics()
 	{
 		$num_votes = Model_Site_Vote::getNumVotes($this);
@@ -983,7 +983,7 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 		return $retArr;
 	*/
 	}
-	
+
 	public function getTeams($args = array())
 	{
 		extract($args);
@@ -1047,7 +1047,7 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 		{
 			$retArr[$data['id']] = $data;
 		}
-		 
+
 		return $retArr;
 	}
 

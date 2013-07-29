@@ -29,14 +29,14 @@ define(["require", "text!userresume/templates/layout.html",
 	/*MODEL SECTION*/
 	BasicInfoModel = require("userresume/models/basic_info"), 
 	ResumeModel = require('userresume/models/resume'),
-	 RDTreeModel = require("userresume/models/resume"),
+	RDTreeModel = require("userresume/models/resume"),
 	GpaModel = require("userresume/models/gpa"),
 	/*COLLECTIONS SECTIONS*/
 
 	/*VIEW SECTION*/
-	BasicInfoView = require("userresume/views/basic_info"), SentResumeView = require("userresume/views/sentresumeview");
-	RDTreeView = require("userresume/views/rdtree");
-	var AcademicView = require("userresume/views/academic");
+	BasicInfoView = require("userresume/views/basic_info"), SentResumeView = require("userresume/views/sentresumeview"),
+	RDTreeView = require("userresume/views/rdtree"),
+	AcademicView = require("userresume/views/academic"),
 	UserResumeController = Controller.extend({
 		/*CSS SECTION*/
 		cssArr : ["/pages/userresume/userresume.css"],
@@ -104,6 +104,7 @@ define(["require", "text!userresume/templates/layout.html",
 				self.setUpBasicView();
 				self.setUpSentResumeView();
 				self.setUpRdTreeView();
+				self.setUpAcademicView();
 			});
 
 		},
@@ -166,7 +167,7 @@ define(["require", "text!userresume/templates/layout.html",
 				user_id : self.id,
 			});
 
-			this.scheme.push(this.rdTreeView);
+			this.scheme.push(this.academicView);
 			this.layout.render();
 		}
 	});

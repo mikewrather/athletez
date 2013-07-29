@@ -7,7 +7,7 @@
 
 define(['facade', 'collections', 'user/collections/gpa', 'utils'], function(facade, collections, UserCollection, utils) {
 
-	var List, BaseCollection = collections.BaseCollection, _ = facade._, Channel = utils.lib.Channel;
+	var List, BaseCollection = collections.BaseCollection, _ = facade._, Channel = utils.lib.Channel,
 
 	List = UserCollection.extend({
 		url : function() {
@@ -19,8 +19,27 @@ define(['facade', 'collections', 'user/collections/gpa', 'utils'], function(faca
 			}
 			return 'api/user/gpa/' + this.user_id + '?id1=' + this.user_id;
 		},
-		
+
+		parseAsRequired : function() {
+			var self = this;
+
+			var models = self.toJSON();
+			var d = [];
+
+			if (models.length) {
+				$.each(models, function(index, load) {
+					if (load != null && load.payload != null) {
+						var payload = load.payload;
+						d.push({
+							gpa : payload.gpa,
+							year : payload.year
+						});
+					}
+				});
+			}
+			return d;
+		}
 	});
 
 	return List;
-}); 
+});

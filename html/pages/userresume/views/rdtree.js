@@ -4,16 +4,17 @@
  // Requires `define`, `require`
  // Returns {RDTREEVIEW} constructor
  */
-define(['require', 'text!userresume/templates/rdtree.html', 'facade', 'views', 'utils', 'vendor', 'userresume/collections/rdtree'], function(require, rdTemplate) {
+define(['require', 'text!userresume/templates/rdtree.html', 'facade', 'views', 'utils', 'vendor', 'userresume/collections/rdtree', 'userresume/models/rdtree'], function(require, rdTemplate) {
 
-	var self, facade = require('facade'), views = require('views'), SectionView = views.SectionView, utils = require('utils'), Channel = utils.lib.Channel, vendor = require('vendor'), Mustache = vendor.Mustache, $ = facade.$, RDTreeCollection = require('userresume/collections/rdtree'), RDTREEVIEW = SectionView.extend({
+	var self, facade = require('facade'), views = require('views'), SectionView = views.SectionView, utils = require('utils'), Channel = utils.lib.Channel, vendor = require('vendor'), Mustache = vendor.Mustache, $ = facade.$, RDTreeCollection = require('userresume/collections/rdtree'), RDTreeModel = require('userresume/models/rdtree'), RDTREEVIEW = SectionView.extend({
 
 		template : rdTemplate,
 
 		/*Bind Events on controls present in current view template*/
 		events : {
 			"click .btn-edit-rdtree_h" : "MarkEdit",
-			"click .btn-Finish-RdTree_h" : "FinishEdit"
+			"click .btn-Finish-RdTree_h" : "FinishEdit",
+			"blur .txtRdTrees_h" : "SaveResumeData"
 		},
 
 		/*Holds */
@@ -36,11 +37,9 @@ define(['require', 'text!userresume/templates/rdtree.html', 'facade', 'views', '
 		},
 		/*initialize gets called by default when constructor is initialized*/
 		initialize : function(options) {
-			//	debugger;
 			SectionView.prototype.initialize.call(this, options);
 			self = this;
 			self.setOptions(options);
-			//debugger;
 
 			this.init();
 
@@ -75,55 +74,64 @@ define(['require', 'text!userresume/templates/rdtree.html', 'facade', 'views', '
 				if (Collection.isError())
 					return;
 
-				var models = Collection.toJSON();
-				if (models.length) {
-					var d = [];
+				self.Tree = Collection.parseAsRequired();
+				console.log("d", self.Tree);
 
-					$.each(models, function(index, load) {
-						var temp = {
-							title : load.payload.name
-						}
-						var data = [];
-						for (var key in load.payload.data) {
-							var t = load.payload.data[key];
-							var obj = {
-								name : t.name,
-								id : t.id,
-								type : t.type,
-								val : t.val || ""
-							}
-							data.push(obj);
-						}
-						temp.data = data;
-
-						d.push(temp);
-					});
-
-					self.Tree = d;
-					console.log("d", d);
-					var markup = Mustache.to_html(self.template, {
-						rdtrees : d
-					});
-					$(self.el).html(markup);
-				} else {
-					$(self.el).html(self.messages.dataNotExist);
-
-				}
+				var markup = Mustache.to_html(self.template, {
+					rdtrees : self.Tree
+				});
+				$(self.el).html(markup);
 
 			});
-			// this.scheme.push(this.basicView);
 		},
 
 		MarkEdit : function(e) {
 			$(e.target).fadeOut();
-		$(e.target).parents(self.controls.sectionRdTreeItems).find(self.controls.txtRdTree).removeAttr('disabled');
-		$(e.target).parents(self.controls.sectionRdTreeItems).find(self.controls.btnFinishRdTree).fadeIn();
+			$(e.target).parents(self.controls.sectionRdTreeItems).find(self.controls.txtRdTree).removeAttr('disabled');
+			$(e.target).parents(self.controls.sectionRdTreeItems).find(self.controls.btnFinishRdTree).fadeIn();
 		},
-		FinishEdit : function(e){
+		FinishEdit : function(e) {
 			$(e.target).fadeOut();
-			$(e.target).parents(self.controls.sectionRdTreeItems).find(self.controls.txtRdTree).attr('disabled','disabled');
+			$(e.target).parents(self.controls.sectionRdTreeItems).find(self.controls.txtRdTree).attr('disabled', 'disabled');
 			$(e.target).parents(self.controls.sectionRdTreeItems).find(self.controls.btnEditRdTree).fadeIn();
-			
+
+		},
+		SaveResumeData : function(e) {
+			var id = $(e.target).attr('treeId');
+			var rdId = $(e.target).attr('resumeDataId');
+			var value = $(e.target).val();
+
+			var payload = {
+				treeId : id,
+				user_id : self.user_id,
+				resume_data_id : rdId,
+				user_value : value
+			}
+
+			var rdModel = new RDTreeModel(payload);
+			rdModel.treeId = id;
+			rdModel.user_id = self.user_id;
+			rdModel.target = $(e.target);
+			if (id > 0) {
+				rdModel.action = "update";
+				rdModel.save({
+					id1 : id
+				});
+			} else {
+				rdModel.action = "save";
+				rdModel.save();
+			}
+
+			$.when(rdModel.request).done(function(response) {
+				console.log("response",response);
+				if(response.payload != null){
+					if(response.payload.id > 0){
+						$(e.target).attr('treeId',response.payload.id);
+					}
+				}
+				$(e.target).parent().find(".error_h").html('').fadeOut();
+				$(e.target).parent().find(".success_h").html('').fadeOut();
+			});
 		}
 	});
 

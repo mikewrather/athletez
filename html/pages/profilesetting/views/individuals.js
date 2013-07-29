@@ -10,6 +10,7 @@ define(['require',
 'text!profilesetting/templates/sportitem.html',
 'facade', 'views', 'utils', 'vendor', 
 'profilesetting/collections/individualsports',
+'profilesetting/collections/sports',
 'profilesetting/models/sport',
    ], function(require, individualSportsTemplate,sportsCheckboxes,sportsItem) {
 

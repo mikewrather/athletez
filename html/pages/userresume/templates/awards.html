@@ -1,0 +1,25 @@
+<div class="row-fluid sub-section-prof-setting well well-large">
+<div class="row-fluid">
+	<span class="spn-black-heading  well-small">Awards</span>
+</div>
+<div id="container-rdtree" class="row-fluid">
+	{{#rdtrees}}
+	<div class="well section-rdtree-items_h">
+		<div class="row-fluid"><h3>{{title}}</h3><br />
+			<a href="javascript:void(0)" class="btn-edit-rdtree_h">Edit</a>
+		</div>
+		{{#data}}
+			<div class="row-fluid">
+				<span class="span3">{{name}}</span>
+				<span class="span3"><input type="text" class="txtRdTrees_h" treeId="{{id}}" value="{{val}}" resumeDataId="{{resumeDataId}}" disabled="disabled"/>
+					<span class="alert alert-danger displayNone error_h"></span>
+					<span class="alert alert-success displayNone success_h"></span>
+					
+				</span>
+			</div>
+		{{/data}}
+		<a href="javascript:void(0)" class="btn btn-primary btn-Finish-RdTree_h displayNone">Finish</a>
+	</div>
+	{{/rdtrees}}
+</div>
+</div>
