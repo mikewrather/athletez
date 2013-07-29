@@ -439,7 +439,7 @@
 			}
 
 			$arguments["users_id"] = (int) $this->mainModel->id;
-
+			//$this->mainModel = ORM::factory("User_Contact");
 			return $this->mainModel->getContact($arguments);
 		}
 
@@ -1669,11 +1669,100 @@
 			return $this->mainModel->addComment($arguments['comment'],$this->user->id);
 
 		}
+
+		public function action_post_contact()
+		{
+
+			$this->payloadDesc = "Add a new contact info";
+
+			if(!$this->mainModel->id)
+			{
+				$this->modelNotSetError();
+				return false;
+			}
+
+			$args = array(); //This will get passed to the add method
+
+			if(trim($this->request->post('phone_cell')) != "")
+			{
+				$args['phone_cell'] = trim($this->request->post('phone_cell'));
+			}
+
+			if(trim($this->request->post('phone_work')) != "")
+			{
+				$args['phone_work'] = trim($this->request->post('phone_work'));
+			}
+
+			$args['users_id'] = $this->mainModel->id;
+
+			if((int)trim($this->request->post('locations_id')) > 0)
+			{
+				$args['locations_id'] = (int)trim($this->request->post('locations_id'));
+			}
+			$contact_model = ORM::factory("User_Contact");
+			$result =  $contact_model->addContact($args);
+
+			//Check for success / error
+			if(get_class($result) == get_class($contact_model))
+			{
+				return $result;
+			}
+			elseif(get_class($result) == 'ORM_Validation_Exception')
+			{
+				//parse error and add to error array
+				$this->processValidationError($result,$contact_model->error_message_path);
+				return false;
+			}
+
+		}
 		
 		############################################################################
 		############################    PUT METHODS    #############################
 		############################################################################
+		public function action_put_contact()
+		{
+			$this->payloadDesc = "Update contact info";
+			$args = array(); //This will get passed to the add method
 
+			if(!$this->mainModel->id)
+			{
+				$this->modelNotSetError();
+				return false;
+			}
+
+			if(trim($this->put('phone_cell')) != "")
+			{
+				$args['phone_cell'] = urldecode(trim($this->put('phone_cell')));
+			}
+
+			if(trim($this->put('phone_work')) != "")
+			{
+				$args['phone_work'] = trim($this->put('phone_work'));
+			}
+
+			$args['users_id'] = $this->mainModel->id;
+
+			if((int)trim($this->put('locations_id')) > 0)
+			{
+				$args['locations_id'] = (int)trim($this->put('locations_id'));
+			}
+
+			$contact_model = ORM::factory("User_Contact");
+
+			$result = $contact_model->editContact($args);
+
+			//Check for success / error
+			if(get_class($result) == get_class($contact_model))
+			{
+				return $result;
+			}
+			elseif(get_class($result) == 'ORM_Validation_Exception')
+			{
+				//parse error and add to error array
+				$this->processValidationError($result,$contact_model->error_message_path);
+				return false;
+			}
+		}
 		
 		/**
 		 * action_put_basics() Update basic information about the user
@@ -2426,10 +2515,23 @@
 				$arguments["test_score_id"] = (int)trim($this->delete('test_score_id'));
 			}
 
-
-
 			$arguments['users_id'] = $this->mainModel->id;
 			$this->mainModel->delete_tests($arguments);
+		}
+
+		public function action_delete_contact()
+		{
+			$this->payloadDesc = "Delete contact info";
+			if(!$this->mainModel->id)
+			{
+				$this->modelNotSetError();
+				return false;
+			}
+
+			$contact_model = ORM::factory('User_Contact');
+			$result = $contact_model->where('users_id', '=', $this->mainModel->id)->find();
+			$new_contact_model = ORM::factory('User_Contact', $result->id);
+			$new_contact_model->delete_with_deps();
 		}
 		
 	}

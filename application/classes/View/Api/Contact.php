@@ -13,7 +13,7 @@
 			return $retArr;
 		}
 		
-		public function post_add()
+		public function post_contact()
 		{
 			$retArr = array();
 			$retArr = $this->obj->getBasics();

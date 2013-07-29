@@ -259,7 +259,11 @@
 		}
 
 		public function get_contact(){
-			$retArr = $this->obj->find()->getBasics();
+			$retArr = $this->obj->find();
+			if (!$retArr->loaded()){
+				return null;
+			}
+			$retArr = $retArr->getBasics();
 			return $retArr;
 		}
 
@@ -829,4 +833,25 @@
 
 			return $retArr;
 		}
+
+		public function post_contact()
+		{
+			$retArr = null;
+			$retArr = $this->obj->getBasics();
+
+			return $retArr;
+		}
+
+		public function put_contact()
+		{
+			$retArr = $this->obj->getBasics();
+
+			return $retArr;
+		}
+
+		public function delete_contact(){
+			return null;
+		}
+
+
 	}

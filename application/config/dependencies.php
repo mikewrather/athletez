@@ -211,7 +211,11 @@ return array(
 
 	'User_Sportlink' => array(
 		'User_Sportlink_Gamelink' => 'user_sport_link_id'
-	)
+	),
+
+	'User_Contact' => array(
+		//No dependency table
+	),
 
 
 

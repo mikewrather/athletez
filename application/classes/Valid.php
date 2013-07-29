@@ -31,6 +31,17 @@
 			}
 		}
 
+		public static function user_has_contact($users_id){
+			$contact = ORM::factory("User_Contact");
+			$contact->where('users_id', '=', $users_id)->find();
+
+			if ($contact->loaded()){
+				return true;
+			}else{
+				return false;
+			}
+		}
+
 		public static function languages_id_exist($value){
 			$positions = ORM::factory("Site_Language");
 			$positions->where('id', '=', $value)->find();
