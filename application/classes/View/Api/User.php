@@ -745,11 +745,12 @@
 			$retArr = null;
 
 			// Scaffolding Code For Array:
-			$objs = $this->obj->find_all();
+			$objs = $this->obj->execute();
 
 			foreach($objs as $obj)
 			{
-				$retArr[] = $obj->getBasics();
+				$user = ORM::factory('User_Base',$obj['users_id']);
+				$retArr[] = $user->getBasics();
 			}
 
 			return $retArr;

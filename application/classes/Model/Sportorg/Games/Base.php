@@ -122,7 +122,7 @@ class Model_Sportorg_Games_Base extends ORM
 	{
 		if($primary = Model_Media_Base::find_most_voted_tag($this,'image',1))
 		{
-			return $primary->original_url;
+			return $primary->getBasics(array('user'));
 		}
 		return null;
 	}

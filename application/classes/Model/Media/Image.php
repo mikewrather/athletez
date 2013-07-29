@@ -43,7 +43,7 @@ class Model_Media_Image extends ORM
 		);
 	}
 
-	public function getBasics()
+	public function getBasics($exclude_array=array())
 	{
 		$num_votes = Model_Site_Vote::getNumVotes($this);
 
@@ -51,7 +51,7 @@ class Model_Media_Image extends ORM
 			"id" => $this->id,
 			"original_url" => $this->original_url,
 			"moviemasher_id" => $this->moviemasher_id,
-			"media" => $this->media->getBasics(),//->getBasics(),
+			"media" => $this->media->getBasics($exclude_array),
 			"image_title" => $this->media->name,
 			"image_path" => $this->original_url,
 			"num_votes" => $num_votes,

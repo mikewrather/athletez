@@ -924,9 +924,9 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 
 	public function getAvatar()
 	{
-		if ($this->user_picture){
+		if ($this->user_picture > 0){
 			$image = ORM::factory('Media_Image',$this->user_picture);
-			return $image->original_url;
+			return $image->getBasics(array('user'));
 		}
 	}
 	
@@ -941,6 +941,8 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 //		foreach($utl_results as $tmp_utl){
 //			$results[] = $tmp_utl->as_array();
 //		}
+
+
 
 		return array(
 			"id" => $this->id,
@@ -1051,14 +1053,13 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 
 	public function getSearch($args = array()){
 		extract($args);
-		$user_model = $this;
-		//$this->select();
-		//$this->select(array(concat('user_base.first_name',' ','user_base.last_name'), 'full_name'));
-		//$user_modelx = $this;
-		$classes_arr['User_Base'] = 'user_base';
+
+		$user_model = DB::select(array('users.id','users_id'))
+			->from('users');
+
 		if (isset($sports_id) || isset($complevels_id) || isset($positions_id))
 		{
-			$user_model->join('users_teams_link')->on('users_teams_link.users_id', '=', 'user_base.id');
+			$user_model->join('users_teams_link')->on('users_teams_link.users_id', '=', 'users.id');
 			$user_model->join('teams')->on('users_teams_link.teams_id', '=', 'teams.id');
 			$classes_arr['User_Teamslink'] = 'users_teams_link';
 			$classes_arr['Sportorg_Team'] = 'teams';
@@ -1071,7 +1072,7 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 		}
 
 		if (isset($states_id)){
-			$user_model->join('cities')->on('user_base.cities_id', '=', 'cities.id');
+			$user_model->join('cities')->on('users.cities_id', '=', 'cities.id');
 			$user_model->where('cities.state_id', '=', $states_id);
 			$classes_arr['Location_City'] = 'cities';
 		}
@@ -1087,61 +1088,64 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 		}
 
 		if (isset($gradyear)){
-			$user_model->where('user_base.grad_year', '=', $gradyear);
+			$user_model->where('users.grad_year', '=', $gradyear);
 		}
 
 		if (isset($cities_id)){
-			$user_model->where('user_base.cities_id', '=', $cities_id);
+			$user_model->where('users.cities_id', '=', $cities_id);
 		}
 
-//        if (isset($dob)){
-//            $this->where('user_base.dob', '=', $dob);
-//        }
-		$ent = $this;
-		$enttype_id = Model_Site_Enttype::getMyEntTypeID($ent);
-		$counts = DB::select(array(DB::expr('COUNT(*)'),'num_votes'))
-			->select(array('subject_id', 'users_id'))
-			->from('votes')
-			->join('users','LEFT')->on('users.id','=','votes.subject_id')
-			->where('subject_enttypes_id','=',$enttype_id);
+		$enttype_id = Model_Site_Enttype::getMyEntTypeID($this);
 
-		//Here have issues to apply _sql_exclude_deleted_abstract
-		$classes_arr = array();
+		// NUM VOTES
+		if (!isset($orderby) || $orderby == 'votes')
+		{
 
-		// excludes the votes this user made
-		$classes_arr['Site_Vote'] = '`votes`.`id`';
-		$counts = ORM::_sql_exclude_deleted_abstract($classes_arr, $counts);
+			$num_votes = DB::select(array(DB::expr('COUNT(*)'),'num_votes'))
+				->from('votes')
+			//	->join('users','LEFT')->on('users.id','=','votes.subject_id')
+				->where('subject_enttypes_id','=',$enttype_id)
+				->where('votes.subject_id','=',DB::expr('`users`.`id`'));
 
-	//	print_r($counts->execute());
-		if (!isset($orderby) || $orderby == 'votes'){
-			$user_model->join(array($counts,'filtered'), 'LEFT')->on('filtered.users_id', '=', 'user_base.id');
-			$user_model->order_by('num_votes', 'asc');
-		}else if ($orderby == 'followers'){
-			$followers = DB::select(array(DB::expr('COUNT(id)'),'num_followers'))
-				->select(array('subject_id', 'users_id'))
+			$vote_class['Site_Vote'] = '`votes`.`id`';
+			$num_votes = ORM::_sql_exclude_deleted_abstract($vote_class, $num_votes);
+
+			$user_model->select(array($num_votes,'num_votes'));
+			$user_model->order_by('num_votes', 'desc');
+
+		}
+		// NUM FOLLOWERS
+		else if ($orderby == 'followers')
+		{
+
+			$followers = DB::select(array(DB::expr('COUNT(*)'),'num_followers'))
 				->from('followers')
-				->where('subject_enttypes_id','=',$enttype_id);
-			$user_model->join(array($followers,'followers'), 'LEFT')->on('followers.users_id', '=', 'user_base.id');
-			$user_model->order_by('num_followers', 'asc');
-		}else if ($orderby == 'regist_time'){
-			$user_model->order_by('user_base.id', 'asc');
+				->where('subject_enttypes_id','=',$enttype_id)
+				->where('subject_id','=',DB::expr('`users`.`id`'));
+
+			$follower_class_arr['User_Follower'] = '`followers`.`id`';
+			$followers = ORM::_sql_exclude_deleted_abstract($follower_class_arr, $followers);
+
+			$user_model->select(array($followers,'num_followers'));
+			$user_model->order_by('num_followers', 'desc');
+
+		}
+		else if ($orderby == 'regist_time')
+		{
+			$user_model->order_by('users.id', 'desc');
 		}
 
-		if (isset($searchtext)){
-			$user_model->where(array(Db::expr('CONCAT(user_base.first_name," ",user_base.last_name)'), 'full_name'), 'like ','%'.$searchtext.'%');
+		if (isset($searchtext))
+		{
+			$user_model->where(array(Db::expr('CONCAT(users.first_name," ",users.last_name)'), 'full_name'), 'like ','%'.$searchtext.'%');
 		}
 		$user_model->distinct(TRUE);
 		$user_model->limit(50);
 
-		$classes_arr = array();
-		$entClassStr = str_replace('Model_','',get_class($ent));
-		$classes_arr[$entClassStr] = 'user_base';
+		$exclude_deleted_users_array['User_Base'] = 'users';
+		$user_model = ORM::_sql_exclude_deleted($exclude_deleted_users_array, $user_model);
 
-		$user_model = ORM::_sql_exclude_deleted($classes_arr, $user_model);
-
-		print_r($user_model->find_all());
-
-	//	return $user_model;
+		return $user_model;
 	}
 
 	public function lastName()

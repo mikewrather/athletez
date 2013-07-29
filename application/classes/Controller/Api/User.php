@@ -378,7 +378,7 @@
 
 			$result = $user_obj->getSearch($arguments);
 
-			if(get_class($result) == get_class($this->mainModel))
+			if(get_class($result) == 'Database_Query_Builder_Select')
 			{
 				return $result;
 			}
