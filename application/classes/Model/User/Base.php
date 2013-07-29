@@ -1099,18 +1099,20 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 //        }
 		$ent = $this;
 		$enttype_id = Model_Site_Enttype::getMyEntTypeID($ent);
-		$counts = DB::select(array(DB::expr('COUNT(id)'),'num_votes'))
+		$counts = DB::select(array(DB::expr('COUNT(*)'),'num_votes'))
 			->select(array('subject_id', 'users_id'))
 			->from('votes')
+			->join('users','LEFT')->on('users.id','=','votes.subject_id')
 			->where('subject_enttypes_id','=',$enttype_id);
 
 		//Here have issues to apply _sql_exclude_deleted_abstract
 		$classes_arr = array();
-		$entClassStr = str_replace('Model_','',get_class($ent));
-		$classes_arr[$entClassStr] = 'user_base.id';
-		$classes_arr['Site_Vote'] = 'site_vote.id';
+
+		// excludes the votes this user made
+		$classes_arr['Site_Vote'] = '`votes`.`id`';
 		$counts = ORM::_sql_exclude_deleted_abstract($classes_arr, $counts);
-		print_r($counts->execute());
+
+	//	print_r($counts->execute());
 		if (!isset($orderby) || $orderby == 'votes'){
 			$user_model->join(array($counts,'filtered'), 'LEFT')->on('filtered.users_id', '=', 'user_base.id');
 			$user_model->order_by('num_votes', 'asc');
@@ -1131,10 +1133,15 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 		$user_model->distinct(TRUE);
 		$user_model->limit(50);
 
-		$classes_arr["User_Base"] = 'user_base';
+		$classes_arr = array();
+		$entClassStr = str_replace('Model_','',get_class($ent));
+		$classes_arr[$entClassStr] = 'user_base';
 
 		$user_model = ORM::_sql_exclude_deleted($classes_arr, $user_model);
-		return $user_model;
+
+		print_r($user_model->find_all());
+
+	//	return $user_model;
 	}
 
 	public function lastName()
