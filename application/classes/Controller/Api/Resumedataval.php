@@ -117,8 +117,9 @@
 		     // CHECK FOR PARAMETERS:
 			// user_value 
 			// Update the user's entered value for this peice of resume data
-				
-			$user_value = trim(urldecode($this->put('user_value')));
+
+			echo $user_value = $this->put('user_value');
+
 
 			//permission check
 			if(!$this->user->can('Assumeownership', array('owner' => $this->mainModel->owner()))){

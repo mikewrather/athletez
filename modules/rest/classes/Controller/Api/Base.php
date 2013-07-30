@@ -126,7 +126,11 @@ class Controller_Api_Base extends AuthController
 			foreach($arr as $argPair)
 			{
 				$argArr = explode('=',$argPair);
-				$this->$verb($argArr[0],$argArr[1]);
+				$this->$verb($argArr[0],trim(urldecode($argArr[1])));
+			}
+			if($this->check_for_json())
+			{
+				//nothing to do here.  But json model key has been moved to main array
 			}
 		}
 
