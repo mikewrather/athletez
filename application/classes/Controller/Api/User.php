@@ -603,6 +603,11 @@
 				$this->throw_permission_error(Constant::NOT_OWNER);
 			}
 
+			if((int)trim($this->request->query('sports_id')) > 0)
+			{
+				$sports_id = $arguments["sports_id"] = (int)trim($this->request->query('sports_id'));
+			}
+
 			$test_model = ORM::factory("Academics_Tests");
 			return $tests = $test_model->getTestsByType($arguments);
 		}
@@ -2276,8 +2281,18 @@
 				$this->modelNotSetError($error_array);
 				return false;
 			}
-            return $this->mainModel->deleteSport($arguments);
-		}
+
+			if (!$this->mainModel->deleteSport($arguments)){
+				$error_array = array(
+					"error" => "User sport link doesn't exist",
+					"desc" => "User sport link doesn't exist."
+				);
+
+				$this->modelNotSetError($error_array);
+				return false;
+			}
+
+        }
 
 		/**
 		 * action_delete_position() Delete a position for a user / team association
@@ -2358,7 +2373,15 @@
 
 			if($this->mainModel->id)
 			{
-				return $this->mainModel->deleteRole($arguments);
+				if (!$this->mainModel->deleteRole($arguments)){
+					$error_array = array(
+						"error" => "User role link doesn't exist",
+						"desc" => "User role link doesn't exist."
+					);
+
+					$this->modelNotSetError($error_array);
+					return false;
+				}
 			}
 			else
 			{
