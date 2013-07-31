@@ -8,9 +8,11 @@ function(facade,  views,   utils,   ImageItemView,            ImageBoardView,   
         ImageListAbstract,
         $ = facade.$,
         _ = facade._,
+	    vendor = require("vendor"),
         Channel = utils.lib.Channel,
         CollectionView = views.CollectionView,
-        SectionView = views.SectionView;
+        SectionView = views.SectionView,
+	    Mustache = vendor.Mustache;
 
     ImageListAbstract = CollectionView.extend(SectionView.prototype);
 
@@ -110,21 +112,6 @@ function(facade,  views,   utils,   ImageItemView,            ImageBoardView,   
             
             Channel('changeimage' + this.collection.id).subscribe(changeBoard);
         },
-
-	    render: function(callback)
-	    {
-		    var view = this;
-		    console.log("view.name",view.name);
-		    var childView = layout.section(view.name);
-		    if (childView.isRendered()) {
-			    childView.display(true);
-		    } else if (childView.isNotRendered()) {
-			    childView.render.call(childView);
-			    childView.deferred.done(function () {
-				    childView.display(true);
-			    });
-		    }
-	    }
 
     });
 

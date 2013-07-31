@@ -11,6 +11,7 @@ define([
     "models",
     "views",
     "utils",
+	"packages",
     
     "profile/models/basics",
     "profile/models/addmedia",
@@ -60,6 +61,8 @@ define([
         ProfileImageListView = require("profile/views/image-list"),
         ProfileCommentOfListView = require("profile/views/commentof-list"),
         ProfileCommentOnListView = require("profile/views/commenton-list"),
+
+	    MediaImageModel = require("media/models/image");
         
         LayoutView = views.LayoutView,
         $ = facade.$,
@@ -93,8 +96,6 @@ define([
             {
 	            self.init();
             }
-
-
             return self;
         },
 
@@ -333,65 +334,32 @@ define([
             this.layout.render();
         },
 
-		    /*	    refreshImageData: function(sports_id)
-	    {
 
-
-		    $.when(this.images.request).done(function(x) {
-			    console.log("Image Fetch Finished ",x);
-			    Channel('image-refetch-finished').publish();
-		    });
-
-	    },
-	           */
 	    updateImages: function(data)
 	    {
 		    console.log("update Images Called",data);
-		    //this.images.fetch();
-/*
-		    var MediaImageModel = require('packages/media/models/image');
+
+		    console.log(this.imageListView.collection);
+
+		    //create new image model to hold newly uploaded image
 		    var newImageModel = new MediaImageModel();
+
+		    //set the model to use the data from the new image
 		    newImageModel.processItemFromPayload(data);
 
+		    console.log(this.imageListView.collection);
+
+		    //use the view's standard image type to pick
+		    //which image to display in the rendered view
+		    this.imageListView.filterWithImageType();
+
+		    console.log(this.imageListView.collection);
+
+		    //add the model to the view's collection
 		    this.imageListView.collection.add(newImageModel);
-*/
 
-		    //this.refreshImageData(data.payload.media.sport.sport_id);
+		    console.log(this.imageListView.collection);
 
-		    /*
-		    function callback() {
-
-			    console.log(self.imageListView);
-			    console.log(self.scheme);
-
-			    if ((self.imageListView != undefined) && (self.imageListView != null)) {
-				    //	    $(this.imageListView.destination).html('');
-				    var newScheme = [];
-				    _.each(self.scheme, function (currentview, key) {
-					    console.log("VIEW: ", currentview);
-
-					    if (currentview === self.imageListView) {
-						    console.log("This one (" + key + ") is the image layout.");
-						    self.imageListView = new ProfileImageListView({
-							    collection: self.images,
-							    destination: "#image-wrap"
-						    });
-						    newScheme.push(self.imageListView);
-					    }
-					    else {
-						    newScheme.push(currentview);
-					    }
-				    }, self);
-
-				    self.scheme = newScheme;
-				    console.log(self.scheme);
-				    self.layout.render();
-				    //	    var position = $.inArray(this.imageListView, this.scheme);
-			    }
-
-		    }
-		    Channel('image-refetch-finished').subscribe(callback);
-		    */
 	    },
         
         setupCommentOfListView: function() {
