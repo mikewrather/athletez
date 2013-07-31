@@ -109,7 +109,7 @@ class Model_User_Resume_Data_Profile extends ORM
 	 * @param string $format is either res or something else.
 	 * @return array|object depending on format
 	 */
-	public function getRDPForUser(user_model $user,$format='res')
+	public function getRDPForUser($user,$format='res')
 	{
 		//get positions for user
 		$pos_arr = $user->getPositions();

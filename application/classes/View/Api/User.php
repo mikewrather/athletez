@@ -259,7 +259,11 @@
 		}
 
 		public function get_contact(){
-			$retArr = $this->obj->find()->getBasics();
+			$retArr = $this->obj->find();
+			if (!$retArr->loaded()){
+				return null;
+			}
+			$retArr = $retArr->getBasics();
 			return $retArr;
 		}
 
@@ -749,11 +753,12 @@
 			$retArr = null;
 
 			// Scaffolding Code For Array:
-			$objs = $this->obj->find_all();
+			$objs = $this->obj->execute();
 
 			foreach($objs as $obj)
 			{
-				$retArr[] = $obj->getBasics();
+				$user = ORM::factory('User_Base',$obj['users_id']);
+				$retArr[] = $user->getBasics();
 			}
 
 			return $retArr;
@@ -828,4 +833,25 @@
 
 			return $retArr;
 		}
+
+		public function post_contact()
+		{
+			$retArr = null;
+			$retArr = $this->obj->getBasics();
+
+			return $retArr;
+		}
+
+		public function put_contact()
+		{
+			$retArr = $this->obj->getBasics();
+
+			return $retArr;
+		}
+
+		public function delete_contact(){
+			return null;
+		}
+
+
 	}

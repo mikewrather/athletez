@@ -61,5 +61,6 @@ return array(
 	"uslgamelink_link_not_exist" => "As far as we can tell, that link already exist",
 	"users_id_exist" => "As far as we can tell, that ID doesn't refer to a user",
 	"valid_time" => "Invalid time, time should be like 00:00:00",
-	"user_score_not_exist" => "As far as we can tell, that user's score already exist"
+	"user_score_not_exist" => "As far as we can tell, that user's score already exist",
+	"user_has_contact" => "As far as we can tell, that user doesn't has contact info"
 );

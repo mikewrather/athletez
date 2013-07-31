@@ -27,7 +27,8 @@ class Model_User_Contact extends ORM
 
 			'users_id'=>array(
 				array('not_empty'),
-				array('users_id_exist')
+				array('users_id_exist'),
+				array('user_has_contact'),
 			),
 			// sports_id (int)
 			'locations_id'=>array(
@@ -69,6 +70,42 @@ class Model_User_Contact extends ORM
 			return $e;
 		}
 		return $this;
+	}
+
+	public function editContact($args = array()){
+		extract($args);
+		$contact_model = ORM::factory('User_Contact');
+		$contact_info = $contact_model->where('users_id', '=', $users_id)->find();
+		$id = $contact_info->id;
+		$new_contact_model = ORM::factory('User_Contact', $id);
+		$new_contact_model->id = $id;
+
+		if(isset($phone_cell))
+		{
+			$new_contact_model->phone_cell = $phone_cell;
+		}
+
+		if(isset($phone_work))
+		{
+			$new_contact_model->phone_work = $phone_work;
+		}
+
+		if(isset($locations_id))
+		{
+			$new_contact_model->locations_id = $locations_id;
+		}
+
+		if(isset($users_id))
+		{
+			$new_contact_model->users_id = $users_id;
+		}
+		try{
+			$new_contact_model->save();
+		}catch(ORM_Validation_Exception $e)
+		{
+			return $e;
+		}
+		return $new_contact_model;
 	}
 
 	public function getBasics()
