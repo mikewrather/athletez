@@ -70,11 +70,9 @@ define(['require', 'text!userresume/templates/academic.html', 'text!userresume/t
 		},
 		/*initialize gets called by default when constructor is initialized*/
 		initialize : function(options) {
-			//	debugger;
 			SectionView.prototype.initialize.call(this, options);
 			self = this;
 			self.setOptions(options);
-			//debugger;
 
 			this.init();
 
@@ -88,7 +86,6 @@ define(['require', 'text!userresume/templates/academic.html', 'text!userresume/t
 		// **Method** `setOptions` - called by BaseView's initialize method
 		setOptions : function(options) {
 			this.user_id = options.user_id;
-			//	this.el = options.destination;
 		},
 
 		/*initialize must be a wrapper so any function definitions and calles must be called in init*/
