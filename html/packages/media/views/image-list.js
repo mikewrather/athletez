@@ -33,8 +33,8 @@ function(facade,  views,   utils,   ImageItemView,            ImageBoardView,   
 
         initialize: function(options) {
 
-	        console.log(options);
-	        console.log(this);
+	        //console.log(options);
+	        //console.log(this);
 
             CollectionView.prototype.initialize.call(this, options);
             if (!this.collection) {
@@ -76,15 +76,9 @@ function(facade,  views,   utils,   ImageItemView,            ImageBoardView,   
 	    filterWithImageType: function(type) {
 		    var c = this.collection;
 			$.each(c.models, function(i, field){
-				_.each(field.get("payload").types, function(element, index){
-					if (index == type){
-						field.get("payload").image_path = element.url;
-					}
-				});
+				field.selectImageType(type);
 		    });
-
 		    return c;
-
 		},
 
         setupBoardView: function() {

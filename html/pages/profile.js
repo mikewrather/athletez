@@ -103,7 +103,6 @@ define([
         
         init: function()
         {
-	        debug.log("called profile.js init");
             this.setupLayout().render();
             this.createData();
             this.handleDeferreds();            
@@ -183,7 +182,6 @@ define([
         },
 
 	    handleDeferredsDynamic: function() {
-		    console.log("Called handleDeferredsDynamic");
 		    var controller = this;
 
 		    $.when(this.orgs.request).done(function() {
@@ -203,7 +201,7 @@ define([
 		    });
 
 		    $.when(this.images.request).done(function(x) {
-			    console.log("Images Ready (called in profile.js handleDeferredDynamic)",x);
+			    //console.log("Images Ready (called in profile.js handleDeferredDynamic)",x);
 			    controller.setupImageListView();
 		    });
 	    },
@@ -328,7 +326,7 @@ define([
                 destination: "#image-wrap"
             });
 
-	        console.log("Profile.js setupImageListView: ",this.imageListView);
+	        //console.log("Profile.js setupImageListView: ",this.imageListView);
 
             this.scheme.push(this.imageListView);
             this.layout.render();
@@ -337,29 +335,22 @@ define([
 
 	    updateImages: function(data)
 	    {
-		    console.log("update Images Called",data);
-
-		    console.log(this.imageListView.collection);
-
 		    //create new image model to hold newly uploaded image
 		    var newImageModel = new MediaImageModel();
 
 		    //set the model to use the data from the new image
 		    newImageModel.processItemFromPayload(data);
 
-		    console.log(this.imageListView.collection);
+		    //select the image list view's display type and
+		    //by setting the url to the correct one of its types
+		    newImageModel.selectImageType(this.imageListView.imagetype);
 
 		    //use the view's standard image type to pick
 		    //which image to display in the rendered view
 		    this.imageListView.filterWithImageType();
 
-		    console.log(this.imageListView.collection);
-
 		    //add the model to the view's collection
 		    this.imageListView.collection.add(newImageModel);
-
-		    console.log(this.imageListView.collection);
-
 	    },
         
         setupCommentOfListView: function() {
