@@ -10,6 +10,7 @@ define(["require", "text!userresume/templates/layout.html",
 	 'text!userresume/templates/basic_info_header.html',
 	  'text!userresume/templates/rdtree.html',
 	  'text!userresume/templates/academic.html',
+	  'text!userresume/templates/awards.html',
 	  
 	   "facade",
 	  
@@ -18,11 +19,13 @@ define(["require", "text!userresume/templates/layout.html",
 	     'userresume/models/resume',
 	      'userresume/models/rdtree',
 	       'userresume/models/gpa',
+	       'userresume/models/award',
 	      
 	    "userresume/views/basic_info",
 	     "userresume/views/sentresumeview", 
 	     "userresume/views/rdtree",
-	     "userresume/views/academic"], function(require, pageLayoutTemplate, sentResumeHtml, basicInfoHtml, rdTreeHtml,academicHtml) {
+	     "userresume/views/academic",
+	     "userresume/views/awards",], function(require, pageLayoutTemplate, sentResumeHtml, basicInfoHtml, rdTreeHtml,academicHtml,awardsHtml) {
 
 	var UserResumeController, facade = require("facade"), Controller = require("controller"), models = require("models"), views = require("views"), utils = require("utils"), $ = facade.$, _ = facade._, debug = utils.debug, Channel = utils.lib.Channel, LayoutView = views.LayoutView,
 
@@ -31,12 +34,15 @@ define(["require", "text!userresume/templates/layout.html",
 	ResumeModel = require('userresume/models/resume'),
 	RDTreeModel = require("userresume/models/resume"),
 	GpaModel = require("userresume/models/gpa"),
+	AwardModel = require("userresume/models/award"),
 	/*COLLECTIONS SECTIONS*/
 
 	/*VIEW SECTION*/
 	BasicInfoView = require("userresume/views/basic_info"), SentResumeView = require("userresume/views/sentresumeview"),
 	RDTreeView = require("userresume/views/rdtree"),
 	AcademicView = require("userresume/views/academic"),
+	AwardsView = require("userresume/views/awards"),
+	
 	UserResumeController = Controller.extend({
 		/*CSS SECTION*/
 		cssArr : ["/pages/userresume/userresume.css"],
@@ -105,6 +111,7 @@ define(["require", "text!userresume/templates/layout.html",
 				self.setUpSentResumeView();
 				self.setUpRdTreeView();
 				self.setUpAcademicView();
+				self.setUpAwardsView();
 			});
 
 		},
@@ -168,6 +175,21 @@ define(["require", "text!userresume/templates/layout.html",
 			});
 
 			this.scheme.push(this.academicView);
+			this.layout.render();
+		},
+		
+		/* Set  Up  User  Awards  View  View */
+		setUpAwardsView : function() {
+			var self = this;
+			this.awardsView = new AwardsView({
+				model : new AwardModel(),
+				template : awardsHtml,
+				name : "resume-awards",
+				destination : "#section-awards",
+				user_id : self.id,
+			});
+
+			this.scheme.push(this.awardsView);
 			this.layout.render();
 		}
 	});

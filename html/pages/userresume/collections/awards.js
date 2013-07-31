@@ -12,28 +12,43 @@ define(['facade', 'collections', 'user/collections/awards', 'utils'], function(f
 	List = UserCollection.extend({
 		url : function() {
 			if (testpath)
-				return testpath + '/api/user/gpa/' + this.user_id;
+				return testpath + '/api/user/awards/' + this.user_id;
 
 			if (this.user_id == undefined) {
 				//Incase to Hit Api without any parameter, Add Url here
 			}
-			return 'api/user/gpa/' + this.user_id + '?id1=' + this.user_id;
+			return 'api/user/awards/' + this.user_id + '?id1=' + this.user_id;
 		},
 
 		parseAsRequired : function() {
 			var self = this;
 
 			var models = self.toJSON();
+			console.log("sports models", models);
 			var d = [];
 
 			if (models.length) {
 				$.each(models, function(index, load) {
 					if (load != null && load.payload != null) {
 						var payload = load.payload;
-						d.push({
-							gpa : payload.gpa,
-							year : payload.year
-						});
+						var temp = {
+							
+							sports_id : payload.sports_id,
+							sports_name : payload.name,
+							awards : []
+						}
+						
+						$.each(payload.awards,function(i,l){
+							temp.awards.push({
+								id : l.id,
+								name : l.name,
+								description : l.description,
+								year : l.year
+							});
+							
+						})
+						
+						d.push(temp);
 					}
 				});
 			}
