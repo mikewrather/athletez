@@ -29,9 +29,7 @@ define(["facade", "models/base"], function (facade, BaseModel) {
 
 	    processItemFromPayload: function(response,key)
 	    {
-		    var item = this;
-		    var payload = response.payload;
-
+		    var item = this, payload = response.payload;
 		    item.id = Math.ceil(Math.random() * 100000);
 
 		    // this gives a payload, desc, and exec_data to every item in collection based on the main response
@@ -45,8 +43,18 @@ define(["facade", "models/base"], function (facade, BaseModel) {
 		    }
 		    item.set('desc', response.desc);
 		    item.set('exec_data', response.exec_data);
+		    return this;
+	    },
 
-		    console.log("MediaImageModel: ",this);
+	    selectImageType: function(type)
+	    {
+		    _.each(this.get("payload").types, function(element, index)
+		    {
+			    if (index == type) {
+				    this.get("payload").image_path = element.url;
+			    }
+		    },this);
+		    return this;
 	    }
         
         
