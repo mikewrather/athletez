@@ -817,9 +817,7 @@
 		 */
 		public function delete_testscore()
 		{
-			$retArr = $this->obj->getBasics();
-
-			return $retArr;
+			return null;
 		}
 
 		/**
@@ -829,9 +827,7 @@
 		 */
 		public function delete_gpa()
 		{
-			$retArr = $this->obj->getBasics();
-
-			return $retArr;
+			return null;
 		}
 
 		public function post_contact()
