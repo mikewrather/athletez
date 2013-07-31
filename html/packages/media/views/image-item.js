@@ -29,7 +29,7 @@ function (
         
         // Event handlers...
         events: {
-            "click": "changeImage"
+        //    "click": "changeImage"
         },
         
         initialize: function (options) {
@@ -43,10 +43,7 @@ function (
             return this;
         },
         
-        changeImage: function() {
 
-            Channel('changeimage' + this.model.collection.id).publish(this.model);
-        }        
         
       });
 

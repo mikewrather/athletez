@@ -157,13 +157,17 @@ define([
 			    success: function(data){
 					$("#preview_"+id).fadeOut("slow");
 					$("#preview_"+id+"rot").fadeOut("slow");
+
+				    Channel("image-upload-success").publish(data);
+
 					debug.log(data);
 					$("imageup").attr("disabled", "disabled");
-					thiss.count=thiss.count+1;
+					thiss.count++;
 					if(thiss.count == length)
 					{
 						msg={"msg":" File Uploaded Succesfully","color":"alert-success"};
 						Channel("imageup-msg").publish(msg);
+
 						$("#imageup").removeAttr("disabled");
 						$("#image_file").removeAttr("disabled");
 						$(".closepreview").removeAttr("disabled");	

@@ -5,13 +5,13 @@
 
 define( ["facade", "user/models/basics"], function (facade, UserBasicsModel) {
 
-    var ProfileBasicsModel,
-        _ = facade._;
+	var ProfileBasicsModel,
+		_ = facade._;
 
-    ProfileBasicsModel = UserBasicsModel.extend({
-        
-    });
+	ProfileBasicsModel = UserBasicsModel.extend({
 
-    return ProfileBasicsModel;
+	});
+
+	return ProfileBasicsModel;
 });
 
