@@ -2032,9 +2032,9 @@
 			$this->payloadDesc = "Update a given test score for a user.";
 			$arguments = array();
 
-			if((int)trim($this->put('test_score_id')) > 0)
+			if((int)trim($this->put('academics_tests_topics_id')) > 0)
 			{
-				$arguments["academics_tests_topics_id"] = (int)trim($this->put('test_score_id'));
+				$arguments["academics_tests_topics_id"] = (int)trim($this->put('academics_tests_topics_id'));
 			}
 
 			if(trim($this->put('score')) != "")

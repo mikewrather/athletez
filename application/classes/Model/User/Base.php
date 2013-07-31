@@ -152,20 +152,33 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
     
     public function deleteSport($args)
     {
-        $sports = DB::delete('user_sport_link')
-			->where('users_id','=', $this->id)
+		$usl_model = ORM::factory('User_Sportlink');
+		$result = $usl_model->where('users_id','=', $this->id)
 			->and_where('sports_id', '=', $args['sports_id'])
-			->execute();
-        return $sports;
+			->find();
+		if (!$result->id){
+			return false;
+		}else{
+			$usl_model = ORM::factory('User_Sportlink', $result->id);
+			$usl_model->delete_with_deps();
+        	return true;
+		}
     }
     
     public function deleteRole($args)
     {
-        $roles = DB::delete('roles_users')
-			->where('users_id','=', $this->id)
+		$user_role_model = ORM::factory('Rolesusers');
+		$result = $user_role_model->where('users_id','=', $this->id)
 			->and_where('role_id', '=', $args['role_id'])
-			->execute();
-        return $roles;
+			->find();
+
+		if (!$result->id){
+			return false;
+		}else{
+			$roleuser_model = ORM::factory('Rolesusers', $result->id);
+			$roleuser_model->delete_with_deps();
+			return true;
+		}
     }
     
     public function deleteIdentity($args)
@@ -1144,7 +1157,7 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 
 		$exclude_deleted_users_array['User_Base'] = 'users';
 		$user_model = ORM::_sql_exclude_deleted($exclude_deleted_users_array, $user_model);
-
+		print_r($user_model->execute());
 		return $user_model;
 	}
 
