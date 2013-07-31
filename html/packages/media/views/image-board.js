@@ -33,7 +33,9 @@ function(require, imageBoardTemplate) {
             }            
         },
 
-        render: function () {
+        render: function ()
+        {
+
             BaseView.prototype.render.call(this);            
         }
         

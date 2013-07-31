@@ -74,6 +74,7 @@ define([
 
         initialize: function (options)
         {
+
 	        var self = this;
 	        debug.log("start initialize");
             Channel('load:css').publish(cssArr);
@@ -96,6 +97,8 @@ define([
 
             return self;
         },
+
+
         
         init: function()
         {
@@ -174,10 +177,36 @@ define([
 
             
             $.when(this.commentson.request).done(function() {
-	            console.log("i run how many times");
                 controller.setupCommentOnListView();
             });
         },
+
+	    handleDeferredsDynamic: function() {
+		    console.log("Called handleDeferredsDynamic");
+		    var controller = this;
+
+		    $.when(this.orgs.request).done(function() {
+			    controller.setupOrgListView();
+		    });
+
+		    $.when(this.relateds.request).done(function() {
+			    controller.setupRelatedListView();
+		    });
+
+		    $.when(this.fitnessbasics.request).done(function() {
+			    controller.setupFitnessBasicListView();
+		    });
+
+		    $.when(this.videos.request).done(function() {
+			    controller.setupVideoListView();
+		    });
+
+		    $.when(this.images.request).done(function(x) {
+			    console.log("Images Ready (called in profile.js handleDeferredDynamic)",x);
+			    controller.setupImageListView();
+		    });
+	    },
+
         refreshPage: function() {
             var position;
             
@@ -211,32 +240,7 @@ define([
                 if ( ~position ) this.scheme.splice(position, 1);
             }
 		},
-        
-        handleDeferredsDynamic: function() {
-            var controller = this;
-            
-            $.when(this.orgs.request).done(function() {
-                controller.setupOrgListView();
-            });
-            
-            $.when(this.relateds.request).done(function() {
-                controller.setupRelatedListView();
-            });
-            
-            $.when(this.fitnessbasics.request).done(function() {
-                controller.setupFitnessBasicListView();
-            });
-            
-            $.when(this.videos.request).done(function() {
-                controller.setupVideoListView();
-            });
 
-            $.when(this.images.request).done(function(x) {
-	            console.log("Images Ready (called in profile.js handleDeferredDynamic)",x);
-                controller.setupImageListView();
-            });
-		},
-        
         setupHeaderView: function() {
             var headerView;
             
@@ -315,8 +319,8 @@ define([
         },
         
         setupImageListView: function() {
-            var imageListView;
 
+	        Channel('image-upload-success').subscribe(this.updateImages);
 
             this.imageListView = new ProfileImageListView({
                 collection: this.images,
@@ -325,12 +329,70 @@ define([
 
 	        console.log("Profile.js setupImageListView: ",this.imageListView);
 
-
-	        //needs to be updated here.
-            
             this.scheme.push(this.imageListView);
             this.layout.render();
         },
+
+		    /*	    refreshImageData: function(sports_id)
+	    {
+
+
+		    $.when(this.images.request).done(function(x) {
+			    console.log("Image Fetch Finished ",x);
+			    Channel('image-refetch-finished').publish();
+		    });
+
+	    },
+	           */
+	    updateImages: function(data)
+	    {
+		    console.log("update Images Called",data);
+		    //this.images.fetch();
+/*
+		    var MediaImageModel = require('packages/media/models/image');
+		    var newImageModel = new MediaImageModel();
+		    newImageModel.processItemFromPayload(data);
+
+		    this.imageListView.collection.add(newImageModel);
+*/
+
+		    //this.refreshImageData(data.payload.media.sport.sport_id);
+
+		    /*
+		    function callback() {
+
+			    console.log(self.imageListView);
+			    console.log(self.scheme);
+
+			    if ((self.imageListView != undefined) && (self.imageListView != null)) {
+				    //	    $(this.imageListView.destination).html('');
+				    var newScheme = [];
+				    _.each(self.scheme, function (currentview, key) {
+					    console.log("VIEW: ", currentview);
+
+					    if (currentview === self.imageListView) {
+						    console.log("This one (" + key + ") is the image layout.");
+						    self.imageListView = new ProfileImageListView({
+							    collection: self.images,
+							    destination: "#image-wrap"
+						    });
+						    newScheme.push(self.imageListView);
+					    }
+					    else {
+						    newScheme.push(currentview);
+					    }
+				    }, self);
+
+				    self.scheme = newScheme;
+				    console.log(self.scheme);
+				    self.layout.render();
+				    //	    var position = $.inArray(this.imageListView, this.scheme);
+			    }
+
+		    }
+		    Channel('image-refetch-finished').subscribe(callback);
+		    */
+	    },
         
         setupCommentOfListView: function() {
             var commentOfListView;

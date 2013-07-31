@@ -45,7 +45,7 @@ function(require, previewBasicTemplate) {
 			val=event.currentTarget.value;
 			this.degree=$("#"+val+"rotang").val();
 			this.degree=parseInt(this.degree)+90;
-			if(this.degree>360)  this.degree=0;
+			if(this.degree>=360)  this.degree=0;
 			$("#"+id).css({
 			                        '-webkit-transform': 'rotate(' + this.degree + 'deg)',
 			                        '-moz-transform': 'rotate(' + this.degree + 'deg)',
