@@ -118,12 +118,11 @@ define(['require', 'text!userresume/templates/academic.html', 'text!userresume/t
 					return;
 
 				self.gpa = Collection.parseAsRequired();
-				console.log("self.gpa", self.gpa);
 			//	if (self.gpa.length > 0) {
 					var markup = Mustache.to_html(templateGpa, {
 						data : self.gpa
 					});
-					// $(self.el).find(self.controls.ContainerGpa).html(markup);
+					 $(self.el).find(self.controls.ContainerGpa).html(markup);
 				// } else {
 					// self.$el(self.controls.ContainerGpa).html(self.messages.dataNotExistGPA);
 // 
@@ -228,7 +227,6 @@ define(['require', 'text!userresume/templates/academic.html', 'text!userresume/t
 					return;
 
 				self.standardTests = Collection.parseAsRequired();
-				console.log("standard test", self.standardTests);
 				var testIds = "";
 				$.each(self.standardTests, function(index, test) {
 					testIds += test.id + ",";
@@ -267,7 +265,6 @@ define(['require', 'text!userresume/templates/academic.html', 'text!userresume/t
 
 				self.standardTestsListAll = Collection.parseAsRequired();
 
-				console.log("standard test list all", self.standardTestsListAll);
 				if (self.standardTestsListAll.length > 0) {
 					var markup = Mustache.to_html(templateTestsListAll, {
 						Test_Type : "Standardized",
@@ -320,7 +317,6 @@ define(['require', 'text!userresume/templates/academic.html', 'text!userresume/t
 					return;
 
 				self.apTests = Collection.parseAsRequired();
-				console.log("ap test", self.apTests);
 				var testIds = "";
 				$.each(self.apTests, function(index, test) {
 					testIds += test.id + ",";
@@ -355,10 +351,8 @@ define(['require', 'text!userresume/templates/academic.html', 'text!userresume/t
 			$.when(Collection.request).done(function() {
 				if (Collection.isError())
 					return;
-
 				self.apTestsListAll = Collection.parseAsRequired();
 
-				console.log("ap test list all", self.apTestsListAll);
 				if (self.apTestsListAll.length > 0) {
 					var markup = Mustache.to_html(templateTestsListAll, {
 						Test_Type : "AP",
@@ -366,7 +360,7 @@ define(['require', 'text!userresume/templates/academic.html', 'text!userresume/t
 					});
 					$(self.el).find(self.controls.ContainerAP).find(self.controls.SectionModalTests).html(markup);
 				} else {
-					self.$el(self.controls.ContainerAP).find(self.controls.SectionModalTests).html(self.messages.dataNotExistTests);
+					$(self.el).find(self.controls.ContainerAP).find(self.controls.SectionModalTests).html(self.messages.dataNotExistTests);
 				}
 
 			});

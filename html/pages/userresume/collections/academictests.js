@@ -25,7 +25,6 @@ define(['facade', 'collections', 'user/collections/tests', 'utils'], function(fa
 
 			var models = self.toJSON();
 			var d = [];
-
 			if (models.length) {
 				$.each(models, function(index, load) {
 					if (load != null && load.payload != null) {
@@ -36,7 +35,8 @@ define(['facade', 'collections', 'user/collections/tests', 'utils'], function(fa
 							type : payload.test_type,
 							topics : []
 						};
-						
+					
+					if(payload.topics != null)	
 						$.each(payload.topics,function(i,l){
 							temp.topics.push({
 								name : l.name,
