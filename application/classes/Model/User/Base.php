@@ -1088,6 +1088,7 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 			$user_model->join('org_sport_link')->on('org_sport_link.id', '=', 'teams.org_sport_link_id');
 			$user_model->where('org_sport_link.sports_id', '=', $sports_id);
 			$classes_arr['Sportorg_Orgsportlink'] = 'org_sport_link';
+
 		}
 
 		if (isset($states_id)){
@@ -1113,6 +1114,8 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 		if (isset($cities_id)){
 			$user_model->where('users.cities_id', '=', $cities_id);
 		}
+
+		$user_model = sizeof($classes_arr) > 0 ? ORM::_sql_exclude_deleted($classes_arr,$user_model) : $user_model;
 
 		$enttype_id = Model_Site_Enttype::getMyEntTypeID($this);
 
@@ -1163,7 +1166,7 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 
 		$exclude_deleted_users_array['User_Base'] = 'users';
 		$user_model = ORM::_sql_exclude_deleted($exclude_deleted_users_array, $user_model);
-		print_r($user_model->execute());
+
 		return $user_model;
 	}
 
