@@ -22,8 +22,6 @@ return array(
 	"stat_contexts_id_exist" => "Statistic contexts id doesn't exist",
 	"stat_id_exist" => "Statistic id doesn't exist",
 	"resume_data_groups_id_exist" => "Resume datagroups id doesn't exist",
-	"fitness_datavalue_exist" => "Fitness data value doesn't exist",
-	"fitness_data_values_id_exist" => "Fitness data value id doesn't exist",
 	"users_id_exist" => "That user doesn't seem to exist.",
 	"location_type_exist" => "Location type should be 'High School', 'Park' or 'Other'",
 	"state_entity_exist" => "That state is already in the system",
