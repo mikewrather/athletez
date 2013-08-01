@@ -2330,9 +2330,15 @@
 			}
 
 			$arguments["users_id"] = $this->mainModel->id;
+			if (!$this->mainModel->delete_position($arguments)){
+				$error_array = array(
+					"error" => "User position doesn't exist",
+					"desc" => "User position doesn't exist."
+				);
 
-			$result = $this->mainModel->delete_position($arguments);
-			return $result;
+				$this->modelNotSetError($error_array);
+				return false;
+			}
 
 		}
 		
@@ -2409,47 +2415,41 @@
 			if(!$this->user->can('Assumeownership', array('owner' => $this->mainModel->id))){
 				$this->throw_permission_error(Constant::NOT_OWNER);
 			}
-
-			$arguments = array();
-
-			if( trim($this->delete('identity_id')) != "")
-			{
-				$arguments["identity_id"] = trim($this->delete('identity_id'));
-				if (!Valid::identity_exist($arguments["identity_id"])){
+//			$arguments = array();
+//
+//			if( trim($this->delete('identity_id')) != "")
+//			{
+//				$arguments["identity_id"] = trim($this->delete('identity_id'));
+//				if (!Valid::identity_exist($arguments["identity_id"])){
 //					$error_array = array(
 //						"error" => "Identity doesn't exist",
-//						"param_name" => "identity_id",
-//						"param_desc" => "This is the ID of the identity from which to disassociate the user."
+//						"desc" => "This is the ID of the identity from which to disassociate the user."
 //					);
-
-					$error_array = array(
-						"error" => "Identity doesn't exist",
-						"desc" => "This is the ID of the identity from which to disassociate the user."
-					);
-					$this->modelNotSetError($error_array);
-					return false;
-				}
-			}
-
-			else // THIS WAS A REQUIRED PARAMETER
-			{
-				// Create Array for Error Data
+//					$this->modelNotSetError($error_array);
+//					return false;
+//				}
+//			}
+//
+//			else // THIS WAS A REQUIRED PARAMETER
+//			{
 //				$error_array = array(
 //					"error" => "Required Parameter Missing",
-//					"param_name" => "identity_id",
-//					"param_desc" => "This is the ID of the identity from which to disassociate the user."
+//					"desc" => "This is the ID of the identity from which to disassociate the user."
 //				);
+//				$this->modelNotSetError($error_array);
+//
+//				return false;
+//			}
 
+			if (!$this->mainModel->deleteIdentity()){
 				$error_array = array(
-					"error" => "Required Parameter Missing",
-					"desc" => "This is the ID of the identity from which to disassociate the user."
+					"error" => "User identity doesn't exist",
+					"desc" => "User identity doesn't exist."
 				);
-				$this->modelNotSetError($error_array);
 
+				$this->modelNotSetError($error_array);
 				return false;
 			}
-
-            return $this->mainModel->deleteIdentity($arguments);
 		}
 
 		/**
@@ -2490,14 +2490,11 @@
 			{
 				// Create Array for Error Data
 				$error_array = array(
-					"error" => "Required Parameter Missing",
-					"param_name" => "year",
-					"param_desc" => "A 4 digit integer for the year."
+					"error" => "Required Parameter Missing, Only 'Junior', 'Senior', 'Freshman', 'Sophomore' are acceptable",
+					"param_name" => "year"
 				);
-
 				// Set whether it is a fatal error
 				$is_fatal = true;
-
 				// Call method to throw an error
 				$this->addError($error_array,$is_fatal);
 				return false;
@@ -2505,8 +2502,16 @@
 			}
 
 			$arguments['users_id'] = $this->mainModel->id;
+			if (!$this->mainModel->delete_gpa($arguments)){
+				$error_array = array(
+					"error" => "User gpa doesn't exist",
+					"desc" => "User gpa doesn't exist."
+				);
 
-			return $this->mainModel->delete_gpa($arguments);
+				$this->modelNotSetError($error_array);
+				return false;
+			}
+
 		}
 
 		/**
@@ -2533,13 +2538,22 @@
 				$this->throw_permission_error(Constant::NOT_OWNER);
 			}
 
-			if((int)trim($this->delete('test_score_id')) > 0)
+			if((int)trim($this->delete('academics_tests_topics_id')) > 0)
 			{
-				$arguments["test_score_id"] = (int)trim($this->delete('test_score_id'));
+				$arguments["academics_tests_topics_id"] = (int)trim($this->delete('academics_tests_topics_id'));
 			}
 
-			$arguments['users_id'] = $this->mainModel->id;
-			$this->mainModel->delete_tests($arguments);
+			if (!$this->mainModel->delete_tests_score($arguments)){
+				$error_array = array(
+					"error" => "User test score doesn't exist",
+					"desc" => "User test score doesn't exist."
+				);
+
+				$this->modelNotSetError($error_array);
+				return false;
+			}
+
+			//$arguments['users_id'] = $this->mainModel->id;
 		}
 
 		public function action_delete_contact()
