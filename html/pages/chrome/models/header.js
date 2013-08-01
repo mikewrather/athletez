@@ -3,7 +3,7 @@
 // Requires define
 // Return {BaseModel} model constructor object
 
-define( ["models/base"], function (BaseModel) {
+define( ["models/base",'utils/storage'], function (BaseModel,Store) {
 
     var HeaderModel;
 
@@ -38,7 +38,11 @@ define( ["models/base"], function (BaseModel) {
             if (testpath)
                 return testpath + '/authcheck';
             return '/authcheck';
-        }
+        },
+	    saveCookie: function () {
+		    var appStates = new Store("user","localStorage");
+		    appStates.create(this);
+		},
 
     });
 

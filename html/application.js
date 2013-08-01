@@ -103,13 +103,12 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
 				var pCont = new ProfileController({
 	                "userId": userid==undefined ? headerModelId : userid
 	            });
-				self.imageUpListeners();
+
             }
             Channel('app-inited').subscribe(initProfile);
 
         },
 		imageUpListeners: function () {
-        	this.loadStyles();
             function showImage(url,attr) {
                 var imageController = new ImageController({"route": "","url":url,"attr":attr});
             }
@@ -217,6 +216,7 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
 
         addSubscribers: function () {
             Channel('load:css').subscribe(this.loadCss);
+	        this.imageUpListeners();
         },
 
         removeSubscribers: function () {

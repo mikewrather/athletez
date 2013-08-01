@@ -57,7 +57,7 @@ function (
                 var authorized = model.get('authorized');
                 if (authorized) {
                     var id = model.get('id');
-	                self.saveCookie();
+	                self.model.saveCookie();
                     Channel('app-inited').publish(id);
                 }
             };
@@ -66,10 +66,7 @@ function (
             return this;
         },
 
-	      saveCookie: function () {
-		      var appStates = new Store("user","cookie");
-			  appStates.create(this.model);
-	      },
+
         
         signupFacebook: function(event) {
         	

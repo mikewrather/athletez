@@ -3,49 +3,42 @@
 // Requires `define`
 // Return {ImageItemView} object as constructor
 
-define([ 
-        'vendor', 
-        'views',
-        'utils', 
-        'text!media/templates/image-item.html'
-        ], 
-function (
-        vendor,
-        views,
-        utils,
-        imageItemTemplate
-        ) {
+define([
+	'vendor',
+	'views',
+	'utils',
+	'text!media/templates/image-item.html'
+],
+	function (vendor, views, utils, imageItemTemplate) {
 
-    var ImageItemView
-      , $ = vendor.$
-      , BaseView = views.BaseView
-      , Mustache = vendor.Mustache;
+		var ImageItemView
+			, $ = vendor.$
+			, BaseView = views.BaseView
+			, Mustache = vendor.Mustache;
 
-      ImageItemView = BaseView.extend({
+		ImageItemView = BaseView.extend({
 
-        tagName: "li",
+			tagName: "li",
 
-        className: "image",
-        
-        // Event handlers...
-        events: {
-        //    "click": "changeImage"
-        },
-        
-        initialize: function (options) {
-            this.template = imageItemTemplate;
-        },
+			className: "image",
 
-        render: function () {
-	        console.log("Called Image Render",this.model);
-            var markup = Mustache.to_html(this.template, this.model.toJSON());
-            this.$el.html(markup);
-            return this;
-        },
-        
+			// Event handlers...
+			events: {
+				//    "click": "changeImage"
+			},
 
-        
-      });
+			initialize: function (options) {
+				this.template = imageItemTemplate;
+			},
 
-    return ImageItemView;
-});
+			render: function () {
+				//console.log("Called Image Render",this.model);
+				var markup = Mustache.to_html(this.template, this.model.toJSON());
+				this.$el.html(markup);
+				return this;
+			},
+
+		});
+
+		return ImageItemView;
+	});

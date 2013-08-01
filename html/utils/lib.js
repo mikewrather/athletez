@@ -83,7 +83,7 @@ define(["facade", "utils/debug"], function(facade, debug) {
         var callbacks, method, topic = id && channels[id], msg,
             allowedFlags = ['once', 'memory', 'unique', 'stopOnFalse'], flagsOk;
 
-	    debug.log(channels);
+	    //debug.log(channels);
 
         if (!topic) {
             if (flags && typeof flags === 'string') {
@@ -118,7 +118,7 @@ define(["facade", "utils/debug"], function(facade, debug) {
             }
         }
 
-	    debug.log(topic);
+	    //debug.log(topic);
 
         return topic;
     };
