@@ -181,10 +181,11 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 		}
     }
     
-    public function deleteIdentity()
+    public function deleteIdentity($args = array())
     {
 		$identity_model = ORM::factory('User_Identity');
 		$result = $identity_model->where('user_id','=', $this->id)
+			->where('identity', '=', $args['identity'])
 			->find();
 
 		if (!$result->id){
@@ -1150,7 +1151,6 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 
 			$user_model->select(array($followers,'num_followers'));
 			$user_model->order_by('num_followers', 'desc');
-
 		}
 		else if ($orderby == 'regist_time')
 		{
@@ -1166,7 +1166,6 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 
 		$exclude_deleted_users_array['User_Base'] = 'users';
 		$user_model = ORM::_sql_exclude_deleted($exclude_deleted_users_array, $user_model);
-
 		return $user_model;
 	}
 
@@ -1599,6 +1598,17 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 			$testscore_model->delete_with_deps();
 			return true;
 		}
+	}
+
+	public function delete_contact(){
+		$contact_model = ORM::factory('User_Contact');
+		$result = $contact_model->where('users_id', '=', $this->id)->find();
+		if ($result->id != ""){
+			$new_contact_model = ORM::factory('User_Contact', $result->id);
+			$new_contact_model->delete_with_deps();
+			return true;
+		}
+		return false;
 	}
 
 	public function delete_position($args)

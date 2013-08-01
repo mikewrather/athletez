@@ -2415,33 +2415,33 @@
 			if(!$this->user->can('Assumeownership', array('owner' => $this->mainModel->id))){
 				$this->throw_permission_error(Constant::NOT_OWNER);
 			}
-//			$arguments = array();
-//
-//			if( trim($this->delete('identity_id')) != "")
-//			{
-//				$arguments["identity_id"] = trim($this->delete('identity_id'));
-//				if (!Valid::identity_exist($arguments["identity_id"])){
-//					$error_array = array(
-//						"error" => "Identity doesn't exist",
-//						"desc" => "This is the ID of the identity from which to disassociate the user."
-//					);
-//					$this->modelNotSetError($error_array);
-//					return false;
-//				}
-//			}
-//
-//			else // THIS WAS A REQUIRED PARAMETER
-//			{
-//				$error_array = array(
-//					"error" => "Required Parameter Missing",
-//					"desc" => "This is the ID of the identity from which to disassociate the user."
-//				);
-//				$this->modelNotSetError($error_array);
-//
-//				return false;
-//			}
+			$arguments = array();
 
-			if (!$this->mainModel->deleteIdentity()){
+			if( trim($this->delete('identity_id')) != "")
+			{
+				$arguments["identity_id"] = trim($this->delete('identity_id'));
+				if (!Valid::identity_exist($arguments["identity_id"])){
+					$error_array = array(
+						"error" => "Identity doesn't exist",
+						"desc" => "This is the ID of the identity from which to disassociate the user."
+					);
+					$this->modelNotSetError($error_array);
+					return false;
+				}
+			}
+
+			else // THIS WAS A REQUIRED PARAMETER
+			{
+				$error_array = array(
+					"error" => "Required Parameter Missing",
+					"desc" => "This is the ID of the identity from which to disassociate the user."
+				);
+				$this->modelNotSetError($error_array);
+
+				return false;
+			}
+
+			if (!$this->mainModel->deleteIdentity($arguments)){
 				$error_array = array(
 					"error" => "User identity doesn't exist",
 					"desc" => "User identity doesn't exist."
@@ -2565,10 +2565,15 @@
 				return false;
 			}
 
-			$contact_model = ORM::factory('User_Contact');
-			$result = $contact_model->where('users_id', '=', $this->mainModel->id)->find();
-			$new_contact_model = ORM::factory('User_Contact', $result->id);
-			$new_contact_model->delete_with_deps();
+			if (!$this->mainModel->delete_contact()){
+				$error_array = array(
+					"error" => "User contact info doesn't exist",
+					"desc" => "User contact info doesn't exist."
+				);
+
+				$this->modelNotSetError($error_array);
+				return false;
+			}
 		}
 		
 	}
