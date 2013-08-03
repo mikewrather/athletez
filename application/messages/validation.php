@@ -14,7 +14,6 @@
 		'not_equals' => $e->get('not_null'),
 		'unique_email' => $e->get('unique_email'),
 		'subject_id_exist' => $e->get('subject_id_exist'),
-		'resume_data_profiles_id_exist' => $e->get('resume_data_profiles_id_exist'),
 		'resume_data_id_exist' => $e->get('resume_data_id_exist'),
 		'stat_contexts_id_exist' => $e->get('stat_contexts_id_exist'),
 		'resume_data_groups_id_exist' => $e->get('resume_data_groups_id_exist'),
@@ -49,11 +48,12 @@
 		'languages_id_exist' => $e->get('languages_id_exist'),
 		'coaches_id_exist' => $e->get('coaches_id_exist'),
 		'academics_tests_topics_id_exist' => $e->get('academics_tests_topics_id_exist'),
-		'users_gpa_exist' => $e->get('users_gpa_exist'),
 		'user_sport_link_exist' => $e->get('user_sport_link_exist'),
 		'uslgamelink_link_not_exist' => $e->get('uslgamelink_link_not_exist'),
 		'users_id_exist' => $e->get('users_id_exist'),
 		'valid_time' => $e->get('valid_time'),
 		'user_score_not_exist' => $e->get('user_score_not_exist'),
-		'user_has_contact' => $e->get('user_has_contact')
+		'user_has_contact' => $e->get('user_has_contact'),
+		'stat_tab_id_exist' => $e->get('stat_tab_id_exist'),
+		'checkCountyExists' => $e->get('checkCountyExists')
 	);

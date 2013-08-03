@@ -130,4 +130,8 @@ class Model_User_Resume_Sent extends ORM
 		$resumesent = ORM::_sql_exclude_deleted($classes_arr, $resumesent);
 		return $resumesent;
 	}
+
+	public function name(){
+		return "";
+	}
 }

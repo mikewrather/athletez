@@ -1011,9 +1011,8 @@
 			);
 
 			$result = $this->mainModel->addTeam($args);
-
 			//Check for success / error
-			if(is_object($result) && ($result) == 'ORM_Validation_Exception')
+			if(is_object($result) && get_class($result) == 'ORM_Validation_Exception')
 			{
 				//parse error and add to error array
 				$this->processValidationError($result,$this->mainModel->error_message_path);

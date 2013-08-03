@@ -90,8 +90,8 @@ class Model_Sportorg_Sport extends ORM
 		if (isset($female) && $female != ""){
 			$this->female = $female;
 		}
-		if (isset($sporttype) && $sporttype != ""){
-			$this->sport_type_id = $sporttype;
+		if (isset($sport_type_id) && $sport_type_id != ""){
+			$this->sport_type_id = $sport_type_id;
 		}
 		try{
 			$this->save();

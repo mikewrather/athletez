@@ -7,7 +7,7 @@
 
 class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 {
-	public $error_message_path = 'models/user/user_base';
+	public $error_message_path = 'models/user';
 
 	protected $_table_name = 'users';
 
@@ -1299,13 +1299,13 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 				$validate_array = array('users_id' => $users_id, 'teams_id' => $teams_id);
 				$external_validate = Validation::factory($validate_array);
 				$external_validate->rule('users_id', 'users_teams_exist', array($users_id, $teams_id));
-				if ($user_teams_link->check($external_validate))
-					$user_teams_link->save();
+				$user_teams_link->check($external_validate);
+				$user_teams_link->save();
+				return $this;
 			} catch (ORM_Validation_Exception $e)
 			{
 				return $e;
 			}
-			return $this;
 		}
 		else
 		{
