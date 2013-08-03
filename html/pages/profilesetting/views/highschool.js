@@ -457,6 +457,7 @@ define(['require', 'text!profilesetting/templates/highschool.html', 'text!profil
 				alert("Select Season");
 			}
 		},
+
 		/*Mark Selected Position as Active ot inactive*/
 		MarkPosition : function(event) {
 			var control = self.$(event.target);
@@ -474,7 +475,6 @@ define(['require', 'text!profilesetting/templates/highschool.html', 'text!profil
 				var positionModel = new PositionModel(payload);
 				positionModel.user_id = self.user_id;
 				positionModel.type = "delete";
-				console.log("positionModel", positionModel);
 				positionModel.destroy({
 					data : payload
 				});

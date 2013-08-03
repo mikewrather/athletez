@@ -12,12 +12,12 @@ define(['facade', 'collections', 'user/collections/contacts', 'utils'], function
 	List = UserCollection.extend({
 		url : function() {
 			if (testpath)
-				return testpath + '/api/user/contacts/' + this.user_id;
+				return testpath + '/api/user/contact/' + this.user_id;
 
 			if (this.user_id == undefined) {
 				//Incase to Hit Api without any parameter, Add Url here
 			}
-			return 'api/api/user/contacts/' + this.user_id + '?id1=' + this.user_id;
+			return 'api/user/contact/' + this.user_id + '?id1=' + this.user_id;
 		},
 
 		parseAsRequired : function() {

@@ -9,6 +9,7 @@ define(["facade", "user/models/common"], function(facade, CommonModel) {
 
 	Model = CommonModel.extend({
 		idAttribute : 'id1',
+		
 		data : {
 			user_id : this.user_id,
 			year : this.year
@@ -17,10 +18,16 @@ define(["facade", "user/models/common"], function(facade, CommonModel) {
 		processData : true,
 		
 		url : function() {
-			if (this.action == "delete")
-				return 'api/user/gpa/' + this.user_id + '?id1=' + this.user_id;
+			if (this.action == "update")	
+				return 'api/awards/basics/' + this.award_id + '?id1=' + this.award_id;
+			if (this.action == "save")
+				return 	'api/awards/add/';
+			if(this.action == "delete");
+				return 'api/awards/base/'+ this.award_id + '?id1=' + this.award_id;
+	
+	return 'api/awards/basics/';
+	
 
-			return 'api/user/addgpa/' + this.user_id + '?id1=' + this.user_id;
 
 		},
 

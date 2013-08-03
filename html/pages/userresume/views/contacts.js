@@ -62,6 +62,7 @@ define(['require', 'text!userresume/templates/contact.html', 'facade', 'views', 
 		},
 		setupView : function() {
 			self.setUpMainView();
+			self.setUpListView();
 			
 		},
 		setUpMainView : function(){
@@ -95,9 +96,8 @@ define(['require', 'text!userresume/templates/contact.html', 'facade', 'views', 
 
 			});
 			
-		//	$(self.el).html(self.template);
 		}
 	});
 
-	return AcademicView;
+	return ContactView;
 });

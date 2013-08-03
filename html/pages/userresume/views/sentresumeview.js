@@ -49,7 +49,6 @@ define(['require', 'text!userresume/templates/sentresume.html',
 		// **Method** `setOptions` - called by BaseView's initialize method
 		setOptions : function(options) {
 			this.user_id = options.user_id;
-			this.el = options.destination;
 		},
 
 		/*initialize must be a wrapper so any function definitions and calles must be called in init*/
@@ -91,14 +90,12 @@ define(['require', 'text!userresume/templates/sentresume.html',
 					resumes : d
 					});
 					$(self.el).html(markup);
-					//		console.log("Teams View Self El",self.el)
 				} else {
 					$(self.el).html(self.messages.dataNotExist);
 
 				}
 
 			});
-		// this.scheme.push(this.basicView);
 		}
 	});
 

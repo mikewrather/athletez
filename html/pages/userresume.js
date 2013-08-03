@@ -11,6 +11,7 @@ define(["require", "text!userresume/templates/layout.html",
 	  'text!userresume/templates/rdtree.html',
 	  'text!userresume/templates/academic.html',
 	  'text!userresume/templates/awards.html',
+	  'text!userresume/templates/awards.html',
 	  
 	   "facade",
 	  
@@ -20,21 +21,25 @@ define(["require", "text!userresume/templates/layout.html",
 	      'userresume/models/rdtree',
 	       'userresume/models/gpa',
 	       'userresume/models/award',
+	       'userresume/models/contact',
 	      
 	    "userresume/views/basic_info",
 	     "userresume/views/sentresumeview", 
 	     "userresume/views/rdtree",
 	     "userresume/views/academic",
-	     "userresume/views/awards",], function(require, pageLayoutTemplate, sentResumeHtml, basicInfoHtml, rdTreeHtml,academicHtml,awardsHtml) {
+	     "userresume/views/awards",
+	     "userresume/views/contacts",
+	     ], function(require, pageLayoutTemplate, sentResumeHtml, basicInfoHtml, rdTreeHtml,academicHtml,awardsHtml,contactHtml) {
 
 	var UserResumeController, facade = require("facade"), Controller = require("controller"), models = require("models"), views = require("views"), utils = require("utils"), $ = facade.$, _ = facade._, debug = utils.debug, Channel = utils.lib.Channel, LayoutView = views.LayoutView,
 
 	/*MODEL SECTION*/
 	BasicInfoModel = require("userresume/models/basic_info"), 
 	ResumeModel = require('userresume/models/resume'),
-	RDTreeModel = require("userresume/models/resume"),
+	RDTreeModel = require("userresume/models/rdtree"),
 	GpaModel = require("userresume/models/gpa"),
 	AwardModel = require("userresume/models/award"),
+	ContactModel = require("userresume/models/contact"),
 	/*COLLECTIONS SECTIONS*/
 
 	/*VIEW SECTION*/
@@ -42,7 +47,7 @@ define(["require", "text!userresume/templates/layout.html",
 	RDTreeView = require("userresume/views/rdtree"),
 	AcademicView = require("userresume/views/academic"),
 	AwardsView = require("userresume/views/awards"),
-	
+	ContactsView = require("userresume/views/contacts"),
 	UserResumeController = Controller.extend({
 		/*CSS SECTION*/
 		cssArr : ["/pages/userresume/userresume.css"],
@@ -112,6 +117,7 @@ define(["require", "text!userresume/templates/layout.html",
 				self.setUpRdTreeView();
 				self.setUpAcademicView();
 				self.setUpAwardsView();
+				self.setUpContactsView();
 			});
 
 		},
@@ -129,7 +135,6 @@ define(["require", "text!userresume/templates/layout.html",
 			});
 
 			this.scheme.push(this.basicView);
-			//this.layout.render();
 		},
 		/*Set up Basic Info View*/
 		setUpSentResumeView : function() {
@@ -191,7 +196,23 @@ define(["require", "text!userresume/templates/layout.html",
 
 			this.scheme.push(this.awardsView);
 			this.layout.render();
+		},
+		
+		/* Set  Up  User Contacts  View  View */
+		setUpContactsView : function() {
+			var self = this;
+			this.contactsView = new ContactsView({
+				model : new ContactModel(),
+				template : contactHtml,
+				name : "resume-contacts",
+				destination : "#section-contacts",
+				user_id : self.id,
+			});
+
+			this.scheme.push(this.contactsView);
+			this.layout.render();
 		}
+
 	});
 	return UserResumeController;
 
