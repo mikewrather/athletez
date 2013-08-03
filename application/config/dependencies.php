@@ -217,6 +217,16 @@ return array(
 		//No dependency table
 	),
 
+	'Rolesusers' => array(
+		//No dependency table
+	),
+
+	'User_Identity' => array(
+		//No dependency table
+	),
+
+
+
 
 
 

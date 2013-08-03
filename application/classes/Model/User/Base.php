@@ -152,29 +152,49 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
     
     public function deleteSport($args)
     {
-        $sports = DB::delete('user_sport_link')
-			->where('users_id','=', $this->id)
+		$usl_model = ORM::factory('User_Sportlink');
+		$result = $usl_model->where('users_id','=', $this->id)
 			->and_where('sports_id', '=', $args['sports_id'])
-			->execute();
-        return $sports;
+			->find();
+		if (!$result->id){
+			return false;
+		}else{
+			$usl_model = ORM::factory('User_Sportlink', $result->id);
+			$usl_model->delete_with_deps();
+        	return true;
+		}
     }
     
     public function deleteRole($args)
     {
-        $roles = DB::delete('roles_users')
-			->where('users_id','=', $this->id)
+		$user_role_model = ORM::factory('Rolesusers');
+		$result = $user_role_model->where('user_id','=', $this->id)
 			->and_where('role_id', '=', $args['role_id'])
-			->execute();
-        return $roles;
+			->find();
+
+		if (!$result->id){
+			return false;
+		}else{
+			$roleuser_model = ORM::factory('Rolesusers', $result->id);
+			$roleuser_model->delete_with_deps();
+			return true;
+		}
     }
     
-    public function deleteIdentity($args)
+    public function deleteIdentity($args = array())
     {
-        $identity = DB::delete('user_identities')
-			->where('user_id','=', $this->id)
-			->and_where('identity', '=', $args['identity_id'])
-			->execute();
-		return $identity;
+		$identity_model = ORM::factory('User_Identity');
+		$result = $identity_model->where('user_id','=', $this->id)
+			->where('identity', '=', $args['identity'])
+			->find();
+
+		if (!$result->id){
+			return false;
+		}else{
+			$identity_model = ORM::factory('User_Identity', $result->id);
+			$identity_model->delete_with_deps();
+			return true;
+		}
     }
     
     public function updateUser($args = array())
@@ -1069,6 +1089,7 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 			$user_model->join('org_sport_link')->on('org_sport_link.id', '=', 'teams.org_sport_link_id');
 			$user_model->where('org_sport_link.sports_id', '=', $sports_id);
 			$classes_arr['Sportorg_Orgsportlink'] = 'org_sport_link';
+
 		}
 
 		if (isset($states_id)){
@@ -1094,6 +1115,8 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 		if (isset($cities_id)){
 			$user_model->where('users.cities_id', '=', $cities_id);
 		}
+
+		$user_model = sizeof($classes_arr) > 0 ? ORM::_sql_exclude_deleted($classes_arr,$user_model) : $user_model;
 
 		$enttype_id = Model_Site_Enttype::getMyEntTypeID($this);
 
@@ -1128,7 +1151,6 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 
 			$user_model->select(array($followers,'num_followers'));
 			$user_model->order_by('num_followers', 'desc');
-
 		}
 		else if ($orderby == 'regist_time')
 		{
@@ -1144,7 +1166,6 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 
 		$exclude_deleted_users_array['User_Base'] = 'users';
 		$user_model = ORM::_sql_exclude_deleted($exclude_deleted_users_array, $user_model);
-
 		return $user_model;
 	}
 
@@ -1564,13 +1585,30 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 		}
 	}
 
-	public function delete_tests($args){
-		$tests_scores = DB::delete('academics_tests_scores')
-			->where('id', '=', $args['test_score_id'])
-			->where('users_id', '=', $args['users_id'])
-			->execute();
+	public function delete_tests_score($args){
+		$testscore_model = ORM::factory('Academics_Tests_Scores');
+		$result = $testscore_model->where('users_id','=', $this->id)
+			->where('academics_tests_topics_id', '=', $args['academics_tests_topics_id'])
+			->find();
 
-		return $tests_scores;
+		if (!$result->id){
+			return false;
+		}else{
+			$testscore_model = ORM::factory('Academics_Tests_Scores', $result->id);
+			$testscore_model->delete_with_deps();
+			return true;
+		}
+	}
+
+	public function delete_contact(){
+		$contact_model = ORM::factory('User_Contact');
+		$result = $contact_model->where('users_id', '=', $this->id)->find();
+		if ($result->id != ""){
+			$new_contact_model = ORM::factory('User_Contact', $result->id);
+			$new_contact_model->delete_with_deps();
+			return true;
+		}
+		return false;
 	}
 
 	public function delete_position($args)
@@ -1582,11 +1620,18 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 
 		if($teamlink->loaded())
 		{
-			$position_link = DB::delete('utl_position_link')
-				->where('users_teams_link_id','=',$teamlink->id)
-				->where('positions_id','=',$args['positions_id'])
-				->execute();
+			$utl_position_link = ORM::factory("User_Teamslink_Positionlink");
 
+			$result = $utl_position_link->where('users_teams_link_id','=',$teamlink->id)
+				->where('positions_id','=',$args['positions_id'])
+				->find();
+			if (!$result->id){
+				return false;
+			}else{
+				$utl_position_link = ORM::factory('User_Teamslink_Positionlink', $result->id);
+				$utl_position_link->delete_with_deps();
+				return true;
+			}
 			return $position_link;
 		}
 		else
@@ -1597,12 +1642,18 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 	}
 
 	public function delete_gpa($args){
-		$gpa = DB::delete('academics_gpa')
+		$gpa_model = ORM::factory('Academics_Gpa');
+		$result = $gpa_model->where('users_id','=', $this->id)
 			->where('year', '=', $args['year'])
-			->where('users_id', '=', $args['users_id'])
-			->execute();
+			->find();
 
-		return $gpa;
+		if (!$result->id){
+			return false;
+		}else{
+			$gpa_model = ORM::factory('Academics_Gpa', $result->id);
+			$gpa_model->delete_with_deps();
+			return true;
+		}
 	}
 
 	function is_member_of_team($user_id, $team_id){

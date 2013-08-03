@@ -9,6 +9,8 @@ function(facade,   utils,   BaseImageListView,        GameAddImageView) {
 
     GameImageListView = BaseImageListView.extend({
 
+	    imagetype: "large_thumb",
+
         setupAddView: function() {
             var listView = this,
                 addView = new GameAddImageView({collection: this.collection}),

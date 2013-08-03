@@ -8,9 +8,11 @@ function(facade,  views,   utils,   ImageItemView,            ImageBoardView,   
         ImageListAbstract,
         $ = facade.$,
         _ = facade._,
+	    vendor = require("vendor"),
         Channel = utils.lib.Channel,
         CollectionView = views.CollectionView,
-        SectionView = views.SectionView;
+        SectionView = views.SectionView,
+	    Mustache = vendor.Mustache;
 
     ImageListAbstract = CollectionView.extend(SectionView.prototype);
 
@@ -31,8 +33,8 @@ function(facade,  views,   utils,   ImageItemView,            ImageBoardView,   
 
         initialize: function(options) {
 
-	        console.log(options);
-	        console.log(this);
+	        //console.log(options);
+	        //console.log(this);
 
             CollectionView.prototype.initialize.call(this, options);
             if (!this.collection) {
@@ -74,15 +76,9 @@ function(facade,  views,   utils,   ImageItemView,            ImageBoardView,   
 	    filterWithImageType: function(type) {
 		    var c = this.collection;
 			$.each(c.models, function(i, field){
-				_.each(field.get("payload").types, function(element, index){
-					if (index == type){
-						field.get("payload").image_path = element.url;
-					}
-				});
+				field.selectImageType(type);
 		    });
-
 		    return c;
-
 		},
 
         setupBoardView: function() {
@@ -110,21 +106,6 @@ function(facade,  views,   utils,   ImageItemView,            ImageBoardView,   
             
             Channel('changeimage' + this.collection.id).subscribe(changeBoard);
         },
-
-	    render: function(callback)
-	    {
-		    var view = this;
-		    console.log("view.name",view.name);
-		    var childView = layout.section(view.name);
-		    if (childView.isRendered()) {
-			    childView.display(true);
-		    } else if (childView.isNotRendered()) {
-			    childView.render.call(childView);
-			    childView.deferred.done(function () {
-				    childView.display(true);
-			    });
-		    }
-	    }
 
     });
 
