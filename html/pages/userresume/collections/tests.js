@@ -24,7 +24,6 @@ define(['facade', 'collections', 'user/collections/tests', 'utils'], function(fa
 			var self = this;
 
 			var models = self.toJSON();
-			console.log("standard models",models);
 			var d = [];
 
 			if (models.length) {
@@ -38,13 +37,14 @@ define(['facade', 'collections', 'user/collections/tests', 'utils'], function(fa
 							topics : []
 						};
 						
-						$.each(payload.topics,function(i,l){
+						for (var key in payload.topics) {
 							temp.topics.push({
-								name : l.name,
-								score : l.score == false ? "" : l.score
+								topicid : key,
+								name : payload.topics[key].name,
+								score : payload.topics[key].score == false ? "" : payload.topics[key].score
 							});
 							
-						})
+						}
 						d.push(temp);
 					}
 				});

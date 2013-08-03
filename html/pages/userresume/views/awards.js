@@ -2,7 +2,7 @@
  // ---------
  // Pages
  // Requires `define`, `require`
- // Returns {CONTACTS VIEW} constructor
+ // Returns {Awards VIEW} constructor
  */
 define(['require', 'text!userresume/templates/awards.html', 'text!userresume/templates/listAwards.html', 'facade', 'views', 'utils', 'vendor', 'userresume/collections/awards', 'userresume/collections/sports', 'userresume/models/award'], function(require, awardsTemplate, listTemplate) {
 
@@ -109,7 +109,6 @@ define(['require', 'text!userresume/templates/awards.html', 'text!userresume/tem
 					return;
 
 				self.awards = Collection.parseAsRequired();
-				console.log("self.awards", self.awards);
 				if (self.awards.length > 0) {
 					var markup = Mustache.to_html(listTemplate, {
 						data : self.awards
@@ -126,11 +125,9 @@ define(['require', 'text!userresume/templates/awards.html', 'text!userresume/tem
 		},
 
 		AddNewAward : function(e) {
-			console.log("Add new");
 
 			self.ClearControls(e);
 			var dropdown = $(e.target).parents(self.controls.newAwardContainer).find(self.controls.ddlSports);
-			console.log(dropdown);
 			$(e.target).parents(self.controls.newAwardContainer).find(self.controls.newAwardControls).fadeIn();
 
 			if (self.sports && self.sports.length > 0) {
@@ -209,7 +206,7 @@ define(['require', 'text!userresume/templates/awards.html', 'text!userresume/tem
 			awardsModel.users_id = self.user_id;
 			awardsModel.award_id = awardId;
 			awardsModel.action = action;
-			
+			awardsModel.target = $(e.target);
 			
 			
 			awardsModel.save();
@@ -217,16 +214,13 @@ define(['require', 'text!userresume/templates/awards.html', 'text!userresume/tem
 				self.ClearControls(e);
 				self.setUpListView();
 			});
-		},
+		},	
 
 		SaveNewAward : function(e) {
-			console.log("Save New");
-		
 			self.SaveAward(e, "save");
 		},
 		
 		EditAward : function(e){
-			console.log("Edit Award")
 			$(e.target).parents(self.controls.newAwardContainer).find(self.controls.newControls).removeAttr('disabled');
 			$(e.target).fadeOut();
 			$(e.target).parents(self.controls.newAwardContainer).find(self.controls.btnUpdateAwardExisting).fadeIn();
@@ -235,24 +229,19 @@ define(['require', 'text!userresume/templates/awards.html', 'text!userresume/tem
 		},
 		
 		UpdateAward : function(e) {
-			console.log("Update Award")
 			self.SaveAward(e,"update");
-
 		},
 		
 		CancelNew : function() {
-			console.log("Cancel New");
 			self.ClearControls(e);
 		},
 		CancelExisting : function() {
-			console.log("Cancel Existing")
 			$(e.target).fadeOut();
 			$(e.target).parents(self.controls.newAwardContainer).find(self.controls.btnUpdateAwardExisting).fadeOut();
 			$(e.target).parents(self.controls.newAwardContainer).find(self.controls.btnEditAward).fadeIn();
 		
 		},
 		RemoveAward : function(e) {
-			console.log("Remove Award");
 			var awardId = $(e.target).attr('awardid');
 			
 			var payload = {
@@ -266,6 +255,7 @@ define(['require', 'text!userresume/templates/awards.html', 'text!userresume/tem
 			awardsModel.users_id = self.user_id;
 			awardsModel.award_id = awardId
 			awardsModel.action = "delete";
+			awardsModel.target = $(e.target);
 			awardsModel.destroy({
 				success:function(){
 				self.setUpListView();	

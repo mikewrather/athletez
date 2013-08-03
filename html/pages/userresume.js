@@ -11,7 +11,8 @@ define(["require", "text!userresume/templates/layout.html",
 	  'text!userresume/templates/rdtree.html',
 	  'text!userresume/templates/academic.html',
 	  'text!userresume/templates/awards.html',
-	  'text!userresume/templates/awards.html',
+	  'text!userresume/templates/contacts.html',
+	  'text!userresume/templates/references.html',
 	  
 	   "facade",
 	  
@@ -22,6 +23,7 @@ define(["require", "text!userresume/templates/layout.html",
 	       'userresume/models/gpa',
 	       'userresume/models/award',
 	       'userresume/models/contact',
+	       'userresume/models/reference',
 	      
 	    "userresume/views/basic_info",
 	     "userresume/views/sentresumeview", 
@@ -29,7 +31,9 @@ define(["require", "text!userresume/templates/layout.html",
 	     "userresume/views/academic",
 	     "userresume/views/awards",
 	     "userresume/views/contacts",
-	     ], function(require, pageLayoutTemplate, sentResumeHtml, basicInfoHtml, rdTreeHtml,academicHtml,awardsHtml,contactHtml) {
+	     "userresume/views/references",
+	     
+	     ], function(require, pageLayoutTemplate, sentResumeHtml, basicInfoHtml, rdTreeHtml,academicHtml,awardsHtml,contactHtml,referenceHtml) {
 
 	var UserResumeController, facade = require("facade"), Controller = require("controller"), models = require("models"), views = require("views"), utils = require("utils"), $ = facade.$, _ = facade._, debug = utils.debug, Channel = utils.lib.Channel, LayoutView = views.LayoutView,
 
@@ -40,6 +44,8 @@ define(["require", "text!userresume/templates/layout.html",
 	GpaModel = require("userresume/models/gpa"),
 	AwardModel = require("userresume/models/award"),
 	ContactModel = require("userresume/models/contact"),
+	ReferenceModel = require("userresume/models/reference"),
+	
 	/*COLLECTIONS SECTIONS*/
 
 	/*VIEW SECTION*/
@@ -48,6 +54,7 @@ define(["require", "text!userresume/templates/layout.html",
 	AcademicView = require("userresume/views/academic"),
 	AwardsView = require("userresume/views/awards"),
 	ContactsView = require("userresume/views/contacts"),
+	ReferencesView = require("userresume/views/references"),
 	UserResumeController = Controller.extend({
 		/*CSS SECTION*/
 		cssArr : ["/pages/userresume/userresume.css"],
@@ -118,6 +125,7 @@ define(["require", "text!userresume/templates/layout.html",
 				self.setUpAcademicView();
 				self.setUpAwardsView();
 				self.setUpContactsView();
+				self.setUpReferenceView();
 			});
 
 		},
@@ -211,7 +219,23 @@ define(["require", "text!userresume/templates/layout.html",
 
 			this.scheme.push(this.contactsView);
 			this.layout.render();
+		},
+		
+		/* Set  Up  User References  View  View */
+		setUpReferenceView : function() {
+			var self = this;
+			this.referenceView = new ReferencesView({
+				model : new ReferenceModel(),
+				template : referenceHtml,
+				name : "resume-references",
+				destination : "#section-references",
+				user_id : self.id,
+			});
+
+			this.scheme.push(this.referenceView);
+			this.layout.render();
 		}
+
 
 	});
 	return UserResumeController;

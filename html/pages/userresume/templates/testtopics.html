@@ -6,8 +6,10 @@
 				<span class="span9">
 					{{#topics}}
 					<div class="row-fluid">
-						<span class="span4">{{name}}</span>
-						<span class="span5"><input type="text" class="txtTestScore_h" testId="{{id}}" value="{{score}}" disabled="disabled"/></span>
+						<span class="span3">{{name}}</span>
+						<span class="span9"><input type="text" class="txtTestScore_h" testId="{{id}}" topicId="{{topicid}}" value="{{score}}" disabled="disabled"/>
+							<span class="alert alert-danger displayNone error_h"></span> <span class="alert alert-success displayNone success_h"></span>
+						</span>
 					</div>
 					 {{/topics}}
 				</span>

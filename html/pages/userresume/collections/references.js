@@ -3,21 +3,18 @@
 
 // Package User
 // Requires define
-// Returns {GPA  Collection} constructor
+// Returns {Reference  Collection} constructor
 
-define(['facade', 'collections', 'user/collections/awards', 'utils'], function(facade, collections, UserCollection, utils) {
+define(['facade', 'collections', 'user/collections/references', 'utils'], function(facade, collections, UserCollection, utils) {
 
 	var List, BaseCollection = collections.BaseCollection, _ = facade._, Channel = utils.lib.Channel,
 
 	List = UserCollection.extend({
 		url : function() {
 			if (testpath)
-				return testpath + '/api/user/awards/' + this.user_id;
+				return testpath + '/api/user/references/' + this.user_id;
 
-			if (this.user_id == undefined) {
-				//Incase to Hit Api without any parameter, Add Url here
-			}
-			return 'api/user/awards/' + this.user_id + '?id1=' + this.user_id;
+			return 'api/user/references/' + this.user_id + '?id1=' + this.user_id;
 		},
 
 		parseAsRequired : function() {
@@ -34,17 +31,18 @@ define(['facade', 'collections', 'user/collections/awards', 'utils'], function(f
 							
 							sports_id : payload.sports_id,
 							sports_name : payload.name,
-							awards : []
+							references : []
 						}
 						
 						$.each(payload.awards,function(i,l){
-							temp.awards.push({
+							temp.references.push({
 								id : l.id,
 								name : l.name,
-								description : l.description,
-								year : l.year
-							});
-							
+								description : l.long_description,
+								relation : l.relation,
+								email : l.email,
+								phone : l.phone
+							});							
 						})
 						
 						d.push(temp);

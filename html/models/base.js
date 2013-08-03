@@ -36,7 +36,6 @@ define(['facade', 'utils'], function(facade, utils) {
 
 		showSuccess : function(model, response) {
 			var self = this;
-			debug.log("ShowSuccess called in base.js");
 			model.hideMessages();
 
 			var exec_data = model.get('exec_data');
@@ -53,7 +52,12 @@ define(['facade', 'utils'], function(facade, utils) {
 					var item = errorsArr[i];
 					if (item['field'] != '') {
 						var field = item['field'];
-						$('#' + field).parent().find('.field-error').html(item['error']).stop().fadeIn();
+						var control = $('#' + field).parent().find('.field-error');
+						if(control.length > 0){
+							control.html(item['error']).stop().fadeIn();
+						}else{
+							errors += item['error'] + '<br/>';
+						}
 					} else {
 						errors += item['error'] + '<br/>';
 					}
@@ -70,12 +74,17 @@ define(['facade', 'utils'], function(facade, utils) {
 					var item = messagesArr[i];
 					if (item['field'] != '') {
 						var field = item['field'];
-						$('#' + field).parent().find('.field-message').html(item['message']).stop().fadeIn();
+						var control = $('#' + field).parent().find('.field-message');
+						if(control.length > 0){
+							control.html(item['message']).stop().fadeIn();
+						}
+					else{
+							messages += item['message'] + '<br/>';
+						}
 					} else {
 						messages += item['message'] + '<br/>';
 					}
 				}
-				console.log("messages",messages);
 				if (messages != '')
 					self.showSuccessMessage(messages);
 			}
@@ -123,7 +132,6 @@ define(['facade', 'utils'], function(facade, utils) {
 						errors += item['error'] + '<br/>';
 					}
 				}
-				console.log("errors",errors);
 				if (errors != '')
 					self.showErrorMessage(errors);
 			}
@@ -135,7 +143,12 @@ define(['facade', 'utils'], function(facade, utils) {
 					var item = messagesArr[i];
 					if (item['field'] != '') {
 						var field = item['field'];
-						$('#' + field).parent().find('.field-message').html(item['message']).stop().fadeIn();
+						var control = $('#' + field).parent().find('.field-message');
+						if(control.length > 0){
+							control.html(item['message']).stop().fadeIn();
+						}else{
+							messages += item['message'] + '<br/>';
+						}
 					} else {
 						messages += item['message'] + '<br/>';
 					}
@@ -146,11 +159,9 @@ define(['facade', 'utils'], function(facade, utils) {
 		},
 		
 		showSuccessMessage : function(messages){
-			console.log("showSuccessMessage");
 			$('.global-messages').html(messages).stop().fadeIn();
 		},
 		showErrorMessage : function(errors){
-			console.log("showErrorMessage");
 			$('.global-errors').html(errors).stop().fadeIn();
 		},
 		// **Property:** `request` - assign fetch return value to this.request property,
@@ -168,7 +179,6 @@ define(['facade', 'utils'], function(facade, utils) {
 				options.error = this.fetchError;
 			}
 			_.extend(options, ajaxOptions);
-			//	console.log("start fetching  results", Backbone.Model.prototype.fetch.call(this, options));
 			return this.request = Backbone.Model.prototype.fetch.call(this, options);
 		},
 
@@ -184,7 +194,6 @@ define(['facade', 'utils'], function(facade, utils) {
 				}
 				model.deferred.resolve();
 			}
-			debug.log(response);
 			
 			model.hideMessages();
 		},
@@ -195,7 +204,6 @@ define(['facade', 'utils'], function(facade, utils) {
 				model.deferred.reject();
 			}
 			//TODO, add by jeffrey
-			console.log("Alert:fetchError", model);
 			model.showError(model, response);
 		},
 
@@ -215,16 +223,11 @@ define(['facade', 'utils'], function(facade, utils) {
 
 		// **Method:** `saveSuccess` - resolve the deferred here in success
 		saveSuccess : function(model, response) {
-			debug.log("Save success log = ", model);
-			debug.log(model);
 			model.showSuccess(model, response);
 		},
 
 		// **Method:** `fetchError` - log response on error
 		saveError : function(model, response) {
-			debug.log("Save error log = ", model);
-			debug.log(model);
-			debug.log(response);
 			model.showError(model, response);
 		},
 
