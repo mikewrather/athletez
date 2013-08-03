@@ -28,7 +28,6 @@ class Model_User_Contact extends ORM
 			'users_id'=>array(
 				array('not_empty'),
 				array('users_id_exist'),
-				array('user_has_contact'),
 			),
 			// sports_id (int)
 			'locations_id'=>array(
@@ -64,6 +63,13 @@ class Model_User_Contact extends ORM
 			$this->users_id = $users_id;
 		}
 		try{
+			if ($this->id != ""){
+				//extra validation
+				$external_validate = Validation::factory($args);
+				$external_validate->rule('user_id', 'user_has_contact', $users_id);
+				if ($this->check($external_validate)){
+				}
+			}
 			$this->save();
 		}catch(ORM_Validation_Exception $e)
 		{

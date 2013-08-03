@@ -17,7 +17,6 @@ return array(
 	"org_sport_not_exist" => "The organization is not yet associated with that sport.",
 	"unique_email" => "That email address is already in our system.  Maybe you made an account already?",
 	"subject_id_exist" => "Subject id doesn't exist",
-	"resume_data_profiles_id_exist" => "Resume data profiles doesn't exist",
 	"resume_data_id_exist" => "Resume data doesn't exist",
 	"stat_contexts_id_exist" => "Statistic contexts id doesn't exist",
 	"stat_id_exist" => "Statistic id doesn't exist",
@@ -54,11 +53,13 @@ return array(
 	"languages_id_exist" => "As far as we can tell, that ID doesn't refer to a Language.",
 	"coaches_id_exist" => "As far as we can tell, that ID doesn't refer to a coach.",
 	"academics_tests_topics_id_exist" => "As far as we can tell, that ID doesn't refer to a academic test topic.",
-	"users_gpa_exist" => "user gpa already exist in this year",
 	"user_sport_link_exist" => "As far as we can tell, that ID doesn't refer to user sport link",
 	"uslgamelink_link_not_exist" => "As far as we can tell, that link already exist",
 	"users_id_exist" => "As far as we can tell, that ID doesn't refer to a user",
 	"valid_time" => "Invalid time, time should be like 00:00:00",
 	"user_score_not_exist" => "As far as we can tell, that user's score already exist",
-	"user_has_contact" => "As far as we can tell, that user doesn't has contact info"
+	"user_has_contact" => "As far as we can tell, that user doesn't has contact info",
+	"stat_tab_id_exist" => "As far as we can tell, that ID doesn't refer to a Statistics tab",
+	"checkCountyExists" => "As far as we can tell, that ID doesn't refer to a county"
+
 );

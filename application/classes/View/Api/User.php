@@ -518,9 +518,7 @@
 		 */
 		public function post_addrole()
 		{
-			$retArr = array(); 
-
-			return $retArr;
+			return $this->obj->getBasics();
 		}
 
 		/**
