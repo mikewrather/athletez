@@ -273,11 +273,7 @@
 		 */
 		public function delete_base()
 		{
-//			$retArr = null;
-//			return $retArr;
-
-			$retArr = $this->obj->getBasics();
-			return $retArr;
+			return null;
 		}
 		
 	}

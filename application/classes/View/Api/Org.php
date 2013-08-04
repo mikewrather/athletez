@@ -312,11 +312,7 @@
 		 */
 		public function delete_base()
 		{
-			$retArr = array();
-			// Scaffolding Code For Single:
-			$retArr = $this->obj->getBasics();
-
-			return $retArr;
+			return null;
 		}
 		
 		/**
@@ -326,10 +322,6 @@
 		 */
 		public function delete_sport()
 		{
-			$retArr = array();
-			// Scaffolding Code For Single:
-			$retArr = $this->obj->getBasics();
-
-			return $retArr;
+			return null;
 		}
 	}

@@ -288,7 +288,7 @@
 				return false;
 			}
 
-			return $this->mainModel->delete();
+			$this->mainModel->delete_with_deps();
 		}
 		
 		/**
@@ -326,8 +326,16 @@
 				$this->modelNotSetError($error_array);
 				return false;
 			}
-			
-			return $this->mainModel->deletePlayers($arguments);
+
+			if (!$this->mainModel->deletePlayers($arguments)){
+				$error_array = array(
+					"error" => "Game match player doesn't exist",
+					"desc" => "Game match player doesn't exist"
+				);
+
+				$this->modelNotSetError($error_array);
+				return false;
+			}
 		}
 		
 	}

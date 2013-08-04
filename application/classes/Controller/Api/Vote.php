@@ -118,7 +118,7 @@
 				$this->modelNotSetError($error_array);
 			}
 
-			return $this->mainModel->deleteVote();
+			$this->mainModel->delete_with_deps();
 		}
 		
 	}

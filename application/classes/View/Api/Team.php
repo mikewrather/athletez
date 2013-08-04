@@ -229,12 +229,7 @@
 		 */
 		public function delete_base()
 		{
-			$retArr = array();
- 
-			// Scaffolding Code For Single:
-			$retArr = $this->obj->getBasics();
-
-			return $retArr;
+			return null;
 		}
 		
 		/**
@@ -244,11 +239,7 @@
 		 */
 		public function delete_gamelink()
 		{
-			$retArr = array();
- 
-			// Scaffolding Code For Single:
-			$retArr = $this->obj;
-			return $retArr;
+			return null;
 		}
 		
 	}
