@@ -16,7 +16,6 @@ define(['require', 'text!userresume/templates/awards.html', 'text!userresume/tem
 		/*Bind Events on controls present in current view template*/
 		events : {
 			"click .btn-Add-award_h" : "AddNewAward",
-			//	"click .btn-Add-Existing_h" : "AddExistingAward",
 			"click .btn-Save_award_h" : "SaveNewAward",
 			"click .btn-Update_award_h" : "UpdateAward",
 			"click .btn-Cancel-New" : "CancelNew",
