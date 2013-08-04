@@ -189,7 +189,13 @@
 		public function action_delete_base()
 		{
 			$this->payloadDesc = "Delete an Image";
+			if(!$this->mainModel->id)
+			{
+				$this->modelNotSetError();
+				return false;
+			}
 
+			$this->mainModel->delete_with_deps();
 		
 		}
 		

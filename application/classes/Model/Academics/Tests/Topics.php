@@ -71,13 +71,18 @@ class Model_Academics_Tests_Topics extends ORM
 			if($this->_current_user_id) $users_id = $this->_current_user_id;
 			else return false;
 		}
+		$score_model = $this->scores;
+		$classes_arr = array(
+			'Academics_Tests_Scores' => 'academics_tests_scores'
+		);
 
-		$score_obj = $this->scores->where('users_id','=',$users_id)->find();
+		$score_model = ORM::_sql_exclude_deleted($classes_arr, $score_model);
+		$score_obj = $score_model->where('users_id','=',$users_id)->find();
 		if($score_obj->loaded())
 		{
 			return $score_obj->score;
 		}
-		return false;
+		return "";
 	}
 
 	public function name()
