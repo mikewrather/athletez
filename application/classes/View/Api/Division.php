@@ -83,9 +83,7 @@
 		 */
 		public function delete_base()
 		{
-			$retArr = array();
-			$retArr = $this->obj->getBasics();
-			return $retArr;
+			return null;
 		}
 		
 	}
