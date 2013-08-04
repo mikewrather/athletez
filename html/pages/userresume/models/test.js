@@ -8,31 +8,31 @@ define(["facade", "user/models/common"], function(facade, CommonModel) {
 	var Model, _ = facade._;
 
 	Model = CommonModel.extend({
-		idAttribute : 'id1',
-		
+		idAttribute : 'academics_test_score_id',
+
 		data : {
 			user_id : this.user_id,
 			year : this.year
 		},
-		
-		processData : true,
-		
-		url : function() {
-			if (this.action == "update")	
-				return 'api/awards/basics/' + this.award_id + '?id1=' + this.award_id;
-			if (this.action == "save")
-				return 	'api/awards/add/';
-			if(this.action == "delete");
-				return 'api/awards/base/'+ this.award_id + '?id1=' + this.award_id;
-	
-	return 'api/awards/basics/';
-	
 
+		processData : true,
+
+		url : function() {
+			if (this.action == "update")
+				return 'api/awards/basics/' + this.users_id + '?id1=' + this.users_id;
+			if (this.action == "save")
+				return 'api/user/addtestscore/' + this.users_id + '?id1=' + this.users_id;
+			if (this.action == "delete")
+				;
+			return 'api/awards/base/' + this.users_id + '?id1=' + this.users_id;
+
+			return 'api/user/addtestscore/';
 
 		},
 
 		/*Function To display SUCCESS messages returned by API*/
 		showSuccessMessage : function(messages) {
+			console.log("showSuccessMessage test");
 			$(this.target).parent().find(".success_h").html(messages).fadeIn();
 			$(this.target).parent().find(".error_h").html('').fadeOut();
 		},

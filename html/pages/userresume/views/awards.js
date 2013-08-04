@@ -2,50 +2,67 @@
  // ---------
  // Pages
  // Requires `define`, `require`
- // Returns {CONTACTS VIEW} constructor
+ // Returns {Awards VIEW} constructor
  */
-define(['require', 'text!userresume/templates/awards.html','text!userresume/templates/listAwards.html', 'facade', 'views', 'utils', 'vendor', 
-'userresume/collections/awards'],
- function(require, awardsTemplate,listTemplate) {
+define(['require', 'text!userresume/templates/awards.html', 'text!userresume/templates/listAwards.html', 'facade', 'views', 'utils', 'vendor', 'userresume/collections/awards', 'userresume/collections/sports', 'userresume/models/award'], function(require, awardsTemplate, listTemplate) {
 
-	var self, facade = require('facade'),
-	 views = require('views'),
-	  SectionView = views.SectionView, utils = require('utils'), Channel = utils.lib.Channel, 
-	  vendor = require('vendor'), Mustache = vendor.Mustache, $ = facade.$, 
-	  AwardsCollection = require('userresume/collections/awards'),
-	  
+	var self, facade = require('facade'), views = require('views'), SectionView = views.SectionView, utils = require('utils'), Channel = utils.lib.Channel, vendor = require('vendor'), Mustache = vendor.Mustache, $ = facade.$, AwardsCollection = require('userresume/collections/awards'), SportsCollection = require('userresume/collections/sports'), AwardsModel = require('userresume/models/award'),
 
 	//Models
-	 AwardsView = SectionView.extend({
+	AwardsView = SectionView.extend({
 
 		template : awardsTemplate,
 
 		/*Bind Events on controls present in current view template*/
 		events : {
+			"click .btn-Add-award_h" : "AddNewAward",
+			//	"click .btn-Add-Existing_h" : "AddExistingAward",
+			"click .btn-Save_award_h" : "SaveNewAward",
+			"click .btn-Update_award_h" : "UpdateAward",
+			"click .btn-Cancel-New" : "CancelNew",
+			"click .btn-Cancel-Existing_award_h" : "CancelExisting",
+			"click .btn-remove_award_h" : "RemoveAward",
+			"click .edit_award_h" : "EditAward"
 		},
 
 		/*Holds */
 		/*Controls Holds all the html controls used in the view and template*/
 		/*Jquery Selectors {#,. etc} must be preixed so that it could be directly used with $ Sign*/
 		controls : {
+
 			//Containers
 			listContainer : "#section-list-awards",
-			
+			newAwardContainer : ".section-new-award",
+			newAwardControls : ".section-new-controls",
+
 			//Buttons
 			btnAddAwardsExisting : ".btn-Add-Existing",
 			btnAddNew : ".btn-Add",
-			
+			btnCancelExisting : ".btn-Cancel-Existing_award_h",
+			btnRemoveExisting : ".btn-remove_award_h",
+			btnUpdateAwardExisting : ".btn-Update_award_h",
+			btnEditAward : ".edit_award_h",
+
 			//Imput Controls
-			ddlSports : ".ddl-sports-awards"
-			
+			ddlSports : ".ddl-sports-awards_h",
+			newControls : ".txtAwards_h",
+			txtName : ".txt_name_h",
+			txtDescription : ".txt_description_h",
+			txtYear : ".txt_year_h",
+
+			// LABELS
+			lblError : '.error_h',
+			lblSuccess : ".success_h"
+
 		},
 
 		/*Messages Holds the messages, warning, alerts, errors, information variables*/
 		/*In Case of similar message create only one object and key*/
 		messages : {
 			dataNotExistAwards : "Data Does Not Exists For Awards.",
+			MandatoryFields : "Sports Id, Name , Year are mandatory."
 		},
-		
+
 		/*initialize gets called by default when constructor is initialized*/
 		initialize : function(options) {
 			SectionView.prototype.initialize.call(this, options);
@@ -74,8 +91,8 @@ define(['require', 'text!userresume/templates/awards.html','text!userresume/temp
 			self.setUpMainView();
 			self.setUpListView();
 		},
-		setUpMainView : function(){
-			var markup = Mustache.to_html(self.template,{});
+		setUpMainView : function() {
+			var markup = Mustache.to_html(self.template, {});
 			$(self.el).html(markup);
 		},
 
@@ -92,7 +109,6 @@ define(['require', 'text!userresume/templates/awards.html','text!userresume/temp
 					return;
 
 				self.awards = Collection.parseAsRequired();
-				console.log("self.awards", self.awards);
 				if (self.awards.length > 0) {
 					var markup = Mustache.to_html(listTemplate, {
 						data : self.awards
@@ -100,11 +116,153 @@ define(['require', 'text!userresume/templates/awards.html','text!userresume/temp
 					$(self.el).find(self.controls.listContainer).html(markup);
 				} else {
 					$(self.el).find(self.controls.listContainer).html(self.messages.dataNotExistAwards);
-
 				}
-
 			});
-		}
+		},
+		ClearControls : function(e) {
+			$(e.target).parents(self.controls.newAwardContainer).find(self.controls.newControls).val('');
+			$(e.target).parents(self.controls.newAwardContainer).find(self.controls.newAwardControls).fadeOut();
+		},
+
+		AddNewAward : function(e) {
+
+			self.ClearControls(e);
+			var dropdown = $(e.target).parents(self.controls.newAwardContainer).find(self.controls.ddlSports);
+			$(e.target).parents(self.controls.newAwardContainer).find(self.controls.newAwardControls).fadeIn();
+
+			if (self.sports && self.sports.length > 0) {
+				self.setDropdownOptions(self.sports, 'sport_name', 'sport_id', dropdown, 'Select Sport');
+				return;
+			} else {
+				var List = new SportsCollection();
+				List.sport_type = 1;
+				List.sport_type_id = 1;
+				// For Sports Not associated With Individuals
+				//TODO:  Gender is missing in API so need to update code
+				List.male = 1;
+				List.female = 0;
+				if (self.gender == "male") {
+					List.male = 1;
+				} else if (self.gender == "famale") {
+					List.female = 0;
+				}
+				List.fetch();
+
+				$.when(List.request).done(function() {
+					if (List.isError())
+						return;
+
+					var models = List.toJSON();
+					if (models == null || models.length < 1)
+						self.$(self.controls.ddlSports).parent().find(self.controls.fieldMessage).html(self.messages.dataNotExist).stop().fadeIn();
+
+					self.sports = [];
+					for (var key in models) {
+						self.sports.push(models[key].payload);
+					}
+					// Sort Sports Before Filling Up Into Drop-Down
+					self.sort(self.sports, 'sport_name', false);
+
+					self.setDropdownOptions(self.sports, 'sport_name', 'sport_id', dropdown, 'Select Sport');
+
+				});
+			}
+		},
+		AddExistingAward : function() {
+			console.log("Add Existing");
+		},
+
+		SaveAward : function(e, action) {
+
+			var section = $(e.target).parents(self.controls.newAwardContainer).find(self.controls.newAwardControls);
+			var sportId = $(e.target).attr('sportid') || section.find(self.controls.ddlSports).val();
+			var name = section.find(self.controls.txtName).val();
+			var year = section.find(self.controls.txtYear).val();
+			var description = section.find(self.controls.txtDescription).val();
+
+			if (sportId =='' || sportId < 1 || $.trim(name) == '' || $.trim(description) == ''|| $.trim(year) == '') {
+
+				section.find(self.controls.lblError).html(self.messages.MandatoryFields).fadeIn();
+				return;
+			}
+
+			section.find(self.controls.lblError).html('').fadeOut();
+
+			var payload = {
+				description : description,
+				name : name,
+				sports_id : sportId,
+				year : year,
+				users_id : self.user_id
+			};
+			var awardId =0;
+			
+			if(action == "update"){
+				awardId = $(e.target).attr('awardid');
+				payload.id1 = $(e.target).attr('awardid');
+			}
+			
+			var awardsModel = new AwardsModel(payload);
+			awardsModel.users_id = self.user_id;
+			awardsModel.award_id = awardId;
+			awardsModel.action = action;
+			awardsModel.target = $(e.target);
+			
+			
+			awardsModel.save();
+			$.when(awardsModel.request).done(function() {
+				self.ClearControls(e);
+				self.setUpListView();
+			});
+		},	
+
+		SaveNewAward : function(e) {
+			self.SaveAward(e, "save");
+		},
+		
+		EditAward : function(e){
+			$(e.target).parents(self.controls.newAwardContainer).find(self.controls.newControls).removeAttr('disabled');
+			$(e.target).fadeOut();
+			$(e.target).parents(self.controls.newAwardContainer).find(self.controls.btnUpdateAwardExisting).fadeIn();
+			$(e.target).parents(self.controls.newAwardContainer).find(self.controls.btnCancelExisting).fadeIn();
+			
+		},
+		
+		UpdateAward : function(e) {
+			self.SaveAward(e,"update");
+		},
+		
+		CancelNew : function() {
+			self.ClearControls(e);
+		},
+		CancelExisting : function() {
+			$(e.target).fadeOut();
+			$(e.target).parents(self.controls.newAwardContainer).find(self.controls.btnUpdateAwardExisting).fadeOut();
+			$(e.target).parents(self.controls.newAwardContainer).find(self.controls.btnEditAward).fadeIn();
+		
+		},
+		RemoveAward : function(e) {
+			var awardId = $(e.target).attr('awardid');
+			
+			var payload = {
+				id1: awardId,
+				award_id : awardId,
+				users_id : self.user_id
+			};
+			
+			var awardsModel = new AwardsModel(payload);
+			awardsModel.id1 = awardId;
+			awardsModel.users_id = self.user_id;
+			awardsModel.award_id = awardId
+			awardsModel.action = "delete";
+			awardsModel.target = $(e.target);
+			awardsModel.destroy({
+				success:function(){
+				self.setUpListView();	
+				}
+			});
+			
+		},
 	});
 
 	return AwardsView;

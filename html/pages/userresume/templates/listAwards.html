@@ -4,20 +4,51 @@
 	<div class="well section-rdtree-items_h">
 		<div class="row-fluid"><h3>{{sports_name}}</h3>
 		</div>
+		<div class="section-new-award">
+		<div class="div-add-dotted well-small btn-Add-award_h" sportId="{{sports_id}}">
+			+ Add an Award
+		</div>
+		<div class="well section-new-controls displayNone">
+			<div class="clearfix row-fluid">
+				<span class="span2">Name :</span>
+				<span class="span3">
+					<input type="text" class="txtAwards_h txt_name_h" value="{{name}}"/>
+				</span>
+				<span class="span2">Description :</span>
+				<span class="span3">
+					<input type="text" class="txtAwards_h txt_description_h" value="{{description}}"/>
+				</span>
+				
+			</div>
+
+			<div class="clearfix row-fluid">
+				<span class="span2">year :</span>
+				<span class="span3">
+					<input type="text" class="txtAwards_h txt_year_h" value="{{year}}"/>
+				</span>
+			</div>
+			<div class="clearfix row-fluid">
+				<span class="span12"> <a href="javascript:void(0)" class="btn btn-primary btn-Save_award_h" sportid="{{sports_id}}">Save</a> <a href="javascript:void(0)" class="btn btn-Cancel-New">Cancel</a> <span class="alert alert-danger displayNone error_h"></span> <span class="alert alert-success displayNone success_h"></span>
+			</div>
+		</div>
+		</div>
 		{{#awards}}
-			<div class="row-fluid">
-				<span class="span3"><input type="text" class="txtAwards_h" value="{{name}}" disabled="disabled"/></span>
-				<span class="span3"><input type="text" class="txtAwards_h" value="{{description}}" disabled="disabled"/></span>
-				<span class="span3"><input type="text" class="txtAwards_h" value="{{year}}" disabled="disabled"/></span>
+		<div class="section-new-award">
+			<div class="row-fluid section-new-controls">
+				<span class="span3"><input type="text" class="txtAwards_h txt_name_h" value="{{name}}" disabled="disabled"/></span>
+				<span class="span3"><input type="text" class="txtAwards_h txt_description_h" value="{{description}}" disabled="disabled"/></span>
+				<span class="span3"><input type="text" class="txtAwards_h txt_year_h" value="{{year}}" disabled="disabled"/></span>
 				<span class="span3">
 					<a href="javascript:void(0)" class="btn edit_award_h">Edit</a>
-					<a href="javascript:void(0)" class="btn btn-primary btn-Update_award_h displayNone" sportId="{{sports_id}}" awardId="id">Save</a>			
-					<a href="javascript:void(0)" class="btn remove_award_h">Remove</a>
+					<a href="javascript:void(0)" class="btn btn-primary btn-Update_award_h displayNone" sportid="{{sports_id}}" awardid="{{id}}">Save</a>
+					<a href="javascript:void(0)" class="btn btn-Cancel-Existing_award_h displayNone">Cancel</a>
+					<a href="javascript:void(0)" class="btn btn-remove_award_h" awardid="{{id}}">Remove</a>
 					<span class="alert alert-danger displayNone error_h"></span>
 					<span class="alert alert-success displayNone success_h"></span>
 					
 				</span>
 			</div>
+		</div>	
 		{{/awards}}
 	</div>
 	{{/data}}

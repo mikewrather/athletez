@@ -4,12 +4,21 @@
  // Requires `define`, `require`
  // Returns {RDTREEVIEW} constructor
  */
-define(['require', 'text!userresume/templates/academic.html', 'text!userresume/templates/gpa.html', 'text!userresume/templates/test.html', 'text!userresume/templates/testtopics.html', 'text!userresume/templates/testlist.html', 'facade', 'views', 'utils', 'vendor', 'userresume/collections/gpa', 'userresume/collections/tests', 'userresume/collections/academictests', 'userresume/models/gpa'], function(require, academicTemplate, templateGpa, templateTests, templateTestTopics, templateTestsListAll) {
+define(['require', 'text!userresume/templates/academic.html', 'text!userresume/templates/gpa.html', 'text!userresume/templates/test.html', 
+'text!userresume/templates/testtopics.html', 'text!userresume/templates/testlist.html', 'facade', 'views', 'utils', 'vendor', 
+'userresume/collections/gpa', 'userresume/collections/tests', 'userresume/collections/academictests',
+ 'userresume/models/gpa', 'userresume/models/test'],
+ function(require, academicTemplate, templateGpa, templateTests, templateTestTopics, templateTestsListAll) {
 
-	var self, facade = require('facade'), views = require('views'), SectionView = views.SectionView, utils = require('utils'), Channel = utils.lib.Channel, vendor = require('vendor'), Mustache = vendor.Mustache, $ = facade.$, GPACollection = require('userresume/collections/gpa'), TestCollection = require('userresume/collections/tests'), AcademicTestsCollection = require("userresume/collections/academictests"),
+	var self, facade = require('facade'), views = require('views'), SectionView = views.SectionView, utils = require('utils'), 
+	Channel = utils.lib.Channel, vendor = require('vendor'), Mustache = vendor.Mustache, $ = facade.$, 
+	GPACollection = require('userresume/collections/gpa'), TestCollection = require('userresume/collections/tests'), 
+	AcademicTestsCollection = require("userresume/collections/academictests"),
 
 	//Models
-	GpaModel = require("userresume/models/gpa"), AcademicView = SectionView.extend({
+	GpaModel = require("userresume/models/gpa"),
+	TestModel = require("userresume/models/test"),
+	 AcademicView = SectionView.extend({
 
 		template : academicTemplate,
 
@@ -25,7 +34,8 @@ define(['require', 'text!userresume/templates/academic.html', 'text!userresume/t
 			"blur .txtGpa_h" : "SaveGpa",
 			"click .btn-delete-gpa" : "DeleteGpa",
 			"click .btn-Add-gpa" : "AddGpa",
-			"click .btn-Save-Gpa" : "SaveNewGpa"
+			"click .btn-Save-Gpa" : "SaveNewGpa",
+			"blur .txtTestScore_h" : "SaveTestScore"
 		},
 
 		/*Holds */
@@ -66,15 +76,14 @@ define(['require', 'text!userresume/templates/academic.html', 'text!userresume/t
 		messages : {
 			dataNotExistGPA : "Data Does Not Exists For GPA TESTS.",
 			dataNotExistTests : "Data Does Not Exist For Tests.",
-			YearScoreIsRequired : "Year And Score Are Required."
+			YearScoreIsRequired : "Year And Score Are Required.",
+			MandatoryFieldsTest : "Score is must for test"
 		},
 		/*initialize gets called by default when constructor is initialized*/
 		initialize : function(options) {
-			//	debugger;
 			SectionView.prototype.initialize.call(this, options);
 			self = this;
 			self.setOptions(options);
-			//debugger;
 
 			this.init();
 
@@ -88,7 +97,6 @@ define(['require', 'text!userresume/templates/academic.html', 'text!userresume/t
 		// **Method** `setOptions` - called by BaseView's initialize method
 		setOptions : function(options) {
 			this.user_id = options.user_id;
-			//	this.el = options.destination;
 		},
 
 		/*initialize must be a wrapper so any function definitions and calles must be called in init*/
@@ -264,7 +272,6 @@ define(['require', 'text!userresume/templates/academic.html', 'text!userresume/t
 					return;
 
 				self.standardTestsListAll = Collection.parseAsRequired();
-
 				if (self.standardTestsListAll.length > 0) {
 					var markup = Mustache.to_html(templateTestsListAll, {
 						Test_Type : "Standardized",
@@ -391,8 +398,6 @@ define(['require', 'text!userresume/templates/academic.html', 'text!userresume/t
 			$(e.target).parents(self.controls.ItemTestTopic).find(self.controls.TxtScore).removeAttr('disabled');
 			$(e.target).parents(self.controls.ItemTestTopic).find(self.controls.BtnFinishTestTopics).fadeIn();
 			$(e.target).fadeOut();
-			//TxtScore
-			//ItemTestTopic
 		},
 		FinishTest : function(e) {
 			$(e.target).parents(self.controls.ItemTestTopic).find(self.controls.TxtScore).attr('disabled', 'disabled');
@@ -407,6 +412,45 @@ define(['require', 'text!userresume/templates/academic.html', 'text!userresume/t
 			});
 
 			self.$(e.target).parent().find(self.controls.ModalBox).modal('show');
+		},
+		SaveTestScore : function(e){
+			
+			var topicId = $(e.target).attr('topicId')
+			var score = $(e.target).val();
+			
+			if ($.trim(score) == '') {
+				$(e.target).parent().find(self.controls.lblError).html(self.messages.MandatoryFieldsTest).fadeIn();
+				return;
+			}
+
+			$(e.target).parent().find(self.controls.lblError).html('').fadeOut();
+
+			var payload = {
+				id1 : self.user_id,
+				academics_topics_id : topicId,				
+				score : score,
+				users_id : self.user_id
+			};
+			
+			var testScoreId = $(e.target).attr('testscoreid');
+			
+			var testModel = new TestModel(payload);
+			testModel.users_id = self.user_id;
+						
+			if(testScoreId != ""){
+			// Write Code For Update Test once Scoreid Received
+			}else{
+				//testModel.action = "save";	
+			}
+			testModel.action = "save";
+			testModel.target = $(e.target);
+			testModel.save();
+			
+			// $.when(awardsModel.request).done(function() {
+				// self.ClearControls(e);
+				// self.setUpListView();
+			// });
+			
 		}
 	});
 
