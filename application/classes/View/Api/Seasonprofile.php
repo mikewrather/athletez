@@ -104,7 +104,6 @@
 		 */
 		public function delete_base()
 		{
-			// Scaffolding Code For Array:
-			return $this->obj->getBasics();
+			return null;
 		}
 	}

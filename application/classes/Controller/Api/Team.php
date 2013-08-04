@@ -726,8 +726,15 @@
 				$this->modelNotSetError($error_array);
 				return false;
 			}
+			if (!$this->mainModel->deleteGamelink($games_id)){
+				$error_array = array(
+					"error" => "Team game link doesn't exist",
+					"desc" => "Team game link doesn't exist."
+				);
 
-			return $this->mainModel->deleteGamelink($games_id);
+				$this->modelNotSetError($error_array);
+				return false;
+			}
 		}
 		
 	}

@@ -225,6 +225,10 @@ return array(
 		//No dependency table
 	),
 
+	'Site_Vote' => array(
+		//No dependency table
+	),
+
 
 
 

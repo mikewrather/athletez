@@ -318,7 +318,7 @@
 				$this->throw_permission_error(Constant::NOT_OWNER);
 			}
 
-			return $this->mainModel->delete();
+			$this->mainModel->delete_with_deps();
 		}
 		
 	}
