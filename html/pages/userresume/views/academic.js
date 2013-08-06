@@ -413,7 +413,7 @@ define(['require', 'text!userresume/templates/academic.html', 'text!userresume/t
 				$(e.target).parent().find(self.controls.lblError).html(self.messages.MandatoryFieldsTest).fadeIn();
 				return;
 			}
-
+    
 			$(e.target).parent().find(self.controls.lblError).html('').fadeOut();
 
 			var payload = {
