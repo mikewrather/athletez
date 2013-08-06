@@ -167,7 +167,7 @@
 				return false;
 			}
 
-			return $this->mainModel->delete();
+			$this->mainModel->delete_with_deps();
 		}
 
 	}

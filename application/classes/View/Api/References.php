@@ -23,10 +23,7 @@
 		
 		public function delete_base()
 		{
-			// Scaffolding Code For Single:
-			$retArr = $this->obj->id;
-
-			return $retArr;
+			return null;
 		}
 
 		public function put_basics()

@@ -238,6 +238,14 @@ return array(
 		//No dependency table
 	),
 
+	'User_Awards' => array(
+		//No dependency table
+	),
+
+	'User_References' => array(
+		//No dependency table
+	)
+
 
 
 
