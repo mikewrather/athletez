@@ -126,9 +126,7 @@
 		 */
 		public function delete_base()
 		{
-			// Scaffolding Code For Array:
-			$objs = $this->obj->getBasics();
-			return $objs;
+			return null;
 		}
 		
 	}

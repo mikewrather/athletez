@@ -80,11 +80,7 @@
 		 */
 		public function delete_base()
 		{
-			$retArr = array();
-			// Scaffolding Code For Single:
-			$retArr = $this->obj->getBasics();
-
-			return $retArr;
+			return null;
 		}
 		
 	}

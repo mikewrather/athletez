@@ -238,8 +238,6 @@
 				return false;
 			}
 			$this->mainModel->delete_with_deps();
-			return $this->mainModel;
-		
 		}
 		
 	}

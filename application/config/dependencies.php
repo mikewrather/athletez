@@ -229,6 +229,16 @@ return array(
 		//No dependency table
 	),
 
+	'Media_Videoservice' => array(
+		'Media_Queuedvideo' => 'video_services_id',
+		'Media_Video' => 'video_services_id'
+	),
+
+	'Media_Queuedvideo' => array(
+		//No dependency table
+	),
+
+
 
 
 

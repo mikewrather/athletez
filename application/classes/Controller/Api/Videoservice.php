@@ -162,7 +162,13 @@
 		{
 			$this->payloadDesc = "Delete Video Service";
 
-		
+			if(!$this->mainModel->id)
+			{
+				$this->modelNotSetError();
+				return false;
+			}
+
+			$this->mainModel->delete_with_deps();
 		}
 		
 	}

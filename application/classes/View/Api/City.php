@@ -115,11 +115,7 @@
 
 		public function delete_basics()
 		{
-			$retArr = array();
-
-			$retArr = $this->obj->getBasics();
-
-			return $retArr;
+			return null;
 		}
 		
 	}
