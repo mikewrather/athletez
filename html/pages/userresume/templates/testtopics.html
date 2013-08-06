@@ -7,7 +7,8 @@
 					{{#topics}}
 					<div class="row-fluid">
 						<span class="span3">{{name}}</span>
-						<span class="span9"><input type="text" class="txtTestScore_h" testId="{{id}}" topicId="{{topicid}}" value="{{score}}" disabled="disabled"/>
+						<span class="span9"><input type="text" class="txtTestScore_h" testId="{{id}}" topicId="{{topicid}}" initial="{{score}}" value="{{score}}" disabled="disabled"/>
+<a href="javascript:void(0)" class="btn-delete-test_h" testId="{{id}}" topicId="{{topicid}}">Remove</a>
 							<span class="alert alert-danger displayNone error_h"></span> <span class="alert alert-success displayNone success_h"></span>
 						</span>
 					</div>

@@ -4,21 +4,12 @@
  // Requires `define`, `require`
  // Returns {RDTREEVIEW} constructor
  */
-define(['require', 'text!userresume/templates/academic.html', 'text!userresume/templates/gpa.html', 'text!userresume/templates/test.html', 
-'text!userresume/templates/testtopics.html', 'text!userresume/templates/testlist.html', 'facade', 'views', 'utils', 'vendor', 
-'userresume/collections/gpa', 'userresume/collections/tests', 'userresume/collections/academictests',
- 'userresume/models/gpa', 'userresume/models/test'],
- function(require, academicTemplate, templateGpa, templateTests, templateTestTopics, templateTestsListAll) {
+define(['require', 'text!userresume/templates/academic.html', 'text!userresume/templates/gpa.html', 'text!userresume/templates/test.html', 'text!userresume/templates/testtopics.html', 'text!userresume/templates/testlist.html', 'facade', 'views', 'utils', 'vendor', 'userresume/collections/gpa', 'userresume/collections/tests', 'userresume/collections/academictests', 'userresume/models/gpa', 'userresume/models/test'], function(require, academicTemplate, templateGpa, templateTests, templateTestTopics, templateTestsListAll) {
 
-	var self, facade = require('facade'), views = require('views'), SectionView = views.SectionView, utils = require('utils'), 
-	Channel = utils.lib.Channel, vendor = require('vendor'), Mustache = vendor.Mustache, $ = facade.$, 
-	GPACollection = require('userresume/collections/gpa'), TestCollection = require('userresume/collections/tests'), 
-	AcademicTestsCollection = require("userresume/collections/academictests"),
+	var self, facade = require('facade'), views = require('views'), SectionView = views.SectionView, utils = require('utils'), Channel = utils.lib.Channel, vendor = require('vendor'), Mustache = vendor.Mustache, $ = facade.$, GPACollection = require('userresume/collections/gpa'), TestCollection = require('userresume/collections/tests'), AcademicTestsCollection = require("userresume/collections/academictests"),
 
 	//Models
-	GpaModel = require("userresume/models/gpa"),
-	TestModel = require("userresume/models/test"),
-	 AcademicView = SectionView.extend({
+	GpaModel = require("userresume/models/gpa"), TestModel = require("userresume/models/test"), AcademicView = SectionView.extend({
 
 		template : academicTemplate,
 
@@ -35,7 +26,8 @@ define(['require', 'text!userresume/templates/academic.html', 'text!userresume/t
 			"click .btn-delete-gpa" : "DeleteGpa",
 			"click .btn-Add-gpa" : "AddGpa",
 			"click .btn-Save-Gpa" : "SaveNewGpa",
-			"blur .txtTestScore_h" : "SaveTestScore"
+			"blur .txtTestScore_h" : "SaveTestScore",
+			"click .btn-delete-test_h" : "DeleteTestScore"
 		},
 
 		/*Holds */
@@ -126,14 +118,14 @@ define(['require', 'text!userresume/templates/academic.html', 'text!userresume/t
 					return;
 
 				self.gpa = Collection.parseAsRequired();
-			//	if (self.gpa.length > 0) {
-					var markup = Mustache.to_html(templateGpa, {
-						data : self.gpa
-					});
-					 $(self.el).find(self.controls.ContainerGpa).html(markup);
+				//	if (self.gpa.length > 0) {
+				var markup = Mustache.to_html(templateGpa, {
+					data : self.gpa
+				});
+				$(self.el).find(self.controls.ContainerGpa).html(markup);
 				// } else {
-					// self.$el(self.controls.ContainerGpa).html(self.messages.dataNotExistGPA);
-// 
+				// self.$el(self.controls.ContainerGpa).html(self.messages.dataNotExistGPA);
+				//
 				// }
 
 			});
@@ -288,15 +280,13 @@ define(['require', 'text!userresume/templates/academic.html', 'text!userresume/t
 			var testid = $(e.target).attr('testid');
 			if ($(e.target).is(':checked')) {
 				var d = [];
-				
-				
-				
+
 				$.each(self.standardTestsListAll, function(index, load) {
 					if (load.id == testid) {
 						d.push(load);
 					}
 				});
-				
+
 				var topicsHtml = Mustache.to_html(templateTestTopics, {
 					Test_Type : "Standardized",
 					data : d
@@ -370,11 +360,9 @@ define(['require', 'text!userresume/templates/academic.html', 'text!userresume/t
 				} else {
 					$(self.el).find(self.controls.ContainerAP).find(self.controls.SectionModalTests).html(self.messages.dataNotExistTests);
 				}
-
 			});
 		},
 		AddAPTest : function(e) {
-
 			var testid = $(e.target).attr('testid');
 			if ($(e.target).is(':checked')) {
 				var d = [];
@@ -414,11 +402,13 @@ define(['require', 'text!userresume/templates/academic.html', 'text!userresume/t
 
 			self.$(e.target).parent().find(self.controls.ModalBox).modal('show');
 		},
-		SaveTestScore : function(e){
-			
+		SaveTestScore : function(e) {
+
 			var topicId = $(e.target).attr('topicId')
 			var score = $(e.target).val();
-			
+			var initial = $(e.target).attr('initial');
+			var action = "save";
+			console.log("initial", initial);
 			if ($.trim(score) == '') {
 				$(e.target).parent().find(self.controls.lblError).html(self.messages.MandatoryFieldsTest).fadeIn();
 				return;
@@ -428,25 +418,50 @@ define(['require', 'text!userresume/templates/academic.html', 'text!userresume/t
 
 			var payload = {
 				id1 : self.user_id,
-				academics_topics_id : topicId,				
+				academics_topics_id : topicId,
 				score : score,
 				users_id : self.user_id
 			};
-			
+			if (initial != "") {
+				action = "update";
+				payload.academics_tests_topics_id = topicId;
+			}
 			var testScoreId = $(e.target).attr('testscoreid');
-			
+
 			var testModel = new TestModel(payload);
 			testModel.users_id = self.user_id;
-						
-			if(testScoreId != ""){
-			// Write Code For Update Test once Scoreid Received
-			}else{
-				//testModel.action = "save";	
-			}
-			testModel.action = "save";
+			testModel.action = action;
 			testModel.target = $(e.target);
 			testModel.save();
-			
+
+		},
+		DeleteTestScore : function(e) {
+			var topicId = $(e.target).attr('topicid');
+
+			var payload = {
+				users_id : self.user_id,
+				id1 : 1,
+				academics_tests_topics_id : topicId
+			};
+			var testModel = new TestModel(payload);
+			testModel.users_id = self.user_id;
+			testModel.id1 = self.user_id;
+			testModel.academics_tests_topics_id = topicId;
+			testModel.action = "delete";
+			testModel.target = $(e.target);
+			testModel.destroy({
+				data : {
+					users_id : self.user_id,
+					academics_tests_topics_id : topicId
+				},
+				success : function() {
+					$(e.target).val('').attr('initial', '');
+				}
+			});
+
+			$.when(testModel.request).done(function() {
+				//$(e.target).parent().find(self.controls.TxtGpa).val('');
+			});
 		}
 	});
 

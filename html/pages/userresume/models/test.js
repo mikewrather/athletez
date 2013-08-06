@@ -8,7 +8,7 @@ define(["facade", "user/models/common"], function(facade, CommonModel) {
 	var Model, _ = facade._;
 
 	Model = CommonModel.extend({
-		idAttribute : 'academics_test_score_id',
+		idAttribute : 'academics_tests_topics_id',
 
 		data : {
 			user_id : this.user_id,
@@ -19,12 +19,11 @@ define(["facade", "user/models/common"], function(facade, CommonModel) {
 
 		url : function() {
 			if (this.action == "update")
-				return 'api/awards/basics/' + this.users_id + '?id1=' + this.users_id;
+				return 'api/user/testscore/' + this.users_id + '?id1=' + this.users_id;
 			if (this.action == "save")
 				return 'api/user/addtestscore/' + this.users_id + '?id1=' + this.users_id;
 			if (this.action == "delete")
-				;
-			return 'api/awards/base/' + this.users_id + '?id1=' + this.users_id;
+			return 'api/user/testscore/' + this.users_id + '?id1=' + this.users_id;
 
 			return 'api/user/addtestscore/';
 

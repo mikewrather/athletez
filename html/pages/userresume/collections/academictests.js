@@ -39,7 +39,7 @@ define(['facade', 'collections', 'user/collections/tests', 'utils'], function(fa
 								temp.topics.push({
 									topicid : key,
 									name : payload.topics[key].name,
-									score : payload.topics[key].score || ""
+									score : payload.topics[key].score || "",
 								});
 
 							}
