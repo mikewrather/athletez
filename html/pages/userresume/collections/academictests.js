@@ -7,9 +7,7 @@
 
 define(['facade', 'collections', 'user/collections/tests', 'utils'], function(facade, collections, UserCollection, utils) {
 
-	var List, BaseCollection = collections.BaseCollection, _ = facade._, Channel = utils.lib.Channel,
-
-	List = UserCollection.extend({
+	var List, BaseCollection = collections.BaseCollection, _ = facade._, Channel = utils.lib.Channel, List = UserCollection.extend({
 		url : function() {
 			if (testpath)
 				return testpath + '/api/academictest/listall/' + this.user_id;
@@ -35,15 +33,17 @@ define(['facade', 'collections', 'user/collections/tests', 'utils'], function(fa
 							type : payload.test_type,
 							topics : []
 						};
-					
-					if(payload.topics != null)	
-						$.each(payload.topics,function(i,l){
-							temp.topics.push({
-								name : l.name,
-								score : (l.score == false) ? "" : l.score
-							});
-							
-						})
+
+						if (payload.topics != null) {
+							for (var key in payload.topics) {
+								temp.topics.push({
+									topicid : key,
+									name : payload.topics[key].name,
+									score : payload.topics[key].score || ""
+								});
+
+							}
+						}
 						d.push(temp);
 					}
 				});

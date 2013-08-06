@@ -285,17 +285,18 @@ define(['require', 'text!userresume/templates/academic.html', 'text!userresume/t
 			});
 		},
 		AddStandardTest : function(e) {
-
 			var testid = $(e.target).attr('testid');
 			if ($(e.target).is(':checked')) {
 				var d = [];
+				
+				
+				
 				$.each(self.standardTestsListAll, function(index, load) {
-
 					if (load.id == testid) {
 						d.push(load);
 					}
 				});
-
+				
 				var topicsHtml = Mustache.to_html(templateTestTopics, {
 					Test_Type : "Standardized",
 					data : d
@@ -445,11 +446,6 @@ define(['require', 'text!userresume/templates/academic.html', 'text!userresume/t
 			testModel.action = "save";
 			testModel.target = $(e.target);
 			testModel.save();
-			
-			// $.when(awardsModel.request).done(function() {
-				// self.ClearControls(e);
-				// self.setUpListView();
-			// });
 			
 		}
 	});

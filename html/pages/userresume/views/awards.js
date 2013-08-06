@@ -167,6 +167,7 @@ define(['require', 'text!userresume/templates/awards.html', 'text!userresume/tem
 				});
 			}
 		},
+		
 		AddExistingAward : function() {
 			console.log("Add Existing");
 		},
