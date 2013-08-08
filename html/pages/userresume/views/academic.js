@@ -130,11 +130,13 @@ define(['require', 'text!userresume/templates/academic.html', 'text!userresume/t
 
 			});
 		},
+		/*Eable text boxes and display finish button*/
 		EditGpa : function(e) {
 			$(e.target).parent().find(self.controls.TxtGpa).removeAttr('disabled');
 			$(e.target).parent().find(self.controls.BtnFinishGpa).fadeIn();
 			$(e.target).fadeOut();
 		},
+		/*Save GPA Scores With API In TO DATABASE*/
 		SaveGpa : function(e) {
 			var year = $(e.target).attr('year');
 			var value = $(e.target).val();
