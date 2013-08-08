@@ -1588,8 +1588,13 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 	public function delete_tests_score($args){
 		$testscore_model = ORM::factory('Academics_Tests_Scores');
 		$result = $testscore_model->where('users_id','=', $this->id)
-			->where('academics_tests_topics_id', '=', $args['academics_tests_topics_id'])
-			->find();
+			->where('academics_tests_topics_id', '=', $args['academics_tests_topics_id']);
+		$classes_arr = array(
+			'Academics_Tests_Scores' => 'academics_tests_scores'
+		);
+
+		$result = ORM::_sql_exclude_deleted($classes_arr, $result);
+		$result = $result->find();
 
 		if (!$result->id){
 			return false;
