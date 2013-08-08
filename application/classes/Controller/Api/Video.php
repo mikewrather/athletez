@@ -78,8 +78,25 @@
 			if((int)trim($this->request->query('video_types_id')) > 0)
 			{
 				$video_types_id = (int)trim($this->request->query('video_types_id'));
+				$arguments['video_types_id'] = $video_types_id;
+			}else{
+				$error_array = array(
+					"error" => "Invalid order by column",
+					"desc" => "Currently only support 'votes', 'followers', 'postTime'"
+				);
+				$this->modelNotSetError($error_array);
 			}
 
+			if(!$this->mainModel->id)
+			{
+				$this->modelNotSetError();
+				return false;
+			}
+
+			$arguments['videos_id'] = $this->mainModel->id;
+
+			$video_meta = ORM::factory("Media_Videometa");
+			return $video_meta->getVideoMeta($arguments);
 		}
 
 		/**

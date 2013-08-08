@@ -41,6 +41,16 @@ class ORM extends Kohana_ORM
 		return $qry;
 	}
 
+	public static function enttypes_is_deleted($enttypes_id, $subject_id){
+		$deleted_model = DB::select('id')->from('deleted')->where('subject_enttypes_id' ,'=', $enttypes_id)
+			->where('subject_id', '=', $subject_id);
+		$result = $deleted_model->execute()->as_array();
+		if (count($result) > 0){
+			return true;
+		}
+		return false;
+	}
+
 
 	public static function _sql_exclude_deleted_abstract($class_names,$qry)
 	{

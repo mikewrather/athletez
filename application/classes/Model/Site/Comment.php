@@ -150,7 +150,7 @@ class Model_Site_Comment extends Model_Site_Entdir
 		$name .= method_exists($subject,'name') ? $subject->name() : $subject->name;
 		return $name;
 	}
-
+	//TODO, add by Jeffrey. There are $_belongs_to relationship. we need to deal with this later
 	public function getUser(){
 		$user = $this->user;
 		//$classes_arr = array('User_Base' => 'users');

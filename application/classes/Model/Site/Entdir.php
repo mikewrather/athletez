@@ -35,6 +35,10 @@ class Model_Site_Entdir extends ORM
 		if (!isset($this->subject_enttypes_id) && !isset($this->subject_id)){
 			return;
 		}
+
+		if (ORM::enttypes_is_deleted($this->subject_enttypes_id, $this->subject_id)){
+			return;
+		}
 		$this->subject = Ent::eFact($this->subject_enttypes_id,$this->subject_id);
 		return $this->subject;
 	}

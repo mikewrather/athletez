@@ -93,6 +93,15 @@
 			}
 
 			$subject = Ent::eFact($arguments["subject_enttypes_id"],$arguments["subject_id"]);
+			//check if the user already phantom deleted
+			$classes_arr = array(
+				'User_Base' => 'user_base'
+			);
+			$user_model = ORM::factory('User_Base');
+			$user_model->where('id', '=', $subject->id);
+			$user_model = ORM::_sql_exclude_deleted($classes_arr, $user_model);
+			$result = $user_model->find()->as_array();
+
 			if(!$subject->loaded())
 			{
 				// Create Array for Error Data
@@ -106,6 +115,14 @@
 				// Call method to throw an error
 				$this->addError($error_array,$is_fatal);
 				return false;
+			}
+			if (!$result['id']){
+				$error_array = array(
+					"error" => "As far as we can tell,user already deleted",
+					"desc" => "As far as we can tell,user already deleted"
+				);
+
+				$this->modelNotSetError($error_array);
 			}
 
 			$comments = Model_Site_Comment::getCommentsOn($subject);
@@ -143,8 +160,16 @@
 				$this->modelNotSetError();
 				return false;
 			}
-
-			return $this->mainModel->getSubject();
+			$subject = $this->mainModel->getSubject();
+			if (!$subject){
+				$error_array = array(
+					"error" => "As far as we can tell, the subject was deleted",
+					"desc" => "As far as we can tell, the subject was deleted"
+				);
+				$this->modelNotSetError($error_array);
+				return false;
+			}
+			return $subject;
 		}
 		
 		/**
