@@ -79,6 +79,11 @@ class Model_Academics_Tests_Scores extends ORM
 
 		$score_model = ORM::factory("Academics_Tests_Scores");
 		$result = $score_model->where('academics_tests_topics_id', '=', $academics_tests_topics_id);
+		$classes_arr = array(
+			'Academics_Tests_Scores' => 'academics_tests_scores'
+		);
+
+		$result = ORM::_sql_exclude_deleted($classes_arr, $result);
 		$result->where('users_id', '=', $users_id);
 		$re = $result->find()->as_array();
 
