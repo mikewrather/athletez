@@ -381,7 +381,6 @@ define(['require', 'text!userresume/templates/academic.html', 'text!userresume/t
 				});
 				$(self.el).find(self.controls.ContainerAP).find(self.controls.SectionTestTopics).append(topicsHtml);
 			} else {
-
 				$(self.el).find(self.controls.ContainerAP).find(".item-test-" + testid).remove();
 			}
 		},
@@ -410,12 +409,12 @@ define(['require', 'text!userresume/templates/academic.html', 'text!userresume/t
 			var score = $(e.target).val();
 			var initial = $(e.target).attr('initial');
 			var action = "save";
-			console.log("initial", initial);
+		//	console.log("initial", initial);
 			if ($.trim(score) == '') {
 				$(e.target).parent().find(self.controls.lblError).html(self.messages.MandatoryFieldsTest).fadeIn();
 				return;
 			}
-    
+
 			$(e.target).parent().find(self.controls.lblError).html('').fadeOut();
 
 			var payload = {
@@ -434,8 +433,15 @@ define(['require', 'text!userresume/templates/academic.html', 'text!userresume/t
 			testModel.users_id = self.user_id;
 			testModel.action = action;
 			testModel.target = $(e.target);
-			testModel.save();
-
+			testModel.save({
+				success : function() {
+					//	console.log("success");
+					//	$(e.target).attr('initial',score);
+				}
+			});
+			$.when(testModel.request).done(function() {
+				$(e.target).attr('initial', score);
+			});
 		},
 		DeleteTestScore : function(e) {
 			var topicId = $(e.target).attr('topicid');
