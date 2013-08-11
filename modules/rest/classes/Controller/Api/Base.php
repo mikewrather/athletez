@@ -316,7 +316,11 @@ class Controller_Api_Base extends AuthController
 	{
 		if($this->myID)
 		{
-			$this->mainModel->where('id','=',$this->myID)->find();
+			$enttypes_id = Ent::getMyEntTypeID($this->mainModel);
+			$is_deleted = ORM::enttypes_is_deleted($enttypes_id, $this->myID);
+			$this->mainModel->where('id','=',$this->myID)
+				->where(DB::expr('0'), '=', $is_deleted)
+				->find();
 			if(!$this->mainModel->loaded())	unset($this->mainModel);
 		}
 	//	print_r($this->mainModel);

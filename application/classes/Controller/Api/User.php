@@ -21,6 +21,9 @@
                 $this->myID = $this->user->id;
 			$this->popMainModel();
 			if(!$this->mainModel->id && $this->is_logged_in){
+				if (!isset($this->mainModel)){
+					$this->mainModel = ORM::factory('User_Base');
+				}
 				$this->mainModel->id = $this->user->id;
 			}
 		}
