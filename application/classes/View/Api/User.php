@@ -23,6 +23,10 @@
 			$retArr = $this->obj->getBasics();
 			return $retArr;
 		}
+
+		public function get_demo(){
+			return $this->obj;
+		}
 		
 		/**
 		 * get_teams() List of teams the user is associated with

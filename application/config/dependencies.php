@@ -150,10 +150,12 @@ return array(
 	//TODO, add by Jeffrey, like users stable ,there is cities_id there ,but no relationship line connected.
 	'Location_City' => array(
 		'Location_Base' => 'cities_id',
+		'User_Base' => 'cities_id'
 	),
 
 	'Location_County' => array(
-		'Location_City' => 'county_id'
+		'Location_City' => 'county_id',
+
 	),
 
 	//TODO, as to states_id, we may lose some line connection on states
@@ -161,7 +163,8 @@ return array(
 		'Location_County' => 'states_id',
 		'Sportorg_Section' => 'states_id',
 		'Sportorg_Division' => 'states_id',
-		'Sportorg_League' => 'states_id'
+		'Sportorg_League' => 'states_id',
+		'Location_City' => 'state_id',
 	),
 
 	// Sportorg_Section already have config in above line 62
@@ -244,7 +247,12 @@ return array(
 
 	'User_References' => array(
 		//No dependency table
-	)
+	),
+
+	'Location_Country' => array(
+		'Location_State' => 'countries_id'
+	),
+
 
 
 
