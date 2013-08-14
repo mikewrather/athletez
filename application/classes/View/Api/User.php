@@ -242,24 +242,32 @@
 			// Scaffolding Code For Array:
 			$objs = $this->obj->find_all();
 			$grouped_array = array();
-			$awards_arr = array();
-
+			$references_arr = array();
+			$sports_id = "";
 			foreach($objs as $obj)
 			{
 				$basic = $obj->getBasics();
+				if ( $basic['sports_id'] != $sports_id){
+					unset($references_arr);
+				}
 				$sports_id = $basic['sports_id'];
+
 				$obj = new stdClass();
 				$obj->name = $basic['sport']['sport_name'];
-				$awards_arr[] = $basic;
-				$obj->awards = $awards_arr;
+				$references_arr[] = $basic;
+				$obj->references = $references_arr;
 				$grouped_array[$sports_id] = $obj;
 
 				$retArr = $grouped_array;
-				if (!array_key_exists($sports_id, $grouped_array))
-					unset($awards_arr);
 			}
 
-			return $retArr;
+			$results = null;
+			if ($retArr)
+				foreach($retArr as $b){
+					$results[] = $b;
+				}
+
+			return $results;
 		}
 
 		public function get_contact(){
@@ -273,28 +281,34 @@
 
 		public function get_awards(){
 			$retArr = null;
-			//array('sports_id' => array('sport_name'));
-			// Scaffolding Code For Array:
+
 			$objs = $this->obj->find_all();
 			$grouped_array = array();
 			$awards_arr = array();
-
+			$sports_id = "";
 			foreach($objs as $obj)
 			{
 				$basic = $obj->getBasics();
+				if ( $basic['sports_id'] != $sports_id){
+					unset($awards_arr);
+				}
 				$sports_id = $basic['sports_id'];
 				$obj = new stdClass();
+				$obj->id = $sports_id;
 				$obj->name = $basic['sport']['sport_name'];
 				$awards_arr[] = $basic;
 				$obj->awards = $awards_arr;
 				$grouped_array[$sports_id] = $obj;
 
 				$retArr = $grouped_array;
-				if (!array_key_exists($sports_id, $grouped_array))
-					unset($awards_arr);
 			}
+			$results = null;
+			if ($retArr)
+				foreach($retArr as $b){
+					$results[] = $b;
+				}
 
-			return $retArr;
+			return $results;
 		}
 		
 		/**
