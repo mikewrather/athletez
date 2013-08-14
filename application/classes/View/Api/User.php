@@ -257,7 +257,6 @@
 				$references_arr[] = $basic;
 				$obj->references = $references_arr;
 				$grouped_array[$sports_id] = $obj;
-
 				$retArr = $grouped_array;
 			}
 
