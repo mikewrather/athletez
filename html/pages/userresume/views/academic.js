@@ -118,16 +118,10 @@ define(['require', 'text!userresume/templates/academic.html', 'text!userresume/t
 					return;
 
 				self.gpa = Collection.parseAsRequired();
-				//	if (self.gpa.length > 0) {
 				var markup = Mustache.to_html(templateGpa, {
 					data : self.gpa
 				});
 				$(self.el).find(self.controls.ContainerGpa).html(markup);
-				// } else {
-				// self.$el(self.controls.ContainerGpa).html(self.messages.dataNotExistGPA);
-				//
-				// }
-
 			});
 		},
 		/*Eable text boxes and display finish button*/

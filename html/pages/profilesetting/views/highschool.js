@@ -122,14 +122,14 @@ define(['require', 'text!profilesetting/templates/highschool.html', 'text!profil
 		/*Event Called when a key is pressed
 		 Fetch data from api and populate it in auto complete dropdown
 		 */
-		keyupState : function(event) {
-			var state = $(self.controls.txtStates).val();
+		keyupState : function(e) {
+			var state = $(e.target).val();
 			var stateArr = [];
 			var isValidKey = self.isValidAutoCompleteKey(event);
 			if (state != '') {
 				if (isValidKey == true) {
 					// Disable Schools Text Box
-					self.$(self.controls.txtSchools).attr('disabled', 'disabled');
+					self.$(e.target).attr('disabled', 'disabled');
 
 					//// Remove Sports Section Html
 					self.RemoveSportsSection();
@@ -297,6 +297,7 @@ define(['require', 'text!profilesetting/templates/highschool.html', 'text!profil
 					if (models == null || models.length < 1)
 						self.$(self.controls.ddlSports).parent().find(self.controls.fieldMessage).html(self.messages.dataNotExist).stop().fadeIn();
 
+console.log("models sports",models);
 					self.sports = [];
 					for (var key in models) {
 						self.sports.push(models[key].payload);

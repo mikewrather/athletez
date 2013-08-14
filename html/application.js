@@ -4,9 +4,9 @@
 // Return {Object} App
 
 define( ["facade", "utils", "collections", "chrome", "controller", "profile", "imageup",'home',
- "game", "team", "registration","profilesetting","userresume","packages/site/collections/phrases"],
+ "game", "team", "registration","profilesetting","userresume","packages/site/collections/phrases","usercontrols/tag/tag"],
 function (facade, utils, collections, chromeBootstrap, Controller, ProfileController, ImageController, HomeController,
-	GameController, TeamController, RegistrationController, ProfileSetting,UserResume, SitePhraseList) {
+	GameController, TeamController, RegistrationController, ProfileSetting,UserResume, SitePhraseList , TagController ) {
 
     var App,
         ApplicationStates = collections.ApplicationStates,
@@ -49,7 +49,9 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
             
             'registration': 'showRegistration',
             'registration/': 'showRegistration',
-            'registration/:action': 'showRegistration' 
+            'registration/:action': 'showRegistration' , 
+            
+            'tag': 'showTag'
         },
 
         initialize: function (options) {
@@ -97,9 +99,6 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
             $('#main').empty();
             chromeBootstrap();
 			function initProfile(headerModelId) {
-
-				debug.log("Called initProfile with " + headerModelId);
-
 				var pCont = new ProfileController({
 	                "userId": userid==undefined ? headerModelId : userid
 	            });
@@ -202,6 +201,21 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
             }
             
             Channel('app-inited').subscribe(initRegistration);
+        },
+        
+        showTag: function (userid) {
+            this.loadStyles();
+            $('body').empty();
+            chromeBootstrap();
+
+            function initTag(id) {
+            	
+                var tag = new TagController({
+                	"id": userid==undefined ? id : userid
+                });
+            }
+            
+            Channel('app-inited').subscribe(initTag);
         },
 
         // load style sheets
