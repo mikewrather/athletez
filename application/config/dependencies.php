@@ -164,7 +164,7 @@ return array(
 		'Sportorg_Section' => 'states_id',
 		'Sportorg_Division' => 'states_id',
 		'Sportorg_League' => 'states_id',
-		'Location_City' => 'state_id',
+		'Location_City' => 'states_id',
 	),
 
 	// Sportorg_Section already have config in above line 62

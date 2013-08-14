@@ -1094,7 +1094,7 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 
 		if (isset($states_id)){
 			$user_model->join('cities')->on('users.cities_id', '=', 'cities.id');
-			$user_model->where('cities.state_id', '=', $states_id);
+			$user_model->where('cities.states_id', '=', $states_id);
 			$classes_arr['Location_City'] = 'cities';
 		}
 

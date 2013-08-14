@@ -18,7 +18,7 @@ class Model_Highschool extends ORM
 	protected $_belongs_to = array(
 		'state' => array(
 			'model' => 'Location_State',
-			'foreign_key' => 'state_id'
+			'foreign_key' => 'states_id'
 		)
 	);
 	/*

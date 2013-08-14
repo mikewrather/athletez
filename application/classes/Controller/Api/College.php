@@ -86,7 +86,7 @@
 			
 			if((int)trim($this->request->query('states_id')) > 0)
 			{
-				$arguments["state_id"] = (int)trim($this->request->query('states_id'));
+				$arguments["states_id"] = (int)trim($this->request->query('states_id'));
 			}
 
 			return $this->mainModel->getSearch($arguments);
