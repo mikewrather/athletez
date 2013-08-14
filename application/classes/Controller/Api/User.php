@@ -21,6 +21,9 @@
                 $this->myID = $this->user->id;
 			$this->popMainModel();
 			if(!$this->mainModel->id && $this->is_logged_in){
+				if (!isset($this->mainModel)){
+					$this->mainModel = ORM::factory('User_Base');
+				}
 				$this->mainModel->id = $this->user->id;
 			}
 		}
@@ -2573,6 +2576,15 @@
 				$this->modelNotSetError($error_array);
 				return false;
 			}
+		}
+
+		public function action_get_demo(){
+			if(!$this->mainModel->id)
+			{
+				$this->modelNotSetError();
+				return false;
+			}
+			 return $this->mainModel->get_new_basics();
 		}
 		
 	}

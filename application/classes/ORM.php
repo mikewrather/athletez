@@ -187,4 +187,47 @@ class ORM extends Kohana_ORM
 	{
 		return $this->_table_name;
 	}
+
+	public function get_new_basics($show_basic_info_only = false){
+		$classname = str_replace('Model_','',get_class($this));
+		$deps = Kohana::$config->load('dependencies')->as_array();
+		$its_foreign_keys = array();
+		foreach($deps as $model => $related_model){
+			if (array_key_exists($classname, $related_model)){
+				$its_foreign_keys[] = $related_model[$classname];
+			}
+		}
+
+		$columns = array_keys($this->table_columns());
+		$results = array();
+		foreach($columns as $column){
+			$results[$column] = $this->{$column};
+		}
+
+		if ($show_basic_info_only){
+			return $results;
+		}
+
+		if (empty($its_foreign_keys)){
+			return $results;
+		}
+
+		$class_foreign_relationships = $its_foreign_keys;
+		foreach(array_unique($class_foreign_relationships) as $id1){
+			$class = Ent::getClassByID1($id1);
+			if ($class){
+				if (!$results[$id1]){
+					$results[$id1.'_obj'] = null;
+				}else{
+					$model = ORM::factory($class, $results[$id1]);
+					$results[$id1.'_obj'] = $model->get_new_basics();
+				}
+			}
+		}
+		return $results;
+	}
+
+	public function delete($is_real_delete = false){
+
+	}
 }

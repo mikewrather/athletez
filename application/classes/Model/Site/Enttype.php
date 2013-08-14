@@ -28,6 +28,15 @@ class Model_Site_Enttype extends ORM
 		return $oneofme->class_name;
 	}
 
+	static function getClassByID1($id1){
+		$ent_model = ORM::factory('Site_Enttype');
+		$result = $ent_model->where('id1', '=', $id1)->find();
+		if (isset($result->class_name)){
+			return $result->class_name;
+		}
+		return null;
+	}
+
 	static function getMyTable($enttypeID)
 	{
 		$oneofme = ORM::factory('Site_Enttype',$enttypeID);
