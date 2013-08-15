@@ -90,10 +90,10 @@ define([
 		},
         showuploader: function () {
             //this.basics = new ImageBasicModel();
-			imgModel= new ImageBasicModel();
-            addBasicView = new ImageBasicView({
+
+            var addBasicView = new ImageBasicView({
                 name: "Add Media",
-				model :imgModel,
+				model :new ImageBasicModel(),
 				destination : "#main-content-img"
             },this.attr);
             debug.log("Imagecontroller Show");
@@ -135,7 +135,7 @@ define([
 			    this.showuploader();	
 		},
 		imageUpload: function (data) {
-			debug.log(data);
+			console.log(data);
 			debug.log("image uploading starts");
 			var id=data.id,
 				length=data.len,

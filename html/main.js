@@ -19,6 +19,7 @@ require.config({
         'mustache'     : '/vendor/mustache',
         'backbone'     : '/vendor/backbone',
 
+
         // Plugins
         'bootstrap'    : '/vendor/plugins/bootstrap',
         'jquery.pstrength' : '/vendor/plugins/jquery.pstrength-min.1.2',
@@ -28,6 +29,7 @@ require.config({
 		'fileupload'   :'/vendor/plugins/jquery.fileupload',
 		'jquery.ui.widget'	:'/vendor/plugins/jquery.ui.widget',
         'jquery.slimscroll' : '/vendor/plugins/jquery.slimscroll.min',
+	    'plupload'          : '/vendor/plugins/plupload',
         
         'custom'       : '/vendor/custom',
 
@@ -61,7 +63,7 @@ require.config({
         'controller'   : '/controller',
 
         // Packages
-        'packages'     : '/packages',        
+        'packages'     : '/packages',
         'user'         : '/packages/user',
         'media'        : '/packages/media',
         'site'         : '/packages/site',
@@ -75,6 +77,7 @@ require.config({
         'pages'        : '/pages',
         'chrome'       : '/pages/chrome',
 		'imageup'      : '/pages/imageup',
+	    'videopreview' : '/pages/videopreview',
         'profile'      : '/pages/profile',
         'game'         : '/pages/game',
         'team'         : '/pages/team',
@@ -82,8 +85,9 @@ require.config({
         'home'         : '/pages/home',
         'profilesetting' : '/pages/profilesetting',
         'userresume' : '/pages/userresume',
+
         // Application - bootstrap for frontend app 
-        'application'  : '/application',
+        'application'  : '/application'
 
     },
     shim: {
@@ -96,7 +100,11 @@ require.config({
         },
 	    'bootstrap': {
 		    deps: ['jquery']
+	    },
+	    'plupload': {
+		    deps: ['jquery']
 	    }
+
     },
     priority: ['text', 'modernizr', 'json2', 'vendor', 'utils', 'facade', 'syncs', 'models', 'views', 'collections', 'controller'],
     jquery: '1.9.0',
