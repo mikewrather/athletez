@@ -18,7 +18,7 @@ class Model_User_Identity extends ORM
 	protected $_belongs_to = array(
 		'user' => array(
 			'model' => 'User_Base',
-			'foreign_key' => 'user_id'
+			'foreign_key' => 'users_id'
 		)
 	);
 /*

@@ -83,7 +83,7 @@ define(['require', 'text!userresume/templates/contact.html', 'facade', 'views', 
 					return;
 
 				self.contacts = Collection.parseAsRequired();
-				console.log("self.contacts", self.contacts);
+				//console.log("self.contacts", self.contacts);
 				if (self.contacts.length > 0) {
 					var markup = Mustache.to_html(contactTemplate, {
 						data : self.contacts

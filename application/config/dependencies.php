@@ -164,7 +164,7 @@ return array(
 		'Sportorg_Section' => 'states_id',
 		'Sportorg_Division' => 'states_id',
 		'Sportorg_League' => 'states_id',
-		'Location_City' => 'state_id',
+		'Location_City' => 'states_id',
 	),
 
 	// Sportorg_Section already have config in above line 62
@@ -190,8 +190,8 @@ return array(
 	),
 
 	'User_Base' => array(
-		'User_Tokens' => 'user_id',
-		'User_Identity' => 'user_id',
+		'User_Tokens' => 'users_id',
+		'User_Identity' => 'users_id',
 		'Sportorg_Games_Matchplayer' => 'users_id',
 		'Site_Pog' => 'player_users_id',
 		'Site_Flag' => 'flagger_users_id',
@@ -209,7 +209,7 @@ return array(
 		'Media_Queuedvideo' => 'users_id',
 		'Stats_Vals' => 'users_id',
 		'User_Teamslink' => 'users_id',
-		'Rolesusers' => 'user_id'
+		'Rolesusers' => 'users_id'
 	),
 
 	'User_Sportlink' => array(

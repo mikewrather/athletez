@@ -30,19 +30,19 @@ class Model_Rolesusers extends ORM
 
 	function addRole($args = array()){
 		extract($args);
-		if(isset($role_id))
+		if(isset($roles_id))
 		{
-			$this->role_id = $role_id;
+			$this->roles_id = $roles_id;
 		}
 
-		if(isset($user_id))
+		if(isset($users_id))
 		{
-			$this->user_id = $user_id;
+			$this->users_id = $users_id;
 		}
 
 		try{
 			$external_validate = Validation::factory($args);
-			$external_validate->rule('user_id', 'roles_users_exist', array($user_id, $role_id));
+			$external_validate->rule('users_id', 'roles_users_exist', array($users_id, $roles_id));
 			if ($this->check($external_validate))
 				$this->save();
 			return $this;

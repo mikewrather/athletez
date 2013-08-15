@@ -10,7 +10,7 @@
  */
 
 return array(
-	'user_id' => array(
+	'users_id' => array(
 		'not_equals' => $e->get('not_null'),
 	),
 );

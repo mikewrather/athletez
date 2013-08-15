@@ -494,8 +494,8 @@
                 // Create Array for Error Data
                 $error_array = array(
                     "error" => "This league already exists",
-                    "param_name" => "name,state_id, sports_id",
-                    "param_desc" => "name,state_id, sports_id"
+                    "param_name" => "name,states_id, sports_id",
+                    "param_desc" => "name,states_id, sports_id"
                 );
 
                 // Set whether it is a fatal error

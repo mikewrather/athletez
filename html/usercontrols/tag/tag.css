@@ -1,0 +1,69 @@
+.floatLeft {
+	float: left;
+}
+.floatRight {
+	float: right;
+}
+.displayNone{display:none}
+.section-teams-prof-setting .spn-black-heading {
+	background-color: #444;
+	color: #FFF;
+	width: 40px;
+}
+.section-teams-prof-setting .div-add-dotted {
+	background: #F5F5F5;
+	color: #44F;
+	border: 1px #66F dashed;
+	text-align: center;
+	margin: 5px 0 10px;
+	cursor: pointer;
+}
+
+.section-teams-prof-setting .sub-section-prof-setting {
+	border: 4px solid #555;
+}
+
+.sub-section-prof-setting input[type='text'], .sub-section-prof-setting select {
+	width: 235px;
+	    font-size: 15px;
+    height: auto;
+}
+
+.sub-section-prof-setting label{   display: inline;}
+
+.pointer {cursor: pointer;}
+
+/*Seasons Section Starts Here*/
+.arrow {    background: none repeat scroll 0 0 #222222;
+    border: 3px solid #FFFFFF;
+    border-radius: 23px 23px 23px 23px;
+    color: #FFFFFF;
+    font-size: 26px;
+    font-weight: 100;
+    height: 38px;
+    line-height: 30px;
+    opacity: 0.5;
+    text-align: center;
+    width: 40px;
+    float:left}
+.arrow.down{}
+.arrow.up{}
+/*Seasons Section Ends Here*/
+
+/*Positions Section Starts Here*/
+.position-modal .modal-body span{
+    background: none repeat scroll 0 0 #444444;
+    border-radius: 6px 6px 6px 6px;
+    color: #E5E5E5;
+    margin-bottom: 2px;
+    margin-left: 0;
+    margin-right: 4px;
+    padding: 3px 4px;
+	
+}
+.position-modal .modal-body span.active{
+	background: #AAA;
+	background: #9A9A9A; 
+}
+ 
+/*Positions Section Ends Here*/

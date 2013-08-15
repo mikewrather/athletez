@@ -66,13 +66,10 @@ define(['require', 'text!profilesetting/templates/teamlist.html', 'facade', 'vie
 			teamsCollection.fetch();
 
 			$.when(teamsCollection.request).done(function() {
-				console.log("teams collection", teamsCollection);
-				console.log("Teams View Self El", self.el)
 				if (teamsCollection.isError())
 					return;
 
 				var models = teamsCollection.toJSON();
-				console.log("Teams Collection Models Are", models);
 				if (models.length) {
 					var d = [];
 					for (var i = 0; i < models.length; i++) {
@@ -84,7 +81,6 @@ define(['require', 'text!profilesetting/templates/teamlist.html', 'facade', 'vie
 						orgs : d
 					});
 					$(self.el).html(markup);
-					//		console.log("Teams View Self El",self.el)
 				} else {
 					$(self.el).html(self.messages.dataNotExist);
 

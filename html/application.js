@@ -2,11 +2,10 @@
 // --------------  
 // Requires define
 // Return {Object} App
-
-define( ["require", "facade", "utils", "collections", "chrome", "controller", "profile", "imageup",'home','videopreview',
- "game", "team", "registration","profilesetting","userresume","packages/site/collections/phrases"],
-function (require, facade, utils, collections, chromeBootstrap, Controller, ProfileController, ImageController, HomeController, VideoPreviewController,
-	GameController, TeamController, RegistrationController, ProfileSetting,UserResume, SitePhraseList) {
+define( ["facade", "utils", "collections", "chrome", "controller", "profile", "imageup",'home','videopreview',
+ "game", "team", "registration","profilesetting","userresume","packages/site/collections/phrases","usercontrols/tag/tag"],
+function (facade, utils, collections, chromeBootstrap, Controller, ProfileController, ImageController, HomeController, VideoPreviewController,
+	GameController, TeamController, RegistrationController, ProfileSetting,UserResume, SitePhraseList , TagController ) {
 
 
     var App,
@@ -53,7 +52,9 @@ function (require, facade, utils, collections, chromeBootstrap, Controller, Prof
             
             'registration': 'showRegistration',
             'registration/': 'showRegistration',
-            'registration/:action': 'showRegistration' 
+            'registration/:action': 'showRegistration' , 
+            
+            'tag': 'showTag'
         },
 
         initialize: function (options) {
@@ -101,9 +102,6 @@ function (require, facade, utils, collections, chromeBootstrap, Controller, Prof
             $('#main').empty();
             chromeBootstrap();
 			function initProfile(headerModelId) {
-
-				debug.log("Called initProfile with " + headerModelId);
-
 				var pCont = new ProfileController({
 	                "userId": userid==undefined ? headerModelId : userid
 	            });
@@ -221,6 +219,21 @@ function (require, facade, utils, collections, chromeBootstrap, Controller, Prof
             }
             
             Channel('app-inited').subscribe(initRegistration);
+        },
+        
+        showTag: function (userid) {
+            this.loadStyles();
+            $('body').empty();
+            chromeBootstrap();
+
+            function initTag(id) {
+            	
+                var tag = new TagController({
+                	"id": userid==undefined ? id : userid
+                });
+            }
+            
+            Channel('app-inited').subscribe(initTag);
         },
 
         // load style sheets

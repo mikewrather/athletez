@@ -118,23 +118,19 @@ define(['require', 'text!userresume/templates/academic.html', 'text!userresume/t
 					return;
 
 				self.gpa = Collection.parseAsRequired();
-				//	if (self.gpa.length > 0) {
 				var markup = Mustache.to_html(templateGpa, {
 					data : self.gpa
 				});
 				$(self.el).find(self.controls.ContainerGpa).html(markup);
-				// } else {
-				// self.$el(self.controls.ContainerGpa).html(self.messages.dataNotExistGPA);
-				//
-				// }
-
 			});
 		},
+		/*Eable text boxes and display finish button*/
 		EditGpa : function(e) {
 			$(e.target).parent().find(self.controls.TxtGpa).removeAttr('disabled');
 			$(e.target).parent().find(self.controls.BtnFinishGpa).fadeIn();
 			$(e.target).fadeOut();
 		},
+		/*Save GPA Scores With API In TO DATABASE*/
 		SaveGpa : function(e) {
 			var year = $(e.target).attr('year');
 			var value = $(e.target).val();
@@ -379,7 +375,6 @@ define(['require', 'text!userresume/templates/academic.html', 'text!userresume/t
 				});
 				$(self.el).find(self.controls.ContainerAP).find(self.controls.SectionTestTopics).append(topicsHtml);
 			} else {
-
 				$(self.el).find(self.controls.ContainerAP).find(".item-test-" + testid).remove();
 			}
 		},
@@ -408,12 +403,12 @@ define(['require', 'text!userresume/templates/academic.html', 'text!userresume/t
 			var score = $(e.target).val();
 			var initial = $(e.target).attr('initial');
 			var action = "save";
-			console.log("initial", initial);
+		//	console.log("initial", initial);
 			if ($.trim(score) == '') {
 				$(e.target).parent().find(self.controls.lblError).html(self.messages.MandatoryFieldsTest).fadeIn();
 				return;
 			}
-    
+
 			$(e.target).parent().find(self.controls.lblError).html('').fadeOut();
 
 			var payload = {
@@ -432,8 +427,15 @@ define(['require', 'text!userresume/templates/academic.html', 'text!userresume/t
 			testModel.users_id = self.user_id;
 			testModel.action = action;
 			testModel.target = $(e.target);
-			testModel.save();
-
+			testModel.save({
+				success : function() {
+					//	console.log("success");
+					//	$(e.target).attr('initial',score);
+				}
+			});
+			$.when(testModel.request).done(function() {
+				$(e.target).attr('initial', score);
+			});
 		},
 		DeleteTestScore : function(e) {
 			var topicId = $(e.target).attr('topicid');

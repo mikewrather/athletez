@@ -1118,12 +1118,12 @@
 
 			if((int)trim($this->request->post('roles_id')) > 0)
 			{
-				$arguments["role_id"] = (int)trim($this->request->post('roles_id'));
+				$arguments["roles_id"] = (int)trim($this->request->post('roles_id'));
 			}
 
 			$new_roles_users_obj = ORM::factory("RolesUsers");
 
-			$arguments['user_id'] = $this->mainModel->id;
+			$arguments['users_id'] = $this->mainModel->id;
 
 			$result = $new_roles_users_obj->addRole($arguments);
 

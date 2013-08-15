@@ -11,7 +11,7 @@ define(["require", "text!userresume/templates/layout.html",
 	  'text!userresume/templates/rdtree.html',
 	  'text!userresume/templates/academic.html',
 	  'text!userresume/templates/awards.html',
-	  'text!userresume/templates/contacts.html',
+	  'text!userresume/templates/contact.html',
 	  'text!userresume/templates/references.html',
 	  
 	   "facade",
