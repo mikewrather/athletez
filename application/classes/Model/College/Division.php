@@ -17,7 +17,7 @@ class Model_College_Division extends ORM
 	protected $_has_many = array(
 		'colleges' => array(
 			'model' => 'College_Base',
-			'foreign_key' => 'college_division_id'
+			'foreign_key' => 'college_divisions_id'
 		),
 	);
 }

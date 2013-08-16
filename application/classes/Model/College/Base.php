@@ -21,7 +21,7 @@ class Model_College_Base extends ORM
 		),
 		'division' => array(
 			'model' => 'College_Division',
-			'foreign_key' => 'college_division_id'
+			'foreign_key' => 'college_divisions_id'
 		),
 		'state' => array(
 			'model' => 'Location_State',
@@ -29,7 +29,7 @@ class Model_College_Base extends ORM
 		),
 		'city' => array(
 			'model' => 'Location_City',
-			'foreign_key' => 'city_id'
+			'foreign_key' => 'cities_id'
 		),
 	);
 	
@@ -50,7 +50,7 @@ class Model_College_Base extends ORM
 		return array(
 			'id' => $this->id,
 			'name' => $this->name,
-			'city_id' => $this->city_id,
+			'city_id' => $this->cities_id,
 			'college_city' => $this->college_city,
 			'states_id' => $this->states_id,
 			'school_type' => $this->school_type,
@@ -68,7 +68,7 @@ class Model_College_Base extends ORM
 		}
 
 		if(isset($divisions)){
-			$college_model->join('college_divisions')->on('college_divisions.id', '=', 'college_base.college_division_id')
+			$college_model->join('college_divisions')->on('college_divisions.id', '=', 'college_base.college_divisions_id')
 				->where('college_divisions.id', 'in', $divisions);
 		}
 
