@@ -19,11 +19,11 @@ function(facade, collections, Model, utils) {
         model: Model,
         
         url: function(){
-        	if(this.name)
-        	return '/api/user/search?searchtext="'+ this.name +'"';
+        	if(this.user_name)
+        	return '/api/user/search?searchtext='+ this.user_name;
         	
         	return '/api/user/search';
-        }
+        },
         
         
         // **Method:** `fetchSuccess` - resolve the deferred here in success

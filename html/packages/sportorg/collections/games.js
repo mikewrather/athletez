@@ -30,8 +30,12 @@ function(facade, collections, SportorgGameModel, utils) {
                 item.set('exec_data', response.exec_data);
                 collection.push(item);
             }
-            collection.deferred.resolve(response);            
-        }
+            collection.deferred.resolve(response);  
+            collection.processResult(collection);          
+        },
+        // **MEthod:** Override this function in inherited class if any action is required 
+		processResult : function (collection) {
+		}
 
     });
 

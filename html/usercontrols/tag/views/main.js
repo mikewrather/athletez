@@ -4,16 +4,9 @@
  // Requires `define`, `require`
  // Returns {Awards VIEW} constructor
  */
-define(['require', 'text!usercontrols/tag/templates/layout.html', 'text!usercontrols/tag/templates/sportoption.html', 'facade', 'views', 'utils', 'vendor', 'usercontrols/models/basic_info', 'usercontrols/tag/collections/sports', 
-'location/collections/states', 'usercontrols/tag/collections/schools','user/collections/users',
- 'usercontrols/tag/models/complevel'], function(require, layoutTemplate, sportOptionTemplate) {
+define(['require', 'text!usercontrols/tag/templates/layout.html', 'text!usercontrols/tag/templates/sportoption.html', 'facade', 'views', 'utils', 'vendor', 'usercontrols/models/basic_info', 'usercontrols/tag/collections/sports', 'location/collections/states', 'usercontrols/tag/collections/schools', 'user/collections/users', 'usercontrols/tag/collections/games', 'usercontrols/tag/models/complevel'], function(require, layoutTemplate, sportOptionTemplate) {
 
-	var self, facade = require('facade'), views = require('views'), SectionView = views.SectionView, utils = require('utils'), 
-	Channel = utils.lib.Channel, vendor = require('vendor'), Mustache = vendor.Mustache, $ = facade.$, 
-	BasicModel = require('usercontrols/tag/models/basic_info'), SportsCollection = require('usercontrols/tag/collections/sports'), 
-	StatesCollection = require('location/collections/states'), SchoolCollection = require('usercontrols/tag/collections/schools'), 
-	UserCollection = require('user/collections/users'), 
-	CompLevelModel = require('usercontrols/tag/models/complevel'),
+	var self, facade = require('facade'), views = require('views'), SectionView = views.SectionView, utils = require('utils'), Channel = utils.lib.Channel, vendor = require('vendor'), Mustache = vendor.Mustache, $ = facade.$, BasicModel = require('usercontrols/tag/models/basic_info'), SportsCollection = require('usercontrols/tag/collections/sports'), StatesCollection = require('location/collections/states'), SchoolCollection = require('usercontrols/tag/collections/schools'), UsersCollection = require('user/collections/users'), GamesCollection = require('usercontrols/tag/collections/games'), CompLevelModel = require('usercontrols/tag/models/complevel'),
 
 	//Models
 	TagView = SectionView.extend({
@@ -31,10 +24,22 @@ define(['require', 'text!usercontrols/tag/templates/layout.html', 'text!usercont
 			'keyup .txt-tag-team-state_h' : 'keyupState',
 			'blur .txt-tag-team-state_h' : 'changeState',
 			'keyup .txt-tag-team-school_h' : 'keyupSchool',
-			//	'blur .txt-tag-team-school_h' : 'changeSchool',
+			'blur .txt-tag-team-school_h' : 'changeSchool',
 			'change .ddl-tag-team-level_h' : 'changeCompLevel',
 			'change .ddl-tag-team-season_h' : 'changeSeason',
-			'click .btn-tag-team-Done_h' : 'doneTagTeam'
+			'click .btn-tag-team-Done_h' : 'doneTagTeamTagging',
+
+			// Player Section
+			'click .link-tag-player_h' : 'showPlayer',
+			'click .btn-tag-add-player_h' : 'addPlayer',
+			'keyup .txt-tag-player-name_h' : 'keyUpPlayer',
+			'change .txt-tag-player-name_h' : 'setPlayerId',
+			'click .btn-tag-player-Done_h' : 'donePlayerTagging',
+
+			//Game Section
+			'click .link-tag-Game_h' : 'showGameSection',
+			'click .btn-tag-game-Done_h' : 'doneGameTagging',
+			'change .ddl-tag-game_h' : 'changeGame'
 
 		},
 
@@ -65,6 +70,7 @@ define(['require', 'text!usercontrols/tag/templates/layout.html', 'text!usercont
 			secPlayer : ".section-tag-player_h",
 			secPlayerInput : ".section-tag-player-input_h",
 			txtPlayerName : ".txt-tag-player-name_h",
+			additionalPlayer : ".additional_h",
 			btnAddPlayer : ".btn-tag-add-player_h",
 			btnPlayerDone : ".btn-tag-player-Done_h",
 			//Game
@@ -88,13 +94,14 @@ define(['require', 'text!usercontrols/tag/templates/layout.html', 'text!usercont
 
 		attributes : {
 			stateId : 'stateid',
-			schoolId : 'schoolid'
+			schoolId : 'schoolid',
+			playersId : 'playerid'
 		},
 		inlineTemplates : {
 			sportOption : '{{#sports}}<option value="{{sport_id}}">{{sport_name}}</option>{{/sports}}',
 			compLevelOption : '{{#levels}}<option value="{{complevel_id}}">{{complevel_name}}</option>{{/levels}}',
 			seasonOption : '{{#seasons}}<option value="{{season_id}}">{{season_name}}</option>{{/seasons}}',
-			addPlayerText : '</br><input type="text" class="txt-tag-player-name_h" placeholder="Enter Name" value="" />'
+			addPlayerText : '</br><input type="text" class="txt-tag-player-name_h additional_h" placeholder="Enter Name" value="" />'
 		},
 		/*Messages Holds the messages, warning, alerts, errors, information variables*/
 		/*In Case of similar message create only one object and key*/
@@ -102,7 +109,8 @@ define(['require', 'text!usercontrols/tag/templates/layout.html', 'text!usercont
 			dataNotExist : "Data Does Not Exist . ",
 			dataNotExistAwards : "Data Does Not Exists For Awards.",
 			MandatoryFields : "Sports Id, Name , Year are mandatory.",
-			selectOrganization : "Please Select High School Or Club & Season . "
+			selectOrganization : "Please Select High School Or Club & Season . ",
+			selectTeamAndSports : "Please Select Both Sports And A Team . ",
 		},
 
 		/*initialize gets called by default when constructor is initialized*/
@@ -155,7 +163,7 @@ define(['require', 'text!usercontrols/tag/templates/layout.html', 'text!usercont
 		SetupSportsView : function(List) {
 			var models = List.toJSON();
 			if (models == null || models.length < 1) {
-				self.$(self.controls.ddlSports).parent().find(self.controls.fieldMessage).html(self.messages.dataNotExist).stop().fadeIn();
+				$(self.destination).find(self.controls.ddlSports).parent().find(self.controls.fieldMessage).html(self.messages.dataNotExist).stop().fadeIn();
 				return;
 			}
 			self.sports = [];
@@ -164,15 +172,17 @@ define(['require', 'text!usercontrols/tag/templates/layout.html', 'text!usercont
 			}
 			// Sort Sports Before Filling Up Into Drop-Down
 			self.sort(self.sports, 'sport_name', false);
-			self.sports.splice(0, 0, {
-				sport_id : 0,
-				sport_name : "Select"
-			})
+			// self.sports.splice(0, 0, {
+			// sport_id : 0,
+			// sport_name : "Select"
+			// })
+			//
+			// var markup = Mustache.to_html(self.inlineTemplates.sportOption, {
+			// sports : self.sports
+			// });
+			self.setDropdownOptions(self.sports, 'sport_name', 'sport_id', $(self.destination).find(self.controls.ddlSports), 'Select Sport');
 
-			var markup = Mustache.to_html(self.inlineTemplates.sportOption, {
-				sports : self.sports
-			});
-			self.$(self.controls.ddlSports).html(markup);
+			//			$(self.destination).find(self.controls.ddlSports).html(markup);
 
 		},
 		/*Change sport_id when a sport is selected from dropdown*/
@@ -183,6 +193,7 @@ define(['require', 'text!usercontrols/tag/templates/layout.html', 'text!usercont
 				$(e.target).parent().find(self.controls.btnSportsDone).fadeOut();
 		},
 		sportsDone : function(e) {
+			self.sportsId = $(self.destination).find(self.controls.ddlSports).val();
 			$(self.destination).find(self.controls.lblSportName).html($(self.destination).find(self.controls.ddlSports + ' :selected').text())
 			$(e.target).parents(self.controls.secAddSports).fadeOut();
 			$(self.destination).find(self.controls.secSports).fadeIn();
@@ -193,8 +204,15 @@ define(['require', 'text!usercontrols/tag/templates/layout.html', 'text!usercont
 			$(self.destination).find(self.controls.secSports).fadeOut();
 			$(self.destination).find(self.controls.secAddSports).fadeIn();
 			$(self.destination).find(self.controls.secFooterLinks).fadeOut();
+			$(self.destination).find('*').show();
+			$(self.destination).find('.displayNone').hide();
+			$(self.destination).find('input').val('');
+			//$(self.destination).find('select').html('');
+			$(self.destination).find(self.controls.additionalPlayer).remove();
 		},
 		showTeamSection : function(e) {
+			$(self.destination).find(self.controls.secPlayer).fadeOut();
+			$(self.destination).find(self.controls.secGame).fadeOut();
 			$(self.destination).find(self.controls.secTagTeam).fadeIn();
 			$(e.target).hide();
 		},
@@ -260,17 +278,17 @@ define(['require', 'text!usercontrols/tag/templates/layout.html', 'text!usercont
 			$(e.target).removeAttr(self.attributes.stateId);
 			var isStateValid = false;
 			self.states_id = '';
+			if (self.states) {
+				self.states.forEach(function(value, index) {
+					if (value['name'] == state_name) {
+						isStateValid = true;
+						self.states_id = value['id'];
+						$(e.target).attr(self.attributes.stateId, self.states_id);
+						$(e.target).parent().find(self.controls.txtTeamSchool).removeAttr('disabled').attr(self.attributes.stateId, self.states_id).fadeIn();
+					}
 
-			self.states.forEach(function(value, index) {
-				if (value['name'] == state_name) {
-					isStateValid = true;
-					self.states_id = value['id'];
-					$(e.target).attr(self.attributes.stateId, self.states_id);
-					$(e.target).parent().find(self.controls.txtTeamSchool).removeAttr('disabled').attr(self.attributes.stateId, self.states_id).fadeIn();
-				}
-
-			});
-
+				});
+			}
 			if (!isStateValid) {
 				self.states_id = 0;
 				$(self.destination).find(self.controls.txtTeamSchool).attr('disabled', 'disabled').removeAttr(self.attributes.stateId).fadeOut();
@@ -336,8 +354,8 @@ define(['require', 'text!usercontrols/tag/templates/layout.html', 'text!usercont
 				// Hide all other controls
 				$(e.target).removeAttr(self.attributes.schoolId);
 				self.CheckTeamControlsVisibility();
-				
-				if((e.keyCode ? e.keyCode : e.which) == 13)
+
+				if ((e.keyCode ? e.keyCode : e.which) == 13)
 					self.changeSchool(e);
 			}
 		},
@@ -422,8 +440,6 @@ define(['require', 'text!usercontrols/tag/templates/layout.html', 'text!usercont
 		/*SET UP LEVEL VIEW AS PER THE DESTINATION WHERE TO APPEND THE VIEW*/
 		SetUpCompLevelView : function(orgs_id, sports_id, levels, seasons) {
 			var data = self.GetSeasonsData(seasons, orgs_id, sports_id);
-			console.log("Data", data);
-			console.log(levels);
 			var markup = Mustache.to_html(self.inlineTemplates.compLevelOption, {
 				levels : levels
 			});
@@ -496,83 +512,175 @@ define(['require', 'text!usercontrols/tag/templates/layout.html', 'text!usercont
 			}
 		},
 
-		doneTagTeam : function(e) {
+		doneTagTeamTagging : function(e) {
 			var schoolId = $(self.destination).find(self.controls.txtTeamSchool).attr(self.attributes.schoolId);
 			var seasonId = $(self.destination).find(self.controls.ddlTeamSeason).val();
 			if (schoolId && schoolId != "" && schoolId != 0 && seasonId && seasonId != "" && seasonId != 0) {
 				var teamName = $(self.destination).find(self.controls.txtTeamSchool).val();
 				teamName += " - " + $(self.destination).find(self.controls.ddlTeamSeason).val();
-				$(self.destination).find(self.controls.lblTeamName).html(teamName); 
-				
+				//TODO: Set self.teamId
+				//self.teamId=
+
+				$(self.destination).find(self.controls.lblTeamName).html(teamName);
+
 				$(self.destination).find(self.controls.secTagTeam).fadeOut();
 				$(self.destination).find(self.controls.secTeam).fadeIn();
-				
+
 				$(self.destination).find(self.controls.lnkPlayer).fadeIn();
 				$(self.destination).find(self.controls.lnkGame).fadeIn();
 			} else {
 				self.$(e.target).parents(self.controls.secTagTeam).find(self.controls.fieldMessage).html(self.messages.selectOrganization).stop().fadeIn();
 			}
 		},
-		
+
 		/***********************TAG PLAYER SECTION STARTS HERE*********************************************/
-		showPlayer: function(e){
+		showPlayer : function(e) {
+			$(self.destination).find(self.controls.secTagTeam).fadeOut();
+			$(self.destination).find(self.controls.secGame).fadeOut();
 			$(self.destination).find(self.controls.secPlayer).fadeIn();
-			
+
 		},
-		addPlayer : function(e){
+		addPlayer : function(e) {
 			$(self.destination).find(self.controls.secPlayerInput).append(self.inlineTemplates.addPlayerText);
 		},
-		// keyUpPlayer : function(e){
-			// var searchText = $(e.target).val();
-			// var stateArr = [];
-			// if (state != '') {
-				// if (self.isValidAutoCompleteKey(e) == true) {
-					// // Hide all other controls
-					// $(e.target).removeAttr(self.attributes.stateId);
-					// self.CheckTeamControlsVisibility();
-// 
-					// //Create Collection
-					// var stateList = new StatesCollection();
-					// stateList.state_name = $(e.target).val();
-					// stateList.fetch();
-					// $.when(stateList.request).done(function() {
-						// /*Don't Show Auto Complete In Case Of Error*/
-						// if (stateList.isError())
-							// return;
-// 
-						// var models = stateList.toJSON();
-						// if (models == null || models.length < 1)
-							// self.$(e.target).parent().find(self.controls.fieldMessage).html(self.messages.dataNotExist).stop().fadeIn();
-						// else
-							// self.$(e.target).parent().find(self.controls.fieldMessage).html('').fadeOut();
-// 
-						// self.states = [];
-						// for (var key in models) {
-							// self.states.push(models[key].payload);
-						// }
-						// self.states.forEach(function(value, index) {
-							// stateArr.push(value['name']);
-						// });
-						// // Destroy existing autocomplete from text box before attaching it again
-						// // try catch as for the first time it gives error
-						// try {
-							// self.$(e.target).autocomplete("destroy");
-						// } catch(ex) {
-						// }
-// 
-						// self.$(e.target).autocomplete({
-							// source : stateArr
-						// });
-// 
-						// //Trigger keydown to display the autocomplete dropdown just created
-						// self.$(e.target).trigger('keydown');
-					// });
-				// } else {
-					// self.changeState(e);
-				// }
-			// }
-		// },
-		
+		keyUpPlayer : function(e) {
+			var searchText = $(e.target).val();
+			var playersArr = [];
+			if (searchText != '') {
+				if (self.isValidAutoCompleteKey(e) == true) {
+					$(e.target).removeAttr(self.attributes.playersId);
+
+					//Create Collection
+					var List = new UsersCollection();
+					List.user_name = searchText;
+					List.fetch();
+					$.when(List.request).done(function() {
+
+						var models = List.toJSON();
+						if (models == null || models.length < 1)
+							self.$(e.target).parent().find(self.controls.fieldMessage).html(self.messages.dataNotExist).stop().fadeIn();
+						else
+							self.$(e.target).parent().find(self.controls.fieldMessage).html('').fadeOut();
+
+						self.users = [];
+						for (var key in models) {
+							self.users.push(models[key].payload);
+						}
+						console.log("users", self.users)
+						self.users.forEach(function(value, index) {
+							playersArr.push(value['name']);
+						});
+						// Destroy existing autocomplete from text box before attaching it again
+						// try catch as for the first time it gives error
+						try {
+							self.$(e.target).autocomplete("destroy");
+						} catch(ex) {
+						}
+
+						self.$(e.target).autocomplete({
+							source : playersArr
+						});
+
+						//Trigger keydown to display the autocomplete dropdown just created
+						self.$(e.target).trigger('keydown');
+					});
+				} else {
+					self.setPlayerId(e);
+					if (self.isEnterKey(e))
+						self.addPlayer(e);
+				}
+			} else {
+				$(e.target).removeAttr(self.attributes.playersId);
+			}
+		},
+		setPlayerId : function(e) {
+			if (self.users) {
+				var name = $(e.target).val().toLowerCase();
+				for (var key in self.users) {
+					if (self.users[key].name.toLowerCase() == name) {
+						$(e.target).attr(self.attributes.playersId, self.users[key].id);
+						return;
+					}
+				}
+			}
+		},
+		donePlayerTagging : function(e) {
+			var players = [];
+			$(self.destination).find(self.controls.txtPlayerName).each(function() {
+				if ($(this).attr(self.attributes.playersId) > 0) {
+					players.push({
+						name : $(this).val(),
+						user_id : $(this).attr(self.attributes.playersId)
+					})
+
+				}
+			});
+			if (players.length > 0) {
+				var data = JSON.stringify({
+					players : players
+				});
+				alert(data);
+			} else {
+				$(e.target).parents(self.controls.secGame).find(self.controls.fieldMessage).html(self.messages.selectPlayer).fadeIn();
+			}
+		},
+
+		/***********************TAG GAME SECTION STARTS HERE*********************************************/
+		showGameSection : function(e) {
+			self.bindGamesData(e);
+			$(self.destination).find(self.controls.secTagTeam).fadeOut();
+			$(self.destination).find(self.controls.secPlayer).fadeOut();
+			$(self.destination).find(self.controls.secGame).fadeIn();
+		},
+		bindGamesData : function(e) {
+			var sportid = $(self.destination).find(self.controls.ddlSports).val();
+
+			if (self.sportsId) {
+				//TODO:Apply following condtion for teamId
+				// && self.teamId) {
+				//	self.SetupSportsView(orgs_id, destination);
+				var List = new GamesCollection();
+				$(e.target).parents(self.controls.secFooterLinks).find(self.controls.fieldMessage).html('').fadeOut();
+				List.processResult = function(collection) {
+					self.SetupGamesView(collection);
+				};
+				List.fetch();
+			} else {
+				$(e.target).parents(self.controls.secFooterLinks).find(self.controls.fieldMessage).html(self.messages.selectTeamAndSports).fadeIn();
+			}
+
+		},
+		SetupGamesView : function(List) {
+			var models = List.toJSON();
+			if (models == null || models.length < 1) {
+				$(self.destination).find(self.controls.secFooterLinks).parent().find(self.controls.fieldMessage).html(self.messages.dataNotExist).stop().fadeIn();
+				return;
+			}
+			self.games = [];
+			for (var key in models) {
+				self.games.push(models[key].payload);
+			}
+			// Sort Sports Before Filling Up Into Drop-Down
+			self.sort(self.games, 'game_name', false);
+			self.setDropdownOptions(self.games, 'game_name', 'id', $(self.destination).find(self.controls.ddlGame), 'Select Game');
+		},
+		changeGame : function(e) {
+			var gameId = $(e.target).val();
+			if (gameId && gameId != "" && gameId != 0) {
+				$(e.target).parents(self.controls.secGame).find(self.controls.btnGameDone).fadeIn();
+			} else {
+				$(e.target).parents(self.controls.secGame).find(self.controls.btnGameDone).fadeOut();
+			}
+		},
+		doneGameTagging : function(e) {
+			var data = {
+				game : {
+					game_id : $(e.target).parents(self.controls.secGame).find(self.controls.ddlGame).val(),
+					game_name : $(e.target).parents(self.controls.secGame).find(self.controls.ddlGame "option:selected").text()
+				}
+			}
+			alert(JSON.stringify({result : data}));
+		}
 	});
 	return TagView;
 });

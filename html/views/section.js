@@ -202,7 +202,7 @@ define(['facade', 'views/base', 'utils'], function(facade, BaseView, utils) {
 		 **/
 		isValidAutoCompleteKey : function(event) {
 			if (event) {
-				var code = (event.keyCode ? event.keyCode : e.which);
+				var code = (event.keyCode ? event.keyCode : event.which);
 				if ((code >= 59 && code <= 90)// alphabets
 				|| (code >= 96 && code <= 105)// numeric
 				|| (code == 8)// backspace
@@ -241,6 +241,14 @@ define(['facade', 'views/base', 'utils'], function(facade, BaseView, utils) {
 			});
 
 		},
+		isEnterKey : function(event){
+			if (event) {
+				var code = (event.keyCode ? event.keyCode : event.which);
+				if (code == 13)// alphabets
+					return true;
+			}
+			return false;
+		}
 	});
 
 	// Mix-in `Section` object
