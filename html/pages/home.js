@@ -17,7 +17,7 @@ define(
 		  //collections
 		  "packages/sport/collections/sports",
 		  "pages/home/collections/image",
-		  "packages/location/collections/states.js",
+		  "location/collections/states",
 
 		  //views
 		  "pages/home/views/menu",
@@ -36,7 +36,7 @@ define(
 				
 				//collections
 				SportList = require('packages/sport/collections/sports'), 
-				StateList = require('packages/location/collections/states.js'), 
+				StateList = require('location/collections/states'),
 				ImageList = require('pages/home/collections/image'), 
 	
 				//models

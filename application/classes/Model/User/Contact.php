@@ -66,7 +66,7 @@ class Model_User_Contact extends ORM
 			if ($this->id != ""){
 				//extra validation
 				$external_validate = Validation::factory($args);
-				$external_validate->rule('user_id', 'user_has_contact', $users_id);
+				$external_validate->rule('users_id', 'user_has_contact', $users_id);
 				if ($this->check($external_validate)){
 				}
 			}

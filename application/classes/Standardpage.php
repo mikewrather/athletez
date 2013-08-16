@@ -16,7 +16,8 @@ class Standardpage extends Controller
 	public function action_index()
 	{
 		$renderer = Kostache::factory();
-		$this->response->body($renderer->render(new View_Index));
+		$view = new View_Index();
+		$this->response->body($renderer->render($view));
 	}
 
 }

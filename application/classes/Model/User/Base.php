@@ -24,8 +24,8 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 		(
 			'model' => 'Role',
 			'through' => 'roles_users',
-			'foreign_key' => 'user_id',
-			'far_key' => 'role_id',
+			'foreign_key' => 'users_id',
+			'far_key' => 'roles_id',
 		),
 
 		//Sportorg
@@ -101,7 +101,7 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 		),
 		'views' => array(
 			'model' => 'Site_View',
-			'foreign_key' => 'user_id'
+			'foreign_key' => 'users_id'
 		),
 
 		//Media
@@ -168,8 +168,8 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
     public function deleteRole($args)
     {
 		$user_role_model = ORM::factory('Rolesusers');
-		$result = $user_role_model->where('user_id','=', $this->id)
-			->and_where('role_id', '=', $args['role_id'])
+		$result = $user_role_model->where('users_id','=', $this->id)
+			->and_where('roles_id', '=', $args['role_id'])
 			->find();
 
 		if (!$result->id){
@@ -184,7 +184,7 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
     public function deleteIdentity($args = array())
     {
 		$identity_model = ORM::factory('User_Identity');
-		$result = $identity_model->where('user_id','=', $this->id)
+		$result = $identity_model->where('users_id','=', $this->id)
 			->where('identity', '=', $args['identity'])
 			->find();
 
@@ -1094,7 +1094,7 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 
 		if (isset($states_id)){
 			$user_model->join('cities')->on('users.cities_id', '=', 'cities.id');
-			$user_model->where('cities.state_id', '=', $states_id);
+			$user_model->where('cities.states_id', '=', $states_id);
 			$classes_arr['Location_City'] = 'cities';
 		}
 
@@ -1190,7 +1190,7 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 		if(!$this->loaded()) return false;
 		$user_identity = ORM::factory('User_Identity')
 			->where('provider','=',$provider)
-			->and_where('user_id','=',$this->id)
+			->and_where('users_id','=',$this->id)
 			->find();
 
 		if($user_identity->loaded())

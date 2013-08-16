@@ -136,10 +136,10 @@
 			);
 
 			$roles_users = ORM::_sql_exclude_deleted($classes_arr, $roles_users);
-			$roles_users->where('user_id', '=', $user_id)
-				->and_where('role_id', '=', $role_id)->find();
+			$roles_users->where('users_id', '=', $user_id)
+				->and_where('roles_id', '=', $role_id)->find();
 
-			if ($roles_users->user_id != ""){
+			if ($roles_users->users_id != ""){
 				return false;
 			}else{
 				return true;

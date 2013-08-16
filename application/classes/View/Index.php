@@ -2,9 +2,8 @@
 
 class View_Index
 {
-	public $title = "NewSite";
+	public $title = "Athletez";
 
-    //public $testpath = "test"; //use test data
     public $testpath = NULL;
 
     public function base_url() {

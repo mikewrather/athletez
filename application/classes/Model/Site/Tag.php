@@ -205,7 +205,7 @@ class Model_Site_Tag extends Model_Site_Entdir
 			$city = ORM::factory('Location_City')->where('id','=',$cities_id)->find();
 			if(!$city->loaded()) return false;
 			$this->cities_id = $cities_id;
-			$this->states_id = $city->state_id;
+			$this->states_id = $city->states_id;
 		}
 
 	}

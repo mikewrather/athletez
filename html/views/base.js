@@ -149,7 +149,7 @@ define(['facade', 'utils'], function (facade, utils) {
             }
             this.template = this.template || this.options.template;
             if (!this.template || !data) {
-	            console.log("tmelate = "+this.template  +" data = "+data);
+	            console.log("template = "+this.template  +" data = "+data);
                 throw new Error("BaseView method toHTML called, but this.template or data is not defined.");
             } else {
                 markup = _toHTML(this.template, data, partials);

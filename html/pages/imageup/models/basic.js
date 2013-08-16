@@ -10,7 +10,6 @@ define( ["facade","media/models/image"], function (facade,MediaImageModel) {
 
     ImageBasicsModel =  MediaImageModel.extend({
 	    initialize: function (attributes, options) {
-			this.id="426004";
             MediaImageModel.prototype.initialize.call(attributes, options);
         }
 	

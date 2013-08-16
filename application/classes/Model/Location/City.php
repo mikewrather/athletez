@@ -19,7 +19,7 @@ class Model_Location_City extends ORM
 		),
 		'state' => array(
 			'model' => 'Location_State',
-			'foreign_key' => 'state_id'
+			'foreign_key' => 'states_id'
 		),
 	);
 
@@ -75,7 +75,7 @@ class Model_Location_City extends ORM
 			$county = ORM::factory('Location_County',$counties_id);
 
 			// Get State for County
-			$this->state_id = $county->state->id;
+			$this->states_id = $county->state->id;
 		}
 
 		if(isset($id)){
@@ -229,6 +229,7 @@ class Model_Location_City extends ORM
 		return $cities;
 	}
 
+	/** Jeffrey commented it, b/c currently no other functions use this function
 	public function getCityIDFromName($args,$autoAdd=FALSE)
 	{
 		extract($args);
@@ -275,4 +276,5 @@ class Model_Location_City extends ORM
 			}
 		}
 	}
+	 * */
 }

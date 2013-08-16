@@ -2,11 +2,11 @@
 // --------------  
 // Requires define
 // Return {Object} App
-
-define( ["facade", "utils", "collections", "chrome", "controller", "profile", "imageup",'home',
+define( ["facade", "utils", "collections", "chrome", "controller", "profile", "imageup",'home','videopreview',
  "game", "team", "registration","profilesetting","userresume","packages/site/collections/phrases","usercontrols/tag/tag"],
-function (facade, utils, collections, chromeBootstrap, Controller, ProfileController, ImageController, HomeController,
+function (facade, utils, collections, chromeBootstrap, Controller, ProfileController, ImageController, HomeController, VideoPreviewController,
 	GameController, TeamController, RegistrationController, ProfileSetting,UserResume, SitePhraseList , TagController ) {
+
 
     var App,
         ApplicationStates = collections.ApplicationStates,
@@ -36,6 +36,9 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
              'resume/': 'ShowUserResume',
 
 			'imageup': 'imageUp',
+
+	        'videoprev': 'videoPreview',
+	        'videoprev/': 'videoPreview',
 
             'game': 'showGame',
             'game/': 'showGame',
@@ -150,6 +153,21 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
             function initImage(id){ var imageController = new ImageController({"route": "","url":this.posturl,"attr":this.attribute}); }
             Channel('app-inited').subscribe(initImage);
 		},
+
+	    videoPreview: function () {
+		    this.loadStyles();
+		    chromeBootstrap();
+		//    $('body').empty();
+		    //console.log(VideoPreviewController);
+
+		    function initVideoPreview()
+		    {
+			    var VidPrevCtrl = new VideoPreviewController();
+			    console.log(VidPrevCtrl);
+		    }
+
+		    Channel('app-inited').subscribe(initVideoPreview);
+	    },
         
         showGame: function (id) {
             this.loadStyles();

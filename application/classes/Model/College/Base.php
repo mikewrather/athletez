@@ -25,7 +25,7 @@ class Model_College_Base extends ORM
 		),
 		'state' => array(
 			'model' => 'Location_State',
-			'foreign_key' => 'state_id'
+			'foreign_key' => 'states_id'
 		),
 		'city' => array(
 			'model' => 'Location_City',
@@ -52,7 +52,7 @@ class Model_College_Base extends ORM
 			'name' => $this->name,
 			'city_id' => $this->city_id,
 			'college_city' => $this->college_city,
-			'state_id' => $this->state_id,
+			'states_id' => $this->states_id,
 			'school_type' => $this->school_type,
 		);
 	}
@@ -81,8 +81,8 @@ class Model_College_Base extends ORM
 			$college_model->where('academic', 'in', $academics);
 		}
 
-		if (isset($state_id)){
-			$college_model->where('state_id', '=', $state_id);
+		if (isset($states_id)){
+			$college_model->where('states_id', '=', $states_id);
 		}
 
 		if (isset($private) || isset($public)){
