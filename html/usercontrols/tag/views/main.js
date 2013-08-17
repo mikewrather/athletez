@@ -12,7 +12,13 @@ define(['require', 'text!usercontrols/tag/templates/layout.html', 'text!usercont
 	TagView = SectionView.extend({
 
 		template : layoutTemplate,
-
+		
+		/*Data to be sent as parameter in call back function*/
+		tagData : {
+			Game : {},
+			Player : {},
+			Team : {}
+		},
 		/*Bind Events on controls present in current view template*/
 		events : {
 			'change .ddl-tag-sports_h' : 'changeSport',
@@ -39,8 +45,8 @@ define(['require', 'text!usercontrols/tag/templates/layout.html', 'text!usercont
 			//Game Section
 			'click .link-tag-Game_h' : 'showGameSection',
 			'click .btn-tag-game-Done_h' : 'doneGameTagging',
-			'change .ddl-tag-game_h' : 'changeGame'
-
+			'change .ddl-tag-game_h' : 'changeGame',
+			'click .btn-tag-Finish_h' : 'finishTagging'
 		},
 
 		/*Holds */
@@ -66,6 +72,7 @@ define(['require', 'text!usercontrols/tag/templates/layout.html', 'text!usercont
 			ddlTeamLevel : ".ddl-tag-team-level_h",
 			ddlTeamSeason : ".ddl-tag-team-season_h",
 			btnTeamDone : ".btn-tag-team-Done_h",
+
 			//Player
 			secPlayer : ".section-tag-player_h",
 			secPlayerInput : ".section-tag-player-input_h",
@@ -82,6 +89,7 @@ define(['require', 'text!usercontrols/tag/templates/layout.html', 'text!usercont
 			lnkPlayer : ".link-tag-player_h",
 			lnkGame : ".link-tag-Game_h",
 
+			btnTeamFinish : '.btn-tag-Finish_h',
 			//Common
 			//Buttons
 
@@ -131,6 +139,12 @@ define(['require', 'text!usercontrols/tag/templates/layout.html', 'text!usercont
 		// **Method** `setOptions` - called by BaseView's initialize method
 		setOptions : function(options) {
 			this.user_id = options.user_id;
+			if (!options.channel) {
+				throw new Error("call back channel is must for this");
+			}
+				else{
+				this.channel = options.channel;
+			}
 		},
 
 		/*initialize must be a wrapper so any function definitions and calles must be called in init*/
@@ -520,6 +534,7 @@ define(['require', 'text!usercontrols/tag/templates/layout.html', 'text!usercont
 			} else {
 				self.$(e.target).parents(self.controls.secTagTeam).find(self.controls.fieldMessage).html(self.messages.selectOrganization).stop().fadeIn();
 			}
+			self.tagData.Team = data;
 		},
 
 		/***********************TAG PLAYER SECTION STARTS HERE*********************************************/
@@ -605,10 +620,12 @@ define(['require', 'text!usercontrols/tag/templates/layout.html', 'text!usercont
 				}
 			});
 			if (players.length > 0) {
-				var data = JSON.stringify({
+				var data = {
 					players : players
-				});
-				alert(data);
+				};
+				self.tagData.Player = data;
+				//	alert(data);
+				//Channel(self.channel).publish(data);
 			} else {
 				$(e.target).parents(self.controls.secGame).find(self.controls.fieldMessage).html(self.messages.selectPlayer).fadeIn();
 			}
@@ -662,15 +679,24 @@ define(['require', 'text!usercontrols/tag/templates/layout.html', 'text!usercont
 			}
 		},
 		doneGameTagging : function(e) {
+			var self = this;
 			var data = {
 				game : {
 					game_id : $(e.target).parents(self.controls.secGame).find(self.controls.ddlGame).val(),
 					game_name : $(e.target).parents(self.controls.secGame).find(self.controls.ddlGame + " option:selected").text()
 				}
-			}
-			alert(JSON.stringify({
-				result : data
-			}));
+			};
+
+			self.tagData.Game = data;
+
+			// alert(JSON.stringify({
+			// result : data
+			// }));
+			//Channel(self.channel).publish(data);
+		},
+
+		finishTagging : function() {
+			Channel(self.channel).publish(this.tagData);
 		}
 	});
 	return TagView;
