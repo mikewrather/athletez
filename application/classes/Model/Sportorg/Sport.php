@@ -245,7 +245,7 @@ class Model_Sportorg_Sport extends ORM
 
 	public function getStatTabs(){
 		$stattabs = ORM::factory("Stats_Tab");
-		$stattabs->where('sport_id', '=', $this->id)->or_where('sport_id2','=',$this->id);
+		$stattabs->where('sports_id', '=', $this->id)->or_where('sport_id2','=',$this->id);
 		$classes_arr = array(
 			'Stats_Tab' => 'stats_tab'
 		);

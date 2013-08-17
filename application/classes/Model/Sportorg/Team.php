@@ -358,7 +358,7 @@ class Model_Sportorg_Team extends ORM
 			//$this->join('locations')->on('locations.id', '=', 'orgs.locations_id');
 			$this->join('cities', 'left')->on('locations.cities_id', '=', 'cities.id');
 			$this->or_where('cities.name', 'like', "%".$loc_name."%");
-			$this->join('counties', 'left')->on('cities.county_id', '=', 'counties.id');
+			$this->join('counties', 'left')->on('cities.counties_id', '=', 'counties.id');
 			$this->or_where('counties.name', 'like', "%".$loc_name."%");
 			$this->join('states', 'left')->on('states.id', '=', 'counties.states_id');
 			$this->or_where('states.name', 'like', "%".$loc_name."%");

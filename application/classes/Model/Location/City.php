@@ -15,7 +15,7 @@ class Model_Location_City extends ORM
 	protected $_belongs_to = array(
 		'county' => array(
 			'model' => 'Location_County',
-			'foreign_key' => 'county_id'
+			'foreign_key' => 'counties_id'
 		),
 		'state' => array(
 			'model' => 'Location_State',
@@ -39,7 +39,7 @@ class Model_Location_City extends ORM
 				array('not_empty'),
 			),
 			// county_id (int)
-			'county_id'=>array(
+			'counties_id'=>array(
 				array('not_empty'),
 				array('digit'),
 				array('checkCountyExists',array(':value'))
@@ -55,7 +55,7 @@ class Model_Location_City extends ORM
 		return array(
 			"id" => $this->id,
 			"name" => $this->name,
-			"county_id" => $this->county_id,
+			"county_id" => $this->counties_id,
 			"county" => $this->county->getBasics(),
 		);
 	}
@@ -71,7 +71,7 @@ class Model_Location_City extends ORM
 
 		if(isset($counties_id))
 		{
-			$this->county_id = $counties_id;
+			$this->counties_id = $counties_id;
 			$county = ORM::factory('Location_County',$counties_id);
 
 			// Get State for County

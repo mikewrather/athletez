@@ -22,7 +22,7 @@ class Model_Location_County extends ORM
 	protected $_has_many = array(
 		'cities' => array(
 			'model' => 'Location_City',
-			'foreign_key' => 'county_id'
+			'foreign_key' => 'counties_id'
 		)
 	);
 
@@ -130,7 +130,7 @@ class Model_Location_County extends ORM
 		$org_model = ORM::factory("Sportorg_Org");
 		$org_model->join('locations')->on('sportorg_org.locations_id', '=', 'locations.id');
 		$org_model->join('cities')->on('cities.id', '=', 'locations.cities_id');
-		$org_model->where('cities.county_id', '=', $county_id);
+		$org_model->where('cities.counties_id', '=', $county_id);
 
 		$classes_arr['Location_Base'] = 'locations';
 		$classes_arr['Location_City'] = 'cities';

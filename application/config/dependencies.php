@@ -154,7 +154,7 @@ return array(
 	),
 
 	'Location_County' => array(
-		'Location_City' => 'county_id',
+		'Location_City' => 'counties_id',
 
 	),
 

@@ -1209,7 +1209,7 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 			$user_identity = ORM::factory('User_Identity');
 			$user_identity->provider = $provider;
 			$user_identity->identity = $uid;
-			$user_identity->user_id = $this->id;
+			$user_identity->users_id = $this->id;
 			$user_identity->save();
 		}
 		return $user_identity;

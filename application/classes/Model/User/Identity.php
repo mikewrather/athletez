@@ -52,9 +52,9 @@ class Model_User_Identity extends ORM
 		$user_identity = $this->where('provider','=',$provider)->and_where('identity','=',$identity)->find();
 		if($user_identity->loaded())
 		{
-			$user = ORM::factory("User_Base", $user_identity->user_id);
+			$user = ORM::factory("User_Base", $user_identity->users_id);
 
-			if ($user->loaded() && $user->id == $user_identity->user_id && is_numeric($user->id))
+			if ($user->loaded() && $user->id == $user_identity->users_id && is_numeric($user->id))
 			{
 				if($force_login) Auth::instance()->force_login($user);
 				return $user;
