@@ -13,7 +13,7 @@ define(["require", "text!usercontrols/tag/templates/layout.html",
 	    
 	    //Collections
 	    "usercontrols/tag/collections/sports",
-	    
+	   
 	    
 	    //Views
 	    "usercontrols/tag/views/main",
@@ -75,7 +75,7 @@ define(["require", "text!usercontrols/tag/templates/layout.html",
 			var pageLayout = new LayoutView({
 				scheme : this.scheme,
 				destination : "#main",
-				template : ,
+				template : '',
 				displayWhen : "ready"
 			});
 			this.layout = pageLayout;
