@@ -52,7 +52,7 @@ class Model_Sportorg_Complevel_Base extends ORM
 		);
 	}
 
-	public function getBasics()
+	public function getBasics($settings = array())
 	{
 		return array(
 			"complevel_id" => $this->id,

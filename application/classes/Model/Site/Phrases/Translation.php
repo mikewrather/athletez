@@ -72,7 +72,7 @@ class Model_Site_Phrases_Translation extends ORM
 		return $this;
 	}
 
-	public function getBasics(){
+	public function getBasics($settings = array()){
 		return array(
 			'id' => $this->id,
 			'phrases_id' => $this->phrases_id,

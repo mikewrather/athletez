@@ -120,7 +120,7 @@ class Model_Academics_Gpa extends ORM
 		}
 	}
 
-	public function getBasics(){
+	public function getBasics($settings = array()){
 		return array(
 			'year' => $this->year,
 			'users_id' => $this->users_id,

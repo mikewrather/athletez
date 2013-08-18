@@ -88,7 +88,7 @@ class Model_Sportorg_Seasons_Base extends ORM
         }  
     }
 
-	public function getBasics()
+	public function getBasics($settings = array())
 	{
 		return array(
 			"season_id" => $this->id,

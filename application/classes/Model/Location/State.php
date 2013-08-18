@@ -106,7 +106,7 @@ class Model_Location_State extends ORM
 		return $this;
 	}
 	
-	public function getBasics()
+	public function getBasics($settings = array())
 	{
 		return array(
 			"id" => $this->id,

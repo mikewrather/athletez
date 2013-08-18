@@ -106,16 +106,28 @@ class Model_Site_Enttype extends ORM
 		}
 	}
 
-	public function getBasics()
+	static function get_obj_for_fk_name($fk_name,$id=FALSE)
 	{
-		return array(
-			"id" => $this->id,			
-			"api_name" => $this->api_name,
-			"class_name" => $this->class_name,
-			"db_table" => $this->db_table,
-			"description" => $this->description
-		);
-	}
+		$ent = ORM::factory('Site_Enttype')
+			->where('id1','=',$fk_name)
+			->find();
 
+		if($ent->loaded())
+		{
+			if($id)
+			{
+				$obj = ORM::factory($ent->class_name)->where('id','=',(int)$id)->find();
+				if($obj->loaded())
+				{
+					return $obj;
+				}
+			}
+			else
+			{
+				return true;
+			}
+		}
+		return false;
+	}
 
 }

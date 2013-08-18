@@ -58,7 +58,7 @@ class Model_User_Resume_Data_Vals extends ORM
 		return $this->user->first_name.' '.$this->user->last_name;
 	}
 	
-	public function getBasics()
+	public function getBasics($settings = array())
 	{
 		return array(
 			"id" => $this->id,

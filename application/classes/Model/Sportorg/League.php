@@ -49,7 +49,7 @@ class Model_Sportorg_League extends ORM
 		);
 	}
 
-	public function getBasics()
+	public function getBasics($settings = array())
 	{
 		//TODO, add by Jeffrey. Here need to align with Mike
 		$orgsArray = null;

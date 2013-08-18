@@ -94,7 +94,7 @@ class Model_User_References extends ORM
 		return $this;
 	}
 
-	public function getBasics()
+	public function getBasics($settings = array())
 	{
 		return array(
 			"id" => $this->id,

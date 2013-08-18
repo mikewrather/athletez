@@ -22,7 +22,7 @@ class Model_User_Followers extends ORM
 		return 0;
 	}
 
-	public function getBasics()
+	public function getBasics($settings = array())
 	{
 		if(!$this->loaded()) return false;
 

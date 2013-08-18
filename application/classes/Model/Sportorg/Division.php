@@ -57,7 +57,7 @@ class Model_Sportorg_Division extends ORM
 		);
 	}
 
-	public function getBasics()
+	public function getBasics($settings = array())
 	{
 		$orgsArray = null;
 		foreach($this->orgs->find_all() as $org){

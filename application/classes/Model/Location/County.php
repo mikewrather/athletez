@@ -90,7 +90,7 @@ class Model_Location_County extends ORM
 	}
  
      
-	public function getBasics()
+	public function getBasics($settings = array())
 	{
 		return array(
 			"id" => $this->id,

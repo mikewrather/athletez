@@ -227,6 +227,110 @@ class ORM extends Kohana_ORM
 		return $results;
 	}
 
+	// This will force column name changes
+	protected $get_basics_exceptions = array(
+		// key = current name of column, val = name getBasics will return
+		'column_name_changes' => array(
+			'sport_type_obj' => 'sport_type'
+		),
+		// key = name of the column in the table, val = standard fk name that's used as id1
+		'alternate_fk_names' => array(
+			'voter_users_id' => 'users_id', //would be used in votes table
+			'flagger_users_id' => 'users_id' //would be used in the flags table
+		)
+	);
+
+	/**
+	 * Mike's implementation of getBasics uses the id1 column of enttypes for recursion and
+	 * loops through columns instead of dependencies config
+	 *
+	 * Features include protection against infinite recursion and the ability to override default column names.
+	 * Also has the ability to shut off sub-object generation or exclude fields from being included
+	 *
+	 * @param $settings array - array that holds settings for the current getBasics call
+	 * @return array
+	 */
+	public function getBasics($settings = array())
+	{
+		// Set defaults for settings ////////////////////////////////////////////////////////////////////////////
+		// get_sub_objects, if set to false, will not attempt to generate objects for foreign key columns
+		$settings['get_sub_objects'] = is_bool($settings['get_sub_objects']) ? $settings['get_sub_objects'] : TRUE;
+
+		// exclude list can hold a list of columns to exclude from the results
+		$settings['exclude_list'] = (is_array($settings['exclude_list']) && !empty($settings['exclude_list'])) ?
+			$settings['exclude_list'] : array();
+
+		$settings['return_enttypes_id'] = is_bool($settings['return_enttypes_id']) ? $settings['return_enttypes_id'] : TRUE;
+
+		//////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+		//store enttype of this object
+		$current_enttype = Ent::getMyEntTypeID($this);
+
+		//add current enttype to list of types not to call in recursive calls
+		$settings['called_entities'][] = $current_enttype;
+
+		// Create return array variable and set the enttype ID of the current object
+		$retArr = ($settings['return_enttypes_id'] === TRUE) ? array("enttypes_id" => $current_enttype) : array();
+
+		// Loop through all columns
+		foreach($this->table_columns() as $column=>$column_meta)
+		{
+			// This will use the '$get_basics_exceptions' property to alter the column's name if necessary
+			// If that config array is empty just use the column name
+			if(empty($this->get_basics_exceptions['column_name_changes'])) $column_key = $column;
+			else // but if it's not empty than see if the current column name exists in that array's keys
+			{
+				// check if array key exists and if it does than use the alternate naming
+				$column_key = array_key_exists($column,$this->get_basics_exceptions['column_name_changes']) ?
+					$this->get_basics_exceptions['column_name_changes'][$column] : $column;
+			}
+
+			$retArr[$column_key] = $this->$column;
+
+			// Allows us to turn off sub-objects
+			if($settings['get_sub_objects'] === TRUE)
+			{
+				// Check that this is an integer and not a primary key (id) so we don't try to create an object out of a string
+				if($column_meta['type'] == 'int' && $column_meta['key'] != 'PRI')
+				{
+					// Check for an alternative fk name and if one exists for this column use it
+					$real_fk_name = (
+						is_array($this->get_basics_exceptions['alternate_fk_names'])
+						&& !empty($this->get_basics_exceptions['alternate_fk_names'])
+						&& array_key_exists($column,$this->get_basics_exceptions['alternate_fk_names'])
+					) ?	$this->get_basics_exceptions['alternate_fk_names'][$column] : $column;
+
+					// Check if it exists as an id1 and if it does try to create an object from it.  If that fails then ignore the next section.
+					if(is_object($sub_object = Ent::get_obj_for_fk_name($real_fk_name,(int)$this->$column))) //passes the column name and id of fk
+					{
+						//Set up the string we will use as the key
+						$sub_obj_key = str_replace('_id','',$column).'_obj';
+
+						// This will use the '$get_basics_exceptions' property to alter the column's name if necessary
+						// The only difference between the one above is that we are using the constructed key name instead of the column name
+						if(empty($this->get_basics_exceptions['column_name_changes'])) $sub_obj_key = $sub_obj_key;
+						else
+						{
+							// check if array key exists and if it does than use the alternate naming
+							$sub_obj_key = array_key_exists($sub_obj_key,$this->get_basics_exceptions['column_name_changes']) ?
+								$this->get_basics_exceptions['column_name_changes'][$sub_obj_key] : $sub_obj_key;
+						}
+
+						//Check if current object type exists in the list of previously called entities
+						$recursion_is_safe = !(in_array(Ent::getMyEntTypeID($sub_object),$settings['called_entities'])) ? TRUE : FALSE;
+
+						// If there is no infinite recursion protection in place, call getBasics function
+						// for this sub object, passing settings array down
+						if($recursion_is_safe) $retArr[$sub_obj_key] = $sub_object->getBasics($settings);
+					}
+				}
+			}
+		}
+
+		return $retArr;
+	}
+
 	public function delete($is_real_delete = false){
 
 	}

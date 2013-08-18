@@ -127,7 +127,7 @@ class Model_Sportorg_Games_Base extends ORM
 		return null;
 	}
 
-	public function getBasics()
+	public function getBasics($settings = array())
 	{
 		return array(
 			"locations_id" => $this->locations_id,

@@ -82,7 +82,7 @@ if (strpos($_SERVER['HTTP_HOST'], 'newsite') !== FALSE || strpos($_SERVER['HTTP_
 	Kohana::$environment = Kohana::LOCALHOST;
 
 	// Turn off notices and strict errors
-	error_reporting(E_ALL ^ E_NOTICE ^ E_STRICT);
+	error_reporting(E_ALL ^ E_NOTICE);
 }
 elseif (strpos($_SERVER['HTTP_HOST'], 'athletesup') !== FALSE)
 {

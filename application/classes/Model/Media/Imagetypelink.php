@@ -27,7 +27,7 @@ class Model_Media_Imagetypelink extends ORM
 
 
 
-	public function getBasics()
+	public function getBasics($settings = array())
 	{
 		return array(
 			"id" => $this->id,

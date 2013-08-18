@@ -75,7 +75,7 @@ class Model_Site_Phrase extends ORM
 		}
 	}
 
-	public function getBasics()
+	public function getBasics($settings = array())
 	{
 		return array(
 			"phrase" => $this->phrase,

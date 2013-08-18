@@ -44,7 +44,7 @@ class Model_User_Teamslink extends ORM
 		);
 	}
 
-	public function getBasics()
+	public function getBasics($settings = array())
 	{
 		return array(
 			"id" => $this->id,

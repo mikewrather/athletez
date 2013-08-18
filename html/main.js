@@ -29,7 +29,9 @@ require.config({
 		'fileupload'   :'/vendor/plugins/jquery.fileupload',
 		'jquery.ui.widget'	:'/vendor/plugins/jquery.ui.widget',
         'jquery.slimscroll' : '/vendor/plugins/jquery.slimscroll.min',
-	    'plupload'          : '/vendor/plugins/plupload',
+//	    'plupload-full'          : '/vendor/plugins/plupload.full.min',
+	    'plupload'          : '/plupload/js/plupload.full',
+//	    'jq.plupload'       : "/plupload/js/jquery.ui.plupload/jquery.ui.plupload",
         
         'custom'       : '/vendor/custom',
 

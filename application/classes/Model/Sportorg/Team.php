@@ -201,7 +201,7 @@ class Model_Sportorg_Team extends ORM
 		}
 	}
 		
-	public function getBasics()
+	public function getBasics($settings = array())
 	{
 		$athletesArray = array();
 		foreach($this->athletes->find_all() as $athlete) { $athletesArray[] = $athlete->getBasics(); }
