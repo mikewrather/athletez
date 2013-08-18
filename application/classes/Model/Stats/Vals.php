@@ -96,7 +96,7 @@ class Model_Stats_Vals extends ORM
 		parent::__construct($id);
 	}
 
-	public function getBasics($settings)
+	public function getBasics($settings = array())
 	{
 		return array(
 			"id" => $this->id,

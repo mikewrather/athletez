@@ -39,7 +39,7 @@ class Model_Media_Videometa extends ORM
 		return $video_meta_model;
 	}
 
-	public function getBasics($settings)
+	public function getBasics($settings = array())
 	{
 		return array(
 			"id" => $this->id,

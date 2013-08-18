@@ -34,7 +34,7 @@ class Model_Scrape_Sport extends ORM
 	);
 	*/
 
-	public function getBasics($settings)
+	public function getBasics($settings = array())
 	{
 		return array(
 			"id" => $this->id,

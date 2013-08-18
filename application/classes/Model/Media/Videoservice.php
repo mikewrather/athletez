@@ -49,7 +49,7 @@ class Model_Media_Videoservice extends ORM
 		 
 		return $sports;
 	}
-	public function getBasics($settings)
+	public function getBasics($settings = array())
 	{
 		return array(
 			"id" => $this->id,

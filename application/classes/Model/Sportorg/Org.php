@@ -332,7 +332,7 @@ class Model_Sportorg_Org extends ORM
 		return $games;
 	}
 	
-	public function getBasics($settings)
+	public function getBasics($settings = array())
 	{
 		return array(
 			"org_id" => $this->id,

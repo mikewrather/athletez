@@ -120,7 +120,7 @@ class Model_Site_Comment extends Model_Site_Entdir
 		return $comments;
 	}
 
-	public function getBasics($settings)
+	public function getBasics($settings = array())
 	{
 		//This gets the subject of the vote.  It will be used to pull basic information
 		$subject = $this->getSubject();

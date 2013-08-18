@@ -54,7 +54,7 @@ class Model_User_Resume_Data_Group extends ORM
 		parent::__construct($id);
 	}
 
-	public function getBasics($settings)
+	public function getBasics($settings = array())
 	{
 		return array(
 			"id" => $this->id,

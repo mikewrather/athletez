@@ -74,7 +74,7 @@ class Model_User_Sportlink_Gamelink extends ORM
 		}
 	}
 
-	public function getBasics($settings)
+	public function getBasics($settings = array())
 	{
 		return array(
 			"id" => $this->id,

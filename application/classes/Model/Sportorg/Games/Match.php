@@ -43,7 +43,7 @@ class Model_Sportorg_Games_Match extends ORM
 		return 'name';
 	}
 
-	public function getBasics($settings)
+	public function getBasics($settings = array())
 	{
 		$playerArr = null;
 		foreach($this->players->find_all() as $player){

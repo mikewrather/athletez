@@ -49,7 +49,7 @@ class Model_Location_City extends ORM
 	// end rules for Location_City
 
 	
-	public function getBasics($settings)
+	public function getBasics($settings = array())
 	{
 		if(!$this->loaded()) return false;
 		return array(
