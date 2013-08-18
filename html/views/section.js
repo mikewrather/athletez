@@ -203,7 +203,7 @@ define(['facade', 'views/base', 'utils'], function(facade, BaseView, utils) {
 		isValidAutoCompleteKey : function(event) {
 			if (event) {
 				var code = (event.keyCode ? event.keyCode : event.which);
-				if ((code >= 59 && code <= 90)// alphabets
+				if (( code >= 59 && code <= 90)// alphabets
 				|| (code >= 96 && code <= 105)// numeric
 				|| (code == 8)// backspace
 				|| (code == 32 )// spacebar
@@ -214,7 +214,7 @@ define(['facade', 'views/base', 'utils'], function(facade, BaseView, utils) {
 			}
 			return false;
 		},
-		
+		 
 		/**METHOD** sort collection by the property sent, Developed for the collections/arrays which are modified on frontend not in collections
 		 Parameters:
 		 collection : array of elements

@@ -75,7 +75,7 @@ define(["require", "text!usercontrols/tag/templates/layout.html",
 			var pageLayout = new LayoutView({
 				scheme : this.scheme,
 				destination : "#main",
-				template : '',
+				template : ,
 				displayWhen : "ready"
 			});
 			this.layout = pageLayout;
@@ -86,6 +86,7 @@ define(["require", "text!usercontrols/tag/templates/layout.html",
 		/* Set  Up  User References  View  View */
 		setUpMainView : function() {
 			console.log("Set Up Main View Tag");
+			Channel('tag-team-success').subscribe(this.tagFunction);
 			var self = this;
 			this.tagView = new TagView({
 				model : new BasicModel(),
@@ -93,10 +94,14 @@ define(["require", "text!usercontrols/tag/templates/layout.html",
 				name : "tag-main",
 				destination : "#main",
 				user_id : self.id,
+				channel : 'tag-team-success',
 			});
 
 			this.scheme.push(this.tagView);
 			this.layout.render();
+		},
+		tagFunction : function(data){
+			alert(JSON.stringify(data));
 		}
 	});
 	return TagController;
