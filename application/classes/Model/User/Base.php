@@ -950,7 +950,7 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 		}
 	}
 
-	public function getBasics()
+	public function getBasics($settings)
 	{
 		$num_votes = Model_Site_Vote::getNumVotes($this);
 		$num_followers = Model_User_Followers::num_followers($this);

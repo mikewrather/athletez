@@ -58,7 +58,7 @@ class Model_Media_Video extends ORM
 		),
 	);
 	
-	public function getBasics()
+	public function getBasics($settings)
 	{
 		return array(
 			"id" => $this->id,

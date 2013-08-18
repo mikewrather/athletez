@@ -23,7 +23,7 @@ class Model_Sportorg_Games_Matchplayer extends ORM
 		)
 	);
 
-	public function getBasics()
+	public function getBasics($settings)
 	{
 		return array(
 			"id" => $this->id,

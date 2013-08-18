@@ -36,7 +36,7 @@ class Model_User_Sportlink extends ORM
 			'far_key' => 'games_id'
 		)
 	);
-	public function getBasics()
+	public function getBasics($settings)
 	{
 		return array(
 			"id" => $this->id,

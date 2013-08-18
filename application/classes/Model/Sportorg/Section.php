@@ -61,7 +61,7 @@ class Model_Sportorg_Section extends ORM
 		parent::__construct($id);
 	}
 	
-	public function getBasics()
+	public function getBasics($settings)
 	{
 		return array(
 			"id" => $this->id,

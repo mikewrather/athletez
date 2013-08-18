@@ -130,16 +130,4 @@ class Model_Site_Enttype extends ORM
 		return false;
 	}
 
-	public function getBasics($settings=array())
-	{
-		return array(
-			"id" => $this->id,			
-			"api_name" => $this->api_name,
-			"class_name" => $this->class_name,
-			"db_table" => $this->db_table,
-			"description" => $this->description
-		);
-	}
-
-
 }

@@ -36,7 +36,7 @@ class Model_Sportorg_Games_Teamslink extends ORM
 		);
 	}
 
-	public function getBasics()
+	public function getBasics($settings)
 	{
 		return array(
 			"points_scored" => $this->points_scored,

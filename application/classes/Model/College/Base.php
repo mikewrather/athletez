@@ -46,7 +46,7 @@ class Model_College_Base extends ORM
 		)
 	);
 
-/*	public function getBasics(){
+/*	public function getBasics($settings){
 		return array(
 			'id' => $this->id,
 			'name' => $this->name,

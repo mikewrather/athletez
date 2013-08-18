@@ -229,8 +229,14 @@ class ORM extends Kohana_ORM
 
 	// This will force column name changes
 	protected $get_basics_exceptions = array(
+		// key = current name of column, val = name getBasics will return
 		'column_name_changes' => array(
 			'sport_type_obj' => 'sport_type'
+		),
+		// key = name of the column in the table, val = standard fk name that's used as id1
+		'alternate_fk_names' => array(
+			'voter_users_id' => 'users_id', //would be used in votes table
+			'flagger_users_id' => 'users_id' //would be used in the flags table
 		)
 	);
 
@@ -288,8 +294,15 @@ class ORM extends Kohana_ORM
 				// Check that this is an integer and not a primary key (id) so we don't try to create an object out of a string
 				if($column_meta['type'] == 'int' && $column_meta['key'] != 'PRI')
 				{
+					// Check for an alternative fk name and if one exists for this column use it
+					$real_fk_name = (
+						is_array($this->get_basics_exceptions['alternate_fk_names'])
+						&& !empty($this->get_basics_exceptions['alternate_fk_names'])
+						&& array_key_exists($column,$this->get_basics_exceptions['alternate_fk_names'])
+					) ?	$this->get_basics_exceptions['alternate_fk_names'][$column] : $column;
+
 					// Check if it exists as an id1 and if it does try to create an object from it.  If that fails then ignore the next section.
-					if(is_object($sub_object = Ent::get_obj_for_fk_name($column,(int)$this->$column))) //passes the column name and id of fk
+					if(is_object($sub_object = Ent::get_obj_for_fk_name($real_fk_name,(int)$this->$column))) //passes the column name and id of fk
 					{
 						//Set up the string we will use as the key
 						$sub_obj_key = str_replace('_id','',$column).'_obj';

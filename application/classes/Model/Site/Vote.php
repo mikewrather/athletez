@@ -52,7 +52,7 @@ class Model_Site_Vote extends Model_Site_Entdir
 		parent::__construct($id);
 	}
 	
-	public function getBasics()
+	public function getBasics($settings)
 	{
 		//This gets the subject of the vote.  It will be used to pull basic information
 		$subject = $this->getSubject();

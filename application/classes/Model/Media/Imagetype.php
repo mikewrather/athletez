@@ -25,7 +25,7 @@ class Model_Media_Imagetype extends ORM
 		parent::__construct($id);
 	}
 
-	public function getBasics()
+	public function getBasics($settings)
 	{
 		return array(
 			"id" => $this->id,

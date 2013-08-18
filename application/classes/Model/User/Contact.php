@@ -114,7 +114,7 @@ class Model_User_Contact extends ORM
 		return $new_contact_model;
 	}
 
-	public function getBasics()
+	public function getBasics($settings)
 	{
 		return array(
 			"id" => $this->id,

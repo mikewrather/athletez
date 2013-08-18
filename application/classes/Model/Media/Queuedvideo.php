@@ -25,7 +25,7 @@ class Model_Media_Queuedvideo extends ORM
 			'foreign_key' => 'users_id'
 		)
 	);
-	public function getBasics()
+	public function getBasics($settings)
 	{
 		return array(
 			"id" => $this->id,			

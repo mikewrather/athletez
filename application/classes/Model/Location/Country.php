@@ -18,7 +18,7 @@ class Model_Location_Country extends ORM
 	);
 
 
-	public function getBasics()
+	public function getBasics($settings)
 	{
 		return array(
 			"id" => $this->id,

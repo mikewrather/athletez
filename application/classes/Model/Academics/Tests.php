@@ -132,7 +132,7 @@ class Model_Academics_Tests extends ORM
 		return $results;
 	}
 
-	public function getBasics(){
+	public function getBasics($settings){
 		return array(
 			'id' => $this->id,
 			'name' => $this->name,

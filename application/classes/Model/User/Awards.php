@@ -79,7 +79,7 @@ class Model_User_Awards extends ORM
 		return $this;
 	}
 
-	public function getBasics()
+	public function getBasics($settings)
 	{
 		return array(
 			"id" => $this->id,

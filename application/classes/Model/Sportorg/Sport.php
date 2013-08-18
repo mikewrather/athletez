@@ -153,7 +153,7 @@ class Model_Sportorg_Sport extends ORM
 		}
 	}
 
-/*	public function getBasics()
+/*	public function getBasics($settings)
 	{
 		return array(
 			"sport_id" => $this->id,

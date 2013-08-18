@@ -56,7 +56,7 @@ class Model_User_Resume_Sent extends ORM
 //		parent::__construct($id);
 //	}
 //
-	public function getBasics()
+	public function getBasics($settings)
 	{
 		return array(
 			"id" => $this->id,

@@ -45,7 +45,7 @@ class Model_Academics_Tests_Topics extends ORM
 		return $topics;
 	}
 
-	public function getBasics(){
+	public function getBasics($settings){
 		return array(
 			'id' =>$this->id,
 			'academics_tests_id' => $this->academics_tests_id,

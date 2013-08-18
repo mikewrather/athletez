@@ -79,7 +79,7 @@ class Model_Sportorg_Complevel_Profile extends ORM
 		return $retArr;
 	}
 
-	public function getBasics()
+	public function getBasics($settings)
 	{
 		return array(
 			"id" => $this->id,

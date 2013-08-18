@@ -39,7 +39,7 @@ class Model_Stats_Tab extends ORM
 
 
 
-	public function getBasics()
+	public function getBasics($settings)
 	{
 		return array(
 			"id" => $this->id,			
