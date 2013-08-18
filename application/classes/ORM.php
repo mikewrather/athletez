@@ -250,7 +250,7 @@ class ORM extends Kohana_ORM
 	 * @param $settings array - array that holds settings for the current getBasics call
 	 * @return array
 	 */
-	public function getBasics($settings)
+	public function getBasics($settings = array())
 	{
 		// Set defaults for settings ////////////////////////////////////////////////////////////////////////////
 		// get_sub_objects, if set to false, will not attempt to generate objects for foreign key columns
