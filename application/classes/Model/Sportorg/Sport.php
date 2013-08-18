@@ -21,7 +21,8 @@ class Model_Sportorg_Sport extends ORM
 
 	protected $get_basics_exceptions = array(
 		'column_name_changes' => array(
-			'sport_type_obj' => 'sport_type'
+			'sport_type_obj' => 'sport_type',
+			'name' => 'sport_name'
 		)
 	);
 	
