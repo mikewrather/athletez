@@ -11,6 +11,18 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 
 	protected $_table_name = 'users';
 
+	protected $get_basics_exceptions = array(
+		'alternate_fk_names' => array(
+			'city' => 'cities_id',
+			'user_picture' => 'images_id'
+		),
+		'added_function_calls' => array(
+			'name' => 'get_full_name',
+			'num_followers' => 'get_num_followers',
+			'num_votes' =>'get_num_votes',
+		),
+	);
+
 	protected $_belongs_to = array(
 		"city" => array(
 			"model" => "Location_City",
@@ -950,6 +962,21 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 		}
 	}
 
+
+
+	public function get_num_votes()
+	{
+		return Model_Site_Vote::getNumVotes($this);
+	}
+	public function get_num_followers()
+	{
+		return Model_User_Followers::num_followers($this);
+	}
+	public function get_full_name()
+	{
+		return $this->first_name." ".$this->last_name;
+	}
+/*
 	public function getBasics($settings = array())
 	{
 		$num_votes = Model_Site_Vote::getNumVotes($this);
@@ -985,7 +1012,7 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 		);
 
 		//This logic will be added later to return appropriate data for the user's permissions
-		/*
+
 
 		//stuff for public
 		$retArr["name"] = ucfirst($this->first_name.' '.$this->lastName());
@@ -1001,9 +1028,9 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 		//stuff for admin
 
 		return $retArr;
-	*/
-	}
 
+	}
+*/
 	public function getTeams($args = array())
 	{
 		extract($args);

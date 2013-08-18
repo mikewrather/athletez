@@ -12,6 +12,15 @@ class Model_Media_Base extends ORM
 
 	public $error_message_path = 'models/media/base';
 
+	protected $get_basics_exceptions = array(
+		'alternate_fk_names' => array(
+			'sport' => 'sports_id',
+		),
+		'column_name_changes' => array(
+			'sport_type_obj' => 'sport',
+		),
+	);
+
 	protected $_belongs_to = array(
 		'sport' => array(
 			'model' => 'Sportorg_Sport',
@@ -100,16 +109,6 @@ class Model_Media_Base extends ORM
 
 	}
 
-	public function getBasics($exclude_array=array())
-	{
-		return array(
-			"id" => $this->id,
-			"name" => $this->name,
-			"media_type" => $this->media_type,
-			"sport" => $this->sport->getBasics(),
-			"user" => in_array('user',$exclude_array) ? 'excluded' : $this->user->getBasics(),
-		);
-	}
 
 	public function addMedia($args = array())
 	{

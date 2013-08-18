@@ -9,7 +9,20 @@ class Model_Media_Image extends ORM
 {
 	
 	protected $_table_name = 'images';
-	
+
+	protected $get_basics_exceptions = array(
+		'alternate_fk_names' => array(
+			'sport' => 'sports_id',
+		),
+		'added_function_calls' => array(
+			'image_title'=>'get_name',
+			'num_votes'=>'get_num_votes',
+			'types' =>'getTypes'
+		),
+		'column_name_changes' => array(
+			'original_url' => 'image_path',
+		),
+	);
 
 	protected $_belongs_to = array(
 		'media' => array(
@@ -43,21 +56,15 @@ class Model_Media_Image extends ORM
 		);
 	}
 
-	public function getBasics($exclude_array=array())
-	{
-		$num_votes = Model_Site_Vote::getNumVotes($this);
 
-		return array(
-			"id" => $this->id,
-			"original_url" => $this->original_url,
-			"moviemasher_id" => $this->moviemasher_id,
-			"media" => $this->media->getBasics($exclude_array),
-			"image_title" => $this->media->name,
-			"image_path" => $this->original_url,
-			"num_votes" => $num_votes,
-			"image_id" => $this->id,
-			"types" => $this->getTypes(),
-		);
+
+	public function get_name()
+	{
+		return $this->media->name;
+	}
+	public function get_num_votes()
+	{
+		return Model_Site_Vote::getNumVotes($this);
 	}
 
 	public function getTypes()

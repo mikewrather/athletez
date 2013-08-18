@@ -80,10 +80,9 @@ class Controller_User extends Controller_Template
 
 	public function action_gbtest()
 	{
-		$coach = ORM::factory('College_Coach',1379);
+		$coach = ORM::factory('User_Base',425983);
 		$gb_settings = array(
 			'get_sub_objects' => TRUE,
-
 		);
 		print_r($coach->getBasics(array("get_sub_objects"=>TRUE)));
 	}

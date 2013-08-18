@@ -231,7 +231,7 @@ class ORM extends Kohana_ORM
 	protected $get_basics_exceptions = array(
 		// key = current name of column, val = name getBasics will return
 		'column_name_changes' => array(
-			'sport_type_obj' => 'sport_type'
+			'sport_type_obj' => 'sport_type',
 		),
 		// key = name of the column in the table, val = standard fk name that's used as id1
 		'alternate_fk_names' => array(
@@ -260,7 +260,14 @@ class ORM extends Kohana_ORM
 		$settings['exclude_list'] = (is_array($settings['exclude_list']) && !empty($settings['exclude_list'])) ?
 			$settings['exclude_list'] : array();
 
+		// says whether to return the enttypes_id this object
 		$settings['return_enttypes_id'] = is_bool($settings['return_enttypes_id']) ? $settings['return_enttypes_id'] : TRUE;
+
+		// This counts how many levels deep we are on sub_object recursion.  adds 1 here.
+		$settings['recursion_count'] = is_integer($settings['recursion_count']) ? $settings['recursion_count'] + 1 : 0;
+
+		// Single Item allows us to retrieve the value for a single column.  here we check if it is a string (column name)
+		$settings['single_item'] = is_string($settings['single_item']) ? $settings['single_item'] : FALSE;
 
 		//////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -276,29 +283,31 @@ class ORM extends Kohana_ORM
 		// Loop through all columns
 		foreach($this->table_columns() as $column=>$column_meta)
 		{
+			//Check if we just want a single item and if we do, only continue if this is the correct item
+			if($settings['single_item'] !== FALSE && $settings['single_item'] != $column && $settings['recursion_count'] == 0) continue;
+
 			// This will use the '$get_basics_exceptions' property to alter the column's name if necessary
 			// If that config array is empty just use the column name
-			if(empty($this->get_basics_exceptions['column_name_changes'])) $column_key = $column;
-			else // but if it's not empty than see if the current column name exists in that array's keys
-			{
-				// check if array key exists and if it does than use the alternate naming
-				$column_key = array_key_exists($column,$this->get_basics_exceptions['column_name_changes']) ?
-					$this->get_basics_exceptions['column_name_changes'][$column] : $column;
-			}
+			// also check if array key exists and if it does than use the alternate naming
+			$column_key = (
+					!(empty($this->get_basics_exceptions['column_name_changes']))
+				&&  array_key_exists($column,$this->get_basics_exceptions['column_name_changes'])
+			) ? $this->get_basics_exceptions['column_name_changes'][$column] : $column;
 
+			// add this column's value to the return array
 			$retArr[$column_key] = $this->$column;
 
-			// Allows us to turn off sub-objects
+			// Allows us to turn off sub-objects when set to false
 			if($settings['get_sub_objects'] === TRUE)
 			{
-				// Check that this is an integer and not a primary key (id) so we don't try to create an object out of a string
+				// Check that this is an integer and not a primary key (id) so we don't try to create an object out of a string or something
 				if($column_meta['type'] == 'int' && $column_meta['key'] != 'PRI')
 				{
 					// Check for an alternative fk name and if one exists for this column use it
 					$real_fk_name = (
-						is_array($this->get_basics_exceptions['alternate_fk_names'])
-						&& !empty($this->get_basics_exceptions['alternate_fk_names'])
-						&& array_key_exists($column,$this->get_basics_exceptions['alternate_fk_names'])
+							is_array($this->get_basics_exceptions['alternate_fk_names'])
+						&&  !empty($this->get_basics_exceptions['alternate_fk_names'])
+						&&  array_key_exists($column,$this->get_basics_exceptions['alternate_fk_names'])
 					) ?	$this->get_basics_exceptions['alternate_fk_names'][$column] : $column;
 
 					// Check if it exists as an id1 and if it does try to create an object from it.  If that fails then ignore the next section.
@@ -308,14 +317,12 @@ class ORM extends Kohana_ORM
 						$sub_obj_key = str_replace('_id','',$column).'_obj';
 
 						// This will use the '$get_basics_exceptions' property to alter the column's name if necessary
-						// The only difference between the one above is that we are using the constructed key name instead of the column name
-						if(empty($this->get_basics_exceptions['column_name_changes'])) $sub_obj_key = $sub_obj_key;
-						else
-						{
-							// check if array key exists and if it does than use the alternate naming
-							$sub_obj_key = array_key_exists($sub_obj_key,$this->get_basics_exceptions['column_name_changes']) ?
-								$this->get_basics_exceptions['column_name_changes'][$sub_obj_key] : $sub_obj_key;
-						}
+						// check if array key exists and if it does than use the alternate naming
+						$sub_obj_key = (
+								!empty($this->get_basics_exceptions['column_name_changes'])
+							&&  array_key_exists($sub_obj_key,$this->get_basics_exceptions['column_name_changes'])
+						) ? $this->get_basics_exceptions['column_name_changes'][$sub_obj_key] : $sub_obj_key;
+
 
 						//Check if current object type exists in the list of previously called entities
 						$recursion_is_safe = !(in_array(Ent::getMyEntTypeID($sub_object),$settings['called_entities'])) ? TRUE : FALSE;
@@ -323,8 +330,18 @@ class ORM extends Kohana_ORM
 						// If there is no infinite recursion protection in place, call getBasics function
 						// for this sub object, passing settings array down
 						if($recursion_is_safe) $retArr[$sub_obj_key] = $sub_object->getBasics($settings);
+						else $retArr[$sub_obj_key] = "recursion protection";
 					}
 				}
+			}
+		}
+
+		// this section of code will add additional items that get their value from functions
+		if(is_array($this->get_basics_exceptions['added_function_calls']) &&  !empty($this->get_basics_exceptions['added_function_calls']))
+		{
+			foreach($this->get_basics_exceptions['added_function_calls'] as $key_name => $function)
+			{
+				$retArr[$key_name] = $this->$function();
 			}
 		}
 
