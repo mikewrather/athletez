@@ -18,6 +18,12 @@ class Model_Sportorg_Sport extends ORM
 			'foreign_key' => 'sport_type_id'
 		)
 	);
+
+	protected $get_basics_exceptions = array(
+		'column_name_changes' => array(
+			'sport_type_obj' => 'sport_type'
+		)
+	);
 	
 	protected $_has_many = array(
 		'sections' => array(
@@ -147,7 +153,7 @@ class Model_Sportorg_Sport extends ORM
 		}
 	}
 
-	public function getBasics()
+/*	public function getBasics()
 	{
 		return array(
 			"sport_id" => $this->id,
@@ -158,7 +164,7 @@ class Model_Sportorg_Sport extends ORM
 			"sport_type" => $this->type->getBasics()
 		);
 	}
-
+*/
 	public function getListall($args = array()){
 		extract($args);
 		$sports = ORM::factory('Sportorg_Sport');

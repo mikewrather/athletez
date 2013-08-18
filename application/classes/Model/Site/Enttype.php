@@ -106,7 +106,31 @@ class Model_Site_Enttype extends ORM
 		}
 	}
 
-	public function getBasics()
+	static function get_obj_for_fk_name($fk_name,$id=FALSE)
+	{
+		$ent = ORM::factory('Site_Enttype')
+			->where('id1','=',$fk_name)
+			->find();
+
+		if($ent->loaded())
+		{
+			if($id)
+			{
+				$obj = ORM::factory($ent->class_name)->where('id','=',(int)$id)->find();
+				if($obj->loaded())
+				{
+					return $obj;
+				}
+			}
+			else
+			{
+				return true;
+			}
+		}
+		return false;
+	}
+
+	public function getBasics($settings=array())
 	{
 		return array(
 			"id" => $this->id,			
