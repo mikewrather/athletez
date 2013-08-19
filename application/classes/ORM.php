@@ -22,8 +22,14 @@ class ORM extends Kohana_ORM
 	public static function factory($model, $id = NULL)
 	{
 		$model = parent::factory($model,$id);
-		$model->get_basics_obj = new GetBasicsExceptions($model->get_basics_class_standards);
+		$model->populate_get_basics_obj();
 		return $model;
+	}
+
+	public function populate_get_basics_obj()
+	{
+		$this->get_basics_obj = new GetBasicsExceptions($this->get_basics_class_standards);
+		return $this->get_basics_obj;
 	}
 
 	public function is_flagged()
@@ -265,8 +271,8 @@ class ORM extends Kohana_ORM
 	public function getBasics($settings = array())
 	{
 		// Pulls the standard settings for this class
-		$class_settings_arr = $this->get_basics_obj->getSettings();
-		
+		$class_settings_arr = is_object($this->get_basics_obj) ? $this->get_basics_obj->getSettings() : $this->populate_get_basics_obj()->getSettings();
+
 		// Set defaults for settings ////////////////////////////////////////////////////////////////////////////
 		// get_sub_objects, if set to false, will not attempt to generate objects for foreign key columns
 		$settings['get_sub_objects'] = is_bool($settings['get_sub_objects']) ? $settings['get_sub_objects'] : TRUE;
