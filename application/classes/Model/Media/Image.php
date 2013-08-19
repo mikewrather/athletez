@@ -10,7 +10,7 @@ class Model_Media_Image extends ORM
 	
 	protected $_table_name = 'images';
 
-	protected $get_basics_exceptions = array(
+	public $get_basics_class_standards = array(
 		'alternate_fk_names' => array(
 			'sport' => 'sports_id',
 		),

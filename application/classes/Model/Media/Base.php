@@ -12,7 +12,7 @@ class Model_Media_Base extends ORM
 
 	public $error_message_path = 'models/media/base';
 
-	protected $get_basics_exceptions = array(
+	public $get_basics_class_standards = array(
 		'alternate_fk_names' => array(
 			'sport' => 'sports_id',
 		),

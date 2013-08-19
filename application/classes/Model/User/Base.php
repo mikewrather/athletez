@@ -11,7 +11,7 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 
 	protected $_table_name = 'users';
 
-	protected $get_basics_exceptions = array(
+	public $get_basics_class_standards = array(
 		'alternate_fk_names' => array(
 			'city' => 'cities_id',
 			'user_picture' => 'images_id'
@@ -20,6 +20,9 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 			'name' => 'get_full_name',
 			'num_followers' => 'get_num_followers',
 			'num_votes' =>'get_num_votes',
+		),
+		'exclude_columns' => array(
+			'username','email','password','dob'
 		),
 	);
 
@@ -976,61 +979,24 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 	{
 		return $this->first_name." ".$this->last_name;
 	}
-/*
+
 	public function getBasics($settings = array())
 	{
-		$num_votes = Model_Site_Vote::getNumVotes($this);
-		$num_followers = Model_User_Followers::num_followers($this);
-		$user_picture = $this->getAvatar();
-
-//		$utl_results = $this->utl->find_all();
-//		$results = array();
-//		foreach($utl_results as $tmp_utl){
-//			$results[] = $tmp_utl->as_array();
-//		}
-
-
-
-		return array(
-			"id" => $this->id,
-			"email" => $this->email,
-			"name" => $this->first_name." ".$this->last_name,
-			"date_created" => $this->date_created,
-			"login_count" => $this->login_count,
-			"last_login" => $this->last_login,
-			"user_weight" => $this->weight_lb,
-			"user_height" => $this->height_in,
-			"grad_year" => $this->grad_year,
-			"user_picture" => $user_picture,
-			"num_followers" => $num_followers,
-			"num_votes" => $num_votes,
-			"city" => $this->city->getBasics(),
-			"dob" => $this->dob,
-			"ncaa" => $this->ncaa,
-			"gender" => $this->gender
-			//"utl" =>$results
-		);
-
-		//This logic will be added later to return appropriate data for the user's permissions
-
-
-		//stuff for public
-		$retArr["name"] = ucfirst($this->first_name.' '.$this->lastName());
-		$retArr['username'] = $this->username;
-		$retArr['email'] = $this->email;
-		$retArr['logins'] = $this->logins;
-		$retArr['last_login']= date('M jS, g:i a',$this->last_login);
-
-		//stuff for logged in
-
-		//stuff for coaches
-
-		//stuff for admin
-
-		return $retArr;
-
+		//check for permissions here before calling the main getBasics function
+		$logged_user = Auth::instance()->get_user();
+		if($logged_user)
+		{
+			$logged_user = ORM::factory('User_Base',$logged_user->id);
+			if($logged_user->loaded())
+			{
+				// Do checks for permissions and if user can assume ownership then remove private columns from exclude list
+				if($logged_user->can('Assumeownership',array('owner'=>$this->id)))
+					$this->get_basics_obj->remove_excluded_column(array('username','email','password','dob'));
+			}
+		}
+		return parent::getBasics($settings);
 	}
-*/
+
 	public function getTeams($args = array())
 	{
 		extract($args);

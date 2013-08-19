@@ -3,6 +3,29 @@
 class ORM extends Kohana_ORM
 {
 
+	public $get_basics_obj; //this will hold the object that can be manipulated
+	public $get_basics_class_standards = array(
+
+		// key = name of the column in the table, val = standard fk name that's used as id1
+		'alternate_fk_names' => array(),
+
+		// key = current name of column, val = name getBasics will return
+		'column_name_changes' => array(),
+
+		// key = the key that will appear in the returned results, val = the name of the function / property to invoke for the value
+		'added_function_calls' => array(),
+
+		// array of values only.  Each value is the name of a column to exclude
+		'exclude_columns' => array(),
+	);
+
+	public static function factory($model, $id = NULL)
+	{
+		$model = parent::factory($model,$id);
+		$model->get_basics_obj = new GetBasicsExceptions($model->get_basics_class_standards);
+		return $model;
+	}
+
 	public function is_flagged()
 	{
 		if(!$this->loaded()) return false;
@@ -227,18 +250,7 @@ class ORM extends Kohana_ORM
 		return $results;
 	}
 
-	// This will force column name changes
-	protected $get_basics_exceptions = array(
-		// key = current name of column, val = name getBasics will return
-		'column_name_changes' => array(
-			'sport_type_obj' => 'sport_type',
-		),
-		// key = name of the column in the table, val = standard fk name that's used as id1
-		'alternate_fk_names' => array(
-			'voter_users_id' => 'users_id', //would be used in votes table
-			'flagger_users_id' => 'users_id' //would be used in the flags table
-		)
-	);
+
 
 	/**
 	 * Mike's implementation of getBasics uses the id1 column of enttypes for recursion and
@@ -252,13 +264,12 @@ class ORM extends Kohana_ORM
 	 */
 	public function getBasics($settings = array())
 	{
+		// Pulls the standard settings for this class
+		$class_settings_arr = $this->get_basics_obj->getSettings();
+		
 		// Set defaults for settings ////////////////////////////////////////////////////////////////////////////
 		// get_sub_objects, if set to false, will not attempt to generate objects for foreign key columns
 		$settings['get_sub_objects'] = is_bool($settings['get_sub_objects']) ? $settings['get_sub_objects'] : TRUE;
-
-		// exclude list can hold a list of columns to exclude from the results
-		$settings['exclude_list'] = (is_array($settings['exclude_list']) && !empty($settings['exclude_list'])) ?
-			$settings['exclude_list'] : array();
 
 		// says whether to return the enttypes_id this object
 		$settings['return_enttypes_id'] = is_bool($settings['return_enttypes_id']) ? $settings['return_enttypes_id'] : TRUE;
@@ -268,6 +279,10 @@ class ORM extends Kohana_ORM
 
 		// Single Item allows us to retrieve the value for a single column.  here we check if it is a string (column name)
 		$settings['single_item'] = is_string($settings['single_item']) ? $settings['single_item'] : FALSE;
+		
+		// exclude list can hold a list of columns to exclude from the results
+		$class_settings_arr['exclude_columns'] = (is_array($class_settings_arr['exclude_columns']) && !empty($class_settings_arr['exclude_columns'])) ?
+			$class_settings_arr['exclude_columns'] : array();
 
 		//////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -283,16 +298,19 @@ class ORM extends Kohana_ORM
 		// Loop through all columns
 		foreach($this->table_columns() as $column=>$column_meta)
 		{
-			//Check if we just want a single item and if we do, only continue if this is the correct item
-			if($settings['single_item'] !== FALSE && $settings['single_item'] != $column && $settings['recursion_count'] == 0) continue;
-
 			// This will use the '$get_basics_exceptions' property to alter the column's name if necessary
 			// If that config array is empty just use the column name
 			// also check if array key exists and if it does than use the alternate naming
 			$column_key = (
-					!(empty($this->get_basics_exceptions['column_name_changes']))
-				&&  array_key_exists($column,$this->get_basics_exceptions['column_name_changes'])
-			) ? $this->get_basics_exceptions['column_name_changes'][$column] : $column;
+					!(empty($class_settings_arr['column_name_changes']))
+				&&  array_key_exists($column,$class_settings_arr['column_name_changes'])
+			) ? $class_settings_arr['column_name_changes'][$column] : $column;
+
+			//Check if we just want a single item and if we do, only continue if this is the correct item *USES COLUMN KEY FROM ABOVE
+			if($settings['single_item'] !== FALSE && $settings['single_item'] != $column_key && $settings['recursion_count'] == 0) continue;
+
+			//Check if this key is manually excluded in the settings  *USES COLUMN KEY FROM ABOVE
+			if(in_array($column_key,$class_settings_arr['exclude_columns'])) continue;
 
 			// add this column's value to the return array
 			$retArr[$column_key] = $this->$column;
@@ -305,10 +323,10 @@ class ORM extends Kohana_ORM
 				{
 					// Check for an alternative fk name and if one exists for this column use it
 					$real_fk_name = (
-							is_array($this->get_basics_exceptions['alternate_fk_names'])
-						&&  !empty($this->get_basics_exceptions['alternate_fk_names'])
-						&&  array_key_exists($column,$this->get_basics_exceptions['alternate_fk_names'])
-					) ?	$this->get_basics_exceptions['alternate_fk_names'][$column] : $column;
+							is_array($class_settings_arr['alternate_fk_names'])
+						&&  !empty($class_settings_arr['alternate_fk_names'])
+						&&  array_key_exists($column,$class_settings_arr['alternate_fk_names'])
+					) ?	$class_settings_arr['alternate_fk_names'][$column] : $column;
 
 					// Check if it exists as an id1 and if it does try to create an object from it.  If that fails then ignore the next section.
 					if(is_object($sub_object = Ent::get_obj_for_fk_name($real_fk_name,(int)$this->$column))) //passes the column name and id of fk
@@ -319,9 +337,9 @@ class ORM extends Kohana_ORM
 						// This will use the '$get_basics_exceptions' property to alter the column's name if necessary
 						// check if array key exists and if it does than use the alternate naming
 						$sub_obj_key = (
-								!empty($this->get_basics_exceptions['column_name_changes'])
-							&&  array_key_exists($sub_obj_key,$this->get_basics_exceptions['column_name_changes'])
-						) ? $this->get_basics_exceptions['column_name_changes'][$sub_obj_key] : $sub_obj_key;
+								!empty($class_settings_arr['column_name_changes'])
+							&&  array_key_exists($sub_obj_key,$class_settings_arr['column_name_changes'])
+						) ? $class_settings_arr['column_name_changes'][$sub_obj_key] : $sub_obj_key;
 
 
 						//Check if current object type exists in the list of previously called entities
@@ -337,16 +355,25 @@ class ORM extends Kohana_ORM
 		}
 
 		// this section of code will add additional items that get their value from functions
-		if(is_array($this->get_basics_exceptions['added_function_calls']) &&  !empty($this->get_basics_exceptions['added_function_calls']))
+		if(is_array($class_settings_arr['added_function_calls']) &&  !empty($class_settings_arr['added_function_calls']))
 		{
-			foreach($this->get_basics_exceptions['added_function_calls'] as $key_name => $function)
+			foreach($class_settings_arr['added_function_calls'] as $key_name => $callback)
 			{
-				$retArr[$key_name] = $this->$function();
+				// if the callback is an array then there are additional instructions to be parsed
+				if(is_array($callback))
+				{
+					// Parse array into instructions
+				}
+				if(method_exists($this,$callback)) $retArr[$key_name] = $this->$callback();
+				elseif(property_exists($this,$callback)) $retArr[$key_name] = $this->$callback;
+
 			}
 		}
 
 		return $retArr;
 	}
+
+
 
 	public function delete($is_real_delete = false){
 

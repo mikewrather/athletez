@@ -19,13 +19,16 @@ class Model_Sportorg_Sport extends ORM
 		)
 	);
 
-	protected $get_basics_exceptions = array(
+	public $get_basics_class_standards = array(
 		'column_name_changes' => array(
 			'sport_type_obj' => 'sport_type',
 			'name' => 'sport_name'
 		),
 		'alternate_fk_names' => array(
 			'sport_type_id' => 'sport_types_id'
+		),
+		'added_function_calls' => array(
+			'sport_id' => 'pk' // this just adds an extra column which has a duplicate value of id
 		)
 	);
 	
