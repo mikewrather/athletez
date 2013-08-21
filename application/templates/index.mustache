@@ -18,20 +18,20 @@
         var base_url = '{{base_url}}';
         var testpath = '{{base_url}}{{testpath}}';
         var testpath = false;
-        require(['facade', 'application', 'utils'], function (facade, App, utils) {
-            var $ = facade.$,
-                Backbone = facade.Backbone,
-                debug = utils.debug;
+       // require(['facade', 'application', 'utils'], function (facade, App, utils) {
+         //   var $ = facade.$,
+           //     Backbone = facade.Backbone,
+             //   debug = utils.debug;
 
-            $(function () { // doc ready
-                var app;
+          //  $(function () { // doc ready
+           //     var app;
 
                 // run the application, it all starts here.
-                app = new App();
-                Backbone.history.start({pushState: true});
-                debug.log("app initialized.");
-            });
-        });
+               // app = new App();
+                //Backbone.history.start({pushState: true});
+                //debug.log("app initialized.");
+            //});
+        //});
     </script>
 </head>
 <body></body>
