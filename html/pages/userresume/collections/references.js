@@ -22,7 +22,7 @@ define(['facade', 'collections', 'user/collections/references', 'utils'], functi
 
 			var models = self.toJSON();
 			var d = [];
-
+console.log("models References", models);
 			if (models.length) {
 				$.each(models, function(index, load) {
 					if (load != null && load.payload != null) {

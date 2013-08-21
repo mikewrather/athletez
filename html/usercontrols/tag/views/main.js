@@ -452,6 +452,7 @@ define(['require', 'text!usercontrols/tag/templates/layout.html', 'text!usercont
 				seasons : data
 			});
 			$(self.destination).find(self.controls.ddlTeamSeason).html(markup);
+			
 		},
 		/*FETCH SEASONS AS PER THE SCHOOL AND DISPLAY ACCORDINGLY*/
 		GetSeasonsData : function(collection, orgs_id, sports_id) {
@@ -518,6 +519,7 @@ define(['require', 'text!usercontrols/tag/templates/layout.html', 'text!usercont
 		doneTagTeamTagging : function(e) {
 			var schoolId = $(self.destination).find(self.controls.txtTeamSchool).attr(self.attributes.schoolId);
 			var seasonId = $(self.destination).find(self.controls.ddlTeamSeason).val();
+			var data = {};
 			if (schoolId && schoolId != "" && schoolId != 0 && seasonId && seasonId != "" && seasonId != 0) {
 				var teamName = $(self.destination).find(self.controls.txtTeamSchool).val();
 				teamName += " - " + $(self.destination).find(self.controls.ddlTeamSeason).val();

@@ -201,7 +201,7 @@ define(['require', 'text!userresume/templates/academic.html', 'text!userresume/t
 				gpaModel.target = $(e.target).parent();
 				gpaModel.save();
 
-				$.when(Collection.request).done(function() {
+				$.when(gpaModel.request).done(function() {
 					self.setUpGpaView();
 				});
 			}
@@ -462,7 +462,7 @@ define(['require', 'text!userresume/templates/academic.html', 'text!userresume/t
 			});
 
 			$.when(testModel.request).done(function() {
-				//$(e.target).parent().find(self.controls.TxtGpa).val('');
+				$(e.target).parent().find(self.controls.TxtScore).val('');
 			});
 		}
 	});
