@@ -23,6 +23,10 @@ define(["facade", "models/base"], function (facade, BaseModel) {
 		initialize: function () {
 			UserBasicsModel.__super__.initialize.apply(this, arguments);
 
+		},
+		user_pic_small: function()
+		{
+			return this.payload.user_picture.types.small_thumb.url;
 		}
 	});
 

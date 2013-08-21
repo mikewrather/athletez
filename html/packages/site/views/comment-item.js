@@ -38,11 +38,8 @@ function (
 	        console.log("profile payload = ", payload);
             var self = this;
             if (payload) {
-                var user_photo = payload['poster_picture'];
-                var user_email = payload['poster_email'];
-                if (!user_photo && user_email) {
-                    self.$('.user-photo img').attr("src","http://www.gravatar.com/avatar/" + MD5(user_email) + "&s=29");
-                }
+                var user_photo = payload.user.user_picture_obj.types.small_thumb.url;
+				self.$('.user-photo img').attr("src",user_photo);
             }
             
             return this;

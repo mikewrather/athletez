@@ -22,8 +22,16 @@ class ORM extends Kohana_ORM
 	public static function factory($model, $id = NULL)
 	{
 		$model = parent::factory($model,$id);
-		$model->populate_get_basics_obj();
 		return $model;
+	}
+
+	public function __construct($id = NULL)
+	{
+		parent::__construct($id);
+		if(!is_object($this->get_basics_obj))
+		{
+			$this->populate_get_basics_obj();
+		}
 	}
 
 	public function populate_get_basics_obj()
@@ -295,7 +303,7 @@ class ORM extends Kohana_ORM
 		//store enttype of this object
 		$current_enttype = Ent::getMyEntTypeID($this);
 
-		//add current enttype to list of types not to call in recursive calls
+		//add current enttype to list of types not to call in recursive calls.  This will protect from infinite recursion.
 		$settings['called_entities'][] = $current_enttype;
 
 		// Create return array variable and set the enttype ID of the current object
@@ -370,7 +378,11 @@ class ORM extends Kohana_ORM
 				{
 					// Parse array into instructions
 				}
+
+				// If a function was provided, call that function and use the returned data
 				if(method_exists($this,$callback)) $retArr[$key_name] = $this->$callback();
+
+				// If a property name was passed, call that property and use the value
 				elseif(property_exists($this,$callback)) $retArr[$key_name] = $this->$callback;
 
 			}

@@ -1,10 +1,9 @@
-
 {{#payload}}
 <div class="row-fluid">
     <div class="span4 textcenter">
-        {{#user_picture}}
-        <img src="{{base_url}}{{user_picture}}" alt="{{name}}" />
-        {{/user_picture}}
+        {{#user_picture_obj}}
+        <img src="{{base_url}}{{image_path}}" alt="{{name}}" />
+        {{/user_picture_obj}}
     </div>
 
     <div class="span8">
