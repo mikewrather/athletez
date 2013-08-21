@@ -3,9 +3,9 @@
 // Requires define
 // Return {Object} App
 define( ["facade", "utils", "collections", "chrome", "controller", "profile", "imageup",'home','videopreview',
- "game", "team", "registration","profilesetting","userresume","packages/site/collections/phrases","usercontrols/tag/tag"],
+ "game", "team", "registration","profilesetting","userresume","packages/site/collections/phrases","usercontrols/tag/tag","login/model","login/view"],
 function (facade, utils, collections, chromeBootstrap, Controller, ProfileController, ImageController, HomeController, VideoPreviewController,
-	GameController, TeamController, RegistrationController, ProfileSetting,UserResume, SitePhraseList , TagController ) {
+	GameController, TeamController, RegistrationController, ProfileSetting,UserResume, SitePhraseList , TagController,loginModel, loginView ) {
 
 
     var App,
@@ -54,7 +54,8 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
             'registration/': 'showRegistration',
             'registration/:action': 'showRegistration' , 
             
-            'tag': 'showTag'
+            'tag': 'showTag',
+			'user/login' : 'showLogin'
         },
 
         initialize: function (options) {
@@ -191,7 +192,8 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
         },
         
         showTeam: function(id) {
-            this.loadStyles();
+            
+			this.loadStyles();
             
             $('body').empty();
             chromeBootstrap();
@@ -235,7 +237,14 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
             
             Channel('app-inited').subscribe(initTag);
         },
-
+		// route to login template
+		showLogin: function(){
+		 $('#main-content').empty();
+		 var mod = new loginModel();
+		 var logview = new loginView({
+					model:mod
+				});
+		},
         // load style sheets
         loadStyles: function () {
             Channel('load:css').publish([base_url + "css/bootstrap.css", 

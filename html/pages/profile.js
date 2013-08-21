@@ -11,7 +11,7 @@ define([
 	"models",
 	"views",
 	"utils",
-	"packages",
+	//"packages",
 
 	"profile/models/basics",
 	"profile/models/addmedia",
