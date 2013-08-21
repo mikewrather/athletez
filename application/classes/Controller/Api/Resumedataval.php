@@ -118,7 +118,7 @@
 			// user_value 
 			// Update the user's entered value for this peice of resume data
 
-			echo $user_value = $this->put('user_value');
+			$user_value = $this->put('user_value');
 
 
 			//permission check
