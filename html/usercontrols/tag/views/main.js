@@ -4,7 +4,7 @@
  // Requires `define`, `require`
  // Returns {Awards VIEW} constructor
  */
-define(['require', 'text!usercontrols/tag/templates/layout.html', 'text!usercontrols/tag/templates/sportoption.html', 'facade', 'views', 'utils', 'vendor', 'usercontrols/models/basic_info', 'usercontrols/tag/collections/sports', 'location/collections/states', 'usercontrols/tag/collections/schools', 'user/collections/users', 'usercontrols/tag/collections/games', 'usercontrols/tag/models/complevel'], function(require, layoutTemplate, sportOptionTemplate) {
+define(['require', 'text!usercontrols/tag/templates/layout.html', 'text!usercontrols/tag/templates/sportoption.html', 'facade', 'views', 'utils', 'vendor', 'usercontrols/tag/models/basic_info', 'usercontrols/tag/collections/sports', 'location/collections/states', 'usercontrols/tag/collections/schools', 'user/collections/users', 'usercontrols/tag/collections/games', 'usercontrols/tag/models/complevel'], function(require, layoutTemplate, sportOptionTemplate) {
 
 	var self, facade = require('facade'), views = require('views'), SectionView = views.SectionView, utils = require('utils'), Channel = utils.lib.Channel, vendor = require('vendor'), Mustache = vendor.Mustache, $ = facade.$, BasicModel = require('usercontrols/tag/models/basic_info'), SportsCollection = require('usercontrols/tag/collections/sports'), StatesCollection = require('location/collections/states'), SchoolCollection = require('usercontrols/tag/collections/schools'), UsersCollection = require('user/collections/users'), GamesCollection = require('usercontrols/tag/collections/games'), CompLevelModel = require('usercontrols/tag/models/complevel'),
 
