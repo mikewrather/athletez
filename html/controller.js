@@ -14,6 +14,7 @@
 // Returns `{Controller}` constructor, abstract object, must extend and define 
 // an initialize method.
 
+
 define(['facade', 'collections', 'models', 'utils'], 
 function(facade, collections, models, utils) {
 

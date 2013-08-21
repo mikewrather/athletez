@@ -40,7 +40,8 @@ function (
         
         events: {
             "click .signup-facebook": "signupFacebook",
-            "click .signup-email": "signupEmail"
+            "click .signup-email": "signupEmail",
+			"click .account clearfix a": "login"
         },
 
         render: function () {
@@ -141,7 +142,8 @@ function (
             }
 
             Channel('registration-with-email').publish();
-        }
+        },
+		
 
       });
 
