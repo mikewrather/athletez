@@ -237,6 +237,7 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
             
             Channel('app-inited').subscribe(initTag);
         },
+		// route to login template
 		showLogin: function(){
 		 $('#main-content').empty();
 		 var mod = new loginModel();

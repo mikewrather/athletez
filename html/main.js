@@ -110,7 +110,8 @@ require.config({
     jquery: '1.9.0',
     waitSeconds: 30
 });
-//* test code by psbh
+
+// initializing the router "application" on startup
 define([
 	'backbone',
 	'underscore',
