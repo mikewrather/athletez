@@ -40,6 +40,7 @@ function(facade,   utils,   BaseCommentListView,       ProfileCommentFormView, S
             });
             
             function callback (data) {
+	            console.log("Comments callback",data.user_pic_small);
                 formView.model = data;
 	            formView.render();
 	        }
