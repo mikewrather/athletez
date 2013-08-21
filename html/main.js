@@ -13,13 +13,11 @@ require.config({
         'json2'        : '/vendor/json2',
         'modernizr'    : '/vendor/modernizr-2.6.2.min',
         'html5'        : '/vendor/html5',
-        'jquery'       : '/vendor/jquery-2.0.0.min',
         'zepto'        : '/vendor/zepto',
-        'underscore'   : '/vendor/underscore',
         'mustache'     : '/vendor/mustache',
         'backbone'     : '/vendor/backbone',
-
-
+		'underscore'   : '/vendor/underscore',
+		'jquery'       : '/vendor/jquery-2.0.0.min',	
         // Plugins
         'bootstrap'    : '/vendor/plugins/bootstrap',
         'jquery.pstrength' : '/vendor/plugins/jquery.pstrength-min.1.2',
@@ -112,3 +110,21 @@ require.config({
     jquery: '1.9.0',
     waitSeconds: 30
 });
+//* test code by psbh
+define([
+	'backbone',
+	'underscore',
+	'jquery',
+	'application'
+	], function(Backbone, _, $,app){
+		 	//Backbone.noConflict();
+			//apping = new app();
+			//Backbone.history.start();
+			$(function () { // doc ready
+				Backbone.noConflict();
+				routing = new app();
+				Backbone.history.start();
+            });
+		}
+);
+

@@ -20,7 +20,7 @@ define( ["models/base",'utils/storage'], function (BaseModel,Store) {
                 placeholder: "Search"
             },
             
-            login_url: "/user/login",
+            login_url: "#user/login",
             login_label: "Log In",
             
             logout_url: "/user/logout",
