@@ -50,20 +50,20 @@ class Controller_Authcheck extends AuthController
 
 		$retArr['nav'][] = array(
 			"page"=>"My Profile",
-			"link"=>"/profile"
+			"link"=>"/#profile"
 		);
 
 		$retArr['nav'][] = array(
 			"page"=>"Sports / Teams Settings",
-			"link"=>"/usersettings"
+			"link"=>"/#usersettings"
 		);
 		$retArr['nav'][] = array(
 			"page"=>"User Resume",
-			"link"=>"/resume"
+			"link"=>"/#resume"
 		);
 		$retArr['nav'][] = array(
 			"page"=>"Tag",
-			"link"=>"/tag"
+			"link"=>"/#tag"
 		);
 	/*	if($this->user->teams->find_all()->count() > 0)
 		{
