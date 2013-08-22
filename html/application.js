@@ -73,7 +73,8 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
             //this.showProfile();
            	//this.showGame();
             //this.showTeam();
-            this.showHome(null);
+            
+			this.showHome(null);
         },
 
 	    getPhrases: function(){
@@ -100,7 +101,7 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
         	var self = this;
 	        self.loadStyles();
             
-            $('#main').empty();
+            $('body').empty();
             chromeBootstrap();
 			function initProfile(headerModelId) {
 				var pCont = new ProfileController({
