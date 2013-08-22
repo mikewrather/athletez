@@ -224,8 +224,7 @@ class Model_Location_City extends ORM
 		extract($args);
 		$cities = ORM::factory("Location_City");
 		if(isset($city_name))
-			$cities->where('name', 'like', "%$city_name%");
-
+			$cities->where('name', 'like', $city_name."%");
 		return $cities;
 	}
 
