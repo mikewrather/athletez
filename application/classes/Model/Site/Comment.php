@@ -94,7 +94,7 @@ class Model_Site_Comment extends Model_Site_Entdir
 
 		$classes_arr = array();
 		$entClassStr = str_replace('Model_','',get_class($ent));
-		$classes_arr[$entClassStr] = $ent;
+		$classes_arr[$entClassStr] = $ent->id; //added ->id to fix a problem with the games comments.
 		$classes_arr['Site_Comment'] = 'site_comment.id';
 
 		$comments = ORM::factory('Site_Comment')
