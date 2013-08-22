@@ -313,6 +313,7 @@ class Model_Sportorg_Team extends ORM
 		$this->join('org_sport_link')->on('org_sport_link.id', '=', 'sportorg_team.org_sport_link_id');
 		$this->join('orgs')->on('orgs.id', '=', 'org_sport_link.orgs_id');
 		$this->join('locations')->on('locations.id', '=', 'orgs.locations_id');
+
 		$classes_arr = array(
 			'Sportorg_Team' => 'sportorg_team',
 			'Sportorg_Orgsportlink' => 'org_sport_link',
@@ -345,8 +346,26 @@ class Model_Sportorg_Team extends ORM
 			//$this->order_by($orderby, 'asc');
 		}
 
-		if (isset($searchtext)){
-			$this->where('orgs.name', 'like', "%".$searchtext."%");
+		if (isset($searchtext))
+		{
+			$this->join('complevels')->on('complevels.id', '=', 'sportorg_team.complevels_id');
+			$this->join('sports')->on('sports.id', '=', 'org_sport_link.sports_id');
+			$this->join('seasons')->on('seasons.id', '=', 'sportorg_team.seasons_id');
+
+			$words = explode(' ',$searchtext);
+			$this->and_where_open();
+			foreach($words as $word)
+			{
+				$this->and_where_open();
+				$this->where('orgs.name', 'like', "%".$word."%");
+				$this->or_where('complevels.name', '=', $word);
+				$this->or_where('sportorg_team.year', 'like', $word.'%');
+				$this->or_where('sportorg_team.unique_ident', 'like',"%".$word."%");
+				$this->or_where('sports.name', 'like', $word.'%');
+				$this->or_where('seasons.name', 'like', $word.'%');
+				$this->and_where_close();
+			}
+			$this->and_where_close();
 		}
 
 		if (isset($zipcode)){
@@ -369,6 +388,7 @@ class Model_Sportorg_Team extends ORM
 		}
 
 		$search = ORM::_sql_exclude_deleted($classes_arr, $this);
+		//print_r($search->find_all());
 		return $search;
 	}
 	

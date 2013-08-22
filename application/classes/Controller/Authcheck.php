@@ -50,7 +50,7 @@ class Controller_Authcheck extends AuthController
 
 		$retArr['nav'][] = array(
 			"page"=>"My Profile",
-			"link"=>"/profile"
+			"link"=>"/#profile"
 		);
 
 		$retArr['nav'][] = array(

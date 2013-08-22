@@ -24,7 +24,7 @@ function(require, profileAddMediaTemplate) {
         id: 'add-media',
 
         template: profileAddMediaTemplate,
-
+		
 	    events: {
 		    "click #addPhoto" : "openAddImagePopup"
 	    },
