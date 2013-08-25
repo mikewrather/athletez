@@ -200,36 +200,72 @@ class Model_Sportorg_Team extends ORM
 			return $e;
 		}
 	}
-		
+
+	public $get_basics_class_standards = array(
+		'alternate_fk_names' => array(
+//			'city' => 'cities_id',
+//			'user_picture' => 'images_id'
+		),
+		'column_name_changes' => array(
+			//'name' => 'team_name',
+			'id' => 'team_id',
+			'id' => 'id'
+			//'location' => 'team_location'
+		),
+		'added_function_calls' => array(
+			'team_name' => 'name',
+			"team_location" => 'getTeamLocation',
+			"picture" => 'getImage',
+			"num_votes" => 'get_num_votes',
+			"num_followers" => 'get_num_followers'
+//			'num_followers' => 'get_num_followers',
+//			'num_votes' =>'get_num_votes',
+		),
+		'exclude_columns' => array(
+			//'username','email','password','dob'
+		),
+	);
+	public function get_num_votes()
+	{
+		return Model_Site_Vote::getNumVotes($this);
+	}
+
+	public function get_num_followers()
+	{
+		return Model_User_Followers::num_followers($this);
+	}
+
 	public function getBasics($settings = array())
 	{
-		$athletesArray = array();
-		foreach($this->athletes->find_all() as $athlete) { $athletesArray[] = $athlete->getBasics(); }
-		$num_followers = Model_User_Followers::num_followers($this);
-		$num_votes = Model_Site_Vote::getNumVotes($this);
-
-		return array(
-
-			"team_id" => $this->id,
-			"team_name" => $this->name(),
-			"org_sport_link" => $this->org_sport_link->getBasics(),
-			"org_sport_link_id" => $this->org_sport_link_id,
-			"complevel" => $this->complevel->getBasics(),
-			"complevels_id" => $this->complevels_id,
-			"season" => $this->season->getBasics(),
-			"seasons_id" => $this->seasons_id,
-			"year" => $this->year,
-			"mascot" => $this->mascot,
-			"athletes" => $athletesArray,
-			"team_location" => $this->getTeamLocation(),
-			/* TODO, Add by Jeffrey, In order to match Ma's test data ,below data is required from him */
-			"id" => $this->id,
-			"name" => $this->name(),
-			"location" => $this->getTeamLocation(),
-			"picture" => $this->getImage(),
-			"num_votes" => $num_votes,
-			"num_followers" => $num_followers
-		);
+//		$athletesArray = array();
+//		foreach($this->athletes->find_all() as $athlete) { $athletesArray[] = $athlete->getBasics(); }
+//		$num_followers = Model_User_Followers::num_followers($this);
+//		$num_votes = Model_Site_Vote::getNumVotes($this);
+//
+//		return array(
+//
+//			"team_id" => $this->id,
+//			"team_name" => $this->name(),
+//			"org_sport_link" => $this->org_sport_link->getBasics(),
+//			"org_sport_link_id" => $this->org_sport_link_id,
+//			"complevel" => $this->complevel->getBasics(),
+//			"complevels_id" => $this->complevels_id,
+//			"season" => $this->season->getBasics(),
+//			"seasons_id" => $this->seasons_id,
+//			"year" => $this->year,
+//			"mascot" => $this->mascot,
+//			"athletes" => $athletesArray,
+//			"team_location" => $this->getTeamLocation(),
+//			/* TODO, Add by Jeffrey, In order to match Ma's test data ,below data is required from him */
+//
+//			"id" => $this->id,
+//			"name" => $this->name(),
+//			"location" => $this->getTeamLocation(),
+//			"picture" => $this->getImage(),
+//			"num_votes" => $num_votes,
+//			"num_followers" => $num_followers
+//		);
+		return parent::getBasics($settings);
 	}
 
 	public function name()

@@ -107,12 +107,13 @@ class Model_Academics_Tests_Scores extends ORM
 	}
 
 	public function getBasics($settings = array()){
-		return array(
-			'id' => $this->id,
-			'academics_tests_topics_id' => $this->academics_tests_topics_id,
-			'users_id' => $this->users_id,
-			'score' => $this->score,
-		);
+//		return array(
+//			'id' => $this->id,
+//			'academics_tests_topics_id' => $this->academics_tests_topics_id,
+//			'users_id' => $this->users_id,
+//			'score' => $this->score,
+//		);
+		return parent::getBasics($settings);
 	}
 
 	public function name()

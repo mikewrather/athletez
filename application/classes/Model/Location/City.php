@@ -48,16 +48,35 @@ class Model_Location_City extends ORM
 	}
 	// end rules for Location_City
 
-	
+	public $get_basics_class_standards = array(
+
+		// key = name of the column in the table, val = standard fk name that's used as id1
+		'alternate_fk_names' => array(),
+
+		// key = current name of column, val = name getBasics will return
+		'column_name_changes' => array(
+			'counties_obj' => 'county',
+			'counties_id' => 'county_id'
+		),
+
+		// key = the key that will appear in the returned results, val = the name of the function / property to invoke for the value
+		'added_function_calls' => array(),
+
+		// array of values only.  Each value is the name of a column to exclude
+		'exclude_columns' => array(),
+	);
+
 	public function getBasics($settings = array())
 	{
 		if(!$this->loaded()) return false;
-		return array(
-			"id" => $this->id,
-			"name" => $this->name,
-			"county_id" => $this->counties_id,
-			"county" => $this->county->getBasics(),
-		);
+//		return array(
+//			"id" => $this->id,
+//			"name" => $this->name,
+//			"county_id" => $this->counties_id,
+//			"county" => $this->county->getBasics(),
+//		);
+
+		return parent::getBasics($settings);
 	}
 
 	public function addCity($args = array())

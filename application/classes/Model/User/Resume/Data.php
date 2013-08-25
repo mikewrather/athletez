@@ -58,7 +58,26 @@ class Model_User_Resume_Data extends ORM
 	{
 		parent::__construct($id);
 	}
-	
+
+	public $get_basics_class_standards = array(
+
+		// key = name of the column in the table, val = standard fk name that's used as id1
+		'alternate_fk_names' => array(
+			//'resume_data_group' => 'resume_data_groups_id'
+		),
+
+		// key = current name of column, val = name getBasics will return
+		'column_name_changes' => array(
+			'resume_data_groups_obj' => 'resume_data_group'
+		),
+
+		// key = the key that will appear in the returned results, val = the name of the function / property to invoke for the value
+		'added_function_calls' => array(),
+
+		// array of values only.  Each value is the name of a column to exclude
+		'exclude_columns' => array(),
+	);
+
 	public function getBasics($settings = array())
 	{
 		return array(
@@ -68,6 +87,8 @@ class Model_User_Resume_Data extends ORM
 			"resume_data_type" => $this->resume_data_type,
 			"resume_data_groups_id" => $this->resume_data_groups_id
 		);
+
+		return parent::getBasics();
 	}
 	
 	public function updateResumedata($args = array())

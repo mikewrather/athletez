@@ -45,13 +45,32 @@ class Model_Academics_Tests_Topics extends ORM
 		return $topics;
 	}
 
+	public $get_basics_class_standards = array(
+
+		// key = name of the column in the table, val = standard fk name that's used as id1
+		'alternate_fk_names' => array(),
+
+		// key = current name of column, val = name getBasics will return
+		'column_name_changes' => array(),
+
+		// key = the key that will appear in the returned results, val = the name of the function / property to invoke for the value
+		'added_function_calls' => array(
+			'scores' => 'getScore'
+		),
+
+		// array of values only.  Each value is the name of a column to exclude
+		'exclude_columns' => array(),
+	);
+
 	public function getBasics($settings = array()){
-		return array(
-			'id' =>$this->id,
-			'academics_tests_id' => $this->academics_tests_id,
-			'subtopic' => $this->subtopic,
-			'scores' => $this->getScore()
-		);
+//		return array(
+//			'id' =>$this->id,
+//			'academics_tests_id' => $this->academics_tests_id,
+//			'subtopic' => $this->subtopic,
+//			'scores' => $this->getScore()
+//		);
+
+		return parent::getBasics($settings);
 	}
 
 	public function getUserID()

@@ -81,10 +81,12 @@ class Model_Sportorg_Complevel_Profile extends ORM
 
 	public function getBasics($settings = array())
 	{
-		return array(
-			"id" => $this->id,
-			"name" => $this->name,
-		);
+//		return array(
+//			"id" => $this->id,
+//			"name" => $this->name,
+//		);
+
+		return parent::getBasics($settings);
 	}
 
 }

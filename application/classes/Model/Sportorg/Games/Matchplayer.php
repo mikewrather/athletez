@@ -23,19 +23,38 @@ class Model_Sportorg_Games_Matchplayer extends ORM
 		)
 	);
 
+	public $get_basics_class_standards = array(
+
+		// key = name of the column in the table, val = standard fk name that's used as id1
+		'alternate_fk_names' => array(),
+
+		// key = current name of column, val = name getBasics will return
+		'column_name_changes' => array(
+			'users_obj' => 'user',
+			//'game_matches_obj' => 'game_match'
+		),
+
+		// key = the key that will appear in the returned results, val = the name of the function / property to invoke for the value
+		'added_function_calls' => array(),
+
+		// array of values only.  Each value is the name of a column to exclude
+		'exclude_columns' => array(),
+	);
+
 	public function getBasics($settings = array())
 	{
-		return array(
-			"id" => $this->id,
-			"users_id" => $this->users_id,
-			"game_matches_id" => $this->game_matches_id,
-			"points_awarded" => $this->points_awarded,			
-			"result_time" => $this->result_time,
-			//TODO, add by Jeffrey.Need upadate after align with Mike
-			//"game_matches" => $this->game_matches->getBasics(),
-			"user" => $this->user->getBasics(),
-			"match_winner" => $this->match_winner
-		);
+//		return array(
+//			"id" => $this->id,
+//			"users_id" => $this->users_id,
+//			"game_matches_id" => $this->game_matches_id,
+//			"points_awarded" => $this->points_awarded,
+//			"result_time" => $this->result_time,
+//			//TODO, add by Jeffrey.Need upadate after align with Mike "game_matches" => $this->game_matches->getBasics(),
+//			//"user" => $this->user->getBasics(),
+//			"match_winner" => $this->match_winner
+//		);
+
+		return parent::getBasics($settings);
 	}
 	
 	public function name()

@@ -27,13 +27,14 @@ class Model_Media_Imagetype extends ORM
 
 	public function getBasics($settings = array())
 	{
-		return array(
-			"id" => $this->id,
-			"name" => $this->name,
-			"img_extension" => $this->img_extension,
-			"height" => $this->height,
-			"width" => $this->width,
-			"active" => $this->active
-		);
+//		return array(
+//			"id" => $this->id,
+//			"name" => $this->name,
+//			"img_extension" => $this->img_extension,
+//			"height" => $this->height,
+//			"width" => $this->width,
+//			"active" => $this->active
+//		);
+		return parent::getBasics($settings);
 	}
 }

@@ -43,19 +43,62 @@ class Model_Sportorg_Games_Match extends ORM
 		return 'name';
 	}
 
-	public function getBasics($settings = array())
-	{
+	public $get_basics_class_standards = array(
+
+		// key = name of the column in the table, val = standard fk name that's used as id1
+		'alternate_fk_names' => array(),
+
+		// key = current name of column, val = name getBasics will return
+		'column_name_changes' => array(
+			'games_obj' => 'game'
+		),
+
+		// key = the key that will appear in the returned results, val = the name of the function / property to invoke for the value
+		'added_function_calls' => array(
+			'players' => 'get_players'
+
+		),
+
+		// array of values only.  Each value is the name of a column to exclude
+		'exclude_columns' => array(),
+	);
+
+	public function get_players(){
+		//exclude the player that already deleted
+		$players = $this->players;
+		$classes_arr = array(
+			'Sportorg_Games_Matchplayer' => 'sportorg_games_matchplayer',
+		);
+		$players = ORM::_sql_exclude_deleted($classes_arr, $players);
 		$playerArr = null;
-		foreach($this->players->find_all() as $player){
+		foreach($players->find_all() as $player){
 			$playerArr[] = $player->getBasics();
 		}
-		return array(
-			"id" => $this->id,
-			"games_id" => $this->games_id,
-			"match_num" => $this->match_num,
-			"game" => $this->game->getBasics(),
-			"players" => $playerArr
-		);
+
+		return $playerArr;
+	}
+
+	public function getBasics($settings = array())
+	{
+		//exclude the player that already deleted
+//		$players = $this->players;
+//		$classes_arr = array(
+//			'Sportorg_Games_Matchplayer' => 'players',
+//		);
+//		$players = ORM::_sql_exclude_deleted($classes_arr, $players);
+//		$playerArr = null;
+//		foreach($players->find_all() as $player){
+//			$playerArr[] = $player->getBasics();
+//		}
+//		return array(
+//			"id" => $this->id,
+//			"games_id" => $this->games_id,
+//			"match_num" => $this->match_num,
+//			"game" => $this->game->getBasics(),
+//			"players" => $playerArr
+//		);
+
+		return parent::getBasics($settings);
 	}
 
 	public function addGamematch($args = array())
