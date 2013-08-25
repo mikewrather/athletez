@@ -40,3 +40,4 @@ header .signup-email { margin:0 5px; }
 /*  Loading images */
 .loader { background: url(../images/loader/loading.gif) no-repeat; width: 100%; height: 50px; margin: 0 auto; background-position: 50% 0; }
 .image-loading-div { position: absolute; }
+.fade-out { opacity: 0.5; }

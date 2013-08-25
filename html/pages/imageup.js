@@ -148,7 +148,8 @@ define([
 			//url gets set
 			//this.url="/api/"+$("#url_tag").val()+"/addimage/"+$("#id_tag").val();
 			
-			$("#preview_"+id).html('<div class="loader image-loading-div"></div>')
+			$("#preview_"+id).html('<div class="loader image-loading-div"></div>');
+			$(".previewimgsrc").addClass('fade-out');
 			$.ajax({
 			    url: this.url,
 			    data: dataum,
@@ -172,11 +173,12 @@ define([
 						$("#imageup").removeAttr("disabled");
 						$("#image_file").removeAttr("disabled");
 						$(".closepreview").removeAttr("disabled");	
-						$(".previewimgsrc").fadeOut('slow');
+						$(".previewimgsrc").fadeOut('slow').removeClass('fade-out');
 					}
 			    },
 				error:function(data){
 					$("#preview_"+id).fadeOut("slow");
+					$(".previewimgsrc").removeClass('fade-out');
 					$("#preview_"+id).fadeIn("slow").html("<b>Upload Error!</b>");
 					debug.log(data);
 						msg={"msg":data.statusText,"color":"alert-error"};

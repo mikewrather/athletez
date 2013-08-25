@@ -48,6 +48,7 @@ function(require, imageBasicTemplate) {
         initialize: function (options,attr) {
         	// removing the img preview div on init
         	$("#imgpreview").remove();
+        	$("#errormsg, #preview").html("");
         	
             SectionView.prototype.initialize.call(this, options);   
 			debug.log("Image upload basic view");   
