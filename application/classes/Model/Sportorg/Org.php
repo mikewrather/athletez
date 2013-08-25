@@ -331,24 +331,72 @@ class Model_Sportorg_Org extends ORM
 
 		return $games;
 	}
-	
-	public function getBasics($settings = array())
+
+	public $get_basics_class_standards = array(
+		/**/
+		'alternate_fk_names' => array(
+			//'leagues_id' => 'leagues_id'
+		),
+		'added_function_calls' => array(
+			'org_id' => 'org_id',
+			'org_name' => 'org_name',
+			'season_profile' =>'season_profile',
+			'seasons' => 'seasons',
+			'complevel_profile' => 'complevel_profile',
+			'complevels' => 'complevels',
+			'locations' => 'locations'
+		),
+		'exclude_columns' => array(
+			//'username','email','password','dob'
+		),
+	);
+
+	public function org_id(){
+		return $this->id;
+	}
+
+	public function org_name(){
+		return $this->name;
+	}
+
+	public function  season_profile(){
+		return $this->season_profile->getBasics();
+	}
+
+	public function seasons(){
+		return $this->season_profile->getSeasons_as_array();
+	}
+
+	public function complevel_profile(){
+		return $this->complevel_profile->getBasics();
+	}
+
+	public function complevels(){
+		return $this->complevel_profile->getComplevels_as_array();
+	}
+
+	public function locations(){
+		return $this->location->getBasics();
+	}
+
+	public function getBasics($settings = array('get_sub_objects' => false, 'single_item' => true, 'recursion_count' => 1))
 	{
-		return array(
-			"org_id" => $this->id,
-			"divisions_id" => $this->divisions_id,
-			"leagues_id" => $this->leagues_id,
-			"locations_id" => $this->locations_id,
-			"complevel_profiles_id" => $this->complevel_profiles_id,
-			"org_name" => $this->name,
-			"season_profiles_id" => $this->season_profiles_id,
-			"sports_club" => $this->sports_club,
-			"season_profile" => $this->season_profile->getBasics(),
-			"seasons" => $this->season_profile->getSeasons_as_array(),
-			"complevel_profile" => $this->complevel_profile->getBasics(),
-			"complevels" => $this->complevel_profile->getComplevels_as_array(),
-			"locations" => $this->location->getBasics()
-		);
+//		return array(
+//			"org_id" => $this->id,
+//			"divisions_id" => $this->divisions_id,
+//			"leagues_id" => $this->leagues_id,
+//			"locations_id" => $this->locations_id,
+//			"complevel_profiles_id" => $this->complevel_profiles_id,
+//			"org_name" => $this->name,
+//			"season_profiles_id" => $this->season_profiles_id,
+//			"sports_club" => $this->sports_club,
+//			"season_profile" => $this->season_profile->getBasics(),
+//			"seasons" => $this->season_profile->getSeasons_as_array(),
+//			"complevel_profile" => $this->complevel_profile->getBasics(),
+//			"complevels" => $this->complevel_profile->getComplevels_as_array(),
+//			"locations" => $this->location->getBasics()
+//		);
+		return parent::getBasics($settings);
 	}
 	
 	public function updateOrg($args = array())

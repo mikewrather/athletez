@@ -57,21 +57,57 @@ class Model_Sportorg_Division extends ORM
 		);
 	}
 
-	public function getBasics($settings = array())
-	{
+	public $get_basics_class_standards = array(
+
+		// key = name of the column in the table, val = standard fk name that's used as id1
+		'alternate_fk_names' => array(),
+
+		// key = current name of column, val = name getBasics will return
+		'column_name_changes' => array(
+			'sections_obj' => 'section',
+			'states_obj' => 'state'
+		),
+
+		// key = the key that will appear in the returned results, val = the name of the function / property to invoke for the value
+		'added_function_calls' => array(
+			'orgs' => 'get_orgs'
+		),
+
+		// array of values only.  Each value is the name of a column to exclude
+		'exclude_columns' => array(),
+	);
+
+	public function get_orgs(){
 		$orgsArray = null;
-		foreach($this->orgs->find_all() as $org){
+		$orgs = $this->orgs;
+
+		$classes_arr = array(
+			'Sportorg_Org' => 'sportorg_org'
+		);
+
+		$orgs = ORM::_sql_exclude_deleted($classes_arr, $orgs);
+		foreach($orgs->find_all() as $org){
 			$orgsArray[] = $org->getBasics();
 		}
-		return array(
-			"id" => $this->id,
-			"state" => $this->state->getBasics(),
-			"name" => $this->name,
-			"states_id" => $this->states_id,
-			"sections_id" => $this->sections_id,
-			"section" => $this->section->getBasics(),
-			"orgs" =>$orgsArray
-		);
+		return $orgsArray;
+	}
+
+	public function getBasics($settings = array())
+	{
+//		$orgsArray = null;
+//		foreach($this->orgs->find_all() as $org){
+//			$orgsArray[] = $org->getBasics();
+//		}
+//		return array(
+//			"id" => $this->id,
+//			"state" => $this->state->getBasics(),
+//			"name" => $this->name,
+//			"states_id" => $this->states_id,
+//			"sections_id" => $this->sections_id,
+//			"section" => $this->section->getBasics(),
+//			"orgs" =>$orgsArray
+//		);
+		return parent::getBasics($settings);
 	}
 	
 	public function updateDivision($args = array())

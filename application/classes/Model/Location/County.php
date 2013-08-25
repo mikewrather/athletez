@@ -88,16 +88,34 @@ class Model_Location_County extends ORM
             return $e;
         }  
 	}
- 
-     
+
+	public $get_basics_class_standards = array(
+
+		// key = name of the column in the table, val = standard fk name that's used as id1
+		'alternate_fk_names' => array(),
+
+		// key = current name of column, val = name getBasics will return
+		'column_name_changes' => array(
+			'states_obj' => 'state'
+		),
+
+		// key = the key that will appear in the returned results, val = the name of the function / property to invoke for the value
+		'added_function_calls' => array(),
+
+		// array of values only.  Each value is the name of a column to exclude
+		'exclude_columns' => array(),
+	);
+
 	public function getBasics($settings = array())
 	{
-		return array(
-			"id" => $this->id,
-			"state" => $this->state->getBasics(),
-			"name" => $this->name,
-			"states_id" => $this->states_id,
-		);
+//		return array(
+//			"id" => $this->id,
+//			"state" => $this->state->getBasics(),
+//			"name" => $this->name,
+//			"states_id" => $this->states_id,
+//		);
+
+		return parent::getBasics($settings);
 	}
 	
 	public function updateCounty($args = array()){

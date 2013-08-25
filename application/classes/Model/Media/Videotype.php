@@ -27,14 +27,15 @@ class Model_Media_Videotype extends ORM
 	
 	public function getBasics($settings = array())
 	{
-		return array(
-			"id" => $this->id,
-			"name" => $this->name,
-			"vid_extension" => $this->vid_extension,
-			"height" => $this->height,
-			"width" => $this->width,
-			"zencoder_command" => $this->zencoder_command,
-			"active" => $this->active
-		);
+//		return array(
+//			"id" => $this->id,
+//			"name" => $this->name,
+//			"vid_extension" => $this->vid_extension,
+//			"height" => $this->height,
+//			"width" => $this->width,
+//			"zencoder_command" => $this->zencoder_command,
+//			"active" => $this->active
+//		);
+		return parent::getBasics($settings);
 	}
 }

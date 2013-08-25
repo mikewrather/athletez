@@ -73,12 +73,13 @@ class Model_Site_Phrases_Translation extends ORM
 	}
 
 	public function getBasics($settings = array()){
-		return array(
-			'id' => $this->id,
-			'phrases_id' => $this->phrases_id,
-			'translation' => $this->translation,
-			'languages_id' => $this->languages_id
-		);
+//		return array(
+//			'id' => $this->id,
+//			'phrases_id' => $this->phrases_id,
+//			'translation' => $this->translation,
+//			'languages_id' => $this->languages_id
+//		);
+		return parent::getBasics($settings);
 	}
 
 }
