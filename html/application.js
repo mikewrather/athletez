@@ -86,7 +86,8 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
 	    	this.loadStyles();
 	    	
 	    	$('body').empty();
-	    	chromeBootstrap();
+	    	alert("app initialize");
+            chromeBootstrap();
 	    	
 	    	function initHome() {
 	    		var homeController = new HomeController({
@@ -100,9 +101,9 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
         showProfile: function (userid) {
         	var self = this;
 	        self.loadStyles();
-            
-            $('body').empty();
-            chromeBootstrap();
+            //$('#main-header').empty();
+            $('#main-content').empty();
+            //chromeBootstrap();
 			function initProfile(headerModelId) {
 				var pCont = new ProfileController({
 	                "userId": userid==undefined ? headerModelId : userid
@@ -148,16 +149,19 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
             Channel('app-inited').subscribe(initUserResume);
         },
         
-		imageUp: function () {
+		  //imageupProfile: function(){
+        imageUp: function () {
 			this.loadStyles();
 			chromeBootstrap();
-
+            alert("test img");
             function initImage(id){ var imageController = new ImageController({"route": "","url":this.posturl,"attr":this.attribute}); }
             Channel('app-inited').subscribe(initImage);
 		},
 
 	    videoPreview: function () {
-		    this.loadStyles();
+		   
+                alert("test video");
+           /* this.loadStyles();
 		    chromeBootstrap();
 		//    $('body').empty();
 		    //console.log(VideoPreviewController);
@@ -168,19 +172,20 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
 			    console.log(VidPrevCtrl);
 		    }
 
-		    Channel('app-inited').subscribe(initVideoPreview);
+		    Channel('app-inited').subscribe(initVideoPreview);*/
 	    },
         
         showGame: function (id) {
             this.loadStyles();
             
-            $('body').empty();
-            chromeBootstrap();
+           // $('body').empty();
+            //chromeBootstrap();
              /*var gameController = new GameController({
                     "route": ""
                 });*/
             //this callback function is called from /pages/chrom/views/header.js
             //it getting headerModelId
+           $('#main-content').empty();
             if(!id) id=1;
             function initGame(headerModelId) {
                 var gameController = new GameController({
@@ -195,7 +200,7 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
         showTeam: function(id) {
             
 			this.loadStyles();
-            
+            alert('test showteam');
             $('body').empty();
             chromeBootstrap();
             if(!id) id = 1;

@@ -121,6 +121,8 @@ function(require, imageBasicTemplate) {
 		},
         imageUploadClick: function(event)
         {
+	        
+
 	        event.preventDefault();
 
 			var thiss=this;			
@@ -160,6 +162,7 @@ function(require, imageBasicTemplate) {
 			}
 			else
 			{
+				console.log($('#image_file')[0].files.length + "=file prasobh");
 				jQuery.each($('#image_file')[0].files, function(i, file) {
 					var data = new FormData();
 					if ($('#preview_'+i+"group").length > 0) {
