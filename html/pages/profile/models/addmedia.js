@@ -13,17 +13,30 @@ define( ["models/base"], function (BaseModel) {
             
             "links": [{
                 "label": "Photo",
-                "link" : "javascript:void(0);",
+
+                //"link" : "javascript:void(0);",
+                "link" : "#imageup",
 				"id"   :"addPhoto"
-            }, {
+            }, /*{
                 "label": "Video",
-	            "link" : "javascript:void(0);",
+                "link": "#videoprev",
+				"id"   :""
+            }, {
+                "label": "Game",
+                "link": "#game",
+				"id"   :""
+    //            "link" : "javascript:void(0);",
+				"id"   :"addPhoto"
+            },*/ {
+                "label": "Video",
+	            "link": "#videoprev",
+                //"link" : "javascript:void(0);",
 	            "id": "addVideo"
             }, {
                 "label": "Game",
-	            "link" : "javascript:void(0);",
+	            "link" : "#game",
 	            "id": "addGame"
-            }
+                            }
             ],
 	        "userid" : null
             

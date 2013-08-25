@@ -124,7 +124,7 @@ define([
 			$(function () { // doc ready
 				Backbone.noConflict();
 				routing = new app();
-				Backbone.history.start();
+				Backbone.history.start({});
             });
 		}
 );

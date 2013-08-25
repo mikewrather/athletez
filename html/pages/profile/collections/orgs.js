@@ -7,7 +7,7 @@
 
 define(['facade', 'sportorg/collections/orgs', 'utils'], 
 function(facade, SportorgOrgList, utils) {
-
+	
     var ProfileOrgList;
 
     ProfileOrgList = SportorgOrgList.extend({
