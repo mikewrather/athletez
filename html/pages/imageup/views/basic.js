@@ -46,6 +46,9 @@ function(require, imageBasicTemplate) {
 		data :imageBasicTemplate,
 
         initialize: function (options,attr) {
+        	// removing the img preview div on init
+        	$("#imgpreview").remove();
+        	
             SectionView.prototype.initialize.call(this, options);   
 			debug.log("Image upload basic view");   
 			this.attr=attr;      
@@ -58,6 +61,7 @@ function(require, imageBasicTemplate) {
 			$('#imgUploadModal').on('hide', function () {
 		    	Channel('refresh-onImageUpload').publish();
 		    });
+		    console.log($(".modal-body").html());
         },
 		drag: function(event) {
 			event.stopPropagation();
