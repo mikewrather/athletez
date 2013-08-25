@@ -148,7 +148,7 @@ define([
 			//url gets set
 			//this.url="/api/"+$("#url_tag").val()+"/addimage/"+$("#id_tag").val();
 			
-			$("#preview_"+id).html("<progress></progress>")
+			$("#preview_"+id).html('<div class="loader image-loading-div"></div>')
 			$.ajax({
 			    url: this.url,
 			    data: dataum,
