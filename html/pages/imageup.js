@@ -85,7 +85,7 @@ define([
 			
 			Channel('imageup-add-image').subscribe(imageuploader);
 			Channel('imageup-msg').subscribe(msgShow);
-			Channel('imageup-preview').subscribe(previewShow);
+			Channel('imageup-preview', 'unique').subscribe(previewShow);
 			Channel('imageup-rerender').subscribe(rerenderShow);
 		},
         showuploader: function () {

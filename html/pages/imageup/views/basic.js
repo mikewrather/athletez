@@ -46,8 +46,6 @@ function(require, imageBasicTemplate) {
 		data :imageBasicTemplate,
 
         initialize: function (options,attr) {
-        	// removing the img preview div on init
-        	$("#imgpreview").remove();
         	$("#errormsg, #preview").html("");
         	
             SectionView.prototype.initialize.call(this, options);   
@@ -71,12 +69,12 @@ function(require, imageBasicTemplate) {
 		},
 		drop: function(event) {
 			var _self = this;
-			_self.showLoader(_self);
 			event.stopPropagation();
 			event.preventDefault();
 			$("#errormsg").hide();
 			var files = event.originalEvent.dataTransfer.files;
 			this.files_drag=event.originalEvent.dataTransfer.files;
+			if(files.length > 0) _self.showLoader(_self);
 		    var output = [];var dataum=[];var k=0;
 		    for (var i = 0, f; f = files[i]; i++) {
 		      if (!f.type.match('image.*')) {
@@ -103,11 +101,12 @@ function(require, imageBasicTemplate) {
 		},
 		imagePreview: function(event) {
 			var _self = this;
-			_self.showLoader(_self);
 			debug.log("Image preview view");
 			$("#preview").hide();
 			$("#errormsg").hide();
 			var files = $('#image_file')[0].files; 
+			console.log(files.length);
+			if(files.length > 0) _self.showLoader(_self);
 			var dataum=[];var i = 0, f,k=0;
 		    for (; f = files[i]; i++) {
 
@@ -115,6 +114,7 @@ function(require, imageBasicTemplate) {
 		        continue;
 		      }
 		      var reader = new FileReader();
+		     
 		      reader.onload = (function(theFile) {
 		        return function(e) {
 					var preview_id="preview_"+k;
