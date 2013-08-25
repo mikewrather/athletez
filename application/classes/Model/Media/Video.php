@@ -57,17 +57,39 @@ class Model_Media_Video extends ORM
 			'foreign_key' => 'videos_id'
 		),
 	);
+
+	public $get_basics_class_standards = array(
+
+		// key = name of the column in the table, val = standard fk name that's used as id1
+		'alternate_fk_names' => array(),
+
+		// key = current name of column, val = name getBasics will return
+		'column_name_changes' => array(
+			'media_obj' => 'media',
+			'video_services_obj' => 'video_services'
+		),
+
+		// key = the key that will appear in the returned results, val = the name of the function / property to invoke for the value
+		'added_function_calls' => array(
+			'video_type' => 'get_types_and_meta_as_array'
+		),
+
+		// array of values only.  Each value is the name of a column to exclude
+		'exclude_columns' => array(),
+	);
 	
 	public function getBasics($settings = array())
 	{
-		return array(
-			"id" => $this->id,
-			"thumbs" => $this->thumbs,
-			"media_id" => $this->media_id,
-			"media" => $this->media->getBasics(),
-			'video_type' => $this->get_types_and_meta_as_array(),
-			"video_services" => $this->videoservice->getBasics(),
-		);
+//		return array(
+//			"id" => $this->id,
+//			"thumbs" => $this->thumbs,
+//			"media_id" => $this->media_id,
+//			"media" => $this->media->getBasics(),
+//			'video_type' => $this->get_types_and_meta_as_array(),
+//			"video_services" => $this->videoservice->getBasics(),
+//		);
+
+		return parent::getBasics($settings);
 	}
 
 	public static function getVideoCounts($obj){

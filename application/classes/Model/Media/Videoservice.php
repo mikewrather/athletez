@@ -51,10 +51,11 @@ class Model_Media_Videoservice extends ORM
 	}
 	public function getBasics($settings = array())
 	{
-		return array(
-			"id" => $this->id,
-			"name" => $this->name,
-			"website" => $this->website	 
-		);
+//		return array(
+//			"id" => $this->id,
+//			"name" => $this->name,
+//			"website" => $this->website
+//		);
+		return parent::getBasics($settings);
 	}
 }

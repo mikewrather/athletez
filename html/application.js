@@ -86,7 +86,7 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
 	    	this.loadStyles();
 	    	
 	    	$('body').empty();
-	    	alert("app initialize");
+	    	
             chromeBootstrap();
 	    	
 	    	function initHome() {
@@ -152,27 +152,28 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
 		  //imageupProfile: function(){
         imageUp: function () {
 			this.loadStyles();
-			chromeBootstrap();
-            alert("test img");
+			//chromeBootstrap();
+            //alert("test img");
             function initImage(id){ var imageController = new ImageController({"route": "","url":this.posturl,"attr":this.attribute}); }
             Channel('app-inited').subscribe(initImage);
 		},
 
 	    videoPreview: function () {
 		   
-                alert("test video");
-           /* this.loadStyles();
-		    chromeBootstrap();
-		//    $('body').empty();
+              // alert("test video");
+            this.loadStyles();
+		   // chromeBootstrap();
+		    //$('body').empty();
+           // chromeBootstrap();chromeBootstrap();
 		    //console.log(VideoPreviewController);
 
 		    function initVideoPreview()
 		    {
 			    var VidPrevCtrl = new VideoPreviewController();
-			    console.log(VidPrevCtrl);
+			    //console.log(VidPrevCtrl);
 		    }
 
-		    Channel('app-inited').subscribe(initVideoPreview);*/
+		    Channel('app-inited').subscribe(initVideoPreview);
 	    },
         
         showGame: function (id) {

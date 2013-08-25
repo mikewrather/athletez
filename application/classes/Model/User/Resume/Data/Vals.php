@@ -57,18 +57,38 @@ class Model_User_Resume_Data_Vals extends ORM
 	{
 		return $this->user->first_name.' '.$this->user->last_name;
 	}
+
+	public $get_basics_class_standards = array(
+
+		// key = name of the column in the table, val = standard fk name that's used as id1
+		'alternate_fk_names' => array(),
+
+		// key = current name of column, val = name getBasics will return
+		'column_name_changes' => array(
+			'resume_data_obj' => 'resume_data',
+			'users_obj' => 'user',
+			'users_id' => 'user_id'
+		),
+
+		// key = the key that will appear in the returned results, val = the name of the function / property to invoke for the value
+		'added_function_calls' => array(),
+
+		// array of values only.  Each value is the name of a column to exclude
+		'exclude_columns' => array(),
+	);
 	
 	public function getBasics($settings = array())
 	{
-		return array(
-			"id" => $this->id,
-			"user" => $this->user->getBasics(),
-			"resume_data" => $this->resume_data->getBasics(),
-			"user_value" => $this->user_value,
-			"user_id" => $this->users_id,
-			"resume_data_id" => $this->resume_data_id,
-		 
-		);
+//		return array(
+//			"id" => $this->id,
+//			"user" => $this->user->getBasics(),
+//			"resume_data" => $this->resume_data->getBasics(),
+//			"user_value" => $this->user_value,
+//			"user_id" => $this->users_id,
+//			"resume_data_id" => $this->resume_data_id,
+//		);
+
+		return parent::getBasics($settings);
 	}
 	
 	public function updateResumeDataVal($user_value)

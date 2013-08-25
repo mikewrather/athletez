@@ -13,10 +13,11 @@ define( ["models/base"], function (BaseModel) {
             
             "links": [{
                 "label": "Photo",
-                //"link" : "#imageUp",
-                "link" : "#imageupload",
+
+                //"link" : "javascript:void(0);",
+                "link" : "#imageup",
 				"id"   :"addPhoto"
-            }, {
+            }, /*{
                 "label": "Video",
                 "link": "#videoprev",
 				"id"   :""
@@ -24,7 +25,18 @@ define( ["models/base"], function (BaseModel) {
                 "label": "Game",
                 "link": "#game",
 				"id"   :""
-            }
+    //            "link" : "javascript:void(0);",
+				"id"   :"addPhoto"
+            },*/ {
+                "label": "Video",
+	            "link": "#videoprev",
+                //"link" : "javascript:void(0);",
+	            "id": "addVideo"
+            }, {
+                "label": "Game",
+	            "link" : "#game",
+	            "id": "addGame"
+                            }
             ],
 	        "userid" : null
             

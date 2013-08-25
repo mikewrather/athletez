@@ -49,6 +49,7 @@ define([
         },
 
         submitHandler: function (e) {
+            alert("AddVideoView");
             e.preventDefault();
             this.createOnEnter(e);
         },

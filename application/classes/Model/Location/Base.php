@@ -75,19 +75,37 @@ class Model_Location_Base extends ORM
 		);
 	}
 
+	public $get_basics_class_standards = array(
+
+		// key = name of the column in the table, val = standard fk name that's used as id1
+		'alternate_fk_names' => array(),
+
+		// key = current name of column, val = name getBasics will return
+		'column_name_changes' => array(
+			'cities_obj' => 'city',
+		),
+
+		// key = the key that will appear in the returned results, val = the name of the function / property to invoke for the value
+		'added_function_calls' => array(),
+
+		// array of values only.  Each value is the name of a column to exclude
+		'exclude_columns' => array(),
+	);
+
 	public function getBasics($settings = array())
 	{
-		return array(
-			"id" => $this->id,
-			"address" => $this->address,
-			"city" => $this->city->getBasics(),
-			"cities_id" => $this->cities_id,
-			"lon" => $this->lon,
-			"lat" => $this->lat,
-			"location_type" => $this->location_type,
-			"loc_point" => $this->loc_point
-			// put point here
-		);
+//		return array(
+//			"id" => $this->id,
+//			"address" => $this->address,
+//			"city" => $this->city->getBasics(),
+//			"cities_id" => $this->cities_id,
+//			"lon" => $this->lon,
+//			"lat" => $this->lat,
+//			"location_type" => $this->location_type,
+//			"loc_point" => $this->loc_point
+//			// put point here
+//		);
+		return parent::getBasics($settings);
 	}
 	
 	public function updateLocation($args = array())

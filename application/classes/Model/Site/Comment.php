@@ -94,7 +94,7 @@ class Model_Site_Comment extends Model_Site_Entdir
 
 		$classes_arr = array();
 		$entClassStr = str_replace('Model_','',get_class($ent));
-		$classes_arr[$entClassStr] = $ent;
+		$classes_arr[$entClassStr] = $ent->id; //added ->id to fix a problem with the games comments.
 		$classes_arr['Site_Comment'] = 'site_comment.id';
 
 		$comments = ORM::factory('Site_Comment')
@@ -120,26 +120,94 @@ class Model_Site_Comment extends Model_Site_Entdir
 		return $comments;
 	}
 
+	public $get_basics_class_standards = array(
+
+		// key = name of the column in the table, val = standard fk name that's used as id1
+		'alternate_fk_names' => array(
+			//'user_picture' => 'images_id'
+		),
+
+		// key = current name of column, val = name getBasics will return
+		'column_name_changes' => array(
+			'users_obj' => 'user'
+		),
+
+		// key = the key that will appear in the returned results, val = the name of the function / property to invoke for the value
+		'added_function_calls' => array(
+			'comment_date' => 'get_comment_date',
+			'user_picture' => 'get_user_picture',
+			'name' => 'get_name',
+			'email' => 'get_email',
+		),
+
+		// array of values only.  Each value is the name of a column to exclude
+		'exclude_columns' => array(),
+	);
+
+	public function get_user_picture(){
+		$images_id = $this->get_user_subject('user_picture');
+		$image_model = ORM::factory('Media_Image', $images_id);
+		return $image_model->getBasics();
+	}
+
+	public function get_name(){
+		return $this->get_user_subject('name');
+	}
+
+	public function get_email(){
+		return $this->get_user_subject('email');
+	}
+
+	public function get_comment_date(){
+		return isset($this->timePosted) ? date('M jS, g:i a',strtotime($this->timePosted)) : date('M jS, g:i a');
+	}
+
+	public function get_user_subject($param){
+		//This gets the subject of the vote.  It will be used to pull basic information
+		$subject = $this->getSubject();
+		$user_picture = null;
+		$name = null;
+		$email = null;
+		if (!$subject){
+
+		}else{
+			$detail = $subject->getBasics();
+			$user_picture = $detail['user_picture'];
+			$name = $detail['name'];
+			$email = $detail['email'];
+		}
+		return ${$param};
+	}
+
 	public function getBasics($settings = array())
 	{
 		//This gets the subject of the vote.  It will be used to pull basic information
 		$subject = $this->getSubject();
 
-		$detail = $subject->getBasics();
-		$user_picture = $detail['user_picture'];
-		$name = $detail['name'];
-		$email = $detail['email'];
-		return array(
-			"id" => $this->id,
-			"users_id" => $this->users_id,
-			"user" => $this->user->getBasics(),
-			"subject" => $subject->getBasics(),
-			"user_picture" => $user_picture,
-			"name" => $name,
-			'email' => $email,
-			"comment" => $this->comment,
-			"comment_date" => isset($this->timePosted) ? date('M jS, g:i a',strtotime($this->timePosted)) : date('M jS, g:i a')
-		);
+		if (!$subject){
+			$user_picture = null;
+			$name = null;
+			$email = null;
+		}else{
+			$detail = $subject->getBasics();
+			$user_picture = $detail['user_picture'];
+			$name = $detail['name'];
+			$email = $detail['email'];
+		}
+
+//		return array(
+//			"id" => $this->id,
+//			"users_id" => $this->users_id,
+//			"user" => $this->user->getBasics(),
+//			"subject" => $subject->getBasics(),
+//			"user_picture" => $user_picture,
+//			"name" => $name,
+//			'email' => $email,
+//			"comment" => $this->comment,
+//			"comment_date" => isset($this->timePosted) ? date('M jS, g:i a',strtotime($this->timePosted)) : date('M jS, g:i a')
+//		);
+
+		return parent::getBasics($settings);
 	}
 
 	public function name()

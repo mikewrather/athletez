@@ -52,16 +52,37 @@ class Model_Sportorg_Complevel_Base extends ORM
 		);
 	}
 
+	public $get_basics_class_standards = array(
+
+		// key = name of the column in the table, val = standard fk name that's used as id1
+		'alternate_fk_names' => array(),
+
+		// key = current name of column, val = name getBasics will return
+		'column_name_changes' => array(
+			'complevel_profiles_obj' => 'complevelprofile',
+			'name' => 'complevel_name',
+			'id' => 'complevel_id'
+		),
+
+		// key = the key that will appear in the returned results, val = the name of the function / property to invoke for the value
+		'added_function_calls' => array(),
+
+		// array of values only.  Each value is the name of a column to exclude
+		'exclude_columns' => array(),
+	);
+
 	public function getBasics($settings = array())
 	{
-		return array(
-			"complevel_id" => $this->id,
-			"complevelprofile" => $this->complevelprofile->getBasics(),
-			"complevel_name" => $this->name,
-			"min_age" => $this->min_age,		
-			"max_age" => $this->max_age,
-			"complevel_profiles_id" => $this->complevel_profiles_id
-		);
+//		return array(
+//			"complevel_id" => $this->id,
+//			"complevelprofile" => $this->complevelprofile->getBasics(),
+//			"complevel_name" => $this->name,
+//			"min_age" => $this->min_age,
+//			"max_age" => $this->max_age,
+//			"complevel_profiles_id" => $this->complevel_profiles_id
+//		);
+
+		return parent::getBasics($settings);
 	}
 
 	public function getTeamsBasics()
