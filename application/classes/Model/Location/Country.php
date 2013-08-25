@@ -20,10 +20,7 @@ class Model_Location_Country extends ORM
 
 	public function getBasics($settings = array())
 	{
-		return array(
-			"id" => $this->id,
-			"name" => $this->name
-		);
+		return parent::getBasics($settings);
 	}
 
 }

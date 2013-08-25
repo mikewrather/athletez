@@ -248,7 +248,19 @@ define(['facade', 'views/base', 'utils'], function(facade, BaseView, utils) {
 					return true;
 			}
 			return false;
-		}
+		},
+		
+		 showLoader: function(view) {
+		 	var $loaderDiv = $(".loading-div");
+        	if(!$loaderDiv.length)
+        		$(view.$el).append('<div class="loader loading-div"></div>')
+        	else
+        		$loaderDiv.show();
+        },
+        
+        hideLoader: function() {
+        	$(".loading-div").hide();
+        },
 	});
 
 	// Mix-in `Section` object

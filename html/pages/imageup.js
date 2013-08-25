@@ -97,6 +97,7 @@ define([
 				destination : "#main-content-img"
             },this.attr);
             debug.log("Imagecontroller Show");
+            console.log(this.scheme);
             this.scheme.push(addBasicView);
             this.layout.render();
         },
@@ -104,8 +105,8 @@ define([
             var pageLayout;
 			debug.log("Imagecontroller Layout");
 			this.scheme=[];
-			$('body').append('<div id="modalPopup"></div>');
-
+			$(".model-popup-h").remove();
+			$('body').append('<div id="modalPopup" class="model-popup-h"></div>');
             pageLayout = new LayoutView({
                 scheme: this.scheme,
                 destination: "#modalPopup",
@@ -113,6 +114,7 @@ define([
 				displayWhen : "ready"
             });
             this.layout=pageLayout;
+            
             return this.layout;
         },
 		previewShowup: function (dataum) {
@@ -145,8 +147,9 @@ define([
 
 			//url gets set
 			//this.url="/api/"+$("#url_tag").val()+"/addimage/"+$("#id_tag").val();
-
-			$("#preview_"+id).html("<progress></progress>")
+			
+			$("#preview_"+id).html('<div class="loader image-loading-div"></div>');
+			$(".previewimgsrc").addClass('fade-out');
 			$.ajax({
 			    url: this.url,
 			    data: dataum,
@@ -167,14 +170,15 @@ define([
 					{
 						msg={"msg":" File Uploaded Succesfully","color":"alert-success"};
 						Channel("imageup-msg").publish(msg);
-
 						$("#imageup").removeAttr("disabled");
 						$("#image_file").removeAttr("disabled");
 						$(".closepreview").removeAttr("disabled");	
+						$(".previewimgsrc").fadeOut('slow').removeClass('fade-out');
 					}
 			    },
 				error:function(data){
 					$("#preview_"+id).fadeOut("slow");
+					$(".previewimgsrc").removeClass('fade-out');
 					$("#preview_"+id).fadeIn("slow").html("<b>Upload Error!</b>");
 					debug.log(data);
 						msg={"msg":data.statusText,"color":"alert-error"};

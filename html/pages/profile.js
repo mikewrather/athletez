@@ -106,7 +106,7 @@ define([
 
 			createData: function () {
 				this.basics = new ProfileBasicsModel({id: this.id});
-				//this.basics.id = this.id;
+				this.basics.id = this.id;
 				this.basics.fetch();
 
 				this.addmedia = new ProfileAddMediaModel();
@@ -182,7 +182,7 @@ define([
 				var controller = this;
 
 				$.when(this.orgs.request).done(function () {
-					controller.setupOrgListView();
+				 	controller.setupOrgListView();
 				});
 
 				$.when(this.relateds.request).done(function () {

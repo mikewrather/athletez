@@ -56,11 +56,12 @@ class Model_User_Resume_Data_Group extends ORM
 
 	public function getBasics($settings = array())
 	{
-		return array(
-			"id" => $this->id,
-			"name" => $this->name,
-			"description" => $this->description,
-		);
+//		return array(
+//			"id" => $this->id,
+//			"name" => $this->name,
+//			"description" => $this->description,
+//		);
+		return parent::getBasics($settings);
 	}
 	public function updateResumedataGroup($args = array())
 	{

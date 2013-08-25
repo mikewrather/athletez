@@ -140,8 +140,9 @@ class Model_Media_Image extends ORM
 		$this->media_id = ORM::factory('Media_Base')->addMedia($args);
 
 		// Create this object in DB if not already loaded with an ID
+		
 		if(!$this->loaded()) $this->create();
-
+		
 		// Loop through files which are being added or uploaded
 		foreach($args['files'] as $key=>$img_data)
 		{
@@ -193,7 +194,7 @@ class Model_Media_Image extends ORM
 
 			}
 		}
-
+		//return $args['files'];
 		return $this;
 	}
 

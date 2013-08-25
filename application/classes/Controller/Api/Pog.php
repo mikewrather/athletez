@@ -38,7 +38,12 @@
 		public function action_get_basics()
 		{
 			$this->payloadDesc = "Player of the Game basics";
-
+			if(!$this->mainModel->id)
+			{
+				$this->modelNotSetError();
+				return false;
+			}
+			return $this->mainModel;
 		
 		}
 		

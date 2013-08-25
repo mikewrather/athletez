@@ -115,7 +115,14 @@ class Model_Academics_Tests extends ORM
 	}
 
 	public function getTopics(){
-		$arrs = $this->topics->find_all();
+		$topics = $this->topics;
+		$classes_arr = array(
+			'Academics_Tests_Topics' => 'academics_tests_topics'
+		);
+
+		$topics = ORM::_sql_exclude_deleted($classes_arr, $topics);
+
+		$arrs = $topics->find_all();
 		$results = null;
 		foreach($arrs as $topic)
 		{
@@ -132,13 +139,31 @@ class Model_Academics_Tests extends ORM
 		return $results;
 	}
 
+	public $get_basics_class_standards = array(
+
+		// key = name of the column in the table, val = standard fk name that's used as id1
+		'alternate_fk_names' => array(),
+
+		// key = current name of column, val = name getBasics will return
+		'column_name_changes' => array(),
+
+		// key = the key that will appear in the returned results, val = the name of the function / property to invoke for the value
+		'added_function_calls' => array(
+			'topics' => 'getTopics'
+		),
+
+		// array of values only.  Each value is the name of a column to exclude
+		'exclude_columns' => array(),
+	);
+
 	public function getBasics($settings = array()){
-		return array(
-			'id' => $this->id,
-			'name' => $this->name,
-			'test_type' => $this->test_type,
-			'description' => $this->description,
-			'topics' => $this->getTopics()
-		);
+//		return array(
+//			'id' => $this->id,
+//			'name' => $this->name,
+//			'test_type' => $this->test_type,
+//			'description' => $this->description,
+//			'topics' => $this->getTopics()
+//		);
+		return parent::getBasics($settings);
 	}
 }

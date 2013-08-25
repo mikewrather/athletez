@@ -36,10 +36,12 @@ class Model_Sportorg_Seasons_Profile extends ORM
 
 	public function getBasics($settings = array())
 	{
-		return array(
-			"id" => $this->id,
-			"name" => $this->name
-		);
+//		return array(
+//			"id" => $this->id,
+//			"name" => $this->name
+//		);
+
+		return parent::getBasics($settings);
 	}
 	
 	public function getSeasons($args = array())

@@ -127,30 +127,85 @@ class Model_Sportorg_Games_Base extends ORM
 		return null;
 	}
 
+
+
+	public $get_basics_class_standards = array(
+
+		// key = name of the column in the table, val = standard fk name that's used as id1
+		'alternate_fk_names' => array(),
+
+		// key = current name of column, val = name getBasics will return
+		'column_name_changes' => array(
+			'locations_obj' => 'location'
+		),
+
+		// key = the key that will appear in the returned results, val = the name of the function / property to invoke for the value
+		'added_function_calls' => array(
+			'game_name' => 'get_game_name',
+			"game_day" => 'format_game_day', //"Sept 14, 2002",
+			"game_time" => 'format_game_time', //"09:00 AM",
+			"game_picture" => 'getPrimaryImage',
+			"teams" => 'get_game_teams',
+			"game_location" => 'get_game_location'
+		),
+
+		// array of values only.  Each value is the name of a column to exclude
+		'exclude_columns' => array(),
+	);
+
+	public function get_game_teams(){
+		return $this->getTeams()->result;
+	}
+
+	public function get_game_location(){
+		return $this->location->address;
+	}
+
+	public function get_game_name(){
+		return Util::format_time($this->gameTime);
+	}
+
+	public function format_game_day(){
+		return Util::format_date($this->gameDay);
+	}
+
+	public function format_game_time(){
+		return Util::format_time($this->gameTime);
+	}
+
 	public function getBasics($settings = array())
 	{
-		return array(
-			"locations_id" => $this->locations_id,
-			"location" => $this->location->getBasics(),
-			"gameDay" => $this->gameDay,
-			"gameTime" => $this->gameTime,
-			"teams" => $this->teams,
-			'event_name' => $this->event_name,
-			/* Required are required from Ma's test file*/
-			//TODO, add by Jeffrey, Clean up the unnecessary data.
-			"id" => $this->id,
-			"game_name" => $this->name(),
-			"game_day" => Util::format_date($this->gameDay), //"Sept 14, 2002",
-			"game_time" => Util::format_time($this->gameTime), //"09:00 AM",
-			"game_picture" => $this->getPrimaryImage(),
-			"teams" => $this->getTeams()->result,
-			"game_location" => $this->location->address
-		);
+//		return array(
+//			"locations_id" => $this->locations_id,
+//			"location" => $this->location->getBasics(),
+//			"gameDay" => $this->gameDay,
+//			"gameTime" => $this->gameTime,
+//			"teams" => $this->teams,
+//			'event_name' => $this->event_name,
+//			/* Required are required from Ma's test file*/
+//			//TODO, add by Jeffrey, Clean up the unnecessary data.
+//			"id" => $this->id,
+//			"game_name" => $this->name(),
+//			"game_day" => Util::format_date($this->gameDay), //"Sept 14, 2002",
+//			"game_time" => Util::format_time($this->gameTime), //"09:00 AM",
+//			"game_picture" => $this->getPrimaryImage(),
+//			"teams" => $this->getTeams()->result,
+//			"game_location" => $this->location->address
+//		);
+
+		return parent::getBasics($settings);
 	}
 
 	public function getTeams(){
 		$teams_arr = null;
-		$teams = $this->teams->find_all();
+		$teams = $this->teams;
+
+		//the results need to filter the results from deleted table
+		$classes_arr = array(
+			'Sportorg_Team' => 'sportorg_team',
+		);
+		$teams = ORM::_sql_exclude_deleted($classes_arr, $teams);
+		$teams = $teams->find_all();
 		foreach($teams as $team){
 			$new_obj = new stdClass();
 			$teamBasicInfo = $team->getBasics();
@@ -159,6 +214,7 @@ class Model_Sportorg_Games_Base extends ORM
 			$new_obj->team_location = $teamBasicInfo['team_location'];
 			$new_obj->points_scored = $team->getTeamPointsScore($this->id);
 			$teams_arr[] = $new_obj;
+			unset($new_obj);
 		}
 
 		$result_obj = new stdClass();

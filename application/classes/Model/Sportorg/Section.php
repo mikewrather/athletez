@@ -60,17 +60,36 @@ class Model_Sportorg_Section extends ORM
 	{
 		parent::__construct($id);
 	}
-	
+
+	public $get_basics_class_standards = array(
+
+		// key = name of the column in the table, val = standard fk name that's used as id1
+		'alternate_fk_names' => array(),
+
+		// key = current name of column, val = name getBasics will return
+		'column_name_changes' => array(
+			'sports_obj' => 'sports',
+			'states_obj' => 'states',
+		),
+
+		// key = the key that will appear in the returned results, val = the name of the function / property to invoke for the value
+		'added_function_calls' => array(),
+
+		// array of values only.  Each value is the name of a column to exclude
+		'exclude_columns' => array(),
+	);
+
 	public function getBasics($settings = array())
 	{
-		return array(
-			"id" => $this->id,
-			"name" => $this->name,
-			"sports_id" => $this->sports_id,
-			"states_id" => $this->states_id,
-			"sports" => $this->sport->getBasics(),
-			"states" => $this->state->getBasics()
-		);
+//		return array(
+//			"id" => $this->id,
+//			"name" => $this->name,
+//			"sports_id" => $this->sports_id,
+//			"states_id" => $this->states_id,
+//			"sports" => $this->sport->getBasics(),
+//			"states" => $this->state->getBasics()
+//		);
+		return parent::getBasics($settings);
 	}
 
 	function getSports($args = array()){

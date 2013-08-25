@@ -76,11 +76,9 @@ class Model_User_Followers extends ORM
 		$entClassStr = str_replace('Model_','',get_class($obj));
 		$classes_arr[$entClassStr] = 'followers.subject_id';
 
-		$qry = ORM::_sql_exclude_deleted_abstract($classes_arr, $qry);
-
+		$qry = (ORM::_sql_exclude_deleted_abstract($classes_arr, $qry));
 		$retObj = new stdClass();
-
-		foreach($qry as $row)
+		foreach($qry->execute() as $row)
 		{
 			if($ret_type=='users')
 			{

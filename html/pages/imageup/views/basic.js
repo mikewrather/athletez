@@ -46,6 +46,10 @@ function(require, imageBasicTemplate) {
 		data :imageBasicTemplate,
 
         initialize: function (options,attr) {
+        	// removing the img preview div on init
+        	$("#imgpreview").remove();
+        	$("#errormsg, #preview").html("");
+        	
             SectionView.prototype.initialize.call(this, options);   
 			debug.log("Image upload basic view");   
 			this.attr=attr;      
@@ -58,6 +62,7 @@ function(require, imageBasicTemplate) {
 			$('#imgUploadModal').on('hide', function () {
 		    	Channel('refresh-onImageUpload').publish();
 		    });
+		    console.log($(".modal-body").html());
         },
 		drag: function(event) {
 			event.stopPropagation();
@@ -65,6 +70,8 @@ function(require, imageBasicTemplate) {
 		    event.originalEvent.dataTransfer.dropEffect = 'copy';
 		},
 		drop: function(event) {
+			var _self = this;
+			_self.showLoader(_self);
 			event.stopPropagation();
 			event.preventDefault();
 			$("#errormsg").hide();
@@ -87,12 +94,16 @@ function(require, imageBasicTemplate) {
 					$('#image_file').attr('disabled', 'disabled')
 					Channel("imageup-preview").publish(data);
 				  }
+				  _self.hideLoader();
 				};
 		      })(f);
 		      reader.readAsDataURL(f);
 		    }
+		   
 		},
 		imagePreview: function(event) {
+			var _self = this;
+			_self.showLoader(_self);
 			debug.log("Image preview view");
 			$("#preview").hide();
 			$("#errormsg").hide();
@@ -113,14 +124,19 @@ function(require, imageBasicTemplate) {
 				  {
 					data={"data":dataum};
 					Channel("imageup-preview").publish(data);
+				  	_self.hideLoader();
 				  }
+				  
 				};
+				
 		      })(f);
 		      reader.readAsDataURL(f);
 		    }
 		},
         imageUploadClick: function(event)
         {
+	        
+
 	        event.preventDefault();
 
 			var thiss=this;			
@@ -160,6 +176,7 @@ function(require, imageBasicTemplate) {
 			}
 			else
 			{
+				console.log($('#image_file')[0].files.length + "=file prasobh");
 				jQuery.each($('#image_file')[0].files, function(i, file) {
 					var data = new FormData();
 					if ($('#preview_'+i+"group").length > 0) {

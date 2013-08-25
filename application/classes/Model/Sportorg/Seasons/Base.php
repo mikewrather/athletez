@@ -88,14 +88,34 @@ class Model_Sportorg_Seasons_Base extends ORM
         }  
     }
 
+	public $get_basics_class_standards = array(
+
+		// key = name of the column in the table, val = standard fk name that's used as id1
+		'alternate_fk_names' => array(),
+
+		// key = current name of column, val = name getBasics will return
+		'column_name_changes' => array(
+			'id' => 'season_id',
+			'season_profiles_obj' => 'seasonprofile',
+			'name' => 'season_name'
+		),
+
+		// key = the key that will appear in the returned results, val = the name of the function / property to invoke for the value
+		'added_function_calls' => array(),
+
+		// array of values only.  Each value is the name of a column to exclude
+		'exclude_columns' => array(),
+	);
+
 	public function getBasics($settings = array())
 	{
-		return array(
-			"season_id" => $this->id,
-			"seasonprofile" => $this->seasonprofile->getBasics(),			 
-			"season_name" => $this->name,
-			"season_profiles_id" => $this->season_profiles_id,
-		);
+//		return array(
+//			"season_id" => $this->id,
+//			"seasonprofile" => $this->seasonprofile->getBasics(),
+//			"season_name" => $this->name,
+//			"season_profiles_id" => $this->season_profiles_id,
+//		);
+		return parent::getBasics($settings);
 	}
 	
 	public function getTeams($args = array())

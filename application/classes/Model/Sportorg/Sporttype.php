@@ -32,12 +32,11 @@ class Model_Sportorg_Sporttype extends ORM
 	{
 		parent::__construct($id);
 	}
+
+
 	
 	public function getBasics($settings = array())
 	{
-		return array(
-			"id" => $this->id,
-			"name" => $this->name	
-		);
+		return parent::getBasics($settings);
 	}
 }
