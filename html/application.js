@@ -153,14 +153,14 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
         imageUp: function () {
 			this.loadStyles();
 			//chromeBootstrap();
-            //alert("test img");
+            
             function initImage(id){ var imageController = new ImageController({"route": "","url":this.posturl,"attr":this.attribute}); }
             Channel('app-inited').subscribe(initImage);
 		},
 
 	    videoPreview: function () {
 		   
-              // alert("test video");
+             
             this.loadStyles();
 		   // chromeBootstrap();
 		    //$('body').empty();
