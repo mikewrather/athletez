@@ -15,7 +15,7 @@ class Controller_Enttypes extends Controller
 
 	public function action_index()
 	{
-		/*
+
 		$res = DB::select()
 			->from('enttypes')
 			->execute();
@@ -33,7 +33,8 @@ class Controller_Enttypes extends Controller
 ),
 			";
 		}
-		(*/
+		/*
+		(
 
 		$classes_arr = array(
 			'User_Resume_Data_Vals'
@@ -44,7 +45,29 @@ class Controller_Enttypes extends Controller
 		);
 
 		ORM::_sql_exclude_deleted($classes_arr,$db_arr);
+		*/
 
+	}
+
+	public function action_by_id()
+	{
+		$res = DB::select()
+			->from('enttypes')
+			->execute();
+
+		foreach($res as $row)
+		{
+			//	print_r($row);
+			echo "'".$row['id1']."' => array(";
+			foreach($row as $key => $val)
+			{
+				echo "
+	'".$key."' => '".addslashes($val)."',";
+			}
+			echo "
+),
+			";
+		}
 	}
 	
 }

@@ -24,8 +24,10 @@ class Model_Site_Enttype extends ORM
 
 	static function getMyClass($enttypeID)
 	{
-		$oneofme = ORM::factory('Site_Enttype',$enttypeID);
-		return $oneofme->class_name;
+		$et_config = Kohana::$config->load('enttypes-by-id');
+		$oneofme = $et_config->get($enttypeID);
+		if(is_array($oneofme)) return $oneofme['class_name'];
+		return false;
 	}
 
 	static function getClassByID1($id1){
@@ -39,8 +41,10 @@ class Model_Site_Enttype extends ORM
 
 	static function getMyTable($enttypeID)
 	{
-		$oneofme = ORM::factory('Site_Enttype',$enttypeID);
-		return $oneofme->db_table;
+		$et_config = Kohana::$config->load('enttypes-by-id');
+		$oneofme = $et_config->get($enttypeID);
+		if(is_array($oneofme)) return $oneofme['db_table'];
+		return false;
 	}
 
 
@@ -49,9 +53,9 @@ class Model_Site_Enttype extends ORM
 		$my_class = self::getMyClass($enttypeID);
 		$result = ORM::factory($my_class);
 
-		$classes_arr = array(
-			$my_class => self::getMyTable($enttypeID)
-		);
+	//	$classes_arr = array(
+	//		$my_class => self::getMyTable($enttypeID)
+	//	);
 
 		$classes_arr = array(
 			$my_class => strtolower($my_class)
@@ -71,8 +75,10 @@ class Model_Site_Enttype extends ORM
 	{
 		$classname = is_object($class) ? get_class($class) : (string)$class;
 		$classname = str_replace('Model_','',$classname);
-		$oneofme = ORM::factory('Site_Enttype')->where('class_name','=',$classname)->find();
-		if($oneofme->loaded()) return $oneofme->id;
+
+		$et_config = Kohana::$config->load('enttypes');
+		$oneofme = $et_config->get($classname);
+		if(is_array($oneofme)) return $oneofme['id'];
 		return false;
 	}
 
@@ -108,15 +114,15 @@ class Model_Site_Enttype extends ORM
 
 	static function get_obj_for_fk_name($fk_name,$id=FALSE)
 	{
-		$ent = ORM::factory('Site_Enttype')
-			->where('id1','=',$fk_name)
-			->find();
 
-		if($ent->loaded())
+		$et_config = Kohana::$config->load('enttypes-by-id1');
+		$ent = $et_config->get($fk_name);
+
+		if(is_array($ent))
 		{
 			if($id)
 			{
-				$obj = ORM::factory($ent->class_name)->where('id','=',(int)$id)->find();
+				$obj = ORM::factory($ent['class_name'])->where('id','=',(int)$id)->find();
 				if($obj->loaded())
 				{
 					return $obj;

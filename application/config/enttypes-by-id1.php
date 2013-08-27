@@ -2,17 +2,15 @@
 /**
  * $description
  *
- * Date: 7/6/13
- * Time: 5:16 PM
+ * Date: 8/27/13
+ * Time: 3:40 PM
  *
  * @author: Mike Wrather
  *
  */
-
 return array(
 
-
-	'User_Base' => array(
+	'users_id' => array(
 		'id' => '1',
 		'name' => 'User',
 		'api_name' => 'user',
@@ -22,7 +20,7 @@ return array(
 		'id1' => 'users_id',
 		'id2' => '',
 	),
-	'Sportorg_Org' => array(
+	'orgs_id' => array(
 		'id' => '2',
 		'name' => 'Organization',
 		'api_name' => 'org',
@@ -32,7 +30,7 @@ return array(
 		'id1' => 'orgs_id',
 		'id2' => '',
 	),
-	'Sportorg_Position' => array(
+	'positions_id' => array(
 		'id' => '3',
 		'name' => 'Sports Position',
 		'api_name' => 'position',
@@ -42,7 +40,7 @@ return array(
 		'id1' => 'positions_id',
 		'id2' => '',
 	),
-	'Sportorg_Sport' => array(
+	'sports_id' => array(
 		'id' => '4',
 		'name' => 'Sport',
 		'api_name' => 'sport',
@@ -52,7 +50,7 @@ return array(
 		'id1' => 'sports_id',
 		'id2' => '',
 	),
-	'Sportorg_Team' => array(
+	'teams_id' => array(
 		'id' => '5',
 		'name' => 'Team',
 		'api_name' => 'team',
@@ -62,7 +60,7 @@ return array(
 		'id1' => 'teams_id',
 		'id2' => '',
 	),
-	'Sportorg_Seasons_Base' => array(
+	'seasons_id' => array(
 		'id' => '6',
 		'name' => 'Season',
 		'api_name' => 'season',
@@ -72,7 +70,7 @@ return array(
 		'id1' => 'seasons_id',
 		'id2' => '',
 	),
-	'Sportorg_Seasons_Profile' => array(
+	'season_profiles_id' => array(
 		'id' => '7',
 		'name' => 'Season Profile',
 		'api_name' => 'seasonprofile',
@@ -82,7 +80,7 @@ return array(
 		'id1' => 'season_profiles_id',
 		'id2' => '',
 	),
-	'Sportorg_Games_Base' => array(
+	'games_id' => array(
 		'id' => '8',
 		'name' => 'Game',
 		'api_name' => 'game',
@@ -92,7 +90,7 @@ return array(
 		'id1' => 'games_id',
 		'id2' => '',
 	),
-	'Sportorg_Games_Match' => array(
+	'game_matches_id' => array(
 		'id' => '9',
 		'name' => 'Game Match',
 		'api_name' => 'gamematch',
@@ -102,7 +100,7 @@ return array(
 		'id1' => 'game_matches_id',
 		'id2' => '',
 	),
-	'Sportorg_Games_Matchplayer' => array(
+	'game_match_players_id' => array(
 		'id' => '10',
 		'name' => 'Game Match Player',
 		'api_name' => 'gamematchplayer',
@@ -112,7 +110,7 @@ return array(
 		'id1' => 'game_match_players_id',
 		'id2' => '',
 	),
-	'Sportorg_Complevel_Base' => array(
+	'complevels_id' => array(
 		'id' => '11',
 		'name' => 'Competition Level',
 		'api_name' => 'complevel',
@@ -122,7 +120,7 @@ return array(
 		'id1' => 'complevels_id',
 		'id2' => '',
 	),
-	'Sportorg_Complevel_Profile' => array(
+	'complevel_profiles_id' => array(
 		'id' => '12',
 		'name' => 'Competition Level Profile',
 		'api_name' => 'complevelprofile',
@@ -132,7 +130,7 @@ return array(
 		'id1' => 'complevel_profiles_id',
 		'id2' => '',
 	),
-	'Site_Comment' => array(
+	'comments_id' => array(
 		'id' => '14',
 		'name' => 'Comment',
 		'api_name' => 'comment',
@@ -142,7 +140,7 @@ return array(
 		'id1' => 'comments_id',
 		'id2' => '',
 	),
-	'Site_Tag' => array(
+	'tags_id' => array(
 		'id' => '16',
 		'name' => 'Item Tag',
 		'api_name' => 'tag',
@@ -152,7 +150,7 @@ return array(
 		'id1' => 'tags_id',
 		'id2' => '',
 	),
-	'Site_Vote' => array(
+	'votes_id' => array(
 		'id' => '18',
 		'name' => 'Vote',
 		'api_name' => 'vote',
@@ -162,7 +160,7 @@ return array(
 		'id1' => 'votes_id',
 		'id2' => '',
 	),
-	'Media_Base' => array(
+	'media_id' => array(
 		'id' => '19',
 		'name' => 'Media',
 		'api_name' => 'media',
@@ -172,7 +170,7 @@ return array(
 		'id1' => 'media_id',
 		'id2' => '',
 	),
-	'Media_Image' => array(
+	'images_id' => array(
 		'id' => '21',
 		'name' => 'Image',
 		'api_name' => 'image',
@@ -182,7 +180,7 @@ return array(
 		'id1' => 'images_id',
 		'id2' => '',
 	),
-	'Media_Video' => array(
+	'videos_id' => array(
 		'id' => '23',
 		'name' => 'Video Clip',
 		'api_name' => 'video',
@@ -192,7 +190,7 @@ return array(
 		'id1' => 'videos_id',
 		'id2' => '',
 	),
-	'Media_Videoservice' => array(
+	'video_services_id' => array(
 		'id' => '24',
 		'name' => 'Vido Production Service',
 		'api_name' => 'videoservice',
@@ -202,7 +200,7 @@ return array(
 		'id1' => 'video_services_id',
 		'id2' => '',
 	),
-	'User_Resume_Data' => array(
+	'resume_data_id' => array(
 		'id' => '25',
 		'name' => 'Athletic Resume Data',
 		'api_name' => 'resumedata',
@@ -212,7 +210,7 @@ return array(
 		'id1' => 'resume_data_id',
 		'id2' => '',
 	),
-	'User_Resume_Data_Group' => array(
+	'resume_data_groups_id' => array(
 		'id' => '26',
 		'name' => 'Athletic Resume Data Group',
 		'api_name' => 'resumedatagroup',
@@ -222,7 +220,7 @@ return array(
 		'id1' => 'resume_data_groups_id',
 		'id2' => '',
 	),
-	'User_Resume_Data_Profile' => array(
+	'resume_data_profiles_id' => array(
 		'id' => '27',
 		'name' => 'Athletic Resume Data Profile',
 		'api_name' => 'resumedataprofile',
@@ -232,7 +230,7 @@ return array(
 		'id1' => 'resume_data_profiles_id',
 		'id2' => '',
 	),
-	'User_Resume_Data_Vals' => array(
+	'resume_data_vals_id' => array(
 		'id' => '28',
 		'name' => 'Athletic Resume Data Value',
 		'api_name' => 'resumedataval',
@@ -242,7 +240,7 @@ return array(
 		'id1' => 'resume_data_vals_id',
 		'id2' => '',
 	),
-	'Stats_Tab' => array(
+	'stattabs_id' => array(
 		'id' => '30',
 		'name' => 'Statistics Tab',
 		'api_name' => 'stattab',
@@ -252,7 +250,7 @@ return array(
 		'id1' => 'stattabs_id',
 		'id2' => '',
 	),
-	'Stats_Base' => array(
+	'stats_id' => array(
 		'id' => '31',
 		'name' => 'Statistic',
 		'api_name' => 'stat',
@@ -262,7 +260,7 @@ return array(
 		'id1' => 'stats_id',
 		'id2' => '',
 	),
-	'Media_Queuedvideo' => array(
+	'queuedvideos_id' => array(
 		'id' => '32',
 		'name' => 'Video Queued for Processing',
 		'api_name' => 'queuedvideo',
@@ -272,7 +270,7 @@ return array(
 		'id1' => 'queuedvideos_id',
 		'id2' => '',
 	),
-	'Location_Base' => array(
+	'locations_id' => array(
 		'id' => '33',
 		'name' => 'Location',
 		'api_name' => 'location',
@@ -282,7 +280,7 @@ return array(
 		'id1' => 'locations_id',
 		'id2' => '',
 	),
-	'Location_City' => array(
+	'cities_id' => array(
 		'id' => '34',
 		'name' => 'City',
 		'api_name' => 'city',
@@ -292,7 +290,7 @@ return array(
 		'id1' => 'cities_id',
 		'id2' => '',
 	),
-	'Location_County' => array(
+	'counties_id' => array(
 		'id' => '35',
 		'name' => 'County',
 		'api_name' => 'county',
@@ -302,7 +300,7 @@ return array(
 		'id1' => 'counties_id',
 		'id2' => '',
 	),
-	'Location_State' => array(
+	'states_id' => array(
 		'id' => '36',
 		'name' => 'State',
 		'api_name' => 'state',
@@ -312,7 +310,7 @@ return array(
 		'id1' => 'states_id',
 		'id2' => '',
 	),
-	'Site_Pog' => array(
+	'player_of_game_id' => array(
 		'id' => '37',
 		'name' => 'Player of the Game',
 		'api_name' => 'pog',
@@ -322,7 +320,7 @@ return array(
 		'id1' => 'player_of_game_id',
 		'id2' => '',
 	),
-	'Sportorg_Division' => array(
+	'divisions_id' => array(
 		'id' => '40',
 		'name' => 'Sports Division',
 		'api_name' => 'division',
@@ -332,7 +330,7 @@ return array(
 		'id1' => 'divisions_id',
 		'id2' => '',
 	),
-	'Sportorg_League' => array(
+	'leagues_id' => array(
 		'id' => '41',
 		'name' => 'Sports League',
 		'api_name' => 'league',
@@ -342,7 +340,7 @@ return array(
 		'id1' => 'leagues_id',
 		'id2' => '',
 	),
-	'Sportorg_Section' => array(
+	'sections_id' => array(
 		'id' => '43',
 		'name' => 'Sports Section',
 		'api_name' => 'section',
@@ -352,7 +350,7 @@ return array(
 		'id1' => 'sections_id',
 		'id2' => '',
 	),
-	'Sportorg_Sporttype' => array(
+	'sport_types_id' => array(
 		'id' => '44',
 		'name' => 'Sport Type',
 		'api_name' => 'sporttype',
@@ -362,7 +360,7 @@ return array(
 		'id1' => 'sport_types_id',
 		'id2' => '',
 	),
-	'Stats_Context' => array(
+	'stat_contexts_id' => array(
 		'id' => '45',
 		'name' => 'Statistics Context',
 		'api_name' => 'statcontext',
@@ -372,7 +370,7 @@ return array(
 		'id1' => 'stat_contexts_id',
 		'id2' => '',
 	),
-	'Site_Enttype' => array(
+	'subject_type_id' => array(
 		'id' => '46',
 		'name' => 'Anonymous Entity',
 		'api_name' => 'ent',
@@ -382,7 +380,7 @@ return array(
 		'id1' => 'subject_type_id',
 		'id2' => 'subject_id',
 	),
-	'Stats_Vals' => array(
+	'statvals_id' => array(
 		'id' => '47',
 		'name' => 'Statistic Value',
 		'api_name' => 'statval',
@@ -392,7 +390,7 @@ return array(
 		'id1' => 'statvals_id',
 		'id2' => '',
 	),
-	'Role' => array(
+	'roles_id' => array(
 		'id' => '48',
 		'name' => 'Role',
 		'api_name' => 'role',
@@ -402,7 +400,7 @@ return array(
 		'id1' => 'roles_id',
 		'id2' => '',
 	),
-	'Location_Country' => array(
+	'countries_id' => array(
 		'id' => '49',
 		'name' => 'Country',
 		'api_name' => 'country',
@@ -412,7 +410,7 @@ return array(
 		'id1' => 'countries_id',
 		'id2' => '',
 	),
-	'Media_Videotype' => array(
+	'video_types_id' => array(
 		'id' => '50',
 		'name' => 'Video Type',
 		'api_name' => 'videotype',
@@ -422,7 +420,7 @@ return array(
 		'id1' => 'video_types_id',
 		'id2' => '',
 	),
-	'Site_Phrase' => array(
+	'phrases_id' => array(
 		'id' => '51',
 		'name' => 'Text Phrase',
 		'api_name' => 'phrase',
@@ -432,7 +430,7 @@ return array(
 		'id1' => 'phrases_id',
 		'id2' => '',
 	),
-	'Site_Language' => array(
+	'languages_id' => array(
 		'id' => '52',
 		'name' => 'Language',
 		'api_name' => 'lang',
@@ -442,7 +440,7 @@ return array(
 		'id1' => 'languages_id',
 		'id2' => '',
 	),
-	'College_Base' => array(
+	'colleges_id' => array(
 		'id' => '53',
 		'name' => 'College',
 		'api_name' => 'college',
@@ -452,7 +450,7 @@ return array(
 		'id1' => 'colleges_id',
 		'id2' => '',
 	),
-	'College_Coach' => array(
+	'college_coaches_id' => array(
 		'id' => '54',
 		'name' => 'College Coach',
 		'api_name' => 'collegecoach',
@@ -462,7 +460,7 @@ return array(
 		'id1' => 'college_coaches_id',
 		'id2' => '',
 	),
-	'College_Region' => array(
+	'collge_regions_id' => array(
 		'id' => '55',
 		'name' => 'College Region',
 		'api_name' => 'collegeregion',
@@ -472,7 +470,7 @@ return array(
 		'id1' => 'collge_regions_id',
 		'id2' => '',
 	),
-	'College_Division' => array(
+	'college_divisions_id' => array(
 		'id' => '56',
 		'name' => 'College Division',
 		'api_name' => 'collegedivision',
@@ -482,7 +480,7 @@ return array(
 		'id1' => 'college_divisions_id',
 		'id2' => '',
 	),
-	'Academics_Tests' => array(
+	'academics_tests_id' => array(
 		'id' => '57',
 		'name' => 'Academic Test',
 		'api_name' => 'academictest',
@@ -492,7 +490,7 @@ return array(
 		'id1' => 'academics_tests_id',
 		'id2' => '',
 	),
-	'Academics_Tests_Topics' => array(
+	'academics_tests_topics_id' => array(
 		'id' => '58',
 		'name' => 'Academic Test Topic',
 		'api_name' => 'testtopic',
@@ -502,7 +500,7 @@ return array(
 		'id1' => 'academics_tests_topics_id',
 		'id2' => '',
 	),
-	'Academics_Tests_Scores' => array(
+	'academics_tests_scores_id' => array(
 		'id' => '59',
 		'name' => 'Test Score',
 		'api_name' => 'testscore',
@@ -512,7 +510,7 @@ return array(
 		'id1' => 'academics_tests_scores_id',
 		'id2' => '',
 	),
-	'Academics_Gpa' => array(
+	'academics_gpa_id' => array(
 		'id' => '60',
 		'name' => 'GPA',
 		'api_name' => 'gpa',
@@ -522,7 +520,7 @@ return array(
 		'id1' => 'academics_gpa_id',
 		'id2' => 'year',
 	),
-	'Site_Feed' => array(
+	'feed_id' => array(
 		'id' => '61',
 		'name' => 'Feed Item',
 		'api_name' => 'feed',
@@ -532,7 +530,7 @@ return array(
 		'id1' => 'feed_id',
 		'id2' => '',
 	),
-	'Site_Feedfollow' => array(
+	'feed_follow_id' => array(
 		'id' => '62',
 		'name' => 'Feed Follow',
 		'api_name' => 'feedfollow',
@@ -542,7 +540,7 @@ return array(
 		'id1' => 'feed_follow_id',
 		'id2' => '',
 	),
-	'Site_Flag' => array(
+	'flags_id' => array(
 		'id' => '63',
 		'name' => 'Flag',
 		'api_name' => 'flags',
@@ -552,7 +550,7 @@ return array(
 		'id1' => 'flags_id',
 		'id2' => '',
 	),
-	'User_Followers' => array(
+	'followers_id' => array(
 		'id' => '64',
 		'name' => 'User_Followers',
 		'api_name' => 'follower',
@@ -562,7 +560,7 @@ return array(
 		'id1' => 'followers_id',
 		'id2' => '',
 	),
-	'Sportorg_Games_Teamslink' => array(
+	'' => array(
 		'id' => '65',
 		'name' => 'Game / Team Link',
 		'api_name' => 'gameteamlink',
@@ -572,7 +570,7 @@ return array(
 		'id1' => '',
 		'id2' => '',
 	),
-	'Media_Imagetype' => array(
+	'image_types_id' => array(
 		'id' => '66',
 		'name' => 'Image Type',
 		'api_name' => 'imagetype',
@@ -582,7 +580,7 @@ return array(
 		'id1' => 'image_types_id',
 		'id2' => '',
 	),
-	'Sportorg_Leaguelink' => array(
+	'' => array(
 		'id' => '67',
 		'name' => 'Organization / League Link',
 		'api_name' => 'orgleaguelink',
@@ -592,7 +590,7 @@ return array(
 		'id1' => '',
 		'id2' => '',
 	),
-	'Sportorg_Orgsportlink' => array(
+	'org_sport_link_id' => array(
 		'id' => '68',
 		'name' => 'Organization / Sport Link',
 		'api_name' => 'orgsportlink',
@@ -602,7 +600,7 @@ return array(
 		'id1' => 'org_sport_link_id',
 		'id2' => '',
 	),
-	'Site_Prases_Translation' => array(
+	'phrases_translation_id' => array(
 		'id' => '69',
 		'name' => 'Translated Phrase',
 		'api_name' => 'translatedphrase',
@@ -612,7 +610,7 @@ return array(
 		'id1' => 'phrases_translation_id',
 		'id2' => '',
 	),
-	'User_Resume_Data_Group_Profilelink' => array(
+	'' => array(
 		'id' => '70',
 		'name' => 'Resume Group / Profile Link',
 		'api_name' => 'rdgrdplink',
@@ -622,7 +620,7 @@ return array(
 		'id1' => '',
 		'id2' => '',
 	),
-	'User_Resume_Data_Profile_Sportslink' => array(
+	'' => array(
 		'id' => '71',
 		'name' => 'Resume Profile / Sport Link',
 		'api_name' => 'rdpsportslink',
@@ -632,7 +630,7 @@ return array(
 		'id1' => '',
 		'id2' => '',
 	),
-	'User_Resume_Reference' => array(
+	'resume_references_id' => array(
 		'id' => '72',
 		'name' => 'Resume Reference',
 		'api_name' => 'resumereference',
@@ -642,7 +640,7 @@ return array(
 		'id1' => 'resume_references_id',
 		'id2' => '',
 	),
-	'User_Resume_Sent' => array(
+	'resumes_sent_id' => array(
 		'id' => '73',
 		'name' => 'Sent Resumes',
 		'api_name' => 'sentresumes',
@@ -652,7 +650,7 @@ return array(
 		'id1' => 'resumes_sent_id',
 		'id2' => '',
 	),
-	'Rolesusers' => array(
+	'' => array(
 		'id' => '74',
 		'name' => 'User / Role Link',
 		'api_name' => 'role',
@@ -662,7 +660,7 @@ return array(
 		'id1' => '',
 		'id2' => '',
 	),
-	'Social_Links' => array(
+	'social_links_id' => array(
 		'id' => '75',
 		'name' => 'Social Links',
 		'api_name' => 'sociallinks',
@@ -672,7 +670,7 @@ return array(
 		'id1' => 'social_links_id',
 		'id2' => '',
 	),
-	'Social_Types' => array(
+	'social_types_id' => array(
 		'id' => '76',
 		'name' => 'Social Types',
 		'api_name' => 'socialtypes',
@@ -682,7 +680,7 @@ return array(
 		'id1' => 'social_types_id',
 		'id2' => '',
 	),
-	'User_Identity' => array(
+	'user_identities_id' => array(
 		'id' => '77',
 		'name' => 'User Identity',
 		'api_name' => 'useridentity',
@@ -692,7 +690,7 @@ return array(
 		'id1' => 'user_identities_id',
 		'id2' => '',
 	),
-	'User_Sportlink' => array(
+	'user_sport_link_id' => array(
 		'id' => '78',
 		'name' => 'User / Individual Sport Link',
 		'api_name' => 'usersportlink',
@@ -702,7 +700,7 @@ return array(
 		'id1' => 'user_sport_link_id',
 		'id2' => '',
 	),
-	'User_Tokens' => array(
+	'user_tokens_id' => array(
 		'id' => '79',
 		'name' => 'User Token',
 		'api_name' => 'usertoken',
@@ -712,7 +710,7 @@ return array(
 		'id1' => 'user_tokens_id',
 		'id2' => '',
 	),
-	'User_Teamslink' => array(
+	'user_teams_link_id' => array(
 		'id' => '80',
 		'name' => 'User / Team Link',
 		'api_name' => 'userteamslink',
@@ -722,7 +720,7 @@ return array(
 		'id1' => 'user_teams_link_id',
 		'id2' => '',
 	),
-	'User_Sportlink_Gamelink' => array(
+	'usl_game_link_id' => array(
 		'id' => '81',
 		'name' => 'Individual Sport Game Link',
 		'api_name' => 'uslgamelink',
@@ -732,7 +730,7 @@ return array(
 		'id1' => 'usl_game_link_id',
 		'id2' => '',
 	),
-	'User_Teamslink_Positionlink' => array(
+	'utl_position_link_id' => array(
 		'id' => '82',
 		'name' => 'Team Position',
 		'api_name' => 'teamposition',
@@ -742,7 +740,7 @@ return array(
 		'id1' => 'utl_position_link_id',
 		'id2' => '',
 	),
-	'Media_Videotypelink' => array(
+	'video_type_link_id' => array(
 		'id' => '83',
 		'name' => 'Video Type Link',
 		'api_name' => 'videotypelink',
@@ -752,7 +750,7 @@ return array(
 		'id1' => 'video_type_link_id',
 		'id2' => '',
 	),
-	'Site_View' => array(
+	'views_id' => array(
 		'id' => '84',
 		'name' => 'Single View',
 		'api_name' => 'view',
@@ -762,7 +760,7 @@ return array(
 		'id1' => 'views_id',
 		'id2' => '',
 	),
-	'User_Awards' => array(
+	'awards_id' => array(
 		'id' => '85',
 		'name' => 'Awards',
 		'api_name' => 'awards',
@@ -772,7 +770,7 @@ return array(
 		'id1' => 'awards_id',
 		'id2' => '',
 	),
-	'User_References' => array(
+	'references_id' => array(
 		'id' => '86',
 		'name' => 'References',
 		'api_name' => 'references',
@@ -782,7 +780,7 @@ return array(
 		'id1' => 'references_id',
 		'id2' => '',
 	),
-	'User_Contact' => array(
+	'user_contact_id' => array(
 		'id' => '87',
 		'name' => 'User contact info',
 		'api_name' => 'usercontact',
@@ -792,6 +790,5 @@ return array(
 		'id1' => 'user_contact_id',
 		'id2' => '',
 	),
-
 
 );

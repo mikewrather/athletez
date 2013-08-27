@@ -102,8 +102,10 @@ class ORM extends Kohana_ORM
 			{
 				if($search_field->loaded())
 				{
-					$enttype = ORM::factory('Site_Enttype',Ent::getMyEntTypeID($search_field));
-					$search_field = $enttype->id1;
+
+					$et_config = Kohana::$config->load('enttypes');
+					$enttype = $et_config->get($search_field);
+					if(is_array($enttype)) $search_field = $enttype['db_table'];
 				}
 			}
 
