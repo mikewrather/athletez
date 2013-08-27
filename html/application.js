@@ -3,9 +3,9 @@
 // Requires define
 // Return {Object} App
 define( ["facade", "utils", "collections", "chrome", "controller", "profile", "imageup",'home','videopreview',
- "game", "team", "registration","profilesetting","userresume","packages/site/collections/phrases","usercontrols/tag/tag","login/model","login/view"],
+ "game", "team", "registration","profilesetting","userresume","packages/site/collections/phrases","usercontrols/tag/tag","usercontrols/addgame/addgame","login/model","login/view"],
 function (facade, utils, collections, chromeBootstrap, Controller, ProfileController, ImageController, HomeController, VideoPreviewController,
-	GameController, TeamController, RegistrationController, ProfileSetting,UserResume, SitePhraseList , TagController,loginModel, loginView ) {
+	GameController, TeamController, RegistrationController, ProfileSetting,UserResume, SitePhraseList , TagController,AddGameController,loginModel, loginView ) {
 
 
     var App,
@@ -55,7 +55,8 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
             'registration/:action': 'showRegistration' , 
             
             'tag': 'showTag',
-			'user/login' : 'showLogin'
+			'user/login' : 'showLogin',
+			'addgame' : 'showAddGame',
         },
 
         initialize: function (options) {
@@ -246,6 +247,24 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
             
             Channel('app-inited').subscribe(initTag);
         },
+        
+        showAddGame : function(userid){
+        	this.loadStyles();
+            $('body').empty();
+            chromeBootstrap();
+
+            function initAddGame(id) {
+            	
+                var addGame = new AddGameController({
+                	"id": userid==undefined ? id : userid
+                });
+            }
+            
+            Channel('app-inited').subscribe(initAddGame);
+
+        },
+        
+        
 		// route to login template
 		showLogin: function(){
 		 $('#main-content').empty();

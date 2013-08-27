@@ -5,43 +5,44 @@
  // Returns {UserResumeController} constructor
  */
 
-define(["require", "text!usercontrols/tag/templates/layout.html", 
+define(["require", "text!usercontrols/addgame/templates/layout.html", 
 	   "facade",
 	  
 	   "controller", "models", "views",
-	   "usercontrols/tag/models/basic_info",
+	   "user/models/basic_info",
 	    
 	    //Collections
-	    "usercontrols/tag/collections/sports",
+	  //  'sportorg/collections/sports_listall',
 	   
 	    
 	    //Views
-	    "usercontrols/tag/views/main",
+	    "usercontrols/addgame/views/main",
 	     
 	    ], function(require, pageLayoutTemplate) {
 
-	var TagController, facade = require("facade"), Controller = require("controller"),
+	var AddGameController, facade = require("facade"), Controller = require("controller"),
 	 models = require("models"), views = require("views"), utils = require("utils"), 
 	 $ = facade.$, _ = facade._, debug = utils.debug, 
 	 Channel = utils.lib.Channel, LayoutView = views.LayoutView,
 
 	/*MODEL SECTION*/
-	BasicModel = require("usercontrols/tag/models/basic_info"),
+	BasicModel = require("user/models/basic_info"),
 	
 	/*COLLECTIONS SECTIONS*/
 
 	/*VIEW SECTION*/
-	TagView = require("usercontrols/tag/views/main"),
+	AddGameView = require("usercontrols/addgame/views/main"),
 	
-	TagController = Controller.extend({
+	AddGameController = Controller.extend({
 		/*CSS SECTION*/
-		cssArr : ["/usercontrols/tag/tag.css"],
+		cssArr : ["/usercontrols/addgame/addgame.css"],
 
 		events : {
 		},
 		/*Actions to be performed on the first time the object is created*/
 		initialize : function(options) {
-
+			console.log("****************************************************");
+console.log("options",options);
 			/*Load CSS File*/
 			Channel('load:css').publish(this.cssArr);
 			/*Bind Class with all events*/
@@ -85,26 +86,26 @@ define(["require", "text!usercontrols/tag/templates/layout.html",
 		
 		/* Set  Up  User References  View  View */
 		setUpMainView : function() {
-			console.log("Set Up Main View Tag");
-			Channel('tag-team-success').subscribe(this.tagFunction);
+	//		console.log("Set Up Main View Add Game");
+			Channel('add-game-success').subscribe(this.addGameFunction);
 			var self = this;
-			this.tagView = new TagView({
+			this.addGameView = new AddGameView({
 				model : new BasicModel(),
 				template : pageLayoutTemplate,
-				name : "tag-main",
+				name : "add-game-main",
 				destination : "#main",
 				user_id : self.id,
-				channel : 'tag-team-success',
+				channel : 'add-game-success',
 			});
 
-			this.scheme.push(this.tagView);
+			this.scheme.push(this.addGameView);
 			this.layout.render();
 		},
-		tagFunction : function(data){
+		addGameFunction : function(data){
 			alert(JSON.stringify(data));
 		}
 	});
-	return TagController;
+	return AddGameController;
 
 });
 
