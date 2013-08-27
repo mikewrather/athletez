@@ -35,7 +35,7 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
  			 'resume': 'ShowUserResume',
              'resume/': 'ShowUserResume',
 
-			'imageup': 'imageUp',
+			//'imageup': 'imageUp',
 
 	        'videoprev': 'videoPreview',
 	        'videoprev/': 'videoPreview',
@@ -74,7 +74,7 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
             //this.showProfile();
            	//this.showGame();
             //this.showTeam();
-            
+           // alert("this profile");
 			this.showHome(null);
         },
 
@@ -102,9 +102,10 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
         showProfile: function (userid) {
         	var self = this;
 	        self.loadStyles();
-            //$('#main-header').empty();
-            $('#main-content').empty();
-            //chromeBootstrap();
+           $('body').empty();
+           // $('#main-header').empty();
+            //$('#main-content').empty();
+           chromeBootstrap();
 			function initProfile(headerModelId) {
 				var pCont = new ProfileController({
 	                "userId": userid==undefined ? headerModelId : userid
@@ -180,14 +181,15 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
         showGame: function (id) {
             this.loadStyles();
             
-           // $('body').empty();
-            //chromeBootstrap();
+           $('body').empty();
+            chromeBootstrap();
              /*var gameController = new GameController({
                     "route": ""
                 });*/
             //this callback function is called from /pages/chrom/views/header.js
             //it getting headerModelId
-           $('#main-content').empty();
+          // $('#main-content').empty();
+            
             if(!id) id=1;
             function initGame(headerModelId) {
                 var gameController = new GameController({
@@ -202,7 +204,7 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
         showTeam: function(id) {
             
 			this.loadStyles();
-            alert('test showteam');
+           // alert('test showteam');
             $('body').empty();
             chromeBootstrap();
             if(!id) id = 1;

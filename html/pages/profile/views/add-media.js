@@ -26,7 +26,7 @@ function(require, profileAddMediaTemplate) {
         template: profileAddMediaTemplate,
 		
 	    events: {
-		  // "click #addPhoto" : "openAddImagePopup"
+		   "click #addPhoto" : "openAddImagePopup"
           // "click #addVideo" : "openAddvideoPopup"
 	    },
 	
@@ -41,7 +41,8 @@ function(require, profileAddMediaTemplate) {
 
 	    openAddImagePopup: function(event)
 	    {
-			 var url = "/api/user/addimage/" + this.model.userid,
+			 
+             var url = "/api/user/addimage/" + this.model.userid,
 			    attr = {
 				    "sports_id" : $('select#select-sport').val()
 			    };
