@@ -14,8 +14,9 @@ define( ["models/base"], function (BaseModel) {
             "links": [{
                 "label": "Photo",
 
-              //  "link" : "javascript:void(0);",
-                "link" : "#imageup",
+                "link" : "javascript:void(0);",
+                //"link" : "#imageup",
+
 				"id"   :"addPhoto"
             }, /*{
                 "label": "Video",
