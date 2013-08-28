@@ -589,6 +589,12 @@ class Controller_Api_Base extends AuthController
 		}
 	}
 
+	public function action_get_tags()
+	{
+		$media_id = get_class($this->mainModel) == 'Model_Media_Base' ? $this->mainModel->id : $this->mainModel->media_id;
+		return Model_Media_Base::getTaggedObjects($media_id);
+	}
+
 	public function action_post_addvote(){
 		$this->payloadDesc = "Add a new Vote";
 		$arguments = array();

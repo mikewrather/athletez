@@ -80,19 +80,6 @@ class Model_Site_Tag extends Model_Site_Entdir
 	public function get_subject(){
 		return $this->getSubject()->getBasics();
 	}
-	public function getBasics($settings = array())
-	{
-		//This gets the subject of the vote.  It will be used to pull basic information
-		//$subject = $this->getSubject();
-
-//		return array(
-//			"id" => $this->id,
-//			"tagger_users_id" => $this->users_id,
-//			"tagger" => $this->tagger->getBasics(),
-//			"subject" => $subject->getBasics(),
-//		);
-		return parent::getBasics($settings);
-	}
 
 	public static function getNumTags($obj){
 		$subject_enttypes_id = Model_Site_Enttype::getMyEntTypeID($obj);

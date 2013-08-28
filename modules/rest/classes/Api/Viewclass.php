@@ -97,4 +97,11 @@ class Api_Viewclass
 	{
 		return $this->obj->getBasics();
 	}
+
+	public function get_tags()
+	{
+		$retArr = array();
+		foreach($this->obj as $user) { if(is_object($user)) $retArr[] = $user->getBasics(); }
+		return $retArr;
+	}
 }
