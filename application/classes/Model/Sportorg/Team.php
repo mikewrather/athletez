@@ -404,8 +404,8 @@ class Model_Sportorg_Team extends ORM
 			$this->and_where_close();
 		}
 
-		if (isset($zipcode)){
-			$this->where('locations.zip', '=', $zipcode);
+		if (isset($cities_id)){
+			$this->where('locations.cities_id', '=', $cities_id);
 		}
 
 		if (isset($loc_name)){

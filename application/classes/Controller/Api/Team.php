@@ -172,12 +172,12 @@
 				$arguments["zipcode"] = (int)trim($this->request->query('zipcode'));
 			}
 
-			// loc_name
-			// This will search the org's location's city, county and state.
+			// cities_id
+			// This will search the org's location's city
 
-			if(trim($this->request->query('loc_name')) != "")
+			if(trim($this->request->query('cities_id')) != "")
 			{
-				$arguments["loc_name"] = trim($this->request->query('loc_name'));
+				$arguments["cities_id"] = trim($this->request->query('cities_id'));
 			}
 
 			$teams_model = ORM::factory("Sportorg_Team");
