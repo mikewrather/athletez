@@ -110,8 +110,6 @@ class Model_Media_Base extends ORM
 		return $result;
 	}
 
-
-
 	public function addMedia($args = array())
 	{
 		//using user_id instead of users_id because I'm using this method to transfer old stuff right now.

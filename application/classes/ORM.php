@@ -91,9 +91,6 @@ class ORM extends Kohana_ORM
 
 	public static function _sql_exclude_deleted_abstract($class_names,$qry)
 	{
-		$enttypes = array();
-
-		//print_r(get_class($qry));
 
 		$qry->and_where_open();
 		foreach($class_names as $class => $search_field)

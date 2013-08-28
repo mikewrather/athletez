@@ -101,7 +101,20 @@ class Api_Viewclass
 	public function get_tags()
 	{
 		$retArr = array();
-		foreach($this->obj as $user) { if(is_object($user)) $retArr[] = $user->getBasics(); }
+		foreach($this->obj as $obj) { if(is_object($obj)) $retArr[] = $obj->getBasics(); }
 		return $retArr;
+	}
+
+	public function get_commentson()
+	{
+		$retArr = array();
+
+		foreach($this->obj->find_all() as $obj) { if(is_object($obj)) $retArr[] = $obj->getBasics(); }
+		return $retArr;
+	}
+
+	public function get_comments()
+	{
+		return $this->get_commentson();
 	}
 }

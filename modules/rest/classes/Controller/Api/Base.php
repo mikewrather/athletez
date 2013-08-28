@@ -848,6 +848,18 @@ class Controller_Api_Base extends AuthController
 
 	}
 
+	public function action_get_commentson()
+	{
+		$comments = Model_Site_Comment::getCommentsOn($this->mainModel);
+	//	print_r($comments);
+		return $comments;
+	}
+
+	public function action_get_comments()
+	{
+		return $this->action_get_commentson();
+	}
+
 	/**
 	 * action_post_follow() Get followers on a specific subject
 	 *
