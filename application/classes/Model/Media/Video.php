@@ -101,6 +101,22 @@ class Model_Media_Video extends ORM
 		return $res->execute()->get('total_count');
 	}
 
+	public function get_types($args = array()){
+		extract($args);
+
+		$video_type_model = ORM::factory('Media_Videotype');
+		$video_type_model->join('video_type_link')->on('video_type_link.video_types_id', '=', 'media_videotype.id')->where('video_type_link.videos_id', '=', $video_id);
+		if (isset($is_high_def) || $is_high_def){
+			if ($is_high_def){
+				$video_type_model->where('media_videotype.height', '>=', 720);
+			}else{
+				$video_type_model->where('media_videotype.height', '<', 720);
+			}
+		}
+
+		return $video_type_model;
+	}
+
 	public function getTagedVideos($obj, $sports_id = null){
 		$arr = null;
 		$limit = Model_Media_Video::getVideoCounts($obj);

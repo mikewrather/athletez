@@ -54,12 +54,26 @@
 		     // CHECK FOR PARAMETERS:
 			// is_high_def 
 			// Show either high def or non-HD video types
-				
-			if((int)trim($this->request->query('is_high_def')) > 0)
+
+			$args = array();
+			//allow no is_high_def condition
+			if( trim($this->request->query('is_high_def')) != "")
 			{
-				$is_high_def = (int)trim($this->request->query('is_high_def'));
+				$is_high_def = Util::convert_to_boolean(trim($this->request->query('is_high_def')));
+				$args['is_high_def'] = $is_high_def;
 			}
 
+			if(!$this->mainModel->id)
+			{
+				$this->modelNotSetError();
+				return false;
+			}
+
+			$args['video_id'] = $this->mainModel->id;
+
+
+			$result = $this->mainModel->get_types($args);
+			return $result;
 		}
 		
 		/**
