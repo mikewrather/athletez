@@ -51,7 +51,9 @@ class Model_Location_City extends ORM
 	public $get_basics_class_standards = array(
 
 		// key = name of the column in the table, val = standard fk name that's used as id1
-		'alternate_fk_names' => array(),
+		'alternate_fk_names' => array(
+
+		),
 
 		// key = current name of column, val = name getBasics will return
 		'column_name_changes' => array(

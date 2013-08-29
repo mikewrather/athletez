@@ -22,25 +22,45 @@ class Model_Site_Enttype extends ORM
 		parent::__construct($id);
 	}
 
+	public static function getConfigByClassName($classname)
+	{
+		$et_config = Kohana::$config->load('enttypes');
+		$config_array = $et_config->get($classname);
+		if(is_array($config_array)) return $config_array;
+		return false;
+	}
+
+	public static function getConfigByID($id)
+	{
+		$et_config = Kohana::$config->load('enttypes-by-id');
+		$config_array = $et_config->get($id);
+		if(is_array($config_array)) return $config_array;
+		return false;
+	}
+
+	public static function getConfigByID1($id1)
+	{
+		$et_config = Kohana::$config->load('enttypes-by-id1');
+		$config_array = $et_config->get($id1);
+		if(is_array($config_array)) return $config_array;
+		return false;
+	}
+
 	static function getMyClass($enttypeID)
 	{
-		$oneofme = ORM::factory('Site_Enttype',$enttypeID);
-		return $oneofme->class_name;
+		$config_array = self::getConfigByID($enttypeID);
+		return is_array($config_array) ? $config_array['class_name'] : false;
 	}
 
 	static function getClassByID1($id1){
-		$ent_model = ORM::factory('Site_Enttype');
-		$result = $ent_model->where('id1', '=', $id1)->find();
-		if (isset($result->class_name)){
-			return $result->class_name;
-		}
-		return null;
+		$config_array = self::getConfigByID1($id1);
+		return is_array($config_array) ? $config_array['class_name'] : false;
 	}
 
 	static function getMyTable($enttypeID)
 	{
-		$oneofme = ORM::factory('Site_Enttype',$enttypeID);
-		return $oneofme->db_table;
+		$config_array = self::getConfigByID($enttypeID);
+		return is_array($config_array) ? $config_array['db_table'] : false;
 	}
 
 
@@ -50,16 +70,11 @@ class Model_Site_Enttype extends ORM
 		$result = ORM::factory($my_class);
 
 		$classes_arr = array(
-			$my_class => self::getMyTable($enttypeID)
-		);
-
-		$classes_arr = array(
 			$my_class => strtolower($my_class)
 		);
 
 		$result = ORM::_sql_exclude_deleted($classes_arr,$result);
 		return $result;
-
 	}
 
 	/**
@@ -71,9 +86,9 @@ class Model_Site_Enttype extends ORM
 	{
 		$classname = is_object($class) ? get_class($class) : (string)$class;
 		$classname = str_replace('Model_','',$classname);
-		$oneofme = ORM::factory('Site_Enttype')->where('class_name','=',$classname)->find();
-		if($oneofme->loaded()) return $oneofme->id;
-		return false;
+
+		$config_array = self::getConfigByClassName($classname);
+		return is_array($config_array) ? $config_array['id'] : false;
 	}
 
 	static function eFact($enttypeID,$objID=NULL)
@@ -108,15 +123,14 @@ class Model_Site_Enttype extends ORM
 
 	static function get_obj_for_fk_name($fk_name,$id=FALSE)
 	{
-		$ent = ORM::factory('Site_Enttype')
-			->where('id1','=',$fk_name)
-			->find();
 
-		if($ent->loaded())
+		$config_array = self::getConfigByID1($fk_name);
+
+		if(is_array($config_array))
 		{
 			if($id)
 			{
-				$obj = ORM::factory($ent->class_name)->where('id','=',(int)$id)->find();
+				$obj = ORM::factory($config_array['class_name'])->where('id','=',(int)$id)->find();
 				if($obj->loaded())
 				{
 					return $obj;

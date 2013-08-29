@@ -104,11 +104,11 @@ class Model_Media_Base extends ORM
 	 * getTaggedObjects should get all tagged objects and return them each with their getBasics data
 	 * this method should select from the tags table where media_id = $this->id
 	 */
-	public function getTaggedObjects()
+	public static function getTaggedObjects($media_id)
 	{
-
+		$result = ORM::factory("Site_Tag")->where('media_id', '=', $media_id)->find_all();
+		return $result;
 	}
-
 
 	public function addMedia($args = array())
 	{
