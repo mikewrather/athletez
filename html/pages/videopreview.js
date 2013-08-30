@@ -1,21 +1,22 @@
+
 // Game Controller
 // ---------------
 // module as controller for 'game' package
 // Returns {GameController} constructor
-
 define([
-	"require",
-	"text!videopreview/templates/basic.html",
-	"facade",
-	"controller",
-	"models",
-	"views",
-	"utils",
-	'videopreview/models/base',
-	'videopreview/models/videoup',
-	'videopreview/views/uploader',
-	'videopreview/views/preview'
+		"require",
+		"text!videopreview/templates/basic.html",
+		"facade",
+		"controller",
+		"models",
+		"views",
+		"utils",
+		'videopreview/models/base',
+		'videopreview/models/videoup',
+		'videopreview/views/uploader',
+'videopreview/views/preview'
 ], function (
+
 	 require,
 	 pageLayoutTemplate,
 	 facade,
@@ -185,3 +186,4 @@ define([
 	return VideoPreviewController;
 
 });
+
