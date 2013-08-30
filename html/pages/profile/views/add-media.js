@@ -7,15 +7,17 @@
 define([
         'require', 
         'text!media/templates/add-media.html',
-        'profile/models/addmedia',
+		'application',
+		'profile/models/addmedia',
         'facade',
         'views'
         ], 
-function(require, profileAddMediaTemplate) {
+function(require, profileAddMediaTemplate,application) {
 
     var ProfileAddMediaView,
         facade = require('facade'),
         views = require('views'),
+		
         SectionView = views.SectionView,
         _ = facade._;
 
@@ -26,7 +28,7 @@ function(require, profileAddMediaTemplate) {
         template: profileAddMediaTemplate,
 		
 	    events: {
-		   "click #addPhoto" : "openAddImagePopup"
+		   "click #addPhoto" : "openAddImagePopup",
           // "click #addVideo" : "openAddvideoPopup"
 	    },
 	
@@ -42,12 +44,26 @@ function(require, profileAddMediaTemplate) {
 	    openAddImagePopup: function(event)
 	    {
 			 
-             var url = "/api/user/addimage/" + this.model.userid,
+			
+			 console.log($('select#select-sport').val());
+            var url = "/api/user/addimage/" + this.model.userid,
 			    attr = {
 				    "sports_id" : $('select#select-sport').val()
 			    };
 		    Channel("add-image").publish(url,attr);
-	    }
+	    },
+		openAddvideoPopup: function(event){
+			
+			
+			
+			//$('div#modalPopup').remove();
+			//$('body').append('<div id="modalPopup" class="model-popup-h"></div>');
+			//var videoupload = new videouploader({el: $("#modalPopup")});
+			
+			
+			
+			
+		}
         
                 
     });

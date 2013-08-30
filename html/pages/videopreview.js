@@ -11,10 +11,10 @@ define([
 	"models",
 	"views",
 	"utils",
-	'videopreview/models/base',
+	//'videopreview/models/base',
 	'videopreview/models/videoup',
 	'videopreview/views/uploader',
-	'videopreview/views/preview'
+	//'videopreview/views/preview'
 ], function (
 	 require,
 	 pageLayoutTemplate,
@@ -23,10 +23,11 @@ define([
 	 models,
 	 views,
 	 utils,
-	 VideoPreviewModel,
+	// VideoPreviewModel,
 	 VideoUploaderModel,
-	 VideoPreviewUploadView,
-	 VideoPreviewView) {
+	 VideoPreviewUploadView
+	 //VideoPreviewView
+	) {
 
 	var VideoPreviewController,
 		LayoutView = views.LayoutView,
@@ -41,6 +42,9 @@ define([
 
 	VideoPreviewController = Controller.extend({
 
+		defaults:{
+		uploadermain:{ 'prasobh':'prasobh'}
+		},
 		initialize: function (options) {
 
 			Channel('load:css').publish(cssArr);
@@ -83,34 +87,88 @@ define([
 		},
 		showVideoPreview: function()
 		{
-			var vpm = new VideoPreviewModel();
+							
+			var vpm = new VideoUploaderModel();
+			var that = this;
 			var VideoPreviewUploadViewInstance = new VideoPreviewUploadView({
 				name:"Video Upload View",
 				model:vpm,
-				destination : "#main-content-img"
-			},this.attr);
-
-			Channel("mediaup-add-video").subscribe(this.uploadVideo);
-
+				destination : "#main-content-img",
+				},this.attr);
+			
 			this.scheme.push(VideoPreviewUploadViewInstance);
-
-			var VideoPreviewViewInstance = new VideoPreviewView({
-				name:"Video Preview View",
-				model:vpm,
-				destination : ".modal-body #preview"
-			},this.attr);
-			this.scheme.push(VideoPreviewViewInstance);
+			
 			this.layout.render();
+			
+			this.afterRender(vpm);
+			
 		},
+		
+		afterRender: function(vpm){
+				
+				uopladernew = new VideoUploaderModel();
+			
+				window.uploader = vpm.doUpload();
+				
+				
+				window.uploader.bind('Init', function (up, params) {
+					$('#filelist').html("<div></div>");
+				});
+				
+				try{
+				window.uploader.init();
+				alert("uploader inited");
+				}
+				catch(e){
+				alert(e +" error");
+				}
+				
+				window.uploader.bind('FilesAdded', function (up, files) {
+					maxCountError = false;
+					$.each(files, function (i, file) {
+						if(window.uploader.settings.max_file_count && i >= window.uploader.settings.max_file_count){
+							maxCountError = true;
+							setTimeout(function(){ up.removeFile(file); }, 50);
+						}
+						else{
+							$('#filelist').append(
+								'<div id="' + file.id + '">' +
+									file.name + ' (' + plupload.formatSize(file.size) + ') <b></b>' +
+								'</div>');
+						}
+						if(maxCountError){
+							$('#resultdiv').html("You can only select one video at a time.").show();
+						}
+					});
 
+					up.refresh(); // Reposition Flash/Silverlight
+				});
+				
+				/************/
+				window.uploader.bind('UploadProgress', function (up, file) {
+					$('#' + file.id + " b").html(file.percent + "%");
+				});
+
+				window.uploader.bind('Error', function (up, err) {
+					$('#filelist').append("<div>Error: " + err.code +
+						", Message: " + err.message +
+						(err.file ? ", File: " + err.file.name : "") +
+						"</div>"
+					);
+
+					up.refresh(); // Reposition Flash/Silverlight
+				});
+				
+			
+					},	
 		uploadVideo: function(file)
 		{
-
+			alert("inside uploadvideo");
 			console.log("Called",file);
 			var Uploader = new VideoUploaderModel({
 				'file':file
 			});
-			Uploader.doUpload();
+			//Uploader.doUpload();
 		}
 
 	});

@@ -59,6 +59,7 @@ require.config({
         // Should be used as required dependencies with use of `define`, 
         'models'       : '/models',
         'views'        : '/views',
+        
         'collections'  : '/collections',
         'controller'   : '/controller',
 
