@@ -43,8 +43,7 @@ define([
 				SectionView.prototype.initialize.call(this, options);
 		//		this.setModel(options);
 
-			
-			_.bindAll(this, 'beforeRender', 'render', 'afterRender');
+				_.bindAll(this, 'beforeRender', 'render', 'afterRender');
 				var _this = this;
 				this.render = _.wrap(this.render, function(render) {
 					_this.beforeRender();
@@ -54,7 +53,7 @@ define([
 				});
 
 				$('#imgUploadModal').modal('show') ;
-
+//				this.plupInit();
 				
 			
 			},
