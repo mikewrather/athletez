@@ -4,11 +4,13 @@
 // Return {VideoUploaderModel} model constructor object
 
 define(["facade", "models/base"], function (facade, BaseModel) {
-
+	
 	var VideoUploaderModel,
 		_ = facade._;
 
 	VideoUploaderModel = BaseModel.extend({
+		
+		
 		initialize: function(options)
 		{
 			//this.file = options.file;
@@ -16,7 +18,7 @@ define(["facade", "models/base"], function (facade, BaseModel) {
 			//this.url = '/api/user/addvideo/425983';
 
 			//console.log(new plupload.Uploader());
-			alert("videoup.js");
+			
 			//this.doUpload();	
 		},
 

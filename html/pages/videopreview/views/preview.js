@@ -34,9 +34,11 @@ define([
 
 			changeVideo: function(file)
 			{
+				
 				URL = window.URL || window.webkitURL;
+				alert("this is url"+ URL);
 				var fileURL = URL.createObjectURL(file);
-
+				alert(fileURL+ "test");
 				document.querySelector(this.$el.selector + ' video').src = fileURL;
 			},
 

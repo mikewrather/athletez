@@ -11,10 +11,10 @@ define([
 	"models",
 	"views",
 	"utils",
-	//'videopreview/models/base',
+	'videopreview/models/base',
 	'videopreview/models/videoup',
 	'videopreview/views/uploader',
-	//'videopreview/views/preview'
+	'videopreview/views/preview'
 ], function (
 	 require,
 	 pageLayoutTemplate,
@@ -23,10 +23,10 @@ define([
 	 models,
 	 views,
 	 utils,
-	// VideoPreviewModel,
+	 VideoPreviewModel,
 	 VideoUploaderModel,
-	 VideoPreviewUploadView
-	 //VideoPreviewView
+	 VideoPreviewUploadView,
+	 VideoPreviewView
 	) {
 
 	var VideoPreviewController,
@@ -90,6 +90,15 @@ define([
 							
 			var vpm = new VideoUploaderModel();
 			var that = this;
+			
+			var VideoPreviewViewInstance = new VideoPreviewView({
+				name:"Video Preview View",
+				model:vpm,
+				destination : ".modal-body #preview"
+			},this.attr);
+			this.scheme.push(VideoPreviewViewInstance);
+			
+			
 			var VideoPreviewUploadViewInstance = new VideoPreviewUploadView({
 				name:"Video Upload View",
 				model:vpm,
@@ -117,10 +126,10 @@ define([
 				
 				try{
 				window.uploader.init();
-				alert("uploader inited");
+				
 				}
 				catch(e){
-				alert(e +" error");
+				alert(e);
 				}
 				
 				window.uploader.bind('FilesAdded', function (up, files) {
