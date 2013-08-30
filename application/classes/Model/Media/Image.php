@@ -369,7 +369,7 @@ class Model_Media_Image extends ORM
 				$classes_arr = array(
 					'Sportorg_Orgsportlink' => 'org_sport_link',
 					'Sportorg_Org' => 'orgs',
-					'Sportorg_Team' => 'sportorg_team'
+					'Sportorg_Team' => 'teams'
 				);
 				$image = ORM::_sql_exclude_deleted($classes_arr, $image);
 			}
@@ -390,7 +390,7 @@ class Model_Media_Image extends ORM
 				$classes_arr = array(
 					'Sportorg_Orgsportlink' => 'org_sport_link',
 					'Sportorg_Org' => 'orgs',
-					'Sportorg_Team' => 'sportorg_team'
+					'Sportorg_Team' => 'teams'
 				);
 				$image = ORM::_sql_exclude_deleted($classes_arr, $image);
 			}
@@ -411,7 +411,7 @@ class Model_Media_Image extends ORM
 				$classes_arr = array(
 					'Sportorg_Orgsportlink' => 'org_sport_link',
 					'Sportorg_Org' => 'orgs',
-					'Sportorg_Team' => 'sportorg_team'
+					'Sportorg_Team' => 'teams'
 				);
 				$image = ORM::_sql_exclude_deleted($classes_arr, $image);
 			}

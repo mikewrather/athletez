@@ -495,9 +495,22 @@ class Model_Media_Video extends ORM
 			$video->where('tags.cities_id', '=', $cities_id);
 		}
 
+		//add exclude sql logic here
+		$classes_arr = array(
+			'Site_Tag' => 'tags',
+			'Media_Base' => 'media',
+			'Media_Video' => 'videos'
+		);
+
+		$video = ORM::_sql_exclude_deleted($classes_arr, $video);
+
 		if ($class_name == 'User_Base'){
 			if (isset($searchtext) || isset($states_id) || isset($cities_id)){
 				$video->join(array('users', 'user_base'))->on('user_base.id', '=', 'tags.subject_id');
+				$classes_arr = array(
+					'User_Base' => 'user_base'
+				);
+				$video = ORM::_sql_exclude_deleted($classes_arr, $video);
 			}
 			if (isset($searchtext)){
 				//$video->where(array(Db::expr('CONCAT(user_base.first_name," ",user_base.last_name)'), 'full_name'), 'like ','%'.$searchtext.'%');
@@ -510,6 +523,14 @@ class Model_Media_Video extends ORM
 				$video->join('teams')->on('teams.id', '=', 'tags.subject_id');
 				$video->join('org_sport_link')->on('teams.org_sport_link_id', '=', 'org_sport_link.id');
 				$video->join('orgs')->on('orgs.id', '=', 'org_sport_link.orgs_id');
+
+				//add exclude sql logic
+				$classes_arr = array(
+					'Sportorg_Orgsportlink' => 'org_sport_link',
+					'Sportorg_Org' => 'orgs',
+					'Sportorg_Team' => 'teams'
+				);
+				$video = ORM::_sql_exclude_deleted($classes_arr, $video);
 			}
 
 			if (isset($searchtext)){
@@ -523,6 +544,14 @@ class Model_Media_Video extends ORM
 				$video->join('teams')->on('teams.id', '=', 'tags.subject_id');
 				$video->join('org_sport_link')->on('teams.org_sport_link_id', '=', 'org_sport_link.id');
 				$video->join('orgs')->on('orgs.id', '=', 'org_sport_link.orgs_id');
+
+				//add exclude sql logic
+				$classes_arr = array(
+					'Sportorg_Orgsportlink' => 'org_sport_link',
+					'Sportorg_Org' => 'orgs',
+					'Sportorg_Team' => 'teams'
+				);
+				$video = ORM::_sql_exclude_deleted($classes_arr, $video);
 			}
 
 			if (isset($searchtext)){
@@ -536,6 +565,14 @@ class Model_Media_Video extends ORM
 				$video->join('teams')->on('teams.id', '=', 'tags.subject_id');
 				$video->join('org_sport_link')->on('teams.org_sport_link_id', '=', 'org_sport_link.id');
 				$video->join('orgs')->on('orgs.id', '=', 'org_sport_link.orgs_id');
+
+				//add exclude sql logic
+				$classes_arr = array(
+					'Sportorg_Orgsportlink' => 'org_sport_link',
+					'Sportorg_Org' => 'orgs',
+					'Sportorg_Team' => 'teams'
+				);
+				$video = ORM::_sql_exclude_deleted($classes_arr, $video);
 			}
 
 			if (isset($searchtext)){
