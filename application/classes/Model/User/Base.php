@@ -20,6 +20,7 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 			'name' => 'get_full_name',
 			'num_followers' => 'get_num_followers',
 			'num_votes' =>'get_num_votes',
+			'height_ft' => 'get_height_ft',
 		),
 		'exclude_columns' => array(
 			'username','email','password','dob'
@@ -455,6 +456,14 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 //				array(array(Auth::instance(), 'hash'))
 //			)
 		);
+	}
+
+	public function get_height_ft()
+	{
+		if($this->height_in > 0)
+		{
+			return floor($this->height_in / 12) .'"' . $this->height_in%12 . "'";
+		}
 	}
 	 
 	public function getPrimaryVideo()
