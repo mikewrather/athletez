@@ -549,19 +549,21 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 	{
 		if($obj===NULL) $obj = $this;
 		$video = ORM::factory('Media_Video');
-		return $video->getTagedVideos($obj, $sports_id);
+		return $video->getTaggedVideos($obj, $sports_id);
 	}
 
-	public function getImages($obj, $sports_id = null){
+	public function getImages($obj, $sports_id = null)
+	{
+		if($obj===NULL) $obj = $this;
+		$image = ORM::factory('Media_Image');
+		return $image->getTaggedImages($obj, $sports_id);
+	}
 
-
+	public function getMedia($obj, $sports_id = null)
+	{
 		if($obj===NULL) $obj = $this;
 		$image = ORM::factory('Media_Base');
-		return $image->getTagedImages($obj, $sports_id);
-	}
-
-	public function getMedia($obj, $sports_id = null){
-
+		return $image->getTaggedMedia($obj, $sports_id);
 	}
 
 	public function getUploadedImages($sports_id = null)

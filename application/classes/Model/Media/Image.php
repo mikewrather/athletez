@@ -89,7 +89,7 @@ class Model_Media_Image extends ORM
 		return $media_image;
 	}
 
-	public function getTagedImages($obj, $sports_id = null){
+	public function getTaggedImages($obj, $sports_id = null){
 		$result_arr = null;
 		$limit = Model_Media_Image::getImageCounts($obj);
 		if($primary = Model_Media_Base::find_most_voted_tag($obj,'image', $limit))

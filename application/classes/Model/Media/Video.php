@@ -101,7 +101,7 @@ class Model_Media_Video extends ORM
 		return $res->execute()->get('total_count');
 	}
 
-	public function getTagedVideos($obj, $sports_id = null){
+	public function getTaggedVideos($obj, $sports_id = null){
 		$arr = null;
 		$limit = Model_Media_Video::getVideoCounts($obj);
 		if($primary = Model_Media_Base::find_most_voted_tag($obj,'video', $limit))
