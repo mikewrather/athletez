@@ -518,7 +518,7 @@ class Model_Sportorg_Team extends ORM
 			return false;
 		}else{
 			$game_team_link = ORM::factory('Sportorg_Games_Teamslink', $result->id);
-			$game_team_link->delete_with_deps();
+			$game_team_link->delete_with_deps($is_phantom_delete = false);
 			return true;
 		}
 	}

@@ -175,7 +175,7 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 			return false;
 		}else{
 			$usl_model = ORM::factory('User_Sportlink', $result->id);
-			$usl_model->delete_with_deps();
+			$usl_model->delete_with_deps($is_phantom_delete = false);
         	return true;
 		}
     }
