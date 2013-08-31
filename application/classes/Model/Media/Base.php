@@ -176,6 +176,42 @@ class Model_Media_Base extends ORM
 		return $res;
 	}
 
+	public function getTagedMedia($obj, $sports_id = null){
+		$result_arr = null;
+		$limit = Model_Media_Image::getImageCounts($obj);
+		if($primary = Model_Media_Base::find_most_voted_tag($obj,array('image','video'), $limit))
+		{
+			//if the third parameter is more than one and it finds more than one result then it will return them in an array
+			if(is_array($primary))
+			{
+				//Loop through results
+				foreach($primary as $media_id => $single_image)
+				{
+					$media_obj = ORM::factory("Media_Base", $media_id);
+					if ($sports_id){ //only get videos related to one sports_id
+
+						if ($media_obj->sports_id == $sports_id)
+						{
+							$result_arr[] = $single_image->getBasics();
+						}
+					}
+					else
+					{
+						$result_arr[] = $single_image->getBasics();
+					}
+				}
+			}
+			else
+			{
+				$single_image = clone $primary;
+				$result_arr[] = $single_image->getBasics();
+			}
+		}
+		$results = new stdClass();
+		$results->result = $result_arr;
+		return $results;
+	}
+
 	public static function find_most_voted_tag($obj,$mediaType="image",$limit=1)
 	{
 
@@ -194,8 +230,23 @@ class Model_Media_Base extends ORM
 				->on('media.id','=','tags.media_id')
 			->where('tags.subject_enttypes_id','=',$entTypeID)
 			->where('tags.subject_id','=',$subjectID)
-			->where('media.media_type','=',strtolower($mediaType))
 			->group_by('media_id');
+
+		if(is_array($mediaType))
+		{
+			$tags->or_where_open();
+			foreach($mediaType as $type)
+			{
+				$tags->where('media.media_type','=',strtolower($type));
+			}
+			$tags->or_where_close();
+		}
+		else
+		{
+			$tags->where('media.media_type','=',strtolower($mediaType));
+		}
+
+
 		//exclude tags,  media
 		$classes_arr = array('Site_Tag' => 'tags', 'Media_Base' => 'media');
 		$tags = ORM::_sql_exclude_deleted($classes_arr, $tags);

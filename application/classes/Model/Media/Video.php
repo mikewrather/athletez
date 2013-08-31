@@ -285,6 +285,12 @@ class Model_Media_Video extends ORM
 //		return $this;
 //	}
 
+	public function processQueue()
+	{
+
+	}
+
+
 	public function addVideo($args=array())
 	{
 
