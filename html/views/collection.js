@@ -44,10 +44,13 @@ define(['facade','views/base','utils'], function (facade, BaseView, utils) {
             this._className = this.options.className || this._className;
             this._decorator = this.options.decorator || this._decorator;
             this._id = this.options.id || this._id;
+            //this.listView = this.options.listView || undefined;
             this._views = [];
             _(this).bindAll('add', 'remove');
             this.setupCollection();
         },
+        
+         
 
         // **Method:** `setupCollection`  
         // bindings for adding and removing of models within the collection
@@ -69,7 +72,6 @@ define(['facade','views/base','utils'], function (facade, BaseView, utils) {
         // Param {Model} `model` object that extends Backbone.Model
         // Creates a new view for models added to the collection
         add : function(model) {
-        	console.log("collection.js add");
             var view;
 
             view = new this._view({
@@ -80,7 +82,13 @@ define(['facade','views/base','utils'], function (facade, BaseView, utils) {
             });
             this._views.push(view);
             if (this._rendered) {
-                this.$el.append(view.render().el);
+            	if(this.listView)
+            		if(this.prepend)
+            			this.$el.find(this.listView).prepend(view.render().el)
+            		else
+	                	this.$el.find(this.listView).append(view.render().el)
+                else
+	                this.$el.append(view.render().el);
             }
         },
 
@@ -103,17 +111,24 @@ define(['facade','views/base','utils'], function (facade, BaseView, utils) {
         // Iterates over collection appending views to this.$el
         // When a {Function} decorator option is available manipulte views' this.$el
         render : function() {
+            console.log(this.$el);
             this.confirmElement.call(this);
             this._rendered = true;
-            this.$el.empty();
+            if(!this.listView)
+ 	           this.$el.empty();
 
             _(this._views).each(function(view) {
-                this.$el.append(view.render().el);
+                if(this.listView)
+                	if(this.prepend)
+            			this.$el.find(this.listView).prepend(view.render().el)
+            		else
+	                	this.$el.find(this.listView).append(view.render().el)
+                else
+	                this.$el.append(view.render().el);
                 if (view.options.decorator && _.isFunction(view.options.decorator)) {
                     view.options.decorator(view);
                 }
             }, this);
-
             this.resolve.call(this);
             this.callbacks.fire.call(this);
             return this;

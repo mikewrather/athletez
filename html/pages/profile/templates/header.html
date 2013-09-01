@@ -1,19 +1,49 @@
 {{#payload}}
 <div class="row-fluid">
-    <div class="span4 textcenter">
-        {{#user_picture_obj}}
-        <img src="{{base_url}}{{image_path}}" alt="{{name}}" />
-        {{/user_picture_obj}}
-    </div>
-
-    <div class="span8">
-        <div>
+	
+	<div class="profile-heading">
             <h3 class="username">{{name}} '{{grad_year}}</h3>
-            <div class="running">Running Back <span class="userheight">{{user_height}}</span> <span class="userweight">{{user_weight}}</span> </div>
-            <div class="votes">Votes: {{num_votes}}</div>
-            <div class="followers">Followers: {{num_followers}}</div>
-        </div>
-        <div id="sports-info"></div>
+            <h4>FORWARD</h4>
+            <div class="sports-h"></div>
     </div>
+	
+	<div class="row-fluid profile-pic-outer">
+		<div class="span7 border-right">
+		    <div class="span6 textcenter">
+		        {{#user_picture_obj}}
+		        <img src="{{base_url}}{{image_path}}" alt="{{name}}" />
+		        {{/user_picture_obj}}
+		    </div>
+		    
+		    <div class="span6">
+			    	<div class="school-name">Fairfax High</div>
+			    	<div class="city">Los Angeles CA</div>
+			    	<div class="teams">
+			    		 <div id="sports-info"></div>
+			    	</div>
+			    	<div class="height">{{#height_ft}}{{height_ft}}{{/height_ft}}</div>
+			    	<div class="weight">{{#weight_lb}}{{weight_lb}} lbs{{/weight_lb}}</div>
+			    	  <!--div class="running">Running Back <span class="userheight">{{user_height}}</span> 
+			    	  	<span class="userweight">{{user_weight}}</span> </div>
+			            <div class="votes">Votes: {{num_votes}}</div>
+			            <div class="followers">Followers: {{num_followers}}</div-->
+	       </div>
+	    </div>
+	    
+	    <div class="span5">
+	    	<div>Stats</div>
+	    	<ul class="stats-ul">
+	    		<li>GAMES 12</li>
+	    		<li>FOULS 2 </li>
+	    		<li>SHOUTS 14</li>
+	    		<li>GOALS 5</li>
+	    		<li>ASSISTS 7</li>
+	    		<li>SHUTOUTS 2</li>
+	    	</ul>
+	    </div>
+	</div>    
+    
+   </div>
+    
 </div>
 {{/payload}}

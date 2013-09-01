@@ -13,7 +13,7 @@ function(facade,   utils,   BaseCommentListView,       ProfileCommentFormView, S
 	    initialize: function (options) {
 		    _.bindAll(this);
 
-		    this.limitResults();
+		    //this.limitResults();
 		    this.options.collection = this.collection;
 		    BaseCommentListView.prototype.initialize.call(this, options);
 		},
@@ -46,21 +46,30 @@ function(facade,   utils,   BaseCommentListView,       ProfileCommentFormView, S
 	        }
 
 	        function callcommentslist(collection){
-		        console.log("i refresh comment on");
+	        	// scroll to bottom
+	        	var scroll = $("#comment-list").height() + $("li.comment").height();
+	        	$(".comment-outer-h").animate({scrollTop: scroll});
+	        	
+	        	// get last child to blick
+	        	$("#comment-list li:last-child").addClass('newly-added-comment');
+	        	
+	        	//alert("sadasd");
+		       // console.log("i refresh comment on");
 		        //listView.collection.reset();
-		        listView.collection = collection;
-		        console.log("new collection", listView.collection);
-		        var current_collections = listView.collection;
-		            current_collections.each(function(imodel, index) {
+		       // listView.collection = collection;
+		        
+		       // console.log("new collection", listView.collection);
+		       // var current_collections = listView.collection;
+		            /*current_collections.each(function(imodel, index) {
 			            console.log("imodel", imodel);
 			            if (index == 0){
-				            listView.collection.remove(imodel);
+				            //listView.collection.remove(imodel);
 				            console.log("I removed one modelx");
 			            }
-			        });
-		        console.log("updated collection", listView.collection);
-		        listView.render();
-		        console.log("comment on render executed");
+			        });*/
+		       // console.log("updated collection", listView.collection);
+		        //listView.render();
+		       // console.log("comment on render executed");
 		    }
 
 	        Channel('profilecommentonform:fetch').subscribe(callback);

@@ -35,7 +35,7 @@ header .signup-email { margin:0 5px; }
 #main .videothumb { float:left; }
 #main .roster { float:left; }
 #main .video { float:left; }
-#main .user-photo img { width:32px; margin-right:10px; }
+#main .user-photo img { width:45px; margin-top: 10px; margin-right:10px; }
 
 /*  Loading images */
 .loader { background: url(../images/loader/loading.gif) no-repeat; width: 100%; height: 50px; margin: 0 auto; background-position: 50% 0; }
