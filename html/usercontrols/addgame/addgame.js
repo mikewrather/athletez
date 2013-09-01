@@ -41,8 +41,8 @@ define(["require", "text!usercontrols/addgame/templates/layout.html",
 		},
 		/*Actions to be performed on the first time the object is created*/
 		initialize : function(options) {
-			console.log("****************************************************");
-console.log("options",options);
+//			console.log("****************************************************");
+//console.log("options",options);
 			/*Load CSS File*/
 			Channel('load:css').publish(this.cssArr);
 			/*Bind Class with all events*/
@@ -70,7 +70,7 @@ console.log("options",options);
 		/*pageLayoutTemplate is just the skeleton for user setting page modules like High School,Clubs,Individual Sports,
 		 *  Their respective implementation is done in their own view respectively*/
 		setupLayout : function() {
-			console.log("Set Up Layout Tag");
+//			console.log("Set Up Layout Tag");
 			if (this.layout)
 				return this.layout;
 			var pageLayout = new LayoutView({

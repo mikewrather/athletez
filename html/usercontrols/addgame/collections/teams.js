@@ -24,7 +24,7 @@ function(facade, collections, SportsOrgCollection, utils) {
 					params += '&city_id=' + this.city_id;	
 
 
-                    return '/api/team/search/?'+ params;
+                    return '/api/team/search?'+ params;
       },
     });
 

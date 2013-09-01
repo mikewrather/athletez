@@ -45,7 +45,12 @@ define(['facade', 'collections', 'sportorg/models/sport', 'utils'], function(fac
 		},
 		// **MEthod:** Override this function in inherited class if any action is required 
 		processResult : function (collection) {
-		}
+			
+			
+		},
+		returnProcessedData : function(collection){
+			
+		},
 	});
 
 	return SportorgSportList;

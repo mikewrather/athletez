@@ -22,6 +22,7 @@ function(facade, collections, SportorgGameModel, utils) {
         fetchSuccess: function (collection, response) {
             collection.reset();
             var payload = response.payload;
+            if(payload!=null){
             for (i = 0; i < payload.length; i++) {
                 var item = new SportorgGameModel();
                 item.id = Math.ceil(Math.random() * 100000);
@@ -29,6 +30,7 @@ function(facade, collections, SportorgGameModel, utils) {
                 item.set('desc', response.desc);
                 item.set('exec_data', response.exec_data);
                 collection.push(item);
+            }
             }
             collection.deferred.resolve(response);  
             collection.processResult(collection);          

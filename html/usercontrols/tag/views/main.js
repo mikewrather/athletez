@@ -483,7 +483,7 @@ define(['require', 'text!usercontrols/tag/templates/layout.html',
 					if (teamname == name) {
 						console.log(self.team_id);
 						isSchoolValid = true;
-						self.team_id = value['team_id'];
+						self.team_id = value['id'];
 						$(e.target).attr(self.attributes.teamId, self.team_id);
 		//				$(e.target).parents(self.controls.secTagTeam).find(self.controls.ddlTeamLevel).attr(self.attributes.teamId, self.orgs_id).attr(self.attributes.stateId, $(e.target).attr(self.attributes.stateId));
 		//				self.fillCompLevel(e);

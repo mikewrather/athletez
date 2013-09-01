@@ -42,6 +42,14 @@ define(["facade", "models/base"], function (facade, BaseModel) {
 		url: function () {
 			return "/api/team/basics/" + this.id;
 		},
+		/*Use this method to map only required data from response after SUCCESS function*/
+		/*REFERENCE : Exact Implementation in usercontrols/addgame/models/team*/
+       
+       parseAsRequired : function(response) {
+			
+			return response;
+		}
+		
 
 	});
 
