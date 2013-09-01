@@ -1,6 +1,13 @@
 
 {{#payload}}
-<img  src="{{base_url}}{{image_path}}" alt="{{email}}"/><br/>
+{{#original_url}}
+<video controls>
+  <source src="{{original_url}}" type="video/mp4">
+</video>
+{{/original_url}}
+{{^original_url}}
+<img  src="{{base_url}}{{image_path}}" alt="{{email}}"/>
+{{/original_url}}
 {{#num_votes}}{{num_votes}} Votes{{/num_votes}}
 {{/payload}}
 
