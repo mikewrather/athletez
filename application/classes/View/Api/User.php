@@ -321,6 +321,18 @@
 			$images = $this->obj->result;
 			return $images;
 		}
+
+		/**
+		 * get_media()
+		 *
+		 * @retun array
+		 */
+		public function get_media()
+		{
+			$media = $this->obj->result;
+			return $media;
+		}
+
 		
 		/**
 		 * get_commentsof() Get a list of the comments made by the user
