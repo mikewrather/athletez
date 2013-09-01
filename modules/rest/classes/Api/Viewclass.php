@@ -97,4 +97,24 @@ class Api_Viewclass
 	{
 		return $this->obj->getBasics();
 	}
+
+	public function get_tags()
+	{
+		$retArr = array();
+		foreach($this->obj as $obj) { if(is_object($obj)) $retArr[] = $obj->getBasics(); }
+		return $retArr;
+	}
+
+	public function get_commentson()
+	{
+		$retArr = array();
+
+		foreach($this->obj->find_all() as $obj) { if(is_object($obj)) $retArr[] = $obj->getBasics(); }
+		return $retArr;
+	}
+
+	public function get_comments()
+	{
+		return $this->get_commentson();
+	}
 }

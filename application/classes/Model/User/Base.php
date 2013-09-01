@@ -175,7 +175,7 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 			return false;
 		}else{
 			$usl_model = ORM::factory('User_Sportlink', $result->id);
-			$usl_model->delete_with_deps();
+			$usl_model->delete_with_deps($is_phantom_delete = false);
         	return true;
 		}
     }
@@ -260,6 +260,16 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 	        $args['cities_id'] = $this->cities_id;
         }
 
+		//add dob
+		if(isset($dob))
+		{
+			$this->dob  = $dob ;
+		}
+		else
+		{
+			$args['dob'] = $this->dob;
+		}
+
 
         try {
 			$extra_validate = Validation::factory($args);
@@ -301,53 +311,54 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 	public function addUser($args = array())
 	{
 		extract($args);
+		$user_model = ORM::factory('User_Base');
 		// email
 		// Updated Email Address
 		if(isset($email))
 		{
-			$this->email = $email;
-			$this->username = $email;
+			$user_model->email = $email;
+			$user_model->username = $email;
 		}
 		// firstname
 		// Updated First Name
 		if(isset($firstname))
 		{
-			$this->first_name  = $firstname;
+			$user_model->first_name  = $firstname;
 		}
 
 		// lastname
 		// Updated Last Name
 		if(isset($lastname))
 		{
-			$this->last_name  = $lastname;
+			$user_model->last_name  = $lastname;
 		}
 
 		// password
 		// New Password
 		if(isset($lastname))
 		{
-			$this->last_name  = $lastname;
+			$user_model->last_name  = $lastname;
 		}
 		// cities_id
 		// User's Home City
 		if(isset($cities_id))
 		{
-			$this->cities_id  = $cities_id ;
+			$user_model->cities_id  = $cities_id ;
 		}
 
 
 		if(isset($password))
 		{
-			$this->password = $password;
+			$user_model->password = $password;
 		}
 
 		if(isset($dob))
 		{
-			$this->dob = $dob;
+			$user_model->dob = $dob;
 		}
 
 		if(isset($email) && $email != ""){
-			$this->email = $email;
+			$user_model->email = $email;
 		}
 
 		try {
@@ -364,12 +375,11 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 			$extra_validate->rule('re_password','min_length', array(':value', 6));
 			$extra_validate->rule('re_password','max_length', array(':value', 16));
 			$extra_validate->rule('re_password','matches', array(':validation', ':field', 'password'));
-
-			if ($this->check($extra_validate)){
-				$this->password = Auth::instance()->hash($password);
-				$this->create();
+			if ($user_model->check($extra_validate)){
+				$user_model->password = Auth::instance()->hash($password);
+				$user_model->create();
 			}
-			return $this;
+			return $user_model;
 		} catch(ORM_Validation_Exception $e){
 			return $e;
 		}
@@ -402,6 +412,11 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 				array('not_empty'),
 				array('alpha'),
 			),
+
+			'dob' => array(
+				array('not_empty'),
+				array('date')
+			)
 
 
 			// password (varchar)

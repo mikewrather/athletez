@@ -99,7 +99,7 @@ class Model_Site_Comment extends Model_Site_Entdir
 
 		$comments = ORM::factory('Site_Comment')
 			->where('subject_enttypes_id','=',Ent::getMyEntTypeID($ent))
-			->and_where('subject_id','=',$ent->id);
+			->where('subject_id','=',$ent->id);
 
 		$comments = ORM::_sql_exclude_deleted_abstract($classes_arr, $comments);
 		return $comments;
