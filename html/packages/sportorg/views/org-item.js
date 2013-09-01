@@ -35,8 +35,6 @@ function (
         showinfo: function(e) {
         	e.preventDefault();
         	if(!$(e.target).parents('.org-popup').length) {
-	        	console.log("hide here");
-	        	
 	        	
 	        	if($(e.target).find('.org-popup').hasClass('hide')) {
 		        	$('.org-popup').addClass('hide');
@@ -54,7 +52,6 @@ function (
         	$("body").click(function(e) {
         		e.preventDefault();
         		if(!$(e.target).hasClass('team-info-h') && !$(e.target).hasClass('org-popup') && $(e.target).parents('.org-popup').length === 0) {
-        			console.log("ddsfdfdf");
         			$('.org-popup').addClass('hide');
         		}
         	});

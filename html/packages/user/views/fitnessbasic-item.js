@@ -30,9 +30,23 @@ function (
         initialize: function (options) {
             this.template = fitnessBasicItemTemplate;
         },
-
+        
+        calculate: function() {
+        	if(this.unit_type == "time")
+        		var d = "00:"+this.user_value+":00"
+        	else	
+        		var d = this.user_value;
+        		
+        	console.log(d);	
+        		
+        	return d;
+        },
+ 
         render: function () {
-            var markup = Mustache.to_html(this.template, this.model.toJSON());
+        	var data = {};
+        	data = this.model.toJSON();
+        	data.view = this;
+            var markup = Mustache.to_html(this.template, data);
             this.$el.html(markup);
             return this;
         }        
