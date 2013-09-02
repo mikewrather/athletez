@@ -37,8 +37,8 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
 
 			//'imageup': 'imageUp',
 
-	        'videoprev': 'videoPreview',
-	        'videoprev/': 'videoPreview',
+	        //'videoprev': 'videoPreview',
+	        //'videoprev/': 'videoPreview',
 
             'game': 'showGame',
             'game/': 'showGame',
@@ -62,7 +62,8 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
         initialize: function (options) {
             _.bindAll(this);
             this.addSubscribers();
-	        Controller.prototype.appStates = new ApplicationStates();
+	        
+			Controller.prototype.appStates = new ApplicationStates();
 	        this.getPhrases();
         },
 
@@ -121,6 +122,7 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
             }
 			Channel('add-image').subscribe(showImage);
         },
+		
         showProfileSetting: function (userid) {
             this.loadStyles();
             
@@ -175,7 +177,8 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
 			    //console.log(VidPrevCtrl);
 		    }
 
-		    Channel('app-inited').subscribe(initVideoPreview);
+		    //Channel('app-inited').subscribe(initVideoPreview);
+			Channel('add-video').subscribe(initVideoPreview);
 	    },
         
         showGame: function (id) {
@@ -285,8 +288,12 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
         // Pub / Sub
 
         addSubscribers: function () {
+		
             Channel('load:css').subscribe(this.loadCss);
 	        this.imageUpListeners();
+			this.videoPreview();
+			
+			
         },
 
         removeSubscribers: function () {

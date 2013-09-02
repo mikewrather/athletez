@@ -29,8 +29,8 @@ define( ["models/base"], function (BaseModel) {
 				"id"   :"addPhoto"
             },*/ {
                 "label": "Video",
-	            "link": "#videoprev",
-                //"link" : "javascript:void(0);",
+	            //"link": "#videoprev",
+                "link" : "javascript:void(0);",
 	            "id": "addVideo"
             }, {
                 "label": "Game",

@@ -29,7 +29,7 @@ function(require, profileAddMediaTemplate,application) {
 		
 	    events: {
 		   "click #addPhoto" : "openAddImagePopup",
-          // "click #addVideo" : "openAddvideoPopup"
+           "click #addVideo" : "openAddvideoPopup"
 	    },
 	
 		
@@ -54,7 +54,7 @@ function(require, profileAddMediaTemplate,application) {
 	    },
 		openAddvideoPopup: function(event){
 			
-			
+					Channel('add-video').publish();
 			
 			//$('div#modalPopup').remove();
 			//$('body').append('<div id="modalPopup" class="model-popup-h"></div>');
