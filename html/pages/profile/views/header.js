@@ -41,7 +41,7 @@ function(require, profileHeaderTemplate, selectSportTemplate) {
         selectSportTemplate: selectSportTemplate,
         
         events: {
-            "change #select-sport": "selectSport",
+            //"change #select-sport": "selectSport",
             'click .sports-icon-h' : 'selectSport'
         },
 
@@ -106,7 +106,11 @@ function(require, profileHeaderTemplate, selectSportTemplate) {
         },
         
         selectSport: function(e) {
-            var sport_id = (!e)?$(".sports-h a:first-child").data("id"):$(e.target).data("id");//this.select_sport.val();
+            var sport_id = (!e)?$(".sports-h a:first-child").data("id"):$(e.target).data("id");
+            //this.select_sport.val();
+            $(".sports-icon-h").removeClass('selected-sport-h');
+            $(".sports-icon-h[data-id="+sport_id+"]").addClass('selected-sport-h');
+            
             if(sport_id) {
 	            this.$('.sport-info').stop().slideUp();
 	            this.$('.sport-info-' + sport_id).stop().slideDown();
