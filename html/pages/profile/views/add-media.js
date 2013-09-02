@@ -54,14 +54,10 @@ function(require, profileAddMediaTemplate,application) {
 	    },
 		openAddvideoPopup: function(event){
 			
-					Channel('add-video').publish();
-			
-			//$('div#modalPopup').remove();
-			//$('body').append('<div id="modalPopup" class="model-popup-h"></div>');
-			//var videoupload = new videouploader({el: $("#modalPopup")});
+			//** firing the call back list
 			
 			
-			
+			Channel('add-video').publish();
 			
 		}
         

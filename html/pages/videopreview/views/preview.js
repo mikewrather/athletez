@@ -35,11 +35,13 @@ define([
 			changeVideo: function(file)
 			{
 				
-				URL = window.URL || window.webkitURL;
+				URL = window.URL;
 				alert("this is url"+ URL);
-				var fileURL = URL.createObjectURL(file);
-				alert(fileURL+ "test");
-				document.querySelector(this.$el.selector + ' video').src = fileURL;
+				console.log(URL,"url");
+				console.log(file, "test file in change video");
+				//var fileURL = URL.createObjectURL(file);
+				//alert(fileURL+ "test");
+				//document.querySelector(this.$el.selector + ' video').src = fileURL;
 			},
 
 			displayMessage: function (message,isError)

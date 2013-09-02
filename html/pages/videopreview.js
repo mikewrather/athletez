@@ -42,9 +42,7 @@ define([
 
 	VideoPreviewController = Controller.extend({
 
-		defaults:{
-		uploadermain:{ 'prasobh':'prasobh'}
-		},
+		
 		initialize: function (options) {
 
 			Channel('load:css').publish(cssArr);
@@ -115,27 +113,27 @@ define([
 		
 		afterRender: function(vpm){
 				
-				uopladernew = new VideoUploaderModel();
-			
-				window.uploader = vpm.doUpload();
+				
+				// setting up the pluploader property as a model object
+				 vpm.uploader = vpm.doUpload();
 				
 				
-				window.uploader.bind('Init', function (up, params) {
+				vpm.uploader.bind('Init', function (up, params) {
 					$('#filelist').html("<div></div>");
 				});
 				
 				try{
-				window.uploader.init();
+					vpm.uploader.init();
 				
 				}
 				catch(e){
 				alert(e);
 				}
 				
-				window.uploader.bind('FilesAdded', function (up, files) {
+					vpm.uploader.bind('FilesAdded', function (up, files) {
 					maxCountError = false;
 					$.each(files, function (i, file) {
-						if(window.uploader.settings.max_file_count && i >= window.uploader.settings.max_file_count){
+						if(vpm.uploader.settings.max_file_count && i >= vpm.uploader.settings.max_file_count){
 							maxCountError = true;
 							setTimeout(function(){ up.removeFile(file); }, 50);
 						}
@@ -153,12 +151,10 @@ define([
 					up.refresh(); // Reposition Flash/Silverlight
 				});
 				
-				/************/
-				window.uploader.bind('UploadProgress', function (up, file) {
+				vpm.uploader.bind('UploadProgress', function (up, file) {
 					$('#' + file.id + " b").html(file.percent + "%");
 				});
-
-				window.uploader.bind('Error', function (up, err) {
+				vpm.uploader.bind('Error', function (up, err) {
 					$('#filelist').append("<div>Error: " + err.code +
 						", Message: " + err.message +
 						(err.file ? ", File: " + err.file.name : "") +
@@ -168,6 +164,7 @@ define([
 					up.refresh(); // Reposition Flash/Silverlight
 				});
 				
+				//vpm.set({uploadermain:"uploader"});
 			
 					},	
 		uploadVideo: function(file)

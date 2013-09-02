@@ -67,8 +67,13 @@ define([
 				
 			},
 			uploadFiles : function(e){
-						this.uploader= window.uploader;
-						console.log(window.uploader,"pluploader1234");
+						
+
+						// taking referrace of he uploader from model
+						
+						//this.uploader = this.model.uploader;
+						
+						console.log(this.uploader,"up");
 						
 					if($('input#title').val() == '') {
 						alert("Please enter a title for this video.");
@@ -91,12 +96,14 @@ define([
 
 			play: function(event)
 			{
-				console.log(event.target.id,"prasobh");
-				var id = event.target.id;
-				console.log($('#'+id));
-				this.file = event.target.files[0];
+				this.uploader = this.model.uploader;
+				console.log(event,"testevent");
+				console.log(this.uploader, "uploader tester");
+				//var id = event.target.id;
+				console.log($('#'+id),"event id tester");
+				this.file = this.uploader.files[0];
 				Channel('select-video-preview-change').publish(this.file);
-				console.log(this.uploader);
+				
 			},
 
 			videoUploadClick: function(event)

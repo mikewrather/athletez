@@ -11,6 +11,7 @@ define(["facade", "models/base"], function (facade, BaseModel) {
 	VideoUploaderModel = BaseModel.extend({
 		
 		
+		
 		initialize: function(options)
 		{
 			//this.file = options.file;

@@ -176,8 +176,9 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
 			    var VidPrevCtrl = new VideoPreviewController();
 			    //console.log(VidPrevCtrl);
 		    }
-
-		    //Channel('app-inited').subscribe(initVideoPreview);
+			//** creating a call back list and adding the method
+		    
+			//Channel('app-inited').subscribe(initVideoPreview);
 			Channel('add-video').subscribe(initVideoPreview);
 	    },
         
