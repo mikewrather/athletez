@@ -51,6 +51,9 @@ define(['facade', 'utils'], function (facade, utils) {
             if (!this.request) {
                 this.request = this.deferred.promise();
             }
+            if(typeof routing != "undefined" && typeof routing.ajaxRequests != "undefined") {
+	            routing.ajaxRequests.push(this.request);
+	        }
             return this.request;
         },
 

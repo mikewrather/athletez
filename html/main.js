@@ -131,6 +131,7 @@ define([
 			$(function () { // doc ready
 				Backbone.noConflict();
 				routing = new app();
+				routing.ajaxRequests = [];
 				Backbone.history.start({});
             });
 		}

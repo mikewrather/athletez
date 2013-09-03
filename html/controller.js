@@ -53,7 +53,6 @@ function(facade, collections, models, utils) {
     // Use as a template for contrete controller prototypes with 
     // YourController = Controller.extend({ /*...*/ });
     Controller.prototype = {
-		ajaxRequests: facade.ajaxRequests,
         // Public Methods
         // --------------
 

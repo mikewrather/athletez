@@ -59,7 +59,8 @@ function (
                 if (authorized) {
                     var id = model.get('id');
 	                self.model.saveCookie();
-                    Channel('app-inited').publish(id);
+                    routing.trigger('app-inited', id);
+                    //Channel('app-inited').publish(id);
                 }
             };
                 

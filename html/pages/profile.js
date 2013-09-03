@@ -6,6 +6,7 @@
 define([
 	"require",
 	"text!profile/templates/layout.html",
+	"application",
 	"facade",
 	"controller",
 	"models",
@@ -32,18 +33,17 @@ define([
 	"profile/views/image-video-list",
 	"profile/views/commentof-list",
 	"profile/views/commenton-list",
-	"profile/views/fans-image-list"
-	
+	"profile/views/fans-image-list",
+	"application"
 ],
-	function (require, pageLayoutTemplate) {
-
+	function (require, pageLayoutTemplate, app) {
+console.log(app);
 		var ProfileController,
 			facade = require("facade"),
 			Controller = require("controller"),
 			models = require("models"),
 			views = require("views"),
 			utils = require("utils"),
-
 			ProfileBasicsModel = require("profile/models/basics"),
 			ProfileAddMediaModel = require("profile/models/addmedia"),
 			ProfileOrgList = require("profile/collections/orgs"),
@@ -80,7 +80,7 @@ define([
 		ProfileController = Controller.extend({
 			
 			initialize: function (options) {
-
+				
 				var self = this;
 				debug.log("start initialize");
 				Channel('load:css').publish(cssArr);
@@ -110,26 +110,26 @@ define([
 			createData: function () {
 				this.basics = new ProfileBasicsModel({id: this.id});
 				this.basics.id = this.id;
-				this.ajaxRequests.push(this.basics.fetch());
+				this.basics.fetch();
 
 				this.addmedia = new ProfileAddMediaModel();
 				this.addmedia.id = this.id;
 
 				this.commentsof = new ProfileCommentOfList();
 				this.commentsof.id = this.id;
-				this.ajaxRequests.push(this.commentsof.fetch());
+				this.commentsof.fetch();
 
 				this.commentson = new ProfileCommentOnList();
 				this.commentson.id = this.id;
-				this.ajaxRequests.push(this.commentson.fetch());
+				this.commentson.fetch();
 		
 				this.fans = new FansImageList();
 				this.fans.id = this.id;
-				this.ajaxRequests.push(this.fans.fetch());
+				this.fans.fetch();
 
 				this.images = new ProfileImageList();
 				this.images.id = this.id;
-				this.ajaxRequests.push(this.images.fetch());
+				this.images.fetch();
 				
 				var controller = this;
 
@@ -139,17 +139,17 @@ define([
 					controller.orgs = new ProfileOrgList();
 					controller.orgs.id = controller.id;
 					controller.orgs.sport_id = sport_id;
-					controller.ajaxRequests.push(controller.orgs.fetch());
+					controller.orgs.fetch();
 
 					controller.relateds = new ProfileRelatedList();
 					controller.relateds.id = controller.id;
 					controller.relateds.sport_id = sport_id;
-					controller.ajaxRequests.push(controller.relateds.fetch());
+					controller.relateds.fetch();
 
 					controller.fitnessbasics = new ProfileFitnessBasicList();
 					controller.fitnessbasics.id = controller.id;
 					controller.fitnessbasics.sport_id = sport_id;
-					controller.ajaxRequests.push(controller.fitnessbasics.fetch());
+					controller.fitnessbasics.fetch();
 
 					//controller.videos = new ProfileVideoList();
 					//controller.videos.id = controller.id;
@@ -159,12 +159,12 @@ define([
 					controller.images = new ProfileImageList();
 					controller.images.id = controller.id;
 					controller.images.sport_id = sport_id;
-					controller.ajaxRequests.push(controller.images.fetch());
+					controller.images.fetch();
 					
 					controller.fans = new FansImageList();
 					controller.fans.id = controller.id;
 					controller.fans.sport_id = sport_id;
-					controller.ajaxRequests.push(controller.fans.fetch());
+					controller.fans.fetch();
 
 					controller.handleDeferredsDynamic();
 				}
