@@ -2,13 +2,16 @@ define([
 	'vendor',
 	'views',
 	"facade",
+	'videopreview/models/videoup',
 	'text!videopreview/templates/upload.html',
 	'plupload'
+	
 ],
 	function (
 		vendor,
 		views,
-	    facade
+	    facade,
+	    videoupmodel
 		) {
 
 		var UploadVideoTemplate = require("text!videopreview/templates/upload.html")
@@ -30,10 +33,11 @@ define([
 
 			events: {
 				'change input': 'play',
-				"click #videoup": "videoUploadClick"
+				//"click #videoup": "videoUploadClick"
+				"click #uploadfiles" :"uploadFiles"
 			},
 
-			uploader: {},
+			//uploader: {},
 
 			initialize: function (options) {
 				SectionView.prototype.initialize.call(this, options);
@@ -44,59 +48,46 @@ define([
 				this.render = _.wrap(this.render, function(render) {
 					_this.beforeRender();
 					render();
-					_this.afterRender();
+				//	_this.afterRender();
 					return _this;
 				});
 
 				$('#imgUploadModal').modal('show') ;
 //				this.plupInit();
+				
+			
 			},
-
+			
 			beforeRender: function() {
 				console.log('beforeRender');
 			},
 
 			afterRender: function()
 			{
-
-				console.log(this.$('#pickfiles')[0]);
-
-				console.log("called afterRender");
-
-				this.uploader = new plupload.Uploader({
-					runtimes:'gears,html5,flash,silverlight,browserplus',
-					browse_button:this.$('#pickfiles')[0],
-					max_file_size:'500mb',
-					max_file_count:1,
-					chunk_size:'5mb',
-					url:'/api/user/addvideo/425983',
-					unique_names:true,
-					flash_swf_url:'/vendor/plugins/Moxie.swf',
-					silverlight_xap_url:'/vendor/plugins/Moxie.xap',
-					filters:[
-						{title:"Video files", extensions:"mov,mp4,mpeg4,avi,mkv,webm,ogg"}
-					],
-					multipart_params:{title:''}
-
-				});
-				console.log(this.uploader);
-
-				this.uploader.bind('Init', function(up, params) {
-					console.log("uploader initialized",up,params);
-					this.$('#filelist').html(up.runtime);
-				});
-
-				try{
-					this.uploader.init();
-				//	console.log(this.$('#pickfiles').trigger());
-				} catch (err) {
-					console.log(err);
-				}
-
-
-
+				
 			},
+			uploadFiles : function(e){
+						
 
+						// taking referrace of he uploader from model
+						
+						//this.uploader = this.model.uploader;
+						
+						console.log(this.uploader,"up");
+						
+					if($('input#title').val() == '') {
+						alert("Please enter a title for this video.");
+						return;
+					}
+					else{
+						this.uploader.settings.multipart_params.name = $('input#title').val();
+						this.uploader.settings.multipart_params.mm = $('input#mm').is(':checked');
+						this.uploader.settings.multipart_params.sports_id = $('select#sports_id').val();
+						$('#uploadfiles').addClass('isUploading');
+						this.uploader.start();
+					}
+					e.preventDefault();
+			},
 			plupInit: function()
 			{
 
@@ -105,9 +96,14 @@ define([
 
 			play: function(event)
 			{
-				this.file = event.target.files[0];
+				this.uploader = this.model.uploader;
+				console.log(event,"testevent");
+				console.log(this.uploader, "uploader tester");
+				//var id = event.target.id;
+				console.log($('#'+id),"event id tester");
+				this.file = this.uploader.files[0];
 				Channel('select-video-preview-change').publish(this.file);
-				console.log(this.uploader);
+				
 			},
 
 			videoUploadClick: function(event)

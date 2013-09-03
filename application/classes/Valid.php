@@ -115,7 +115,7 @@
 		public static function users_sports_exist($users_id, $sports_id){
 			$user_sport_link = ORM::factory("user_sportlink");
 			$classes_arr = array(
-				'User_Sportlink' => 'user_sport_link'
+				'User_Sportlink' => 'user_sportlink'
 			);
 
 			$user_sport_link = ORM::_sql_exclude_deleted($classes_arr, $user_sport_link);

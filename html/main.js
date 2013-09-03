@@ -22,6 +22,7 @@ require.config({
         'bootstrap'    : '/vendor/plugins/bootstrap',
         'jquery.pstrength' : '/vendor/plugins/jquery.pstrength-min.1.2',
         'jqueryui'     : '/vendor/plugins/jquery-ui-1.10.2.custom.min',
+        'jquerytimepicker' :  '/vendor/plugins/jquery-date-time-picker-1.4',
         'jquery.jrac'  : '/vendor/plugins/jquery.jrac',
 		'iframe-transport' : '/vendor/plugins/jquery.iframe-transport',
 		'fileupload'   :'/vendor/plugins/jquery.fileupload',
@@ -59,6 +60,7 @@ require.config({
         // Should be used as required dependencies with use of `define`, 
         'models'       : '/models',
         'views'        : '/views',
+        
         'collections'  : '/collections',
         'controller'   : '/controller',
 
@@ -95,7 +97,7 @@ require.config({
             exports: '_'
         },
         'backbone': {
-            deps: ['underscore', 'jquery', 'json2', 'html5', 'jqueryui', 'custom'],
+            deps: ['underscore', 'jquery', 'json2', 'html5', 'jqueryui', 'custom','jquerytimepicker'],
             exports: 'Backbone'
         },
 	    'bootstrap': {
@@ -103,6 +105,10 @@ require.config({
 	    },
 	    'plupload': {
 		    deps: ['jquery']
+	    },
+	    'jquerytimepicker' : {
+	    	deps : ['jquery','jqueryui'],
+	    	
 	    }
 
     },
@@ -116,6 +122,7 @@ define([
 	'backbone',
 	'underscore',
 	'jquery',
+	//'jqueryui',
 	'application'
 	], function(Backbone, _, $,app){
 		 	//Backbone.noConflict();
