@@ -69,7 +69,7 @@ define([
 			/*
 
 				alert("after render");
-				console.log(this.$('#pickfiles').html() +"psbh testst");
+				
 				console.log(this.$('#pickfiles')[0]);
 
 				console.log("called afterRender");

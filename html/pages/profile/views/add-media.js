@@ -50,6 +50,7 @@ function(require, profileAddMediaTemplate,application) {
 			    attr = {
 				    "sports_id" : $('select#select-sport').val()
 			    };
+
 		    Channel("add-image").publish(url,attr);
 	    },
 		openAddvideoPopup: function(event){
@@ -57,7 +58,9 @@ function(require, profileAddMediaTemplate,application) {
 			//** firing the call back list
 			
 			
-			Channel('add-video').publish();
+			var url = "/api/user/addvideo/" + this.model.userid;
+			
+			Channel('add-video').publish(url);
 			
 		}
         
