@@ -348,13 +348,12 @@ class Model_Sportorg_Team extends ORM
 
 		$this->join('org_sport_link')->on('org_sport_link.id', '=', 'sportorg_team.org_sport_link_id');
 		$this->join('orgs')->on('orgs.id', '=', 'org_sport_link.orgs_id');
-		$this->join('locations')->on('locations.id', '=', 'orgs.locations_id');
+	//	$this->join('locations')->on('locations.id', '=', 'orgs.locations_id');
 
 		$classes_arr = array(
 			'Sportorg_Team' => 'sportorg_team',
 			'Sportorg_Orgsportlink' => 'org_sport_link',
 			'Sportorg_Org' => 'orgs',
-			'Location_Base' => 'locations'
 		);
 		if (isset($sports_id)){
 			$this->where('org_sport_link.sports_id', '=', $sports_id);
@@ -405,22 +404,7 @@ class Model_Sportorg_Team extends ORM
 		}
 
 		if (isset($cities_id)){
-			$this->where('locations.cities_id', '=', $cities_id);
-		}
-
-		if (isset($loc_name)){
-			$this->and_where_open();
-			//$this->join('locations')->on('locations.id', '=', 'orgs.locations_id');
-			$this->join('cities', 'left')->on('locations.cities_id', '=', 'cities.id');
-			$this->or_where('cities.name', 'like', "%".$loc_name."%");
-			$this->join('counties', 'left')->on('cities.counties_id', '=', 'counties.id');
-			$this->or_where('counties.name', 'like', "%".$loc_name."%");
-			$this->join('states', 'left')->on('states.id', '=', 'counties.states_id');
-			$this->or_where('states.name', 'like', "%".$loc_name."%");
-			$this->and_where_close();
-			$classes_arr['Location_City'] = 'cities';
-			$classes_arr['Location_County'] = 'counties';
-			$classes_arr['Location_State'] = 'states';
+			$this->where('orgs.cities_id', '=', $cities_id);
 		}
 
 		$search = ORM::_sql_exclude_deleted($classes_arr, $this);
