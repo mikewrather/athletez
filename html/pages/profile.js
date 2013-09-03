@@ -84,7 +84,6 @@ define([
 				var self = this;
 				debug.log("start initialize");
 				Channel('load:css').publish(cssArr);
-				alert("initialie profile");
 				_.bindAll(self);
 
 				self.handleOptions(options);
