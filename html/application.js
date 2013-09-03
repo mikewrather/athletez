@@ -5,9 +5,9 @@
 define( ["facade", "utils", "collections", "chrome", "controller", "profile", "imageup",'home','videopreview',
  "game", "team", "registration","profilesetting","userresume","packages/site/collections/phrases","usercontrols/tag/tag","usercontrols/addgame/addgame","login/model","login/view"],
 function (facade, utils, collections, chromeBootstrap, Controller, ProfileController, ImageController, HomeController, VideoPreviewController,
-	GameController, TeamController, RegistrationController, ProfileSetting,UserResume, SitePhraseList , TagController,AddGameController,loginModel, loginView ) {
+	GameController, TeamController, RegistrationController, ProfileSetting,UserResume, SitePhraseList , TagController,AddGameController,loginModel, loginView, ajaxRequests ) {
 
-
+console.log(require.config().ajaxRequests);
     var App,
         ApplicationStates = collections.ApplicationStates,
         $ = facade.$,
@@ -65,12 +65,23 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
 	        Controller.prototype.appStates = new ApplicationStates();
 	        this.getPhrases();
         },
+        
+        cancelAjaxRequests: function() {
+        	 console.log(facade.ajaxRequests);
+            if(facade.ajaxRequests.length) {
+            	for(var i in facade.ajaxRequests) {
+            		console.log("--------------------------here");
+            		facade.ajaxRequests[i].abort();
+            	}
+            }
+        },
 
         defaultRoute: function () {
             this.initApp();
         },
         
         initApp: function (action) {
+        	//alert("init");
             //this.showProfile();
            	//this.showGame();
             //this.showTeam();
@@ -86,6 +97,8 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
 	    showHome: function (action) {
 	    	this.loadStyles();
 	    	
+	    	// cancel ajax requests
+	    	this.cancelAjaxRequests();
 	    	$('body').empty();
 	    	
             chromeBootstrap();
@@ -101,19 +114,43 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
 	    
         showProfile: function (userid) {
         	var self = this;
+        	// cancel ajax requests
+        	//alert("show profile");
+	    	this.cancelAjaxRequests();
 	        self.loadStyles();
            $('body').empty();
            // $('#main-header').empty();
             //$('#main-content').empty();
            chromeBootstrap();
 			function initProfile(headerModelId) {
+				//alert("init profile");
 				var pCont = new ProfileController({
 	                "userId": userid==undefined ? headerModelId : userid
 	            });
 
             }
-            Channel('app-inited').subscribe(initProfile);
+            //initProfile();
+            Channel('app-inited').unsubscribe(initProfile);
+            Channel('app-inited', 'unique').subscribe(initProfile);
 
+        },
+        
+         showTag: function (userid) {
+        	// cancel ajax requests
+	    	this.cancelAjaxRequests();
+            this.loadStyles();
+            $('body').empty();
+            chromeBootstrap();
+			//alert("show fn");
+            function initTag(id) {
+            	//alert("init tag");
+                var tag = new TagController({
+                	"id": userid==undefined ? id : userid
+                });
+            }
+            //initTag();
+            Channel('app-inited').unsubscribe(initTag)
+            Channel('app-inited', 'unique').subscribe(initTag);
         },
 		imageUpListeners: function () {
             function showImage(url,attr) {
@@ -122,6 +159,8 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
 			Channel('add-image').subscribe(showImage);
         },
         showProfileSetting: function (userid) {
+            // cancel ajax requests
+	    	this.cancelAjaxRequests();
             this.loadStyles();
             
             $('body').empty();
@@ -132,11 +171,13 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
                 	"id": userid==undefined ? id : userid
                 });
             }
-            
-            Channel('app-inited').subscribe(initProfileSetting);
+            Channel('app-inited').unsubscribe(initProfileSetting);
+            Channel('app-inited', 'unique').subscribe(initProfileSetting);
         },
         
         ShowUserResume: function (userid) {
+            // cancel ajax requests
+	    	this.cancelAjaxRequests();
             this.loadStyles();
             $('body').empty();
             chromeBootstrap();
@@ -147,8 +188,8 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
                 	"id": userid==undefined ? id : userid
                 });
             }
-            
-            Channel('app-inited').subscribe(initUserResume);
+            Channel('app-inited').unsubscribe(initUserResume);
+            Channel('app-inited', 'unique').subscribe(initUserResume);
         },
         
 		  //imageupProfile: function(){
@@ -157,7 +198,8 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
 			//chromeBootstrap();
             
             function initImage(id){ var imageController = new ImageController({"route": "","url":this.posturl,"attr":this.attribute}); }
-            Channel('app-inited').subscribe(initImage);
+            Channel('app-inited').unsubscribe(initImage);
+            Channel('app-inited', 'unique').subscribe(initImage);
 		},
 
 	    videoPreview: function () {
@@ -174,11 +216,13 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
 			    var VidPrevCtrl = new VideoPreviewController();
 			    //console.log(VidPrevCtrl);
 		    }
-
-		    Channel('app-inited').subscribe(initVideoPreview);
+			Channel('app-inited').unsubscribe(initVideoPreview);
+		    Channel('app-inited', 'unique').subscribe(initVideoPreview);
 	    },
         
         showGame: function (id) {
+            // cancel ajax requests
+	    	this.cancelAjaxRequests();
             this.loadStyles();
             
            $('body').empty();
@@ -197,12 +241,13 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
                     "gameId" : id
                 });
             }
-            
-            Channel('app-inited').subscribe(initGame);
+            Channel('app-inited').unsubscribe(initGame);
+            Channel('app-inited', 'unique').subscribe(initGame);
         },
         
         showTeam: function(id) {
-            
+            // cancel ajax requests
+	    	this.cancelAjaxRequests();
 			this.loadStyles();
            // alert('test showteam');
             $('body').empty();
@@ -214,11 +259,13 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
                     "teamId": id
                 })
             }
-            
-            Channel('app-inited').subscribe(initTeam);
+             Channel('app-inited').unsubscribe(initTeam);
+            Channel('app-inited', 'unique').subscribe(initTeam);
         },
         
         showRegistration: function() {
+            // cancel ajax requests
+	    	this.cancelAjaxRequests();
             this.loadStyles();
             
             $('body').empty();
@@ -227,28 +274,15 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
             function initRegistration() {
                 var registrationController = new RegistrationController({
                     "route": ""
-                })
-            }
-            
-            Channel('app-inited').subscribe(initRegistration);
-        },
-        
-        showTag: function (userid) {
-            this.loadStyles();
-            $('body').empty();
-            chromeBootstrap();
-
-            function initTag(id) {
-            	
-                var tag = new TagController({
-                	"id": userid==undefined ? id : userid
                 });
             }
-            
-            Channel('app-inited').subscribe(initTag);
+            Channel('app-inited').unsubscribe(initRegistration);
+            Channel('app-inited', 'unique').subscribe(initRegistration);
         },
         
         showAddGame : function(userid){
+        	// cancel ajax requests
+	    	this.cancelAjaxRequests();
         	this.loadStyles();
             $('body').empty();
             chromeBootstrap();
@@ -259,8 +293,8 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
                 	"id": userid==undefined ? id : userid
                 });
             }
-            
-            Channel('app-inited').subscribe(initAddGame);
+            Channel('app-inited').unsubscribe(initAddGame)
+            Channel('app-inited', 'unique').subscribe(initAddGame);
 
         },
         
