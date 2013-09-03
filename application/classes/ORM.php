@@ -167,31 +167,38 @@ class ORM extends Kohana_ORM
 		}
 	}
 
-	public function phantom_delete()
+	public function phantom_delete($is_phantom_delete = true)
 	{
-		if(!$this->loaded()) return false;
-		$qry = DB::insert('deleted',array(
-			'subject_enttypes_id',
-			'subject_id',
-			'users_id'
-			)
-		)->values(
-			array(
-				Ent::getMyEntTypeID($this),
-				$this->id,
-				Auth::instance()->get_user()->id
-			)
-		)->execute();
+		//do real delete
+		if (!$is_phantom_delete){
+			$this->real_delete($this);
+		}else{
+
+			if(!$this->loaded()) return false;
+			$qry = DB::insert('deleted',array(
+				'subject_enttypes_id',
+				'subject_id',
+				'users_id'
+				)
+			)->values(
+				array(
+					Ent::getMyEntTypeID($this),
+					$this->id,
+					Auth::instance()->get_user()->id
+				)
+			)->execute();
+
+		}
 		return;
 	}
 
-	public function delete_with_deps()
+	public function delete_with_deps($is_phantom_delete = true)
 	{
-		$this->delete_deps();
-		$this->phantom_delete(); // this method will add the row to the deleted table
+		$this->delete_deps($is_phantom_delete);
+		$this->phantom_delete($is_phantom_delete); // this method will add the row to the deleted table
 	}
 
-	protected function delete_deps()
+	protected function delete_deps($is_phantom_delete)
 	{
 		//Get My Class Name Minus Model_
 		$classname = str_replace('Model_','',get_class($this));
@@ -213,7 +220,7 @@ class ORM extends Kohana_ORM
 				// For each row, recursively execute the delete_with_deps method
 				foreach($orm_models as $orm_model)
 				{
-					$orm_model->delete_with_deps();
+					$orm_model->delete_with_deps($is_phantom_delete);
 				}
 			}
 		}
@@ -390,9 +397,33 @@ class ORM extends Kohana_ORM
 		return $retArr;
 	}
 
+	public function real_delete($obj){
+		/*
+			Not completed section
 
+		//delete the enttypes rows related to delete obj.
+		$classname = str_replace('Model_','',get_class($this));
+		$enttypes_in_table_array = array(
+			'Site_Vote', 'Site_View', 'Site_Tag', 'Site_Flag', 'User_Followers', 'Site_Feed', 'Site_Comment'
+		);
+		if (in_array($classname, $enttypes_in_table_array)){
+			$enttypes_id = Ent::getMyEntTypeID($this);
+			$model = ORM::factory($classname);
+			$results = $model->where('subject_enttypes_id', '=', $enttypes_id)
+				->where('subject_id', '=', $this->id)->find_all();
+			if (!empty($results)){
+				print_r($results);
+				foreach($results as $result){
+					echo "<br>====";
+					print_r($result);
+					echo "xxxxxx";
+					$result->delete();
+				}
+			}
+		}
+		*/
 
-	public function delete($is_real_delete = false){
-
+		$obj->delete();
 	}
+
 }

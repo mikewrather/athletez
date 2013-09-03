@@ -2216,7 +2216,7 @@
                 return false;
             }
             //return $this->mainModel->delete();
-			return $this->mainModel->delete_with_deps();
+			return $this->mainModel->delete_with_deps(false);
 		}
 		
 		/**

@@ -40,7 +40,7 @@ class Util {
 			}
 		}
 
-		if (in_array($value, array(0, 1))){
+		if (in_array($value, array('0', '1'))){
 			return $value;
 		}
 		//Can't convert to boolean

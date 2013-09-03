@@ -336,9 +336,22 @@ class Model_Media_Image extends ORM
 			$image->where('tags.cities_id', '=', $cities_id);
 		}
 
+		//add exclude sql logic here
+		$classes_arr = array(
+			'Site_Tag' => 'tags',
+			'Media_Base' => 'media',
+			'Media_Image' => 'images'
+		);
+
+		$image = ORM::_sql_exclude_deleted($classes_arr, $image);
+
 		if ($class_name == 'User_Base'){
 			if (isset($searchtext) || isset($states_id) || isset($cities_id)){
 				$image->join(array('users', 'user_base'))->on('user_base.id', '=', 'tags.subject_id');
+				$classes_arr = array(
+					'User_Base' => 'user_base'
+				);
+				$image = ORM::_sql_exclude_deleted($classes_arr, $image);
 			}
 			if (isset($searchtext)){
 				//$image->where(array(Db::expr('CONCAT(user_base.first_name," ",user_base.last_name)'), 'full_name'), 'like ','%'.$searchtext.'%');
@@ -351,6 +364,14 @@ class Model_Media_Image extends ORM
 				$image->join('teams')->on('teams.id', '=', 'tags.subject_id');
 				$image->join('org_sport_link')->on('teams.org_sport_link_id', '=', 'org_sport_link.id');
 				$image->join('orgs')->on('orgs.id', '=', 'org_sport_link.orgs_id');
+
+				//add exclude sql logic
+				$classes_arr = array(
+					'Sportorg_Orgsportlink' => 'org_sport_link',
+					'Sportorg_Org' => 'orgs',
+					'Sportorg_Team' => 'teams'
+				);
+				$image = ORM::_sql_exclude_deleted($classes_arr, $image);
 			}
 
 			if (isset($searchtext)){
@@ -364,6 +385,14 @@ class Model_Media_Image extends ORM
 				$image->join('teams')->on('teams.id', '=', 'tags.subject_id');
 				$image->join('org_sport_link')->on('teams.org_sport_link_id', '=', 'org_sport_link.id');
 				$image->join('orgs')->on('orgs.id', '=', 'org_sport_link.orgs_id');
+
+				//add exclude sql logic
+				$classes_arr = array(
+					'Sportorg_Orgsportlink' => 'org_sport_link',
+					'Sportorg_Org' => 'orgs',
+					'Sportorg_Team' => 'teams'
+				);
+				$image = ORM::_sql_exclude_deleted($classes_arr, $image);
 			}
 
 			if (isset($searchtext)){
@@ -377,6 +406,14 @@ class Model_Media_Image extends ORM
 				$image->join('teams')->on('teams.id', '=', 'tags.subject_id');
 				$image->join('org_sport_link')->on('teams.org_sport_link_id', '=', 'org_sport_link.id');
 				$image->join('orgs')->on('orgs.id', '=', 'org_sport_link.orgs_id');
+
+				//add exclude sql logic
+				$classes_arr = array(
+					'Sportorg_Orgsportlink' => 'org_sport_link',
+					'Sportorg_Org' => 'orgs',
+					'Sportorg_Team' => 'teams'
+				);
+				$image = ORM::_sql_exclude_deleted($classes_arr, $image);
 			}
 
 			if (isset($searchtext)){
@@ -384,6 +421,7 @@ class Model_Media_Image extends ORM
 				$image->where('media.name', 'like', "%".$searchtext."%");
 			}
 		}
+		//print_r($image->execute());exit;
 		return $image;
 	}
 
