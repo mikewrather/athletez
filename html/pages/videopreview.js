@@ -26,7 +26,8 @@ define([
 	 VideoPreviewModel,
 	 VideoUploaderModel,
 	 VideoPreviewUploadView,
-	 VideoPreviewView) {
+	 VideoPreviewView
+	) {
 
 	var VideoPreviewController,
 		LayoutView = views.LayoutView,
@@ -41,6 +42,7 @@ define([
 
 	VideoPreviewController = Controller.extend({
 
+		
 		initialize: function (options) {
 
 			Channel('load:css').publish(cssArr);
@@ -83,34 +85,96 @@ define([
 		},
 		showVideoPreview: function()
 		{
-			var vpm = new VideoPreviewModel();
-			var VideoPreviewUploadViewInstance = new VideoPreviewUploadView({
-				name:"Video Upload View",
-				model:vpm,
-				destination : "#main-content-img"
-			},this.attr);
-
-			Channel("mediaup-add-video").subscribe(this.uploadVideo);
-
-			this.scheme.push(VideoPreviewUploadViewInstance);
-
+							
+			var vpm = new VideoUploaderModel();
+			var that = this;
+			
 			var VideoPreviewViewInstance = new VideoPreviewView({
 				name:"Video Preview View",
 				model:vpm,
 				destination : ".modal-body #preview"
 			},this.attr);
 			this.scheme.push(VideoPreviewViewInstance);
+			
+			
+			var VideoPreviewUploadViewInstance = new VideoPreviewUploadView({
+				name:"Video Upload View",
+				model:vpm,
+				destination : "#main-content-img",
+				},this.attr);
+			
+			this.scheme.push(VideoPreviewUploadViewInstance);
+			
 			this.layout.render();
+			
+			this.afterRender(vpm);
+			
 		},
+		
+		afterRender: function(vpm){
+				
+				
+				// setting up the pluploader property as a model object
+				 vpm.uploader = vpm.doUpload();
+				
+				
+				vpm.uploader.bind('Init', function (up, params) {
+					$('#filelist').html("<div></div>");
+				});
+				
+				try{
+					vpm.uploader.init();
+				
+				}
+				catch(e){
+				alert(e);
+				}
+				
+					vpm.uploader.bind('FilesAdded', function (up, files) {
+					maxCountError = false;
+					$.each(files, function (i, file) {
+						if(vpm.uploader.settings.max_file_count && i >= vpm.uploader.settings.max_file_count){
+							maxCountError = true;
+							setTimeout(function(){ up.removeFile(file); }, 50);
+						}
+						else{
+							$('#filelist').append(
+								'<div id="' + file.id + '">' +
+									file.name + ' (' + plupload.formatSize(file.size) + ') <b></b>' +
+								'</div>');
+						}
+						if(maxCountError){
+							$('#resultdiv').html("You can only select one video at a time.").show();
+						}
+					});
 
+					up.refresh(); // Reposition Flash/Silverlight
+				});
+				
+				vpm.uploader.bind('UploadProgress', function (up, file) {
+					$('#' + file.id + " b").html(file.percent + "%");
+				});
+				vpm.uploader.bind('Error', function (up, err) {
+					$('#filelist').append("<div>Error: " + err.code +
+						", Message: " + err.message +
+						(err.file ? ", File: " + err.file.name : "") +
+						"</div>"
+					);
+
+					up.refresh(); // Reposition Flash/Silverlight
+				});
+				
+				//vpm.set({uploadermain:"uploader"});
+			
+					},	
 		uploadVideo: function(file)
 		{
-
+			alert("inside uploadvideo");
 			console.log("Called",file);
 			var Uploader = new VideoUploaderModel({
 				'file':file
 			});
-			Uploader.doUpload();
+			//Uploader.doUpload();
 		}
 
 	});

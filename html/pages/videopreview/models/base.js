@@ -16,6 +16,7 @@ define(["facade", "models/base"], function (facade, BaseModel) {
 		files: [],
 
 		initialize: function () {
+			
 			if (!this.URL) {
 		/*		this.displayMessage('Your browser is not ' +
 					'<a href="http://caniuse.com/bloburls">supported</a>!', true);
