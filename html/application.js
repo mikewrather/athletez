@@ -66,6 +66,16 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
 			Controller.prototype.appStates = new ApplicationStates();
 	        this.getPhrases();
         },
+        
+        cancelAjaxRequests: function() {
+        	 console.log(facade.ajaxRequests);
+            if(facade.ajaxRequests.length) {
+            	for(var i in facade.ajaxRequests) {
+            		console.log("--------------------------here");
+            		facade.ajaxRequests[i].abort();
+            	}
+            }
+        },
 
         defaultRoute: function () {
             this.initApp();
@@ -85,6 +95,7 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
 	    },
 	    
 	    showHome: function (action) {
+	    	this.cancelAjaxRequests();
 	    	this.loadStyles();
 	    	
 	    	$('body').empty();
@@ -102,6 +113,7 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
 	    
         showProfile: function (userid) {
         	var self = this;
+        	this.cancelAjaxRequests();
 	        self.loadStyles();
            $('body').empty();
            // $('#main-header').empty();
@@ -124,6 +136,7 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
         },
 		
         showProfileSetting: function (userid) {
+            this.cancelAjaxRequests();
             this.loadStyles();
             
             $('body').empty();
@@ -139,6 +152,7 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
         },
         
         ShowUserResume: function (userid) {
+            this.cancelAjaxRequests();
             this.loadStyles();
             $('body').empty();
             chromeBootstrap();
@@ -155,6 +169,7 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
         
 		  //imageupProfile: function(){
         imageUp: function () {
+        	this.cancelAjaxRequests();
 			this.loadStyles();
 			//chromeBootstrap();
             
@@ -164,7 +179,7 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
 
 	    videoPreview: function () {
 		   
-             
+             this.cancelAjaxRequests();
             this.loadStyles();
 		   // chromeBootstrap();
 		    //$('body').empty();
@@ -183,6 +198,7 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
 	    },
         
         showGame: function (id) {
+        	this.cancelAjaxRequests();
             this.loadStyles();
             
            $('body').empty();
@@ -206,7 +222,7 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
         },
         
         showTeam: function(id) {
-            
+            this.cancelAjaxRequests();
 			this.loadStyles();
            // alert('test showteam');
             $('body').empty();
@@ -223,6 +239,7 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
         },
         
         showRegistration: function() {
+        	this.cancelAjaxRequests();
             this.loadStyles();
             
             $('body').empty();
@@ -238,7 +255,7 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
         },
         
         showTag: function (userid) {
-           alert("tag");
+           this.cancelAjaxRequests();
             this.loadStyles();
             $('body').empty();
             chromeBootstrap();
@@ -254,6 +271,7 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
         },
         
         showAddGame : function(userid){
+        	this.cancelAjaxRequests();
         	this.loadStyles();
             $('body').empty();
             chromeBootstrap();
