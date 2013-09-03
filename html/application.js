@@ -171,9 +171,9 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
            // chromeBootstrap();chromeBootstrap();
 		    //console.log(VideoPreviewController);
 
-		    function initVideoPreview()
+		    function initVideoPreview(url,attr)
 		    {
-			    var VidPrevCtrl = new VideoPreviewController();
+			    var VidPrevCtrl = new VideoPreviewController({"url":url,"attr":attr});
 			    //console.log(VidPrevCtrl);
 		    }
 			//** creating a call back list and adding the method
