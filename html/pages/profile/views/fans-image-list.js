@@ -4,17 +4,17 @@
 define(['facade', 'utils', 'media/views/image-list'],
 function(facade,  utils,   BaseImageListView) {
 
-    var ProfileImageListView;
+    var FansImageListView;
 
-    ProfileImageListView = BaseImageListView.extend({
+    FansImageListView = BaseImageListView.extend({
 
 	    imagetype: 'large_thumb',
-		name: "Image List",
+		name: "fans List",
         setupAddView: function() {
             
         }
 
     });
 
-    return ProfileImageListView;
+    return FansImageListView;
 });

@@ -7,7 +7,7 @@ define([
         'vendor', 
         'views',
         'utils', 
-        'text!profile/templates/sport-item.html',
+        'text!profile/templates/sport-team.html',
         'profile/collections/teams',
         'sportorg/views/team-list'
         ], 

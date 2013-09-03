@@ -19,19 +19,21 @@ define([
 	"profile/collections/relateds",
 	"profile/collections/fitnessbasics",
 	"profile/collections/videos",
-	"profile/collections/images",
+	"profile/collections/image-videos",
 	"profile/collections/commentsof",
 	"profile/collections/commentson",
-
+	"profile/collections/fans",
 	"profile/views/header",
 	"profile/views/add-media",
 	"sportorg/views/org-list",
 	"user/views/related-list",
 	"user/views/fitnessbasic-list",
 	"profile/views/video-list",
-	"profile/views/image-list",
+	"profile/views/image-video-list",
 	"profile/views/commentof-list",
-	"profile/views/commenton-list"
+	"profile/views/commenton-list",
+	"profile/views/fans-image-list"
+	
 ],
 	function (require, pageLayoutTemplate) {
 
@@ -47,21 +49,23 @@ define([
 			ProfileOrgList = require("profile/collections/orgs"),
 			ProfileRelatedList = require("profile/collections/relateds"),
 			ProfileFitnessBasicList = require("profile/collections/fitnessbasics"),
-			ProfileVideoList = require("profile/collections/videos"),
-			ProfileImageList = require("profile/collections/images"),
+			ProfileImageList = require("profile/collections/image-videos"),
+			//ProfileImageList = require("profile/collections/images"),
 			ProfileCommentOfList = require("profile/collections/commentsof"),
 			ProfileCommentOnList = require("profile/collections/commentson"),
-
+			FansImageList = require("profile/collections/fans"),
+			
 			ProfileHeaderView = require("profile/views/header"),
 			ProfileAddMediaView = require("profile/views/add-media"),
 			ProfileOrgListView = require("sportorg/views/org-list"),
 			ProfileRelatedListView = require("user/views/related-list"),
 			ProfileFitnessBasicListView = require("user/views/fitnessbasic-list"),
-			ProfileVideoListView = require("profile/views/video-list"),
-			ProfileImageListView = require("profile/views/image-list"),
+			ProfileImageListView = require("profile/views/image-video-list"),
+			//ProfileImageListView = require("profile/views/image-list"),
 			ProfileCommentOfListView = require("profile/views/commentof-list"),
 			ProfileCommentOnListView = require("profile/views/commenton-list"),
-
+			FansImageListView = require("profile/views/fans-image-list"),
+			
 			MediaImageModel = require("media/models/image");
 
 		LayoutView = views.LayoutView,
@@ -119,11 +123,15 @@ define([
 				this.commentson = new ProfileCommentOnList();
 				this.commentson.id = this.id;
 				this.commentson.fetch();
+		
+				this.fans = new FansImageList();
+				this.fans.id = this.id;
+				this.fans.fetch();
 
 				this.images = new ProfileImageList();
 				this.images.id = this.id;
 				this.images.fetch();
-
+				
 				var controller = this;
 
 				function callback(sport_id) {
@@ -144,15 +152,20 @@ define([
 					controller.fitnessbasics.sport_id = sport_id;
 					controller.fitnessbasics.fetch();
 
-					controller.videos = new ProfileVideoList();
-					controller.videos.id = controller.id;
-					controller.videos.sport_id = sport_id;
-					controller.videos.fetch();
+					//controller.videos = new ProfileVideoList();
+					//controller.videos.id = controller.id;
+					//controller.videos.sport_id = sport_id;
+					//controller.videos.fetch();
 
 					controller.images = new ProfileImageList();
 					controller.images.id = controller.id;
 					controller.images.sport_id = sport_id;
 					controller.images.fetch();
+					
+					controller.fans = new FansImageList();
+					controller.fans.id = controller.id;
+					controller.fans.sport_id = sport_id;
+					controller.fans.fetch();
 
 					controller.handleDeferredsDynamic();
 				}
@@ -193,14 +206,20 @@ define([
 					controller.setupFitnessBasicListView();
 				});
 
-				$.when(this.videos.request).done(function () {
-					controller.setupVideoListView();
-				});
+				//$.when(this.videos.request).done(function () {
+				//	controller.setupVideoListView();
+				//});
 
 				$.when(this.images.request).done(function (x) {
 					//console.log("Images Ready (called in profile.js handleDeferredDynamic)",x);
 					controller.setupImageListView();
 				});
+				
+				$.when(this.fans.request).done(function (x) {
+					controller.setupFansListView();
+				});
+				
+				
 			},
 
 			refreshPage: function () {
@@ -224,15 +243,21 @@ define([
 					if (~position) this.scheme.splice(position, 1);
 				}
 
-				if (this.videoListView) {
-					$(this.videoListView.destination).html('');
-					position = $.inArray(this.videoListView, this.scheme);
-					if (~position) this.scheme.splice(position, 1);
-				}
+				//if (this.videoListView) {
+				//	$(this.videoListView.destination).html('');
+				//	position = $.inArray(this.videoListView, this.scheme);
+				//	if (~position) this.scheme.splice(position, 1);
+				//}
 
 				if (this.imageListView) {
 					$(this.imageListView.destination).html('');
 					position = $.inArray(this.imageListView, this.scheme);
+					if (~position) this.scheme.splice(position, 1);
+				}
+				
+				if (this.fansListView) {
+					$(this.fansListView.destination).html('');
+					position = $.inArray(this.fansListView, this.scheme);
 					if (~position) this.scheme.splice(position, 1);
 				}
 			},
@@ -268,10 +293,9 @@ define([
 
 			setupOrgListView: function () {
 				var orgListView;
-
 				this.orgListView = new ProfileOrgListView({
 					collection: this.orgs,
-					destination: "#org-wrap"
+					destination: "#games_div"
 				});
 
 				this.scheme.push(this.orgListView);
@@ -320,10 +344,24 @@ define([
 
 				this.imageListView = new ProfileImageListView({
 					collection: this.images,
-					destination: "#image-wrap"
+					destination: "#image-wrap",
+					//model: Backbone.Model.extend(),
+					name: "imagesView"
 				});
 
 				this.scheme.push(this.imageListView);
+				this.layout.render();
+			},
+			
+			setupFansListView: function () {
+				this.fansListView = new FansImageListView({
+					collection: this.fans,
+					destination: "#fans-div",
+					//model: Backbone.Model.extend(),
+					name: "fansView"
+				});
+
+				this.scheme.push(this.fansListView);
 				this.layout.render();
 			},
 
@@ -345,19 +383,17 @@ define([
 
 			setupCommentOfListView: function () {
 				var commentOfListView;
-
 				commentOfListView = new ProfileCommentOfListView({
 					collection: this.commentsof,
 					destination: "#commentof-wrap"
 				});
-
 			//	this.scheme.push(commentOfListView);
 			//	this.layout.render();
 			},
 
 			setupCommentOnListView: function () {
 				var commentOnListView;
-
+				console.log(this.commentson);
 				this.commentOnListView = new ProfileCommentOnListView({
 					collection: this.commentson,
 					destination: "#commenton-wrap"
@@ -366,6 +402,8 @@ define([
 				this.scheme.push(this.commentOnListView);
 				this.layout.render();
 			},
+			
+			
 
 			setupLayout: function () {
 				var pageLayout;

@@ -119,7 +119,7 @@
 				return false;
 			}
 			$video_model = ORM::factory("Media_Video");
-			return $video_model->getTagedVideos($this->mainModel);
+			return $video_model->getTaggedVideos($this->mainModel);
 		}
 
 		public function action_get_teamrosters(){
@@ -148,7 +148,7 @@
 			}
 
 			$image_model = ORM::factory("Media_Image");
-			return $image_model->getTagedImages($this->mainModel);
+			return $image_model->getTaggedImages($this->mainModel);
 		}
 
 		/**

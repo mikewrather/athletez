@@ -38,8 +38,12 @@ function (
 	        console.log("profile payload = ", payload);
             var self = this;
             if (payload) {
+            	try {
                 var user_photo = payload.user.user_picture_obj.types.small_thumb.url;
 				self.$('.user-photo img').attr("src",user_photo);
+            	} catch(e) {
+            		console.log(e);
+            	}
             }
             
             return this;

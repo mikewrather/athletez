@@ -7,7 +7,7 @@
 define([
         'require', 
         'text!profile/templates/header.html', 
-        'text!profile/templates/sport-select.html',
+        'text!profile/templates/sports.html',
         'profile/models/basics',
         'facade', 
         'views',
@@ -41,7 +41,8 @@ function(require, profileHeaderTemplate, selectSportTemplate) {
         selectSportTemplate: selectSportTemplate,
         
         events: {
-            "change #select-sport": "selectSport"
+            //"change #select-sport": "selectSport",
+            'click .sports-icon-h' : 'selectSport'
         },
 
         initialize: function (options) {
@@ -56,12 +57,13 @@ function(require, profileHeaderTemplate, selectSportTemplate) {
             this.sports.fetch();
             $.when(this.sports.request).done(function() {
                 self.setupSportListView();
-                self.select_sport = self.$('#select-sport');
-                self.selectSport();
+                //self.select_sport = self.$('#select-sport');
+              	self.selectSport();
             });
         },
         
         setupSportListView: function() {
+        	console.log(this.sports);
             var self = this,
                 sportListView = new SportListView({
                     collection: this.sports
@@ -81,7 +83,8 @@ function(require, profileHeaderTemplate, selectSportTemplate) {
                     data["payload"][i] = collection.at(i).get('payload');
                 }
                 var markup = Mustache.to_html(self.selectSportTemplate, data);                                
-                self.$el.find('#sports-info').prepend(markup);
+                //self.$el.find('#sports-info').prepend(markup);
+                self.$el.find('.sports-h').html(markup);
             } else {
                 self.$el.find('#sports-info').html('');
             }                
@@ -102,11 +105,17 @@ function(require, profileHeaderTemplate, selectSportTemplate) {
             SectionView.prototype.render.call(this, domInsertion, dataDecorator, partials); 
         },
         
-        selectSport: function(event) {
-            var sport_id = this.select_sport.val();
-            this.$('.sport-info').stop().slideUp();
-            this.$('.sport-info-' + sport_id).stop().slideDown();
-            Channel('gamesports:select' + sport_id).publish();            
+        selectSport: function(e) {
+            var sport_id = (!e)?$(".sports-h a:first-child").data("id"):$(e.target).data("id");
+            //this.select_sport.val();
+            $(".sports-icon-h").removeClass('selected-sport-h');
+            $(".sports-icon-h[data-id="+sport_id+"]").addClass('selected-sport-h');
+            
+            if(sport_id) {
+	            this.$('.sport-info').stop().slideUp();
+	            this.$('.sport-info-' + sport_id).stop().slideDown();
+	            Channel('gamesports:select' + sport_id).publish();            
+        	}
         }
         
                 

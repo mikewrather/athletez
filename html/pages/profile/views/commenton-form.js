@@ -23,7 +23,8 @@ function(require, commentFormTemplate,    ProfileCommentFormModel,        BaseCo
 	    template: commentFormTemplate,
 
 	    events: {
-		    "click #comment-submit": "submitHandler"
+		    "click #comment-submit": "submitHandler",
+		    'click .add-comment-h': 'showCommentBox'
 	    },
 
         // **Method** `setOptions` - called by BaseView's initialize method
@@ -31,9 +32,13 @@ function(require, commentFormTemplate,    ProfileCommentFormModel,        BaseCo
             if (!this.collection) {
                 throw new Error("ProfileCommentOnFormView expected options.collection.");
             }
+            console.log("-------------------------->>");
+            console.log(this.collection.toJSON());
+            
             if (!this.model) {
 	            console.log("this.collection.id =", this.collection.id);
                 this.model = new ProfileCommentFormModel({id: this.collection.id});
+                console.log(this.model.toJSON());
                 this.model.fetch();
             }            
         },
@@ -42,9 +47,17 @@ function(require, commentFormTemplate,    ProfileCommentFormModel,        BaseCo
 		    e.preventDefault();
 		    this.createOnEnter(e);
 	    },
+	    
+	    showCommentBox: function() {
+	    	var $formDiv = this.$el.find('.add-comment-form-h');
+	    	if($formDiv.hasClass('hide'))
+	    		$formDiv.removeClass('hide');
+	    	else
+	    		$formDiv.addClass('hide');
+	    },
 
 	    refreshComments: function(e) {
-		    console.log("yyyy=", this.collection);
+		    //console.log("yyyy=", this.collection);
 		    this.$("#new-comment").val("");
 		},
         

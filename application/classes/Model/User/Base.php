@@ -20,6 +20,7 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 			'name' => 'get_full_name',
 			'num_followers' => 'get_num_followers',
 			'num_votes' =>'get_num_votes',
+			'height_ft' => 'get_height_ft',
 		),
 		'exclude_columns' => array(
 			'username','email','password','dob'
@@ -471,6 +472,14 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 //			)
 		);
 	}
+
+	public function get_height_ft()
+	{
+		if($this->height_in > 0)
+		{
+			return floor($this->height_in / 12) .'"' . $this->height_in%12 . "'";
+		}
+	}
 	 
 	public function getPrimaryVideo()
 	{
@@ -564,13 +573,21 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 	{
 		if($obj===NULL) $obj = $this;
 		$video = ORM::factory('Media_Video');
-		return $video->getTagedVideos($obj, $sports_id);
+		return $video->getTaggedVideos($obj, $sports_id);
 	}
 
-	public function getImages($obj, $sports_id = null){
+	public function getImages($obj, $sports_id = null)
+	{
 		if($obj===NULL) $obj = $this;
 		$image = ORM::factory('Media_Image');
-		return $image->getTagedImages($obj, $sports_id);
+		return $image->getTaggedImages($obj, $sports_id);
+	}
+
+	public function getMedia($obj, $sports_id = null)
+	{
+		if($obj===NULL) $obj = $this;
+		$image = ORM::factory('Media_Base');
+		return $image->getTaggedMedia($obj, $sports_id);
 	}
 
 	public function getUploadedImages($sports_id = null)

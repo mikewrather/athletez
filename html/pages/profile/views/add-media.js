@@ -42,9 +42,9 @@ function(require, profileAddMediaTemplate) {
 	    openAddImagePopup: function(event)
 	    {
 			 
-             var url = "/api/user/addimage/" + this.model.userid,
+             var id = $('.selected-sport-h').data('id'), url = "/api/user/addimage/" + this.model.userid,
 			    attr = {
-				    "sports_id" : $('select#select-sport').val()
+				    "sports_id" : id
 			    };
 		    Channel("add-image").publish(url,attr);
 	    }

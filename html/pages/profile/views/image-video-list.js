@@ -4,9 +4,9 @@
 define(['facade', 'utils', 'media/views/image-list'],
 function(facade,  utils,   BaseImageListView) {
 
-    var ProfileImageListView;
+    var ProfileImageVideoListView;
 
-    ProfileImageListView = BaseImageListView.extend({
+    ProfileImageVideoListView = BaseImageListView.extend({
 
 	    imagetype: 'large_thumb',
 		name: "Image List",
@@ -16,5 +16,5 @@ function(facade,  utils,   BaseImageListView) {
 
     });
 
-    return ProfileImageListView;
+    return ProfileImageVideoListView;
 });

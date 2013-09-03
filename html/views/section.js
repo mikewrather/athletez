@@ -116,9 +116,15 @@ define(['facade', 'views/base', 'utils'], function(facade, BaseView, utils) {
 				section.state('rendered');
 			}
 
+			
+
 
 			this.callbacks.add(setRenderedState);
 			this.__super__.render.call(this, domInsertion, dataDecorator, partials);
+			
+			// call a function after render which will be useful to do bind events after view is renderes
+			if(this.afterRender) this.afterRender(); 
+			
 		},
 
 		// **Method:** `display`
