@@ -44,10 +44,12 @@ function(require, profileAddMediaTemplate,application) {
 	    openAddImagePopup: function(event)
 	    {
 			 
-             var id = $('.selected-sport-h').data('id'), url = "/api/user/addimage/" + this.model.userid, url = "/api/user/addimage/" + this.model.userid,
+             var id = $('.selected-sport-h').data('id'), url = "/api/user/addimage/" + this.model.userid,
+                url = "/api/user/addimage/" + this.model.userid,
 			    attr = {
 				    "sports_id" : id
 			    };
+
 		    Channel("add-image").publish(url,attr);
 	    },
 		openAddvideoPopup: function(event){
@@ -55,7 +57,9 @@ function(require, profileAddMediaTemplate,application) {
 			//** firing the call back list
 			
 			
-			Channel('add-video').publish();
+			var url = "/api/user/addvideo/" + this.model.userid;
+			
+			Channel('add-video').publish(url);
 			
 		}
         
