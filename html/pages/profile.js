@@ -6,6 +6,7 @@
 define([
 	"require",
 	"text!profile/templates/layout.html",
+	"application",
 	"facade",
 	"controller",
 	"models",
@@ -32,18 +33,17 @@ define([
 	"profile/views/image-video-list",
 	"profile/views/commentof-list",
 	"profile/views/commenton-list",
-	"profile/views/fans-image-list"
-	
+	"profile/views/fans-image-list",
+	"application"
 ],
-	function (require, pageLayoutTemplate) {
-
+	function (require, pageLayoutTemplate, app) {
+console.log(app);
 		var ProfileController,
 			facade = require("facade"),
 			Controller = require("controller"),
 			models = require("models"),
 			views = require("views"),
 			utils = require("utils"),
-
 			ProfileBasicsModel = require("profile/models/basics"),
 			ProfileAddMediaModel = require("profile/models/addmedia"),
 			ProfileOrgList = require("profile/collections/orgs"),
@@ -78,13 +78,12 @@ define([
 			];
 
 		ProfileController = Controller.extend({
-
+			
 			initialize: function (options) {
-
+				
 				var self = this;
 				debug.log("start initialize");
 				Channel('load:css').publish(cssArr);
-
 				_.bindAll(self);
 
 				self.handleOptions(options);

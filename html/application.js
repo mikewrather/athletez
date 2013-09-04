@@ -8,15 +8,16 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
 	GameController, TeamController, RegistrationController, ProfileSetting,UserResume, SitePhraseList , TagController,AddGameController,loginModel, loginView ) {
 
 
-    var App,
-        ApplicationStates = collections.ApplicationStates,
+    //App;
+    	
+        var App, ApplicationStates = collections.ApplicationStates,
         $ = facade.$,
         _ = facade._,
         Backbone = facade.Backbone,
         Channel = utils.lib.Channel,
         debug = utils.debug;
 
-    App = Backbone.Router.extend({
+   		App = Backbone.Router.extend({
 
         routes: {
             '': 'defaultRoute',
@@ -62,9 +63,25 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
         initialize: function (options) {
             _.bindAll(this);
             this.addSubscribers();
-	        
+	       
 			Controller.prototype.appStates = new ApplicationStates();
 	        this.getPhrases();
+	        
+        },
+        
+        cancelAjaxRequests: function() {
+            if(typeof routing != "undefined" && typeof routing.ajaxRequests != "undefined" && routing.ajaxRequests.length) {
+            	for(var i in routing.ajaxRequests) {
+            		routing.ajaxRequests[i].abort();
+            	}
+            }
+        },
+        
+        initialiRoutesInit: function(fn) {
+        	routing.off('app-inited');
+            routing.on('app-inited', function(id) {
+            	fn(id);
+            });
         },
 
         defaultRoute: function () {
@@ -76,6 +93,7 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
            	//this.showGame();
             //this.showTeam();
            // alert("this profile");
+            
 			this.showHome(null);
         },
 
@@ -85,6 +103,7 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
 	    },
 	    
 	    showHome: function (action) {
+	    	this.cancelAjaxRequests();
 	    	this.loadStyles();
 	    	
 	    	$('body').empty();
@@ -102,6 +121,7 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
 	    
         showProfile: function (userid) {
         	var self = this;
+        	this.cancelAjaxRequests();
 	        self.loadStyles();
            $('body').empty();
            // $('#main-header').empty();
@@ -111,9 +131,11 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
 				var pCont = new ProfileController({
 	                "userId": userid==undefined ? headerModelId : userid
 	            });
-
             }
-            Channel('app-inited').subscribe(initProfile);
+            this.initialiRoutesInit(initProfile);
+
+            
+            //Channel('app-inited').subscribe(initProfile);
 
         },
 		imageUpListeners: function () {
@@ -124,6 +146,7 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
         },
 		
         showProfileSetting: function (userid) {
+            this.cancelAjaxRequests();
             this.loadStyles();
             
             $('body').empty();
@@ -134,11 +157,12 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
                 	"id": userid==undefined ? id : userid
                 });
             }
-            
-            Channel('app-inited').subscribe(initProfileSetting);
+            this.initialiRoutesInit(initProfileSetting);
+            //Channel('app-inited').subscribe(initProfileSetting);
         },
         
         ShowUserResume: function (userid) {
+            this.cancelAjaxRequests();
             this.loadStyles();
             $('body').empty();
             chromeBootstrap();
@@ -149,22 +173,25 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
                 	"id": userid==undefined ? id : userid
                 });
             }
-            
-            Channel('app-inited').subscribe(initUserResume);
+             this.initialiRoutesInit(initUserResume);
+            //Channel('app-inited').subscribe(initUserResume);
         },
         
 		  //imageupProfile: function(){
         imageUp: function () {
+        	this.cancelAjaxRequests();
 			this.loadStyles();
 			//chromeBootstrap();
             
             function initImage(id){ var imageController = new ImageController({"route": "","url":this.posturl,"attr":this.attribute}); }
-            Channel('app-inited').subscribe(initImage);
+            this.initialiRoutesInit(initImage);
+            
+            //Channel('app-inited').subscribe(initImage);
 		},
 
 	    videoPreview: function () {
 		   
-             
+             this.cancelAjaxRequests();
             this.loadStyles();
 		   // chromeBootstrap();
 		    //$('body').empty();
@@ -183,6 +210,7 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
 	    },
         
         showGame: function (id) {
+        	this.cancelAjaxRequests();
             this.loadStyles();
             
            $('body').empty();
@@ -201,12 +229,12 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
                     "gameId" : id
                 });
             }
-            
-            Channel('app-inited').subscribe(initGame);
+             this.initialiRoutesInit(initGame);
+            //Channel('app-inited').subscribe(initGame);
         },
         
         showTeam: function(id) {
-            
+            this.cancelAjaxRequests();
 			this.loadStyles();
            // alert('test showteam');
             $('body').empty();
@@ -218,11 +246,12 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
                     "teamId": id
                 })
             }
-            
-            Channel('app-inited').subscribe(initTeam);
+            this.initialiRoutesInit(initTeam);
+           // Channel('app-inited').subscribe(initTeam);
         },
         
         showRegistration: function() {
+        	this.cancelAjaxRequests();
             this.loadStyles();
             
             $('body').empty();
@@ -233,27 +262,27 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
                     "route": ""
                 })
             }
-            
-            Channel('app-inited').subscribe(initRegistration);
+            this.initialiRoutesInit(initRegistration);
+            //Channel('app-inited').subscribe(initRegistration);
         },
         
         showTag: function (userid) {
-           alert("tag");
+           this.cancelAjaxRequests();
             this.loadStyles();
             $('body').empty();
             chromeBootstrap();
 
             function initTag(id) {
-            	
                 var tag = new TagController({
                 	"id": userid==undefined ? id : userid
                 });
             }
-            
-            Channel('app-inited').subscribe(initTag);
+            this.initialiRoutesInit(initTag);
+           // Channel('app-inited').subscribe(initTag);
         },
         
         showAddGame : function(userid){
+        	this.cancelAjaxRequests();
         	this.loadStyles();
             $('body').empty();
             chromeBootstrap();
@@ -264,8 +293,8 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
                 	"id": userid==undefined ? id : userid
                 });
             }
-            
-            Channel('app-inited').subscribe(initAddGame);
+           this.initialiRoutesInit(initAddGame); 
+            //Channel('app-inited').subscribe(initAddGame);
 
         },
         

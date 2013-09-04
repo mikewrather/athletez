@@ -98,6 +98,7 @@ define(['facade', 'utils'], function(facade, utils) {
 			$('.field-error').stop().fadeOut();
 
 			/*Print Error on screen*/
+			try {
 			var resultJson = $.parseJSON(response.responseText);
 			var exec_data = "";
 			var desc = "";
@@ -155,6 +156,9 @@ define(['facade', 'utils'], function(facade, utils) {
 				}
 				if (messages != '')
 					self.showSuccessMessage(messages);
+			}
+			} catch(e) {
+				console.log(e);
 			}
 		},
 		

@@ -28,6 +28,7 @@ function(facade, collections, models, utils) {
 
     // Contoller Constructor 
     Controller = function (options) {
+    	
         options = options || {};
         this.route = options.route;
         if (!Controller.prototype.appStates) {
@@ -52,7 +53,6 @@ function(facade, collections, models, utils) {
     // Use as a template for contrete controller prototypes with 
     // YourController = Controller.extend({ /*...*/ });
     Controller.prototype = {
-
         // Public Methods
         // --------------
 
