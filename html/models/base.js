@@ -180,6 +180,7 @@ define(['facade', 'utils'], function(facade, utils) {
 			}
 			_.extend(options, ajaxOptions);
 			return this.request = Backbone.Model.prototype.fetch.call(this, options);
+			
 		},
 
 		// Default success and error handlers used with this.fetch() ...

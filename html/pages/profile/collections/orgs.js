@@ -22,5 +22,5 @@ function(facade, SportorgOrgList, utils) {
 
     });
 
-    return ProfileOrgList;
+   return ProfileOrgList;
 });
