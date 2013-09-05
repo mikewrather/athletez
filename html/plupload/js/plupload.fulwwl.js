@@ -1667,7 +1667,6 @@
                     k.push(new a.File(p, l.name, l.size))
                 }
                 if (m) {
-
                     g.trigger("FilesAdded", k)
                 }
             }
@@ -2144,8 +2143,6 @@
                     })
                 }
                 E.onchange = function () {
-                    var URL = window.URL || window.webkitURL;
-                    window.fileURL = URL.createObjectURL(this.files[0]);
                     o(this.files);
                     this.value = ""
                 };
@@ -3058,10 +3055,9 @@
                     }
                     b.addEvent(A, "change", function (G) {
                         var E = G.target,
-                           
+                            
 							D, F = [],
                             H;
-
                         if (E.value) {
                             e("form_" + q).style.top = -1048575 + "px";
                             D = E.value.replace(/\\/g, "/");
