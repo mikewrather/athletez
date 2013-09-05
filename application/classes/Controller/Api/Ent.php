@@ -39,6 +39,7 @@
 		{
 			$this->payloadDesc = "Basic info on an entity";
 
+
 		
 		}
 		
@@ -161,10 +162,37 @@
 		public function action_post_vote()
 		{
 			$this->payloadDesc = "Post a Vote on a specific subject";
-
+		//	return $this->anon_sub_req('addvote');
 		
 		}
-		
+
+		protected function anon_sub_req($call=FALSE)
+		{
+			if(!isset($this->myID) && isset($this->myID2))
+			{
+				//throw error
+			}
+
+			$class_data = Model_Site_Enttype::getConfigByID($this->myID);
+
+			// cannot send this request because it will try to instantiate sub-request controller with this model's id
+			$req_uri = $call ? '/api/'. $class_data['api_name'] .'/'.$call.'/' : '/api/'. $class_data['api_name'] .'/'.$this->request->action.'/' ;
+
+			$req = new Request($req_uri);
+			$req->method($this->request->method());
+			$req->post($this->request->post());
+			$req->sr_id = $this->myID2;
+			$req->cookie($this->request->cookie());
+
+			$resp = new Response();
+
+			$controller_name = 'Controller_Api_' . ucfirst($class_data['api_name']);
+			$controller_fn = 'action_' . strtolower($this->request->method()) . '_' . $this->request->action();
+
+			$sr_controller = new $controller_name($req,$resp);
+			$result = $sr_controller->$controller_fn();
+			return $result;
+		}
 		/**
 		 * action_post_follow() Follow a Subject
 		 * via /api/ent/follow/{subject_type_id}/subject_id
@@ -173,8 +201,7 @@
 		public function action_post_follow()
 		{
 			$this->payloadDesc = "Follow a Subject";
-
-		
+			return $this->anon_sub_req();
 		}
 		
 		/**
