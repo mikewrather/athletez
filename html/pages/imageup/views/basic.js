@@ -55,10 +55,10 @@ function(require, imageBasicTemplate) {
 
 			$('#imgUploadModal').modal('show') ;
 		    $('#imgUploadModal').on('hidden', function () {
-		    	Channel('refresh-onImageUpload').publish();
+		    	routing.trigger('refresh-onImageUpload');
 		    });
 			$('#imgUploadModal').on('hide', function () {
-		    	Channel('refresh-onImageUpload').publish();
+		    	routing.trigger('refresh-onImageUpload');
 		    });
 		    console.log($(".modal-body").html());
         },
@@ -90,7 +90,7 @@ function(require, imageBasicTemplate) {
 				  {
 					data={"data":dataum};
 					$('#image_file').attr('disabled', 'disabled')
-					Channel("imageup-preview").publish(data);
+					routing.trigger("imageup-preview", data);
 				  }
 				  _self.hideLoader();
 				};
@@ -123,7 +123,7 @@ function(require, imageBasicTemplate) {
 				  if(k==files.length)
 				  {
 					data={"data":dataum};
-					Channel("imageup-preview").publish(data);
+					routing.trigger("imageup-preview", data);
 				  	_self.hideLoader();
 				  }
 				  
@@ -150,7 +150,7 @@ function(require, imageBasicTemplate) {
 			if($(".previewimg").length==0)
 			{
 				var msg={"msg":"Image Field Empty","color":"alert-error"};
-				Channel( "imageup-msg").publish(msg);	
+				routing.trigger("imageup-msg", msg);	
 				$("#imageup").removeAttr("disabled");
 			}
 			else if(this.files_drag.length>=1)
@@ -168,7 +168,7 @@ function(require, imageBasicTemplate) {
 							data.append(attrname,thiss.attr[attrname]);
 						}
 						var dataum={"dataum":data,"id":i,"len":len};
-						Channel("imageup-add-image").publish(dataum);
+						routing.trigger("imageup-add-image", dataum);
 					}
 				});
 				this.files_drag=[];
@@ -189,7 +189,7 @@ function(require, imageBasicTemplate) {
 							data.append(attrname,thiss.attr[attrname]);
 						}	
 						var dataum={"dataum":data,"id":i,"len":$('#image_file')[0].files.length};
-						Channel("imageup-add-image").publish(dataum);
+						routing.trigger("imageup-add-image", dataum);
 					}
 				});
 				$("#imageup").removeAttr("disabled");

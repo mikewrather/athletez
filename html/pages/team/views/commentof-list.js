@@ -4,11 +4,11 @@
 define(['facade', 'utils', 'site/views/comment-list'],
 function(facade,   utils,   BaseCommentListView) {
 
-    var ProfileCommentOfListView;
+    var TeamCommentOfListView;
 
-    ProfileCommentOfListView = BaseCommentListView.extend({
+    TeamCommentOfListView = BaseCommentListView.extend({
         
-       // name: "Commentof List",
+        name: "team Commentof List",
         
         setupFormView: function () {
             
@@ -16,5 +16,5 @@ function(facade,   utils,   BaseCommentListView) {
 
     });
 
-    return ProfileCommentOfListView;
+    return TeamCommentOfListView;
 });

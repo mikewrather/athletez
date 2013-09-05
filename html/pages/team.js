@@ -21,11 +21,15 @@ define([
     "team/collections/videos",
     "team/collections/images",
     "team/collections/comments",
+    "profile/collections/commentsof",
+	"profile/collections/commentson",
     
     "team/views/header",
     "team/views/add-media",
     "sportorg/views/schedule-list",
     "sportorg/views/competitorteam-list",
+    "team/views/commentof-list",
+	"team/views/commenton-list",
     "sportorg/views/roster-list",
     "team/views/video-list",
     "team/views/image-list",
@@ -50,7 +54,8 @@ define([
         TeamVideoList = require("team/collections/videos");
         TeamImageList = require("team/collections/images");
         TeamCommentList = require("team/collections/comments");
-        
+        TeamCommentOfList = require("profile/collections/commentsof"),
+		TeamCommentOnList = require("profile/collections/commentson"),
         TeamHeaderView = require("team/views/header"),
         TeamAddMediaView = require("team/views/add-media"),
         TeamScheduleListView = require("sportorg/views/schedule-list"),
@@ -59,6 +64,8 @@ define([
         TeamVideoListView = require("team/views/video-list"),
         TeamImageListView = require("team/views/image-list"),
         TeamCommentListView = require("team/views/comment-list"),
+        TeamCommentOfListView = require("team/views/commentof-list"),
+		TeamCommentOnListView = require("team/views/commenton-list")
         
         LayoutView = views.LayoutView,
         $ = facade.$,
@@ -75,7 +82,7 @@ define([
             Channel('load:css').publish(cssArr);
 
             _.bindAll(this);
-
+			
             this.handleOptions(options);
             
             this.init();
@@ -85,6 +92,7 @@ define([
         
         handleOptions: function(options) {
         	this.id = options.teamId;
+        	this.userId = options.userId;
         },
         
         init: function() {
@@ -101,6 +109,14 @@ define([
             
             this.addmedia = new TeamAddMediaModel();
             this.addmedia.id = this.id;
+            
+            //this.commentsof = new TeamCommentOfList();
+			//this.commentsof.id = 425983;//this.id;
+			//this.commentsof.fetch();
+
+			this.commentson = new TeamCommentOnList();
+			this.commentson.id = this.userId;
+			this.commentson.fetch();
             
             var controller = this;
             
@@ -168,7 +184,40 @@ define([
                 controller.setupHeaderView();  
                 controller.setupAddMediaView();                              
             });
+            
+            //$.when(this.commentsof.request).done(function () {
+			//	controller.setupCommentOfListView();
+			//});
+
+
+			$.when(this.commentson.request).done(function () {
+				controller.setupCommentOnListView();
+			});
         },
+        
+        setupCommentOfListView: function () {
+			var commentOfListView;
+			commentOfListView = new TeamCommentOfListView({
+				collection: this.commentsof,
+				destination: ".commentsoff-outer-box-h",
+				name: "team comments off view"
+			});
+		//	this.scheme.push(commentOfListView);
+		//	this.layout.render();
+		},
+
+		setupCommentOnListView: function () {
+			var commentOnListView;
+			console.log(this.commentson);
+			this.commentOnListView = new TeamCommentOnListView({
+				collection: this.commentson,
+				destination: ".commentson-outer-box-h",
+				name: "team comments on view"
+			});
+
+			this.scheme.push(this.commentOnListView);
+			this.layout.render();
+		},
         
         refreshPage: function() {
             var position;

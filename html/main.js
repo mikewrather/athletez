@@ -132,6 +132,8 @@ define([
 				Backbone.noConflict();
 				routing = new app();
 				routing.ajaxRequests = [];
+				routing.intializeImageAndVideo();
+				// bind common triggers
 				Backbone.history.start({});
             });
 		}
