@@ -83,10 +83,32 @@ define([
 				controller.rerender();
 			}
 			
-			Channel('imageup-add-image').subscribe(imageuploader);
-			Channel('imageup-msg').subscribe(msgShow);
-			Channel('imageup-preview', 'unique').subscribe(previewShow);
-			Channel('imageup-rerender').subscribe(rerenderShow);
+			
+			routing.off('imageup-add-image');
+            routing.on('imageup-add-image', function(param) {
+            	imageuploader(param);
+            });
+            
+            routing.off('imageup-msg');
+            routing.on('imageup-msg', function(param) {
+            	msgShow(param);
+            });
+            
+            routing.off('imageup-preview');
+            routing.on('imageup-preview', function(param) {
+            	previewShow(param);
+            });
+            
+            routing.off('imageup-rerender');
+            routing.on('imageup-rerender', function(param) {
+            	rerenderShow(param);
+            });
+			
+			
+			//Channel('imageup-add-image').subscribe(imageuploader);
+			//Channel('imageup-msg').subscribe(msgShow);
+			//Channel('imageup-preview', 'unique').subscribe(previewShow);
+			//Channel('imageup-rerender').subscribe(rerenderShow);
 		},
         showuploader: function () {
             //this.basics = new ImageBasicModel();
@@ -131,7 +153,7 @@ define([
 		    debug.log("Preview View Show");
 			this.scheme.push(previewShowView);
 			$("#preview").show();
-		    Channel("imageup-rerender").publish();		  
+		    routing.trigger("imageup-rerender");		  
 		},
 		rerender: function(){
 			    this.showuploader();	
@@ -161,7 +183,7 @@ define([
 					$("#preview_"+id).fadeOut("slow");
 					$("#preview_"+id+"rot").fadeOut("slow");
 
-				    Channel("image-upload-success").publish(data);
+				     routing.trigger("image-upload-success");
 
 					debug.log(data);
 					$("imageup").attr("disabled", "disabled");
@@ -169,7 +191,7 @@ define([
 					if(thiss.count == length)
 					{
 						msg={"msg":" File Uploaded Succesfully","color":"alert-success"};
-						Channel("imageup-msg").publish(msg);
+						 routing.trigger("imageup-msg");
 						$("#imageup").removeAttr("disabled");
 						$("#image_file").removeAttr("disabled");
 						$(".closepreview").removeAttr("disabled");	
@@ -182,7 +204,7 @@ define([
 					$("#preview_"+id).fadeIn("slow").html("<b>Upload Error!</b>");
 					debug.log(data);
 						msg={"msg":data.statusText,"color":"alert-error"};
-						Channel("imageup-msg").publish(msg);
+						 routing.trigger("imageup-msg",msg);
 						$("#imageup").removeAttr("disabled");
 						$("#image_file").removeAttr("disabled");
 						$(".closepreview").removeAttr("disabled");
@@ -204,7 +226,7 @@ define([
             debug.log("Error View Show");
             this.scheme.push(addErrorView);
 			$("#errormsg").show();
-			Channel("imageup-rerender").publish();	
+			 routing.trigger("imageup-rerender");	
 		}
 
     });

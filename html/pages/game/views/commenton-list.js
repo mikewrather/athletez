@@ -4,12 +4,12 @@
 define(['facade', 'utils', 'site/views/comment-list', 'profile/views/commenton-form', 'site/collections/comments'],
 function(facade,   utils,   BaseCommentListView,       ProfileCommentFormView, SiteCommentList) {
 
-    var ProfileCommentOnListView, _ = facade._,
+    var GameCommentOnListView, _ = facade._,
         Channel = utils.lib.Channel;
 
-	ProfileCommentOnListView = BaseCommentListView.extend({
+	GameCommentOnListView = BaseCommentListView.extend({
 
-       // name: "Commenton List",
+       name: "games comments on view",
 	    initialize: function (options) {
 		    _.bindAll(this);
 
@@ -77,5 +77,5 @@ function(facade,   utils,   BaseCommentListView,       ProfileCommentFormView, S
         }
     });
 
-    return ProfileCommentOnListView;
+    return GameCommentOnListView;
 });

@@ -49,8 +49,9 @@ function(require, profileAddMediaTemplate,application) {
 			    attr = {
 				    "sports_id" : id
 			    };
-
-		    Channel("add-image").publish(url,attr);
+			
+			routing.trigger('add-image', url, attr);
+		    //Channel("add-image").publish(url,attr);
 	    },
 		openAddvideoPopup: function(event){
 			

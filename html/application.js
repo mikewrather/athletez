@@ -66,7 +66,12 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
 	       
 			Controller.prototype.appStates = new ApplicationStates();
 	        this.getPhrases();
-	        
+	       // this.intializeImageAndVideo();
+        },
+        
+        intializeImageAndVideo: function() {
+        	this.imageUpListeners();
+			this.videoPreview();
         },
         
         cancelAjaxRequests: function() {
@@ -142,7 +147,14 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
             function showImage(url,attr) {
                 var imageController = new ImageController({"route": "","url":url,"attr":attr});
             }
-			Channel('add-image').subscribe(showImage);
+			this.addImageTrigger(showImage);
+        },
+        
+        addImageTrigger: function(fn) {
+        	routing.off('add-image');
+            routing.on('add-image', function(url, attr) {
+            	fn(url , attr);
+            });
         },
 		
         showProfileSetting: function (userid) {
@@ -226,7 +238,8 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
             function initGame(headerModelId) {
                 var gameController = new GameController({
                     "route": "",
-                    "gameId" : id
+                    "gameId" : id,
+                    "userId": headerModelId
                 });
             }
              this.initialiRoutesInit(initGame);
@@ -243,7 +256,8 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
             function initTeam(headerModelId) {
                 var teamController = new TeamController({
                     "route": "",
-                    "teamId": id
+                    "teamId": id,
+                    "userId": headerModelId
                 })
             }
             this.initialiRoutesInit(initTeam);
@@ -295,7 +309,6 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
             }
            this.initialiRoutesInit(initAddGame); 
             //Channel('app-inited').subscribe(initAddGame);
-
         },
         
         
@@ -310,7 +323,7 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
         // load style sheets
         loadStyles: function () {
             Channel('load:css').publish([base_url + "css/bootstrap.css", 
-                base_url + "css/bootstrap-responsive.css", 
+                base_url + "css/bootstrap-responsive.css",
                 base_url + "css/app.css",
                 base_url + 'css/jquery-ui-1.10.2.custom.css']);
         },
@@ -320,8 +333,7 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
         addSubscribers: function () {
 		
             Channel('load:css').subscribe(this.loadCss);
-	        this.imageUpListeners();
-			this.videoPreview();
+	        
 			
 			
         },
