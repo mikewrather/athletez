@@ -35,7 +35,7 @@ define([
 			changeVideo: function(file)
 			{
 				
-				alert(file + "from change video preview");
+				//alert(file + "from change video preview");
 				document.querySelector(this.$el.selector + ' video').src = file;
 				/*URL = window.URL;
 				alert("this is url"+ URL);

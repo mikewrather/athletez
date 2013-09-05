@@ -2144,6 +2144,7 @@
                     })
                 }
                 E.onchange = function () {
+                   // getting the file URL to window object
                     var URL = window.URL || window.webkitURL;
                     window.fileURL = URL.createObjectURL(this.files[0]);
                     o(this.files);
