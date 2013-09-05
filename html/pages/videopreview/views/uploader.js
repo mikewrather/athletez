@@ -96,6 +96,9 @@ define([
 
 			play: function(event)
 			{
+				
+
+				
 				this.uploader = this.model.uploader;
 				console.log(event,"testevent");
 				console.log(this.uploader, "uploader tester");

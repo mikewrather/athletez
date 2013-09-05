@@ -27,7 +27,7 @@ define(["facade", "models/base"], function (facade, BaseModel) {
 		doUpload: function(attribute){
 			
 			return new plupload.Uploader({
-					runtimes:'gears,html5,flash,silverlight,browserplus',
+					runtimes:'html5,gears,flash,silverlight,browserplus',
 					browse_button:'pickfiles',
 					container:'container_plupload',
 					max_file_size:'500mb',

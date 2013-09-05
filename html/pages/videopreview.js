@@ -125,6 +125,7 @@ define([
 				});
 				
 				try{
+					
 					vpm.uploader.init();
 				
 				}

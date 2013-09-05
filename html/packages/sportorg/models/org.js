@@ -12,6 +12,7 @@ define(["facade", "models/base"], function (facade, BaseModel) {
 
         
     });
-
+   
     return SportorgOrgModel;
+
 });

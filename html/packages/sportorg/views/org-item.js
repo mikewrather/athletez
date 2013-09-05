@@ -50,7 +50,7 @@ function (
 
         initialize: function (options) {
         	$("body").click(function(e) {
-        		e.preventDefault();
+        		//e.preventDefault();
         		if(!$(e.target).hasClass('team-info-h') && !$(e.target).hasClass('org-popup') && $(e.target).parents('.org-popup').length === 0) {
         			$('.org-popup').addClass('hide');
         		}
