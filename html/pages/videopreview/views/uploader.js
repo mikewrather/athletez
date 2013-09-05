@@ -97,16 +97,7 @@ define([
 			play: function(event)
 			{
 				
-				/*
-				console.log(event,"testevent");
-				console.log(this.uploader, "uploader tester");
-				//var id = event.target.id;
-				console.log($('#'+id),"event id tester");*/
-				//this.uploader = this.model.uploader;
-				//this.file = event.target.files[0];
-				//this.uploader.files[0];
-				//var fileURL = URL.createObjectURL(this.file);
-				//console.log(fileURL,"test file URL");
+				
 				var fileURL = window.fileURL
 				Channel('select-video-preview-change').publish(fileURL);
 				
