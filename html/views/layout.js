@@ -222,14 +222,14 @@ define(['facade','views/base','utils'], function (facade, BaseView, utils) {
             _.each(views, function (view) {
             	console.log("view.name",view.name);
                 var childView = layout.section(view.name);
-                if (childView.isRendered()) {
-                    childView.display(true);
-                } else if (childView.isNotRendered()) {
+               // if (childView.isRendered()) {
+                //    childView.display(true);
+               // } else if (childView.isNotRendered()) {
                     childView.render.call(childView);
                     childView.deferred.done(function () {
                         childView.display(true);
                     });
-                }
+               // }
             });
             if (callback && _.isFunction(callback)) {
                 callback();
