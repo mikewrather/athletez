@@ -32,7 +32,7 @@ define([
 			data: UploadVideoTemplate,
 
 			events: {
-				'change input': 'play',
+				'change input:file': 'play',
 				//"click #videoup": "videoUploadClick"
 				"click #uploadfiles" :"uploadFiles"
 			},
@@ -71,7 +71,7 @@ define([
 
 						// taking referrace of he uploader from model
 						
-						//this.uploader = this.model.uploader;
+						this.uploader = this.model.uploader;
 						
 						console.log(this.uploader,"up");
 						
@@ -97,15 +97,9 @@ define([
 			play: function(event)
 			{
 				
-
 				
-				this.uploader = this.model.uploader;
-				console.log(event,"testevent");
-				console.log(this.uploader, "uploader tester");
-				//var id = event.target.id;
-				console.log($('#'+id),"event id tester");
-				this.file = this.uploader.files[0];
-				Channel('select-video-preview-change').publish(this.file);
+				var fileURL = window.fileURL
+				Channel('select-video-preview-change').publish(fileURL);
 				
 			},
 

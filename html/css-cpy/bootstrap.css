@@ -127,12 +127,12 @@ input {
   line-height: normal;
 }
 
-button::-moz-focus-inner,
+/*button::-moz-focus-inner,
 input::-moz-focus-inner {
   padding: 0;
   border: 0;
 }
-
+*/
 button,
 html input[type="button"],
 input[type="reset"],
@@ -1236,7 +1236,7 @@ input[type="checkbox"]:focus {
   height: auto;
 }
 
-input:-moz-placeholder,
+/*input:-moz-placeholder,
 textarea:-moz-placeholder {
   color: #999999;
 }
@@ -1245,7 +1245,7 @@ input:-ms-input-placeholder,
 textarea:-ms-input-placeholder {
   color: #999999;
 }
-
+*/
 input::-webkit-input-placeholder,
 textarea::-webkit-input-placeholder {
   color: #999999;
@@ -3552,12 +3552,12 @@ input[type="submit"].btn {
   *padding-bottom: 3px;
 }
 
-button.btn::-moz-focus-inner,
+/*button.btn::-moz-focus-inner,
 input[type="submit"].btn::-moz-focus-inner {
   padding: 0;
   border: 0;
 }
-
+*/
 button.btn.btn-large,
 input[type="submit"].btn.btn-large {
   *padding-top: 7px;
@@ -4878,7 +4878,7 @@ input[type="submit"].btn.btn-mini {
        -o-transition: none;
           transition: none;
 }
-
+/*
 .navbar-inverse .navbar-search .search-query:-moz-placeholder {
   color: #cccccc;
 }
@@ -4886,6 +4886,7 @@ input[type="submit"].btn.btn-mini {
 .navbar-inverse .navbar-search .search-query:-ms-input-placeholder {
   color: #cccccc;
 }
+*/
 
 .navbar-inverse .navbar-search .search-query::-webkit-input-placeholder {
   color: #cccccc;
