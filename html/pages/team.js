@@ -165,12 +165,12 @@ define([
                 controller.images.season_id = season_id;
                 controller.images.fetch();
                 
-                controller.comments = new TeamCommentList();
-                controller.comments.id = controller.id;
-                controller.comments.sport_id = sport_id;
-                controller.comments.complevel_id = complevel_id;
-                controller.comments.season_id = season_id;
-                controller.comments.fetch();
+                //controller.comments = new TeamCommentList();
+                //controller.comments.id = controller.id;
+               // controller.comments.sport_id = sport_id;
+               // controller.comments.complevel_id = complevel_id;
+               /// controller.comments.season_id = season_id;
+               // controller.comments.fetch();
                 
                 controller.handleDeferredsDynamic();
             }
@@ -258,9 +258,9 @@ define([
                 if ( ~position ) this.scheme.splice(position, 1);
             }
             
-            if (this.commentListView) {
-                $(this.commentListView.destination).html('');
-                position = $.inArray(this.commentListView, this.scheme);
+            if (this.commentson) {
+                $(this.commentson.destination).html('');
+                position = $.inArray(this.commentson, this.scheme);
                 if ( ~position ) this.scheme.splice(position, 1);
             }
         },

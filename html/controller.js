@@ -69,6 +69,12 @@ function(facade, collections, models, utils) {
 
             return this;
         },
+        
+        generateRandomNumber: function() {
+        	var time = new Date().getTime();
+        	time = time + Math.floor((Math.random()*200)+1);
+        	return time;
+        },
 
         // Create methods as needed to add views to layout
         // add Section Views to this.sections['byName'] = sectionView 

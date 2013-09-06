@@ -21,7 +21,7 @@ function(facade, collections, SportorgComplevelModel, utils) {
         // **Method:** `fetchSuccess` - resolve the deferred here in success
         fetchSuccess: function (collection, response) {
             collection.reset();
-            var payload = response.payload;
+            var payload = response.payload || [];
             for (i = 0; i < payload.length; i++) {
                 var item = new SportorgComplevelModel();
                 item.id = Math.ceil(Math.random() * 100000);
