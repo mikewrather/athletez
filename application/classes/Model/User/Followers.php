@@ -160,7 +160,7 @@ class Model_User_Followers extends ORM
 
 	}
 
-	public function addFollower(user_model $user, ORM $object)
+	public function addFollower(Model_User_Base $user, ORM $object)
 	{
 		if(!$object->loaded()) return false;
 

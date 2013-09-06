@@ -15,7 +15,6 @@
 		public function __construct($request,$response)
 		{
 			parent::__construct($request,$response);
-
 			$this->setMainModel(ORM::factory('User_Base'));
             if (!$this->myID) 
                 $this->myID = $this->user->id;
