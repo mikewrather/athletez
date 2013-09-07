@@ -19,27 +19,34 @@ define([ 'require', 'text!votes/templates/vote.html','views', 'vendor', 'facade'
 	VoteView = SectionView.extend({
 		template: voteTemplate,
 		events: {
-			'click .team-action-h': 'voteClick',
-			'click .follow-action-h': 'followClick'
+			'click .team-action-h': 'vote',
+			'click .follow-action-h': 'follow'
 		},
 		
 		vote: function() {
-			//this.voteModel.save();
-			alert("vote click ");
+			this.voteModelOb.save();
 		},
 		
 		follow: function() {
-			//this.followModel.save();
-			alert(this.id);
+			this.followModelOb.save();
 		},
-		
 		
 		initialize : function(options) {
 			var _self = this;
-			var payload = this.model.get('payload');
+			
+			console.log(options);
+			
+			_.bindAll(this);
 			SectionView.prototype.initialize.call(this, options);
-			this.voteModel = new voteModel({id: this.id, entity_id: payload.enttypes_id});
-			this.followModel = new followModel({id: this.id, entity_id: payload.enttypes_id});
+			var payload = this.model.get('payload');
+			console.log(payload);
+			this.voteModelOb = new voteModel();
+			this.voteModelOb.id = options.userId;
+			this.voteModelOb.entity_id = payload.enttypes_id;
+			
+			this.followModelOb = new followModel();
+			this.followModelOb.id = options.userId;
+			this.followModelOb.entity_id = payload.enttypes_id;
 			// $(document).off('click', '.team-action-h');
 			// $(document).off('click', '.follow-action-h');
 			// $(document).on('click', '.team-action-h', function() {
@@ -52,7 +59,6 @@ define([ 'require', 'text!votes/templates/vote.html','views', 'vendor', 'facade'
 		
 		render: function (domInsertion, dataDecorator, partials) {
             SectionView.prototype.render.call(this, domInsertion, dataDecorator, partials); 
-        	//this.initVoteView();  
         }
 		
 	});

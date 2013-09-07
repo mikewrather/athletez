@@ -7,6 +7,7 @@ define([
 	"require",
 	"text!profile/templates/layout.html",
 	"application",
+	'votes/views/vote',
 	"facade",
 	"controller",
 	"models",
@@ -36,7 +37,7 @@ define([
 	"profile/views/fans-image-list",
 	"application"
 ],
-	function (require, pageLayoutTemplate, app) {
+	function (require, pageLayoutTemplate, app, voteView) {
 console.log(app);
 		var ProfileController,
 			facade = require("facade"),
@@ -177,6 +178,7 @@ console.log(app);
 
 				$.when(this.basics.request).done(function () {
 					controller.setupHeaderView();
+					controller.initVoteView();
 					controller.setupAddMediaView();
 				});
 
@@ -189,6 +191,18 @@ console.log(app);
 					controller.setupCommentOnListView();
 				});
 			},
+			
+			 // intialize vote view
+	        initVoteView: function() {
+	    	  var voteButtonsView = new voteView({
+	                name: "vote View",
+	                destination: '#votes-area-h',
+	                model: this.basics,
+	                userId: this.id
+	           });
+	           this.scheme.push(voteButtonsView);
+	           this.layout.render();
+	        },
 
 			handleDeferredsDynamic: function () {
 				var controller = this;

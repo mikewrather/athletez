@@ -6,6 +6,7 @@
 define([
 	"require",
 	"text!game/templates/layout.html",
+	 'votes/views/vote',
 	"facade",
 	"controller",
 	"models",
@@ -29,7 +30,7 @@ define([
 	"game/views/comment-list",
 	"game/views/commenton-list"
 
-], function (require, pageLayoutTemplate)
+], function (require, pageLayoutTemplate, voteView)
 {
 
 	var GameController,
@@ -125,6 +126,7 @@ define([
 
 			$.when(this.basics.request).done(function () {
 				controller.setupHeaderView();
+				controller.initVoteView();
 				controller.setupAddMediaView();
 			});
 
@@ -148,6 +150,18 @@ define([
 				controller.setupCommentsOnListView();
 			})
 		},
+		
+		// intialize vote view
+        initVoteView: function() {
+    	  var voteButtonsView = new voteView({
+                name: "vote View",
+                destination: '#votes-area-h',
+                model: this.basics,
+                userId: this.id
+           });
+           this.scheme.push(voteButtonsView);
+           this.layout.render();
+        },
 
 		setupHeaderView: function () {
 			var headerView;

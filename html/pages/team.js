@@ -397,7 +397,7 @@ define([
                 name: "vote View",
                 destination: '#votes-area-h',
                 model: this.basics,
-                id: this.id
+                userId: this.id
            });
            this.scheme.push(voteButtonsView);
            this.layout.render();
@@ -424,29 +424,7 @@ define([
                         
         setupLayout: function () {
             var pageLayout;
-            var teamLayout = LayoutView.extend({
-            	displayWhenReady: function (callback) {
-		            var views = this.scheme,
-		                layout = this;
-		            _.each(views, function (view) {
-		            	console.log("view.name",view.name);
-		                var childView = layout.section(view.name);
-		                //if (childView.isRendered()) {
-		               //     childView.display(true);
-		                //} else if (childView.isNotRendered()) {
-		                    childView.render.call(childView);
-		                    childView.deferred.done(function () {
-		                        childView.display(true);
-		                    });
-		               // }
-		            });
-		            if (callback && _.isFunction(callback)) {
-		                callback();
-		            }
-		       }
-            });
-            
-            pageLayout = new teamLayout({
+            pageLayout = new LayoutView({
                 scheme: this.scheme,
                 destination: "#main",
                 template: pageLayoutTemplate,
