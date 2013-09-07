@@ -6,6 +6,9 @@
 define([
     "require",
     "text!team/templates/layout.html",
+    'votes/views/vote',
+     
+     
     "facade",
     "controller",
     "models",
@@ -36,7 +39,7 @@ define([
     "team/views/comment-list"
     
     
-    ], function (require, pageLayoutTemplate) {
+    ], function (require, pageLayoutTemplate, voteView) {
 
     var TeamController,
         facade = require("facade"),
@@ -182,8 +185,11 @@ define([
 
             $.when(this.basics.request).done(function () {
                 controller.setupHeaderView();  
+                controller.initVoteView();
                 controller.setupAddMediaView();                              
             });
+            
+            
             
             //$.when(this.commentsof.request).done(function () {
 			//	controller.setupCommentOfListView();
@@ -308,6 +314,8 @@ define([
 
             this.scheme.push(headerView);            
             this.layout.render();
+            
+            this.initVoteView();
         },
         
         setupAddMediaView: function() {
@@ -383,6 +391,18 @@ define([
             this.layout.render();
         },
         
+        // intialize vote view
+        initVoteView: function() {
+    	  this.voteButtonsView = new voteView({
+                name: "vote View",
+                destination: '#votes-area-h',
+                model: this.basics,
+                id: this.id
+           });
+           this.scheme.push(this.voteButtonsView);
+           this.layout.render();
+        },
+        
         setupImages: function() {
             this.imageListView = new TeamImageListView({
                 collection: this.images,
@@ -392,6 +412,7 @@ define([
             this.scheme.push(this.imageListView);
             this.layout.render();
         },
+        
         
         setupComments: function() {
             this.commentListView = new TeamCommentListView({

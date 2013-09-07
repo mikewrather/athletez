@@ -8,6 +8,7 @@ define([
         'require', 
         'text!team/templates/header.html', 
         'text!team/templates/sport-select.html',
+        
         'team/models/basics',
         'facade', 
         'views',
@@ -15,6 +16,7 @@ define([
         'vendor',
         'team/collections/sports',
         'team/views/sport-list'
+        
         ], 
 function(require, headerTemplate, selectSportTemplate) {
 
@@ -47,7 +49,8 @@ function(require, headerTemplate, selectSportTemplate) {
 
         initialize: function (options) {
             SectionView.prototype.initialize.call(this, options);
-            this.initSportList();            
+            this.initSportList();   
+                   
         },
         
         initSportList: function () {
@@ -59,7 +62,7 @@ function(require, headerTemplate, selectSportTemplate) {
                 self.setupSportListView();
                 Channel('teamsports:fetch').publish();
                 self.select_sport = self.$('#select-sport');
-                self.selectSport();                
+                self.selectSport();
             });
         },
         
@@ -105,6 +108,7 @@ function(require, headerTemplate, selectSportTemplate) {
         
         render: function (domInsertion, dataDecorator, partials) {
             SectionView.prototype.render.call(this, domInsertion, dataDecorator, partials); 
+        	//this.initVoteView();  
         },
         
         selectSport: function(event) {

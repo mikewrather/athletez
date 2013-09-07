@@ -72,6 +72,7 @@ require.config({
         'sportorg'     : '/packages/sportorg',
         'location'     : '/packages/location',
         'sport'        : '/packages/sport',
+        'votes'         : '/packages/vote',
 	
         
         // Pages
