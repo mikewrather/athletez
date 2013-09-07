@@ -393,13 +393,13 @@ define([
         
         // intialize vote view
         initVoteView: function() {
-    	  this.voteButtonsView = new voteView({
+    	  var voteButtonsView = new voteView({
                 name: "vote View",
                 destination: '#votes-area-h',
                 model: this.basics,
                 id: this.id
            });
-           this.scheme.push(this.voteButtonsView);
+           this.scheme.push(voteButtonsView);
            this.layout.render();
         },
         
@@ -413,21 +413,40 @@ define([
             this.layout.render();
         },
         
-        
         setupComments: function() {
             this.commentListView = new TeamCommentListView({
                 collection: this.comments,
                 destination: "#comment-wrap"
             });
-            
             this.scheme.push(this.commentListView);
             this.layout.render();
         },
                         
         setupLayout: function () {
             var pageLayout;
-
-            pageLayout = new LayoutView({
+            var teamLayout = LayoutView.extend({
+            	displayWhenReady: function (callback) {
+		            var views = this.scheme,
+		                layout = this;
+		            _.each(views, function (view) {
+		            	console.log("view.name",view.name);
+		                var childView = layout.section(view.name);
+		                //if (childView.isRendered()) {
+		               //     childView.display(true);
+		                //} else if (childView.isNotRendered()) {
+		                    childView.render.call(childView);
+		                    childView.deferred.done(function () {
+		                        childView.display(true);
+		                    });
+		               // }
+		            });
+		            if (callback && _.isFunction(callback)) {
+		                callback();
+		            }
+		       }
+            });
+            
+            pageLayout = new teamLayout({
                 scheme: this.scheme,
                 destination: "#main",
                 template: pageLayoutTemplate,
