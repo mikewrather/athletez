@@ -133,8 +133,9 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
             //$('#main-content').empty();
            chromeBootstrap();
 			function initProfile(headerModelId) {
+				alert(headerModelId);
 				var pCont = new ProfileController({
-	                "userId": userid==undefined ? headerModelId : userid
+	                "userId": headerModelId
 	            });
             }
             this.initialiRoutesInit(initProfile);
