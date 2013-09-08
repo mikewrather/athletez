@@ -41,12 +41,15 @@ define([ 'require', 'text!votes/templates/vote.html','views', 'vendor', 'facade'
 			var payload = this.model.get('payload');
 			console.log(payload);
 			this.voteModelOb = new voteModel();
-			this.voteModelOb.id = options.userId;
+			this.voteModelOb.userId = options.userId;
 			this.voteModelOb.entity_id = payload.enttypes_id;
 			
+			this.voteModelOb.setData();
+			
 			this.followModelOb = new followModel();
-			this.followModelOb.id = options.userId;
+			this.followModelOb.userId = options.userId;
 			this.followModelOb.entity_id = payload.enttypes_id;
+			//this.followModelOb.setData();
 			// $(document).off('click', '.team-action-h');
 			// $(document).off('click', '.follow-action-h');
 			// $(document).on('click', '.team-action-h', function() {

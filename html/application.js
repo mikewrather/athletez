@@ -133,7 +133,6 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
             //$('#main-content').empty();
            chromeBootstrap();
 			function initProfile(headerModelId) {
-				alert(headerModelId);
 				var pCont = new ProfileController({
 	                "userId": headerModelId
 	            });
