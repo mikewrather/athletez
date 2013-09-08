@@ -125,7 +125,7 @@ define(['require', 'text!profilesetting/templates/highschool.html', 'text!profil
 		keyupState : function(e) {
 			var state = $(e.target).val();
 			var stateArr = [];
-			var isValidKey = self.isValidAutoCompleteKey(event);
+			var isValidKey = self.isValidAutoCompleteKey(e);
 			if (state != '') {
 				if (isValidKey == true) {
 					// Disable Schools Text Box
