@@ -60,23 +60,44 @@ class Model_Media_Queuedvideo extends ORM
 			return;
 		}
 
-		if(isset($this->local_file))
+		$this->is_processing = 1;
+		$this->save();
+
+		if(isset($this->local_file) && $this->local_file != '')
 		{
+			//check if file exists
+
+			//upload
 			$cloudRaw = s3::upload($this->local_file,$this->users_id);
+
+			//delete local file
 			unlink($this->local_file);
+
+			//unset the local file attribute
 			$this->local_file = '';
 		}
 		elseif(isset($this->url))
 		{
 			$cloudRaw = $this->url;
 		}
+		else
+		{
+			return;
+		}
+
+		$this->url = $cloudRaw;
+		$video = ORM::factory('Media_Video',$this->videos_id);
+		$video->jobID =
 
 		$zenres = Model_Media_Video::_zencode($cloudRaw);
 
-		$this->moviemasher_id = $zenres['randID'];
+		$this->mm_id = $zenres['randID'];
 		$this->jobID = $zenres['encoding_job']->id;
+		$video->jobID = $zenres['encoding_job']->id;
 		$this->complete = 1;
+		$this->is_processing = 0;
 		$this->save();
+		$video->save();
 
 		return $this;
 

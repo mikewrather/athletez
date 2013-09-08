@@ -27,7 +27,11 @@ class Controller_Api_Queuedvideo extends Controller_Api_Base
 	 */
 	public function action_get_process()
 	{
-		$queue = ORM::factory('Media_Queuedvideo')->find_all();
+		$queue = ORM::factory('Media_Queuedvideo')
+			->where('complete','=',0)
+			->where('is_processing','=',0)
+			->find_all();
+
 		$retArr = array();
 		foreach($queue as $waiting)
 		{
