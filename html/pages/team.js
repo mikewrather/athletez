@@ -117,8 +117,6 @@ define([
 			//this.commentsof.id = 425983;//this.id;
 			//this.commentsof.fetch();
 
-			
-            
             var controller = this;
             
             function callback(sport_id, complevel_id, season_id) {
