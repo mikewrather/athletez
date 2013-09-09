@@ -135,7 +135,7 @@ define([
 				controller.commentson.id = controller.id;
 				controller.commentson.fetch();
 				$.when(controller.commentson.request).done(function () {
-					controller.setupCommentOnListView();
+					controller.setupCommentsOnListView();
 				});
 			});
 

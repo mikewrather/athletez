@@ -275,7 +275,10 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
             //it getting headerModelId
           // $('#main-content').empty();
             
-            if(!id) id=1;
+            if(!id) { 
+            	this.notFound('team');
+            	return; 
+            }
              this.removeCurrent();
             function initGame(headerModelId) {
                 self.currentController = new GameController({
