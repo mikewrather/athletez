@@ -9,10 +9,10 @@ function(facade,   utils,   BaseCommentListView,       ProfileCommentFormView, S
 
 	TeamCommentOnListView = BaseCommentListView.extend({
 
-       name: "team comments off view",
 	    initialize: function (options) {
 		    _.bindAll(this);
-
+		    if(options.name)
+				this.name = options.name;
 		    //this.limitResults();
 		    this.options.collection = this.collection;
 		    BaseCommentListView.prototype.initialize.call(this, options);

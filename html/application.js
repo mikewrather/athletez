@@ -124,6 +124,13 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
 	    	initHome();
 	    },
 	    
+	    removeCurrent: function() {
+	    	/*if(this.currentController) {
+	    		console.log(this.currentController.layout);
+	    		this.currentController.remove();
+	    	}*/
+	    },
+	    
         showProfile: function (userid) {
         	var self = this;
         	this.cancelAjaxRequests();
@@ -132,9 +139,12 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
            // $('#main-header').empty();
             //$('#main-content').empty();
            chromeBootstrap();
+           self.removeCurrent();
 			function initProfile(headerModelId) {
-				var pCont = new ProfileController({
-	                "userId": headerModelId
+				
+				
+                self.currentController = new ProfileController({
+	                "userId": (typeof userid != "undefined")?userid:headerModelId
 	            });
             }
             this.initialiRoutesInit(initProfile);
@@ -143,6 +153,37 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
             //Channel('app-inited').subscribe(initProfile);
 
         },
+        
+        notFound: function(page) {
+        	alert("Page not found");
+        },
+        
+        
+         showTeam: function(id) {
+         	var self = this;
+            this.cancelAjaxRequests();
+			this.loadStyles();
+           // alert('test showteam');
+            $('body').empty();
+            chromeBootstrap();
+            if(!id) { 
+            	this.notFound('team');
+            	return; 
+            }
+            self.removeCurrent();
+            function initTeam(headerModelId) {
+            	
+                self.currentController = new TeamController({
+                    "route": "",
+                    "teamId": id,
+                    "userId": headerModelId
+                })
+            }
+            this.initialiRoutesInit(initTeam);
+           // Channel('app-inited').subscribe(initTeam);
+        },
+        
+        
 		imageUpListeners: function () {
             function showImage(url,attr) {
                 var imageController = new ImageController({"route": "","url":url,"attr":attr});
@@ -163,9 +204,9 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
             
             $('body').empty();
             chromeBootstrap();
-
+			 this.removeCurrent();
             function initProfileSetting(id) {
-                var profileSetting = new ProfileSetting({
+               self.currentController = new ProfileSetting({
                 	"id": userid==undefined ? id : userid
                 });
             }
@@ -178,10 +219,10 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
             this.loadStyles();
             $('body').empty();
             chromeBootstrap();
-
+			this.removeCurrent();
             function initUserResume(id) {
             	
-                var resume = new UserResume({
+                self.currentController = new UserResume({
                 	"id": userid==undefined ? id : userid
                 });
             }
@@ -209,7 +250,7 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
 		    //$('body').empty();
            // chromeBootstrap();chromeBootstrap();
 		    //console.log(VideoPreviewController);
-
+			
 		    function initVideoPreview(url,attr)
 		    {
 			    var VidPrevCtrl = new VideoPreviewController({"url":url,"attr":attr});
@@ -235,8 +276,9 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
           // $('#main-content').empty();
             
             if(!id) id=1;
+             this.removeCurrent();
             function initGame(headerModelId) {
-                var gameController = new GameController({
+                self.currentController = new GameController({
                     "route": "",
                     "gameId" : id,
                     "userId": headerModelId
@@ -246,23 +288,7 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
             //Channel('app-inited').subscribe(initGame);
         },
         
-        showTeam: function(id) {
-            this.cancelAjaxRequests();
-			this.loadStyles();
-           // alert('test showteam');
-            $('body').empty();
-            chromeBootstrap();
-            if(!id) id = 1;
-            function initTeam(headerModelId) {
-                var teamController = new TeamController({
-                    "route": "",
-                    "teamId": id,
-                    "userId": headerModelId
-                })
-            }
-            this.initialiRoutesInit(initTeam);
-           // Channel('app-inited').subscribe(initTeam);
-        },
+       
         
         showRegistration: function() {
         	this.cancelAjaxRequests();
@@ -270,9 +296,9 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
             
             $('body').empty();
             chromeBootstrap();
-            
+             this.removeCurrent();
             function initRegistration() {
-                var registrationController = new RegistrationController({
+                self.currentController = new RegistrationController({
                     "route": ""
                 })
             }
@@ -285,9 +311,9 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
             this.loadStyles();
             $('body').empty();
             chromeBootstrap();
-
+			 this.removeCurrent();
             function initTag(id) {
-                var tag = new TagController({
+                self.currentController = new TagController({
                 	"id": userid==undefined ? id : userid
                 });
             }
@@ -300,10 +326,10 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
         	this.loadStyles();
             $('body').empty();
             chromeBootstrap();
-
+			this.removeCurrent();
             function initAddGame(id) {
             	
-                var addGame = new AddGameController({
+                self.currentController = new AddGameController({
                 	"id": userid==undefined ? id : userid
                 });
             }
