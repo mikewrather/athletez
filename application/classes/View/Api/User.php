@@ -254,6 +254,8 @@
 
 				$obj = new stdClass();
 				$obj->name = $basic['sport']['sport_name'];
+				$obj->sports_name = $basic['sport']['sport_name'];
+				$obj->sports_id = $sports_id;
 				$references_arr[] = $basic;
 				$obj->references = $references_arr;
 				$grouped_array[$sports_id] = $obj;
@@ -478,6 +480,7 @@
 
 			// Scaffolding Code For Array:
 			$objs = $this->obj->find_all();
+
 			foreach($objs as $obj)
 			{
 				$obj->setUserID($this->obj->getUserID());
