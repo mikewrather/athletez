@@ -116,9 +116,9 @@ console.log(app);
 				this.addmedia = new ProfileAddMediaModel();
 				this.addmedia.id = this.id;
 
-				this.commentsof = new ProfileCommentOfList();
-				this.commentsof.id = this.id;
-				this.commentsof.fetch();
+				//this.commentsof = new ProfileCommentOfList();
+				//this.commentsof.id = this.id;
+				//this.commentsof.fetch();
 
 				this.commentson = new ProfileCommentOnList();
 				this.commentson.id = this.id;
@@ -182,9 +182,9 @@ console.log(app);
 					controller.setupAddMediaView();
 				});
 
-				$.when(this.commentsof.request).done(function () {
-					controller.setupCommentOfListView();
-				});
+				//$.when(this.commentsof.request).done(function () {
+				//	controller.setupCommentOfListView();
+				//});
 
 
 				$.when(this.commentson.request).done(function () {

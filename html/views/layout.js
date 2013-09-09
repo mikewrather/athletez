@@ -48,6 +48,8 @@ define(['facade','views/base','utils'], function (facade, BaseView, utils) {
             if (options) {
                 this.setOptions(options);
             }
+            
+            
             if (controller && controller.route) {
                 this.addController(controller);
             }
@@ -156,7 +158,7 @@ define(['facade','views/base','utils'], function (facade, BaseView, utils) {
         render: function (callback) {
         	
             var options = this.options;
-
+			console.log("--------------->>>>   "+options.displayWhen);
             if (options.displayWhen) {
                 if (options.displayWhen === 'ready') {
                     this.displayWhenReady(callback);
@@ -219,8 +221,10 @@ define(['facade','views/base','utils'], function (facade, BaseView, utils) {
             var views = this.scheme,
                 layout = this;
 
+
+			if(views.length) {
             _.each(views, function (view) {
-            	console.log("view.name",view.name);
+            	
                 var childView = layout.section(view.name);
                 if (childView.isRendered()) {
                     childView.display(true);
@@ -231,6 +235,7 @@ define(['facade','views/base','utils'], function (facade, BaseView, utils) {
                     });
                 }
             });
+            }
             if (callback && _.isFunction(callback)) {
                 callback();
             }
@@ -272,10 +277,11 @@ define(['facade','views/base','utils'], function (facade, BaseView, utils) {
             for(var i in this.scheme) { 
             	if(typeof this.scheme == "object") {
                 	this.scheme[i].destroy();
-                	//delete this.scheme[i];
+                	delete this.scheme[i];
                }
             }
-            this.scheme = [];
+            this.scheme = null;
+            this.schemeViewNames = null;
         },
 
         // **Method:** `remove`  

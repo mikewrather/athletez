@@ -48,6 +48,7 @@ function(require, headerTemplate, selectSportTemplate) {
         },
 
         initialize: function (options) {
+        	console.log(options);
             SectionView.prototype.initialize.call(this, options);
             this.initSportList();   
                    
