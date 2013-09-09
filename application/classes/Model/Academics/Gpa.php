@@ -66,6 +66,13 @@ class Model_Academics_Gpa extends ORM
 			$gpa_model = ORM::factory("Academics_Gpa");
 			$result = $gpa_model->where('users_id', '=', $users_id);
 			$result->where('year', '=', ucfirst($year));
+
+			$classes_arr = array(
+				'Academics_Gpa' => 'academics_gpa'
+			);
+
+			$result = ORM::_sql_exclude_deleted($classes_arr, $result);
+
 			$re = $result->find();
 			if (!$re->loaded())
 			{
