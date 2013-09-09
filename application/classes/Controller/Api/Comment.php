@@ -94,14 +94,14 @@
 
 			$subject = Ent::eFact($arguments["subject_enttypes_id"],$arguments["subject_id"]);
 			//check if the user already phantom deleted
-			$classes_arr = array(
+		/*	$classes_arr = array(
 				'User_Base' => 'user_base'
 			);
 			$user_model = ORM::factory('User_Base');
 			$user_model->where('id', '=', $subject->id);
 			$user_model = ORM::_sql_exclude_deleted($classes_arr, $user_model);
 			$result = $user_model->find()->as_array();
-
+*/
 			if(!$subject->loaded())
 			{
 				// Create Array for Error Data
@@ -116,7 +116,7 @@
 				$this->addError($error_array,$is_fatal);
 				return false;
 			}
-			if (!$result['id']){
+		/*	if (!$result['id']){
 				$error_array = array(
 					"error" => "As far as we can tell,user already deleted",
 					"desc" => "As far as we can tell,user already deleted"
@@ -124,7 +124,7 @@
 
 				$this->modelNotSetError($error_array);
 			}
-
+*/
 			$comments = Model_Site_Comment::getCommentsOn($subject);
 			return $comments;
 
@@ -198,75 +198,27 @@
 		 */
 		public function action_post_add()
 		{
-			//prompt frontend user to use the new one.
-			$error_array = array(
-				"error" => "Invalid now, please use '/api/comment/addcomment' instead "
-			);
-
-			// Set whether it is a fatal error
-			$is_fatal = true;
-
-			// Call method to throw an error
-			$this->addError($error_array,$is_fatal);
-			/* comment by Jeffrey, b/c we use the common one in parent class
-			$this->payloadDesc = "Add a new comment";
-
-			if(!$this->user)
+			if((int)trim($this->post('subject_enttypes_id')) > 0)
 			{
-				// Create Array for Error Data
-				$error_array = array(
-					"error" => "This action requires authentication"
-				);
-
-				// Set whether it is a fatal error
-				$is_fatal = true;
-
-				// Call method to throw an error
-				$this->addError($error_array,$is_fatal);
+				$subject_enttypes_id = (int)trim($this->post('subject_enttypes_id'));
+			}
+			elseif((int)trim($this->post('subject_type_id')) > 0)
+			{
+				$subject_enttypes_id = (int)trim($this->post('subject_type_id'));
 			}
 
-			if(trim($this->request->post('comment')) != "")
+			if((int)trim($this->post('subject_id')) > 0)
 			{
-				$comment = trim($this->request->post('comment'));
+				$subject_id = (int)trim($this->post('subject_id'));
 			}
 
-			// subject_type_id (REQUIRED)
-			// The ID of the subject type / entity type of the comment's subject (this is a row from the enttypes table) 
-				
-			if((int)trim($this->request->post('subject_type_id')) > 0)
-			{
-				$subject_type_id = (int)trim($this->request->post('subject_type_id'));
-			}
-
-			// subject_id (REQUIRED)
-			// This is the ID of the subject whos type is specified in the enttypes table
-				
-			if((int)trim($this->request->post('subject_id')) > 0)
-			{
-				$subject_id = (int)trim($this->request->post('subject_id'));
-			}
-
-			$args['comment'] = $comment;
-			$args['subject_enttypes_id'] = $subject_type_id;
-			$args['subject_id'] = $subject_id;
-			$args['users_id'] = $this->user->id;
-
-			$result =  $this->mainModel->addComment($args);
-
-			//Check for success / error
-			if(get_class($result) == get_class($this->mainModel))
-			{
-				return $result;
-			}
-			elseif(get_class($result) == 'ORM_Validation_Exception')
-			{
-				//parse error and add to error array
-				$this->processValidationError($result,$this->mainModel->error_message_path);
-				return false;
-
-			}
-			*/
-        }
+			$this->mainModel = Ent::eFact($subject_enttypes_id,$subject_id);
+			if($this->mainModel->loaded()) return $this->action_post_addcomment();
+            else
+            {
+	            //throw error
+            }
+		}
 		
 		############################################################################
 		############################    PUT METHODS    #############################

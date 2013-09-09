@@ -641,7 +641,6 @@ class Controller_Api_Base extends AuthController
 		$arguments = array();
 		// CHECK FOR PARAMETERS:
 
-		//only create team's comments if have games_id
 		if ($this->mainModel->id){
 			$arguments["subject_enttypes_id"] = $ent_types_id = Ent::getMyEntTypeID($this->mainModel);
 			$arguments["subject_id"] = $subject_id = $this->mainModel->id;
