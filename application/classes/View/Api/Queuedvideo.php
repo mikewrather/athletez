@@ -28,5 +28,10 @@
 
 			return $retArr;
 		}
+
+		public function get_process()
+		{
+			return $this->obj;
+		}
 		
 	}

@@ -326,7 +326,7 @@ class Model_Media_Video extends ORM
 			$mediaArr['sports_id'] = $sports_id;
 		}
 
-		$mediaArr['user_id'] = (isset($user_id) && $user_id > 0) ? $user_id : Auth::instance()->get_user()->id;
+		$mediaArr['user_id'] = (isset($user_id) && $user_id > 0) ? $user_id : $user->id;
 
 		if(isset($name))
 		{
@@ -340,16 +340,17 @@ class Model_Media_Video extends ORM
 			$this->video_services_id = $video_services_id;
 		}
 
-		$cloudRaw = s3::uploads3($args['video_file'], $user->id);
-		$zenres = $this->_zencode($cloudRaw);
-		$this->mm_encode = $args['mm']=='true' ? 1 : 0;
-		$this->moviemasher_id = $zenres['randID'];
-		$this->jobID = $zenres['encoding_job']->id;
-		$this->original_url = $cloudRaw;
-
 		try
 		{
 			$this->save();
+
+			$queued = ORM::factory('Media_Queuedvideo');
+			$queued->local_file = $video_file;
+			$queued->users_id = $user->id;
+			$queued->videos_id = $this->id;
+			$queued->sports_id = $sports_id;
+			$queued->save();
+
 			return $this;
 		}
 		catch(ORM_Validation_Exception $e)
@@ -358,7 +359,7 @@ class Model_Media_Video extends ORM
 		}
 	}
 
-	protected function _zencode($cloudRaw)
+	public static function _zencode($file_url)
 	{
 		// UserID is used to generate the url for the image
 		$user = Auth::instance()->get_user();
@@ -400,7 +401,7 @@ class Model_Media_Video extends ORM
 
 		$reqstr = '
 		{
-		    "input": "' . $cloudRaw . '",
+		    "input": "' . $file_url . '",
 		    "region": "us",
 		    "download_connections": 10,
 		    "private": true,
