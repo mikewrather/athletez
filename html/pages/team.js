@@ -218,7 +218,7 @@ define([
 			this.commentOnListView = new TeamCommentOnListView({
 				collection: this.commentson,
 				destination: ".commentson-outer-box-h",
-				name: "team comments on view " + this.generateRandomNumber()				
+				name: "team comments on view " + 'random number'				
 			});
 
 			this.scheme.push(this.commentOnListView);
@@ -308,7 +308,7 @@ define([
             
             headerView = new TeamHeaderView({
                 model: this.basics,
-                name: "Header"+ this.generateRandomNumber(),
+                name: "Header"+ 'random number',
                 destination: "#main-header" 
             });
 
@@ -323,7 +323,7 @@ define([
             
             addMediaView = new TeamAddMediaView({
                 model: this.addmedia,
-                name: "Add Media" + this.generateRandomNumber(),
+                name: "Add Media" + 'random number',
                 destination: "#add-media"
             });
             
@@ -335,12 +335,12 @@ define([
             var UpcomingScheduleListView;
             
             UpcomingScheduleListView = TeamScheduleListView.extend({
-                name: "Upcoming Schedule List" + this.generateRandomNumber()
+                name: "Upcoming Schedule List" + 'random number'
             });
             this.upcomingScheduleListView = new UpcomingScheduleListView({
                 collection: this.upcoming_schedules,
                 destination: "#upcoming-schedule",
-                name: "upcoming schedule"+ this.generateRandomNumber()
+                name: "upcoming schedule"+ 'random number'
             });
             
             this.scheme.push(this.upcomingScheduleListView);
@@ -351,12 +351,12 @@ define([
             var RecentScheduleListView;
             
             RecentScheduleListView = TeamScheduleListView.extend({
-                name: "Recent Schedule List" + this.generateRandomNumber()
+                name: "Recent Schedule List" + 'random number'
             });
             this.recentScheduleListView = new RecentScheduleListView({
                 collection: this.recent_schedules,
                 destination: "#recent-schedule",
-                name: "recent schedule"+ this.generateRandomNumber()
+                name: "recent schedule"+ 'random number'
             });
             
             this.scheme.push(this.recentScheduleListView);
@@ -367,7 +367,7 @@ define([
             this.competitorTeamListView = new TeamCompetitorTeamListView({
                 collection: this.competitor_teams,
                 destination: "#competitor-teams",
-                name: "competitor teams"+ this.generateRandomNumber()
+                name: "competitor teams"+ 'random number'
             });
             
             this.scheme.push(this.competitorTeamListView);
@@ -378,7 +378,7 @@ define([
             this.rosterListView = new TeamRosterListView({
                 collection: this.rosters,
                 destination: "#roster-wrap",
-                name: "roster wrap"+ this.generateRandomNumber()
+                name: "roster wrap"+ 'random number'
             });
             
             this.scheme.push(this.rosterListView);
@@ -389,7 +389,7 @@ define([
             this.videoListView = new TeamVideoListView({
                 collection: this.videos,
                 destination: "#video-wrap",
-                name: "video wrap"+ this.generateRandomNumber()
+                name: "video wrap"+ 'random number'
             });
             
             this.scheme.push(this.videoListView);
@@ -399,7 +399,7 @@ define([
         // intialize vote view
         initVoteView: function() {
     	  var voteButtonsView = new voteView({
-                name: "vote View"+ this.generateRandomNumber(),
+                name: "vote View"+ 'random number',
                 destination: '#votes-area-h',
                 model: this.basics,
                 userId: this.id
@@ -412,7 +412,7 @@ define([
             this.imageListView = new TeamImageListView({
                 collection: this.images,
                 destination: "#image-wrap",
-                name: "image wrap "+ this.generateRandomNumber()
+                name: "image wrap "+ 'random number'
             });
             
             this.scheme.push(this.imageListView);
@@ -423,7 +423,7 @@ define([
             this.commentListView = new TeamCommentListView({
                 collection: this.comments,
                 destination: "#comment-wrap",
-                name: "comment wrap" + this.generateRandomNumber()
+                name: "comment wrap" + 'random number'
             });
             this.scheme.push(this.commentListView);
             this.layout.render();
@@ -441,7 +441,11 @@ define([
             this.layout = pageLayout;
 
             return this.layout;
-        }
+        },
+        
+        routeChange: function (route) {
+            Controller.prototype.routeChange(options);
+        },
 
     });
 

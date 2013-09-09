@@ -124,6 +124,13 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
 	    	initHome();
 	    },
 	    
+	    removeCurrent: function() {
+	    	/*if(this.currentController) {
+	    		console.log(this.currentController.layout);
+	    		this.currentController.remove();
+	    	}*/
+	    },
+	    
         showProfile: function (userid) {
         	var self = this;
         	this.cancelAjaxRequests();
@@ -132,9 +139,12 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
            // $('#main-header').empty();
             //$('#main-content').empty();
            chromeBootstrap();
+           self.removeCurrent();
 			function initProfile(headerModelId) {
-				var pCont = new ProfileController({
-	                "userId": headerModelId
+				
+				
+                self.currentController = new ProfileController({
+	                "userId": (typeof userid != "undefined")?userid:headerModelId
 	            });
             }
             this.initialiRoutesInit(initProfile);
@@ -143,6 +153,33 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
             //Channel('app-inited').subscribe(initProfile);
 
         },
+        
+        
+         showTeam: function(id) {
+         	var self = this;
+            this.cancelAjaxRequests();
+			this.loadStyles();
+           // alert('test showteam');
+            $('body').empty();
+            chromeBootstrap();
+            if(!id) { 
+            	alert("please specify id");
+            	return; 
+            }
+            self.removeCurrent();
+            function initTeam(headerModelId) {
+            	
+                self.currentController = new TeamController({
+                    "route": "",
+                    "teamId": id,
+                    "userId": headerModelId
+                })
+            }
+            this.initialiRoutesInit(initTeam);
+           // Channel('app-inited').subscribe(initTeam);
+        },
+        
+        
 		imageUpListeners: function () {
             function showImage(url,attr) {
                 var imageController = new ImageController({"route": "","url":url,"attr":attr});
@@ -246,23 +283,7 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
             //Channel('app-inited').subscribe(initGame);
         },
         
-        showTeam: function(id) {
-            this.cancelAjaxRequests();
-			this.loadStyles();
-           // alert('test showteam');
-            $('body').empty();
-            chromeBootstrap();
-            if(!id) id = 1;
-            function initTeam(headerModelId) {
-                var teamController = new TeamController({
-                    "route": "",
-                    "teamId": id,
-                    "userId": headerModelId
-                })
-            }
-            this.initialiRoutesInit(initTeam);
-           // Channel('app-inited').subscribe(initTeam);
-        },
+       
         
         showRegistration: function() {
         	this.cancelAjaxRequests();

@@ -268,9 +268,12 @@ define(['facade','views/base','utils'], function (facade, BaseView, utils) {
         clearLayoutScheme: function () {
             var i;
 
-            for (i = 0; i < this.scheme.length; i++) {
-                this.scheme[i].destroy();
-                delete this.scheme[i];
+            //for (i = 0; i < this.scheme.length; i++) {
+            for(var i in this.scheme) { 
+            	if(typeof this.scheme == "object") {
+                	this.scheme[i].destroy();
+                	//delete this.scheme[i];
+               }
             }
             this.scheme = [];
         },
