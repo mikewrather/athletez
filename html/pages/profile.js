@@ -120,9 +120,7 @@ console.log(app);
 				//this.commentsof.id = this.id;
 				//this.commentsof.fetch();
 
-				this.commentson = new ProfileCommentOnList();
-				this.commentson.id = this.id;
-				this.commentson.fetch();
+				
 		
 				this.fans = new FansImageList();
 				this.fans.id = this.id;
@@ -180,6 +178,15 @@ console.log(app);
 					controller.setupHeaderView();
 					controller.initVoteView();
 					controller.setupAddMediaView();
+					
+					var subject_type_id = controller.basics.get("payload").enttypes_id;
+					controller.commentson = new ProfileCommentOnList();
+					controller.commentson.subject_entity_type = subject_type_id;
+					controller.commentson.id = controller.id;
+					controller.commentson.fetch();
+					$.when(controller.commentson.request).done(function () {
+						controller.setupCommentOnListView();
+					});
 				});
 
 				//$.when(this.commentsof.request).done(function () {
@@ -187,9 +194,7 @@ console.log(app);
 				//});
 
 
-				$.when(this.commentson.request).done(function () {
-					controller.setupCommentOnListView();
-				});
+				
 			},
 			
 			 // intialize vote view

@@ -117,9 +117,7 @@ define([
 			//this.commentsof.id = 425983;//this.id;
 			//this.commentsof.fetch();
 
-			this.commentson = new TeamCommentOnList();
-			this.commentson.id = this.userId;
-			this.commentson.fetch();
+			
             
             var controller = this;
             
@@ -186,7 +184,19 @@ define([
             $.when(this.basics.request).done(function () {
                 controller.setupHeaderView();  
                 controller.initVoteView();
-                controller.setupAddMediaView();                              
+                controller.setupAddMediaView();
+                
+                console.log(controller.basics);
+                
+                var subject_type_id = controller.basics.get("payload").enttypes_id;
+	        	controller.commentson = new TeamCommentOnList();
+	        	controller.commentson.subject_entity_type = subject_type_id;
+				controller.commentson.id = controller.id;
+				controller.commentson.fetch();
+                
+                 $.when(controller.commentson.request).done(function () {
+					controller.setupCommentOnListView();
+				});
             });
             
             
@@ -196,9 +206,9 @@ define([
 			//});
 
 
-			$.when(this.commentson.request).done(function () {
-				controller.setupCommentOnListView();
-			});
+			// $.when(this.commentson.request).done(function () {
+				// controller.setupCommentOnListView();
+			// });
         },
         
         setupCommentOfListView: function () {
@@ -305,6 +315,7 @@ define([
         
         setupHeaderView: function() {
             var headerView;
+            console.error(this.basics);
             headerView = new TeamHeaderView({
                 model: this.basics,
                 name: "Header",
@@ -313,7 +324,6 @@ define([
 
             this.scheme.push(headerView);            
             this.layout.render();
-            
             this.initVoteView();
         },
         
