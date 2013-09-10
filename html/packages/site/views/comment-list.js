@@ -19,7 +19,7 @@ function(facade,  views,   utils,   CommentItemView,    CommentFormView, comment
         __super__: CollectionView.prototype,
 
        // id: "comment-list",
-        name: "Comment List",
+       // name: "Comment List",
        // tagName: "ul",
 		listView: "#comment-list",
         // Tag for the child views

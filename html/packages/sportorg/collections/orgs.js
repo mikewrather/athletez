@@ -22,9 +22,10 @@ function(facade, collections, SportorgOrgModel, utils) {
         fetchSuccess: function (collection, response) {
             collection.reset();
             
+            
             var payload = response.payload;            
             for (var key in payload) {
-                var item = new SportorgOrgModel();
+               var item = new SportorgOrgModel();
                 item.id = Math.ceil(Math.random() * 100000);
                 var subpayload = payload[key];
                 var teamsObj = subpayload['teams'];
@@ -41,17 +42,17 @@ function(facade, collections, SportorgOrgModel, utils) {
                     teams.push(team);
                 }
                 subpayload['teams'] = teams;
-                item.set('payload', payload[key]);
-                item.set('desc', response.desc);
-                item.set('exec_data', response.exec_data);
+               item.set('payload', payload[key]);
+               item.set('desc', response.desc);
+               item.set('exec_data', response.exec_data);
                 collection.push(item);
             }
             
             collection.deferred.resolve(response);            
         },
         isError : function(){
-        	//TODO: retun true in case of any error
-        return false;	
+            //TODO: retun true in case of any error
+        return false;   
         }
 
     });

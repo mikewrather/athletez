@@ -8,15 +8,16 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
 	GameController, TeamController, RegistrationController, ProfileSetting,UserResume, SitePhraseList , TagController,AddGameController,loginModel, loginView ) {
 
 
-    var App,
-        ApplicationStates = collections.ApplicationStates,
+    //App;
+    	
+        var App, ApplicationStates = collections.ApplicationStates,
         $ = facade.$,
         _ = facade._,
         Backbone = facade.Backbone,
         Channel = utils.lib.Channel,
         debug = utils.debug;
 
-    App = Backbone.Router.extend({
+   		App = Backbone.Router.extend({
 
         routes: {
             '': 'defaultRoute',
@@ -62,9 +63,30 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
         initialize: function (options) {
             _.bindAll(this);
             this.addSubscribers();
-	        
+	       
 			Controller.prototype.appStates = new ApplicationStates();
 	        this.getPhrases();
+	       // this.intializeImageAndVideo();
+        },
+        
+        intializeImageAndVideo: function() {
+        	this.imageUpListeners();
+			this.videoPreview();
+        },
+        
+        cancelAjaxRequests: function() {
+            if(typeof routing != "undefined" && typeof routing.ajaxRequests != "undefined" && routing.ajaxRequests.length) {
+            	for(var i in routing.ajaxRequests) {
+            		routing.ajaxRequests[i].abort();
+            	}
+            }
+        },
+        
+        initialiRoutesInit: function(fn) {
+        	routing.off('app-inited');
+            routing.on('app-inited', function(id) {
+            	fn(id);
+            });
         },
 
         defaultRoute: function () {
@@ -76,6 +98,7 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
            	//this.showGame();
             //this.showTeam();
            // alert("this profile");
+            
 			this.showHome(null);
         },
 
@@ -85,6 +108,7 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
 	    },
 	    
 	    showHome: function (action) {
+	    	this.cancelAjaxRequests();
 	    	this.loadStyles();
 	    	
 	    	$('body').empty();
@@ -100,80 +124,136 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
 	    	initHome();
 	    },
 	    
+	    removeCurrent: function() {
+	    	/*if(this.currentController) {
+	    		console.log(this.currentController.layout);
+	    		this.currentController.remove();
+	    	}*/
+	    },
+	    
         showProfile: function (userid) {
         	var self = this;
+        	this.cancelAjaxRequests();
 	        self.loadStyles();
            $('body').empty();
            // $('#main-header').empty();
             //$('#main-content').empty();
            chromeBootstrap();
+           self.removeCurrent();
 			function initProfile(headerModelId) {
-				var pCont = new ProfileController({
-	                "userId": userid==undefined ? headerModelId : userid
+				
+				
+                self.currentController = new ProfileController({
+	                "userId": (typeof userid != "undefined")?userid:headerModelId
 	            });
-
             }
-            Channel('app-inited').subscribe(initProfile);
+            this.initialiRoutesInit(initProfile);
+
+            
+            //Channel('app-inited').subscribe(initProfile);
 
         },
+        
+        notFound: function(page) {
+        	alert("Page not found");
+        },
+        
+        
+         showTeam: function(id) {
+         	var self = this;
+            this.cancelAjaxRequests();
+			this.loadStyles();
+           // alert('test showteam');
+            $('body').empty();
+            chromeBootstrap();
+            if(!id) { 
+            	this.notFound('team');
+            	return; 
+            }
+            self.removeCurrent();
+            function initTeam(headerModelId) {
+            	
+                self.currentController = new TeamController({
+                    "route": "",
+                    "teamId": id,
+                    "userId": headerModelId
+                })
+            }
+            this.initialiRoutesInit(initTeam);
+           // Channel('app-inited').subscribe(initTeam);
+        },
+        
+        
 		imageUpListeners: function () {
             function showImage(url,attr) {
                 var imageController = new ImageController({"route": "","url":url,"attr":attr});
             }
-			Channel('add-image').subscribe(showImage);
+			this.addImageTrigger(showImage);
+        },
+        
+        addImageTrigger: function(fn) {
+        	routing.off('add-image');
+            routing.on('add-image', function(url, attr) {
+            	fn(url , attr);
+            });
         },
 		
         showProfileSetting: function (userid) {
+            this.cancelAjaxRequests();
             this.loadStyles();
             
             $('body').empty();
             chromeBootstrap();
-
+			 this.removeCurrent();
             function initProfileSetting(id) {
-                var profileSetting = new ProfileSetting({
+               self.currentController = new ProfileSetting({
                 	"id": userid==undefined ? id : userid
                 });
             }
-            
-            Channel('app-inited').subscribe(initProfileSetting);
+            this.initialiRoutesInit(initProfileSetting);
+            //Channel('app-inited').subscribe(initProfileSetting);
         },
         
         ShowUserResume: function (userid) {
+            this.cancelAjaxRequests();
             this.loadStyles();
             $('body').empty();
             chromeBootstrap();
-
+			this.removeCurrent();
             function initUserResume(id) {
             	
-                var resume = new UserResume({
+                self.currentController = new UserResume({
                 	"id": userid==undefined ? id : userid
                 });
             }
-            
-            Channel('app-inited').subscribe(initUserResume);
+             this.initialiRoutesInit(initUserResume);
+            //Channel('app-inited').subscribe(initUserResume);
         },
         
 		  //imageupProfile: function(){
         imageUp: function () {
+        	this.cancelAjaxRequests();
 			this.loadStyles();
 			//chromeBootstrap();
             
             function initImage(id){ var imageController = new ImageController({"route": "","url":this.posturl,"attr":this.attribute}); }
-            Channel('app-inited').subscribe(initImage);
+            this.initialiRoutesInit(initImage);
+            
+            //Channel('app-inited').subscribe(initImage);
 		},
 
 	    videoPreview: function () {
 		   
-             
+             this.cancelAjaxRequests();
             this.loadStyles();
 		   // chromeBootstrap();
 		    //$('body').empty();
            // chromeBootstrap();chromeBootstrap();
 		    //console.log(VideoPreviewController);
-
-		    function initVideoPreview()
+			
+		    function initVideoPreview(url,attr)
 		    {
-			    var VidPrevCtrl = new VideoPreviewController();
+			    var VidPrevCtrl = new VideoPreviewController({"url":url,"attr":attr});
 			    //console.log(VidPrevCtrl);
 		    }
 			//** creating a call back list and adding the method
@@ -183,6 +263,7 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
 	    },
         
         showGame: function (id) {
+        	this.cancelAjaxRequests();
             this.loadStyles();
             
            $('body').empty();
@@ -195,77 +276,65 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
           // $('#main-content').empty();
             
             if(!id) id=1;
+             this.removeCurrent();
             function initGame(headerModelId) {
-                var gameController = new GameController({
+                self.currentController = new GameController({
                     "route": "",
-                    "gameId" : id
+                    "gameId" : id,
+                    "userId": headerModelId
                 });
             }
-            
-            Channel('app-inited').subscribe(initGame);
+             this.initialiRoutesInit(initGame);
+            //Channel('app-inited').subscribe(initGame);
         },
         
-        showTeam: function(id) {
-            
-			this.loadStyles();
-           // alert('test showteam');
-            $('body').empty();
-            chromeBootstrap();
-            if(!id) id = 1;
-            function initTeam(headerModelId) {
-                var teamController = new TeamController({
-                    "route": "",
-                    "teamId": id
-                })
-            }
-            
-            Channel('app-inited').subscribe(initTeam);
-        },
+       
         
         showRegistration: function() {
+        	this.cancelAjaxRequests();
             this.loadStyles();
             
             $('body').empty();
             chromeBootstrap();
-            
+             this.removeCurrent();
             function initRegistration() {
-                var registrationController = new RegistrationController({
+                self.currentController = new RegistrationController({
                     "route": ""
                 })
             }
-            
-            Channel('app-inited').subscribe(initRegistration);
+            this.initialiRoutesInit(initRegistration);
+            //Channel('app-inited').subscribe(initRegistration);
         },
         
         showTag: function (userid) {
+           this.cancelAjaxRequests();
             this.loadStyles();
             $('body').empty();
             chromeBootstrap();
-
+			 this.removeCurrent();
             function initTag(id) {
-            	
-                var tag = new TagController({
+                self.currentController = new TagController({
                 	"id": userid==undefined ? id : userid
                 });
             }
-            
-            Channel('app-inited').subscribe(initTag);
+            this.initialiRoutesInit(initTag);
+           // Channel('app-inited').subscribe(initTag);
         },
         
         showAddGame : function(userid){
+        	this.cancelAjaxRequests();
         	this.loadStyles();
             $('body').empty();
             chromeBootstrap();
-
+			this.removeCurrent();
             function initAddGame(id) {
             	
-                var addGame = new AddGameController({
+                self.currentController = new AddGameController({
                 	"id": userid==undefined ? id : userid
                 });
             }
-            
-            Channel('app-inited').subscribe(initAddGame);
-
+           this.initialiRoutesInit(initAddGame); 
+            //Channel('app-inited').subscribe(initAddGame);
         },
         
         
@@ -280,7 +349,7 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
         // load style sheets
         loadStyles: function () {
             Channel('load:css').publish([base_url + "css/bootstrap.css", 
-                base_url + "css/bootstrap-responsive.css", 
+                base_url + "css/bootstrap-responsive.css",
                 base_url + "css/app.css",
                 base_url + 'css/jquery-ui-1.10.2.custom.css']);
         },
@@ -290,8 +359,7 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
         addSubscribers: function () {
 		
             Channel('load:css').subscribe(this.loadCss);
-	        this.imageUpListeners();
-			this.videoPreview();
+	        
 			
 			
         },

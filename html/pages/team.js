@@ -6,6 +6,9 @@
 define([
     "require",
     "text!team/templates/layout.html",
+    'votes/views/vote',
+     
+     
     "facade",
     "controller",
     "models",
@@ -21,18 +24,22 @@ define([
     "team/collections/videos",
     "team/collections/images",
     "team/collections/comments",
+    "profile/collections/commentsof",
+	"profile/collections/commentson",
     
     "team/views/header",
     "team/views/add-media",
     "sportorg/views/schedule-list",
     "sportorg/views/competitorteam-list",
+    "team/views/commentof-list",
+	"team/views/commenton-list",
     "sportorg/views/roster-list",
     "team/views/video-list",
     "team/views/image-list",
     "team/views/comment-list"
     
     
-    ], function (require, pageLayoutTemplate) {
+    ], function (require, pageLayoutTemplate, voteView) {
 
     var TeamController,
         facade = require("facade"),
@@ -50,7 +57,8 @@ define([
         TeamVideoList = require("team/collections/videos");
         TeamImageList = require("team/collections/images");
         TeamCommentList = require("team/collections/comments");
-        
+        TeamCommentOfList = require("profile/collections/commentsof"),
+		TeamCommentOnList = require("profile/collections/commentson"),
         TeamHeaderView = require("team/views/header"),
         TeamAddMediaView = require("team/views/add-media"),
         TeamScheduleListView = require("sportorg/views/schedule-list"),
@@ -59,6 +67,8 @@ define([
         TeamVideoListView = require("team/views/video-list"),
         TeamImageListView = require("team/views/image-list"),
         TeamCommentListView = require("team/views/comment-list"),
+        TeamCommentOfListView = require("team/views/commentof-list"),
+		TeamCommentOnListView = require("team/views/commenton-list")
         
         LayoutView = views.LayoutView,
         $ = facade.$,
@@ -75,7 +85,7 @@ define([
             Channel('load:css').publish(cssArr);
 
             _.bindAll(this);
-
+			
             this.handleOptions(options);
             
             this.init();
@@ -85,6 +95,7 @@ define([
         
         handleOptions: function(options) {
         	this.id = options.teamId;
+        	this.userId = options.userId;
         },
         
         init: function() {
@@ -101,6 +112,14 @@ define([
             
             this.addmedia = new TeamAddMediaModel();
             this.addmedia.id = this.id;
+            
+            //this.commentsof = new TeamCommentOfList();
+			//this.commentsof.id = 425983;//this.id;
+			//this.commentsof.fetch();
+
+			this.commentson = new TeamCommentOnList();
+			this.commentson.id = this.userId;
+			this.commentson.fetch();
             
             var controller = this;
             
@@ -149,12 +168,12 @@ define([
                 controller.images.season_id = season_id;
                 controller.images.fetch();
                 
-                controller.comments = new TeamCommentList();
-                controller.comments.id = controller.id;
-                controller.comments.sport_id = sport_id;
-                controller.comments.complevel_id = complevel_id;
-                controller.comments.season_id = season_id;
-                controller.comments.fetch();
+                //controller.comments = new TeamCommentList();
+                //controller.comments.id = controller.id;
+               // controller.comments.sport_id = sport_id;
+               // controller.comments.complevel_id = complevel_id;
+               /// controller.comments.season_id = season_id;
+               // controller.comments.fetch();
                 
                 controller.handleDeferredsDynamic();
             }
@@ -166,9 +185,45 @@ define([
 
             $.when(this.basics.request).done(function () {
                 controller.setupHeaderView();  
+                controller.initVoteView();
                 controller.setupAddMediaView();                              
             });
+            
+            
+            
+            //$.when(this.commentsof.request).done(function () {
+			//	controller.setupCommentOfListView();
+			//});
+
+
+			$.when(this.commentson.request).done(function () {
+				controller.setupCommentOnListView();
+			});
         },
+        
+        setupCommentOfListView: function () {
+			var commentOfListView;
+			commentOfListView = new TeamCommentOfListView({
+				collection: this.commentsof,
+				destination: ".commentsoff-outer-box-h",
+				name: "team comments off view"
+			});
+		//	this.scheme.push(commentOfListView);
+		//	this.layout.render();
+		},
+
+		setupCommentOnListView: function () {
+			var commentOnListView;
+			console.log(this.commentson);
+			this.commentOnListView = new TeamCommentOnListView({
+				collection: this.commentson,
+				destination: ".commentson-outer-box-h",
+				name: "team comments on view "				
+			});
+
+			this.scheme.push(this.commentOnListView);
+			this.layout.render();
+		},
         
         refreshPage: function() {
             var position;
@@ -209,9 +264,9 @@ define([
                 if ( ~position ) this.scheme.splice(position, 1);
             }
             
-            if (this.commentListView) {
-                $(this.commentListView.destination).html('');
-                position = $.inArray(this.commentListView, this.scheme);
+            if (this.commentson) {
+                $(this.commentson.destination).html('');
+                position = $.inArray(this.commentson, this.scheme);
                 if ( ~position ) this.scheme.splice(position, 1);
             }
         },
@@ -250,15 +305,16 @@ define([
         
         setupHeaderView: function() {
             var headerView;
-            
             headerView = new TeamHeaderView({
                 model: this.basics,
                 name: "Header",
-                destination: "#main-header"
+                destination: "#main-header" 
             });
 
             this.scheme.push(headerView);            
             this.layout.render();
+            
+            this.initVoteView();
         },
         
         setupAddMediaView: function() {
@@ -266,7 +322,7 @@ define([
             
             addMediaView = new TeamAddMediaView({
                 model: this.addmedia,
-                name: "Add Media",
+                name: "Add_Media",
                 destination: "#add-media"
             });
             
@@ -278,11 +334,12 @@ define([
             var UpcomingScheduleListView;
             
             UpcomingScheduleListView = TeamScheduleListView.extend({
-                name: "Upcoming Schedule List"
+                name: "Upcoming_Schedule_List" 
             });
             this.upcomingScheduleListView = new UpcomingScheduleListView({
                 collection: this.upcoming_schedules,
-                destination: "#upcoming-schedule"
+                destination: "#upcoming-schedule",
+                name: "upcoming_schedule"
             });
             
             this.scheme.push(this.upcomingScheduleListView);
@@ -293,11 +350,12 @@ define([
             var RecentScheduleListView;
             
             RecentScheduleListView = TeamScheduleListView.extend({
-                name: "Recent Schedule List"
+                name: "Recent_Schedule_List" 
             });
             this.recentScheduleListView = new RecentScheduleListView({
                 collection: this.recent_schedules,
-                destination: "#recent-schedule"
+                destination: "#recent-schedule",
+                name: "recent_schedule"
             });
             
             this.scheme.push(this.recentScheduleListView);
@@ -307,7 +365,8 @@ define([
         setupCompetitorTeams: function() {
             this.competitorTeamListView = new TeamCompetitorTeamListView({
                 collection: this.competitor_teams,
-                destination: "#competitor-teams"
+                destination: "#competitor-teams",
+                name: "competitor_teams"
             });
             
             this.scheme.push(this.competitorTeamListView);
@@ -317,7 +376,8 @@ define([
         setupRosters: function() {
             this.rosterListView = new TeamRosterListView({
                 collection: this.rosters,
-                destination: "#roster-wrap"
+                destination: "#roster-wrap",
+                name: "roster_wrap"
             });
             
             this.scheme.push(this.rosterListView);
@@ -327,17 +387,31 @@ define([
         setupVideos: function() {
             this.videoListView = new TeamVideoListView({
                 collection: this.videos,
-                destination: "#video-wrap"
+                destination: "#video-wrap",
+                name: "video_wrap"
             });
             
             this.scheme.push(this.videoListView);
             this.layout.render();
         },
         
+        // intialize vote view
+        initVoteView: function() {
+    	  var voteButtonsView = new voteView({
+                name: "vote View",
+                destination: '#votes-area-h',
+                model: this.basics,
+                userId: this.id
+           });
+           this.scheme.push(voteButtonsView);
+           this.layout.render();
+        },
+        
         setupImages: function() {
             this.imageListView = new TeamImageListView({
                 collection: this.images,
-                destination: "#image-wrap"
+                destination: "#image-wrap",
+                name: "image_wrap "
             });
             
             this.scheme.push(this.imageListView);
@@ -347,16 +421,15 @@ define([
         setupComments: function() {
             this.commentListView = new TeamCommentListView({
                 collection: this.comments,
-                destination: "#comment-wrap"
+                destination: "#comment-wrap",
+                name: "comment_wrap" 
             });
-            
             this.scheme.push(this.commentListView);
             this.layout.render();
         },
                         
         setupLayout: function () {
             var pageLayout;
-
             pageLayout = new LayoutView({
                 scheme: this.scheme,
                 destination: "#main",
@@ -368,6 +441,8 @@ define([
 
             return this.layout;
         }
+        
+       
 
     });
 

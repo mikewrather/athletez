@@ -46,28 +46,61 @@ class Model_Media_Queuedvideo extends ORM
 		'exclude_columns' => array(),
 	);
 
-	public function getBasics($settings = array())
+
+	public function name()
 	{
-//		return array(
-//			"id" => $this->id,
-//			"title" => $this->title,
-//			"url" => $this->url,
-//			"jobID" => $this->jobID,
-//			"videos" => $this->video->getBasics(),
-//			"video_services" => $this->videoservice->getBasics(),
-//			"user" => $this->user->getBasics(),
-//			"complete" => $this->complete,
-//			"duration" => $this->duration,
-//			"mm_id" => $this->mm_id,
-//			"mm_encode" => $this->mm_encode,
-//			"user_sess" => $this->user_sess,
-//			"sports_id" => $this->sports_id,
-//		);
-		return parent::getBasics($settings);
+		return;
 	}
 
-	public function name(){
-		return;
+	public function process()
+	{
+
+		if(!$this->loaded())
+		{
+			return;
+		}
+
+		$this->is_processing = 1;
+		$this->save();
+
+		if(isset($this->local_file) && $this->local_file != '')
+		{
+			//check if file exists
+
+			//upload
+			$cloudRaw = s3::upload($this->local_file,$this->users_id);
+
+			//delete local file
+			unlink($this->local_file);
+
+			//unset the local file attribute
+			$this->local_file = '';
+		}
+		elseif(isset($this->url))
+		{
+			$cloudRaw = $this->url;
+		}
+		else
+		{
+			return;
+		}
+
+		$this->url = $cloudRaw;
+		$video = ORM::factory('Media_Video',$this->videos_id);
+		$video->jobID =
+
+		$zenres = Model_Media_Video::_zencode($cloudRaw);
+
+		$this->mm_id = $zenres['randID'];
+		$this->jobID = $zenres['encoding_job']->id;
+		$video->jobID = $zenres['encoding_job']->id;
+		$this->complete = 1;
+		$this->is_processing = 0;
+		$this->save();
+		$video->save();
+
+		return $this;
+
 	}
 
 }

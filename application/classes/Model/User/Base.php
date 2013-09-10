@@ -475,10 +475,7 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 
 	public function get_height_ft()
 	{
-		if($this->height_in > 0)
-		{
-			return floor($this->height_in / 12) .'"' . $this->height_in%12 . "'";
-		}
+		return ($this->height_in > 0) ? floor($this->height_in / 12) .'"' . $this->height_in % 12 . "'" : 'NA';
 	}
 	 
 	public function getPrimaryVideo()
@@ -910,11 +907,15 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 		//exclude sports itself
 		$isports = ORM::_sql_exclude_deleted($classes_arr, $isports);
 
+
+
 		if($format=='select') return $isports;
 		elseif($format=='array')
 		{
 			$sports_arr = array();
 			$res = $isports->execute();
+
+			print_r($res);
 			foreach($res as $rs)
 			{
 				$sport = ORM::factory('Sportorg_Sport',$rs['sports_id']);

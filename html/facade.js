@@ -43,6 +43,6 @@ define(['vendor'/*, 'touch'*/], function (vendor) {
     facade.$ = domLib;
     facade._ = _;
     facade.Backbone = Backbone;
-
+	facade.ajaxRequests = [];
     return facade;
 });

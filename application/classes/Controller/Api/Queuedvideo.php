@@ -9,52 +9,37 @@
  *
  */
 
-	class Controller_Api_Queuedvideo extends Controller_Api_Base
+class Controller_Api_Queuedvideo extends Controller_Api_Base
+{
+
+	public function __construct($request,$response)
 	{
+		parent::__construct($request,$response);
 
-		public function __construct($request,$response)
-		{
-			parent::__construct($request,$response);
-
-			$this->setMainModel(ORM::factory('Media_Queuedvideo'));
-			$this->popMainModel();
-		}
-
-		public function action_index()
-		{
-
-		}
-	
-		############################################################################
-		###########################    GET METHODS    ##############################
-		############################################################################
-
-		
-		/**
-		 * action_get_basics() Basic info about this queued video
-		 * via /api/queuedvideo/basics/{queuedvideos_id}
-		 *
-		 */
-		public function action_get_basics()
-		{
-			$this->payloadDesc = "Basic info about this queued video";
-
-		
-		}
-		
-		############################################################################
-		###########################    POST METHODS    #############################
-		############################################################################
-
-		
-		############################################################################
-		############################    PUT METHODS    #############################
-		############################################################################
-
-		
-		############################################################################
-		###########################    DELETE METHODS    ###########################
-		############################################################################
-
-		
+		$this->setMainModel(ORM::factory('Media_Queuedvideo'));
+		$this->popMainModel();
 	}
+
+
+	/**
+	 * this method will be called to process the current queue
+	 *
+	 */
+	public function action_get_process()
+	{
+		$queue = ORM::factory('Media_Queuedvideo')
+			->where('complete','=',0)
+			->where('is_processing','=',0)
+			->find_all();
+
+		$retArr = array();
+		foreach($queue as $waiting)
+		{
+			$retArr[] = $waiting->process();
+		}
+
+		return $retArr;
+
+	}
+
+}

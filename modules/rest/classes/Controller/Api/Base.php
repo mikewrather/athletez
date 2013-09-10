@@ -47,6 +47,13 @@ class Controller_Api_Base extends AuthController
 		$this->myID = (int)$this->request->param('id') > 0 ? (int)$this->request->param('id') : 0;
 		$this->myID2 = (int)$this->request->param('id2') > 0 ? (int)$this->request->param('id2') : 0;
 
+
+		if($this->request->is_initial()==false && $this->request->sr_id > 0)
+		{
+			// This sets the id based on a non-uri based id in a sub-request
+			$this->myID = $this->request->sr_id;
+		}
+
 		// calls a method to set the user and logged_in properties
 		$this->populateAuthVars();
 
@@ -634,7 +641,6 @@ class Controller_Api_Base extends AuthController
 		$arguments = array();
 		// CHECK FOR PARAMETERS:
 
-		//only create team's comments if have games_id
 		if ($this->mainModel->id){
 			$arguments["subject_enttypes_id"] = $ent_types_id = Ent::getMyEntTypeID($this->mainModel);
 			$arguments["subject_id"] = $subject_id = $this->mainModel->id;
@@ -880,7 +886,6 @@ class Controller_Api_Base extends AuthController
 			"Model_Sportorg_Team",
 		);
 
-
 		if($this->mainModel->loaded() && !in_array(get_class($this->mainModel),$valid_object_types))
 		{
 			$ent_types_id = Ent::getMyEntTypeID($this->mainModel);
@@ -905,11 +910,15 @@ class Controller_Api_Base extends AuthController
 			return false;
 		}
 
+		echo $this->mainModel->id;
+		echo $this->myID;
+
 		$follow = ORM::factory('User_Followers');
 		$follow->addFollower($this->user,$this->mainModel);
 		return $follow;
 
 	}
+
 
 	public function action_post_flag()
 	{

@@ -107,7 +107,7 @@ class Model_User_References extends ORM
 
 		// key = the key that will appear in the returned results, val = the name of the function / property to invoke for the value
 		'added_function_calls' => array(
-
+		//	'sports_name' => ''
 		),
 
 		// array of values only.  Each value is the name of a column to exclude

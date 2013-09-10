@@ -72,6 +72,7 @@ require.config({
         'sportorg'     : '/packages/sportorg',
         'location'     : '/packages/location',
         'sport'        : '/packages/sport',
+        'votes'         : '/packages/vote',
 	
         
         // Pages
@@ -131,6 +132,9 @@ define([
 			$(function () { // doc ready
 				Backbone.noConflict();
 				routing = new app();
+				routing.ajaxRequests = [];
+				routing.intializeImageAndVideo();
+				// bind common triggers
 				Backbone.history.start({});
             });
 		}

@@ -9,7 +9,7 @@ function(facade,   utils,   BaseCommentListView,       ProfileCommentFormView, S
 
 	ProfileCommentOnListView = BaseCommentListView.extend({
 
-        name: "Commenton List",
+       // name: "Commenton List",
 	    initialize: function (options) {
 		    _.bindAll(this);
 
@@ -45,7 +45,7 @@ function(facade,   utils,   BaseCommentListView,       ProfileCommentFormView, S
 	            formView.render();
 	        }
 
-	        function callcommentslist(collection){
+	        function callcommentslist(collection) {
 	        	// scroll to bottom
 	        	var scroll = $("#comment-list").height() + $("li.comment").height();
 	        	$(".comment-outer-h").animate({scrollTop: scroll});

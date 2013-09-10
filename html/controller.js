@@ -28,6 +28,7 @@ function(facade, collections, models, utils) {
 
     // Contoller Constructor 
     Controller = function (options) {
+    	
         options = options || {};
         this.route = options.route;
         if (!Controller.prototype.appStates) {
@@ -52,7 +53,6 @@ function(facade, collections, models, utils) {
     // Use as a template for contrete controller prototypes with 
     // YourController = Controller.extend({ /*...*/ });
     Controller.prototype = {
-
         // Public Methods
         // --------------
 
@@ -68,6 +68,12 @@ function(facade, collections, models, utils) {
             this.handleDeferreds();
 
             return this;
+        },
+        
+        generateRandomNumber: function() {
+        	var time = new Date().getTime();
+        	time = time + Math.floor((Math.random()*200)+1);
+        	return time;
         },
 
         // Create methods as needed to add views to layout

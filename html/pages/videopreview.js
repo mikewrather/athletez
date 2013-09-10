@@ -58,6 +58,8 @@ define([
 
 		init: function(option) {
 
+			this.url = option.url
+			this.attr = option.attr;
 			debug.log("VideoPreview Init");
 
 			this.setupLayout();
@@ -83,7 +85,7 @@ define([
 			return this.layout;
 
 		},
-		showVideoPreview: function()
+		showVideoPreview: function(option)
 		{
 							
 			var vpm = new VideoUploaderModel();
@@ -115,7 +117,7 @@ define([
 				
 				
 				// setting up the pluploader property as a model object
-				 vpm.uploader = vpm.doUpload();
+				 vpm.uploader = vpm.doUpload(this.url);
 				
 				
 				vpm.uploader.bind('Init', function (up, params) {
@@ -123,6 +125,7 @@ define([
 				});
 				
 				try{
+					
 					vpm.uploader.init();
 				
 				}

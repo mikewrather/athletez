@@ -93,7 +93,7 @@ define([
 			var vpm = new VideoUploaderModel();
 			//this.uploader = vpm.doUpload();
 			//alert("check it out man");
-			//console.log(this.uploader, "psbhuploader23");
+			
 			//var vpm = new VideoPreviewModel();
 			/*********/
 			/*var VideoPreviewViewInstance = new VideoPreviewView({

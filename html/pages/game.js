@@ -6,6 +6,7 @@
 define([
 	"require",
 	"text!game/templates/layout.html",
+	 'votes/views/vote',
 	"facade",
 	"controller",
 	"models",
@@ -18,15 +19,18 @@ define([
 	"game/collections/videos",
 	"game/collections/images",
 	"game/collections/comments",
+	"profile/collections/commentson",
 
 	"game/views/header",
 	"game/views/add-media",
+	"game/views/commenton-list",
 	"sportorg/views/teamroster-list",
 	"game/views/video-list",
 	"game/views/image-list",
-	"game/views/comment-list"
+	"game/views/comment-list",
+	"game/views/commenton-list"
 
-], function (require, pageLayoutTemplate)
+], function (require, pageLayoutTemplate, voteView)
 {
 
 	var GameController,
@@ -42,14 +46,15 @@ define([
 		GameVideoList = require("game/collections/videos"),
 		GameImageList = require("game/collections/images"),
 		GameCommentList = require("game/collections/comments"),
-
+		GameCommentOnList = require("profile/collections/commentson"),
+		
 		GameHeaderView = require("game/views/header"),
 		GameAddMediaView = require("game/views/add-media"),
 		GameTeamRosterListView = require("sportorg/views/teamroster-list"),
 		GameVideoListView = require("game/views/video-list"),
 		GameImageListView = require("game/views/image-list"),
 		GameCommentListView = require("game/views/comment-list"),
-
+		GameCommentOnListView = require("game/views/commenton-list"),
 		MediaImageModel = require("media/models/image"),
 
 		LayoutView = views.LayoutView,
@@ -77,6 +82,7 @@ define([
 
 		handleOptions: function (options) {
 			this.id = options.gameId;
+			this.userId = options.userId;
 		},
 
 		init: function () {
@@ -106,9 +112,13 @@ define([
 			this.images.id = this.id;
 			this.images.fetch();
 
-			this.comments = new GameCommentList();
-			this.comments.id = this.id;
-			this.comments.fetch();
+			//this.comments = new GameCommentList();
+			//this.comments.id = this.id;
+			//this.comments.fetch();
+			
+			this.commentson = new GameCommentOnList();
+			this.commentson.id = this.userId;
+			this.commentson.fetch();
 		},
 
 		handleDeferreds: function () {
@@ -116,6 +126,7 @@ define([
 
 			$.when(this.basics.request).done(function () {
 				controller.setupHeaderView();
+				controller.initVoteView();
 				controller.setupAddMediaView();
 			});
 
@@ -131,10 +142,26 @@ define([
 				controller.setupImageListView();
 			});
 
-			$.when(this.comments.request).done(function () {
-				controller.setupCommentListView();
+			//$.when(this.comments.request).done(function () {
+			//	controller.setupCommentListView();
+			//})
+			
+			$.when(this.commentson.request).done(function () {
+				controller.setupCommentsOnListView();
 			})
 		},
+		
+		// intialize vote view
+        initVoteView: function() {
+    	  var voteButtonsView = new voteView({
+                name: "vote View",
+                destination: '#votes-area-h',
+                model: this.basics,
+                userId: this.id
+           });
+           this.scheme.push(voteButtonsView);
+           this.layout.render();
+        },
 
 		setupHeaderView: function () {
 			var headerView;
@@ -219,11 +246,23 @@ define([
 		},
 
 		setupCommentListView: function () {
-			var commentListView;
+			/*var commentListView;
 
 			commentListView = new GameCommentListView({
 				collection: this.comments,
 				destination: "#comment-wrap"
+			});
+
+			this.scheme.push(commentListView);
+			this.layout.render();*/
+		},
+		
+		setupCommentsOnListView: function() {
+			var commentListView;
+			commentListView = new GameCommentOnListView({
+				collection: this.commentson,
+				destination: ".commentson-outer-box-h",
+				name: "games comment on view"
 			});
 
 			this.scheme.push(commentListView);

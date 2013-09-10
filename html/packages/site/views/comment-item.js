@@ -33,7 +33,7 @@ function (
         render: function () {
             var markup = Mustache.to_html(this.template, this.model.toJSON());
             this.$el.html(markup);
-            
+            console.log("--------render------------");
             var payload = this.model.get('payload');
 	        console.log("profile payload = ", payload);
             var self = this;

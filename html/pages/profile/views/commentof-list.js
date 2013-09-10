@@ -8,7 +8,7 @@ function(facade,   utils,   BaseCommentListView) {
 
     ProfileCommentOfListView = BaseCommentListView.extend({
         
-        name: "Commentof List",
+       // name: "Commentof List",
         
         setupFormView: function () {
             

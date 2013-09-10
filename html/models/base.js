@@ -98,6 +98,7 @@ define(['facade', 'utils'], function(facade, utils) {
 			$('.field-error').stop().fadeOut();
 
 			/*Print Error on screen*/
+			try {
 			var resultJson = $.parseJSON(response.responseText);
 			var exec_data = "";
 			var desc = "";
@@ -156,6 +157,9 @@ define(['facade', 'utils'], function(facade, utils) {
 				if (messages != '')
 					self.showSuccessMessage(messages);
 			}
+			} catch(e) {
+				console.log(e);
+			}
 		},
 		
 		showSuccessMessage : function(messages){
@@ -180,6 +184,7 @@ define(['facade', 'utils'], function(facade, utils) {
 			}
 			_.extend(options, ajaxOptions);
 			return this.request = Backbone.Model.prototype.fetch.call(this, options);
+			
 		},
 
 		// Default success and error handlers used with this.fetch() ...

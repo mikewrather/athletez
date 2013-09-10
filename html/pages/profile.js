@@ -6,6 +6,8 @@
 define([
 	"require",
 	"text!profile/templates/layout.html",
+	"application",
+	'votes/views/vote',
 	"facade",
 	"controller",
 	"models",
@@ -32,18 +34,17 @@ define([
 	"profile/views/image-video-list",
 	"profile/views/commentof-list",
 	"profile/views/commenton-list",
-	"profile/views/fans-image-list"
-	
+	"profile/views/fans-image-list",
+	"application"
 ],
-	function (require, pageLayoutTemplate) {
-
+	function (require, pageLayoutTemplate, app, voteView) {
+console.log(app);
 		var ProfileController,
 			facade = require("facade"),
 			Controller = require("controller"),
 			models = require("models"),
 			views = require("views"),
 			utils = require("utils"),
-
 			ProfileBasicsModel = require("profile/models/basics"),
 			ProfileAddMediaModel = require("profile/models/addmedia"),
 			ProfileOrgList = require("profile/collections/orgs"),
@@ -78,13 +79,12 @@ define([
 			];
 
 		ProfileController = Controller.extend({
-
+			
 			initialize: function (options) {
-
+				
 				var self = this;
 				debug.log("start initialize");
 				Channel('load:css').publish(cssArr);
-
 				_.bindAll(self);
 
 				self.handleOptions(options);
@@ -116,9 +116,9 @@ define([
 				this.addmedia = new ProfileAddMediaModel();
 				this.addmedia.id = this.id;
 
-				this.commentsof = new ProfileCommentOfList();
-				this.commentsof.id = this.id;
-				this.commentsof.fetch();
+				//this.commentsof = new ProfileCommentOfList();
+				//this.commentsof.id = this.id;
+				//this.commentsof.fetch();
 
 				this.commentson = new ProfileCommentOnList();
 				this.commentson.id = this.id;
@@ -178,18 +178,31 @@ define([
 
 				$.when(this.basics.request).done(function () {
 					controller.setupHeaderView();
+					controller.initVoteView();
 					controller.setupAddMediaView();
 				});
 
-				$.when(this.commentsof.request).done(function () {
-					controller.setupCommentOfListView();
-				});
+				//$.when(this.commentsof.request).done(function () {
+				//	controller.setupCommentOfListView();
+				//});
 
 
 				$.when(this.commentson.request).done(function () {
 					controller.setupCommentOnListView();
 				});
 			},
+			
+			 // intialize vote view
+	        initVoteView: function() {
+	    	  var voteButtonsView = new voteView({
+	                name: "vote View",
+	                destination: '#votes-area-h',
+	                model: this.basics,
+	                userId: this.id
+	           });
+	           this.scheme.push(voteButtonsView);
+	           this.layout.render();
+	        },
 
 			handleDeferredsDynamic: function () {
 				var controller = this;
