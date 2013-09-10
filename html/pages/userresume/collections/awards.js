@@ -32,7 +32,7 @@ define(['facade', 'collections', 'user/collections/awards', 'utils'], function(f
 						var payload = load.payload;
 						var temp = {
 							
-							sports_id : payload.sports_id,
+							sports_id : payload.id,
 							sports_name : payload.name,
 							awards : []
 						}

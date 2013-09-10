@@ -4,9 +4,22 @@
  // Requires `define`, `require`
  // Returns {Add Game VIEW} constructor
  */
-define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 'views', 'utils', 'vendor', 'user/models/basic_info', 'sportorg/collections/sports_users', 'location/collections/states', 'usercontrols/addgame/collections/teams', 'location/collections/cities', 'usercontrols/addgame/collections/teams_user', 'usercontrols/addgame/collections/teams', 'usercontrols/addgame/models/team', 'usercontrols/addgame/models/team_add', 'usercontrols/addgame/models/game'], function(require, layoutTemplate) {
+define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 'views', 'utils', 'vendor', 'user/models/basic_info', 
+'sportorg/collections/sports_users', 'location/collections/states', 'usercontrols/addgame/collections/teams', 
+'location/collections/cities', 'usercontrols/addgame/collections/teams_user', 
+'usercontrols/addgame/collections/teams',
+'usercontrols/addgame/collections/games_search',
+'usercontrols/addgame/models/team', 
+'usercontrols/addgame/models/team_add', 'usercontrols/addgame/models/game'], function(require, layoutTemplate) {
 
-	var self, facade = require('facade'), views = require('views'), SectionView = views.SectionView, utils = require('utils'), Channel = utils.lib.Channel, vendor = require('vendor'), Mustache = vendor.Mustache, $ = facade.$, BasicModel = require('usercontrols/tag/models/basic_info'), SportsCollection = require('sportorg/collections/sports_users'), StatesCollection = require('location/collections/states'), CityCollection = require('location/collections/cities'), UserTeamsCollection = require('usercontrols/addgame/collections/teams_user'), TeamsCollection = require('usercontrols/addgame/collections/teams'), TeamModel = require('usercontrols/addgame/models/team'), TeamAddModel = require('usercontrols/addgame/models/team_add'), GameModel = require('usercontrols/addgame/models/game'),
+	var self, facade = require('facade'), views = require('views'), SectionView = views.SectionView, utils = require('utils'), 
+	Channel = utils.lib.Channel, vendor = require('vendor'), Mustache = vendor.Mustache, $ = facade.$, 
+	BasicModel = require('usercontrols/tag/models/basic_info'), SportsCollection = require('sportorg/collections/sports_users'), 
+	StatesCollection = require('location/collections/states'), CityCollection = require('location/collections/cities'), 
+	UserTeamsCollection = require('usercontrols/addgame/collections/teams_user'), 
+	TeamsCollection = require('usercontrols/addgame/collections/teams'), TeamModel = require('usercontrols/addgame/models/team'), 
+	TeamAddModel = require('usercontrols/addgame/models/team_add'), GameModel = require('usercontrols/addgame/models/game'),
+	GamesSearchCollection = require('usercontrols/addgame/collections/games_search'),
 	//Models
 	AddGameView = SectionView.extend({
 
@@ -27,6 +40,8 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 			'blur .txt-game-city_h' : 'changeCity',
 			'keyup .txt-game-team_h' : 'keyupTeam',
 			'blur .txt-game-team_h' : 'changeTeam',
+			'keyup .txt-individual-game_h' : 'keyupIndividualGame',
+			'blur .txt-individual-game_h' : 'changeindividualGame',
 			'change .ddl-game-userteams_h' : 'changeUserTeam',
 			'click .btn-new-team-game_h' : 'showAddTeam',
 			'click .rdo-game-location_h' : 'showLocation',
@@ -63,6 +78,10 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 			sectionMainLocation : ".section-main-location_h",
 			sectionLocation : ".div-game-location_h",
 
+			sectionIndividual : ".secction-individual-game_h",
+			txtIndividualGame : ".txt-individual-game_h",
+			btnIndividualFinish : ".btn-game-individual-Finish_h",
+
 			// LABELS
 			fieldMessage : '.field-message',
 			//fieldError : '.field-error'
@@ -75,7 +94,8 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 			playersId : 'playerid',
 			cityId : 'cityid',
 			sportId : 'sportid',
-			locationId : 'locationid'
+			locationId : 'locationid',
+			gameId : 'gameid'
 		},
 		inlineTemplates : {
 
@@ -88,7 +108,8 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 			selectTeam : "Select Team",
 			selectScore : "Enter Score",
 			selectLocation : "select location",
-			selectLocationType : "select location type"
+			selectLocationType : "select location type",
+			gameFound : "Sweet ! This Event Already Exists ! "
 		},
 
 		/*initialize gets called by default when constructor is initialized*/
@@ -462,20 +483,117 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 			}
 			self.CheckTeamControlsVisibility();
 		},
+		
+		/*Event Called when a key is pressed
+		 Fetch data from api and populate it in auto complete dropdown
+		 */
+		keyupIndividualGame : function(e) {
+			var name = $(e.target).val();
+			var arr = [];
+			var isValidKey = self.isValidAutoCompleteKey(e);
+			if (name != '' && isValidKey == true && name.length > 2) {
+
+				// Hide all other controls
+				$(e.target).removeAttr(self.attributes.gameId);
+				self.CheckTeamControlsVisibility();
+
+				var List = new GamesSearchCollection();
+				List.sports_id = $(e.target).attr(self.attributes.sportId);
+				List.game_name = name;
+				List.fetch();
+				$.when(List.request).done(function() {
+					if (List.isError())
+						return;
+
+					var models = List.toJSON();
+					if (models == null || models.length < 1)
+						self.$(e.target).parent().find(self.controls.fieldMessage).html(self.messages.dataNotExist).stop().fadeIn();
+					else
+						self.$(e.target).parent().find(self.controls.fieldMessage).html('').stop().fadeOut();
+					self.individualGames = [];
+					for (var key in models) {
+						self.individualGames.push(models[key].payload);
+					}
+					self.individualGames.forEach(function(value, index) {
+					//	var name = value['game_name'] + "( " + +" )";
+						arr.push(value['game_name']);
+					});
+					
+					// Destroy existing autocomplete from text box before attaching it again
+					// try catch as for the first time it gives error
+					try {
+						self.$(e.target).autocomplete("destroy");
+					} catch(ex) {
+					}
+
+console.log("s.arr",arr);
+					$(e.target).autocomplete({
+						source : arr
+					});
+					//Trigger keydown to display the autocomplete dropdown just created
+					$(e.target).trigger('keydown');
+				});
+			} else {
+				// Hide all other controls
+				$(e.target).removeAttr(self.attributes.gameId);
+				self.CheckTeamControlsVisibility();
+
+				if (self.isEnterKey(e))
+					self.changeIndividualGame(e);
+			}
+		},
+
+		/*Change school_id as per the selected record from auto complete for state created in keyupSchool*/
+		changeIndividualGame : function(e) {
+			var name = $(e.target).val();
+			var isGameValid = false;
+			self.individual_game_id = 0;
+			if (self.individualGames) {
+				self.individualGames.forEach(function(value, index) {
+					var gamename = value['game_name'];
+					if (gamename == name) {
+						isGameValid = true;
+						self.individual_game_id = value['id'];
+						$(e.target).attr(self.attributes.gameId, self.individual_game_id);
+					}
+				});
+			}
+			if (!isGameValid) {
+				// Hide all other controls
+				$(e.target).removeAttr(self.attributes.gameId);
+				$(e.target).parent().find(self.controls.fieldMessage).html('').stop().fadeOut();
+			}else{
+				$(e.target).parent().find(self.controls.fieldMessage).html(self.messages.gameFound).fadeIn();
+			}
+			self.CheckTeamControlsVisibility();
+		},
+		
+		
 		CheckTeamControlsVisibility : function() {
 			var value = $(self.destination).find(self.controls.ddlSports).val();
+			// sectionIndividual : ".secction-individual-game_h",
+			// txtIndividualGame : ".txt-individual-game_h",
+			// btnIndividualFinish : ".btn-game-individual-Finish_h",
+			//sssssssssssssssss
 			if (value && value != "" && value != 0) {
-
-				$(self.destination).find(self.controls.sectionTeams).show();
-				$(self.destination).find(self.controls.sectionScore).show();
 				var isTeam = self.getTeamType();
 				if (!isTeam) {
-					$(self.destination).find(self.controls.sectionTeamTwo).hide();
-					$(self.destination).find(self.controls.sectionScore).hide();
+				$(self.destination).find(self.controls.sectionTeams).hide();
+				$(self.destination).find(self.controls.sectionScore).hide();
+				$(self.destination).find(self.controls.btnFinish).hide();
+
+
+					$(self.destination).find(self.controls.sectionIndividual).show();
+					$(self.destination).find(self.controlsbtnIndividualFinish).show();
+
 				}
 			} else {
-				$(self.destination).find(self.controls.sectionTeams).hide();
-				$(self.destination).find(self.controls.txtTeam).val('').removeAttr(self.attributes.teamId).hide();
+				$(self.destination).find(self.controls.sectionIndividual).hide();
+				$(self.destination).find(self.controlsbtnIndividualFinish).hide();
+				
+				$(self.destination).find(self.controls.sectionTeams).show();
+				$(self.destination).find(self.controls.sectionScore).show();
+				$(self.destination).find(self.controls.btnFinish).show();
 			}
 
 			value = $(self.destination).find(self.controls.txtTeam).attr(self.attributes.teamId);
@@ -573,10 +691,10 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 
 			// var location_type_one = $(self.destination).find(self.controls.rdoTeamOne + " :checked");
 			// if (location_type_one.length < 1) {
-				// $(self.destination).find(self.controls.sectionTeamOne).find(self.controls.sectionRadio).find(self.controls.fieldMessage).html(self.messages.selectLocationType).fadeIn();
-				// isDataValid = false;
+			// $(self.destination).find(self.controls.sectionTeamOne).find(self.controls.sectionRadio).find(self.controls.fieldMessage).html(self.messages.selectLocationType).fadeIn();
+			// isDataValid = false;
 			// }
-		//	console.log("location_type",location_type_one);
+			//	console.log("location_type",location_type_one);
 			var isTeam = self.getTeamType();
 			if (isTeam) {
 
@@ -597,8 +715,8 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 				// var location_type_two = $(self.destination).find(self.controls.rdoTeamTwo + " :checked");
 				// console.log("location_type_two",location_type_two);
 				// if (location_type_two.length < 1) {
-					// $(self.destination).find(self.controls.sectionTeamTwo).find(self.controls.sectionRadio).find(self.controls.fieldMessage).html(self.messages.selectLocationType).fadeIn();
-					// isDataValid = false;
+				// $(self.destination).find(self.controls.sectionTeamTwo).find(self.controls.sectionRadio).find(self.controls.fieldMessage).html(self.messages.selectLocationType).fadeIn();
+				// isDataValid = false;
 				// }
 			}
 
@@ -636,7 +754,7 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 
 						var addTeamModelOne = new TeamAddModel(payload);
 						addTeamModelOne.teams_id = teamOneId;
-
+						addTeamModelOne.games_id = self.game_id;
 						addTeamModelOne.save();
 
 						var payloadTwo = {
@@ -649,6 +767,7 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 
 						var addTeamModelTwo = new TeamAddModel(payload);
 						addTeamModelTwo.teams_id = teamTwoId;
+						addTeamModelOne.games_id = self.game_id;
 						addTeamModelTwo.save();
 
 						self.gameData = {
@@ -663,7 +782,6 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 				});
 
 			}
-
 
 		}
 	});

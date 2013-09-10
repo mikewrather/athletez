@@ -117,6 +117,9 @@ define(['require', 'text!userresume/templates/references.html', 'text!userresume
 					return;
 
 				self.references = Collection.parseAsRequired();
+				console.log("11111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111");
+			
+				console.log("self.references",self.references);
 				if (self.references.length > 0) {
 					var markup = Mustache.to_html(listTemplate, {
 						data : self.references
@@ -239,11 +242,11 @@ define(['require', 'text!userresume/templates/references.html', 'text!userresume
 			self.SaveReference(e, "update");
 		},
 
-		CancelNew : function() {
+		CancelNew : function(e) {
 			self.ClearControls(e);
 		},
 		
-		CancelExisting : function() {
+		CancelExisting : function(e) {
 			$(e.target).fadeOut();
 			$(e.target).parents(self.controls.newReferenceContainer).find(self.controls.btnUpdateReferenceExisting).fadeOut();
 			$(e.target).parents(self.controls.newReferenceContainer).find(self.controls.btnEditReference).fadeIn();

@@ -108,6 +108,8 @@ define(['require', 'text!userresume/templates/awards.html', 'text!userresume/tem
 					return;
 
 				self.awards = Collection.parseAsRequired();
+			//	console.log("111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111");
+			//	console.log(self.awards);
 				if (self.awards.length > 0) {
 					var markup = Mustache.to_html(listTemplate, {
 						data : self.awards

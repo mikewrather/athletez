@@ -238,7 +238,6 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
         },
         
         showTag: function (userid) {
-           alert("tag");
             this.loadStyles();
             $('body').empty();
             chromeBootstrap();
