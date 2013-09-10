@@ -15,6 +15,9 @@ function(require, commentFormTemplate,    ProfileCommentFormModel,        BaseCo
 
     CommentOnFormView = BaseView.extend({
 	    initialize: function (options) {
+	    	
+	    	console.error(options);
+	    	
              _.bindAll(this);
              this.setOptions();
              BaseView.prototype.initialize.call(this, options);
@@ -73,13 +76,15 @@ function(require, commentFormTemplate,    ProfileCommentFormModel,        BaseCo
                 var payload = new Array;
                 payload['comment'] = comment;
                 payload['comment_date'] = date.toDateString();
-                                
+                payload['subject_type_id'] = this.collection.subject_entity_type;
+                payload['subject_id'] = this.model.get("id"); 
+                 
                 var saveInfo = new BaseModel(payload);
                 saveInfo.url = function() {
 	                debug.log(self);
                     if (testpath)
-                        return testpath + '/user/addcomment';
-                    return '/api/user/addcomment';
+                        return testpath + '/user/comment/add';
+                    return '/api/comment/add/';
                 };
 
             saveInfo.saveSuccess = function(model, response) {

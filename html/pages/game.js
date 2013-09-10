@@ -116,9 +116,9 @@ define([
 			//this.comments.id = this.id;
 			//this.comments.fetch();
 			
-			this.commentson = new GameCommentOnList();
-			this.commentson.id = this.userId;
-			this.commentson.fetch();
+			//this.commentson = new GameCommentOnList();
+			//this.commentson.id = this.userId;
+			//this.commentson.fetch();
 		},
 
 		handleDeferreds: function () {
@@ -128,6 +128,15 @@ define([
 				controller.setupHeaderView();
 				controller.initVoteView();
 				controller.setupAddMediaView();
+				
+				var subject_type_id = controller.basics.get("payload").enttypes_id;
+				controller.commentson = new GameCommentOnList();
+				controller.commentson.subject_entity_type = subject_type_id;
+				controller.commentson.id = controller.id;
+				controller.commentson.fetch();
+				$.when(controller.commentson.request).done(function () {
+					controller.setupCommentsOnListView();
+				});
 			});
 
 			$.when(this.teamrosters.request).done(function () {
@@ -146,9 +155,9 @@ define([
 			//	controller.setupCommentListView();
 			//})
 			
-			$.when(this.commentson.request).done(function () {
-				controller.setupCommentsOnListView();
-			})
+			//$.when(this.commentson.request).done(function () {
+			//	controller.setupCommentsOnListView();
+			//})
 		},
 		
 		// intialize vote view

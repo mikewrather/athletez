@@ -14,8 +14,8 @@ function(facade, SiteCommentList, utils) {
         
         url: function() {
             if (testpath)
-                return testpath + '/user/commentson/' + this.id;
-            return '/api/user/commentson/' + this.id;
+                return testpath + '/comment/getall/' + this.id;
+            return '/api/comment/getall/?subject_enttypes_id='+this.subject_entity_type+'&subject_id='+this.id;
         }
 
     });
