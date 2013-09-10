@@ -21,16 +21,48 @@ function(require, teamAddMediaTemplate) {
 
     TeamAddMediaView = SectionView.extend({
 
-        id: 'add-media',
+        //id: 'add-media',
 
         template: teamAddMediaTemplate,
         
+        
+        events: {
+		   "click #addPhoto" : "openAddImagePopup",
+           "click #addVideo" : "openAddvideoPopup"
+	    },
+	
+		
         // **Method** `setOptions` - called by BaseView's initialize method
         setOptions: function (options) {
             if (!this.model) {
-                throw new Error("TeamAddMediaView expects option with model property.");
-            }            
-        }
+                throw new Error("ProfileAddMediaView expects option with model property.");
+            }
+			this.model.userid = options.userid;
+        },
+
+	    openAddImagePopup: function(event)
+	    {
+			 
+             var id = $('.selected-sport-h').data('id'), url = "/api/team/addimage/" + this.model.id,
+                url = "/api/team/addimage/" + this.model.id,
+			    attr = {
+				    "sports_id" : id
+			    };
+			
+			routing.trigger('add-image', url, attr);
+		    //Channel("add-image").publish(url,attr);
+	    },
+		openAddvideoPopup: function(event){
+			
+			//** firing the call back list
+			
+			
+			var url = "/api/user/addvideo/" + this.model.id;
+			
+			Channel('add-video').publish(url);
+			
+		}
+        
         
                 
     });

@@ -8,18 +8,21 @@ define( ["models/base"], function (BaseModel) {
     var TeamAddMediaModel;
 
     TeamAddMediaModel = BaseModel.extend({
-
+		id: undefined,
         defaults: {
             
             "links": [{
                 "label": "Photo",
-                "link": "#"
+                "link": "javascript: void(0);",
+                "id"   :"addPhoto"
             }, {
                 "label": "Video",
-                "link": "#"
+                "link": "javascript: void(0);",
+                "id"   :"addVideo"
             }, {
                 "label": "Game",
-                "link": "#"
+                "link": "javascript: void(0);",
+                "id"   :"addGame"
             }
             ]
             

@@ -1,7 +1,16 @@
 
 {{#payload}}
 <div class="row-fluid">
-    <div class="span4 textcenter">
+	
+	<div class="profile-heading">
+            <h3 class="username">{{name}} '{{grad_year}}</h3>
+            <h4>FORWARD</h4>
+            <div class="sports-h"></div>
+    </div>
+	
+	
+	
+    <!--div class="span4 textcenter">
         {{#picture}}
         <img src="{{picture}}" alt="{{name}}" />
         {{/picture}}
@@ -14,8 +23,9 @@
             <div class="followers">Followers: {{num_followers}}</div>
         </div>
         <div id="sports-info"></div>
-    </div>
+    </div-->
 </div>
 
+<div id="sports-info"></div>
 {{/payload}}
 
