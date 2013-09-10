@@ -330,6 +330,7 @@ class Controller_Api_Base extends AuthController
 				->find();
 			if(!$this->mainModel->loaded())	unset($this->mainModel);
 		}
+	//	print_r($this->mainModel);
 	}
 
 
