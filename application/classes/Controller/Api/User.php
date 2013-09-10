@@ -192,35 +192,6 @@
 		}
 
 		/**
-		 * action_get_media()
-		 * via /api/user/media/{users_id}
-		 *
-		 */
-		public function action_get_media()
-		{
-			$this->payloadDesc = "";
-			$arguments = array();
-			// CHECK FOR PARAMETERS:
-			// sports_id
-			//
-
-			if((int)trim($this->request->query('sports_id')) > 0)
-			{
-				$sports_id = $arguments["sports_id"] = (int)trim($this->request->query('sports_id'));
-			}
-			elseif((int)trim($this->request->query('sport_id')) > 0)
-			{
-				$sports_id = $arguments["sports_id"] = (int)trim($this->request->query('sport_id'));
-			}
-			else
-			{
-				$sports_id = null;
-			}
-
-			return $this->mainModel->getMedia($this->mainModel, $sports_id);
-		}
-
-		/**
 		 * action_get_images() List of images uploaded by the user
 		 * via /api/user/images/{users_id}
 		 *

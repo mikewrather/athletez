@@ -946,4 +946,30 @@ class Controller_Api_Base extends AuthController
 		}
 	}
 
+	public function action_get_media()
+	{
+
+		if(!$this->mainModel->id)
+		{
+			$this->modelNotSetError();
+			return false;
+		}
+
+		if((int)trim($this->request->query('sports_id')) > 0)
+		{
+			$sports_id = $arguments["sports_id"] = (int)trim($this->request->query('sports_id'));
+		}
+		elseif((int)trim($this->request->query('sport_id')) > 0)
+		{
+			$sports_id = $arguments["sports_id"] = (int)trim($this->request->query('sport_id'));
+		}
+		else
+		{
+			$sports_id = null;
+		}
+
+		$media = ORM::factory('Media_Base');
+		return $media->getTaggedMedia($this->mainModel, $sports_id);
+	}
+
 }
