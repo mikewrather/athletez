@@ -187,7 +187,7 @@ class Model_Sportorg_Org extends ORM
 	
 	public function getSports()
 	{
-		$sports = $this->sports;
+		$sports = $this->sports->distinct(true);
 		$classes_arr = array(
 			'Sportorg_Sport' => 'sportorg_sport'
 		);
@@ -251,13 +251,16 @@ class Model_Sportorg_Org extends ORM
 		$seasons_model->join('orgs')->on('orgs.season_profiles_id', '=', 'seasons.season_profiles_id');
 		$seasons_model->join('teams')->on('teams.seasons_id', '=', 'seasons.id');
 		$seasons_model->where('orgs.id', '=', $id);
+		$seasons_model->join('org_sport_link')->on('org_sport_link.id', '=', 'teams.org_sport_link_id');
+		$seasons_model->where('org_sport_link.orgs_id', '=', $id);
+
 		$classes_arr = array(
 			'Sportorg_Org' => 'orgs',
 			'Sportorg_Team' => 'teams',
 			'Sportorg_Seasons_Base' => 'seasons'
 		);
-		if (isset($sports_id)){
-			$seasons_model->join('org_sport_link')->on('org_sport_link.id', '=', 'teams.org_sport_link_id');
+		if (isset($sports_id))
+		{
 			$seasons_model->where('org_sport_link.sports_id', '=', $sports_id);
 			$classes_arr['Sportorg_Orgsportlink'] = 'org_sport_link';
 		}
