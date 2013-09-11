@@ -25,8 +25,9 @@ define([
     "team/collections/images",
     "team/collections/comments",
     "profile/collections/commentsof",
-	"profile/collections/commentson",
+	"team/collections/commentson",
 	"team/collections/orgs",
+	"team/collections/fans",
     
     "team/views/header",
     "team/views/add-media",
@@ -39,8 +40,8 @@ define([
     "team/views/image-list",
     "team/views/comment-list",
     "media/models/image",
-    "sportorg/views/org-list"
-    
+    "sportorg/views/org-list",
+    "profile/views/fans-image-list"
     
     ], function (require, pageLayoutTemplate, voteView) {
 
@@ -57,12 +58,13 @@ define([
         TeamRecentScheduleList = require("team/collections/recent_schedules"),
         TeamCompetitorTeamList = require("team/collections/competitor_teams"),
         TeamOrgList = require("team/collections/orgs"),
-        TeamRosterList = require("team/collections/rosters");
-        TeamVideoList = require("team/collections/videos");
-        TeamImageList = require("team/collections/images");
-        TeamCommentList = require("team/collections/comments");
+        TeamRosterList = require("team/collections/rosters"),
+        TeamVideoList = require("team/collections/videos"),
+        TeamImageList = require("team/collections/images"),
+        FansImageList = require("team/collections/fans"),
+        TeamCommentList = require("team/collections/comments"),
         TeamCommentOfList = require("profile/collections/commentsof"),
-		TeamCommentOnList = require("profile/collections/commentson"),
+		TeamCommentOnList = require("team/collections/commentson"),
         TeamHeaderView = require("team/views/header"),
         TeamAddMediaView = require("team/views/add-media"),
         TeamOrgListView = require("sportorg/views/org-list"),
@@ -74,6 +76,7 @@ define([
         TeamCommentListView = require("team/views/comment-list"),
         TeamCommentOfListView = require("team/views/commentof-list"),
 		TeamCommentOnListView = require("team/views/commenton-list"),
+		FansImageListView = require("profile/views/fans-image-list"),
         MediaImageModel = require("media/models/image");
         LayoutView = views.LayoutView,
         $ = facade.$,
@@ -124,7 +127,7 @@ define([
 
             var controller = this;
             
-            function callback(sport_id, team_id) {
+            function callback(sport_id, team_id, season_id) {
                 controller.refreshPage();
                 //controller.upcoming_schedules = new TeamUpcomingScheduleList();
                // controller.upcoming_schedules.id = controller.id;
@@ -162,7 +165,7 @@ define([
               //  controller.videos.fetch();
                 
                 controller.games = new TeamOrgList();
-				controller.games.id = team_id;
+				controller.games.id = season_id;
 				controller.games.sport_id = sport_id;
 				controller.games.fetch();
                 
@@ -171,13 +174,18 @@ define([
                 controller.images.team_id = team_id;
                 controller.images.sport_id = sport_id;
                 controller.images.fetch();
-                
+               
+                controller.fans = new FansImageList();
+				controller.fans.id = team_id;
+				controller.fans.sport_id = sport_id;
+				controller.fans.fetch();
+               
                 var subject_type_id = controller.basics.get("payload").enttypes_id;
 	        	controller.commentson = new TeamCommentOnList();
 	        	controller.commentson.subject_entity_type = subject_type_id;
+	        	controller.commentson.savePath = "/team/addcomment/"+team_id;
 				controller.commentson.id = team_id;
 				controller.commentson.fetch();
-                
                 //controller.comments = new TeamCommentList();
                 //controller.comments.id = controller.id;
                // controller.comments.sport_id = sport_id;
@@ -188,8 +196,8 @@ define([
                 controller.handleDeferredsDynamic();
             }
             
-            routing.on('refresh-teampage', function(sport_id, team_id) {
-            	callback(sport_id, team_id)
+            routing.on('refresh-teampage', function(sport_id, team_id,season_id) {
+            	callback(sport_id, team_id, season_id)
             })
             
           //  Channel('refresh-teampage').subscribe(callback);
@@ -234,22 +242,47 @@ define([
 		},
 
 		setupCommentOnListView: function () {
-			var commentOnListView;
-			console.log(this.commentson);
-			this.commentOnListView = new TeamCommentOnListView({
-				collection: this.commentson,
-				destination: ".commentson-outer-box-h",
-				name: "team comments on view "				
-			});
-
-			this.scheme.push(this.commentOnListView);
-			this.layout.render();
+			//var commentOnListView;
+			//$(".commentson-outer-box-h").empty();
+			//if(typeof this.commentOnListView == "undefined") {
+				this.commentOnListView = new TeamCommentOnListView({
+					collection: this.commentson,
+					destination: ".commentson-outer-box-h",
+					name: "team comments on view "			
+				});
+				this.scheme.push(this.commentOnListView);
+				this.layout.render();
+		//	} else {
+				//alert("here");
+			//	this.commentOnListView.collection.reset(this.commentson.toJSON());
+		//	}
+			
+			
+			
 		},
         
         refreshPage: function() {
             var position;
             
-            if (this.upcomingScheduleListView) {
+            if (this.commentOnListView) {
+                $(this.commentOnListView.destination).html('');
+                position = $.inArray(this.commentOnListView, this.scheme);
+                if ( ~position ) this.scheme.splice(position, 1);
+            }
+            
+            if (this.gamesView) {
+                $(this.gamesView.destination).html('');
+                position = $.inArray(this.gamesView, this.scheme);
+                if ( ~position ) this.scheme.splice(position, 1);
+            }
+            
+            if (this.fansListView) {
+                $(this.fansListView.destination).html('');
+                position = $.inArray(this.fansListView, this.scheme);
+                if ( ~position ) this.scheme.splice(position, 1);
+            }
+            
+           /* if (this.upcomingScheduleListView) {
                 $(this.upcomingScheduleListView.destination).html('');
                 position = $.inArray(this.upcomingScheduleListView, this.scheme);
                 if ( ~position ) this.scheme.splice(position, 1);
@@ -277,7 +310,7 @@ define([
                 $(this.videoListView.destination).html('');
                 position = $.inArray(this.videoListView, this.scheme);
                 if ( ~position ) this.scheme.splice(position, 1);
-            }
+            }*/
             
             if (this.imageListView) {
                 $(this.imageListView.destination).html('');
@@ -285,11 +318,7 @@ define([
                 if ( ~position ) this.scheme.splice(position, 1);
             }
             
-            if (this.commentson) {
-                $(this.commentson.destination).html('');
-                position = $.inArray(this.commentson, this.scheme);
-                if ( ~position ) this.scheme.splice(position, 1);
-            }
+            
         },
         
         handleDeferredsDynamic: function() {
@@ -305,6 +334,9 @@ define([
 			
 			 $.when(controller.games.request).done(function () {
 					controller.setupGameView();
+			});
+			$.when(controller.fans.request).done(function (x) {
+					controller.setupFansListView();
 			});
 			
           //  $.when(this.recent_schedules.request).done(function () {
@@ -331,6 +363,18 @@ define([
           //      controller.setupComments();
           //  });
         },
+        
+        setupFansListView: function () {
+				this.fansListView = new FansImageListView({
+					collection: this.fans,
+					destination: "#fans-div",
+					//model: Backbone.Model.extend(),
+					name: "fans View"
+				});
+
+				this.scheme.push(this.fansListView);
+				this.layout.render();
+			},
         
         setupHeaderView: function() {
             var headerView;
@@ -392,13 +436,13 @@ define([
         },
         
         setupGameView: function () {
-			var gamesView;
-			gamesView = new TeamOrgListView({
+			this.gamesView = new TeamOrgListView({
 				collection: this.games,
-				destination: "#games_div"
+				destination: "#games_div",
+				name: "games view"
 			});
 
-			this.scheme.push(gamesView);
+			this.scheme.push(this.gamesView);
 			this.layout.render();
 		},
         

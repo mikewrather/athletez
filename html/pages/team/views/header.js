@@ -97,7 +97,7 @@ function(require, headerTemplate, selectSportTemplate) {
         },
         
         showAllTeamData: function() {
-        	routing.trigger('refresh-teampage', $(".sports-h").val(), $(".team-h").val());
+        	routing.trigger('refresh-teampage', $(".sports-h").val(), $(".team-h").val(), this.season.id);
         },
         
         getComplevels: function() {
