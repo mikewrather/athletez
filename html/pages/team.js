@@ -36,7 +36,8 @@ define([
     "sportorg/views/roster-list",
     "team/views/video-list",
     "team/views/image-list",
-    "team/views/comment-list"
+    "team/views/comment-list",
+    "media/models/image"
     
     
     ], function (require, pageLayoutTemplate, voteView) {
@@ -68,8 +69,8 @@ define([
         TeamImageListView = require("team/views/image-list"),
         TeamCommentListView = require("team/views/comment-list"),
         TeamCommentOfListView = require("team/views/commentof-list"),
-		TeamCommentOnListView = require("team/views/commenton-list")
-        
+		TeamCommentOnListView = require("team/views/commenton-list"),
+        MediaImageModel = require("media/models/image");
         LayoutView = views.LayoutView,
         $ = facade.$,
         _ = facade._,
@@ -421,7 +422,12 @@ define([
            this.layout.render();
         },
         
-        setupImages: function() {
+        setupImages: function(data) {
+        	var self = this;
+        	routing.on('image-upload-success', function(data) { 
+        		self.updateImages(data);
+        	});
+        	
             this.imageListView = new TeamImageListView({
                 collection: this.images,
                 destination: "#image-wrap",
@@ -431,6 +437,22 @@ define([
             this.scheme.push(this.imageListView);
             this.layout.render();
         },
+        
+        
+        updateImages: function (data) {
+				//create new image model to hold newly uploaded image
+				var newImageModel = new MediaImageModel();
+
+				//set the model to use the data from the new image
+				newImageModel.processItemFromPayload(data);
+
+				//select the image list view's display type and
+				//by setting the url to the correct one of its types
+				newImageModel.selectImageType(this.imageListView.imagetype);
+
+				//add the model to the view's collection
+				this.imageListView.collection.add(newImageModel);
+			},
         
         setupComments: function() {
             this.commentListView = new TeamCommentListView({

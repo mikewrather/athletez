@@ -49,9 +49,6 @@ function(require, teamAddMediaTemplate) {
 				    "sports_id" : sport_id
 			    };
 			
-			alert(url);
-			alert(attr);
-			
 			routing.trigger('add-image', url, attr);
 		    //Channel("add-image").publish(url,attr);
 	    },
