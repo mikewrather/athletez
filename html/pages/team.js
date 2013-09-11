@@ -119,50 +119,53 @@ define([
 
             var controller = this;
             
-            function callback(sport_id, complevel_id, season_id) {
+            function callback(sport_id, team_id) {
                 controller.refreshPage();
-            
-                controller.upcoming_schedules = new TeamUpcomingScheduleList();
-                controller.upcoming_schedules.id = controller.id;
-                controller.upcoming_schedules.sport_id = sport_id;
-                controller.upcoming_schedules.complevel_id = complevel_id;
-                controller.upcoming_schedules.season_id = season_id;
-                controller.upcoming_schedules.fetch();
+                //controller.upcoming_schedules = new TeamUpcomingScheduleList();
+               // controller.upcoming_schedules.id = controller.id;
+               // controller.upcoming_schedules.sport_id = sport_id;
+               // controller.upcoming_schedules.complevel_id = complevel_id;
+               // controller.upcoming_schedules.season_id = season_id;
+               // controller.upcoming_schedules.fetch();
                 
-                controller.recent_schedules = new TeamRecentScheduleList();
-                controller.recent_schedules.id = controller.id;
-                controller.recent_schedules.sport_id = sport_id;
-                controller.recent_schedules.complevel_id = complevel_id;
-                controller.recent_schedules.season_id = season_id;
-                controller.recent_schedules.fetch();
+                //controller.recent_schedules = new TeamRecentScheduleList();
+               // controller.recent_schedules.id = controller.id;
+               // controller.recent_schedules.sport_id = sport_id;
+               // controller.recent_schedules.complevel_id = complevel_id;
+               // controller.recent_schedules.season_id = season_id;
+               // controller.recent_schedules.fetch();
                 
-                controller.competitor_teams = new TeamCompetitorTeamList();
-                controller.competitor_teams.id = controller.id;
-                controller.competitor_teams.sport_id = sport_id;
-                controller.competitor_teams.complevel_id = complevel_id;
-                controller.competitor_teams.season_id = season_id;
-                controller.competitor_teams.fetch();
+               // controller.competitor_teams = new TeamCompetitorTeamList();
+              //  controller.competitor_teams.id = controller.id;
+              //  controller.competitor_teams.sport_id = sport_id;
+               // controller.competitor_teams.complevel_id = complevel_id;
+               // controller.competitor_teams.season_id = season_id;
+              //  controller.competitor_teams.fetch();
                 
-                controller.rosters = new TeamRosterList();
-                controller.rosters.id = controller.id;
-                controller.rosters.sport_id = sport_id;
-                controller.rosters.complevel_id = complevel_id;
-                controller.rosters.season_id = season_id;
-                controller.rosters.fetch();
+                //controller.rosters = new TeamRosterList();
+               // controller.rosters.id = controller.id;
+               // controller.rosters.sport_id = sport_id;
+               // controller.rosters.complevel_id = complevel_id;
+               // controller.rosters.season_id = season_id;
+               //controller.rosters.fetch();
                 
-                controller.videos = new TeamVideoList();
-                controller.videos.id = controller.id;
-                controller.videos.sport_id = sport_id;
-                controller.videos.complevel_id = complevel_id;
-                controller.videos.season_id = season_id;
-                controller.videos.fetch();
+                //controller.videos = new TeamVideoList();
+               // controller.videos.id = controller.id;
+               // controller.videos.sport_id = sport_id;
+               // controller.videos.complevel_id = complevel_id;
+               // controller.videos.season_id = season_id;
+              //  controller.videos.fetch();
                 
                 controller.images = new TeamImageList();
-                controller.images.id = controller.id;
+                controller.images.team_id = team_id;
                 controller.images.sport_id = sport_id;
-                controller.images.complevel_id = complevel_id;
-                controller.images.season_id = season_id;
                 controller.images.fetch();
+                
+                var subject_type_id = controller.basics.get("payload").enttypes_id;
+	        	controller.commentson = new TeamCommentOnList();
+	        	controller.commentson.subject_entity_type = subject_type_id;
+				controller.commentson.id = team_id;
+				controller.commentson.fetch();
                 
                 //controller.comments = new TeamCommentList();
                 //controller.comments.id = controller.id;
@@ -173,7 +176,12 @@ define([
                 
                 controller.handleDeferredsDynamic();
             }
-            Channel('refresh-teampage').subscribe(callback);
+            
+            routing.on('refresh-teampage', function(sport_id, team_id) {
+            	callback(sport_id, team_id)
+            })
+            
+          //  Channel('refresh-teampage').subscribe(callback);
         },
         
         handleDeferreds: function() {
@@ -186,15 +194,9 @@ define([
                 
                 console.log(controller.basics);
                 
-                var subject_type_id = controller.basics.get("payload").enttypes_id;
-	        	controller.commentson = new TeamCommentOnList();
-	        	controller.commentson.subject_entity_type = subject_type_id;
-				controller.commentson.id = controller.id;
-				controller.commentson.fetch();
+               
                 
-                 $.when(controller.commentson.request).done(function () {
-					controller.setupCommentOnListView();
-				});
+                
             });
             
             
@@ -282,33 +284,37 @@ define([
         handleDeferredsDynamic: function() {
             var controller = this;
             
-            $.when(this.upcoming_schedules.request).done(function () {
-                controller.setupUpcomingSchedules();
-            });
+          //  $.when(this.upcoming_schedules.request).done(function () {
+           //     controller.setupUpcomingSchedules();
+          //  });
             
-            $.when(this.recent_schedules.request).done(function () {
-                controller.setupRecentSchedules();
-            });
+             $.when(controller.commentson.request).done(function () {
+					controller.setupCommentOnListView();
+			});
             
-            $.when(this.competitor_teams.request).done(function () {
-                controller.setupCompetitorTeams();
-            });
+          //  $.when(this.recent_schedules.request).done(function () {
+           //     controller.setupRecentSchedules();
+          //  });
             
-            $.when(this.rosters.request).done(function () {
-                controller.setupRosters();
-            });
+          //  $.when(this.competitor_teams.request).done(function () {
+          //      controller.setupCompetitorTeams();
+          //  });
             
-            $.when(this.videos.request).done(function () {
-                controller.setupVideos();
-            });
+          //  $.when(this.rosters.request).done(function () {
+          //      controller.setupRosters();
+         //   });
+            
+          //  $.when(this.videos.request).done(function () {
+          //      controller.setupVideos();
+          //  });
             
             $.when(this.images.request).done(function () {
                 controller.setupImages();
             });
             
-            $.when(this.comments.request).done(function () {
-                controller.setupComments();
-            });
+           // $.when(this.comments.request).done(function () {
+          //      controller.setupComments();
+          //  });
         },
         
         setupHeaderView: function() {

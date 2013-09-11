@@ -43,11 +43,14 @@ function(require, teamAddMediaTemplate) {
 	    openAddImagePopup: function(event)
 	    {
 			 
-             var id = $('.selected-sport-h').data('id'), url = "/api/team/addimage/" + this.model.id,
-                url = "/api/team/addimage/" + this.model.id,
+             var sport_id = $('.sports-h').val(), id = $(".team-h").val(), url = "/api/team/addimage/" + id,
+                url = "/api/team/addimage/" + id,
 			    attr = {
-				    "sports_id" : id
+				    "sports_id" : sport_id
 			    };
+			
+			alert(url);
+			alert(attr);
 			
 			routing.trigger('add-image', url, attr);
 		    //Channel("add-image").publish(url,attr);

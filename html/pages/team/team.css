@@ -214,6 +214,10 @@ position: relative;
 	display: inline-block;
 }
 
+#sports-info {
+	margin-left: 20px;
+}
+
 .see-more-h {
 	float: right;
 margin-right: 100px;
@@ -222,4 +226,13 @@ margin-right: 100px;
 #comment_div {
 	text-align: right;
 margin-right: 100px;
+}
+
+#complevel-list, #sport-list {
+	display: inline-block;
+}
+
+.team-template-outer .profile-heading {
+	background: #4b3dc6;
+	
 }
