@@ -129,7 +129,7 @@ define(['require', 'text!profilesetting/templates/highschool.html', 'text!profil
 			if (state != '') {
 				if (isValidKey == true) {
 					// Disable Schools Text Box
-					self.$(e.target).attr('disabled', 'disabled');
+					self.$(e.target).parents(self.controls.divAddSportSection).find(self.controls.txtSchools).attr('disabled', 'disabled');
 
 					//// Remove Sports Section Html
 					self.RemoveSportsSection();
@@ -170,14 +170,14 @@ define(['require', 'text!profilesetting/templates/highschool.html', 'text!profil
 						self.$el.find(self.controls.txtStates).trigger('keydown');
 					});
 				} else {
-					self.changeState();
+					self.changeState(e);
 				}
 			}
 		},
 
 		/*Change state_id as per the selected record from auto complete for state created in keyupState*/
-		changeState : function(event) {
-			var state_name = $(self.controls.txtStates).val();
+		changeState : function(e) {
+			var state_name = $(e.target).val();
 			var isStateValid = false;
 			self.states_id = '';
 
@@ -195,14 +195,14 @@ define(['require', 'text!profilesetting/templates/highschool.html', 'text!profil
 				self.states_id = 0;
 				self.$(self.controls.txtSchools).attr('disabled', 'disabled');
 			}
-			self.keyupSchool();
+			//self.keyupSchool(event);
 		},
 
 		/*Event Called when a key is pressed
 		 Fetch data from api and populate it in auto complete dropdown
 		 */
 		keyupSchool : function(event) {
-			var name = $(self.controls.txtSchools).val();
+			var name = $(event.target).val();
 			var arr = [];
 			var isValidKey = self.isValidAutoCompleteKey(event);
 			if (name != '' && isValidKey == true) {
@@ -222,9 +222,9 @@ define(['require', 'text!profilesetting/templates/highschool.html', 'text!profil
 
 					var models = List.toJSON();
 					if (models == null || models.length < 1)
-						self.$(self.controls.txtSchools).parent().find(self.controls.fieldMessage).html(self.messages.dataNotExist).stop().fadeIn();
+						self.$el.find(self.controls.txtSchools).parent().find(self.controls.fieldMessage).html(self.messages.dataNotExist).stop().fadeIn();
 					else
-						self.$(self.controls.txtSchools).parent().find(self.controls.fieldMessage).html('').stop().fadeOut();
+						self.$el.find(self.controls.txtSchools).parent().find(self.controls.fieldMessage).html('').stop().fadeOut();
 					self.schools = [];
 					for (var key in models) {
 						self.schools.push(models[key].payload);
@@ -239,26 +239,26 @@ define(['require', 'text!profilesetting/templates/highschool.html', 'text!profil
 					} catch(ex) {
 					}
 
-					$(self.controls.txtSchools).autocomplete({
+					$(event.target).autocomplete({
 						source : arr
 					});
 					//Trigger keydown to display the autocomplete dropdown just created
-					self.$el.find(self.controls.txtSchools).trigger('keydown');
+					$(event.target).trigger('keydown');
 				});
 			} else {
 				self.RemoveSportsSection();
-				self.changeSchool();
+				self.changeSchool(event);
 			}
 		},
 
 		/*Change school_id as per the selected record from auto complete for state created in keyupSchool*/
 		changeSchool : function(event) {
-			var name = this.$(self.controls.txtSchools).val();
+			var name = self.$(event.target).val();
 			self.orgs_id = 0;
 			self.schools.forEach(function(value, index) {
 				if (value['org_name'] == name) {
 					self.orgs_id = value['org_id'];
-					if ($(self.controls.divMainSportsSection).find(self.controls.ddlSports).length < 1)
+					if (self.$el.find(self.controls.divMainSportsSection).find(self.controls.ddlSports).length < 1)
 						self.fillSports(self.orgs_id, self.controls.divMainSportsSection);
 				}
 			});
@@ -295,9 +295,8 @@ define(['require', 'text!profilesetting/templates/highschool.html', 'text!profil
 
 					var models = List.toJSON();
 					if (models == null || models.length < 1)
-						self.$(self.controls.ddlSports).parent().find(self.controls.fieldMessage).html(self.messages.dataNotExist).stop().fadeIn();
+						self.$el.find(self.controls.ddlSports).parent().find(self.controls.fieldMessage).html(self.messages.dataNotExist).stop().fadeIn();
 
-console.log("models sports",models);
 					self.sports = [];
 					for (var key in models) {
 						self.sports.push(models[key].payload);
@@ -338,9 +337,7 @@ console.log("models sports",models);
 		 * orgs_id : int, School Id selected from changeSchool function */
 		fillCompLevel : function(orgs_id, destination, sportsId) {
 			self.compLevel_id = undefined;
-			console.log("orgs_id, destination, sportsId",orgs_id, destination, sportsId)
 			// Destroy complevel id if request received to refill the comp level
-			console.log("Fill Comp Level High School");
 			if (orgs_id && orgs_id > 0) {
 				var List = new CompLevelModel();
 				List.orgs_id = orgs_id;
@@ -518,7 +515,6 @@ console.log("models sports",models);
 		},
 		/*Removes Sports From HTML As Well As From Json*/
 		RemoveSports : function(event) {
-
 			self.$(event.target).parents(self.controls.divsportsLevel).remove();
 		},
 		/*SHOW EXISTING TEAM SECTION AT THE BOTTOM OF HIGHSCHOOL SECTION*/
@@ -558,21 +554,19 @@ console.log("models sports",models);
 					teamsModel.user_id = self.user_id;
 					teamsModel.save();
 					$.when(teamsModel.request).done(function() {
-						console.log("teamsModel", teamsModel);
-						console.log("teamsModel", teamsModel.toJSON());
-
 						if (teamsModel.isError())
 							return;
 
 						var model = teamsModel.toJSON();
-						if (model != null && model.payload != null || model.payload.team_id != null) {
+						console.log("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+						console.log("Model",model);
+						if (model != null && model.payload != null || model.payload.id != null) {
 							$(event.target).attr('teamid', model.payload.team_id);
-							$(event.target).parent().find(self.controls.btnOpenPositions).attr('teamid', model.payload.team_id);
-							//	self.displayPositionPopup(event, model.payload.team_id);
+							$(event.target).parent().find(self.controls.btnOpenPositions).attr('teamid', model.payload.id);
+							//	self.displayPositionPopup(event, model.payload.id);
 						}
 					});
 				} else {
-					console.error("OrgsId & ComplevelIds are", orgsId, compLevelId);
 					var cont = $(event.target).parents(self.controls.divLevels).find(self.controls.ddlComplevel);
 					$(cont).parent().find(self.controls.fieldError).html(self.messages.SelectLevel).stop().fadeIn();
 				}
@@ -609,7 +603,6 @@ console.log("models sports",models);
 		},
 		//REFRESH TEAM LIST AS SOON AS USER IS DONE WITH THE CHANGES AND CLICKS FINISH
 		FinishSports : function() {
-			console.log("SetUpTeamsView");
 			self.ClearAddNewForm();
 			self.init();
 		},

@@ -11,7 +11,7 @@ define(['require', 'text!userresume/templates/academic.html', 'text!userresume/t
 	//Models
 	GpaModel = require("userresume/models/gpa"), TestModel = require("userresume/models/test"), AcademicView = SectionView.extend({
 
-		template : academicTemplate,
+		//template : academicTemplate,
 
 		/*Bind Events on controls present in current view template*/
 		events : {
@@ -102,6 +102,8 @@ define(['require', 'text!userresume/templates/academic.html', 'text!userresume/t
 			self.setUpAPTestView();
 		},
 		setUpMainView : function() {
+			//console.log(">>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<<<<<<<<");
+			//console.log($(self.el),self.template);
 			$(self.el).html(self.template);
 		},
 		/*Set complete view like template rendering, default data bindings*/

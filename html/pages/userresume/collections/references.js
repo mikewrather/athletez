@@ -22,19 +22,19 @@ define(['facade', 'collections', 'user/collections/references', 'utils'], functi
 
 			var models = self.toJSON();
 			var d = [];
-console.log("models References", models);
+				console.log("models References", models);
 			if (models.length) {
 				$.each(models, function(index, load) {
 					if (load != null && load.payload != null) {
 						var payload = load.payload;
 						var temp = {
 							
-							sports_id : payload.sports_id,
+							sports_id : payload.id,
 							sports_name : payload.name,
 							references : []
 						}
 						
-						$.each(payload.awards,function(i,l){
+						$.each(payload.references,function(i,l){
 							temp.references.push({
 								id : l.id,
 								name : l.name,
@@ -49,6 +49,7 @@ console.log("models References", models);
 					}
 				});
 			}
+			console.log("del",d);
 			return d;
 		}
 	});

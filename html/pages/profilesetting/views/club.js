@@ -129,7 +129,7 @@ define(['require', 'text!profilesetting/templates/club.html', 'text!profilesetti
 			if (state != '') {
 				if (isValidKey == true) {
 					// Disable Schools Text Box
-					self.$(self.controls.txtSchools).attr('disabled', 'disabled');
+					self.$(self.controls.txtSchools).attr('disabled', 'disabled').val('');
 
 					//// Remove Sports Section Html
 					self.RemoveSportsSection();
@@ -170,14 +170,14 @@ define(['require', 'text!profilesetting/templates/club.html', 'text!profilesetti
 						self.$el.find(self.controls.txtStates).trigger('keydown');
 					});
 				} else {
-					self.changeState();
+					self.changeState(event);
 				}
 			}
 		},
 
 		/*Change state_id as per the selected record from auto complete for state created in keyupState*/
-		changeState : function(event) {
-			var state_name = $(self.controls.txtStates).val();
+		changeState : function(e) {
+			var state_name = $(e.target).val();
 			var isStateValid = false;
 			self.states_id = '';
 
@@ -186,23 +186,23 @@ define(['require', 'text!profilesetting/templates/club.html', 'text!profilesetti
 				if (value['name'] == state_name) {
 					isStateValid = true;
 					self.states_id = value['id'];
-					self.$(self.controls.txtSchools).removeAttr('disabled');
+					self.$el.find(self.controls.txtSchools).removeAttr('disabled');
 				}
 
 			});
 
 			if (!isStateValid) {
 				self.states_id = 0;
-				self.$(self.controls.txtSchools).attr('disabled', 'disabled');
+				self.$el.find(self.controls.txtSchools).attr('disabled', 'disabled').val('');
 			}
-			self.keyupSchool();
+			//self.keyupSchool();
 		},
 
 		/*Event Called when a key is pressed
 		 Fetch data from api and populate it in auto complete dropdown
 		 */
 		keyupSchool : function(event) {
-			var name = $(self.controls.txtSchools).val();
+			var name = $(event.target).val();
 			var arr = [];
 			var isValidKey = self.isValidAutoCompleteKey(event);
 			if (name != '' && isValidKey == true) {
@@ -222,9 +222,9 @@ define(['require', 'text!profilesetting/templates/club.html', 'text!profilesetti
 
 					var models = List.toJSON();
 					if (models == null || models.length < 1)
-						self.$(self.controls.txtSchools).parent().find(self.controls.fieldMessage).html(self.messages.dataNotExist).stop().fadeIn();
+						self.$el.find(self.controls.txtSchools).parent().find(self.controls.fieldMessage).html(self.messages.dataNotExist).stop().fadeIn();
 					else
-						self.$(self.controls.txtSchools).parent().find(self.controls.fieldMessage).html('').stop().fadeOut();
+						self.$el.find(self.controls.txtSchools).parent().find(self.controls.fieldMessage).html('').stop().fadeOut();
 
 					self.schools = [];
 					for (var key in models) {
@@ -240,7 +240,7 @@ define(['require', 'text!profilesetting/templates/club.html', 'text!profilesetti
 					} catch(ex) {
 					}
 
-					$(self.controls.txtSchools).autocomplete({
+					$(event.target).autocomplete({
 						source : arr
 					});
 					//Trigger keydown to display the autocomplete dropdown just created
@@ -248,18 +248,18 @@ define(['require', 'text!profilesetting/templates/club.html', 'text!profilesetti
 				});
 			} else {
 				self.RemoveSportsSection();
-				self.changeSchool();
+				self.changeSchool(event);
 			}
 		},
 
 		/*Change school_id as per the selected record from auto complete for state created in keyupSchool*/
 		changeSchool : function(event) {
-			var name = this.$(self.controls.txtSchools).val();
+			var name = this.$(event.target).val();
 			self.orgs_id = 0;
 			self.schools.forEach(function(value, index) {
 				if (value['org_name'] == name) {
 					self.orgs_id = value['org_id'];
-					if ($(self.controls.divMainSportsSection).find(self.controls.ddlSports).length < 1)
+					if (self.$el.find(self.controls.divMainSportsSection).find(self.controls.ddlSports).length < 1)
 						self.fillSports(self.orgs_id, self.controls.divMainSportsSection);
 				}
 			});
@@ -272,7 +272,6 @@ define(['require', 'text!profilesetting/templates/club.html', 'text!profilesetti
 
 		/*Fill Sports dropdown with sports on basis of gender and sports_club type*/
 		fillSports : function(orgs_id, destination) {
-			console.log("Fill Sports", orgs_id);
 			if (self.sports && self.sports.length > 0) {
 				self.SetupSportsView(orgs_id, destination);
 			} else {
@@ -295,9 +294,8 @@ define(['require', 'text!profilesetting/templates/club.html', 'text!profilesetti
 						return;
 
 					var models = List.toJSON();
-					console.log("Models", models);
 					if (models == null || models.length < 1)
-						self.$(self.controls.ddlSports).parent().find(self.controls.fieldMessage).html(self.messages.dataNotExist).stop().fadeIn();
+						self.$el.find(self.controls.ddlSports).parent().find(self.controls.fieldMessage).html(self.messages.dataNotExist).stop().fadeIn();
 
 					self.sports = [];
 					for (var key in models) {
@@ -326,8 +324,6 @@ define(['require', 'text!profilesetting/templates/club.html', 'text!profilesetti
 		},
 		/*Set up sports section as per the destination wehether default or updation case*/
 		SetupSportsView : function(orgs_id, destination) {
-			console.log("self.sports", self.sports);
-			console.log(destination);
 			var markup = Mustache.to_html(sportsLevelTemplate, {
 				sports : self.sports,
 				orgsId : orgs_id
@@ -342,7 +338,6 @@ define(['require', 'text!profilesetting/templates/club.html', 'text!profilesetti
 		fillCompLevel : function(orgs_id, destination, sportsId) {
 			self.compLevel_id = undefined;
 			// Destroy complevel id if request received to refill the comp level
-			console.log("Fill Comp Level Club");
 			if (orgs_id && orgs_id > 0) {
 				var List = new CompLevelModel();
 				List.orgs_id = orgs_id;
@@ -387,8 +382,6 @@ define(['require', 'text!profilesetting/templates/club.html', 'text!profilesetti
 		/*SET UP LEVEL VIEW AS PER THE DESTINATION WHERE TO APPEND THE VIEW*/
 		SetUpCompLevelView : function(orgs_id, destination, sports_id) {
 			var data = self.GetSeasonsData(self.seasons, orgs_id, sports_id);
-			console.log("Data", data);
-			console.log(destination);
 			var markup = Mustache.to_html(levelTemplate, {
 				levels : self.compLevel,
 				Data : data
@@ -417,7 +410,6 @@ define(['require', 'text!profilesetting/templates/club.html', 'text!profilesetti
 		/*Calls Positions View To Fill Data In Positions PopUp*/
 		fillPositions : function(sport_id, destination) {
 			if (sport_id) {
-				console.log("sport_id", sport_id, "destination", destination);
 				this.positionView = new PositionsView({
 					name : "settings-club-positions",
 					destination : destination,
@@ -435,14 +427,12 @@ define(['require', 'text!profilesetting/templates/club.html', 'text!profilesetti
 			self.clickedPositionTarget = $(event.target);
 			if ($(event.target).parent().find(self.controls.chkSeasons).is(':checked')) {
 				var teamId = $(event.target).attr('teamid');
-				console.log($(event.target).parents(self.controls.divSubLevels).find(self.controls.modalPositionsTitle));
 				if ($(event.target).parents(self.controls.divSubLevels).find(self.controls.modalPositionsTitle).length > 0) {
 
 					self.$(event.target).parents(self.controls.divSubLevels).find(self.controls.modalPositionsTitle).attr('teamid', teamId).removeClass('active');
 
 					// Iterate through the existing positions and mark them active
 					var ids = $(event.target).attr('positions');
-					console.log("ids", ids);
 					if (ids) {
 						var array = ids.split(',');
 						$.each(array, function(index, id) {
@@ -475,7 +465,6 @@ define(['require', 'text!profilesetting/templates/club.html', 'text!profilesetti
 				var positionModel = new PositionModel(payload);
 				positionModel.user_id = self.user_id;
 				positionModel.type = "delete";
-				console.log("positionModel", positionModel);
 				positionModel.destroy({
 					data : payload
 				});
@@ -522,7 +511,6 @@ define(['require', 'text!profilesetting/templates/club.html', 'text!profilesetti
 		},
 		/*SHOW EXISTING TEAM SECTION AT THE BOTTOM OF HIGHSCHOOL SECTION*/
 		SetUpTeamsView : function() {
-			console.log("Club teams view Set Up Teams View");
 			this.teamsView = new TeamsView({
 				user_id : self.user_id,
 				destination : self.controls.divTeamListDetail,
@@ -563,10 +551,10 @@ define(['require', 'text!profilesetting/templates/club.html', 'text!profilesetti
 							return;
 
 						var model = teamsModel.toJSON();
-						if (model != null && model.payload != null || model.payload.team_id != null) {
+						if (model != null && model.payload != null || model.payload.id != null) {
 							$(event.target).attr('teamid', model.payload.team_id);
-							$(event.target).parent().find(self.controls.btnOpenPositions).attr('teamid', model.payload.team_id);
-							//	self.displayPositionPopup(event, model.payload.team_id);
+							$(event.target).parent().find(self.controls.btnOpenPositions).attr('teamid', model.payload.id);
+							//	self.displayPositionPopup(event, model.payload.id);
 						}
 					});
 				} else {
@@ -607,7 +595,6 @@ define(['require', 'text!profilesetting/templates/club.html', 'text!profilesetti
 		},
 		//REFRESH TEAM LIST AS SOON AS USER IS DONE WITH THE CHANGES AND CLICKS FINISH
 		FinishSports : function() {
-			console.log("SetUpTeamsView");
 			self.ClearAddNewForm();
 			self.init();
 		},
