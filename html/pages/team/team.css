@@ -236,3 +236,25 @@ margin-right: 100px;
 	background: #4b3dc6;
 	
 }
+
+
+.bubble{
+		position: relative; left: 90px;
+		background: #fff; border: solid 0; background-color: rgb(229, 229, 229); 
+		width: 90%; min-height: 85px;
+		-webkit-border-radius: 15px; -moz-border-radius: 15px; border-radius: 15px;
+	}
+
+	.bubble .content{
+		position: relative;
+		padding:10px;
+		z-index:1;
+	}
+
+	.pointer{
+		content: "";
+		position: absolute; bottom:36px; left:-40px;
+		display: block; width: 0; z-index: 0;    
+		border-color: transparent rgb(229, 229, 229); border-style: solid; border-width: 18px 77px 18px 0;
+		-webkit-transform: rotate(-25deg); -ms-transform: rotate(-25deg); transform: rotate(-25deg);
+	}

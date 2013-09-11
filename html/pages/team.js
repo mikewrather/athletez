@@ -26,6 +26,7 @@ define([
     "team/collections/comments",
     "profile/collections/commentsof",
 	"profile/collections/commentson",
+	"team/collections/orgs",
     
     "team/views/header",
     "team/views/add-media",
@@ -37,7 +38,8 @@ define([
     "team/views/video-list",
     "team/views/image-list",
     "team/views/comment-list",
-    "media/models/image"
+    "media/models/image",
+    "sportorg/views/org-list"
     
     
     ], function (require, pageLayoutTemplate, voteView) {
@@ -54,6 +56,7 @@ define([
         TeamUpcomingScheduleList = require("team/collections/upcoming_schedules"),
         TeamRecentScheduleList = require("team/collections/recent_schedules"),
         TeamCompetitorTeamList = require("team/collections/competitor_teams"),
+        TeamOrgList = require("team/collections/orgs"),
         TeamRosterList = require("team/collections/rosters");
         TeamVideoList = require("team/collections/videos");
         TeamImageList = require("team/collections/images");
@@ -62,6 +65,7 @@ define([
 		TeamCommentOnList = require("profile/collections/commentson"),
         TeamHeaderView = require("team/views/header"),
         TeamAddMediaView = require("team/views/add-media"),
+        TeamOrgListView = require("sportorg/views/org-list"),
         TeamScheduleListView = require("sportorg/views/schedule-list"),
         TeamCompetitorTeamListView = require("sportorg/views/competitorteam-list"),
         TeamRosterListView = require("sportorg/views/roster-list"),
@@ -156,6 +160,12 @@ define([
                // controller.videos.complevel_id = complevel_id;
                // controller.videos.season_id = season_id;
               //  controller.videos.fetch();
+                
+                controller.games = new TeamOrgList();
+				controller.games.id = team_id;
+				controller.games.sport_id = sport_id;
+				controller.games.fetch();
+                
                 
                 controller.images = new TeamImageList();
                 controller.images.team_id = team_id;
@@ -292,7 +302,11 @@ define([
              $.when(controller.commentson.request).done(function () {
 					controller.setupCommentOnListView();
 			});
-            
+			
+			 $.when(controller.games.request).done(function () {
+					controller.setupGameView();
+			});
+			
           //  $.when(this.recent_schedules.request).done(function () {
            //     controller.setupRecentSchedules();
           //  });
@@ -376,6 +390,17 @@ define([
             this.scheme.push(this.recentScheduleListView);
             this.layout.render();
         },
+        
+        setupGameView: function () {
+			var gamesView;
+			gamesView = new TeamOrgListView({
+				collection: this.games,
+				destination: "#games_div"
+			});
+
+			this.scheme.push(gamesView);
+			this.layout.render();
+		},
         
         setupCompetitorTeams: function() {
             this.competitorTeamListView = new TeamCompetitorTeamListView({

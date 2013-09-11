@@ -322,7 +322,6 @@ console.log(app);
 
 			setupRelatedListView: function () {
 				var relatedListView;
-
 				this.relatedListView = new ProfileRelatedListView({
 					collection: this.relateds,
 					destination: "#related-wrap"

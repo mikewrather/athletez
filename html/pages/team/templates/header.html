@@ -3,11 +3,10 @@
 <div class="row-fluid">
 	
 	<div class="profile-heading">
-            <h3 class="username">{{name}} '{{grad_year}}</h3>
-            <h4>FORWARD</h4>
+            <h3 class="username">{{team_name}}</h3>
+            <h4>{{org_sport_link_obj.sport.sport_name}} | {{complevels_obj.complevel_name}} | FALL '{{year}}</h4>
+            <a href="javascript: void(0);" title="Edit Team">Edit Team</a>
     </div>
-	
-	
 	
     <!--div class="span4 textcenter">
         {{#picture}}
@@ -35,11 +34,9 @@
 		<option>-SELECT--</option>
 	</select>
 	
-	
 	<select class="team-h">
 		<option>-SELECT--</option>
 	</select>
-	
 </div>
 {{/payload}}
 
