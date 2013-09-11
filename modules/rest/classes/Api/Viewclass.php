@@ -117,4 +117,10 @@ class Api_Viewclass
 	{
 		return $this->get_commentson();
 	}
+
+	public function get_media()
+	{
+		$media = $this->obj->result;
+		return $media;
+	}
 }

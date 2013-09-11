@@ -57,7 +57,7 @@ function(require, headerTemplate, selectSportTemplate) {
         initSportList: function () {
             var self = this;
             this.sports = new TeamSportList();
-            this.sports.id = this.model.id;
+            this.sports.id = this.model.get("payload").org_sport_link_obj.orgs_id;
             this.sports.fetch();
             $.when(this.sports.request).done(function() {
                 self.setupSportListView();
