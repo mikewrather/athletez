@@ -21,7 +21,7 @@
 }
 
 #main {
-	background: #e0e0e0;
+/*	background: #e0e0e0;*/
 
 }
 
@@ -29,15 +29,7 @@
 	margin: 40px 15px;
 }
 
-.green-left-heading {
-	float: left;
-	background: #9cca3c;
-	color: #FFF;
-	font-weight: bold;
-	padding: 5px 15px;
-	text-align: center;
-	margin: 25px 0;
-}
+
 
 .profile-comment-list-box #comment-list {
 	margin-left: 50px;

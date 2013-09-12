@@ -8,6 +8,18 @@
 .textright { text-align:right; }
 .textcenter { text-align:center; }
 
+.m-r-10 { margin-right: 10px; }
+
+html, body	{
+	height: 100%;
+	}
+body	{
+	max-width: 1000px;
+	margin: 0 auto;
+	background: #e0e0e0;
+	}
+
+
 .global-messages,
 .global-errors,
 .global-alert { display:none; }
@@ -29,7 +41,7 @@ header .userlinks .dropdown-menu { left:auto; right:0; top:25px; }
 header .signup-facebook,
 header .signup-email { margin:0 5px; }
 
-#main { padding-top:15px; padding-bottom:15px; }
+#main { background: #FFF; padding-top:15px; padding-bottom:15px; }
 #main .sports-info { margin-top:20px; }
 #main .image { float:left; }
 #main .videothumb { float:left; }
@@ -49,3 +61,13 @@ header .signup-email { margin:0 5px; }
 
 select.displayNone, textarea.displayNone, input.displayNone{display:none;}
 input[disabled].hasDatepicker,input[readonly].hasDatepicker {background: #FFF; cursor:text;}
+
+.green-left-heading {
+	float: left;
+	background: #9cca3c;
+	color: #FFF;
+	font-weight: bold;
+	padding: 5px 15px;
+	text-align: center;
+	margin: 25px 0;
+}

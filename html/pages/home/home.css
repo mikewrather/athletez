@@ -52,3 +52,16 @@ li.sport:hover {
 	background-color : #FEFEFE;
 	margin : 0 15px 0 0;
 }
+
+#image-list, #menu {
+	margin: 20px 0;
+}
+
+li.image {
+	margin:0 15px 15px 0;
+}
+
+li.image img {
+	width: 220px;
+	height: 220px
+}
