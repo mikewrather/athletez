@@ -49,7 +49,7 @@ function(require, headerTemplate, selectSportTemplate) {
         
         events: {
             "change .sports-h": "getComplevels",
-            "change .team-h": "getSeason"
+            "change .team-h": "showAllTeamData"
         },
 
         initialize: function (options) {

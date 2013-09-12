@@ -163,7 +163,6 @@ define([
                // controller.videos.complevel_id = complevel_id;
                // controller.videos.season_id = season_id;
               //  controller.videos.fetch();
-                
                 controller.games = new TeamOrgList();
 				controller.games.id = team_id;
 				controller.games.sport_id = sport_id;

@@ -41,7 +41,7 @@ header .userlinks .dropdown-menu { left:auto; right:0; top:25px; }
 header .signup-facebook,
 header .signup-email { margin:0 5px; }
 
-#main { background: #FFF; padding-top:15px; padding-bottom:15px; }
+#main { padding-top:15px; padding-bottom:15px; }
 #main .sports-info { margin-top:20px; }
 #main .image { float:left; }
 #main .videothumb { float:left; }
