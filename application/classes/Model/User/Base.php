@@ -915,7 +915,7 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 			$sports_arr = array();
 			$res = $isports->execute();
 
-			print_r($res);
+		//	print_r($res);
 			foreach($res as $rs)
 			{
 				$sport = ORM::factory('Sportorg_Sport',$rs['sports_id']);
