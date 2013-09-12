@@ -26,7 +26,25 @@ function (
         tagName: "li",
 
         className: "team",
-          
+           events: {
+            'click .team-info-h': 'showinfo'
+        },
+        
+        showinfo: function(e) {
+        	e.preventDefault();
+        	if(!$(e.target).parents('.org-popup').length) {
+	        	
+	        	if($(e.target).find('.org-popup').hasClass('hide')) {
+		        	$('.org-popup').addClass('hide');
+		        	$(e.target).find('.org-popup').removeClass('hide');
+		        } else {
+		        	$('.org-popup').addClass('hide');
+		        }
+		        
+		        
+		        
+        	}
+        },
         initialize: function (options) {
             this.template = teamItemTemplate;
         },

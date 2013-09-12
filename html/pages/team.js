@@ -40,7 +40,7 @@ define([
     "team/views/image-list",
     "team/views/comment-list",
     "media/models/image",
-    "sportorg/views/org-list",
+    "sportorg/views/team-list",
     "profile/views/fans-image-list"
     
     ], function (require, pageLayoutTemplate, voteView) {
@@ -67,7 +67,7 @@ define([
 		TeamCommentOnList = require("team/collections/commentson"),
         TeamHeaderView = require("team/views/header"),
         TeamAddMediaView = require("team/views/add-media"),
-        TeamOrgListView = require("sportorg/views/org-list"),
+        TeamOrgListView = require("sportorg/views/team-list"),
         TeamScheduleListView = require("sportorg/views/schedule-list"),
         TeamCompetitorTeamListView = require("sportorg/views/competitorteam-list"),
         TeamRosterListView = require("sportorg/views/roster-list"),
