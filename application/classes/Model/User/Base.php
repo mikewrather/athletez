@@ -1042,7 +1042,10 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 		}
 		//exclude itself
 		$classes_arr['Sportorg_Team'] = 'sportorg_team';
+		$classes_arr['User_Teamslink'] = 'users_teams_link';
+
 		$team = ORM::_sql_exclude_deleted($classes_arr, $team);
+
 		return $team;
 	}
 	public function getResumeData()

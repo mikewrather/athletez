@@ -87,6 +87,8 @@
 		public function get_orgs()
 		{
 
+			print_r($this->obj);
+
 			if(is_array($this->obj['result']))
 			{
 				$orgs = $this->obj['result'];
