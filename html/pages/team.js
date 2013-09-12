@@ -165,7 +165,7 @@ define([
               //  controller.videos.fetch();
                 
                 controller.games = new TeamOrgList();
-				controller.games.id = season_id;
+				controller.games.id = team_id;
 				controller.games.sport_id = sport_id;
 				controller.games.fetch();
                 
@@ -265,8 +265,10 @@ define([
             var position;
             
             if (this.commentOnListView) {
-                $(this.commentOnListView.destination).html('');
+            	this.commentOnListView.unbind().remove();
+                $(this.commentOnListView.destination).unbind().html('');
                 position = $.inArray(this.commentOnListView, this.scheme);
+                
                 if ( ~position ) this.scheme.splice(position, 1);
             }
             

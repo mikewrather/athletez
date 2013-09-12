@@ -16,14 +16,14 @@ function(require, commentFormTemplate,    ProfileCommentFormModel,        BaseCo
     CommentOnFormView = BaseView.extend({
 	    initialize: function (options) {
 	    	console.error(options);
-	    	
+	    	this.$el.unbind();
              _.bindAll(this);
              this.setOptions();
              BaseView.prototype.initialize.call(this, options);
          },
 	    el: "#comment_div",
 	    template: commentFormTemplate,
-
+		name: 'Comment Form',
 	    events: {
 		    "click #comment-submit": "submitHandler",
 		    'click .add-comment-h': 'showCommentBox'
@@ -40,7 +40,7 @@ function(require, commentFormTemplate,    ProfileCommentFormModel,        BaseCo
                 this.model = new ProfileCommentFormModel({id: this.collection.id});
                 console.log(this.model.toJSON());
                 this.model.fetch();
-            }            
+            }
         },
 
 	    submitHandler: function (e) {
@@ -108,13 +108,14 @@ function(require, commentFormTemplate,    ProfileCommentFormModel,        BaseCo
 	                self.collection.push(model);
 	                console.log("latest collectionsx", self.collection);
 	                self.refreshComments();
-	                Channel('profilecommentonlist:refresh').publish(self.collection);
+	                routing.trigger('profilecommentonlist:refresh', self.collection);
                 };
 	            saveInfo.save();
             }
         },
 
 	    render: function () {
+	    	
 		    BaseView.prototype.render.call(this);
 		    this.input = this.$("#new-comment");
 		    console.log("run here now", this.el);

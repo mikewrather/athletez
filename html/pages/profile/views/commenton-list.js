@@ -72,8 +72,14 @@ function(facade,   utils,   BaseCommentListView,       ProfileCommentFormView, S
 		       // console.log("comment on render executed");
 		    }
 
-	        Channel('profilecommentonform:fetch').subscribe(callback);
-            Channel('profilecommentonlist:refresh').subscribe(callcommentslist);
+	       routing.off('profilecommentonform:fetch');
+	        routing.on('profilecommentonform:fetch', function(data) {
+	        	callback(data);
+	        });
+	        routing.off('profilecommentonlist:refresh');
+	        routing.on('profilecommentonlist:refresh', function(data) {
+	        	callcommentslist(data);
+	        });
         }
     });
 
