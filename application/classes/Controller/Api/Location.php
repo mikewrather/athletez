@@ -113,6 +113,45 @@
 			return $this->mainModel->getGames($arguments);
 		}
 
+		/**
+		 * action_get_search()
+		 * via /api/location/search/{locations_id}
+		 *
+		 */
+		public function action_get_search()
+		{
+			$this->payloadDesc = "";
+			$arguments = array();
+			// CHECK FOR PARAMETERS:
+			// search_text
+			// This will search cities, states, and location addresses
+
+			if(trim($this->request->query('search_text')) != "")
+			{
+				$arguments["search_text"] = trim($this->request->query('search_text'));
+			}
+
+			// states_id
+			//
+
+			if((int)trim($this->request->query('states_id')) > 0)
+			{
+				$arguments["states_id"] = (int)trim($this->request->query('states_id'));
+			}
+
+			// cities_id
+			//
+
+			if((int)trim($this->request->query('cities_id')) > 0)
+			{
+				$arguments["cities_id"] = (int)trim($this->request->query('cities_id'));
+			}
+
+			$result = $this->mainModel->search($arguments);
+			return $result;
+
+		}
+
 
 		############################################################################
 		###########################    POST METHODS    #############################

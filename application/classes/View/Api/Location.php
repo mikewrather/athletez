@@ -45,6 +45,31 @@
 			}
 			return $retArr;
 		}
+
+		/**
+		 * get_search()
+		 *
+		 * @retun array
+		 */
+		public function get_search()
+		{
+			$retArr = array();
+
+			// Scaffolding Code For Array:
+			$objs = $this->obj->execute();
+		//	print_r($objs);
+			foreach($objs as $obj)
+			{
+				$res_obj = ORM::factory($obj['class'],$obj['id']);
+				$retArr[] = array(
+					'type'  => $obj['result_type'],
+					'id'    => $obj['id'],
+					'str'   => $obj['name'],
+					'obj'   => $res_obj->getBasics(),
+				);
+			}
+			return $retArr;
+		}
 		
 		/**
 		 * post_add() Add a new location
