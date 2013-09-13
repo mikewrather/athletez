@@ -9,7 +9,7 @@
 .textcenter { text-align:center; }
 
 .m-r-10 { margin-right: 10px; }
-
+.p-l-20 { padding-left: 20px; }
 html, body	{
 	height: 100%;
 	}
@@ -18,6 +18,10 @@ body	{
 	margin: 0 auto;
 	background: #e0e0e0;
 	}
+	
+	.template-container { background: #FFF; }
+	
+	
 
 
 .global-messages,
@@ -41,7 +45,7 @@ header .userlinks .dropdown-menu { left:auto; right:0; top:25px; }
 header .signup-facebook,
 header .signup-email { margin:0 5px; }
 
-#main { padding-top:15px; padding-bottom:15px; }
+#main { padding-top:15px;  padding-bottom:15px; }
 #main .sports-info { margin-top:20px; }
 #main .image { float:left; }
 #main .videothumb { float:left; }
