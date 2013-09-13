@@ -22,7 +22,7 @@ function(facade,  views,   utils,   ProfileSportItemView) {
 
         // Tag for the child views
         _tagName: "li",
-       _className: "sport",
+        _className: "sport",
 
         // Store constructor for the child views
         _view: ProfileSportItemView,
