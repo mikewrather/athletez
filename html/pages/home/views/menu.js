@@ -39,6 +39,10 @@ define(
 				resetLocation: function() {
 					var page = "location";
 					Channel('resetFilter').publish(page);
+					this.$el.find('#city').val('');
+					var s = document.getElementById('state-list');
+					s.selectedIndex = 0;
+					
 					this.$el.find(".menu-detail-h").hide();
 					this.$el.find('.reset-location-area-h ul li a.select, .reset-location-area-h ul li.select').removeClass('select');
 				},
