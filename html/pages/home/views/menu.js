@@ -26,22 +26,24 @@ define(
 					var page = "view";
 					Channel('resetFilter').publish(page);
 					this.$el.find(".menu-detail-h").hide();
+					this.$el.find('.reset-view-area-h ul li a.select, .reset-view-area-h ul li.select').removeClass('select');
 				},
 				
 				resetSport: function() {
 					var page = "sports";
 					Channel('resetFilter').publish(page);
 					this.$el.find(".menu-detail-h").hide();
+					this.$el.find('.reset-sport-area-h ul li a.select, .reset-sport-area-h ul li.select').removeClass('select');
 				},
 				
 				resetLocation: function() {
 					var page = "location";
 					Channel('resetFilter').publish(page);
 					this.$el.find(".menu-detail-h").hide();
+					this.$el.find('.reset-location-area-h ul li a.select, .reset-location-area-h ul li.select').removeClass('select');
 				},
 
 				template : menuTemplate,
-
 				intialize : function(options) {
 					SectionView.prototype.initialize.call(this, options);
 				},
