@@ -1181,7 +1181,7 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 			$user_model->select(array($followers,'num_followers'));
 			$user_model->order_by('num_followers', 'desc');
 		}
-		else if ($orderby == 'regist_time')
+		else if ($orderby == 'newest')
 		{
 			$user_model->order_by('users.id', 'desc');
 		}
