@@ -85,6 +85,7 @@ require.config({
         'game'         : '/pages/game',
         'team'         : '/pages/team',
         'registration' : '/pages/registration',
+        'signup'       :  '/pages/signup',
         'home'         : '/pages/home',
         'profilesetting' : '/pages/profilesetting',
         'userresume' : '/pages/userresume',
