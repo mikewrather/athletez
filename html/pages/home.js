@@ -90,6 +90,10 @@ define(
 						'state_id' : '0',
 						'searchtext' : ''
 					};
+					
+					this.viewOptions = ['order_by', 'time'];
+					this.sportsOptions = ['sports_id'];
+					this.locationOptions = ['city_id', 'state_id'];
 				},
 				
 				addSubscribers : function() {
@@ -101,6 +105,7 @@ define(
 					Channel('textChanged').subscribe(this.updateText);
 					Channel('viewFilterChanged').subscribe(this.changeViewFilter);
 					Channel('baseUrlChanged').subscribe(this.updateBaseUrl);
+					Channel('resetFilter').subscribe(this.resetFilter);
 				},
 				
 				setupScheme: function () {
@@ -153,6 +158,32 @@ define(
 				changeCityFilter : function(item) {
 					var options = {'city_id':item.id};
 					this.transitionView(options);
+				},
+				
+				resetFilter: function(page) {
+					switch(page) {
+						case 'view':
+							for(var i in this.viewOptions) {
+								if(i == "order_by")
+									this.urlOptions[this.viewOptions[i]] = "voter";
+								else if(i == "time")
+									this.urlOptions[this.viewOptions[i]] = "today";
+							}
+						break;
+						case 'sports':
+							for(var i in this.sportsOptions) {
+								console.log(this.sportsOptions[i]);
+								console.log(this.urlOptions);
+								this.urlOptions[this.sportsOptions[i]] = "0";
+							}
+						break;
+						case 'location':
+							for(var i in this.locationOptions) {
+								this.urlOptions[this.locationOptions[i]] = "0";
+							}
+						break;
+					}
+					this.transitionView();
 				},
 				
 				transitionView : function(options) {

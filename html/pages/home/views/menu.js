@@ -16,7 +16,28 @@ define(
 					"click .dropdown-menu > li > a" : "select",
 					"click .dd" : "doNothing",
 					//"click .menu" : "toggle",
-					"click .menu-link-h" : "showMenuDropdown"
+					"click .menu-link-h" : "showMenuDropdown",
+					'click .views-reset-btn-h' : 'resetView',
+					'click .sport-reset-btn-h' : 'resetSport',
+					'click .location-reset-btn-h' : 'resetLocation'
+				},
+				
+				resetView: function() {
+					var page = "view";
+					Channel('resetFilter').publish(page);
+					this.$el.find(".menu-detail-h").hide();
+				},
+				
+				resetSport: function() {
+					var page = "sports";
+					Channel('resetFilter').publish(page);
+					this.$el.find(".menu-detail-h").hide();
+				},
+				
+				resetLocation: function() {
+					var page = "location";
+					Channel('resetFilter').publish(page);
+					this.$el.find(".menu-detail-h").hide();
 				},
 
 				template : menuTemplate,
