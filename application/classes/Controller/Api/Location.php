@@ -131,6 +131,11 @@
 				$arguments["search_text"] = trim($this->request->query('search_text'));
 			}
 
+			if(trim($this->request->query('searchtext')) != "")
+			{
+				$arguments["search_text"] = trim($this->request->query('searchtext'));
+			}
+
 			// states_id
 			//
 
