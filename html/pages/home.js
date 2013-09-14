@@ -87,13 +87,14 @@ define(
 						'city_id' : '0',
 						'order_by' : 'votes',
 						'time' : 'DAY',
-						'state_id' : '0',
-						'searchtext' : ''
+						'states_id' : '0',
+						'searchtext' : '',
+						'country_id' : '0'
 					};
 					
 					this.viewOptions = ['order_by', 'time'];
 					this.sportsOptions = ['sports_id'];
-					this.locationOptions = ['city_id', 'state_id'];
+					this.locationOptions = ['city_id', 'states_id', 'country_id'];
 				},
 				
 				addSubscribers : function() {
@@ -157,12 +158,13 @@ define(
 		        },
 		        
 		        changeStateFilter : function(id) {
-		        	var options = {'state_id' : id};
+		        	var options = {'states_id' : id};
 		        	this.transitionView(options);
 		        },
 		        
 				changeCityFilter : function(item) {
-					var options = {'city_id':item.id};
+					var options = {'city_id':item.id, 'states_id': item.state_id, 'country_id': item.country_id};
+					console.log(options);
 					this.transitionView(options);
 				},
 				
@@ -297,11 +299,11 @@ define(
 					    cityModel = new CityModel(),
 					    cityViewName = 'city';
 					
-					stateListView = new StateListView({
-						collection : this.collections[stateViewName],
-						name : stateViewName,
-						destination : "#location .state"
-					});
+					//stateListView = new StateListView({
+					//	collection : this.collections[stateViewName],
+					//	name : stateViewName,
+					//	destination : "#location .state"
+					//});
 
 					cityView = new CityView({
 						model : cityModel,
@@ -309,12 +311,12 @@ define(
 						destination : "#location .city"
 					});
 					
-					stateListView.render();
+					//stateListView.render();
 					cityView.render();
 					this.sections[cityViewName] = cityView;
 					this.meta.activeViews.push(cityViewName);
-					this.sections[stateViewName] = stateListView;
-					this.meta.activeViews.push(stateViewName);
+					//this.sections[stateViewName] = stateListView;
+					//this.meta.activeViews.push(stateViewName);
 				},
 
 				setupLayout : function() {

@@ -12,6 +12,7 @@ define(
 
 				events : {
 					"blur #search" : "updateSearch",
+					"focus #search": "hideDropdown",
 					"click .searchBtn" : "changeBaseUrl",
 					"click .dropdown-menu > li > a" : "select",
 					"click .dd" : "doNothing",
@@ -41,8 +42,8 @@ define(
 					var page = "location";
 					Channel('resetFilter').publish(page);
 					this.$el.find('#city').val('');
-					var s = document.getElementById('state-list');
-					s.selectedIndex = 0;
+					//var s = document.getElementById('state-list');
+					//s.selectedIndex = 0;
 					
 					this.$el.find(".menu-detail-h").hide();
 					this.$el.find('.reset-location-area-h ul li a.select, .reset-location-area-h ul li.select').removeClass('select');
@@ -76,12 +77,16 @@ define(
 					e.stopPropagation();
 				},
 				
+				hideDropdown: function() {
+					this.$el.find(".menu-detail-h").hide();
+				},
+				
 				hideAllDropdowns: function() {
 					var _self = this;
-					$("html").click(function(e) {
+					$("html, #search").click(function(e) {
 						console.log($(e.target).parents("#views").length);
-						if(!$(e.target).parents(".menu-outer-h").length)
-							_self.$el.find(".menu-detail-h").hide();
+						if(!$(e.target).parents(".menu").length)
+							_self.hideDropdown();
 					});
 				},
 				

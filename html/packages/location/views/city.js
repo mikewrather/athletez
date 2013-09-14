@@ -34,7 +34,7 @@ define([ 'require', 'text!location/templates/city.html', 'views', 'facade', 'uti
 			console.log(id);
 			
 			$('#city').autocomplete({
-				minLength: 1,
+				minLength: 2,
 				source: function(request, response) {
 					console.log(request);
 					console.log(response);

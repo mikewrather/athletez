@@ -21,15 +21,18 @@ define([ 'models', 'facade' ], function(models, facade) {
 			if(this.request) this.request.abort();
 			
 			this.request = $.ajax({
-				url : "/api/city/search?city_name=" + term
+				url : "/api/location/search/?search_text=" + term
 			}).done(function(data, textStatus, jqXHR) {
+				console.log(data);
 				 var collection = [];
 				 var payload = data.payload;
 		         if(payload != null){
 		         	 for (i = 0; i < (payload.length > 10 ? 10 : payload.length) ; i++) {
 		         		 var item = {};
-		         		 item.label = item.value = payload[i].name + ', ' + payload[i].county.state.name;
+		         		 item.label = payload[i].str;
 		         		 item.id = payload[i].id;
+		         		 item.state_id = payload[i].obj.states_obj.id;
+		         		 item.country_id = payload[i].obj.states_obj.country.id;
 		         		 collection.push(item);
 		         	 }
 		         }
