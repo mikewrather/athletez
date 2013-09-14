@@ -86,7 +86,7 @@ define(
 						'sports_id' : '0',
 						'city_id' : '0',
 						'order_by' : 'votes',
-						'time' : 'today',
+						'time' : 'DAY',
 						'state_id' : '0',
 						'searchtext' : ''
 					};
@@ -97,11 +97,18 @@ define(
 				},
 				
 				addSubscribers : function() {
+					var _self = this;
 					_.each(this.genderTypes, function(viewName){
 						Channel('sportChanged:'+this.collections[viewName].cid).subscribe(this.changeSportFilter);						
 					}, this);
 					Channel('cityChanged:'+ this.sections['city'].id).subscribe(this.changeCityFilter);
-					Channel('stateChanged:'+ this.collections['state'].cid).subscribe(this.changeStateFilter);
+					///alert("add");
+					//routing.off("stateChanged");
+					routing.on("stateChanged", function(id) {
+						_self.changeStateFilter(id);
+					});
+					
+					//Channel('stateChanged:'+ this.collections['state'].cid).subscribe(this.changeStateFilter);
 					Channel('textChanged').subscribe(this.updateText);
 					Channel('viewFilterChanged').subscribe(this.changeViewFilter);
 					Channel('baseUrlChanged').subscribe(this.updateBaseUrl);
@@ -110,7 +117,6 @@ define(
 				
 				setupScheme: function () {
 		            var i, params = this.params;
-
 		            for (i = 0; i < this.meta.activeViews.length; i++) {
 		                this.scheme.push(this.sections[this.meta.activeViews[i]]);
 		            };
@@ -132,6 +138,7 @@ define(
 		        
 		        updateText : function(text) {
 		        	this.urlOptions.searchtext = text;
+		        	this.transitionView();
 		        },
 		        
 		        changeViewFilter : function(str) {
@@ -149,9 +156,8 @@ define(
 		        	this.transitionView(options);
 		        },
 		        
-		        changeStateFilter : function(model) {
-		        	console.log(model.attributes.payload.id);
-		        	var options = {'state_id' : model.attributes.payload.id};
+		        changeStateFilter : function(id) {
+		        	var options = {'state_id' : id};
 		        	this.transitionView(options);
 		        },
 		        

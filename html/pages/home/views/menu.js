@@ -11,7 +11,7 @@ define(
 				id : 'menu',
 
 				events : {
-					"input #search" : "updateText",
+					"blur #search" : "updateSearch",
 					"click .searchBtn" : "changeBaseUrl",
 					"click .dropdown-menu > li > a" : "select",
 					"click .dd" : "doNothing",
@@ -19,7 +19,8 @@ define(
 					"click .menu-link-h" : "showMenuDropdown",
 					'click .views-reset-btn-h' : 'resetView',
 					'click .sport-reset-btn-h' : 'resetSport',
-					'click .location-reset-btn-h' : 'resetLocation'
+					'click .location-reset-btn-h' : 'resetLocation',
+					//'change #state-list' : 'stateListChange'
 				},
 				
 				resetView: function() {
@@ -52,16 +53,22 @@ define(
 					SectionView.prototype.initialize.call(this, options);
 				},
 				
-				updateText : function(e) {
-					var target = $(e.currentTarget);
-					var text = $(target).val();
-					Channel('textChanged').publish(text);
+				updateSearch : function(e) {
+					Channel('textChanged').publish($(e.target).val());
 				},
 				
 				changeBaseUrl : function(e) {
 					var target = $(e.currentTarget);
 					var num = target.data("number");
 					Channel('baseUrlChanged').publish(num);
+				},
+				
+				stateListChange: function(e) {
+					var target = $(e.currentTarget).val();
+					console.log(target);
+					var num = target.data("id");
+					routing.trigger('stateChanged', num);
+					//Channel('baseUrlChanged').publish(num);
 				},
 				
 				doNothing : function(e) {
@@ -99,7 +106,7 @@ define(
 					$(target).addClass('select');
 					var ret = {
 							'submenu' : targetClass,
-							'value' :  $(target).text()
+							'value' :  $(target).data('id') || $(target).text()
 							};
 					Channel('viewFilterChanged').publish(ret);
 					debug.log(ret);

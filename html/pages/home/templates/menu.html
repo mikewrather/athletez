@@ -9,7 +9,7 @@
 			<div class="clearfix"></div>
 			<ul class="dropdown-menu" style="display: block; position: relative; margin-bottom:15px;">
 				{{#views.browse}}
-				<li><a class="browse" href="javascript:void(0);">{{name}}</a></li>
+				<li><a class="browse" data-id="{{value}}" href="javascript:void(0);">{{name}}</a></li>
 				{{/views.browse}}
 			</ul>
 		</div>
@@ -19,7 +19,7 @@
 			<div class="clearfix"></div>
 			<ul class="dropdown-menu" style="display: block; position: relative;">
 				{{#views.time}}
-				<li><a class="time" href="javascript: void(0)">{{name}}</a></li>
+				<li><a class="time" data-id="{{value}}" href="javascript: void(0)">{{name}}</a></li>
 				{{/views.time}}
 			</ul>
 		</div>
@@ -57,11 +57,11 @@
 	<div class="pull-left">
 		<input type="text" id="search"></input>
 	</div>
-	<!--div >
+	<div class="pull-left">
 		<a id="video" class="searchBtn" data-number="0" href="javascript:void(0)"><i class="icon-facetime-video"></i></a>
 		<a id="image" class="searchBtn" data-number="1" href="javascript:void(0)"><i class="icon-picture"></i></a>
 		<a id="user" class="searchBtn" data-number="2" href="javascript:void(0)"><i class="icon-user"></i></a>
 		<a id="game" class="searchBtn" data-number="3" href="javascript:void(0)"><i class="icon-user"></i></a>
-	</div-->
+	</div>
 </div>
 </div>

@@ -19,25 +19,34 @@ define([ 'require', 'text!location/templates/city.html', 'views', 'facade', 'uti
 		className : 'ui-front',
 		
 		initialize : function(options) {
+			console.log("-------------------------------------------- city view");
 			SectionView.prototype.initialize.call(this, options);
 			this.id = options.id || this.id || _.unique('v');
 			this.addSubscribers();			
 		},
 		
 		initPlugin : function() {
+			
 			//var input = this.$el.find('.city');
 			//console.log($);
 			var view = this;
 			var id = this.model.id;
+			console.log(id);
+			
 			$('#city').autocomplete({
-				minLength: 3,
+				minLength: 1,
 				source: function(request, response) {
+					console.log(request);
+					console.log(response);
 					var term = request.term;
 					var appStates = controller.prototype.appStates;
+					
+					console.log(appStates);
 					if (appStates) {
 						var collection = appStates.findByNameInStorage(term);
 						if(collection){response(collection.data);
-						return;}
+						return;
+						}
 					}
 					var myResponse = function(collection) {
 						var appStates = controller.prototype.appStates;

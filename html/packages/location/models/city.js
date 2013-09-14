@@ -18,7 +18,9 @@ define([ 'models', 'facade' ], function(models, facade) {
 		},
 
 		search : function(term) {
-			$.ajax({
+			if(this.request) this.request.abort();
+			
+			this.request = $.ajax({
 				url : "/api/city/search?city_name=" + term
 			}).done(function(data, textStatus, jqXHR) {
 				 var collection = [];
