@@ -1,3 +1,20 @@
 {{#payload}}
-<img src="{{image_path}}" alt="{{image_title}}"/>
+
+{{#user_picture_obj}}
+
+
+<a href="javascript:L void(0);" class="image-outer-h">
+	<img src="{{user_picture_obj.types.standard_thumb.url}}" alt="{{user_picture_obj.image_title}}"/>
+	<div class="image-detail-view">
+		<h6>{{name}}</h6>
+		<span>Soccer, Mid fielder</span>
+		<span>San {{grad_year}}</span>
+	</div>
+</a>
+
+{{/user_picture_obj}}
+
+{{^user_picture_obj}}
+	<img src="{{image_path}}" alt="{{image_title}}"/>
+{{/user_picture_obj}}
 {{/payload}}
