@@ -84,17 +84,17 @@ define(
 					this.baseUrl = this.searchUrls[1];
 					this.urlOptions = {
 						'sports_id' : '0',
-						'city_id' : '0',
-						'order_by' : 'votes',
+						'cities_id' : '0',
+						'orderby' : 'votes',
 						'time' : 'DAY',
 						'states_id' : '0',
 						'searchtext' : '',
 						'country_id' : '0'
 					};
 					
-					this.viewOptions = ['order_by', 'time'];
+					this.viewOptions = ['orderby', 'time'];
 					this.sportsOptions = ['sports_id'];
-					this.locationOptions = ['city_id', 'states_id', 'country_id'];
+					this.locationOptions = ['cities_id', 'states_id', 'country_id'];
 				},
 				
 				addSubscribers : function() {
