@@ -3,7 +3,7 @@
 	<div class="section-Add-Sports_h">
 		<div class="section-game-date_h">
 			<input type="text" class="txt-game-date_h" placeholder="Enter Date" readonly="readonly" />
-			<input type="text" class="txt-game-time_h hasDatepicker"  placeholder="Enter Time" readonly="readonly"  />
+			<!-- <input type="text" class="txt-game-time_h hasDatepicker"  placeholder="Enter Time" readonly="readonly"  /> -->
 			<!-- <select class="ddl-time-period_h">
 			<option value="AM">AM</option>
 			<option value="PM">PM</option>
@@ -38,7 +38,7 @@
 		</div>
 		<div class="section-game-radio_h">
 			<span class="alert alert-danger displayNone field-message"></span>
-			<input type="radio" name="rdo-team1_h" value="home" class="rdo-game-location_h" team="one">
+			<input type="radio" name="rdo-team1_h" value="home" class="rdo-game-location_h rdo-game-location-one-home_h" team="one">
 			home &nbsp; &nbsp;
 			<input type="radio" name="rdo-team1_h" value="away" class="rdo-game-location_h" team="one">
 			away
@@ -71,7 +71,8 @@
 		</div>
 		<div class="section-game-radio_h">
 			<span class="alert alert-danger displayNone field-message"></span>
-			<input type="radio" name="rdo-team2_h" value="home" class="rdo-game-location_h"  team="two">
+			<input type="radio" name="rdo-team2_h" value="home" class="rdo-game-location_h rdo-game-location-two-home_h"  team="two">
+			
 			home &nbsp; &nbsp;
 			<input type="radio" name="rdo-team2_h" value="away" class="rdo-game-location_h"   team="two">
 			away
@@ -81,6 +82,7 @@
 	<div class="section-main-location_h">
 		<h4>Location : </h4>
 		<span class="alert alert-danger displayNone field-message"></span>
+		<input type="text" class="txt-game-location-id_h displayNone" >
 		<div class="div-game-location_h">
 
 		</div>
