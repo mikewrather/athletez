@@ -70,21 +70,4 @@ li.image img {
 	height: 220px
 }
 
-.image-outer-h {
-	position: relative;
-	display: block;
-	overflow: hidden;
-	
-}
 
-.image-detail-view {
-	position: absolute;
-	bottom: -80px;
-	transition: bottom .3s linear;
-	-webkit-transition: bottom .3s linear;
-	-moz-transition: bottom .3s linear;
-	-o-transition: bottom .3s linear;
-	-ms-transition: bottom .3s linear;
-	background: rgba(19, 223, 80, .5);
-	width: 100%;
-}

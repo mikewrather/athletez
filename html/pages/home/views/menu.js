@@ -1,10 +1,11 @@
 //Menu View
 
 define(
-		[ 'require', 'text!pages/home/templates/menu.html', 'facade', 'views' ],
+		[ 'require', 'text!pages/home/templates/menu.html', 'usercontrol/dropdown/view/dropdown', 'facade', 'views' ],
 		function(require, menuTemplate) {
 
-			var MenuView, facade = require('facade'), views = require('views'), SectionView = views.SectionView;
+			var MenuView, facade = require('facade'), views = require('views'), SectionView = views.SectionView,
+			DropDownView = require('usercontrol/dropdown/view/dropdown');
 
 			MenuView = SectionView.extend({
 
@@ -24,6 +25,12 @@ define(
 					//'change #state-list' : 'stateListChange'
 				},
 				
+				
+				demoSelect: function() {
+					
+				},
+				
+				
 				resetView: function() {
 					var page = "view";
 					Channel('resetFilter').publish(page);
@@ -37,6 +44,7 @@ define(
 					this.$el.find(".menu-detail-h").hide();
 					this.$el.find('.reset-sport-area-h ul li a.select, .reset-sport-area-h ul li.select').removeClass('select');
 				},
+				
 				
 				resetLocation: function() {
 					var page = "location";
@@ -52,6 +60,10 @@ define(
 				template : menuTemplate,
 				intialize : function(options) {
 					SectionView.prototype.initialize.call(this, options);
+					console.log("intializwe menu view ----------->>>");
+					
+					
+					//this.$el.find('.demo-select').html(DropDown.$el);
 				},
 				
 				updateSearch : function(e) {
@@ -137,6 +149,11 @@ define(
 				
 				afterRender: function() {
 					this.hideAllDropdowns();
+					/*var DropDown = new DropDownView({
+						name: "Drop Down",
+						destination: '.demo-select'
+					});
+					this.$el.find(".demo-select").html(DropDown.el);*/
 				}
 
 			});
