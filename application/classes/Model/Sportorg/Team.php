@@ -155,6 +155,9 @@ class Model_Sportorg_Team extends ORM
 
 	public function addGame($args = array()){
 		extract($args);
+
+		print_r($args);
+
 		if (isset($game_datetime)){
 			if ($game_datetime == ""){
 			}else{
@@ -165,7 +168,8 @@ class Model_Sportorg_Team extends ORM
 		}
 		$games_teams_link = ORM::factory("Sportorg_Games_Teamslink");
 		try {
-			if ($games_id == ""){
+			if ((int)$games_id == 0){
+
 				$games_model = ORM::factory("Sportorg_Games_Base");
 				$games_model->gameDay = $gameDay;
 				$games_model->gameTime = $gameTime;
@@ -179,8 +183,14 @@ class Model_Sportorg_Team extends ORM
 					$games_teams_link->points_scored = $points_scored;
 					$games_teams_link->save();
 
-			}else{
-
+			}
+			else
+			{
+				$games_teams_link->teams_id = $this->id;
+				$games_teams_link->games_id = $games_id;
+				$games_teams_link->points_scored = $points_scored;
+				$games_teams_link->save();
+/*
 				$external_validate = Validation::factory($args);
 				$external_validate->rule('teams_id', 'gamesteams_combine_primary_key_exist', array($teams_id, $games_id));
 
@@ -194,6 +204,7 @@ class Model_Sportorg_Team extends ORM
 				if ($games_teams_link->check($external_validate)){
 					$games_teams_link->save();
 				}
+*/
 			}
 			return $this;
 		} catch(ORM_Validation_Exception $e){
@@ -336,6 +347,9 @@ class Model_Sportorg_Team extends ORM
 			'Sportorg_Games_Base' => 'sportorg_games_base',
 			'Sportorg_Games_Teamslink' => 'games_teams_link'
 		);
+
+		$games->order_by('gameDay','ASC');
+
 		$games = ORM::_sql_exclude_deleted($classes_arr, $games);
 		return $games;
 	}
@@ -470,10 +484,10 @@ class Model_Sportorg_Team extends ORM
 		// if the user wanted to get the past games,
 		if( $past_games )
 		{
-			$game_list_obj
-				->and_where_open()
-				->where('gameDay','<',$gameDay)
-				->and_where_close();
+		//	$game_list_obj
+		//		->and_where_open()
+		//		->where('gameDay','<',$gameDay)
+		//		->and_where_close();
 		}else{
 			$game_list_obj
 				->and_where_open()

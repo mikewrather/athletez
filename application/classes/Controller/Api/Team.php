@@ -195,6 +195,12 @@
 			return $this->mainModel->getComments();
 		}
 
+		public function action_get_schedule()
+		{
+			return $this->action_get_recent_schedules();
+		}
+
+
 		public function action_get_recent_schedules()
 		{
 			$this->payloadDesc = "Recent schedule";
@@ -385,50 +391,65 @@
 				return false;
 			}
 
+			print_r($this->request->post());
+
 			if((int)trim($this->request->post('games_id')) > 0)
 			{
 				$games_id = (int)trim($this->request->post('games_id'));
-			}
 
-			// game_datetime 
-			// The date/time of the game.
-				
-			if($this->request->post('game_datetime') != "")
+				if(trim($this->request->post('points_scored') != ""))
+				{
+					$points_scored = (int)trim($this->request->post('points_scored'));
+				}
+
+				$args = array(
+					'games_id' => $games_id,
+					'points_scored' => $points_scored
+				);
+			}
+			else
 			{
-				// Format as date
-				$game_datetime = date("Y-m-d H:i:s",strtotime($this->request->post('game_datetime')));
+				// game_datetime
+				// The date/time of the game.
+
+				if($this->request->post('game_datetime') != "")
+				{
+					// Format as date
+					$game_datetime = date("Y-m-d H:i:s",strtotime($this->request->post('game_datetime')));
+				}
+
+				// locations_id
+				// ID of the location
+
+				if((int)trim($this->request->post('locations_id')) > 0)
+				{
+					$locations_id = (int)trim($this->request->post('locations_id'));
+				}
+
+				// home_team
+				// True if this team is the home team for the game.
+
+				if(trim($this->request->post('home_team') != ""))
+				{
+					//convert home_team to a boolean
+					$home_team = Util::convert_to_boolean(trim($this->request->post('home_team')));
+				}
+
+				if(trim($this->request->post('points_scored') != ""))
+				{
+					$points_scored = (int)trim($this->request->post('points_scored'));
+				}
+
+				$args = array(
+					'teams_id' => $this->mainModel->id,
+					'game_datetime' => $game_datetime,
+					'locations_id' => $locations_id,
+					'is_home_team' => $home_team,
+					'points_scored' => $points_scored
+				);
 			}
 
-			// locations_id 
-			// ID of the location
-				
-			if((int)trim($this->request->post('locations_id')) > 0)
-			{
-				$locations_id = (int)trim($this->request->post('locations_id'));
-			}
 
-			// home_team 
-			// True if this team is the home team for the game.
-				
-			if(trim($this->request->post('home_team') != ""))
-			{
-				//convert home_team to a boolean
-				$home_team = Util::convert_to_boolean(trim($this->request->post('home_team')));
-			}
-
-			if(trim($this->request->post('points_scored') != ""))
-			{
-				$points_scored = (int)trim($this->request->post('points_scored'));
-			}
-
-			$args = array(
-				'teams_id' => $this->mainModel->id,
-				'games_id' => $games_id,
-				'game_datetime' => $game_datetime,
-				'locations_id' => $locations_id,
-				'is_home_team' => $home_team,
-				'points_scored' => $points_scored
-			);
 
 			$result = $this->mainModel->addGame($args);
 

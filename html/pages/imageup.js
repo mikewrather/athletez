@@ -183,7 +183,7 @@ define([
 					$("#preview_"+id).fadeOut("slow");
 					$("#preview_"+id+"rot").fadeOut("slow");
 
-				     routing.trigger("image-upload-success");
+				     routing.trigger("image-upload-success", data);
 
 					debug.log(data);
 					$("imageup").attr("disabled", "disabled");
@@ -191,7 +191,7 @@ define([
 					if(thiss.count == length)
 					{
 						msg={"msg":" File Uploaded Succesfully","color":"alert-success"};
-						 routing.trigger("imageup-msg");
+						 routing.trigger("imageup-msg", msg);
 						$("#imageup").removeAttr("disabled");
 						$("#image_file").removeAttr("disabled");
 						$(".closepreview").removeAttr("disabled");	

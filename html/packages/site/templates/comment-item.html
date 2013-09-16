@@ -5,10 +5,16 @@
     <div class="user-photo">
     	<img src="{{base_url}}{{poster_picture}}" alt="{{poster}}" />
     </div>
-    <div class="comment-box">
-    	<span>{{poster}} {{comment_date}}</span>
-    	<p>{{comment}}</p>
-    </div>
+    
+    <div>
+	    <div class="bubble">  
+		<div class="pointer"></div>
+	        <div class="content">
+	        	<span>{{poster}} {{comment_date}}</span>
+	        	<p>{{comment}}</p>
+	        </div>
+	    </div>
+	</div>
 </div>
 {{/payload}}
 

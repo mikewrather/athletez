@@ -1,7 +1,14 @@
 
 {{#payload}}
 <div class="row-fluid">
-    <div class="span4 textcenter">
+	
+	<div class="profile-heading">
+            <h3 class="username">{{team_name}}</h3>
+            <h4>{{org_sport_link_obj.sport.sport_name}} | {{complevels_obj.complevel_name}} | FALL '{{year}}</h4>
+            <a href="javascript: void(0);" title="Edit Team">Edit Team</a>
+    </div>
+	
+    <!--div class="span4 textcenter">
         {{#picture}}
         <img src="{{picture}}" alt="{{name}}" />
         {{/picture}}
@@ -14,8 +21,22 @@
             <div class="followers">Followers: {{num_followers}}</div>
         </div>
         <div id="sports-info"></div>
-    </div>
+    </div-->
 </div>
 
+<div id="sports-info">
+	
+	<select class="sports-h">
+		<option>-SELECT--</option>
+	</select>
+	
+	<select class="season-h">
+		<option>-SELECT--</option>
+	</select>
+	
+	<select class="team-h">
+		<option>-SELECT--</option>
+	</select>
+</div>
 {{/payload}}
 

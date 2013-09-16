@@ -16,8 +16,8 @@ function(facade, MediaImageList, utils) {
         
         url: function() {
             if (testpath)
-                return testpath + '/team/images/' + this.id + '/' + this.sport_id + '/' + this.complevel_id + '/' + this.season_id;
-            return '/api/team/images/' + this.id + '?sport_id=' + this.sport_id + '&complevel_id=' + this.complevel_id + '&season_id=' + this.season_id;
+                return testpath + '/team/media/' + this.team_id+'/'+ this.sport_id;
+            return '/api/team/media/' + this.team_id + '?sport_id=' + this.sport_id;
         }
 
     });

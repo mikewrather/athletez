@@ -15,7 +15,6 @@ function(require, commentFormTemplate,    ProfileCommentFormModel,        BaseCo
 
     CommentOnFormView = BaseView.extend({
 	    initialize: function (options) {
-	    	
 	    	console.error(options);
 	    	
              _.bindAll(this);
@@ -82,6 +81,10 @@ function(require, commentFormTemplate,    ProfileCommentFormModel,        BaseCo
                 var saveInfo = new BaseModel(payload);
                 saveInfo.url = function() {
 	                debug.log(self);
+	                
+	                if(!_.isUndefined(self.collection.savePath))
+	                	return 'api'+self.collection.savePath;
+	                
                     if (testpath)
                         return testpath + '/user/comment/add';
                     return '/api/comment/add/';

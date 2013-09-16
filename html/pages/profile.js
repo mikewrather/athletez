@@ -322,7 +322,6 @@ console.log(app);
 
 			setupRelatedListView: function () {
 				var relatedListView;
-
 				this.relatedListView = new ProfileRelatedListView({
 					collection: this.relateds,
 					destination: "#related-wrap"
@@ -357,9 +356,12 @@ console.log(app);
 			},
 
 			setupImageListView: function () {
-
-				Channel('image-upload-success').subscribe(this.updateImages);
-
+				var self = this;
+				//Channel('image-upload-success').subscribe(this.updateImages);
+				routing.on('image-upload-success', function(data) { 
+        			self.updateImages(data);
+        		});
+        		
 				this.imageListView = new ProfileImageListView({
 					collection: this.images,
 					destination: "#image-wrap",
