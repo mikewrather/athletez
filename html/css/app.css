@@ -1,70 +1,173 @@
+.left {
+	float: left;
+}
+.right {
+	float: right;
+}
+.clear {
+	float: none;
+	clear: both;
+}
+.clearfix:after {
+	display: block;
+	content: ".";
+	clear: both;
+	font-size: 0;
+	line-height: 0;
+	height: 0;
+	overflow: hidden;
+}
 
-.left  { float:left; }
-.right { float:right; }
-.clear { float:none; clear:both; }
-.clearfix:after { display:block; content:"."; clear:both; font-size:0; line-height:0; height:0; overflow:hidden; }
+.textleft {
+	text-align: left;
+}
+.textright {
+	text-align: right;
+}
+.textcenter {
+	text-align: center;
+}
 
-.textleft { text-align:left; }
-.textright { text-align:right; }
-.textcenter { text-align:center; }
-
-.m-r-10 { margin-right: 10px; }
-.p-l-20 { padding-left: 20px; }
-html, body	{
+.m-r-10 {
+	margin-right: 10px;
+}
+.p-l-20 {
+	padding-left: 20px;
+}
+html, body {
 	height: 100%;
-	}
-body	{
+}
+body {
 	max-width: 1000px;
 	margin: 0 auto;
 	background: #e0e0e0;
-	}
-	
-	.template-container { background: #FFF; }
-	
-	
+}
 
+.template-container {
+	background: #FFF;
+}
 
-.global-messages,
-.global-errors,
-.global-alert { display:none; }
-.field-error { color: #b94a48; display:none; }
-.field-message { color: #3a87ad; display:none; }
+.global-messages, .global-errors, .global-alert {
+	display: none;
+}
+.field-error {
+	color: #b94a48;
+	display: none;
+}
+.field-message {
+	color: #3a87ad;
+	display: none;
+}
 
-ul { list-style:none; }
+ul {
+	list-style: none;
+}
 
-header { border-bottom:1px solid #ccc; padding-top:10px; padding-bottom:10px; background-color: #000; }
-header .logo { float:left; margin:6px 0; }
-header .searchform { float:left; margin:6px 15px; }
-header .searchform form { margin-bottom:0; }
-header .account { float:right; }
-header .photo { float:left; margin-right:10px; }
-header .photo img { width:32px; }
-header .userlinks { float:left; margin-top:5px; }
-header .userlinks .dropdown-toggle { min-width:200px; font-weight:bold; color:#fff; }
-header .userlinks .dropdown-menu { left:auto; right:0; top:25px; }
-header .signup-facebook,
-header .signup-email { margin:0 5px; }
+header {
+	border-bottom: 1px solid #ccc;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	background-color: #000;
+}
+header .logo {
+	float: left;
+	margin: 6px 0;
+}
+header .searchform {
+	float: left;
+	margin: 6px 15px;
+}
+header .searchform form {
+	margin-bottom: 0;
+}
+header .account {
+	float: right;
+}
+header .photo {
+	float: left;
+	margin-right: 10px;
+}
+header .photo img {
+	width: 32px;
+}
+header .userlinks {
+	float: left;
+	margin-top: 5px;
+}
+header .userlinks .dropdown-toggle {
+	min-width: 200px;
+	font-weight: bold;
+	color: #fff;
+}
+header .userlinks .dropdown-menu {
+	left: auto;
+	right: 0;
+	top: 25px;
+}
+header .signup-facebook, header .signup-email {
+	margin: 0 5px;
+}
 
-#main { padding-top:15px;  padding-bottom:15px; }
-#main .sports-info { margin-top:20px; }
-#main .image { float:left; }
-#main .videothumb { float:left; }
-#main .roster { float:left; }
-#main .video { float:left; }
-#main .user-photo img { width:45px; margin-top: 10px; margin-right:10px; }
+#main {
+	padding-top: 15px;
+	padding-bottom: 15px;
+}
+#main .sports-info {
+	margin-top: 20px;
+}
+#main .image {
+	float: left;
+}
+#main .videothumb {
+	float: left;
+}
+#main .roster {
+	float: left;
+}
+#main .video {
+	float: left;
+}
+#main .user-photo img {
+	width: 45px;
+	margin-top: 10px;
+	margin-right: 10px;
+}
 
 /*  Loading images */
-.loader { background: url(../images/loader/loading.gif) no-repeat; width: 100%; height: 50px; margin: 0 auto; background-position: 50% 0; }
-.image-loading-div { position: absolute; }
-.fade-out { opacity: 0.5; }
+.loader {
+	background: url(../images/loader/loading.gif) no-repeat;
+	width: 100%;
+	height: 50px;
+	margin: 0 auto;
+	background-position: 50% 0;
+}
+.image-loading-div {
+	position: absolute;
+}
+.fade-out {
+	opacity: 0.5;
+}
 
-.floatLeft {float: left;}
-.floatRight {float: right;}
-.displayNone{display:none}
-.pointer {cursor: pointer;}
+.floatLeft {
+	float: left;
+}
+.floatRight {
+	float: right;
+}
+.displayNone {
+	display: none
+}
+.pointer {
+	cursor: pointer;
+}
 
-select.displayNone, textarea.displayNone, input.displayNone{display:none;}
-input[disabled].hasDatepicker,input[readonly].hasDatepicker {background: #FFF; cursor:text;}
+select.displayNone, textarea.displayNone, input.displayNone {
+	display: none;
+}
+input[disabled].hasDatepicker, input[readonly].hasDatepicker {
+	background: #FFF;
+	cursor: text;
+}
 
 .green-left-heading {
 	float: left;
@@ -75,3 +178,152 @@ input[disabled].hasDatepicker,input[readonly].hasDatepicker {background: #FFF; c
 	text-align: center;
 	margin: 25px 0;
 }
+
+
+/****** common styles  *****/
+
+/**** buttons css *****/
+.btn-common {
+	padding:5px 10px;
+	color: #FFF;
+	display: inline-block;
+}
+
+.default-btn {
+	color: #FF0000;	
+}
+
+.default-btn:hover, .default-btn:active {
+	color: #000000;
+}
+
+.validation-btn {
+	color: green;
+}
+
+.validation-btn:hover, .validation-btn:active {
+	color: yellow;
+}
+
+
+/*****  Btn Css End *****/
+
+
+/***** Common Primary Styles *****/
+
+/******* Common Primary Color Ends *******/
+
+
+/***** Image Styles *****/
+.image-outer-h {
+	position: relative;
+	display: block;
+	overflow: hidden;
+	
+}
+
+.image-detail-view {
+	position: absolute;
+	bottom: -80px;
+	transition: bottom .3s linear;
+	-webkit-transition: bottom .3s linear;
+	-moz-transition: bottom .3s linear;
+	-o-transition: bottom .3s linear;
+	-ms-transition: bottom .3s linear;
+	background: rgba(19, 223, 80, .5);
+	width: 100%;
+}
+/***** Image Styles Ends *****/
+
+
+/**** Input Styles *****/
+
+input {
+	background: #CCCCCC;
+	color :#000;
+}
+
+.region-light {
+	background: grey;
+	color: #FFF;
+	padding: 5px 10px;
+}
+
+.region-dark {
+	background: brown;
+	color: #FFF;
+	padding: 5px 10px;
+	text-align: center;
+}
+
+/***** Input styles Ends ****/
+
+/**** Custom Drop Down  ******/
+
+.dropdown-container {
+	background: #CCCCCC;
+	display: inline-block;
+	width: 200px;
+	position: absolute;
+	
+}
+
+ul.common-dropdown {
+	display: block;
+	max-height: 200px;
+	overflow-y: auto;
+	background: #FFF;
+	margin: 0 10px;
+	display: none;
+	clear: both;
+	margin-bottom: 10px;
+}
+
+
+ul.common-dropdown li a {
+	background: none;
+	display: inline-block;
+	color: #000;
+	width: 100%;
+}
+
+ul.common-dropdown li a:hover {
+	text-decoration: none;
+}
+
+ul.common-dropdown li {
+	text-align: center;
+	padding: 3px 0px;
+	margin: 0 5px;
+}
+
+ul.common-dropdown li.selected a {
+	color: #FFF;
+}
+
+.drop-down-outer {
+	width: 100%;
+	height: 29px;
+}
+
+.dropdown-header-box {
+	width: 70%;
+	float: left;
+	display: inline-block;
+}
+
+.down-arrow-outer {
+	background: #000000;
+	display: inline-block;
+	width: 20%;
+	float: right;
+	height: 100%;
+	text-align: center;
+	color: #FFF;
+}
+
+ul.common-dropdown li.selected {
+	background: green;
+}
+
+

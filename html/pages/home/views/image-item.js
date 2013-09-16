@@ -40,6 +40,16 @@ function (
 	        console.log("Called Image Render",this.model);
             var markup = Mustache.to_html(this.template, this.model.toJSON());
             this.$el.html(markup);
+            
+            this.$el.find('.image-outer-h').mouseover(function() {
+            	$(this).find('.image-detail-view').css({'bottom': '0px'});
+            });
+            
+            this.$el.find('.image-outer-h').mouseout(function() {
+            	$(this).find('.image-detail-view').css({'bottom': '-80px'});
+            });
+            
+            
             return this;
         },
         
