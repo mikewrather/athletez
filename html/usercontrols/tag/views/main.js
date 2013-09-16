@@ -172,7 +172,6 @@ define(['require', 'text!usercontrols/tag/templates/layout.html', 'facade', 'vie
 
 		/*Fill Sports dropdown with sports on basis of gender and sports_club type*/
 		fillSports : function() {
-			console.log("Fill Sports");
 			if (self.sports && self.sports.length > 0) {
 				//	self.SetupSportsView(orgs_id, destination);
 			} else {
@@ -343,7 +342,7 @@ define(['require', 'text!usercontrols/tag/templates/layout.html', 'facade', 'vie
 							return;
 
 						var models = List.toJSON();
-						console.log("City Models", models);
+						//console.log("City Models", models);
 						if (models == null || models.length < 1)
 							self.$(e.target).parent().find(self.controls.fieldMessage).html(self.messages.dataNotExist).stop().fadeIn();
 						else
@@ -415,7 +414,10 @@ define(['require', 'text!usercontrols/tag/templates/layout.html', 'facade', 'vie
 
 				var List = new TeamsCollection();
 				List.states_id = $(e.target).attr(self.attributes.stateId);
+				List.cities_id = self.city_id;
+				List.sports_id = $(self.destination).find(self.controls.ddlSports).val();
 				List.team_name = name;
+				
 				List.fetch();
 
 				$.when(List.request).done(function() {
@@ -446,7 +448,7 @@ define(['require', 'text!usercontrols/tag/templates/layout.html', 'facade', 'vie
 					});
 					
 					//Trigger keydown to display the autocomplete dropdown just created
-					//$(e.target).trigger('keydown');
+					$(e.target).trigger('keydown');
 				});
 			} else {
 				// Hide all other controls
@@ -468,12 +470,9 @@ define(['require', 'text!usercontrols/tag/templates/layout.html', 'facade', 'vie
 				self.teams.forEach(function(value, index) {
 					var teamname = value['team_name'];
 					if (teamname == name) {
-						console.log(self.team_id);
 						isSchoolValid = true;
 						self.team_id = value['id'];
 						$(e.target).attr(self.attributes.teamId, self.team_id);
-						//				$(e.target).parents(self.controls.secTagTeam).find(self.controls.ddlTeamLevel).attr(self.attributes.teamId, self.orgs_id).attr(self.attributes.stateId, $(e.target).attr(self.attributes.stateId));
-						//				self.fillCompLevel(e);
 					}
 				});
 			}
@@ -486,7 +485,6 @@ define(['require', 'text!usercontrols/tag/templates/layout.html', 'facade', 'vie
 
 		CheckTeamControlsVisibility : function() {
 			var value = $(self.destination).find(self.controls.txtTeamState).attr(self.attributes.stateId);
-			console.log(value);
 			if (value && value != "" && value != 0) {
 				$(self.destination).find(self.controls.txtTeamCity).show();
 			} else {
@@ -510,6 +508,7 @@ define(['require', 'text!usercontrols/tag/templates/layout.html', 'facade', 'vie
 
 		doneTagTeamTagging : function(e) {
 			var teamId = $(self.destination).find(self.controls.txtTeamSchool).attr(self.attributes.teamId);
+			self.team_id = teamId
 			var seasonId = $(self.destination).find(self.controls.ddlTeamSeason).val();
 			var data = {};
 			if (teamId && teamId != "" && teamId != 0 && teamId && teamId != "" && teamId != 0) {
@@ -549,6 +548,10 @@ define(['require', 'text!usercontrols/tag/templates/layout.html', 'facade', 'vie
 					//Create Collection
 					var List = new UsersCollection();
 					List.user_name = searchText;
+						List.states_id = self.states_id;
+						List.cities_id = self.city_id;
+						List.sports_id = $(self.destination).find(self.controls.ddlSports).val();
+						
 					List.fetch();
 					$.when(List.request).done(function() {
 
@@ -562,7 +565,6 @@ define(['require', 'text!usercontrols/tag/templates/layout.html', 'facade', 'vie
 						for (var key in models) {
 							self.users.push(models[key].payload);
 						}
-						console.log("users", self.users)
 						self.users.forEach(function(value, index) {
 							playersArr.push(value['name']);
 						});
@@ -644,24 +646,26 @@ define(['require', 'text!usercontrols/tag/templates/layout.html', 'facade', 'vie
 			var sportid = $(self.destination).find(self.controls.ddlSports).val();
 
 			if (self.sportsId) {
-				//TODO:Apply following condtion for teamId
-				// && self.teamId) {
-				//	self.SetupSportsView(orgs_id, destination);
 				var List = new GamesCollection();
-				$(e.target).parents(self.controls.secFooterLinks).find(self.controls.fieldMessage).html('').fadeOut();
+				List.states_id = self.states_id;
+				List.cities_id = self.city_id;
+				List.sports_id = self.sportsId;
+				List.teams_id = self.team_id;
+				
+				$(e.target).parents(self.controls.secGame).find(self.controls.fieldMessage).html('').fadeOut();
 				List.processResult = function(collection) {
 					self.SetupGamesView(collection);
 				};
 				List.fetch();
 			} else {
-				$(e.target).parents(self.controls.secFooterLinks).find(self.controls.fieldMessage).html(self.messages.selectTeamAndSports).fadeIn();
+				$(e.target).parents(self.controls.secGame).find(self.controls.fieldMessage).html(self.messages.selectTeamAndSports).fadeIn();
 			}
 
 		},
 		SetupGamesView : function(List) {
 			var models = List.toJSON();
 			if (models == null || models.length < 1) {
-				$(self.destination).find(self.controls.secFooterLinks).parent().find(self.controls.fieldMessage).html(self.messages.dataNotExist).stop().fadeIn();
+				$(self.destination).find(self.controls.secGame).find(self.controls.fieldMessage).html(self.messages.dataNotExist).stop().fadeIn();
 				return;
 			}
 			self.games = [];

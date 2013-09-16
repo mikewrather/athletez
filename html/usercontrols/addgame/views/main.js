@@ -114,14 +114,6 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 		/*render displays the view in browser*/
 		render : function() {
 			SectionView.prototype.render.call(this);
-
-			// $(self.el).find(self.controls.txtGameDate).datetimepicker({
-			// altField : $(self.el).find(self.controls.txtGameTime),
-			// changeMonth : true,
-			// changeYear : true
-			// });
-			//
-
 			$(self.el).find(self.controls.txtGameDate).datetimepicker({
 				timeFormat : 'hh:mm tt z',
 				separator : ' @ ',
@@ -203,26 +195,17 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 			List.processResult = function(collection) {
 
 				var data = List.parseAsRequired();
-				//	//console.log("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
-				//	//console.log("data",data);
 				self.setUpUserTeams(data);
 
 			};
 			List.fetch();
 		},
 		setUpUserTeams : function(List) {
-			//	var models = List.toJSON();
-			//	//console.log("Models Teams", models);
 			if (List == null) {
 				$(self.destination).find(self.controls.ddlUserTeams).parent().find(self.controls.fieldMessage).html(self.messages.dataNotExist).stop().fadeIn();
 				return;
 			}
 			self.teams = List;
-			// [];
-			// for (var key in List) {
-			// self.teams.push(List[key].payload);
-			// }
-			// Sort Sports Before Filling Up Into Drop-Down
 			self.sort(self.teams, 'team_name', false);
 			self.setDropdownOptions(self.teams, 'team_name', 'team_id', $(self.destination).find(self.controls.ddlUserTeams), 'Select Team');
 		},
@@ -410,8 +393,29 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 		keyupTeam : function(e) {
 			var name = $(e.target).val();
 			var arr = [];
+			
 			var isValidKey = self.isValidAutoCompleteKey(e);
 			if (name != '' && isValidKey == true && name.length > 2) {
+				
+			// Abort all the running ajax request 
+			// self.TeamFetchRequest = self.TeamFetchRequest || [];
+	//		console.log("Team Fetch1",self.TeamFetchRequest);
+//			self.TeamFetchRequest = self.abortRequest(self.TeamFetchRequest);
+	//		console.log("Team Fetch2",self.TeamFetchRequest);
+			
+				// for(var key in self.TeamFetchRequest){
+					// console.log("request array",self.TeamFetchRequest);
+					// console.log("request state",self.TeamFetchRequest[key].readyState);
+					// if(self.TeamFetchRequest[key].readyState > 0 && self.TeamFetchRequest[key].readyState < 4){
+						// console.log("Abort Started");
+						// self.TeamFetchRequest[key].abort();
+						// console.log("Abort Ended");
+// 						
+// 						
+					// }
+// 					
+				// }
+
 
 				// Hide all other controls
 				$(e.target).removeAttr(self.attributes.teamId);
@@ -421,7 +425,11 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 				List.states_id = $(e.target).attr(self.attributes.stateId);
 				List.city_id = $(e.target).attr(self.attributes.cityId);
 				List.team_name = name;
-				List.fetch();
+	
+				self.TeamFetchRequest = self.abortRequest(self.TeamFetchRequest);
+				var tempCollection = List.fetch();
+				self.TeamFetchRequest.push(tempCollection);
+				
 				$.when(List.request).done(function() {
 					if (List.isError())
 						return;
