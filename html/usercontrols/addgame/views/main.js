@@ -4,22 +4,9 @@
  // Requires `define`, `require`
  // Returns {Add Game VIEW} constructor
  */
-define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 'views', 'utils', 'vendor', 'user/models/basic_info', 
-'sportorg/collections/sports_users', 'location/collections/states', 'usercontrols/addgame/collections/teams', 
-'location/collections/cities', 'usercontrols/addgame/collections/teams_user', 
-'usercontrols/addgame/collections/teams',
-'usercontrols/addgame/collections/games_search',
-'usercontrols/addgame/models/team', 
-'usercontrols/addgame/models/team_add', 'usercontrols/addgame/models/game'], function(require, layoutTemplate) {
+define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 'views', 'utils', 'vendor', 'user/models/basic_info', 'sportorg/collections/sports_users', 'location/collections/states', 'usercontrols/addgame/collections/teams', 'location/collections/cities', 'usercontrols/addgame/collections/teams_user', 'usercontrols/addgame/collections/teams', 'usercontrols/addgame/collections/games_search', 'usercontrols/addgame/models/team', 'usercontrols/addgame/models/team_add', 'usercontrols/addgame/models/game'], function(require, layoutTemplate) {
 
-	var self, facade = require('facade'), views = require('views'), SectionView = views.SectionView, utils = require('utils'), 
-	Channel = utils.lib.Channel, vendor = require('vendor'), Mustache = vendor.Mustache, $ = facade.$, 
-	BasicModel = require('usercontrols/tag/models/basic_info'), SportsCollection = require('sportorg/collections/sports_users'), 
-	StatesCollection = require('location/collections/states'), CityCollection = require('location/collections/cities'), 
-	UserTeamsCollection = require('usercontrols/addgame/collections/teams_user'), 
-	TeamsCollection = require('usercontrols/addgame/collections/teams'), TeamModel = require('usercontrols/addgame/models/team'), 
-	TeamAddModel = require('usercontrols/addgame/models/team_add'), GameModel = require('usercontrols/addgame/models/game'),
-	GamesSearchCollection = require('usercontrols/addgame/collections/games_search'),
+	var self, facade = require('facade'), views = require('views'), SectionView = views.SectionView, utils = require('utils'), Channel = utils.lib.Channel, vendor = require('vendor'), Mustache = vendor.Mustache, $ = facade.$, BasicModel = require('usercontrols/tag/models/basic_info'), SportsCollection = require('sportorg/collections/sports_users'), StatesCollection = require('location/collections/states'), CityCollection = require('location/collections/cities'), UserTeamsCollection = require('usercontrols/addgame/collections/teams_user'), TeamsCollection = require('usercontrols/addgame/collections/teams'), TeamModel = require('usercontrols/addgame/models/team'), TeamAddModel = require('usercontrols/addgame/models/team_add'), GameModel = require('usercontrols/addgame/models/game'), GamesSearchCollection = require('usercontrols/addgame/collections/games_search'),
 	//Models
 	AddGameView = SectionView.extend({
 
@@ -45,7 +32,8 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 			'change .ddl-game-userteams_h' : 'changeUserTeam',
 			'click .btn-new-team-game_h' : 'showAddTeam',
 			'click .rdo-game-location_h' : 'showLocation',
-			'click .btn-game-Finish_h' : 'finishGame'
+			'click .btn-game-Finish_h' : 'finishGame',
+			'blur .txt-game-date_h' : 'CheckTeamControlsVisibility'
 		},
 
 		/*Holds */
@@ -72,11 +60,12 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 
 			sectionScore : ".section-score_h",
 			sectionRadio : ".section-game-radio_h",
-			rdoTeamOne : "rdo-team1_h",
-			rdoTeamTwo : "rdo-team2_h",
+			rdoTeamOne : ".rdo-game-location-one-home_h",
+			rdoTeamTwo : ".rdo-game-location-two-home_h",
 			rdoLocation : ".rdo-game-location_h",
 			sectionMainLocation : ".section-main-location_h",
 			sectionLocation : ".div-game-location_h",
+			txtLocationId : ".txt-game-location-id_h",
 
 			sectionIndividual : ".secction-individual-game_h",
 			txtIndividualGame : ".txt-individual-game_h",
@@ -125,8 +114,18 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 		/*render displays the view in browser*/
 		render : function() {
 			SectionView.prototype.render.call(this);
+
+			// $(self.el).find(self.controls.txtGameDate).datetimepicker({
+			// altField : $(self.el).find(self.controls.txtGameTime),
+			// changeMonth : true,
+			// changeYear : true
+			// });
+			//
+
 			$(self.el).find(self.controls.txtGameDate).datetimepicker({
-				altField : $(self.el).find(self.controls.txtGameTime),
+				timeFormat : 'hh:mm tt z',
+				separator : ' @ ',
+				showTimezone : true,
 				changeMonth : true,
 				changeYear : true
 			});
@@ -204,8 +203,8 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 			List.processResult = function(collection) {
 
 				var data = List.parseAsRequired();
-				//	console.log("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
-				//	console.log("data",data);
+				//	//console.log("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+				//	//console.log("data",data);
 				self.setUpUserTeams(data);
 
 			};
@@ -213,7 +212,7 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 		},
 		setUpUserTeams : function(List) {
 			//	var models = List.toJSON();
-			//	console.log("Models Teams", models);
+			//	//console.log("Models Teams", models);
 			if (List == null) {
 				$(self.destination).find(self.controls.ddlUserTeams).parent().find(self.controls.fieldMessage).html(self.messages.dataNotExist).stop().fadeIn();
 				return;
@@ -483,7 +482,7 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 			}
 			self.CheckTeamControlsVisibility();
 		},
-		
+
 		/*Event Called when a key is pressed
 		 Fetch data from api and populate it in auto complete dropdown
 		 */
@@ -515,10 +514,10 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 						self.individualGames.push(models[key].payload);
 					}
 					self.individualGames.forEach(function(value, index) {
-					//	var name = value['game_name'] + "( " + +" )";
+						//	var name = value['game_name'] + "( " + +" )";
 						arr.push(value['game_name']);
 					});
-					
+
 					// Destroy existing autocomplete from text box before attaching it again
 					// try catch as for the first time it gives error
 					try {
@@ -526,7 +525,7 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 					} catch(ex) {
 					}
 
-console.log("s.arr",arr);
+					//console.log("s.arr", arr);
 					$(e.target).autocomplete({
 						source : arr
 					});
@@ -562,38 +561,58 @@ console.log("s.arr",arr);
 				// Hide all other controls
 				$(e.target).removeAttr(self.attributes.gameId);
 				$(e.target).parent().find(self.controls.fieldMessage).html('').stop().fadeOut();
-			}else{
+			} else {
 				$(e.target).parent().find(self.controls.fieldMessage).html(self.messages.gameFound).fadeIn();
 			}
 			self.CheckTeamControlsVisibility();
 		},
-		
-		
+
 		CheckTeamControlsVisibility : function() {
+			//	debugger;
+			//console.log("checkteam");
 			var value = $(self.destination).find(self.controls.ddlSports).val();
 			// sectionIndividual : ".secction-individual-game_h",
 			// txtIndividualGame : ".txt-individual-game_h",
 			// btnIndividualFinish : ".btn-game-individual-Finish_h",
 			//sssssssssssssssss
 			if (value && value != "" && value != 0) {
+				//console.log("value");
 				var isTeam = self.getTeamType();
 				if (!isTeam) {
-				$(self.destination).find(self.controls.sectionTeams).hide();
-				$(self.destination).find(self.controls.sectionScore).hide();
-				$(self.destination).find(self.controls.btnFinish).hide();
-
+					$(self.destination).find(self.controls.sectionTeams).hide();
+					$(self.destination).find(self.controls.sectionScore).html('').hide();
+					$(self.destination).find(self.controls.btnFinish).hide();
 
 					$(self.destination).find(self.controls.sectionIndividual).show();
 					$(self.destination).find(self.controlsbtnIndividualFinish).show();
+				} else {
+					var date = $(self.destination).find(self.controls.txtGameDate).datetimepicker('getDate');
+					var currentDate = new Date();
+					//console.log("date", date, currentDate);
+					if (date != null && currentDate >= date) {
+						//console.log("true");
+						$(self.destination).find(self.controls.sectionScore).show();
+					} else {
+						//console.log("false");
+						$(self.destination).find(self.controls.sectionScore).hide();
+						$(self.destination).find(self.controls.txtScore).val('');
+					}
+
+					$(self.destination).find(self.controls.sectionIndividual).hide();
+					$(self.destination).find(self.controlsbtnIndividualFinish).hide();
+
+					$(self.destination).find(self.controls.sectionTeams).show();
+					$(self.destination).find(self.controls.btnFinish).show();
 
 				}
 			} else {
+				//console.log("value null");
+
 				$(self.destination).find(self.controls.sectionIndividual).hide();
 				$(self.destination).find(self.controlsbtnIndividualFinish).hide();
-				
-				$(self.destination).find(self.controls.sectionTeams).show();
-				$(self.destination).find(self.controls.sectionScore).show();
-				$(self.destination).find(self.controls.btnFinish).show();
+				$(self.destination).find(self.controls.sectionTeams).hide();
+				$(self.destination).find(self.controls.btnFinish).hide();
+
 			}
 
 			value = $(self.destination).find(self.controls.txtTeam).attr(self.attributes.teamId);
@@ -634,6 +653,7 @@ console.log("s.arr",arr);
 
 			}
 			if (teamId) {
+
 				var teamModel = new TeamModel();
 				teamModel.id = teamId;
 				teamModel.fetchSuccess = function(model, response) {
@@ -644,15 +664,17 @@ console.log("s.arr",arr);
 				teamModel.fetch();
 
 			} else {
+				$(self.destination).find(self.controls.txtLocationId).html('').fadeIn();
 				self.clearLocation();
 			}
 		},
 		setLocation : function(data) {
 			if (data.location_id) {
 				self.location_id = data.location_id || 0;
-
+				$(self.destination).find(self.controls.txtLocationId).val('').fadeOut();
 				$(self.destination).find(self.controls.sectionLocation).html(data.location_name).attr(self.attributes.locationId, data.location_id);
-
+			} else {
+				$(self.destination).find(self.controls.txtLocationId).val('').fadeIn();
 			}
 		},
 		clearLocation : function() {
@@ -662,15 +684,15 @@ console.log("s.arr",arr);
 			$(self.destination).find(self.controls.fieldMessage).html('').hide();
 			var isDataValid = true;
 
-			var date = $(self.destination).find(self.controls.txtGameDate).val();
-			var time = $(self.destination).find(self.controls.txtGameTime).val();
+			var date = $(self.destination).find(self.controls.txtGameDate).datetimepicker('getDate');
 			var teamOneId = $(self.destination).find(self.controls.sectionTeamOne).find(self.controls.txtTeam).attr(self.attributes.teamId);
 			var scoreOne = $(self.destination).find(self.controls.sectionTeamOne).find(self.controls.txtScore).val();
 			var teamTwoId = $(self.destination).find(self.controls.sectionTeamTwo).find(self.controls.txtTeam).attr(self.attributes.teamId);
 			var scoreTwo = $(self.destination).find(self.controls.sectionTeamTwo).find(self.controls.txtScore).val();
 
-			self.location_id = self.location_id || 0;
-			if (date == '' || time == '') {
+			self.location_id = self.location_id || $(self.controls.txtLocationId).val() || 0;
+			//console.log(date);
+			if (!date) {
 				$(self.destination).find(self.controls.sectionDate).find(self.controls.fieldMessage).html(self.messages.selectDateAndTime).fadeIn();
 				isDataValid = false;
 			}
@@ -680,94 +702,84 @@ console.log("s.arr",arr);
 				isDataValid = false;
 			}
 
-			console.log(teamOneId);
-			console.log(teamTwoId);
-			console.log(scoreOne);
-			console.log(scoreTwo);
+			//console.log(teamOneId);
+			//console.log(teamTwoId);
+			//console.log(scoreOne);
+			//console.log(scoreTwo);
 			if (!(teamOneId > 0 )) {
 				$(self.destination).find(self.controls.sectionTeamOne).find(self.controls.fieldMessage).html(self.messages.selectTeam).fadeIn();
 				isDataValid = false;
 			}
-
-			// var location_type_one = $(self.destination).find(self.controls.rdoTeamOne + " :checked");
-			// if (location_type_one.length < 1) {
-			// $(self.destination).find(self.controls.sectionTeamOne).find(self.controls.sectionRadio).find(self.controls.fieldMessage).html(self.messages.selectLocationType).fadeIn();
-			// isDataValid = false;
-			// }
-			//	console.log("location_type",location_type_one);
 			var isTeam = self.getTeamType();
 			if (isTeam) {
+
+				var currentDate = new Date();
+				//console.log("date", date, currentDate);
 
 				if (!(teamTwoId > 0)) {
 					$(self.destination).find(self.controls.sectionTeamTwo).find(self.controls.fieldMessage).html(self.messages.selectTeam).fadeIn();
 					isDataValid = false;
 				}
-				if (scoreOne == '') {
+				if (scoreOne == '' && date != null && currentDate > date) {
 					$(self.destination).find(self.controls.sectionTeamOne).find(self.controls.fieldMessage).html(self.messages.selectScore).fadeIn();
 					isDataValid = false;
 				}
 
-				if (scoreTwo == '') {
+				if (scoreTwo == '' && date != null && currentDate > date) {
 					$(self.destination).find(self.controls.sectionTeamTwo).find(self.controls.fieldMessage).html(self.messages.selectScore).fadeIn();
 					isDataValid = false;
 				}
 
-				// var location_type_two = $(self.destination).find(self.controls.rdoTeamTwo + " :checked");
-				// console.log("location_type_two",location_type_two);
-				// if (location_type_two.length < 1) {
-				// $(self.destination).find(self.controls.sectionTeamTwo).find(self.controls.sectionRadio).find(self.controls.fieldMessage).html(self.messages.selectLocationType).fadeIn();
-				// isDataValid = false;
-				// }
 			}
 
 			if (isDataValid) {
 				var payload = {
-					game_datetime : date + " " + time,
+					game_datetime : date,
 					locations_id : self.location_id,
 					teamOneId : teamOneId,
 					teamTwoId : teamTwoId,
 
 				};
-				console.log("payload", payload);
+				////console.log("payload", payload);
 				var gameModel = new GameModel(payload);
 
-				gameModel.save({
-					success : function(response) {
-						alert("S");
-						console.log("response", response);
-						console.log("data", data);
-					}
-				});
+				gameModel.save({});
 
 				$.when(gameModel.request).done(function(response) {
-					console.log(response);
+					////console.log(response);
 					if (response != null && response.payload != null) {
 						self.game_id = response.payload.id;
 
+						var isHome = $(self.destination).find(self.controls.rdoTeamOne).is(':checked');
+
+						//console.log("home",isHome);
 						var payloadOne = {
 							game_datetime : date,
 							games_id : self.game_id,
-							home_team : true,
+							home_team : isHome || false,
 							locations_id : self.location_id,
 							score : scoreOne
 						}
 
-						var addTeamModelOne = new TeamAddModel(payload);
+						var addTeamModelOne = new TeamAddModel(payloadOne);
 						addTeamModelOne.teams_id = teamOneId;
-						addTeamModelOne.games_id = self.game_id;
+						//addTeamModelOne.games_id = self.game_id;
 						addTeamModelOne.save();
-
 						var payloadTwo = {
 							game_datetime : date,
 							games_id : self.game_id,
-							home_team : true,
+							home_team : isHome || false,
 							locations_id : self.location_id,
 							score : scoreTwo
 						}
 
-						var addTeamModelTwo = new TeamAddModel(payload);
+						isHome = $(self.destination).find(self.controls.rdoTeamTwo).is(':checked');
+
+						//console.log("home",isHome);
+
+						var addTeamModelTwo = new TeamAddModel(payloadTwo);
 						addTeamModelTwo.teams_id = teamTwoId;
-						addTeamModelOne.games_id = self.game_id;
+						//addTeamModelTwq.games_id = self.game_id;
 						addTeamModelTwo.save();
 
 						self.gameData = {
