@@ -257,22 +257,45 @@ input[disabled].hasDatepicker, input[readonly].hasDatepicker {
 	
 }
 
-.image-detail-view {
-	position: absolute;
-	bottom: -92px;
-    height: 92px;
-	transition: bottom .3s linear;
-	-webkit-transition: bottom .3s linear;
-	-moz-transition: bottom .3s linear;
-	-o-transition: bottom .3s linear;
-	-ms-transition: bottom .3s linear;
-	background: rgba(157, 202, 60, .75);
-	width: 100%;
-    color: white;
+.detail-view{
+    position: absolute;
 
+    bottom: -92px;
+    height: 92px;
+
+    transition: bottom .3s linear;
+    -webkit-transition: bottom .3s linear;
+    -moz-transition: bottom .3s linear;
+    -o-transition: bottom .3s linear;
+    -ms-transition: bottom .3s linear;
+
+    background: rgba(157, 202, 60, .75);
+    width: 100%;
+    color: white;
+}
+.detail-view.game {
+    bottom: -120px;
+    height: 120px;
 }
 
-.image-detail-view h6{
+.detail-view.game h6{
+    width:100%;
+    margin: 15px 8px 8px 8px;
+    font-size: 1.2em;
+}
+
+.detail-view.game span.team{
+
+}
+.detail-view.game span.team:after{
+    content: ' VS. ';
+}
+
+.detail-view.game span.team:last-child:after{
+    content : '';
+}
+
+.detail-view h6{
     margin: 15px 8px 8px 8px;
     text-transform:uppercase;
     font-size: 1.6em;
