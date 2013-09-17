@@ -215,6 +215,41 @@ input[disabled].hasDatepicker, input[readonly].hasDatepicker {
 
 
 /***** Image Styles *****/
+
+.action-section{
+    width:100%;
+    position:absolute;
+    top:0px;
+
+}
+.action-block{
+    height:30px;
+    width:30px;
+    margin:8px;
+    display: inline-block;
+    opacity: 0;
+    -webkit-transition: opacity .3s;
+    -moz-transition: opacity .3s;
+    -o-transition: opacity .3s;
+    -ms-transition: opacity .3s;
+
+    color: white;
+    font-size: 2.5em;
+    text-align: center;
+    padding:5px;
+}
+
+.action-block.vote{
+    display: block;
+    float:left;
+    background-color:#33aeab;
+}
+.action-block.follow{
+    display: block;
+    float: right;
+    background-color: #9dca3c;
+}
+
 .image-outer-h {
 	position: relative;
 	display: block;

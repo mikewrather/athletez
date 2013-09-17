@@ -29,7 +29,9 @@ function (
         
         // Event handlers...
         events: {
-            "click": "changeImage"
+            "click": "changeImage",
+			"click .vote": "vote",
+	        "click .follow": "follow"
         },
         
         initialize: function (options) {
@@ -48,10 +50,26 @@ function (
             this.$el.find('.image-outer-h').mouseout(function() {
             	$(this).find('.image-detail-view').css({'bottom': '-92px'});
             });
-            
-            
+
+	        this.$el.find('.image-outer-h').mouseout(function() {
+		        $(this).find('.action-block.vote, .action-block.follow').css({opacity:0});
+	        });
+
+	        this.$el.find('.image-outer-h').mouseover(function() {
+		        $(this).find('.action-block.vote, .action-block.follow').css({opacity:90});
+	        });
+
             return this;
         },
+
+	    vote: function(e)
+	    {
+		    e.preventDefault();
+	    },
+
+	    follow: function(e){
+		    e.preventDefault();
+	    },
         
         changeImage: function() {
 

@@ -3,8 +3,12 @@
 {{#user_picture_obj}}
 
 
-<a href="javascript:L void(0);" class="image-outer-h">
+<a href="/#profile/{{payload.id}}" class="image-outer-h">
 	<img src="{{user_picture_obj.types.standard_thumb.url}}" alt="{{user_picture_obj.image_title}}"/>
+	<div class="action-section">
+		<div class="action-block vote" user-id="{{payload.id}}">V</div>
+		<div class="action-block follow" user-id="{{payload.id}}">F</div>
+	</div>
 	<div class="image-detail-view">
 		<h6>{{name}}</h6>
 		<span>Soccer, Mid fielder</span>
