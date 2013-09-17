@@ -21,6 +21,8 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 			'num_followers' => 'get_num_followers',
 			'num_votes' =>'get_num_votes',
 			'height_ft' => 'get_height_ft',
+			'label' => 'getLabel',
+			'sub_label' => 'getSubLabel',
 		),
 		'exclude_columns' => array(
 			'username','email','password','dob'
@@ -882,13 +884,15 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 		$classes_arr['Sportorg_Team'] = 'teams';
 		$classes_arr['Sportorg_Orgsportlink'] = 'org_sport_link';
 
-
+		##############################################################
+		$utl->join('sports')->on('sports.id','=','org_sport_link.sports_id');
+		$classes_arr['Sportorg_Sport'] = 'sports';
 		if($sport_type_id != NULL)
 		{
-			$utl->join('sports')->on('sports.id','=','org_sport_link.sports_id')->where('sports.sport_type_id','=',$sport_type_id);
-			$classes_arr['Sportorg_Sport'] = 'sports';
+			$utl->where('sports.sport_type_id','=',$sport_type_id);
 		}
 		$utl = ORM::_sql_exclude_deleted($classes_arr, $utl);
+		##############################################################
 
 		$classes_arr = array();
 		$isports = DB::select('sports_id',array(DB::expr('NULL'),'positions_id'),array(DB::expr('"individual"'),'sport_type'))
@@ -897,16 +901,15 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 			->where('users_id','=',$this->id);
 		$classes_arr['User_Sportlink'] = 'user_sport_link';
 
+		##############################################################
+		$isports->join('sports')->on('sports.id','=','sports_id');
+		$classes_arr['Sportorg_Sport'] = 'sports';
 		if($sport_type_id != NULL)
 		{
-			$isports->join('sports')->on('sports.id','=','sports_id')->where('sports.sport_type_id','=',$sport_type_id);
-			$classes_arr['Sportorg_Sport'] = 'sports';
+			$isports->where('sports.sport_type_id','=',$sport_type_id);
 		}
-
-
-		//exclude sports itself
 		$isports = ORM::_sql_exclude_deleted($classes_arr, $isports);
-
+		##############################################################
 
 
 		if($format=='select') return $isports;
@@ -1242,6 +1245,30 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 			$user_identity->save();
 		}
 		return $user_identity;
+	}
+
+	public function getLabel()
+	{
+		return $this->name();
+	}
+
+	public function getSubLabel()
+	{
+		$result = $this->getSports();
+		$objs = $result->execute();
+		foreach($objs as $obj)
+		{
+			$sport = ORM::factory('Sportorg_Sport',$obj['sports_id']);
+			$retArr[$sport->id] = $sport->getBasics();
+			$retArr[$sport->id]['primary_position'] = ORM::factory('Sportorg_Position',$obj['positions_id'])->name;
+			$retArr[$sport->id]['team_type'] = $obj['sport_type'];
+			$retArr[$sport->id]['social_links'] = array();
+		}
+
+		if (empty($retArr)){
+			return null;
+		}
+		return $retArr;
 	}
 
 	public function add_from_facebook($facebook)
