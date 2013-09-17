@@ -46,7 +46,7 @@ function (
             });
             
             this.$el.find('.image-outer-h').mouseout(function() {
-            	$(this).find('.image-detail-view').css({'bottom': '-80px'});
+            	$(this).find('.image-detail-view').css({'bottom': '-92px'});
             });
             
             
