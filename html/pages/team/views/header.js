@@ -16,6 +16,7 @@ define([
         'vendor',
         'team/collections/sports',
         'team/views/sport-list',
+        'usercontrol/dropdown/view/dropdown',
         'team/collections/seasonteams',
         'team/collections/complevels'
         
@@ -29,7 +30,7 @@ function(require, headerTemplate, selectSportTemplate) {
         SectionView = views.SectionView,
         TeamSportListView = require('team/views/sport-list'),
         TeamSportList = require('team/collections/sports'),
-         
+        DropDownList = require('usercontrol/dropdown/view/dropdown'), 
 		SeasonTeams = require('team/collections/seasonteams'),
         CompLevels = require('team/collections/complevels'),
         
@@ -48,8 +49,8 @@ function(require, headerTemplate, selectSportTemplate) {
         selectSportTemplate: selectSportTemplate,
         
         events: {
-            "change .sports-h": "getComplevels",
-            "change .team-h": "showAllTeamData"
+            //"change .sports-h": "getComplevels",
+            //"change .team-h": "showAllTeamData"
         },
 
         initialize: function (options) {
@@ -71,53 +72,59 @@ function(require, headerTemplate, selectSportTemplate) {
         	 var self = this;
             this.season = new SeasonTeams();
             this.season.id = this.model.get("payload").org_sport_link_obj.orgs_id;
-            this.season.sport_id = $(".sports-h").val();
-            this.season.complevel_id = $(".complevels-h").val();
+            this.season.sport_id = $("#sports-h").val();
+            this.season.complevel_id = $("#complevels-h").val();
             
             this.season.fetch();
             $.when(this.season.request).done(function() {
-               
-               console.error(self.season.toJSON());
-               //self.insertOption($(".season-h"), self.season.toJSON());
-               var html = '', data = self.season.toJSON(), len = data.length;
-	        	for(var i = 0; i < len; i++) {
-	        		html += '<option value="'+data[i].payload.id+'">'+data[i].payload.team_name+'</option>;'
-	        	}
-	        	$(".team-h").html(html);
-	        	
-	        	// get all team page data by triggring the vent
-	        	self.showAllTeamData();
-	        	
-              // self.getSeasons();
-               // self.setupSportListView();
-                //Channel('teamsports:fetch').publish();
-                
-                //self.selectSport();
+                var data = {};
+               data.records = self.season.toJSON();
+               data.recordId = 'id';
+			   data.recordValue = 'team_name';
+               var DropDown = new DropDownList({
+					data: data,
+					title: "Team",
+					elementId: "team-h",
+					destination: '.team-h',
+					targetView: self,
+					callback: function(result) {
+							self.showAllTeamData();
+					}
+				});
             });
         },
         
         showAllTeamData: function() {
-        	routing.trigger('refresh-teampage', $(".sports-h").val(), $(".team-h").val(), this.season.id);
+        	routing.trigger('refresh-teampage', $("#sports-h").val(), $("#team-h").val(), this.season.id);
         },
         
         getComplevels: function() {
+        	
+        	console.error("comp levels");
+        	
         	 var self = this;
             this.complevel = new CompLevels();
             this.complevel.id = this.model.get("payload").org_sport_link_obj.orgs_id;
-            this.complevel.sport_id = $(".sports-h").val();
+            this.complevel.sport_id = $("#sports-h").val();
             this.complevel.fetch();
             $.when(this.complevel.request).done(function() {
-               console.error(self.complevel.toJSON());
-                var html = '', data = self.complevel.toJSON(), len = data.length;
-	        	for(var i = 0; i < len; i++) {
-	        		html += '<option value="'+data[i].payload.complevel_id+'">'+data[i].payload.complevel_name+'</option>;'
-	        	}
-	        	$(".season-h").html(html);
-                self.getSeason();
-               // self.setupSportListView();
-                //Channel('teamsports:fetch').publish();
-                
-                //self.selectSport();
+               
+               
+               var data = {};
+               data.records = self.complevel.toJSON();
+               data.recordId = 'complevel_id';
+			   data.recordValue = 'complevel_name';
+               var DropDown = new DropDownList({
+					data: data,
+					title: "Season",
+					elementId: "season-h",
+					destination: '.season-h',
+					targetView: self,
+					callback: function(result) {
+						console.error("comp level call");
+						self.getSeason();
+					}
+				});
             });
         },
         
@@ -128,20 +135,22 @@ function(require, headerTemplate, selectSportTemplate) {
             this.sports.fetch();
             $.when(this.sports.request).done(function() {
                
-               console.error(self.sports.toJSON());
-               var html = '', data = self.sports.toJSON(), len = data.length;
-	        	for(var i = 0; i < len; i++) {
-	        		html += '<option value="'+data[i].payload.sport_id+'">'+data[i].payload.sport_name+'</option>;'
-	        	}
-	        	$(".sports-h").html(html);
-               
-               //self.insertOption($(".sports-h"), self.sports.toJSON());
-               self.getComplevels();
-               // self.setupSportListView();
-                //Channel('teamsports:fetch').publish();
-                
-                //self.selectSport();
-            });
+               var data = {};
+               data.records = self.sports.toJSON();
+               data.recordId = 'sport_id';
+			   data.recordValue = 'sport_name';
+               var DropDown = new DropDownList({
+					data: data,
+					elementId: "sports-h",
+					title: "Sport",
+					destination: '.sports-h',
+					targetView: self,
+					callback: function(result) {
+						console.error("here in callback");
+						self.getComplevels();
+					}
+				});
+             });
         },
         
         

@@ -277,8 +277,8 @@ ul.common-dropdown {
 	display: none;
 	clear: both;
 	margin-bottom: 10px;
+	margin-top: 10px;
 }
-
 
 ul.common-dropdown li a {
 	background: none;
@@ -326,4 +326,12 @@ ul.common-dropdown li.selected {
 	background: green;
 }
 
+.drop-down-main-outer {
+	width: 250px;
+	display: inline-block;
+}
 
+
+#sports-info {
+	margin-bottom: 20px;
+}
