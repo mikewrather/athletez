@@ -16,6 +16,16 @@
 	line-height: 38px;
 }
 
+.profile-heading div.sports-h{
+    display:block;
+    float:right;
+}
+
+.profile-heading div.sports-h img{
+    max-width: 70px;
+    max-height: 50px;
+}
+
 #main-header, .profile-comment-list-box, .template-container {
 		background: #FFF;
 }
@@ -161,10 +171,10 @@
 
 
 .comment-outer-h {
-	max-height: 400px;
+/*	max-height: 400px;
 	height: auto;
 	overflow-y: auto;
-	overflow-x: hidden;
+	overflow-x: hidden; */
 }
 
 
@@ -240,9 +250,9 @@ margin-right: 100px;
 
 
 .bubble{
-		position: relative; left: 90px;
+		position: relative; left: 90px; margin-top:5px;
 		background: #fff; border: solid 0; background-color: rgb(229, 229, 229); 
-		width: 90%; min-height: 85px;
+		width: 90%; min-height: 65px;
 		-webkit-border-radius: 15px; -moz-border-radius: 15px; border-radius: 15px;
 	}
 
@@ -254,7 +264,7 @@ margin-right: 100px;
 
 	.pointer{
 		content: "";
-		position: absolute; bottom:36px; left:-40px;
+		position: absolute; bottom:16px; left:-40px;
 		display: block; width: 0; z-index: 0;    
 		border-color: transparent rgb(229, 229, 229); border-style: solid; border-width: 18px 77px 18px 0;
 		-webkit-transform: rotate(-25deg); -ms-transform: rotate(-25deg); transform: rotate(-25deg);

@@ -70,4 +70,9 @@ li.image img {
 	height: 220px
 }
 
+img.tiny-sport-icon{
+    max-width: 20px;
+    max-height: 20px;
+    margin-right:4px;
 
+}

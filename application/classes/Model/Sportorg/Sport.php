@@ -92,6 +92,55 @@ class Model_Sportorg_Sport extends ORM
 		);
 	}
 
+	function consolidate()
+	{
+
+		 $duplicate = ORM::factory('Sportorg_Sport')
+			 ->where('name','=',$this->name)
+			 ->and_where('female','=',1)
+			 ->find();
+
+		if($duplicate->loaded())
+		{
+			echo "<br><br>".$duplicate->name." (".$duplicate->id.")";
+			$osl = ORM::factory('Sportorg_Orgsportlink')
+				->where('sports_id','=',$duplicate->id)
+				->find_all();
+
+			foreach($osl as $link)
+			{
+				echo "<br>linkID: ".$link->id." (".$link->id.")";
+			//	$link->sports_id = $this->sports_id;
+			//	$link->gender = 'female';
+			//	$link->save();
+			}
+
+			foreach($this->positions->find_all() as $position)
+			{
+				echo "<br>position: ".$position->name." (".$position->id.")";
+			}
+			echo '<br>';
+			foreach($duplicate->positions->find_all() as $position)
+			{
+				echo "<br>position: ".$position->name." (".$position->id.")";
+		//		$position->sports_id = $this->sports_id;
+		//		$position->is_vestige = 1;
+		//		$position->save();
+			}
+
+			foreach($duplicate->media->find_all() as $media)
+			{
+				echo "<br>media: ".$media->name." (".$media->id.")";
+		//		$media->sports_id = $this->sports_id;
+		//		$media->save();
+			}
+
+		//	$duplicate->name = "_".$duplicate->name;
+		//	$this->female = 1;
+
+		}
+	}
+
 	function addSport($args = array()){
 		extract($args);
 		if (isset($name) && $name != ""){

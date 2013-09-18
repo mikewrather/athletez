@@ -106,7 +106,7 @@ function(require, profileHeaderTemplate, selectSportTemplate) {
         },
         
         selectSport: function(e) {
-            var sport_id = (!e)?$(".sports-h a:first-child").data("id"):$(e.target).data("id");
+            var sport_id = (!e)?$(".sports-h img:first-child").data("id"):$(e.target).data("id");
             //this.select_sport.val();
             $(".sports-icon-h").removeClass('selected-sport-h');
             $(".sports-icon-h[data-id="+sport_id+"]").addClass('selected-sport-h');
