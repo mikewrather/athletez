@@ -7,9 +7,11 @@
 define(['require', 'text!usercontrol/dropdown/template/layout.html', 'facade', 'views', 'utils', 'vendor'], function(require, layoutTemplate) {
 
 	var self, facade = require('facade'), views = require('views'), SectionView = views.SectionView, utils = require('utils'), Channel = utils.lib.Channel, vendor = require('vendor'), Mustache = vendor.Mustache, $ = facade.$;
-	var BaseView = views.BaseView, DropDownView;
+	var BaseView = views.BaseView,Backbone = facade.Backbone, DropDownView, _self;
 	//Models
-	DropDownView = BaseView.extend({
+	
+	
+	DropDownView = Backbone.View.extend({
 
 		template : layoutTemplate,
 		multiple : false,
@@ -36,7 +38,7 @@ define(['require', 'text!usercontrol/dropdown/template/layout.html', 'facade', '
 			else
 				this.setSingleOption(val, e);
 				
-				
+			if(this.callback) this.callback(this.selectedOptions);
 			console.log(this.selectedOptions);	
 				
 		},
@@ -61,6 +63,8 @@ define(['require', 'text!usercontrol/dropdown/template/layout.html', 'facade', '
 				this.$el.find(".common-dropdown li").removeClass('selected');
 				$(e.target).parent().addClass('selected');
 				this.selectedOptions.push(val);
+				this.$el.find(".hidden-input-dropdown-h").val(val);
+				this.hideDropdown();
 			} else {
 				//$(e.target).parent().removeClass('selected');
 				//this.selectedOptions.splice(index, 1);
@@ -81,35 +85,99 @@ define(['require', 'text!usercontrol/dropdown/template/layout.html', 'facade', '
 
 		/*initialize gets called by default when constructor is initialized*/
 		initialize : function(options) {
+			_self = this;
 			console.log("init - ------------------------------->>>>>>");
 			//SectionView.prototype.initialize.call(this, options);
 			self = this;
+			this.selectedOptions = [];
 			self.setOptions(options);
-
 			this.render();
-
+			this.$el.find(".hidden-input-dropdown-h").attr("id", this.elementId)
 		},
 
 		selectDesign : function(e) {
 
 		},
+		
+		hideDropdown: function(e) {
+			if(!e || !this.$el.find($(e.target)).parents(".dropdown-container").length) {
+				this.$el.find(".up-down-arrow-h span").removeClass('icon-chevron-up').addClass('icon-chevron-down');
+				this.$el.find(".common-dropdown").slideUp();
+			}
+		},
 
 		showDropdown : function(e) {
-			if ($(e.target).hasClass('icon-chevron-down')) {
-				$(e.target).removeClass('icon-chevron-down').addClass('icon-chevron-up')
+			e.preventDefault();
+			var self = this;
+			if ($(e.currentTarget).find("span").hasClass('icon-chevron-down')) {
+				$(e.currentTarget).find("span").removeClass('icon-chevron-down').addClass('icon-chevron-up');
+				$("html").bind('click', function(e) {
+					self.hideDropdown(e);
+				});
 			} else {
-				$(e.target).removeClass('icon-chevron-up').addClass('icon-chevron-down')
+				//$("html").unbind('click');
+				$(e.currentTarget).find("span").removeClass('icon-chevron-up').addClass('icon-chevron-down');
 			}
-			$(e.target).parents('.dropdown-container').find('.common-dropdown').slideToggle();
+			$(e.currentTarget).parents('.dropdown-container').find('.common-dropdown').slideToggle();
+		},
+		
+		getRecordId: function() {
+			return this.payload[_self.data.recordId];
+		},
+		
+		defaultSelected: function(val) {
+			console.error(this);
+			if(_self.multiple) {
+				if(_.isArray(_self.selectedValue)) {
+					for(var i in _self.selectedValue) {
+						if(_self.selectedValue[i] == this.payload[_self.data.recordId]) {
+							return "selected";
+						}
+					}
+				}
+			} else {
+				if(_self.selectedValue && _self.selectedValue == this.payload[_self.data.recordId])
+					return "selected";
+			}
+
+		},
+		
+		
+		getRecordValue: function() {
+			return this.payload[_self.data.recordValue];
 		},
 
 		/*render displays the view in browser*/
 		render : function() {
-			var markup = Mustache.to_html(self.template, {});
+			console.log(this.model);
+			this.data.dropView = this;
+			
+			if(!this.selectedValue) {
+				//alert("not defied");
+				if(this.data.records.length)
+					this.selectedValue = this.data.records[0].payload[this.data.recordId];
+			}
+			
+			
+			var self = this, markup = Mustache.to_html(self.template, this.data);
 			$(self.el).html(markup);
+			this.targetView.$el.find(this.destination).html(this.el);
+			this.$el.find(".hidden-input-dropdown-h").val(this.selectedValue);
+			this.selectedOptions.push(this.selectedValue);
+			
+			
+			if($("#"+this.elementId).length) {
+				if(self.callback) self.callback(this.selectedOptions);
+			} else {
+				setTimeout(function() {
+				if(self.callback) self.callback(this.selectedOptions);	
+			}, 200);	
+			}
+
 			return true;
 			//SectionView.prototype.render.call(this);
 		},
+		
 
 		// **Method** `setOptions` - called by BaseView's initialize method
 		setOptions : function(options) {

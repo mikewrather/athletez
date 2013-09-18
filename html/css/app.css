@@ -196,7 +196,7 @@ input[disabled].hasDatepicker, input[readonly].hasDatepicker {
 }
 
 .default-btn {
-	color: #FF0000;	
+	color: rgb(26, 160, 174);	
 }
 
 .default-btn:hover, .default-btn:active {
@@ -204,7 +204,7 @@ input[disabled].hasDatepicker, input[readonly].hasDatepicker {
 }
 
 .validation-btn {
-	color: green;
+	color: rgb(156, 202, 60);
 }
 
 .validation-btn:hover, .validation-btn:active {
@@ -323,7 +323,7 @@ input {
 }
 
 .region-dark {
-	background: brown;
+	background:  rgb(107, 110, 113);
 	color: #FFF;
 	padding: 5px 10px;
 	text-align: center;
@@ -338,6 +338,7 @@ input {
 	display: inline-block;
 	width: 200px;
 	position: absolute;
+	z-index: 1000;
 	
 }
 
@@ -350,8 +351,8 @@ ul.common-dropdown {
 	display: none;
 	clear: both;
 	margin-bottom: 10px;
+	margin-top: 10px;
 }
-
 
 ul.common-dropdown li a {
 	background: none;
@@ -360,6 +361,8 @@ ul.common-dropdown li a {
 	width: 100%;
 }
 
+
+
 ul.common-dropdown li a:hover {
 	text-decoration: none;
 }
@@ -367,7 +370,7 @@ ul.common-dropdown li a:hover {
 ul.common-dropdown li {
 	text-align: center;
 	padding: 3px 0px;
-	margin: 0 5px;
+	margin: 3px 5px;
 }
 
 ul.common-dropdown li.selected a {
@@ -376,7 +379,7 @@ ul.common-dropdown li.selected a {
 
 .drop-down-outer {
 	width: 100%;
-	height: 29px;
+	height: 30px;
 }
 
 .dropdown-header-box {
@@ -386,7 +389,7 @@ ul.common-dropdown li.selected a {
 }
 
 .down-arrow-outer {
-	background: #000000;
+	background: rgb(65, 67, 70);
 	display: inline-block;
 	width: 20%;
 	float: right;
@@ -395,8 +398,71 @@ ul.common-dropdown li.selected a {
 	color: #FFF;
 }
 
+.down-arrow-outer a {
+	display: block;
+	height: 100%;
+}
+
+.down-arrow-outer a span {
+	margin-top: 5px;
+}
+
+ul.common-dropdown li:first-child {
+	margin-top: 10px;
+}
+
+ul.common-dropdown li:last-child {
+	margin-bottom: 10px;
+}
+
 ul.common-dropdown li.selected {
-	background: green;
+	background: #1aa0ae;
+}
+
+.drop-down-main-outer {
+	width: 250px;
+	display: inline-block;
 }
 
 
+#sports-info {
+	margin-bottom: 20px;
+}
+
+/**   Autocomplete css **/
+	
+.ui-autocomplete-input {
+	background: #eaedf1 !important;
+	color: #000000 !important;
+}
+
+
+ul.ui-autocomplete {
+	border: 2px solid #b5b9be;
+	padding: 10px 0 !important;
+	background: rgb(255, 255, 255) !important;
+}
+
+.ui-autocomplete li.ui-menu-item {
+	color: #000 !important;
+	width: auto !important;
+	padding: 0 !important;
+	
+	background: rgb(255, 255, 255) !important;
+}
+
+.ui-autocomplete li.ui-menu-item a {
+	padding: 5px 0 5px 15px !important;
+	border-radius: none;
+}
+
+span.ui-helper-hidden-accessible {
+	display: none;
+}
+
+
+.ui-menu .ui-menu-item a:hover, .ui-state-focus {
+	color: #FFF !important;
+	background: #1AA0AE !important;
+	border: none !important;
+}

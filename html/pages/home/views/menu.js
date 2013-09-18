@@ -21,7 +21,7 @@ define(
 					"click .menu-link-h" : "showMenuDropdown",
 					'click .views-reset-btn-h' : 'resetView',
 					'click .sport-reset-btn-h' : 'resetSport',
-					'click .location-reset-btn-h' : 'resetLocation',
+					'click .location-reset-btn-h' : 'resetLocation'
 					//'change #state-list' : 'stateListChange'
 				},
 				
@@ -149,8 +149,14 @@ define(
 				
 				afterRender: function() {
 					this.hideAllDropdowns();
+					
+					var data = this.model.toJSON();
+					console.error(data.views);
+					
+					
 					/*var DropDown = new DropDownView({
 						name: "Drop Down",
+						data: this.model,
 						destination: '.demo-select'
 					});
 					this.$el.find(".demo-select").html(DropDown.el);*/

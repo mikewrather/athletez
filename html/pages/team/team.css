@@ -62,7 +62,8 @@
 
 .image-list li {
 	width: 25%;
-	height: 165px;
+	height: 230px;
+	max-height: 230px;
 /*	margin-right: 20px;
 	margin-bottom: 20px;*/
 }
@@ -70,6 +71,7 @@
 .image-list li img {
 	width: 95%;
 	height: 92%;
+	height: 220px;
 }
 
 .image-list li.image-board {
