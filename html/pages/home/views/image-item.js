@@ -46,7 +46,6 @@ function (
 			        _enttypes_id : mpay.enttypes_id,
 	                _id : mpay.id
 		        };
-	        console.log(mpay.enttypes_id);
 	        switch(mpay.enttypes_id)
 	        {
 		        case '23': //videos
@@ -82,7 +81,6 @@ function (
 			        break;
 
 	        }
-			console.log(extra);
 	        console.log("Called Image Render",extra);
             var markup = Mustache.to_html(this.template, extra);
             this.$el.html(markup);

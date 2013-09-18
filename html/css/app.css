@@ -173,10 +173,16 @@ input[disabled].hasDatepicker, input[readonly].hasDatepicker {
 	float: left;
 	background: #9cca3c;
 	color: #FFF;
-	font-weight: bold;
+
 	padding: 5px 15px;
 	text-align: center;
 	margin: 25px 0;
+
+    font-family: "Avenir", "HelveticaNeue";
+    font-size:1.0em;
+    font-weight: bolder;
+    text-transform: uppercase;
+
 }
 
 
