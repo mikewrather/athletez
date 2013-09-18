@@ -282,11 +282,11 @@ class Model_Sportorg_Team extends ORM
 	public function name()
 	{
 		$title = "";
-		$title .= $this->getOrg()->name;
+		$title .= ucwords(strtolower($this->getOrg()->name));
 		$title .= " ".$this->complevel->name;
 		$title .= " ".$this->getSport()->name;
 		$title .= " ".$this->season->name;
-		$title .= " ".$this->year;
+		$title .= " ".str_replace("20","'",$this->year);
 		$title .= $this->unique_ident=='' ? '' : ' '.$this->unique_ident;
 		return $title;
 	}

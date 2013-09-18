@@ -333,7 +333,8 @@ class ORM extends Kohana_ORM
 			if(in_array($column_key,$class_settings_arr['exclude_columns'])) continue;
 
 			// add this column's value to the return array
-			$retArr[$column_key] = $this->$column;
+			$retArr[$column_key] = utf8_encode($this->$column);
+		//	$retArr[$column_key] = $this->$column;
 
 			// Allows us to turn off sub-objects when set to false
 			if($settings['get_sub_objects'] === TRUE)
