@@ -73,7 +73,7 @@ function(require, headerTemplate, selectSportTemplate) {
             this.season = new SeasonTeams();
             this.season.id = this.model.get("payload").org_sport_link_obj.orgs_id;
             this.season.sport_id = $("#sports-h").val();
-            this.season.complevel_id = $("#complevels-h").val();
+            this.season.complevel_id = $("#season-h").val();
             
             this.season.fetch();
             $.when(this.season.request).done(function() {
