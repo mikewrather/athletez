@@ -88,7 +88,7 @@ function(require, headerTemplate, selectSportTemplate) {
 					destination: '.team-h',
 					targetView: self,
 					callback: function(result) {
-							self.showAllTeamData();
+						self.showAllTeamData();
 					}
 				});
             });
