@@ -1,20 +1,11 @@
-{{#payload}}
-
-{{#user_picture_obj}}
-
-
-<a href="javascript:L void(0);" class="image-outer-h">
-	<img src="{{user_picture_obj.types.standard_thumb.url}}" alt="{{user_picture_obj.image_title}}"/>
-	<div class="image-detail-view">
-		<h6>{{name}}</h6>
-		<span>Soccer, Mid fielder</span>
-		<span>San {{grad_year}}</span>
-	</div>
-</a>
-
-{{/user_picture_obj}}
-
-{{^user_picture_obj}}
-	<img src="{{image_path}}" alt="{{image_title}}"/>
-{{/user_picture_obj}}
-{{/payload}}
+	<a href="{{_link}}" class="image-outer-h">
+		<img src="{{_thumbnail}}" alt=""/>
+		<div class="action-section">
+			<div class="action-block vote" subject-type-id="{{_enttypes_id}}" subject-id="{{_id}}">V</div>
+			<div class="action-block follow" subject-type-id="{{_enttypes_id}}" subject-id="{{_id}}">F</div>
+		</div>
+		<div class="detail-view {{#_detailclass}}{{_detailclass}}{{/_detailclass}}">
+			<h6>{{_label}}</h6>
+			<span>{{_sublabel}}</span>
+		</div>
+	</a>
