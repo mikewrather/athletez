@@ -99,7 +99,7 @@ define(['require', 'text!usercontrol/dropdown/template/layout.html', 'facade', '
 		
 		hideDropdown: function(e) {
 			if(!e || !this.$el.find($(e.target)).parents(".dropdown-container").length) {
-				this.$el.find(".up-down-arrow-h").removeClass('icon-chevron-up').addClass('icon-chevron-down');
+				this.$el.find(".up-down-arrow-h span").removeClass('icon-chevron-up').addClass('icon-chevron-down');
 				this.$el.find(".common-dropdown").slideUp();
 			}
 		},
@@ -107,16 +107,16 @@ define(['require', 'text!usercontrol/dropdown/template/layout.html', 'facade', '
 		showDropdown : function(e) {
 			e.preventDefault();
 			var self = this;
-			if ($(e.target).hasClass('icon-chevron-down')) {
-				$(e.target).removeClass('icon-chevron-down').addClass('icon-chevron-up');
+			if ($(e.currentTarget).find("span").hasClass('icon-chevron-down')) {
+				$(e.currentTarget).find("span").removeClass('icon-chevron-down').addClass('icon-chevron-up');
 				$("html").bind('click', function(e) {
 					self.hideDropdown(e);
 				});
 			} else {
 				//$("html").unbind('click');
-				$(e.target).removeClass('icon-chevron-up').addClass('icon-chevron-down');
+				$(e.currentTarget).find("span").removeClass('icon-chevron-up').addClass('icon-chevron-down');
 			}
-			$(e.target).parents('.dropdown-container').find('.common-dropdown').slideToggle();
+			$(e.currentTarget).parents('.dropdown-container').find('.common-dropdown').slideToggle();
 		},
 		
 		getRecordId: function() {

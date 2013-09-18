@@ -108,8 +108,6 @@ function(require, headerTemplate, selectSportTemplate) {
             this.complevel.sport_id = $("#sports-h").val();
             this.complevel.fetch();
             $.when(this.complevel.request).done(function() {
-               
-               
                var data = {};
                data.records = self.complevel.toJSON();
                data.recordId = 'complevel_id';
