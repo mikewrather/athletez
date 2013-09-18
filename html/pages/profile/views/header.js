@@ -114,7 +114,7 @@ function(require, profileHeaderTemplate, selectSportTemplate) {
             if(sport_id) {
 	            this.$('.sport-info').stop().slideUp();
 	            this.$('.sport-info-' + sport_id).stop().slideDown();
-	            routing.trigger("showTwmList");
+	            routing.trigger("showTwmList", sport_id);
 	            //Channel('gamesports:select' + sport_id).publish();            
         	}
         }

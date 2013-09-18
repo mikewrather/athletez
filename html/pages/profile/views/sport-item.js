@@ -38,14 +38,14 @@ function (
             this.id = options.model.collection.id;            
             var sport_id = this.model.get('payload')['sport_id'];
             
-            function callback() {
+            function callback(sport_id) {
                 self.initTeamList();
                 Channel('refresh-profilepage').publish(sport_id);
             }
             
             routing.off("showTwmList");
-            routing.on("showTwmList", function() {
-            	callback();
+            routing.on("showTwmList", function(sport_id) {
+            	callback(sport_id);
             });
             
 			//Channel('gamesports:select' + sport_id).subscribe(callback);
