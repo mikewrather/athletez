@@ -140,6 +140,7 @@ function(require, headerTemplate, selectSportTemplate) {
                var DropDown = new DropDownList({
 					data: data,
 					elementId: "sports-h",
+					selectedValue: "77",
 					title: "Sport",
 					destination: '.sports-h',
 					targetView: self,

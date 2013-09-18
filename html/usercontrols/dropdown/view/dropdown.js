@@ -7,9 +7,11 @@
 define(['require', 'text!usercontrol/dropdown/template/layout.html', 'facade', 'views', 'utils', 'vendor'], function(require, layoutTemplate) {
 
 	var self, facade = require('facade'), views = require('views'), SectionView = views.SectionView, utils = require('utils'), Channel = utils.lib.Channel, vendor = require('vendor'), Mustache = vendor.Mustache, $ = facade.$;
-	var BaseView = views.BaseView, DropDownView, _self;
+	var BaseView = views.BaseView,Backbone = facade.Backbone, DropDownView, _self;
 	//Models
-	DropDownView = BaseView.extend({
+	
+	
+	DropDownView = Backbone.View.extend({
 
 		template : layoutTemplate,
 		multiple : false,
@@ -123,6 +125,23 @@ define(['require', 'text!usercontrol/dropdown/template/layout.html', 'facade', '
 			return this.payload[_self.data.recordId];
 		},
 		
+		defaultSelected: function(val) {
+			console.error(this);
+			if(_self.multiple) {
+				if(_.isArray(_self.selectedValue)) {
+					for(var i in _self.selectedValue) {
+						if(_self.selectedValue[i] == this.payload[_self.data.recordId]) {
+							return "selected";
+						}
+					}
+				}
+			} else {
+				if(_self.selectedValue && _self.selectedValue == this.payload[_self.data.recordId])
+					return "selected";
+			}
+
+		},
+		
 		
 		getRecordValue: function() {
 			return this.payload[_self.data.recordValue];
@@ -132,14 +151,20 @@ define(['require', 'text!usercontrol/dropdown/template/layout.html', 'facade', '
 		render : function() {
 			console.log(this.model);
 			this.data.dropView = this;
+			
+			if(!this.selectedValue) {
+				//alert("not defied");
+				if(this.data.records.length)
+					this.selectedValue = this.data.records[0].payload[this.data.recordId];
+			}
+			
+			
 			var self = this, markup = Mustache.to_html(self.template, this.data);
 			$(self.el).html(markup);
 			this.targetView.$el.find(this.destination).html(this.el);
-			var $firstLi = this.$el.find("ul.common-dropdown li:first-child");
-			$firstLi.addClass("selected");
-			var id = $firstLi.find('a').data("id");
-			this.$el.find(".hidden-input-dropdown-h").val(id);
-			this.selectedOptions.push(id);
+			this.$el.find(".hidden-input-dropdown-h").val(this.selectedValue);
+			this.selectedOptions.push(this.selectedValue);
+			
 			
 			if($("#"+this.elementId).length) {
 				if(self.callback) self.callback(this.selectedOptions);
@@ -148,8 +173,6 @@ define(['require', 'text!usercontrol/dropdown/template/layout.html', 'facade', '
 				if(self.callback) self.callback(this.selectedOptions);	
 			}, 200);	
 			}
-			
-							
 
 			return true;
 			//SectionView.prototype.render.call(this);

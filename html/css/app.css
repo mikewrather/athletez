@@ -355,6 +355,8 @@ ul.common-dropdown li a {
 	width: 100%;
 }
 
+
+
 ul.common-dropdown li a:hover {
 	text-decoration: none;
 }
@@ -362,7 +364,7 @@ ul.common-dropdown li a:hover {
 ul.common-dropdown li {
 	text-align: center;
 	padding: 3px 0px;
-	margin: 0 5px;
+	margin: 3px 5px;
 }
 
 ul.common-dropdown li.selected a {
