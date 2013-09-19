@@ -29,14 +29,18 @@ define(['vendor', 'views', 'utils', 'text!media/templates/image-item.html'], fun
 			var mpay = this.model.attributes.payload, extra = {
 				_enttypes_id : mpay.enttypes_id,
 				_id : mpay.id
-			};
-			console.error(mpay);
+				},
+				show_edit = false;
+
 			switch(mpay.enttypes_id) {
 				case '23':
 					//videos
 					extra._thumbnail = mpay.thumbs;
 					extra._label = mpay.media.name;
 					extra._link = "";
+
+					if(mpay.media.hasOwnProperty('is_owner')) show_edit = mpay.media.is_owner;
+
 					break;
 				case '21':
 					//images
@@ -44,6 +48,9 @@ define(['vendor', 'views', 'utils', 'text!media/templates/image-item.html'], fun
 						extra._thumbnail = mpay.types.standard_thumb.url;
 					extra._label = mpay.media_obj.name;
 					extra._link = "";
+
+					if(mpay.media_obj.hasOwnProperty('is_owner')) show_edit = mpay.media_obj.is_owner;
+
 					break;
 				case '1':
 					//users
@@ -52,6 +59,9 @@ define(['vendor', 'views', 'utils', 'text!media/templates/image-item.html'], fun
 					extra._label = mpay.label;
 					extra._sublabel = "Coming Soon";
 					extra._link = "/#profile/" + mpay.id;
+
+					if(mpay.hasOwnProperty('is_owner')) show_edit = mpay.is_owner;
+
 					break;
 				case '8':
 					//games
@@ -67,12 +77,17 @@ define(['vendor', 'views', 'utils', 'text!media/templates/image-item.html'], fun
 						team_str += '</a>';
 						if (i + 1 < mpay.teams.length)
 							team_str += " VS. ";
+
+						if(mpay.hasOwnProperty('is_owner')) show_edit = mpay.is_owner;
+
 					}
 					extra._sublabel = team_str;
 					break;
 
 			}
-			console.log(extra);
+			console.log("Is Owner:",show_edit);
+			extra.show_edit = show_edit==true ? true : undefined;
+
 			console.log("Called Image Render", extra);
 			var markup = Mustache.to_html(this.template, extra);
 			this.$el.html(markup);
@@ -80,7 +95,7 @@ define(['vendor', 'views', 'utils', 'text!media/templates/image-item.html'], fun
 			var game_detail_view_height = '120px', detail_view_height = '92px';
 
 			this.$el.find('.image-outer-h').mouseout(function() {
-				$(this).find('.action-block.vote, .action-block.follow').css({
+				$(this).find('.action-block').css({
 					opacity : 0
 				});
 				$(this).find('.detail-view').css({
@@ -95,7 +110,7 @@ define(['vendor', 'views', 'utils', 'text!media/templates/image-item.html'], fun
 				$(this).find('.detail-view').css({
 					'bottom' : '0px'
 				});
-				$(this).find('.action-block.vote, .action-block.follow').css({
+				$(this).find('.action-block').css({
 					opacity : 90
 				});
 			});

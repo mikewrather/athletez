@@ -252,7 +252,7 @@ li.image img {
     height:30px;
     width:30px;
     margin:8px;
-    display: inline-block;
+    display: block;
     opacity: 0;
     -webkit-transition: opacity .3s;
     -moz-transition: opacity .3s;
@@ -260,22 +260,36 @@ li.image img {
     -ms-transition: opacity .3s;
 
     color: white;
-    font-size: 2.5em;
+    font-size: 2.1em;
     text-align: center;
     padding:5px;
 }
 
-.action-block.vote{
-    display: block;
+.action-block.left-block{
     float:left;
+}
+
+.action-block.right-block{
+    float:right;
+}
+
+.action-block.vote{
     background-color:#33aeab;
 }
 .action-block.follow{
-    display: block;
-    float: right;
     background-color: #9dca3c;
 }
 
+.action-block.edit{
+    background-color:#d36011;
+}
+.action-block.delete{
+    background-color: #4b3ec6;
+}
+
+.action-block span{
+    vertical-align: middle;
+}
 .image-outer-h {
 	position: relative;
 	display: block;
