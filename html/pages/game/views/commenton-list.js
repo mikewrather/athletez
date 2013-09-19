@@ -71,9 +71,19 @@ function(facade,   utils,   BaseCommentListView,       ProfileCommentFormView, S
 		        //listView.render();
 		       // console.log("comment on render executed");
 		    }
-
-	        Channel('profilecommentonform:fetch').subscribe(callback);
-            Channel('profilecommentonlist:refresh').subscribe(callcommentslist);
+			routing.off('profilecommentonform:fetch');
+	        routing.on('profilecommentonform:fetch', function(model) {
+	        	callback(model);
+	        });
+	        
+	        
+	        routing.off('profilecommentonlist:refresh');
+	        routing.on('profilecommentonlist:refresh', function(model) {
+	        	alert("refresh")
+	        	callcommentslist(model);
+	        });
+	        
+           // Channel('profilecommentonlist:refresh').subscribe(callcommentslist);
         }
     });
 

@@ -19,14 +19,14 @@ define([
 	"game/collections/videos",
 	"game/collections/images",
 	"game/collections/comments",
-	"profile/collections/commentson",
+	"game/collections/commentson",
 
 	"game/views/header",
 	"game/views/add-media",
 	"game/views/commenton-list",
 	"sportorg/views/teamroster-list",
 	"game/views/video-list",
-	"game/views/image-list",
+	"profile/views/image-video-list",
 	"game/views/comment-list",
 	"game/views/commenton-list"
 
@@ -46,13 +46,13 @@ define([
 		GameVideoList = require("game/collections/videos"),
 		GameImageList = require("game/collections/images"),
 		GameCommentList = require("game/collections/comments"),
-		GameCommentOnList = require("profile/collections/commentson"),
+		GameCommentOnList = require("game/collections/commentson"),
 		
 		GameHeaderView = require("game/views/header"),
 		GameAddMediaView = require("game/views/add-media"),
 		GameTeamRosterListView = require("sportorg/views/teamroster-list"),
 		GameVideoListView = require("game/views/video-list"),
-		GameImageListView = require("game/views/image-list"),
+		ProfileImageListView = require("profile/views/image-video-list"),
 		GameCommentListView = require("game/views/comment-list"),
 		GameCommentOnListView = require("game/views/commenton-list"),
 		MediaImageModel = require("media/models/image"),
@@ -100,24 +100,22 @@ define([
 			this.addmedia = new GameAddMediaModel();
 			this.addmedia.id = this.id;
 
-			this.teamrosters = new GameTeamRosterList();
-			this.teamrosters.id = this.id;
-			this.teamrosters.fetch();
+			//this.teamrosters = new GameTeamRosterList();
+			//this.teamrosters.id = this.id;
+			//this.teamrosters.fetch();
 
-			this.videos = new GameVideoList();
-			this.videos.id = this.id;
-			this.videos.fetch();
+			//this.videos = new GameVideoList();
+			//this.videos.id = this.id;
+			//this.videos.fetch();
 
-			this.images = new GameImageList();
-			this.images.id = this.id;
-			this.images.fetch();
+			
 
 			//this.comments = new GameCommentList();
 			//this.comments.id = this.id;
 			//this.comments.fetch();
 			
 			//this.commentson = new GameCommentOnList();
-			//this.commentson.id = this.userId;
+			//this.commentson.id = this.id;
 			//this.commentson.fetch();
 		},
 
@@ -130,6 +128,10 @@ define([
 				controller.setupAddMediaView();
 				
 				var subject_type_id = controller.basics.get("payload").enttypes_id;
+				controller.images = new GameImageList();
+				controller.images.id = controller.id;
+				controller.images.fetch();
+				
 				controller.commentson = new GameCommentOnList();
 				controller.commentson.subject_entity_type = subject_type_id;
 				controller.commentson.id = controller.id;
@@ -137,19 +139,23 @@ define([
 				$.when(controller.commentson.request).done(function () {
 					controller.setupCommentsOnListView();
 				});
+				
+				$.when(controller.images.request).done(function () {
+					controller.setupImageListView();
+				});
 			});
 
-			$.when(this.teamrosters.request).done(function () {
-				controller.setupTeamRosterListView();
-			});
+			//$.when(this.teamrosters.request).done(function () {
+			//	controller.setupTeamRosterListView();
+			//});
 
-			$.when(this.videos.request).done(function () {
-				controller.setupVideoListView();
-			});
+			//$.when(this.videos.request).done(function () {
+			//	controller.setupVideoListView();
+			//});
 
-			$.when(this.images.request).done(function () {
-				controller.setupImageListView();
-			});
+			//$.when(this.images.request).done(function () {
+			//	controller.setupImageListView();
+			//});
 
 			//$.when(this.comments.request).done(function () {
 			//	controller.setupCommentListView();
@@ -157,7 +163,7 @@ define([
 			
 			//$.when(this.commentson.request).done(function () {
 			//	controller.setupCommentsOnListView();
-			//})
+			//});
 		},
 		
 		// intialize vote view
@@ -225,16 +231,13 @@ define([
 
 		setupImageListView: function () {
 			var imageListView;
-
-			imageListView = new GameImageListView({
+			imageListView = new ProfileImageListView({
 				collection: this.images,
-				destination: "#image-wrap"
+				destination: "#image-wrap",
+				name: "image list"
 			});
-
 			this.imageListView = imageListView;
-
 			Channel('image-upload-success').subscribe(this.updateImages);
-
 			this.scheme.push(imageListView);
 			this.layout.render();
 		},
