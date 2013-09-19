@@ -68,7 +68,8 @@ define(['vendor', 'views', 'utils', 'text!media/templates/image-item.html'], fun
 				case '8':
 					//games
 					extra._detailclass = "game";
-					extra._thumbnail = mpay.game_picture;
+
+					extra._thumbnail = mpay.game_picture!==null ? mpay.game_picture.types.standard_thumb.url : "http://lorempixel.com/output/sports-q-c-440-440-4.jpg";
 					extra._label = mpay.game_day;
 					extra._link = "/#game/" + mpay.id;
 					var team_str = "", teamLength = mpay.teams.length,
@@ -93,7 +94,6 @@ define(['vendor', 'views', 'utils', 'text!media/templates/image-item.html'], fun
 					break;
 
 			}
-			console.log("Is Owner:",show_edit);
 			extra.show_edit = show_edit==true ? true : undefined;
 
 			console.log("Called Image Render", extra);

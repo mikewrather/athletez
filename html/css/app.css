@@ -229,17 +229,15 @@ ul li.image{
 }
 
 div.image-item-container{
-
     width:220px;
     height: 220px;
     overflow: hidden;
 }
 
-li.image img {
+div.image-item-container img{
     position: absolute;
-    min-width: 100%;
-    min-height: 100%;
-    max-width: 1000%;
+    min-width: 220px;
+    min-height: 220px;
 }
 
 .action-section{
@@ -294,7 +292,6 @@ li.image img {
 	position: relative;
 	display: block;
 	overflow: hidden;
-	
 }
 
 .detail-view{

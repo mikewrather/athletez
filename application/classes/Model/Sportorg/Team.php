@@ -89,7 +89,9 @@ class Model_Sportorg_Team extends ORM
 
 	public function getSport()
 	{
-		return $this->org_sport_link->sport;
+
+		return ($this->org_sport_link->sport);
+
 	}
 
 	public function addTeam($post_values = array()){
