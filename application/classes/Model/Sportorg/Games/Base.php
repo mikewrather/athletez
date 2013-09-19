@@ -182,17 +182,6 @@ class Model_Sportorg_Games_Base extends ORM
 		return 0;
 	}
 
-	public function get_game_level()
-	{
-		$teams = $this->teams->find_all();
-		foreach($teams as $team)
-		{
-			return $team->complevel->name;
-		}
-		return null;
-	}
-
-
 
 	public function get_game_teams(){
 		return $this->getTeams()->result;
@@ -239,26 +228,25 @@ class Model_Sportorg_Games_Base extends ORM
 
 	public function getTeams(){
 		$teams_arr = null;
-		$teams = $this->teams;
+		$team_link = DB::select()->from('games_teams_link')
+			->join('teams','LEFT')->on('games_teams_link.teams_id','=','teams.id')
+			->where('games_id','=',$this->id);
 
 		//the results need to filter the results from deleted table
 		$classes_arr = array(
-			'Sportorg_Team' => 'sportorg_team',
+			'Sportorg_Team' => 'teams.id',
+			'Sportorg_Games_Teamslink' => 'games_teams_link.id'
 		);
-		$teams = ORM::_sql_exclude_deleted($classes_arr, $teams);
-		$teams = $teams->find_all();
-		foreach($teams as $team){
-
-			$new_obj = new stdClass();
-			$teamBasicInfo = $team->getBasics();
-	/*		$new_obj->id = $teamBasicInfo['id'];
-			$new_obj->team_name = $teamBasicInfo['team_name'];
-			$new_obj->team_location = $teamBasicInfo['team_location'];
-			$new_obj->points_scored = $team->getTeamPointsScore($this->id); */
-			$teams_arr[] = $teamBasicInfo;
-			unset($new_obj);
+		$teams = ORM::_sql_exclude_deleted_abstract($classes_arr, $team_link);
+		$teams = $teams->execute();
+		foreach($teams as $team_link)
+		{
+			$team = ORM::factory('Sportorg_Team',$team_link['teams_id']);
+			if($team->loaded()) $teams_arr[] = array_merge($team->getBasics(),array(
+				'points_scored'=>$team_link['points_scored'],
+				'isWinner' => $team_link['isWinner'] == 1 ? true : false
+			));
 		}
-
 		$result_obj = new stdClass();
 		$result_obj->result = $teams_arr;
 		return $result_obj;
