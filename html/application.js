@@ -392,6 +392,7 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
             Channel('load:css').publish([base_url + "css/bootstrap.css", 
                 base_url + "css/bootstrap-responsive.css",
                 base_url + "css/app.css",
+                base_url + "css/common.css",
                 base_url + 'css/jquery-ui-1.10.2.custom.css']);
         },
 

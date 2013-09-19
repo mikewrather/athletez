@@ -108,7 +108,7 @@ function(require, commentFormTemplate,    ProfileCommentFormModel,        BaseCo
 	                self.collection.push(model);
 	                console.log("latest collectionsx", self.collection);
 	                self.refreshComments();
-	                Channel('profilecommentonlist:refresh').publish(self.collection);
+	                routing.on('profilecommentonlist:refresh', self.collection);
                 };
 	            saveInfo.save();
             }

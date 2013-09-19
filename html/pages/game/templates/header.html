@@ -1,12 +1,32 @@
 
 {{#payload}}
 <div class="row-fluid">
-    <div class="span4 textcenter">
+	
+	
+	<div class="game-heading">
+		<!--div class="sports-h"></div-->
+           {{#game_picture}}
+        		<img src="{{game_picture}}" alt="{{game_name}}" />
+        	{{/game_picture}}
+            <h3 class="username">{{game_name}} '{{grad_year}}</h3>
+            <h4>{{game_location}}</h4>
+            <ul>
+            {{#teams}}
+				<li>
+                Team Name:{{team_name}} - Location:{{team_location}} - Points scored:{{points_scored}}
+				</li>
+            {{/teams}}
+			</ul>
+    </div>
+	
+	
+    <!--div class="span4 textcenter">
         {{#game_picture}}
         <img src="{{game_picture}}" alt="{{game_name}}" />
         {{/game_picture}}
-    </div>
-    <div class="span8" style="border: 1px solid red;">
+    </div-->
+    
+    <!--div class="span8" style="border: 1px solid red;">
         <div>
             <h3 class="gametitle">Game Name:{{game_name}}</h3>
             Date: {{game_day}} {{game_time}}<br/>
@@ -20,10 +40,10 @@
             {{/teams}}
 			</ul>
         </div>
-    </div>
+    </div-->
 </div>
-<form action="#" method="post">
+<!--form action="#" method="post">
     <input type="hidden" name="action" value="vote"/>
     <input type="submit" name="submit" value="Vote"/>
-</form>
+</form-->
 {{/payload}}

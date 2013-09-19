@@ -1,0 +1,17 @@
+.game-heading {
+	background: #9cca3c;
+	color: #000;
+	padding: 10px 10px 0 10px;
+}
+
+.game-heading h3 {
+	font-weight: bold;
+	font-size: 50px;
+	line-height: 30px;
+}
+
+.game-heading h4 {
+	font-weight: bold;
+	font-size: 30px;
+	line-height: 38px;
+}
