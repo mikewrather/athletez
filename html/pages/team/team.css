@@ -55,10 +55,6 @@
 	float: left;
 }
 
-.image-list {
-	margin: 0 25px;
-}
-
 .comment-box {
 	margin-left: 5%;
 	float: left;
@@ -70,23 +66,10 @@
 	padding: 5px 20px
 }
 
-.image-list li {
-	width: 25%;
-	height: 230px;
-	max-height: 230px;
-/*	margin-right: 20px;
-	margin-bottom: 20px;*/
-}
 
-.image-list li img {
-	width: 95%;
-	height: 92%;
-	height: 220px;
-}
 
 .image-list li.image-board {
-	width: 0;
-	height: 0;
+	display: none;
 }
 
 

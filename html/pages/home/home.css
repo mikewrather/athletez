@@ -61,15 +61,6 @@ li.sport:hover {
 	float: left; width: 100%;
 }
 
-li.image {
-	margin:0 15px 15px 0;
-}
-
-li.image img {
-	width: 220px;
-	height: 220px
-}
-
 img.tiny-sport-icon{
     max-width: 20px;
     max-height: 20px;
