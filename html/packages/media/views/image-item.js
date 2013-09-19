@@ -71,12 +71,20 @@ define(['vendor', 'views', 'utils', 'text!media/templates/image-item.html'], fun
 					extra._thumbnail = mpay.game_picture;
 					extra._label = mpay.game_day;
 					extra._link = "/#game/" + mpay.id;
-					var team_str = "", teamLength = mpay.teams.length;
-					
+					var team_str = "", teamLength = mpay.teams.length,
+						ucwords = function(str)
+						{
+							str = str.toLowerCase();
+							return str.replace(/(^([a-zA-Z\p{M}]))|([ -][a-zA-Z\p{M}])/g,
+								function($1){
+									return $1.toUpperCase();
+								});
+						}
 					for (var i = 0; i < teamLength; i++) {
-						team_str += '<a href="/#team/' + mpay.id + '">';
-						team_str += mpay.teams[i].team_name;
-						team_str += '</a>';
+						team_str += '<span>';
+
+						team_str += ucwords(mpay.teams[i].team_name);
+						team_str += '</span>';
 						if (i + 1 < mpay.teams.length)
 							team_str += " VS. ";
 					}

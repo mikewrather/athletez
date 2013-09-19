@@ -310,8 +310,15 @@ li.image img {
     -ms-transition: bottom .3s linear;
 
     background: rgba(157, 202, 60, .75);
-    width: 100%;
+    width: 220px;
     color: white;
+    text-wrap: normal;
+    text-overflow: ellipsis;
+}
+
+.detail-view a{
+    text-overflow: ellipsis;
+    word-wrap: break-word;
 }
 .detail-view.game {
     bottom: -120px;
@@ -326,9 +333,6 @@ li.image img {
 
 .detail-view.game span.team{
 
-}
-.detail-view.game span.team:after{
-    content: ' VS. ';
 }
 
 .detail-view.game span.team:last-child:after{
