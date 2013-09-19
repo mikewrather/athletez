@@ -146,12 +146,53 @@ class Model_Sportorg_Games_Base extends ORM
 			"game_time" => 'format_game_time', //"09:00 AM",
 			"game_picture" => 'getPrimaryImage',
 			"teams" => 'get_game_teams',
-			"game_location" => 'get_game_location'
+			"game_location" => 'get_game_location',
+			"shared" => 'get_shared_info'
 		),
 
 		// array of values only.  Each value is the name of a column to exclude
 		'exclude_columns' => array(),
 	);
+
+	public function get_game_sports_id()
+	{
+		$teams = $this->teams->find_all();
+		foreach($teams as $team)
+		{
+			$sport = $team->getSport();
+			return $sport->id;
+		}
+		return 0;
+	}
+
+	public function get_shared_info()
+	{
+		$retArr = array();
+		$teams = $this->teams->find_all();
+		foreach($teams as $team)
+		{
+			$sport = $team->getSport();
+			$retArr['sports_id'] = $sport->id;
+			$retArr['sport'] = $sport->name;
+			$retArr['complevel'] = $team->complevel->name;
+			$season = $team->season;
+			$retArr['season'] = $season->name." ".str_replace('20',"'",$team->year);
+			return $retArr;
+		}
+		return 0;
+	}
+
+	public function get_game_level()
+	{
+		$teams = $this->teams->find_all();
+		foreach($teams as $team)
+		{
+			return $team->complevel->name;
+		}
+		return null;
+	}
+
+
 
 	public function get_game_teams(){
 		return $this->getTeams()->result;
@@ -166,7 +207,7 @@ class Model_Sportorg_Games_Base extends ORM
 	}
 
 	public function format_game_day(){
-		return Util::format_date($this->gameDay);
+		return date('n.d.y',strtotime($this->gameDay));
 	}
 
 	public function format_game_time(){
@@ -207,13 +248,14 @@ class Model_Sportorg_Games_Base extends ORM
 		$teams = ORM::_sql_exclude_deleted($classes_arr, $teams);
 		$teams = $teams->find_all();
 		foreach($teams as $team){
+
 			$new_obj = new stdClass();
 			$teamBasicInfo = $team->getBasics();
-			$new_obj->id = $teamBasicInfo['id'];
+	/*		$new_obj->id = $teamBasicInfo['id'];
 			$new_obj->team_name = $teamBasicInfo['team_name'];
 			$new_obj->team_location = $teamBasicInfo['team_location'];
-			$new_obj->points_scored = $team->getTeamPointsScore($this->id);
-			$teams_arr[] = $new_obj;
+			$new_obj->points_scored = $team->getTeamPointsScore($this->id); */
+			$teams_arr[] = $teamBasicInfo;
 			unset($new_obj);
 		}
 

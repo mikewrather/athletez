@@ -178,7 +178,7 @@ input[disabled].hasDatepicker, input[readonly].hasDatepicker {
 	text-align: center;
 	margin: 25px 0;
 
-    font-family: "Avenir HelveticaNeue";
+    font-family: "Avenir", "HelveticaNeue", "Helvetica";
     font-size:1.0em;
     font-weight: bolder;
     text-transform: uppercase;
@@ -604,10 +604,6 @@ margin-right: 100px;
 	float: left;
 }
 
-.image-list {
-	margin: 0 25px;
-}
-
 .comment-box {
 	margin-left: 5%;
 	float: left;
@@ -618,26 +614,6 @@ margin-right: 100px;
 	width: 70%;
 	padding: 5px 20px
 }
-
-.image-list li {
-	width: 25%;
-	height: 230px;
-	max-height: 230px;
-/*	margin-right: 20px;
-	margin-bottom: 20px;*/
-}
-
-.image-list li img {
-	width: 95%;
-	height: 92%;
-	height: 220px;
-}
-
-.image-list li.image-board {
-	width: 0;
-	height: 0;
-}
-
 
 
 .comment-box span {

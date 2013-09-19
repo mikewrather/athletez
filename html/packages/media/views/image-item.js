@@ -17,7 +17,9 @@ define(['vendor', 'views', 'utils', 'text!media/templates/image-item.html'], fun
 		 events: {
             "click": "changeImage",
 			"click .vote": "vote",
-	        "click .follow": "follow"
+	        "click .follow": "follow",
+			"click .edit": "edit",
+			"click .delete": "delete"
         },
 
 		initialize : function(options) {
@@ -77,10 +79,8 @@ define(['vendor', 'views', 'utils', 'text!media/templates/image-item.html'], fun
 						team_str += '</a>';
 						if (i + 1 < mpay.teams.length)
 							team_str += " VS. ";
-
-						if(mpay.hasOwnProperty('is_owner')) show_edit = mpay.is_owner;
-
 					}
+					if(mpay.hasOwnProperty('is_owner')) show_edit = mpay.is_owner;
 					extra._sublabel = team_str;
 					break;
 
@@ -122,8 +122,12 @@ define(['vendor', 'views', 'utils', 'text!media/templates/image-item.html'], fun
 			//this.$el.html(markup);
 			//return this;
 		},
-		
-		 vote: function(e)
+
+		/**
+		 * This entire block of functions here should call methods from the model so that it can be centralized
+		 */
+
+		vote: function(e)
 	    {
 		    e.preventDefault();
 		    console.log(this.model);
@@ -133,8 +137,17 @@ define(['vendor', 'views', 'utils', 'text!media/templates/image-item.html'], fun
 		    e.preventDefault();
 		    console.log(e.target);
 	    },
-	    
-	    
+
+		edit: function(e)
+		{
+			e.preventDefault();
+		},
+
+		delete: function(e)
+		{
+			e.preventDefault();
+		}
+
 	});
 
 	return ImageItemView;
