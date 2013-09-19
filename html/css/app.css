@@ -317,15 +317,16 @@ input {
 }
 
 .region-light {
-	background: grey;
+	background:#B5B9BE;
 	color: #FFF;
 	padding: 5px 10px;
 }
 
 .region-dark {
-	background:  rgb(107, 110, 113);
+	background:#6b6e71;
 	color: #FFF;
 	padding: 5px 10px;
+	font-size: 1.125em;
 	text-align: center;
 }
 
@@ -401,6 +402,7 @@ ul.common-dropdown li.selected a {
 .down-arrow-outer a {
 	display: block;
 	height: 100%;
+	font-family: "HelveticaNeue Medium";
 }
 
 .down-arrow-outer a span {
