@@ -105,6 +105,8 @@ define(["require",
 					},
 					handleDeferreds : function() {
 						var controller = this;
+						
+						
 						controller.setupSelectTypeView();
 						
 						function registerBasicFinal(attrs) {

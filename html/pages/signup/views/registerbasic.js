@@ -35,9 +35,18 @@ define([
         		next: function(event){
         			event.preventDefault();
         			
-        			
+        			//backbone.validation.bind(this);
         			var fields = this.$(":input").serializeArray();
-                	
+                    var flag= true;
+                	$.each(fields, function( index, value ) {
+                       if(!value.value){
+                        alert(value.name +" is blank");
+                        flag = false;
+                        return false;
+                       }
+                      
+                    });
+                   if(flag)
                    Channel('register-basic-final').publish(fields);
                 	           
 

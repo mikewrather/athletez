@@ -200,8 +200,9 @@ class Model_Media_Image extends ORM
 
 	public function saveCrop($args,$user)
 	{
+		
 		$request = Request::factory($args['image_url']);
-
+		
 		$request->client()->options(array(
 			CURLOPT_SSL_VERIFYHOST => 0,
 			CURLOPT_SSL_VERIFYPEER => 0

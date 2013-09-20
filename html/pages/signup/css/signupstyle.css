@@ -31,7 +31,7 @@
 		}
 		#regpanefinal{
 			width: 382px;
-			overflow: hidden;
+			//overflow: hidden;
 			position: relative;
 			padding: 10px;
 			height: auto;
@@ -48,7 +48,7 @@
 			margin: 0 auto;
 		}
 		#mainregfinal{
-			width: 538px;
+			width: 673px;
 			position: relative;
 			background-color: white;
 			margin: 0 auto;
@@ -224,3 +224,14 @@
 			background-color: white;
 			margin: 0 auto;
    		}
+
+   		.fbimage {
+   			 float:left;
+    		 margin-right: 4px;
+   			 /* width:150px; */
+		}
+		.picture-buttons {
+    		clear:both;
+		}
+		/* .fbimagecontainer img { display:none; } */
+			.fbimagecontainer jrac_viewport img {display:block}
