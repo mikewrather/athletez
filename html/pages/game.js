@@ -127,17 +127,40 @@ define([
 				controller.initVoteView();
 				controller.setupAddMediaView();
 				
-				var subject_type_id = controller.basics.get("payload").enttypes_id;
+				var data = controller.basics.get("payload"), subject_type_id = data.enttypes_id;
 				controller.images = new GameImageList();
 				controller.images.id = controller.id;
 				controller.images.fetch();
+				
+				
+				var teams = data.teams, teamLength = teams.length, i = 0, teamRoster = [];
+				var team_id = teams[0].id;
+				
+				controller.teamrosters = new GameTeamRosterList();
+				controller.teamrosters.id = team_id;
+				controller.teamrosters.fetch();
+				
+				//for(i = 0; i < teamLength; i++) {
+				//	teamRoster[i] = new GameTeamRosterList();
+				//	teamRoster[i].id = teams[i].id;
+				//	teamRoster[i].fetch();
+				//	$.when(teamRoster[i].request).done(function () {
+				//		console.log(teamRoster[i]);
+				//		controller.setupTeamRosterListView(teamRoster[i]);
+				//	});
+				//}
 				
 				controller.commentson = new GameCommentOnList();
 				controller.commentson.subject_entity_type = subject_type_id;
 				controller.commentson.id = controller.id;
 				controller.commentson.fetch();
+				
 				$.when(controller.commentson.request).done(function () {
 					controller.setupCommentsOnListView();
+				});
+				
+				$.when(controller.teamrosters.request).done(function () {
+					controller.setupTeamRosterListView();
 				});
 				
 				$.when(controller.images.request).done(function () {
@@ -207,7 +230,6 @@ define([
 
 		setupTeamRosterListView: function () {
 			var teamRosterListView;
-
 			teamRosterListView = new GameTeamRosterListView({
 				collection: this.teamrosters,
 				destination: "#roster-wrap"

@@ -15,3 +15,23 @@
 	font-size: 30px;
 	line-height: 38px;
 }
+
+ul.game-teams li {
+	width: 100%;
+	display: inline-block;
+}
+
+.game-info-outer {
+	margin: 20px 0;
+}
+
+.pointed-score {
+	width: 5%;
+	display: inline-block;
+}
+
+.game-team-info {
+	width: 90%;
+	margin-left: 2%;
+	display: inline-block;
+}

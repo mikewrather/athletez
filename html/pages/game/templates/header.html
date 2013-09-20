@@ -5,20 +5,32 @@
 	
 	<div class="game-heading">
 		<!--div class="sports-h"></div-->
-           {{#game_picture}}
-        		<img src="{{game_picture}}" alt="{{game_name}}" />
-        	{{/game_picture}}
-            <h3 class="username">{{game_name}} '{{grad_year}}</h3>
-            <h4>{{game_location}}</h4>
-            <ul>
-            {{#teams}}
-				<li>
-                Team Name:{{team_name}} - Location:{{team_location}} - Points scored:{{points_scored}}
-				</li>
-            {{/teams}}
-			</ul>
+            <h4 class="username">{{game_name}} '{{grad_year}}</h3>
+            <h3>{{gameDay}}</h3>
+            <a href="javascript: void(0)" class="edit-game-h" title="Edit game">Edit Game</a>
     </div>
-	
+		
+		
+		<div class="row-fluid game-info-outer">
+			<div class="span4 textcenter">
+	        	{{#game_picture.types.standard_thumb.url}}
+	        		<img src="{{game_picture.types.standard_thumb.url}}" alt="{{game_name}}" />
+	        	{{/game_picture.types.standard_thumb.url}}
+	    	</div>
+			<ul class="game-teams">
+	            {{#teams}}
+					<li>
+						<div class="pointed-score">
+							{{points_scored}}
+						</div>
+	                	<div class="game-team-info">
+	                		<h3>{{team_name}}</h3>
+		                	<p>{{team_location}}</p>
+	                	</div>
+					</li>
+	            {{/teams}}
+			</ul>
+		</div>
 	
     <!--div class="span4 textcenter">
         {{#game_picture}}

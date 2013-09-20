@@ -16,8 +16,8 @@ function(facade, SportorgTeamRosterList, utils) {
         
         url: function() {
             if (testpath)
-                return testpath + '/game/teamrosters/' + this.id;
-            return '/api/game/teamrosters/' + this.id;
+                return testpath + '/team/roster/' + this.id;
+            return '/api/team/roster/' + this.id;
         }
 
     });
