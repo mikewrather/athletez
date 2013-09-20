@@ -279,8 +279,24 @@ class Model_Sportorg_Games_Base extends ORM
 
 	public function getSearch($args = array()){
 		extract($args);
+		$this->distinct(true);
 		$this->join('games_teams_link')->on('games_teams_link.games_id', '=', 'sportorg_games_base.id');
 		$this->join('teams')->on('games_teams_link.teams_id', '=', 'teams.id');
+
+		$enttype_id = Model_Site_Enttype::getMyEntTypeID($this);
+		$game_votes = DB::select(array(DB::expr('COUNT(id)'),'num_votes'))
+			->from('votes')
+			->where('subject_enttypes_id','=',$enttype_id)
+			->where('subject_id','=',DB::expr('`sportorg_games_base`.`id`'));
+
+		$followers = DB::select(array(DB::expr('COUNT(id)'),'num_followers'))
+			->from('followers')
+			->where('subject_enttypes_id','=',$enttype_id)
+			->where('subject_id','=',DB::expr('`sportorg_games_base`.`id`'));
+
+		$this->select(array($game_votes,'num_votes'),array($followers,'num_followers'));
+
+
 		if (isset($teams_id)){
 			$this->where('teams.id', '=', $teams_id);
 		}
@@ -301,24 +317,16 @@ class Model_Sportorg_Games_Base extends ORM
 //			$this->where('teams.complevels_id', '=', $complevels_id);
 //		}
 
-		if (!isset($orderby) || $orderby == 'postTime'){
+		if (!isset($orderby) || $orderby == 'postTime')
+		{
 			$this->order_by('gameDay', 'desc');
-		}else if ($orderby == 'votes'){
-			$enttype_id = Model_Site_Enttype::getMyEntTypeID($this);
-			$game_votes = DB::select(array(DB::expr('COUNT(id)'),'num_votes'))
-				->select(array('subject_id', 'games_id'))
-				->from('votes')
-				->where('subject_enttypes_id','=',$enttype_id);
-
-			$this->join(array($game_votes, 'game_votes'), 'left')->on('game_votes.games_id', '=', 'sportorg_games_base.id');
+		}
+		else if ($orderby == 'votes')
+		{
 			$this->order_by('num_votes', 'desc');
-		}else if ($orderby == 'followers'){
-			$enttype_id = Model_Site_Enttype::getMyEntTypeID($this);
-			$followers = DB::select(array(DB::expr('COUNT(id)'),'num_followers'))
-				->select(array('subject_id', 'games_id'))
-				->from('followers')
-				->where('subject_enttypes_id','=',$enttype_id);
-			$this->join(array($followers,'followers'), 'LEFT')->on('followers.games_id', '=', 'sportorg_games_base.id');
+		}
+		else if ($orderby == 'followers')
+		{
 			$this->order_by('num_followers', 'desc');
 		}
 

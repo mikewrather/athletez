@@ -504,31 +504,50 @@ span.ui-helper-hidden-accessible {
 	border: none !important;
 }
 
-/*** Commeny section css  **/
+/**
+####################################  START COMMENTS ###########################################
+**/
 
 
 .bubble{
-		position: relative; left: 90px; margin-top:5px;
-		background: #fff; border: solid 0; background-color: rgb(229, 229, 229); 
-		width: 90%; min-height: 65px;
-		-webkit-border-radius: 15px; -moz-border-radius: 15px; border-radius: 15px;
-	}
+    position: relative; left: 100px; margin-top:5px;
+    background: #fff; border: solid 0; background-color: rgb(229, 229, 229);
+    width: 86%; min-height: 65px;
+    -webkit-border-radius: 15px; -moz-border-radius: 15px; border-radius: 15px;
+}
 
-	.bubble .content{
-		position: relative;
-		padding:10px;
-		z-index:1;
-	}
+.bubble .content{
+    font-family: "HelveticaNeue","Helvetica";
+    position: relative;
+    padding:10px;
+    z-index:1;
+}
 
-	.pointer{
-		content: "";
-		position: absolute; bottom:16px; left:-40px;
-		display: block; width: 0; z-index: 0;    
-		border-color: transparent rgb(229, 229, 229); border-style: solid; border-width: 18px 77px 18px 0;
-		-webkit-transform: rotate(-25deg); -ms-transform: rotate(-25deg); transform: rotate(-25deg);
-	}
-	
-	
+.bubble .content span.comment-date{
+    font-family: inherit;
+    font-weight: bold;
+    color:#818181;
+    font-size: .9em;
+    display: block;
+}
+
+.bubble .content p.comment-text{
+    font-family: inherit;
+    font-weight: normal;
+    font-size: 1.1em;
+    padding:4px;
+}
+
+.pointer{
+    content: "";
+    position: absolute;
+    bottom:16px; left:-40px;
+    display: block; width: 0; z-index: 0;
+    border-color: transparent rgb(229, 229, 229); border-style: solid; border-width: 18px 77px 18px 0;
+    -webkit-transform: rotate(-25deg); -ms-transform: rotate(-25deg); transform: rotate(-25deg);
+}
+
+
 	.see-more-h {
 	float: right;
 margin-right: 100px;
@@ -536,8 +555,30 @@ margin-right: 100px;
 
 #comment_div {
 	text-align: right;
-margin-right: 100px;
+    margin-right: 100px;
 }
+
+.comment-outer-h {
+    /*	max-height: 400px;
+        height: auto;
+        overflow-y: auto;
+        overflow-x: hidden; */
+}
+
+.comment .user-photo {
+    width:55px;
+    height: 55px;
+}
+
+.comment .user-photo img {
+    width:100% !important;
+    height: 100%;
+    margin-top:30px !important;
+}
+
+/**
+####################################  END COMMENTS ###########################################
+**/
 
 #complevel-list, #sport-list {
 	display: inline-block;
@@ -582,7 +623,7 @@ margin-right: 100px;
 
 #main {
 /*	background: #e0e0e0;*/
-
+    padding-bottom: 150px;
 }
 
 .profile-pic-outer {
@@ -694,15 +735,6 @@ margin-right: 100px;
 	z-index: 3;
 	left: -155px;
 }
-
-
-.comment-outer-h {
-/*	max-height: 400px;
-	height: auto;
-	overflow-y: auto;
-	overflow-x: hidden; */
-}
-
 
 @keyframes blink {  
     0% { background: #000; }
