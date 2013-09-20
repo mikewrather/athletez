@@ -230,11 +230,11 @@ define([
 
 		setupTeamRosterListView: function () {
 			var teamRosterListView;
-			teamRosterListView = new GameTeamRosterListView({
+			teamRosterListView = new ProfileImageListView({
 				collection: this.teamrosters,
+				name: "roster images",
 				destination: "#roster-wrap"
 			});
-
 			this.scheme.push(teamRosterListView);
 			this.layout.render();
 		},
@@ -255,8 +255,8 @@ define([
 			var imageListView;
 			imageListView = new ProfileImageListView({
 				collection: this.images,
-				destination: "#image-wrap",
-				name: "image list"
+				name: "image list",
+				destination: "#image-wrap"
 			});
 			this.imageListView = imageListView;
 			Channel('image-upload-success').subscribe(this.updateImages);

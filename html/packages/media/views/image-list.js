@@ -44,6 +44,10 @@ function(facade,  views,   utils,   ImageItemView,            ImageBoardView,   
        },
 
         initialize: function(options) {
+        	if(options.name)
+        		this.name = options.name;
+        	else
+        		this.name = "image list";
         	//alert("sdfsdf");
 			// render template
 			this.renderTemplate();
@@ -60,7 +64,7 @@ function(facade,  views,   utils,   ImageItemView,            ImageBoardView,   
             
             _.bindAll(this);
             this.addSubscribers();
-            this.setupBoardView();
+           this.setupBoardView();
         	this.setupAddView();
         },
         
@@ -114,7 +118,7 @@ function(facade,  views,   utils,   ImageItemView,            ImageBoardView,   
 	    filterWithImageType: function(type) {
 		    var c = this.collection;
 			$.each(c.models, function(i, field){
-				field.selectImageType(type);
+				if(field.selectImageType) field.selectImageType(type);
 		    });
 		    return c;
 		},

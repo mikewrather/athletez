@@ -151,7 +151,7 @@ define(['vendor', 'views', 'utils', 'text!media/templates/image-item.html'], fun
 			e.preventDefault();
 		},
 
-		delete: function(e)
+		'delete': function(e)
 		{
 			e.preventDefault();
 		}
