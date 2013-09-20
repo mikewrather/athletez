@@ -146,12 +146,42 @@ class Model_Sportorg_Games_Base extends ORM
 			"game_time" => 'format_game_time', //"09:00 AM",
 			"game_picture" => 'getPrimaryImage',
 			"teams" => 'get_game_teams',
-			"game_location" => 'get_game_location'
+			"game_location" => 'get_game_location',
+			"shared" => 'get_shared_info'
 		),
 
 		// array of values only.  Each value is the name of a column to exclude
 		'exclude_columns' => array(),
 	);
+
+	public function get_game_sports_id()
+	{
+		$teams = $this->teams->find_all();
+		foreach($teams as $team)
+		{
+			$sport = $team->getSport();
+			return $sport->id;
+		}
+		return 0;
+	}
+
+	public function get_shared_info()
+	{
+		$retArr = array();
+		$teams = $this->teams->find_all();
+		foreach($teams as $team)
+		{
+			$sport = $team->getSport();
+			$retArr['sports_id'] = $sport->id;
+			$retArr['sport'] = $sport->name;
+			$retArr['complevel'] = $team->complevel->name;
+			$season = $team->season;
+			$retArr['season'] = $season->name." ".str_replace('20',"'",$team->year);
+			return $retArr;
+		}
+		return 0;
+	}
+
 
 	public function get_game_teams(){
 		return $this->getTeams()->result;
@@ -166,7 +196,7 @@ class Model_Sportorg_Games_Base extends ORM
 	}
 
 	public function format_game_day(){
-		return Util::format_date($this->gameDay);
+		return date('n.d.y',strtotime($this->gameDay));
 	}
 
 	public function format_game_time(){
@@ -198,25 +228,25 @@ class Model_Sportorg_Games_Base extends ORM
 
 	public function getTeams(){
 		$teams_arr = null;
-		$teams = $this->teams;
+		$team_link = DB::select()->from('games_teams_link')
+			->join('teams','LEFT')->on('games_teams_link.teams_id','=','teams.id')
+			->where('games_id','=',$this->id);
 
 		//the results need to filter the results from deleted table
 		$classes_arr = array(
-			'Sportorg_Team' => 'sportorg_team',
+			'Sportorg_Team' => 'teams.id',
+			'Sportorg_Games_Teamslink' => 'games_teams_link.id'
 		);
-		$teams = ORM::_sql_exclude_deleted($classes_arr, $teams);
-		$teams = $teams->find_all();
-		foreach($teams as $team){
-			$new_obj = new stdClass();
-			$teamBasicInfo = $team->getBasics();
-			$new_obj->id = $teamBasicInfo['id'];
-			$new_obj->team_name = $teamBasicInfo['team_name'];
-			$new_obj->team_location = $teamBasicInfo['team_location'];
-			$new_obj->points_scored = $team->getTeamPointsScore($this->id);
-			$teams_arr[] = $new_obj;
-			unset($new_obj);
+		$teams = ORM::_sql_exclude_deleted_abstract($classes_arr, $team_link);
+		$teams = $teams->execute();
+		foreach($teams as $team_link)
+		{
+			$team = ORM::factory('Sportorg_Team',$team_link['teams_id']);
+			if($team->loaded()) $teams_arr[] = array_merge($team->getBasics(),array(
+				'points_scored'=>$team_link['points_scored'],
+				'isWinner' => $team_link['isWinner'] == 1 ? true : false
+			));
 		}
-
 		$result_obj = new stdClass();
 		$result_obj->result = $teams_arr;
 		return $result_obj;
@@ -249,8 +279,24 @@ class Model_Sportorg_Games_Base extends ORM
 
 	public function getSearch($args = array()){
 		extract($args);
+		$this->distinct(true);
 		$this->join('games_teams_link')->on('games_teams_link.games_id', '=', 'sportorg_games_base.id');
 		$this->join('teams')->on('games_teams_link.teams_id', '=', 'teams.id');
+
+		$enttype_id = Model_Site_Enttype::getMyEntTypeID($this);
+		$game_votes = DB::select(array(DB::expr('COUNT(id)'),'num_votes'))
+			->from('votes')
+			->where('subject_enttypes_id','=',$enttype_id)
+			->where('subject_id','=',DB::expr('`sportorg_games_base`.`id`'));
+
+		$followers = DB::select(array(DB::expr('COUNT(id)'),'num_followers'))
+			->from('followers')
+			->where('subject_enttypes_id','=',$enttype_id)
+			->where('subject_id','=',DB::expr('`sportorg_games_base`.`id`'));
+
+		$this->select(array($game_votes,'num_votes'),array($followers,'num_followers'));
+
+
 		if (isset($teams_id)){
 			$this->where('teams.id', '=', $teams_id);
 		}
@@ -271,24 +317,16 @@ class Model_Sportorg_Games_Base extends ORM
 //			$this->where('teams.complevels_id', '=', $complevels_id);
 //		}
 
-		if (!isset($orderby) || $orderby == 'postTime'){
+		if (!isset($orderby) || $orderby == 'postTime')
+		{
 			$this->order_by('gameDay', 'desc');
-		}else if ($orderby == 'votes'){
-			$enttype_id = Model_Site_Enttype::getMyEntTypeID($this);
-			$game_votes = DB::select(array(DB::expr('COUNT(id)'),'num_votes'))
-				->select(array('subject_id', 'games_id'))
-				->from('votes')
-				->where('subject_enttypes_id','=',$enttype_id);
-
-			$this->join(array($game_votes, 'game_votes'), 'left')->on('game_votes.games_id', '=', 'sportorg_games_base.id');
+		}
+		else if ($orderby == 'votes')
+		{
 			$this->order_by('num_votes', 'desc');
-		}else if ($orderby == 'followers'){
-			$enttype_id = Model_Site_Enttype::getMyEntTypeID($this);
-			$followers = DB::select(array(DB::expr('COUNT(id)'),'num_followers'))
-				->select(array('subject_id', 'games_id'))
-				->from('followers')
-				->where('subject_enttypes_id','=',$enttype_id);
-			$this->join(array($followers,'followers'), 'LEFT')->on('followers.games_id', '=', 'sportorg_games_base.id');
+		}
+		else if ($orderby == 'followers')
+		{
 			$this->order_by('num_followers', 'desc');
 		}
 

@@ -178,7 +178,7 @@ input[disabled].hasDatepicker, input[readonly].hasDatepicker {
 	text-align: center;
 	margin: 25px 0;
 
-    font-family: "Avenir HelveticaNeue";
+    font-family: "Avenir", "HelveticaNeue", "Helvetica";
     font-size:1.0em;
     font-weight: bolder;
     text-transform: uppercase;
@@ -222,6 +222,24 @@ input[disabled].hasDatepicker, input[readonly].hasDatepicker {
 
 /***** Image Styles *****/
 
+ul li.image{
+    padding:10px;
+    /*	margin-right: 20px;
+        margin-bottom: 20px;*/
+}
+
+div.image-item-container{
+    width:220px;
+    height: 220px;
+    overflow: hidden;
+}
+
+div.image-item-container img{
+    position: absolute;
+    min-width: 220px;
+    min-height: 220px;
+}
+
 .action-section{
     width:100%;
     position:absolute;
@@ -232,7 +250,7 @@ input[disabled].hasDatepicker, input[readonly].hasDatepicker {
     height:30px;
     width:30px;
     margin:8px;
-    display: inline-block;
+    display: block;
     opacity: 0;
     -webkit-transition: opacity .3s;
     -moz-transition: opacity .3s;
@@ -240,27 +258,40 @@ input[disabled].hasDatepicker, input[readonly].hasDatepicker {
     -ms-transition: opacity .3s;
 
     color: white;
-    font-size: 2.5em;
+    font-size: 2.1em;
     text-align: center;
     padding:5px;
 }
 
-.action-block.vote{
-    display: block;
+.action-block.left-block{
     float:left;
+}
+
+.action-block.right-block{
+    float:right;
+}
+
+.action-block.vote{
     background-color:#33aeab;
 }
 .action-block.follow{
-    display: block;
-    float: right;
     background-color: #9dca3c;
 }
 
+.action-block.edit{
+    background-color:#d36011;
+}
+.action-block.delete{
+    background-color: #4b3ec6;
+}
+
+.action-block span{
+    vertical-align: middle;
+}
 .image-outer-h {
 	position: relative;
 	display: block;
 	overflow: hidden;
-	
 }
 
 .detail-view{
@@ -276,8 +307,15 @@ input[disabled].hasDatepicker, input[readonly].hasDatepicker {
     -ms-transition: bottom .3s linear;
 
     background: rgba(157, 202, 60, .75);
-    width: 100%;
+    width: 220px;
     color: white;
+    text-wrap: normal;
+    text-overflow: ellipsis;
+}
+
+.detail-view a{
+    text-overflow: ellipsis;
+    word-wrap: break-word;
 }
 .detail-view.game {
     bottom: -120px;
@@ -292,9 +330,6 @@ input[disabled].hasDatepicker, input[readonly].hasDatepicker {
 
 .detail-view.game span.team{
 
-}
-.detail-view.game span.team:after{
-    content: ' VS. ';
 }
 
 .detail-view.game span.team:last-child:after{
@@ -469,31 +504,50 @@ span.ui-helper-hidden-accessible {
 	border: none !important;
 }
 
-/*** Commeny section css  **/
+/**
+####################################  START COMMENTS ###########################################
+**/
 
 
 .bubble{
-		position: relative; left: 90px; margin-top:5px;
-		background: #fff; border: solid 0; background-color: rgb(229, 229, 229); 
-		width: 90%; min-height: 65px;
-		-webkit-border-radius: 15px; -moz-border-radius: 15px; border-radius: 15px;
-	}
+    position: relative; left: 100px; margin-top:5px;
+    background: #fff; border: solid 0; background-color: rgb(229, 229, 229);
+    width: 86%; min-height: 65px;
+    -webkit-border-radius: 15px; -moz-border-radius: 15px; border-radius: 15px;
+}
 
-	.bubble .content{
-		position: relative;
-		padding:10px;
-		z-index:1;
-	}
+.bubble .content{
+    font-family: "HelveticaNeue","Helvetica";
+    position: relative;
+    padding:10px;
+    z-index:1;
+}
 
-	.pointer{
-		content: "";
-		position: absolute; bottom:16px; left:-40px;
-		display: block; width: 0; z-index: 0;    
-		border-color: transparent rgb(229, 229, 229); border-style: solid; border-width: 18px 77px 18px 0;
-		-webkit-transform: rotate(-25deg); -ms-transform: rotate(-25deg); transform: rotate(-25deg);
-	}
-	
-	
+.bubble .content span.comment-date{
+    font-family: inherit;
+    font-weight: bold;
+    color:#818181;
+    font-size: .9em;
+    display: block;
+}
+
+.bubble .content p.comment-text{
+    font-family: inherit;
+    font-weight: normal;
+    font-size: 1.1em;
+    padding:4px;
+}
+
+.pointer{
+    content: "";
+    position: absolute;
+    bottom:16px; left:-40px;
+    display: block; width: 0; z-index: 0;
+    border-color: transparent rgb(229, 229, 229); border-style: solid; border-width: 18px 77px 18px 0;
+    -webkit-transform: rotate(-25deg); -ms-transform: rotate(-25deg); transform: rotate(-25deg);
+}
+
+
 	.see-more-h {
 	float: right;
 margin-right: 100px;
@@ -501,8 +555,30 @@ margin-right: 100px;
 
 #comment_div {
 	text-align: right;
-margin-right: 100px;
+    margin-right: 100px;
 }
+
+.comment-outer-h {
+    /*	max-height: 400px;
+        height: auto;
+        overflow-y: auto;
+        overflow-x: hidden; */
+}
+
+.comment .user-photo {
+    width:55px;
+    height: 55px;
+}
+
+.comment .user-photo img {
+    width:100% !important;
+    height: 100%;
+    margin-top:30px !important;
+}
+
+/**
+####################################  END COMMENTS ###########################################
+**/
 
 #complevel-list, #sport-list {
 	display: inline-block;
@@ -547,7 +623,7 @@ margin-right: 100px;
 
 #main {
 /*	background: #e0e0e0;*/
-
+    padding-bottom: 150px;
 }
 
 .profile-pic-outer {
@@ -570,10 +646,6 @@ margin-right: 100px;
 	float: left;
 }
 
-.image-list {
-	margin: 0 25px;
-}
-
 .comment-box {
 	margin-left: 5%;
 	float: left;
@@ -584,26 +656,6 @@ margin-right: 100px;
 	width: 70%;
 	padding: 5px 20px
 }
-
-.image-list li {
-	width: 25%;
-	height: 230px;
-	max-height: 230px;
-/*	margin-right: 20px;
-	margin-bottom: 20px;*/
-}
-
-.image-list li img {
-	width: 95%;
-	height: 92%;
-	height: 220px;
-}
-
-.image-list li.image-board {
-	width: 0;
-	height: 0;
-}
-
 
 
 .comment-box span {
@@ -682,15 +734,6 @@ margin-right: 100px;
 	z-index: 3;
 	left: -155px;
 }
-
-
-.comment-outer-h {
-/*	max-height: 400px;
-	height: auto;
-	overflow-y: auto;
-	overflow-x: hidden; */
-}
-
 
 @keyframes blink {  
     0% { background: #000; }

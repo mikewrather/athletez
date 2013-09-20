@@ -284,6 +284,9 @@ class ORM extends Kohana_ORM
 	 */
 	public function getBasics($settings = array())
 	{
+		//get the current user for later use
+		$logged_user = Auth::instance()->get_user();
+
 		// Pulls the standard settings for this class
 		$class_settings_arr = is_object($this->get_basics_obj) ? $this->get_basics_obj->getSettings() : $this->populate_get_basics_obj()->getSettings();
 
@@ -331,6 +334,9 @@ class ORM extends Kohana_ORM
 		// if these vars are set it means the settings calls for it to be returned, so add them to return array
 		if(isset($has_voted)) $retArr['has_voted'] = $has_voted;
 		if(isset($is_following)) $retArr['is_following'] = $is_following;
+
+		//check to see if the logged user is the owner of this object
+		if($logged_user) $retArr['is_owner'] = (method_exists($this,'is_owner')) ? $this->is_owner($logged_user) : false;
 
 		// Loop through all columns
 		foreach($this->table_columns() as $column=>$column_meta)
