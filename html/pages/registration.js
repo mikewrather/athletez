@@ -3,7 +3,8 @@
 // module as controller for 'registration' package
 // Returns {RegistrationController} constructor
 
-define(["require", "text!registration/templates/layout.html", "facade", "controller", "models", "views", "utils", "registration/models/select_type", "registration/models/register_facebook", "registration/models/register_email", "registration/models/upload_image", "registration/models/select_org", "registration/views/select_type", "registration/views/register_facebook", "registration/views/register_email", "registration/views/upload_image", "registration/views/select_org"], function(require, pageLayoutTemplate) {
+define(["require", "text!registration/templates/layout.html", "facade", "controller", "models", "views", "utils", "registration/models/select_type", "registration/models/register_facebook", "registration/models/register_email", "registration/models/upload_image", "registration/models/select_org", "registration/views/select_type", "registration/views/register_facebook", "registration/views/register_email", "registration/views/upload_image", "registration/views/select_org"], 
+	function(require, pageLayoutTemplate) {
 
 	var RegistrationController, facade = require("facade"), Controller = require("controller"), models = require("models"), views = require("views"), utils = require("utils"), RegistrationSelectTypeModel = require("registration/models/select_type"), RegistrationFacebookModel = require("registration/models/register_facebook"), RegistrationEmailModel = require("registration/models/register_email"), RegistrationUploadImageModel = require("registration/models/upload_image"), RegistrationSelectOrgModel = require("registration/models/select_org"), RegistrationSelectTypeView = require("registration/views/select_type"), RegistrationFacebookView = require("registration/views/register_facebook"), RegistrationEmailView = require("registration/views/register_email"), RegistrationUploadImageView = require("registration/views/upload_image"), RegistrationSelectOrgView = require("registration/views/select_org"), LayoutView = views.LayoutView, $ = facade.$, _ = facade._, debug = utils.debug, Channel = utils.lib.Channel, cssArr = ["/pages/registration/registration.css", "/css/style.jrac.css"];
 
@@ -23,6 +24,7 @@ define(["require", "text!registration/templates/layout.html", "facade", "control
 
 		init : function() {
 			this.setupLayout().render();
+			
 			this.refreshPage();
 			this.createData();
 			this.handleDeferreds();
@@ -34,7 +36,7 @@ define(["require", "text!registration/templates/layout.html", "facade", "control
 
 		handleDeferreds : function() {
 			var controller = this;
-
+			
 			controller.setupSelectTypeView();
 
 			function registerWithFacebook() {
@@ -133,6 +135,7 @@ define(["require", "text!registration/templates/layout.html", "facade", "control
 		},
 
 		initRegisterEmail : function() {
+			
 			var controller = this;
 			this.refreshPage();
 			this.register_email = new RegistrationEmailModel();

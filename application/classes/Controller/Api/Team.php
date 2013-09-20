@@ -163,6 +163,10 @@
 			{
 				$arguments["searchtext"] = trim($this->request->query('searchtext'));
 			}
+			elseif(trim($this->request->query('team_name')) != "")
+			{
+				$arguments["searchtext"] = trim($this->request->query('team_name'));
+			}
 
 			// zipcode
 			// This will search the location of the team's ORG

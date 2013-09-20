@@ -40,7 +40,7 @@ define([
     "team/views/image-list",
     "team/views/comment-list",
     "media/models/image",
-    "sportorg/views/org-list",
+    "sportorg/views/team-list",
     "profile/views/fans-image-list"
     
     ], function (require, pageLayoutTemplate, voteView) {
@@ -67,7 +67,7 @@ define([
 		TeamCommentOnList = require("team/collections/commentson"),
         TeamHeaderView = require("team/views/header"),
         TeamAddMediaView = require("team/views/add-media"),
-        TeamOrgListView = require("sportorg/views/org-list"),
+        TeamOrgListView = require("sportorg/views/team-list"),
         TeamScheduleListView = require("sportorg/views/schedule-list"),
         TeamCompetitorTeamListView = require("sportorg/views/competitorteam-list"),
         TeamRosterListView = require("sportorg/views/roster-list"),
@@ -163,9 +163,8 @@ define([
                // controller.videos.complevel_id = complevel_id;
                // controller.videos.season_id = season_id;
               //  controller.videos.fetch();
-                
                 controller.games = new TeamOrgList();
-				controller.games.id = season_id;
+				controller.games.id = team_id;
 				controller.games.sport_id = sport_id;
 				controller.games.fetch();
                 
@@ -265,8 +264,10 @@ define([
             var position;
             
             if (this.commentOnListView) {
-                $(this.commentOnListView.destination).html('');
+            	this.commentOnListView.unbind().remove();
+                $(this.commentOnListView.destination).unbind().html('');
                 position = $.inArray(this.commentOnListView, this.scheme);
+                
                 if ( ~position ) this.scheme.splice(position, 1);
             }
             

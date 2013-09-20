@@ -26,7 +26,7 @@ function (
 
         id: 'main',
 
-        className: 'container-fluid clearfix',
+        className: 'clear clearfix',
         
         initialize: function (options) {
             this.template = MainTemplate;

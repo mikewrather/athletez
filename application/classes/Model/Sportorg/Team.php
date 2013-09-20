@@ -89,7 +89,9 @@ class Model_Sportorg_Team extends ORM
 
 	public function getSport()
 	{
-		return $this->org_sport_link->sport;
+
+		return ($this->org_sport_link->sport);
+
 	}
 
 	public function addTeam($post_values = array()){
@@ -282,11 +284,11 @@ class Model_Sportorg_Team extends ORM
 	public function name()
 	{
 		$title = "";
-		$title .= $this->getOrg()->name;
+		$title .= ucwords(strtolower($this->getOrg()->name));
 		$title .= " ".$this->complevel->name;
 		$title .= " ".$this->getSport()->name;
 		$title .= " ".$this->season->name;
-		$title .= " ".$this->year;
+		$title .= " ".str_replace("20","'",$this->year);
 		$title .= $this->unique_ident=='' ? '' : ' '.$this->unique_ident;
 		return $title;
 	}
@@ -422,7 +424,7 @@ class Model_Sportorg_Team extends ORM
 		}
 
 		$search = ORM::_sql_exclude_deleted($classes_arr, $this);
-		//print_r($search->find_all());
+		$search->limit(10);
 		return $search;
 	}
 	

@@ -223,9 +223,10 @@ textarea {
 
 body {
   margin: 0;
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-  font-size: 14px;
+  font-family: "HelveticaNeue", Helvetica, Arial, sans-serif;
+  font-size: 16px;
   line-height: 20px;
+  font-weight: normal;
   color: #333333;
   background-color: #ffffff;
 }

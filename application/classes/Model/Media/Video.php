@@ -484,12 +484,15 @@ class Model_Media_Video extends ORM
 		$enttypes_id = Ent::getMyEntTypeID($class_name);
 		extract($condition);
 
+		$video_types = DB::select(DB::expr('COUNT(id)'))->from('video_type_link')->where('videos_id','=','videos.id');
+
 		$video = DB::select('videos.id', 'media.sports_id')
 			->from('tags')
 			->join('media')->on('media.id', '=', 'tags.media_id')
 			->where('media.media_type', '=', 'video')
 			->join('videos')->on('videos.media_id', '=', 'media.id')
-			->and_where('tags.subject_enttypes_id', '=', $enttypes_id);
+			->and_where('tags.subject_enttypes_id', '=', $enttypes_id)
+			->and_where($video_types,'>',0);
 		if (isset($sports_id)){
 			$video->where('media.sports_id', '=', $sports_id);
 		}

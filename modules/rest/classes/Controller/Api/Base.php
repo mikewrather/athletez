@@ -883,6 +883,7 @@ class Controller_Api_Base extends AuthController
 		$valid_object_types = array(
 			"Model_User_Base",
 			"Model_Sportorg_Team",
+			"Model_Sportorg_Games_Base"
 		);
 
 		if($this->mainModel->loaded() && !in_array(get_class($this->mainModel),$valid_object_types))

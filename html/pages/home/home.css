@@ -52,3 +52,18 @@ li.sport:hover {
 	background-color : #FEFEFE;
 	margin : 0 15px 0 0;
 }
+
+#image-list, #menu {
+	margin: 20px 0;
+}
+
+#menu {
+	float: left; width: 100%;
+}
+
+img.tiny-sport-icon{
+    max-width: 20px;
+    max-height: 20px;
+    margin-right:4px;
+
+}

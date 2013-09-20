@@ -1,29 +1,47 @@
 
 {{#payload}}
 <div class="row-fluid">
-    <div class="span4 textcenter">
-        {{#game_picture}}
-        <img src="{{game_picture}}" alt="{{game_name}}" />
-        {{/game_picture}}
+
+	<div class="game-heading">
+		<!--div class="sports-h"></div-->
+		<div class="game-general">
+			<div class="stretch"></div>
+			{{#shared.sport}}<span>{{shared.sport}}</span>{{/shared.sport}}
+			{{#shared.complevel}}<span>{{shared.complevel}}</span>{{/shared.complevel}}
+			{{#shared.season}}<span>{{shared.season}}</span>{{/shared.season}}
+
+		</div>
+        <h3>{{game_day}}</h3>
+
     </div>
-    <div class="span8" style="border: 1px solid red;">
-        <div>
-            <h3 class="gametitle">Game Name:{{game_name}}</h3>
-            Date: {{game_day}} {{game_time}}<br/>
-            Location: {{game_location}}<br/>
-            Teams: <br/>
-			<ul>
-            {{#teams}}
-				<li style="margin-top: 5px; background: #a9a9a9;">
-                Team Name:{{team_name}} - Location:{{team_location}} - Points scored:{{points_scored}}
-				</li>
-            {{/teams}}
-			</ul>
-        </div>
-    </div>
+
+	{{#game_picture}}
+		<div class="header-image-container image-outer-h">
+			<div class="image-item-container">
+				<img src="{{game_picture.types.standard_thumb.url}}" alt="{{game_name}}" />
+			</div>
+		</div>
+	{{/game_picture}}
+
+	<ul class="teams-list">
+		{{#teams}}
+		<li class="team-item">
+			<div class='score-box {{#isWinner}}win{{/isWinner}}'>
+				<span>{{points_scored}}</span>
+			</div>
+			<div class="org-info">
+				<span class="org-name">
+					{{org_sport_link_obj.org.org_name}}
+				</span>
+				<span class="org-location">
+					{{team_location}}
+				</span>
+			</div>
+		</li>
+		{{/teams}}
+	</ul>
+
+
 </div>
-<form action="#" method="post">
-    <input type="hidden" name="action" value="vote"/>
-    <input type="submit" name="submit" value="Vote"/>
-</form>
+
 {{/payload}}

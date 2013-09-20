@@ -28,9 +28,7 @@ function (
         className: "state",
         
         // Event handlers...
-        events: {
-            "click": "changeState"
-        },
+       
         
         initialize: function (options) {
             this.template = stateItemTemplate;
@@ -43,7 +41,7 @@ function (
         },
         
         changeState: function() {
-        	debug.log(this.model);
+        	console.log(this.model);
             Channel('stateChanged:' + this.model.collection.cid).publish(this.model);
         }        
         
