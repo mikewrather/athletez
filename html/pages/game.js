@@ -133,12 +133,34 @@ define([
 				controller.images.fetch();
 				
 				
-				var teams = data.teams, teamLength = teams.length, i = 0, teamRoster = [];
-				var team_id = teams[0].id;
+				if(!_.isUndefined(data.teams) && data.teams) {
+					console.error(data.teams);
+					var teams = data.teams, teamLength = teams.length, i = 0, teamRoster = [];
+					var team_id = teams[0].id;
+					
+					
+					controller.teamrosters = new GameTeamRosterList();
+					controller.teamrosters.id = team_id;
+					controller.teamrosters.fetch();
+					
+					
+					var team_id_second = (!_.isUndefined(teams[1]))?teams[1].id:0;
+					controller.teamrostersSecond = new GameTeamRosterList();
+					controller.teamrostersSecond.id = team_id_second;
+					controller.teamrostersSecond.fetch();
+					
+					$.when(controller.teamrosters.request).done(function () {
+						$(".team-one-h").html(teams[0].team_name).show();
+						controller.setupTeamRosterListView();
+					});
+					
+					$.when(controller.teamrostersSecond.request).done(function () {
+						$(".team-second-h").html(teams[1].team_name).show();
+						controller.setupTeamRosterSecondListView();
+					});
 				
-				controller.teamrosters = new GameTeamRosterList();
-				controller.teamrosters.id = team_id;
-				controller.teamrosters.fetch();
+				
+				}
 				
 				//for(i = 0; i < teamLength; i++) {
 				//	teamRoster[i] = new GameTeamRosterList();
@@ -159,9 +181,8 @@ define([
 					controller.setupCommentsOnListView();
 				});
 				
-				$.when(controller.teamrosters.request).done(function () {
-					controller.setupTeamRosterListView();
-				});
+				
+				
 				
 				$.when(controller.images.request).done(function () {
 					controller.setupImageListView();
@@ -234,6 +255,17 @@ define([
 				collection: this.teamrosters,
 				name: "roster images",
 				destination: "#roster-wrap"
+			});
+			this.scheme.push(teamRosterListView);
+			this.layout.render();
+		},
+		
+		setupTeamRosterSecondListView: function () {
+			var teamRosterListView;
+			teamRosterListView = new ProfileImageListView({
+				collection: this.teamrostersSecond,
+				name: "roster roster second images",
+				destination: "#roster-second-wrap"
 			});
 			this.scheme.push(teamRosterListView);
 			this.layout.render();
