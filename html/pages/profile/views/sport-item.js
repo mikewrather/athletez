@@ -38,19 +38,25 @@ function (
             this.id = options.model.collection.id;            
             var sport_id = this.model.get('payload')['sport_id'];
             
-            function callback() {
+            function callback(sport_id) {
                 self.initTeamList();
                 Channel('refresh-profilepage').publish(sport_id);
             }
-            Channel('gamesports:select' + sport_id).subscribe(callback);
+            
+            routing.off("showTwmList");
+            routing.on("showTwmList", function(sport_id) {
+            	callback(sport_id);
+            });
+            
+			//Channel('gamesports:select' + sport_id).subscribe(callback);
         },
         
         initTeamList: function() {
-            var self = this;
+            var self = this, sport_id = $(".sports-h a.selected-sport-h").data("id");
             
             this.teams = new TeamList();
             this.teams.id = this.id;
-            this.teams.sport_id = this.model.get('payload')['sport_id'];
+            this.teams.sport_id = sport_id;
             this.teams.fetch();
             $.when(this.teams.request).done(function() {
                 self.setupTeamListView();
@@ -58,13 +64,18 @@ function (
         },
         
         setupTeamListView: function() {
-            var self = this,
-                teamListView = new TeamListView({
-                    collection: this.teams
-                });
+        	console.error(this.teams.toJSON());
+        	var data = {};
+        	data.records = this.teams.toJSON();
+        	 var markup = Mustache.to_html(this.template, data);
+            this.$el.html(markup);
+           // var self = this,
+            //    teamListView = new TeamListView({
+             //       collection: this.teams
+              //  });
             
-            self.$el.find('.teams-info').html(teamListView.el);
-            teamListView.render();                        
+            //self.$el.find('.teams-info').html(teamListView.el);
+            //teamListView.render();                        
         },
 
         render: function () {

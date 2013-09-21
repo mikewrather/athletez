@@ -34,8 +34,6 @@ function(require, commentFormTemplate,    ProfileCommentFormModel,        BaseCo
             if (!this.collection) {
                 throw new Error("ProfileCommentOnFormView expected options.collection.");
             }
-            console.log("-------------------------->>");
-            console.log(this.collection.toJSON());
             
             if (!this.model) {
 	            console.log("this.collection.id =", this.collection.id);
@@ -110,7 +108,7 @@ function(require, commentFormTemplate,    ProfileCommentFormModel,        BaseCo
 	                self.collection.push(model);
 	                console.log("latest collectionsx", self.collection);
 	                self.refreshComments();
-	                Channel('profilecommentonlist:refresh').publish(self.collection);
+	                routing.on('profilecommentonlist:refresh', self.collection);
                 };
 	            saveInfo.save();
             }

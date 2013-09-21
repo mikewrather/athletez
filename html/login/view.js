@@ -13,7 +13,7 @@ define([
 				console.log($(this.el));
 				//console.log(this.template(this));
 				$(this.el).html(this.template(this));
-				$("#main-content").html($(this.el).html());
+				$("#main").html($(this.el).html());
 			},
 			initialize: function(){
 				

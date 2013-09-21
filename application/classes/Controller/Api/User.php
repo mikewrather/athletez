@@ -360,7 +360,7 @@
 				$arguments["states_id"] = trim($this->request->query('states_id'));
 			}
 
-			$legal_orderby = array('votes', 'followers', 'regist_time');
+			$legal_orderby = array('votes', 'followers', 'newest');
 			// orderby
 			// Default will be to order by votes.
 
@@ -370,7 +370,7 @@
 				if (!in_array($arguments["orderby"], $legal_orderby)){
 					$error_array = array(
 						"error" => "Invalid order by column",
-						"desc" => "Currently only support 'votes', 'followers', 'regist_time'"
+						"desc" => "Currently only support 'votes', 'followers', 'newest'"
 					);
 					$this->modelNotSetError($error_array);
 				}

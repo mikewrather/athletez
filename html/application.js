@@ -2,10 +2,9 @@
 // --------------  
 // Requires define
 // Return {Object} App
-define( ["facade", "utils", "collections", "chrome", "controller", "profile", "imageup",'home','videopreview',
- "game", "team", "registration","profilesetting","userresume","packages/site/collections/phrases","usercontrols/tag/tag","usercontrols/addgame/addgame","login/model","login/view"],
+define( ["facade", "utils", "collections", "chrome", "controller", "profile", "imageup",'home','videopreview',"game", "team", "registration","profilesetting","userresume","packages/site/collections/phrases","usercontrols/tag/tag","usercontrols/addgame/addgame","login/model","login/view",'signup'],
 function (facade, utils, collections, chromeBootstrap, Controller, ProfileController, ImageController, HomeController, VideoPreviewController,
-	GameController, TeamController, RegistrationController, ProfileSetting,UserResume, SitePhraseList , TagController,AddGameController,loginModel, loginView ) {
+	GameController, TeamController, RegistrationController,ProfileSetting,UserResume, SitePhraseList , TagController,AddGameController,loginModel, loginView, SignupController) {
 
 
     //App;
@@ -58,6 +57,7 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
             'tag': 'showTag',
 			'user/login' : 'showLogin',
 			'addgame' : 'showAddGame',
+            'user/create':'showUsercreate'
         },
 
         initialize: function (options) {
@@ -290,9 +290,7 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
              this.initialiRoutesInit(initGame);
             //Channel('app-inited').subscribe(initGame);
         },
-        
-       
-        
+
         showRegistration: function() {
         	this.cancelAjaxRequests();
             this.loadStyles();
@@ -343,17 +341,58 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
         
 		// route to login template
 		showLogin: function(){
-		 $('#main-content').empty();
-		 var mod = new loginModel();
+		 //$('#main-content').empty();
+		   $('body').empty();
+            chromeBootstrap();
+         var mod = new loginModel();
 		 var logview = new loginView({
 					model:mod
 				});
 		},
+        // route to registratiom
+        showUsercreate: function(){
+            
+            this.cancelAjaxRequests();
+            this.loadStyles();
+            
+            $('body').empty();
+            chromeBootstrap();
+
+            function initSignup() {
+               
+                var registrationController = new RegistrationController({
+                    "route": ""
+                });
+               var signupController = new SignupController({
+                    "route": ""
+                });
+            }
+            initSignup();
+            //this.initialiRoutesInit(initSignup);
+
+        },
+
+        showRegistration: function() {
+            this.cancelAjaxRequests();
+            this.loadStyles();
+            
+            $('body').empty();
+            chromeBootstrap();
+            
+            function initRegistration() {
+                var registrationController = new RegistrationController({
+                    "route": ""
+                })
+            }
+            this.initialiRoutesInit(initRegistration);
+            //Channel('app-inited').subscribe(initRegistration);
+        },
         // load style sheets
         loadStyles: function () {
             Channel('load:css').publish([base_url + "css/bootstrap.css", 
                 base_url + "css/bootstrap-responsive.css",
                 base_url + "css/app.css",
+                base_url + "css/common.css",
                 base_url + 'css/jquery-ui-1.10.2.custom.css']);
         },
 

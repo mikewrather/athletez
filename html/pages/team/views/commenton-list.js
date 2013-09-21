@@ -1,8 +1,8 @@
 // The CommentOn List
 // --------------
 
-define(['facade', 'utils', 'site/views/comment-list', 'profile/views/commenton-form', 'site/collections/comments'],
-function(facade,   utils,   BaseCommentListView,       ProfileCommentFormView, SiteCommentList) {
+define(['facade', 'utils', 'site/views/comment-list', 'team/views/commenton-form', 'site/collections/comments'],
+function(facade,   utils,   BaseCommentListView,       TeamCommentFormView, SiteCommentList) {
 
     var TeamCommentOnListView, _ = facade._,
         Channel = utils.lib.Channel;
@@ -28,12 +28,15 @@ function(facade,   utils,   BaseCommentListView,       ProfileCommentFormView, S
 			this.collection.reset();
 			this.collection = new_collectoin;
 		},
+		
+		
 
         setupFormView: function () {
             var listView = this,
-	            formView = new ProfileCommentFormView({collection: this.collection}),
+	            formView = new TeamCommentFormView({collection: this.collection}),
+                
                 renderAddView = this.addChildView(formView);
-
+				
 	        //this.childViews.form = formView;
             this.callbacks.add(function() {
                 renderAddView();
@@ -71,9 +74,15 @@ function(facade,   utils,   BaseCommentListView,       ProfileCommentFormView, S
 		        //listView.render();
 		       // console.log("comment on render executed");
 		    }
-
-	        Channel('profilecommentonform:fetch').subscribe(callback);
-            Channel('profilecommentonlist:refresh').subscribe(callcommentslist);
+			
+			routing.off('profilecommentonform:fetch');
+	        routing.on('profilecommentonform:fetch', function(data) {
+	        	callback(data);
+	        });
+	        routing.off('profilecommentonlist:refresh');
+	        routing.on('profilecommentonlist:refresh', function(data) {
+	        	callcommentslist(data);
+	        });
         }
     });
 

@@ -260,5 +260,30 @@ class Model_Location_Base extends ORM
 		$games_model->limit($limit);
 		return $games_model;
 	}
+
+	public function search($args)
+	{
+		extract($args);
+
+		$loc_search = DB::select('id',array('full_address','name'),array(DB::expr('"locations_id"'),'result_type'),array(DB::expr('"Location_Base"'),'class'))->from('locations')->limit(3);
+		$city_search = DB::select('cities.id',array(DB::expr("CONCAT(`cities`.`name`,', ',`states`.`name`)"),'name'),array(DB::expr('"cities_id"'),'result_type'),array(DB::expr('"Location_City"'),'class'))
+			->from('cities')
+			->join('states','LEFT')
+				->on('cities.states_id','=','states.id')
+			->limit(6);
+		$state_search = DB::select('id','name',array(DB::expr('"states_id"'),'result_type'),array(DB::expr('"Location_State"'),'class'))->from('states');
+
+		if(isset($search_text))
+		{
+			$loc_search->where('full_address','LIKE',"%$search_text%");
+			$city_search->where('cities.name','LIKE',"$search_text%")
+				->or_where(DB::expr("CONCAT(`cities`.`name`,', ',`states`.`name`)"),'LIKE',"$search_text%");
+			$state_search->where('states.name','LIKE',"$search_text%");
+		}
+
+		$final = DB::select()->from(array($loc_search->union($city_search,TRUE)->union($state_search,TRUE),'final'))->limit(10);
+		return $final;
+
+	}
 	
 }

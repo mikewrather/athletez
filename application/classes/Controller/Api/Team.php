@@ -163,6 +163,10 @@
 			{
 				$arguments["searchtext"] = trim($this->request->query('searchtext'));
 			}
+			elseif(trim($this->request->query('team_name')) != "")
+			{
+				$arguments["searchtext"] = trim($this->request->query('team_name'));
+			}
 
 			// zipcode
 			// This will search the location of the team's ORG
@@ -391,7 +395,7 @@
 				return false;
 			}
 
-			print_r($this->request->post());
+			//print_r($this->request->post());
 
 			if((int)trim($this->request->post('games_id')) > 0)
 			{
