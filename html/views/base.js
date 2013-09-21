@@ -258,10 +258,10 @@ define(['facade', 'utils'], function(facade, utils) {
 						 * [
 				
 				    {
-				        "object":"{//Request 1 Team}"
+				        "object":"{//Request 1 State}"
 				    },
 				    {
-				        "object":"{//Request 2 Team}"
+				        "object":"{//Request 2 State}"
 				    },
 				    {
 				        "object":[
@@ -274,10 +274,10 @@ define(['facade', 'utils'], function(facade, utils) {
 				            {
 				                "object":[
 				                    {
-				                        "object":"{//Request 1 State}"
+				                        "object":"{//Request 1 Team}"
 				                    },
 				                    {
-				                        "object":"{//Request 2 State}"
+				                        "object":"{//Request 2 Team}"
 				                    }
 				                ]
 				            }
