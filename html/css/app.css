@@ -786,4 +786,7 @@ margin-right: 100px;
 	margin-left: 20px;
 }
 
-
+/** Popup CSS **/
+.modal-body {
+	width: 100%;
+}
