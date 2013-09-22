@@ -163,10 +163,13 @@ function(require, headerTemplate, selectSportTemplate) {
         
         setupSportListView: function() {
             var self = this,
+
                 sportListView = new TeamSportListView({
                     collection: this.sports
                 }),
                 renderSportListView = this.addChildView(sportListView);
+
+	    //    console.log("SPORTS LIST",this.sports);
 
             this.childViews.sportListView = sportListView;
             this.callbacks.add(function () {
