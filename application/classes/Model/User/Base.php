@@ -1135,7 +1135,7 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 
 		}
 
-		if (isset($states_id)){
+		if (isset($states_id) && (int)$this->cities_id > 0){
 			$user_model->join('cities')->on('users.cities_id', '=', 'cities.id');
 			$user_model->where('cities.states_id', '=', $states_id);
 			$classes_arr['Location_City'] = 'cities';
@@ -1155,13 +1155,13 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 			$user_model->where('users.grad_year', '=', $gradyear);
 		}
 
-		if (isset($cities_id)){
+		if (isset($cities_id) && (int)$this->cities_id > 0){
 			$user_model->where('users.cities_id', '=', $cities_id);
 		}
 
 		$user_model = sizeof($classes_arr) > 0 ? ORM::_sql_exclude_deleted($classes_arr,$user_model) : $user_model;
 
-		$enttype_id = Model_Site_Enttype::getMyEntTypeID($this);
+		$enttype_id = Ent::getMyEntTypeID($this);
 
 		// NUM VOTES
 		if (!isset($orderby) || $orderby == 'votes')
@@ -1202,10 +1202,14 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 
 		if (isset($searchtext))
 		{
-			$user_model->where(array(Db::expr('CONCAT(users.first_name," ",users.last_name)'), 'full_name'), 'like ','%'.$searchtext.'%');
+			$user_model->and_where_open()
+				->where('users.first_name', 'LIKE ',$searchtext.'%')
+				->or_where('users.last_name','LIKE',$searchtext.'%')
+				->or_where(array(Db::expr('CONCAT(users.first_name," ",users.last_name)'), 'full_name'), 'like ','%'.$searchtext.'%')
+				->and_where_close();
 		}
 		$user_model->distinct(TRUE);
-		$user_model->limit(50);
+		$user_model->limit($limit)->offset($offset);
 
 		$exclude_deleted_users_array['User_Base'] = 'users';
 		$user_model = ORM::_sql_exclude_deleted($exclude_deleted_users_array, $user_model);

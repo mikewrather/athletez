@@ -198,6 +198,11 @@
 				return false;
 			}
 
+			if(trim($this->request->query('states_id')) != "")
+			{
+				$arguments["states_id"] = trim($this->request->query('states_id'));
+			}
+
 			if (isset($arguments['city_name'])){
 				if (!strlen($arguments['city_name'])>= 3){
 					$error = array(
