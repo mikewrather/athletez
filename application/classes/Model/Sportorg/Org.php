@@ -32,6 +32,10 @@ class Model_Sportorg_Org extends ORM
 			'model' => 'Sportorg_Division',
 			'foreign_key' => 'divisions_id',
 		),
+		'city' => array(
+			'model' => 'Location_City',
+			'foreign_key' => 'cities_id'
+		)
 	);
 
 	protected $_has_many = array(
@@ -301,7 +305,8 @@ class Model_Sportorg_Org extends ORM
 			$orgs_model->where('sportorg_org.name', 'like', "%$name%");
 		}
 
-		$orgs_model->where('sportorg_org.states_id', '=', $states_id);
+
+		$orgs_model->where('sportorg_org.states_id', '=', $states_id)->limit(10);
 
 
 		return $orgs_model;
@@ -348,6 +353,7 @@ class Model_Sportorg_Org extends ORM
 			'complevel_profile' => 'complevel_profile',
 			'complevels' => 'complevels',
 			'locations' => 'locations'
+
 		),
 		'exclude_columns' => array(
 			//'username','email','password','dob'
@@ -359,7 +365,7 @@ class Model_Sportorg_Org extends ORM
 	}
 
 	public function org_name(){
-		return $this->name;
+		return ucwords(strtolower($this->name . " - ".$this->city->name));
 	}
 
 	public function  season_profile(){

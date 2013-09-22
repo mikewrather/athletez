@@ -15,7 +15,7 @@ function(facade, SportorgTeamList, utils) {
         url: function() {
             if (testpath)
                 return testpath + '/user/teams/' + this.id + '/' + this.sport_id;
-            return '/api/user/teams/' + this.id + '?sport_id=' + this.sport_id;
+            return '/api/user/teams/' + this.id + '?sports_id=' + this.sports_id;
         }
 
     });

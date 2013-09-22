@@ -24,16 +24,17 @@ define(['vendor', 'views', 'utils', 'text!media/templates/image-item.html'], fun
 
 		initialize : function(options) {
 			this.template = imageItemTemplate;
+			//this.render();
 		},
 
 		render : function() {
-
 			var mpay = this.model.attributes.payload, extra = {
 				_enttypes_id : mpay.enttypes_id,
 				_id : mpay.id
 				},
 				show_edit = false;
 
+	
 			switch(mpay.enttypes_id) {
 				case '23':
 					//videos
@@ -80,7 +81,7 @@ define(['vendor', 'views', 'utils', 'text!media/templates/image-item.html'], fun
 								function($1){
 									return $1.toUpperCase();
 								});
-						}
+						};
 					for (var i = 0; i < teamLength; i++) {
 						team_str += '<span>';
 
@@ -151,7 +152,7 @@ define(['vendor', 'views', 'utils', 'text!media/templates/image-item.html'], fun
 			e.preventDefault();
 		},
 
-		delete: function(e)
+		'delete': function(e)
 		{
 			e.preventDefault();
 		}

@@ -28,7 +28,8 @@ define([
 	"game/views/video-list",
 	"profile/views/image-video-list",
 	"game/views/comment-list",
-	"game/views/commenton-list"
+	"game/views/commenton-list",
+	"roster/views/roster"
 
 ], function (require, pageLayoutTemplate, voteView)
 {
@@ -56,6 +57,7 @@ define([
 		GameCommentListView = require("game/views/comment-list"),
 		GameCommentOnListView = require("game/views/commenton-list"),
 		MediaImageModel = require("media/models/image"),
+		RosterView = require("roster/views/roster"),
 
 		LayoutView = views.LayoutView,
 		$ = facade.$,
@@ -70,7 +72,6 @@ define([
 
 		initialize: function (options) {
 			Channel('load:css').publish(cssArr);
-
 			_.bindAll(this);
 
 			this.handleOptions(options);
@@ -132,23 +133,10 @@ define([
 				controller.images.id = controller.id;
 				controller.images.fetch();
 				
-				
-				var teams = data.teams, teamLength = teams.length, i = 0, teamRoster = [];
-				var team_id = teams[0].id;
-				
-				controller.teamrosters = new GameTeamRosterList();
-				controller.teamrosters.id = team_id;
-				controller.teamrosters.fetch();
-				
-				//for(i = 0; i < teamLength; i++) {
-				//	teamRoster[i] = new GameTeamRosterList();
-				//	teamRoster[i].id = teams[i].id;
-				//	teamRoster[i].fetch();
-				//	$.when(teamRoster[i].request).done(function () {
-				//		console.log(teamRoster[i]);
-				//		controller.setupTeamRosterListView(teamRoster[i]);
-				//	});
-				//}
+				var teams = data.teams, teamLength = (teams)?teams.length:0;
+				for(var i = 0; i < teamLength; i++) {
+					controller.setupRosterView(teams[i].id, teams[i].org_sport_link_obj.org.name);
+				}
 				
 				controller.commentson = new GameCommentOnList();
 				controller.commentson.subject_entity_type = subject_type_id;
@@ -159,9 +147,8 @@ define([
 					controller.setupCommentsOnListView();
 				});
 				
-				$.when(controller.teamrosters.request).done(function () {
-					controller.setupTeamRosterListView();
-				});
+				
+				
 				
 				$.when(controller.images.request).done(function () {
 					controller.setupImageListView();
@@ -200,6 +187,20 @@ define([
            this.scheme.push(voteButtonsView);
            this.layout.render();
         },
+        
+        setupRosterView: function(id, name) {
+        	var rosterView;
+			rosterView = new RosterView({
+				model: this.images,
+				team_id: id,
+				team_name: name,
+				name: "roster images" + Math.random(),
+				destination: "#roster-wrap"
+			});
+
+			this.scheme.push(rosterView);
+			this.layout.render();
+        },
 
 		setupHeaderView: function () {
 			var headerView;
@@ -230,11 +231,22 @@ define([
 
 		setupTeamRosterListView: function () {
 			var teamRosterListView;
-			teamRosterListView = new GameTeamRosterListView({
+			teamRosterListView = new ProfileImageListView({
 				collection: this.teamrosters,
+				name: "roster images",
 				destination: "#roster-wrap"
 			});
-
+			this.scheme.push(teamRosterListView);
+			this.layout.render();
+		},
+		
+		setupTeamRosterSecondListView: function () {
+			var teamRosterListView;
+			teamRosterListView = new ProfileImageListView({
+				collection: this.teamrostersSecond,
+				name: "roster roster second images",
+				destination: "#roster-second-wrap"
+			});
 			this.scheme.push(teamRosterListView);
 			this.layout.render();
 		},
@@ -255,8 +267,8 @@ define([
 			var imageListView;
 			imageListView = new ProfileImageListView({
 				collection: this.images,
-				destination: "#image-wrap",
-				name: "image list"
+				name: "image list",
+				destination: "#image-wrap"
 			});
 			this.imageListView = imageListView;
 			Channel('image-upload-success').subscribe(this.updateImages);
