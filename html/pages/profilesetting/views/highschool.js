@@ -129,14 +129,23 @@ define(['require', 'text!profilesetting/templates/highschool.html', 'text!profil
 			if (state != '') {
 				if (isValidKey == true) {
 					// Disable Schools Text Box
-					self.$(e.target).parents(self.controls.divAddSportSection).find(self.controls.txtSchools).attr('disabled', 'disabled');
+					self.$(e.target).parents(self.controls.divAddSportSection).find(self.controls.txtSchools).attr('disabled', 'disabled').val('');
 
 					//// Remove Sports Section Html
 					self.RemoveSportsSection();
 
 					var stateList = new StatesCollection();
 					stateList.state_name = state;
-					stateList.fetch();
+					
+					console.log("State Request Abort Request Function AddGame/Main.js");
+					self.stateFetchRequest = self.stateFetchRequest || [];
+					self.stateFetchRequest.push(self.cityFetchRequest || []);
+					self.stateFetchRequest.push(self.schoolFetchRequest || []);
+
+					self.stateFetchRequest = self.abortRequest(self.stateFetchRequest);
+					var tempCollection = stateList.fetch();
+					self.stateFetchRequest.push(tempCollection);
+					
 					$.when(stateList.request).done(function() {
 						/*Don't Show Auto Complete In Case Of Error*/
 						if (stateList.isError())
@@ -214,7 +223,10 @@ define(['require', 'text!profilesetting/templates/highschool.html', 'text!profil
 				List.sports_club = 0;
 				List.states_id = self.states_id;
 				List.org_name = name;
-				List.fetch();
+				console.log("School Request Abort Request Function");
+				self.schoolFetchRequest = self.abortRequest(self.schoolFetchRequest);
+				var tempCollection = List.fetch();
+				self.schoolFetchRequest.push(tempCollection);
 
 				$.when(List.request).done(function() {
 					if (List.isError())
@@ -341,7 +353,11 @@ define(['require', 'text!profilesetting/templates/highschool.html', 'text!profil
 			if (orgs_id && orgs_id > 0) {
 				var List = new CompLevelModel();
 				List.orgs_id = orgs_id;
-				List.fetch();
+				
+				console.log("Complevels Request Abort Request Function");
+				self.compFetchRequest = self.abortRequest(self.compFetchRequest);
+				var tempCollection = List.fetch();
+				self.compFetchRequest.push(tempCollection);
 
 				$.when(List.request).done(function() {
 					if (List.isError())
@@ -558,17 +574,18 @@ define(['require', 'text!profilesetting/templates/highschool.html', 'text!profil
 							return;
 
 						var model = teamsModel.toJSON();
-						console.log("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
-						console.log("Model",model);
+						//console.log("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+						//console.log("Model",model);
 						if (model != null && model.payload != null || model.payload.id != null) {
 							$(event.target).attr('teamid', model.payload.team_id);
-							$(event.target).parent().find(self.controls.btnOpenPositions).attr('teamid', model.payload.id);
+							$(event.target).parent().find(self.controls.btnOpenPositions).attr('teamid', model.payload.id).removeAttr('disabled');
 							//	self.displayPositionPopup(event, model.payload.id);
 						}
 					});
 				} else {
 					var cont = $(event.target).parents(self.controls.divLevels).find(self.controls.ddlComplevel);
 					$(cont).parent().find(self.controls.fieldError).html(self.messages.SelectLevel).stop().fadeIn();
+					$(event.target).parent().find(self.controls.btnOpenPositions).attr('disabled','disabled');
 				}
 			} else if (!$(event.target).is(':checked') && $(event.target).attr('teamid')) {
 				// IN CASE TEAM IS ALREADY ADDED INTO DATABASE DELETE IT
@@ -595,7 +612,7 @@ define(['require', 'text!profilesetting/templates/highschool.html', 'text!profil
 					processData : true,
 					success : function() {
 						$(event.target).removeAttr('teamid');
-						$(event.target).parent().find(self.controls.btnOpenPositions).removeAttr('teamid');
+						$(event.target).parent().find(self.controls.btnOpenPositions).removeAttr('teamid').attr('disabled','disabled');;
 					}
 				});
 
@@ -660,6 +677,10 @@ define(['require', 'text!profilesetting/templates/highschool.html', 'text!profil
 				List.orgs_id = orgId;
 				List.fetch();
 
+				console.log("Complevel Model Request Abort Request Function");
+				self.compLevelFetchRequest = self.abortRequest(self.compLevelFetchRequest);
+				self.compLevelFetchRequest = List.fetch();
+				
 				$.when(List.request).done(function() {
 					if (List.isError())
 						return;

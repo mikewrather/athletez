@@ -348,7 +348,7 @@ define(['require', 'text!usercontrols/tag/templates/layout.html', 'facade', 'vie
 					self.cityFetchRequest = self.cityFetchRequest || [];
 					self.cityFetchRequest.push(self.teamFetchRequest || []);
 
-					self.cityFetchRequest = self.abortRequest(self.stateFetchRequest);
+					self.cityFetchRequest = self.abortRequest(self.cityFetchRequest);
 					var tempCollection = List.fetch();
 					self.cityFetchRequest.push(tempCollection);
 					$.when(List.request).done(function() {

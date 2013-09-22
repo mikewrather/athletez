@@ -117,10 +117,7 @@ define(['require', 'text!userresume/templates/references.html', 'text!userresume
 					return;
 
 				self.references = Collection.parseAsRequired();
-				console.log("11111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111");
-			
-				console.log("self.references",self.references);
-				if (self.references.length > 0) {
+					if (self.references.length > 0) {
 					var markup = Mustache.to_html(listTemplate, {
 						data : self.references
 					});

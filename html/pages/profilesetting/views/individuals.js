@@ -24,7 +24,7 @@ define(['require',
 
 		/*Bind Events on controls present in current view template*/
 		events : {
-			"change .select-all" : "CheckAll",
+		"change .select-all" : "CheckAll",
 		"change .chk-single" : "CheckSingle",
 		"click .delete-individualsport" : "DeleteSport"
 		},
@@ -189,9 +189,15 @@ define(['require',
 				sportsModel.user_id = self.user_id;
 				sportsModel.sports_id = sportsId;
 				sportsModel.type = "save";
-				sportsModel.save({
+				
+				
+				console.log("Save Model Request Abort Request Function");
+				self.sportsModelFetchRequest = self.abortRequest(self.sportsModelFetchRequest);
+				self.compLevelFetchRequest = sportsModel.save({
 					sports_id : sportsId
 				});
+				
+				
 				$.when(sportsModel.request).done(function() {
 					self.setUpUsersSportsCheck();
 					//self.setUpUsersSports();
