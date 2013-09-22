@@ -73,6 +73,10 @@
 			{
 				$arguments["sports_id"] = (int)trim($this->request->query('sports_id'));
 			}
+			elseif((int)trim($this->request->query('sport_id')) > 0)
+			{
+				$arguments["sports_id"] = (int)trim($this->request->query('sport_id'));
+			}
 
 
 			return $this->mainModel->getTeams($arguments);
