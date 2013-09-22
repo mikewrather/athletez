@@ -2,70 +2,102 @@
     height: 18px;
     background: green;
 }
+
 .imageholder {
-  height: 100px;
-  border: 2px dashed #ccc;
-  margin: 10px 5px 0 0;
-  vertical-align: middle;
-  color: #CCCCCC;
-  text-align:center;
-  font-size:200%;
-}
-.previewimg{
-	display:inline;
-	float: left;
-	margin: 10px 4px 80px;
-	height: 100px;
-}
-#preview
-{
-	display:inline-block;
-	position:inherit;
-}
-.fileuploader
-{
-	margin: 10px 5px 0 10px;
-}
-.previewprogress
-{
-	margin: -63px 0 0 0px;
-}
-.previewimgsrc 
-{
-	height :inherit;
-	position: relative;
-}
-.previewrotate
-{
-	margin-bottom: 25%;
+    border: 3px dashed #ccc;
+    margin: 10px;
+    padding:30px 0 30px 0;
+
+    vertical-align: middle;
+    color: #CCCCCC;
+    text-align: center;
+    font-size: 1.4em;
+    font-weight: normal;
+    font-family: "Avenir", "HelveticaNeue";
 }
 
-.modal
-{
+.previewimg {
+    display: inline;
+    float: left;
+    margin: 10px 4px 80px;
+    height: 100px;
+}
+
+#preview {
+    display: inline-block;
+    position: inherit;
+}
+
+.fileuploader {
+    margin: 10px 5px 0 10px;
+}
+
+.previewprogress {
+    margin: -63px 0 0 0px;
+}
+
+.previewimgsrc {
+    height: inherit;
+    position: relative;
+}
+
+.previewrotate {
+    margin-bottom: 25%;
+}
+
+.modal {
     left: 10%;
     z-index: 1050;
     width: 80%;
-    margin-left:0px;
+    margin-left: 0px;
 }
 
-.modal-body
-{
+.modal * {
+    z-index: 1051;
+}
+
+.modal-footer button{
+    margin:auto;
+}
+
+#imgUploadModal .main-body {
     max-height: 500px !important;
-    height:500px;
-    width: 80%;
-    float:left;
+    height: 500px;
+    width: 70%;
+    float: right;
+    display:inline-block;
 }
 
-#main-content-img
-{
-    width:90%;
-    float:left;
-    height:100%;
+#main-content-img {
+    width: 100%;
+    float: left;
+    height: 35%;
     background-color: #f5f5f5;
-    padding:5%;
+    padding: 0%;
 }
 
-#imageuploadForm input[type="file"]
-{
-    width:90%;
+#image-tagging{
+    width: 100%;
+    float: left;
+    height: 50%;
+    background-color: #f5f5f5;
+    padding: 0%;
+}
+
+.main-body{
+    width:70%;
+
+}
+.side-panel{
+    width:25%;
+    height:100%;
+    display:inline-block;
+}
+
+#imageuploadForm input[type="file"] {
+    width: 90%;
+}
+
+#imgUploadModal {
+    height: 700px;
 }

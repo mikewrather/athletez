@@ -69,9 +69,9 @@
 				return false;
 			}
 
-			if((int)trim($this->request->query('sport_id')) > 0)
+			if((int)trim($this->request->query('sports_id')) > 0)
 			{
-				$arguments["sport_id"] = (int)trim($this->request->query('sport_id'));
+				$arguments["sports_id"] = (int)trim($this->request->query('sports_id'));
 			}
 
 
@@ -521,6 +521,18 @@
 				$this->modelNotSetError();
 				return false;
 			}
+			if((int)trim($this->request->query('sports_id')) > 0)
+			{
+				$sports_id = (int)trim($this->request->query('sports_id'));
+			}
+			else $sports_id = NULL;
+
+
+			$overview = ((int)trim($this->request->query('overview')) > 0) ? true : false;
+
+			$result = $this->mainModel->getResumeDataTree($sports_id,$overview);
+		//	print_r($result);
+			return $result;
 		}
 
 		/**

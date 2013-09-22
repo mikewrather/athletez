@@ -677,8 +677,8 @@ margin-right: 100px;
 }
 #fitnessbasic-list li, .stats-ul li {
 	float: left;
-	width: 50%;
-	text-align: center;
+	width: 100%;
+	text-align: left;
 }
 
 .game-box-outer {
