@@ -380,6 +380,15 @@
 				}
 			}
 
+			// limit
+			// The number or records to retrieve
+			$arguments["limit"] = ((int)trim($this->request->query('limit')) > 0) ? (int)trim($this->request->query('limit')) : 30;
+
+			// offset
+			// The record to start with
+			$arguments["offset"] = ((int)trim($this->request->query('offset')) > 0) ? (int)trim($this->request->query('offset')) : 0;
+
+
 			$user_obj = ORM::factory('User_Base');
 
 			$result = $user_obj->getSearch($arguments);
