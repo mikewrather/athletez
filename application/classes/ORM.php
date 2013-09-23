@@ -226,6 +226,10 @@ class ORM extends Kohana_ORM
 		}
 	}
 
+	public function restore_deleted_entity($enttypes_id, $subject_id){
+		//TODO, add by Jeffrey, Need to delete recursively, DB::delete()
+	}
+
 	public function getTableName()
 	{
 		return $this->_table_name;

@@ -206,5 +206,44 @@
 		###########################    DELETE METHODS    ###########################
 		############################################################################
 
-		
+		public function action_delete_delete(){
+			//permission check
+			if(!$this->user->can('Assumeownership', array('owner' => $this->user->id))){
+				$this->throw_permission_error(Constant::NOT_OWNER);
+			}
+
+			if(!isset($this->myID) || !isset($this->myID2))
+			{
+				$error_array = array(
+					"error" => "Required Parameters Missing",
+					"desc" => "Required Parameters Missing."
+				);
+
+				$this->modelNotSetError($error_array);
+				return false;
+			}
+			$my_class = Ent::eFact($this->myID, $this->myID2);
+			$my_class->delete_with_deps();
+			$obj = new stdClass();
+			$obj->enttypes_id = $this->myID;
+			$obj->subject_id = $this->myID2;
+			return $obj;
+		}
+
+		public function action_delete_restore(){
+			//permission check
+			if(!$this->user->can('Assumeownership', array('owner' => $this->user->id))){
+				$this->throw_permission_error(Constant::NOT_OWNER);
+			}
+
+			if(!isset($this->myID) || !isset($this->myID2))
+			{
+				$error_array = array(
+					"error" => "Required Parameters Missing",
+					"desc" => "Required Parameters Missing."
+				);
+			}
+
+			//TODO, Jeffrey, delete the rows from deleted table recursively
+		}
 	}
