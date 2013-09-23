@@ -68,19 +68,6 @@ class Model_Location_City extends ORM
 		'exclude_columns' => array(),
 	);
 
-	public function getBasics($settings = array())
-	{
-		if(!$this->loaded()) return false;
-//		return array(
-//			"id" => $this->id,
-//			"name" => $this->name,
-//			"county_id" => $this->counties_id,
-//			"county" => $this->county->getBasics(),
-//		);
-
-		return parent::getBasics($settings);
-	}
-
 	public function addCity($args = array())
 	{
 		extract($args);
@@ -244,8 +231,8 @@ class Model_Location_City extends ORM
 	public function getCities($args = array()){
 		extract($args);
 		$cities = ORM::factory("Location_City");
-		if(isset($city_name))
-			$cities->where('name', 'like', $city_name."%");
+		if(isset($city_name)) $cities->where('name', 'like', $city_name."%");
+		if(isset($states_id)) $cities->where('states_id','=',$states_id);
 		return $cities;
 	}
 

@@ -1,5 +1,9 @@
-
 {{#payload}}
-    {{fitness_test}}:  {{view.calculate}}
+	{{#data}}
+		<div class="fitness-overview-data-piece" style="">
+			<img title="{{name}}" src="{{icon}}" style=""/>
+			<span style="font-family: 'Avenir';font-weight: bolder; font-size: 2em;">{{val}}</span>
+		</div>
+	{{/data}}
 {{/payload}}
 

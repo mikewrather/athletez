@@ -395,7 +395,7 @@
 				return false;
 			}
 
-			print_r($this->request->post());
+			//print_r($this->request->post());
 
 			if((int)trim($this->request->post('games_id')) > 0)
 			{

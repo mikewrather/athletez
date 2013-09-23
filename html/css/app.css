@@ -238,6 +238,7 @@ div.image-item-container img{
     position: absolute;
     min-width: 220px;
     min-height: 220px;
+    max-width: 500%;
 }
 
 .action-section{
@@ -677,8 +678,35 @@ margin-right: 100px;
 }
 #fitnessbasic-list li, .stats-ul li {
 	float: left;
-	width: 50%;
-	text-align: center;
+	width: 100%;
+	text-align: left;
+}
+
+.fitness-overview-data-piece{
+    width:30%;
+    display:inline-block;
+    float:left;
+    height:30px;
+    margin:15px 20px 40px 30px;
+}
+
+.fitness-overview-data-piece img{
+    width:40px;
+    height: 40px;
+}
+
+.stats-panel{
+    background-color:#e0e0e0;
+    padding:0;
+    width:35%
+}
+
+.stats-header{
+    background-color:#b9b9ba;
+    font-family: 'Avenir','HelveticaNeue';
+    font-weight: bold;
+    font-size: 1.7em;
+    padding:10px;
 }
 
 .game-box-outer {
@@ -783,7 +811,7 @@ margin-right: 100px;
 
 #sports-info {
 	margin-top: 30px;
-	margin-left: 20px;
+	margin-left: 0;
 }
 
 /** Popup CSS **/

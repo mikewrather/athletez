@@ -158,7 +158,7 @@ class Model_Sportorg_Team extends ORM
 	public function addGame($args = array()){
 		extract($args);
 
-		print_r($args);
+	//	print_r($args);
 
 		if (isset($game_datetime)){
 			if ($game_datetime == ""){

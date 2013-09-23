@@ -110,7 +110,7 @@ class Model_User_Resume_Data_Profile extends ORM
 	 * @param string $format is either res or something else.
 	 * @return array|object depending on format
 	 */
-	public function getRDPForUser($user,$format='res')
+	public function getRDPForUser($user,$format='res',$sports_id=NULL,$overview=false)
 	{
 		//get positions for user
 		$pos_arr = $user->getPositions();
@@ -119,14 +119,27 @@ class Model_User_Resume_Data_Profile extends ORM
 		$sports_arr = $user->getSports('array');
 
 		//select profiles and sports
-		$qry = DB::select()->from('rdp_sports_link')
-			->where_open();
+		$qry = DB::select()->from('rdp_sports_link');
+
+
+
+		if(is_integer($sports_id) && $sports_id > 0)
+		{
+			$qry->where('sports_id','=',$sports_id);
+			$qry->and_where_open();
+			$use_and_where = true;
+		}
+
+		$qry->where_open();
 
 		if(sizeof($pos_arr) > 0)
-		foreach($pos_arr as $positions_id => $position)
 		{
-			$qry->or_where('positions_id','=',$positions_id);
+			foreach($pos_arr as $positions_id => $position)
+			{
+				$qry->or_where('positions_id','=',$positions_id);
+			}
 		}
+
 		$qry->where_close()->or_where_open();
 
 		if(sizeof($sports_arr) > 0)
@@ -134,7 +147,12 @@ class Model_User_Resume_Data_Profile extends ORM
 			{
 				$qry->or_where('sports_id','=',$sports_id);
 			}
-		$res = $qry->or_where_close()->execute();
+		$qry->or_where_close();
+
+		if($use_and_where) $qry->and_where_close();
+
+		$res = $qry->group_by('resume_data_profiles_id')->execute();
+	//	print_r($res);
 
 		if($format=='res') return $res;
 

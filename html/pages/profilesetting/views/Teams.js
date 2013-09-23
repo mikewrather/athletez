@@ -63,7 +63,12 @@ define(['require', 'text!profilesetting/templates/teamlist.html', 'facade', 'vie
 			teamsCollection.user_id = self.user_id;
 			teamsCollection.sports_club = this.sports_club;
 			teamsCollection.org_type = this.org_type;
-			teamsCollection.fetch();
+			
+			console.log("Team Request Abort Request Function");
+			self.teamFetchRequest = self.abortRequest(self.teamFetchRequest);
+			var tempCollection = teamsCollection.fetch();
+			self.teamFetchRequest.push(tempCollection);
+
 
 			$.when(teamsCollection.request).done(function() {
 				if (teamsCollection.isError())

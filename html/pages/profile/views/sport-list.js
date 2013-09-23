@@ -29,6 +29,7 @@ function(facade,  views,   utils,   ProfileSportItemView) {
 
         initialize: function(options) {
             CollectionView.prototype.initialize.call(this, options);
+
             if (!this.collection) {
                 throw new Error("SportListView expected options.collection.");
             }
