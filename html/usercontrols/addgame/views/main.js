@@ -333,6 +333,7 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 
 					//Create Collection
 					var List = new CityCollection();
+					List.state_id = self.states_id;
 					List.city_name = $(e.target).val();
 					console.log("City Request Abort Request Function AddGame/Main.js");
 					self.cityFetchRequest = self.cityFetchRequest || [];
