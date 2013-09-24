@@ -137,6 +137,7 @@ define([
 				routing = new app();
 				routing.ajaxRequests = [];
 				routing.intializeImageAndVideo();
+				routing.initTriggers();
 				// bind common triggers
 				Backbone.history.start({});
             });

@@ -27,8 +27,11 @@ function (
         className: "comment",
           
         initialize: function (options) {
-	        this.template = commentItemTemplate;
-        },
+        	if(!options.template)
+		        this.template = commentItemTemplate;
+		    else	    
+		    	this.template = options.template;
+        },		
 
         render: function () {
             var markup = Mustache.to_html(this.template, this.model.toJSON());

@@ -34,7 +34,8 @@ function(facade,  views,   utils,   ImageItemView,            ImageBoardView,   
         _view: ImageItemView,
 		//template: imageListTemplate,
 		events: {
-			'click .see-more-h': 'seeMore'
+			'click .see-more-h': 'seeMore',
+			"click .image-outer-h": "initPhotoPlayer"
 		},
 		
 		renderTemplate: function () {
@@ -42,8 +43,11 @@ function(facade,  views,   utils,   ImageItemView,            ImageBoardView,   
             this.$el.html(markup);
             return this;
        },
+       
+      
 
         initialize: function(options) {
+        	
         	if(options.name)
         		this.name = options.name;
         	else
@@ -71,7 +75,18 @@ function(facade,  views,   utils,   ImageItemView,            ImageBoardView,   
             this.addSubscribers();
             this.setupBoardView();
         	this.setupAddView();
+        	//$(document).off('click','.image-outer-h');
+        	//$(document).on('click','.image-outer-h', function() {
+			//	_self.initPhotoPlayer();
+			//});
+        	
         },
+        
+        initPhotoPlayer: function(e) {
+			var index = $(e.target).parents('li').index() - 1;       		
+       		routing.trigger('photo-player-init', index, this.allData);
+       	},
+
         
         seeMore: function(e) {
 			var len = this.allData.length, start = this.page * this.page_limit, end = start + this.page_limit;

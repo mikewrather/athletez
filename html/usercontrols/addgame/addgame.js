@@ -67,10 +67,8 @@ define(["require", "text!usercontrols/addgame/templates/layout.html",
 			if(options.gender){
 				this.gender = options.gender;
 			}
-				this.init();
-
+			this.init();
 			return this;
-
 		},
 		/*To reduce initialize methods length and all the view related functions */
 		init : function() {
