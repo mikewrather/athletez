@@ -249,12 +249,9 @@
 				$this->modelNotSetError($error_array);
 				return false;
 			}
-			$my_class = Ent::eFact($this->myID, $this->myID2);
-			$my_class->delete_with_deps();
-			$obj = new stdClass();
-			$obj->enttypes_id = $this->myID;
-			$obj->subject_id = $this->myID2;
-			return $obj;
+			$subject = Ent::eFact($this->myID, $this->myID2);
+			$subject->delete_with_deps();
+			return $subject->getBasics();
 		}
 
 		public function action_delete_restore(){
@@ -270,7 +267,18 @@
 					"desc" => "Required Parameters Missing."
 				);
 			}
+			if(!isset($this->myID) || !isset($this->myID2))
+			{
+				$error_array = array(
+					"error" => "Required Parameters Missing",
+					"desc" => "Required Parameters Missing."
+				);
 
-			//TODO, Jeffrey, delete the rows from deleted table recursively
+				$this->modelNotSetError($error_array);
+				return false;
+			}
+			$subject = Ent::eFact($this->myID, $this->myID2);
+			$subject->undo_delete_with_deps();
+			return $subject->getBasics();
 		}
 	}

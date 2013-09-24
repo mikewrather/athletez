@@ -34,6 +34,26 @@ class Model_Sportorg_Complevel_Profile extends ORM
 		);
 	}
 
+	public $get_basics_class_standards = array(
+		'added_function_calls' => array(
+			'levels' => 'get_complevels',
+		)
+	);
+
+	function get_complevels()
+	{
+		$retArr = array();
+		$complevels = $this->complevels->find_all();
+		foreach($complevels as $level)
+		{
+			$retArr[] = array(
+				"name" => $level->name,
+				"id" => $level->id
+			);
+		}
+		return $retArr;
+	}
+
 
 	function addComplevelprofile($args){
 		extract($args);

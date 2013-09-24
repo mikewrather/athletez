@@ -33,6 +33,9 @@ class Model_Location_Base extends ORM
 
 		return array
 		(
+			'all_info'=>array(
+				array('not_empty'),
+			),
 			// address (varchar)
 			'address'=>array(
 				array('not_empty'),
@@ -40,7 +43,6 @@ class Model_Location_Base extends ORM
 
 			// cities_id (int)
 			'cities_id'=>array(
-				array('not_empty'),
 				array('digit'),
 				array('cities_id_exist')
 			),
@@ -52,14 +54,12 @@ class Model_Location_Base extends ORM
 
 			// lon (float)
 			'lon'=>array(
-				array('not_empty'),
-				array('digit'),
+				array('numeric'),
 			),
 
 			// lat (float)
 			'lat'=>array(
-				array('not_empty'),
-				array('digit'),
+				array('numeric'),
 			),
 
 			// loc_point (point), Comment by jeffrey, no this field in page, ignore
@@ -160,6 +160,79 @@ class Model_Location_Base extends ORM
 			return $e;
 		}
 	}
+
+	public function google_verify($address){
+		$final = array();
+
+		$address = urlencode($address);
+
+		$json = file_get_contents("http://maps.google.com/maps/api/geocode/json?address=$address&sensor=false");
+		$json = get_object_vars(json_decode($json));
+
+
+		if($json['status']=='ZERO_RESULTS'){
+			return false;
+		}
+
+		foreach($json["results"] as $key=>$res)
+		{
+			if(is_object($res)) $res = get_object_vars($res);
+
+			// Get full address, longitude and latitude
+			$final['full_address'] = $res['formatted_address'];
+			$final['lon'] = $res['geometry']->location->lng;
+			$final['lat'] = $res['geometry']->location->lat;
+
+			// Parse Address components and assign to correct array keys
+			foreach($res['address_components'] as $subkey=>$comp)
+			{
+				if(is_object($comp)) $comp = get_object_vars($comp);
+
+				foreach($comp['types'] as $ckey=>$cval)
+				{
+					switch ($cval)
+					{
+						case "street_number":
+							$final['number'] = $comp['long_name'];
+							break;
+						case "route":
+							$final['street'] = $comp['long_name'];
+							break;
+						case "country":
+							$final['country'] = $comp['long_name'];
+							break;
+						case "postal_code":
+							$final['zip'] = $comp['long_name'];
+							break;
+						case "locality":
+							$final['city'] = $comp['long_name'];
+							break;
+						case "neighborhood":
+							$final['neighborhood'] = $comp['long_name'];
+							break;
+						case "administrative_area_level_1":
+							$final['state'] = $comp['long_name'];
+							break;
+						case "administrative_area_level_2":
+							$final['county'] = $comp['long_name'];
+							break;
+						case "colloquial_area":
+							$final['colloquial_area'] = $comp['long_name'];
+							break;
+						case "park":
+							$final['park'] = $comp['long_name'];
+							break;
+						case "intersection":
+							$final['intersection'] = $comp['long_name'];
+							break;
+						default:
+							break;
+					}
+				}
+			}
+		}
+		return $final;
+	}
 	
 	public function name()
 	{
@@ -171,40 +244,67 @@ class Model_Location_Base extends ORM
 		extract($args);
 		if(isset($address))
 		{
-			$this->address = $address;
+			if($g_results = $this->google_verify($address))
+			{
+				$match = ORM::factory('Location_Base')
+					->where('lat','=',$g_results['lat'])
+					->and_where('lon','=',$g_results['lon'])
+					->find();
+
+			//	print_r($match);
+
+				if($match->loaded()) return $match;
+
+				$this->address = $g_results['number']." ".$g_results['street'].", ".$g_results['city']." ".$g_results['state'].", ".$g_results['zip'];
+				$this->full_address = $g_results['full_address'];
+				$this->lat = $g_results['lat'];
+				$this->lon = $g_results['lon'];
+
+				$this->loc_point = DB::expr("GeomFromText('POINT(".$g_results['lat']." ".$g_results['lon'].")')");
+				$this->all_info = serialize($g_results);
+			}
+		}
+		else
+		{
+			if(isset($cities_id))
+			{
+				$this->cities_id = $cities_id;
+			}
+
+			if(isset($lon))
+			{
+				$this->lon = $lon;
+			}
+			else $lon = 0;
+
+			if(isset($lat))
+			{
+				$this->lat = $lat;
+			}
+			else $lat = 0;
+
+			if(isset($loc_point))
+			{
+				$this->loc_point = $loc_point;
+			}
+
+			if(isset($zip))
+			{
+				$this->zip = $zip;
+			}
+			$this->loc_point = DB::expr("GeomFromText('POINT(".$lat." ".$lon.")')");
 		}
 
-		if(isset($cities_id))
-		{
-			$this->cities_id = $cities_id;
-		}
-
-		if(isset($lon))
-		{
-			$this->lon = $lon;
-		}
-		
-		if(isset($lat))
-		{
-			$this->lat = $lat;
-		}
-
-		if(isset($loc_point))
-		{
-			$this->loc_point = $loc_point;
-		}
-
-		if(isset($zip))
-		{
-			$this->zip = $zip;
-		}
 		
 		if(isset($location_type))
 		{
 			$this->location_type = $location_type;
 		}
+		else
+		{
+			$this->location_type = "Other";
+		}
 
-		$this->loc_point = DB::expr("GeomFromText('POINT(".$lat." ".$lon.")')");
 		         
 		try{		 
 //			$db = Database::instance();

@@ -10,5 +10,7 @@
 	$e = Kohana::$config->load('error_messages');
 
 	return array(
-
+		'all_info' => array(
+			'not_empty' => 'The address you entered could not be verified.  Please check and make sure that this address exists and try again.',
+		)
 	);

@@ -48,6 +48,27 @@
 
 			return $retArr;
 		}
+
+		/**
+		 * get_search()
+		 *
+		 * @retun array
+		 */
+		public function get_search()
+		{
+			$retArr = array();
+
+			// Scaffolding Code For Array:
+			$objs = $this->obj;
+	//		print_r($objs);
+			foreach($objs as $obj)
+			{
+		//		print_r($obj);
+				$retArr[$obj->id] = $obj->getBasics();
+			}
+
+			return $retArr;
+		}
 		
 		/**
 		 * post_addseason() Add a new season to a season profile
