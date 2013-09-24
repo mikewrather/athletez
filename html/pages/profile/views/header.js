@@ -72,7 +72,7 @@ function(require, profileHeaderTemplate, selectSportTemplate) {
                 }),
                 renderSportListView = this.addChildView(sportListView);
 
-	        console.log("SPORTS LIST VIEW",sportListView);
+	        console.log("SPORTS LIST VIEW",sportListView.el);
 
 
 
