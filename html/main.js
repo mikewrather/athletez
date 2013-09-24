@@ -73,6 +73,7 @@ require.config({
         'location'     : '/packages/location',
         'sport'        : '/packages/sport',
         'votes'         : '/packages/vote',
+        'roster'         : '/packages/roster',
 	
         
         // Pages

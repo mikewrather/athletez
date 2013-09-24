@@ -46,6 +46,7 @@ function (
         	var data = {};
         	data = this.model.toJSON();
         	data.view = this;
+	        console.log("Fitness Data getting passed to template",data);
             var markup = Mustache.to_html(this.template, data);
             this.$el.html(markup);
             return this;

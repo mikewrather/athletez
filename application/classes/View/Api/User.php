@@ -436,7 +436,9 @@
 		 */
 		public function get_rdtree()
 		{
-			return $this->obj->getResumeDataTree();
+			if(is_object($this->obj)) if(get_class($this->obj)=='Model_User_Base') return array();
+			return $this->obj;
+
 		}
 
 		/**

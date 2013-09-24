@@ -64,21 +64,28 @@ function(require, profileHeaderTemplate, selectSportTemplate) {
         
         setupSportListView: function() {
         	console.log(this.sports);
+
+
             var self = this,
                 sportListView = new SportListView({
                     collection: this.sports
                 }),
                 renderSportListView = this.addChildView(sportListView);
 
-            this.childViews.sportListView = sportListView;
+	        console.log("SPORTS LIST VIEW",sportListView.el);
+
+
+
+	        this.childViews.sportListView = sportListView;
             this.callbacks.add(function () {
                 renderSportListView();                
-            });  
+            });
             
             self.$el.find('#sports-info').html(sportListView.el);
             var data = {"payload": []};
             var collection = sportListView.collection;
-            if (collection.length) {
+            if (collection.length)
+            {
                 for (i = 0; i < collection.length; i++) {
                     data["payload"][i] = collection.at(i).get('payload');
                 }

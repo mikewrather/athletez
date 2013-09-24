@@ -9,7 +9,6 @@ function(facade,  utils,   BaseImageListView) {
     ProfileImageListView = BaseImageListView.extend({
 
 	    imagetype: 'large_thumb',
-		name: "Image List",
         setupAddView: function() {
             
         }

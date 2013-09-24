@@ -1,4 +1,4 @@
-	    {{#records}}
-	        {{#payload.team_name}}{{payload.team_name}}{{/payload.team_name}}<br/>
-	    {{/records}}
+{{#records}}
+    <a href="/#team/{{payload.id}}">{{#payload.team_name}}{{payload.team_name}}{{/payload.team_name}}</a><br />
+{{/records}}
 

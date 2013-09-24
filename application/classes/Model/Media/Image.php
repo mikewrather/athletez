@@ -267,15 +267,54 @@ class Model_Media_Image extends ORM
 			// This is where we will temporarily store the new image before we upload to s3
 			$local_path  = DOCROOT . '../files_temp/' . md5(rand()) . '.' . $type->img_extension;
 
-			// only resize if we are resizing down.  because the db col can be null we also have to check to make sure > 0
-			if(((int)$type->width > 0 && $type->width < $image->width) || ((int)$type->height > 0 && $type->height < $image->height))
+			// short side shrink means that it will only shrink the shorter side to match the dimensions.
+			// this is good for instances where it needs to fit into a square and you want it to be natural
+			// width or height.
+			if($type->short_side_shrink)
 			{
-				// If the height or width is blank in the database, NULL will be passed to the function so it is ignored
-				$this_img->resize(
-					$type->width != '' ? $type->width : NULL,
-					$type->height != '' ? $type->height : NULL,
-					Image::AUTO // this is the resizing instruction
-				);
+				//  because the db col can be null we also have to check to make sure > 0
+				if((int)$type->height > 0 || (int)$type->width > 0)
+				{
+					if($image->height > $image->width)
+					{
+						if(((int)$type->width > 0 && $type->width < $image->width))
+						{
+							// If the height or width is blank in the database, NULL will be passed to the function so it is ignored
+							$this_img->resize(
+								$type->width != '' ? $type->width : NULL,
+								NULL,
+								Image::AUTO // this is the resizing instruction
+							);
+						}
+					}
+					elseif($image->width > $image->height)
+					{
+						if( (int)$type->height > 0 && $type->height < $image->height )
+						{
+							// If the height or width is blank in the database, NULL will be passed to the function so it is ignored
+							$this_img->resize(
+								NULL,
+								$type->height != '' ? $type->height : NULL,
+								Image::AUTO // this is the resizing instruction
+							);
+						}
+					}
+				}
+			}
+			// if short side shrink is false then it will shrink both sides to match the dimension.  This could mean that
+			// a very wide image ends up having a hight way under the called for dimension or a very long image has a width
+			// way under the called for dimension.  This is better for instances where we want to display the entire image.
+			else
+			{
+				if(((int)$type->width > 0 && $type->width < $image->width) || ((int)$type->height > 0 && $type->height < $image->height))
+				{
+					// If the height or width is blank in the database, NULL will be passed to the function so it is ignored
+					$this_img->resize(
+						$type->width != '' ? $type->width : NULL,
+						$type->height != '' ? $type->height : NULL,
+						Image::AUTO // this is the resizing instruction
+					);
+				}
 			}
 
 			// Save with new quality

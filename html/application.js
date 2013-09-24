@@ -83,10 +83,23 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
         },
         
         initialiRoutesInit: function(fn) {
+        	var self = this;
         	routing.off('app-inited');
             routing.on('app-inited', function(id) {
             	fn(id);
             });
+            
+            // initialize add game popup common trigger 
+            routing.off('add-game');
+            routing.on('add-game', function(id) {
+            	//fn(id);
+            	 var addGameview = new AddGameController({
+                	"id": id,
+                	popup: true
+                });
+            });
+            
+            
         },
 
         defaultRoute: function () {
@@ -141,8 +154,6 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
            chromeBootstrap();
            self.removeCurrent();
 			function initProfile(headerModelId) {
-				
-				
                 self.currentController = new ProfileController({
 	                "userId": (typeof userid != "undefined")?userid:headerModelId
 	            });

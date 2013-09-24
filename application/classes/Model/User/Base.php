@@ -506,20 +506,29 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 		return $pos_arr;
 	}
 
-	public function getResumeDataTree()
+	public function getResumeDataTree($sports_id=NULL,$overview=false)
 	{
 		if(!$this->loaded()) return false;
 
 		$rdp = ORM::factory('User_Resume_Data_Profile');
-		$rdps = $rdp->getRDPForUser($this,'array');
-
+		$rdps = $rdp->getRDPForUser($this,'array',$sports_id,$overview);
 
 		$profiles = array();
 		foreach($rdps as $rdp_id => $rdp)
 		{
 		//	print_r($rdp->as_array());
 
-			$datagroups = $rdp->datagroups->find_all();
+			$datagroups = $rdp->datagroups;
+
+			if($overview)
+			{
+				$datagroups->where('user_resume_data_group.is_overview','=',1);
+			}
+
+			$datagroups = $datagroups->find_all();
+
+		//	print_r($datagroups);
+
 			foreach($datagroups as $group)
 			{
 
@@ -555,6 +564,7 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 							"id" => $val->loaded() ? $val->id : 0,
 							"resume_data_id" => $data->id,
 						);
+						if($data->large_icon != "") $profiles[$group->id]["data"][$data->id]["icon"] = $data->large_icon;
 					}
 				}
 			}
@@ -1037,10 +1047,10 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 	{
 		extract($args);
 		$team = $this->teams;
-		if (isset($sport_id)){
+		if (isset($sports_id)){
 			$team->join('org_sport_link')
 				->on('org_sport_link.id', '=', 'sportorg_team.org_sport_link_id')
-				->where('org_sport_link.sports_id', '=', $sport_id);
+				->where('org_sport_link.sports_id', '=', $sports_id);
 			$classes_arr['Sportorg_Orgsportlink'] = 'org_sport_link';
 		}
 		//exclude itself
@@ -1049,6 +1059,7 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 
 		$team = ORM::_sql_exclude_deleted($classes_arr, $team);
 
+		//print_r($team->find_all());
 		return $team;
 	}
 	public function getResumeData()
@@ -1124,7 +1135,7 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 
 		}
 
-		if (isset($states_id)){
+		if (isset($states_id) && (int)$this->cities_id > 0){
 			$user_model->join('cities')->on('users.cities_id', '=', 'cities.id');
 			$user_model->where('cities.states_id', '=', $states_id);
 			$classes_arr['Location_City'] = 'cities';
@@ -1144,13 +1155,13 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 			$user_model->where('users.grad_year', '=', $gradyear);
 		}
 
-		if (isset($cities_id)){
+		if (isset($cities_id) && (int)$this->cities_id > 0){
 			$user_model->where('users.cities_id', '=', $cities_id);
 		}
 
 		$user_model = sizeof($classes_arr) > 0 ? ORM::_sql_exclude_deleted($classes_arr,$user_model) : $user_model;
 
-		$enttype_id = Model_Site_Enttype::getMyEntTypeID($this);
+		$enttype_id = Ent::getMyEntTypeID($this);
 
 		// NUM VOTES
 		if (!isset($orderby) || $orderby == 'votes')
@@ -1191,10 +1202,14 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 
 		if (isset($searchtext))
 		{
-			$user_model->where(array(Db::expr('CONCAT(users.first_name," ",users.last_name)'), 'full_name'), 'like ','%'.$searchtext.'%');
+			$user_model->and_where_open()
+				->where('users.first_name', 'LIKE ',$searchtext.'%')
+				->or_where('users.last_name','LIKE',$searchtext.'%')
+				->or_where(array(Db::expr('CONCAT(users.first_name," ",users.last_name)'), 'full_name'), 'like ','%'.$searchtext.'%')
+				->and_where_close();
 		}
 		$user_model->distinct(TRUE);
-		$user_model->limit(50);
+		$user_model->limit($limit)->offset($offset);
 
 		$exclude_deleted_users_array['User_Base'] = 'users';
 		$user_model = ORM::_sql_exclude_deleted($exclude_deleted_users_array, $user_model);

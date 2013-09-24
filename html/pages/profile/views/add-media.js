@@ -29,7 +29,8 @@ function(require, profileAddMediaTemplate,application) {
 		
 	    events: {
 		   "click #addPhoto" : "openAddImagePopup",
-           "click #addVideo" : "openAddvideoPopup"
+           "click #addVideo" : "openAddvideoPopup",
+           "click #addGame" : "openAddGamePopup"
 	    },
 	
 		
@@ -39,6 +40,10 @@ function(require, profileAddMediaTemplate,application) {
                 throw new Error("ProfileAddMediaView expects option with model property.");
             }
 			this.model.userid = options.userid;
+        },
+        
+        openAddGamePopup: function() {
+        	routing.trigger('add-game', this.model.userid);
         },
 
 	    openAddImagePopup: function(event)

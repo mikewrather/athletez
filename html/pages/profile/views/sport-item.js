@@ -52,13 +52,14 @@ function (
         },
         
         initTeamList: function() {
-            var self = this, sport_id = $(".sports-h a.selected-sport-h").data("id");
-            
+            var self = this, sports_id = $(".sports-h img.selected-sport-h").data("id");
+
             this.teams = new TeamList();
             this.teams.id = this.id;
-            this.teams.sport_id = sport_id;
+            this.teams.sports_id = sports_id;
             this.teams.fetch();
             $.when(this.teams.request).done(function() {
+	            console.log("TEAMS:",self.teams);
                 self.setupTeamListView();
             });
         },

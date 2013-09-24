@@ -51,6 +51,19 @@ define(["require", "text!usercontrols/addgame/templates/layout.html",
 			if (options.id) {
 				this.id = options.id;
 			}
+			
+			if(options.popup) {
+				this.popup = true;
+				this.modelHTML = '<div id="modalPopup" class="modal hide fade model-popup-h">'+
+								'<div class="modal-header">'+
+   			 					'<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>'+
+    							'<h3>Add Game</h3>'+
+  								'</div>'+
+								'<div class="modal-body page-content-h"></div><div class="modal-footer">'+
+    							'<button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>'+
+  								'</div></div>';
+				}
+			
 			if(options.gender){
 				this.gender = options.gender;
 			}
@@ -61,7 +74,13 @@ define(["require", "text!usercontrols/addgame/templates/layout.html",
 		},
 		/*To reduce initialize methods length and all the view related functions */
 		init : function() {
-			this.setupLayout().render();
+			
+			
+			if(this.popup)
+				this.setupPopupLayout().render();
+			else
+				this.setupLayout().render();
+				
 			this.setUpMainView();
 			this.handleDeferreds();
 
@@ -84,6 +103,22 @@ define(["require", "text!usercontrols/addgame/templates/layout.html",
 			return this.layout;
 		},
 		
+		setupPopupLayout: function () {
+            var pageLayout;
+			this.scheme=[];
+			$(".model-popup-h").remove();
+			$('body').append(this.modelHTML);
+            var pageLayout = new LayoutView({
+				scheme : this.scheme,
+				destination : "#modalPopup",
+				template : '',
+				displayWhen : "ready"
+			});
+            this.layout=pageLayout;
+           $('#modalPopup').modal();
+            return this.layout;
+        },
+		
 		/* Set  Up  User References  View  View */
 		setUpMainView : function() {
 	//		console.log("Set Up Main View Add Game");
@@ -93,7 +128,7 @@ define(["require", "text!usercontrols/addgame/templates/layout.html",
 				model : new BasicModel(),
 				template : pageLayoutTemplate,
 				name : "add-game-main",
-				destination : "#main",
+				destination : (this.popup)?".page-content-h":"#main",
 				user_id : self.id,
 				channel : 'add-game-success',
 			});
