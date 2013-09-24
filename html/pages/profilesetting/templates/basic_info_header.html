@@ -1,14 +1,14 @@
 {{#payload}}
 <div class="span3">
-	<img id="img-profile-prof-setting" src="{{user_picture}}" />
+	<img id="img-profile-prof-setting" src="{{user_picture_obj.types.large_thumb.url}}" />
 </div>
 <div class="span6">
 	<h2>{{name}}</h2>
 	<p>
-		{{user_height}} INCHES
+		{{height_in}} INCHES
 	</p>
 	<p>
-		{{user_weight}} LBS
+		{{weight_lb}} LBS
 	</p>
 </div>
 {{/payload}}

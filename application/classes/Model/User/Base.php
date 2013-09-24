@@ -633,20 +633,26 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 				array('users.id', 'user_id'),
 				array('orgs.id', 'org_id'),
 				array('orgs.name', 'org_name'),
+				array('cities.name', 'city_name'),
+				array('states.abbr', 'state_name'),
 				'teams.*',
 				array('sports.name','sport'),
 				array('sports.id','sports_id'),
+				array('sports.small_icon','icon'),
 				array('teams.id', 'team_id'),
 				array('complevels.name', 'complevel_name'),
 				array('seasons.name', 'season'), 'statvals.statval',
 				array('seasons.id', 'seasons_id')
 			)
 			->from('users')
+
 			->join('users_teams_link')->on('users.id','=','users_teams_link.users_id')
 			->join('teams')->on('teams.id','=','users_teams_link.teams_id')
 			->join('org_sport_link')->on('org_sport_link.id','=','teams.org_sport_link_id')
 			->join('sports')->on('org_sport_link.sports_id','=','sports.id')
 			->join('orgs')->on('orgs.id','=','org_sport_link.orgs_id')
+			->join('cities')->on('orgs.cities_id','=','cities.id')
+			->join('states')->on('cities.states_id','=','states.id')
 			->join('complevels', 'LEFT')->on('complevels.id','=','teams.complevels_id')
 			->join('seasons', 'LEFT')->on('seasons.id','=','teams.seasons_id')
 			->join('statvals', 'LEFT')->on('statvals.teams_id','=','teams.id')
@@ -690,12 +696,15 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 
 		foreach($res as $team)
 		{
+
 			if(!array_key_exists($team['org_id'],$orgs))
 			{
 				// Create the org array
 				$orgs[$team['org_id']] = array(
 					'org_id' => $team['org_id'],
 					'org_name' => $team['org_name'],
+					'city' => $team['city_name'],
+					'state' => $team['state_name']
 				);
 			}
 
@@ -735,6 +744,7 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 					$orgs[$team['org_id']]["sports"][$team['sports_id']] = array(
 						"sports_name" => $team['sport'],
 						"sports_id" => $team['sports_id'],
+						"icon" => $team['icon'],
 						"complevels" => array(),
 					);
 				}

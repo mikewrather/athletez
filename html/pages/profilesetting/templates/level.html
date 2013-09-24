@@ -1,4 +1,9 @@
 <div class="div-levels">
+	{{#sport}}
+		<div class="org-sport-list-header">
+			<div class="sport-name"><img src="{{icon}}" />{{sports_name}}</div>
+		</div>
+	{{/sport}}
 	<div class="well-small span12">
 		<!-- class="ddl-school-complevel"-->
 		<select class="ddl-complevel" orgsid="{{orgsId}}" sportsid="{{sportsId}}">
@@ -12,22 +17,26 @@
 	</div>
 	<!-- id="div-school-seasons"-->
 	<div class="div-seasons displayNone">
-		<div class="span12 well-small">
+		<div class="arrow-container">
 			<a href="javascript:void(0)" class="down arrow">&uarr;</a>
 		</div>
 		{{#Data}}
-		<div class="span12">
-			<span class="span3"><strong>{{year}}</strong></span>
+		<div class="season-array">
+			<div class="year-label">{{year}}</div>
+
 			{{#seasons}}
-			<span class="span3">
-				<input type="checkbox" class="chkSeasons chkSeasons-{{season_id}}-{{year}}" seasonId = '{{season_id}}' year='{{year}}' orgsid="{{orgsId}}" sportsid="{{sportsId}}"/>
-				<label>&nbsp;{{season_name}} </label> 
-				<a href="javascript:void(0)" class="btnOpenPositions displayNone" disabled="disabled" >Positions</a>
+
+				<span class="single-season">
+					<input type="checkbox" class="chkSeasons chkSeasons-{{season_id}}-{{year}}" seasonId = '{{season_id}}' year='{{year}}' orgsid="{{orgsId}}" sportsid="{{sportsId}}"/>
+					<label>&nbsp;{{season_name}} </label>
+					<a href="javascript:void(0)" class="btnOpenPositions displayNone" disabled="disabled" >Positions</a>
 				</span>
+
 			{{/seasons}}
+
 		</div>
 		{{/Data}}
-		<div class="span12 well-small">
+		<div class="arrow-container">
 			<a href="javascript:void(0)" class="down arrow">&darr;</a>
 		</div>
 

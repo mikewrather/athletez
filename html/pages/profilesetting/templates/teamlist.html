@@ -1,36 +1,35 @@
 {{#orgs}}
-<div class="div-sports-wrapper">
-	
-<div class="clearfix">
-	<h3>{{org_name}}</h3><a class="btn-add-sports" href="javascript:void(0)" orgsId="{{org_id}}">Add Sport</a>
-</div>
-<div class="school-sports-section">
-		</div>
-</div>
-{{#sports}}
-<div class="clearfix">
-	<h4> {{sports_name}}</h4>
-	
-</div>
-<div class="sub-section-prof-setting well well-large">
-	<a href="javascript:void(0)" class="edit-team"  orgsId="{{org_id}}" sportId="{{sports_id}}">Edit</a>
-	{{#complevels}}
-	{{#seasons}}
-	<div class="row-fluid">
-		<span class="span3"><strong>{{season}} {{year}}</strong></span>
-		<span class="span3">{{complevel}}</span>
-		<span class="span3">
-			{{#positions}}
-			{{name}},
-			{{/positions}}
-			
-		</span>
-		<span class="span3">
-		<!--	<a href="javascript:void(0)" class="delete-team" teamid="{{team_id}}">Delete</a> -->
-		</span>
+	<div class="div-sports-wrapper"  orgsId="{{org_id}}">
+		<div class="school-sports-section"></div>
 	</div>
-	{{/seasons}}
-	{{/complevels}}
-</div>
-{{/sports}}
+	<div class="org-sport-list">
+		<div class="org-sport-list-header">
+			<div class="org-name">{{org_name}}, {{city}}, {{state}}</div>
+			<div class="add-sport"><a class="btn-add-sports" href="javascript:void(0)" orgsId="{{org_id}}">Add Sport</a></div>
+		</div>
+		{{#sports}}
+
+			<div class="org-sport-list-header">
+				<div class="sport-name"><img src="{{icon}}" />{{sports_name}} - <a href="javascript:void(0)" class="edit-team"  orgsId="{{org_id}}" sportId="{{sports_id}}">Edit</a></div>
+			</div>
+
+			<div>
+				{{#complevels}}
+
+					{{#seasons}}
+				<div class="season-list">
+						<span>{{complevel}}</span>
+						<span>{{season}} {{year}}</span>
+						<span>
+							{{#positions}}<span class="position-listing">{{name}}</span>{{/positions}}
+							{{^positions}}No Positions&nbsp;{{/positions}}
+						</span>
+				</div>
+					{{/seasons}}
+
+				{{/complevels}}
+			</div>
+
+
+		{{/sports}}</div>
 {{/orgs}}
