@@ -114,14 +114,6 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 		/*render displays the view in browser*/
 		render : function() {
 			SectionView.prototype.render.call(this);
-
-			// $(self.el).find(self.controls.txtGameDate).datetimepicker({
-			// altField : $(self.el).find(self.controls.txtGameTime),
-			// changeMonth : true,
-			// changeYear : true
-			// });
-			//
-
 			$(self.el).find(self.controls.txtGameDate).datetimepicker({
 				timeFormat : 'hh:mm tt z',
 				separator : ' @ ',
@@ -197,32 +189,27 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 
 		},
 		fillTeams : function(sport_id) {
+			
 			var List = new UserTeamsCollection();
 			List.user_id = self.user_id;
 			List.sports_id = sport_id;
 			List.processResult = function(collection) {
 
 				var data = List.parseAsRequired();
-				//	//console.log("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
-				//	//console.log("data",data);
 				self.setUpUserTeams(data);
 
 			};
-			List.fetch();
+			//self.TeamFetchRequest = self.abortRequest(self.TeamFetchRequest);
+			var tempCollection = List.fetch();
+			//self.TeamFetchRequest.push(tempCollection);
+
 		},
 		setUpUserTeams : function(List) {
-			//	var models = List.toJSON();
-			//	//console.log("Models Teams", models);
 			if (List == null) {
 				$(self.destination).find(self.controls.ddlUserTeams).parent().find(self.controls.fieldMessage).html(self.messages.dataNotExist).stop().fadeIn();
 				return;
 			}
 			self.teams = List;
-			// [];
-			// for (var key in List) {
-			// self.teams.push(List[key].payload);
-			// }
-			// Sort Sports Before Filling Up Into Drop-Down
 			self.sort(self.teams, 'team_name', false);
 			self.setDropdownOptions(self.teams, 'team_name', 'team_id', $(self.destination).find(self.controls.ddlUserTeams), 'Select Team');
 		},
@@ -255,7 +242,15 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 					//Create Collection
 					var stateList = new StatesCollection();
 					stateList.state_name = $(e.target).val();
-					stateList.fetch();
+					
+					console.log("State Request Abort Request Function AddGame/Main.js");
+					self.stateFetchRequest = self.stateFetchRequest || [];
+					self.stateFetchRequest.push(self.cityFetchRequest || []);
+					self.stateFetchRequest.push(self.teamFetchRequest || []);
+					
+					self.stateFetchRequest = self.abortRequest(self.stateFetchRequest);
+					var tempCollection = stateList.fetch();
+					self.stateFetchRequest.push(tempCollection);					
 					$.when(stateList.request).done(function() {
 						/*Don't Show Auto Complete In Case Of Error*/
 						if (stateList.isError())
@@ -339,7 +334,14 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 					//Create Collection
 					var List = new CityCollection();
 					List.city_name = $(e.target).val();
-					List.fetch();
+					console.log("City Request Abort Request Function AddGame/Main.js");
+					self.cityFetchRequest = self.cityFetchRequest || [];
+					self.cityFetchRequest.push(self.teamFetchRequest || []);
+					
+					self.cityFetchRequest = self.abortRequest(self.stateFetchRequest);
+					var tempCollection = List.fetch();
+					self.cityFetchRequest.push(tempCollection);
+
 					$.when(List.request).done(function() {
 						/*Don't Show Auto Complete In Case Of Error*/
 						if (List.isError())
@@ -410,10 +412,10 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 		keyupTeam : function(e) {
 			var name = $(e.target).val();
 			var arr = [];
+			
 			var isValidKey = self.isValidAutoCompleteKey(e);
 			if (name != '' && isValidKey == true && name.length > 2) {
-
-				// Hide all other controls
+			// Hide all other controls
 				$(e.target).removeAttr(self.attributes.teamId);
 				self.CheckTeamControlsVisibility();
 
@@ -421,7 +423,11 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 				List.states_id = $(e.target).attr(self.attributes.stateId);
 				List.city_id = $(e.target).attr(self.attributes.cityId);
 				List.team_name = name;
-				List.fetch();
+	
+				self.TeamFetchRequest = self.abortRequest(self.TeamFetchRequest);
+				var tempCollection = List.fetch();
+				self.TeamFetchRequest.push(tempCollection);
+				
 				$.when(List.request).done(function() {
 					if (List.isError())
 						return;
@@ -496,10 +502,17 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 				$(e.target).removeAttr(self.attributes.gameId);
 				self.CheckTeamControlsVisibility();
 
+
 				var List = new GamesSearchCollection();
 				List.sports_id = $(e.target).attr(self.attributes.sportId);
 				List.game_name = name;
-				List.fetch();
+				
+
+				console.log("Game Request Abort Request Function");
+				self.individualGameFetchRequest = self.abortRequest(self.individualGameFetchRequest);
+				var tempCollection = List.fetch();
+				self.individualGameFetchRequest.push(individualGameFetchRequest);
+				
 				$.when(List.request).done(function() {
 					if (List.isError())
 						return;
@@ -690,14 +703,14 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 			var teamTwoId = $(self.destination).find(self.controls.sectionTeamTwo).find(self.controls.txtTeam).attr(self.attributes.teamId);
 			var scoreTwo = $(self.destination).find(self.controls.sectionTeamTwo).find(self.controls.txtScore).val();
 
-			self.location_id = self.location_id || $(self.controls.txtLocationId).val() || 0;
+			var locationId = self.location_id || $(self.controls.txtLocationId).val() || 0;
 			//console.log(date);
 			if (!date) {
 				$(self.destination).find(self.controls.sectionDate).find(self.controls.fieldMessage).html(self.messages.selectDateAndTime).fadeIn();
 				isDataValid = false;
 			}
 
-			if (!self.location_id) {
+			if (!locationId) {
 				$(self.destination).find(self.controls.sectionMainLocation).find(self.controls.fieldMessage).html(self.messages.selectLocation).fadeIn();
 				isDataValid = false;
 			}
@@ -735,7 +748,7 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 			if (isDataValid) {
 				var payload = {
 					game_datetime : date,
-					locations_id : self.location_id,
+					locations_id : locationId,
 					teamOneId : teamOneId,
 					teamTwoId : teamTwoId,
 
@@ -748,6 +761,8 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 				$.when(gameModel.request).done(function(response) {
 					////console.log(response);
 					if (response != null && response.payload != null) {
+						console.log("gameId",response.payload.id);
+			console.log("response",response.payload);
 						self.game_id = response.payload.id;
 
 						var isHome = $(self.destination).find(self.controls.rdoTeamOne).is(':checked');

@@ -44,12 +44,21 @@ function(facade,  views,   utils,   ImageItemView,            ImageBoardView,   
        },
 
         initialize: function(options) {
-        	//alert("sdfsdf");
+        	if(options.name)
+        		this.name = options.name;
+        	else
+        		this.name = "image list";
+        	
+        	
+        	if(options.collecton)
+        		this.collection = options.collection;
+        		
 			// render template
 			this.renderTemplate();
 	        //console.log(options);
-	        console.log($(this.listView));
-	       // options.listView = this.listView;
+	       
+	      
+	       
 	        var _self = this;
 			 _self.allData = this.collection.toArray();
 			_self.seeMore();
@@ -66,7 +75,6 @@ function(facade,  views,   utils,   ImageItemView,            ImageBoardView,   
         
         seeMore: function(e) {
 			var len = this.allData.length, start = this.page * this.page_limit, end = start + this.page_limit;
-			console.log(start +"--"+ len +"--"+end);
 			if(len <= end) {
 				 this.$el.find('.see-more-h').hide();
 			}
@@ -104,7 +112,6 @@ function(facade,  views,   utils,   ImageItemView,            ImageBoardView,   
             function callback (data) {
                 addView.model = data;
                 addView.render();
-                alert("render");
                 $(this.listView).append(addView.el);
             }
             
@@ -114,16 +121,12 @@ function(facade,  views,   utils,   ImageItemView,            ImageBoardView,   
 	    filterWithImageType: function(type) {
 		    var c = this.collection;
 			$.each(c.models, function(i, field){
-				field.selectImageType(type);
+				if(field.selectImageType) field.selectImageType(type);
 		    });
 		    return c;
 		},
 
         setupBoardView: function() {
-        	debug.log("setupBoardView media/views/image-list.js");
-
-	        debug.log("image list collection: ");
-	        debug.log(this.collection);
             if (this.collection.size() == 0)
                 return;
             var filtered_images = this.filterWithImageType( this.imagetype );
@@ -136,16 +139,12 @@ function(facade,  views,   utils,   ImageItemView,            ImageBoardView,   
                 addView.render();
                 $(this.listView).prepend(addView.el);
             });
-            
-            console.log(this);
-            
+           
             
             function changeBoard(data) {
                 addView.model = data;
                 addView.render();
-               
             }
-            
            // this.$el.append("this is for test");
             Channel('changeimage' + this.collection.id).subscribe(changeBoard);
         }

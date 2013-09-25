@@ -36,7 +36,7 @@ define( ["models/base"], function (BaseModel) {
 	            "id": "addVideo"
             }, {
                 "label": "Game",
-	            "link" : "#game",
+	            "link" : "javascript: void(0);",
 	            "id": "addGame"
                             }
             ],

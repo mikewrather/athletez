@@ -1,10 +1,4 @@
-
-{{#payload}}
-<div class="row-fluid sport-info sport-info-{{sport_id}}" style="display:none">
-    <div class="teams-info"></div>
-	    {{#teams}}
-	        {{team_name}}<br/>
-	    {{/teams}}
-	</div>            
-{{/payload}}
+{{#records}}
+    <a href="/#team/{{payload.id}}">{{#payload.team_name}}{{payload.team_name}}{{/payload.team_name}}</a><br />
+{{/records}}
 

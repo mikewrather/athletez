@@ -14,10 +14,9 @@ function(facade, UserFitnessBasicList, utils) {
         
         url: function() {
             if (testpath)
-                return testpath + '/user/fitnessbasics/' + this.id + '/' + this.sport_id;            
-            return '/api/user/fitnessbasics/' + this.id + '&sport_id=' + this.sport_id;                        
+                return testpath + '/user/rdtree/' + this.id + '/?overview=1&sports_id=' + this.sport_id;
+            return '/api/user/rdtree/' + this.id + '?overview=1&sports_id=' + this.sport_id;
         }
-        
 
     });
 

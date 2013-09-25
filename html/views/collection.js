@@ -73,7 +73,6 @@ define(['facade','views/base','utils'], function (facade, BaseView, utils) {
         // Creates a new view for models added to the collection
         add : function(model) {
             var view;
-
             view = new this._view({
                 "tagName": this._tagName,
                 "model": model,
@@ -82,12 +81,15 @@ define(['facade','views/base','utils'], function (facade, BaseView, utils) {
             });
             this._views.push(view);
             if (this._rendered) {
-            	if(this.listView)
+            	if(this.listView) {
             		if(this.prepend)
-            			this.$el.find(this.listView).prepend(view.render().el)
+            			this.$el.find(this.listView).prepend(view.render().el);
             		else
-	                	this.$el.find(this.listView).append(view.render().el)
-                else
+	                	this.$el.find(this.listView).append(view.render().el);
+                } else {
+	                this.$el.append(view.render().el);
+            	}
+            } else {
 	                this.$el.append(view.render().el);
             }
         },
@@ -111,7 +113,6 @@ define(['facade','views/base','utils'], function (facade, BaseView, utils) {
         // Iterates over collection appending views to this.$el
         // When a {Function} decorator option is available manipulte views' this.$el
         render : function() {
-            console.log(this.$el);
             this.confirmElement.call(this);
             this._rendered = true;
             if(!this.listView)

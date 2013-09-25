@@ -18,8 +18,8 @@ function(facade, collections, SportsOrgCollection, utils) {
                 var params = '';
 				if(this.game_name)
 					params += 'searchtext='+ this.game_name;
-				if(this.game_name)
-				//	params += '&sports_id='+ this.sports_id;
+				if(this.sports_id)
+					params += '&sports_id='+ this.sports_id;
 
                     return '/api/game/search?'+ params;
       },

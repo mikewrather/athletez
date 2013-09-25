@@ -226,6 +226,10 @@ class ORM extends Kohana_ORM
 		}
 	}
 
+	public function restore_deleted_entity($enttypes_id, $subject_id){
+		//TODO, add by Jeffrey, Need to delete recursively, DB::delete()
+	}
+
 	public function getTableName()
 	{
 		return $this->_table_name;
@@ -284,6 +288,9 @@ class ORM extends Kohana_ORM
 	 */
 	public function getBasics($settings = array())
 	{
+		//get the current user for later use
+		$logged_user = Auth::instance()->get_user();
+
 		// Pulls the standard settings for this class
 		$class_settings_arr = is_object($this->get_basics_obj) ? $this->get_basics_obj->getSettings() : $this->populate_get_basics_obj()->getSettings();
 
@@ -299,6 +306,9 @@ class ORM extends Kohana_ORM
 
 		// Single Item allows us to retrieve the value for a single column.  here we check if it is a string (column name)
 		$settings['single_item'] = is_string($settings['single_item']) ? $settings['single_item'] : FALSE;
+
+		// Get whether to return vote / follow information for this item
+		$settings['get_vote_and_follow'] = is_bool($settings['get_vote_and_follow']) ? $settings['single_item'] : TRUE;
 		
 		// exclude list can hold a list of columns to exclude from the results
 		$class_settings_arr['exclude_columns'] = (is_array($class_settings_arr['exclude_columns']) && !empty($class_settings_arr['exclude_columns'])) ?
@@ -309,11 +319,28 @@ class ORM extends Kohana_ORM
 		//store enttype of this object
 		$current_enttype = Ent::getMyEntTypeID($this);
 
+		// check settings to see if we can return vote and follow
+		if($settings['get_vote_and_follow'])
+		{
+			//get whether logged user has cast a vote for this item
+			$has_voted = Ent::has_voted($current_enttype,$this->id);
+
+			//get whether logged user is following this item
+			$is_following = Ent::is_follower($this);
+		}
+
 		//add current enttype to list of types not to call in recursive calls.  This will protect from infinite recursion.
 		$settings['called_entities'][] = $current_enttype;
 
 		// Create return array variable and set the enttype ID of the current object
 		$retArr = ($settings['return_enttypes_id'] === TRUE) ? array("enttypes_id" => $current_enttype) : array();
+
+		// if these vars are set it means the settings calls for it to be returned, so add them to return array
+		if(isset($has_voted)) $retArr['has_voted'] = $has_voted;
+		if(isset($is_following)) $retArr['is_following'] = $is_following;
+
+		//check to see if the logged user is the owner of this object
+		if($logged_user) $retArr['is_owner'] = (method_exists($this,'is_owner')) ? $this->is_owner($logged_user) : false;
 
 		// Loop through all columns
 		foreach($this->table_columns() as $column=>$column_meta)
@@ -333,7 +360,8 @@ class ORM extends Kohana_ORM
 			if(in_array($column_key,$class_settings_arr['exclude_columns'])) continue;
 
 			// add this column's value to the return array
-			$retArr[$column_key] = $this->$column;
+			$retArr[$column_key] = utf8_encode($this->$column);
+		//	$retArr[$column_key] = $this->$column;
 
 			// Allows us to turn off sub-objects when set to false
 			if($settings['get_sub_objects'] === TRUE)

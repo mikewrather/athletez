@@ -2,7 +2,7 @@
 // --------------
 
 define(
-		[ 'facade', 'views', 'utils', 'pages/home/views/image-item' ],
+		[ 'facade', 'views', 'utils', 'media/views/image-item' ],
 		function(facade, views, utils, ImageItemView) {
 
 			var ImageListView, ImageListAbstract, $ = facade.$, _ = facade._, Channel = utils.lib.Channel, CollectionView = views.CollectionView, SectionView = views.SectionView;

@@ -71,10 +71,10 @@ define([
 				{
 					var url = "/api/game/addimage/" + self.game_model.attributes.id,
 						attr = {
-							"sports_id" : teamModel.attributes.payload.org_sport_link.sports_id
+							"sports_id" : teamModel.attributes.payload.org_sport_link_obj.sports_id
 						};
 					// open the popup
-					Channel("add-image").publish(url, attr);
+					routing.trigger("add-image", url, attr);
 				});
 			}
 

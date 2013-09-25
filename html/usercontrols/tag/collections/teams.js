@@ -15,11 +15,20 @@ function(facade, collections, SportsOrgCollection, utils) {
 
     List = SportsOrgCollection.extend({
     	url: function(){
-    		var params = '';
+    		 var params = '';
 				if(this.team_name)
 					params += 'team_name='+ this.team_name;
+				 if(this.team_name)
+					 params += '&searchtext='+ this.team_name;
+				 if(this.states_id)
+					 params += '&states_id=' + this.states_id;	
+				 if(this.cities_id)
+					 params += '&cities_id=' + this.cities_id;
+				 if(this.sports_id)
+					 params += '&sports_id=' + this.sports_id;
 
-                    return '/api/team/search/?'+ params;
+
+                    return '/api/team/search?'+ params;
       },
     });
 

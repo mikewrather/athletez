@@ -233,5 +233,52 @@
 		###########################    DELETE METHODS    ###########################
 		############################################################################
 
-		
+		public function action_delete_delete(){
+			//permission check
+			if(!$this->user->can('Assumeownership', array('owner' => $this->user->id))){
+				$this->throw_permission_error(Constant::NOT_OWNER);
+			}
+
+			if(!isset($this->myID) || !isset($this->myID2))
+			{
+				$error_array = array(
+					"error" => "Required Parameters Missing",
+					"desc" => "Required Parameters Missing."
+				);
+
+				$this->modelNotSetError($error_array);
+				return false;
+			}
+			$subject = Ent::eFact($this->myID, $this->myID2);
+			$subject->delete_with_deps();
+			return $subject->getBasics();
+		}
+
+		public function action_delete_restore(){
+			//permission check
+			if(!$this->user->can('Assumeownership', array('owner' => $this->user->id))){
+				$this->throw_permission_error(Constant::NOT_OWNER);
+			}
+
+			if(!isset($this->myID) || !isset($this->myID2))
+			{
+				$error_array = array(
+					"error" => "Required Parameters Missing",
+					"desc" => "Required Parameters Missing."
+				);
+			}
+			if(!isset($this->myID) || !isset($this->myID2))
+			{
+				$error_array = array(
+					"error" => "Required Parameters Missing",
+					"desc" => "Required Parameters Missing."
+				);
+
+				$this->modelNotSetError($error_array);
+				return false;
+			}
+			$subject = Ent::eFact($this->myID, $this->myID2);
+			$subject->undo_delete_with_deps();
+			return $subject->getBasics();
+		}
 	}

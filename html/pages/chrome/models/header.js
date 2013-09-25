@@ -12,8 +12,8 @@ define( ["models/base",'utils/storage'], function (BaseModel,Store) {
         defaults: {
             
             branding: {
-                alt: "NewSite",
-                src: "/images/logo.png"
+                alt: "athletez",
+                src: "http://cdn.athletez.com/resources/img/athletez_logo_small.png"
             },            
             
             search: {

@@ -64,21 +64,28 @@ function(require, profileHeaderTemplate, selectSportTemplate) {
         
         setupSportListView: function() {
         	console.log(this.sports);
+
+
             var self = this,
                 sportListView = new SportListView({
                     collection: this.sports
                 }),
                 renderSportListView = this.addChildView(sportListView);
 
-            this.childViews.sportListView = sportListView;
+	        console.log("SPORTS LIST VIEW",sportListView.el);
+
+
+
+	        this.childViews.sportListView = sportListView;
             this.callbacks.add(function () {
                 renderSportListView();                
-            });  
+            });
             
             self.$el.find('#sports-info').html(sportListView.el);
             var data = {"payload": []};
             var collection = sportListView.collection;
-            if (collection.length) {
+            if (collection.length)
+            {
                 for (i = 0; i < collection.length; i++) {
                     data["payload"][i] = collection.at(i).get('payload');
                 }
@@ -106,7 +113,7 @@ function(require, profileHeaderTemplate, selectSportTemplate) {
         },
         
         selectSport: function(e) {
-            var sport_id = (!e)?$(".sports-h a:first-child").data("id"):$(e.target).data("id");
+            var sport_id = (!e)?$(".sports-h img:first-child").data("id"):$(e.target).data("id");
             //this.select_sport.val();
             $(".sports-icon-h").removeClass('selected-sport-h');
             $(".sports-icon-h[data-id="+sport_id+"]").addClass('selected-sport-h');
@@ -114,7 +121,8 @@ function(require, profileHeaderTemplate, selectSportTemplate) {
             if(sport_id) {
 	            this.$('.sport-info').stop().slideUp();
 	            this.$('.sport-info-' + sport_id).stop().slideDown();
-	            Channel('gamesports:select' + sport_id).publish();            
+	            routing.trigger("showTwmList", sport_id);
+	            //Channel('gamesports:select' + sport_id).publish();            
         	}
         }
         

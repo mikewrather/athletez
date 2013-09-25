@@ -136,7 +136,14 @@ define(['require', 'text!profilesetting/templates/club.html', 'text!profilesetti
 
 					var stateList = new StatesCollection();
 					stateList.state_name = state;
-					stateList.fetch();
+					console.log("State Request Abort Request Function AddGame/Main.js");
+					self.stateFetchRequest = self.stateFetchRequest || [];
+					self.stateFetchRequest.push(self.cityFetchRequest || []);
+					self.stateFetchRequest.push(self.schoolFetchRequest || []);
+
+					self.stateFetchRequest = self.abortRequest(self.stateFetchRequest);
+					var tempCollection = stateList.fetch();
+					self.stateFetchRequest.push(tempCollection);
 					$.when(stateList.request).done(function() {
 						/*Don't Show Auto Complete In Case Of Error*/
 						if (stateList.isError())
@@ -214,7 +221,11 @@ define(['require', 'text!profilesetting/templates/club.html', 'text!profilesetti
 				List.sports_club = 1;
 				List.states_id = self.states_id;
 				List.org_name = name;
-				List.fetch();
+				
+				console.log("School Request Abort Request Function");
+				self.schoolFetchRequest = self.abortRequest(self.schoolFetchRequest);
+				var tempCollection = List.fetch();
+				self.schoolFetchRequest.push(tempCollection);
 
 				$.when(List.request).done(function() {
 					if (List.isError())
@@ -341,8 +352,12 @@ define(['require', 'text!profilesetting/templates/club.html', 'text!profilesetti
 			if (orgs_id && orgs_id > 0) {
 				var List = new CompLevelModel();
 				List.orgs_id = orgs_id;
-				List.fetch();
-
+				
+				console.log("Complevels Request Abort Request Function");
+				self.compFetchRequest = self.abortRequest(self.compFetchRequest);
+				var tempCollection = List.fetch();
+				self.compFetchRequest.push(tempCollection);
+				
 				$.when(List.request).done(function() {
 					if (List.isError())
 						return;
@@ -425,8 +440,8 @@ define(['require', 'text!profilesetting/templates/club.html', 'text!profilesetti
 		 e: event, checkbox click event consisting of all information of event triggered*/
 		displayPositionPopup : function(event) {
 			self.clickedPositionTarget = $(event.target);
+			var teamId = $(event.target).attr('teamid');
 			if ($(event.target).parent().find(self.controls.chkSeasons).is(':checked')) {
-				var teamId = $(event.target).attr('teamid');
 				if ($(event.target).parents(self.controls.divSubLevels).find(self.controls.modalPositionsTitle).length > 0) {
 
 					self.$(event.target).parents(self.controls.divSubLevels).find(self.controls.modalPositionsTitle).attr('teamid', teamId).removeClass('active');
@@ -544,8 +559,6 @@ define(['require', 'text!profilesetting/templates/club.html', 'text!profilesetti
 					teamsModel.user_id = self.user_id;
 					teamsModel.save();
 					$.when(teamsModel.request).done(function() {
-						console.log("teamsModel", teamsModel);
-						console.log("teamsModel", teamsModel.toJSON());
 
 						if (teamsModel.isError())
 							return;
@@ -553,7 +566,7 @@ define(['require', 'text!profilesetting/templates/club.html', 'text!profilesetti
 						var model = teamsModel.toJSON();
 						if (model != null && model.payload != null || model.payload.id != null) {
 							$(event.target).attr('teamid', model.payload.team_id);
-							$(event.target).parent().find(self.controls.btnOpenPositions).attr('teamid', model.payload.id);
+							$(event.target).parent().find(self.controls.btnOpenPositions).attr('teamid', model.payload.id).removeAttr('disabled');
 							//	self.displayPositionPopup(event, model.payload.id);
 						}
 					});
@@ -561,6 +574,7 @@ define(['require', 'text!profilesetting/templates/club.html', 'text!profilesetti
 					console.error("OrgsId & ComplevelIds are", orgsId, compLevelId);
 					var cont = $(event.target).parents(self.controls.divLevels).find(self.controls.ddlComplevel);
 					$(cont).parent().find(self.controls.fieldError).html(self.messages.SelectLevel).stop().fadeIn();
+					$(event.target).parent().find(self.controls.btnOpenPositions).attr('disabled','disabled');
 				}
 			} else if (!$(event.target).is(':checked') && $(event.target).attr('teamid')) {
 				// IN CASE TEAM IS ALREADY ADDED INTO DATABASE DELETE IT
@@ -587,7 +601,7 @@ define(['require', 'text!profilesetting/templates/club.html', 'text!profilesetti
 					processData : true,
 					success : function() {
 						$(event.target).removeAttr('teamid');
-						$(event.target).parent().find(self.controls.btnOpenPositions).removeAttr('teamid').removeAttr("positions");
+						$(event.target).parent().find(self.controls.btnOpenPositions).removeAttr('teamid').removeAttr("positions").attr('disabled','disabled');
 					}
 				});
 
@@ -650,8 +664,11 @@ define(['require', 'text!profilesetting/templates/club.html', 'text!profilesetti
 			if (orgId && orgId > 0) {
 				var List = new CompLevelModel();
 				List.orgs_id = orgId;
-				List.fetch();
-
+				
+				console.log("Complevel Model Request Abort Request Function");
+				self.compLevelFetchRequest = self.abortRequest(self.compLevelFetchRequest);
+				self.compLevelFetchRequest = List.fetch();
+				
 				$.when(List.request).done(function() {
 					if (List.isError())
 						return;

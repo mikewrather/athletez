@@ -19,10 +19,19 @@ function(facade, collections, Model, utils) {
         model: Model,
         
         url: function(){
+        	var params = '';
         	if(this.user_name)
-        	return '/api/user/search?searchtext='+ this.user_name;
-        	
-        	return '/api/user/search';
+					params += 'searchtext='+ this.user_name;			
+			if(this.sports_id)
+					 params += '&sports_id=' + this.sports_id;
+			if(this.states_id)
+				 params += '&states_id=' + this.states_id;	
+			if(this.cities_id)
+					 params += '&cities_id=' + this.cities_id;
+			if(this.team_id)
+					 params += '&team_id=' + this.cities_id;
+					 
+        	return '/api/user/search?' + params;
         },
         
         

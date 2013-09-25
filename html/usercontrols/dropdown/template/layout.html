@@ -1,33 +1,21 @@
 <div class="dropdown-container">
+	<input type="hidden" class="hidden-input-dropdown-h" value="" />
 	<div class="drop-down-outer">
 		<div class="region-dark dropdown-header-box">
-			Region
+			{{dropView.title}}
 		</div>
 		<div class="down-arrow-outer">
-			<a href="javascript: void(0);" class="down-arrow icon-white up-down-arrow-h icon-chevron-down"></a>
+			<a href="javascript: void(0);" class="down-arrow up-down-arrow-h">
+				<span class="icon-white icon-chevron-down"></span>
+			</a>
 		</div>
 	</div>
 	<ul class="common-dropdown">
-		<li>
-			<a data-id="1" href="javascript: void(0);">A</a>
+		{{#records}}
+		
+		<li class="{{#dropView.defaultSelected}}{{dropView.defaultSelected}}{{/dropView.defaultSelected}}">
+			<a data-id="{{#dropView.getRecordId}}{{dropView.getRecordId}}{{/dropView.getRecordId}}" href="javascript: void(0);">{{#dropView.getRecordValue}}{{dropView.getRecordValue}}{{/dropView.getRecordValue}}</a>
 		</li>
-		<li>
-			<a data-id="2" href="javascript: void(0);">B</a>
-		</li>
-		<li>
-			<a data-id="3" href="javascript: void(0);">C</a>
-		</li>
-		<li>
-			<a data-id="4" href="javascript: void(0);">D</a>
-		</li>
-		<li>
-			<a data-id="5" href="javascript: void(0);">E</a>
-		</li>
-		<li>
-			<a data-id="6" href="javascript: void(0);">F</a>
-		</li>
-		<li>
-			<a data-id="7" href="javascript: void(0);">G</a>
-		</li>
+		{{/records}}
 	</ul>
 </div>
