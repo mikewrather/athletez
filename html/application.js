@@ -84,9 +84,10 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
         
         initTriggers: function() {
         	routing.off('photo-player-init');
-            routing.on('photo-player-init', function(index, collection) {
+            routing.on('photo-player-init', function(index, collection, userId) {
             	 var photoPlayer = new PhotoPlayerController({
                 	"index": index,
+                	userId: userId,
                 	_collection: collection
                 });
             });
@@ -403,7 +404,7 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
             function initRegistration() {
                 var registrationController = new RegistrationController({
                     "route": ""
-                })
+                });
             }
             this.initialiRoutesInit(initRegistration);
             //Channel('app-inited').subscribe(initRegistration);

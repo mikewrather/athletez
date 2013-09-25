@@ -1,0 +1,139 @@
+.photo-frame-model {
+	width: 970px !important;
+	margin-left: -486px !important;
+	top: 5% !important;
+}
+
+.photo-frame-model .modal-body {
+	max-height: 540px !important;
+}
+
+.photo-frame-model .comment-input-outer {
+	float: right;
+	width: 30%;
+}
+
+.photo-frame-model .comment .user-photo img {
+	margin-top: 0px !important;
+}
+
+.comment-input-outer #new-comment {
+	height: 30px;
+}
+
+.comment-input-outer form {
+	display: block !important;
+}
+
+.comment-input-outer .add-comment-h {
+	display: none;
+}
+
+.photo-player {
+	float: left;
+	width: 70%;
+}
+
+.comment-area, .photo-frame-model #comment_div {
+	width: 30%;
+	float: right;
+}
+
+.photo-player-coment {
+	float: left;
+	width: 100%;
+}
+
+.photo-player-coment .user-photo {
+	width: 24px;
+	height: 24px;
+	float: left;
+}
+
+.photo-player-coment .content {
+	float: left;
+	padding-left: 10px;
+}
+
+.photo-frame-model li.comment {
+	background: #CCCCCC;
+	display: block;
+}
+
+.player-move-options {
+	/*position: absolute;
+	 top: 150px;
+	 left: 0px;*/
+	margin-top: 28%;
+	font-size: 18px;
+}
+
+.image-bg {
+	text-align: center;
+	background: #000;
+}
+
+.photo-player-next {
+	margin-right: 20px;
+}
+
+.photo-player-back {
+	margin-left: 20px;
+}
+
+.images-list {
+	/*display: inline-block;*/
+	/*width: 100%;*/
+	float: left;
+}
+
+.thumbs-outer {
+	max-width: 100%;
+	width: 100%;
+	margin-top: 5px;
+	max-height: 150px;
+	overflow: scroll;
+}
+
+.thumbs-inner {
+	width: 10000px;
+}
+
+.images-list li {
+	float: left;
+	display: inline-block;
+	margin-right: 5px;
+	opacity: 0.5;
+}
+
+.images-list li img {
+	width: 90px;
+}
+
+.images-list li.selected-photo-thumb {
+	opacity: 1;
+}
+
+.image-actions {
+	position: absolute;
+	top: 30px;
+	left: 50px;
+}
+
+.image-actions li {
+	padding: 5px;
+	background: #CCC;
+	float: left;
+}
+
+.image-actions li:first-child {
+	margin-right: 5px;
+}
+
+.image-actions li a {
+	color: #FFF;
+}
+
+.photo-player-main-image {
+	min-height: 380px;
+}
