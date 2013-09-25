@@ -2,9 +2,9 @@
 // --------------  
 // Requires define
 // Return {Object} App
-define( ["facade", "utils", "collections", "chrome", "controller", "profile", "imageup",'home','videopreview',"game", "team", "registration","profilesetting","userresume","packages/site/collections/phrases","usercontrols/tag/tag","usercontrols/addgame/addgame","login/model","login/view",'signup'],
+define( ["facade", "utils", "collections", "chrome", "controller", "profile", "imageup",'home','videopreview',"game", "team", "registration","profilesetting","userresume","packages/site/collections/phrases","usercontrols/tag/tag","usercontrols/addgame/addgame","login/model","login/view",'signup', "usercontrols/photo-player/photo-player"],
 function (facade, utils, collections, chromeBootstrap, Controller, ProfileController, ImageController, HomeController, VideoPreviewController,
-	GameController, TeamController, RegistrationController,ProfileSetting,UserResume, SitePhraseList , TagController,AddGameController,loginModel, loginView, SignupController) {
+	GameController, TeamController, RegistrationController,ProfileSetting,UserResume, SitePhraseList , TagController,AddGameController,loginModel, loginView, SignupController, PhotoPlayerController) {
 
 
     //App;
@@ -80,6 +80,17 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
             		routing.ajaxRequests[i].abort();
             	}
             }
+        },
+        
+        initTriggers: function() {
+        	routing.off('photo-player-init');
+            routing.on('photo-player-init', function(index, collection, userId) {
+            	 var photoPlayer = new PhotoPlayerController({
+                	"index": index,
+                	userId: userId,
+                	_collection: collection
+                });
+            });
         },
         
         initialiRoutesInit: function(fn) {
@@ -393,7 +404,7 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
             function initRegistration() {
                 var registrationController = new RegistrationController({
                     "route": ""
-                })
+                });
             }
             this.initialiRoutesInit(initRegistration);
             //Channel('app-inited').subscribe(initRegistration);

@@ -48,7 +48,7 @@ function(require, teamAddMediaTemplate) {
 	    openAddImagePopup: function(event)
 	    {
 			 
-             var sport_id = $('.sports-h').val(), id = $(".team-h").val(), url = "/api/team/addimage/" + id,
+             var sport_id = $('#sports-h').val(), id = $("#team-h").val(), url = "/api/team/addimage/" + id,
                 url = "/api/team/addimage/" + id,
 			    attr = {
 				    "sports_id" : sport_id

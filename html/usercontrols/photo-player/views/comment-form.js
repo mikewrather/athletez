@@ -6,8 +6,8 @@
 // Requires define
 // Returns {CommentOnFormView} constructor
 
-define(['require',  'text!site/templates/comment-form.html', 'profile/models/commentonform', 'site/views/comment-form', 'models/base',  'views'],
-function(require, commentFormTemplate,    ProfileCommentFormModel,        BaseCommentFormView,      BaseModel) {
+define(['require',  'text!site/templates/comment-form.html', 'usercontrols/photo-player/models/commentonform', 'site/views/comment-form', 'models/base',  'views'],
+function(require, commentFormTemplate,    commentFormModel,        BaseCommentFormView,      BaseModel) {
 
     var CommentOnFormView;
 	var  views = require('views'),
@@ -20,7 +20,7 @@ function(require, commentFormTemplate,    ProfileCommentFormModel,        BaseCo
              this.setOptions();
              BaseView.prototype.initialize.call(this, options);
          },
-	    el: "#comment_div",
+	    el: ".comment-input-outer-h",
 	    template: commentFormTemplate,
 
 	    events: {
@@ -31,12 +31,12 @@ function(require, commentFormTemplate,    ProfileCommentFormModel,        BaseCo
         // **Method** `setOptions` - called by BaseView's initialize method
         setOptions: function (options) {
             if (!this.collection) {
-                throw new Error("ProfileCommentOnFormView expected options.collection.");
+                throw new Error("comment form view expected options.collection.");
             }
             
             if (!this.model) {
 	            console.log("this.collection.id =", this.collection.id);
-                this.model = new ProfileCommentFormModel({id: this.collection.id});
+                this.model = new commentFormModel({id: this.collection.id});
                 console.log(this.model.toJSON());
                 this.model.fetch();
             }
@@ -84,7 +84,7 @@ function(require, commentFormTemplate,    ProfileCommentFormModel,        BaseCo
 	                
                     if (testpath)
                         return testpath + '/user/comment/add';
-                    return '/api/comment/add/';
+                    return '/api/media/addcomment/'+payload['subject_id']+"?comment="+payload['comment'];
                 };
 
             saveInfo.saveSuccess = function(model, response) {

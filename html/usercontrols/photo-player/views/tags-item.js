@@ -7,31 +7,26 @@ define([
         'vendor', 
         'views',
         'utils', 
-        'text!site/templates/comment-item.html'
+        'text!usercontrol/photo-player/templates/tag-item.html'
         ], 
 function (
         vendor,
         views,
         utils,
-        commentItemTemplate
+        tagItemTemplate
         ) {
 
-    var CommentItemView,
+    var TagItemView,
         BaseView = views.BaseView, 
         Mustache = vendor.Mustache;
 
-      CommentItemView = BaseView.extend({
-
+      TagItemView = BaseView.extend({
         tagName: "li",
-
-        className: "comment",
+        template: tagItemTemplate,
+        className: "tag",
           
         initialize: function (options) {
-        	if(!options.template)
-		        this.template = commentItemTemplate;
-		    else	    
-		    	this.template = options.template;
-        },		
+        },	
 
         render: function () {
             var markup = Mustache.to_html(this.template, this.model.toJSON());
@@ -54,5 +49,5 @@ function (
         
       });
 
-    return CommentItemView;
+    return TagItemView;
 });

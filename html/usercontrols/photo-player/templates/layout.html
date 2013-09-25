@@ -1,0 +1,93 @@
+<div class="well-large well span6">
+	<h4>Add Game</h4>
+	<div class="section-Add-Sports_h">
+		<div class="section-game-date_h">
+			<input type="text" class="txt-game-date_h" placeholder="Enter Date" readonly="readonly" />
+			<!-- <input type="text" class="txt-game-time_h hasDatepicker"  placeholder="Enter Time" readonly="readonly"  /> -->
+			<!-- <select class="ddl-time-period_h">
+			<option value="AM">AM</option>
+			<option value="PM">PM</option>
+			</select>	 -->
+			<span class="alert alert-danger displayNone field-message"></span>
+		</div>
+
+		<div class="row-fluid">
+			Select Sport:
+		</div>
+		<div class="row-fluid">
+
+			<select class="ddl-game-sports_h"></select>
+			<span class="alert alert-danger displayNone field-message"></span>
+			<br/>
+		</div>
+
+	</div>
+	<div class="section-game-teams_h team-one_h displayNone">
+		Select Team 1 :
+		<select class="ddl-game-userteams_h"></select>
+
+		<a href="javascript:void(0)" class="btn-new-team-game_h">Team not listed ?</a>
+		<div class="section-new-team_h">
+			<!-- <input type="text" class="txt-game-state_h" placeholder="Enter State" />
+			<input type="text" class="txt-game-city_h displayNone" placeholder="Enter City" /> -->
+			<input type="text"class="txt-game-team_h displayNone" placeholder="Enter Team" />
+		</div>
+		<div class="section-score_h">
+			Score :
+			<input type="text" class="txt-score-team_h" placeholder="Enter Score" />
+		</div>
+		<div class="section-game-radio_h">
+			<span class="alert alert-danger displayNone field-message"></span>
+			<input type="radio" name="rdo-team1_h" value="home" class="rdo-game-location_h rdo-game-location-one-home_h" team="one">
+			home &nbsp; &nbsp;
+			<input type="radio" name="rdo-team1_h" value="away" class="rdo-game-location_h" team="one">
+			away
+		</div>
+	</div>
+
+	<div class="secction-individual-game_h displayNone">
+		<input type="text"class="txt-individual-game_h" placeholder="Enter Game" />
+		<br/>
+		<span class="alert alert-warning displayNone field-message"></span>
+		<br/>
+		<button class="btn btn-primary btn-game-individual-Finish_h floatRight">
+			Go There !
+		</button>
+	</div>
+
+	<div class="section-game-teams_h team-two_h displayNone">
+		Select Team 2 :
+		<select class="ddl-game-userteams_h"></select>
+
+		<a href="javascript:void(0)" class="btn-new-team-game_h">Team not listed ?</a>
+		<div class="section-new-team_h">
+			<!-- <input type="text" class="txt-game-state_h" placeholder="Enter State" />
+			<input type="text" class="txt-game-city_h displayNone" placeholder="Enter City" /> -->
+			<input type="text"class="txt-game-team_h displayNone" placeholder="Enter Team" />
+		</div>
+		<div class="section-score_h">
+			Score :
+			<input type="text" class="txt-score-team_h" placeholder="Enter Score" />
+		</div>
+		<div class="section-game-radio_h">
+			<span class="alert alert-danger displayNone field-message"></span>
+			<input type="radio" name="rdo-team2_h" value="home" class="rdo-game-location_h rdo-game-location-two-home_h"  team="two">
+			
+			home &nbsp; &nbsp;
+			<input type="radio" name="rdo-team2_h" value="away" class="rdo-game-location_h"   team="two">
+			away
+		</div>
+	</div>
+
+	<div class="section-main-location_h">
+		<h4>Location : </h4>
+		<span class="alert alert-danger displayNone field-message"></span>
+		<input type="text" class="txt-game-location-id_h displayNone" >
+		<div class="div-game-location_h">
+
+		</div>
+	</div>
+	<button class="btn btn-primary btn-game-Finish_h floatRight displayNone">
+		Create
+	</button>
+</div>

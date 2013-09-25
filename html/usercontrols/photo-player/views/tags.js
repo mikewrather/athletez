@@ -1,36 +1,30 @@
-// The Comment List
+// The CommentOn List
 // --------------
 
-define(['facade','views', 'utils', 'site/views/comment-item', 'site/views/comment-form',  'text!site/templates/comment-list.html'], 
-function(facade,  views,   utils,   CommentItemView,    CommentFormView, commentListTemlate) {
+define(['facade', 'vendor', 'utils', 'views', 'text!usercontrol/photo-player/templates/tags.html', 'usercontrol/photo-player/views/tags-item'],
+function(facade, vendor,  utils, views, tagListTemlate, TagItemView) {
 
-    var CommentListView, 
-        CommentListAbstract,
-        Channel = utils.lib.Channel,
-        vendor = require("vendor"),
-        CollectionView = views.CollectionView,
-        SectionView = views.SectionView,
-        Mustache = vendor.Mustache;
+    var TagListView, _ = facade._,
+    CollectionView = views.CollectionView,
+    SectionView = views.SectionView,
+     Mustache = vendor.Mustache;
+        Channel = utils.lib.Channel;
 
-    CommentListAbstract = CollectionView.extend(SectionView.prototype);
+	CommentListAbstract = CollectionView.extend(SectionView.prototype);
 
-    CommentListView = CommentListAbstract.extend({
+    TagListView = CommentListAbstract.extend({
+		__super__: CollectionView.prototype,
 
-        __super__: CollectionView.prototype,
-
-       // id: "comment-list",
-       // name: "Comment List",
-       // tagName: "ul",
-		listView: "#comment-list",
+		listView: "#tags-list",
         // Tag for the child views
         _tagName: "li",
-        _className: "comment",
+        _className: "tags-li",
 		page: 1,
 		page_limit: 5,
 		prepend: false,
         // Store constructor for the child views
-        _view: CommentItemView,
-		template: commentListTemlate,
+        _view: TagItemView,
+		template: tagListTemlate,
 		events: {
 			'click .see-more-h': 'seeMore'
 		},
@@ -59,10 +53,6 @@ function(facade,  views,   utils,   CommentItemView,    CommentFormView, comment
             }
             _.bindAll(this);
             this.addSubscribers();
-            this.setupFormView();
-            /*this.collection.on('add', function() {
-            	renderAddView();
-            });*/        
         },
         
         seeMore: function(e) {
@@ -93,32 +83,7 @@ function(facade,  views,   utils,   CommentItemView,    CommentFormView, comment
         },
 
 	    // Child views...
-        childViews: {},
-
-        // Event handlers...
-
-        // Add Views
-        setupFormView: function () {
-            var listView = this,
-                formView = new CommentFormView({collection: this.collection}),
-                renderAddView = this.addChildView(formView);
-            
-            this.childViews.form = formView;
-            this.callbacks.add(function() {
-                renderAddView();
-            });
-            
-            function callback (data) {
-                formView.model = data;
-                formView.render();
-                $(listView.listView).prepend(formView.el);
-            }
-            
-            
-            Channel('commentform:fetch').subscribe(callback);
-        }
-
+        childViews: {}
     });
-
-    return CommentListView;
+    return TagListView;
 });
