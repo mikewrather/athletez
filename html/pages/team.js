@@ -393,9 +393,11 @@ define([
         
         setupAddMediaView: function() {
             var addMediaView;
-            
+            console.error("add media model");
+            console.error(this.addmedia.toJSON());
             addMediaView = new TeamAddMediaView({
                 model: this.addmedia,
+                team_id: this.basics.id,
                 name: "Add_Media",
                 destination: "#add-media"
             });

@@ -19,7 +19,6 @@ define([ 'require', 'text!location/templates/city.html', 'views', 'facade', 'uti
 		className : 'ui-front',
 		
 		initialize : function(options) {
-			console.log("-------------------------------------------- city view");
 			SectionView.prototype.initialize.call(this, options);
 			this.id = options.id || this.id || _.unique('v');
 			this.addSubscribers();			
@@ -31,7 +30,6 @@ define([ 'require', 'text!location/templates/city.html', 'views', 'facade', 'uti
 			//console.log($);
 			var view = this;
 			var id = this.model.id;
-			console.log(id);
 			
 			$('#city').autocomplete({
 				minLength: 2,

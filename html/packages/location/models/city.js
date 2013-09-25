@@ -28,11 +28,13 @@ define([ 'models', 'facade' ], function(models, facade) {
 				 var payload = data.payload;
 		         if(payload != null){
 		         	 for (i = 0; i < (payload.length > 10 ? 10 : payload.length) ; i++) {
+		         		 
 		         		 var item = {};
 		         		 item.label = payload[i].str;
 		         		 item.id = payload[i].id;
-		         		 item.state_id = payload[i].obj.states_obj.id;
-		         		 item.country_id = payload[i].obj.states_obj.country.id;
+		         		 var state_ob = (_.isUndefined(payload[i].obj.city))?payload[i].obj.states_obj:(!_.isUndefined(payload[i].obj.city.states_obj)?payload[i].obj.city.states_obj:{});
+		         		 item.state_id = state_ob.id;
+		         		 item.country_id = state_ob.country.id;
 		         		 collection.push(item);
 		         	 }
 		         }
