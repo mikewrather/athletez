@@ -70,7 +70,7 @@ define(['vendor', 'views', 'utils', 'text!media/templates/image-item.html'], fun
 					//games
 					extra._detailclass = "game";
 
-					extra._thumbnail = mpay.game_picture!==null ? mpay.game_picture.types.standard_thumb.url : "http://lorempixel.com/output/sports-q-c-440-440-4.jpg";
+					extra._thumbnail = mpay.game_picture!==null ? mpay.game_picture.types.standard_thumb.url : "http://lorempixel.com/output/sports-q-g-440-440-3.jpg";
 					extra._label = mpay.game_day;
 					extra._link = "/#game/" + mpay.id;
 					var team_str = "", teamLength = mpay.teams.length,
