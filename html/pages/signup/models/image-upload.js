@@ -8,7 +8,8 @@ define( ["models/base"], function (BaseModel) {
         defaults: {
                         
         },
-       url:'api/user/register' 
+       url:'/api/user/savecrop/425983',
+       payload:{} 
         
     });
 

@@ -21,6 +21,19 @@ define([
 				initialize: function (options) {
             		this.template =  _.template(signupBasicTemplate);
             		this.$el = $(options.destination);
+                    $("#errormsg, #preview").html("");
+            
+                     SectionView.prototype.initialize.call(this, options);   
+                     debug.log("Image upload basic view");   
+                     $('#imgUploadModal').modal('show') ;
+                     $('#imgUploadModal').on('hidden', function () {
+               
+                        //routing.trigger('refresh-onImageUpload');
+                    });
+                    $('#imgUploadModal').on('hide', function () {
+               
+                        //routing.trigger('refresh-onImageUpload');
+                      });
             		this.render();
             		        		
         		},
@@ -35,11 +48,20 @@ define([
         		next: function(event){
         			event.preventDefault();
         			
-        			
+        			//backbone.validation.bind(this);
         			var fields = this.$(":input").serializeArray();
-                	
-                   Channel('register-basic-final').publish(fields);
-                	           
+                    var flag= true;
+                	$.each(fields, function( index, value ) {
+                       if(!value.value){
+                        alert(value.name +" is blank");
+                        flag = false;
+                        return false;
+                       }
+                      
+                    });
+                   if(flag)
+                   //Channel('register-basic-final').publish(fields);
+                	routing.trigger("register-basic-final", fields);           
 
                     
         		},

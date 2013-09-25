@@ -4,8 +4,17 @@
       <span class="regheader"> Upload a user pic</span>
     </div>
       <div id="imgcontainer" class="imgcontainer">
-        <div id="imgpreview" class="imgpreview">
-          <img id="previewimg" src="#" alt="Preview" />
+       
+        <div class="textcenter pane" id="imgpreview" >
+          <img id="image-select" style="max-height: 245px; max-width: 320px;" />
+            <div class="coords" style="display:none;">
+                <div>crop x <input name="crop-x" type="hidden" /></div>
+                <div>crop y <input name="crop-y" type="hidden" /></div>
+                <div>crop width <input name="crop-width" type="hidden" /></div>
+                <div>crop height <input name="crop-height" type="hidden" /></div>
+                <div>image width <input name="image-width" type="hidden" /></div>
+                <div>image height <input name="image-height" type="hidden" /></div>            
+            </div>
         </div>
         <div id="imguploader" class="imguploader">
           <input type="file" name= "preview" id="preview">
@@ -16,8 +25,9 @@
         </div>  
 
         <div id="imgupload"  class="imgupload">
-          <input type="submit" name="imgup" value="Crop and save" class="imgup" />    
+          <input type="submit" name="imgup" id="crpimgup" value="Crop and save" class="imgup" />    
         </div>
+        
       </div>
     </div>  
   </div>   
