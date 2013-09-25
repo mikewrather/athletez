@@ -7,7 +7,9 @@ define(["require", 'text!usercontrols/photo-player/templates/comments.html',
 	   "user/models/basic_info",
 	   "usercontrols/photo-player/collections/comments",
 	   "usercontrols/photo-player/views/main",
-	   "usercontrols/photo-player/views/comments"
+	   "usercontrols/photo-player/views/comments",
+	   "usercontrols/photo-player/collections/tags",
+	   "usercontrols/photo-player/views/tags",
 	    ], function(require, modelBoxCommentTemplate) {
 
 	var PhotoPlayerController, facade = require("facade"), Controller = require("controller"),
@@ -20,11 +22,11 @@ define(["require", 'text!usercontrols/photo-player/templates/comments.html',
 	
 	//collections
 	CommentsCollection = require("usercontrols/photo-player/collections/comments"),
-
+	TagsCollection = require("usercontrols/photo-player/collections/tags"),
 	// views
 	PhotoPlayerView = require("usercontrols/photo-player/views/main"),
 	CommentSectionView = require("usercontrols/photo-player/views/comments"),
-	
+	TagsSectionView = require("usercontrols/photo-player/views/tags"),
 	
 	PhotoPlayerController = Controller.extend({
 		// define css files to load
@@ -50,18 +52,20 @@ define(["require", 'text!usercontrols/photo-player/templates/comments.html',
 					'</div>'+
 					'<div class="modal-body page-content-h">'+
 					'<div class="photo-player-area-h photo-player"></div>'+
-					'<div class="coment-area-h comment-area"></div><div class="comment-input-outer-h comment-input-outer" class="clearfix"></div>'+
-					'</div></div>';
+					'<div class="comment-area"><div class="tags-area-h"></div><div class="coment-area-h"></div><div class="comment-input-outer-h comment-input-outer" class="clearfix"></div>'+
+					'</div></div></div>';
 			
 			routing.off('photo-player-section-reload');
 			routing.on('photo-player-section-reload', function(entity_id, id) {
 				_self.id = id;
 				_self.setUpCommentView(entity_id, id);
+				_self.setUpTagView(entity_id, id);
 			});
 			
 			routing.off('comments-fetch-new-form-data');
 	       	routing.on('comments-fetch-new-form-data', function(entity_id, id) {
 	       		_self.setUpCommentView(entity_id, id);
+				_self.setUpTagView(entity_id, id);
 	       	});
 
   			// set up main layout view					
@@ -104,6 +108,30 @@ define(["require", 'text!usercontrols/photo-player/templates/comments.html',
 			});
 			this.scheme.push(photoPlayerMain);
 			this.layout.render();
+		},
+		
+		setUpTagView: function(entity_id, id) {
+			var l = this.scheme.length;
+			for(var i = 0; i < l; i++) {
+				if(this.scheme[i].name == this.oldTagView)
+					this.scheme[i].remove();
+			}
+			
+			var _self = this, tagView;
+			_self.oldTagView = "tag section" + Math.random();
+			_self.tags = new TagsCollection();
+			_self.tags.id = id;
+			_self.tags.fetch();
+			//$(".coment-area-h").html();
+			$.when(_self.tags.request).done(function () {
+				tagView = new TagsSectionView({
+					collection : _self.tags,
+					name : _self.oldTagView,
+					destination : ".tags-area-h"
+				});
+				_self.scheme.push(tagView);
+				_self.layout.render();
+			});
 		},
 		
 		// set up comment view in photo player
