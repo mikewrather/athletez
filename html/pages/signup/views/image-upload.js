@@ -57,13 +57,13 @@ define([
                 initCropView: function() {
                    
                      $('#image-select').jrac({
-                                'crop_width': 150,
-                                'crop_height': 150,
+                                'crop_width': 200,
+                                'crop_height': 240,
                                 'crop_aspect_ratio': '1:1',
-                                'crop_x': 100,
-                                'crop_y': 100,
-                                'image_width': 400,
-                                'image_height':400,
+                                'crop_x': 0,
+                                'crop_y': 0,
+                                'crop_resize': false,
+                                'viewport_resize': false,
                                 'viewport_onload': function() {
                                     var $viewport = this;
                                     var inputs = $viewport.$container.parent('.pane').find('.coords input:hidden');

@@ -21,6 +21,19 @@ define([
 				initialize: function (options) {
             		this.template =  _.template(signupBasicTemplate);
             		this.$el = $(options.destination);
+                    $("#errormsg, #preview").html("");
+            
+                     SectionView.prototype.initialize.call(this, options);   
+                     debug.log("Image upload basic view");   
+                     $('#imgUploadModal').modal('show') ;
+                     $('#imgUploadModal').on('hidden', function () {
+               
+                        //routing.trigger('refresh-onImageUpload');
+                    });
+                    $('#imgUploadModal').on('hide', function () {
+               
+                        //routing.trigger('refresh-onImageUpload');
+                      });
             		this.render();
             		        		
         		},
@@ -47,8 +60,8 @@ define([
                       
                     });
                    if(flag)
-                   Channel('register-basic-final').publish(fields);
-                	           
+                   //Channel('register-basic-final').publish(fields);
+                	routing.trigger("register-basic-final", fields);           
 
                     
         		},

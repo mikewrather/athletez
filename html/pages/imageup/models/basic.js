@@ -9,12 +9,13 @@ define( ["facade","media/models/image"], function (facade,MediaImageModel) {
         _ = facade._;
 
     ImageBasicsModel =  MediaImageModel.extend({
-	    initialize: function (attributes, options) {
-            MediaImageModel.prototype.initialize.call(attributes, options);
-        }
+	   // initialize: function (attributes, options) {
+       //     MediaImageModel.prototype.initialize.call(attributes, options);
+      //  }
 	
 	});
 
-    return ImageBasicsModel;
+    //return null;
+   return ImageBasicsModel;
 });
 
