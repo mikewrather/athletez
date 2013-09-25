@@ -52,7 +52,7 @@ define(["require", 'text!usercontrols/photo-player/templates/comments.html',
 					'</div>'+
 					'<div class="modal-body page-content-h">'+
 					'<div class="photo-player-area-h photo-player"></div>'+
-					'<div class="comment-area"><div class="tags-area-h"></div><div class="coment-area-h"></div><div class="comment-input-outer-h comment-input-outer" class="clearfix"></div>'+
+					'<div class="photo-player-right-area"><div class="tags-area-h"></div><div class="comment-area coment-area-h"></div><div class="comment-input-outer-h comment-input-outer" class="clearfix"></div>'+
 					'</div></div></div>';
 			
 			routing.off('photo-player-section-reload');

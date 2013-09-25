@@ -4,9 +4,11 @@
  // Requires `define`, `require`
  // Returns {Photo Player View} constructor
  */
-define(['require', 'text!usercontrols/photo-player/templates/player.html', 'facade', 'views', 'utils', 'vendor'], function(require, layoutTemplate) {
+define(['require', 'text!usercontrols/photo-player/templates/player.html', 'facade', 'views', 'utils', 'vendor', 'usercontrol/photo-player/models/vote' ], function(require, layoutTemplate) {
 
-	var self, facade = require('facade'), views = require('views'), SectionView = views.SectionView, utils = require('utils'), Channel = utils.lib.Channel, vendor = require('vendor'), Mustache = vendor.Mustache, $ = facade.$,
+	var self, facade = require('facade'), views = require('views'), SectionView = views.SectionView, 
+	utils = require('utils'), Channel = utils.lib.Channel, vendor = require('vendor'), 
+	Mustache = vendor.Mustache, $ = facade.$, voteModel = require('usercontrol/photo-player/models/vote');
 	//Models
 	PhotoPlayerView = SectionView.extend({
 		template : layoutTemplate,
@@ -14,7 +16,8 @@ define(['require', 'text!usercontrols/photo-player/templates/player.html', 'faca
 		events : {
 			'click .back-arrow-h' : 'backButton',
 			'click .next-arrow-h' : 'nextButton',
-			'click .thumb-link-h' : 'changeImage'
+			'click .thumb-link-h' : 'changeImage',
+			'click .photo-player-vote-h': 'vote'
 		},
 
 		/*initialize gets called by default when constructor is initialized*/
@@ -29,6 +32,12 @@ define(['require', 'text!usercontrols/photo-player/templates/player.html', 'faca
 			this.initThumbsSection();
 			this.loadImage(true);
 			
+		},
+		
+		vote: function() {
+			var vote = new voteModel();
+			vote.id = this.id;
+			vote.save();
 		},
 		
 		changeImage: function(e) {
@@ -122,7 +131,7 @@ define(['require', 'text!usercontrols/photo-player/templates/player.html', 'faca
 				}
 				data.data.push(extra);
 			}
-			console.error(data);
+			this.id = extra._id;
 			var markup = Mustache.to_html(this.thumbTemplate, data);
 			this.$el.find('.thumb-image-list-h').html(markup);
 		},
@@ -200,17 +209,10 @@ define(['require', 'text!usercontrols/photo-player/templates/player.html', 'faca
 			}
 			this.$el.find('.large-image-h').attr('src', extra._thumbnail);
 			
-			
 			this.$el.find('.thumb-image-list-h li').removeClass('selected-photo-thumb');
 			this.$el.find('.thumb-link-h[data-index='+this.index+']').parents('li').addClass('selected-photo-thumb');
 
-			
 			routing.trigger('photo-player-section-reload', extra._enttypes_id, extra._id);
-			
-			//if(!trigger) {
-			//}
-			
-			
 		},
 
 		// **Method** `setOptions` - called by BaseView's initialize method
