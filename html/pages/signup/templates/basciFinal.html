@@ -18,23 +18,24 @@
 			
 			<form action="#/user/create" method="post" accept-charset="utf-8">
 				<div id="finalreg">
-					<div class="firstdiv">
+					<div class="firstdiv" id="firstname">
 						<div class="label">
 							<label for="Name">Name</label>
 						</div>
-						<input type="text" id="nameInput" name="Name" placeholder="Name" />
+						<input type="text" id="first_name" name="Name" placeholder="Name" />
+						<a id="editname">edit</a>
 					</div>
-					<div class="seconddiv">
+					<div class="seconddiv" id="dob">
 						<div class="label">
 							<label for="born">Born</label>
 						</div>	
 						
 					</div>
-					<div class="thirddiv">
+					<div class="thirddiv" id="email">
 						<div class="label">
 							<label for="Email">Email</label>
 						</div>	
-						<input type="text" name="Email" id="emailInput" placeholder="Email" />
+						<input type="text" name="email" id="emailInput" placeholder="Email" />
 					</div>
 					<div class="fourthdiv">
 						<div class="label">
@@ -76,7 +77,7 @@
 						<div class="label">
 							<label for="CPassword">Confirm</label>
 						</div>	
-						<input type="Password" name="Password" id="cpassword" placeholder="Password" />
+						<input type="password" name="re_password" id="re_password" placeholder="Password" />
 					</div>
 					</div>
 					<div id="submitbutton">

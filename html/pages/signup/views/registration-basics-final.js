@@ -32,7 +32,42 @@ define([
                     this.fetchpayload(this.payload); 
                 },     
                 events:{
-                "click .regsubmitfinal":"next"   
+                "click .regsubmitfinal":"next", 
+                "click #editname":"editName"  
+                },
+                editName: function(event){
+                  event.preventDefault();
+                  $(".firstdiv").empty();
+                  var first_name= this.getnameElement('first_name','First Name','firstname');
+                  var last_name= this.getnameElement('last_name','Last Name','lastname');
+                  var getLabelfirst = this.getLabel('First Name');
+                  var getLabelsecond = this.getLabel('Second Name');
+                  $(".firstdiv").append(getLabelfirst);
+                  $(".firstdiv").append(first_name);
+                  $(".firstdiv").append(getLabelsecond);
+                  $(".firstdiv").append(last_name);
+
+                },
+                getLabel:function(Name){
+
+                        var eleDiv = $('<div/>').attr({
+                                        "class":"label"
+                                       });
+                        var labelFor = $('<lable/>').attr({
+                                        "For":Name
+                                        }).html(Name);
+                        eleDiv.append(labelFor);
+                        return eleDiv;
+                        
+                },
+                getnameElement:function(id,placeholder,name){
+                     var element = $('<input/>').attr({
+                                     "name":name,
+                                     "type":"text",
+                                     "id":id,
+                                     "placeholder":placeholder
+                                     });
+                     return element;
                 },
                 finalRegistrationPayload: function(attrs){
                     
@@ -81,18 +116,29 @@ define([
                 },
                 fetchpayload: function(payload){
                     
-                  $("#nameInput").val(payload.firstname+' '+ payload.lastname);
+                  $("#first_name").val(payload.firstname+' '+ payload.lastname);
                   $("#emailInput").val(payload.email); 
                 },
                 next: function(event){
+                    var current = this;
                     event.preventDefault();
-                    alert("preventing default");
+                   
                     console.log(this.payload);
+                    //
+                    //get the input values to payload
+                    var fields=this.$(":input").serializeArray();
+                     $.each(fields, function(i, field){
+                       
+                        payload[field.name] = field.value;
+                    
+                    });
+                        console.log(payload,"new payload");
+                    //
                     this.payload.gender=$("input:radio[name=gender]").val();
                     this.payload.password=$("#password").val();
-                    this.payload.re_password=$("#cpassword").val();
-                    //this.payload.dob=$(".born").val()+'-'+ $(".borndate").val()+'-'+ $(".borndyear").val();
-                    this.payload.dob="10-6-1987"; 
+                    this.payload.re_password=$("#re_password").val();
+                    this.payload.dob= $(".borndate").val()+'-'+$(".born").val()+'-'+ $(".borndyear").val();
+                    //this.payload.dob="10-6-2005"; 
                     this.payload.accept_terms=true;
                     
                     this.model.save(this.payload,
@@ -101,13 +147,57 @@ define([
                               
                               
                                 /* update the view now */
-                                 Channel('upload-user-image').publish(msg);
+                                routing.trigger("upload-user-image", msg);
+                                // Channel('upload-user-image').publish(msg);
                             },
-                            error: function() {
-                                /* handle the error code here */
+                            error: function(msg) {
+                                $( ".errormsg" ).remove();
+                                var errors= jQuery.parseJSON( msg.request.responseText);
+                                errorArray = errors.exec_data.error_array;
+                                $.each(errorArray, function( index, value ) {
+                                     current.displayErrors(value);
+                                });
+
+
+
+
                             }
                         }
                     );
+                },
+                displayErrors: function(errors){
+                    
+                    var fieldPosition=$("#"+errors.field);
+                    var elementwidth = fieldPosition.width();
+                    if(elementwidth){
+                            console.log(fieldPosition.position(),"fieldName",elementwidth,"elemet width");
+                            var messageDiv = this.displayMesage(fieldPosition.position(),errors.error,elementwidth)
+                            $("#finalreg").append(messageDiv);
+                     }       
+
+
+                },
+                displayMesage:function(pos,message,widthele){
+                       console.log(widthele,"widthele");
+                        var posleft = (pos.left + 15);
+                        posleft = posleft + widthele;
+                        console.log(posleft,"posleft");
+                        var element = $('<div/>').attr({
+                                     
+                                     "name":"error message",
+                                     "class":"errormsg"
+                                     }).
+                                    css({
+                                     "width":'200px',
+                                     "height":'50px', 
+                                     "position":"absolute",
+                                     "top": pos.top,
+                                     "left":posleft,
+                                     "color":"#CE0009"
+                                    }).
+                                    html(message); 
+                        return element;                            
+
                 }
 
             });    

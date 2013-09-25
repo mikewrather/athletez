@@ -323,7 +323,7 @@
       }
       else {
         src = src + (src.search(/\?/)<0?'?':'&') + 'jracrandom=' + (new Date()).getTime();
-        $('<img>').attr('src', src).load(image_load_handler);
+        $('<img>').attr('src', src).load(image_load_handler());
       }
     });
   };
