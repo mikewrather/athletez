@@ -42,7 +42,9 @@ function(vendor, facade,  views,   utils,   TeamItemView, TeamListViewTemplate) 
         },
         
         renderTemplate: function () {
-            var markup = Mustache.to_html(this.template, this.collection.toJSON());
+        	var data = {};
+        	data.data = this.collection.toJSON();
+            var markup = Mustache.to_html(this.template, data);
             this.$el.html(markup);
             return this;
         }  
