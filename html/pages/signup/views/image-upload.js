@@ -37,7 +37,12 @@ define([
                 },     
                 events:{
                  "change input":"preview", 
-                 "click #crpimgup": "imageupload"
+                 "click #crpimgup": "imageupload",
+                 "click #skip":"skip"
+                },
+                skip:function(event){
+                    event.preventDefault();
+                     window.location.href = "#usersettings";
                 },
                 userinfo:function(attrs){
                     

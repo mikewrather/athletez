@@ -110,24 +110,27 @@ define(["require",
 					},
 					handleDeferreds : function() {
 						var controller = this;
-						//var attrs=null;						
+						 // display basic form for sign up					
 						controller.setupSelectTypeView();
-						//controller.uploadUserImage({"attr":attrs});
+						
 						
 						function registerBasicFinal(attrs) {
 							controller.initRegisterFinal({"attr":attrs});
 						}
+						//Remove a previously-bound callback function from routing
 						routing.off('register-basic-final');
+          				//Bind a callback function to an object routing
           				routing.on('register-basic-final', function(param) {
             							registerBasicFinal(param);
             			});
-						//Channel('register-basic-final').subscribe(registerBasicFinal);
-						
+												
 						function uploadImage(attrs) {
 							controller.uploadUserImage({"attr":attrs});
 						}
 						//Channel('upload-user-image').subscribe(uploadImage);
+						//Remove a previously-bound callback function from routing
 						routing.off('upload-user-image');
+          				//Bind a callback function to an object routing
           				routing.on('upload-user-image', function(param) {
             							uploadImage(param);
             			});

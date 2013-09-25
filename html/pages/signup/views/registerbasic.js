@@ -3,10 +3,12 @@ define([
 	'text!signup/templates/registration.html', 
     'backbone',
     'underscore',
+    'registration',
     'views',
     'facade', 
     'utils', 
-	],function(require,  signupBasicTemplate,backbone,_) {
+
+	],function(require,  signupBasicTemplate,backbone,_,RegistrationController) {
 			
 		var SignupBasicView,
         	facade = require('facade'),
@@ -43,7 +45,7 @@ define([
         		},
         		events:{
         		"click .regsubmit":"next",
-                "click #fbpane":	"registerWithFacebook"
+                "click #fbpane":"signupFacebook"
         		},
         		next: function(event){
         			event.preventDefault();
@@ -65,6 +67,74 @@ define([
 
                     
         		},
+               //***************//
+
+               signupFacebook: function(event) {
+
+            
+            event.preventDefault();
+
+            $('#imgUploadModal').modal('hide') ;
+          // event.preventDefault();
+            // Additional JS functions here
+            window.fbAsyncInit = function() {
+                FB.init({
+                    appId      : '239430712864961', // App ID
+                    status     : true, // check login status
+                    cookie     : true, // enable cookies to allow the server to access the session
+                    xfbml      : true,  // parse XFBML
+                    oauth      : true
+                });
+
+                // Additional init code here
+                FB.getLoginStatus(function(response) {
+                    if (response.status === 'connected') {
+                        FB.api('/me', function(response) {
+                            console.log(response);
+                            Channel('registration-with-facebook').publish();
+                        });
+                    } else if (response.status === 'not_authorized') {
+                        console.log('not_authorized');
+                        login();
+                    } else {
+                        login();
+                    }
+                },{scope: 'email, user_birthday, user_photos'});
+            };
+
+            function login() {
+                FB.login(function(response) {
+                    if (response.authResponse) {
+                        Channel('registration-with-facebook').publish();
+                    } else {
+                        alert('Cancelled');
+                    }
+                },{scope: 'email, user_birthday, user_photos'});
+            }
+
+            // Load the SDK Asynchronously
+            function loadFBLogin(){
+  //            alert("load fb");
+                if (!this.registrationController) {
+                this.registrationController = new RegistrationController({
+                    "route": ""
+                });
+            }
+            this.registrationController.refreshPage();
+//             alert("signupFaceook-header registration-with-facebook 1");
+                var js, id = 'facebook-jssdk', ref = document.getElementsByTagName('script')[0];
+                if (document.getElementById(id)) {
+                    login();
+                    return;
+                }
+                js = document.createElement('script'); js.id = id; js.async = true;
+                js.src = "//connect.facebook.net/en_US/all.js";
+                ref.parentNode.insertBefore(js, ref);
+            }
+
+            loadFBLogin();
+        },
+//************//
                 registerWithFacebook: function(event) {                                
                     event.preventDefault();
             
