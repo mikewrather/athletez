@@ -1399,7 +1399,6 @@
 				//convert gender to a boolean
 				$arguments["gender"] = $this->request->post('gender');
 			}
-
 			$result = ORM::factory('User_Base')->addRegister($arguments);
 
 			//Check for success / error

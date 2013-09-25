@@ -1502,19 +1502,23 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 			$extra_validate->rule('dob','date');
 			$extra_validate->rule('dob','valid_age_frame', array($dob));
 
-			if ($this->check($extra_validate)){
+			if ($this->check($extra_validate))
+			{
+
 				$ai = Auth::instance();
 				$this->password = $ai->hash($password);
 				$this->create();
+				$this->add('roles', ORM::factory('Role',array('name'=>'login')));
 
 				//Log out if already logged in
-				//if($ai->logged_in()) $ai->logout();
+				if($ai->logged_in()) $ai->logout();
 
 				// Log in the user that was just created
-				//Auth::instance()->login($this->email,$password,TRUE);
+				Auth::instance()->login($this->email,$password,TRUE);
 
+				return $this;
 			}
-			return $this;
+
 		} catch(ORM_Validation_Exception $e){
 			return $e;
 		}
