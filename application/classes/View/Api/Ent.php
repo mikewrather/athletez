@@ -133,5 +133,13 @@
 
 			return $retArr;
 		}
+
+		public function delete_delete(){
+			return $this->obj;
+		}
+
+		public function delele_restore(){
+			return $this->obj;
+		}
 		
 	}

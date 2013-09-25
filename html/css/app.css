@@ -687,7 +687,7 @@ margin-right: 100px;
     display:inline-block;
     float:left;
     height:30px;
-    margin:15px 20px 40px 30px;
+    margin:15px 20px 30px 30px;
 }
 
 .fitness-overview-data-piece img{
@@ -734,14 +734,14 @@ margin-right: 100px;
     display: inline-block;
     margin-left:20px;
     border-radius: 0;
-    top:-4px;
+    top:-5px;
 }
 
 
 .game-box-outer li a {
     padding:1px 10px 0px 10px;
     border-radius: 25px;
-    border: 4px solid #bbbbbc;
+    border: 5px solid #bbbbbc;
     color: #FFF;
     position: relative;
 }
