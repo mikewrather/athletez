@@ -47,6 +47,7 @@ function(facade,  views,   utils,   CommentItemView,    CommentFormView, comment
 	        //console.log("options herebb",this.collection);
 	        //options = {collection: this.collection.first(3)};
 	         var _self = this;
+	        
 	         this.collection = options.collection;
 	         console.log(this.collection.toJSON());
 			 _self.allData = this.collection.toArray();
@@ -61,7 +62,7 @@ function(facade,  views,   utils,   CommentItemView,    CommentFormView, comment
             this.setupFormView();
             /*this.collection.on('add', function() {
             	renderAddView();
-            });*/
+            });*/        
         },
         
         seeMore: function(e) {
@@ -112,6 +113,7 @@ function(facade,  views,   utils,   CommentItemView,    CommentFormView, comment
                 formView.render();
                 $(listView.listView).prepend(formView.el);
             }
+            
             
             Channel('commentform:fetch').subscribe(callback);
         }

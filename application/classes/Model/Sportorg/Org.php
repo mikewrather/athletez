@@ -208,7 +208,8 @@ class Model_Sportorg_Org extends ORM
 		$complevels_model->join('teams')->on('teams.complevels_id', '=', 'sportorg_complevel_base.id');
 		$complevels_model->join('org_sport_link')->on('org_sport_link.id', '=', 'teams.org_sport_link_id');
 		$complevels_model->join('orgs')->on('orgs.complevel_profiles_id', '=', 'sportorg_complevel_base.complevel_profiles_id');
-		$complevels_model->where('orgs.id', '=', $id);
+		$complevels_model->where('orgs.id', '=', $id)
+			->and_where('org_sport_link.orgs_id','=',$id);
 
 		// This is an array of all of the classes we are checking for deleted
 		// We also provide the table name that it will be referenced by
@@ -222,7 +223,10 @@ class Model_Sportorg_Org extends ORM
 		$complevels_model = ORM::_sql_exclude_deleted($classes_arr,$complevels_model);
 
 		if (isset($sports_id))
+		{
 			$complevels_model->where('org_sport_link.sports_id', '=', $sports_id);
+		}
+
 		$complevels_model->group_by('sportorg_complevel_base.id');
 		return $complevels_model;
 	}

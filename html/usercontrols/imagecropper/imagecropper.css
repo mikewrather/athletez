@@ -1,0 +1,38 @@
+.modal.imagecropper{
+    border-radius: 0;
+    -webkit-border-radius: 0;
+    margin: 0;
+    height: 90%;
+    width:100%;
+    padding:0;
+    left:0;
+    position: absolute;
+}
+
+.modal.imagecropper .modal-header{
+    margin: 0;
+    border: 0;
+    height: 15px;
+    padding: 0;
+}
+.modal.imagecropper div.modal-body{
+    max-height: 100%;
+    max-width: 100%;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    top:15px;
+}
+
+.modal.imagecropper button.close{
+    margin: 10px 15px 0px 8px;
+}
+
+.modal.imagecropper iframe{
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}

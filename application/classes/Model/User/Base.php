@@ -273,6 +273,23 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 			$args['dob'] = $this->dob;
 		}
 
+	    if(isset($height_in))
+	    {
+		    $this->height_in  = $height_in ;
+	    }
+	    else
+	    {
+		    $args['height_in'] = $this->height_in;
+	    }
+
+	    if(isset($weight_lb))
+	    {
+		    $this->weight_lb  = $weight_lb ;
+	    }
+	    else
+	    {
+		    $args['weight_lb'] = $this->weight_lb;
+	    }
 
         try {
 			$extra_validate = Validation::factory($args);
@@ -1527,19 +1544,23 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 			$extra_validate->rule('dob','date');
 			$extra_validate->rule('dob','valid_age_frame', array($dob));
 
-			if ($this->check($extra_validate)){
+			if ($this->check($extra_validate))
+			{
+
 				$ai = Auth::instance();
 				$this->password = $ai->hash($password);
 				$this->create();
+				$this->add('roles', ORM::factory('Role',array('name'=>'login')));
 
 				//Log out if already logged in
-				//if($ai->logged_in()) $ai->logout();
+				if($ai->logged_in()) $ai->logout();
 
 				// Log in the user that was just created
-				//Auth::instance()->login($this->email,$password,TRUE);
+				Auth::instance()->login($this->email,$password,TRUE);
 
+				return $this;
 			}
-			return $this;
+
 		} catch(ORM_Validation_Exception $e){
 			return $e;
 		}

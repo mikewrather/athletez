@@ -522,7 +522,11 @@
 				return $this->obj->getBasics();
 			}
 		}
-		
+
+		public function post_uploaduserpic()
+		{
+			return $this->obj;
+		}
 		/**
 		 * post_addsport() Add a new sport association for a user
 		 *
