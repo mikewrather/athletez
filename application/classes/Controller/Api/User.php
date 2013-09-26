@@ -1459,6 +1459,36 @@
 			}
 		}
 
+		public function action_post_uploaduserpic()
+		{
+
+			if(!$this->mainModel->id)
+			{
+				$this->modelNotSetError();
+				return false;
+			}
+
+			if(!$this->user->can('Assumeownership', array('owner' => $this->mainModel->id))){
+				$this->throw_permission_error(Constant::NOT_OWNER);
+			}
+
+			$result = $this->action_post_addimage();
+
+			$result = $result->getBasics();
+		//	print_r($result);
+
+			$return_obj = new stdClass();
+			$return_obj->delete_type = 'DELETE';
+			$return_obj->delete_url = $result['image_path'];
+			$return_obj->name = $this->mainModel->get_full_name()." User Picture";
+			$return_obj->size = $result['original_size'];
+			$return_obj->thumbnail_url = $result['types']['standard_thumb']['url'];
+			$return_obj->type = $result['original_mime'];
+			$return_obj->url = $result['image_path'];
+			return $return_obj;
+
+		}
+
 		/**
 		 * action_post_savecrop() This is the method that can save the cropping information for an image being used as userpic.
 		 * It differs from those in the media controller in that it assumes this is going to be a userpic.
@@ -1472,7 +1502,6 @@
 			if(!$this->user->can('Assumeownership', array('owner' => $this->mainModel->id))){
 				$this->throw_permission_error(Constant::NOT_OWNER);
 			}
-
 			$arguments = array();
 			// CHECK FOR PARAMETERS:
 			// image_url (REQUIRED)

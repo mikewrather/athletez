@@ -1,0 +1,77 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Image Editor - iEdit v1.0</title>
+
+<script type="text/javascript" src="http://runtriz-universal-images.s3.amazonaws.com/defaults/jquery.js"></script>
+<script type="text/javascript" src="http://runtriz-universal-images.s3.amazonaws.com/jqui/jqui.min.js"></script>
+<link rel="stylesheet" type="text/css" href="http://runtriz-universal-images.s3.amazonaws.com/defaults/reset.css" media="all" />
+<link rel="stylesheet" type="text/css" href="http://runtriz-universal-images.s3.amazonaws.com/jqui/jqui-css.css" media="all" />
+<link rel="stylesheet" type="text/css" href="css/iedit-style.css" media="all" />
+<link rel="stylesheet" type="text/css" href="css/uploader.css" media="all" />
+
+<!-- File Upload Plugins -->
+<script type="text/javascript" src="js/jquery.fileupload.js"></script>
+<script type="text/javascript" src="js/jquery.fileupload-fp.js"></script>
+<script type="text/javascript" src="js/jquery.fileupload-ui.js"></script>
+<script type="text/javascript" src="js/jquery.fileupload-jui.js"></script>
+<script type="text/javascript" src="js/jquery.iframe-transport.js"></script>
+<!-- Image Edit Plugins -->
+<script type="text/javascript" src="js/jquery.zoompan.js"></script>
+<script type="text/javascript" src="js/iedit.js"></script>
+<!-- Initialization and management of iEdit display -->
+<script type="text/javascript" src="js/setup-iedit.js"></script>
+
+<script type="text/javascript">
+    $(function(){
+
+        //index.html?vh=700&vw=500&sx=0&sy=0&sz=100&t=Test&o=http://s3.amazonaws.com/com-runtriz-pictures/144_1_bgiPad_478.jpg&edit=http://runtriz-universal-images.s3.amazonaws.com/instances/he_beta/processed/6225432.jpg
+        var settings = $.getUrlVars();
+        iEdit.setup(settings);
+
+        if(typeof settings.o !== 'undefined')
+        {
+            iEdit.nav.edit();
+        }
+        else
+        {
+            iEdit.nav.upload();
+        }
+    });
+</script>
+
+</head>
+
+<body>
+
+<div id="image-editor">
+    <div class="main">
+
+                    <div class="content">
+                        <div id="menu-frame">
+                            <div class="header">
+                                <h1 id="page-title">View Image</h1>
+                                <a id="iedit-close" class="x" title="close"></a>
+                            </div>
+                            <div class="sub">
+                                <div class="nav">
+                                    <a id="upload-link" onclick="iEdit.nav.upload();"><p>Upload Image</p></a>
+                                    <a id="edit-link" onclick="iEdit.nav.edit();"><p>Edit Image</p></a>
+                                    <a id="view-link" onclick="iEdit.nav.view();"><p>View Image</p></a>
+                                    <!--
+                                    <a id="library-link"><p>Choose From Library</p></a>-->
+                                </div>
+                                <div class="extra-tools" style="display: none; "></div>
+                            </div>
+                            <div class="display-main">
+                            </div>
+                        </div>
+                    </div>
+
+    </div>
+    <div class="mask"></div>
+</div>
+
+</body>
+</html>

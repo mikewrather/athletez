@@ -147,11 +147,12 @@ class Model_Media_Image extends ORM
 		foreach($args['files'] as $key=>$img_data)
 		{
 			// check to make sure it's an image.  If it's not terminate this function
-			if(!strstr($img_data['type'],'image')) continue;
+			$image_type = is_array($img_data['type']) ? $img_data['type'][0] : $img_data['type'];
+			if(!strstr($image_type,'image')) continue;
 			else
 			{
 				// Save to variable because it will be used outside loop
-				$tmp_image = $img_data['tmp_name'];
+				$tmp_image = is_array( $img_data['tmp_name']) ? $img_data['tmp_name'][0] : $img_data['tmp_name'];
 
 				// Create an image object for image data and save data to table
 				$img_obj = Image::factory($tmp_image);
