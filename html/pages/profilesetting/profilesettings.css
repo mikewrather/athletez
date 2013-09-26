@@ -11,21 +11,23 @@
 	width: 40px;
 }
 .section-teams-prof-setting .div-add-dotted {
-	background: #F5F5F5;
-	color: #44F;
-	border: 1px #66F dashed;
+    background-color: #eef7f7;
+	color: #33aeab;
+	border: 1px #33aeab dashed;
+    border-radius: 5px;
+    -webkit-border-radius: 5px;
 	text-align: center;
-	margin: 5px 0 10px;
+	margin: 5px 30px 10px 30px;
+    padding:8px 0 8px 0;
 	cursor: pointer;
+    font-family: "Avenir", "HelveticaNeue";
 }
 
-.section-teams-prof-setting .sub-section-prof-setting {
-	border: 4px solid #555;
-}
+
 
 .sub-section-prof-setting input[type='text'], .sub-section-prof-setting select {
 	width: 235px;
-	    font-size: 15px;
+	font-size: 15px;
     height: auto;
 }
 
@@ -34,7 +36,8 @@
 .pointer {cursor: pointer;}
 
 /*Seasons Section Starts Here*/
-.arrow {    background: none repeat scroll 0 0 #222222;
+.arrow {
+    background: none repeat scroll 0 0 #222222;
     border: 3px solid #FFFFFF;
     border-radius: 23px 23px 23px 23px;
     color: #FFFFFF;
@@ -45,7 +48,8 @@
     opacity: 0.5;
     text-align: center;
     width: 40px;
-    float:left}
+    float:left
+}
 .arrow.down{}
 .arrow.up{}
 /*Seasons Section Ends Here*/
@@ -65,5 +69,78 @@
 	background: #AAA;
 	background: #9A9A9A; 
 }
- 
 /*Positions Section Ends Here*/
+
+.add-org-fields{
+    margin-left: 15%;
+}
+
+.add-org-fields *{
+    font-family: "HelveticaNeue", "Helvetica";
+}
+
+.org-sport-list{
+    margin:25px 5% 0 5%;
+    background-color: #eaedf1;
+    height: auto;
+}
+
+.org-sport-list .org-sport-list-header{
+    width: 100%;
+ /*   border-bottom: 1px solid #b7b7b7;
+    border-top: 1px solid #b7b7b7; */
+    font-family: "Avenir";
+    font-weight: bold;
+}
+
+.org-sport-list .org-sport-list-header:first-child{ border: none; }
+
+.org-sport-list-header > div{
+    color:#515252;
+    display: inline-block;
+    border-right:1px solid #b7b7b7;
+    padding:7px 15px 7px 10px;
+}
+
+.org-sport-list-header div:last-child{
+    border-right:none;
+}
+
+.org-sport-list-header .org-name{
+    font-size: 1.2em;
+}
+.org-sport-list-header .sport-name{ padding: 5px 0 5px 0; margin: 10px 0 10px 0; width: 100%; border-bottom:1px solid #b7b7b7;  font-size: .9em; }
+.org-sport-list-header .sport-name img{ margin-left:10px; margin-right: 10px; max-height: 30px; max-width: 40px; }
+.org-sport-list-header .add-sport > a, .org-sport-list-header .sport-name > a{ font-size: .6em; color: #515252; }
+
+.org-sport-list-header input{
+    margin:5px 20px 5px 20px;
+}
+.season-list > span{ color: #515252;font-weight: bold; font-size:.9em; display: inline-block; width: 15%; margin: 15px; text-wrap: normal;vertical-align: middle;}
+.season-list > span:first-child{ margin-left: 30px;}
+.season-list > span:last-child{width: 50%;}
+.season-list > span .position-listing{margin-right: 10px;}
+.season-list > span .position-listing:after{ content: ', '; }
+.season-list > span .position-listing:last-child:after{ content: ''; }
+
+.section-team-list-detail > *, .section-team-list-detail-club > *, .section-individual-sports > *{
+    margin: 25px 5% 0 5%;
+}
+
+.season-array{
+    vertical-align: middle;
+}
+
+.season-array > *{
+    margin:5px 30px 5px 30px;
+}
+
+.season-array .year-label{
+    display: inline-block;
+}
+
+.div-seasons div.arrow-container{
+    width: 100%;
+    float: left;
+    margin: 20px;
+}

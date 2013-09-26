@@ -19,16 +19,18 @@ define(['vendor', 'views', 'utils', 'text!media/templates/image-item.html'], fun
 			"click .vote": "vote",
 	        "click .follow": "follow",
 			"click .edit": "edit",
-			"click .delete": "delete"
+			"click .delete": "delete",
+			'click .image-outer-h' : 'initPhotoPlayer'
         },
 
 		initialize : function(options) {
 			this.template = imageItemTemplate;
 			//this.render();
 		},
-
+		
+		
 		render : function() {
-			var mpay = this.model.attributes.payload, extra = {
+			var _self = this, mpay = this.model.attributes.payload, extra = {
 				_enttypes_id : mpay.enttypes_id,
 				_id : mpay.id
 				},
@@ -40,7 +42,7 @@ define(['vendor', 'views', 'utils', 'text!media/templates/image-item.html'], fun
 					//videos
 					extra._thumbnail = mpay.thumbs;
 					extra._label = mpay.media.name;
-					extra._link = "";
+					extra._link = "javascript: void(0);";
 
 					if(mpay.media.hasOwnProperty('is_owner')) show_edit = mpay.media.is_owner;
 
@@ -50,7 +52,7 @@ define(['vendor', 'views', 'utils', 'text!media/templates/image-item.html'], fun
 					if ( typeof (mpay.types) == 'object' && mpay.types.standard_thumb)
 						extra._thumbnail = mpay.types.standard_thumb.url;
 					extra._label = mpay.media_obj.name;
-					extra._link = "";
+					extra._link = "javascript: void(0);";
 
 					if(mpay.media_obj.hasOwnProperty('is_owner')) show_edit = mpay.media_obj.is_owner;
 
@@ -70,7 +72,7 @@ define(['vendor', 'views', 'utils', 'text!media/templates/image-item.html'], fun
 					//games
 					extra._detailclass = "game";
 
-					extra._thumbnail = mpay.game_picture!==null ? mpay.game_picture.types.standard_thumb.url : "http://lorempixel.com/output/sports-q-c-440-440-4.jpg";
+					extra._thumbnail = mpay.game_picture!==null ? mpay.game_picture.types.standard_thumb.url : "http://lorempixel.com/output/sports-q-g-440-440-3.jpg";
 					extra._label = mpay.game_day;
 					extra._link = "/#game/" + mpay.id;
 					var team_str = "", teamLength = mpay.teams.length,
@@ -114,6 +116,8 @@ define(['vendor', 'views', 'utils', 'text!media/templates/image-item.html'], fun
 					'bottom' : '-' + game_detail_view_height
 				});
 			});
+			
+			
 
 			this.$el.find('.image-outer-h').mouseover(function() {
 				$(this).find('.detail-view').css({
@@ -123,6 +127,10 @@ define(['vendor', 'views', 'utils', 'text!media/templates/image-item.html'], fun
 					opacity : 90
 				});
 			});
+
+
+
+			
 
 			return this;
 

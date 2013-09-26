@@ -98,12 +98,14 @@ class Controller_Api_Base extends AuthController
 		{
 			empty($this->$verb);
 			$this->$verb = get_object_vars($json);
+			if($verb=='post') $this->request->post($this->$verb);
 			return true;
 		}
 		else
 		{
 			return false;
 		}
+
 	}
 	/**
 	 * @param string $verb is NULL by default and will use the current request's method.  But it can also be set manually.

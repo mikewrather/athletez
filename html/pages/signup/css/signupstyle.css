@@ -152,7 +152,7 @@
 			border: 0;
 			border-radius: 4px;
 		}
-		}
+	
 		#finalreg{
 			color: #6B6F72;
 			font-family: Tahoma;
@@ -234,4 +234,8 @@
     		clear:both;
 		}
 		/* .fbimagecontainer img { display:none; } */
-			.fbimagecontainer jrac_viewport img {display:block}
+		.fbimagecontainer jrac_viewport img {display:block}
+
+		#skip{
+			width:82px;
+		}	

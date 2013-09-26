@@ -56,7 +56,7 @@ function(require, headerTemplate, selectSportTemplate) {
         initialize: function (options) {
         	console.log(options);
             SectionView.prototype.initialize.call(this, options);
-            this.initSportList();   
+            this.initSportList();
                    
         },
         
@@ -68,14 +68,27 @@ function(require, headerTemplate, selectSportTemplate) {
             //Channel('teamsports:select' + sport_id).publish();            
         },
         
+        // update header data
+        updateHeaderData: function(id) {
+        	var _self = this;
+        	if(_self.model.id != id) {
+	        	_self.model.id = id;
+	        	_self.model.fetch();
+	        	$.when(_self.model.request).done(function() {
+	        		_self.render();
+	        		_self.initSportList();
+	        	});
+        	}
+        },
+        
         getSeason: function() {
         	 var self = this;
             this.season = new SeasonTeams();
             this.season.id = this.model.get("payload").org_sport_link_obj.orgs_id;
             this.season.sport_id = $("#sports-h").val();
             this.season.complevel_id = $("#season-h").val();
-            
             this.season.fetch();
+            
             $.when(this.season.request).done(function() {
                 var data = {};
                data.records = self.season.toJSON();
@@ -85,9 +98,11 @@ function(require, headerTemplate, selectSportTemplate) {
 					data: data,
 					title: "Team",
 					elementId: "team-h",
+					selectedValue: self.model.id,
 					destination: '.team-h',
 					targetView: self,
 					callback: function(result) {
+						self.updateHeaderData($("#team-h").val());
 						self.showAllTeamData();
 					}
 				});
@@ -126,13 +141,13 @@ function(require, headerTemplate, selectSportTemplate) {
             });
         },
         
-        initSportList: function () {
+        initSportList: function () {       	
+        	console.error(this.model.toJSON());        	        	
             var self = this;
             this.sports = new TeamSportList();
             this.sports.id = this.model.get("payload").org_sport_link_obj.orgs_id;
             this.sports.fetch();
             $.when(this.sports.request).done(function() {
-               
                var data = {};
                data.records = self.sports.toJSON();
                data.recordId = 'sport_id';
@@ -155,7 +170,7 @@ function(require, headerTemplate, selectSportTemplate) {
         insertOption: function($target, data) {
         	var html = '', len = data.length;
         	for(var i = 0; i < len; i++) {
-        		html += '<option value="'+data[i].payload.sport_id+'">'+data[i].payload.sport_name+'</option>;'
+        		html += '<option value="'+data[i].payload.sport_id+'">'+data[i].payload.sport_name+'</option>';
         	}
         	$target.html(html);
         },

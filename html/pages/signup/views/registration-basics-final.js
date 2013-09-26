@@ -147,7 +147,8 @@ define([
                               
                               
                                 /* update the view now */
-                                 Channel('upload-user-image').publish(msg);
+                                routing.trigger("upload-user-image", msg);
+                                // Channel('upload-user-image').publish(msg);
                             },
                             error: function(msg) {
                                 $( ".errormsg" ).remove();

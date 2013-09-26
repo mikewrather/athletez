@@ -2,9 +2,9 @@
 // --------------  
 // Requires define
 // Return {Object} App
-define( ["facade", "utils", "collections", "chrome", "controller", "profile", "imageup",'home','videopreview',"game", "team", "registration","profilesetting","userresume","packages/site/collections/phrases","usercontrols/tag/tag","usercontrols/addgame/addgame","login/model","login/view",'signup'],
+define( ["facade", "utils", "collections", "chrome", "controller", "profile", "imageup",'home','videopreview',"game", "team", "registration","profilesetting","userresume","packages/site/collections/phrases","usercontrols/tag/tag","usercontrols/addgame/addgame","login/model","login/view",'signup', "usercontrols/photo-player/photo-player"],
 function (facade, utils, collections, chromeBootstrap, Controller, ProfileController, ImageController, HomeController, VideoPreviewController,
-	GameController, TeamController, RegistrationController,ProfileSetting,UserResume, SitePhraseList , TagController,AddGameController,loginModel, loginView, SignupController) {
+	GameController, TeamController, RegistrationController,ProfileSetting,UserResume, SitePhraseList , TagController,AddGameController,loginModel, loginView, SignupController, PhotoPlayerController) {
 
 
     //App;
@@ -57,7 +57,7 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
             'tag': 'showTag',
 			'user/login' : 'showLogin',
 			'addgame' : 'showAddGame',
-            'user/create':'showUsercreate'
+           // 'user/create':'showUsercreate'
         },
 
         initialize: function (options) {
@@ -72,6 +72,7 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
         intializeImageAndVideo: function() {
         	this.imageUpListeners();
 			this.videoPreview();
+            this.showUsercreate();
         },
         
         cancelAjaxRequests: function() {
@@ -80,6 +81,17 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
             		routing.ajaxRequests[i].abort();
             	}
             }
+        },
+        
+        initTriggers: function() {
+        	routing.off('photo-player-init');
+            routing.on('photo-player-init', function(index, collection, userId) {
+            	 var photoPlayer = new PhotoPlayerController({
+                	"index": index,
+                	userId: userId,
+                	_collection: collection
+                });
+            });
         },
         
         initialiRoutesInit: function(fn) {
@@ -363,24 +375,30 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
         // route to registratiom
         showUsercreate: function(){
             
-            this.cancelAjaxRequests();
+            /*this.cancelAjaxRequests();
             this.loadStyles();
             
             $('body').empty();
-            chromeBootstrap();
+            chromeBootstrap();*/
 
             function initSignup() {
                
-                var registrationController = new RegistrationController({
-                    "route": ""
-                });
+            //    var registrationController = new RegistrationController({
+            //        "route": ""
+            //   });
                var signupController = new SignupController({
                     "route": ""
                 });
             }
-            initSignup();
+            this.addUserTrigger(initSignup);
             //this.initialiRoutesInit(initSignup);
 
+        },
+        addUserTrigger: function(fn) {
+            routing.off('add-user');
+            routing.on('add-user', function() {
+                fn();
+            });
         },
 
         showRegistration: function() {
@@ -393,7 +411,7 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
             function initRegistration() {
                 var registrationController = new RegistrationController({
                     "route": ""
-                })
+                });
             }
             this.initialiRoutesInit(initRegistration);
             //Channel('app-inited').subscribe(initRegistration);

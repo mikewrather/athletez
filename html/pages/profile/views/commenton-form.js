@@ -16,7 +16,6 @@ function(require, commentFormTemplate,    ProfileCommentFormModel,        BaseCo
     CommentOnFormView = BaseView.extend({
 	    initialize: function (options) {
 	    	console.error(options);
-	    	
              _.bindAll(this);
              this.setOptions();
              BaseView.prototype.initialize.call(this, options);
@@ -40,7 +39,7 @@ function(require, commentFormTemplate,    ProfileCommentFormModel,        BaseCo
                 this.model = new ProfileCommentFormModel({id: this.collection.id});
                 console.log(this.model.toJSON());
                 this.model.fetch();
-            }            
+            }
         },
 
 	    submitHandler: function (e) {
@@ -74,7 +73,7 @@ function(require, commentFormTemplate,    ProfileCommentFormModel,        BaseCo
                 payload['comment'] = comment;
                 payload['comment_date'] = date.toDateString();
                 payload['subject_type_id'] = this.collection.subject_entity_type;
-                payload['subject_id'] = this.model.get("id"); 
+                payload['subject_id'] = this.model.get("id");
                  
                 var saveInfo = new BaseModel(payload);
                 saveInfo.url = function() {

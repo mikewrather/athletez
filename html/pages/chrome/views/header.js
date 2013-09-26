@@ -40,7 +40,7 @@ function (
         
         events: {
             "click .signup-facebook": "signupFacebook",
-            "click .signup-email": "signupEmail",
+            "click .signup-email": "signupUser",
 			"click .account clearfix a": "login"
         },
 
@@ -133,7 +133,13 @@ function (
             loadFBLogin();
         },
 
-        signupEmail: function(event) {
+
+
+        signupUser: function(event){
+                    event.preventDefault();
+                    routing.trigger("add-user");
+                },
+        /*signupEmail: function(event) {
             event.preventDefault();
 
             if (!this.registrationController) {
@@ -143,7 +149,7 @@ function (
             }
 
             Channel('registration-with-email').publish();
-        },
+        },*/
 		
 
       });
