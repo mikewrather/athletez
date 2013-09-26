@@ -273,6 +273,23 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 			$args['dob'] = $this->dob;
 		}
 
+	    if(isset($height_in))
+	    {
+		    $this->height_in  = $height_in ;
+	    }
+	    else
+	    {
+		    $args['height_in'] = $this->height_in;
+	    }
+
+	    if(isset($weight_lb))
+	    {
+		    $this->weight_lb  = $weight_lb ;
+	    }
+	    else
+	    {
+		    $args['weight_lb'] = $this->weight_lb;
+	    }
 
         try {
 			$extra_validate = Validation::factory($args);

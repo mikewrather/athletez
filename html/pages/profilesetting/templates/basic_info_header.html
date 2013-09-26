@@ -1,14 +1,16 @@
 {{#payload}}
 <div class="span3">
 	<img id="img-profile-prof-setting" src="{{user_picture_obj.types.large_thumb.url}}" />
+	<a href="javascript:void(0);" id="change_user_pic">Change User Picture</a>
 </div>
 <div class="span6">
 	<h2>{{name}}</h2>
 	<p>
-		{{height_in}} INCHES
+		{{#height_in}} {{height_in}} INCHES{{/height_in}}
 	</p>
 	<p>
-		{{weight_lb}} LBS
+		{{#weight_lb}}{{weight_lb}} LBS{{/weight_lb}}
 	</p>
+	<div id="edit_profile_info">Edit</div>
 </div>
 {{/payload}}

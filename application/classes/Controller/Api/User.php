@@ -1831,6 +1831,12 @@
 		public function action_put_basics()
 		{
 			$this->payloadDesc = "Update basic information about the user";
+			if(!$this->mainModel->id)
+			{
+				$this->modelNotSetError();
+				return false;
+			}
+
 			$arguments = array();
 			// CHECK FOR PARAMETERS:
 			// email
@@ -1880,12 +1886,18 @@
 			{
 				$arguments["cities_id"] = (int)trim($this->put('cities_id'));
 			}
+
+			if((int)trim($this->put('height_in')) > 0)
+			{
+				$arguments["height_in"] = (int)trim($this->put('height_in'));
+			}
+
+			if((int)trim($this->put('weight_lb')) > 0)
+			{
+				$arguments["weight_lb"] = (int)trim($this->put('weight_lb'));
+			}
             
-            if(!$this->mainModel->id)
-            {
-                $this->modelNotSetError();
-                return false;
-            }
+
 
 			if(!$this->user->can('Assumeownership', array('owner' => $this->mainModel->id))){
 				$this->throw_permission_error(Constant::NOT_OWNER);

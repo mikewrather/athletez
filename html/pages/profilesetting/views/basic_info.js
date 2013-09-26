@@ -12,6 +12,7 @@ define([
         'views',
         'utils',
         'vendor',
+		'usercontrols/imagecropper/imagecropper'
         ], 
 function(require, profileHeaderTemplate) {
 
@@ -24,7 +25,8 @@ function(require, profileHeaderTemplate) {
         Channel = utils.lib.Channel,
         vendor = require('vendor'),
         Mustache = vendor.Mustache,
-        $ = facade.$;
+        $ = facade.$,
+	    ImageCropperController = require('usercontrols/imagecropper/imagecropper');
         
 
     ProfileHeaderView = SectionView.extend({
@@ -32,13 +34,16 @@ function(require, profileHeaderTemplate) {
         id: 'basic_info',
 
         template: profileHeaderTemplate,
-        
-        events: {
-          "click .btn-prof-setting-h" : "initialize"
-        },
+
+	    events: {
+		    "click .btn-prof-setting-h": "initialize",
+		    "click #edit_profile_info": "editProfile",
+		    "click #change_user_pic": "changeUserpic"
+	    },
 
         initialize: function (options) {
-            this.initBasicView();            
+            this.initBasicView();
+	        _.bindAll();
         },
         
         initBasicView: function () {
@@ -57,7 +62,13 @@ function(require, profileHeaderTemplate) {
            // self.render();
             
             var markup = Mustache.to_html(self.template, this.basicInfoModel.toJSON());
+	        console.log(markup);
             $('#section-basics-prof-setting').html(markup);
+
+	        console.log($('#change_user_pic'));
+	        $('#change_user_pic').bind('click',function(){
+		        self.changeUserpic();
+	        });
         },
         
         // **Method** `setOptions` - called by BaseView's initialize method
@@ -66,6 +77,19 @@ function(require, profileHeaderTemplate) {
                 throw new Error("HeaderView expects option with model property.");
             }            
         },
+
+	    editProfile: function()
+		{
+			//TODO these should just make the fields editable and then submit changes to PUT /api/user/basics
+			//TODO I added the parameters "height_in" and "weight_lb"
+		},
+
+	    changeUserpic: function()
+	    {
+			//TODO Needs to launch the userpic popup
+		    console.log("clicked");
+		    var imageCropperController = new ImageCropperController();
+	    }
                 
     });
 
