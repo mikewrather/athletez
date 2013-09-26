@@ -65,7 +65,6 @@ function(require, profileHeaderTemplate) {
 	        console.log(markup);
             $('#section-basics-prof-setting').html(markup);
 
-	        console.log($('#change_user_pic'));
 	        $('#change_user_pic').bind('click',function(){
 		        self.changeUserpic();
 	        });
@@ -84,11 +83,9 @@ function(require, profileHeaderTemplate) {
 			//TODO I added the parameters "height_in" and "weight_lb"
 		},
 
-	    changeUserpic: function()
-	    {
-			//TODO Needs to launch the userpic popup
-		    console.log("clicked");
-		    var imageCropperController = new ImageCropperController();
+	    changeUserpic: function(){
+		    var self=this,imageCropperController = new ImageCropperController();
+		    Channel('userpic-changed').subscribe(function(){ self.initBasicView(); });
 	    }
                 
     });

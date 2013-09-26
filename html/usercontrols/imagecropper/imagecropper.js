@@ -23,13 +23,14 @@ define([
 
 		Channel = utils.lib.Channel, LayoutView = views.LayoutView,
 		Backbone = facade.Backbone,
-		BasicModel = require("user/models/basic_info"),
-		//ImageCropperView = require("usercontrols/imagecropper/views/main"),
+		BasicModel = require("user/models/basic_info");
 
 		ImageCropperController = Controller.extend({
 			// define css files to load
 			cssArr: ["/usercontrols/imagecropper/imagecropper.css"],
-			events: {},
+			events: {
+					"click button.close":"alertsomething"
+			},
 
 			// controller intialize function
 			initialize: function (options) {
@@ -64,6 +65,7 @@ define([
 
 			// setup main layout
 			setupLayout: function () {
+				var self = this;
 				this.scheme = [];
 				$(".model-popup-h").remove();
 				$('body').append(this.modelHTML);
@@ -74,9 +76,16 @@ define([
 					displayWhen: "ready"
 				});
 				this.layout = pageLayout;
+				$('#modalPopup button.close').bind('click',function(){
+					self.notifyUpdate();
+				});
 				$('#modalPopup').modal();
 				return this.layout;
 			},
+
+			notifyUpdate:function(){
+				Channel('userpic-changed').publish();
+			}
 		});
 	return ImageCropperController;
 
