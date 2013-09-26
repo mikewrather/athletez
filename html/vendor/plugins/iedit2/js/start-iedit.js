@@ -8,8 +8,8 @@ $(function () {
 	var isEditShown = false;
     
 	// Temporary hard links
-	var orig = 'http://s3.amazonaws.com/com-runtriz-pictures/144_1_bgiPad_478.jpg';
-	var saved_edit = 'http://runtriz-universal-images.s3.amazonaws.com/instances/he_beta/processed/6225432.jpg';
+	var orig = '';
+	var saved_edit = '';
 
 	// Clear the display window, update title and highlight link
 	function clearDisplay(newtitle, linksel)  {
