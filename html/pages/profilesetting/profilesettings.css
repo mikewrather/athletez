@@ -144,3 +144,23 @@
     float: left;
     margin: 20px;
 }
+
+div#edit_profile_info_section{
+    margin:5px;
+    padding:15px;
+}
+
+div#edit_profile_info_section div span{
+    display: inline-block;
+    width:100px;
+}
+
+#section-basics-prof-setting .profile-image{
+    padding:10px;
+}
+
+#section-basics-prof-setting .profile-image a{
+    font-size: 1.3em;
+    font-weight: bold;
+    text-align: center;
+}

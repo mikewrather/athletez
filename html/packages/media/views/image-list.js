@@ -47,7 +47,6 @@ function(facade,  views,   utils,   ImageItemView,            ImageBoardView,   
       
 
         initialize: function(options) {
-        	
         	if(options.name)
         		this.name = options.name;
         	else

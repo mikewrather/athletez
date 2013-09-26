@@ -7,6 +7,7 @@
 define([
         'require',
         'text!profilesetting/templates/basic_info_header.html',
+		'text!profilesetting/templates/basic_info_header_edit.html',
         'profilesetting/models/basic_info',
         'facade',
         'views',
@@ -14,7 +15,7 @@ define([
         'vendor',
 		'usercontrols/imagecropper/imagecropper'
         ],
-function(require, profileHeaderTemplate) {
+function(require, profileHeaderTemplate,profileHeaderEditTemplate) {
 
     var ProfileHeaderView,
         facade = require('facade'),
@@ -53,6 +54,7 @@ function(require, profileHeaderTemplate) {
             //this.basicInfoModel.id = this.id; //;
             this.basicInfoModel.fetch();
             $.when(this.basicInfoModel.request).done(function() {
+	            self.basicInfoModel.set('id',self.basicInfoModel.get('payload').id);
                 self.setupBasicView();
             });
         },
@@ -65,6 +67,7 @@ function(require, profileHeaderTemplate) {
 	        console.log(markup);
             $('#section-basics-prof-setting').html(markup);
 	        $('#change_user_pic').bind('click',function(){ self.changeUserpic();});
+	        $('#edit_profile_info').bind('click',function(){ self.editProfile();});
         },
 
         // **Method** `setOptions` - called by BaseView's initialize method
@@ -76,9 +79,19 @@ function(require, profileHeaderTemplate) {
 
 	    editProfile: function()
 		{
-			//TODO these should just make the fields editable and then submit changes to PUT /api/user/basics
-			//TODO I added the parameters "height_in" and "weight_lb"
+			var self=this, markup = Mustache.to_html(profileHeaderEditTemplate, this.basicInfoModel.toJSON());
+			$('div#user_profile_data').html(markup);
+			$('#save_user_data').bind('click',function(){ self.saveProfileBasics();});
 		},
+
+	    saveProfileBasics: function()
+	    {
+		    var self = this, newAttr = {};
+		    $('div#user_profile_data').find('input').each(function(){
+			    newAttr[$(this).attr('model-property')] = $(this).val();
+		    });
+		    this.basicInfoModel.save(newAttr,{success:function(){ self.initBasicView();}});
+	    },
 
 	    changeUserpic: function () {
 		    var mpay = this.basicInfoModel.get('payload');

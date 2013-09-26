@@ -195,19 +195,24 @@ define(
 				},
 				
 				transitionView : function(options) {
+
 					var viewName = 'search-result',
 					    imageList = this.collections[viewName];
 					    controller = this;
+
+					console.log("CALLED",this.collections[viewName]);
 		
 					imageList.url = this.url(options);
 					imageList.fetch();
 
 					$.when(imageList.request).done(function() {
+						console.log("Fetch Complete");
 						var view = new ImageListView({
-							collection : imageList,
+						//	collection : imageList,
 							name : viewName,
 							destination : '#'+viewName
 						});
+						console.log(view);
 						controller.layout.transition(viewName, view);
 					});
 				},
