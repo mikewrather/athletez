@@ -43,14 +43,13 @@ define([
 				_.bindAll(this);
 
 				// model box html
-				if (options.id) this.id = options.id;
-				if (options.index) this.index = options.index;
-				if (options.userId) this.userId = options.userId;
-				if (options._collection) this._collection = options._collection;
+				console.log(options);
+				this.image_o = (options.image_o) ? options.image_o : "";
+				this.image_e = (options.image_e) ? options.image_e : "";
 
 				this.modelHTML =
 					'<div id="modalPopup" class="modal imagecropper hide fade model-popup-h">' +
-						'<div class="modal-header">Userpic Editor' +
+						'<div class="modal-header"><span>Userpic Editor</span>' +
 							'<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>' +
 						'</div>' +
 						'<div class="modal-body page-content-h"></div>' +
@@ -75,10 +74,17 @@ define([
 					template: cropperLayoutTemplate,
 					displayWhen: "ready"
 				});
+
 				this.layout = pageLayout;
 				$('#modalPopup button.close').bind('click',function(){
 					self.notifyUpdate();
 				});
+
+				var url='/vendor/plugins/iedit2/index.html?vh=500&vw=500&sx=0&sy=0&sz=100&t=Profile%20Picture&edit=';
+				if(this.image_e != "") url += '&edit='+this.image_e;
+				if(this.image_o != "") url += '&o='+this.image_o;
+				$('#modalPopup iframe#cropper_iframe').attr('src',url);
+
 				$('#modalPopup').modal();
 				return this.layout;
 			},

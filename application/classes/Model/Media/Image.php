@@ -173,8 +173,10 @@ class Model_Media_Image extends ORM
 				// user is used to generate url for s3
 				$user = Auth::instance()->get_user();
 
+				if(isset($args['pre_crop_url']) && strlen($args['pre_crop_url']) > 5) $this->pre_crop_url = $args['pre_crop_url'];
 				// save to s3 and save s3 url to database
 				$this->original_url = s3::upload($local_path,$user->id);
+
 
 				// save all other information to database
 				$this->original_x = $img_obj->width;
@@ -228,7 +230,8 @@ class Model_Media_Image extends ORM
 					'tmp_name'=>$image->file,
 					'type'=>$image->mime,
 				)
-			)
+			),
+			'pre_crop_url' => $args['image_url']
 		);
 
 		$result = $this->addImage($media_args);

@@ -6,7 +6,7 @@
     width:100%;
     padding:0;
     left:0;
-    position: absolute;
+    position: fixed;
 }
 
 .modal.imagecropper .modal-header{
@@ -26,6 +26,13 @@
     top:15px;
 }
 
+.modal.imagecropper .modal-header span{
+    display: inline-block;
+    font-size:1.6em;
+    font-weight: bolder;
+    font-family: "Avenir";
+    padding:10px;
+}
 .modal.imagecropper button.close{
     margin: 10px 15px 0px 8px;
 }
