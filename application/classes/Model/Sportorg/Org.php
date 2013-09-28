@@ -99,13 +99,11 @@ class Model_Sportorg_Org extends ORM
 
 			// leagues_id (int)
 			'leagues_id'=>array(
-				array('not_empty'),
 				array('leagues_id_exist')
 			),
 
 			// divisions_id (int)
 			'divisions_id'=>array(
-				array('not_empty'),
 				array('divisions_id_exist')
 			),
 
