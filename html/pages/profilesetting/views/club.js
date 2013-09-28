@@ -28,7 +28,8 @@ define(['require', 'text!profilesetting/templates/club.html', 'text!profilesetti
 			"click .btn-Close-Positions" : "ClosePositions",
 			"click .btn-Finish-Sports" : "FinishSports",
 			"click .edit-team" : "EditTeam",
-			"click .btnOpenPositions" : "displayPositionPopup"
+			"click .btnOpenPositions" : "displayPositionPopup",
+			"click .add-club-h" : "openAddClubPopup"
 		},
 
 		/*Holds */
@@ -92,6 +93,11 @@ define(['require', 'text!profilesetting/templates/club.html', 'text!profilesetti
 			self = this;
 			self.setOptions(options);
 			this.init();
+		},
+		
+		/* Add club popup  */
+		openAddClubPopup: function() {
+			routing.trigger('add-school-init', '', '', 'club');
 		},
 
 		/*initialize must be a wrapper so any function definitions and calles must be called in init*/

@@ -16,6 +16,9 @@ define(['require', 'text!usercontrol/dropdown/template/layout.html', 'facade', '
 		multiple : false,
 		// stack to store all selected options
 		selectedOptions : [],
+		
+		// dropdown outer class
+		className: 'dropdown-wrapper',
 
 		/*Bind Events on controls present in current view template*/
 		events : {
@@ -33,7 +36,6 @@ define(['require', 'text!usercontrol/dropdown/template/layout.html', 'facade', '
 
 			if (this.callback)
 				this.callback(this.selectedOptions);
-			console.log(this.selectedOptions);
 
 		},
 
@@ -100,6 +102,8 @@ define(['require', 'text!usercontrol/dropdown/template/layout.html', 'facade', '
 			var self = this;
 			if ($(e.currentTarget).find("span").hasClass('icon-chevron-down')) {
 				$(e.currentTarget).find("span").removeClass('icon-chevron-down').addClass('icon-chevron-up');
+				$(".dropdown-container").removeClass('increase-dropown-zindex');
+				self.$el.find(".dropdown-container").addClass('increase-dropown-zindex');
 				$("html").bind('click', function(e) {
 					self.hideDropdown(e);
 				});
@@ -139,7 +143,6 @@ define(['require', 'text!usercontrol/dropdown/template/layout.html', 'facade', '
 
 		//render displays the view in browser
 		render : function() {
-			console.error(this.data);
 			this.data.dropView = this;
 			if (!this.selectedValue) {
 				if (this.data.records.length)
@@ -176,7 +179,6 @@ define(['require', 'text!usercontrol/dropdown/template/layout.html', 'facade', '
 			for (var i in options) {
 				this[i] = options[i];
 			}
-			console.error(this.destination);
 		}
 	});
 	return DropDownView;

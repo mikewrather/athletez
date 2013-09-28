@@ -2,9 +2,9 @@
 // --------------  
 // Requires define
 // Return {Object} App
-define( ["facade", "utils", "collections", "chrome", "controller", "profile", "imageup",'home','videopreview',"game", "team", "registration","profilesetting","userresume","packages/site/collections/phrases","usercontrols/tag/tag","usercontrols/addgame/addgame","login/model","login/view",'signup', "usercontrols/photo-player/photo-player"],
+define( ["facade", "utils", "collections", "chrome", "controller", "profile", "imageup",'home','videopreview',"game", "team", "registration","profilesetting","userresume","packages/site/collections/phrases","usercontrols/tag/tag","usercontrols/addgame/addgame","login/model","login/view",'signup', "usercontrols/photo-player/photo-player", "usercontrols/add-club/add-club"],
 function (facade, utils, collections, chromeBootstrap, Controller, ProfileController, ImageController, HomeController, VideoPreviewController,
-	GameController, TeamController, RegistrationController,ProfileSetting,UserResume, SitePhraseList , TagController,AddGameController,loginModel, loginView, SignupController, PhotoPlayerController) {
+	GameController, TeamController, RegistrationController,ProfileSetting,UserResume, SitePhraseList , TagController,AddGameController,loginModel, loginView, SignupController, PhotoPlayerController, AddClubController) {
 
 
     //App;
@@ -90,6 +90,15 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
                 	"index": index,
                 	userId: userId,
                 	_collection: collection
+                });
+            });
+            
+            routing.off('add-school-init');
+            routing.on('add-school-init', function(collection, userId, addType) {
+            	 var addSchool = new AddClubController({
+            	 	type: addType
+                	//userId: userId,
+                	//_collection: collection
                 });
             });
         },
@@ -200,7 +209,7 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
                     "route": "",
                     "teamId": id,
                     "userId": headerModelId
-                })
+                });
             }
             this.initialiRoutesInit(initTeam);
            // Channel('app-inited').subscribe(initTeam);

@@ -29,7 +29,8 @@ define(['require', 'text!profilesetting/templates/highschool.html', 'text!profil
 			"click .btn-Close-Positions" : "ClosePositions",
 			"click .btn-Finish-Sports" : "FinishSports",
 			"click .edit-team" : "EditTeam",
-			"click .btnOpenPositions" : "displayPositionPopup"
+			"click .btnOpenPositions" : "displayPositionPopup",
+			"click .add-school-h": "openAddHighSchoolPopup"
 		},
 
 		/*Holds */
@@ -95,7 +96,12 @@ define(['require', 'text!profilesetting/templates/highschool.html', 'text!profil
 			self.setOptions(options);
 			this.init();
 		},
-
+		
+		/* Add club popup  */
+		openAddHighSchoolPopup: function() {
+			routing.trigger('add-school-init', '', '', 'school');
+		},
+		
 		/*initialize must be a wrapper so any function definitions and calles must be called in init*/
 		init : function() {
 			self.setupView();

@@ -361,7 +361,7 @@ input {
 .region-dark {
 	background:#6b6e71;
 	color: #FFF;
-	padding: 5px 10px;
+	padding: 5px 1%;
 	font-size: 1.125em;
 	text-align: center;
 }
@@ -370,13 +370,23 @@ input {
 
 /**** Custom Drop Down  ******/
 
+.dropdown-wrapper {
+	width: 300px;
+	position: relative;
+}
+
+
 .dropdown-container {
 	background: #CCCCCC;
 	display: inline-block;
-	width: 200px;
+	width: 100%;
 	position: absolute;
 	z-index: 1000;
 	
+}
+
+.increase-dropown-zindex {
+	z-index: 2000 !important;
 }
 
 ul.common-dropdown {
@@ -420,7 +430,7 @@ ul.common-dropdown li.selected a {
 }
 
 .dropdown-header-box {
-	width: 70%;
+	width: 72%;
 	float: left;
 	display: inline-block;
 }
@@ -428,7 +438,7 @@ ul.common-dropdown li.selected a {
 .down-arrow-outer {
 	background: rgb(65, 67, 70);
 	display: inline-block;
-	width: 20%;
+	width: 26%;
 	float: right;
 	height: 100%;
 	text-align: center;
