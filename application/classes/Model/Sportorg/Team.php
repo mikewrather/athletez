@@ -227,6 +227,7 @@ class Model_Sportorg_Team extends ORM
 		),
 		'added_function_calls' => array(
 			'team_name' => 'name',
+			'org_name' => 'get_org_name',
 			"team_location" => 'getTeamLocation',
 			"picture" => 'getImage',
 			"num_votes" => 'get_num_votes',
@@ -246,6 +247,12 @@ class Model_Sportorg_Team extends ORM
 	public function get_num_followers()
 	{
 		return Model_User_Followers::num_followers($this);
+	}
+
+	public function get_org_name()
+	{
+		$org = $this->getOrg();
+		return $org->name;
 	}
 
 	public function getBasics($settings = array())

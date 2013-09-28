@@ -93,7 +93,6 @@ class Model_Sportorg_Org extends ORM
 
 			// sports_club (smallint)
 			'sports_club'=>array(
-				array('not_empty'),
 			),
 
 			// leagues_id (int)
