@@ -41,7 +41,7 @@ define(["require", 'text!usercontrols/photo-player/templates/comments.html',
 			if (options.id) this.id = options.id;
 			if (options.index) this.index = options.index;
 			if(options.userId) this.userId = options.userId;
-			if(options.type) this.userId = options.type;
+			if(options.type) this.type = options.type;
 			
 			
 			if (options._collection) this._collection = options._collection;
