@@ -35,7 +35,7 @@ define(['vendor', 'views', 'utils', 'text!media/templates/image-item.html'], fun
 				_id : mpay.id
 				},
 				show_edit = false,
-				standard_thumb;
+				standard_thumb = null;
 
 			console.log(mpay);
 			switch(mpay.enttypes_id)
@@ -163,29 +163,31 @@ define(['vendor', 'views', 'utils', 'text!media/templates/image-item.html'], fun
 				});
 			});
 
-			console.log(standard_thumb);
+			if(standard_thumb != "undefined" && standard_thumb != null)
+			{
 
-			var ratio_x = standard_thumb.width / 220,
-				ratio_y = standard_thumb.height / 220;
+				var ratio_x = standard_thumb.width / 220,
+					ratio_y = standard_thumb.height / 220;
 
-			standard_thumb.width = parseInt(standard_thumb.width);
-			standard_thumb.height = parseInt(standard_thumb.height);
+				standard_thumb.width = parseInt(standard_thumb.width);
+				standard_thumb.height = parseInt(standard_thumb.height);
 
-			var overflow = (standard_thumb.width > standard_thumb.height) ?
+				var overflow = (standard_thumb.width > standard_thumb.height) ?
 					-((standard_thumb.width / ratio_y) -220) / 2:
 					-((standard_thumb.height / ratio_x)-220) / 2;
-			if(overflow > 0) overflow = 0;
+				if(overflow > 0) overflow = 0;
 
-			if(standard_thumb.width > standard_thumb.height)
-				this.$el.find('img').css({
-					'max-width':standard_thumb.width / ratio_y,
-					'left':overflow
-				});
-			else
-				this.$el.find('img').css({
-					'max-height':standard_thumb.height / ratio_x,
-					'top':overflow
-				});
+				if(standard_thumb.width > standard_thumb.height)
+					this.$el.find('img').css({
+						'max-width':standard_thumb.width / ratio_y,
+						'left':overflow
+					});
+				else
+					this.$el.find('img').css({
+						'max-height':standard_thumb.height / ratio_x,
+						'top':overflow
+					});
+			}
 
 			this.$el.find('.image-outer-h').mouseover(function() {
 				$(this).find('.detail-view').css({
@@ -195,11 +197,6 @@ define(['vendor', 'views', 'utils', 'text!media/templates/image-item.html'], fun
 					opacity : 90
 				});
 			});
-
-
-
-			
-
 			return this;
 
 			//console.log("Called Image Render",this.model);

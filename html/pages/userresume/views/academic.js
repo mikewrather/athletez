@@ -122,8 +122,12 @@ define(['require', 'text!userresume/templates/academic.html', 'text!userresume/t
 				self.gpa = Collection.parseAsRequired();
 				var markup = Mustache.to_html(templateGpa, {
 					data : self.gpa
-				});
-				$(self.el).find(self.controls.ContainerGpa).html(markup);
+				}),
+					$container = $(self.el).find(self.controls.ContainerGpa);
+				$container.html(markup);
+
+				if(parseInt(Collection.models.length) > 0) $container.find('a#edit-gpa-btn').css('visibility','visible');
+				else $container.find('a#edit-gpa-btn').css('visibility','hidden');
 			});
 		},
 		/*Eable text boxes and display finish button*/
@@ -183,7 +187,7 @@ define(['require', 'text!userresume/templates/academic.html', 'text!userresume/t
 			$(e.target).fadeOut();
 		},
 		AddGpa : function(e) {
-			self.$(self.controls.SectionAddGpa).fadeIn();
+			self.$(self.controls.SectionAddGpa).fadeIn().css('display','inline-block');
 		},
 		SaveNewGpa : function(e) {
 			var year = self.$(self.controls.SectionAddGpa).find(self.controls.TxtGpaYear).val();

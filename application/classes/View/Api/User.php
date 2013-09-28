@@ -296,6 +296,7 @@
 				$obj = new stdClass();
 				$obj->id = $sports_id;
 				$obj->name = $basic['sport']['sport_name'];
+				$obj->icon = $basic['sport']['large_icon'];
 				$awards_arr[] = $basic;
 				$obj->awards = $awards_arr;
 				$grouped_array[$sports_id] = $obj;

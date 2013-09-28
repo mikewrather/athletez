@@ -4,13 +4,13 @@
 .floatRight {
 	float: right;
 }
-.displayNone{display:none}
+.displayNone{display:none;}
 .section-teams-prof-setting .spn-black-heading {
 	background-color: #444;
 	color: #FFF;
 	width: 40px;
 }
-.section-teams-prof-setting .div-add-dotted {
+.div-add-dotted {
     background-color: #eef7f7;
 	color: #33aeab;
 	border: 1px #33aeab dashed;
@@ -163,4 +163,117 @@ div#edit_profile_info_section div span{
     font-size: 1.3em;
     font-weight: bold;
     text-align: center;
+}
+
+.main-container{
+    margin : auto; background-color: white; width:100%; padding-bottom: 60px;
+}
+
+.main-container > div{
+    width: 100%;
+    display: inline-block;
+}
+
+.inset-data-entry{
+    padding:10px 5% 0 10%;
+    width:85%;
+}
+
+.standard-subsection-header{
+    margin:25px 5% 0 0;
+    height: auto;
+    width: 100%;
+    /*   border-bottom: 1px solid #b7b7b7;
+       border-top: 1px solid #b7b7b7; */
+    font-family: "Avenir";
+    font-weight: bold;
+    font-size: 1.1em;
+    color:#515252;
+}
+
+.rd-entry{ vertical-align:middle;padding:5px 0 0 30px;}
+.rd-entry > span{ display: inline-block;font-family: "Avenir";font-weight:normal; color:#515252; font-size: 1.0em;}
+.rd-entry > span:first-child{ width:30%; }
+.rd-entry > span:first-child > img{ width:30px; margin-right:10px;}
+
+.resume_button{
+    float: right;
+    background-color: #515252;
+    color: #eef4da;
+    padding:7px 20px 7px 20px;
+    font-family: "Avenir","HelveticaNeue";
+    font-weight: bolder;
+    margin-right:5px;
+}
+
+.btn-Finish-RdTree_h{ margin-top:-50px; }
+
+a.edit,a.remove{
+    content:'';
+    background-repeat: no-repeat;
+    background-size:20px 20px;
+    display: inline-block;
+    height:20px;
+    width: 20px;
+}
+a.edit{background-image: url(http://athletez.s3.amazonaws.com/resources/img/pencil.png);}
+a.edit:hover,a.remove:hover{text-decoration: none;}
+a.remove{ background-image: url(http://athletez.s3.amazonaws.com/resources/img/x.png);}
+
+.section-new-controls{
+    padding-left:5%;
+}
+
+.section-new-controls .resume_button{
+    margin-top:10px;
+    float:none;
+}
+
+.section-new-controls > div > span{
+    width:30%;
+    margin-right:5px;
+}
+
+.section-new-controls > div textarea{
+    width:90%;
+}
+.section-new-controls > div > span:last-child textarea{
+    padding:10px;
+}
+
+.txtAwards_h{
+    margin-right: 5px;
+}
+
+#section-list-awards .standard-subsection-header{padding-bottom: 10px;}
+#section-list-awards .standard-subsection-header > img{
+    max-width:40px; max-height: 40px; margin:5px;
+}
+
+.awards-sports-header{
+    border-bottom: 1px solid #ccc;
+}
+
+.section-new-award{
+    padding-top:5px;
+}
+.section-new-award input[type="text"]{
+    max-width:190px;
+}
+
+.section-new-award input[type="text"].year{
+    max-width:70px;
+}
+
+
+.award-labels{
+    margin:25px 10px 0 0;
+    height: auto;
+    width: 100%;
+    /*   border-bottom: 1px solid #b7b7b7;
+       border-top: 1px solid #b7b7b7; */
+    font-family: "Avenir";
+    font-weight: bold;
+    font-size: 1.1em;
+    color:#515252;
 }

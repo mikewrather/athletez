@@ -1,34 +1,33 @@
-<div class="row-fluid sub-section-prof-setting well well-large">
+<div class="row-fluid sub-section-prof-setting">
 	<div class="row-fluid">
-		<span class="spn-black-heading  well-small">Awards</span>
+		<span class="green-left-heading">Awards</span>
 	</div>
 
-	<div class="section-new-award">
+	<div class="inset-data-entry section-new-award">
 		<div class="div-add-dotted well-small btn-Add-award_h" testids="{{TestIds}}">
 			+ Add an Award
 		</div>
-		<div class="well section-new-controls displayNone">
+		<div class="section-new-controls displayNone">
 			<div class="clearfix row-fluid">
-				<span class="span2">Sports :</span>
-				<span class="span3"> <select class="ddl-sports-awards_h"></select> </span>
-				<span class="span2">Name :</span>
-				<span class="span3">
-					<input type="text" class="txtAwards_h txt_name_h" value="{{name}}"/>
+				<div style="width: 100%; padding:5px; margin: 0;">
+				<span>
+					<select class="ddl-sports-awards_h"></select>
 				</span>
+				<span>
+					<input type="text" class="txtAwards_h txt_name_h" placeholder="Award Name" value="{{name}}"/>
+				</span>
+				<span>
+					<input type="text" class="txtAwards_h txt_year_h" placeholder="Year Awarded" value="{{year}}"/>
+				</span>
+				</div>
+				<div style="width: 100%; padding:5px; margin: 0;">
+				<span>
+					<textarea class="txtAwards_h txt_description_h" placeholder="Description">{{description}}</textarea>
+				</span>
+				</div>
 			</div>
-
-			<div class="clearfix row-fluid">
-				<span class="span2">Description :</span>
-				<span class="span3">
-					<input type="text" class="txtAwards_h txt_description_h" value="{{description}}"/>
-				</span>
-				<span class="span2">year :</span>
-				<span class="span3">
-					<input type="text" class="txtAwards_h txt_year_h" value="{{year}}"/>
-				</span>
-			</div>
-			<div class="clearfix row-fluid">
-				<span class="span12"> <a href="javascript:void(0)" class="btn btn-primary btn-Save_award_h" >Save</a> <a href="javascript:void(0)" class="btn btn-Cancel-New">Cancel</a> <span class="alert alert-danger displayNone error_h"></span> <span class="alert alert-success displayNone success_h"></span>
+			<div style="width: 100%; padding:5px; margin: 0;">
+				<span class=""><a href="javascript:void(0)" class="resume_button btn-Save_award_h" >Save</a> <a href="javascript:void(0)" class="resume_button btn-Cancel-New">Cancel</a> <span class="alert alert-danger displayNone error_h"></span> <span class="alert alert-success displayNone success_h"></span>
 			</div>
 		</div>
 		<br/>

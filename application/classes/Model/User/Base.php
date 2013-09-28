@@ -581,7 +581,7 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 							"id" => $val->loaded() ? $val->id : 0,
 							"resume_data_id" => $data->id,
 						);
-						if($data->large_icon != "") $profiles[$group->id]["data"][$data->id]["icon"] = $data->large_icon;
+						if(is_string($data->large_icon) && strlen($data->large_icon) > 5) $profiles[$group->id]["data"][$data->id]['icon'] = $data->large_icon;
 					}
 				}
 			}
@@ -981,6 +981,7 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 
 		if (isset($sports_id)){
 			$awards_model->where('sports_id', '=', $sports_id);
+			$awards_model->join('sports')->on('user_awards.sports_id','=','sports.id');
 		}
 		//exclude itself
 		$classes_arr = array(
@@ -1751,8 +1752,14 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 	public function delete_gpa($args){
 		$gpa_model = ORM::factory('Academics_Gpa');
 		$result = $gpa_model->where('users_id','=', $this->id)
-			->where('year', '=', $args['year'])
-			->find();
+			->where('year', '=', $args['year']);
+
+		$classes_arr = array(
+			'Academics_Gpa' => 'academics_gpa'
+		);
+		$result = ORM::_sql_exclude_deleted($classes_arr, $result);
+		$result = $result->find();
+
 
 		if (!$result->id){
 			return false;

@@ -44,7 +44,8 @@ function(require, profileHeaderTemplate,profileHeaderEditTemplate) {
 
         initialize: function (options) {
             this.initBasicView();
-	        _.bindAll();
+	        if(options.length > 0) SectionView.prototype.initialize.call(this, options);
+	     //   _.bindAll();
         },
 
         initBasicView: function () {

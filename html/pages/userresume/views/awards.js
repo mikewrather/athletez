@@ -121,6 +121,7 @@ define(['require', 'text!userresume/templates/awards.html', 'text!userresume/tem
 			});
 		},
 		ClearControls : function(e) {
+			console.log($(e.target).parents(self.controls.newAwardContainer).find(self.controls.newAwardControls));
 			$(e.target).parents(self.controls.newAwardContainer).find(self.controls.newControls).val('');
 			$(e.target).parents(self.controls.newAwardContainer).find(self.controls.newAwardControls).fadeOut();
 		},
@@ -225,6 +226,7 @@ define(['require', 'text!userresume/templates/awards.html', 'text!userresume/tem
 		EditAward : function(e){
 			$(e.target).parents(self.controls.newAwardContainer).find(self.controls.newControls).removeAttr('disabled');
 			$(e.target).fadeOut();
+			$(e.target).parents(self.controls.newAwardContainer).find(self.controls.btnRemoveExisting).fadeOut();
 			$(e.target).parents(self.controls.newAwardContainer).find(self.controls.btnUpdateAwardExisting).fadeIn();
 			$(e.target).parents(self.controls.newAwardContainer).find(self.controls.btnCancelExisting).fadeIn();
 			
@@ -234,14 +236,15 @@ define(['require', 'text!userresume/templates/awards.html', 'text!userresume/tem
 			self.SaveAward(e,"update");
 		},
 		
-		CancelNew : function() {
+		CancelNew : function(e) {
 			self.ClearControls(e);
 		},
-		CancelExisting : function() {
+		CancelExisting : function(e) {
 			$(e.target).fadeOut();
 			$(e.target).parents(self.controls.newAwardContainer).find(self.controls.btnUpdateAwardExisting).fadeOut();
 			$(e.target).parents(self.controls.newAwardContainer).find(self.controls.btnEditAward).fadeIn();
-		
+			$(e.target).parents(self.controls.newAwardContainer).find(self.controls.btnRemoveExisting).fadeIn();
+			$(e.target).parents(self.controls.newAwardContainer).find('textarea, input').attr('disabled','disabled')
 		},
 		RemoveAward : function(e) {
 			var awardId = $(e.target).attr('awardid');
