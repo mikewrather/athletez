@@ -94,18 +94,15 @@ class Model_Sportorg_Org extends ORM
 			// sports_club (smallint)
 			'sports_club'=>array(
 				array('not_empty'),
-				array('in_array', array(':value', array(1, 0))),
 			),
 
 			// leagues_id (int)
 			'leagues_id'=>array(
-				array('not_empty'),
 				array('leagues_id_exist')
 			),
 
 			// divisions_id (int)
 			'divisions_id'=>array(
-				array('not_empty'),
 				array('divisions_id_exist')
 			),
 
@@ -126,7 +123,6 @@ class Model_Sportorg_Org extends ORM
 			),
 
 			'states_id'=>array(
-				array('not_empty'),
 				array('states_id_exist')
 			),
 
