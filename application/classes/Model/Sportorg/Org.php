@@ -123,7 +123,6 @@ class Model_Sportorg_Org extends ORM
 			),
 
 			'states_id'=>array(
-				array('not_empty'),
 				array('states_id_exist')
 			),
 
