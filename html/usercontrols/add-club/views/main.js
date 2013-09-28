@@ -28,6 +28,7 @@ define(['require', 'text!usercontrols/add-club/templates/layout.html', 'facade',
 		initialize : function(options) {
 			this.model = options.model;
 			this.id = options.id;
+			this.addType = options.addType;
 			this.addressValid = false;
 			SectionView.prototype.initialize.call(this, options);
 			this.setUpMainView();
@@ -55,12 +56,17 @@ define(['require', 'text!usercontrols/add-club/templates/layout.html', 'facade',
 		},
 		
 		saveData: function() {
-			var _self = this, addModel = new AddModel();
-			addModel.name = this.$el.find(".name-h").val();
-			addModel.compLevel = this.$el.find("#comp-levels-h").val();
-			addModel.locationId = _self.locationId;
-			addModel.club = (_self.addType == "school")?1:0;
+			var _self = this, addModel = new AddModel(), data = {};
+			data.name = this.$el.find(".name-h").val();
+			data.complevel_profiles_id = this.$el.find("#comp-levels-h").val();
+			data.location_id = _self.locationId;
+			data.season_profiles_id = this.$el.find("#profile-h").val();
+			data.sports_club = (_self.addType == "school")?'1':'0';
+			addModel.set(data);
 			addModel.save();
+			$.when(addModel.request).done(function() {
+				alert(_self.addType+" added successfully");
+			});
 		},
 		
 		verifyAddress: function(callback) {
@@ -92,11 +98,12 @@ define(['require', 'text!usercontrols/add-club/templates/layout.html', 'facade',
                		var a = {};
                		a.name = [];
                		a.id = [];
-               		for(var j in json[0].payload[i].seasons) {
-               			a.name.push(json[0].payload[i].seasons[j].name);
-               			a.id.push(json[0].payload[i].seasons[j].id);
-               		}
-               		data.records.push({payload: {id: a.id.join(","), name: a.name.join(",")}});
+               		//for(var j in json[0].payload[i].seasons) {
+               		//	a.name.push(json[0].payload[i].seasons[j].name);
+               		//	a.id.push(json[0].payload[i].seasons[j].id);
+               		//}
+               		//data.records.push({payload: {id: a.id.join(","), name: a.name.join(",")}});
+               		data.records.push({payload:{id: json[0].payload[i].id, name: json[0].payload[i].name}});
                }
                data.recordId = 'id';
 			   data.recordValue = 'name';
@@ -123,14 +130,15 @@ define(['require', 'text!usercontrols/add-club/templates/layout.html', 'facade',
             	var json = _self.compLevel.toJSON(), data = {};
                data.records = [];
                for(var i in json[0].payload) {
-               		var a = {};
-               		a.name = [];
-               		a.id = [];
-               		for(var j in json[0].payload[i].levels) {
-               			a.name.push(json[0].payload[i].levels[j].name);
-               			a.id.push(json[0].payload[i].levels[j].id);
-               		}
-               		data.records.push({payload: {id: a.id.join(","), name: a.name.join(",")}});
+               		//var a = {};
+               		//a.name = [];
+               		//a.id = [];
+               		//for(var j in json[0].payload[i].levels) {
+               		//	a.name.push(json[0].payload[i].levels[j].name);
+               		//	a.id.push(json[0].payload[i].levels[j].id);
+               		//}
+               		//data.records.push({payload: {id: a.id.join(","), name: a.name.join(",")}});
+               		data.records.push({payload:{id: json[0].payload[i].id, name: json[0].payload[i].name}});
                }
             	
                data.recordId = 'id';
@@ -150,7 +158,9 @@ define(['require', 'text!usercontrols/add-club/templates/layout.html', 'facade',
 
 		setUpMainView : function() {
 			var self = this;
-			var markup = Mustache.to_html(self.template, {});
+			var data = {};
+			data.type = self.addType;
+			var markup = Mustache.to_html(self.template, data);
 			$(self.$el).html(markup);
 		}
 	});

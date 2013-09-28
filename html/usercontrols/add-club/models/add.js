@@ -11,10 +11,9 @@ define( ["facade", "models/base"], function (facade, BaseModel) {
         
       url: function() {
             if (testpath)
-                return testpath + '/location/add?address=' + this.address;
-            return '/api/org/add?name=' + this.name + '&complevel_profiles_id='+this.compLevel+"&location_id="+this.locationId+"&sports_club="+this.club;
-        }
-        
+                return testpath + '/org/add';
+            return '/api/org/add';
+       }
     });
 });
 
