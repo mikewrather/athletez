@@ -36,20 +36,34 @@ define(['require', 'text!usercontrols/add-club/templates/layout.html', 'facade',
 		},
 		
 		addClub: function() {
-			var _self = this;
+			var _self = this, submit = true;
+			if(this.$el.find(".name-h").val() == "") {
+				alert("Please enter name.");
+				return false;
+			}
+			
 			if(!this.addressValid) {
 				alert("Please choose valid address");
+				return false;
 			} else {
-				var addModel = new AddModel();
-				addModel.name = "";
-				addModel.compLevel = this.$el.find("#comp-levels-h").val();
-				addModel.locationId = _self.locationId;
-				addModel.club = (self.addType == "school")?1:0;
-				addModel.save();
+				this.verifyAddress(function() {
+					if(submit)
+						_self.saveData();
+				});
 			}
+			
 		},
 		
-		verifyAddress: function() {
+		saveData: function() {
+			var _self = this, addModel = new AddModel();
+			addModel.name = this.$el.find(".name-h").val();
+			addModel.compLevel = this.$el.find("#comp-levels-h").val();
+			addModel.locationId = _self.locationId;
+			addModel.club = (_self.addType == "school")?1:0;
+			addModel.save();
+		},
+		
+		verifyAddress: function(callback) {
 			var _self = this, address = _self.$el.find('.address-h').val(), adressModel = new AdressModel();
 			adressModel.address = address;
 			adressModel.url();
@@ -62,7 +76,7 @@ define(['require', 'text!usercontrols/add-club/templates/layout.html', 'facade',
 				if(_self.locationId) {
 					_self.$el.find('.address-h').addClass('address-verified');
 					_self.addressValid = true;
-					console.log(adressModel);
+					if(typeof callback == "function") callback();
 				} else {
 					_self.addressValid = false;
 				}
