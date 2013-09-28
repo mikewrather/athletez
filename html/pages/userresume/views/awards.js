@@ -58,8 +58,8 @@ define(['require', 'text!userresume/templates/awards.html', 'text!userresume/tem
 		/*Messages Holds the messages, warning, alerts, errors, information variables*/
 		/*In Case of similar message create only one object and key*/
 		messages : {
-			dataNotExistAwards : "Data Does Not Exists For Awards.",
-			MandatoryFields : "Sports Id, Name , Year are mandatory."
+			dataNotExistAwards : "No Awards Entered Yet.",
+			MandatoryFields : "All fields are mandatory."
 		},
 
 		/*initialize gets called by default when constructor is initialized*/

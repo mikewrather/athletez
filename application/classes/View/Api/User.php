@@ -254,6 +254,7 @@
 				$obj = new stdClass();
 				$obj->name = $basic['sport']['sport_name'];
 				$obj->sports_name = $basic['sport']['sport_name'];
+				$obj->icon = $basic['sport']['large_icon'];
 				$obj->sports_id = $sports_id;
 				$references_arr[] = $basic;
 				$obj->references = $references_arr;

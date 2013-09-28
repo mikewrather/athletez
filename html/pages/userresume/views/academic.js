@@ -66,10 +66,10 @@ define(['require', 'text!userresume/templates/academic.html', 'text!userresume/t
 		/*Messages Holds the messages, warning, alerts, errors, information variables*/
 		/*In Case of similar message create only one object and key*/
 		messages : {
-			dataNotExistGPA : "Data Does Not Exists For GPA TESTS.",
-			dataNotExistTests : "Data Does Not Exist For Tests.",
+			dataNotExistGPA : "No GPAs entered yet.",
+			dataNotExistTests : "No Tests entered yet.",
 			YearScoreIsRequired : "Year And Score Are Required.",
-			MandatoryFieldsTest : "Score is must for test"
+			MandatoryFieldsTest : "Please enter a score."
 		},
 		/*initialize gets called by default when constructor is initialized*/
 		initialize : function(options) {

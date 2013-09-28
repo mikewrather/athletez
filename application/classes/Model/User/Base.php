@@ -1001,6 +1001,7 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 
 		if (isset($sports_id)){
 			$references_model->where('sports_id', '=', $sports_id);
+			$references_model->join('sports')->on('user_references.sports_id','=','sports.id');
 		}
 
 		//exclude itself

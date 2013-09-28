@@ -245,8 +245,8 @@ a.remove{ background-image: url(http://athletez.s3.amazonaws.com/resources/img/x
     margin-right: 5px;
 }
 
-#section-list-awards .standard-subsection-header{padding-bottom: 10px;}
-#section-list-awards .standard-subsection-header > img{
+#section-list-awards .standard-subsection-header, #section-list-references .standard-subsection-header{padding-bottom: 10px;}
+#section-list-awards .standard-subsection-header > img, #section-list-references .standard-subsection-header > img{
     max-width:40px; max-height: 40px; margin:5px;
 }
 
@@ -266,7 +266,7 @@ a.remove{ background-image: url(http://athletez.s3.amazonaws.com/resources/img/x
 }
 
 
-.award-labels{
+.award-labels, .reference-labels{
     margin:25px 10px 0 0;
     height: auto;
     width: 100%;
@@ -276,4 +276,8 @@ a.remove{ background-image: url(http://athletez.s3.amazonaws.com/resources/img/x
     font-weight: bold;
     font-size: 1.1em;
     color:#515252;
+}
+
+.reference-labels{
+    display:inline-block;
 }
