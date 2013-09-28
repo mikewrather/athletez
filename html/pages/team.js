@@ -226,7 +226,8 @@ define([
 
 			// $.when(this.commentson.request).done(function () {
 				// controller.setupCommentOnListView();
-			// });
+			// });
+
         },
         
         setupCommentOfListView: function () {
@@ -439,6 +440,7 @@ define([
         },
         
         setupGameView: function () {
+	        console.log("Setting up game view",this.games);
 			this.gamesView = new TeamOrgListView({
 				collection: this.games,
 				destination: "#games_div",
