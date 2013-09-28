@@ -110,6 +110,9 @@ require.config({
 	    'plupload': {
 		    deps: ['jquery']
 	    },
+	    'jqueryui' : {
+		    deps : ['jquery']
+	    },
 	    'jquerytimepicker' : {
 	    	deps : ['jquery','jqueryui'],
 	    	

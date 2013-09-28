@@ -31,6 +31,7 @@ define(['facade', 'collections', 'user/collections/references', 'utils'], functi
 							
 							sports_id : payload.id,
 							sports_name : payload.name,
+							icon: payload.icon,
 							references : []
 						}
 						

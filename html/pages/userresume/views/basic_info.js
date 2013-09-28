@@ -5,26 +5,30 @@
 // Returns {basic_info} constructor
 */
 define([
-        'require', 
-        'text!userresume/templates/basic_info_header.html',
-        'profilesetting/models/basic_info',
-        'facade', 
-        'views',
-        'utils',
-        'vendor',
+	'require',
+	'text!profilesetting/templates/basic_info_header.html',
+	'text!profilesetting/templates/basic_info_header_edit.html',
+	'profilesetting/models/basic_info',
+	'facade',
+	'views',
+	'utils',
+	'vendor',
+	'usercontrols/imagecropper/imagecropper'
         ], 
 function(require, profileHeaderTemplate) {
 
-    var ProfileHeaderView,
-        facade = require('facade'),
-        views = require('views'),
-        BasicsInfoModel = require('profilesetting/models/basic_info'),
-        SectionView = views.SectionView,
-        utils = require('utils'),
-        Channel = utils.lib.Channel,
-        vendor = require('vendor'),
-        Mustache = vendor.Mustache,
-        $ = facade.$;
+	var ProfileHeaderView,
+		facade = require('facade'),
+		views = require('views'),
+		BasicsInfoModel = require('profilesetting/models/basic_info'),
+		SectionView = views.SectionView,
+		utils = require('utils'),
+		Channel = utils.lib.Channel,
+		vendor = require('vendor'),
+		Mustache = vendor.Mustache,
+		$ = facade.$,
+		ImageCropperController = require('usercontrols/imagecropper/imagecropper');
+
         
 
     ProfileHeaderView = SectionView.extend({
@@ -32,10 +36,12 @@ function(require, profileHeaderTemplate) {
         id: 'basic_info',
 
         template: profileHeaderTemplate,
-        
-        events: {
-          "click .btn-prof-setting-h" : "initialize"
-        },
+
+	    events: {
+		    "click .btn-prof-setting-h": "initialize",
+		    "click #edit_profile_info": "editProfile",
+		    "click #change_user_pic": "changeUserpic"
+	    },
 
         initialize: function (options) {
         	SectionView.prototype.initialize.call(this, options);

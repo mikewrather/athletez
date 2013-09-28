@@ -66,8 +66,8 @@ define(['require', 'text!userresume/templates/references.html', 'text!userresume
 		/*Messages Holds the messages, warning, alerts, errors, information variables*/
 		/*In Case of similar message create only one object and key*/
 		messages : {
-			dataNotExistReferences : "Data Does Not Exists For References.",
-			MandatoryFields : "Sports Id , Name ,  are mandatory."
+			dataNotExistReferences : "No References entered yet.",
+			MandatoryFields : "All Fields are Mandatory."
 		},
 
 		/*initialize gets called by default when constructor is initialized*/
@@ -233,6 +233,7 @@ define(['require', 'text!userresume/templates/references.html', 'text!userresume
 			$(e.target).fadeOut();
 			$(e.target).parents(self.controls.newReferenceContainer).find(self.controls.btnUpdateReferenceExisting).fadeIn();
 			$(e.target).parents(self.controls.newReferenceContainer).find(self.controls.btnCancelExisting).fadeIn();
+			$(e.target).parents(self.controls.newAwardContainer).find(self.controls.btnRemoveExisting).fadeOut();
 		},
 
 		UpdateReference : function(e) {
@@ -247,6 +248,7 @@ define(['require', 'text!userresume/templates/references.html', 'text!userresume
 			$(e.target).fadeOut();
 			$(e.target).parents(self.controls.newReferenceContainer).find(self.controls.btnUpdateReferenceExisting).fadeOut();
 			$(e.target).parents(self.controls.newReferenceContainer).find(self.controls.btnEditReference).fadeIn();
+			$(e.target).parents(self.controls.newAwardContainer).find(self.controls.btnRemoveExisting).fadeIn();
 		},
 		
 		RemoveReference : function(e) {

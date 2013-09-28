@@ -1,4 +1,4 @@
-<h3>GPA</h3>
+<span class="standard-subsection-header">GPA</span>
 <div class="div-add-dotted well-small btn-Add-gpa" testids="{{TestIds}}">
 	+ Add a Gpa
 </div>
@@ -14,19 +14,19 @@
 		</select>
 		</span>
 	<span class="span5">Score : <input type="text" class="txtGpaScore_h"/></span>
-	<p ><button class="btn btn-primary btn-Save-Gpa">Save</button></p>
+	<p ><button class="resume_button btn-Save-Gpa">Save</button></p>
 </div>
-<a href="javascript:void(0)" class="edit-gpa">Edit</a>
+<a href="javascript:void(0)" id="edit-gpa-btn" class="edit edit-gpa displayNone"></a>
 {{#data}}
 			<div class="row-fluid">
 				<span class="span3">{{year}}</span>
 				<span class="span9">
 					<input type="text" class="txtGpa_h" year="{{year}}" gpaId="{{id}}" value="{{gpa}}" disabled="disabled"/>
-					<a href="javascript:void(0)" class="btn-delete-gpa" year="{{year}}">Remove</a>
+					<a href="javascript:void(0)" class="remove btn-delete-gpa" year="{{year}}"></a>
 					<span class="alert alert-danger displayNone error_h"></span>
 					<span class="alert alert-success displayNone success_h"></span>
 					</span>
 					
 			</div>
 		{{/data}}
-		<button class="btn btn-primary btn-finish-gpa_h displayNone">Finish</button>
+		<button class="resume_button btn-finish-gpa_h displayNone">Finish</button>

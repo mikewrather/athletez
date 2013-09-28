@@ -33,7 +33,7 @@ define(['require', 'text!userresume/templates/contact.html', 'facade', 'views', 
 		/*Messages Holds the messages, warning, alerts, errors, information variables*/
 		/*In Case of similar message create only one object and key*/
 		messages : {
-			dataNotExistContacts : "Data Does Not Exists For Contacts.",
+			dataNotExistContacts : "No Contacts.",
 		},
 		/*initialize gets called by default when constructor is initialized*/
 		initialize : function(options) {

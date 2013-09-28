@@ -38,7 +38,8 @@ define(['facade', 'collections', 'user/collections/rdtree', 'utils'], function(f
 								id : t.id,
 								type : t.type,
 								val : t.val || "",
-								resumeDataId : t.resume_data_id
+								resumeDataId : t.resume_data_id,
+								icon : t.icon || null
 							}
 							data.push(obj);
 						}
