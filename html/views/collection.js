@@ -44,9 +44,10 @@ define(['facade','views/base','utils'], function (facade, BaseView, utils) {
             this._className = this.options.className || this._className;
             this._decorator = this.options.decorator || this._decorator;
             this._id = this.options.id || this._id;
+            this._temp = this.options._template || this._template;
             //this.listView = this.options.listView || undefined;
             this._views = [];
-            _(this).bindAll('add', 'remove');
+            _(this).bindAll('add', 'remove', 'reset');
             this.setupCollection();
         },
         
@@ -55,7 +56,9 @@ define(['facade','views/base','utils'], function (facade, BaseView, utils) {
         // **Method:** `setupCollection`  
         // bindings for adding and removing of models within the collection
         setupCollection: function () {
+        	
             var collection = this.options.collection || this.collection;
+            collection.on('reset', this.reset);
 	        collection.on('add', this.add);
             collection.on('remove', this.remove);
             if (!collection.length && !collection.request) {
@@ -67,6 +70,24 @@ define(['facade','views/base','utils'], function (facade, BaseView, utils) {
                 collection.each(this.add);
             }
         },
+        
+        reset: function() {
+        	this._views = [];
+        	
+        },
+        
+        addRecords: function() {
+        	alert("add records");
+        	console.log(this._views);
+        	 var collection =  this.collection;
+        	 delete this._views;
+        	 this._views = [];
+        	//collection.request = collection.fetch();
+            //collection.request.done(function () {
+            	//console.log("-----------");
+              collection.each(this.add);
+            //});
+        },
 
         // **Method:** `add`  
         // Param {Model} `model` object that extends Backbone.Model
@@ -76,6 +97,7 @@ define(['facade','views/base','utils'], function (facade, BaseView, utils) {
             view = new this._view({
                 "tagName": this._tagName,
                 "model": model,
+                "template": this._temp,
                 "className": this._className,
                 "decorator": this._decorator
             });
@@ -121,9 +143,9 @@ define(['facade','views/base','utils'], function (facade, BaseView, utils) {
             _(this._views).each(function(view) {
                 if(this.listView)
                 	if(this.prepend)
-            			this.$el.find(this.listView).prepend(view.render().el)
+            			this.$el.find(this.listView).prepend(view.render().el);
             		else
-	                	this.$el.find(this.listView).append(view.render().el)
+	                	this.$el.find(this.listView).append(view.render().el);
                 else
 	                this.$el.append(view.render().el);
                 if (view.options.decorator && _.isFunction(view.options.decorator)) {

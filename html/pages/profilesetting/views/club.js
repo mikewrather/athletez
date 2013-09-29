@@ -67,7 +67,7 @@ define(['require', 'text!profilesetting/templates/club.html', 'text!profilesetti
 		/*Messages Holds the messages, warning, alerts, errors, information variables*/
 		/*In Case of similar message create only one object and key*/
 		messages : {
-			dataNotExist : 'Data not exist.',
+			dataNotExist : 'Couldn\'t find any matches',
 			optionsMissing : 'HeaderView expects option with model property.',
 
 			selectSport : 'Please select sport',
@@ -320,16 +320,18 @@ define(['require', 'text!profilesetting/templates/club.html', 'text!profilesetti
 		},
 		/*Change sport_id when a sport is selected from dropdown*/
 		changeSports : function(event) {
+			console.log("SPORTS",self.sports);
 			var sportId = $(event.target).val();
 			var orgsId = $(event.target).attr('orgsid');
+			console.log("Event Target Sports List",$(event.target), sportId, orgsId);
 			if ((sportId != 0 && sportId != null && sportId != '') && (orgsId && orgsId != 0 && orgsId != null && orgsId != '')) {
 				self.sport_id = sportId;
 
 				var controlToAppend = self.$(event.target).parents(self.controls.divsportsLevel).find(self.controls.divLevels);
+				console.log("CALLED",controlToAppend);
 				controlToAppend.html('');
 				self.$(event.target).parents(self.controls.divsportsLevel).find(self.controls.btnAddLevel).attr('sportid',sportId);
 				self.fillCompLevel(orgsId, controlToAppend, sportId);
-				
 			} else
 				self.sport_id = 0;
 		},
@@ -339,10 +341,18 @@ define(['require', 'text!profilesetting/templates/club.html', 'text!profilesetti
 				sports : self.sports,
 				orgsId : orgs_id
 			});
-			self.$(destination).append(markup);
-			$(destination).parents(self.controls.divSportsWrapper).find(self.controls.btnAddSports).attr('orgsid', orgs_id);
+			self.$(destination).append(markup); $(destination).parents(self.controls.divSportsWrapper).find(self.controls.btnAddSports).attr('orgsid', orgs_id);
 			$(destination).parents(self.controls.divSportsWrapper).fadeIn();
 		},
+
+		findSportById: function(sports_id){
+			if(self.sports.length < 1) return 0;
+			for (var k=0; k< self.sports.length; k++)
+			{
+				if(self.sports[k].id==sports_id) return self.sports[k];
+			}
+		},
+
 		/*Fills CompLevel DropDown after fetching data from API*/
 		/*PARAMETER:
 		 * orgs_id : int, School Id selected from changeSchool function */
@@ -370,8 +380,8 @@ define(['require', 'text!profilesetting/templates/club.html', 'text!profilesetti
 						for (var key in models.payload.complevels) {
 							self.compLevel.push(models.payload.complevels[key]);
 						}
-
-						self.SetUpCompLevelView(orgs_id, destination, sportsId);
+						var sport = self.findSportById(sportsId);
+						self.SetUpCompLevelView(orgs_id, destination, sport);
 					} else {
 					}
 				});
@@ -395,11 +405,13 @@ define(['require', 'text!profilesetting/templates/club.html', 'text!profilesetti
 			self.$(event.target).parents(self.controls.divSubLevels).find(self.controls.divSeasons).fadeOut();
 		},
 		/*SET UP LEVEL VIEW AS PER THE DESTINATION WHERE TO APPEND THE VIEW*/
-		SetUpCompLevelView : function(orgs_id, destination, sports_id) {
+		SetUpCompLevelView : function(orgs_id, destination, sport) {
+			var sports_id = sport.sports_id;
 			var data = self.GetSeasonsData(self.seasons, orgs_id, sports_id);
 			var markup = Mustache.to_html(levelTemplate, {
 				levels : self.compLevel,
-				Data : data
+				Data : data,
+				'sport' : sport
 			});
 			self.$(destination).append(markup);
 
@@ -511,8 +523,9 @@ define(['require', 'text!profilesetting/templates/club.html', 'text!profilesetti
 		},
 		/*ADD SPORT WHEN A USER CLICKS ON ADD SPORTS BUTTON*/
 		AddSports : function(event) {
-			var destination = self.$(event.target).parents(self.controls.divSportsWrapper).find(self.controls.divSchoolSportsSection);
 			var orgsId = self.$(event.target).attr('orgsid');
+			var destination = $(self.controls.divSportsWrapper + '[orgsId="'+orgsId+'"] ' + self.controls.divSchoolSportsSection);
+
 			if (orgsId && orgsId != 0 && orgsId != null && orgsId != '') {
 				self.fillSports(orgsId, destination);
 				$(destination).parents(self.controls.divSportsWrapper).fadeIn();
@@ -628,10 +641,11 @@ define(['require', 'text!profilesetting/templates/club.html', 'text!profilesetti
 			var orgId = $(event.target).attr('orgsId');
 			var sportId = $(event.target).attr('sportId');
 			var destination = $(event.target).parent();
-			var tempHtml = '<div class="section-sportslevel">';
+
+			var tempHtml = '<div class="section-sportslevel"><div class="div-sports-level"></div>';
 			tempHtml += '<a tabindex="0" orgsid="' + orgId + '" class="btn-add-level" href="javascript:void(0)">Add Level</a>';
-			 tempHtml += '<span class="floatRight"><a href="javascript:void(0)" class=" well-small btn-primary btn-Finish-Sports" tabindex="0">Finish</a> </span>';
-			 tempHtml += '<div class="div-sports-level"></div></div>';
+			 tempHtml += '<span class="floatRight"><a href="javascript:void(0)" class="common-btn common-btn-direction btn-Finish-Sports" tabindex="0">Finish</a> </span>';
+			 tempHtml += '</div>';
 			 
 			$(destination).html(tempHtml);
 			var sportDestination = $(destination).find(self.controls.divLevels);
@@ -683,7 +697,7 @@ define(['require', 'text!profilesetting/templates/club.html', 'text!profilesetti
 						}
 
 						$.each(sport.complevels, function(index, complevel) {
-							self.SetUpCompLevelView(orgId, destination, sportId);
+							self.SetUpCompLevelView(orgId, destination, sport);
 							var currDestinations = self.$(destination).find(self.controls.divSubLevels);
 							if (currDestinations[index]) {
 								var ddl = self.$(currDestinations[index]).find(self.controls.ddlComplevel);

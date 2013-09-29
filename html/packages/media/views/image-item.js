@@ -19,46 +19,94 @@ define(['vendor', 'views', 'utils', 'text!media/templates/image-item.html'], fun
 			"click .vote": "vote",
 	        "click .follow": "follow",
 			"click .edit": "edit",
-			"click .delete": "delete"
+			"click .delete": "delete",
+			'click .image-outer-h' : 'initPhotoPlayer'
         },
 
 		initialize : function(options) {
 			this.template = imageItemTemplate;
 			//this.render();
 		},
-
+		
+		
 		render : function() {
-			var mpay = this.model.attributes.payload, extra = {
+			var _self = this, mpay = this.model.attributes.payload, extra = {
 				_enttypes_id : mpay.enttypes_id,
 				_id : mpay.id
 				},
-				show_edit = false;
+				show_edit = false,
+				standard_thumb = null;
 
-	
-			switch(mpay.enttypes_id) {
+			console.log(mpay);
+			switch(mpay.enttypes_id)
+			{
 				case '23':
 					//videos
 					extra._thumbnail = mpay.thumbs;
+
 					extra._label = mpay.media.name;
-					extra._link = "";
+					extra._link = "javascript: void(0);";
 
 					if(mpay.media.hasOwnProperty('is_owner')) show_edit = mpay.media.is_owner;
 
 					break;
 				case '21':
 					//images
-					if ( typeof (mpay.types) == 'object' && mpay.types.standard_thumb)
-						extra._thumbnail = mpay.types.standard_thumb.url;
+					if ( typeof (mpay.types) == 'object')
+					{
+						//console.log(mpay.types);
+						if(typeof(mpay.types.standard_thumb)=='object')
+						{
+							standard_thumb = mpay.types.standard_thumb;
+							extra._thumbnail = standard_thumb.url;
+						}
+						else if(typeof(mpay.types.large_thumb)=='object')
+						{
+							standard_thumb = mpay.types.large_thumb;
+							extra._thumbnail = standard_thumb.url;
+						}
+						else if(typeof(mpay.types.original)=='object')
+						{
+							//console.log(mpay.types.original);
+							standard_thumb = mpay.types['original'];
+							extra._thumbnail = standard_thumb.url;
+						}
+					}
+					else
+
 					extra._label = mpay.media_obj.name;
-					extra._link = "";
+					extra._link = "javascript: void(0);";
 
 					if(mpay.media_obj.hasOwnProperty('is_owner')) show_edit = mpay.media_obj.is_owner;
 
 					break;
 				case '1':
 					//users
+
+
 					if ( typeof (mpay.user_picture_obj) == 'object')
-						extra._thumbnail = mpay.user_picture_obj.types.standard_thumb.url;
+					{
+						if(typeof(mpay.user_picture_obj.types) == 'object')
+						{
+							if(typeof(mpay.user_picture_obj.types.standard_thumb)=='object')
+							{
+								standard_thumb = mpay.user_picture_obj.types.standard_thumb;
+								extra._thumbnail = standard_thumb.url;
+							}
+							else if(typeof(mpay.user_picture_obj.types.large_thumb)=='object')
+							{
+								standard_thumb = mpay.user_picture_obj.types.large_thumb;
+								extra._thumbnail = standard_thumb.url;
+							}
+							else if(typeof(mpay.user_picture_obj.types.original)=='object')
+							{
+								//console.log(mpay.types.original);
+								standard_thumb = mpay.user_picture_obj.types['original'];
+								extra._thumbnail = standard_thumb.url;
+							}
+						}
+					}
+
 					extra._label = mpay.label;
 					extra._sublabel = "Coming Soon";
 					extra._link = "/#profile/" + mpay.id;
@@ -69,8 +117,8 @@ define(['vendor', 'views', 'utils', 'text!media/templates/image-item.html'], fun
 				case '8':
 					//games
 					extra._detailclass = "game";
-
-					extra._thumbnail = mpay.game_picture!==null ? mpay.game_picture.types.standard_thumb.url : "http://lorempixel.com/output/sports-q-c-440-440-4.jpg";
+					standard_thumb = mpay.game_picture!==null ? mpay.game_picture.types.standard_thumb : {height:440,width:440,url:"http://lorempixel.com/output/sports-q-g-440-440-3.jpg"}
+					extra._thumbnail = standard_thumb.url;
 					extra._label = mpay.game_day;
 					extra._link = "/#game/" + mpay.id;
 					var team_str = "", teamLength = mpay.teams.length,
@@ -97,7 +145,7 @@ define(['vendor', 'views', 'utils', 'text!media/templates/image-item.html'], fun
 			}
 			extra.show_edit = show_edit==true ? true : undefined;
 
-			console.log("Called Image Render", extra);
+			//console.log("Called Image Render", extra);
 			var markup = Mustache.to_html(this.template, extra);
 			this.$el.html(markup);
 
@@ -115,6 +163,32 @@ define(['vendor', 'views', 'utils', 'text!media/templates/image-item.html'], fun
 				});
 			});
 
+			if(standard_thumb != "undefined" && standard_thumb != null)
+			{
+
+				var ratio_x = standard_thumb.width / 220,
+					ratio_y = standard_thumb.height / 220;
+
+				standard_thumb.width = parseInt(standard_thumb.width);
+				standard_thumb.height = parseInt(standard_thumb.height);
+
+				var overflow = (standard_thumb.width > standard_thumb.height) ?
+					-((standard_thumb.width / ratio_y) -220) / 2:
+					-((standard_thumb.height / ratio_x)-220) / 2;
+				if(overflow > 0) overflow = 0;
+
+				if(standard_thumb.width > standard_thumb.height)
+					this.$el.find('img').css({
+						'max-width':standard_thumb.width / ratio_y,
+						'left':overflow
+					});
+				else
+					this.$el.find('img').css({
+						'max-height':standard_thumb.height / ratio_x,
+						'top':overflow
+					});
+			}
+
 			this.$el.find('.image-outer-h').mouseover(function() {
 				$(this).find('.detail-view').css({
 					'bottom' : '0px'
@@ -123,7 +197,6 @@ define(['vendor', 'views', 'utils', 'text!media/templates/image-item.html'], fun
 					opacity : 90
 				});
 			});
-
 			return this;
 
 			//console.log("Called Image Render",this.model);

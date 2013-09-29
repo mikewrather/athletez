@@ -1,24 +1,26 @@
-<div class="row-fluid sub-section-prof-setting well well-large">
+<div class="sub-section-prof-setting">
 <div class="row-fluid">
-	<span class="spn-black-heading  well-small">Work Outs</span>
+	<span class="green-left-heading">Work Outs</span>
 </div>
-<div id="container-rdtree" class="row-fluid">
+<div id="container-rdtree" class="row-fluid inset-data-entry">
 	{{#rdtrees}}
-	<div class="well section-rdtree-items_h">
-		<div class="row-fluid"><h3>{{title}}</h3><br />
-			<a href="javascript:void(0)" class="btn-edit-rdtree_h">Edit</a>
+	<div class="section-rdtree-items_h">
+		<div><span class="standard-subsection-header" style="margin-top:15px;">{{title}}</span>
+
+			<a href="javascript:void(0)" class="edit btn-edit-rdtree_h">&nbsp;</a>
 		</div>
 		{{#data}}
-			<div class="row-fluid">
-				<span class="span3">{{name}}</span>
-				<span class="span3"><input type="text" class="txtRdTrees_h" treeId="{{id}}" value="{{val}}" resumeDataId="{{resumeDataId}}" disabled="disabled"/>
+			<div class="rd-entry">
+				<span>{{#icon}}<img src="{{icon}}" />{{/icon}}{{name}}</span>
+				<span>
+					<input type="text" class="txtRdTrees_h" treeId="{{id}}" value="{{val}}" resumeDataId="{{resumeDataId}}" disabled="disabled"/>
 					<span class="alert alert-danger displayNone error_h"></span>
 					<span class="alert alert-success displayNone success_h"></span>
 					
 				</span>
 			</div>
 		{{/data}}
-		<a href="javascript:void(0)" class="btn btn-primary btn-Finish-RdTree_h displayNone">Finish</a>
+		<a href="javascript:void(0)" class="resume_button btn-Finish-RdTree_h displayNone">FINISH</a>
 	</div>
 	{{/rdtrees}}
 </div>

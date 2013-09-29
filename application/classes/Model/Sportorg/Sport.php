@@ -25,10 +25,13 @@ class Model_Sportorg_Sport extends ORM
 			'name' => 'sport_name'
 		),
 		'alternate_fk_names' => array(
-			'sport_type_id' => 'sport_types_id'
+			'sport_type_id' => 'sport_types_id',
 		),
 		'added_function_calls' => array(
-			'sport_id' => 'pk' // this just adds an extra column which has a duplicate value of id
+			'sport_id' => 'pk', // this just adds an extra column which has a duplicate value of id
+			'sports_id' => 'pk',
+			'icon' => 'large_icon',
+			'sports_name' => 'name'
 		)
 	);
 	
@@ -62,6 +65,9 @@ class Model_Sportorg_Sport extends ORM
 			'far_key' => 'orgs_id'
 		),
 	);
+
+	public function name(){ return $this->name; }
+	public function large_icon(){ return $this->large_icon;	}
 
 	public function rules(){
 

@@ -1,27 +1,48 @@
 define([
-	'underscore',
+	'require',
+	'text!/login/templates/logintemplate.html', 
     'backbone',
-    'jquery',
-	'text!/login/templates/logintemplate.html',
-	
-	], function(_, backbone, $, templateNew){
-
-		return backbone.View.extend({
-			//el: $("#logincontainer"),
-			render: function(){
-				
-				console.log($(this.el));
-				//console.log(this.template(this));
-				$(this.el).html(this.template(this));
-				$("#main").html($(this.el).html());
-			},
-			initialize: function(){
-				
-				this.template = _.template(templateNew);
+    'underscore',
+    'views',
+    'facade', 
+    'utils'
+	],function(require,  signInTemplate,backbone,_) {
 			
-			this.render();
-			}
+		var SignupBasicView,
+        	facade = require('facade'),
+        	 views = require('views'),
+        	
+        	utils = require('utils'),
+        	Channel = utils.lib.Channel,
+        	
+        	SectionView = backbone.View;
+			SigninBasicView = SectionView.extend({
+              
+              initialize: function (options) {
+                   
+                    this.template =  _.template(signInTemplate);
+                    this.$el = $("#main");
+                    this.render();
+                                    
+                },
+                render: function(){
+
+                    this.$el.html(this.template);
+                   
+                },     
+                events:{
+                  "click a#signup": "signupUser", 
+                },
+                signupUser: function(event){
+                	event.preventDefault();
+					routing.trigger("add-user");
+                },
+               
+               
 
 
-		});
-	});	
+            });
+            
+            return SigninBasicView;
+
+    }); 

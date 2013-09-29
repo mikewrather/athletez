@@ -110,6 +110,9 @@ require.config({
 	    'plupload': {
 		    deps: ['jquery']
 	    },
+	    'jqueryui' : {
+		    deps : ['jquery']
+	    },
 	    'jquerytimepicker' : {
 	    	deps : ['jquery','jqueryui'],
 	    	
@@ -137,6 +140,7 @@ define([
 				routing = new app();
 				routing.ajaxRequests = [];
 				routing.intializeImageAndVideo();
+				routing.initTriggers();
 				// bind common triggers
 				Backbone.history.start({});
             });

@@ -19,7 +19,7 @@ define(['require', 'text!profilesetting/templates/teamlist.html', 'facade', 'vie
 		/*Messages Holds the messages, warning, alerts, errors, information variables*/
 		/*In Case of similar message create only one object and key*/
 		messages : {
-			dataNotExist : 'Data not exist.',
+			dataNotExist : 'Couldn\'t find any matches',
 			optionsMissing : 'HeaderView expects option with model property.'
 		},
 

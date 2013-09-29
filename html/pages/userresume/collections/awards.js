@@ -34,6 +34,7 @@ define(['facade', 'collections', 'user/collections/awards', 'utils'], function(f
 							
 							sports_id : payload.id,
 							sports_name : payload.name,
+							icon : payload.icon,
 							awards : []
 						}
 						

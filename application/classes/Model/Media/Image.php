@@ -147,11 +147,12 @@ class Model_Media_Image extends ORM
 		foreach($args['files'] as $key=>$img_data)
 		{
 			// check to make sure it's an image.  If it's not terminate this function
-			if(!strstr($img_data['type'],'image')) continue;
+			$image_type = is_array($img_data['type']) ? $img_data['type'][0] : $img_data['type'];
+			if(!strstr($image_type,'image')) continue;
 			else
 			{
 				// Save to variable because it will be used outside loop
-				$tmp_image = $img_data['tmp_name'];
+				$tmp_image = is_array( $img_data['tmp_name']) ? $img_data['tmp_name'][0] : $img_data['tmp_name'];
 
 				// Create an image object for image data and save data to table
 				$img_obj = Image::factory($tmp_image);
@@ -172,8 +173,10 @@ class Model_Media_Image extends ORM
 				// user is used to generate url for s3
 				$user = Auth::instance()->get_user();
 
+				if(isset($args['pre_crop_url']) && strlen($args['pre_crop_url']) > 5) $this->pre_crop_url = $args['pre_crop_url'];
 				// save to s3 and save s3 url to database
 				$this->original_url = s3::upload($local_path,$user->id);
+
 
 				// save all other information to database
 				$this->original_x = $img_obj->width;
@@ -200,8 +203,9 @@ class Model_Media_Image extends ORM
 
 	public function saveCrop($args,$user)
 	{
+		
 		$request = Request::factory($args['image_url']);
-
+		
 		$request->client()->options(array(
 			CURLOPT_SSL_VERIFYHOST => 0,
 			CURLOPT_SSL_VERIFYPEER => 0
@@ -226,7 +230,8 @@ class Model_Media_Image extends ORM
 					'tmp_name'=>$image->file,
 					'type'=>$image->mime,
 				)
-			)
+			),
+			'pre_crop_url' => $args['image_url']
 		);
 
 		$result = $this->addImage($media_args);

@@ -34,14 +34,25 @@ class Model_Sportorg_Seasons_Profile extends ORM
 		);
 	}
 
-	public function getBasics($settings = array())
-	{
-//		return array(
-//			"id" => $this->id,
-//			"name" => $this->name
-//		);
+	public $get_basics_class_standards = array(
+		'alternate_fk_names' => array(),
+		'added_function_calls' => array(
+			'seasons' => 'get_seasons',
+		)
+	);
 
-		return parent::getBasics($settings);
+	public function get_seasons()
+	{
+		$retArr = array();
+		$seasons = $this->seasons->find_all();
+		foreach($seasons as $season)
+		{
+			$retArr[] = array(
+				"name" => $season->name,
+				"id" => $season->id
+			);
+		}
+		return $retArr;
 	}
 	
 	public function getSeasons($args = array())

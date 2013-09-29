@@ -70,6 +70,18 @@
 			return $this->mainModel->getSeasons($arguments);
 		
 		}
+
+		/**
+		 * action_get_search()
+		 * via /api/seasonprofile/search/{season_profiles_id}
+		 *
+		 */
+		public function action_get_search()
+		{
+			$this->payloadDesc = "";
+			$season_profiles = ORM::factory('Sportorg_Seasons_Profile')->find_all();
+			return $season_profiles;
+		}
 		
 		############################################################################
 		###########################    POST METHODS    #############################

@@ -273,6 +273,23 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 			$args['dob'] = $this->dob;
 		}
 
+	    if(isset($height_in))
+	    {
+		    $this->height_in  = $height_in ;
+	    }
+	    else
+	    {
+		    $args['height_in'] = $this->height_in;
+	    }
+
+	    if(isset($weight_lb))
+	    {
+		    $this->weight_lb  = $weight_lb ;
+	    }
+	    else
+	    {
+		    $args['weight_lb'] = $this->weight_lb;
+	    }
 
         try {
 			$extra_validate = Validation::factory($args);
@@ -564,7 +581,7 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 							"id" => $val->loaded() ? $val->id : 0,
 							"resume_data_id" => $data->id,
 						);
-						if($data->large_icon != "") $profiles[$group->id]["data"][$data->id]["icon"] = $data->large_icon;
+						if(is_string($data->large_icon) && strlen($data->large_icon) > 5) $profiles[$group->id]["data"][$data->id]['icon'] = $data->large_icon;
 					}
 				}
 			}
@@ -633,20 +650,26 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 				array('users.id', 'user_id'),
 				array('orgs.id', 'org_id'),
 				array('orgs.name', 'org_name'),
+				array('cities.name', 'city_name'),
+				array('states.abbr', 'state_name'),
 				'teams.*',
 				array('sports.name','sport'),
 				array('sports.id','sports_id'),
+				array('sports.small_icon','icon'),
 				array('teams.id', 'team_id'),
 				array('complevels.name', 'complevel_name'),
 				array('seasons.name', 'season'), 'statvals.statval',
 				array('seasons.id', 'seasons_id')
 			)
 			->from('users')
+
 			->join('users_teams_link')->on('users.id','=','users_teams_link.users_id')
 			->join('teams')->on('teams.id','=','users_teams_link.teams_id')
 			->join('org_sport_link')->on('org_sport_link.id','=','teams.org_sport_link_id')
 			->join('sports')->on('org_sport_link.sports_id','=','sports.id')
 			->join('orgs')->on('orgs.id','=','org_sport_link.orgs_id')
+			->join('cities')->on('orgs.cities_id','=','cities.id')
+			->join('states')->on('cities.states_id','=','states.id')
 			->join('complevels', 'LEFT')->on('complevels.id','=','teams.complevels_id')
 			->join('seasons', 'LEFT')->on('seasons.id','=','teams.seasons_id')
 			->join('statvals', 'LEFT')->on('statvals.teams_id','=','teams.id')
@@ -690,12 +713,15 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 
 		foreach($res as $team)
 		{
+
 			if(!array_key_exists($team['org_id'],$orgs))
 			{
 				// Create the org array
 				$orgs[$team['org_id']] = array(
 					'org_id' => $team['org_id'],
 					'org_name' => $team['org_name'],
+					'city' => $team['city_name'],
+					'state' => $team['state_name']
 				);
 			}
 
@@ -735,6 +761,7 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 					$orgs[$team['org_id']]["sports"][$team['sports_id']] = array(
 						"sports_name" => $team['sport'],
 						"sports_id" => $team['sports_id'],
+						"icon" => $team['icon'],
 						"complevels" => array(),
 					);
 				}
@@ -954,6 +981,7 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 
 		if (isset($sports_id)){
 			$awards_model->where('sports_id', '=', $sports_id);
+			$awards_model->join('sports')->on('user_awards.sports_id','=','sports.id');
 		}
 		//exclude itself
 		$classes_arr = array(
@@ -973,6 +1001,7 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 
 		if (isset($sports_id)){
 			$references_model->where('sports_id', '=', $sports_id);
+			$references_model->join('sports')->on('user_references.sports_id','=','sports.id');
 		}
 
 		//exclude itself
@@ -1517,19 +1546,23 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 			$extra_validate->rule('dob','date');
 			$extra_validate->rule('dob','valid_age_frame', array($dob));
 
-			if ($this->check($extra_validate)){
+			if ($this->check($extra_validate))
+			{
+
 				$ai = Auth::instance();
 				$this->password = $ai->hash($password);
 				$this->create();
+				$this->add('roles', ORM::factory('Role',array('name'=>'login')));
 
 				//Log out if already logged in
-				//if($ai->logged_in()) $ai->logout();
+				if($ai->logged_in()) $ai->logout();
 
 				// Log in the user that was just created
-				//Auth::instance()->login($this->email,$password,TRUE);
+				Auth::instance()->login($this->email,$password,TRUE);
 
+				return $this;
 			}
-			return $this;
+
 		} catch(ORM_Validation_Exception $e){
 			return $e;
 		}
@@ -1720,8 +1753,14 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 	public function delete_gpa($args){
 		$gpa_model = ORM::factory('Academics_Gpa');
 		$result = $gpa_model->where('users_id','=', $this->id)
-			->where('year', '=', $args['year'])
-			->find();
+			->where('year', '=', $args['year']);
+
+		$classes_arr = array(
+			'Academics_Gpa' => 'academics_gpa'
+		);
+		$result = ORM::_sql_exclude_deleted($classes_arr, $result);
+		$result = $result->find();
+
 
 		if (!$result->id){
 			return false;

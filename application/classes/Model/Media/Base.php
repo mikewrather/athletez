@@ -188,8 +188,7 @@ class Model_Media_Base extends ORM
 				foreach($primary as $media_id => $single_image)
 				{
 					$media_obj = ORM::factory("Media_Base", $media_id);
-					if ($sports_id){ //only get videos related to one sports_id
-
+					if (is_integer($sports_id)){ //only get videos related to one sports_id
 						if ($media_obj->sports_id == $sports_id)
 						{
 							$result_arr[] = $single_image->getBasics();
@@ -203,8 +202,20 @@ class Model_Media_Base extends ORM
 			}
 			else
 			{
-				$single_image = clone $primary;
-				$result_arr[] = $single_image->getBasics();
+				$media_obj = ORM::factory("Media_Base", $primary->media_id);
+				if (is_integer($sports_id)){ //only get videos related to one sports_id
+					if ($media_obj->sports_id == $sports_id)
+					{
+						$single_image = clone $primary;
+						$result_arr[] = $single_image->getBasics();
+					}
+				}
+				else
+				{
+					$single_image = clone $primary;
+					$result_arr[] = $single_image->getBasics();
+				}
+
 			}
 		}
 		$results = new stdClass();

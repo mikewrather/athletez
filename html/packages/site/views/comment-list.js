@@ -47,11 +47,12 @@ function(facade,  views,   utils,   CommentItemView,    CommentFormView, comment
 	        //console.log("options herebb",this.collection);
 	        //options = {collection: this.collection.first(3)};
 	         var _self = this;
+	        
 	         this.collection = options.collection;
 	         console.log(this.collection.toJSON());
 			 _self.allData = this.collection.toArray();
 			_self.seeMore();
-			console.log(this.collection.toJSON());
+
             CollectionView.prototype.initialize.call(this, options);
             if (!this.collection) {
                 throw new Error("CommentListView expected options.collection.");
@@ -59,9 +60,12 @@ function(facade,  views,   utils,   CommentItemView,    CommentFormView, comment
             _.bindAll(this);
             this.addSubscribers();
             this.setupFormView();
+
+	        console.log(this.collection.toJSON());
+
             /*this.collection.on('add', function() {
             	renderAddView();
-            });*/
+            });*/        
         },
         
         seeMore: function(e) {
@@ -101,7 +105,9 @@ function(facade,  views,   utils,   CommentItemView,    CommentFormView, comment
             var listView = this,
                 formView = new CommentFormView({collection: this.collection}),
                 renderAddView = this.addChildView(formView);
-            
+
+	        console.log("Form:",formView);
+
             this.childViews.form = formView;
             this.callbacks.add(function() {
                 renderAddView();
@@ -112,6 +118,7 @@ function(facade,  views,   utils,   CommentItemView,    CommentFormView, comment
                 formView.render();
                 $(listView.listView).prepend(formView.el);
             }
+            
             
             Channel('commentform:fetch').subscribe(callback);
         }

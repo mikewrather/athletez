@@ -70,6 +70,18 @@
 
 			return $this->mainModel->getComplevels($arguments);
 		}
+
+		/**
+		 * action_get_search()
+		 * via /api/complevelprofile/search/{complevel_profiles_id}
+		 *
+		 */
+		public function action_get_search()
+		{
+			$this->payloadDesc = "";
+			return ORM::factory('Sportorg_Complevel_Profile');
+
+		}
 		
 		############################################################################
 		###########################    POST METHODS    #############################

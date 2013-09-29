@@ -115,7 +115,7 @@ function(require, findMyClubTemplate) {
                     
                     var models = stateList.toJSON();
                     if (models == null  || models.length < 1)
-                        self.$('#states_id').parent().find('.field-message').html('Data not exist').stop().fadeIn();
+                        self.$('#states_id').parent().find('.field-message').html('Couldn\'t find any matches').stop().fadeIn();
                     
                     self.states = [];
                     for (var key in models) {
@@ -134,18 +134,18 @@ function(require, findMyClubTemplate) {
         },
         
         changeState: function(event) {
-            var state_name = this.$('#states_id').val();
-            var self = this;
-            self.states_id = '';
-            self.states.forEach(function(value, index) {
+		    var state_name = this.$('#states_id').val();
+		    var self = this;
+		    self.states_id = '';
+		    self.states.forEach(function(value, index) {
 
-                if (value['name'] == state_name){
-	                self.states_id = value['id'];
-                }
+			    if (value['name'] == state_name){
+				    self.states_id = value['id'];
+			    }
 
-            });
-            this.keyupClub();            
-        },
+		    });
+		    this.keyupClub();
+	    },
         /*Auto Complete For Sports Text Box*/        
         keyupSport: function(event) {
             var self = this;
@@ -168,7 +168,7 @@ function(require, findMyClubTemplate) {
                     var models = sportList.toJSON();
                     console.log("Sports Model", models);
                     if (models == null  || models.length < 1)
-                        self.$('#sports_id').parent().find('.field-message').html('Data not exist').stop().fadeIn();
+                        self.$('#sports_id').parent().find('.field-message').html('Couldn\'t find any matches').stop().fadeIn();
                     self.sports = [];
                     
                     for (var key in models) {
@@ -218,7 +218,7 @@ function(require, findMyClubTemplate) {
                         var models = clubList.toJSON();
                         console.log("models",models);
                     if (models == null || models.length < 1)
-                        self.$('#orgs_id').parent().find('.field-message').html('Data not exist').stop().fadeIn();
+                        self.$('#orgs_id').parent().find('.field-message').html('Couldn\'t find any matches').stop().fadeIn();
                     self.clubs = [];
                     for (var key in models) {
                         self.clubs.push(models[key].payload);

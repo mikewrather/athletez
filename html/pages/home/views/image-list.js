@@ -25,7 +25,7 @@ define(
 				_view : ImageItemView,
 
 				initialize : function(options) {
-
+					var _self = this;
 					console.log(options);
 					console.log(this);
 					this.name = options.name || this.name;
@@ -36,7 +36,18 @@ define(
 					}
 					_.bindAll(this);
 					this.addSubscribers();
+					
+					$(document).off('click','.image-outer-h');
+					$(document).on('click','.image-outer-h', function() {
+						_self.initPhotoPlayer();
+					});
+        	
 				},
+				
+				initPhotoPlayer: function() {
+					console.log(this.collection);
+       				routing.trigger('photo-player-init', 1, this.collection);
+       			},
 
 				// Child views...
 				childViews : {}

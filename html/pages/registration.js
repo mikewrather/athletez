@@ -124,7 +124,7 @@ define(["require", "text!registration/templates/layout.html", "facade", "control
 		},
 
 		setupRegisterFacebookView : function() {
-			//   	alert("Setup facebook");
+			 	
 			this.registerFacebookView = new RegistrationFacebookView({
 				model : this.register_facebook,
 				name : "Registration with Facebook",
