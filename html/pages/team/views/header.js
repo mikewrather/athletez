@@ -148,6 +148,9 @@ function(require, headerTemplate, selectSportTemplate) {
             this.sports.id = this.model.get("payload").org_sport_link_obj.orgs_id;
             this.sports.fetch();
             $.when(this.sports.request).done(function() {
+            	
+            	console.error(self.sports.toJSON());	
+            	
                var data = {};
                data.records = self.sports.toJSON();
                data.recordId = 'sport_id';
@@ -156,6 +159,7 @@ function(require, headerTemplate, selectSportTemplate) {
 					data: data,
 					elementId: "sports-h",
 					title: "Sport",
+					selectedValue: self.model.get("payload").org_sport_link_obj.sports_id,
 					destination: '.sports-h',
 					targetView: self,
 					callback: function(result) {

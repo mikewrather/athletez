@@ -378,7 +378,7 @@ input {
 .dropdown-container {
 	background: #CCCCCC;
 	display: inline-block;
-	width: 100%;
+	width: 80%;
 	position: absolute;
 	z-index: 1000;
 	
