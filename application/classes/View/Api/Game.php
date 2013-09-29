@@ -221,6 +221,18 @@
 
 			return $retArr;
 		}
+
+		/**
+		 * put_score() Change the score for this game for a given team
+		 *
+		 * @retun array
+		 */
+		public function put_score()
+		{
+			// Scaffolding Code For Single:
+			return $this->obj->getBasics();
+		}
+
 		
 		/**
 		 * delete_base() Delete a Game

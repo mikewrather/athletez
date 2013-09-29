@@ -47,6 +47,7 @@ class Controller_Authcheck extends AuthController
 	//	$retArr['user_photo'] = $this->user->getAvatar();
 		$retArr['user_name'] = $this->user->name();
         $retArr['user_email'] = $this->user->email;
+		$retArr['user_photo'] = $this->user->userpic->getBasics();
 
 		$retArr['nav'][] = array(
 			"page"=>"My Profile",

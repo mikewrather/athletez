@@ -49,12 +49,12 @@ function (
             this.model.fetchSuccess = this.model.fetchError = function(model, res) {
                 var markup = Mustache.to_html(self.template, model.toJSON());
                 self.$el.html(markup);
+	            console.log(model.toJSON());
                 
-                var user_photo = model.get('user_photo');
+                var user_photo = model.get('user_photo').types.small_thumb.url;
                 var user_email = model.get('user_email');
-                if (!user_photo && user_email) {
-                    self.$('.photo img').attr("src","http://www.gravatar.com/avatar/" + MD5(user_email) + "&s=29");
-                }
+                self.$('.photo img').attr("src",user_photo);
+
                 var authorized = model.get('authorized');
                 if (authorized) {
                     var id = model.get('id');

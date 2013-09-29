@@ -544,7 +544,10 @@ class Model_Sportorg_Org extends ORM
 		}
 
 		if (isset($locations_id)){
+			$location = ORM::factory('Location_Base',$locations_id);
 			$this->locations_id = $locations_id;
+			$this->states_id = $location->states_id;
+			$this->cities_id = $location->cities_id;
 		}
 
 		if (isset($states_id)){

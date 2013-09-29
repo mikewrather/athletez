@@ -50,5 +50,10 @@ class Model_Sportorg_Games_Teamslink extends ORM
 		);
 	}
 
+	public function name()
+	{
+		return "GTL ".$this->id;
+	}
+
 
 }

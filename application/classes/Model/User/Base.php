@@ -33,6 +33,10 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 		"city" => array(
 			"model" => "Location_City",
 			"foreign_key" => "cities_id"
+		),
+		"userpic" => array(
+			"model" => "Media_Image",
+			"foreign_key" => "user_picture"
 		)
 	);
 	protected $_has_many = array(

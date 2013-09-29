@@ -394,6 +394,10 @@
 			{
 				$arguments["locations_id"] = (int)trim($this->request->post('locations_id'));
 			}
+			elseif((int)trim($this->request->post('location_id')) > 0)
+			{
+				$arguments["locations_id"] = (int)trim($this->request->post('location_id'));
+			}
 
 			if((int)trim($this->request->post('states_id')) > 0)
 			{

@@ -56,7 +56,8 @@ function (
 
         render: function () {
 	        var string_to_use = this.createOpponentString();
-            var markup = Mustache.to_html(this.template, {summary:string_to_use});
+
+            var markup = Mustache.to_html(this.template, {id:this.mpay.id,summary:string_to_use});
             this.$el.html(markup);
             return this;
         },
