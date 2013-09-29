@@ -159,7 +159,7 @@ define(
 		        },
 		        
 				changeCityFilter : function(item) {
-					var options = {'city_id':item.id, 'states_id': item.state_id, 'country_id': item.country_id};
+					var options = {'cities_id':item.id, 'states_id': item.state_id, 'country_id': item.country_id};
 					console.log(options);
 					this.transitionView(options);
 				},
@@ -197,7 +197,6 @@ define(
 					    controller = this;
 
 					console.log("CALLED",this.collections[viewName]);
-		
 					imageList.url = this.url(options);
 					imageList.fetch();
 
