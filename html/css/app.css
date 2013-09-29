@@ -432,6 +432,9 @@ ul.common-dropdown li.selected a {
 	width: 72%;
 	float: left;
 	display: inline-block;
+		white-space: nowrap;
+	overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .down-arrow-outer {
@@ -469,6 +472,7 @@ ul.common-dropdown li.selected {
 .drop-down-main-outer {
 	width: 250px;
 	display: inline-block;
+
 }
 
 

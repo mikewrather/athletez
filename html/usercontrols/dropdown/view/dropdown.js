@@ -34,9 +34,16 @@ define(['require', 'text!usercontrol/dropdown/template/layout.html', 'facade', '
 			else
 				this.setSingleOption(val, e);
 
+			this.showSelectedValue();
 			if (this.callback)
 				this.callback(this.selectedOptions);
-
+		},
+		
+		
+		showSelectedValue: function() {
+			// show vaue selected
+			var html = this.$el.find('.common-dropdown li.selected').text() || this.title;
+			this.$el.find('.dropdown-header-box').html(html);
 		},
 
 		// set multipe dropdown options
@@ -161,7 +168,7 @@ define(['require', 'text!usercontrol/dropdown/template/layout.html', 'facade', '
 			this.targetView.$el.find(this.destination).html(this.el);
 			this.$el.find(".hidden-input-dropdown-h").val(this.selectedValue);
 			this.selectedOptions.push(this.selectedValue);
-
+			this.showSelectedValue();
 			if ($("#" + this.elementId).length) {
 				if (self.callback)
 					self.callback(this.selectedOptions);
