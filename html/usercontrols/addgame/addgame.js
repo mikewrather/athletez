@@ -129,7 +129,7 @@ define(["require", "text!usercontrols/addgame/templates/layout.html",
 				destination : (this.popup)?".page-content-h":"#main",
 				user_id : self.id,
 				channel : 'add-game-success',
-				sports_id : "47",
+				sports_id : "2",
 				teams_id : "290"
 			});
 
