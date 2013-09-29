@@ -115,8 +115,8 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 		render : function() {
 			SectionView.prototype.render.call(this);
 			$(self.el).find(self.controls.txtGameDate).datetimepicker({
-				timeFormat : 'hh:mm tt z',
-				separator : ' @ ',
+				timeFormat : 'hh:mm tt',
+				//separator : ' @ ',
 				showTimezone : true,
 				changeMonth : true,
 				changeYear : true
@@ -130,6 +130,8 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 				throw new Error("call back channel is must for this");
 			} else {
 				this.channel = options.channel;
+				this.sports_id = options.sports_id || null;
+				this.team_id = options.teams_id || null;
 			}
 		},
 
@@ -140,6 +142,7 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 		setupView : function() {
 			self.setUpMainView();
 			self.fillSports();
+			//self.setFirstTeam();
 		},
 		setUpMainView : function() {
 			var markup = Mustache.to_html(self.template, {});
@@ -170,6 +173,11 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 			// Sort Sports Before Filling Up Into Drop-Down
 			self.sort(self.sports, 'sport_name', false);
 			self.setDropdownOptions(self.sports, 'sport_name', 'sport_id', $(self.destination).find(self.controls.ddlSports), 'Select Sport');
+			if (self.sports_id) {
+				$(self.destination).find(self.controls.ddlSports).val(self.sports_id);
+				$(self.destination).find(self.controls.ddlSports).trigger('change');
+				self.CheckTeamControlsVisibility();
+			}
 		},
 		/*Change sport_id when a sport is selected from dropdown*/
 		changeSport : function(e) {
@@ -188,8 +196,39 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 			self.CheckTeamControlsVisibility();
 
 		},
+		setFirstTeam : function() {
+			var isTeamFound = false;
+			if (self.team_id) {
+				for (var key in self.teams) {
+					if (self.teams[key].team_id == self.team_id) {
+						$(self.destination).find(self.controls.sectionTeamOne).find(self.controls.ddlUserTeams).val(self.teams[key].team_id);
+						isTeamFound = true;
+					}
+				}
+				if (!isTeamFound) {
+					var teamModel = new TeamModel();
+					teamModel.id = self.team_id;
+					teamModel.fetchSuccess = function(model, response) {
+						var data = teamModel.parseAsRequired(response);
+						self.setSelectedTeam(data);
+
+					};
+					teamModel.fetch();
+					
+				}
+				self.CheckTeamControlsVisibility();
+			}
+		},
+		setSelectedTeam : function(data) {
+			if (data) {
+				var teamname = data['team_name'];
+				var teamId = data['id'];
+				console.log("data",data);
+				$(self.destination).find(self.controls.sectionTeamOne).find("input").attr(self.attributes.teamId, teamId);
+				$(self.destination).find(self.controls.sectionTeamOne).find(self.controls.txtTeam).val(teamname).show();
+			}
+		},
 		fillTeams : function(sport_id) {
-			
 			var List = new UserTeamsCollection();
 			List.user_id = self.user_id;
 			List.sports_id = sport_id;
@@ -212,6 +251,7 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 			self.teams = List;
 			self.sort(self.teams, 'team_name', false);
 			self.setDropdownOptions(self.teams, 'team_name', 'team_id', $(self.destination).find(self.controls.ddlUserTeams), 'Select Team');
+			self.setFirstTeam();
 		},
 		changeUserTeam : function(e) {
 			$(e.target).parents(self.controls.sectionTeams).find(self.controls.txtTeam).hide();
@@ -242,15 +282,15 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 					//Create Collection
 					var stateList = new StatesCollection();
 					stateList.state_name = $(e.target).val();
-					
+
 					console.log("State Request Abort Request Function AddGame/Main.js");
 					self.stateFetchRequest = self.stateFetchRequest || [];
 					self.stateFetchRequest.push(self.cityFetchRequest || []);
 					self.stateFetchRequest.push(self.teamFetchRequest || []);
-					
+
 					self.stateFetchRequest = self.abortRequest(self.stateFetchRequest);
 					var tempCollection = stateList.fetch();
-					self.stateFetchRequest.push(tempCollection);					
+					self.stateFetchRequest.push(tempCollection);
 					$.when(stateList.request).done(function() {
 						/*Don't Show Auto Complete In Case Of Error*/
 						if (stateList.isError())
@@ -333,12 +373,12 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 
 					//Create Collection
 					var List = new CityCollection();
-					List.state_id = self.states_id;
+					List.states_id = self.states_id;
 					List.city_name = $(e.target).val();
-					console.log("City Request Abort Request Function AddGame/Main.js");
+					//console.log("City Request Abort Request Function AddGame/Main.js");
 					self.cityFetchRequest = self.cityFetchRequest || [];
 					self.cityFetchRequest.push(self.teamFetchRequest || []);
-					
+
 					self.cityFetchRequest = self.abortRequest(self.stateFetchRequest);
 					var tempCollection = List.fetch();
 					self.cityFetchRequest.push(tempCollection);
@@ -413,22 +453,23 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 		keyupTeam : function(e) {
 			var name = $(e.target).val();
 			var arr = [];
-			
+
 			var isValidKey = self.isValidAutoCompleteKey(e);
 			if (name != '' && isValidKey == true && name.length > 2) {
-			// Hide all other controls
+				// Hide all other controls
 				$(e.target).removeAttr(self.attributes.teamId);
 				self.CheckTeamControlsVisibility();
 
 				var List = new TeamsCollection();
 				List.states_id = $(e.target).attr(self.attributes.stateId);
 				List.city_id = $(e.target).attr(self.attributes.cityId);
+				List.sports_id = $(e.target).attr(self.attributes.sportId);
 				List.team_name = name;
-	
+
 				self.TeamFetchRequest = self.abortRequest(self.TeamFetchRequest);
 				var tempCollection = List.fetch();
 				self.TeamFetchRequest.push(tempCollection);
-				
+
 				$.when(List.request).done(function() {
 					if (List.isError())
 						return;
@@ -503,17 +544,15 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 				$(e.target).removeAttr(self.attributes.gameId);
 				self.CheckTeamControlsVisibility();
 
-
 				var List = new GamesSearchCollection();
 				List.sports_id = $(e.target).attr(self.attributes.sportId);
 				List.game_name = name;
-				
 
 				console.log("Game Request Abort Request Function");
 				self.individualGameFetchRequest = self.abortRequest(self.individualGameFetchRequest);
 				var tempCollection = List.fetch();
 				self.individualGameFetchRequest.push(individualGameFetchRequest);
-				
+
 				$.when(List.request).done(function() {
 					if (List.isError())
 						return;
@@ -762,8 +801,8 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 				$.when(gameModel.request).done(function(response) {
 					////console.log(response);
 					if (response != null && response.payload != null) {
-						console.log("gameId",response.payload.id);
-			console.log("response",response.payload);
+						console.log("gameId", response.payload.id);
+						console.log("response", response.payload);
 						self.game_id = response.payload.id;
 
 						var isHome = $(self.destination).find(self.controls.rdoTeamOne).is(':checked');

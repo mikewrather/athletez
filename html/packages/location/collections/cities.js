@@ -23,12 +23,12 @@ function(facade, collections, CommonModel, utils) {
             if(this.city_name == undefined){
             	return '/api/city/search';
             }
+            
             var params = '?city_name=' + this.city_name;
             if(this.states_id)   
-                     params += '&state_id=' + this.states_id;
+                     params += '&states_id=' + this.states_id;                     
                      
-                     
-                    return '/api/city/search/;            
+                    return '/api/city/search/' + params;            
         },
         
         // **Method:** `fetchSuccess` - resolve the deferred here in success
