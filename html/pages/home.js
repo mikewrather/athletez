@@ -57,16 +57,12 @@ define(
 				cssArr = [ base_url + 'pages/home/home.css' ];
 
 			HomeController = Controller.extend({
-
 				initialize : function(options) {
 					Channel('load:css').publish(cssArr);
-
 					_.bindAll(this);
-
 					this.handleOptions(options);
 					this.genderTypes = ['boys', 'girls', 'both'];
 					this.init();
-					
 					return this;
 				},
 
@@ -208,7 +204,7 @@ define(
 					$.when(imageList.request).done(function() {
 						console.log("Fetch Complete");
 						var view = new ImageListView({
-						//	collection : imageList,
+							collection : imageList,
 							name : viewName,
 							destination : '#'+viewName
 						});
