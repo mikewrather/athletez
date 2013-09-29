@@ -5,3 +5,12 @@
 .address-verified {
 	border: 2px solid green;
 }
+
+.address-field-error {
+	border: 2px solid red;
+}
+
+.address-error{
+	color: red;
+float: right;
+}

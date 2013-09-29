@@ -36,6 +36,7 @@ define(['require', 'text!usercontrols/add-club/templates/layout.html', 'facade',
 			this.setProfiles();
 		},
 		
+		// add club and school
 		addClub: function() {
 			var _self = this, submit = true;
 			if(this.$el.find(".name-h").val() == "") {
@@ -55,6 +56,7 @@ define(['require', 'text!usercontrols/add-club/templates/layout.html', 'facade',
 			
 		},
 		
+		// save data
 		saveData: function() {
 			var _self = this, addModel = new AddModel(), data = {};
 			data.name = this.$el.find(".name-h").val();
@@ -69,6 +71,7 @@ define(['require', 'text!usercontrols/add-club/templates/layout.html', 'facade',
 			});
 		},
 		
+		// verify address
 		verifyAddress: function(callback) {
 			var _self = this, address = _self.$el.find('.address-h').val(), adressModel = new AdressModel();
 			adressModel.address = address;
@@ -76,18 +79,20 @@ define(['require', 'text!usercontrols/add-club/templates/layout.html', 'facade',
 			adressModel.set({address: address});
 			
 			adressModel.showError = function(model, error) {
-				console.error(model);
-				console.error(JSON.parse(JSON.stringify(error)));
-				//console.error(eval("'"+error.responseText+"'"));
+				try {
+					_self.$el.find('.address-error-status-h').removeClass('hide').html(error.responseJSON.exec_data.error_array[0].error);
+				} catch(e) {}
+				_self.$el.find('.address-h').addClass('address-field-error').removeClass('address-verified');
 			};
 			
-			adressModel.save();
+			adressModel.save({dataType:"json"});
 			_self.$el.find('.address-h').removeClass('address-verified');
 			$.when(adressModel.request).done(function() {
 				console.log(adressModel.toJSON());
 				_self.locationId = adressModel.get("payload").id;
 				if(_self.locationId) {
-					_self.$el.find('.address-h').addClass('address-verified');
+					_self.$el.find('.address-error-status-h').addClass('hide');
+					_self.$el.find('.address-h').removeClass('address-field-error').addClass('address-verified');
 					_self.addressValid = true;
 					if(typeof callback == "function") callback();
 				} else {
@@ -131,6 +136,7 @@ define(['require', 'text!usercontrols/add-club/templates/layout.html', 'facade',
 				});
         },
 		
+		// get comp levels
 		getCompLevels: function() {
         	 var _self = this;
             _self.compLevel = new CompLevel();
@@ -168,6 +174,7 @@ define(['require', 'text!usercontrols/add-club/templates/layout.html', 'facade',
             });
         },
 
+		// set up main view
 		setUpMainView : function() {
 			var self = this;
 			var data = {};
