@@ -145,6 +145,7 @@ define(['require', 'text!registration/templates/register_facebook.html', 'facade
 		},
 
 		nextStep : function(event) {
+			
 			event.preventDefault();
 			var fields = this.$(":input").serializeArray();
 			var payload = this.model.get('payload');

@@ -129,6 +129,7 @@ define(["require", "text!registration/templates/layout.html", "facade", "control
 				model : this.register_facebook,
 				name : "Registration with Facebook",
 				destination : "#main-content"
+				//destination:"#main-content-reg"
 			});
 			this.scheme.push(this.registerFacebookView);
 			this.layout.render();
@@ -188,6 +189,7 @@ define(["require", "text!registration/templates/layout.html", "facade", "control
 				model : this.select_org,
 				name : "Registration Select Org",
 				destination : "#main-content"
+				//destination:"#main-content-reg"
 			});
 
 			this.scheme.push(this.selectOrgView);

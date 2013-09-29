@@ -9,6 +9,8 @@ define([
         'text!chrome/templates/header.html',
         'chrome/models/header',
         'registration',
+        'signup',
+        'signup/views/shopopup',
 		'utils/storage'
         ], 
 function (
@@ -17,6 +19,8 @@ function (
         headerTemplate,
         HeaderModel,
         RegistrationController,
+        scontroller,
+        popupview,
         Store
         ) {
 
@@ -89,7 +93,10 @@ function (
                     if (response.status === 'connected') {
                         FB.api('/me', function(response) {
                             console.log(response);
+                            this.signupc = new scontroller({"route":""});
                             Channel('registration-with-facebook').publish();
+                             this.pop = new popupview();
+
                         });
                     } else if (response.status === 'not_authorized') {
                         console.log('not_authorized');
@@ -103,7 +110,9 @@ function (
             function login() {
                 FB.login(function(response) {
                     if (response.authResponse) {
+                        this.signupc = new scontroller({"route":""});
                         Channel('registration-with-facebook').publish();
+                        this.pop = new popupview();
                     } else {
                         alert('Cancelled');
                     }
@@ -137,7 +146,10 @@ function (
 
         signupUser: function(event){
                     event.preventDefault();
-                    routing.trigger("add-user");
+                    this.signupc = new scontroller({"route":""});
+                    routing.trigger("register-basic");
+                    this.pop = new popupview();
+                   // this.signupc.showPopup();
                 },
         /*signupEmail: function(event) {
             event.preventDefault();
