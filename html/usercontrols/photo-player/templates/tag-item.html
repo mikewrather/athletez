@@ -1,11 +1,9 @@
-{{#payload}}
 <div class="row-fluid">
     <div class="tags-name">
-		<span>{{media_obj.sports_obj.sport_name}}</span>
-		<span>{{subject.name}}</span>
+		<span><img src="{{_thumbnail}}" width="20" height="20" /></span>
+		<span>{{{_label}}}</span>
     </div>
     <div class="tags-number">
-    	27
+    	{{count}}
     </div>
 </div>
-{{/payload}}

@@ -143,10 +143,24 @@
 
 .tags-name {
 	float: left;
-	width: 80%;
+	width: 100%;
+}
+
+.tags-name > span {
+	float: left;
 }
 
 .tags-number {
 	float: right;
 	width: 20%;
+}
+
+.game-match-name {
+	float: left;
+	width: 70%;
+}
+
+.game-score {
+	float: right;
+	width: 30%;
 }
