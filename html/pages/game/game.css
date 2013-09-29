@@ -1,6 +1,8 @@
 .game-heading {
 	background: #d36011;
 	color: #000;
+	float: left;
+	width: 100%;
 	padding: 5px 10px 5px 10px;
     font-family: "Avenir","HelveticaNeue","Helvetica";
 }
