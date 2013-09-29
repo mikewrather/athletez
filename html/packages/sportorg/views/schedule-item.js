@@ -32,6 +32,7 @@ function (
         },
 
         render: function () {
+	        console.log("SCHEDULE ITEM MODEL",this.model.toJSON());
             var markup = Mustache.to_html(this.template, this.model.toJSON());
             this.$el.html(markup);
             return this;

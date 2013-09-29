@@ -226,7 +226,8 @@ define([
 
 			// $.when(this.commentson.request).done(function () {
 				// controller.setupCommentOnListView();
-			// });
+			// });
+
         },
         
         setupCommentOfListView: function () {
@@ -408,7 +409,6 @@ define([
         
         setupUpcomingSchedules: function() {
             var UpcomingScheduleListView;
-            
             UpcomingScheduleListView = TeamScheduleListView.extend({
                 name: "Upcoming_Schedule_List" 
             });
@@ -424,7 +424,6 @@ define([
         
         setupRecentSchedules: function() {
             var RecentScheduleListView;
-            
             RecentScheduleListView = TeamScheduleListView.extend({
                 name: "Recent_Schedule_List" 
             });
@@ -439,7 +438,9 @@ define([
         },
         
         setupGameView: function () {
+	        console.log("Setting up game view",this.games, this.id);
 			this.gamesView = new TeamOrgListView({
+				teams_id: this.id,
 				collection: this.games,
 				destination: "#games_div",
 				name: "games view"

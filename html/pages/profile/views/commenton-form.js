@@ -46,13 +46,17 @@ function(require, commentFormTemplate,    ProfileCommentFormModel,        BaseCo
 		    e.preventDefault();
 		    this.createOnEnter(e);
 	    },
-	    
-	    showCommentBox: function() {
-	    	var $formDiv = this.$el.find('.add-comment-form-h');
-	    	if($formDiv.hasClass('hide'))
-	    		$formDiv.removeClass('hide');
-	    	else
-	    		$formDiv.addClass('hide');
+
+	    showCommentBox: function (e) {
+		    var $formDiv = this.$el.find('.add-comment-form-h');
+		    if ($formDiv.hasClass('hide')) {
+			    $(e.target).html('Hide');
+			    $formDiv.removeClass('hide');
+		    }
+		    else {
+			    $(e.target).html('Comment');
+			    $formDiv.addClass('hide');
+		    }
 	    },
 
 	    refreshComments: function(e) {

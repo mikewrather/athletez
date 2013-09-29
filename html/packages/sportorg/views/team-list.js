@@ -31,7 +31,7 @@ function(vendor, facade,  views,   utils,   TeamItemView, TeamListViewTemplate) 
         _view: TeamItemView,
 		listView : ".team-list-h",
         initialize: function(options) {
-        	this.renderTemplate();
+	        this.renderTemplate();
             CollectionView.prototype.initialize.call(this, options);
             if (!this.collection) {
                 throw new Error("TeamListView expected options.collection.");
@@ -44,6 +44,7 @@ function(vendor, facade,  views,   utils,   TeamItemView, TeamListViewTemplate) 
         renderTemplate: function () {
         	var data = {};
         	data.data = this.collection.toJSON();
+	        console.log("Schedule Data",data.data);
             var markup = Mustache.to_html(this.template, data);
             this.$el.html(markup);
             return this;

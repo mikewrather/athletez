@@ -259,9 +259,22 @@ class Model_Location_Base extends ORM
 				$this->full_address = $g_results['full_address'];
 				$this->lat = $g_results['lat'];
 				$this->lon = $g_results['lon'];
+				$this->zip = substr($g_results['zip'],0,5);
 
 				$this->loc_point = DB::expr("GeomFromText('POINT(".$g_results['lat']." ".$g_results['lon'].")')");
 				$this->all_info = serialize($g_results);
+
+				//get city
+				$city = ORM::factory('Location_City')
+					->join('counties')->on('location_city.counties_id','=','counties.id')
+					->where('location_city.name','=',$g_results['city'])
+					->and_where('counties.name','=',$g_results['county'])
+					->find();
+
+				if($city->loaded()){
+					$this->cities_id = $city->id;
+					$this->states_id = $city->states_id;
+				}
 			}
 		}
 		else

@@ -124,9 +124,18 @@ define(["require", 'text!usercontrols/photo-player/templates/comments.html',
 			_self.tags.fetch();
 			//$(".coment-area-h").html();
 			$.when(_self.tags.request).done(function () {
+				/// 
+				
+				console.error(_self.tags.toJSON());
+				
+				//var collection = _self.tags.t
+				
+				
+				console.error(_self.tags);
 				tagView = new TagsSectionView({
 					collection : _self.tags,
 					name : _self.oldTagView,
+					entity_type_id: entity_id,
 					destination : ".tags-area-h"
 				});
 				_self.scheme.push(tagView);
@@ -152,6 +161,7 @@ define(["require", 'text!usercontrols/photo-player/templates/comments.html',
 			_self.commentson.fetch();
 			//$(".coment-area-h").html();
 			$.when(_self.commentson.request).done(function () {
+								console.error(_self.commentson.toJSON());
 				photoPlayer = new CommentSectionView({
 					collection : _self.commentson,
 					userId: _self.userId,

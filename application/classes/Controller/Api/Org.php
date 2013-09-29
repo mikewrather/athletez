@@ -355,7 +355,7 @@
 			if($this->request->post('sports_club') != "")
 			{
 				//convert sports_club to a boolean
-				$arguments["sports_club"] = Util::convert_to_boolean($this->request->post('sports_club'));
+				$arguments["sports_club"] =$this->request->post('sports_club');
 			}
 
 			// season_profiles_id
@@ -393,6 +393,10 @@
 			if((int)trim($this->request->post('locations_id')) > 0)
 			{
 				$arguments["locations_id"] = (int)trim($this->request->post('locations_id'));
+			}
+			elseif((int)trim($this->request->post('location_id')) > 0)
+			{
+				$arguments["locations_id"] = (int)trim($this->request->post('location_id'));
 			}
 
 			if((int)trim($this->request->post('states_id')) > 0)

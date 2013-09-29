@@ -1,12 +1,5 @@
-{{#payload}}
-	<a href="javascript: void(0);" class="background-blue team-info-h">
-	<div class="org-popup hide">
-		<ul>
-			{{#teams}}
-			<li>
-				{{gameDay}} | VS. {{team_name}} | Home | W 2-1
-			</li>
-			{{/teams}}
-		</ul>
+
+	<a href="/#game/{{id}}" class="background-blue team-info-h" tooltip="test">
+	<div class="game-info hide">
+		{{summary}}
 	</div> </a>
-{{/payload}}

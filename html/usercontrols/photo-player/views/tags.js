@@ -37,11 +37,7 @@ function(facade, vendor,  utils, views, tagListTemlate, TagItemView) {
 		
         initialize: function(options) {
         	this.renderTemplate();
-	        //this.limitResults(4);
-	        //console.log("options herebb",this.collection);
-	        //options = {collection: this.collection.first(3)};
 	         var _self = this;
-	        
 	         this.collection = options.collection;
 	         console.log(this.collection.toJSON());
 			 _self.allData = this.collection.toArray();

@@ -479,6 +479,86 @@
 
 			}
 		}
+
+		/**
+		 * action_put_score() Change the score for this game for a given team
+		 * via /api/game/score/{games_id}
+		 *
+		 */
+		public function action_put_score()
+		{
+			$this->payloadDesc = "Change the score for this game for a given team";
+			$arguments = array();
+			// CHECK FOR PARAMETERS:
+			// teams_id (REQUIRED)
+			// Required.  The teamID for the team you are changing the score of.
+
+			if((int)trim($this->put('teams_id')) > 0)
+			{
+				$arguments["teams_id"] = (int)trim($this->put('teams_id'));
+			}
+
+			else // THIS WAS A REQUIRED PARAMETER
+			{
+				// Create Array for Error Data
+				$error_array = array(
+					"error" => "Required Parameter Missing",
+					"param_name" => "teams_id",
+					"param_desc" => "Required.  The teamID for the team you are changing the score of."
+				);
+
+				// Set whether it is a fatal error
+				$is_fatal = true;
+
+				// Call method to throw an error
+				$this->addError($error_array,$is_fatal);
+				return false;
+
+			}
+
+			// score (REQUIRED)
+			// The new score for this team in this game.
+
+			if(trim($this->put('score')) != "")
+			{
+				$arguments["score"] = trim($this->put('score'));
+			}
+
+			else // THIS WAS A REQUIRED PARAMETER
+			{
+				// Create Array for Error Data
+				$error_array = array(
+					"error" => "Required Parameter Missing",
+					"param_name" => "score",
+					"param_desc" => "The new score for this team in this game."
+				);
+
+				// Set whether it is a fatal error
+				$is_fatal = true;
+
+				// Call method to throw an error
+				$this->addError($error_array,$is_fatal);
+				return false;
+
+			}
+
+			$result =  $this->mainModel->updateScore($arguments);
+
+			//Check for success / error
+			if(get_class($result) == get_class($this->mainModel))
+			{
+				return $result;
+			}
+			elseif(get_class($result) == 'ORM_Validation_Exception')
+			{
+				//parse error and add to error array
+				$this->processValidationError($result,$this->mainModel->error_message_path);
+				return false;
+
+			}
+
+
+		}
 		
 		############################################################################
 		###########################    DELETE METHODS    ###########################

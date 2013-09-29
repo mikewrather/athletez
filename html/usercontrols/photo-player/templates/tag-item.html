@@ -1,21 +1,9 @@
-
-{{#payload}}
-<div class="row-fluid" data-id="bbbbbbbb">
-    <div class="user-photo">
-    	<img src="{{base_url}}{{poster_picture}}" alt="{{poster}}" />
+<div class="row-fluid">
+    <div class="tags-name">
+		<span><a href="{{_link}}"><img src="{{_thumbnail}}" width="20" height="20" /></a></span>
+		<span>{{{_label}}}</span>
     </div>
-    
-    <div>
-	    <div class="bubble">  
-		<div class="pointer"></div>
-	        <div class="content">
-	        	<span class="comment-date">{{poster}} {{comment_date}}</span>
-	        	<p class="comment-text">{{comment}}</p>
-	        </div>
-	    </div>
-	</div>
+    <div class="tags-number">
+    	{{count}}
+    </div>
 </div>
-{{/payload}}
-
-
-
