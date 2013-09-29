@@ -61,7 +61,7 @@ define(['require', 'text!usercontrols/add-club/templates/layout.html', 'facade',
 			data.complevel_profiles_id = this.$el.find("#comp-levels-h").val();
 			data.location_id = _self.locationId;
 			data.season_profiles_id = this.$el.find("#profile-h").val();
-			data.sports_club = (_self.addType == "school")?'1':'0';
+			data.sports_club = (_self.addType == "school")?'0':'1';
 			addModel.set(data);
 			addModel.save();
 			$.when(addModel.request).done(function() {
@@ -74,6 +74,13 @@ define(['require', 'text!usercontrols/add-club/templates/layout.html', 'facade',
 			adressModel.address = address;
 			adressModel.url();
 			adressModel.set({address: address});
+			
+			adressModel.showError = function(model, error) {
+				console.error(model);
+				console.error(JSON.parse(JSON.stringify(error)));
+				//console.error(eval("'"+error.responseText+"'"));
+			};
+			
 			adressModel.save();
 			_self.$el.find('.address-h').removeClass('address-verified');
 			$.when(adressModel.request).done(function() {
@@ -87,6 +94,11 @@ define(['require', 'text!usercontrols/add-club/templates/layout.html', 'facade',
 					_self.addressValid = false;
 				}
 			});
+			
+			
+			
+			
+			
 		},
 		
 		// set profile view dropdowns

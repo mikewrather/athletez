@@ -4,11 +4,11 @@
  // Requires `define`, `require`
  // Returns {Photo Player View} constructor
  */
-define(['require', 'text!usercontrols/photo-player/templates/player.html', 'facade', 'views', 'utils', 'vendor', 'usercontrol/photo-player/models/vote' ], function(require, layoutTemplate) {
+define(['require', 'text!usercontrols/photo-player/templates/player.html', 'facade', 'views', 'utils', 'vendor', 'votes/models/vote' ], function(require, layoutTemplate) {
 
 	var self, facade = require('facade'), views = require('views'), SectionView = views.SectionView, 
 	utils = require('utils'), Channel = utils.lib.Channel, vendor = require('vendor'), 
-	Mustache = vendor.Mustache, $ = facade.$, voteModel = require('usercontrol/photo-player/models/vote');
+	Mustache = vendor.Mustache, $ = facade.$, voteModel = require('votes/models/vote');
 	//Models
 	PhotoPlayerView = SectionView.extend({
 		template : layoutTemplate,
@@ -34,10 +34,19 @@ define(['require', 'text!usercontrols/photo-player/templates/player.html', 'faca
 			
 		},
 		
-		vote: function() {
-			var vote = new voteModel();
-			vote.id = this.id;
+		vote: function(e) {
+			
+			if($(e.currentTarget).hasClass('voted'))
+				return;
+				
+			var _self = ths, vote = new voteModel();
+			vote.userId = this.json[this.index].payload.id;
+			vote.entity_id = this.json[this.index].payload.enttypes_id;
+			vote.set({subject_type_id:vote.entity_id , subject_id: vote.userId});
 			vote.save();
+			$.when(vote.request).done(function() {
+				_self.$el.find('.photo-player-vote-h').addClass('voted');
+			});
 		},
 		
 		changeImage: function(e) {

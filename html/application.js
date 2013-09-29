@@ -86,6 +86,9 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
         initTriggers: function() {
         	routing.off('photo-player-init');
             routing.on('photo-player-init', function(index, collection, userId) {
+            	
+            	console.log(collection);
+            	
             	 var photoPlayer = new PhotoPlayerController({
                 	"index": index,
                 	userId: userId,

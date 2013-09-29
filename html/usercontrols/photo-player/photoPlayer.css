@@ -140,3 +140,13 @@
 .photo-player-main-image {
     min-height: 380px;
 }
+
+.tags-name {
+	float: left;
+	width: 80%;
+}
+
+.tags-number {
+	float: right;
+	width: 20%;
+}
