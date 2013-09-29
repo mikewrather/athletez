@@ -284,7 +284,7 @@ class Model_Sportorg_Games_Base extends ORM
 		if (isset($teams_id) && isset($score))
 		{
 			DB::update('games_teams_link')
-				->set(array('score',$score))
+				->set(array('score'=>$score,'points_scored'=>$score))
 				->where('games_id','=',$this->id)
 				->and_where('teams_id','=',$teams_id)
 				->execute();
