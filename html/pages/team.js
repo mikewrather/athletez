@@ -39,6 +39,7 @@ define([
     "team/views/video-list",
     "team/views/image-list",
     "team/views/comment-list",
+    "team/views/menu",
     "media/models/image",
     "sportorg/views/team-list",
     "profile/views/fans-image-list"
@@ -77,6 +78,7 @@ define([
         TeamCommentOfListView = require("team/views/commentof-list"),
 		TeamCommentOnListView = require("team/views/commenton-list"),
 		FansImageListView = require("profile/views/fans-image-list"),
+		MenuPageView = require("team/views/menu"),
         MediaImageModel = require("media/models/image");
         LayoutView = views.LayoutView,
         $ = facade.$,
@@ -196,8 +198,8 @@ define([
             }
             
             routing.on('refresh-teampage', function(sport_id, team_id,season_id) {
-            	callback(sport_id, team_id, season_id)
-            })
+            	callback(sport_id, team_id, season_id);
+            });
             
           //  Channel('refresh-teampage').subscribe(callback);
         },
@@ -380,12 +382,20 @@ define([
         
         setupHeaderView: function() {
             var headerView;
-            console.error(this.basics);
             headerView = new TeamHeaderView({
                 model: this.basics,
                 name: "Header",
                 destination: "#main-header" 
             });
+            
+           var  menuView = new MenuPageView({
+                model: this.basics,
+                name: "Menu View",
+                headerView: headerView,
+                destination: "#menu-container" 
+            });
+            
+            this.scheme.push(menuView);            
 
             this.scheme.push(headerView);            
             this.layout.render();

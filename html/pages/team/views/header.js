@@ -49,15 +49,12 @@ function(require, headerTemplate, selectSportTemplate) {
         selectSportTemplate: selectSportTemplate,
         
         events: {
-            //"change .sports-h": "getComplevels",
-            //"change .team-h": "showAllTeamData"
         },
 
         initialize: function (options) {
-        	console.log(options);
+        	console.error(options);
             SectionView.prototype.initialize.call(this, options);
-            this.initSportList();
-                   
+           // this.initSportList();
         },
         
          selectSport: function(event) {
@@ -76,12 +73,12 @@ function(require, headerTemplate, selectSportTemplate) {
 	        	_self.model.fetch();
 	        	$.when(_self.model.request).done(function() {
 	        		_self.render();
-	        		_self.initSportList();
+	        		//_self.initSportList();
 	        	});
         	}
         },
         
-        getSeason: function() {
+        getTeam: function() {
         	 var self = this;
             this.season = new SeasonTeams();
             this.season.id = this.model.get("payload").org_sport_link_obj.orgs_id;
@@ -98,7 +95,6 @@ function(require, headerTemplate, selectSportTemplate) {
 					data: data,
 					title: "Team",
 					elementId: "team-h",
-					selectedValue: self.model.id,
 					destination: '.team-h',
 					targetView: self,
 					callback: function(result) {
@@ -114,9 +110,6 @@ function(require, headerTemplate, selectSportTemplate) {
         },
         
         getComplevels: function() {
-        	
-        	console.error("comp levels");
-        	
         	 var self = this;
             this.complevel = new CompLevels();
             this.complevel.id = this.model.get("payload").org_sport_link_obj.orgs_id;
@@ -132,10 +125,11 @@ function(require, headerTemplate, selectSportTemplate) {
 					title: "Season",
 					elementId: "season-h",
 					destination: '.season-h',
+					selectedValue: self.model.get("payload").complevels_obj.complevel_profiles_id,
 					targetView: self,
 					callback: function(result) {
 						console.error("comp level call");
-						self.getSeason();
+						self.getTeam();
 					}
 				});
             });
@@ -148,9 +142,6 @@ function(require, headerTemplate, selectSportTemplate) {
             this.sports.id = this.model.get("payload").org_sport_link_obj.orgs_id;
             this.sports.fetch();
             $.when(this.sports.request).done(function() {
-            	
-            	console.error(self.sports.toJSON());	
-            	
                var data = {};
                data.records = self.sports.toJSON();
                data.recordId = 'sport_id';
@@ -163,7 +154,6 @@ function(require, headerTemplate, selectSportTemplate) {
 					destination: '.sports-h',
 					targetView: self,
 					callback: function(result) {
-						console.error("here in callback");
 						self.getComplevels();
 					}
 				});
@@ -225,7 +215,6 @@ function(require, headerTemplate, selectSportTemplate) {
         
         render: function (domInsertion, dataDecorator, partials) {
             SectionView.prototype.render.call(this, domInsertion, dataDecorator, partials); 
-        	//this.initVoteView();  
         },
         
        
