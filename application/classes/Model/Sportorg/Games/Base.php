@@ -352,7 +352,7 @@ class Model_Sportorg_Games_Base extends ORM
 
 		if (isset($searchtext)){
 			$this->join('orgs')->on('orgs.id', '=', 'org_sport_link.orgs_id');
-			$this->where('orgs.name', 'like', "%".$searchtext."%");
+			$this->where('orgs.name', 'like', $searchtext."%");
 		}
 
 		if (isset($cities_id) || isset($states_id)){

@@ -31,7 +31,7 @@ class Model_Sportorg_Games_Teamslink extends ORM
 			),
 
 			'is_home_team' => array(
-				array('in_array', array(':value', array(0 ,1))),
+		//		array('in_array', array(':value', array(0 ,1))),
 			),
 		);
 	}
