@@ -524,7 +524,7 @@ class Model_Media_Video extends ORM
 			}
 			if (isset($searchtext)){
 				//$video->where(array(Db::expr('CONCAT(user_base.first_name," ",user_base.last_name)'), 'full_name'), 'like ','%'.$searchtext.'%');
-				$video->where('media.name', 'like', "%".$searchtext."%");
+				$video->where('media.name', 'like', $searchtext."%");
 			}
 		}
 
@@ -545,7 +545,7 @@ class Model_Media_Video extends ORM
 
 			if (isset($searchtext)){
 				//$video->where('orgs.name', 'like', '%'.$searchtext.'%');
-				$video->where('media.name', 'like', "%".$searchtext."%");
+				$video->where('media.name', 'like', $searchtext."%");
 			}
 		}
 
@@ -566,7 +566,7 @@ class Model_Media_Video extends ORM
 
 			if (isset($searchtext)){
 				//$video->where('orgs.name', 'like', '%'.$searchtext.'%');
-				$video->where('media.name', 'like', "%".$searchtext."%");
+				$video->where('media.name', 'like',$searchtext."%");
 			}
 		}
 
@@ -587,7 +587,7 @@ class Model_Media_Video extends ORM
 
 			if (isset($searchtext)){
 				//$video->where('orgs.name', 'like', '%'.$searchtext.'%');
-				$video->where('media.name', 'like', "%".$searchtext."%");
+				$video->where('media.name', 'like', $searchtext."%");
 			}
 		}
 

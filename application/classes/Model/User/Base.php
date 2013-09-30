@@ -1238,7 +1238,7 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 			$user_model->and_where_open()
 				->where('users.first_name', 'LIKE ',$searchtext.'%')
 				->or_where('users.last_name','LIKE',$searchtext.'%')
-				->or_where(array(Db::expr('CONCAT(users.first_name," ",users.last_name)'), 'full_name'), 'like ','%'.$searchtext.'%')
+				->or_where(array(Db::expr('CONCAT(users.first_name," ",users.last_name)'), 'full_name'), 'like ',$searchtext.'%')
 				->and_where_close();
 		}
 		$user_model->distinct(TRUE);

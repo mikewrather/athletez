@@ -326,7 +326,7 @@ class Model_Sportorg_Sport extends ORM
 
 		$sport_model = ORM::factory("Sportorg_Sport");
 		if(isset($sport_name)){
-			$sport_model->where('name', 'like', '%'.$sport_name.'%');
+			$sport_model->where('name', 'like', $sport_name.'%');
 		}
 		$classes_arr = array(
 			'Sportorg_Sport' => 'sportorg_sport'

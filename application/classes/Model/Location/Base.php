@@ -388,7 +388,8 @@ class Model_Location_Base extends ORM
 
 		if(isset($search_text))
 		{
-			$loc_search->where('full_address','LIKE',"%$search_text%");
+			$loc_search->where('full_address','LIKE',"$search_text%");
+			$loc_search->where('address','LIKE',"$search_text%");
 			$city_search->where('cities.name','LIKE',"$search_text%")
 				->or_where(DB::expr("CONCAT(`cities`.`name`,', ',`states`.`name`)"),'LIKE',"$search_text%");
 			$state_search->where('states.name','LIKE',"$search_text%");

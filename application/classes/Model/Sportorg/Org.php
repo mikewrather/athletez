@@ -301,7 +301,7 @@ class Model_Sportorg_Org extends ORM
 		}
 
 		if (isset($name)){
-			$orgs_model->where('sportorg_org.name', 'like', "%$name%");
+			$orgs_model->where('sportorg_org.name', 'like',$name."%");
 		}
 
 
