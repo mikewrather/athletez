@@ -1,12 +1,12 @@
-// Header View
+// Menu View
 // ---------
 // Package Team
 // Requires `define`, `require`
-// Returns {HeaderView} constructor
+// Returns {MenuView} constructor
 
 define([
         'require', 
-        'text!team/templates/header.html', 
+        'text!team/templates/menu.html', 
         'text!team/templates/sport-select.html',
         
         'team/models/basics',
@@ -19,12 +19,10 @@ define([
         'usercontrol/dropdown/view/dropdown',
         'team/collections/seasonteams',
         'team/collections/complevels'
-        
         ], 
 function(require, headerTemplate, selectSportTemplate) {
 
-    var TeamHeaderView,
-        facade = require('facade'),
+    var facade = require('facade'),
         views = require('views'),
         TeamBasicsModel = require('team/models/basics'),
         SectionView = views.SectionView,
@@ -33,7 +31,6 @@ function(require, headerTemplate, selectSportTemplate) {
         DropDownList = require('usercontrol/dropdown/view/dropdown'), 
 		SeasonTeams = require('team/collections/seasonteams'),
         CompLevels = require('team/collections/complevels'),
-        
         utils = require('utils'),
         Channel = utils.lib.Channel,
         vendor = require('vendor'),
@@ -42,18 +39,17 @@ function(require, headerTemplate, selectSportTemplate) {
         _ = facade._;
         
 
-    TeamHeaderView = SectionView.extend({
-
+    return  SectionView.extend({
         template: headerTemplate,
-        
         selectSportTemplate: selectSportTemplate,
         
         events: {
         },
 
         initialize: function (options) {
-        	console.error(options);
+        	this.headerView = options.headerView;
             SectionView.prototype.initialize.call(this, options);
+            this.initSportList();
         },
         
          selectSport: function(event) {
@@ -66,22 +62,102 @@ function(require, headerTemplate, selectSportTemplate) {
         
         // update header data
         updateHeaderData: function(id) {
-        	var _self = this;
-        	if(_self.model.id != id) {
-	        	_self.model.id = id;
-	        	_self.model.fetch();
-	        	$.when(_self.model.request).done(function() {
-	        		_self.render();
-	        		//_self.initSportList();
-	        	});
+        	if(this.model.id != id) {
+        		this.headerView.updateHeaderData(id);
         	}
+        	//var _self = this;
+        	//if(_self.model.id != id) {
+	        //	_self.model.id = id;
+	        //	_self.model.fetch();
+	        //	$.when(_self.model.request).done(function() {
+	        		//_self.render();
+	        		//_self.initSportList();
+	        //	});
+        	//}
         },
         
-       
+        getTeam: function() {
+        	 var self = this;
+            this.season = new SeasonTeams();
+            this.season.id = this.model.get("payload").org_sport_link_obj.orgs_id;
+            this.season.sport_id = $("#sports-h").val();
+            this.season.complevel_id = $("#season-h").val();
+            this.season.fetch();
+            
+            $.when(this.season.request).done(function() {
+                var data = {};
+               data.records = self.season.toJSON();
+               data.recordId = 'id';
+			   data.recordValue = 'team_name';
+               var DropDown = new DropDownList({
+					data: data,
+					title: "Team",
+					elementId: "team-h",
+					destination: '.team-h',
+					targetView: self,
+					callback: function(result) {
+						self.updateHeaderData($("#team-h").val());
+						self.showAllTeamData();
+					}
+				});
+            });
+        },
         
         showAllTeamData: function() {
         	routing.trigger('refresh-teampage', $("#sports-h").val(), $("#team-h").val(), this.season.id);
         },
+        
+        getComplevels: function() {
+        	 var self = this;
+            this.complevel = new CompLevels();
+            this.complevel.id = this.model.get("payload").org_sport_link_obj.orgs_id;
+            this.complevel.sport_id = $("#sports-h").val();
+            this.complevel.fetch();
+            $.when(this.complevel.request).done(function() {
+               var data = {};
+               data.records = self.complevel.toJSON();
+               data.recordId = 'complevel_id';
+			   data.recordValue = 'complevel_name';
+               var DropDown = new DropDownList({
+					data: data,
+					title: "Season",
+					elementId: "season-h",
+					destination: '.season-h',
+					selectedValue: self.model.get("payload").complevels_obj.complevel_profiles_id,
+					targetView: self,
+					callback: function(result) {
+						console.error("comp level call");
+						self.getTeam();
+					}
+				});
+            });
+        },
+        
+        initSportList: function () {       	
+        	console.error(this.model.toJSON());        	        	
+            var self = this;
+            this.sports = new TeamSportList();
+            this.sports.id = this.model.get("payload").org_sport_link_obj.orgs_id;
+            this.sports.fetch();
+            $.when(this.sports.request).done(function() {
+               var data = {};
+               data.records = self.sports.toJSON();
+               data.recordId = 'sport_id';
+			   data.recordValue = 'sport_name';
+               var DropDown = new DropDownList({
+					data: data,
+					elementId: "sports-h",
+					title: "Sport",
+					selectedValue: self.model.get("payload").org_sport_link_obj.sports_id,
+					destination: '.sports-h',
+					targetView: self,
+					callback: function(result) {
+						self.getComplevels();
+					}
+				});
+             });
+        },
+        
         
         insertOption: function($target, data) {
         	var html = '', len = data.length;
@@ -90,6 +166,7 @@ function(require, headerTemplate, selectSportTemplate) {
         	}
         	$target.html(html);
         },
+        
         
         setupSportListView: function() {
             var self = this,
@@ -136,12 +213,6 @@ function(require, headerTemplate, selectSportTemplate) {
         
         render: function (domInsertion, dataDecorator, partials) {
             SectionView.prototype.render.call(this, domInsertion, dataDecorator, partials); 
-        },
-        
-       
-        
-                
+        }         
     });
-
-    return TeamHeaderView;
 });
