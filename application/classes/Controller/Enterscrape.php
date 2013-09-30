@@ -31,7 +31,7 @@ class Controller_Enterscrape extends Controller
 
 		$mpschools = DB::select()->from(array($this->schema_name.'.schools_maxpreps', 'mpschools'))
 			->where('mpschools.univeral_highschool_id', 'IS NOT', NULL)
-			->limit('100')
+			->limit('1000')
 			->execute();
 
 		print_r($mpschools);
@@ -61,7 +61,7 @@ class Controller_Enterscrape extends Controller
 					->execute();
 
 				print_r($update);
-			} while($update > 0 && $count < 5000);
+			} while($update > 0 && $count < 1);
 
 
 			foreach ($mpschools as $mps)
