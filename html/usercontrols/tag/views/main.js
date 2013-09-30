@@ -342,6 +342,7 @@ define(['require', 'text!usercontrols/tag/templates/layout.html', 'facade', 'vie
 
 					//Create Collection
 					var List = new CityCollection();
+					List.states_id = self.states_id;
 					List.city_name = $(e.target).val();
 
 					console.log("City Request Abort Request Function AddGame/Main.js");
@@ -428,7 +429,7 @@ define(['require', 'text!usercontrols/tag/templates/layout.html', 'facade', 'vie
 
 				var List = new TeamsCollection();
 				List.states_id = $(e.target).attr(self.attributes.stateId);
-				List.cities_id = self.city_id;
+				//List.cities_id = self.city_id;
 				List.sports_id = $(self.destination).find(self.controls.ddlSports).val();
 				List.team_name = name;
 
@@ -566,7 +567,8 @@ define(['require', 'text!usercontrols/tag/templates/layout.html', 'facade', 'vie
 					var List = new UsersCollection();
 					List.user_name = searchText;
 					List.states_id = self.states_id;
-					List.cities_id = self.city_id;
+					// No Need to pass City Id in User Search as States Is is enough #961 (23/09/2013)
+					//List.cities_id = self.city_id;
 					List.sports_id = $(self.destination).find(self.controls.ddlSports).val();
 
 					console.log("Player Request Abort Request Function");
