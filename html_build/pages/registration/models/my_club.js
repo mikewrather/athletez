@@ -1,0 +1,1 @@
+define(["models/base"],function(e){var t;return t=e.extend({url:function(){return testpath?testpath+"/user/myclub":"/api/user/basics/"+this.id}}),t});

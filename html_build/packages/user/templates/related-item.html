@@ -1,0 +1,25 @@
+
+{{#payload}}
+<div class="row-fluid">
+    <div class="span6">
+        <img src="{{base_url}}{{user_picture}}" alt="{{user_name}}"/>
+    </div>
+    <div class="span6">
+        <div class="username">{{user_name}}</div>
+        <div class="votes">Votes: {{num_votes}}</div>
+        <div class="fans">Followers: {{num_followers}}</div>
+    </div>
+</div>
+<table class="table">
+{{#teams}}
+    <tr>
+        <td>{{sport}}</td>
+        <td>{{position}}</td>
+        <td>{{org}}</td>
+        <td>{{season}}</td>
+        <td>{{year}}</td>
+    </tr>
+{{/teams}}
+</table>
+{{/payload}}
+

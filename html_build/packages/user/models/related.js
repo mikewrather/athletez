@@ -1,0 +1,1 @@
+define(["facade","models/base"],function(e,t){var n,r=e._;return n=t.extend({defaults:r.extend({},(new t).attributes,{payload:{user_id:0,user_name:null,user_picture:null,teams:[{sport:null,position:null,org:null,season:null,year:null}],num_votes:0,num_followers:0},desc:"Related user information about the user",exec_data:{exec_time:0,exec_error:!1}})}),n});

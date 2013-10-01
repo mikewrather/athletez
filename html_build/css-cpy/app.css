@@ -1,0 +1,42 @@
+
+.left  { float:left; }
+.right { float:right; }
+.clear { float:none; clear:both; }
+.clearfix:after { display:block; content:"."; clear:both; font-size:0; line-height:0; height:0; overflow:hidden; }
+.textleft { text-align:left; }
+.textright { text-align:right; }
+.textcenter { text-align:center; }
+.global-messages,
+.global-errors,
+.global-alert { display:none; }
+.field-error { color: #b94a48; display:none; }
+.field-message { color: #3a87ad; display:none; }
+ul { list-style:none; }
+header { border-bottom:1px solid #ccc; padding-top:10px; padding-bottom:10px; background-color: #000; }
+header .logo { float:left; margin:6px 0; }
+header .searchform { float:left; margin:6px 15px; }
+header .searchform form { margin-bottom:0; }
+header .account { float:right; }
+header .photo { float:left; margin-right:10px; }
+header .photo img { width:32px; }
+header .userlinks { float:left; margin-top:5px; }
+header .userlinks .dropdown-toggle { min-width:200px; font-weight:bold; color:#fff; }
+header .userlinks .dropdown-menu { left:auto; right:0; top:25px; }
+header .signup-facebook,
+header .signup-email { margin:0 5px; }
+#main { padding-top:15px; padding-bottom:15px; }
+#main .sports-info { margin-top:20px; }
+#main .image { float:left; }
+#main .videothumb { float:left; }
+#main .roster { float:left; }
+#main .video { float:left; }
+#main .user-photo img { width:45px; margin-top: 10px; margin-right:10px; }
+.loader { background: url(../images/loader/loading.gif) no-repeat; width: 100%; height: 50px; margin: 0 auto; background-position: 50% 0; }
+.image-loading-div { position: absolute; }
+.fade-out { opacity: 0.5; }
+.floatLeft {float: left;}
+.floatRight {float: right;}
+.displayNone{display:none}
+.pointer {cursor: pointer;}
+select.displayNone, textarea.displayNone, input.displayNone{display:none;}
+input[disabled].hasDatepicker,input[readonly].hasDatepicker {background: #FFF; cursor:text;}

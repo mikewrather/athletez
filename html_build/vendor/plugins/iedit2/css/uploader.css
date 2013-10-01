@@ -1,0 +1,97 @@
+@charset 'UTF-8';
+/*
+ * jQuery File Upload UI Plugin CSS 6.3
+ * https://github.com/blueimp/jQuery-File-Upload
+ *
+ * Copyright 2010, Sebastian Tschan
+ * https://blueimp.net
+ *
+ * Licensed under the MIT license:
+ * http://www.opensource.org/licenses/MIT
+ */
+ 
+.fileinput-button {
+  position: relative;
+  overflow: hidden;
+  float: left;
+  margin-right: 5px;
+  margin-left: 280px;
+}
+.fileinput-button input {
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin: 0;
+  border: solid transparent;
+  border-width: 0 0 100px 200px;
+  opacity: 0;
+  filter: alpha(opacity=0);
+  -moz-transform: translate(-300px, 0) scale(4);
+  direction: ltr;
+  cursor: pointer;
+}
+.fileupload-buttonbar .ui-button,
+.fileupload-buttonbar .toggle {
+  margin-bottom: 5px;
+}
+.files .progress {
+  width: 200px;
+}
+.files .progress,
+.fileupload-buttonbar .progress {
+  height: 15px;
+}
+.progress-container {
+  margin-left: -200px
+}
+#progress {
+  width: 650px;
+  height: 15px;
+  padding: 1px;
+  border: 4px solid #C4C4C4;
+  border-radius: 8px;
+  background-color: #C4C4C4;
+  display: none;
+}
+.bar {
+  width: 0%;
+  height: 15px;
+  background: url(../img/progressbar.gif);
+}
+.fileupload-buttonbar > .ui-button .ui-button-text {
+    background-color: #9cca3c;
+    color: white;
+    font-family: "Avenir";
+    font-weight: bolder;
+    font-size: 1.2em;
+}
+.fileupload-buttonbar .fade,
+.files .fade {
+  display: none;
+}
+.fileupload-processing .fileupload-loading {
+  display: block;
+}
+*html .fileinput-button {
+  margin-right: -2px;
+}
+*html .fileinput-button .ui-button-text {
+  line-height: 24px;
+}
+*html .fileupload-buttonbar .ui-button {
+  margin-left: 3px;
+}
+*+html .fileinput-button {
+  margin-right: 1px;
+}
+*+html .fileinput-button .ui-button-text {
+  line-height: 24px;
+}
+*+html .fileupload-buttonbar .ui-button {
+  margin-left: 3px;
+}
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+  .fileinput-button {
+    margin-top: 2px;
+  }
+}

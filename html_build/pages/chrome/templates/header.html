@@ -1,0 +1,48 @@
+
+<div class="row-fluid">
+    <div class="logo">
+    {{#branding}}
+    <a class="brand" href="/#home">
+        <img src="{{base_url}}{{src}}" alt="{{alt}}" />
+    </a>
+    {{/branding}}
+    </div>
+
+    <div class="searchform">
+    {{#search}}
+    <form action="/" method="post" class="form-inline">
+        <input class="input-search" name="s" placeholder="{{placeholder}}"/>    
+    </form>
+    {{/search}}
+    </div>
+
+    <div class="account clearfix">
+        {{#authorized}}
+            <div class="photo"><img src="" alt="{{user_name}}"/></div>
+            <div class="userlinks dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown">{{user_name}} <b class="caret"></b></a>
+                <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                    {{#nav}}
+                        <li><a href="{{link}}">{{page}}</a></li>
+                    {{/nav}}
+                    <li><a href="{{logout_url}}">{{logout_label}}</a></li>
+                </ul>
+            </div>
+        {{/authorized}}    
+        {{^authorized}}
+            <a href="{{login_url}}">{{login_label}}</a>
+        {{/authorized}}    
+    </div>
+</div>
+
+{{^authorized}}
+<div class="row-fluid textright">
+    {{signup_social_label}} <a href="{{signup_facebook_link}}" class="signup-facebook">{{signup_facebook_label}}</a>
+	<a href="{{signup_email_link}}" class="signup-email">{{signup_email_label}}</a>
+</div>
+{{/authorized}}
+<!--
+ <div class="alert global-alert"></div>
+<div class="alert alert-info global-messages"></div>
+<div class="alert alert-error global-errors"></div>
+-->

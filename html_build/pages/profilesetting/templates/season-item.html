@@ -1,0 +1,18 @@
+<div class="span12 well-small">
+	<a href="javascript:void(0)" class="down arrow">&uarr;</a>
+</div>
+{{#Data}}
+<div class="span12">
+	<span class="span3"><strong>{{year}}</strong></span>
+	{{#seasons}}
+	<span class="span3">
+		<input type="checkbox" class="chkSeasons" year='{{year}}' seasonId = '{{season_id}}' />
+		<label>&nbsp;{{season_name}} </label>
+		<a href="javascript:void(0)" class="btnOpenPositions">Positions</a>
+		 </span>
+	{{/seasons}}
+</div>
+{{/Data}}
+<div class="span12 well-small">
+	<a href="javascript:void(0)" class="down arrow">&darr;</a>
+</div>

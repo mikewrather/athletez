@@ -1,0 +1,42 @@
+@font-face {
+	font-family: 'HelveticaNeue';
+    src: url('http://cdn.athletez.com/resources/fonts/HelveticaNeueLTStd-Md.woff') format('woff');
+	font-weight: bold;
+	font-style: normal;
+}
+@font-face {
+	font-family: 'HelveticaNeue';
+    src: url('http://cdn.athletez.com/resources/fonts/HelveticaNeueLTStd-Roman.woff') format('woff');
+	font-weight: normal;
+	font-style: normal;
+}
+@font-face {
+	font-family: 'HelveticaNeue';
+    src: url('http://cdn.athletez.com/resources/fonts/HelveticaNeueLTStd-Bd.woff') format('woff');
+	font-weight: bolder;
+	font-style: normal;
+}
+@font-face {
+	font-family: 'Avenir';
+	src: url('http://cdn.athletez.com/resources/fonts/AvenirLTStd-Black.woff') format('woff');
+	font-weight: bold;
+	font-style: normal;
+}
+@font-face {
+	font-family: 'Avenir';
+	src: url('http://cdn.athletez.com/resources/fonts/AvenirLTStd-Book.woff') format('woff');
+	font-weight: lighter;
+	font-style: normal;
+}
+@font-face {
+	font-family: 'Avenir';
+    src: url('http://cdn.athletez.com/resources/fonts/AvenirLTStd-BookOblique.woff') format('woff');
+	font-weight: normal;
+	font-style: oblique;
+}
+@font-face {
+	font-family: 'Avenir';
+    src: url('http://cdn.athletez.com/resources/fonts/HelveticaNeue-Medium.woff') format('woff');
+	font-weight: normal;
+	font-style: normal;
+}

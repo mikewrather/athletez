@@ -1,0 +1,1 @@
+define(["views","jquery","text!/login/templates/registration.html"],function(e,t,n){return e.extend({template:n,render:function(){e.prototype.render.call(this),this.input=this.$("#main-content")}})});

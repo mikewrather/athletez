@@ -1,0 +1,11 @@
+<a href="javascript: void(0);" class="add-comment-h">Comment</a>
+{{#payload}}
+
+<form class="add-comment-form-h hide" method="post" action="#">
+<div class="row-fluid">
+    <div class="field-message submit-result"></div>
+    <textarea style="width:85%;-webkit-border-radius: 15px; border-radius: 15px; height: 65px;" id="new-comment" placeholder="{{comment_placeholder}}" ></textarea>
+    <br/><input type="button" id="comment-submit" value="Submit"/>
+</div>
+</form>
+{{/payload}}

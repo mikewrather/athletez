@@ -1,0 +1,1 @@
+define(["facade","utils","media/views/image-list"],function(e,t,n){var r;return r=n.extend({imagetype:"large_thumb",name:"fans List",setupAddView:function(){}}),r});

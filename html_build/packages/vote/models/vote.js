@@ -1,0 +1,1 @@
+define(["models","facade"],function(e,t){var n,r=e.BaseModel,i=t.$,s=t._;return n=r.extend({url:function(){return base_url+"api/vote/add?subject_type_id="+this.entity_id+"&subject_id="+this.userId},setData:function(){this.set({subject_type_id:this.entity_id,subject_id:this.userId})}}),n});
