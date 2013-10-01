@@ -382,7 +382,7 @@
 
 			// limit
 			// The number or records to retrieve
-			$arguments["limit"] = ((int)trim($this->request->query('limit')) > 0) ? (int)trim($this->request->query('limit')) : 30;
+			$arguments["limit"] = ((int)trim($this->request->query('limit')) > 0) ? (int)trim($this->request->query('limit')) : 12;
 
 			// offset
 			// The record to start with

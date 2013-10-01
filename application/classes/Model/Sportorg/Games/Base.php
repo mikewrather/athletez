@@ -373,6 +373,17 @@ class Model_Sportorg_Games_Base extends ORM
 			$this->where('cities.states_id', '=', $states_id);
 		}
 
+		if (isset($limit))
+		{
+			$this->limit($limit);
+		}
+		else $this->limit(12);
+
+		if(isset($offset))
+		{
+			$this->offset($offset);
+		}
+
 //		if (isset($loc_search)){
 //			$this->and_where_open();
 //			$this->join('locations')->on('locations.id', '=', 'orgs.locations_id');
