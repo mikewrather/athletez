@@ -867,3 +867,9 @@ div.game-info{
     color:#333;
     box-shadow:10px 10px 5px #333;
 }
+
+.score-box a {
+	width: 100%;
+	height: 100%;
+	display: inline-block;
+}

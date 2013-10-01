@@ -10,7 +10,7 @@ define(["models/base"], function (BaseModel) {
 		url: function() {
             if (testpath)
                 return testpath + '/game/score/';
-            return '/api/game/score/';
+            return '/api/game/score/?teams_id='+this.teams_id+"&score="+this.score;
         }
 
 	});

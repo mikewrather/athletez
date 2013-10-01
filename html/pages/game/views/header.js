@@ -58,7 +58,11 @@ function(require, gameHeaderTemplate) {
 					opacity : 90
 				});
 			});
-			
+			this.$el.find('.image-outer-h').mouseout(function() {
+				$(this).find('.action-block').css({
+					opacity : 0
+				});
+			});
         },
         
         vote: function(e) {
@@ -89,15 +93,16 @@ function(require, gameHeaderTemplate) {
         
         resumeEditScore: function(e) {
         	var score = new scoreModel();
+        	score.teams_id = $(e.currentTarget).data("id");
+        	score.score = $(e.target).val();
         	score.set({'teams_id': $(e.target).data("id"), 'score': $(e.target).val()});
         	score.save();
+        	this.$el.find(".edit-score-input-h").attr("type", "hidden");
+   		    this.$el.find('.edit-score-h').show();
 			$.when(score.request).done(function() {
-	        	this.$el.find(".edit-score-input-h").attr("type", "hidden");
-   		     	this.$el.find('.edit-score-h').show();
+	        	
 			});
         }
-        
-                
     });
 
     return GameHeaderView;
