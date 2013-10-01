@@ -65,6 +65,11 @@
 			{
 				$arguments["users_id"] = (int)trim($this->request->post('users_id'));
 			}
+			else
+			{
+				$user = Auth::instance()->get_user();
+				$arguments['users_id'] = $user->id;
+			}
 
 			if(trim($this->request->post('result_time')) != "")
 			{
