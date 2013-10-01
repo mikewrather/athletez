@@ -84,8 +84,11 @@ if (strpos($_SERVER['HTTP_HOST'], 'newsite') !== FALSE || strpos($_SERVER['HTTP_
 	// Turn off notices and strict errors
 	error_reporting(E_ALL ^ E_NOTICE);
 }
-elseif (strpos($_SERVER['HTTP_HOST'], 'athletesup') !== FALSE || strpos($_SERVER['HTTP_HOST'], 'amazonaws') !== FALSE)
-{
+elseif (
+	strpos($_SERVER['HTTP_HOST'], 'athletesup') !== FALSE ||
+	strpos($_SERVER['HTTP_HOST'], 'amazonaws') !== FALSE ||
+	strpos($_SERVER['HTTP_HOST'], 'athletez') !== FALSE
+){
 	// Localhost
 	Kohana::$environment = Kohana::PRODUCTION;
 

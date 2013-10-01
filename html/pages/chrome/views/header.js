@@ -50,10 +50,18 @@ function (
                 var markup = Mustache.to_html(self.template, model.toJSON());
                 self.$el.html(markup);
 	            console.log(model.toJSON());
-                
-                var user_photo = model.get('user_photo').types.small_thumb.url;
-                var user_email = model.get('user_email');
-                self.$('.photo img').attr("src",user_photo);
+
+	            if(typeof(model.get('user_photo'))=='object')
+	                if(typeof(model.get('user_photo').types)=='object')
+	                    if(typeof(model.get('user_photo').types.small_thumb)=='object')
+		                    var user_photo = model.get('user_photo').types.small_thumb.url;
+	                    else if(typeof(model.get('user_photo').types.large_thumb)=='object')
+		                    var user_photo = model.get('user_photo').types.large_thumb.url;
+	                    else if(typeof(model.get('user_photo').types.original)=='object')
+		                    var user_photo = model.get('user_photo').types.original.url;
+                        else var user_photo = "";
+
+			  self.$('.photo img').attr("src",user_photo);
 
                 var authorized = model.get('authorized');
                 if (authorized) {
