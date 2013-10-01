@@ -33,7 +33,6 @@ define([
 
 ], function (require, pageLayoutTemplate, voteView)
 {
-
 	var GameController,
 		facade = require("facade"),
 		Controller = require("controller"),
@@ -125,7 +124,7 @@ define([
 
 			$.when(this.basics.request).done(function () {
 				controller.setupHeaderView();
-				controller.initVoteView();
+				//controller.initVoteView();
 				controller.setupAddMediaView();
 				
 				var data = controller.basics.get("payload"), subject_type_id = data.enttypes_id;
