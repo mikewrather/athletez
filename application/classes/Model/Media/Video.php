@@ -645,6 +645,17 @@ class Model_Media_Video extends ORM
 			$videoModel->join('media' ,'left')->on('media_video.media_id', '=', 'media.id');
 			$videoModel->order_by('media.timePosted', 'desc');
 		}
+		if (isset($limit))
+		{
+			$videoModel->limit($limit);
+		}
+		else $videoModel->limit(12);
+
+		if(isset($offset))
+		{
+			$videoModel->offset($offset);
+		}
+
 
 		$videoModel->where('media_video.id', 'in', $video_ids);
 		return $videoModel;

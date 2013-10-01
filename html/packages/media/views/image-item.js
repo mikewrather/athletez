@@ -17,10 +17,11 @@ define(['vendor', 'views', 'utils', 'text!media/templates/image-item.html'], fun
 		 events: {
             "click": "changeImage",
 			"click .vote": "vote",
+			'click .image-outer-h' : 'initPhotoPlayer',
 	        "click .follow": "follow",
 			"click .edit": "edit",
-			"click .delete": "delete",
-			'click .image-outer-h' : 'initPhotoPlayer'
+			"click .delete": "delete"
+
         },
 
 		initialize : function(options) {
@@ -117,11 +118,11 @@ define(['vendor', 'views', 'utils', 'text!media/templates/image-item.html'], fun
 				case '8':
 					//games
 					extra._detailclass = "game";
-					standard_thumb = mpay.game_picture!==null ? mpay.game_picture.types.standard_thumb : {height:440,width:440,url:"http://lorempixel.com/output/sports-q-g-440-440-3.jpg"}
+					standard_thumb = mpay.game_picture!==null ? mpay.game_picture.types.standard_thumb : {height:440,width:440,url:"http://cdn.athletez.com/resources/icons/game/square_game.png"}
 					extra._thumbnail = standard_thumb.url;
 					extra._label = mpay.game_day;
 					extra._link = "/#game/" + mpay.id;
-					var team_str = "", teamLength = mpay.teams.length,
+					var team_str = "", teams = mpay.teams,
 						ucwords = function(str)
 						{
 							str = str.toLowerCase();
@@ -130,6 +131,8 @@ define(['vendor', 'views', 'utils', 'text!media/templates/image-item.html'], fun
 									return $1.toUpperCase();
 								});
 						};
+					if(teams != null) var teamLength = teams.length;
+
 					for (var i = 0; i < teamLength; i++) {
 						team_str += '<span>';
 

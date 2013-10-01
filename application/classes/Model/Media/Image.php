@@ -500,6 +500,17 @@ class Model_Media_Image extends ORM
 
 		$imageModel = ORM::factory("Media_Image");
 
+		if (isset($limit))
+		{
+			$imageModel->limit($limit);
+		}
+		else $imageModel->limit(12);
+
+		if(isset($offset))
+		{
+			$imageModel->offset($offset);
+		}
+
 
 		if (!isset($orderby) || $orderby == 'votes'){
 			$enttype_id = Model_Site_Enttype::getMyEntTypeID($imageModel);
