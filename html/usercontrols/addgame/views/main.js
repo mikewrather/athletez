@@ -233,9 +233,12 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 		},
 		setSelectedTeam : function(data) {
 			if (data) {
+				console.log(data);
 				var teamname = data['team_name'];
-				var teamId = data['id'];
+				var teamId = data['team_id'];
 				$(self.destination).find(self.controls.sectionTeamOne).find("input").attr(self.attributes.teamId, teamId);
+				$(self.destination).find(self.controls.sectionTeamOne).find(self.controls.ddlUserTeams).hide();
+				$(self.destination).find(self.controls.sectionTeamOne).find(self.controls.btnNewTeam).hide();
 				$(self.destination).find(self.controls.sectionTeamOne).find(self.controls.txtTeam).val(teamname).show();
 			}
 		},
@@ -271,7 +274,9 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 			self.showLocation();
 		},
 		showAddTeam : function(e) {
-			$(e.target).parents(self.controls.sectionTeams).find(self.controls.ddlUserTeams).val("");
+			//Hide Link and DROPDOWN
+			$(e.target).hide();
+			$(e.target).parents(self.controls.sectionTeams).find(self.controls.ddlUserTeams).val("").hide();
 			$(e.target).parents(self.controls.sectionTeams).find(self.controls.txtTeam).show();
 			$(e.target).parents(self.controls.sectionTeams).find("input").removeAttr(self.attributes.teamId);
 			$(e.target).parents(self.controls.sectionTeams).find("input:checked").removeAttr("checked");
@@ -581,7 +586,8 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 					}
 					self.individualGames.forEach(function(value, index) {
 						//	var name = value['game_name'] + "( " + +" )";
-						arr.push(value['game_name']);
+						var name = value['event_name']  + value['game_name']; 
+						arr.push(name);
 					});
 
 					// Destroy existing autocomplete from text box before attaching it again
@@ -615,7 +621,7 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 			self.individual_game_id = 0;
 			if (self.individualGames) {
 				self.individualGames.forEach(function(value, index) {
-					var gamename = value['game_name'];
+					var gamename = value['event_name']  + value['game_name'];
 					if (gamename == name) {
 						isGameValid = true;
 						self.individual_game_id = value['id'];
@@ -876,15 +882,15 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 					$(self.destination).find(self.controls.sectionTeamTwo).find(self.controls.fieldMessage).html(self.messages.selectTeam).fadeIn();
 					isDataValid = false;
 				}
-				if (scoreOne == '' && date != null && currentDate > date) {
-					$(self.destination).find(self.controls.sectionTeamOne).find(self.controls.fieldMessage).html(self.messages.selectScore).fadeIn();
-					isDataValid = false;
-				}
-
-				if (scoreTwo == '' && date != null && currentDate > date) {
-					$(self.destination).find(self.controls.sectionTeamTwo).find(self.controls.fieldMessage).html(self.messages.selectScore).fadeIn();
-					isDataValid = false;
-				}
+				// if (scoreOne == '' && date != null && currentDate > date) {
+					// $(self.destination).find(self.controls.sectionTeamOne).find(self.controls.fieldMessage).html(self.messages.selectScore).fadeIn();
+					// isDataValid = false;
+				// }
+// 
+				// if (scoreTwo == '' && date != null && currentDate > date) {
+					// $(self.destination).find(self.controls.sectionTeamTwo).find(self.controls.fieldMessage).html(self.messages.selectScore).fadeIn();
+					// isDataValid = false;
+				// }
 
 			}
 
