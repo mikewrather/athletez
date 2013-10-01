@@ -87,6 +87,7 @@ if (strpos($_SERVER['HTTP_HOST'], 'newsite') !== FALSE || strpos($_SERVER['HTTP_
 elseif (
 	strpos($_SERVER['HTTP_HOST'], 'athletesup') !== FALSE ||
 	strpos($_SERVER['HTTP_HOST'], 'amazonaws') !== FALSE ||
+	strpos($_SERVER['HTTP_HOST'], '50.19.123.141') !== FALSE ||
 	strpos($_SERVER['HTTP_HOST'], 'athletez') !== FALSE
 ){
 	// Localhost
