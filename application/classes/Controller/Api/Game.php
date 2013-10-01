@@ -224,6 +224,16 @@
 				$arguments["cities_id"] = (int)trim($this->request->query('cities_id'));
 			}
 
+			if((int)trim($this->request->query('limit')) > 0)
+			{
+				$arguments["limit"] = (int)trim($this->request->query('limit'));
+			}
+
+			if((int)trim($this->request->query('offset')) > 0)
+			{
+				$arguments["offset"] = (int)trim($this->request->query('offset'));
+			}
+
 //			if((int)trim($this->request->query('teams_id')) > 0)
 //			{
 //				$arguments["teams_id"] = (int)trim($this->request->query('teams_id'));

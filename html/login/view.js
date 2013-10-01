@@ -1,6 +1,6 @@
 define([
 	'require',
-	'text!/login/templates/logintemplate.html', 
+	'text!login/templates/logintemplate.html',
     'backbone',
     'underscore',
     'views',

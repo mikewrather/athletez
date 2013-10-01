@@ -1,7 +1,7 @@
 //Vote View
 //Vote and follow up button functionality
 
-define([ 'require', 'text!roster/templates/roster.html','views', 'vendor', 'facade', 'utils', 'jqueryui', 'controller', 'roster/models/roster', 'roster/collections/roster', , 'roster/views/image-list'], function(require, rosterTemplate) {
+define([ 'require', 'text!roster/templates/roster.html','views', 'vendor', 'facade', 'utils', 'jqueryui', 'controller', 'roster/models/roster', 'roster/collections/roster' , 'roster/views/image-list'], function(require, rosterTemplate) {
 	var RosterView,
 		views = require('views'),
 		facade = require('facade'),
