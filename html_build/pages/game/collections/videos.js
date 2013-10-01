@@ -1,0 +1,1 @@
+define(["facade","media/collections/videos","utils"],function(e,t,n){var r,i=e._,s=n.lib.Channel;return r=t.extend({url:function(){return testpath?testpath+"/game/videos/"+this.id:"/api/game/videos/"+this.id}}),r});

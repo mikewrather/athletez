@@ -1,0 +1,1 @@
+define(["facade","sportorg/models/team"],function(e,t){var n,r=e._;return n=t.extend({url:function(){return"/api/team/game/"+this.teams_id+"?games_id="+this.games_id}}),n});

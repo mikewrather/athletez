@@ -1,0 +1,47 @@
+
+{{#payload}}
+<div class="row-fluid">
+
+	<div class="game-heading">
+		<!--div class="sports-h"></div-->
+		<div class="game-general">
+			<div class="stretch"></div>
+			{{#shared.sport}}<span>{{shared.sport}}</span>{{/shared.sport}}
+			{{#shared.complevel}}<span>{{shared.complevel}}</span>{{/shared.complevel}}
+			{{#shared.season}}<span>{{shared.season}}</span>{{/shared.season}}
+
+		</div>
+        <h3>{{game_day}} {{gameTime}}</h3>
+		<a href="javascript: void(0);" class="common-btn common-default-sky-dark pull-right">Edit Game</a>
+    </div>
+
+	{{#game_picture}}
+		<div class="header-image-container image-outer-h">
+			<div class="image-item-container">
+				<img src="{{game_picture.types.standard_thumb.url}}" alt="{{game_name}}" />
+			</div>
+		</div>
+	{{/game_picture}}
+
+	<ul class="teams-list">
+		{{#teams}}
+		<li class="team-item">
+			<div class='score-box {{#isWinner}}win{{/isWinner}}'>
+				<span>{{points_scored}}</span>
+			</div>
+			<div class="org-info">
+				<span class="org-name">
+					{{org_sport_link_obj.org.org_name}}
+				</span>
+				<span class="org-location">
+					{{team_location}}
+				</span>
+			</div>
+		</li>
+		{{/teams}}
+	</ul>
+
+
+</div>
+
+{{/payload}}

@@ -1,0 +1,18 @@
+{            
+    "payload": [{
+        "sport_name": "football",
+        "sport_id": 1
+    },{
+        "sport_name": "basketball",
+        "sport_id": 2
+    },{
+        "sport_name": "sport2",
+        "sport_id": 3
+    }],
+    "desc": "List of sports associated with the team.",
+    "exec_data": {
+        "exec_time": 0.024134,
+        "exec_error": false
+    }
+}
+

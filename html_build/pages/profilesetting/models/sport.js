@@ -1,0 +1,1 @@
+define(["facade","sportorg/models/sport"],function(e,t){var n,r=e._;return n=t.extend({idAttribute:"user_id",url:function(){this.orgs_id==undefined;if(this.type=="save")return"/api/user/addsport/"+this.user_id;if(this.type=="delete")return"/api/user/sport/"+this.user_id}}),n});

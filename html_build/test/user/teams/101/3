@@ -1,0 +1,15 @@
+{            
+    "payload": [{
+        "team_name": "Blair Academy4",
+        "team_location": "Blairstown, NJ"
+    },{
+        "team_name": "Blair Academy5",
+        "team_location": "Blairstown1, NJ"
+    }],
+    "desc": "Teams information about the user and sport",
+    "exec_data": {
+        "exec_time": 0.024134,
+        "exec_error": false
+    }
+}
+

@@ -1,0 +1,1 @@
+define(["facade","collections","user/collections/resumes","utils"],function(e,t,n,r){var i,s=t.BaseCollection,o=e._,u=r.lib.Channel,i=n.extend({url:function(){return testpath?testpath+"/api/user/sent_resume/"+this.user_id:(this.user_id==undefined,"api/user/sent_resumes/"+this.user_id+"?id1="+this.user_id)}});return i});

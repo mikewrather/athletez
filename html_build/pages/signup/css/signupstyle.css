@@ -1,0 +1,232 @@
+#firstreg input{
+			background-color: #E4E3E9;
+    		border-style: none;
+    		color: #68686A;
+    		font-family: Tahoma;
+    		font-size: 16px;
+    		font-weight: bold;
+    		height: 38px;
+    		margin-left: 25px;
+    		margin-top: 25px;
+    		padding-left: 14px;
+    		width: 258px;
+		}
+		.error {
+			color: red;
+		}
+		.message {
+			padding: 10px;
+			background-color: yellow;
+		}
+		#regpane{
+			width: 327px;
+			overflow: hidden;
+			position: relative;
+			padding: 10px;
+			height: auto;
+			//background-color: burlywood;
+			margin-left: 10%;
+			margin-bottom: 0%;
+		}
+		#regpanefinal{
+			width: 382px;
+			//overflow: hidden;
+			position: relative;
+			padding: 10px;
+			height: auto;
+			//background-color: burlywood;
+			margin-left: 10%;
+			margin-bottom: 0%;
+		}
+		
+		#mainreg{
+			width: 450px;
+			position: relative;
+			background-color: white;
+			margin: 0 auto;
+		}
+		#mainregfinal{
+			width: 673px;
+			position: relative;
+			background-color: white;
+			margin: 0 auto;
+		}
+		#fbpane{
+			background-color: #3b5998;
+			width: 242px;
+			padding: 10px;
+			margin-left: 18%;
+			text-align: center;
+			color: white;
+			font-family: Tahoma;
+			font-size: 16px;
+			font-weight: bold;
+			cursor: pointer;
+			border-style: outset;
+		}
+		#regcontainer{
+			background-color: #E4E3E9;
+			margin: 0 auto;
+			width: 100%;
+			height: auto;
+			padding-top: 29px;
+			padding-bottom: 29px;
+		}
+		.regheader{
+			font-size: 29px;
+			padding: 59px;
+		}
+		.regsubmit{
+			background-color: #9DCA3C;
+			width: 224px;
+			height: 51px;
+			margin-left: 38px;
+			color: white;
+			font-size: 20px;
+			border-style: outset;
+		}
+		.regsubmitfinal{
+			background-color: #1BA0AF;
+			width: 224px;
+			height: 51px;
+			margin-left: 38px;
+			color: white;
+			font-size: 20px;
+			border-style: outset;
+			margin-left: 69%;
+		}
+		#fblogo{
+			background-image: url(new-facebook-logo.png);
+			background-size: 25px;
+			width: 50px;
+			background-color: wheat;
+		}
+		#header{
+			padding-top: 16px;
+			padding-bottom: 20px;
+			font:  bold 12px/30px Georgia,serif;
+		}
+		#regor{
+			text-align: center;
+			padding-top: 14px;
+			font-family: Tahoma;
+			font-size: 16px;
+			font-weight: bold;
+			color: #68686A;
+		}
+		#reglogin{
+		
+			width: 100%;
+			text-align: center;
+			padding-top: 5px;
+			font-family: thahoma;
+		}
+		
+		.label{
+			width: 123px;
+			position: relative;
+			float: left;
+			color:black;
+			background-color: white;
+		}
+		.firstdiv,.seconddiv,.thirddiv,.fourthdiv,.fifthdiv,.sixthdiv,.seventhdiv{
+			padding-bottom: 10px;
+		}
+		#finalreg input{
+			width: 180px;
+			height: 30px;
+			background-color: #E4E3E9;
+			border: 0;
+			border-radius: 4px;
+		}
+		#radioinput input{
+			width: 21px;
+			height: 30px;
+			background-color: #E4E3E9;
+			border: 0;
+			border-radius: 4px;
+		}
+	
+		#finalreg{
+			color: #6B6F72;
+			font-family: Tahoma;
+		}
+		#gender input, #Role input{
+			width: 20px;
+		}
+		.born{
+			color: white;
+			background-color: #6B6F72;
+			height:30px;
+			width:100px;
+		}
+		.borndate{
+			color: white;
+			background-color: #6B6F72;
+			height:30px;
+			width:70px;
+		}
+		.borndyear{
+			color: white;
+			background-color: #6B6F72;
+			height:30px;
+			width:80px;
+		}
+		.radioinput{
+			width: 20px;
+			float: left;
+		}
+		.radio{
+			width: 84px;
+			float: left;
+			padding-left: 12px;
+			padding-top: 9px;
+		}
+		.submitbutton{
+		}
+		#imguploader{
+    		position: absolute;
+    		opacity: 0
+   		}
+   		#imgpreview{
+      		background-color: white;
+      		height: 330px;
+      		overflow: hidden;
+      		width: 330px;
+      		margin-left: 56px;
+   		}
+   		#previewimg{
+    		height: 330px;
+    		width: 330px;
+   		}
+   		#imgupload{
+    		padding-left: 218px;
+    		padding-top: 14px;
+    		position: relative;
+   		}
+   		.imgup{
+    		background-color: #1BA0AF;
+    		border-style: outset;
+   			color: #FFFFFF;
+   			font-size: 14px;
+    		height: 31px;
+   		}
+   		#mainregimg{
+   			width: 450px;
+			position: relative;
+			background-color: white;
+			margin: 0 auto;
+   		}
+   		.fbimage {
+   			 float:left;
+    		 margin-right: 4px;
+   			 
+		}
+		.picture-buttons {
+    		clear:both;
+		}
+		
+		.fbimagecontainer jrac_viewport img {display:block}
+		#skip{
+			width:82px;
+		}	
