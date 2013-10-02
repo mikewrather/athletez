@@ -75,7 +75,7 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 			txtIndividualLocation : ".txt-individual-location_h",
 			btnIndividualGameCreate : ".btn-game-individual-Create_h",
 			// LABELS
-			fieldMessage : '.field-message',
+			fieldMessage : '.field-message_h',
 			secSports : ".section-game-sports_h"
 			//fieldError : '.field-error'
 		},
@@ -96,15 +96,15 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 		/*Messages Holds the messages, warning, alerts, errors, information variables*/
 		/*In Case of similar message create only one object and key*/
 		messages : {
-			dataNotExist : "Data Does Not Exist . ",
-			selectDateAndTime : "Select Date And Time",
-			selectTeam : "Select Team",
-			selectScore : "Enter Score",
-			selectLocation : "select location",
-			selectLocationType : "select location type",
+			dataNotExist : "Data does not exist . ",
+			selectDateAndTime : "Please select date and time",
+			selectTeam : "Please select team",
+			selectScore : "Please enter score",
+			selectLocation : "Please select location",
+			selectLocationType : "Please select location type",
 			gameFound : "Sweet ! This Event Already Exists ! ",
-			enterEventName : "Enter event name",
-			selectSport : "Select Sport"
+			enterEventName : "Please enter event name",
+			selectSport : "Please select sport"
 		},
 
 		/*initialize gets called by default when constructor is initialized*/
@@ -112,9 +112,7 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 			SectionView.prototype.initialize.call(this, options);
 			self = this;
 			self.setOptions(options);
-
 			this.init();
-
 		},
 
 		/*render displays the view in browser*/
@@ -812,12 +810,11 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 				teamModel.fetchSuccess = function(model, response) {
 					var data = teamModel.parseAsRequired(response);
 					self.setLocation(data);
-
 				};
 				teamModel.fetch();
 
 			} else {
-				$(self.destination).find(self.controls.txtLocationId).html('').fadeIn();
+				$(self.destination).find(self.controls.txtLocationId).val('').fadeIn();
 				self.clearLocation();
 			}
 		},
@@ -863,11 +860,7 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 				$(self.destination).find(self.controls.sectionMainLocation).find(self.controls.fieldMessage).html(self.messages.selectLocation).fadeIn();
 				isDataValid = false;
 			}
-
-			//console.log(teamOneId);
-			//console.log(teamTwoId);
-			//console.log(scoreOne);
-			//console.log(scoreTwo);
+			
 			if (!(teamOneId > 0 )) {
 				$(self.destination).find(self.controls.sectionTeamOne).find(self.controls.fieldMessage).html(self.messages.selectTeam).fadeIn();
 				isDataValid = false;
@@ -912,10 +905,8 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 					////console.log(response);
 					if (response != null && response.payload != null) {
 						self.game_id = response.payload.id;
-
 						var isHome = $(self.destination).find(self.controls.rdoTeamOne).is(':checked');
 
-						//console.log("home",isHome);
 						var payloadOne = {
 							game_datetime : date,
 							games_id : self.game_id,
