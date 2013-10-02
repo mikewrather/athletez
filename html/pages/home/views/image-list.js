@@ -23,7 +23,6 @@ define(
 				events: {
 					'click .image-outer-h': 'initPhotoPlayer'
 				},
-			
 
 				// Store constructor for the child views
 				_view : ImageItemView,

@@ -3,9 +3,12 @@
 // Requires `define`
 // Return {ImageItemView} object as constructor
 
-define(['vendor', 'views', 'utils', 'text!media/templates/image-item.html'], function(vendor, views, utils, imageItemTemplate) {
+define(['vendor', 'views', 'utils', 'text!media/templates/image-item.html', 'votes/models/vote',
+        'votes/models/follow'], function(vendor, views, utils, imageItemTemplate) {
 
-	var ImageItemView, $ = vendor.$, BaseView = views.BaseView, Mustache = vendor.Mustache;
+	var ImageItemView, $ = vendor.$, BaseView = views.BaseView, Mustache = vendor.Mustache,
+	voteModel = require('votes/models/vote'),
+    followModel = require('votes/models/follow');
 
 	ImageItemView = BaseView.extend({
 
@@ -21,7 +24,6 @@ define(['vendor', 'views', 'utils', 'text!media/templates/image-item.html'], fun
 	        "click .follow": "follow",
 			"click .edit": "edit",
 			"click .delete": "delete"
-
         },
 
 		initialize : function(options) {
@@ -216,11 +218,21 @@ define(['vendor', 'views', 'utils', 'text!media/templates/image-item.html'], fun
 	    {
 		    e.preventDefault();
 		    console.log(this.model);
+		   
+		    var voteModelOb = new voteModel();
+			voteModelOb.userId = this.model.id;
+			voteModelOb.entity_id = this.model.get("payload").enttypes_id;
+			voteModelOb.setData();
+			voteModelOb.save();
 	    },
 
 	    follow: function(e){
-		    e.preventDefault();
+		   e.preventDefault();
 		    console.log(e.target);
+		    var followModelOb = new followModel();
+			followModelOb.userId = this.model.id;
+			followModelOb.entity_id = this.model.get("payload").enttypes_id;
+			followModelOb.save();
 	    },
 
 		edit: function(e)
