@@ -26,7 +26,7 @@ function(facade,  views,   utils,   SportItemView) {
         // Tag for the child views
         _tagName: "li",
         _className: "sport",
-
+        
         // Store constructor for the child views
         _view: SportItemView,
 
@@ -54,6 +54,7 @@ function(facade,  views,   utils,   SportItemView) {
         	var view = this;
         	Channel('layout:ready').subscribe(view.initScroll);
         },
+        
         // Child views...
         childViews: {},
 
