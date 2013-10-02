@@ -486,7 +486,7 @@ class Model_Media_Video extends ORM
 		$enttypes_id = Ent::getMyEntTypeID($class_name);
 		extract($condition);
 
-		$video_types = DB::select(DB::expr('COUNT(id)'))->from('video_type_link')->where('videos_id','=','videos.id');
+		$video_types = DB::select(DB::expr('COUNT(id)'))->from('video_type_link')->where('videos_id','=',DB::expr("`videos`.`id`"));
 
 		$video = DB::select('videos.id', 'media.sports_id')
 			->from('tags')
@@ -615,6 +615,7 @@ class Model_Media_Video extends ORM
 			->union($team_video, false)
 			->union($org_video, false)
 			->union($game_video, false)->execute()->as_array();
+
 		if (empty($results)){
 			$video_ids[] = -1; //avoid sql error
 		}
