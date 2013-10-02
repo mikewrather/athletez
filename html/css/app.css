@@ -873,3 +873,19 @@ div.game-info{
 	height: 100%;
 	display: inline-block;
 }
+
+
+/**  Google Map ***/
+
+
+#map-canvas {
+	width: 80%;
+	height: 300px;
+	margin-top: 30px;
+}
+
+
+.link-disabled {
+	opacity: 0.5;
+	pointer-events: none;
+}

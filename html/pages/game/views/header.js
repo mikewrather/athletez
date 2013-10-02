@@ -12,7 +12,8 @@ define([
         'game/models/score',
         'game/models/basics',
         'votes/models/vote',
-        'votes/models/follow'
+        'votes/models/follow',
+        'usercontrols/location/views/location'
         ], 
 function(require, gameHeaderTemplate) {
 
@@ -23,14 +24,12 @@ function(require, gameHeaderTemplate) {
         basicModel = require('game/models/basics'),
         voteModel = require('votes/models/vote'),
         followModel = require('votes/models/follow'),
+        LocationView = require('usercontrols/location/views/location'),
 		SectionView = views.SectionView;
 
 	GameHeaderView = SectionView.extend({
-
         id: 'main-header',
-
         template: gameHeaderTemplate,
-        
         events: {
         	'click .edit-score-h' : 'editScore',
         	'blur .edit-score-input-h': 'resumeEditScore',
@@ -40,12 +39,19 @@ function(require, gameHeaderTemplate) {
 	        "click .object-delete-h": "deleteObject",
 	        "click .game-edit-btn-h" : "gameEditBtn",
 	        "submit .update-date-time-h": "updateDateTime",
-	        "click .cancel-time-edit-h" : "cancelDateTimeBtn"
+	        "click .cancel-time-edit-h" : "cancelDateTimeBtn",
+	        "click .address-info-h": "openLocationPopup"
         	//'keyup .edit-score-input-h': 'resumeEditScore'
         },
         
         initialize: function (options) {
           SectionView.prototype.initialize.call(this, options);           
+        },
+        
+        openLocationPopup: function() {
+        	console.log(this.model);
+        	var location = { latitude : this.model.get("payload").location.lat, longitude : this.model.get("payload").location.lon}; 
+        	routing.trigger('location_popup_open', LocationView, location);
         },
         
         editObject: function() {
