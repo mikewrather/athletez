@@ -160,7 +160,7 @@
 
 			if(trim($this->request->query('orderby')) != "")
 			{
-				$legal_orderby = array('votes', 'followers', 'postTime');
+				$legal_orderby = array('votes', 'followers', 'postTime','random');
 				$arguments["orderby"] = trim($this->request->query('orderby'));
 				if (!in_array($arguments["orderby"], $legal_orderby)){
 					$error_array = array(
@@ -187,6 +187,16 @@
 			if((int)trim($this->request->query('cities_id')) > 0)
 			{
 				$arguments["cities_id"] = (int)trim($this->request->query('cities_id'));
+			}
+
+			if((int)trim($this->request->query('limit')) > 0)
+			{
+				$arguments["limit"] = (int)trim($this->request->query('limit'));
+			}
+
+			if((int)trim($this->request->query('offset')) > 0)
+			{
+				$arguments["offset"] = (int)trim($this->request->query('offset'));
 			}
 
 			$video_model = ORM::factory("Media_Video");

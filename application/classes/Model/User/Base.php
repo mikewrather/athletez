@@ -1198,7 +1198,7 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 
 		$enttype_id = Ent::getMyEntTypeID($this);
 
-		/*
+
 		// NUM VOTES
 		if (!isset($orderby) || $orderby == 'votes')
 		{
@@ -1235,8 +1235,11 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 		{
 			$user_model->order_by('users.id', 'desc');
 		}
-*/
-		$user_model->order_by(DB::expr('RAND()'));
+		elseif($orderby=='random')
+		{
+			$user_model->order_by(DB::expr('RAND()'));
+		}
+
 
 		if (isset($searchtext))
 		{
@@ -1247,7 +1250,17 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 				->and_where_close();
 		}
 		$user_model->distinct(TRUE);
-		$user_model->limit($limit)->offset($offset);
+
+		if (isset($limit))
+		{
+			$user_model->limit($limit);
+		}
+		else $user_model->limit(12);
+
+		if(isset($offset))
+		{
+			$user_model->offset($offset);
+		}
 
 		$exclude_deleted_users_array['User_Base'] = 'users';
 		$user_model = ORM::_sql_exclude_deleted($exclude_deleted_users_array, $user_model);

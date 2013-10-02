@@ -349,6 +349,10 @@ class Model_Sportorg_Games_Base extends ORM
 		{
 			$this->order_by('num_followers', 'desc');
 		}
+		elseif($orderby=='random')
+		{
+			$this->order_by(DB::expr('RAND()'));
+		}
 
 		if (isset($searchtext)){
 			$this->join('orgs','LEFT')->on('orgs.id', '=', 'org_sport_link.orgs_id');

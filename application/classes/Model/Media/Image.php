@@ -545,6 +545,10 @@ class Model_Media_Image extends ORM
 			$imageModel->join('media' ,'left')->on('media_image.media_id', '=', 'media.id');
 			$imageModel->order_by('media.timePosted', 'desc');
 		}
+		elseif($orderby=='random')
+		{
+			$imageModel->order_by(DB::expr('RAND()'));
+		}
 
 		$imageModel->where('media_image.id', 'in', $image_ids);
 

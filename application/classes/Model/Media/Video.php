@@ -645,6 +645,12 @@ class Model_Media_Video extends ORM
 			$videoModel->join('media' ,'left')->on('media_video.media_id', '=', 'media.id');
 			$videoModel->order_by('media.timePosted', 'desc');
 		}
+		elseif($orderby=='random')
+		{
+			$videoModel->order_by(DB::expr('RAND()'));
+		}
+
+
 		if (isset($limit))
 		{
 			$videoModel->limit($limit);

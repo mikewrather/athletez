@@ -364,7 +364,7 @@
 				$arguments["states_id"] = trim($this->request->query('states_id'));
 			}
 
-			$legal_orderby = array('votes', 'followers', 'newest');
+			$legal_orderby = array('votes', 'followers', 'newest','random');
 			// orderby
 			// Default will be to order by votes.
 
