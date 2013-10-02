@@ -364,10 +364,12 @@ class Model_Media_Video extends ORM
 		// UserID is used to generate the url for the image
 		$user = Auth::instance()->get_user();
 
+		$zc_config = Kohana::$config->load('zencoder');
+
 		$randID = md5(time() + rand(1, 1000));
-		$baseOutURL = "s3://highlightvids/post/" . $user->id . "/" . $randID . "/";
-		$zencoder = new Services_Zencoder('492b54895636addb1f3411d55ab7ea03');
-		$notificationURL = "http://athletesup.com/vidlistener";
+		$baseOutURL = $zc_config->get('base_out') . $user->id . "/" . $randID . "/";
+		$zencoder = new Services_Zencoder($zc_config->get('api_key'));
+		$notificationURL = $zc_config->get('notification_url');
 
 		// The zencoder command for each video to encode is kept in the
 		// video types table.  So we use that table to construct the
