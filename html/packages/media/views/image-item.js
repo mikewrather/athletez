@@ -35,7 +35,9 @@ define(['vendor', 'views', 'utils', 'text!media/templates/image-item.html', 'vot
 		render : function() {
 			var _self = this, mpay = this.model.attributes.payload, extra = {
 				_enttypes_id : mpay.enttypes_id,
-				_id : mpay.id
+				_id : mpay.id,
+				_has_voted: mpay.has_voted,
+				_is_following: mpay.is_following
 				},
 				show_edit = false,
 				standard_thumb = null;
