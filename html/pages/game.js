@@ -72,11 +72,8 @@ define([
 		initialize: function (options) {
 			Channel('load:css').publish(cssArr);
 			_.bindAll(this);
-
 			this.handleOptions(options);
-
 			this.init();
-
 			return this;
 		},
 
@@ -107,8 +104,6 @@ define([
 			//this.videos = new GameVideoList();
 			//this.videos.id = this.id;
 			//this.videos.fetch();
-
-			
 
 			//this.comments = new GameCommentList();
 			//this.comments.id = this.id;
