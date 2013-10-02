@@ -32,7 +32,7 @@
 	content: "";
 }
 
-.select {
+.select, .select a {
 	background-color: #0081C2;
     background-image: linear-gradient(to bottom, #0088CC, #0077B3);
     background-repeat: repeat-x;
@@ -40,7 +40,7 @@
     text-decoration: none;
 }
 
-li.sport:hover {
+li.sport:hover, li.sport a:hover {
 	background-color: #0081C2;
     background-image: linear-gradient(to bottom, #0088CC, #0077B3);
     background-repeat: repeat-x;
@@ -66,4 +66,18 @@ img.tiny-sport-icon{
     max-height: 20px;
     margin-right:4px;
 
+}
+
+li.sport a {
+	display: inline-block;
+	width: 100%;
+float: left;
+}
+
+li.sport.select a {
+	color: #FFF;
+}
+
+li.sport a:hover {
+	color: #FFF;
 }

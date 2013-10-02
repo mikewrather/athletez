@@ -81,7 +81,7 @@ define(
 					this.urlOptions = {
 						'sports_id' : '0',
 						'cities_id' : '0',
-						'orderby' : 'random',
+						'orderby' : 'votes',
 						'time' : 'DAY',
 						'states_id' : '0',
 						'searchtext' : '',
