@@ -19,11 +19,11 @@ define(['vendor', 'views', 'utils', 'text!media/templates/image-item.html', 'vot
 		// Event handlers...
 		 events: {
             "click": "changeImage",
-			"click .vote": "vote",
+			"click .vote-h": "vote",
 			'click .image-outer-h' : 'initPhotoPlayer',
-	        "click .follow": "follow",
-			"click .edit": "edit",
-			"click .delete": "delete"
+	        "click .follow-h": "follow",
+			"click .edit-h": "edit",
+			"click .delete-h": "delete"
         },
 
 		initialize : function(options) {
@@ -238,11 +238,13 @@ define(['vendor', 'views', 'utils', 'text!media/templates/image-item.html', 'vot
 		edit: function(e)
 		{
 			e.preventDefault();
+			console.log("edit");
 		},
 
 		'delete': function(e)
 		{
 			e.preventDefault();
+			console.log("delete");
 		}
 
 	});
