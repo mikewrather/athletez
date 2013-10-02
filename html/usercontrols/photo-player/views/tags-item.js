@@ -111,7 +111,7 @@ function (
 
 					extra._label = mpay.subject.label;
 					extra._sublabel = "Coming Soon";
-					extra._link = "/#profile/" + mpay.id;
+					extra._link = "/#profile/" + mpay.subject.id;
 					if(mpay.hasOwnProperty('is_owner')) show_edit = mpay.is_owner;
 					break;
 				case '8':
@@ -120,7 +120,7 @@ function (
 					standard_thumb = mpay.subject.game_picture!==null ? mpay.subject.game_picture.types.standard_thumb : {height:440,width:440,url:"http://lorempixel.com/output/sports-q-g-440-440-3.jpg"};
 					extra._thumbnail = standard_thumb.url;
 					//extra._label = mpay.subject.game_day;
-					extra._link = "/#game/" + mpay.id;
+					extra._link = "/#game/" + mpay.subject.id;
 					var team_str = "", teamLength = mpay.subject.teams.length,
 						ucwords = function(str)
 						{
