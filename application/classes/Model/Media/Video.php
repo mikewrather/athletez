@@ -71,25 +71,34 @@ class Model_Media_Video extends ORM
 
 		// key = the key that will appear in the returned results, val = the name of the function / property to invoke for the value
 		'added_function_calls' => array(
-			'video_type' => 'get_types_and_meta_as_array'
+			'video_type' => 'get_types_and_meta_as_array',
+			'standard_thumb' => 'get_standard_thumb'
 		),
 
 		// array of values only.  Each value is the name of a column to exclude
 		'exclude_columns' => array(),
 	);
-	
-	public function getBasics($settings = array())
-	{
-//		return array(
-//			"id" => $this->id,
-//			"thumbs" => $this->thumbs,
-//			"media_id" => $this->media_id,
-//			"media" => $this->media->getBasics(),
-//			'video_type' => $this->get_types_and_meta_as_array(),
-//			"video_services" => $this->videoservice->getBasics(),
-//		);
 
-		return parent::getBasics($settings);
+
+	public function get_standard_thumb()
+	{
+		if(isset($this->thumb_width) && isset($this->thumb_height))
+		{
+			return array(
+				'url' => $this->thumbs,
+				'width' => $this->thumb_width,
+				'height' => $this->thumb_height
+			);
+		}
+		elseif(isset($this->thumbs))
+		{
+			list($width,$height) = getimagesize($this->thumbs);
+			return array(
+				'url' => $this->thumbs,
+				'width' => $width,
+				'height' => $height
+			);
+		}
 	}
 
 	public static function getVideoCounts($obj){
