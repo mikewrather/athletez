@@ -201,7 +201,7 @@ class Model_Media_Image extends ORM
 		return $this;
 	}
 
-	public function saveCrop($args,$user)
+	public function saveCrop($args,$user,$docrop=true)
 	{
 		
 		$request = Request::factory($args['image_url']);
@@ -219,8 +219,12 @@ class Model_Media_Image extends ORM
 
 		$image = Image::factory($local_path);
 
-		$image->resize($args['image_width'],$args['image_height']);
-		$image->crop($args['crop_width'],$args['crop_height'],$args['crop_x'],$args['crop_y']);
+		if($docrop)
+		{
+			$image->resize($args['image_width'],$args['image_height']);
+			$image->crop($args['crop_width'],$args['crop_height'],$args['crop_x'],$args['crop_y']);
+		}
+
 		$image->save();
 
 		$media_args = array(
@@ -231,7 +235,8 @@ class Model_Media_Image extends ORM
 					'type'=>$image->mime,
 				)
 			),
-			'pre_crop_url' => $args['image_url']
+			'pre_crop_url' => $args['image_url'],
+			'user_id' => $user->id
 		);
 
 		$result = $this->addImage($media_args);
@@ -339,8 +344,15 @@ class Model_Media_Image extends ORM
 			$this_type->mime = $this_img->mime;
 			$this_type->save();
 
-			// Delete the temporary file
-			unlink($local_path);
+			try{
+				// Delete the temporary file
+				unlink($local_path);
+			}
+			catch(ErrorException $e)
+			{
+
+			}
+
 
 			// Unset all variables for use in the next iteration
 			unset($this_img);

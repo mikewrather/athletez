@@ -17,6 +17,9 @@ class Controller_Deps extends Controller
 	{
 	//	$media_item = ORM::factory('User_Base',424490);
 	//	$media_item->delete_with_deps();
+
+		$user = ORM::factory('User_Base',424322);
+		$user->delete_with_deps(true);
 	}
 
 	public function action_orgs()
