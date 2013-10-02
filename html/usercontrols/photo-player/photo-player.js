@@ -43,8 +43,9 @@ define(["require", 'text!usercontrols/photo-player/templates/comments.html',
 			_.bindAll(this);
 			// model box html 
 			if (options.id) this.id = options.id;
-			if (options.index) this.index = options.index;
+			this.index = options.index;
 			if(options.userId) this.userId = options.userId;
+			if(options.array) this.collectionArray = true;
 			if (options._collection) this._collection = options._collection;
 				this.modelHTML = '<div id="modalPopup" class="modal photo-frame-model hide fade model-popup-h">'+
 					'<div class="modal-header">'+
@@ -96,9 +97,14 @@ define(["require", 'text!usercontrols/photo-player/templates/comments.html',
 		
 		// set up photo player main view
 		setUpMainView : function() {
-			var self = this, collectionInstance = Backbone.Collection.extend(), collection = new collectionInstance(); 
+			var self = this; 
 			
-			collection.reset(self._collection);
+			if(self.collectionArray) {
+				var collectionInstance = Backbone.Collection.extend(), collection = new collectionInstance(); 
+				collection.reset(self._collection);
+			} else {
+				collection = self._collection;
+			}
 			
 			var photoPlayerMain = new PhotoPlayerView({
 				model : collection,
@@ -106,6 +112,7 @@ define(["require", 'text!usercontrols/photo-player/templates/comments.html',
 				destination : ".photo-player-area-h",
 				index : self.index
 			});
+			
 			this.scheme.push(photoPlayerMain);
 			this.layout.render();
 		},
@@ -124,14 +131,6 @@ define(["require", 'text!usercontrols/photo-player/templates/comments.html',
 			_self.tags.fetch();
 			//$(".coment-area-h").html();
 			$.when(_self.tags.request).done(function () {
-				/// 
-				
-				console.error(_self.tags.toJSON());
-				
-				//var collection = _self.tags.t
-				
-				
-				console.error(_self.tags);
 				tagView = new TagsSectionView({
 					collection : _self.tags,
 					name : _self.oldTagView,

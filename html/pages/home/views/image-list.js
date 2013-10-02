@@ -38,15 +38,16 @@ define(
 					this.addSubscribers();
 					
 					$(document).off('click','.image-outer-h');
-					$(document).on('click','.image-outer-h', function() {
-						_self.initPhotoPlayer();
+					$(document).on('click','.image-outer-h', function(e) {
+						_self.initPhotoPlayer(e);
 					});
         	
 				},
 				
-				initPhotoPlayer: function() {
+				initPhotoPlayer: function(e) {
 					console.log(this.collection);
-       				routing.trigger('photo-player-init', 1, this.collection);
+       				var index = ($(e.target).parents('li').index());     
+       				routing.trigger('photo-player-init', index, this.collection, this.collection.id);
        			},
 
 				// Child views...

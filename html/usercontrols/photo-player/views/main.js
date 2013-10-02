@@ -27,6 +27,7 @@ define(['require', 'text!usercontrols/photo-player/templates/player.html', 'faca
 			this.index = options.index;
 			SectionView.prototype.initialize.call(this, options);
 			this.setUpMainView();
+			//console.log(this.model.toJSON());
 			this.json = this.model.toJSON();
 			this.render();
 			this.initThumbsSection();
@@ -152,7 +153,6 @@ define(['require', 'text!usercontrols/photo-player/templates/player.html', 'faca
 		//}
 		
 		loadImage: function(trigger) {
-			//console.log(this.json[_self.index]);
 			var _self = this, mpay = this.json[_self.index].payload, extra = {
 				_enttypes_id : mpay.enttypes_id,
 				_id : mpay.id,
