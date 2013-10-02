@@ -19,8 +19,7 @@ define([
         'usercontrol/dropdown/view/dropdown',
         'team/collections/seasonteams',
         'team/collections/complevels'
-        
-        ], 
+        ],
 function(require, headerTemplate, selectSportTemplate) {
 
     var TeamHeaderView,
@@ -128,7 +127,7 @@ function(require, headerTemplate, selectSportTemplate) {
         setOptions: function (options) {
             if (!this.model) {
                 throw new Error("HeaderView expects option with model property.");
-            }            
+            }           
         },
         
         // Child views...

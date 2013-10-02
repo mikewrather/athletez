@@ -85,14 +85,13 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
         
         initTriggers: function() {
         	routing.off('photo-player-init');
-            routing.on('photo-player-init', function(index, collection, userId) {
-            	
-            	console.log(collection);
+            routing.on('photo-player-init', function(index, collection, userId, array) {
             	
             	 var photoPlayer = new PhotoPlayerController({
-                	"index": index,
+                	index: index,
                 	userId: userId,
-                	_collection: collection
+                	_collection: collection,
+                	array: array
                 });
             });
             
@@ -103,6 +102,31 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
                 	//userId: userId,
                 	//_collection: collection
                 });
+            });
+            
+            routing.off('location_popup_open');
+            routing.on('location_popup_open', function(view, location) {
+            	 var modelHTML = '<div id="modalPopup" class="modal photo-frame-model hide fade model-popup-h">'+
+					'<div class="modal-header">'+
+ 					'<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>'+
+					'</div>'+
+					'<div class="modal-body page-content-h">'+
+					'</div></div>';
+					$(".model-popup-h").remove();
+					$('body').append(modelHTML);
+					var viewOb = new view(location);
+					console.log(viewOb);
+					console.log(viewOb.el);
+					$(".modal-body").html(viewOb.$el);
+					$('#modalPopup').modal();
+					
+            });
+            
+            
+            routing.off('popup-close');
+            routing.on('popup-close', function() {
+            	$('#modalPopup').modal('hide');
+            	$(".model-popup-h").remove();
             });
         },
         

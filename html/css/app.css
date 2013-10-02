@@ -987,4 +987,24 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#84a934', end
  }
 .container_add_game .ui-autocomplete li.ui-menu-item{
 	font-size: 14px;
+.score-box a {
+	width: 100%;
+	height: 100%;
+	display: inline-block;
+}
+
+
+/**  Google Map ***/
+
+
+#map-canvas {
+	width: 80%;
+	height: 300px;
+	margin-top: 30px;
+}
+
+
+.link-disabled {
+	opacity: 0.5;
+	pointer-events: none;
 }
