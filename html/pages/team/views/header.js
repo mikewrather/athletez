@@ -127,7 +127,7 @@ function(require, headerTemplate, selectSportTemplate) {
         setOptions: function (options) {
             if (!this.model) {
                 throw new Error("HeaderView expects option with model property.");
-            }            
+            }           
         },
         
         // Child views...

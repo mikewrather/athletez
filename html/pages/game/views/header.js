@@ -10,6 +10,7 @@ define([
         'facade', 
         'views',
         'game/models/score',
+        'game/models/basics',
         'votes/models/vote',
         'votes/models/follow'
         ], 
@@ -19,9 +20,10 @@ function(require, gameHeaderTemplate) {
         facade = require('facade'),
         views = require('views'),
         scoreModel = require('game/models/score'),
-         voteModel = require('votes/models/vote'),
+        basicModel = require('game/models/basics'),
+        voteModel = require('votes/models/vote'),
         followModel = require('votes/models/follow'),
-        SectionView = views.SectionView;
+		SectionView = views.SectionView;
 
 	GameHeaderView = SectionView.extend({
 
@@ -36,11 +38,14 @@ function(require, gameHeaderTemplate) {
 	        "click .follow": "follow",
 	        "click .object-edit-h": "editObject",
 	        "click .object-delete-h": "deleteObject",
+	        "click .game-edit-btn-h" : "gameEditBtn",
+	        "submit .update-date-time-h": "updateDateTime",
+	        "click .cancel-time-edit-h" : "cancelDateTimeBtn"
         	//'keyup .edit-score-input-h': 'resumeEditScore'
         },
         
         initialize: function (options) {
-            SectionView.prototype.initialize.call(this, options);                        
+          SectionView.prototype.initialize.call(this, options);           
         },
         
         editObject: function() {
@@ -51,22 +56,61 @@ function(require, gameHeaderTemplate) {
         	alert("Coming soon");
         },
         
+        gameEditBtn: function() {
+        	this.$el.find('.update-date-time-h').removeClass('hide');
+        },
+        
+        updateDateTime: function(e) {
+        	console.log(this.model);
+        	e.preventDefault();
+        	this.$el.find('.update-date-time-h').addClass('hide');
+        	var _self = this, val = this.$el.find('.date-time-h').val(), basic = new basicModel();
+        	basic.id = this.model.id;
+        	basic.set({'game_datetime': val, 'id1': basic.id});
+        	basic.save();
+        	$.when(basic.request).done(function() {
+        		_self.updateHeaderData(basic.id);
+        	});
+        },
+        
+        // update header data
+        updateHeaderData: function(id) {
+        	var _self = this;
+        	_self.model.id = id;
+        	_self.model.fetch();
+        	$.when(_self.model.request).done(function() {
+        		_self.render();
+        	});
+        },
+        
+        cancelDateTimeBtn: function() {
+        	this.$el.find('.update-date-time-h').addClass('hide');
+        },
+        
         
         afterRender: function() {
+        	
         	this.$el.find('.image-outer-h').mouseover(function() {
 				$(this).find('.action-block').css({
 					opacity : 90
 				});
-			});
-			this.$el.find('.image-outer-h').mouseout(function() {
+			}).mouseout(function() {
 				$(this).find('.action-block').css({
 					opacity : 0
 				});
 			});
+			
+			this.$el.find(".date-time-h").datetimepicker({
+				timeFormat : 'hh:mm:ss',
+				dateFormat : 'yy-mm-dd',
+				showTimezone : true,
+				changeMonth : true,
+				changeYear : true
+			});
         },
         
         vote: function(e) {
-		    e.preventDefault();
+			e.preventDefault();
 		    console.log(this.model);
 		    var voteModelOb = new voteModel();
 			voteModelOb.userId = this.model.id;
@@ -95,14 +139,22 @@ function(require, gameHeaderTemplate) {
         	var score = new scoreModel();
         	score.teams_id = $(e.currentTarget).data("id");
         	score.score = $(e.target).val();
-        	score.set({'teams_id': $(e.target).data("id"), 'score': $(e.target).val()});
+        	score.gameId = this.model.id;
+        	score.set({'id': $(e.target).data("id"), 'teams_id': $(e.target).data("id"), 'score': $(e.target).val()});
         	score.save();
         	this.$el.find(".edit-score-input-h").attr("type", "hidden");
    		    this.$el.find('.edit-score-h').show();
 			$.when(score.request).done(function() {
 	        	
 			});
-        }
+        },
+        
+        // Child views...
+        childViews: {},
+        
+        render: function (domInsertion, dataDecorator, partials) {
+            SectionView.prototype.render.call(this, domInsertion, dataDecorator, partials); 
+        },
     });
 
     return GameHeaderView;
