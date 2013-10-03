@@ -1,11 +1,10 @@
 //Menu View
 
 define(
-		[ 'require', 'text!pages/home/templates/menu.html', 'usercontrol/dropdown/view/dropdown', 'facade', 'views' ],
+		[ 'require', 'text!pages/home/templates/menu.html', 'facade', 'views' ],
 		function(require, menuTemplate) {
 
-			var MenuView, facade = require('facade'), views = require('views'), SectionView = views.SectionView,
-			DropDownView = require('usercontrol/dropdown/view/dropdown');
+			var MenuView, facade = require('facade'), views = require('views'), SectionView = views.SectionView;
 
 			MenuView = SectionView.extend({
 
@@ -152,14 +151,6 @@ define(
 					
 					var data = this.model.toJSON();
 					console.error(data.views);
-					
-					
-					/*var DropDown = new DropDownView({
-						name: "Drop Down",
-						data: this.model,
-						destination: '.demo-select'
-					});
-					this.$el.find(".demo-select").html(DropDown.el);*/
 				}
 
 			});

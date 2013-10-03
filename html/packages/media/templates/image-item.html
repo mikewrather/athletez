@@ -3,12 +3,14 @@
 	<img src="{{_thumbnail}}" alt=""/>
 		<div class="action-section">
 			{{#show_edit}}
-				<div class="action-block left-block edit" subject-type-id="{{_enttypes_id}}" subject-id="{{_id}}"><span>E</span></div>
-				<div class="action-block right-block delete" subject-type-id="{{_enttypes_id}}" subject-id="{{_id}}"><span>D</span></div>
+				<div class="action-block left-block edit edit-h" subject-type-id="{{_enttypes_id}}" subject-id="{{_id}}"><span>E</span></div>
+				<div class="action-block right-block delete delete-h" subject-type-id="{{_enttypes_id}}" subject-id="{{_id}}"><span>D</span></div>
 			{{/show_edit}}
 			{{^show_edit}}
-				<div class="action-block left-block vote" subject-type-id="{{_enttypes_id}}" subject-id="{{_id}}"><span>V</span></div>
-				<div class="action-block right-block follow" subject-type-id="{{_enttypes_id}}" subject-id="{{_id}}"><span>F</span></div>
+				<div class="action-block left-block vote vote-h {{#_has_voted}} link-disabled {{/_has_voted}}" subject-type-id="{{_enttypes_id}}" subject-id="{{_id}}">
+					<span>V</span>
+					</div>
+				<div class="action-block right-block follow follow-h {{#_is_following}} link-disabled {{/_is_following}}" subject-type-id="{{_enttypes_id}}" subject-id="{{_id}}"><span>F</span></div>
 			{{/show_edit}}
 		</div>
 		<div class="detail-view {{#_detailclass}}{{_detailclass}}{{/_detailclass}}">

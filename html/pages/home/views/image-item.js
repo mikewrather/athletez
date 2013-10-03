@@ -7,7 +7,9 @@ define([
         'vendor', 
         'views',
         'utils', 
-        'text!pages/home/templates/image-item.html'
+        'text!pages/home/templates/image-item.html',
+         'votes/models/vote',
+        'votes/models/follow'
         ], 
 function (
         vendor,
@@ -18,20 +20,19 @@ function (
 
     var ImageItemView
       , $ = vendor.$
-      , BaseView = views.BaseView
-      , Mustache = vendor.Mustache;
+      , BaseView = views.BaseView,
+      voteModel = require('votes/models/vote'),
+        followModel = require('votes/models/follow'),
+      Mustache = vendor.Mustache;
 
       ImageItemView = BaseView.extend({
-
         tagName: "li",
-
         className: "image",
-        
         // Event handlers...
         events: {
             "click": "changeImage",
-			"click .vote": "vote",
-	        "click .follow": "follow"
+			"click .left-block vote": "vote",
+	        "click .right-block follow": "follow"
         },
         
         initialize: function (options) {
@@ -104,13 +105,22 @@ function (
 
 	    vote: function(e)
 	    {
-		    e.preventDefault();
+		   e.preventDefault();
 		    console.log(this.model);
+		    var voteModelOb = new voteModel();
+			voteModelOb.userId = this.model.id;
+			voteModelOb.entity_id = this.model.get("payload").enttypes_id;
+			voteModelOb.setData();
+			voteModelOb.save();
 	    },
 
 	    follow: function(e){
-		    e.preventDefault();
+		     e.preventDefault();
 		    console.log(e.target);
+		    var followModelOb = new followModel();
+			followModelOb.userId = this.model.id;
+			followModelOb.entity_id = this.model.get("payload").enttypes_id;
+			followModelOb.save();
 	    },
         
         changeImage: function() {

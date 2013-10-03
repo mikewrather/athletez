@@ -412,6 +412,8 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 	public function rules(){
 		return array
 		(
+
+			/*
 			// email (varchar)
 			'email'=>array(
 				array('not_empty'),
@@ -616,8 +618,8 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 	public function getMedia($obj, $sports_id = null)
 	{
 		if($obj===NULL) $obj = $this;
-		$image = ORM::factory('Media_Base');
-		return $image->getTaggedMedia($obj, $sports_id);
+		$media = ORM::factory('Media_Base');
+		return $media->getTaggedMedia($obj, $sports_id);
 	}
 
 	public function getUploadedImages($sports_id = null)
@@ -1196,6 +1198,7 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 
 		$enttype_id = Ent::getMyEntTypeID($this);
 
+
 		// NUM VOTES
 		if (!isset($orderby) || $orderby == 'votes')
 		{
@@ -1232,6 +1235,11 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 		{
 			$user_model->order_by('users.id', 'desc');
 		}
+		elseif($orderby=='random')
+		{
+			$user_model->order_by(DB::expr('RAND()'));
+		}
+
 
 		if (isset($searchtext))
 		{
@@ -1242,7 +1250,17 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 				->and_where_close();
 		}
 		$user_model->distinct(TRUE);
-		$user_model->limit($limit)->offset($offset);
+
+		if (isset($limit))
+		{
+			$user_model->limit($limit);
+		}
+		else $user_model->limit(12);
+
+		if(isset($offset))
+		{
+			$user_model->offset($offset);
+		}
 
 		$exclude_deleted_users_array['User_Base'] = 'users';
 		$user_model = ORM::_sql_exclude_deleted($exclude_deleted_users_array, $user_model);

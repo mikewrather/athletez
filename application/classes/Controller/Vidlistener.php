@@ -23,6 +23,10 @@ class Controller_VidListener extends Controller
 			foreach($arr->output->thumbnails[0]->images as $img)
 			{
 				$video->thumbs = $img->url;
+				$dimensions = explode('x',$img->dimensions);
+				$video->thumb_height = $dimensions[1];
+				$video->thumb_width = $dimensions[0];
+
 				break;
 			}
 		}

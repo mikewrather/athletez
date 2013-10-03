@@ -231,7 +231,7 @@ define(
 					collections['state'] = new StateList(); 
 					collections['top-rated'] = new ImageList([], {
 						url : '/api/user/search',
-						num : '3'
+						num : '4'
 					});
 					_.each(this.genderTypes, function(name) {
 						collections[name] = new SportList([], {name : name});

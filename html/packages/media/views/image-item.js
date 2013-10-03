@@ -19,11 +19,11 @@ define(['vendor', 'views', 'utils', 'text!media/templates/image-item.html', 'vot
 		// Event handlers...
 		 events: {
             "click": "changeImage",
-			"click .vote": "vote",
+			"click .vote-h": "vote",
 			'click .image-outer-h' : 'initPhotoPlayer',
-	        "click .follow": "follow",
-			"click .edit": "edit",
-			"click .delete": "delete"
+	        "click .follow-h": "follow",
+			"click .edit-h": "edit",
+			"click .delete-h": "delete"
         },
 
 		initialize : function(options) {
@@ -35,7 +35,9 @@ define(['vendor', 'views', 'utils', 'text!media/templates/image-item.html', 'vot
 		render : function() {
 			var _self = this, mpay = this.model.attributes.payload, extra = {
 				_enttypes_id : mpay.enttypes_id,
-				_id : mpay.id
+				_id : mpay.id,
+				_has_voted: mpay.has_voted,
+				_is_following: mpay.is_following
 				},
 				show_edit = false,
 				standard_thumb = null;
@@ -45,7 +47,14 @@ define(['vendor', 'views', 'utils', 'text!media/templates/image-item.html', 'vot
 			{
 				case '23':
 					//videos
-					extra._thumbnail = mpay.thumbs;
+					if(typeof(mpay.standard_thumb)=='object')
+					{
+						standard_thumb = mpay.standard_thumb;
+						extra._thumbnail = standard_thumb.url;
+					}
+					else{
+						extra._thumbnail = mpay.thumbs;
+					}
 
 					extra._label = mpay.media.name;
 					extra._link = "javascript: void(0);";
@@ -238,11 +247,13 @@ define(['vendor', 'views', 'utils', 'text!media/templates/image-item.html', 'vot
 		edit: function(e)
 		{
 			e.preventDefault();
+			console.log("edit");
 		},
 
 		'delete': function(e)
 		{
 			e.preventDefault();
+			console.log("delete");
 		}
 
 	});

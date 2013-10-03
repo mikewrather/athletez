@@ -266,9 +266,9 @@ class Model_Location_Base extends ORM
 
 				//get city
 				$city = ORM::factory('Location_City')
-					->join('counties')->on('location_city.counties_id','=','counties.id')
+					->join('states')->on('location_city.states_id','=','states.id')
 					->where('location_city.name','=',$g_results['city'])
-					->and_where('counties.name','=',$g_results['county'])
+					->and_where('states.name','=',$g_results['state'])
 					->find();
 
 				if($city->loaded()){
