@@ -52,7 +52,8 @@ define(['vendor', 'views', 'utils', 'text!media/templates/image-item.html', 'vot
 						standard_thumb = mpay.standard_thumb;
 						extra._thumbnail = standard_thumb.url;
 					}
-					else{
+					else
+					{
 						extra._thumbnail = mpay.thumbs;
 					}
 

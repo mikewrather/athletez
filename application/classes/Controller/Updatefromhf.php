@@ -19,7 +19,26 @@ class Controller_Updatefromhf extends Controller
 		set_time_limit(0);
 	//	$this->transfer_users();
 	//	$this->transfer_videos_from_queue();
-		$this->update_tags();
+	//	$this->update_tags();
+	}
+
+	public function action_entersmallthumbs()
+	{
+		$videos = ORM::factory('Media_Video')
+			->where('thumbs','IS NOT',null)
+			->find_all();
+
+		foreach($videos as $video)
+		{
+			$url = $video->thumbs;
+			$orig_x = $video->thumb_width;
+			$orig_y = $video->thumb_height;
+
+			$video->small_thumb_height = 220;
+			$video->small_thumb_width = (220/$orig_y) * $orig_x;
+			$video->small_thumbs = str_replace('L_0000.png','t_0000.png',$url);
+			$video->save();
+		}
 	}
 
 	protected function update_tags()
@@ -43,7 +62,6 @@ class Controller_Updatefromhf extends Controller
 					$states_id
 				))->execute();
 		}
-
 	}
 
 	protected function setLocation($subject_type_id,$subject_id)

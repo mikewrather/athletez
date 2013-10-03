@@ -82,6 +82,28 @@ class Model_Media_Video extends ORM
 
 	public function get_standard_thumb()
 	{
+		if(isset($this->small_thumb_width) && isset($this->small_thumb_height))
+		{
+			return array(
+				'url' => $this->small_thumbs,
+				'width' => $this->small_thumb_width,
+				'height' => $this->small_thumb_height
+			);
+		}
+		elseif(isset($this->small_thumbs) && $this->small_thumbs != '')
+		{
+			list($width,$height) = getimagesize($this->thumbs);
+			return array(
+				'url' => $this->small_thumbs,
+				'width' => $width,
+				'height' => $height
+			);
+		}
+		return false;
+	}
+
+	public function get_large_thumb()
+	{
 		if(isset($this->thumb_width) && isset($this->thumb_height))
 		{
 			return array(
@@ -90,7 +112,7 @@ class Model_Media_Video extends ORM
 				'height' => $this->thumb_height
 			);
 		}
-		elseif(isset($this->thumbs))
+		elseif(isset($this->thumbs) && $this->thumbs != '')
 		{
 			list($width,$height) = getimagesize($this->thumbs);
 			return array(
@@ -99,6 +121,7 @@ class Model_Media_Video extends ORM
 				'height' => $height
 			);
 		}
+		return false;
 	}
 
 	public static function getVideoCounts($obj){
