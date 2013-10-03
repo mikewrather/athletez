@@ -183,9 +183,9 @@ define([
         },
         
         setupRosterView: function(id, name) {
-        	var rosterView;
+        	var rosterView, model = facade.Backbone.Collection.extend({});
 			rosterView = new RosterView({
-				model: this.images,
+				model: new model(),
 				team_id: id,
 				team_name: name,
 				name: "roster images" + Math.random(),

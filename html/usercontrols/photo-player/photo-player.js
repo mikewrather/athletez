@@ -148,7 +148,6 @@ define(["require", 'text!usercontrols/photo-player/templates/comments.html',
 			for(var i = 0; i < l; i++) {
 				if(this.scheme[i].name == this.oldView)
 					this.scheme[i].remove();
-				console.error(this.scheme[i].name);
 			}
 			
 			var _self = this, photoPlayer;
