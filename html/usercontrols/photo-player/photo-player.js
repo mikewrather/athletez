@@ -48,9 +48,6 @@ define(["require", 'text!usercontrols/photo-player/templates/comments.html',
 			if(options.array) this.collectionArray = true;
 			if (options._collection) this._collection = options._collection;
 				this.modelHTML = '<div id="modalPopup" class="modal photo-frame-model hide fade model-popup-h">'+
-					'<div class="modal-header">'+
- 					'<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>'+
-					'</div>'+
 					'<div class="modal-body page-content-h">'+
 					'<div class="photo-player-area-h photo-player"></div>'+
 					'<div class="photo-player-right-area"><div class="tags-area-h"></div><div class="comment-area coment-area-h"></div><div class="comment-input-outer-h comment-input-outer" class="clearfix"></div>'+
@@ -144,6 +141,8 @@ define(["require", 'text!usercontrols/photo-player/templates/comments.html',
 		
 		// set up comment view in photo player
 		setUpCommentView: function(entity_id, id) {
+			console.log(this.scheme);
+			console.log(this.oldView)
 			var l = this.scheme.length;
 			for(var i = 0; i < l; i++) {
 				if(this.scheme[i].name == this.oldView)

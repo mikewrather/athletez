@@ -158,24 +158,24 @@ define(['require', 'text!usercontrols/photo-player/templates/player.html', 'faca
 				_id : mpay.id,
 				_currentIndex: _self.index
 			};
-			
+
+			console.log(mpay);
+
+			var image_object;
 			switch(mpay.enttypes_id) {
 				case '23':
 					//videos
+
 					extra._thumbnail = mpay.thumbs;
 					extra._label = mpay.media.name;
 					extra._link = "javascript: void(0);";
-					if(mpay.media.hasOwnProperty('is_owner')) show_edit = mpay.media.is_owner;
 					break;
 				case '21':
 					//images
-					if ( typeof (mpay.types) == 'object' && mpay.types.standard_thumb)
-						extra._thumbnail = mpay.types.large_thumb.url;
+					if ( typeof (mpay.types) == 'object' && mpay.types.large_format)
+						image_object = mpay.types.large_format;
 					extra._label = mpay.media_obj.name;
 					extra._link = "javascript: void(0);";
-
-					if(mpay.media_obj.hasOwnProperty('is_owner')) show_edit = mpay.media_obj.is_owner;
-
 					break;
 				case '1':
 					//users
@@ -216,11 +216,42 @@ define(['require', 'text!usercontrols/photo-player/templates/player.html', 'faca
 					extra._sublabel = team_str;
 					break;
 			}
-			this.$el.find('.large-image-h').attr('src', extra._thumbnail);
+
+			if(image_object != "undefined" && image_object != null)
+			{
+				var totalheight = parseInt(this.$el.height()) * .8,
+					image_height = parseInt(image_object.height) > 380 ? parseInt(image_object.height) : 380;
+
+				console.log(totalheight,image_height,(totalheight-image_height)/2);
+
+				if(image_object.width > image_object.height || image_object.width == image_object.height)
+				{
+					var top = totalheight<image_height ? 10 : (totalheight-image_height)/2;
+					this.$el.find('img').css({
+						'max-width':'100%',
+						'top':top + 'px'
+					});
+				}
+				else
+				{
+					this.$el.find('img').css({
+						'max-height':'100%',
+						'top':'0px'
+
+					});
+				}
+
+
+				this.$el.find('.large-image-h').attr('src', image_object.url);
+
+			}
+			
+
 			
 			this.$el.find('.thumb-image-list-h li').removeClass('selected-photo-thumb');
 			this.$el.find('.thumb-link-h[data-index='+this.index+']').parents('li').addClass('selected-photo-thumb');
 
+			console.log(extra);
 			routing.trigger('photo-player-section-reload', extra._enttypes_id, extra._id);
 		},
 
