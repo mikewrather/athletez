@@ -10,7 +10,11 @@ define(["facade", "sportorg/models/team"], function(facade, SportsOrgModel) {
 	Model = SportsOrgModel.extend({
 		url : function() {
 			
-			return '/api/team/game/' + this.teams_id + '?games_id=' + this.games_id;
+			var param = '';
+			if(this.games_id)
+			param += '?games_id=' + this.games_id;
+			
+			return '/api/team/game/' + this.teams_id + param;
 		},
 		// /*Override function from sportorg/models/complevel as per the requirement*/
 		// fetchSuccess : function(model, response) {

@@ -187,7 +187,7 @@
 
 			if(trim($this->request->query('orderby')) != "")
 			{
-				$legal_orderby = array('votes', 'followers', 'postTime');
+				$legal_orderby = array('votes', 'followers', 'postTime','random');
 				$arguments["orderby"] = trim($this->request->query('orderby'));
 				if (!in_array($arguments["orderby"], $legal_orderby)){
 					$error_array = array(

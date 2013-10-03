@@ -4,10 +4,13 @@
  // Requires `define`, `require`
  // Returns {Add Game VIEW} constructor
  */
-define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 'views', 'utils', 'vendor', 'user/models/basic_info', 'sportorg/collections/sports_users', 'location/collections/states', 'usercontrols/addgame/collections/teams', 'location/collections/cities', 'usercontrols/addgame/collections/teams_user', 'usercontrols/addgame/collections/teams', 'usercontrols/addgame/collections/games_search', 'usercontrols/addgame/models/team', 'usercontrols/addgame/models/team_add', 'usercontrols/addgame/models/game'], function(require, layoutTemplate) {
+define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 'views', 'utils', 'vendor', 'user/models/basic_info', 'sportorg/collections/sports_users', 'location/collections/states', 'usercontrols/addgame/collections/teams', 'location/collections/cities', 'usercontrols/addgame/collections/teams_user', 'usercontrols/addgame/collections/teams', 'usercontrols/addgame/collections/games_search', 'usercontrols/addgame/models/team', 'usercontrols/addgame/models/team_add', 'usercontrols/addgame/models/game', 'usercontrols/addgame/models/uslgamelink'], function(require, layoutTemplate) {
 
 	var self, facade = require('facade'), views = require('views'), SectionView = views.SectionView, utils = require('utils'), Channel = utils.lib.Channel, vendor = require('vendor'), Mustache = vendor.Mustache, $ = facade.$, BasicModel = require('usercontrols/tag/models/basic_info'), SportsCollection = require('sportorg/collections/sports_users'), StatesCollection = require('location/collections/states'), CityCollection = require('location/collections/cities'), UserTeamsCollection = require('usercontrols/addgame/collections/teams_user'), TeamsCollection = require('usercontrols/addgame/collections/teams'), TeamModel = require('usercontrols/addgame/models/team'), TeamAddModel = require('usercontrols/addgame/models/team_add'), GameModel = require('usercontrols/addgame/models/game'), GamesSearchCollection = require('usercontrols/addgame/collections/games_search'),
+	
 	//Models
+	UserGameLinkModel = require('usercontrols/addgame/models/uslgamelink'),
+	
 	AddGameView = SectionView.extend({
 
 		template : layoutTemplate,
@@ -31,10 +34,12 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 			'blur .txt-individual-game_h' : 'changeindividualGame',
 			'change .ddl-game-userteams_h' : 'changeUserTeam',
 			'click .btn-new-team-game_h' : 'showAddTeam',
+			'click .btn-ddl-team-game_h' : 'showDdlTeam',
 			'click .rdo-game-location_h' : 'showLocation',
 			'click .btn-game-Finish_h' : 'finishGame',
 			'blur .txt-game-date_h' : 'CheckTeamControlsVisibility',
-			"click .btn-game-individual-Create_h"	: 'createIndividualEvent'
+			"click .btn-game-individual-Create_h" : 'createIndividualEvent',
+			"click .btn-game-individual-Finish_h" : 'goThereIndividualGame'
 		},
 
 		/*Holds */
@@ -50,6 +55,7 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 			sectionTeams : ".section-game-teams_h",
 			ddlUserTeams : ".ddl-game-userteams_h",
 			btnNewTeam : ".btn-new-team-game_h",
+			btnDdlTem : ".btn-ddl-team-game_h",
 			sectionNewTeam : ".section-new-team_h",
 			txtState : ".txt-game-state_h",
 			txtCity : ".txt-game-city_h",
@@ -75,7 +81,7 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 			txtIndividualLocation : ".txt-individual-location_h",
 			btnIndividualGameCreate : ".btn-game-individual-Create_h",
 			// LABELS
-			fieldMessage : '.field-message',
+			fieldMessage : '.field-message_h',
 			secSports : ".section-game-sports_h"
 			//fieldError : '.field-error'
 		},
@@ -96,15 +102,20 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 		/*Messages Holds the messages, warning, alerts, errors, information variables*/
 		/*In Case of similar message create only one object and key*/
 		messages : {
-			dataNotExist : "Data Does Not Exist . ",
-			selectDateAndTime : "Select Date And Time",
-			selectTeam : "Select Team",
-			selectScore : "Enter Score",
-			selectLocation : "select location",
-			selectLocationType : "select location type",
+			dataNotExist : "Data does not exist . ",
+			selectDateAndTime : "Please select date and time",
+			selectTeam : "Please select team",
+			selectScore : "Please enter score",
+			selectLocation : "Please select location",
+			selectLocationType : "Please select location type",
 			gameFound : "Sweet ! This Event Already Exists ! ",
-			enterEventName : "Enter event name",
-			selectSport : "Select Sport"
+			enterEventName : "Please enter event name",
+			selectSport : "Please select sport"
+		},
+		/*tags to be used to tag the type of game in games data*/
+		tags : {
+			individual : "individual",
+			team : "team"
 		},
 
 		/*initialize gets called by default when constructor is initialized*/
@@ -112,9 +123,7 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 			SectionView.prototype.initialize.call(this, options);
 			self = this;
 			self.setOptions(options);
-
 			this.init();
-
 		},
 
 		/*render displays the view in browser*/
@@ -279,6 +288,15 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 			$(e.target).parents(self.controls.sectionTeams).find(self.controls.ddlUserTeams).val("").hide();
 			$(e.target).parents(self.controls.sectionTeams).find(self.controls.txtTeam).show();
 			$(e.target).parents(self.controls.sectionTeams).find("input").removeAttr(self.attributes.teamId);
+			$(e.target).parents(self.controls.sectionTeams).find("input:checked").removeAttr("checked");
+			self.showLocation();
+		},
+		showDdlTeam : function(e) {
+			//Show Link and DROPDOWN
+			$(e.target).hide();
+			$(e.target).parents(self.controls.sectionTeams).find(self.controls.txtTeam).val("").hide();
+			$(e.target).parents(self.controls.sectionTeams).find("input").removeAttr(self.attributes.teamId);
+			$(e.target).parents(self.controls.sectionTeams).find(self.controls.ddlUserTeams).val("").show();			
 			$(e.target).parents(self.controls.sectionTeams).find("input:checked").removeAttr("checked");
 			self.showLocation();
 		},
@@ -586,8 +604,9 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 					}
 					self.individualGames.forEach(function(value, index) {
 						//	var name = value['game_name'] + "( " + +" )";
-						var name = value['event_name']  + value['game_name']; 
+						var name = value['event_name'] + " " + value['game_name']; 
 						arr.push(name);
+					//	arr.push({label:name,value:value['id']});
 					});
 
 					// Destroy existing autocomplete from text box before attaching it again
@@ -599,7 +618,13 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 
 					//console.log("s.arr", arr);
 					$(e.target).autocomplete({
-						source : arr
+						source : arr,
+						// select :  function (event, ui) {
+							// self.$(e.target).val(ui.item.label);
+							// //self.changeIndividualGame(event,ui);
+					          // // display the selected text
+					        // // $("#txtAllowSearchID").val(ui.item.value); // save selected id to hidden input
+					    // }
 					});
 					//Trigger keydown to display the autocomplete dropdown just created
 					$(e.target).trigger('keydown');
@@ -615,13 +640,16 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 		},
 
 		/*Change school_id as per the selected record from auto complete for state created in keyupSchool*/
-		changeIndividualGame : function(e) {
+		changeIndividualGame : function(e,ui) {			
 			var name = $(e.target).val();
 			var isGameValid = false;
 			self.individual_game_id = 0;
+			//if(ui && ui.item != null && ui.item.value){
+//			self.individual_game_id = ui.item.value;			
+	//		isGameValid = true;
 			if (self.individualGames) {
 				self.individualGames.forEach(function(value, index) {
-					var gamename = value['event_name']  + value['game_name'];
+					var gamename = value['event_name']+ " "  + value['game_name'];
 					if (gamename == name) {
 						isGameValid = true;
 						self.individual_game_id = value['id'];
@@ -630,6 +658,7 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 					}
 				});
 			}
+		//	}
 			if (!isGameValid) {
 				// Hide all other controls
 				self.eventNotFound(e);
@@ -649,7 +678,6 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 			$(self.destination).find(self.controls.txtIndividualLocation).show();
 			$(self.destination).find(self.controls.btnIndividualGameCreate).show();
 			$(self.destination).find(self.controls.btnIndividualFinish).hide();
-
 			$(e.target).parent().find(self.controls.fieldMessage).html('').stop().fadeOut();
 			$(e.target).removeAttr(self.attributes.gameId);
 		},
@@ -657,7 +685,6 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 			$(self.destination).find(self.controls.txtIndividualLocation).hide();
 			$(self.destination).find(self.controls.btnIndividualGameCreate).hide();
 			$(self.destination).find(self.controls.btnIndividualFinish).show();
-
 			$(e.target).parent().find(self.controls.fieldMessage).html(self.messages.gameFound).fadeIn();
 		},
 		createIndividualEvent : function(e) {
@@ -718,6 +745,36 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 			} else {
 				$(e.target).parent().find(self.controls.fieldMessage).html(message).fadeIn();
 			}
+		},
+		
+		goThereIndividualGame : function(e){
+			
+			var sportsId = $(self.destination).find(self.controls.ddlSports).val();
+			var payload = {
+				users_id : 	self.user_id,
+				sports_id : sportsId,
+				games_id : self.individual_game_id				
+			}
+				var model = new UserGameLinkModel(payload);
+				model.save();
+				
+			$.when(model.request).done(function(response) {
+				console.log("response",response)
+			});
+		},
+		goThereSuccess : function(response){
+			console.log("/*****************************************************/");
+			console.log("responsse",response);
+			var payload = response.payload;
+			self.gameData = {
+						type : self.tags.individual,
+							game_datetime : payload.gameDay,
+							event_name : payload.event_name,
+							game_location : payload.game_location,
+							games_id : payload.games_id,							
+							sports_id : payload.usl ? payload.usl.sports_id : null
+					};
+			Channel(self.channel).publish(self.gameData);
 		},
 
 		/**********Create Event Ends Here*****************/
@@ -806,18 +863,15 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 
 			}
 			if (teamId) {
-
 				var teamModel = new TeamModel();
 				teamModel.id = teamId;
 				teamModel.fetchSuccess = function(model, response) {
 					var data = teamModel.parseAsRequired(response);
 					self.setLocation(data);
-
 				};
 				teamModel.fetch();
-
 			} else {
-				$(self.destination).find(self.controls.txtLocationId).html('').fadeIn();
+				$(self.destination).find(self.controls.txtLocationId).val('').fadeIn();
 				self.clearLocation();
 			}
 		},
@@ -863,11 +917,7 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 				$(self.destination).find(self.controls.sectionMainLocation).find(self.controls.fieldMessage).html(self.messages.selectLocation).fadeIn();
 				isDataValid = false;
 			}
-
-			//console.log(teamOneId);
-			//console.log(teamTwoId);
-			//console.log(scoreOne);
-			//console.log(scoreTwo);
+			
 			if (!(teamOneId > 0 )) {
 				$(self.destination).find(self.controls.sectionTeamOne).find(self.controls.fieldMessage).html(self.messages.selectTeam).fadeIn();
 				isDataValid = false;
@@ -912,10 +962,8 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 					////console.log(response);
 					if (response != null && response.payload != null) {
 						self.game_id = response.payload.id;
-
 						var isHome = $(self.destination).find(self.controls.rdoTeamOne).is(':checked');
 
-						//console.log("home",isHome);
 						var payloadOne = {
 							game_datetime : date,
 							games_id : self.game_id,
@@ -946,6 +994,7 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 						addTeamModelTwo.save();
 
 						self.gameData = {
+							type : self.tags.team,
 							game_datetime : date,
 							games_id : self.game_id,
 							team_id_one : teamOneId,

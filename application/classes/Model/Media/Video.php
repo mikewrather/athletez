@@ -71,25 +71,57 @@ class Model_Media_Video extends ORM
 
 		// key = the key that will appear in the returned results, val = the name of the function / property to invoke for the value
 		'added_function_calls' => array(
-			'video_type' => 'get_types_and_meta_as_array'
+			'video_type' => 'get_types_and_meta_as_array',
+			'standard_thumb' => 'get_standard_thumb'
 		),
 
 		// array of values only.  Each value is the name of a column to exclude
 		'exclude_columns' => array(),
 	);
-	
-	public function getBasics($settings = array())
-	{
-//		return array(
-//			"id" => $this->id,
-//			"thumbs" => $this->thumbs,
-//			"media_id" => $this->media_id,
-//			"media" => $this->media->getBasics(),
-//			'video_type' => $this->get_types_and_meta_as_array(),
-//			"video_services" => $this->videoservice->getBasics(),
-//		);
 
-		return parent::getBasics($settings);
+
+	public function get_standard_thumb()
+	{
+		if(isset($this->small_thumb_width) && isset($this->small_thumb_height))
+		{
+			return array(
+				'url' => $this->small_thumbs,
+				'width' => $this->small_thumb_width,
+				'height' => $this->small_thumb_height
+			);
+		}
+		elseif(isset($this->small_thumbs) && $this->small_thumbs != '')
+		{
+			list($width,$height) = getimagesize($this->thumbs);
+			return array(
+				'url' => $this->small_thumbs,
+				'width' => $width,
+				'height' => $height
+			);
+		}
+		return false;
+	}
+
+	public function get_large_thumb()
+	{
+		if(isset($this->thumb_width) && isset($this->thumb_height))
+		{
+			return array(
+				'url' => $this->thumbs,
+				'width' => $this->thumb_width,
+				'height' => $this->thumb_height
+			);
+		}
+		elseif(isset($this->thumbs) && $this->thumbs != '')
+		{
+			list($width,$height) = getimagesize($this->thumbs);
+			return array(
+				'url' => $this->thumbs,
+				'width' => $width,
+				'height' => $height
+			);
+		}
+		return false;
 	}
 
 	public static function getVideoCounts($obj){
@@ -364,10 +396,12 @@ class Model_Media_Video extends ORM
 		// UserID is used to generate the url for the image
 		$user = Auth::instance()->get_user();
 
+		$zc_config = Kohana::$config->load('zencoder');
+
 		$randID = md5(time() + rand(1, 1000));
-		$baseOutURL = "s3://highlightvids/post/" . $user->id . "/" . $randID . "/";
-		$zencoder = new Services_Zencoder('492b54895636addb1f3411d55ab7ea03');
-		$notificationURL = "http://athletesup.com/vidlistener";
+		$baseOutURL = $zc_config->get('base_out') . $user->id . "/" . $randID . "/";
+		$zencoder = new Services_Zencoder($zc_config->get('api_key'));
+		$notificationURL = $zc_config->get('notification_url');
 
 		// The zencoder command for each video to encode is kept in the
 		// video types table.  So we use that table to construct the
@@ -484,7 +518,7 @@ class Model_Media_Video extends ORM
 		$enttypes_id = Ent::getMyEntTypeID($class_name);
 		extract($condition);
 
-		$video_types = DB::select(DB::expr('COUNT(id)'))->from('video_type_link')->where('videos_id','=','videos.id');
+		$video_types = DB::select(DB::expr('COUNT(id)'))->from('video_type_link')->where('videos_id','=',DB::expr("`videos`.`id`"));
 
 		$video = DB::select('videos.id', 'media.sports_id')
 			->from('tags')
@@ -613,6 +647,7 @@ class Model_Media_Video extends ORM
 			->union($team_video, false)
 			->union($org_video, false)
 			->union($game_video, false)->execute()->as_array();
+
 		if (empty($results)){
 			$video_ids[] = -1; //avoid sql error
 		}
@@ -645,6 +680,12 @@ class Model_Media_Video extends ORM
 			$videoModel->join('media' ,'left')->on('media_video.media_id', '=', 'media.id');
 			$videoModel->order_by('media.timePosted', 'desc');
 		}
+		elseif($orderby=='random')
+		{
+			$videoModel->order_by(DB::expr('RAND()'));
+		}
+
+
 		if (isset($limit))
 		{
 			$videoModel->limit($limit);

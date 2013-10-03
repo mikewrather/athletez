@@ -47,7 +47,15 @@ define(['vendor', 'views', 'utils', 'text!media/templates/image-item.html', 'vot
 			{
 				case '23':
 					//videos
-					extra._thumbnail = mpay.thumbs;
+					if(typeof(mpay.standard_thumb)=='object')
+					{
+						standard_thumb = mpay.standard_thumb;
+						extra._thumbnail = standard_thumb.url;
+					}
+					else
+					{
+						extra._thumbnail = mpay.thumbs;
+					}
 
 					extra._label = mpay.media.name;
 					extra._link = "javascript: void(0);";
