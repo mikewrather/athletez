@@ -34,11 +34,11 @@ define( ["models/base"], function (BaseModel) {
 	            //"link": "#videoprev",
                 "link" : "javascript:void(0);",
 	            "id": "addVideo"
-            }, {
+            }/*, {
                 "label": "Game",
 	            "link" : "javascript: void(0);",
 	            "id": "addGame"
-                            }
+                            }*/
             ],
 	        "userid" : null
             
