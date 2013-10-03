@@ -968,7 +968,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#84a934', end
    }
 .container_add_game .field-message{
 	color:#77011C;
-	font-size: :8px;
+	font-size: 8px;
 	font-style: italic;
 	font-weight: normal;
 	background-color: none;	
@@ -985,8 +985,9 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#84a934', end
  	 padding: 0 2px !important;
  	
  }
-.container_add_game .ui-autocomplete li.ui-menu-item{
+.container_add_game .ui-autocomplete li.ui-menu-item {
 	font-size: 14px;
+}
 .score-box a {
 	width: 100%;
 	height: 100%;

@@ -246,7 +246,7 @@ define(['vendor', 'views', 'utils', 'text!media/templates/image-item.html', 'vot
 		    console.log(this.model);
 		   e.stopPropagation();
 		    var voteModelOb = new voteModel();
-			voteModelOb.userId = this.model.id;
+			voteModelOb.userId = this.model.get("payload").id;
 			voteModelOb.entity_id = this.model.get("payload").enttypes_id;
 			voteModelOb.setData();
 			voteModelOb.save();
@@ -260,7 +260,7 @@ define(['vendor', 'views', 'utils', 'text!media/templates/image-item.html', 'vot
 		    console.log(e.target);
 		    e.stopPropagation();
 		    var followModelOb = new followModel();
-			followModelOb.userId = this.model.id;
+			followModelOb.userId = this.model.get("payload").id;
 			followModelOb.entity_id = this.model.get("payload").enttypes_id;
 			followModelOb.save();
 			$.when(followModelOb.request).done(function() {
