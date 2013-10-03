@@ -46,6 +46,13 @@
     overflow-y: auto;
 }
 
+.photo-player-right-area .right-area-header{
+    height:40px;
+    background-color: #989899;
+    width:100%;
+    margin-bottom:20px;
+}
+
 .comment-area, .photo-frame-model #comment_div {
     /*width: 90%;
     float: right;*/
