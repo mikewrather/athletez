@@ -242,6 +242,8 @@ pages/registration/collections/fbimages.js
 text!registration/templates/fbimage-item.html
 pages/registration/views/fbimage-item.js
 text!media/templates/image-item.html
+packages/vote/models/vote.js
+packages/vote/models/follow.js
 packages/media/views/image-item.js
 text!media/templates/image-board.html
 packages/media/views/image-board.js
@@ -263,7 +265,6 @@ pages/registration/views/upload_image.js
 text!registration/templates/select_org.html
 pages/registration/models/my_club.js
 text!registration/templates/find_my_club.html
-vendor/plugins/jquery-ui-1.10.2.custom.min.js
 packages/location/models/state.js
 packages/location/collections/states.js
 pages/registration/collections/states.js
@@ -344,6 +345,8 @@ pages/registration/collections/fbimages.js
 text!registration/templates/fbimage-item.html
 pages/registration/views/fbimage-item.js
 text!media/templates/image-item.html
+packages/vote/models/vote.js
+packages/vote/models/follow.js
 packages/media/views/image-item.js
 text!media/templates/image-board.html
 packages/media/views/image-board.js
@@ -365,7 +368,6 @@ pages/registration/views/upload_image.js
 text!registration/templates/select_org.html
 pages/registration/models/my_club.js
 text!registration/templates/find_my_club.html
-vendor/plugins/jquery-ui-1.10.2.custom.min.js
 packages/location/models/state.js
 packages/location/collections/states.js
 pages/registration/collections/states.js
@@ -407,8 +409,6 @@ packages/sport/collections/sports.js
 pages/home/models/image.js
 pages/home/collections/image.js
 text!pages/home/templates/menu.html
-text!usercontrol/dropdown/template/layout.html
-usercontrols//dropdown/view/dropdown.js
 pages/home/views/menu.js
 pages/home/views/image-list.js
 text!packages/location/templates/state-item.html
@@ -433,8 +433,6 @@ pages/videopreview/views/preview.js
 pages/videopreview.js
 text!game/templates/layout.html
 text!votes/templates/vote.html
-packages/vote/models/vote.js
-packages/vote/models/follow.js
 packages/vote/views/vote.js
 packages/sportorg/models/game.js
 pages/game/models/basics.js
@@ -451,6 +449,10 @@ packages/site/collections/comments.js
 pages/game/collections/comments.js
 pages/game/collections/commentson.js
 text!game/templates/header.html
+pages/game/models/score.js
+text!usercontrols/location/templates/layout.html
+usercontrols/location/models/verify-adress.js
+usercontrols/location/views/location.js
 pages/game/views/header.js
 text!media/templates/add-media.html
 packages/sportorg/models/team.js
@@ -528,6 +530,8 @@ pages/team/views/complevel-item.js
 pages/team/views/complevel-list.js
 pages/team/views/sport-item.js
 pages/team/views/sport-list.js
+text!usercontrol/dropdown/template/layout.html
+usercontrols//dropdown/view/dropdown.js
 pages/team/views/header.js
 pages/profile/models/addmedia.js
 pages/team/views/add-media.js
@@ -668,6 +672,7 @@ usercontrols/addgame/collections/games_search.js
 usercontrols/addgame/models/team.js
 usercontrols/addgame/models/team_add.js
 usercontrols/addgame/models/game.js
+usercontrols/addgame/models/uslgamelink.js
 usercontrols/addgame/views/main.js
 usercontrols/addgame/addgame.js
 login/model.js
@@ -749,7 +754,6 @@ pages/game.js
 vendor/plugins/text.js
 text!game/templates/layout.html
 text!votes/templates/vote.html
-vendor/plugins/jquery-ui-1.10.2.custom.min.js
 controller.js
 packages/vote/models/vote.js
 packages/vote/models/follow.js
@@ -771,6 +775,10 @@ packages/site/collections/comments.js
 pages/game/collections/comments.js
 pages/game/collections/commentson.js
 text!game/templates/header.html
+pages/game/models/score.js
+text!usercontrols/location/templates/layout.html
+usercontrols/location/models/verify-adress.js
+usercontrols/location/views/location.js
 pages/game/views/header.js
 text!media/templates/add-media.html
 packages/sportorg/models/team.js
@@ -821,7 +829,6 @@ pages/team.js
 vendor/plugins/text.js
 text!team/templates/layout.html
 text!votes/templates/vote.html
-vendor/plugins/jquery-ui-1.10.2.custom.min.js
 controller.js
 packages/vote/models/vote.js
 packages/vote/models/follow.js
@@ -956,6 +963,8 @@ pages/registration/collections/fbimages.js
 text!registration/templates/fbimage-item.html
 pages/registration/views/fbimage-item.js
 text!media/templates/image-item.html
+packages/vote/models/vote.js
+packages/vote/models/follow.js
 packages/media/views/image-item.js
 text!media/templates/image-board.html
 packages/media/views/image-board.js
@@ -977,7 +986,6 @@ pages/registration/views/upload_image.js
 text!registration/templates/select_org.html
 pages/registration/models/my_club.js
 text!registration/templates/find_my_club.html
-vendor/plugins/jquery-ui-1.10.2.custom.min.js
 packages/location/models/state.js
 packages/location/collections/states.js
 pages/registration/collections/states.js
@@ -1017,6 +1025,8 @@ pages/registration/collections/fbimages.js
 text!registration/templates/fbimage-item.html
 pages/registration/views/fbimage-item.js
 text!media/templates/image-item.html
+packages/vote/models/vote.js
+packages/vote/models/follow.js
 packages/media/views/image-item.js
 text!media/templates/image-board.html
 packages/media/views/image-board.js
@@ -1038,7 +1048,6 @@ pages/registration/views/upload_image.js
 text!registration/templates/select_org.html
 pages/registration/models/my_club.js
 text!registration/templates/find_my_club.html
-vendor/plugins/jquery-ui-1.10.2.custom.min.js
 packages/location/models/state.js
 packages/location/collections/states.js
 pages/registration/collections/states.js
@@ -1073,10 +1082,10 @@ pages/home/collections/image.js
 packages/location/models/state.js
 packages/location/collections/states.js
 text!pages/home/templates/menu.html
-text!usercontrol/dropdown/template/layout.html
-usercontrols//dropdown/view/dropdown.js
 pages/home/views/menu.js
 text!media/templates/image-item.html
+packages/vote/models/vote.js
+packages/vote/models/follow.js
 packages/media/views/image-item.js
 pages/home/views/image-list.js
 text!packages/location/templates/state-item.html
@@ -1085,7 +1094,6 @@ packages/location/views/state-list.js
 pages/home/views/state-list.js
 text!sport/templates/sport-item.html
 packages/sport/views/sport-item.js
-vendor/plugins/jquery-ui-1.10.2.custom.min.js
 vendor/plugins/jquery.slimscroll.min.js
 packages/sport/views/sport-list.js
 text!location/templates/city.html

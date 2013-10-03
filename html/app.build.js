@@ -90,6 +90,31 @@
 		'application': 'application'
 
 	},
+	shim: {
+		'underscore': {
+			exports: '_'
+		},
+		'backbone': {
+			deps: ['underscore', 'jquery', 'json2', 'html5', 'jqueryui', 'custom','jquerytimepicker'],
+			exports: 'Backbone'
+		},
+		'bootstrap': {
+			deps: ['jquery']
+		},
+		'plupload': {
+			deps: ['jquery']
+		},
+		'jqueryui' : {
+			deps : ['jquery']
+		},
+		'jquerytimepicker' : {
+			deps : ['jquery','jqueryui'],
+
+		}
+
+	},
+	priority: ['text', 'modernizr', 'json2', 'vendor', 'utils', 'facade', 'syncs', 'models', 'views', 'collections', 'controller'],
+	jquery: '1.9.0',
 	modules: [
 		// Common libraries, Utilities, Syncs, Models, Views, Collections
 		{
