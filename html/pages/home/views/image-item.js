@@ -30,9 +30,11 @@ function (
         className: "image",
         // Event handlers...
         events: {
-            "click": "changeImage",
-			"click .left-block vote": "vote",
-	        "click .right-block follow": "follow"
+            //"click": "changeImage",
+			// "click .vote-h": "vote",
+	        // "click .follow-h": "follow",
+	        // "click .edit-h": "edit",
+	        // "click .delete-h": "delete"
         },
         
         initialize: function (options) {
@@ -42,7 +44,7 @@ function (
         render: function ()
         {
 
-	        var mpay = this.model.attributes.payload,
+	        var _self = this, mpay = this.model.attributes.payload,
 		        extra = {
 			        _enttypes_id : mpay.enttypes_id,
 	                _id : mpay.id
@@ -99,7 +101,24 @@ function (
 		        $(this).find('.detail-view').css({'bottom': '0px'});
 		        $(this).find('.action-block.vote, .action-block.follow').css({opacity:90});
 	        });
-
+	        
+	        
+	        this.$el.find('.vote-h').click(function() {
+	        	_self.vote();
+	        });
+	        
+	        this.$el.find('.follow-h').click(function() {
+	        	_self.follow();
+	        });
+	        
+	        this.$el.find('.edit-h').click(function() {
+	        	_self.edit();
+	        });
+	        
+	        this.$el.find('.delete-h').click(function() {
+	        	_self['delete']();
+	        });
+	        
             return this;
         },
 
@@ -126,7 +145,21 @@ function (
         changeImage: function() {
 
             Channel('changeimage' + this.model.collection.id).publish(this.model);
-        }        
+        },
+        edit: function(e)
+		{
+			alert("edit");
+			e.preventDefault();
+			console.log("edit");
+		},
+
+		'delete': function(e)
+		{
+				alert("delete");
+			e.preventDefault();
+			console.log("delete");
+		}
+               
         
       });
 

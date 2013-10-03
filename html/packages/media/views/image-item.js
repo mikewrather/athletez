@@ -18,9 +18,9 @@ define(['vendor', 'views', 'utils', 'text!media/templates/image-item.html', 'vot
 
 		// Event handlers...
 		 events: {
-            "click": "changeImage",
+            //"click": "changeImage",
 			"click .vote-h": "vote",
-			'click .image-outer-h' : 'initPhotoPlayer',
+			//'click .image-outer-h' : 'initPhotoPlayer',
 	        "click .follow-h": "follow",
 			"click .edit-h": "edit",
 			"click .delete-h": "delete"
@@ -204,6 +204,22 @@ define(['vendor', 'views', 'utils', 'text!media/templates/image-item.html', 'vot
 					opacity : 90
 				});
 			});
+			
+			  this.$el.find('.vote-h').click(function(e) {
+	        	_self.vote(e);
+	        });
+	        
+	        this.$el.find('.follow-h').click(function(e) {
+	        	_self.follow(e);
+	        });
+	        
+	        this.$el.find('.edit-h').click(function(e) {
+	        	_self.edit(e);
+	        });
+	        
+	        this.$el.find('.delete-h').click(function(e) {
+	        	_self['delete'](e);
+	        });
 			return this;
 
 			//console.log("Called Image Render",this.model);
@@ -220,31 +236,64 @@ define(['vendor', 'views', 'utils', 'text!media/templates/image-item.html', 'vot
 	    {
 		    e.preventDefault();
 		    console.log(this.model);
-		   
+		   e.stopPropagation();
 		    var voteModelOb = new voteModel();
 			voteModelOb.userId = this.model.id;
 			voteModelOb.entity_id = this.model.get("payload").enttypes_id;
 			voteModelOb.setData();
 			voteModelOb.save();
+			$.when(voteModelOb.request).done(function() {
+				$(e.currentTarget).addClass('link-disabled');
+			});
 	    },
 
 	    follow: function(e){
 		   e.preventDefault();
 		    console.log(e.target);
+		    e.stopPropagation();
 		    var followModelOb = new followModel();
 			followModelOb.userId = this.model.id;
 			followModelOb.entity_id = this.model.get("payload").enttypes_id;
 			followModelOb.save();
+			$.when(followModelOb.request).done(function() {
+				$(e.currentTarget).addClass('link-disabled');
+			});
 	    },
 
 		edit: function(e)
 		{
+			e.stopPropagation();
 			e.preventDefault();
-			console.log("edit");
+			
+			var _self = this, mpay = this.model.get("payload");
+			switch(mpay.enttypes_id)
+			{
+				case '23':
+					//videos
+					extra._link = "javascript: void(0);";
+					break;
+				case '21':
+					//images
+					extra._link = "javascript: void(0);";
+					break;
+				case '1':
+					//users
+					window.location.hash = "profile/" + mpay.id;
+					break;
+				case '8':
+					//games
+					window.location.hash = "game/" + mpay.id;
+					break;
+
+			}
+			
+			
+			console.log(this.model);
 		},
 
 		'delete': function(e)
 		{
+			e.stopPropagation();
 			e.preventDefault();
 			console.log("delete");
 		}
