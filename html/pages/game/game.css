@@ -107,7 +107,6 @@ li.team-item div.org-info{
 }
 
 
-
 .org-info span{
     display:block;
     padding-left: 80px;
@@ -116,7 +115,7 @@ li.team-item div.org-info{
 }
 
 .org-info span.org-name{
-    font-size: 2.3em;
+    font-size: 1.5em;
     font-weight: bolder;
 
 }

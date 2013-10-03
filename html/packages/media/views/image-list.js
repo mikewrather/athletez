@@ -52,15 +52,12 @@ function(facade,  views,   utils,   ImageItemView,            ImageBoardView,   
         	else
         		this.name = "image list";
         	
-        	
         	if(options.collecton)
         		this.collection = options.collection;
         		
 			// render template
 			this.renderTemplate();
 	        //console.log(options);
-	       
-	      
 	       
 	        var _self = this;
 			 _self.allData = this.collection.toArray();

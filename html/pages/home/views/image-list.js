@@ -48,6 +48,7 @@ define(
 				},
 				
 				initPhotoPlayer: function(e) {
+					e.preventDefault();
 					console.log(this.collection);
        				var index = ($(e.target).parents('li').index());     
        				routing.trigger('photo-player-init', index, this.collection, this.collection.id);
