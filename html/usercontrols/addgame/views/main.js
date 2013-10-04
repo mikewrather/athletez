@@ -148,6 +148,7 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 				this.sports_id = options.sports_id || null;
 				this.team_id = options.teams_id || null;
 			}
+			console.log("CURRENT USER ID:", this);
 		},
 
 		/*initialize must be a wrapper so any function definitions and calles must be called in init*/

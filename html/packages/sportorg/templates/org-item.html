@@ -6,11 +6,11 @@
 			{{#teams}}
 			
 		<div class="org-name">
-	{{org_name}} | {{complevel}} | {{season}} {{year}} {{^schedules}}
-				<div class="info">	
-	No games on the docket.  <a href="javascript: void(0);" title="add game" class="add-game-h"> - Click here to Add Game.</a>
-</div>
-				{{/schedules}}
+	{{org_name}} | {{complevel}} | {{season}} {{year}}
+			{{^schedules}}
+				<span>&nbsp;(No games on the docket)</span>
+			{{/schedules}} <a href="javascript: void(0);" title="add game" class="add-game-h">Add Game</a>
+
 </div>	
 
 

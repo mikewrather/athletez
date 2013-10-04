@@ -748,7 +748,7 @@ margin-right: 100px;
 .game-box-outer ul {
     background: #bbbbbc;
     border-radius:5px;
-    /*height: 8px;*/
+    height: 8px;
 }
 
 .game-box-outer li {
@@ -756,7 +756,7 @@ margin-right: 100px;
     display: inline-block;
     margin-left:20px;
     border-radius: 0;
-    top:0px;
+    top:-4px;
 }
 
 
@@ -926,10 +926,19 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#84a934', end
 }
 
 /********************ADD GAME POP UP CSS**************************************/
+
+
+.add-game-modal{
+    width:80%;
+    left:10%;
+    margin:0;
+    height: 80%;
+}
+
 .container_add_game{
 	font-size:12px ;
 	background-color: #FFF;
-	width: 96%;
+	/*width: 96%;*/
 	padding: 0 20px 10px;
 	float: left;
 }

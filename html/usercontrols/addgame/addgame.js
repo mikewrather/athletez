@@ -54,7 +54,7 @@ define(["require", "text!usercontrols/addgame/templates/layout.html",
 			
 			if(options.popup) {
 				this.popup = true;
-				this.modelHTML = '<div id="modalPopup" class="modal hide fade model-popup-h">'+
+				this.modelHTML = '<div id="modalPopup" class="modal hide fade model-popup-h add-game-modal">'+
 								'<div class="modal-header">'+
    			 					'<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>'+
     							'<h3>Add Game</h3>'+
