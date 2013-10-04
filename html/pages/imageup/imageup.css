@@ -68,6 +68,16 @@
     display:inline-block;
 }
 
+
+
+
+#imgUploadModal .main-body {
+    max-height: 500px !important;
+    height: 500px;
+    width: 70%;
+    float: right;
+    display:inline-block;
+}
 #main-content-img {
     width: 100%;
     float: left;
@@ -100,4 +110,13 @@
 
 #imgUploadModal {
     height: 700px;
+}
+#Loginview {
+	height: 700px;
+}
+#RegModal{
+height: 700px;
+}
+.errormsg{
+color: red;
 }

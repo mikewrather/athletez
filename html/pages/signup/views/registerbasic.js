@@ -1,6 +1,7 @@
 define([
 	'require',
-	'text!signup/templates/registration.html', 
+	'text!signup/templates/registration.html',
+    'chrome/views/header', 
     'backbone',
     'underscore',
     'registration',
@@ -8,7 +9,7 @@ define([
     'facade', 
     'utils', 
 
-	],function(require,  signupBasicTemplate,backbone,_,RegistrationController) {
+	],function(require,  signupBasicTemplate,chromeHeader,backbone,_,RegistrationController) {
 			
 		var SignupBasicView,
         	facade = require('facade'),
@@ -21,19 +22,22 @@ define([
 			SignupBasicView = SectionView.extend({
 				
 				initialize: function (options) {
+                    this.registrationController = new RegistrationController({
+                    "route": ""
+                     });
             		this.template =  _.template(signupBasicTemplate);
             		this.$el = $(options.destination);
                     $("#errormsg, #preview").html("");
             
                      SectionView.prototype.initialize.call(this, options);   
                      debug.log("Image upload basic view");   
-                     $('#imgUploadModal').modal('show') ;
-                     $('#imgUploadModal').on('hidden', function () {
+                     $('#RegModal').modal('show') ;
+                     $('#RegModal').on('hidden', function () {
                
                         //routing.trigger('refresh-onImageUpload');
                     });
-                    $('#imgUploadModal').on('hide', function () {
-               
+                    $('#RegModal').on('hide', function () {
+                        $('div#modalPopup').remove();
                         //routing.trigger('refresh-onImageUpload');
                       });
             		this.render();
@@ -71,11 +75,8 @@ define([
 
                signupFacebook: function(event) {
 
-            
-            event.preventDefault();
-
-            $('#imgUploadModal').modal('hide') ;
-          // event.preventDefault();
+              event.preventDefault();
+              var self = this;          // event.preventDefault();
             // Additional JS functions here
             window.fbAsyncInit = function() {
                 FB.init({
@@ -91,7 +92,10 @@ define([
                     if (response.status === 'connected') {
                         FB.api('/me', function(response) {
                             console.log(response);
+                            //sthis.signupc = new scontroller({"route":""});
                             Channel('registration-with-facebook').publish();
+                             //this.pop = new popupview();
+
                         });
                     } else if (response.status === 'not_authorized') {
                         console.log('not_authorized');
@@ -105,7 +109,9 @@ define([
             function login() {
                 FB.login(function(response) {
                     if (response.authResponse) {
+                        //this.signupc = new scontroller({"route":""});
                         Channel('registration-with-facebook').publish();
+                        //this.pop = new popupview();
                     } else {
                         alert('Cancelled');
                     }
@@ -114,14 +120,14 @@ define([
 
             // Load the SDK Asynchronously
             function loadFBLogin(){
-  //            alert("load fb");
-                if (!this.registrationController) {
-                this.registrationController = new RegistrationController({
+  //          
+                if (!self.registrationController) {
+                self.registrationController = new RegistrationController({
                     "route": ""
                 });
             }
-            this.registrationController.refreshPage();
-//             alert("signupFaceook-header registration-with-facebook 1");
+            self.registrationController.refreshPage();
+//            
                 var js, id = 'facebook-jssdk', ref = document.getElementsByTagName('script')[0];
                 if (document.getElementById(id)) {
                     login();
@@ -134,59 +140,7 @@ define([
 
             loadFBLogin();
         },
-//************//
-                registerWithFacebook: function(event) {                                
-                    event.preventDefault();
-            
-                        // Additional JS functions here
-                   window.fbAsyncInit = function() {
-                FB.init({
-                    appId      : '239430712864961', // App ID
-                    status     : true, // check login status
-                    cookie     : true, // enable cookies to allow the server to access the session
-                    xfbml      : true,  // parse XFBML
-                    oauth      : true
-                });
-                 FB.getLoginStatus(function(response) {
-                    if (response.status === 'connected') {
-                        
-                        FB.api('/me', function(response) {
-                          Channel('registration-with-facebook').publish();
-                        });
-                    } else if (response.status === 'not_authorized') {
-                        login();
-                    } else {
-                        login();
-                    }
-                },{scope: 'email, user_birthday, user_photos'});
-            };
 
-            
-            function login() {
-                FB.login(function(response) {
-                    if (response.authResponse) {
-                      
-                        Channel('registration-with-facebook').publish();
-                    } else {
-                        alert('Cancelled');
-                        // for test
-                        //Channel('registration-with-facebook').publish();
-                    }
-                },{scope: 'email, user_birthday, user_photos'});
-            }
-            function loadFBLogin(){
-                var js, id = 'facebook-jssdk', ref = document.getElementsByTagName('script')[0];
-                if (document.getElementById(id)) {
-                    login();
-                    return;
-                }
-                js = document.createElement('script'); js.id = id; js.async = true;
-                js.src = "//connect.facebook.net/en_US/all.js";
-                ref.parentNode.insertBefore(js, ref);
-            }
-            loadFBLogin();
-  
-                },
 
         		
 

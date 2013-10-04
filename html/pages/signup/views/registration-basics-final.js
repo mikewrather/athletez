@@ -147,7 +147,9 @@ define([
                               
                               
                                 /* update the view now */
-                                routing.trigger("upload-user-image", msg);
+                               // routing.trigger("upload-user-image", msg);
+                                location.href='#usersettings';
+                                $('#RegModal').modal('hide') ;
                                 // Channel('upload-user-image').publish(msg);
                             },
                             error: function(msg) {
