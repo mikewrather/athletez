@@ -234,7 +234,7 @@ div.image-item-container{
     overflow: hidden;
 }
 
-div.image-item-container img{
+div.image-item-container > img{
     position: absolute;
     min-width: 220px;
     min-height: 220px;

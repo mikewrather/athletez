@@ -19,6 +19,8 @@ class ORM extends Kohana_ORM
 		'exclude_columns' => array(),
 	);
 
+	public function can_follow(){ return Ent::ent_can_follow($this); }
+
 	public static function factory($model, $id = NULL)
 	{
 		$model = parent::factory($model,$id);

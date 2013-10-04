@@ -63,6 +63,21 @@ class Model_Site_Enttype extends ORM
 		return is_array($config_array) ? $config_array['db_table'] : false;
 	}
 
+	public static function ent_can_follow($class)
+	{
+		$classname = is_object($class) ? get_class($class) : (string)$class;
+		$valid_object_types = array(
+			"Model_User_Base",
+			"Model_Sportorg_Team",
+			"Model_Sportorg_Games_Base",
+			"User_Base",
+			"Sportorg_Team",
+			"Sportorg_Games_Base"
+		);
+
+		if(!in_array($classname,$valid_object_types)) return false;
+		return true;
+	}
 
 	static function getObjectList($enttypeID)
 	{

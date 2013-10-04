@@ -23,6 +23,7 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 			'height_ft' => 'get_height_ft',
 			'label' => 'getLabel',
 			'sub_label' => 'getSubLabel',
+			'can_follow' => 'can_follow'
 		),
 		'exclude_columns' => array(
 			'username','email','password','dob'
@@ -153,6 +154,8 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 		),
 
 	);
+
+
 
     public function deleteTeam($args)
     {

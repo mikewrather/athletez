@@ -147,7 +147,8 @@ class Model_Sportorg_Games_Base extends ORM
 			"game_picture" => 'getPrimaryImage',
 			"teams" => 'get_game_teams',
 			"game_location" => 'get_game_location',
-			"shared" => 'get_shared_info'
+			"shared" => 'get_shared_info',
+			'can_follow' => 'can_follow'
 		),
 
 		// array of values only.  Each value is the name of a column to exclude

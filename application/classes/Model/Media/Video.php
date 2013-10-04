@@ -72,7 +72,8 @@ class Model_Media_Video extends ORM
 		// key = the key that will appear in the returned results, val = the name of the function / property to invoke for the value
 		'added_function_calls' => array(
 			'video_type' => 'get_types_and_meta_as_array',
-			'standard_thumb' => 'get_standard_thumb'
+			'standard_thumb' => 'get_standard_thumb',
+			'can_follow' => 'can_follow'
 		),
 
 		// array of values only.  Each value is the name of a column to exclude

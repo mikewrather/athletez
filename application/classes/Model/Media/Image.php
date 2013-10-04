@@ -17,7 +17,8 @@ class Model_Media_Image extends ORM
 		'added_function_calls' => array(
 			'image_title'=>'get_name',
 			'num_votes'=>'get_num_votes',
-			'types' =>'getTypes'
+			'types' =>'getTypes',
+			'can_follow' =>'can_follow'
 		),
 		'column_name_changes' => array(
 			'original_url' => 'image_path',

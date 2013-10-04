@@ -33,16 +33,25 @@ define(['vendor', 'views', 'utils', 'text!media/templates/image-item.html', 'vot
 		
 		
 		render : function() {
-			var _self = this, mpay = this.model.attributes.payload, extra = {
-				_enttypes_id : mpay.enttypes_id,
-				_id : mpay.id,
-				_has_voted: mpay.has_voted,
-				_is_following: mpay.is_following
+			var _self = this, mpay = this.model.attributes.payload,
+				extra = {
+					_enttypes_id : mpay.enttypes_id,
+					_id : mpay.id,
+					_has_voted: mpay.has_voted,
+					_is_following: mpay.is_following,
+					_can_follow: mpay.can_follow
 				},
 				show_edit = false,
-				standard_thumb = null;
+				standard_thumb = null,
+				ucwords = function(str)
+				{
+					str = str.toLowerCase();
+					return str.replace(/(^([a-zA-Z\p{M}]))|([ -][a-zA-Z\p{M}])/g,
+						function($1){
+							return $1.toUpperCase();
+						});
+				};
 
-			console.log(mpay);
 			switch(mpay.enttypes_id)
 			{
 				case '23':
@@ -85,9 +94,14 @@ define(['vendor', 'views', 'utils', 'text!media/templates/image-item.html', 'vot
 							extra._thumbnail = standard_thumb.url;
 						}
 					}
-					else
+					//else
 
-					extra._label = mpay.media_obj.name;
+					extra._label = mpay.media_obj.users_obj.label;
+					if(typeof(mpay.media_obj.sports_obj) == 'object')
+					{
+						extra._sublabel = ucwords(mpay.media_obj.sports_obj.sport_name);
+					}
+
 					extra._link = "javascript: void(0);";
 
 					if(mpay.media_obj.hasOwnProperty('is_owner')) show_edit = mpay.media_obj.is_owner;
@@ -121,7 +135,7 @@ define(['vendor', 'views', 'utils', 'text!media/templates/image-item.html', 'vot
 					}
 
 					extra._label = mpay.label;
-					extra._sublabel = "Coming Soon";
+					extra._sublabel = "Votes: " + mpay.num_votes + ", Followers: " + mpay.num_followers;
 					extra._link = "/#profile/" + mpay.id;
 
 					if(mpay.hasOwnProperty('is_owner')) show_edit = mpay.is_owner;
@@ -134,15 +148,7 @@ define(['vendor', 'views', 'utils', 'text!media/templates/image-item.html', 'vot
 					extra._thumbnail = standard_thumb.url;
 					extra._label = mpay.game_day;
 					extra._link = "/#game/" + mpay.id;
-					var team_str = "", teams = mpay.teams,
-						ucwords = function(str)
-						{
-							str = str.toLowerCase();
-							return str.replace(/(^([a-zA-Z\p{M}]))|([ -][a-zA-Z\p{M}])/g,
-								function($1){
-									return $1.toUpperCase();
-								});
-						};
+					var team_str = "", teams = mpay.teams;
 					if(teams != null) var teamLength = teams.length;
 
 					for (var i = 0; i < teamLength; i++) {
@@ -193,12 +199,12 @@ define(['vendor', 'views', 'utils', 'text!media/templates/image-item.html', 'vot
 				if(overflow > 0) overflow = 0;
 
 				if(standard_thumb.width > standard_thumb.height)
-					this.$el.find('img').css({
+					this.$el.find('img.list-thumbnail').css({
 						'max-width':standard_thumb.width / ratio_y,
 						'left':overflow
 					});
 				else
-					this.$el.find('img').css({
+					this.$el.find('img.list-thumbnail').css({
 						'max-height':standard_thumb.height / ratio_x,
 						'top':overflow
 					});
@@ -250,7 +256,9 @@ define(['vendor', 'views', 'utils', 'text!media/templates/image-item.html', 'vot
 			voteModelOb.entity_id = this.model.get("payload").enttypes_id;
 			voteModelOb.setData();
 			voteModelOb.save();
-			$.when(voteModelOb.request).done(function() {
+			$.when(voteModelOb.request).done(function()
+			{
+				//if()
 				$(e.currentTarget).addClass('link-disabled');
 			});
 	    },
@@ -264,7 +272,16 @@ define(['vendor', 'views', 'utils', 'text!media/templates/image-item.html', 'vot
 			followModelOb.entity_id = this.model.get("payload").enttypes_id;
 			followModelOb.save();
 			$.when(followModelOb.request).done(function() {
-				$(e.currentTarget).addClass('link-disabled');
+
+				console.log(followModelOb.get('payload'))
+				if(typeof(followModelOb.get('payload').follower) =='object' && typeof(followModelOb.get('payload').subject) =='object' && followModelOb.get('payload').id > 0)
+				{
+					$(e.currentTarget).addClass('link-disabled');
+				}
+				else
+				{
+					console.log("FAIL");
+				}
 			});
 	    },
 

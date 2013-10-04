@@ -821,13 +821,7 @@ class Controller_Api_Base extends AuthController
 	{
 		$this->payloadDesc = "Get followers on a specific subject";
 
-		$valid_object_types = array(
-			"Model_User_Base",
-			"Model_Sportorg_Team",
-		);
-
-
-		if($this->mainModel->loaded() && !in_array(get_class($this->mainModel),$valid_object_types))
+		if($this->mainModel->loaded() && !Ent::ent_can_follow($this->mainModel))
 		{
 			$ent_types_id = Ent::getMyEntTypeID($this->mainModel);
 			$ent_type = ORM::factory('Site_Enttype',$ent_types_id);
@@ -882,13 +876,7 @@ class Controller_Api_Base extends AuthController
 
 		$this->payloadDesc = "Become a Follower";
 
-		$valid_object_types = array(
-			"Model_User_Base",
-			"Model_Sportorg_Team",
-			"Model_Sportorg_Games_Base"
-		);
-
-		if($this->mainModel->loaded() && !in_array(get_class($this->mainModel),$valid_object_types))
+		if($this->mainModel->loaded() && !Ent::ent_can_follow($this->mainModel))
 		{
 			$ent_types_id = Ent::getMyEntTypeID($this->mainModel);
 			$ent_type = ORM::factory('Site_Enttype',$ent_types_id);
@@ -912,8 +900,8 @@ class Controller_Api_Base extends AuthController
 			return false;
 		}
 
-		echo $this->mainModel->id;
-		echo $this->myID;
+//		echo $this->mainModel->id;
+//		echo $this->myID;
 
 		$follow = ORM::factory('User_Followers');
 		$follow->addFollower($this->user,$this->mainModel);
