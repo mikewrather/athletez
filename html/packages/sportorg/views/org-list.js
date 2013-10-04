@@ -1,8 +1,8 @@
 // Org List
 // --------------
 
-define(['facade','views', 'utils', 'sportorg/views/org-item'], 
-function(facade,  views,   utils,   OrgItemView) {
+define(['facade','views', 'utils', 'sportorg/views/org-item','utils/storage'], 
+function(facade,  views,   utils,   OrgItemView, Store) {
 
     var OrgListView, 
         OrgListAbstract,
@@ -30,7 +30,8 @@ function(facade,  views,   utils,   OrgItemView) {
         _view: OrgItemView,
         
         events: {
-        	'click .team-info-h': 'showinfo'
+        	'click .team-info-h': 'showinfo',
+        	"click .add-game-h": "addGame"
         },
         
          showinfo: function(e) {
@@ -47,6 +48,20 @@ function(facade,  views,   utils,   OrgItemView) {
 		        
 		        
         	}
+        },
+        
+         addGame: function() {
+        	var appStates = new Store("user","localStorage");
+        	console.log(appStates.data);
+        	var user = 0;
+        	if(appStates.data) {
+ 	  	     	for(var userId in appStates.data) {
+ 	  	     		user = userId;
+ 	  	     		break;		
+ 	  	     	}
+        	}
+        	if(user)	
+	        	routing.trigger('add-game', user);
         },
 
         initialize: function(options) {

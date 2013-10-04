@@ -52,7 +52,7 @@ function(require, gameHeaderTemplate) {
         	var _self = this;
         	var location = { latitude : this.model.get("payload").location.lat, longitude : this.model.get("payload").location.lon, game_id: this.model.id}; 
         	routing.trigger('location_popup_open', LocationView, location, function() {
-        		_self.render();
+        		_self.updateHeaderData(_self.model.id);
         	});
         },
         
