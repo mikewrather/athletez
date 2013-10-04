@@ -6,25 +6,18 @@
 define([
         'vendor', 
         'views',
-        'text!chrome/templates/header.html',
-        'chrome/models/header',
         'registration',
-        'login',
         'signup',
         'signup/views/shopopup',
-       
-		'utils/storage'
+        'utils/storage'
         ], 
 function (
         vendor,
         views,
         headerTemplate,
-        HeaderModel,
         RegistrationController,
-        loginController,
         scontroller,
         popupview,
-       
         Store
         ) {
 
@@ -36,57 +29,12 @@ function (
 
       HeaderView = BaseView.extend({
 
-        tagName: 'header',
-
-        className: 'container-fluid clearfix',
-
-        initialize: function (options) {
-            this.template = headerTemplate;
-        },
-
-        model: new HeaderModel(),
-        
-        events: {
-            "click .signup-facebook": "signupFacebook",
-            "click .signup-email": "signupUser",
-			"click .account clearfix a": "login",
-            "click #userlogin":"userLogin"
-        },
-
-        render: function () {
-            var self = this;
-            this.model.fetchSuccess = this.model.fetchError = function(model, res) {
-                var markup = Mustache.to_html(self.template, model.toJSON());
-                self.$el.html(markup);
-                
-                var user_photo = model.get('user_photo');
-                var user_email = model.get('user_email');
-                if (!user_photo && user_email) {
-                    self.$('.photo img').attr("src","http://www.gravatar.com/avatar/" + MD5(user_email) + "&s=29");
-                }
-                var authorized = model.get('authorized');
-                if (authorized) {
-                    var id = model.get('id');
-	                self.model.saveCookie();
-                    routing.trigger('app-inited', id);
-                    //Channel('app-inited').publish(id);
-                }
-            };
-                
-            this.model.fetch();
-            return this;
-        },
-        userLogin:function(event){
-            event.preventDefault();
-            this.logincontroller = new LoginController();
-            routing.trigger("Login");
-        },
-
-             
-        signupFacebook: function(event) {
-        	
-            event.preventDefault();
-         
+       
+               
+        signupFacebook: function() {
+            
+            
+          // event.preventDefault();
             // Additional JS functions here
             window.fbAsyncInit = function() {
                 FB.init({
@@ -102,8 +50,8 @@ function (
                     if (response.status === 'connected') {
                         FB.api('/me', function(response) {
                             console.log(response);
-                            this.signupc = new scontroller({"route":""});
-                            Channel('registration-with-facebook').publish();
+                            //this.signupc = new scontroller({"route":""});
+                             Channel('registration-with-facebook').publish();
                              this.pop = new popupview();
 
                         });
@@ -119,7 +67,7 @@ function (
             function login() {
                 FB.login(function(response) {
                     if (response.authResponse) {
-                        this.signupc = new scontroller({"route":""});
+                       // this.signupc = new scontroller({"route":""});
                         Channel('registration-with-facebook').publish();
                         this.pop = new popupview();
                     } else {
@@ -130,14 +78,19 @@ function (
 
             // Load the SDK Asynchronously
             function loadFBLogin(){
- 
-            	if (!this.registrationController) {
+  //            alert("load fb");
+                if (!this.registrationController) {
                 this.registrationController = new RegistrationController({
                     "route": ""
                 });
+                if(!this.signupc){
+
+                    this.signupc = new scontroller({"route":""});
+                }
+
             }
             this.registrationController.refreshPage();
-//           
+//             alert("signupFaceook-header registration-with-facebook 1");
                 var js, id = 'facebook-jssdk', ref = document.getElementsByTagName('script')[0];
                 if (document.getElementById(id)) {
                     login();
@@ -151,16 +104,6 @@ function (
             loadFBLogin();
         },
 
-
-
-        signupUser: function(event){
-                    event.preventDefault();
-                    this.signupc = new scontroller({"route":""});
-                    routing.trigger("register-basic");
-                    this.pop = new popupview();
-                  
-                },
-       	
 
       });
 

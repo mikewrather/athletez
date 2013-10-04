@@ -2,9 +2,9 @@
 // --------------  
 // Requires define
 // Return {Object} App
-define( ["facade", "utils", "collections", "chrome", "controller", "profile", "imageup",'home','videopreview',"game", "team", "registration","profilesetting","userresume","packages/site/collections/phrases","usercontrols/tag/tag","usercontrols/addgame/addgame","login/model","login/view",'signup', "usercontrols/photo-player/photo-player"],
+define( ["facade", "utils", "collections", "chrome", "controller", "profile", "imageup",'home','videopreview',"game", "team", "registration","profilesetting","userresume","packages/site/collections/phrases","usercontrols/tag/tag","usercontrols/addgame/addgame",'signup','login', "usercontrols/photo-player/photo-player"],
 function (facade, utils, collections, chromeBootstrap, Controller, ProfileController, ImageController, HomeController, VideoPreviewController,
-	GameController, TeamController, RegistrationController,ProfileSetting,UserResume, SitePhraseList , TagController,AddGameController,loginModel, loginView, SignupController, PhotoPlayerController) {
+	GameController, TeamController, RegistrationController,ProfileSetting,UserResume, SitePhraseList , TagController,AddGameController,SignupController,LoginController, PhotoPlayerController) {
 
 
     //App;
@@ -73,6 +73,7 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
         	this.imageUpListeners();
 			this.videoPreview();
             this.showUsercreate();
+            this.showLogin();
         },
         
         cancelAjaxRequests: function() {
@@ -365,12 +366,13 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
 		// route to login template
 		showLogin: function(){
 		 //$('#main-content').empty();
-		   $('body').empty();
-            chromeBootstrap();
-         var mod = new loginModel();
-		 var logview = new loginView({
-					model:mod
-				});
+		   //$('body').empty();
+           // chromeBootstrap();
+        // var mod = new loginModel();
+		// var logview = new loginView({
+		//			model:mod
+		//		});
+         
 		},
         // route to registratiom
         showUsercreate: function(){

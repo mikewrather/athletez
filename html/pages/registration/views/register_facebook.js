@@ -4,7 +4,7 @@
 // Requires `define`, `require`
 // Returns {RegistrationFacebookView} constructor
 
-define(['require', 'text!registration/templates/register_facebook.html', 'facade', 'views', 'utils', 'jquery.pstrength', 'registration/collections/fbimages', 'registration/views/fbimage-list',], function(require, registrationFacebookTemplate) {
+define(['require', 'text!registration/templates/register_facebook.html','backbone', 'facade', 'views', 'utils', 'jquery.pstrength', 'registration/collections/fbimages', 'registration/views/fbimage-list'], function(require, registrationFacebookTemplate,backbone) {
 
 	
 	var RegistrationFacebookView, facade = require('facade'), views = require('views'), utils = require('utils'), Channel = utils.lib.Channel, SectionView = views.SectionView, RegistrationFBImageList = require('registration/collections/fbimages'), RegistrationFBImageView = require('registration/views/fbimage-list');
@@ -97,14 +97,24 @@ define(['require', 'text!registration/templates/register_facebook.html', 'facade
 				$.when(this.fbimages.request).done(function() {
 					debug.log("this.fbimages are as follows");
 					debug.log(self.fbimages.toJSON());
-					self.setupFBPictures();
+					//self.setupFBPictures();
+					//alert('if');
+
+						this.fbImageListView = new RegistrationFBImageView({
+							collection : self.fbimages.toJSON()
+						});
 				});
 			} else {
-				$('#' + this.fbImageListView.id).dialog({
-					width : '80%',
-					close : self.removeListView
-				});
-				this.fbImageListView.initCropView();
+				debug.log(self.fbimages.toJSON(),"else");
+						this.fbImageListView = new RegistrationFBImageView({
+								collection : self.fbimages.toJSON()
+						});
+				//alert('else');
+				//$('#' + this.fbImageListView.id).dialog({
+				//	width : '80%',
+				//	close : self.removeListView
+				//});
+				//this.fbImageListView.initCropView();
 			}
 		},
 
@@ -172,8 +182,18 @@ define(['require', 'text!registration/templates/register_facebook.html', 'facade
 					return testpath + '/user/basics';
 				return '/api/user/basics/' + payload['users_id'];
 			}
-			this.model.save();
-			Channel('registration-select-org').publish();
+			
+			this.model.save({callback : "true"},
+							{
+							success: function(msg) {
+                              
+                            	location.href='#usersettings';
+                            	$('#RegModal').modal('hide') ;
+
+                            }}
+				);
+			//disabled temporarly
+			//Channel('registration-select-org').publish();
 		}
 	});
 
