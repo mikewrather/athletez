@@ -278,11 +278,11 @@ define(['vendor', 'views', 'utils', 'text!media/templates/image-item.html', 'vot
 			{
 				case '23':
 					//videos
-					extra._link = "javascript: void(0);";
+					//extra._link = "javascript: void(0);";
 					break;
 				case '21':
 					//images
-					extra._link = "javascript: void(0);";
+					//extra._link = "javascript: void(0);";
 					break;
 				case '1':
 					//users

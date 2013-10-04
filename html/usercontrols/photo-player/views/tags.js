@@ -38,6 +38,7 @@ function(facade, vendor,  utils, views, tagListTemlate, TagItemView) {
         initialize: function(options) {
         	this.renderTemplate();
 	         var _self = this;
+	         this.name = options.name;
 	         this.collection = options.collection;
 	         console.log(this.collection.toJSON());
 			 _self.allData = this.collection.toArray();

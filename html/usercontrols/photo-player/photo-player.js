@@ -120,19 +120,22 @@ define(["require", 'text!usercontrols/photo-player/templates/comments.html',
 		setUpTagView: function(entity_id, id) {
 			var l = this.scheme.length;
 			for(var i = 0; i < l; i++) {
-				if(this.scheme[i].name == this.oldTagView)
+				if(this.scheme[i].name == this.oldTagView) {
 					this.scheme[i].remove();
+				}
 			}
-			
-			var _self = this, tagView;
+			var _self = this;
 			_self.oldTagView = "tag section" + Math.random();
+			$(".tags-area-h").unbind().html("");
 			_self.tags = new TagsCollection();
 			_self.tags.id = id;
 			_self.tags.fetch();
 			//$(".coment-area-h").html();
 			$.when(_self.tags.request).done(function () {
-				tagView = new TagsSectionView({
+				console.error(_self.tags);
+				var tagView = new TagsSectionView({
 					collection : _self.tags,
+					userId: _self.userId,
 					name : _self.oldTagView,
 					entity_type_id: entity_id,
 					destination : ".tags-area-h"
@@ -148,6 +151,7 @@ define(["require", 'text!usercontrols/photo-player/templates/comments.html',
 			for(var i = 0; i < l; i++) {
 				if(this.scheme[i].name == this.oldView)
 					this.scheme[i].remove();
+				
 			}
 			
 			var _self = this, photoPlayer;
@@ -159,7 +163,6 @@ define(["require", 'text!usercontrols/photo-player/templates/comments.html',
 			_self.commentson.fetch();
 			//$(".coment-area-h").html();
 			$.when(_self.commentson.request).done(function () {
-								console.error(_self.commentson.toJSON());
 				photoPlayer = new CommentSectionView({
 					collection : _self.commentson,
 					userId: _self.userId,
