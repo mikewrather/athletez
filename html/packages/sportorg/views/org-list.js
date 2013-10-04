@@ -51,7 +51,8 @@ function(facade,  views,   utils,   OrgItemView, Store) {
         },
         
          addGame: function(e) {
-	        	routing.trigger('add-game', $(e.currentTarget).data("id"));
+	         console.log($(e.currentTarget).data());
+	        	routing.trigger('add-game',0,$(e.currentTarget).data("team-id"),$(e.currentTarget).data("sport-id"));
         },
 
         initialize: function(options) {

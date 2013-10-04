@@ -147,9 +147,12 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
             
             // initialize add game popup common trigger 
             routing.off('add-game');
-            routing.on('add-game', function(id) {
+            routing.on('add-game', function(id,teams_id,sports_id,users_id) {
             	//fn(id);
             	 var addGameview = new AddGameController({
+		            "teams_id":teams_id,
+		             "sports_id":sports_id,
+		            "users_id" : users_id,
                 	"id": id,
                 	popup: true
                 });

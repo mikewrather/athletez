@@ -9,7 +9,7 @@
 	{{org_name}} | {{complevel}} | {{season}} {{year}}
 			{{^schedules}}
 				<span>&nbsp;(No games on the docket)</span>
-			{{/schedules}}  <a href="javascript: void(0);" data-id="{{team_id}}" title="add game" class="add-game-h">Add Game</a>
+			{{/schedules}}  <a href="javascript: void(0);" data-team-id="{{team_id}}" data-sport-id="0" title="add game" class="add-game-h">Add Game</a>
 
 </div>	
 
@@ -38,60 +38,7 @@
 			</ul>
 	</div>
 			{{/teams}}
-			<!--li>
-				<a href="javascript: void(0);" class="background-orange">b</a>
-			</li-->
-		
 
-	<!--select name="team" id="select-team">
-	{{#teams}}
-	<option value="{{team_id}}">{{complevel}} - {{season}} {{year}}</option>
-	{{/teams}}
-	</select-->
-
-	<!--div class="teams-info">
-	{{#teams}}
-	<div class="team-info team-info-{{team_id}}" style="display:none">
-	<table class="table team-schedule">
-	{{#schedules}}
-	<tr><!--
-	<td>
-	{{#complevel}}
-	{{name}}
-	{{/complevel}}
-	</td>
-	<td>
-	{{#season}}
-	{{name}}
-	{{/season}}
-	</td>
-	<td>{{game_name}}</td>
-	<td>{{game_location}}</td>
-	<td>{{game_day}}</td>
-	<td>{{mascot}}</td>
-	<!--<td>{{num_votes}}</td>
-	<td>{{num_followers}}</td>
-	</tr>
-	{{/schedules}}
-	</table>
-	<a href="team/schedule/{{team_id}}">View full schedule</a>
-	<table class="table team-stats">
-	<tr>
-	<td></td>
-	{{#stats}}
-	<td>{{name}}</td>
-	{{/stats}}
-	</tr>
-	<tr>
-	<td>{{statval}}</td>
-	{{#stats}}
-	<td>{{value}}</td>
-	{{/stats}}
-	</tr>
-	</table>
-	<a href="team/stats/{{team_id}}">View complete stats</a>
-	</div>
-	{{/teams}}-->
 </div>
 </div>
 {{/payload}}
