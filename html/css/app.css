@@ -232,6 +232,7 @@ div.image-item-container{
     width:220px;
     height: 220px;
     overflow: hidden;
+    background-image: url(http://cdn.athletez.com/resources/img/green_loading.gif);
 }
 
 div.image-item-container > img{

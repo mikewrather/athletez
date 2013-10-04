@@ -29,6 +29,7 @@ define([ 'require', 'text!votes/templates/vote.html','views', 'vendor', 'facade'
 		
 		follow: function() {
 			this.followModelOb.save();
+			Channel('new-fan').publish();
 		},
 		
 		initialize : function(options) {
@@ -58,7 +59,8 @@ define([ 'require', 'text!votes/templates/vote.html','views', 'vendor', 'facade'
 // 			
 			// $(document).on('click', '.follow-action-h', function() {
 				// _self.follow();
-			// });		},
+			// });
+		},
 		
 		render: function (domInsertion, dataDecorator, partials) {
             SectionView.prototype.render.call(this, domInsertion, dataDecorator, partials); 
