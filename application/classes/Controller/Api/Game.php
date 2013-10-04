@@ -187,8 +187,9 @@
 
 			if(trim($this->request->query('orderby')) != "")
 			{
-				$legal_orderby = array('votes', 'followers', 'postTime','random');
 				$arguments["orderby"] = trim($this->request->query('orderby'));
+				$legal_orderby = array('votes', 'followers', 'postTime', 'newest', 'random');
+				if($arguments['orderby'] == 'newest') $arguments['orderby'] = 'postTime';
 				if (!in_array($arguments["orderby"], $legal_orderby)){
 					$error_array = array(
 						"error" => "Invalid order by column",

@@ -3,7 +3,7 @@
  // Pages
  // Requires `define`, `require`
  */
-define(['require', 'text!usercontrols/location/templates/layout.html', 'facade', 'views', 'utils', 'vendor', 'usercontrols/location/models/verify-adress', , 'usercontrols/location/models/save'], function(require, layoutTemplate) {
+define(['require', 'text!usercontrols/location/templates/layout.html', 'facade', 'views', 'utils', 'vendor', 'usercontrols/location/models/verify-adress', 'usercontrols/location/models/save'], function(require, layoutTemplate) {
 
 	var self, facade = require('facade'), views = require('views'), 
 	SectionView = views.SectionView, utils = require('utils'), 

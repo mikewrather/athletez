@@ -599,7 +599,7 @@ margin-right: 100px;
     display: inline-block;
     margin-left:20px;
     border-radius: 0;
-    top:-5px;
+    top:-4px;
 }
 .game-box-outer li a {
     padding:1px 10px 0px 10px;
@@ -734,10 +734,16 @@ background: -ms-linear-gradient(top,  #84a934 0%,#9cca3c 100%);
 background: linear-gradient(to bottom,  #84a934 0%,#9cca3c 100%); 
 filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#84a934', endColorstr='#9cca3c',GradientType=0 ); 
 }
+.add-game-modal{
+    width:80%;
+    left:10%;
+    margin:0;
+    height: 80%;
+}
 .container_add_game{
 	font-size:12px ;
 	background-color: #FFF;
-	width: 96%;
+	
 	padding: 0 20px 10px;
 	float: left;
 }
@@ -807,4 +813,14 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#84a934', end
 .link-disabled {
 	opacity: 0.5 !important;
 	pointer-events: none !important;
+}
+#logincontainer{
+    margin: auto;
+}
+#logincontainer *{
+    font-size:1em;
+    font-family: "HelveticaNeue","HELVETICA";
+}
+#regcontainer *{
+    font-family: "HelveticaNeue", "Helvetica";
 }

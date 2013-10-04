@@ -1019,3 +1019,17 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#84a934', end
 	opacity: 0.5 !important;
 	pointer-events: none !important;
 }
+
+/********* Login ************/
+#logincontainer{
+    margin: auto;
+}
+
+#logincontainer *{
+    font-size:1em;
+    font-family: "HelveticaNeue","HELVETICA";
+}
+
+#regcontainer *{
+    font-family: "HelveticaNeue", "Helvetica";
+}
