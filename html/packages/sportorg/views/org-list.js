@@ -50,18 +50,8 @@ function(facade,  views,   utils,   OrgItemView, Store) {
         	}
         },
         
-         addGame: function() {
-        	var appStates = new Store("user","localStorage");
-        	console.log(appStates.data);
-        	var user = 0;
-        	if(appStates.data) {
- 	  	     	for(var userId in appStates.data) {
- 	  	     		user = userId;
- 	  	     		break;		
- 	  	     	}
-        	}
-        	if(user)	
-	        	routing.trigger('add-game', user);
+         addGame: function(e) {
+	        	routing.trigger('add-game', $(e.currentTarget).data("id"));
         },
 
         initialize: function(options) {
