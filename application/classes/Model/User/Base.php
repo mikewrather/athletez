@@ -1425,6 +1425,10 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 				$external_validate = Validation::factory($validate_array);
 				$external_validate->rule('users_id', 'users_teams_exist', array($users_id, $teams_id));
 				$user_teams_link->check($external_validate);
+
+				//check if the item is deleted and if it is, undelete, otherwise save
+				if(ORM::is_deleted($user_teams_link)) $user_teams_link->undo_delete_with_deps();
+
 				$user_teams_link->save();
 				return $this;
 			} catch (ORM_Validation_Exception $e)
@@ -1460,13 +1464,17 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 
 					if (!$org_sport_link->loaded()) // This means the organization does not have this sport
 					{
-
+						//check if deleted
 						unset($org_sport_link);
 						//Add the Association
 						$org_sport_link = ORM::factory('Sportorg_Orgsportlink');
 						$org_sport_link->orgs_id = $orgs_id;
 						$org_sport_link->sports_id = $sports_id;
 						$org_sport_link->save();
+					}
+					elseif(ORM::is_deleted($org_sport_link))
+					{
+						$org_sport_link->undo_delete_with_deps();
 					}
 
 					$new_team = ORM::factory('Sportorg_Team')
@@ -1487,6 +1495,10 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 						$new_team->year = $year;
 						$new_team->save();
 					}
+					elseif(ORM::is_deleted($new_team))
+					{
+						$new_team->undo_delete_with_deps();
+					}
 
 					if (!$this->has('teams', $new_team)) // CHECK IF USER ALREADY HAS TEAM ASSOCIATION
 					{
@@ -1494,6 +1506,15 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 						$user_teams_link->users_id = $this->id;
 						$user_teams_link->teams_id = $new_team->id;
 						$user_teams_link->save();
+					}
+					else
+					{
+						$user_teams_link = ORM::factory("User_Teamslink")
+							->where('teams_id','=',$new_team->id)
+							->where('users_id','=',$this->id)
+							->find();
+						//print_r($user_teams_link);
+						if(ORM::is_deleted($user_teams_link)) $user_teams_link->undo_delete_with_deps();
 					}
 
 					$result[] = $new_team;
