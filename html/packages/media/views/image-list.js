@@ -80,7 +80,8 @@ function(facade,  views,   utils,   ImageItemView,            ImageBoardView,   
         
         initPhotoPlayer: function(e) {
         	console.log(this.collection);
-			var index = ($(e.target).parents('li').index());  
+			var index = ($(e.target).parents('li').index() - 1);  
+			if(index< 0) index = 0;
        		routing.trigger('photo-player-init', index, this.allData, this.collection.id, true);
        	},
 

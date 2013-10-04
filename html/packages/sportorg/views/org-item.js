@@ -59,6 +59,7 @@ function (
         },
 
         render: function () {
+        	console.error( this.model.toJSON());
             var markup = Mustache.to_html(this.template, this.model.toJSON());
             this.$el.html(markup);
             this.select_team = this.$('#select-team');
