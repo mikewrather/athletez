@@ -692,6 +692,7 @@ pages/signup.js
 text!usercontrols/photo-player/templates/comments.html
 usercontrols/photo-player/collections/comments.js
 text!usercontrols/photo-player/templates/player.html
+text!usercontrols/photo-player/templates/image-thumbs.html
 usercontrols/photo-player/views/main.js
 usercontrols/photo-player/models/commentonform.js
 usercontrols/photo-player/views/comment-form.js
@@ -938,6 +939,13 @@ text!sportorg/templates/team-item.html
 packages/sportorg/views/team-item.js
 text!sportorg/templates/team-list.html
 packages/sportorg/views/team-list.js
+text!roster/templates/roster.html
+packages/roster/models/roster.js
+packages/sportorg/models/teamroster.js
+packages/sportorg/collections/teamrosters.js
+packages/roster/collections/roster.js
+packages/roster/views/image-list.js
+packages/roster/views/roster.js
 pages/profile/views/fans-image-list.js
 pages/team.js
 
