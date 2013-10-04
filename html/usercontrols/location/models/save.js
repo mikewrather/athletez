@@ -10,9 +10,8 @@ define( ["facade", "models/base"], function (facade, BaseModel) {
     return BaseModel.extend({
       url: function() {
             if (testpath)
-                return testpath + '/location/add?address=' + this.address;
-            return '/api/location/add?address=' + this.address;
+                return testpath + '/game/basics/' + this.id;
+            return "/api/game/basics/"+this.id;
         }
-        
     });
 });

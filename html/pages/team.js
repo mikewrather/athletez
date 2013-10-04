@@ -426,7 +426,6 @@ define([
 
             this.scheme.push(headerView);            
             this.layout.render();
-            this.initVoteView();
         },
         
         setupAddMediaView: function() {
@@ -522,6 +521,7 @@ define([
         
         // intialize vote view
         initVoteView: function() {
+        	alert("init");
     	  var voteButtonsView = new voteView({
                 name: "vote View",
                 destination: '#votes-area-h',

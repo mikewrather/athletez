@@ -104,8 +104,12 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
                 });
             });
             
+            var popupCallback = undefined;
+            
             routing.off('location_popup_open');
-            routing.on('location_popup_open', function(view, location) {
+            routing.on('location_popup_open', function(view, location, callback) {
+            	if(callback)
+	            	popupCallback = callback;
             	 var modelHTML = '<div id="modalPopup" class="modal photo-frame-model hide fade model-popup-h">'+
 					'<div class="modal-header">'+
  					'<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>'+
@@ -127,6 +131,7 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
             routing.on('popup-close', function() {
             	$('#modalPopup').modal('hide');
             	$(".model-popup-h").remove();
+            	if(popupCallback) popupCallback();
             });
         },
         
