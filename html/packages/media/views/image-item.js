@@ -68,6 +68,7 @@ define(['vendor', 'views', 'utils', 'text!media/templates/image-item.html', 'vot
 
 					extra._label = mpay.media.name;
 					extra._link = "javascript: void(0);";
+					extra._has_link = false;
 
 					if(mpay.media.hasOwnProperty('is_owner')) show_edit = mpay.media.is_owner;
 
@@ -96,14 +97,14 @@ define(['vendor', 'views', 'utils', 'text!media/templates/image-item.html', 'vot
 					}
 					//else
 
-					extra._label = mpay.media_obj.users_obj.label;
+					extra._label = (!_.isUndefined(mpay.media_obj.users_obj.label))?mpay.media_obj.users_obj.label:'';
 					if(typeof(mpay.media_obj.sports_obj) == 'object')
 					{
 						extra._sublabel = ucwords(mpay.media_obj.sports_obj.sport_name);
 					}
 
 					extra._link = "javascript: void(0);";
-
+					extra._has_link = false;
 					if(mpay.media_obj.hasOwnProperty('is_owner')) show_edit = mpay.media_obj.is_owner;
 
 					break;
@@ -137,17 +138,18 @@ define(['vendor', 'views', 'utils', 'text!media/templates/image-item.html', 'vot
 					extra._label = mpay.label;
 					extra._sublabel = "Votes: " + mpay.num_votes + ", Followers: " + mpay.num_followers;
 					extra._link = "/#profile/" + mpay.id;
-
+					extra._has_link = true;
 					if(mpay.hasOwnProperty('is_owner')) show_edit = mpay.is_owner;
 
 					break;
 				case '8':
 					//games
 					extra._detailclass = "game";
-					standard_thumb = mpay.game_picture!==null ? mpay.game_picture.types.standard_thumb : {height:440,width:440,url:"http://cdn.athletez.com/resources/icons/game/square_game.png"}
+					standard_thumb = mpay.game_picture!==null ? mpay.game_picture.types.standard_thumb : {height:440,width:440,url:"http://cdn.athletez.com/resources/icons/game/square_game.png"};
 					extra._thumbnail = standard_thumb.url;
 					extra._label = mpay.game_day;
 					extra._link = "/#game/" + mpay.id;
+					extra._has_link = true;
 					var team_str = "", teams = mpay.teams;
 					if(teams != null) var teamLength = teams.length;
 

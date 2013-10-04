@@ -35,7 +35,7 @@ function(facade,  views,   utils,   ImageItemView,            ImageBoardView,   
 		//template: imageListTemplate,
 		events: {
 			'click .see-more-h': 'seeMore',
-			"click .image-outer-h": "initPhotoPlayer"
+			"click .open-photo-player-h": "initPhotoPlayer"
 		},
 		
 		renderTemplate: function () {

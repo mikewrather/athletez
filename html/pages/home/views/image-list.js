@@ -21,7 +21,7 @@ define(
 				_tagName : "li",
 				_className : "image",
 				events: {
-					'click .image-outer-h': 'initPhotoPlayer'
+					'click .open-photo-player-h': 'initPhotoPlayer'
 				},
 
 				// Store constructor for the child views
