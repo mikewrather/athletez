@@ -87,14 +87,33 @@ li.team-item div.score-box{
     background-color:#e49f6f;
     text-align: center;
     padding: 5px;
+
 }
 
+div.score-box a{
+    color:white;
+    text-decoration: none;
+}
+div.score-box input{
+    font-family: inherit;
+    font-size: 2em;
+    font-weight: bolder;
+    display: block;
+    color:white;
+    text-decoration: none;
+    height: 90%;
+    width: 80%;
+    background:none !important;
+    border:none;
+}
 div.score-box span{
     font-family: inherit;
     font-size: 2.2em;
     font-weight: bolder;
     display: block;
     margin-top:15px;
+    color:white;
+    text-decoration: none;
 }
 
 li.team-item div.score-box.win{
