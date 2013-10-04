@@ -140,7 +140,7 @@ define(
 		        
 		        changeViewFilter : function(str) {
 		        	if(str.submenu === 'browse') {
-		        		options = {'order_by': str.value};
+		        		options = {'orderby': str.value};
 		        	} else {
 		        		options = {'time' : str.value};
 		        	}
@@ -168,11 +168,12 @@ define(
 					switch(page) {
 						case 'view':
 							for(var i in this.viewOptions) {
-								if(i == "order_by")
-									this.urlOptions[this.viewOptions[i]] = "voter";
+								if(this.viewOptions[i] == "orderby")
+									this.urlOptions[this.viewOptions[i]] = "random";
 								else if(i == "time")
 									this.urlOptions[this.viewOptions[i]] = "today";
 							}
+							
 						break;
 						case 'sports':
 							for(var i in this.sportsOptions) {
