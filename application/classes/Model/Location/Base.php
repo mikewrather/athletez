@@ -259,9 +259,22 @@ class Model_Location_Base extends ORM
 				$this->full_address = $g_results['full_address'];
 				$this->lat = $g_results['lat'];
 				$this->lon = $g_results['lon'];
+				$this->zip = substr($g_results['zip'],0,5);
 
 				$this->loc_point = DB::expr("GeomFromText('POINT(".$g_results['lat']." ".$g_results['lon'].")')");
 				$this->all_info = serialize($g_results);
+
+				//get city
+				$city = ORM::factory('Location_City')
+					->join('states')->on('location_city.states_id','=','states.id')
+					->where('location_city.name','=',$g_results['city'])
+					->and_where('states.name','=',$g_results['state'])
+					->find();
+
+				if($city->loaded()){
+					$this->cities_id = $city->id;
+					$this->states_id = $city->states_id;
+				}
 			}
 		}
 		else
@@ -375,7 +388,8 @@ class Model_Location_Base extends ORM
 
 		if(isset($search_text))
 		{
-			$loc_search->where('full_address','LIKE',"%$search_text%");
+			$loc_search->where('full_address','LIKE',"$search_text%");
+			$loc_search->where('address','LIKE',"$search_text%");
 			$city_search->where('cities.name','LIKE',"$search_text%")
 				->or_where(DB::expr("CONCAT(`cities`.`name`,', ',`states`.`name`)"),'LIKE',"$search_text%");
 			$state_search->where('states.name','LIKE',"$search_text%");

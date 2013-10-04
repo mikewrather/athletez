@@ -2,9 +2,11 @@
 // --------------  
 // Requires define
 // Return {Object} App
-define( ["facade", "utils", "collections", "chrome", "controller", "profile", "imageup",'home','videopreview',"game", "team", "registration","profilesetting","userresume","packages/site/collections/phrases","usercontrols/tag/tag","usercontrols/addgame/addgame",'signup','login', "usercontrols/photo-player/photo-player"],
+
+define( ["facade", "utils", "collections", "chrome", "controller", "profile", "imageup",'home','videopreview',"game", "team", "registration","profilesetting","userresume","packages/site/collections/phrases","usercontrols/tag/tag","usercontrols/addgame/addgame","signup","login", "usercontrols/photo-player/photo-player", "usercontrols/add-club/add-club"],
 function (facade, utils, collections, chromeBootstrap, Controller, ProfileController, ImageController, HomeController, VideoPreviewController,
-	GameController, TeamController, RegistrationController,ProfileSetting,UserResume, SitePhraseList , TagController,AddGameController,SignupController,LoginController, PhotoPlayerController) {
+	GameController, TeamController, RegistrationController,ProfileSetting,UserResume, SitePhraseList , TagController,AddGameController, SignupController,LoginController,PhotoPlayerController, AddClubController) {
+
 
 
     //App;
@@ -86,12 +88,48 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
         
         initTriggers: function() {
         	routing.off('photo-player-init');
-            routing.on('photo-player-init', function(index, collection, userId) {
+            routing.on('photo-player-init', function(index, collection, userId, array) {
+            	
             	 var photoPlayer = new PhotoPlayerController({
-                	"index": index,
+                	index: index,
                 	userId: userId,
-                	_collection: collection
+                	_collection: collection,
+                	array: array
                 });
+            });
+            
+            routing.off('add-school-init');
+            routing.on('add-school-init', function(collection, userId, addType) {
+            	 var addSchool = new AddClubController({
+            	 	type: addType
+                	//userId: userId,
+                	//_collection: collection
+                });
+            });
+            
+            routing.off('location_popup_open');
+            routing.on('location_popup_open', function(view, location) {
+            	 var modelHTML = '<div id="modalPopup" class="modal photo-frame-model hide fade model-popup-h">'+
+					'<div class="modal-header">'+
+ 					'<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>'+
+					'</div>'+
+					'<div class="modal-body page-content-h">'+
+					'</div></div>';
+					$(".model-popup-h").remove();
+					$('body').append(modelHTML);
+					var viewOb = new view(location);
+					console.log(viewOb);
+					console.log(viewOb.el);
+					$(".modal-body").html(viewOb.$el);
+					$('#modalPopup').modal();
+					
+            });
+            
+            
+            routing.off('popup-close');
+            routing.on('popup-close', function() {
+            	$('#modalPopup').modal('hide');
+            	$(".model-popup-h").remove();
             });
         },
         
@@ -201,7 +239,7 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
                     "route": "",
                     "teamId": id,
                     "userId": headerModelId
-                })
+                });
             }
             this.initialiRoutesInit(initTeam);
            // Channel('app-inited').subscribe(initTeam);

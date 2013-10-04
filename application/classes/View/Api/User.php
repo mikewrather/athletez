@@ -254,6 +254,7 @@
 				$obj = new stdClass();
 				$obj->name = $basic['sport']['sport_name'];
 				$obj->sports_name = $basic['sport']['sport_name'];
+				$obj->icon = $basic['sport']['large_icon'];
 				$obj->sports_id = $sports_id;
 				$references_arr[] = $basic;
 				$obj->references = $references_arr;
@@ -296,6 +297,7 @@
 				$obj = new stdClass();
 				$obj->id = $sports_id;
 				$obj->name = $basic['sport']['sport_name'];
+				$obj->icon = $basic['sport']['large_icon'];
 				$awards_arr[] = $basic;
 				$obj->awards = $awards_arr;
 				$grouped_array[$sports_id] = $obj;
@@ -738,7 +740,21 @@
 			return $this->post_fbreg();
 		}
 
+		/**
+		 * post_login() Log in a user
+		 *
+		 * @retun array
+		 */
+		public function post_login()
+		{
+			if(is_object($this->obj) && (is_subclass_of($this->obj,'Model_Auth_User'))) return $this->obj->getBasics();
+			return $this->obj;
+		}
 
+		public function post_logout()
+		{
+			return false;
+		}
 
 		/**
 		 * post_savecrop() This is the method that can save the cropping information for an image being used as userpic.  It differs from those in the media controller in that it assumes this is going to be a userpic.

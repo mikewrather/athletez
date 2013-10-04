@@ -3,9 +3,12 @@
 // Requires `define`
 // Return {ImageItemView} object as constructor
 
-define(['vendor', 'views', 'utils', 'text!media/templates/image-item.html'], function(vendor, views, utils, imageItemTemplate) {
+define(['vendor', 'views', 'utils', 'text!media/templates/image-item.html', 'votes/models/vote',
+        'votes/models/follow'], function(vendor, views, utils, imageItemTemplate) {
 
-	var ImageItemView, $ = vendor.$, BaseView = views.BaseView, Mustache = vendor.Mustache;
+	var ImageItemView, $ = vendor.$, BaseView = views.BaseView, Mustache = vendor.Mustache,
+	voteModel = require('votes/models/vote'),
+    followModel = require('votes/models/follow');
 
 	ImageItemView = BaseView.extend({
 
@@ -15,12 +18,12 @@ define(['vendor', 'views', 'utils', 'text!media/templates/image-item.html'], fun
 
 		// Event handlers...
 		 events: {
-            "click": "changeImage",
-			"click .vote": "vote",
-	        "click .follow": "follow",
-			"click .edit": "edit",
-			"click .delete": "delete",
-			'click .image-outer-h' : 'initPhotoPlayer'
+            //"click": "changeImage",
+			"click .vote-h": "vote",
+			//'click .image-outer-h' : 'initPhotoPlayer',
+	        "click .follow-h": "follow",
+			"click .edit-h": "edit",
+			"click .delete-h": "delete"
         },
 
 		initialize : function(options) {
@@ -30,17 +33,39 @@ define(['vendor', 'views', 'utils', 'text!media/templates/image-item.html'], fun
 		
 		
 		render : function() {
-			var _self = this, mpay = this.model.attributes.payload, extra = {
-				_enttypes_id : mpay.enttypes_id,
-				_id : mpay.id
+			var _self = this, mpay = this.model.attributes.payload,
+				extra = {
+					_enttypes_id : mpay.enttypes_id,
+					_id : mpay.id,
+					_has_voted: mpay.has_voted,
+					_is_following: mpay.is_following,
+					_can_follow: mpay.can_follow
 				},
-				show_edit = false;
+				show_edit = false,
+				standard_thumb = null,
+				ucwords = function(str)
+				{
+					str = str.toLowerCase();
+					return str.replace(/(^([a-zA-Z\p{M}]))|([ -][a-zA-Z\p{M}])/g,
+						function($1){
+							return $1.toUpperCase();
+						});
+				};
 
-	
-			switch(mpay.enttypes_id) {
+			switch(mpay.enttypes_id)
+			{
 				case '23':
 					//videos
-					extra._thumbnail = mpay.thumbs;
+					if(typeof(mpay.standard_thumb)=='object')
+					{
+						standard_thumb = mpay.standard_thumb;
+						extra._thumbnail = standard_thumb.url;
+					}
+					else
+					{
+						extra._thumbnail = mpay.thumbs;
+					}
+
 					extra._label = mpay.media.name;
 					extra._link = "javascript: void(0);";
 
@@ -49,9 +74,34 @@ define(['vendor', 'views', 'utils', 'text!media/templates/image-item.html'], fun
 					break;
 				case '21':
 					//images
-					if ( typeof (mpay.types) == 'object' && mpay.types.standard_thumb)
-						extra._thumbnail = mpay.types.standard_thumb.url;
-					extra._label = mpay.media_obj.name;
+					if ( typeof (mpay.types) == 'object')
+					{
+						//console.log(mpay.types);
+						if(typeof(mpay.types.standard_thumb)=='object')
+						{
+							standard_thumb = mpay.types.standard_thumb;
+							extra._thumbnail = standard_thumb.url;
+						}
+						else if(typeof(mpay.types.large_thumb)=='object')
+						{
+							standard_thumb = mpay.types.large_thumb;
+							extra._thumbnail = standard_thumb.url;
+						}
+						else if(typeof(mpay.types.original)=='object')
+						{
+							//console.log(mpay.types.original);
+							standard_thumb = mpay.types['original'];
+							extra._thumbnail = standard_thumb.url;
+						}
+					}
+					//else
+
+					extra._label = mpay.media_obj.users_obj.label;
+					if(typeof(mpay.media_obj.sports_obj) == 'object')
+					{
+						extra._sublabel = ucwords(mpay.media_obj.sports_obj.sport_name);
+					}
+
 					extra._link = "javascript: void(0);";
 
 					if(mpay.media_obj.hasOwnProperty('is_owner')) show_edit = mpay.media_obj.is_owner;
@@ -59,10 +109,33 @@ define(['vendor', 'views', 'utils', 'text!media/templates/image-item.html'], fun
 					break;
 				case '1':
 					//users
+
+
 					if ( typeof (mpay.user_picture_obj) == 'object')
-						extra._thumbnail = mpay.user_picture_obj.types.standard_thumb.url;
+					{
+						if(typeof(mpay.user_picture_obj.types) == 'object')
+						{
+							if(typeof(mpay.user_picture_obj.types.standard_thumb)=='object')
+							{
+								standard_thumb = mpay.user_picture_obj.types.standard_thumb;
+								extra._thumbnail = standard_thumb.url;
+							}
+							else if(typeof(mpay.user_picture_obj.types.large_thumb)=='object')
+							{
+								standard_thumb = mpay.user_picture_obj.types.large_thumb;
+								extra._thumbnail = standard_thumb.url;
+							}
+							else if(typeof(mpay.user_picture_obj.types.original)=='object')
+							{
+								//console.log(mpay.types.original);
+								standard_thumb = mpay.user_picture_obj.types['original'];
+								extra._thumbnail = standard_thumb.url;
+							}
+						}
+					}
+
 					extra._label = mpay.label;
-					extra._sublabel = "Coming Soon";
+					extra._sublabel = "Votes: " + mpay.num_votes + ", Followers: " + mpay.num_followers;
 					extra._link = "/#profile/" + mpay.id;
 
 					if(mpay.hasOwnProperty('is_owner')) show_edit = mpay.is_owner;
@@ -71,19 +144,13 @@ define(['vendor', 'views', 'utils', 'text!media/templates/image-item.html'], fun
 				case '8':
 					//games
 					extra._detailclass = "game";
-
-					extra._thumbnail = mpay.game_picture!==null ? mpay.game_picture.types.standard_thumb.url : "http://lorempixel.com/output/sports-q-g-440-440-3.jpg";
+					standard_thumb = mpay.game_picture!==null ? mpay.game_picture.types.standard_thumb : {height:440,width:440,url:"http://cdn.athletez.com/resources/icons/game/square_game.png"}
+					extra._thumbnail = standard_thumb.url;
 					extra._label = mpay.game_day;
 					extra._link = "/#game/" + mpay.id;
-					var team_str = "", teamLength = mpay.teams.length,
-						ucwords = function(str)
-						{
-							str = str.toLowerCase();
-							return str.replace(/(^([a-zA-Z\p{M}]))|([ -][a-zA-Z\p{M}])/g,
-								function($1){
-									return $1.toUpperCase();
-								});
-						};
+					var team_str = "", teams = mpay.teams;
+					if(teams != null) var teamLength = teams.length;
+
 					for (var i = 0; i < teamLength; i++) {
 						team_str += '<span>';
 
@@ -99,7 +166,7 @@ define(['vendor', 'views', 'utils', 'text!media/templates/image-item.html'], fun
 			}
 			extra.show_edit = show_edit==true ? true : undefined;
 
-			console.log("Called Image Render", extra);
+			//console.log("Called Image Render", extra);
 			var markup = Mustache.to_html(this.template, extra);
 			this.$el.html(markup);
 
@@ -116,8 +183,32 @@ define(['vendor', 'views', 'utils', 'text!media/templates/image-item.html'], fun
 					'bottom' : '-' + game_detail_view_height
 				});
 			});
-			
-			
+
+			if(standard_thumb != "undefined" && standard_thumb != null)
+			{
+
+				var ratio_x = standard_thumb.width / 220,
+					ratio_y = standard_thumb.height / 220;
+
+				standard_thumb.width = parseInt(standard_thumb.width);
+				standard_thumb.height = parseInt(standard_thumb.height);
+
+				var overflow = (standard_thumb.width > standard_thumb.height) ?
+					-((standard_thumb.width / ratio_y) -220) / 2:
+					-((standard_thumb.height / ratio_x)-220) / 2;
+				if(overflow > 0) overflow = 0;
+
+				if(standard_thumb.width > standard_thumb.height)
+					this.$el.find('img.list-thumbnail').css({
+						'max-width':standard_thumb.width / ratio_y,
+						'left':overflow
+					});
+				else
+					this.$el.find('img.list-thumbnail').css({
+						'max-height':standard_thumb.height / ratio_x,
+						'top':overflow
+					});
+			}
 
 			this.$el.find('.image-outer-h').mouseover(function() {
 				$(this).find('.detail-view').css({
@@ -127,11 +218,22 @@ define(['vendor', 'views', 'utils', 'text!media/templates/image-item.html'], fun
 					opacity : 90
 				});
 			});
-
-
-
 			
-
+			  this.$el.find('.vote-h').click(function(e) {
+	        	_self.vote(e);
+	        });
+	        
+	        this.$el.find('.follow-h').click(function(e) {
+	        	_self.follow(e);
+	        });
+	        
+	        this.$el.find('.edit-h').click(function(e) {
+	        	_self.edit(e);
+	        });
+	        
+	        this.$el.find('.delete-h').click(function(e) {
+	        	_self['delete'](e);
+	        });
 			return this;
 
 			//console.log("Called Image Render",this.model);
@@ -148,21 +250,77 @@ define(['vendor', 'views', 'utils', 'text!media/templates/image-item.html'], fun
 	    {
 		    e.preventDefault();
 		    console.log(this.model);
+		   e.stopPropagation();
+		    var voteModelOb = new voteModel();
+			voteModelOb.userId = this.model.get("payload").id;
+			voteModelOb.entity_id = this.model.get("payload").enttypes_id;
+			voteModelOb.setData();
+			voteModelOb.save();
+			$.when(voteModelOb.request).done(function()
+			{
+				//if()
+				$(e.currentTarget).addClass('link-disabled');
+			});
 	    },
 
 	    follow: function(e){
-		    e.preventDefault();
+		   e.preventDefault();
 		    console.log(e.target);
+		    e.stopPropagation();
+		    var followModelOb = new followModel();
+			followModelOb.userId = this.model.get("payload").id;
+			followModelOb.entity_id = this.model.get("payload").enttypes_id;
+			followModelOb.save();
+			$.when(followModelOb.request).done(function() {
+
+				console.log(followModelOb.get('payload'))
+				if(typeof(followModelOb.get('payload').follower) =='object' && typeof(followModelOb.get('payload').subject) =='object' && followModelOb.get('payload').id > 0)
+				{
+					$(e.currentTarget).addClass('link-disabled');
+				}
+				else
+				{
+					console.log("FAIL");
+				}
+			});
 	    },
 
 		edit: function(e)
 		{
+			e.stopPropagation();
 			e.preventDefault();
+			
+			var _self = this, mpay = this.model.get("payload");
+			switch(mpay.enttypes_id)
+			{
+				case '23':
+					//videos
+					//extra._link = "javascript: void(0);";
+					break;
+				case '21':
+					//images
+					//extra._link = "javascript: void(0);";
+					break;
+				case '1':
+					//users
+					window.location.hash = "profile/" + mpay.id;
+					break;
+				case '8':
+					//games
+					window.location.hash = "game/" + mpay.id;
+					break;
+
+			}
+			
+			
+			console.log(this.model);
 		},
 
 		'delete': function(e)
 		{
+			e.stopPropagation();
 			e.preventDefault();
+			console.log("delete");
 		}
 
 	});

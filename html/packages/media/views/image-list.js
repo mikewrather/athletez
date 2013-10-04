@@ -47,12 +47,10 @@ function(facade,  views,   utils,   ImageItemView,            ImageBoardView,   
       
 
         initialize: function(options) {
-        	
         	if(options.name)
         		this.name = options.name;
         	else
         		this.name = "image list";
-        	
         	
         	if(options.collecton)
         		this.collection = options.collection;
@@ -60,8 +58,6 @@ function(facade,  views,   utils,   ImageItemView,            ImageBoardView,   
 			// render template
 			this.renderTemplate();
 	        //console.log(options);
-	       
-	      
 	       
 	        var _self = this;
 			 _self.allData = this.collection.toArray();
@@ -84,8 +80,9 @@ function(facade,  views,   utils,   ImageItemView,            ImageBoardView,   
         
         initPhotoPlayer: function(e) {
         	console.log(this.collection);
-			var index = $(e.target).parents('li').index() - 1;       		
-       		routing.trigger('photo-player-init', index, this.allData, this.collection.id);
+			var index = ($(e.target).parents('li').index() - 1);  
+			if(index< 0) index = 0;
+       		routing.trigger('photo-player-init', index, this.allData, this.collection.id, true);
        	},
 
         

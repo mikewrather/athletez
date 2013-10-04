@@ -43,16 +43,14 @@ define(["require", 'text!usercontrols/photo-player/templates/comments.html',
 			_.bindAll(this);
 			// model box html 
 			if (options.id) this.id = options.id;
-			if (options.index) this.index = options.index;
+			this.index = options.index;
 			if(options.userId) this.userId = options.userId;
+			if(options.array) this.collectionArray = true;
 			if (options._collection) this._collection = options._collection;
 				this.modelHTML = '<div id="modalPopup" class="modal photo-frame-model hide fade model-popup-h">'+
-					'<div class="modal-header">'+
- 					'<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>'+
-					'</div>'+
 					'<div class="modal-body page-content-h">'+
 					'<div class="photo-player-area-h photo-player"></div>'+
-					'<div class="photo-player-right-area"><div class="tags-area-h"></div><div class="comment-area coment-area-h"></div><div class="comment-input-outer-h comment-input-outer" class="clearfix"></div>'+
+					'<div class="photo-player-right-area"><div class="right-area-header"></div><div class="tags-area-h"></div><div class="comment-area coment-area-h"></div><div class="comment-input-outer-h comment-input-outer" class="clearfix"></div>'+
 					'</div></div></div>';
 			
 			routing.off('photo-player-section-reload');
@@ -96,9 +94,14 @@ define(["require", 'text!usercontrols/photo-player/templates/comments.html',
 		
 		// set up photo player main view
 		setUpMainView : function() {
-			var self = this, collectionInstance = Backbone.Collection.extend(), collection = new collectionInstance(); 
+			var self = this; 
 			
-			collection.reset(self._collection);
+			if(self.collectionArray) {
+				var collectionInstance = Backbone.Collection.extend(), collection = new collectionInstance(); 
+				collection.reset(self._collection);
+			} else {
+				collection = self._collection;
+			}
 			
 			var photoPlayerMain = new PhotoPlayerView({
 				model : collection,
@@ -106,6 +109,7 @@ define(["require", 'text!usercontrols/photo-player/templates/comments.html',
 				destination : ".photo-player-area-h",
 				index : self.index
 			});
+			
 			this.scheme.push(photoPlayerMain);
 			this.layout.render();
 		},
@@ -113,20 +117,24 @@ define(["require", 'text!usercontrols/photo-player/templates/comments.html',
 		setUpTagView: function(entity_id, id) {
 			var l = this.scheme.length;
 			for(var i = 0; i < l; i++) {
-				if(this.scheme[i].name == this.oldTagView)
+				if(this.scheme[i].name == this.oldTagView) {
 					this.scheme[i].remove();
+				}
 			}
-			
-			var _self = this, tagView;
+			var _self = this;
 			_self.oldTagView = "tag section" + Math.random();
+			$(".tags-area-h").unbind().html("");
 			_self.tags = new TagsCollection();
 			_self.tags.id = id;
 			_self.tags.fetch();
 			//$(".coment-area-h").html();
 			$.when(_self.tags.request).done(function () {
-				tagView = new TagsSectionView({
+				console.error(_self.tags);
+				var tagView = new TagsSectionView({
 					collection : _self.tags,
+					userId: _self.userId,
 					name : _self.oldTagView,
+					entity_type_id: entity_id,
 					destination : ".tags-area-h"
 				});
 				_self.scheme.push(tagView);
@@ -136,11 +144,13 @@ define(["require", 'text!usercontrols/photo-player/templates/comments.html',
 		
 		// set up comment view in photo player
 		setUpCommentView: function(entity_id, id) {
+			console.log(this.scheme);
+			console.log(this.oldView)
 			var l = this.scheme.length;
 			for(var i = 0; i < l; i++) {
 				if(this.scheme[i].name == this.oldView)
 					this.scheme[i].remove();
-				console.error(this.scheme[i].name);
+				
 			}
 			
 			var _self = this, photoPlayer;

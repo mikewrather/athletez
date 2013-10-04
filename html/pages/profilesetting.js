@@ -21,17 +21,15 @@ define(["require", "text!profilesetting/templates/layout.html", "facade", "contr
 	IndividualSportsView = require("profilesetting/views/individuals");
 
 	var HighSchoolModel = require("profilesetting/models/high_school");
-var IndividualSportsCollection = require("profilesetting/collections/individualsports");
+	var IndividualSportsCollection = require("profilesetting/collections/individualsports");
 	ProfileSettingController = Controller.extend({
 		/*CSS SECTION*/
 		cssArr : ["/pages/profilesetting/profilesettings.css"],
-
 		events : {
 			//"click #btn-Add-School" : "addHighSchool",
 		},
 		/*Actions to be performed on the first time the object is created*/
 		initialize : function(options) {
-
 			/*Load CSS File*/
 			Channel('load:css').publish(this.cssArr);
 			/*Bind Class with all events*/
@@ -130,7 +128,6 @@ var IndividualSportsCollection = require("profilesetting/collections/individuals
 			});
 			this.scheme.push(this.individualSportsView);
 			this.layout.render();
-			
 		},
 		/*Add School View if user clicks on Add School*/
 		SetUpClubView : function() {

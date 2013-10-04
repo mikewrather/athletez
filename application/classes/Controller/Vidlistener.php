@@ -19,10 +19,24 @@ class Controller_VidListener extends Controller
 		if(!$video->loaded()) return;
 
 		if(isset($arr->output->thumbnails)){
-			
+
 			foreach($arr->output->thumbnails[0]->images as $img)
 			{
 				$video->thumbs = $img->url;
+				$dimensions = explode('x',$img->dimensions);
+				$video->thumb_height = $dimensions[1];
+				$video->thumb_width = $dimensions[0];
+
+				break;
+			}
+
+			foreach($arr->output->thumbnails[1]->images as $img)
+			{
+				$video->small_thumbs = $img->url;
+				$dimensions = explode('x',$img->dimensions);
+				$video->small_thumb_height = $dimensions[1];
+				$video->small_thumb_width = $dimensions[0];
+
 				break;
 			}
 		}

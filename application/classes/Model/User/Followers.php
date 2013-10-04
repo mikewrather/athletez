@@ -12,10 +12,13 @@ class Model_User_Followers extends ORM
 	public static function num_followers($obj){
 		$subject_enttypes_id = Model_Site_Enttype::getMyEntTypeID($obj);
 		$subject_id = $obj->id;
-		$followers = ORM::factory("User_Followers");
-		$followers->where('subject_enttypes_id', '=', $subject_enttypes_id);
-		$followers->where('subject_id', '=', $subject_id)->find_all()->as_array();
-		$total_followers = count($followers);
+
+		$total_followers = DB::select(array(DB::expr('COUNT(id)'),'num_followers'))->from('followers')
+			->where('subject_enttypes_id', '=', $subject_enttypes_id)
+			->where('subject_id', '=', $subject_id)
+			->execute()
+			->get('num_followers',0);
+
 		if ($total_followers){
 			return intval($total_followers);
 		}

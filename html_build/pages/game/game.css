@@ -1,0 +1,111 @@
+.game-heading {
+	background: #d36011;
+	color: #000;
+	float: left;
+	width: 100%;
+	padding: 5px 10px 5px 10px;
+    font-family: "Avenir","HelveticaNeue","Helvetica";
+}
+.game-heading h3 {
+	font-weight: bold;
+	font-size: 50px;
+	line-height: 30px;
+    font-family: inherit;
+}
+.game-heading h4 {
+	font-weight: bold;
+	font-size: 30px;
+	line-height: 38px;
+    font-family: inherit;
+}
+.game-heading .game-general{
+    display: block;
+    width: 100%;
+    text-align: justify;
+    -ms-text-justify: distribute-all-lines;
+    text-justify: distribute-all-lines;
+}
+.game-heading .game-general span{
+    font-size: 2.5em;
+    font-weight: bolder;
+    font-family: inherit;
+    margin-right:30px;
+    text-align: center;
+    text-transform: uppercase;
+}
+.game-heading .game-general span:after{
+    content: '  |';
+}
+.game-heading .game-general span:last-child:after{
+    content: '';
+}
+div.stretch{
+    content: '';
+    width: 100%;
+    display: inline-block;
+    font-size: 0;
+    line-height: 0
+}
+.game-heading .game-general span:last-child{
+    margin-right:0;
+}
+ul.teams-list{
+    display:inline-block;
+    padding:10px;
+    width: 65%;
+    float: left;
+}
+ul.teams-list li.team-item{
+    min-width:70%;
+    vertical-align: middle;
+    height: 80px;
+    padding: 10px;
+    margin-top:10px;
+    display:block;
+    border-bottom:1px solid #CCCCCC;
+    font-family:'Avenir','HelveticaNeue','Helvetica';
+}
+ul.teams-list li.team-item:last-child{
+    border:0;
+}
+li.team-item div.score-box{
+    display: inline-block;
+    float: left;
+    height:50px;
+    width: 50px;
+    background-color:#e49f6f;
+    text-align: center;
+    padding: 5px;
+}
+div.score-box span{
+    font-family: inherit;
+    font-size: 2.2em;
+    font-weight: bolder;
+    display: block;
+    margin-top:15px;
+}
+li.team-item div.score-box.win{
+    background-color:#d36011;
+}
+li.team-item div.org-info{
+    display: block;
+    margin-top:10px;
+}
+.org-info span{
+    display:block;
+    padding-left: 80px;
+    padding-bottom: 10px;
+    font-family: inherit;
+}
+.org-info span.org-name{
+    font-size: 1.5em;
+    font-weight: bolder;
+}
+.org-info span.org-location{
+    font-size: 1.2em; font-weight: bolder;
+}
+.header-image-container{
+    display: inline-block;
+    float: left !important;
+    margin: 20px 0 0 10px;
+}

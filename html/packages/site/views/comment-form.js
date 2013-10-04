@@ -43,6 +43,7 @@ define([
         },
 
         render: function () {
+	        console.log("RENDER CALLED!!!!");
             BaseView.prototype.render.call(this);
             this.input = this.$("#new-comment");            
             
@@ -52,9 +53,6 @@ define([
             if (payload) {
                 var user_photo = payload.user_picture;
                 var user_email = payload.email;
-	            if (!user_photo && user_email) {
-	                self.$('.user-photo img').attr("src","http://www.gravatar.com/avatar/" + MD5(user_email) + "&s=29");
-                }
             }
 	        return this;
         },

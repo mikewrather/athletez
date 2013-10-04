@@ -69,7 +69,7 @@ class Model_Sportorg_Team extends ORM
 				array('exact_length', array(':value', 4)),
 			),
 			'mascot' => array(
-				array('alpha')
+			//	array('alpha')
 			),
 			'unique_ident' => array(
 				array('alpha')
@@ -227,6 +227,7 @@ class Model_Sportorg_Team extends ORM
 		),
 		'added_function_calls' => array(
 			'team_name' => 'name',
+			'org_name' => 'get_org_name',
 			"team_location" => 'getTeamLocation',
 			"picture" => 'getImage',
 			"num_votes" => 'get_num_votes',
@@ -246,6 +247,12 @@ class Model_Sportorg_Team extends ORM
 	public function get_num_followers()
 	{
 		return Model_User_Followers::num_followers($this);
+	}
+
+	public function get_org_name()
+	{
+		$org = $this->getOrg();
+		return $org->name;
 	}
 
 	public function getBasics($settings = array())
@@ -408,10 +415,10 @@ class Model_Sportorg_Team extends ORM
 			foreach($words as $word)
 			{
 				$this->and_where_open();
-				$this->where('orgs.name', 'like', "%".$word."%");
+				$this->where('orgs.name', 'like', $word."%");
 				$this->or_where('complevels.name', '=', $word);
 				$this->or_where('sportorg_team.year', 'like', $word.'%');
-				$this->or_where('sportorg_team.unique_ident', 'like',"%".$word."%");
+				$this->or_where('sportorg_team.unique_ident', 'like',$word."%");
 				$this->or_where('sports.name', 'like', $word.'%');
 				$this->or_where('seasons.name', 'like', $word.'%');
 				$this->and_where_close();

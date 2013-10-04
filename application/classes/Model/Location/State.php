@@ -100,7 +100,7 @@ class Model_Location_State extends ORM
 			return $this;
 		}else{
 			extract($args);
-			$this->where('name', 'like', "%$name%");
+			$this->where('name', 'like', $name."%");
 		}
 
 		return $this;

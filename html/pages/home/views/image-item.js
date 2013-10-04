@@ -7,7 +7,9 @@ define([
         'vendor', 
         'views',
         'utils', 
-        'text!pages/home/templates/image-item.html'
+        'text!pages/home/templates/image-item.html',
+         'votes/models/vote',
+        'votes/models/follow'
         ], 
 function (
         vendor,
@@ -18,20 +20,21 @@ function (
 
     var ImageItemView
       , $ = vendor.$
-      , BaseView = views.BaseView
-      , Mustache = vendor.Mustache;
+      , BaseView = views.BaseView,
+      voteModel = require('votes/models/vote'),
+        followModel = require('votes/models/follow'),
+      Mustache = vendor.Mustache;
 
       ImageItemView = BaseView.extend({
-
         tagName: "li",
-
         className: "image",
-        
         // Event handlers...
         events: {
-            "click": "changeImage",
-			"click .vote": "vote",
-	        "click .follow": "follow"
+            //"click": "changeImage",
+			// "click .vote-h": "vote",
+	        // "click .follow-h": "follow",
+	        // "click .edit-h": "edit",
+	        // "click .delete-h": "delete"
         },
         
         initialize: function (options) {
@@ -41,7 +44,7 @@ function (
         render: function ()
         {
 
-	        var mpay = this.model.attributes.payload,
+	        var _self = this, mpay = this.model.attributes.payload,
 		        extra = {
 			        _enttypes_id : mpay.enttypes_id,
 	                _id : mpay.id
@@ -98,25 +101,65 @@ function (
 		        $(this).find('.detail-view').css({'bottom': '0px'});
 		        $(this).find('.action-block.vote, .action-block.follow').css({opacity:90});
 	        });
-
+	        
+	        
+	        this.$el.find('.vote-h').click(function() {
+	        	_self.vote();
+	        });
+	        
+	        this.$el.find('.follow-h').click(function() {
+	        	_self.follow();
+	        });
+	        
+	        this.$el.find('.edit-h').click(function() {
+	        	_self.edit();
+	        });
+	        
+	        this.$el.find('.delete-h').click(function() {
+	        	_self['delete']();
+	        });
+	        
             return this;
         },
 
 	    vote: function(e)
 	    {
-		    e.preventDefault();
+		   e.preventDefault();
 		    console.log(this.model);
+		    var voteModelOb = new voteModel();
+			voteModelOb.userId = this.model.id;
+			voteModelOb.entity_id = this.model.get("payload").enttypes_id;
+			voteModelOb.setData();
+			voteModelOb.save();
 	    },
 
 	    follow: function(e){
-		    e.preventDefault();
+		     e.preventDefault();
 		    console.log(e.target);
+		    var followModelOb = new followModel();
+			followModelOb.userId = this.model.id;
+			followModelOb.entity_id = this.model.get("payload").enttypes_id;
+			followModelOb.save();
 	    },
         
         changeImage: function() {
 
             Channel('changeimage' + this.model.collection.id).publish(this.model);
-        }        
+        },
+        edit: function(e)
+		{
+			alert("edit");
+			e.preventDefault();
+			console.log("edit");
+		},
+
+		'delete': function(e)
+		{
+				alert("delete");
+			e.preventDefault();
+			console.log("delete");
+		}
+               
         
       });
 

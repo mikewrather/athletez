@@ -114,3 +114,9 @@
 #Loginview {
 	height: 700px;
 }
+#RegModal{
+height: 700px;
+}
+.errormsg{
+color: red;
+}

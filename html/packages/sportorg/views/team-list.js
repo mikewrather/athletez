@@ -1,8 +1,8 @@
 // Team List
 // --------------
 
-define(['vendor', 'facade','views', 'utils', 'sportorg/views/team-item', 'text!sportorg/templates/team-list.html'], 
-function(vendor, facade,  views,   utils,   TeamItemView, TeamListViewTemplate) {
+define(['vendor', 'facade','views', 'utils', 'sportorg/views/team-item', 'text!sportorg/templates/team-list.html','utils/storage'], 
+function(vendor, facade,  views,   utils,   TeamItemView, TeamListViewTemplate, Store) {
 
     var TeamListView, 
         TeamListAbstract,
@@ -23,6 +23,10 @@ function(vendor, facade,  views,   utils,   TeamItemView, TeamListViewTemplate) 
         name: "Team List",
         //tagName: "ul",
 
+		events: {
+			"click .add-game-h": "addGame"
+		},
+		
         // Tag for the child views
         _tagName: "li",
         _className: "team",
@@ -31,7 +35,7 @@ function(vendor, facade,  views,   utils,   TeamItemView, TeamListViewTemplate) 
         _view: TeamItemView,
 		listView : ".team-list-h",
         initialize: function(options) {
-        	this.renderTemplate();
+	        this.renderTemplate();
             CollectionView.prototype.initialize.call(this, options);
             if (!this.collection) {
                 throw new Error("TeamListView expected options.collection.");
@@ -41,9 +45,24 @@ function(vendor, facade,  views,   utils,   TeamItemView, TeamListViewTemplate) 
             this.addSubscribers();
         },
         
+        addGame: function() {
+        	var appStates = new Store("user","localStorage");
+        	console.log(appStates.data);
+        	var user = 0;
+        	if(appStates.data) {
+ 	  	     	for(var userId in appStates.data) {
+ 	  	     		user = userId;
+ 	  	     		break;		
+ 	  	     	}
+        	}
+        	if(user)	
+	        	routing.trigger('add-game', user);
+        },
+        
         renderTemplate: function () {
         	var data = {};
         	data.data = this.collection.toJSON();
+	        console.log("Schedule Data",data.data);
             var markup = Mustache.to_html(this.template, data);
             this.$el.html(markup);
             return this;

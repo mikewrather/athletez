@@ -26,7 +26,7 @@ function (
         
         // Event handlers...
         events: {
-            "click": "selectSport"
+           // "click a": "selectSport",
         },
         
         initialize: function (options) {
@@ -34,8 +34,13 @@ function (
         },
 
         render: function () {
-            var markup = Mustache.to_html(this.template, this.model.toJSON());
+            var _self = this, markup = Mustache.to_html(this.template, this.model.toJSON());
             this.$el.html(markup);
+            
+            this.$el.find('a').click(function() {
+            	_self.selectSport();
+            });
+            
             return this;
         },
         

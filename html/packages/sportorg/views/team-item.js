@@ -27,18 +27,19 @@ function (
 
         className: "team",
            events: {
-            'click .team-info-h': 'showinfo'
+	           'mouseover .team-info-h': 'showinfo',
+	           'mouseout .team-info-h': 'showinfo'
         },
         
         showinfo: function(e) {
         	e.preventDefault();
-        	if(!$(e.target).parents('.org-popup').length) {
+        	if(!$(e.target).parents('.game-info').length) {
 	        	
-	        	if($(e.target).find('.org-popup').hasClass('hide')) {
-		        	$('.org-popup').addClass('hide');
-		        	$(e.target).find('.org-popup').removeClass('hide');
+	        	if($(e.target).find('.game-info').hasClass('hide')) {
+		        //	$('.game-info').addClass('hide');
+		        	$(e.target).find('.game-info').removeClass('hide');
 		        } else {
-		        	$('.org-popup').addClass('hide');
+		        	$('.game-info').addClass('hide');
 		        }
 		        
 		        
@@ -46,14 +47,30 @@ function (
         	}
         },
         initialize: function (options) {
+	        this.teams_id = options.teams_id || null;
+	        console.log("Teams_id:",options);
+	        this.mpay = this.model.get('payload');
+	        console.log("Team Item View",this.mpay);
             this.template = teamItemTemplate;
         },
 
         render: function () {
-            var markup = Mustache.to_html(this.template, this.model.toJSON());
+	        var string_to_use = this.createOpponentString();
+
+            var markup = Mustache.to_html(this.template, {id:this.mpay.id,summary:string_to_use});
             this.$el.html(markup);
             return this;
-        }        
+        },
+
+	    createOpponentString: function()
+	    {
+		    var str = this.mpay.game_day + " | ";
+		    console.log("Game info",this.mpay);
+		    $.each(this.mpay.teams,function(){
+				if(this.id > 0 && this.id != this.teams_id) str += " VS. " + this.org_name;
+		    });
+		    return str;
+	    }
         
       });
 

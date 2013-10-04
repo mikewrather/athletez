@@ -16,6 +16,9 @@ define(['require', 'text!usercontrol/dropdown/template/layout.html', 'facade', '
 		multiple : false,
 		// stack to store all selected options
 		selectedOptions : [],
+		
+		// dropdown outer class
+		className: 'dropdown-wrapper',
 
 		/*Bind Events on controls present in current view template*/
 		events : {
@@ -31,10 +34,16 @@ define(['require', 'text!usercontrol/dropdown/template/layout.html', 'facade', '
 			else
 				this.setSingleOption(val, e);
 
+			this.showSelectedValue();
 			if (this.callback)
 				this.callback(this.selectedOptions);
-			console.log(this.selectedOptions);
-
+		},
+		
+		
+		showSelectedValue: function() {
+			// show vaue selected
+			var html = this.$el.find('.common-dropdown li.selected').text() || this.title;
+			this.$el.find('.dropdown-header-box').html(html);
 		},
 
 		// set multipe dropdown options
@@ -100,6 +109,8 @@ define(['require', 'text!usercontrol/dropdown/template/layout.html', 'facade', '
 			var self = this;
 			if ($(e.currentTarget).find("span").hasClass('icon-chevron-down')) {
 				$(e.currentTarget).find("span").removeClass('icon-chevron-down').addClass('icon-chevron-up');
+				$(".dropdown-container").removeClass('increase-dropown-zindex');
+				self.$el.find(".dropdown-container").addClass('increase-dropown-zindex');
 				$("html").bind('click', function(e) {
 					self.hideDropdown(e);
 				});
@@ -116,7 +127,6 @@ define(['require', 'text!usercontrol/dropdown/template/layout.html', 'facade', '
 
 		// set default values selected
 		defaultSelected : function(val) {
-			console.error(this);
 			if (_self.multiple) {
 				if (_.isArray(_self.selectedValue)) {
 					for (var i in _self.selectedValue) {
@@ -139,7 +149,6 @@ define(['require', 'text!usercontrol/dropdown/template/layout.html', 'facade', '
 
 		//render displays the view in browser
 		render : function() {
-			console.error(this.data);
 			this.data.dropView = this;
 			if (!this.selectedValue) {
 				if (this.data.records.length)
@@ -158,7 +167,7 @@ define(['require', 'text!usercontrol/dropdown/template/layout.html', 'facade', '
 			this.targetView.$el.find(this.destination).html(this.el);
 			this.$el.find(".hidden-input-dropdown-h").val(this.selectedValue);
 			this.selectedOptions.push(this.selectedValue);
-
+			this.showSelectedValue();
 			if ($("#" + this.elementId).length) {
 				if (self.callback)
 					self.callback(this.selectedOptions);
@@ -176,7 +185,6 @@ define(['require', 'text!usercontrol/dropdown/template/layout.html', 'facade', '
 			for (var i in options) {
 				this[i] = options[i];
 			}
-			console.error(this.destination);
 		}
 	});
 	return DropDownView;

@@ -1,0 +1,1 @@
+define(["facade","collections","media/models/image","utils"],function(e,t,n,r){var i,s=t.BaseCollection,o=e._,u=r.lib.Channel;return i=s.extend({model:n,fetchSuccess:function(e,t){e.reset();var r=t.payload;for(var i in r){var s=new n;s.processItemFromPayload(t,i),s.selected_image!=undefined&&(r[i].image_path=s.selected_image),e.push(s)}e.deferred.resolve(t)}}),i});

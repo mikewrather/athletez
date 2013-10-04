@@ -1,0 +1,1 @@
+define(["models/base"],function(e){var t;return t=e.extend({defaults:{links:[{label:"Photo",link:"javascript:void(0);",id:"addPhoto"},{label:"Video",link:"javascript:void(0);",id:"addVideo"}],userid:null}}),t});

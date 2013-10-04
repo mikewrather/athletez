@@ -58,12 +58,20 @@ function (
             this.model.fetchSuccess = this.model.fetchError = function(model, res) {
                 var markup = Mustache.to_html(self.template, model.toJSON());
                 self.$el.html(markup);
-                
-                var user_photo = model.get('user_photo');
-                var user_email = model.get('user_email');
-                if (!user_photo && user_email) {
-                    self.$('.photo img').attr("src","http://www.gravatar.com/avatar/" + MD5(user_email) + "&s=29");
-                }
+	            console.log(model.toJSON());
+
+	            if(typeof(model.get('user_photo'))=='object')
+	                if(typeof(model.get('user_photo').types)=='object')
+	                    if(typeof(model.get('user_photo').types.small_thumb)=='object')
+		                    var user_photo = model.get('user_photo').types.small_thumb.url;
+	                    else if(typeof(model.get('user_photo').types.large_thumb)=='object')
+		                    var user_photo = model.get('user_photo').types.large_thumb.url;
+	                    else if(typeof(model.get('user_photo').types.original)=='object')
+		                    var user_photo = model.get('user_photo').types.original.url;
+                        else var user_photo = "";
+
+			  self.$('.photo img').attr("src",user_photo);
+
                 var authorized = model.get('authorized');
                 if (authorized) {
                     var id = model.get('id');

@@ -76,7 +76,7 @@ if (isset($_SERVER['KOHANA_ENV']))
 	Kohana::$environment = constant('Kohana::' . strtoupper($_SERVER['KOHANA_ENV']));
 }
 
-if (strpos($_SERVER['HTTP_HOST'], 'newsite') !== FALSE || strpos($_SERVER['HTTP_HOST'], 'aup.dev') !== FALSE || strpos($_SERVER['HTTP_HOST'], 'localhost') !== FALSE)
+if (strpos($_SERVER['HTTP_HOST'], 'newsite') !== FALSE || strpos($_SERVER['HTTP_HOST'], 'aup.') !== FALSE || strpos($_SERVER['HTTP_HOST'], 'localhost') !== FALSE)
 {
 	// Localhost
 	Kohana::$environment = Kohana::LOCALHOST;
@@ -84,8 +84,12 @@ if (strpos($_SERVER['HTTP_HOST'], 'newsite') !== FALSE || strpos($_SERVER['HTTP_
 	// Turn off notices and strict errors
 	error_reporting(E_ALL ^ E_NOTICE);
 }
-elseif (strpos($_SERVER['HTTP_HOST'], 'athletesup') !== FALSE || strpos($_SERVER['HTTP_HOST'], 'amazonaws') !== FALSE)
-{
+elseif (
+	strpos($_SERVER['HTTP_HOST'], 'athletesup') !== FALSE ||
+	strpos($_SERVER['HTTP_HOST'], 'amazonaws') !== FALSE ||
+	strpos($_SERVER['HTTP_HOST'], '50.19.123.141') !== FALSE ||
+	strpos($_SERVER['HTTP_HOST'], 'athletez') !== FALSE
+){
 	// Localhost
 	Kohana::$environment = Kohana::PRODUCTION;
 

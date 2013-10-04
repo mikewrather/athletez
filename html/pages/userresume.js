@@ -17,7 +17,8 @@ define(["require", "text!userresume/templates/layout.html",
 	   "facade",
 	  
 	   "controller", "models", "views",
-	    "utils", "userresume/models/basic_info",
+	    "utils",
+		"profilesetting/models/basic_info",
 	     'userresume/models/resume',
 	      'userresume/models/rdtree',
 	       'userresume/models/gpa',
@@ -25,7 +26,7 @@ define(["require", "text!userresume/templates/layout.html",
 	       'userresume/models/contact',
 	       'userresume/models/reference',
 	      
-	    "userresume/views/basic_info",
+	    "profilesetting/views/basic_info",
 	     "userresume/views/sentresumeview", 
 	     "userresume/views/rdtree",
 	     "userresume/views/academic",
@@ -38,7 +39,7 @@ define(["require", "text!userresume/templates/layout.html",
 	var UserResumeController, facade = require("facade"), Controller = require("controller"), models = require("models"), views = require("views"), utils = require("utils"), $ = facade.$, _ = facade._, debug = utils.debug, Channel = utils.lib.Channel, LayoutView = views.LayoutView,
 
 	/*MODEL SECTION*/
-	BasicInfoModel = require("userresume/models/basic_info"), 
+	BasicInfoModel = require("profilesetting/models/basic_info"),
 	ResumeModel = require('userresume/models/resume'),
 	RDTreeModel = require("userresume/models/rdtree"),
 	GpaModel = require("userresume/models/gpa"),
@@ -49,7 +50,7 @@ define(["require", "text!userresume/templates/layout.html",
 	/*COLLECTIONS SECTIONS*/
 
 	/*VIEW SECTION*/
-	BasicInfoView = require("userresume/views/basic_info"), SentResumeView = require("userresume/views/sentresumeview"),
+	BasicInfoView = require("profilesetting/views/basic_info"), SentResumeView = require("userresume/views/sentresumeview"),
 	RDTreeView = require("userresume/views/rdtree"),
 	AcademicView = require("userresume/views/academic"),
 	AwardsView = require("userresume/views/awards"),
@@ -57,7 +58,7 @@ define(["require", "text!userresume/templates/layout.html",
 	ReferencesView = require("userresume/views/references"),
 	UserResumeController = Controller.extend({
 		/*CSS SECTION*/
-		cssArr : ["/pages/userresume/userresume.css"],
+		cssArr : ["/pages/profilesetting/profilesettings.css"],
 
 		events : {
 		},
@@ -142,7 +143,7 @@ define(["require", "text!userresume/templates/layout.html",
 				id : self.id
 			});
 
-			this.scheme.push(this.basicView);
+			//this.scheme.push(this.basicView);
 		},
 		/*Set up Basic Info View*/
 		setUpSentResumeView : function() {

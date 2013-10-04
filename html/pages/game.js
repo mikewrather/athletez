@@ -33,7 +33,6 @@ define([
 
 ], function (require, pageLayoutTemplate, voteView)
 {
-
 	var GameController,
 		facade = require("facade"),
 		Controller = require("controller"),
@@ -73,11 +72,8 @@ define([
 		initialize: function (options) {
 			Channel('load:css').publish(cssArr);
 			_.bindAll(this);
-
 			this.handleOptions(options);
-
 			this.init();
-
 			return this;
 		},
 
@@ -109,8 +105,6 @@ define([
 			//this.videos.id = this.id;
 			//this.videos.fetch();
 
-			
-
 			//this.comments = new GameCommentList();
 			//this.comments.id = this.id;
 			//this.comments.fetch();
@@ -125,7 +119,7 @@ define([
 
 			$.when(this.basics.request).done(function () {
 				controller.setupHeaderView();
-				controller.initVoteView();
+				//controller.initVoteView();
 				controller.setupAddMediaView();
 				
 				var data = controller.basics.get("payload"), subject_type_id = data.enttypes_id;
@@ -189,9 +183,9 @@ define([
         },
         
         setupRosterView: function(id, name) {
-        	var rosterView;
+        	var rosterView, model = facade.Backbone.Collection.extend({});
 			rosterView = new RosterView({
-				model: this.images,
+				model: new model(),
 				team_id: id,
 				team_name: name,
 				name: "roster images" + Math.random(),

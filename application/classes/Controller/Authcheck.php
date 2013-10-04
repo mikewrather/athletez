@@ -47,6 +47,7 @@ class Controller_Authcheck extends AuthController
 	//	$retArr['user_photo'] = $this->user->getAvatar();
 		$retArr['user_name'] = $this->user->name();
         $retArr['user_email'] = $this->user->email;
+		$retArr['user_photo'] = $this->user->userpic->getBasics();
 
 		$retArr['nav'][] = array(
 			"page"=>"My Profile",
@@ -54,17 +55,18 @@ class Controller_Authcheck extends AuthController
 		);
 
 		$retArr['nav'][] = array(
-			"page"=>"Sports / Teams Settings",
+			"page"=>"Profile Settings",
 			"link"=>"/#usersettings"
 		);
 		$retArr['nav'][] = array(
-			"page"=>"User Resume",
+			"page"=>"Resume Settings",
 			"link"=>"/#resume"
 		);
-		$retArr['nav'][] = array(
+	/*	$retArr['nav'][] = array(
 			"page"=>"Tag",
 			"link"=>"/#tag"
 		);
+	*/
 	/*	if($this->user->teams->find_all()->count() > 0)
 		{
 			$retArr['nav'][] = array(

@@ -1,0 +1,72 @@
+
+<h1>The Basics</h1>
+<div class="row-fluid">
+    <form class="form-horizontal">
+        <div class="control-group">
+            <label class="control-label" for="first_name">First Name: </label>
+            <div class="controls">
+                <input type="text" name="firstname" id="first_name" placeholder="First Name">
+                <p class="field-error"></p>
+                <p class="field-message"></p>
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label" for="last_name">Last Name: </label>
+            <div class="controls">
+                <input type="text" name="lastname" id="last_name" placeholder="Last Name">
+                <p class="field-error"></p>
+                <p class="field-message"></p>
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label" for="dob">DOB: </label>
+            <div class="controls">
+                <input type="text" name="dob" id="dob" placeholder="Birthday">
+                <p class="field-error"></p>
+                <p class="field-message"></p>
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label" for="email">Email: </label>
+            <div class="controls">
+                <input type="text" name="email" id="email" placeholder="Email">
+                <p class="field-error"></p>
+                <p class="field-message"></p>
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label">Gender: </label>
+            <div class="controls" id="gender">
+                <label for="male"><input type="radio" id="male" name="gender" value="M"> Male</label>
+                <label for="female"><input type="radio" id="female" name="gender" value="F"> Female</label>
+                <p class="field-error"></p>
+                <p class="field-message"></p>
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label" for="password">Password: </label>
+            <div class="controls">
+                <input type="password" id="password" name="password" placeholder="Password"/>
+                <p class="field-error"></p>
+                <p class="field-message"></p>
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label" for="re_password">Again: </label>
+            <div class="controls">
+                <input type="password" id="re_password" name="re_password" placeholder="Password Again"/>
+                <p class="field-error"></p>
+                <p class="field-message"></p>
+            </div>
+        </div>
+        <div>
+            <p class="agree-error text-error"></p>
+            <label for="accept_terms">
+                <input type="checkbox" id="accept_terms" name="accept_terms"/>I have read and agree to the <a href="#">Terms of Service</a>
+                <p class="field-error"></p>
+                <p class="field-message"></p>
+            </label>            
+            <a href="#" class="next">What's Next</a>
+        </div>
+    </form>
+</div>

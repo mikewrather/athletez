@@ -20,6 +20,9 @@ define(
 				// Tag for the child views
 				_tagName : "li",
 				_className : "image",
+				events: {
+					'click .image-outer-h': 'initPhotoPlayer'
+				},
 
 				// Store constructor for the child views
 				_view : ImageItemView,
@@ -37,16 +40,18 @@ define(
 					_.bindAll(this);
 					this.addSubscribers();
 					
-					$(document).off('click','.image-outer-h');
-					$(document).on('click','.image-outer-h', function() {
-						_self.initPhotoPlayer();
-					});
+					//$(document).off('click','.image-outer-h');
+					//$(document).on('click','.image-outer-h', function(e) {
+					//	_self.initPhotoPlayer(e);
+					//});
         	
 				},
 				
-				initPhotoPlayer: function() {
+				initPhotoPlayer: function(e) {
+					e.preventDefault();
 					console.log(this.collection);
-       				routing.trigger('photo-player-init', 1, this.collection);
+       				var index = ($(e.target).parents('li').index());     
+       				routing.trigger('photo-player-init', index, this.collection, this.collection.id);
        			},
 
 				// Child views...

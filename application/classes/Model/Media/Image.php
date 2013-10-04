@@ -17,7 +17,8 @@ class Model_Media_Image extends ORM
 		'added_function_calls' => array(
 			'image_title'=>'get_name',
 			'num_votes'=>'get_num_votes',
-			'types' =>'getTypes'
+			'types' =>'getTypes',
+			'can_follow' =>'can_follow'
 		),
 		'column_name_changes' => array(
 			'original_url' => 'image_path',
@@ -201,7 +202,7 @@ class Model_Media_Image extends ORM
 		return $this;
 	}
 
-	public function saveCrop($args,$user)
+	public function saveCrop($args,$user,$docrop=true)
 	{
 		
 		$request = Request::factory($args['image_url']);
@@ -219,8 +220,12 @@ class Model_Media_Image extends ORM
 
 		$image = Image::factory($local_path);
 
-		$image->resize($args['image_width'],$args['image_height']);
-		$image->crop($args['crop_width'],$args['crop_height'],$args['crop_x'],$args['crop_y']);
+		if($docrop)
+		{
+			$image->resize($args['image_width'],$args['image_height']);
+			$image->crop($args['crop_width'],$args['crop_height'],$args['crop_x'],$args['crop_y']);
+		}
+
 		$image->save();
 
 		$media_args = array(
@@ -231,7 +236,8 @@ class Model_Media_Image extends ORM
 					'type'=>$image->mime,
 				)
 			),
-			'pre_crop_url' => $args['image_url']
+			'pre_crop_url' => $args['image_url'],
+			'user_id' => $user->id
 		);
 
 		$result = $this->addImage($media_args);
@@ -339,8 +345,15 @@ class Model_Media_Image extends ORM
 			$this_type->mime = $this_img->mime;
 			$this_type->save();
 
-			// Delete the temporary file
-			unlink($local_path);
+			try{
+				// Delete the temporary file
+				unlink($local_path);
+			}
+			catch(ErrorException $e)
+			{
+
+			}
+
 
 			// Unset all variables for use in the next iteration
 			unset($this_img);
@@ -399,7 +412,7 @@ class Model_Media_Image extends ORM
 			}
 			if (isset($searchtext)){
 				//$image->where(array(Db::expr('CONCAT(user_base.first_name," ",user_base.last_name)'), 'full_name'), 'like ','%'.$searchtext.'%');
-				$image->where('media.name', 'like', "%".$searchtext."%");
+				$image->where('media.name', 'like', $searchtext."%");
 			}
 		}
 
@@ -420,7 +433,7 @@ class Model_Media_Image extends ORM
 
 			if (isset($searchtext)){
 				//$image->where('orgs.name', 'like', '%'.$searchtext.'%');
-				$image->where('media.name', 'like', "%".$searchtext."%");
+				$image->where('media.name', 'like', $searchtext."%");
 			}
 		}
 
@@ -441,7 +454,7 @@ class Model_Media_Image extends ORM
 
 			if (isset($searchtext)){
 				//$image->where('orgs.name', 'like', '%'.$searchtext.'%');
-				$image->where('media.name', 'like', "%".$searchtext."%");
+				$image->where('media.name', 'like', $searchtext."%");
 			}
 		}
 
@@ -462,7 +475,7 @@ class Model_Media_Image extends ORM
 
 			if (isset($searchtext)){
 				//$image->where('orgs.name', 'like', '%'.$searchtext.'%');
-				$image->where('media.name', 'like', "%".$searchtext."%");
+				$image->where('media.name', 'like',$searchtext."%");
 			}
 		}
 		//print_r($image->execute());exit;
@@ -500,6 +513,17 @@ class Model_Media_Image extends ORM
 
 		$imageModel = ORM::factory("Media_Image");
 
+		if (isset($limit))
+		{
+			$imageModel->limit($limit);
+		}
+		else $imageModel->limit(12);
+
+		if(isset($offset))
+		{
+			$imageModel->offset($offset);
+		}
+
 
 		if (!isset($orderby) || $orderby == 'votes'){
 			$enttype_id = Model_Site_Enttype::getMyEntTypeID($imageModel);
@@ -521,6 +545,10 @@ class Model_Media_Image extends ORM
 		}else if ($orderby == 'postTime'){
 			$imageModel->join('media' ,'left')->on('media_image.media_id', '=', 'media.id');
 			$imageModel->order_by('media.timePosted', 'desc');
+		}
+		elseif($orderby=='random')
+		{
+			$imageModel->order_by(DB::expr('RAND()'));
 		}
 
 		$imageModel->where('media_image.id', 'in', $image_ids);

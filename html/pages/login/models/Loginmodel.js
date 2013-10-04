@@ -8,8 +8,9 @@
 
         defaults: {
                         
-        }
-       
+        },
+       url:'api/user/login',
+       payload:{} 
         
     });
 

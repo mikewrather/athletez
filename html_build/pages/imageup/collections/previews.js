@@ -1,0 +1,1 @@
+define(["facade","collections/base","utils","imageup/models/preview","text!imageup/templates/preview_template.html"],function(e,t,n,r){var i,s=e._,o=n.lib.Channel;return i=t.extend({model:r}),i});

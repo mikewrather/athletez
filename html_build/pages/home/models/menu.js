@@ -1,0 +1,1 @@
+define(["models"],function(e){var t,n=e.BaseModel;return t=n.extend({defaults:{name:null,views:{browse:[{name:"Up Votes",value:"votes"},{name:"Newest",value:"newest"},{name:"Fans",value:"followers"}],time:[{name:"Today",value:"DAY"},{name:"Week",value:"WEEK"},{name:"Month",value:"MONTH"},{name:"Year",value:"YEAR"}]}}}),t});

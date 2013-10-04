@@ -57,16 +57,12 @@ define(
 				cssArr = [ base_url + 'pages/home/home.css' ];
 
 			HomeController = Controller.extend({
-
 				initialize : function(options) {
 					Channel('load:css').publish(cssArr);
-
 					_.bindAll(this);
-
 					this.handleOptions(options);
 					this.genderTypes = ['boys', 'girls', 'both'];
 					this.init();
-					
 					return this;
 				},
 
@@ -85,7 +81,7 @@ define(
 					this.urlOptions = {
 						'sports_id' : '0',
 						'cities_id' : '0',
-						'orderby' : 'votes',
+						'orderby' : 'random',
 						'time' : 'DAY',
 						'states_id' : '0',
 						'searchtext' : '',
@@ -163,7 +159,7 @@ define(
 		        },
 		        
 				changeCityFilter : function(item) {
-					var options = {'city_id':item.id, 'states_id': item.state_id, 'country_id': item.country_id};
+					var options = {'cities_id':item.id, 'states_id': item.state_id, 'country_id': item.country_id};
 					console.log(options);
 					this.transitionView(options);
 				},
@@ -195,19 +191,23 @@ define(
 				},
 				
 				transitionView : function(options) {
+
 					var viewName = 'search-result',
 					    imageList = this.collections[viewName];
 					    controller = this;
-		
+
+					console.log("CALLED",this.collections[viewName]);
 					imageList.url = this.url(options);
 					imageList.fetch();
 
 					$.when(imageList.request).done(function() {
+						console.log("Fetch Complete");
 						var view = new ImageListView({
 							collection : imageList,
 							name : viewName,
 							destination : '#'+viewName
 						});
+						console.log(view);
 						controller.layout.transition(viewName, view);
 					});
 				},
@@ -231,7 +231,7 @@ define(
 					collections['state'] = new StateList(); 
 					collections['top-rated'] = new ImageList([], {
 						url : '/api/user/search',
-						num : '3'
+						num : '4'
 					});
 					_.each(this.genderTypes, function(name) {
 						collections[name] = new SportList([], {name : name});

@@ -39,8 +39,10 @@ define([
     "team/views/video-list",
     "team/views/image-list",
     "team/views/comment-list",
+    "team/views/menu",
     "media/models/image",
     "sportorg/views/team-list",
+    "roster/views/roster",
     "profile/views/fans-image-list"
     
     ], function (require, pageLayoutTemplate, voteView) {
@@ -58,7 +60,6 @@ define([
         TeamRecentScheduleList = require("team/collections/recent_schedules"),
         TeamCompetitorTeamList = require("team/collections/competitor_teams"),
         TeamOrgList = require("team/collections/orgs"),
-        TeamRosterList = require("team/collections/rosters"),
         TeamVideoList = require("team/collections/videos"),
         TeamImageList = require("team/collections/images"),
         FansImageList = require("team/collections/fans"),
@@ -70,13 +71,15 @@ define([
         TeamOrgListView = require("sportorg/views/team-list"),
         TeamScheduleListView = require("sportorg/views/schedule-list"),
         TeamCompetitorTeamListView = require("sportorg/views/competitorteam-list"),
-        TeamRosterListView = require("sportorg/views/roster-list"),
         TeamVideoListView = require("team/views/video-list"),
         TeamImageListView = require("team/views/image-list"),
+        TeamRosterListView = require("sportorg/views/teamroster-list"),
         TeamCommentListView = require("team/views/comment-list"),
         TeamCommentOfListView = require("team/views/commentof-list"),
 		TeamCommentOnListView = require("team/views/commenton-list"),
 		FansImageListView = require("profile/views/fans-image-list"),
+		MenuPageView = require("team/views/menu"),
+		RosterView = require("roster/views/roster"),
         MediaImageModel = require("media/models/image");
         LayoutView = views.LayoutView,
         $ = facade.$,
@@ -196,37 +199,29 @@ define([
             }
             
             routing.on('refresh-teampage', function(sport_id, team_id,season_id) {
-            	callback(sport_id, team_id, season_id)
-            })
+            	callback(sport_id, team_id, season_id);
+            });
             
           //  Channel('refresh-teampage').subscribe(callback);
         },
         
         handleDeferreds: function() {
             var controller = this;
-
             $.when(this.basics.request).done(function () {
                 controller.setupHeaderView();  
-                controller.initVoteView();
+				controller.setupRosterView();
                 controller.setupAddMediaView();
-                
-                console.log(controller.basics);
-                
-               
-                
-                
             });
-            
             
             
             //$.when(this.commentsof.request).done(function () {
 			//	controller.setupCommentOfListView();
 			//});
 
-
 			// $.when(this.commentson.request).done(function () {
 				// controller.setupCommentOnListView();
-			// });
+			// });
+
         },
         
         setupCommentOfListView: function () {
@@ -239,6 +234,39 @@ define([
 		//	this.scheme.push(commentOfListView);
 		//	this.layout.render();
 		},
+		
+		deleteOldView: function(oldView) {
+			var l = this.scheme.length;
+			for(var i = 0; i < l; i++) {
+				if(this.scheme[i].name == oldView)
+					this.scheme[i].remove();
+			}
+		},
+		
+		 setupRosterView: function(id, name) {
+		 	
+		 	if(!id && !name) {
+		 		var payload = this.basics.get("payload"), id = payload.id,
+		 		name = payload.org_sport_link_obj.org.name;
+		 	}
+		 	
+		 	if(this.oldRosterViewName)
+		 		this.deleteOldView(this.oldRosterViewName);
+		 	
+		 	this.oldRosterViewName = "roster images" + Math.random();
+		 	
+        	var rosterView, model = facade.Backbone.Collection.extend({});
+			rosterView = new RosterView({
+				model: new model(),
+				team_id: id,
+				team_name: name,
+				name: this.oldRosterViewName,
+				destination: "#roster-wrap"
+			});
+
+			this.scheme.push(rosterView);
+			this.layout.render();
+        },
 
 		setupCommentOnListView: function () {
 			//var commentOnListView;
@@ -378,13 +406,23 @@ define([
 			},
         
         setupHeaderView: function() {
-            var headerView;
-            console.error(this.basics);
+            var headerView, _self = this;
             headerView = new TeamHeaderView({
                 model: this.basics,
                 name: "Header",
+                controllerObject:  _self,
                 destination: "#main-header" 
             });
+            
+           var  menuView = new MenuPageView({
+                model: this.basics,
+                name: "Menu View",
+                headerView: headerView,
+                controllerObject:  _self,
+                destination: "#menu-container" 
+            });
+            
+            this.scheme.push(menuView);            
 
             this.scheme.push(headerView);            
             this.layout.render();
@@ -408,7 +446,6 @@ define([
         
         setupUpcomingSchedules: function() {
             var UpcomingScheduleListView;
-            
             UpcomingScheduleListView = TeamScheduleListView.extend({
                 name: "Upcoming_Schedule_List" 
             });
@@ -424,7 +461,6 @@ define([
         
         setupRecentSchedules: function() {
             var RecentScheduleListView;
-            
             RecentScheduleListView = TeamScheduleListView.extend({
                 name: "Recent_Schedule_List" 
             });
@@ -439,7 +475,9 @@ define([
         },
         
         setupGameView: function () {
+	        console.log("Setting up game view",this.games, this.id);
 			this.gamesView = new TeamOrgListView({
+				teams_id: this.id,
 				collection: this.games,
 				destination: "#games_div",
 				name: "games view"

@@ -17,7 +17,8 @@ require.config({
         'mustache'     : '/vendor/mustache',
         'backbone'     : '/vendor/backbone',
 		'underscore'   : '/vendor/underscore',
-		'jquery'       : '/vendor/jquery-2.0.0.min',	
+		'jquery'       : '/vendor/jquery-2.0.0.min',
+		
         // Plugins
         'bootstrap'    : '/vendor/plugins/bootstrap',
         'jquery.pstrength' : '/vendor/plugins/jquery.pstrength-min.1.2',
@@ -43,6 +44,9 @@ require.config({
 
 		// Create a rotate effect events
         'rotate'        : '/vendor/plugins/jQueryRotate',
+        
+        // load async files
+        'async'         : '/vendor/plugins/async',
 		
 
         // Vendor libs, packaged group of common dependencies
@@ -110,6 +114,9 @@ require.config({
 	    },
 	    'plupload': {
 		    deps: ['jquery']
+	    },
+	    'jqueryui' : {
+		    deps : ['jquery']
 	    },
 	    'jquerytimepicker' : {
 	    	deps : ['jquery','jqueryui'],

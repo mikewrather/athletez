@@ -23,6 +23,7 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 			'height_ft' => 'get_height_ft',
 			'label' => 'getLabel',
 			'sub_label' => 'getSubLabel',
+			'can_follow' => 'can_follow'
 		),
 		'exclude_columns' => array(
 			'username','email','password','dob'
@@ -33,6 +34,10 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 		"city" => array(
 			"model" => "Location_City",
 			"foreign_key" => "cities_id"
+		),
+		"userpic" => array(
+			"model" => "Media_Image",
+			"foreign_key" => "user_picture"
 		)
 	);
 	protected $_has_many = array(
@@ -149,6 +154,8 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 		),
 
 	);
+
+
 
     public function deleteTeam($args)
     {
@@ -408,6 +415,8 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 	public function rules(){
 		return array
 		(
+
+			/*
 			// email (varchar)
 			'email'=>array(
 				array('not_empty'),
@@ -581,7 +590,7 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 							"id" => $val->loaded() ? $val->id : 0,
 							"resume_data_id" => $data->id,
 						);
-						if($data->large_icon != "") $profiles[$group->id]["data"][$data->id]["icon"] = $data->large_icon;
+						if(is_string($data->large_icon) && strlen($data->large_icon) > 5) $profiles[$group->id]["data"][$data->id]['icon'] = $data->large_icon;
 					}
 				}
 			}
@@ -612,8 +621,8 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 	public function getMedia($obj, $sports_id = null)
 	{
 		if($obj===NULL) $obj = $this;
-		$image = ORM::factory('Media_Base');
-		return $image->getTaggedMedia($obj, $sports_id);
+		$media = ORM::factory('Media_Base');
+		return $media->getTaggedMedia($obj, $sports_id);
 	}
 
 	public function getUploadedImages($sports_id = null)
@@ -981,6 +990,7 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 
 		if (isset($sports_id)){
 			$awards_model->where('sports_id', '=', $sports_id);
+			$awards_model->join('sports')->on('user_awards.sports_id','=','sports.id');
 		}
 		//exclude itself
 		$classes_arr = array(
@@ -1000,6 +1010,7 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 
 		if (isset($sports_id)){
 			$references_model->where('sports_id', '=', $sports_id);
+			$references_model->join('sports')->on('user_references.sports_id','=','sports.id');
 		}
 
 		//exclude itself
@@ -1190,6 +1201,7 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 
 		$enttype_id = Ent::getMyEntTypeID($this);
 
+
 		// NUM VOTES
 		if (!isset($orderby) || $orderby == 'votes')
 		{
@@ -1226,17 +1238,32 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 		{
 			$user_model->order_by('users.id', 'desc');
 		}
+		elseif($orderby=='random')
+		{
+			$user_model->order_by(DB::expr('RAND()'));
+		}
+
 
 		if (isset($searchtext))
 		{
 			$user_model->and_where_open()
 				->where('users.first_name', 'LIKE ',$searchtext.'%')
 				->or_where('users.last_name','LIKE',$searchtext.'%')
-				->or_where(array(Db::expr('CONCAT(users.first_name," ",users.last_name)'), 'full_name'), 'like ','%'.$searchtext.'%')
+				->or_where(array(Db::expr('CONCAT(users.first_name," ",users.last_name)'), 'full_name'), 'like ',$searchtext.'%')
 				->and_where_close();
 		}
 		$user_model->distinct(TRUE);
-		$user_model->limit($limit)->offset($offset);
+
+		if (isset($limit))
+		{
+			$user_model->limit($limit);
+		}
+		else $user_model->limit(12);
+
+		if(isset($offset))
+		{
+			$user_model->offset($offset);
+		}
 
 		$exclude_deleted_users_array['User_Base'] = 'users';
 		$user_model = ORM::_sql_exclude_deleted($exclude_deleted_users_array, $user_model);
@@ -1751,8 +1778,14 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 	public function delete_gpa($args){
 		$gpa_model = ORM::factory('Academics_Gpa');
 		$result = $gpa_model->where('users_id','=', $this->id)
-			->where('year', '=', $args['year'])
-			->find();
+			->where('year', '=', $args['year']);
+
+		$classes_arr = array(
+			'Academics_Gpa' => 'academics_gpa'
+		);
+		$result = ORM::_sql_exclude_deleted($classes_arr, $result);
+		$result = $result->find();
+
 
 		if (!$result->id){
 			return false;

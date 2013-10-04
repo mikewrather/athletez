@@ -29,7 +29,8 @@ define(['require', 'text!profilesetting/templates/highschool.html', 'text!profil
 			"click .btn-Close-Positions" : "ClosePositions",
 			"click .btn-Finish-Sports" : "FinishSports",
 			"click .edit-team" : "EditTeam",
-			"click .btnOpenPositions" : "displayPositionPopup"
+			"click .btnOpenPositions" : "displayPositionPopup",
+			"click .add-school-h": "openAddHighSchoolPopup"
 		},
 
 		/*Holds */
@@ -68,7 +69,7 @@ define(['require', 'text!profilesetting/templates/highschool.html', 'text!profil
 		/*Messages Holds the messages, warning, alerts, errors, information variables*/
 		/*In Case of similar message create only one object and key*/
 		messages : {
-			dataNotExist : 'Data not exist.',
+			dataNotExist : 'Couldn\'t find any matches',
 			optionsMissing : 'HeaderView expects option with model property.',
 
 			selectSport : 'Please select sport',
@@ -95,7 +96,12 @@ define(['require', 'text!profilesetting/templates/highschool.html', 'text!profil
 			self.setOptions(options);
 			this.init();
 		},
-
+		
+		/* Add club popup  */
+		openAddHighSchoolPopup: function() {
+			routing.trigger('add-school-init', '', '', 'school');
+		},
+		
 		/*initialize must be a wrapper so any function definitions and calles must be called in init*/
 		init : function() {
 			self.setupView();

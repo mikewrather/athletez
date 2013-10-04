@@ -147,7 +147,8 @@ class Model_Sportorg_Games_Base extends ORM
 			"game_picture" => 'getPrimaryImage',
 			"teams" => 'get_game_teams',
 			"game_location" => 'get_game_location',
-			"shared" => 'get_shared_info'
+			"shared" => 'get_shared_info',
+			'can_follow' => 'can_follow'
 		),
 
 		// array of values only.  Each value is the name of a column to exclude
@@ -277,11 +278,31 @@ class Model_Sportorg_Games_Base extends ORM
 		return $matches;
 	}
 
+	public function updateScore($args)
+	{
+		extract($args);
+
+		if (isset($teams_id) && isset($score))
+		{
+			DB::update('games_teams_link')
+				->set(array('score'=>$score,'points_scored'=>$score))
+				->where('games_id','=',$this->id)
+				->and_where('teams_id','=',$teams_id)
+				->execute();
+			return $this;
+		}
+		else
+		{
+			return this;
+		}
+
+	}
+
 	public function getSearch($args = array()){
 		extract($args);
 		$this->distinct(true);
-		$this->join('games_teams_link')->on('games_teams_link.games_id', '=', 'sportorg_games_base.id');
-		$this->join('teams')->on('games_teams_link.teams_id', '=', 'teams.id');
+		$this->join('games_teams_link', 'LEFT')->on('games_teams_link.games_id', '=', 'sportorg_games_base.id');
+		$this->join('teams', 'LEFT')->on('games_teams_link.teams_id', '=', 'teams.id');
 
 		$enttype_id = Model_Site_Enttype::getMyEntTypeID($this);
 		$game_votes = DB::select(array(DB::expr('COUNT(id)'),'num_votes'))
@@ -302,7 +323,7 @@ class Model_Sportorg_Games_Base extends ORM
 		}
 
 		if (isset($sports_id) || isset($searchtext)){
-			$this->join('org_sport_link')->on('org_sport_link.id', '=', 'teams.org_sport_link_id');
+			$this->join('org_sport_link','LEFT')->on('org_sport_link.id', '=', 'teams.org_sport_link_id');
 		}
 
 		if (isset($teams_id)){
@@ -329,11 +350,20 @@ class Model_Sportorg_Games_Base extends ORM
 		{
 			$this->order_by('num_followers', 'desc');
 		}
+		elseif($orderby=='random')
+		{
+			$this->order_by(DB::expr('RAND()'));
+		}
 
 		if (isset($searchtext)){
-			$this->join('orgs')->on('orgs.id', '=', 'org_sport_link.orgs_id');
-			$this->where('orgs.name', 'like', "%".$searchtext."%");
+			$this->join('orgs','LEFT')->on('orgs.id', '=', 'org_sport_link.orgs_id');
+			$this->and_where_open();
+			$this->where('orgs.name', 'like', $searchtext."%");
+			$this->or_where('event_name', 'like', $searchtext."%");
+			$this->and_where_close();
 		}
+
+//		print_r($this->find_all());
 
 		if (isset($cities_id) || isset($states_id)){
 			$this->join('locations')->on('locations.id', '=', 'sportorg_games_base.locations_id');
@@ -348,6 +378,17 @@ class Model_Sportorg_Games_Base extends ORM
 			$this->where('cities.states_id', '=', $states_id);
 		}
 
+		if (isset($limit))
+		{
+			$this->limit($limit);
+		}
+		else $this->limit(12);
+
+		if(isset($offset))
+		{
+			$this->offset($offset);
+		}
+
 //		if (isset($loc_search)){
 //			$this->and_where_open();
 //			$this->join('locations')->on('locations.id', '=', 'orgs.locations_id');
@@ -359,6 +400,8 @@ class Model_Sportorg_Games_Base extends ORM
 //			$this->or_where('states.name', 'like', "%".$loc_search."%");
 //			$this->and_where_close();
 //		}
+
+
 		return $this;
 	}
 

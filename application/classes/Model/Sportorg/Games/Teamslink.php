@@ -31,7 +31,7 @@ class Model_Sportorg_Games_Teamslink extends ORM
 			),
 
 			'is_home_team' => array(
-				array('in_array', array(':value', array(0 ,1))),
+		//		array('in_array', array(':value', array(0 ,1))),
 			),
 		);
 	}
@@ -48,6 +48,11 @@ class Model_Sportorg_Games_Teamslink extends ORM
 			"team" => $this->team->getBasics(),
 			"game" => $this->game->getBasics()			
 		);
+	}
+
+	public function name()
+	{
+		return "GTL ".$this->id;
 	}
 
 

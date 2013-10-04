@@ -1,0 +1,1 @@
+define(["facade","user/models/fbreg","utils"],function(e,t,n){var r,i=e._,s=n.lib.Channel;return r=t.extend({url:function(){return testpath?testpath+"/user/fbreg":"/api/user/fbreg"}}),r});

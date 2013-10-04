@@ -1,6 +1,6 @@
 define([
 	'require',
-	'text!/login/templates/logintemplate.html', 
+	'text!login/templates/logintemplate.html', 
     'backbone',
     'underscore',
     'signup',
@@ -41,6 +41,33 @@ define([
                 },     
                 events:{
                   "click a#signup": "signupUser", 
+                  "click .loginUser":"userLogin"
+                },
+                userLogin:function(event){
+                event.preventDefault();
+                var fields = this.$(":input").serializeArray();
+                var payload=[];
+                $.each(fields, function( index, value ) {
+                       payload[value.name] = value.value;
+                      
+                       });
+                var obj = $.extend({}, payload)
+                console.log(obj,"new");
+                this.model.save(obj,{
+                    success: function(msg) {
+                            location.href='#usersettings';
+                             $('#Loginview').modal('hide');
+                            },
+                    error: function(msg) {
+                                console.log(msg);
+                                $( ".errormsg" ).empty();
+                                var errors= jQuery.parseJSON( msg.request.responseText);
+                                console.log(errors.desc);
+                                $( ".errormsg" ).html(errors.desc);
+                            }
+
+                });
+
                 },
                 signupUser: function(event){
                 	event.preventDefault();
