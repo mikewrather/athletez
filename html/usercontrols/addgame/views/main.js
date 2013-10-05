@@ -110,6 +110,7 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 			gameId : 'gameid'
 		},
 		inlineTemplates : {
+			
 
 		},
 		/*Messages Holds the messages, warning, alerts, errors, information variables*/
@@ -123,12 +124,14 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 			selectLocationType : "Please select location type",
 			gameFound : "Sweet ! This Event Already Exists ! ",
 			enterEventName : "Please enter event name",
-			selectSport : "Please select sport"
+			selectSport : "Please select sport",
+			selectValidTime : "Please enter valid time in format hh:mm (12 hours)"
 		},
 		/*tags to be used to tag the type of game in games data*/
 		tags : {
 			individual : "individual",
-			team : "team"
+			team : "team",
+			rgxTime : /^(0?[1-9]|1[012])(:[0-5]\d)$/
 		},
 
 		/*initialize gets called by default when constructor is initialized*/
@@ -153,14 +156,12 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 				payload : {
 					name : "AM",
 					value : "AM"
-					
 				}
 			},
 			{
 				payload : {
 					name : "PM",
-					value : "PM"
-					
+					value : "PM"					
 				}
 			},]
 			
@@ -174,6 +175,7 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 					elementId: self.controls.hdnTimePeriodData,
 					destination: self.controls.spnTimePeriod,
 					targetView: self,
+					selectedValue : "AM",
 					callback: function(result) {
 						//self.changeSport(result);						
 					}
@@ -776,22 +778,43 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 			var message = '';
 			var date = $(self.destination).find(self.controls.txtGameDate).datepicker('getDate');
 			var timeText = $(self.destination).find(self.controls.txtGameTime).val();
-			var timeZone = $(self.destination).find(self.controls.ddlTimePeriod).val();
+			var timeZone = $(self.destination).find(self.controls.hdnTimePeriod).val();;
 			var locationId = self.location_id || $(self.controls.txtIndividualLocation).val() || 0;
 			var eventName = $(self.destination).find(self.controls.txtIndividualGame).val();
 			var sportsId = $(self.destination).find(self.controls.hdnSportsId).val();
-			//console.log(date);
 			if(!sportsId){
 				$(self.destination).find(self.controls.secSports).find(self.controls.fieldMessage).html(self.messages.selectSport).fadeIn();
 				isDataValid = false;
 			}
 			
-			console.log("create");
 			if (!date || !timeText) {
 				$(self.destination).find(self.controls.sectionDate).find(self.controls.fieldMessage).html(self.messages.selectDateAndTime).fadeIn();
 				isDataValid = false;
 			}else{
-				$(self.destination).find(self.controls.sectionDate).find(self.controls.fieldMessage).html("").fadeOut();
+					var validTime = timeText.match(self.tags.rgxTime);
+					console.log("orginal date",date);
+					console.log("orginal time",timeText);
+					console.log("timeZone",timeZone);					
+					if(!validTime){
+						$(self.destination).find(self.controls.sectionDate).find(self.controls.fieldMessage).html(self.messages.selectValidTime).fadeIn();
+						isDataValid = false;
+					}else{
+						$(self.destination).find(self.controls.sectionDate).find(self.controls.fieldMessage).html('').fadeOut();
+						try{
+						var array = timeText.split(':');
+						if(array){	
+							console.log(array);
+							if(timeZone != "PM" && array[0] != "12")							
+							date.setHours(array[0]);
+							
+							date.setMinutes(array[1]);
+							
+							if(timeZone == "PM")
+								date.addHours(12);
+						}
+						}catch(ex){}
+					}
+					console.log("new date",date);
 			}
 
 			if (!locationId) {
@@ -814,7 +837,6 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 					sports_id : sportsId
 
 				};
-			console.log("payload", payload);
 				var gameModel = new GameModel(payload);
 
 				gameModel.save({});
@@ -847,12 +869,10 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 				model.save();
 				
 			$.when(model.request).done(function(response) {
-				console.log("response",response)
+
 			});
 		},
 		goThereSuccess : function(response){
-			console.log("/*****************************************************/");
-			console.log("responsse",response);
 			var payload = response.payload;
 			self.gameData = {
 						type : self.tags.individual,
@@ -868,9 +888,7 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 		/**********Create Event Ends Here*****************/
 
 		CheckTeamControlsVisibility : function() {
-			var value = $(self.destination).find(self.controls.hdnSportsId).val();
-			console.log("value",value);
-			
+			var value = $(self.destination).find(self.controls.hdnSportsId).val();			
 			if (value && value != "" && value != 0) {
 				//console.log("value");
 				var isTeam = self.getTeamType(value);
@@ -887,12 +905,9 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 					
 					var date = $(self.destination).find(self.controls.txtGameDate).datepicker('getDate');
 					var currentDate = new Date();
-					console.log("date", date, currentDate);
 					if (date != null && currentDate >= date) {
-						console.log("true");
 						$(self.destination).find(self.controls.sectionScore).show();
 					} else {
-						console.log("false");
 						$(self.destination).find(self.controls.sectionScore).hide();
 						$(self.destination).find(self.controls.txtScore).val('');
 					}
@@ -939,7 +954,6 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 			return false;
 		},
 		showLocation : function(e) {
-			console.log("*************************** SHOW LOCATION *************************");
 			$(self.destination).find(self.controls.sectionMainLocation).show();
 			var teamId = 0;
 			var value = e ? $(e.target).val() : "away";
@@ -986,7 +1000,7 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 			var isDataValid = true;
 			var date = $(self.destination).find(self.controls.txtGameDate).datepicker('getDate');
 			var timeText = $(self.destination).find(self.controls.txtGameTime).val();
-			var timeZone = $(self.destination).find(self.controls.ddlTimePeriod).val();
+			var timeZone = $(self.destination).find(self.controls.hdnTimePeriod).val();
 			
 			var teamOneId = $(self.destination).find(self.controls.sectionTeamOne).find(self.controls.txtTeam).attr(self.attributes.teamId);
 			var scoreOne = $(self.destination).find(self.controls.sectionTeamOne).find(self.controls.txtScore).val();
@@ -995,19 +1009,42 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 			var sportsId = $(self.destination).find(self.controls.hdnSportsId).val();
 
 			var locationId = self.location_id || $(self.controls.txtLocationId).val() || 0;
-			//console.log(date);
+			
 			
 			if(!sportsId){
 				$(self.destination).find(self.controls.secSports).find(self.controls.fieldMessage).html(self.messages.selectSport).fadeIn();
 				isDataValid = false;
 			}
-			
-			
+						
 			if (!date || !timeText) {
 				$(self.destination).find(self.controls.sectionDate).find(self.controls.fieldMessage).html(self.messages.selectDateAndTime).fadeIn();
 				isDataValid = false;
+			}else{
+					var validTime = timeText.match(self.tags.rgxTime);	
+					console.log("orginal date",date);
+					console.log("orginal time",timeText);
+					console.log("timeZone",timeZone);					
+					if(!validTime){
+						$(self.destination).find(self.controls.sectionDate).find(self.controls.fieldMessage).html(self.messages.selectValidTime).fadeIn();
+						isDataValid = false;
+					}else{
+						$(self.destination).find(self.controls.sectionDate).find(self.controls.fieldMessage).html('').fadeOut();
+						try{
+						var array = timeText.split(':');
+						if(array){								
+							console.log(array);
+							if(timeZone != "PM" && array[0] != "12")							
+							date.setHours(array[0]);
+							
+							date.setMinutes(array[1]);
+							
+							if(timeZone == "PM")
+								date.addHours(12);
+						}
+						}catch(ex){}
+					}
 			}
-
+				console.log("new date",date);
 			if (!locationId) {
 				$(self.destination).find(self.controls.sectionMainLocation).find(self.controls.fieldMessage).html(self.messages.selectLocation).fadeIn();
 				isDataValid = false;
@@ -1038,9 +1075,9 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 				// }
 
 			}
-
+//yyyy-mm-dd H:i:s
 			if (isDataValid) {
-				var completeDate = date ;//+ " " + timeText + " " + timeZone;
+				var completeDate = date;// + " " + timeText + "00";// + timeZone;
 				var payload = {
 					game_datetime : completeDate,
 					locations_id : locationId,
