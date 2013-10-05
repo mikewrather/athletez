@@ -136,7 +136,7 @@ define(["require", "text!usercontrols/addgame/templates/layout.html",
 				user_id : self.id,
 				channel : 'add-game-success',
 				sports_id : this.sports_id,
-				teams_id : "49"
+				teams_id : this.teams_id
 
 			});
 
