@@ -34,17 +34,26 @@ function(facade, collections, SportsOrgCollection, utils) {
 						 
 						 if(payload && payload.org_sport_link_obj && payload.org_sport_link_obj.org && payload.org_sport_link_obj.org.locations)
 							location = payload.org_sport_link_obj.org.locations;
-						var temp = {
-							team_id : payload.id,
-							team_name : payload.team_name,
-							location_id : location.id,
-							location_name : location.full_address,
-						};
+											var temp = {
+												team_id : payload.id,
+												team_name : payload.team_name,
+												location_id : location.id,
+												location_name : location.full_address,
+											};
 						d.push(temp);
 					}
 				});
 			}
 			return d;
+		},
+		AppendItem : function(item){
+			var self = this;
+			var models = self.toJSON();
+			var model = {
+				payload : item
+			}
+			models.push(model);
+			return models;
 		}
     });
 

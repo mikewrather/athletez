@@ -78,8 +78,7 @@ define(["require", "text!usercontrols/addgame/templates/layout.html",
 		},
 		/*To reduce initialize methods length and all the view related functions */
 		init : function() {
-			
-			
+		
 			if(this.popup)
 				this.setupPopupLayout().render();
 			else

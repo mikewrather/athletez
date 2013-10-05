@@ -4,11 +4,11 @@
  // Requires `define`, `require`
  // Returns {Add Game VIEW} constructor
  */
-define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 'views', 'utils', 'vendor', 'user/models/basic_info', 'sportorg/collections/sports_users', 'location/collections/states', 'usercontrols/addgame/collections/teams', 'location/collections/cities', 'usercontrols/addgame/collections/teams_user', 'usercontrols/addgame/collections/teams', 'usercontrols/addgame/collections/games_search', 'usercontrols/addgame/models/team', 'usercontrols/addgame/models/team_add', 'usercontrols/addgame/models/game', 'usercontrols/addgame/models/uslgamelink',
+define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 'views', 'utils', 'vendor', 'user/models/basic_info', 'sportorg/collections/sports_listall', 'location/collections/states', 'usercontrols/addgame/collections/teams', 'location/collections/cities', 'usercontrols/addgame/collections/teams_user', 'usercontrols/addgame/collections/teams', 'usercontrols/addgame/collections/games_search', 'usercontrols/addgame/models/team', 'usercontrols/addgame/models/team_add', 'usercontrols/addgame/models/game', 'usercontrols/addgame/models/uslgamelink',
 'usercontrol/dropdown/view/dropdown'
 ], function(require, layoutTemplate) {
 
-	var self, facade = require('facade'), views = require('views'), SectionView = views.SectionView, utils = require('utils'), Channel = utils.lib.Channel, vendor = require('vendor'), Mustache = vendor.Mustache, $ = facade.$, BasicModel = require('usercontrols/tag/models/basic_info'), SportsCollection = require('sportorg/collections/sports_users'), StatesCollection = require('location/collections/states'), CityCollection = require('location/collections/cities'), UserTeamsCollection = require('usercontrols/addgame/collections/teams_user'), TeamsCollection = require('usercontrols/addgame/collections/teams'), TeamModel = require('usercontrols/addgame/models/team'), TeamAddModel = require('usercontrols/addgame/models/team_add'), GameModel = require('usercontrols/addgame/models/game'), GamesSearchCollection = require('usercontrols/addgame/collections/games_search'),
+	var self, facade = require('facade'), views = require('views'), SectionView = views.SectionView, utils = require('utils'), Channel = utils.lib.Channel, vendor = require('vendor'), Mustache = vendor.Mustache, $ = facade.$, BasicModel = require('usercontrols/tag/models/basic_info'), SportsCollection = require('sportorg/collections/sports_listall'), StatesCollection = require('location/collections/states'), CityCollection = require('location/collections/cities'), UserTeamsCollection = require('usercontrols/addgame/collections/teams_user'), TeamsCollection = require('usercontrols/addgame/collections/teams'), TeamModel = require('usercontrols/addgame/models/team'), TeamAddModel = require('usercontrols/addgame/models/team_add'), GameModel = require('usercontrols/addgame/models/game'), GamesSearchCollection = require('usercontrols/addgame/collections/games_search'),
 	DropDownList = require('usercontrol/dropdown/view/dropdown'),
 	
 	//Models
@@ -131,7 +131,9 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 		tags : {
 			individual : "individual",
 			team : "team",
-			rgxTime : /^(0?[1-9]|1[012])(:[0-5]\d)$/
+			rgxTime : /^(0?[1-9]|1[012])(:[0-5]\d)$/,
+			rgxTimeWhole : /^(0?[1-9]|1[012])$/
+			
 		},
 
 		/*initialize gets called by default when constructor is initialized*/
@@ -215,28 +217,29 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 		setUpMainView : function() {
 			var markup = Mustache.to_html(self.template, {});
 			$(self.el).html(markup);
-
 		},
 
 		/*Fill Sports dropdown with sports on basis of gender and sports_club type*/
 		fillSports : function() {			
 				var List = new SportsCollection();
-				List.user_id = self.user_id;
+				//List.user_id = self.user_id;
 				List.processResult = function(collection) {
-					//var data = List.parseAsRequired();
-					self.SetupSportsView(collection);
+					var data = List.ParseForDropdown();
+					console.log("sport",collection);
+					console.log("data",data);
+					self.SetupSportsView(data);
 				};
 				List.fetch();
 		},
 		SetupSportsView : function(List) {
-			
-			 self.sports = List.toJSON();
+
+			 self.sports = List;
 			 console.log("self.sports",self.sports);
 			
 			var data = {};
                data.records = self.sports;
                data.recordId = 'id';
-			   data.recordValue = 'sport_name';
+			   data.recordValue = 'custom_name';
 			var DropDown = new DropDownList({
 					data: data,
 					title: "Select Sport",
@@ -309,8 +312,13 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 			List.user_id = self.user_id;
 			List.sports_id = sport_id;
 			List.processResult = function(collection) {
-				//var data = List.parseAsRequired();
-				self.setUpUserTeams(collection);
+				var item = {
+					team_name : "Team Not Found",
+					id : -1
+				}
+				
+				var list = List.AppendItem(item);
+				self.setUpUserTeams(list);
 			};
 			//self.TeamFetchRequest = self.abortRequest(self.TeamFetchRequest);
 			var tempCollection = List.fetch();
@@ -318,7 +326,7 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 
 		},
 		setUpUserTeams : function(List) {
-			self.teams = List ? List.toJSON() : [];
+			self.teams = List || [];
 			self.setFirstTeam(self.team_id);
 			//spanddlteam
 			var data = {};
@@ -351,21 +359,31 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 		},
 		changeUserTeamOne : function(result) {
 			console.log("result",result);
+			if(result == "-1"){
+				$(self.destination).find(self.controls.sectionTeamOne).find(self.controls.btnNewTeam).trigger('click');
+			}
+			else{
 			$(self.destination).find(self.controls.sectionTeamOne).find(self.controls.txtTeam).hide();
 			$(self.destination).find(self.controls.sectionTeamOne).find(self.controls.spanddlteamone).show();
 			$(self.destination).find(self.controls.sectionTeamOne).find(self.controls.btnNewTeam).show();
 			$(self.destination).find(self.controls.sectionTeamOne).find("input").attr(self.attributes.teamId, result);
 			$(self.destination).find(self.controls.sectionTeamOne).find("input:checked").removeAttr("checked");
 			self.showLocation();
+			}
 		},
 		changeUserTeamTwo : function(result) {
 			console.log("result",result);
+			if(result == "-1"){
+				$(self.destination).find(self.controls.sectionTeamTwo).find(self.controls.btnNewTeam).trigger('click');
+			}
+			else{
 			$(self.destination).find(self.controls.sectionTeamTwo).find(self.controls.txtTeam).hide();
 			$(self.destination).find(self.controls.sectionTeamTwo).find(self.controls.spanddlteamtwo).show();
 			$(self.destination).find(self.controls.sectionTeamTwo).find(self.controls.btnNewTeam).show();
 			$(self.destination).find(self.controls.sectionTeamTwo).find("input").attr(self.attributes.teamId, result);
 			$(self.destination).find(self.controls.sectionTeamTwo).find("input:checked").removeAttr("checked");
 			self.showLocation();
+			}
 		},
 		showAddTeam : function(e) {
 			//Hide Link and DROPDOWN
@@ -791,7 +809,7 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 				$(self.destination).find(self.controls.sectionDate).find(self.controls.fieldMessage).html(self.messages.selectDateAndTime).fadeIn();
 				isDataValid = false;
 			}else{
-					var validTime = timeText.match(self.tags.rgxTime);
+					var validTime = timeText.match(self.tags.rgxTime) || timeText.match(self.tags.rgxTimeWhole);
 					console.log("orginal date",date);
 					console.log("orginal time",timeText);
 					console.log("timeZone",timeZone);					
@@ -807,7 +825,8 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 							if(timeZone != "PM" && array[0] != "12")							
 							date.setHours(array[0]);
 							
-							date.setMinutes(array[1]);
+							if(array.length > 1)
+								date.setMinutes(array[1]);
 							
 							if(timeZone == "PM")
 								date.addHours(12);
@@ -926,13 +945,11 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 				}
 			} else {
 				//console.log("value null");
-
 				$(self.destination).find(self.controls.sectionIndividual).hide();
 				$(self.destination).find(self.controls.btnIndividualFinish).hide();
 				$(self.destination).find(self.controls.sectionTeams).hide();
 				$(self.destination).find(self.controls.btnFinish).hide();
 				$(self.destination).find(self.controls.sectionMainLocation).hide();
-
 			}
 
 			value = $(self.destination).find(self.controls.txtTeam).attr(self.attributes.teamId);
@@ -945,10 +962,11 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 		getTeamType : function(value) {
 			if (value && value != "" && value != 0) {
 				var isTeam = true;
-			//	debugger;
+				console.log("getteamtype",value);
 				for (var key in self.sports) {
 					if (self.sports[key].payload.id == value) {
-						if (self.sports[key].payload.team_type == "individual") {
+						console.log("payload",self.sports[key].payload);
+						if (self.sports[key].payload.team_type == "Individual") {
 							isTeam = false;
 						}
 					}
@@ -1024,7 +1042,7 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 				$(self.destination).find(self.controls.sectionDate).find(self.controls.fieldMessage).html(self.messages.selectDateAndTime).fadeIn();
 				isDataValid = false;
 			}else{
-					var validTime = timeText.match(self.tags.rgxTime);	
+					var validTime = timeText.match(self.tags.rgxTime) || timeText.match(self.tags.rgxTimeWhole);	
 					console.log("orginal date",date);
 					console.log("orginal time",timeText);
 					console.log("timeZone",timeZone);					
@@ -1037,10 +1055,11 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 						var array = timeText.split(':');
 						if(array){								
 							console.log(array);
+							console.log(array[0]);
 							if(timeZone != "PM" && array[0] != "12")							
-							date.setHours(array[0]);
-							
-							date.setMinutes(array[1]);
+								date.setHours(array[0]);
+							if(array.length > 1)
+								date.setMinutes(array[1]);
 							
 							if(timeZone == "PM")
 								date.addHours(12);
@@ -1068,6 +1087,7 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 					$(self.destination).find(self.controls.sectionTeamTwo).find(self.controls.fieldMessage).html(self.messages.selectTeam).fadeIn();
 					isDataValid = false;
 				}
+
 				// if (scoreOne == '' && date != null && currentDate > date) {
 					// $(self.destination).find(self.controls.sectionTeamOne).find(self.controls.fieldMessage).html(self.messages.selectScore).fadeIn();
 					// isDataValid = false;
@@ -1079,7 +1099,7 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 				// }
 
 			}
-//yyyy-mm-dd H:i:s
+
 			if (isDataValid) {
 				var completeDate = date;// + " " + timeText + "00";// + timeZone;
 				var payload = {
