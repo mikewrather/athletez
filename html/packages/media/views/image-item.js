@@ -4,10 +4,11 @@
 // Return {ImageItemView} object as constructor
 
 define(['vendor', 'views', 'utils', 'text!media/templates/image-item.html', 'votes/models/vote',
-        'votes/models/follow'], function(vendor, views, utils, imageItemTemplate) {
+        'votes/models/follow','utils/storage'], function(vendor, views, utils, imageItemTemplate) {
 
 	var ImageItemView, $ = vendor.$, BaseView = views.BaseView, Mustache = vendor.Mustache,
 	voteModel = require('votes/models/vote'),
+	Store = require('utils/storage'),
     followModel = require('votes/models/follow');
 
 	ImageItemView = BaseView.extend({
@@ -29,6 +30,14 @@ define(['vendor', 'views', 'utils', 'text!media/templates/image-item.html', 'vot
 		initialize : function(options) {
 			this.template = imageItemTemplate;
 			//this.render();
+		},
+		
+		
+		checkForUser: function() {
+			if(!_.isUndefined(routing.userLoggedIn) && routing.userLoggedIn)
+				return true;
+			else	
+        		return false;
 		},
 		
 		
@@ -250,9 +259,13 @@ define(['vendor', 'views', 'utils', 'text!media/templates/image-item.html', 'vot
 
 		vote: function(e)
 	    {
-		    e.preventDefault();
-		    console.log(this.model);
+		   e.preventDefault();
 		   e.stopPropagation();
+		  
+		   if(!this.checkForUser()) {
+		  		$("#userlogin").trigger('click');
+		    	return;
+	    	}
 		    var voteModelOb = new voteModel();
 			voteModelOb.userId = this.model.get("payload").id;
 			voteModelOb.entity_id = this.model.get("payload").enttypes_id;
@@ -265,17 +278,20 @@ define(['vendor', 'views', 'utils', 'text!media/templates/image-item.html', 'vot
 			});
 	    },
 
-	    follow: function(e){
+	    follow: function(e) {
 		   e.preventDefault();
 		    console.log(e.target);
 		    e.stopPropagation();
+		     if(!this.checkForUser()) {
+		  		$("#userlogin").trigger('click');
+		    	return;
+	    	}
 		    var followModelOb = new followModel();
 			followModelOb.userId = this.model.get("payload").id;
 			followModelOb.entity_id = this.model.get("payload").enttypes_id;
 			followModelOb.save();
 			$.when(followModelOb.request).done(function() {
 
-				console.log(followModelOb.get('payload'))
 				if(typeof(followModelOb.get('payload').follower) =='object' && typeof(followModelOb.get('payload').subject) =='object' && followModelOb.get('payload').id > 0)
 				{
 					$(e.currentTarget).addClass('link-disabled');

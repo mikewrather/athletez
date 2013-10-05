@@ -100,16 +100,12 @@ define(["require",
 					handleDeferreds : function() {
 						var controller = this;
 						 // display basic form for sign up					
-						
 						 //Remove a previously-bound callback function from routing
 						routing.off('Login');
           				//Bind a callback function to an object routing
           				routing.on('Login', function() {
             				controller.setupLoginView();				
             			});
-						
-						
-
 					},
 					
 					setupLoginView : function() {

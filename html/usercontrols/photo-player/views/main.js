@@ -62,6 +62,7 @@ define(['require', 'text!usercontrols/photo-player/templates/player.html','text!
 			if(this.index > 0) {
 				this.index--;
 				this.loadImage();
+				this.changeThumbPosition();
 			}
 		},
 		
@@ -69,13 +70,34 @@ define(['require', 'text!usercontrols/photo-player/templates/player.html','text!
 			if(this.index < this.json.length) {
 				this.index++;	
 				this.loadImage();
+				this.changeThumbPosition();
 			}
+		},
+		
+		// change thumb position
+		changeThumbPosition: function() {
+			// get the values to manuplate scroll
+			var $ul = this.$el.find(".thumb-image-list-h"), $li = this.$el.find(".selected-photo-thumb"),
+			liPos = $li.position(), ulPos = $ul.position(), ulWid = $ul.width(), scroll = 0, $tOuter = this.$el.find(".thumbs-outer"), outWid = $tOuter.width();
+			// get the li position 
+			
+			if((liPos.left + $li.width()) > outWid) {
+				scroll = liPos.left - outWid;
+				scroll += (ulPos.left < 0)?-(ulPos.left):-(ulPos.left);
+				scroll += $li.width() + 20;
+			} else {
+				var outerWid = (ulPos.left < 0)?-(ulPos.left):ulPos.left;
+				scroll = +(outerWid) - $li.width();//ulPos.left;
+			}
+			console.error(scroll);
+			// scrol to teh position
+			if(scroll)
+				this.$el.find(".thumbs-outer").animate({scrollLeft: scroll + 'px'}, 1000);
 		},
 		
 		initThumbsSection: function() {
 			var _self = this, dataLength = this.json.length, data = {},standard_thumb=null;
 			data.data = [];
-			console.error(this.json);
 			for(var i = 0; i < dataLength; i++) {
 				var mpay = this.json[i].payload, extra = {
 					_enttypes_id : mpay.enttypes_id,
@@ -131,10 +153,7 @@ define(['require', 'text!usercontrols/photo-player/templates/player.html','text!
 								extra._thumbnail = standard_thumb.url;
 							}
 						}
-
-	
 						if(mpay.media_obj.hasOwnProperty('is_owner')) show_edit = mpay.media_obj.is_owner;
-	
 						break;
 					case '1':
 						//users
@@ -172,10 +191,8 @@ define(['require', 'text!usercontrols/photo-player/templates/player.html','text!
 					case '8':
 						//games
 						extra._detailclass = "game";
-
 						extra._thumbnail = mpay.game_picture!==null ? mpay.game_picture.types.small_thumb.url : "http://lorempixel.com/output/sports-q-c-440-440-4.jpg";
-						standard_thumb = mpay.game_picture!==null ? mpay.game_picture.types.small_thumb : {height:440,width:440,url:"http://cdn.athletez.com/resources/icons/game/square_game.png"}
-
+						standard_thumb = mpay.game_picture!==null ? mpay.game_picture.types.small_thumb : {height:440,width:440,url:"http://cdn.athletez.com/resources/icons/game/square_game.png"};
 						extra._label = mpay.game_day;
 						extra._link = "/#game/" + mpay.id;
 						var team_str = "", teamLength = mpay.teams.length,
@@ -201,11 +218,8 @@ define(['require', 'text!usercontrols/photo-player/templates/player.html','text!
 				}
 
 
-				console.log("standard thumb",standard_thumb);
-
 				if(standard_thumb != "undefined" && standard_thumb != null)
 				{
-
 					var ratio_x = standard_thumb.width / 110,
 						ratio_y = standard_thumb.height / 110;
 
@@ -241,27 +255,13 @@ define(['require', 'text!usercontrols/photo-player/templates/player.html','text!
 							}];
 				}
 
-
-
-				console.log(extra);
-
 				data.data.push(extra);
 			}
 			this.id = extra._id;
 			var markup = Mustache.to_html(this.thumbTemplate, data);
 			this.$el.find('.thumb-image-list-h').html(markup);
 
-
-
-
-
 		},
-		
-		
-		
-		//fetchForm: function() {
-			
-		//}
 		
 		loadImage: function(trigger) {
 			var _self = this, mpay = this.json[_self.index].payload, extra = {
@@ -270,13 +270,10 @@ define(['require', 'text!usercontrols/photo-player/templates/player.html','text!
 				_currentIndex: _self.index
 			};
 
-			console.log(mpay);
-
 			var image_object;
 			switch(mpay.enttypes_id) {
 				case '23':
 					//videos
-
 					extra._thumbnail = mpay.thumbs;
 					extra._label = mpay.media.name;
 					extra._link = "javascript: void(0);";
@@ -295,9 +292,7 @@ define(['require', 'text!usercontrols/photo-player/templates/player.html','text!
 					extra._label = mpay.label;
 					extra._sublabel = "Coming Soon";
 					extra._link = "/#profile/" + mpay.id;
-
 					if(mpay.hasOwnProperty('is_owner')) show_edit = mpay.is_owner;
-
 					break;
 				case '8':
 					//games
@@ -332,10 +327,6 @@ define(['require', 'text!usercontrols/photo-player/templates/player.html','text!
 			{
 				var self=this,loading_div = this.$el.find('div.loading_image');
 				loading_div.css('opacity','0');
-
-
-
-
 
 				function showImage(event){
 					var self = event.data.self,
@@ -374,7 +365,6 @@ define(['require', 'text!usercontrols/photo-player/templates/player.html','text!
 					event.data.el.find('.large-image-h').off('load');
 				}
 				loading_div.find('.large-image-h').attr('src', image_object.url).on('load',{'el':loading_div,'self':this,'image_object':image_object},showImage);
-
 			}
 
 			this.$el.find('.thumb-image-list-h li').removeClass('selected-photo-thumb');
