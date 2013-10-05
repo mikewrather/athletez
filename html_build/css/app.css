@@ -398,6 +398,7 @@ ul.ui-autocomplete {
 	border: 2px solid #b5b9be;
 	padding: 10px 0 !important;
 	background: rgb(255, 255, 255) !important;
+    z-index: 1060;
 }
 .ui-autocomplete li.ui-menu-item {
 	color: #000 !important;
@@ -463,13 +464,17 @@ margin-right: 100px;
     
 }
 .comment .user-photo {
-    width:55px;
-    height: 55px;
+    width:50px;
+    height: 50px;
+}
+.comment .user-photo {
+	font-size: 10px;
+	line-height: 12px;
 }
 .comment .user-photo img {
     width:100% !important;
     height: 100%;
-    margin-top:30px !important;
+    margin-top:5px !important;
 }
 .add-comment-form-h{
     width: 100%;
@@ -588,6 +593,13 @@ margin-right: 100px;
 	float: left;
 	width: 100%;
 	text-align: left;
+}
+span.team-label{
+    display: inline-block;
+    margin-left:100px;
+    font-family: 'Avenir','HelveticaNeue';
+    font-weight: bolder;
+    font-size: 1.1em;
 }
 .game-box-outer ul {
     background: #bbbbbc;
@@ -737,15 +749,11 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#84a934', end
 .add-game-modal{
     width:80%;
     left:10%;
-    margin:0;
-    height: 80%;
+    height: 70%;
 }
 .container_add_game{
 	font-size:12px ;
-	background-color: #FFF;
 	
-	padding: 0 20px 10px;
-	float: left;
 }
 .container_add_game select {
 	background-color: #6B6F72;	
@@ -761,11 +769,12 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#84a934', end
 }
 .container_add_game input[type="text"].txt-score-team_h {
 	width:25px;
-	
+	margin-bottom: 0;	
 }
 .container_add_game .section-game-radio_h {
-	margin-left:10px;
+	
 	padding:4px 0 0 0;
+	margin-top: 5px;
 	
 }
 .container_add_game .section-new-team_h{clear:both} 
@@ -777,10 +786,11 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#84a934', end
 .container_add_game .section-game-teams_h{
     float: left;
     width: 100%;
+    margin: 10px 0;
    }
 .container_add_game .field-message{
 	color:#77011C;
-	font-size: 8px;
+	font-size: 12px;
 	font-style: italic;
 	font-weight: normal;
 	background-color: none;	
@@ -790,8 +800,14 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#84a934', end
 	margin: 8px -20px;
 	padding: 4px 15px;
 }
-.container_add_game input[type="radio"],.container_add_game input[type="checkbox"] {
+.container_add_game input[type="radio"],
+.container_add_game input[type="checkbox"] {
     margin: 0;
+}
+.container_add_game .score-box a {
+	width: 100%;
+	height: 100%;
+	display: inline-block;
 }
  .container_add_game .ul.ui-autocomplete{
  	 padding: 0 2px !important;
@@ -800,10 +816,59 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#84a934', end
 .container_add_game .ui-autocomplete li.ui-menu-item {
 	font-size: 14px;
 }
-.score-box a {
-	width: 100%;
-	height: 100%;
-	display: inline-block;
+.container_add_game input.txtDate{
+width: 90px;	
+float:left;
+}
+.container_add_game input.txtTime{
+	float:left;
+	width:40px;
+	margin-left: 4px;
+    margin-right: 4px;
+}
+.container_add_game .ddlTime{
+	width:50px;
+	float:left;
+	margin-left:8px;
+}
+.container_add_game .section-score_h{
+	margin-top: 4px;
+    padding: 4px 0 0;
+}
+.container_add_game .dropdown-container {
+	z-index: 0;
+	width:98%
+}
+.container_add_game .dropdown-wrapper{
+	width:224px;
+}
+.container_add_game [class*="span"] {
+	margin-left: 0px;
+	
+}
+.container_add_game .span_ddl_team_h{
+	margin-bottom: 14px;height: 15px;
+}
+.container_add_game .span_ddl_team_h .dropdown-wrapper{
+	width:500px;
+} 
+.container_add_game .section-new-team_h input[type="text"]{
+	width:480px;
+}
+.container_add_game .spn-ddl-time-period_h .region-dark{
+	padding: 4px 1%;
+}
+.container_add_game .spn-ddl-time-period_h .dropdown-wrapper{
+	width:60px;
+}
+.container_add_game .spn-ddl-time-period_h .drop-down-outer{
+	height: 28px;
+}
+.container_add_game .secction-individual-game_h{
+margin-top:10px;	
+}
+.ui-datepicker{
+	z-index: 5000 !important;
 }
 #map-canvas {
 	width: 80%;
@@ -819,7 +884,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#84a934', end
 }
 #logincontainer *{
     font-size:1em;
-    font-family: "HelveticaNeue","HELVETICA";
+    font-family: "HelveticaNeue","Helvetica";
 }
 #regcontainer *{
     font-family: "HelveticaNeue", "Helvetica";
