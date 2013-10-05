@@ -230,7 +230,7 @@
 		public function put_score()
 		{
 			// Scaffolding Code For Single:
-			return $this->obj->getBasics();
+			return $this->obj;
 		}
 
 		

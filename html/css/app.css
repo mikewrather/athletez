@@ -493,6 +493,7 @@ ul.ui-autocomplete {
 	border: 2px solid #b5b9be;
 	padding: 10px 0 !important;
 	background: rgb(255, 255, 255) !important;
+    z-index: 1060;
 }
 
 .ui-autocomplete li.ui-menu-item {
@@ -940,6 +941,11 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#84a934', end
     height: 80%;
 }
 
+.add-game-modal div.modal-body{
+    max-height: 100%;
+    width: 99%;
+    padding: .5%;
+}
 .container_add_game{
 	font-size:12px ;
 	/*background-color: #FFF;

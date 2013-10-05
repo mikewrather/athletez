@@ -305,11 +305,11 @@ class Model_Sportorg_Games_Base extends ORM
 				->where('games_id','=',$this->id)
 				->and_where('teams_id','=',$teams_id)
 				->execute();
-			return $this;
+			return array("score"=>$score);
 		}
 		else
 		{
-			return this;
+			return false;
 		}
 
 	}
