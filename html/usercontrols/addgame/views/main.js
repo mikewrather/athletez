@@ -272,6 +272,7 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 
 		},
 		setFirstTeam : function(teamId) {
+			console.log("setFirstTeam");
 			var isTeamFound = false;
 			if (self.team_id) {
 				for (var key in self.teams) {
@@ -285,21 +286,20 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 					teamModel.fetchSuccess = function(model, response) {
 						var data = teamModel.parseAsRequired(response);
 						self.setSelectedTeam(data);
-
 					};
 					teamModel.fetch();
-
 				}
 				self.CheckTeamControlsVisibility();
 			}
 		},
 		setSelectedTeam : function(data) {
+			console.log("setSelectedTeam");
 			if (data) {
-				console.log(data);
+				console.log("data",data);
 				var teamname = data['team_name'];
 				var teamId = data['team_id'];
 				$(self.destination).find(self.controls.sectionTeamOne).find("input").attr(self.attributes.teamId, teamId);
-				$(self.destination).find(self.controls.sectionTeamOne).find(self.controls.ddlUserTeams).hide();
+				$(self.destination).find(self.controls.sectionTeamOne).find(self.controls.spanddlteamone).hide();
 				$(self.destination).find(self.controls.sectionTeamOne).find(self.controls.btnNewTeam).hide();
 				$(self.destination).find(self.controls.sectionTeamOne).find(self.controls.txtTeam).val(teamname).show();
 			}
@@ -318,10 +318,11 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 
 		},
 		setUpUserTeams : function(List) {
-			self.teams = List;
+			self.teams = List ? List.toJSON() : [];
+			self.setFirstTeam(self.team_id);
 			//spanddlteam
 			var data = {};
-               data.records = self.teams.toJSON();
+               data.records = self.teams;
                data.recordId = 'id';
 			   data.recordValue = 'team_name';
 			   
@@ -347,7 +348,6 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 						self.changeUserTeamTwo(result);						
 					}
 				});
-			
 		},
 		changeUserTeamOne : function(result) {
 			console.log("result",result);
