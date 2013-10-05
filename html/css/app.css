@@ -1010,3 +1010,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#84a934', end
 	opacity: 0.5 !important;
 	pointer-events: none !important;
 }
+
+#logincontainer {
+	padding: 50px;
+}
