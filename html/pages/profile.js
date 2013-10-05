@@ -399,7 +399,6 @@ console.log(app);
 				this.layout.render();
 			},
 
-
 			updateImages: function (data) {
 				//create new image model to hold newly uploaded image
 				var newImageModel = new MediaImageModel();
