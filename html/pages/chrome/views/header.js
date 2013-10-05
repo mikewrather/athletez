@@ -76,8 +76,11 @@ function (
                 if (authorized) {
                     var id = model.get('id');
 	                self.model.saveCookie();
+	                routing.userLoggedIn = true;
                     routing.trigger('app-inited', id);
                     //Channel('app-inited').publish(id);
+                } else {
+                	routing.userLoggedIn = false;
                 }
             };
                 
@@ -137,15 +140,13 @@ function (
             }
 
             // Load the SDK Asynchronously
-            function loadFBLogin(){
- 
+            function loadFBLogin() {
             	if (!this.registrationController) {
                 this.registrationController = new RegistrationController({
                     "route": ""
                 });
             }
             this.registrationController.refreshPage();
-//           
                 var js, id = 'facebook-jssdk', ref = document.getElementsByTagName('script')[0];
                 if (document.getElementById(id)) {
                     login();
@@ -155,11 +156,8 @@ function (
                 js.src = "//connect.facebook.net/en_US/all.js";
                 ref.parentNode.insertBefore(js, ref);
             }
-
             loadFBLogin();
         },
-
-
 
         signupUser: function(event){
                     event.preventDefault();
@@ -167,9 +165,7 @@ function (
                     routing.trigger("register-basic");
                     this.pop = new popupview();
                   
-                },
-       	
-
+                }
       });
 
     return HeaderView;

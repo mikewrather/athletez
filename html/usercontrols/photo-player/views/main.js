@@ -153,10 +153,7 @@ define(['require', 'text!usercontrols/photo-player/templates/player.html','text!
 								extra._thumbnail = standard_thumb.url;
 							}
 						}
-
-	
 						if(mpay.media_obj.hasOwnProperty('is_owner')) show_edit = mpay.media_obj.is_owner;
-	
 						break;
 					case '1':
 						//users
@@ -194,10 +191,8 @@ define(['require', 'text!usercontrols/photo-player/templates/player.html','text!
 					case '8':
 						//games
 						extra._detailclass = "game";
-
 						extra._thumbnail = mpay.game_picture!==null ? mpay.game_picture.types.small_thumb.url : "http://lorempixel.com/output/sports-q-c-440-440-4.jpg";
-						standard_thumb = mpay.game_picture!==null ? mpay.game_picture.types.small_thumb : {height:440,width:440,url:"http://cdn.athletez.com/resources/icons/game/square_game.png"}
-
+						standard_thumb = mpay.game_picture!==null ? mpay.game_picture.types.small_thumb : {height:440,width:440,url:"http://cdn.athletez.com/resources/icons/game/square_game.png"};
 						extra._label = mpay.game_day;
 						extra._link = "/#game/" + mpay.id;
 						var team_str = "", teamLength = mpay.teams.length,
@@ -223,10 +218,8 @@ define(['require', 'text!usercontrols/photo-player/templates/player.html','text!
 				}
 
 
-
 				if(standard_thumb != "undefined" && standard_thumb != null)
 				{
-
 					var ratio_x = standard_thumb.width / 110,
 						ratio_y = standard_thumb.height / 110;
 
@@ -281,7 +274,6 @@ define(['require', 'text!usercontrols/photo-player/templates/player.html','text!
 			switch(mpay.enttypes_id) {
 				case '23':
 					//videos
-
 					extra._thumbnail = mpay.thumbs;
 					extra._label = mpay.media.name;
 					extra._link = "javascript: void(0);";
@@ -300,9 +292,7 @@ define(['require', 'text!usercontrols/photo-player/templates/player.html','text!
 					extra._label = mpay.label;
 					extra._sublabel = "Coming Soon";
 					extra._link = "/#profile/" + mpay.id;
-
 					if(mpay.hasOwnProperty('is_owner')) show_edit = mpay.is_owner;
-
 					break;
 				case '8':
 					//games
@@ -337,10 +327,6 @@ define(['require', 'text!usercontrols/photo-player/templates/player.html','text!
 			{
 				var self=this,loading_div = this.$el.find('div.loading_image');
 				loading_div.css('opacity','0');
-
-
-
-
 
 				function showImage(event){
 					var self = event.data.self,
@@ -379,7 +365,6 @@ define(['require', 'text!usercontrols/photo-player/templates/player.html','text!
 					event.data.el.find('.large-image-h').off('load');
 				}
 				loading_div.find('.large-image-h').attr('src', image_object.url).on('load',{'el':loading_div,'self':this,'image_object':image_object},showImage);
-
 			}
 
 			this.$el.find('.thumb-image-list-h li').removeClass('selected-photo-thumb');

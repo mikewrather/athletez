@@ -17,9 +17,7 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
         Backbone = facade.Backbone,
         Channel = utils.lib.Channel,
         debug = utils.debug;
-
    		App = Backbone.Router.extend({
-
         routes: {
             '': 'defaultRoute',
             'home': 'showHome',
@@ -191,8 +189,9 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
 	    		self.currentController = new HomeController({
 	    		});
 	    	}
-	    	
-	    	this.initialiRoutesInit(initHome);
+	    	initHome();
+	    	var proxy = function() {};
+	    	this.initialiRoutesInit(proxy);
 	    },
 	    
 	    removeCurrent: function() {
@@ -319,8 +318,7 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
            // chromeBootstrap();chromeBootstrap();
 		    //console.log(VideoPreviewController);
 			
-		    function initVideoPreview(url,attr)
-		    {
+		    function initVideoPreview(url,attr) {
 			    var VidPrevCtrl = new VideoPreviewController({"url":url,"attr":attr});
 			    //console.log(VidPrevCtrl);
 		    }
@@ -333,7 +331,6 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
         showGame: function (id) {
         	this.cancelAjaxRequests();
             this.loadStyles();
-            
            $('body').empty();
             chromeBootstrap();
              /*var gameController = new GameController({
@@ -356,23 +353,20 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
                 });
             }
              this.initialiRoutesInit(initGame);
-            //Channel('app-inited').subscribe(initGame);
         },
 
         showRegistration: function() {
         	this.cancelAjaxRequests();
             this.loadStyles();
-            
             $('body').empty();
             chromeBootstrap();
              this.removeCurrent();
             function initRegistration() {
                 self.currentController = new RegistrationController({
                     "route": ""
-                })
+                });
             }
             this.initialiRoutesInit(initRegistration);
-            //Channel('app-inited').subscribe(initRegistration);
         },
         
         showTag: function (userid) {
@@ -465,20 +459,16 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
         // load style sheets
         loadStyles: function () {
             Channel('load:css').publish([base_url + "css/bootstrap.css", 
-                base_url + "css/bootstrap-responsive.css",
-                base_url + "css/app.css",
-                base_url + "css/common.css",
-                base_url + 'css/jquery-ui-1.10.2.custom.css']);
+            base_url + "css/bootstrap-responsive.css",
+            base_url + "css/app.css",
+            base_url + "css/common.css",
+            base_url + 'css/jquery-ui-1.10.2.custom.css']);
         },
 
         // Pub / Sub
 
         addSubscribers: function () {
-		
             Channel('load:css').subscribe(this.loadCss);
-	        
-			
-			
         },
 
         removeSubscribers: function () {
@@ -486,7 +476,6 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
         },
 
         // Helpers
-
         getStoredState: function (keyName, metaPropName) {
             var storedState, found;
 
