@@ -127,7 +127,7 @@ define(['require', 'text!usercontrol/dropdown/template/layout.html', 'facade', '
 
 		// set default values selected
 		defaultSelected : function(val) {
-			console.error(this);
+			//console.error(self);
 			if (_self.multiple) {
 				if (_.isArray(_self.selectedValue)) {
 					for (var i in _self.selectedValue) {
@@ -174,8 +174,9 @@ define(['require', 'text!usercontrol/dropdown/template/layout.html', 'facade', '
 					self.callback(this.selectedOptions);
 			} else {
 				setTimeout(function() {
+					console.log("self.callback",self.callback,self.selectedOptions);
 					if (self.callback)
-						self.callback(this.selectedOptions);
+						self.callback(self.selectedOptions);
 				}, 200);
 			}
 			return true;

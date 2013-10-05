@@ -4,9 +4,12 @@
  // Requires `define`, `require`
  // Returns {Add Game VIEW} constructor
  */
-define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 'views', 'utils', 'vendor', 'user/models/basic_info', 'sportorg/collections/sports_users', 'location/collections/states', 'usercontrols/addgame/collections/teams', 'location/collections/cities', 'usercontrols/addgame/collections/teams_user', 'usercontrols/addgame/collections/teams', 'usercontrols/addgame/collections/games_search', 'usercontrols/addgame/models/team', 'usercontrols/addgame/models/team_add', 'usercontrols/addgame/models/game', 'usercontrols/addgame/models/uslgamelink'], function(require, layoutTemplate) {
+define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 'views', 'utils', 'vendor', 'user/models/basic_info', 'sportorg/collections/sports_users', 'location/collections/states', 'usercontrols/addgame/collections/teams', 'location/collections/cities', 'usercontrols/addgame/collections/teams_user', 'usercontrols/addgame/collections/teams', 'usercontrols/addgame/collections/games_search', 'usercontrols/addgame/models/team', 'usercontrols/addgame/models/team_add', 'usercontrols/addgame/models/game', 'usercontrols/addgame/models/uslgamelink',
+'usercontrol/dropdown/view/dropdown'
+], function(require, layoutTemplate) {
 
 	var self, facade = require('facade'), views = require('views'), SectionView = views.SectionView, utils = require('utils'), Channel = utils.lib.Channel, vendor = require('vendor'), Mustache = vendor.Mustache, $ = facade.$, BasicModel = require('usercontrols/tag/models/basic_info'), SportsCollection = require('sportorg/collections/sports_users'), StatesCollection = require('location/collections/states'), CityCollection = require('location/collections/cities'), UserTeamsCollection = require('usercontrols/addgame/collections/teams_user'), TeamsCollection = require('usercontrols/addgame/collections/teams'), TeamModel = require('usercontrols/addgame/models/team'), TeamAddModel = require('usercontrols/addgame/models/team_add'), GameModel = require('usercontrols/addgame/models/game'), GamesSearchCollection = require('usercontrols/addgame/collections/games_search'),
+	DropDownList = require('usercontrol/dropdown/view/dropdown'),
 	
 	//Models
 	UserGameLinkModel = require('usercontrols/addgame/models/uslgamelink'),
@@ -37,7 +40,7 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 			'click .btn-ddl-team-game_h' : 'showDdlTeam',
 			'click .rdo-game-location_h' : 'showLocation',
 			'click .btn-game-Finish_h' : 'finishGame',
-			'blur .txt-game-date_h' : 'CheckTeamControlsVisibility',
+			'change .txt-game-date_h' : 'CheckTeamControlsVisibility',
 			"click .btn-game-individual-Create_h" : 'createIndividualEvent',
 			"click .btn-game-individual-Finish_h" : 'goThereIndividualGame'
 		},
@@ -50,10 +53,15 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 			sectionDate : ".section-game-date_h",
 			txtGameDate : ".txt-game-date_h",
 			txtGameTime : ".txt-game-time_h",
+			spnTimePeriod :".spn-ddl-time-period_h",
 			ddlTimePeriod : ".ddl-time-period_h",
+			spnSports : ".span-ddl-sports_h",
 			ddlSports : ".ddl-game-sports_h",
 			sectionTeams : ".section-game-teams_h",
 			ddlUserTeams : ".ddl-game-userteams_h",
+			spanddlteam : ".span_ddl_team_h",
+			spanddlteamtwo : ".span_ddl_team_two_h",
+			spanddlteamone : ".span_ddl_team_one_h",
 			btnNewTeam : ".btn-new-team-game_h",
 			btnDdlTem : ".btn-ddl-team-game_h",
 			sectionNewTeam : ".section-new-team_h",
@@ -82,8 +90,13 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 			btnIndividualGameCreate : ".btn-game-individual-Create_h",
 			// LABELS
 			fieldMessage : '.field-message_h',
-			secSports : ".section-game-sports_h"
-			//fieldError : '.field-error'
+			secSports : ".section-game-sports_h",
+			//fieldError : '.field-error',
+			
+			hdnSportsIdData : "hdn_sport_id",
+			hdnSportsId : "#hdn_sport_id",
+			hdnTimePeriodData : "hdn_time-period_h",
+			hdnTimePeriod : "#hdn_time-period_h"
 		},
 
 		attributes : {
@@ -129,13 +142,50 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 		/*render displays the view in browser*/
 		render : function() {
 			SectionView.prototype.render.call(this);
-			$(self.el).find(self.controls.txtGameDate).datetimepicker({
-				timeFormat : 'hh:mm tt',
-				//separator : ' @ ',
-				showTimezone : true,
+			$(self.el).find(self.controls.txtGameDate).datepicker({
+				dateFormat: 'yy-mm-dd',
 				changeMonth : true,
 				changeYear : true
 			});
+			
+			
+			var records = [{
+				payload : {
+					name : "AM",
+					value : "AM"
+					
+				}
+			},
+			{
+				payload : {
+					name : "PM",
+					value : "PM"
+					
+				}
+			},]
+			
+			var data = {};
+               data.records = records;
+               data.recordId = 'name';
+			   data.recordValue = 'value';
+			var DropDown = new DropDownList({
+					data: data,
+					title: "Select Sport",
+					elementId: self.controls.hdnTimePeriodData,
+					destination: self.controls.spnTimePeriod,
+					targetView: self,
+					callback: function(result) {
+						//self.changeSport(result);						
+					}
+				});
+				
+			// $(self.el).find(self.controls.txtGameDate).datetimepicker({
+				// timeFormat : 'hh:mm tt',
+				// //separator : ' @ ',
+				// showTimezone : true,
+				// changeMonth : true,
+				// changeYear : true
+			// });
 		},
 
 		// **Method** `setOptions` - called by BaseView's initialize method
@@ -166,63 +216,63 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 		},
 
 		/*Fill Sports dropdown with sports on basis of gender and sports_club type*/
-		fillSports : function() {
-			if (self.sports && self.sports.length > 0) {
-				self.SetupSportsView(orgs_id, destination);
-			} else {
+		fillSports : function() {			
 				var List = new SportsCollection();
 				List.user_id = self.user_id;
 				List.processResult = function(collection) {
-					var data = List.parseAsRequired();
-					self.SetupSportsView(data);
+					//var data = List.parseAsRequired();
+					self.SetupSportsView(collection);
 				};
 				List.fetch();
-			}
 		},
 		SetupSportsView : function(List) {
-			if (List == null || List.length < 1) {
-				$(self.destination).find(self.controls.ddlSports).parent().find(self.controls.fieldMessage).html(self.messages.dataNotExist).stop().fadeIn();
-				return;
-			}
-			self.sports = List;
-			// Sort Sports Before Filling Up Into Drop-Down
-			self.sort(self.sports, 'sport_name', false);
-			self.setDropdownOptions(self.sports, 'sport_name', 'sport_id', $(self.destination).find(self.controls.ddlSports), 'Select Sport');
-			if (self.sports_id) {
-				for(var key in self.sports){
-					if(self.sports[key].sport_id == self.sports_id){
-						$(self.destination).find(self.controls.ddlSports).val(self.sports_id);
-						$(self.destination).find(self.controls.ddlSports).trigger('change');
-						self.CheckTeamControlsVisibility();		
+			
+			 self.sports = List.toJSON();
+			 console.log("self.sports",self.sports);
+			
+			var data = {};
+               data.records = self.sports;
+               data.recordId = 'id';
+			   data.recordValue = 'sport_name';
+			var DropDown = new DropDownList({
+					data: data,
+					title: "Select Sport",
+					elementId: self.controls.hdnSportsIdData,
+					destination: self.controls.spnSports,
+					targetView: self,
+					selectedValue : self.sports_id || null,
+					callback: function(result) {
+						self.changeSport(result);						
 					}
-					
-				}
-				
-			}
+				});
 		},
 		/*Change sport_id when a sport is selected from dropdown*/
-		changeSport : function(e) {
-			if ($(e.target).val() && $(e.target).val() != 0) {
-
-				$(e.target).parents(self.destination).find(self.controls.sectionTeams).show();
-				$(e.target).parents(self.destination).find(self.controls.btnFinish).fadeIn();
-				$(self.destination).find("input").attr(self.attributes.sportId, $(e.target).val());
-				self.fillTeams($(e.target).val());
+		changeSport : function(result) {
+			console.log("result",result);
+			if (result && result != 0) {
+				$(self.destination).find(self.controls.sectionTeams).show();
+				$(self.destination).find(self.controls.btnFinish).fadeIn();
+				$(self.destination).find("input").attr(self.attributes.sportId, result);
+				
+				// Fill Teams Only if Its Team Game
+				var isTeam = self.getTeamType(result);
+				if(isTeam){
+					self.fillTeams(result);
+				}
+				
 			} else {
-				$(e.target).parents(self.destination).find(self.controls.btnFinish).fadeOut();
-
-				$(e.target).parents(self.destination).find(self.controls.sectionTeams).fadeOut();
+				$(self.destination).find(self.controls.btnFinish).fadeOut();
+				$(self.destination).find(self.controls.sectionTeams).fadeOut();
 				$(self.destination).find("input").removeAttr(self.attributes.stateId);
 			}
 			self.CheckTeamControlsVisibility();
 
 		},
-		setFirstTeam : function() {
+		setFirstTeam : function(teamId) {
 			var isTeamFound = false;
 			if (self.team_id) {
 				for (var key in self.teams) {
-					if (self.teams[key].team_id == self.team_id) {
-						$(self.destination).find(self.controls.sectionTeamOne).find(self.controls.ddlUserTeams).val(self.teams[key].team_id);
+					if (self.teams[key].payload.id == self.team_id) {
 						isTeamFound = true;
 					}
 				}
@@ -256,10 +306,8 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 			List.user_id = self.user_id;
 			List.sports_id = sport_id;
 			List.processResult = function(collection) {
-
-				var data = List.parseAsRequired();
-				self.setUpUserTeams(data);
-
+				//var data = List.parseAsRequired();
+				self.setUpUserTeams(collection);
 			};
 			//self.TeamFetchRequest = self.abortRequest(self.TeamFetchRequest);
 			var tempCollection = List.fetch();
@@ -267,25 +315,59 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 
 		},
 		setUpUserTeams : function(List) {
-			if (List == null) {
-				$(self.destination).find(self.controls.ddlUserTeams).parent().find(self.controls.fieldMessage).html(self.messages.dataNotExist).stop().fadeIn();
-				return;
-			}
 			self.teams = List;
-			self.sort(self.teams, 'team_name', false);
-			self.setDropdownOptions(self.teams, 'team_name', 'team_id', $(self.destination).find(self.controls.ddlUserTeams), 'Select Team');
-			self.setFirstTeam();
+			//spanddlteam
+			var data = {};
+               data.records = self.teams.toJSON();
+               data.recordId = 'id';
+			   data.recordValue = 'team_name';
+			   
+			var DropDownOne = new DropDownList({
+					data: data,
+					title: "Select Team",
+					elementId: "hdn_team_id",
+					targetView: self,					
+					destination: self.controls.spanddlteamone,			
+					selectedValue : self.team_id || null,
+					callback: function(result) {
+						self.changeUserTeamOne(result);						
+					}
+				});
+			
+			var DropDownTwo = new DropDownList({
+					data: data,
+					title: "Select Team",
+					elementId: "hdn_team_id",
+					targetView: self,					
+					destination: self.controls.spanddlteamtwo,					
+					callback: function(result) {
+						self.changeUserTeamTwo(result);						
+					}
+				});
+			
 		},
-		changeUserTeam : function(e) {
-			$(e.target).parents(self.controls.sectionTeams).find(self.controls.txtTeam).hide();
-			$(e.target).parents(self.controls.sectionTeams).find("input").attr(self.attributes.teamId, $(e.target).val());
-			$(e.target).parents(self.controls.sectionTeams).find("input:checked").removeAttr("checked");
+		changeUserTeamOne : function(result) {
+			console.log("result",result);
+			$(self.destination).find(self.controls.sectionTeamOne).find(self.controls.txtTeam).hide();
+			$(self.destination).find(self.controls.sectionTeamOne).find(self.controls.spanddlteamone).show();
+			$(self.destination).find(self.controls.sectionTeamOne).find(self.controls.btnNewTeam).show();
+			$(self.destination).find(self.controls.sectionTeamOne).find("input").attr(self.attributes.teamId, result);
+			$(self.destination).find(self.controls.sectionTeamOne).find("input:checked").removeAttr("checked");
+			self.showLocation();
+		},
+		changeUserTeamTwo : function(result) {
+			console.log("result",result);
+			$(self.destination).find(self.controls.sectionTeamTwo).find(self.controls.txtTeam).hide();
+			$(self.destination).find(self.controls.sectionTeamTwo).find(self.controls.spanddlteamtwo).show();
+			$(self.destination).find(self.controls.sectionTeamTwo).find(self.controls.btnNewTeam).show();
+			$(self.destination).find(self.controls.sectionTeamTwo).find("input").attr(self.attributes.teamId, result);
+			$(self.destination).find(self.controls.sectionTeamTwo).find("input:checked").removeAttr("checked");
 			self.showLocation();
 		},
 		showAddTeam : function(e) {
 			//Hide Link and DROPDOWN
 			$(e.target).hide();
-			$(e.target).parents(self.controls.sectionTeams).find(self.controls.ddlUserTeams).val("").hide();
+			$(e.target).parents(self.controls.sectionTeams).find(self.controls.spanddlteam).hide();
 			$(e.target).parents(self.controls.sectionTeams).find(self.controls.txtTeam).show();
 			$(e.target).parents(self.controls.sectionTeams).find("input").removeAttr(self.attributes.teamId);
 			$(e.target).parents(self.controls.sectionTeams).find("input:checked").removeAttr("checked");
@@ -691,10 +773,12 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 			
 			var isDataValid = true;
 			var message = '';
-			var date = $(self.destination).find(self.controls.txtGameDate).datetimepicker('getDate');
+			var date = $(self.destination).find(self.controls.txtGameDate).datepicker('getDate');
+			var timeText = $(self.destination).find(self.controls.txtGameTime).val();
+			var timeZone = $(self.destination).find(self.controls.ddlTimePeriod).val();
 			var locationId = self.location_id || $(self.controls.txtIndividualLocation).val() || 0;
 			var eventName = $(self.destination).find(self.controls.txtIndividualGame).val();
-			var sportsId = $(self.destination).find(self.controls.ddlSports).val();
+			var sportsId = $(self.destination).find(self.controls.hdnSportsId).val();
 			//console.log(date);
 			if(!sportsId){
 				$(self.destination).find(self.controls.secSports).find(self.controls.fieldMessage).html(self.messages.selectSport).fadeIn();
@@ -702,9 +786,11 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 			}
 			
 			console.log("create");
-			if (!date) {
+			if (!date || !timeText) {
 				$(self.destination).find(self.controls.sectionDate).find(self.controls.fieldMessage).html(self.messages.selectDateAndTime).fadeIn();
 				isDataValid = false;
+			}else{
+				$(self.destination).find(self.controls.sectionDate).find(self.controls.fieldMessage).html("").fadeOut();
 			}
 
 			if (!locationId) {
@@ -713,14 +799,15 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 			}
 
 			if ($.trim(eventName) == "") {
-				message += self.messages.enterEventName;
+				message += "<br/>" + self.messages.enterEventName;
 				isDataValid = false;
 			}
 
 			if (isDataValid) {
+				var completeDate = date ; //+ " " + timeText + " " + timeZone;
 				$(e.target).parent().find(self.controls.fieldMessage).html('').fadeOut();
 				var payload = {
-					game_datetime : date,
+					game_datetime : completeDate,
 					locations_id : locationId,
 					event_name : eventName,
 					sports_id : sportsId
@@ -734,7 +821,7 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 				$.when(gameModel.request).done(function(response) {
 				self.game_id = response.payload.id;
 				self.gameData = {
-							game_datetime : date,
+							game_datetime : completeDate,
 							games_id : self.game_id,
 							event_name : eventName,
 							locations_id : locationId,
@@ -749,7 +836,7 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 		
 		goThereIndividualGame : function(e){
 			
-			var sportsId = $(self.destination).find(self.controls.ddlSports).val();
+			var sportsId = $(self.destination).find(self.controls.hdnSportsId).val();
 			var payload = {
 				users_id : 	self.user_id,
 				sports_id : sportsId,
@@ -780,27 +867,31 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 		/**********Create Event Ends Here*****************/
 
 		CheckTeamControlsVisibility : function() {
-			var value = $(self.destination).find(self.controls.ddlSports).val();
+			var value = $(self.destination).find(self.controls.hdnSportsId).val();
+			console.log("value",value);
+			
 			if (value && value != "" && value != 0) {
 				//console.log("value");
-				var isTeam = self.getTeamType();
+				var isTeam = self.getTeamType(value);
 				if (!isTeam) {
+					
 					$(self.destination).find(self.controls.sectionTeams).hide();
-					$(self.destination).find(self.controls.sectionScore).html('').hide();
+					$(self.destination).find(self.controls.sectionScore).hide();
 					$(self.destination).find(self.controls.btnFinish).hide();
 					$(self.destination).find(self.controls.sectionMainLocation).hide();
 			
 					$(self.destination).find(self.controls.sectionIndividual).show();
-					$(self.destination).find(self.controlsbtnIndividualFinish).show();
+			//		$(self.destination).find(self.controlsbtnIndividualFinish).show();
 				} else {
-					var date = $(self.destination).find(self.controls.txtGameDate).datetimepicker('getDate');
+					
+					var date = $(self.destination).find(self.controls.txtGameDate).datepicker('getDate');
 					var currentDate = new Date();
-					//console.log("date", date, currentDate);
+					console.log("date", date, currentDate);
 					if (date != null && currentDate >= date) {
-						//console.log("true");
+						console.log("true");
 						$(self.destination).find(self.controls.sectionScore).show();
 					} else {
-						//console.log("false");
+						console.log("false");
 						$(self.destination).find(self.controls.sectionScore).hide();
 						$(self.destination).find(self.controls.txtScore).val('');
 					}
@@ -817,7 +908,7 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 				//console.log("value null");
 
 				$(self.destination).find(self.controls.sectionIndividual).hide();
-				$(self.destination).find(self.controlsbtnIndividualFinish).hide();
+				$(self.destination).find(self.controls.btnIndividualFinish).hide();
 				$(self.destination).find(self.controls.sectionTeams).hide();
 				$(self.destination).find(self.controls.btnFinish).hide();
 				$(self.destination).find(self.controls.sectionMainLocation).hide();
@@ -831,13 +922,13 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 				$(self.destination).find(self.controls.btnTeamDone).hide();
 			}
 		},
-		getTeamType : function() {
-			var value = $(self.destination).find(self.controls.ddlSports).val();
+		getTeamType : function(value) {
 			if (value && value != "" && value != 0) {
 				var isTeam = true;
+			//	debugger;
 				for (var key in self.sports) {
-					if (self.sports[key].sport_id == value) {
-						if (self.sports[key].team_type == "individual") {
+					if (self.sports[key].payload.id == value) {
+						if (self.sports[key].payload.team_type == "individual") {
 							isTeam = false;
 						}
 					}
@@ -847,6 +938,7 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 			return false;
 		},
 		showLocation : function(e) {
+			console.log("*************************** SHOW LOCATION *************************");
 			$(self.destination).find(self.controls.sectionMainLocation).show();
 			var teamId = 0;
 			var value = e ? $(e.target).val() : "away";
@@ -891,13 +983,15 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 		finishGame : function() {
 			$(self.destination).find(self.controls.fieldMessage).html('').hide();
 			var isDataValid = true;
-
-			var date = $(self.destination).find(self.controls.txtGameDate).datetimepicker('getDate');
+			var date = $(self.destination).find(self.controls.txtGameDate).datepicker('getDate');
+			var timeText = $(self.destination).find(self.controls.txtGameTime).val();
+			var timeZone = $(self.destination).find(self.controls.ddlTimePeriod).val();
+			
 			var teamOneId = $(self.destination).find(self.controls.sectionTeamOne).find(self.controls.txtTeam).attr(self.attributes.teamId);
 			var scoreOne = $(self.destination).find(self.controls.sectionTeamOne).find(self.controls.txtScore).val();
 			var teamTwoId = $(self.destination).find(self.controls.sectionTeamTwo).find(self.controls.txtTeam).attr(self.attributes.teamId);
 			var scoreTwo = $(self.destination).find(self.controls.sectionTeamTwo).find(self.controls.txtScore).val();
-			var sportsId = $(self.destination).find(self.controls.ddlSports).val();
+			var sportsId = $(self.destination).find(self.controls.hdnSportsId).val();
 
 			var locationId = self.location_id || $(self.controls.txtLocationId).val() || 0;
 			//console.log(date);
@@ -908,7 +1002,7 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 			}
 			
 			
-			if (!date) {
+			if (!date || !timeText) {
 				$(self.destination).find(self.controls.sectionDate).find(self.controls.fieldMessage).html(self.messages.selectDateAndTime).fadeIn();
 				isDataValid = false;
 			}
@@ -945,8 +1039,9 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 			}
 
 			if (isDataValid) {
+				var completeDate = date ;//+ " " + timeText + " " + timeZone;
 				var payload = {
-					game_datetime : date,
+					game_datetime : completeDate,
 					locations_id : locationId,
 					teamOneId : teamOneId,
 					teamTwoId : teamTwoId,
@@ -965,7 +1060,7 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 						var isHome = $(self.destination).find(self.controls.rdoTeamOne).is(':checked');
 
 						var payloadOne = {
-							game_datetime : date,
+							game_datetime : completeDate,
 							games_id : self.game_id,
 							home_team : isHome || false,
 							locations_id : self.location_id,
@@ -977,7 +1072,7 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 						//addTeamModelOne.games_id = self.game_id;
 						addTeamModelOne.save();
 						var payloadTwo = {
-							game_datetime : date,
+							game_datetime : completeDate,
 							games_id : self.game_id,
 							home_team : isHome || false,
 							locations_id : self.location_id,
@@ -995,7 +1090,7 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 
 						self.gameData = {
 							type : self.tags.team,
-							game_datetime : date,
+							game_datetime : completeDate,
 							games_id : self.game_id,
 							team_id_one : teamOneId,
 							team_id_two : teamTwoId,

@@ -130,7 +130,7 @@ define(["require", "text!usercontrols/addgame/templates/layout.html",
 				user_id : self.id,
 				channel : 'add-game-success',
 				sports_id : "2",
-				//teams_id : "290"
+				teams_id : "290"
 			});
 
 			this.scheme.push(this.addGameView);
