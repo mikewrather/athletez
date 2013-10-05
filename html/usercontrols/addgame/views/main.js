@@ -869,20 +869,24 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 				model.save();
 				
 			$.when(model.request).done(function(response) {
-
+				self.goThereSuccess(response);
 			});
 		},
 		goThereSuccess : function(response){
-			var payload = response.payload;
+			if(response && response.payload != null){
+			var game = response.payload.game;
+			if(game){
 			self.gameData = {
-						type : self.tags.individual,
-							game_datetime : payload.gameDay,
-							event_name : payload.event_name,
-							game_location : payload.game_location,
-							games_id : payload.games_id,							
-							sports_id : payload.usl ? payload.usl.sports_id : null
+							type : self.tags.individual,
+							game_datetime : game.gameDay,
+							event_name : game.event_name,
+							game_location : game.game_location,
+							games_id : game.id,							
+							sports_id : response.payload.usl ? response.payload.usl.sports_id : null
 					};
 			Channel(self.channel).publish(self.gameData);
+			}
+			}
 		},
 
 		/**********Create Event Ends Here*****************/
