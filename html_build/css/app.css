@@ -849,6 +849,9 @@ float:left;
 .container_add_game .span_ddl_team_h{
 	margin-bottom: 14px;height: 15px;
 }
+.container_add_game .btn-new-team-game_h{
+	display:none !important;
+}
 .container_add_game .span_ddl_team_h .dropdown-wrapper{
 	width:500px;
 } 
