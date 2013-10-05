@@ -189,9 +189,7 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
 	    		self.currentController = new HomeController({
 	    		});
 	    	}
-	    	initHome();
-	    	var proxy = function() {};
-	    	this.initialiRoutesInit(proxy);
+	    	this.initialiRoutesInit(initHome);
 	    },
 	    
 	    removeCurrent: function() {

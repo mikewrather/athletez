@@ -78,9 +78,9 @@ function (
 	                self.model.saveCookie();
 	                routing.userLoggedIn = true;
                     routing.trigger('app-inited', id);
-                    //Channel('app-inited').publish(id);
                 } else {
                 	routing.userLoggedIn = false;
+                	routing.trigger('app-inited');
                 }
             };
                 

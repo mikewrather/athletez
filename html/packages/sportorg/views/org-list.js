@@ -50,8 +50,18 @@ function(facade,  views,   utils,   OrgItemView, Store) {
         	}
         },
         
+        checkForUser: function() {
+			if(!_.isUndefined(routing.userLoggedIn) && routing.userLoggedIn)
+				return true;
+			else	
+        		return false;
+		},
+        
          addGame: function(e) {
-	         console.log($(e.currentTarget).data());
+         	 if(!this.checkForUser()) {
+		  		$("#userlogin").trigger('click');
+		    	return;
+	    	}
 	        	routing.trigger('add-game',0,$(e.currentTarget).data("team-id"),$(e.currentTarget).data("sport-id"));
         },
 
