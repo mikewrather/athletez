@@ -177,7 +177,7 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
 	    	this.cancelAjaxRequests();
 	    	this.loadStyles();
 	    	
-	    	$('body').empty();
+	    	$('body').unbind().empty();
 	    	
             chromeBootstrap();
 	    	

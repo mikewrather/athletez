@@ -34,14 +34,12 @@ define(["require", "text!profilesetting/templates/layout.html", "facade", "contr
 			Channel('load:css').publish(this.cssArr);
 			/*Bind Class with all events*/
 			_.bindAll(this);
-
+			 this.scheme = [];
 			if (options.id) {
 				this.id = options.id;
 				this.init();
 			}
-
 			return this;
-
 		},
 		/*To reduce initialize methods length and all the view related functions */
 		init : function() {
