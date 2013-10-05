@@ -62,6 +62,7 @@ define(['require', 'text!usercontrols/photo-player/templates/player.html','text!
 			if(this.index > 0) {
 				this.index--;
 				this.loadImage();
+				this.changeThumbPosition();
 			}
 		},
 		
@@ -69,13 +70,34 @@ define(['require', 'text!usercontrols/photo-player/templates/player.html','text!
 			if(this.index < this.json.length) {
 				this.index++;	
 				this.loadImage();
+				this.changeThumbPosition();
 			}
+		},
+		
+		// change thumb position
+		changeThumbPosition: function() {
+			// get the values to manuplate scroll
+			var $ul = this.$el.find(".thumb-image-list-h"), $li = this.$el.find(".selected-photo-thumb"),
+			liPos = $li.position(), ulPos = $ul.position(), ulWid = $ul.width(), scroll = 0, $tOuter = this.$el.find(".thumbs-outer"), outWid = $tOuter.width();
+			// get the li position 
+			
+			if((liPos.left + $li.width()) > outWid) {
+				scroll = liPos.left - outWid;
+				scroll += (ulPos.left < 0)?-(ulPos.left):-(ulPos.left);
+				scroll += $li.width() + 20;
+			} else {
+				var outerWid = (ulPos.left < 0)?-(ulPos.left):ulPos.left;
+				scroll = +(outerWid) - $li.width();//ulPos.left;
+			}
+			console.error(scroll);
+			// scrol to teh position
+			if(scroll)
+				this.$el.find(".thumbs-outer").animate({scrollLeft: scroll + 'px'}, 1000);
 		},
 		
 		initThumbsSection: function() {
 			var _self = this, dataLength = this.json.length, data = {},standard_thumb=null;
 			data.data = [];
-			console.error(this.json);
 			for(var i = 0; i < dataLength; i++) {
 				var mpay = this.json[i].payload, extra = {
 					_enttypes_id : mpay.enttypes_id,
@@ -201,7 +223,6 @@ define(['require', 'text!usercontrols/photo-player/templates/player.html','text!
 				}
 
 
-				console.log("standard thumb",standard_thumb);
 
 				if(standard_thumb != "undefined" && standard_thumb != null)
 				{
@@ -241,27 +262,13 @@ define(['require', 'text!usercontrols/photo-player/templates/player.html','text!
 							}];
 				}
 
-
-
-				console.log(extra);
-
 				data.data.push(extra);
 			}
 			this.id = extra._id;
 			var markup = Mustache.to_html(this.thumbTemplate, data);
 			this.$el.find('.thumb-image-list-h').html(markup);
 
-
-
-
-
 		},
-		
-		
-		
-		//fetchForm: function() {
-			
-		//}
 		
 		loadImage: function(trigger) {
 			var _self = this, mpay = this.json[_self.index].payload, extra = {
@@ -269,8 +276,6 @@ define(['require', 'text!usercontrols/photo-player/templates/player.html','text!
 				_id : mpay.id,
 				_currentIndex: _self.index
 			};
-
-			console.log(mpay);
 
 			var image_object;
 			switch(mpay.enttypes_id) {

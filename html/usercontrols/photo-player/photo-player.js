@@ -129,7 +129,6 @@ define(["require", 'text!usercontrols/photo-player/templates/comments.html',
 			_self.tags.fetch();
 			//$(".coment-area-h").html();
 			$.when(_self.tags.request).done(function () {
-				console.error(_self.tags);
 				var tagView = new TagsSectionView({
 					collection : _self.tags,
 					userId: _self.userId,
@@ -144,8 +143,6 @@ define(["require", 'text!usercontrols/photo-player/templates/comments.html',
 		
 		// set up comment view in photo player
 		setUpCommentView: function(entity_id, id) {
-			console.log(this.scheme);
-			console.log(this.oldView)
 			var l = this.scheme.length;
 			for(var i = 0; i < l; i++) {
 				if(this.scheme[i].name == this.oldView)
