@@ -94,6 +94,7 @@ function(require, headerTemplate, selectSportTemplate) {
 					title: "Team",
 					elementId: "team-h",
 					destination: '.team-h',
+					selectedValue: self.model.id,
 					targetView: self,
 					callback: function(result) {
 						self.updateHeaderData($("#team-h").val());

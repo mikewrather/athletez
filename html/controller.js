@@ -145,8 +145,6 @@ function(facade, collections, models, utils) {
 
         // Privileged Properties
         // ---------------------
-
-
         // Property: `meta`
         // holds data and references used to configure the layout's display strategy  
         // {String} names are added to {Array} `viewNames`  

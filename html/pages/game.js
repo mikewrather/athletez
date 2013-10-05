@@ -72,6 +72,7 @@ define([
 		initialize: function (options) {
 			Channel('load:css').publish(cssArr);
 			_.bindAll(this);
+			 this.scheme = [];
 			this.handleOptions(options);
 			this.init();
 			return this;

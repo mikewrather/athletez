@@ -581,14 +581,19 @@ margin-right: 100px;
 }
 
 .comment .user-photo {
-    width:55px;
-    height: 55px;
+    width:50px;
+    height: 50px;
+}
+
+.comment .user-photo {
+	font-size: 10px;
+	line-height: 12px;
 }
 
 .comment .user-photo img {
     width:100% !important;
     height: 100%;
-    margin-top:30px !important;
+    margin-top:5px !important;
 }
 
 .add-comment-form-h{
@@ -1088,7 +1093,8 @@ margin-top:10px;
 
 #logincontainer *{
     font-size:1em;
-    font-family: "HelveticaNeue","HELVETICA";
+    font-family: "HelveticaNeue","Helvetica";
+    padding: 50px;
 }
 
 #regcontainer *{

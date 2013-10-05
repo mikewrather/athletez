@@ -60,6 +60,7 @@ define(
 				initialize : function(options) {
 					Channel('load:css').publish(cssArr);
 					_.bindAll(this);
+					 this.scheme = [];
 					this.handleOptions(options);
 					this.genderTypes = ['boys', 'girls', 'both'];
 					this.init();
@@ -208,7 +209,6 @@ define(
 							name : viewName,
 							destination : '#'+viewName
 						});
-						console.log(view);
 						controller.layout.transition(viewName, view);
 					});
 				},

@@ -86,9 +86,7 @@ console.log(app);
 				debug.log("start initialize");
 				Channel('load:css').publish(cssArr);
 				_.bindAll(self);
-
 				self.handleOptions(options);
-
 				self.scheme = [];
 				if (options.userId) {
 					debug.log(options.userId);
@@ -125,19 +123,13 @@ console.log(app);
 				this.fans = new FansImageList();
 				this.fans.id = this.id;
 				this.fans.fetch();
-
+				
 				this.images = new ProfileImageList();
 				this.images.id = this.id;
 				this.images.fetch();
 
 				// I added this in here even though it might not be the best place for it.
 				// If I take it out it won't render images if no sport is selected
-				$.when(this.images.request).done(function (x) {
-					controller.setupImageListView();
-				});
-				$.when(this.fans.request).done(function (x) {
-					controller.setupFansListView();
-				});
 
 				var controller = this;
 
@@ -169,10 +161,7 @@ console.log(app);
 					controller.images.sport_id = sport_id;
 					controller.images.fetch();
 					
-					controller.fans = new FansImageList();
-					controller.fans.id = controller.id;
-					controller.fans.sport_id = sport_id;
-					controller.fans.fetch();
+					
 
 					controller.handleDeferredsDynamic();
 				}
@@ -211,6 +200,7 @@ console.log(app);
 					$.when(controller.commentson.request).done(function () {
 						controller.setupCommentOnListView();
 					});
+					
 				});
 
 				//$.when(this.commentsof.request).done(function () {
@@ -251,14 +241,14 @@ console.log(app);
 				//$.when(this.videos.request).done(function () {
 				//	controller.setupVideoListView();
 				//});
+				
+				$.when(this.fans.request).done(function (x) {
+					controller.setupFansListView();
+				});
 
 				$.when(this.images.request).done(function (x) {
 					//console.log("Images Ready (called in profile.js handleDeferredDynamic)",x);
 					controller.setupImageListView();
-				});
-				
-				$.when(this.fans.request).done(function (x) {
-					controller.setupFansListView();
 				});
 				
 				
@@ -408,7 +398,6 @@ console.log(app);
 				this.scheme.push(this.fansListView);
 				this.layout.render();
 			},
-
 
 			updateImages: function (data) {
 				//create new image model to hold newly uploaded image
