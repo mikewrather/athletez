@@ -396,7 +396,6 @@ define([
         
         // intialize vote view
         initVoteView: function() {
-        	alert("init");
     	  var voteButtonsView = new voteView({
                 name: "vote View",
                 destination: '#votes-area-h',

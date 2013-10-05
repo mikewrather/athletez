@@ -180,14 +180,13 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
 	    	$('body').unbind().empty();
 	    	
             chromeBootstrap();
-	    	
+	    	//self.removeCurrent();
 	    	function initHome() {
-	    		var homeController = new HomeController({
-	    			"route" : "home"
+	    		self.currentController = new HomeController({
 	    		});
 	    	}
 	    	
-	    	initHome();
+	    	this.initialiRoutesInit(initHome);
 	    },
 	    
 	    removeCurrent: function() {
@@ -238,7 +237,6 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
             function initTeam(headerModelId) {
             	
                 self.currentController = new TeamController({
-                    "route": "",
                     "teamId": id,
                     "userId": headerModelId
                 });

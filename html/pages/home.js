@@ -209,7 +209,6 @@ define(
 							name : viewName,
 							destination : '#'+viewName
 						});
-						console.log(view);
 						controller.layout.transition(viewName, view);
 					});
 				},
