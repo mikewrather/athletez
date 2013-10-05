@@ -39,7 +39,6 @@ function (
 			show_edit = false,
 			standard_thumb = null;
 
-			console.error(extra._enttypes_id);
 			switch(extra._enttypes_id)
 			{
 				case '23':
@@ -149,7 +148,6 @@ function (
 			}
 			extra.show_edit = show_edit==true ? true : undefined;
 
-			console.log(extra);
 			var markup = Mustache.to_html(this.template, extra);
 			this.$el.html(markup);
 
@@ -159,8 +157,6 @@ function (
         
 
         render: function () {
-        	
-        	console.error("-------<><><> tag item view");
         	
         	
         	this.filterData();

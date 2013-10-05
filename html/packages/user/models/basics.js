@@ -12,7 +12,7 @@ define(["facade", "models/base"], function (facade, BaseModel) {
 		url: function () {
 			if ('undefined' == typeof this.id) {
 				if (testpath)
-					return testpath + '/user/basics/425983';
+					return testpath + '/user/basics/';
 				return '/api/user/basics/';
 			} else {
 				if (testpath)

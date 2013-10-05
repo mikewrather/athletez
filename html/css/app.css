@@ -232,9 +232,10 @@ div.image-item-container{
     width:220px;
     height: 220px;
     overflow: hidden;
+    background-image: url(http://cdn.athletez.com/resources/img/green_loading.gif);
 }
 
-div.image-item-container img{
+div.image-item-container > img{
     position: absolute;
     min-width: 220px;
     min-height: 220px;
@@ -755,7 +756,7 @@ margin-right: 100px;
     display: inline-block;
     margin-left:20px;
     border-radius: 0;
-    top:-5px;
+    top:-4px;
 }
 
 
@@ -925,6 +926,15 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#84a934', end
 }
 
 /********************ADD GAME POP UP CSS**************************************/
+
+
+.add-game-modal{
+    width:80%;
+    left:10%;
+    margin:0;
+    height: 80%;
+}
+
 .container_add_game{
 	font-size:12px ;
 	/*background-color: #FFF;
@@ -970,7 +980,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#84a934', end
    }
 .container_add_game .field-message{
 	color:#77011C;
-	font-size: :8px;
+	font-size: 8px;
 	font-style: italic;
 	font-weight: normal;
 	background-color: none;	
@@ -986,9 +996,18 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#84a934', end
 }
 
 .container_add_game .score-box a {
+
 	width: 100%;
 	height: 100%;
 	display: inline-block;
+}
+
+ .container_add_game .ul.ui-autocomplete{
+ 	 padding: 0 2px !important;
+ 	
+ }
+.container_add_game .ui-autocomplete li.ui-menu-item {
+	font-size: 14px;
 }
 .container_add_game input.txtDate{
 width: 90px;	
@@ -1062,3 +1081,16 @@ margin-top:10px;
 	pointer-events: none !important;
 }
 
+/********* Login ************/
+#logincontainer{
+    margin: auto;
+}
+
+#logincontainer *{
+    font-size:1em;
+    font-family: "HelveticaNeue","HELVETICA";
+}
+
+#regcontainer *{
+    font-family: "HelveticaNeue", "Helvetica";
+}

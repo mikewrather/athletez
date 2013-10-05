@@ -68,15 +68,12 @@ define([
 		];
 
 	GameController = Controller.extend({
-
+		rosterViewsCount: 0,
 		initialize: function (options) {
 			Channel('load:css').publish(cssArr);
 			_.bindAll(this);
-
 			this.handleOptions(options);
-
 			this.init();
-
 			return this;
 		},
 
@@ -107,8 +104,6 @@ define([
 			//this.videos = new GameVideoList();
 			//this.videos.id = this.id;
 			//this.videos.fetch();
-
-			
 
 			//this.comments = new GameCommentList();
 			//this.comments.id = this.id;
@@ -145,9 +140,6 @@ define([
 				$.when(controller.commentson.request).done(function () {
 					controller.setupCommentsOnListView();
 				});
-				
-				
-				
 				
 				$.when(controller.images.request).done(function () {
 					controller.setupImageListView();
@@ -188,22 +180,25 @@ define([
         },
         
         setupRosterView: function(id, name) {
-        	var rosterView;
+			if(!$("#roster_wrap_"+this.rosterViewsCount).length) {
+				$("#roster-wrap").append('<div id="roster_wrap_'+this.rosterViewsCount+'" class="clear"></div>');
+			}
+        	var rosterView, model = facade.Backbone.Collection.extend({});
 			rosterView = new RosterView({
-				model: this.images,
+				model: new model(),
 				team_id: id,
 				team_name: name,
-				name: "roster images" + Math.random(),
-				destination: "#roster-wrap"
+				name: "roster images" + Math.random() * Math.random(),
+				destination: "#roster_wrap_"+this.rosterViewsCount
 			});
 
 			this.scheme.push(rosterView);
 			this.layout.render();
+			this.rosterViewsCount++;
         },
 
 		setupHeaderView: function () {
 			var headerView;
-
 			headerView = new GameHeaderView({
 				model: this.basics,
 				name: "Header",
@@ -229,14 +224,21 @@ define([
 		},
 
 		setupTeamRosterListView: function () {
+			alert($("#roster_wrap_"+this.rosterViewsCount).length);
+			if(!$("#roster_wrap_"+this.rosterViewsCount).length) {
+				$("#roster-wrap").append('<div id="#roster_wrap_'+this.rosterViewsCount+'" class="clear"></div>');
+			}
+			
 			var teamRosterListView;
 			teamRosterListView = new ProfileImageListView({
 				collection: this.teamrosters,
 				name: "roster images",
-				destination: "#roster-wrap"
+				destination: "#roster_wrap_"+this.rosterViewsCount
 			});
+			
 			this.scheme.push(teamRosterListView);
 			this.layout.render();
+			this.rosterViewsCount++;
 		},
 		
 		setupTeamRosterSecondListView: function () {

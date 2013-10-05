@@ -1110,7 +1110,97 @@
 				return false;
 			}
 		}
-		
+
+		/**
+		 * action_post_login() Log in a user
+		 * via /api/user/login/{users_id}
+		 *
+		 */
+		public function action_post_login()
+		{
+			$this->payloadDesc = "Log in a user";
+			$arguments = array();
+			// CHECK FOR PARAMETERS:
+			// username (REQUIRED)
+			// Username (Email Address)
+
+			if(trim($this->request->post('username')) != "")
+			{
+				$username = trim($this->request->post('username'));
+			}
+
+			else // THIS WAS A REQUIRED PARAMETER
+			{
+				// Create Array for Error Data
+				$error_array = array(
+					"error" => "Required Parameter Missing",
+					"param_name" => "username",
+					"param_desc" => "Username (Email Address)"
+				);
+
+				// Set whether it is a fatal error
+				$is_fatal = true;
+
+				// Call method to throw an error
+				$this->addError($error_array,$is_fatal);
+				return false;
+
+			}
+
+			// password (REQUIRED)
+			// Password
+
+			if(trim($this->request->post('password')) != "")
+			{
+				$password = trim($this->request->post('password'));
+			}
+
+			else // THIS WAS A REQUIRED PARAMETER
+			{
+				// Create Array for Error Data
+				$error_array = array(
+					"error" => "Required Parameter Missing",
+					"param_name" => "password",
+					"param_desc" => "Password"
+				);
+
+				// Set whether it is a fatal error
+				$is_fatal = true;
+
+				// Call method to throw an error
+				$this->addError($error_array,$is_fatal);
+				return false;
+
+			}
+
+			$remember = array_key_exists('remember',$this->request->post()) ? (bool) $this->request->post('remember') : FALSE;
+			$user = Auth::instance()->login($username,$password,$remember);
+
+			if($user)
+			{
+				return $user;
+			}
+			else
+			{
+				$error_array = array(
+					"error" => "Login Failed"
+				);
+
+				// Set whether it is a fatal error
+				$is_fatal = true;
+
+				// Call method to throw an error
+				$this->addError($error_array,$is_fatal);
+				return false;
+			}
+		}
+
+		public function action_post_logout()
+		{
+			Auth::instance()->logout();
+			return false;
+		}
+
 		/**
 		 * action_post_addrole() Add a new role for this User
 		 * via /api/user/addrole/{users_id}

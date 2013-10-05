@@ -50,11 +50,13 @@ define(["require", "text!usercontrols/addgame/templates/layout.html",
 
 			if (options.id) {
 				this.id = options.id;
+				this.sports_id = options.sports_id;
+				this.teams_id = options.teams_id;
 			}
 			
 			if(options.popup) {
 				this.popup = true;
-				this.modelHTML = '<div id="modalPopup" class="modal hide fade model-popup-h">'+
+				this.modelHTML = '<div id="modalPopup" class="modal hide fade model-popup-h add-game-modal">'+
 								'<div class="modal-header">'+
    			 					'<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>'+
     							'<h3>Add Game</h3>'+
@@ -129,8 +131,9 @@ define(["require", "text!usercontrols/addgame/templates/layout.html",
 				destination : (this.popup)?".page-content-h":"#main",
 				user_id : self.id,
 				channel : 'add-game-success',
-				sports_id : "2",
-				teams_id : "290"
+				sports_id : this.sports_id,
+				teams_id : this.teams_id
+
 			});
 
 			this.scheme.push(this.addGameView);

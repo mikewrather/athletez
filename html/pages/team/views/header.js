@@ -52,7 +52,9 @@ function(require, headerTemplate, selectSportTemplate) {
 
         initialize: function (options) {
         	console.error(options);
+            this.controllerObject = options.controllerObject;
             SectionView.prototype.initialize.call(this, options);
+            _.bindAll(this);
         },
         
          selectSport: function(event) {
@@ -71,12 +73,13 @@ function(require, headerTemplate, selectSportTemplate) {
 	        	_self.model.fetch();
 	        	$.when(_self.model.request).done(function() {
 	        		_self.render();
-	        		//_self.initSportList();
+	        		var payload = _self.model.get("payload"), id = payload.id,
+		 			name = payload.org_sport_link_obj.org.name;
+	        		_self.controllerObject.setupRosterView(id, name);
 	        	});
         	}
         },
         
-       
         
         showAllTeamData: function() {
         	routing.trigger('refresh-teampage', $("#sports-h").val(), $("#team-h").val(), this.season.id);

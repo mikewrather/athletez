@@ -108,10 +108,30 @@ define(["require",
 
 
 					},
+					showPopup:function(){
+						
+							$('#imgUploadModal').modal('show') ;
+                     		$('#imgUploadModal').on('hidden', function () {
+               
+                        		//routing.trigger('refresh-onImageUpload');
+              			      });
+                   			 $('#imgUploadModal').on('hide', function () {
+               
+                        	//routing.trigger('refresh-onImageUpload');
+                      		});
+
+					},
 					handleDeferreds : function() {
 						var controller = this;
 						 // display basic form for sign up					
-						controller.setupSelectTypeView();
+						
+						 //Remove a previously-bound callback function from routing
+						routing.off('register-basic');
+          				//Bind a callback function to an object routing
+          				routing.on('register-basic', function() {
+            				controller.setupSelectTypeView();				
+            			});
+						
 						
 						
 						function registerBasicFinal(attrs) {

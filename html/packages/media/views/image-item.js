@@ -18,9 +18,9 @@ define(['vendor', 'views', 'utils', 'text!media/templates/image-item.html', 'vot
 
 		// Event handlers...
 		 events: {
-            "click": "changeImage",
+            //"click": "changeImage",
 			"click .vote-h": "vote",
-			'click .image-outer-h' : 'initPhotoPlayer',
+			//'click .image-outer-h' : 'initPhotoPlayer',
 	        "click .follow-h": "follow",
 			"click .edit-h": "edit",
 			"click .delete-h": "delete"
@@ -33,16 +33,25 @@ define(['vendor', 'views', 'utils', 'text!media/templates/image-item.html', 'vot
 		
 		
 		render : function() {
-			var _self = this, mpay = this.model.attributes.payload, extra = {
-				_enttypes_id : mpay.enttypes_id,
-				_id : mpay.id,
-				_has_voted: mpay.has_voted,
-				_is_following: mpay.is_following
+			var _self = this, mpay = this.model.attributes.payload,
+				extra = {
+					_enttypes_id : mpay.enttypes_id,
+					_id : mpay.id,
+					_has_voted: mpay.has_voted,
+					_is_following: mpay.is_following,
+					_can_follow: mpay.can_follow
 				},
 				show_edit = false,
-				standard_thumb = null;
+				standard_thumb = null,
+				ucwords = function(str)
+				{
+					str = str.toLowerCase();
+					return str.replace(/(^([a-zA-Z\p{M}]))|([ -][a-zA-Z\p{M}])/g,
+						function($1){
+							return $1.toUpperCase();
+						});
+				};
 
-			console.log(mpay);
 			switch(mpay.enttypes_id)
 			{
 				case '23':
@@ -52,12 +61,14 @@ define(['vendor', 'views', 'utils', 'text!media/templates/image-item.html', 'vot
 						standard_thumb = mpay.standard_thumb;
 						extra._thumbnail = standard_thumb.url;
 					}
-					else{
+					else
+					{
 						extra._thumbnail = mpay.thumbs;
 					}
 
 					extra._label = mpay.media.name;
 					extra._link = "javascript: void(0);";
+					extra._has_link = false;
 
 					if(mpay.media.hasOwnProperty('is_owner')) show_edit = mpay.media.is_owner;
 
@@ -84,11 +95,16 @@ define(['vendor', 'views', 'utils', 'text!media/templates/image-item.html', 'vot
 							extra._thumbnail = standard_thumb.url;
 						}
 					}
-					else
+					//else
 
-					extra._label = mpay.media_obj.name;
+					extra._label = (!_.isUndefined(mpay.media_obj.users_obj.label))?mpay.media_obj.users_obj.label:'';
+					if(typeof(mpay.media_obj.sports_obj) == 'object')
+					{
+						extra._sublabel = ucwords(mpay.media_obj.sports_obj.sport_name);
+					}
+
 					extra._link = "javascript: void(0);";
-
+					extra._has_link = false;
 					if(mpay.media_obj.hasOwnProperty('is_owner')) show_edit = mpay.media_obj.is_owner;
 
 					break;
@@ -120,28 +136,21 @@ define(['vendor', 'views', 'utils', 'text!media/templates/image-item.html', 'vot
 					}
 
 					extra._label = mpay.label;
-					extra._sublabel = "Coming Soon";
+					extra._sublabel = "Votes: " + mpay.num_votes + ", Followers: " + mpay.num_followers;
 					extra._link = "/#profile/" + mpay.id;
-
+					extra._has_link = true;
 					if(mpay.hasOwnProperty('is_owner')) show_edit = mpay.is_owner;
 
 					break;
 				case '8':
 					//games
 					extra._detailclass = "game";
-					standard_thumb = mpay.game_picture!==null ? mpay.game_picture.types.standard_thumb : {height:440,width:440,url:"http://cdn.athletez.com/resources/icons/game/square_game.png"}
+					standard_thumb = mpay.game_picture!==null ? mpay.game_picture.types.standard_thumb : {height:440,width:440,url:"http://cdn.athletez.com/resources/icons/game/square_game.png"};
 					extra._thumbnail = standard_thumb.url;
 					extra._label = mpay.game_day;
 					extra._link = "/#game/" + mpay.id;
-					var team_str = "", teams = mpay.teams,
-						ucwords = function(str)
-						{
-							str = str.toLowerCase();
-							return str.replace(/(^([a-zA-Z\p{M}]))|([ -][a-zA-Z\p{M}])/g,
-								function($1){
-									return $1.toUpperCase();
-								});
-						};
+					extra._has_link = true;
+					var team_str = "", teams = mpay.teams;
 					if(teams != null) var teamLength = teams.length;
 
 					for (var i = 0; i < teamLength; i++) {
@@ -192,12 +201,12 @@ define(['vendor', 'views', 'utils', 'text!media/templates/image-item.html', 'vot
 				if(overflow > 0) overflow = 0;
 
 				if(standard_thumb.width > standard_thumb.height)
-					this.$el.find('img').css({
+					this.$el.find('img.list-thumbnail').css({
 						'max-width':standard_thumb.width / ratio_y,
 						'left':overflow
 					});
 				else
-					this.$el.find('img').css({
+					this.$el.find('img.list-thumbnail').css({
 						'max-height':standard_thumb.height / ratio_x,
 						'top':overflow
 					});
@@ -211,6 +220,22 @@ define(['vendor', 'views', 'utils', 'text!media/templates/image-item.html', 'vot
 					opacity : 90
 				});
 			});
+			
+			  this.$el.find('.vote-h').click(function(e) {
+	        	_self.vote(e);
+	        });
+	        
+	        this.$el.find('.follow-h').click(function(e) {
+	        	_self.follow(e);
+	        });
+	        
+	        this.$el.find('.edit-h').click(function(e) {
+	        	_self.edit(e);
+	        });
+	        
+	        this.$el.find('.delete-h').click(function(e) {
+	        	_self['delete'](e);
+	        });
 			return this;
 
 			//console.log("Called Image Render",this.model);
@@ -227,31 +252,75 @@ define(['vendor', 'views', 'utils', 'text!media/templates/image-item.html', 'vot
 	    {
 		    e.preventDefault();
 		    console.log(this.model);
-		   
+		   e.stopPropagation();
 		    var voteModelOb = new voteModel();
-			voteModelOb.userId = this.model.id;
+			voteModelOb.userId = this.model.get("payload").id;
 			voteModelOb.entity_id = this.model.get("payload").enttypes_id;
 			voteModelOb.setData();
 			voteModelOb.save();
+			$.when(voteModelOb.request).done(function()
+			{
+				//if()
+				$(e.currentTarget).addClass('link-disabled');
+			});
 	    },
 
 	    follow: function(e){
 		   e.preventDefault();
 		    console.log(e.target);
+		    e.stopPropagation();
 		    var followModelOb = new followModel();
-			followModelOb.userId = this.model.id;
+			followModelOb.userId = this.model.get("payload").id;
 			followModelOb.entity_id = this.model.get("payload").enttypes_id;
 			followModelOb.save();
+			$.when(followModelOb.request).done(function() {
+
+				console.log(followModelOb.get('payload'))
+				if(typeof(followModelOb.get('payload').follower) =='object' && typeof(followModelOb.get('payload').subject) =='object' && followModelOb.get('payload').id > 0)
+				{
+					$(e.currentTarget).addClass('link-disabled');
+				}
+				else
+				{
+					console.log("FAIL");
+				}
+			});
 	    },
 
 		edit: function(e)
 		{
+			e.stopPropagation();
 			e.preventDefault();
-			console.log("edit");
+			
+			var _self = this, mpay = this.model.get("payload");
+			switch(mpay.enttypes_id)
+			{
+				case '23':
+					//videos
+					//extra._link = "javascript: void(0);";
+					break;
+				case '21':
+					//images
+					//extra._link = "javascript: void(0);";
+					break;
+				case '1':
+					//users
+					window.location.hash = "profile/" + mpay.id;
+					break;
+				case '8':
+					//games
+					window.location.hash = "game/" + mpay.id;
+					break;
+
+			}
+			
+			
+			console.log(this.model);
 		},
 
 		'delete': function(e)
 		{
+			e.stopPropagation();
 			e.preventDefault();
 			console.log("delete");
 		}

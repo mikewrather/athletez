@@ -17,7 +17,128 @@ class Controller_Updatefromhf extends Controller
 	{
 		ini_set('memory_limit', '1024M');
 		set_time_limit(0);
-		$this->transfer_users();
+	//	$this->transfer_users();
+	//	$this->transfer_videos_from_queue();
+	//	$this->update_tags();
+	}
+
+	public function action_entersmallthumbs()
+	{
+		$videos = ORM::factory('Media_Video')
+			->where('thumbs','IS NOT',null)
+			->find_all();
+
+		foreach($videos as $video)
+		{
+			$url = $video->thumbs;
+			$orig_x = $video->thumb_width;
+			$orig_y = $video->thumb_height;
+
+			$video->small_thumb_height = 220;
+			$video->small_thumb_width = (220/$orig_y) * $orig_x;
+			$video->small_thumbs = str_replace('L_0000.png','t_0000.png',$url);
+			$video->save();
+		}
+	}
+
+	protected function update_tags()
+	{
+		$new_vids = DB::select()
+			->from('media')
+			->where('id','>',2483)
+			->and_where('media_type','=','video')
+			->execute();
+
+		foreach($new_vids as $vid)
+		{
+			list($cities_id,$states_id) = $this->setLocation(1,$vid['users_id']);
+			DB::insert('tags',array('media_id','subject_enttypes_id','subject_id','users_id','cities_id','states_id'))
+				->values(array(
+					$vid['id'],
+					1,
+					$vid['users_id'],
+					$vid['users_id'],
+					$cities_id,
+					$states_id
+				))->execute();
+		}
+	}
+
+	protected function setLocation($subject_type_id,$subject_id)
+	{
+
+		$ent = Ent::eFact($subject_type_id,$subject_id);
+
+		$className = get_class($ent);
+		switch ($className){
+			case "Model_User_Base":
+				$cities_id = $ent->cities_id;
+				break;
+			case "Model_Sportorg_Team":
+				$org = $ent->getOrg();
+				$cities_id = $org->location->cities_id;
+				break;
+			case "Model_Sportorg_Games_Base":
+				$cities_id = $ent->location->cities_id;
+				break;
+			case "Model_Sportorg_Org":
+				$cities_id = $ent->location->cities_id;
+				break;
+			default:
+				break;
+		}
+
+		if((int)$cities_id > 0)
+		{
+			$city = ORM::factory('Location_City')->where('id','=',$cities_id)->find();
+			if(!$city->loaded()) return false;
+			return array($cities_id,$city->states_id);
+		}
+
+	}
+
+	protected function transfer_videos_from_queue()
+	{
+		$queue = DB::select()->from('queuedvideos_hf')
+			->execute();
+
+		foreach($queue as $video_row)
+		{
+
+			$video = ORM::factory('Media_Video');
+			$media = ORM::factory('Media_Base');
+
+
+			$mediaArr = array(
+				"media_type" => "video",
+			);
+
+
+			$mediaArr['sports_id'] = $video_row['sports_id'];
+
+
+			$mediaArr['user_id'] = $video_row['user_id'];
+
+
+			$mediaArr['name'] = $video_row['title'];
+
+			$video->media_id = $media->addMedia($mediaArr);
+
+			try
+			{
+				$video->save();
+				$queued = ORM::factory('Media_Queuedvideo');
+				$queued->url = $video_row['url'];
+				$queued->users_id = $video_row['user_id'];
+				$queued->videos_id = $video->id;
+				$queued->sports_id = $video_row['sports_id'];
+				$queued->save();
+			}
+			catch(ORM_Validation_Exception $e)
+			{
+				return $e;
+			}
+		}
 	}
 
 	protected function transfer_users()

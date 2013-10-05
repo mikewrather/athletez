@@ -95,20 +95,36 @@ class Model_Sportorg_Games_Base extends ORM
 		if (isset($locations_id))
 			$this->locations_id = $locations_id;
 
-		try {
+		if(isset($game_datetime))
+		{
 			$external_validate = Validation::factory(array('game_datetime' => $game_datetime));
 			$external_validate->rule("game_datetime", 'not_empty');
 			$external_validate->rule("game_datetime", 'correct_date_format');
-			if ($this->check($external_validate)){
-				$game_datetime = date("Y-m-d H:i:s", strtotime($game_datetime));
-				$arr = explode(' ', $game_datetime);
-				$gameDay = $arr[0];
-				$gameTime = $arr[1];
-				$this->gameDay = $gameDay;
-				//$args['gameDay'] = $gameDay;
-				$this->gameTime = $gameTime;
+			try {
+
+				if ($this->check($external_validate)){
+					$game_datetime = date("Y-m-d H:i:s", strtotime($game_datetime));
+					$arr = explode(' ', $game_datetime);
+					$gameDay = $arr[0];
+					$gameTime = $arr[1];
+					$this->gameDay = $gameDay;
+					//$args['gameDay'] = $gameDay;
+					$this->gameTime = $gameTime;
+				}
 			}
-			$this->event_name = $event_name;
+			catch(ORM_Validation_Exception $e){
+				return $e;
+			}
+		}
+		elseif($this->loaded())
+		{
+
+		}
+
+		try {
+			if(isset($event_name))
+				$this->event_name = $event_name;
+
 			$this->save();
 			Model_Site_Feed::addToFeed($this,$feed_action);
 
@@ -147,7 +163,8 @@ class Model_Sportorg_Games_Base extends ORM
 			"game_picture" => 'getPrimaryImage',
 			"teams" => 'get_game_teams',
 			"game_location" => 'get_game_location',
-			"shared" => 'get_shared_info'
+			"shared" => 'get_shared_info',
+			'can_follow' => 'can_follow'
 		),
 
 		// array of values only.  Each value is the name of a column to exclude

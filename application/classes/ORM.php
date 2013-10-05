@@ -19,6 +19,8 @@ class ORM extends Kohana_ORM
 		'exclude_columns' => array(),
 	);
 
+	public function can_follow(){ return Ent::ent_can_follow($this); }
+
 	public static function factory($model, $id = NULL)
 	{
 		$model = parent::factory($model,$id);
@@ -78,16 +80,29 @@ class ORM extends Kohana_ORM
 		return $qry;
 	}
 
-	public static function enttypes_is_deleted($enttypes_id, $subject_id){
-		$deleted_model = DB::select('id')->from('deleted')->where('subject_enttypes_id' ,'=', $enttypes_id)
-			->where('subject_id', '=', $subject_id);
-		$result = $deleted_model->execute()->as_array();
-		if (count($result) > 0){
+	public static function enttypes_is_deleted($enttypes_id, $subject_id=null){
+
+		if(is_string($enttypes_id)){
+			$enttypes_id = Ent::getMyEntTypeID($enttypes_id);
+		}
+		elseif(is_object($enttypes_id) && is_subclass_of($enttypes_id,'ORM'))
+		{
+			$subject_id = ($subject_id == null && $enttypes_id->loaded()) ? $enttypes_id->id : $subject_id;
+			$enttypes_id = Ent::getMyEntTypeID($enttypes_id);
+		}
+
+		$deleted_rows = DB::select(array(DB::expr("COUNT('id')"),'deleted_rows'))->from('deleted')->where('subject_enttypes_id' ,'=', $enttypes_id)
+			->where('subject_id', '=', $subject_id)
+			->execute()
+			->get('deleted_rows',0);
+
+		if ($deleted_rows > 0){
 			return true;
 		}
 		return false;
 	}
 
+	public static function is_deleted($enttypes_id,$subject_id=null){ return self::enttypes_is_deleted($enttypes_id,$subject_id); }
 
 	public static function _sql_exclude_deleted_abstract($class_names,$qry)
 	{

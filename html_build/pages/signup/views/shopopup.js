@@ -1,0 +1,1 @@
+define(["require","backbone","underscore","registration","views","facade","utils"],function(e,t,n,r){var i,s=t.View;return i=s.extend({initialize:function(e){$("#errormsg, #preview").html(""),debug.log("Image upload basic view"),$("#RegModal").modal("show"),$("#RegModal").on("hide",function(){$("div#modalPopup").remove()})}}),i});

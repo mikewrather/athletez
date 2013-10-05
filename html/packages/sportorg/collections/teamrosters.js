@@ -22,15 +22,18 @@ function(facade, collections, SportorgTeamRosterModel, utils) {
         fetchSuccess: function (collection, response) {
             collection.reset();
             var payload = response.payload;
-            for (i = 0; i < payload.length; i++) {
-                var item = new SportorgTeamRosterModel();
-                item.id = Math.ceil(Math.random() * 100000);
-                item.set('payload', payload[i]);
-                item.set('desc', response.desc);
-                item.set('exec_data', response.exec_data);
-                collection.push(item);
-            }
-            collection.deferred.resolve(response);            
+            if(!_.isUndefined(payload) && payload != null && payload) {
+	            for (i = 0; i < payload.length; i++) {
+	                var item = new SportorgTeamRosterModel();
+	                item.id = Math.ceil(Math.random() * 100000);
+	                item.set('payload', payload[i]);
+	                item.set('desc', response.desc);
+	                item.set('exec_data', response.exec_data);
+	                collection.push(item);
+	            }
+	            collection.deferred.resolve(response); 
+            } 
+            collection.deferred.resolve(response);           
         }
 
     });

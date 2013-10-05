@@ -129,7 +129,16 @@ console.log(app);
 				this.images = new ProfileImageList();
 				this.images.id = this.id;
 				this.images.fetch();
-				
+
+				// I added this in here even though it might not be the best place for it.
+				// If I take it out it won't render images if no sport is selected
+				$.when(this.images.request).done(function (x) {
+					controller.setupImageListView();
+				});
+				$.when(this.fans.request).done(function (x) {
+					controller.setupFansListView();
+				});
+
 				var controller = this;
 
 				function callback(sport_id) {
@@ -168,6 +177,21 @@ console.log(app);
 					controller.handleDeferredsDynamic();
 				}
 
+				function refreshFans()
+				{
+					controller.fans = new FansImageList();
+					controller.fans.id = controller.id;
+					controller.fans.fetch();
+					$.when(controller.fans.request).done(function (x) {
+						if (controller.fansListView) {
+							$(controller.fansListView.destination).html('');
+							position = $.inArray(controller.fansListView, controller.scheme);
+							if (~position) controller.scheme.splice(position, 1);
+						}
+						controller.setupFansListView();
+					});
+				}
+				Channel('new-fan').subscribe(refreshFans);
 				Channel('refresh-profilepage').subscribe(callback);
 			},
 
@@ -178,7 +202,7 @@ console.log(app);
 					controller.setupHeaderView();
 					controller.initVoteView();
 					controller.setupAddMediaView();
-					
+
 					var subject_type_id = controller.basics.get("payload").enttypes_id;
 					controller.commentson = new ProfileCommentOnList();
 					controller.commentson.subject_entity_type = subject_type_id;
@@ -361,7 +385,7 @@ console.log(app);
 				routing.on('image-upload-success', function(data) { 
         			self.updateImages(data);
         		});
-        		
+
 				this.imageListView = new ProfileImageListView({
 					collection: this.images,
 					destination: "#image-wrap",

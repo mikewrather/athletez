@@ -1,8 +1,8 @@
 // Org List
 // --------------
 
-define(['facade','views', 'utils', 'sportorg/views/org-item'], 
-function(facade,  views,   utils,   OrgItemView) {
+define(['facade','views', 'utils', 'sportorg/views/org-item','utils/storage'], 
+function(facade,  views,   utils,   OrgItemView, Store) {
 
     var OrgListView, 
         OrgListAbstract,
@@ -28,6 +28,32 @@ function(facade,  views,   utils,   OrgItemView) {
 
         // Store constructor for the child views
         _view: OrgItemView,
+        
+        events: {
+        	'click .team-info-h': 'showinfo',
+        	"click .add-game-h": "addGame"
+        },
+        
+         showinfo: function(e) {
+        	e.preventDefault();
+        	if(!$(e.target).parents('.org-popup').length) {
+	        	
+	        	if($(e.target).find('.org-popup').hasClass('hide')) {
+		        	$('.org-popup').addClass('hide');
+		        	$(e.target).find('.org-popup').removeClass('hide');
+		        } else {
+		        	$('.org-popup').addClass('hide');
+		        }
+		        
+		        
+		        
+        	}
+        },
+        
+         addGame: function(e) {
+	         console.log($(e.currentTarget).data());
+	        	routing.trigger('add-game',0,$(e.currentTarget).data("team-id"),$(e.currentTarget).data("sport-id"));
+        },
 
         initialize: function(options) {
             CollectionView.prototype.initialize.call(this, options);

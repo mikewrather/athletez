@@ -9,6 +9,10 @@ define([
         'text!chrome/templates/header.html',
         'chrome/models/header',
         'registration',
+        'login',
+        'signup',
+        'signup/views/shopopup',
+       
 		'utils/storage'
         ], 
 function (
@@ -17,6 +21,10 @@ function (
         headerTemplate,
         HeaderModel,
         RegistrationController,
+        loginController,
+        scontroller,
+        popupview,
+       
         Store
         ) {
 
@@ -41,7 +49,8 @@ function (
         events: {
             "click .signup-facebook": "signupFacebook",
             "click .signup-email": "signupUser",
-			"click .account clearfix a": "login"
+			"click .account clearfix a": "login",
+            "click #userlogin":"userLogin"
         },
 
         render: function () {
@@ -75,13 +84,17 @@ function (
             this.model.fetch();
             return this;
         },
+        userLogin:function(event){
+            event.preventDefault();
+            this.logincontroller = new LoginController();
+            routing.trigger("Login");
+        },
 
-
-        
+             
         signupFacebook: function(event) {
         	
             event.preventDefault();
-          // event.preventDefault();
+         
             // Additional JS functions here
             window.fbAsyncInit = function() {
                 FB.init({
@@ -97,7 +110,10 @@ function (
                     if (response.status === 'connected') {
                         FB.api('/me', function(response) {
                             console.log(response);
+                            this.signupc = new scontroller({"route":""});
                             Channel('registration-with-facebook').publish();
+                             this.pop = new popupview();
+
                         });
                     } else if (response.status === 'not_authorized') {
                         console.log('not_authorized');
@@ -111,7 +127,9 @@ function (
             function login() {
                 FB.login(function(response) {
                     if (response.authResponse) {
+                        this.signupc = new scontroller({"route":""});
                         Channel('registration-with-facebook').publish();
+                        this.pop = new popupview();
                     } else {
                         alert('Cancelled');
                     }
@@ -120,14 +138,14 @@ function (
 
             // Load the SDK Asynchronously
             function loadFBLogin(){
-  //          	alert("load fb");
+ 
             	if (!this.registrationController) {
                 this.registrationController = new RegistrationController({
                     "route": ""
                 });
             }
             this.registrationController.refreshPage();
-//             alert("signupFaceook-header registration-with-facebook 1");
+//           
                 var js, id = 'facebook-jssdk', ref = document.getElementsByTagName('script')[0];
                 if (document.getElementById(id)) {
                     login();
@@ -145,20 +163,12 @@ function (
 
         signupUser: function(event){
                     event.preventDefault();
-                    routing.trigger("add-user");
+                    this.signupc = new scontroller({"route":""});
+                    routing.trigger("register-basic");
+                    this.pop = new popupview();
+                  
                 },
-        /*signupEmail: function(event) {
-            event.preventDefault();
-
-            if (!this.registrationController) {
-                this.registrationController = new RegistrationController({
-                    "route": ""
-                });
-            }
-
-            Channel('registration-with-email').publish();
-        },*/
-		
+       	
 
       });
 

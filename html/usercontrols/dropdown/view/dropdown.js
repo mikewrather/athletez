@@ -127,7 +127,6 @@ define(['require', 'text!usercontrol/dropdown/template/layout.html', 'facade', '
 
 		// set default values selected
 		defaultSelected : function(val) {
-			//console.error(self);
 			if (_self.multiple) {
 				if (_.isArray(_self.selectedValue)) {
 					for (var i in _self.selectedValue) {

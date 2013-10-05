@@ -72,7 +72,8 @@ class Model_Media_Video extends ORM
 		// key = the key that will appear in the returned results, val = the name of the function / property to invoke for the value
 		'added_function_calls' => array(
 			'video_type' => 'get_types_and_meta_as_array',
-			'standard_thumb' => 'get_standard_thumb'
+			'standard_thumb' => 'get_standard_thumb',
+			'can_follow' => 'can_follow'
 		),
 
 		// array of values only.  Each value is the name of a column to exclude
@@ -82,6 +83,28 @@ class Model_Media_Video extends ORM
 
 	public function get_standard_thumb()
 	{
+		if(isset($this->small_thumb_width) && isset($this->small_thumb_height))
+		{
+			return array(
+				'url' => $this->small_thumbs,
+				'width' => $this->small_thumb_width,
+				'height' => $this->small_thumb_height
+			);
+		}
+		elseif(isset($this->small_thumbs) && $this->small_thumbs != '')
+		{
+			list($width,$height) = getimagesize($this->thumbs);
+			return array(
+				'url' => $this->small_thumbs,
+				'width' => $width,
+				'height' => $height
+			);
+		}
+		return false;
+	}
+
+	public function get_large_thumb()
+	{
 		if(isset($this->thumb_width) && isset($this->thumb_height))
 		{
 			return array(
@@ -90,7 +113,7 @@ class Model_Media_Video extends ORM
 				'height' => $this->thumb_height
 			);
 		}
-		elseif(isset($this->thumbs))
+		elseif(isset($this->thumbs) && $this->thumbs != '')
 		{
 			list($width,$height) = getimagesize($this->thumbs);
 			return array(
@@ -99,6 +122,7 @@ class Model_Media_Video extends ORM
 				'height' => $height
 			);
 		}
+		return false;
 	}
 
 	public static function getVideoCounts($obj){

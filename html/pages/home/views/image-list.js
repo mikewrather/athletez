@@ -21,7 +21,7 @@ define(
 				_tagName : "li",
 				_className : "image",
 				events: {
-					'click .image-outer-h': 'initPhotoPlayer'
+					'click .open-photo-player-h': 'initPhotoPlayer'
 				},
 
 				// Store constructor for the child views
@@ -48,6 +48,7 @@ define(
 				},
 				
 				initPhotoPlayer: function(e) {
+					e.preventDefault();
 					console.log(this.collection);
        				var index = ($(e.target).parents('li').index());     
        				routing.trigger('photo-player-init', index, this.collection, this.collection.id);

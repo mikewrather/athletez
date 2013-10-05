@@ -2,9 +2,11 @@
 // --------------  
 // Requires define
 // Return {Object} App
-define( ["facade", "utils", "collections", "chrome", "controller", "profile", "imageup",'home','videopreview',"game", "team", "registration","profilesetting","userresume","packages/site/collections/phrases","usercontrols/tag/tag","usercontrols/addgame/addgame","login/model","login/view",'signup', "usercontrols/photo-player/photo-player", "usercontrols/add-club/add-club"],
+
+define( ["facade", "utils", "collections", "chrome", "controller", "profile", "imageup",'home','videopreview',"game", "team", "registration","profilesetting","userresume","packages/site/collections/phrases","usercontrols/tag/tag","usercontrols/addgame/addgame","signup","login", "usercontrols/photo-player/photo-player", "usercontrols/add-club/add-club"],
 function (facade, utils, collections, chromeBootstrap, Controller, ProfileController, ImageController, HomeController, VideoPreviewController,
-	GameController, TeamController, RegistrationController,ProfileSetting,UserResume, SitePhraseList , TagController,AddGameController,loginModel, loginView, SignupController, PhotoPlayerController, AddClubController) {
+	GameController, TeamController, RegistrationController,ProfileSetting,UserResume, SitePhraseList , TagController,AddGameController, SignupController,LoginController,PhotoPlayerController, AddClubController) {
+
 
 
     //App;
@@ -73,6 +75,7 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
         	this.imageUpListeners();
 			this.videoPreview();
             this.showUsercreate();
+            this.showLogin();
         },
         
         cancelAjaxRequests: function() {
@@ -104,8 +107,12 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
                 });
             });
             
+            var popupCallback = undefined;
+            
             routing.off('location_popup_open');
-            routing.on('location_popup_open', function(view, location) {
+            routing.on('location_popup_open', function(view, location, callback) {
+            	if(callback)
+	            	popupCallback = callback;
             	 var modelHTML = '<div id="modalPopup" class="modal photo-frame-model hide fade model-popup-h">'+
 					'<div class="modal-header">'+
  					'<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>'+
@@ -127,6 +134,7 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
             routing.on('popup-close', function() {
             	$('#modalPopup').modal('hide');
             	$(".model-popup-h").remove();
+            	if(popupCallback) popupCallback();
             });
         },
         
@@ -139,9 +147,12 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
             
             // initialize add game popup common trigger 
             routing.off('add-game');
-            routing.on('add-game', function(id) {
+            routing.on('add-game', function(id,teams_id,sports_id,users_id) {
             	//fn(id);
             	 var addGameview = new AddGameController({
+		            "teams_id":teams_id,
+		             "sports_id":sports_id,
+		            "users_id" : users_id,
                 	"id": id,
                 	popup: true
                 });
@@ -401,12 +412,13 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
 		// route to login template
 		showLogin: function(){
 		 //$('#main-content').empty();
-		   $('body').empty();
-            chromeBootstrap();
-         var mod = new loginModel();
-		 var logview = new loginView({
-					model:mod
-				});
+		   //$('body').empty();
+           // chromeBootstrap();
+        // var mod = new loginModel();
+		// var logview = new loginView({
+		//			model:mod
+		//		});
+         
 		},
         // route to registratiom
         showUsercreate: function(){
