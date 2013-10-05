@@ -47,29 +47,43 @@ class Model_User_Sportlink_Gamelink extends ORM
 		$this->result_place = $result_place;
 		$this->bib_number = $bib_number;
 		$this->result_time = $result_time;
-		try {
+
+		try
+		{
 			$external_validate = Validation::factory($post_values)
-					->rule('users_id', 'users_id_exist')
-					->rule('sports_id', 'sports_id_exist')
-					->rule('sports_id', 'user_sport_link_exist', array($users_id, $sports_id));
-				//if check pass,add org_id,sports_id to db,generate org_sport_id for use
-				if ($this->check($external_validate)){
-					//check org_sport in db.
-					$usl_model = ORM::factory("User_Sportlink");
-					$user_sport_link_id = $usl_model->getId($users_id, $sports_id);
-					$this->user_sport_link_id = $user_sport_link_id;
+				->rule('users_id', 'users_id_exist')
+				->rule('sports_id', 'sports_id_exist')
+				->rule('sports_id', 'user_sport_link_exist', array($users_id, $sports_id));
+			//if check pass,add org_id,sports_id to db,generate org_sport_id for use
+			if ($this->check($external_validate))
+			{
+				//check org_sport in db.
+				$usl_model = ORM::factory("User_Sportlink");
+				$user_sport_link_id = $usl_model->getId($users_id, $sports_id);
+				$this->user_sport_link_id = $user_sport_link_id;
 
-					$valid_array = array('games_id' => $games_id, 'user_sport_link_id' => $user_sport_link_id);
-					$external_validate_games = Validation::factory($valid_array);
-					$external_validate_games->rule('games_id', 'games_id_exist')
-						->rule('user_sport_link_id', 'uslgamelink_link_not_exist', array($user_sport_link_id, $games_id));
-					if ($this->check($external_validate_games)){
-
-						$this->save();
+				$valid_array = array('games_id' => $games_id, 'user_sport_link_id' => $user_sport_link_id);
+				$external_validate_games = Validation::factory($valid_array);
+				$external_validate_games
+					->rule('games_id', 'games_id_exist');
+				//	->rule('user_sport_link_id', 'uslgamelink_link_not_exist', array($user_sport_link_id, $games_id));
+				if ($this->check($external_validate_games))
+				{
+					if(Valid::uslgamelink_link_not_exist($user_sport_link_id, $games_id)) $this->save();
+					else
+					{
+						return ORM::factory('User_Sportlink_Gamelink')
+							->where('user_sport_link_id','=',$user_sport_link_id)
+							->where('games_id','=',$games_id)
+							->find();
 					}
+					return $this;
 				}
-			return $this;
-		} catch(ORM_Validation_Exception $e){
+
+			}
+
+		} catch (ORM_Validation_Exception $e)
+		{
 			return $e;
 		}
 	}

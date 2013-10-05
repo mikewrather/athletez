@@ -50,7 +50,11 @@ define(["require", "text!usercontrols/addgame/templates/layout.html",
 
 			if (options.id) {
 				this.id = options.id;
+			}
+			if (options.sports_id) {
 				this.sports_id = options.sports_id;
+			}
+			if (options.teams_id) {
 				this.teams_id = options.teams_id;
 			}
 			

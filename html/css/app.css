@@ -751,6 +751,13 @@ margin-right: 100px;
 	text-align: left;
 }
 
+span.team-label{
+    display: inline-block;
+    margin-left:100px;
+    font-family: 'Avenir','HelveticaNeue';
+    font-weight: bolder;
+    font-size: 1.1em;
+}
 .game-box-outer ul {
     background: #bbbbbc;
     border-radius:5px;
@@ -937,15 +944,14 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#84a934', end
 .add-game-modal{
     width:80%;
     left:10%;
-    margin:0;
-    height: 80%;
+    height: 70%;
 }
-
+/*
 .add-game-modal div.modal-body{
     max-height: 100%;
     width: 99%;
     padding: .5%;
-}
+}*/
 .container_add_game{
 	font-size:12px ;
 	/*background-color: #FFF;
@@ -1057,6 +1063,13 @@ float:left;
 .container_add_game .span_ddl_team_h{
 	margin-bottom: 14px;height: 15px;
 }
+.container_add_game .span_ddl_team_h .dropdown-wrapper{
+	width:500px;
+} 
+
+.container_add_game .section-new-team_h input[type="text"]{
+	width:480px;
+}
 .container_add_game .spn-ddl-time-period_h .region-dark{
 	padding: 4px 1%;
 }
@@ -1100,7 +1113,6 @@ margin-top:10px;
 #logincontainer *{
     font-size:1em;
     font-family: "HelveticaNeue","Helvetica";
-    padding: 50px;
 }
 
 #regcontainer *{
