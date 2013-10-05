@@ -94,13 +94,11 @@ define([
 
         initialize: function (options) {
             Channel('load:css').publish(cssArr);
-
             _.bindAll(this);
-			
+            self.scheme = [];
             this.handleOptions(options);
             
             this.init();
-            
             return this;
         },
         

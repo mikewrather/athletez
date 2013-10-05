@@ -86,9 +86,7 @@ console.log(app);
 				debug.log("start initialize");
 				Channel('load:css').publish(cssArr);
 				_.bindAll(self);
-
 				self.handleOptions(options);
-
 				self.scheme = [];
 				if (options.userId) {
 					debug.log(options.userId);
