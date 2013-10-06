@@ -1106,6 +1106,12 @@ margin-top:10px;
 	background : url(images/invalidS.png) no-repeat;
 }
 
+.image-tagging .div_select_all {
+	height:100%;
+}
+.image-tagging .center{
+	
+}
 /**  Google Map ***/
 
 
@@ -1133,4 +1139,8 @@ margin-top:10px;
 
 #regcontainer *{
     font-family: "HelveticaNeue", "Helvetica";
+}
+
+#imgpreview .selected{
+	border:2px solid #954121;
 }
