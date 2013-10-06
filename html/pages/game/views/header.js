@@ -148,12 +148,12 @@ function(require, gameHeaderTemplate) {
         	score.teams_id = $(e.currentTarget).data("id");
         	score.score = $(e.target).val();
         	score.gameId = this.model.id;
-        	score.set({'id': $(e.target).data("id"), 'teams_id': $(e.target).data("id"), 'score': $(e.target).val()});
+        	score.set({'id': $(e.target).data("id"), 'games_teams_link_id': $(e.target).data("id"), 'score': $(e.target).val()});
         	score.save();
         	this.$el.find(".edit-score-input-h").attr("type", "hidden");
    		    this.$el.find('.edit-score-h').show();
 			$.when(score.request).done(function() {
-	        	
+	        	$(e.currentTarget).parents('.score-box-h').find(".edit-score-h span").html(score.get("score"));
 			});
         },
         

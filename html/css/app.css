@@ -1109,6 +1109,11 @@ margin-top:10px;
 	pointer-events: none !important;
 }
 
+.disable-arrow-link {
+	opacity: 0.5;
+	pointer-events: none;
+}
+
 /********* Login ************/
 #logincontainer{
     margin: auto;
