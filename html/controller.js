@@ -28,8 +28,13 @@ function(facade, collections, models, utils) {
 
     // Contoller Constructor 
     Controller = function (options) {
-    	
         options = options || {};
+        
+        if(options.title)
+        	 document.title = options.title;
+        else
+        	document.title = "Athletz";
+        	
         this.route = options.route;
         if (!Controller.prototype.appStates) {
             Controller.prototype.appStates = new ApplicationStates(); // is Singleton
