@@ -220,32 +220,9 @@ class Model_Sportorg_Games_Base extends ORM
 		return Util::format_time($this->gameTime);
 	}
 
-	public function getBasics($settings = array())
-	{
-//		return array(
-//			"locations_id" => $this->locations_id,
-//			"location" => $this->location->getBasics(),
-//			"gameDay" => $this->gameDay,
-//			"gameTime" => $this->gameTime,
-//			"teams" => $this->teams,
-//			'event_name' => $this->event_name,
-//			/* Required are required from Ma's test file*/
-//			//TODO, add by Jeffrey, Clean up the unnecessary data.
-//			"id" => $this->id,
-//			"game_name" => $this->name(),
-//			"game_day" => Util::format_date($this->gameDay), //"Sept 14, 2002",
-//			"game_time" => Util::format_time($this->gameTime), //"09:00 AM",
-//			"game_picture" => $this->getPrimaryImage(),
-//			"teams" => $this->getTeams()->result,
-//			"game_location" => $this->location->address
-//		);
-
-		return parent::getBasics($settings);
-	}
-
 	public function getTeams(){
 		$teams_arr = null;
-		$team_link = DB::select()->from('games_teams_link')
+		$team_link = DB::select('*',array('games_teams_link.id','gtl_id'))->from('games_teams_link')
 			->join('teams','LEFT')->on('games_teams_link.teams_id','=','teams.id')
 			->where('games_id','=',$this->id);
 
@@ -261,6 +238,7 @@ class Model_Sportorg_Games_Base extends ORM
 			$team = ORM::factory('Sportorg_Team',$team_link['teams_id']);
 			if($team->loaded()) $teams_arr[] = array_merge($team->getBasics(),array(
 				'points_scored'=>$team_link['points_scored'],
+				'games_teams_link_id'=>$team_link['gtl_id'],
 				'isWinner' => $team_link['isWinner'] == 1 ? true : false
 			));
 		}
@@ -298,7 +276,15 @@ class Model_Sportorg_Games_Base extends ORM
 	{
 		extract($args);
 
-		if (isset($teams_id) && isset($score))
+		if (isset($games_teams_link_id) && isset($score))
+		{
+			DB::update('games_teams_link')
+				->set(array('score'=>$score,'points_scored'=>$score))
+				->where('id','=',$games_teams_link_id)
+				->execute();
+			return array("score"=>$score);
+		}
+		else if (isset($teams_id) && isset($score))
 		{
 			DB::update('games_teams_link')
 				->set(array('score'=>$score,'points_scored'=>$score))
