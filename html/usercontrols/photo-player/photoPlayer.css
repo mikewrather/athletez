@@ -133,6 +133,7 @@ div.right-arrow-container > img{
     /*display: inline-block;*/
     /*width: 100%;*/
     float: left;
+    /*position: relative;*/
 }
 
 .thumbs-outer {

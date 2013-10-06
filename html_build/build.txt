@@ -690,7 +690,6 @@ usercontrols/tag/views/main.js
 usercontrols/tag/tag.js
 text!usercontrols/addgame/templates/layout.html
 packages/user/models/basic_info.js
-packages/sportorg/collections/sports_users.js
 usercontrols/addgame/collections/teams.js
 usercontrols/addgame/collections/teams_user.js
 usercontrols/addgame/collections/games_search.js
