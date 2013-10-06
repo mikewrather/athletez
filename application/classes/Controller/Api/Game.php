@@ -504,28 +504,39 @@
 			// teams_id (REQUIRED)
 			// Required.  The teamID for the team you are changing the score of.
 
-			if((int)trim($this->put('teams_id')) > 0)
+			if((int)trim($this->put('games_teams_link_id')) > 0)
 			{
-				$arguments["teams_id"] = (int)trim($this->put('teams_id'));
+				$arguments["games_teams_link_id"] = (int)trim($this->put('games_teams_link_id'));
+			}
+			else
+			{
+				if((int)trim($this->put('teams_id')) > 0)
+				{
+					$arguments["teams_id"] = (int)trim($this->put('teams_id'));
+				}
+
+				else // THIS WAS A REQUIRED PARAMETER
+				{
+					// Create Array for Error Data
+					$error_array = array(
+						"error" => "Required Parameter Missing",
+						"param_name" => "teams_id",
+						"param_desc" => "Required.  The teamID for the team you are changing the score of."
+					);
+					$error_array2 = array(
+						"error" => "Required Parameter Missing",
+						"param_name" => "games_teams_link_id",
+						"param_desc" => "This service requires either a teamID or a game/team link ID."
+					);
+
+					// Call method to throw an error
+					$this->addError($error_array2,false);
+					$this->addError($error_array,true);
+					return false;
+
+				}
 			}
 
-			else // THIS WAS A REQUIRED PARAMETER
-			{
-				// Create Array for Error Data
-				$error_array = array(
-					"error" => "Required Parameter Missing",
-					"param_name" => "teams_id",
-					"param_desc" => "Required.  The teamID for the team you are changing the score of."
-				);
-
-				// Set whether it is a fatal error
-				$is_fatal = true;
-
-				// Call method to throw an error
-				$this->addError($error_array,$is_fatal);
-				return false;
-
-			}
 
 			// score (REQUIRED)
 			// The new score for this team in this game.
