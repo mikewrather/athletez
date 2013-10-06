@@ -144,9 +144,6 @@ function(require, imageBasicTemplate) {
 			$("#imageup").attr("disabled", "disabled");
 			$(".closepreview").attr("disabled", "disabled");
 			$(".rotate").attr("disabled", "disabled");
-			console.log($('#image_file')[0].files.length)
-			console.log(this.files_drag.length)
-			console.log($(".previewimg").length)
 			if($(".previewimg").length==0)
 			{
 				var msg={"msg":"Image Field Empty","color":"alert-error"};

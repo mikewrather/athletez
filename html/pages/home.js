@@ -89,6 +89,12 @@ define(
 						'country_id' : '0'
 					};
 					
+					this.menuValues = [
+						{src : '.view-options-h .browse.select', target: '.view-link-h .option-heading-h', input: false, defaultValue: 'VIEWS'},
+     					{src: '.sports-option-h .sport.select', target: '.sport-link-h', input: false, defaultValue: 'SPORT'},
+     					{src: '#city', target: '.location-link-h', input: true, defaultValue: 'LOCATION'}
+					];
+					
 					this.viewOptions = ['orderby', 'time'];
 					this.sportsOptions = ['sports_id'];
 					this.locationOptions = ['cities_id', 'states_id', 'country_id'];
@@ -160,8 +166,11 @@ define(
 		        },
 		        
 				changeCityFilter : function(item) {
+					//console.log(item);
+					if(item.label)
+						$("#city").val(item.label);
+						
 					var options = {'cities_id':item.id, 'states_id': item.state_id, 'country_id': item.country_id};
-					console.log(options);
 					this.transitionView(options);
 				},
 				
@@ -193,6 +202,9 @@ define(
 				},
 				
 				transitionView : function(options) {
+					
+					
+					//console.error(this.urlOptions);
 
 					var viewName = 'search-result',
 					    imageList = this.collections[viewName];
@@ -201,7 +213,7 @@ define(
 					console.log("CALLED",this.collections[viewName]);
 					imageList.url = this.url(options);
 					imageList.fetch();
-
+					
 					$.when(imageList.request).done(function() {
 						console.log("Fetch Complete");
 						var view = new ImageListView({
@@ -211,6 +223,21 @@ define(
 						});
 						controller.layout.transition(viewName, view);
 					});
+					
+					for(var i in this.menuValues) {
+						if(this.menuValues[i].input) {
+							var val = $(this.menuValues[i].src).val();
+						} else {
+							var val = $(this.menuValues[i].src).text();
+						}
+						
+						console.log(val);
+						if(val != '') {
+							$(this.menuValues[i].target).html(val);
+						} else {
+							$(this.menuValues[i].target).html(this.menuValues[i].defaultValue);
+						}
+					}
 				},
 				
 				url : function(options) {
