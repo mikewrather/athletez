@@ -1085,14 +1085,26 @@ float:left;
 }
 
 
-.container_add_game .secction-individual-game_h{
+.container_add_game .section-individual-game_h{
 margin-top:10px;	
 }
+
 
 .ui-datepicker{
 	z-index: 5000 !important;
 }
 
+.container_add_game .indicator_h{
+	height:16px;width:16px; display: inline-block;  margin-left: 4px; 
+}
+
+.valid{
+	background : url(images/validS.png) no-repeat;
+}
+
+.invalid{
+	background : url(images/invalidS.png) no-repeat;
+}
 
 /**  Google Map ***/
 
