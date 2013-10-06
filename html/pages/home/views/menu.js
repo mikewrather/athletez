@@ -103,7 +103,7 @@ define(
 				
 				// show and hide dropdown
 				showMenuDropdown: function(e) {
-					var $target = $(e.target).next();
+					var $target = $(e.currentTarget).next();
 					if($target.css('display') == "none") {
 						this.$el.find(".menu-detail-h").hide();
 						$target.show();
@@ -111,6 +111,7 @@ define(
 						$target.hide();
 					}
 				},
+				
 				
 				select : function(e) {
 					e.preventDefault();

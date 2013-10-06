@@ -158,8 +158,6 @@ function(require, imageBasicTemplate, selectAllTemplate,tagTemplate) {
 			$(".closepreview").attr("disabled", "disabled");
 			$(".rotate").attr("disabled", "disabled");
 			console.log("SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS");
-			console.log($('#image_file')[0].files.length)
-			console.log(this.files_drag.length)
 			console.log($(".previewimg").length)
 			if($(".previewimg").length==0)
 			{

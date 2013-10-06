@@ -269,6 +269,18 @@ define(['require', 'text!usercontrols/photo-player/templates/player.html','text!
 				_id : mpay.id,
 				_currentIndex: _self.index
 			};
+			
+			if(_self.index >= this.json.length - 1) {
+				this.$el.find('.next-arrow-h').addClass('disable-arrow-link');
+			} else {
+				this.$el.find('.next-arrow-h').removeClass('disable-arrow-link');
+			}
+			
+			if(_self.index == 0) {
+				this.$el.find('.back-arrow-h').addClass('disable-arrow-link');
+			} else {
+				this.$el.find('.back-arrow-h').removeClass('disable-arrow-link');
+			}
 
 			var image_object;
 			switch(mpay.enttypes_id) {

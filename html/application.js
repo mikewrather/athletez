@@ -136,12 +136,13 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
             });
         },
         
-        initialiRoutesInit: function(fn) {
+        initialiRoutesInit: function(fn, title) {
         	var self = this;
         	routing.off('app-inited');
             routing.on('app-inited', function(id) {
             	fn(id);
             });
+            
             
             // initialize add game popup common trigger 
             routing.off('add-game');
@@ -181,12 +182,14 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
 	    	this.cancelAjaxRequests();
 	    	this.loadStyles();
 	    	
-	    	$('body').unbind().empty();
+	    	$('body').empty();
 	    	
             chromeBootstrap();
 	    	//self.removeCurrent();
 	    	function initHome() {
 	    		self.currentController = new HomeController({
+	    			route: "",
+	    			title: "Athletz"
 	    		});
 	    	}
 	    	this.initialiRoutesInit(initHome);
@@ -210,7 +213,8 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
            self.removeCurrent();
 			function initProfile(headerModelId) {
                 self.currentController = new ProfileController({
-	                "userId": (typeof userid != "undefined")?userid:headerModelId
+	                "userId": (typeof userid != "undefined")?userid:headerModelId,
+	                title: "Profile page"
 	            });
             }
             this.initialiRoutesInit(initProfile);
@@ -241,6 +245,7 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
             	
                 self.currentController = new TeamController({
                     "teamId": id,
+                     title: "team page",
                     "userId": headerModelId
                 });
             }
@@ -272,7 +277,8 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
 			 this.removeCurrent();
             function initProfileSetting(id) {
                self.currentController = new ProfileSetting({
-                	"id": userid==undefined ? id : userid
+                	"id": userid==undefined ? id : userid,
+                	title: "Profile setting"
                 });
             }
             this.initialiRoutesInit(initProfileSetting);
@@ -347,6 +353,7 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
                 self.currentController = new GameController({
                     "route": "",
                     "gameId" : id,
+                    title: "Game Page",
                     "userId": headerModelId
                 });
             }
@@ -361,7 +368,8 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
              this.removeCurrent();
             function initRegistration() {
                 self.currentController = new RegistrationController({
-                    "route": ""
+                    "route": "",
+                    title: "Register"
                 });
             }
             this.initialiRoutesInit(initRegistration);
@@ -448,7 +456,8 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
             
             function initRegistration() {
                 var registrationController = new RegistrationController({
-                    "route": ""
+                    "route": "",
+                    title: "Register"
                 });
             }
             this.initialiRoutesInit(initRegistration);
