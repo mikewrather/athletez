@@ -200,7 +200,7 @@ define(
 					}
 					this.transitionView();
 				},
-				
+
 				transitionView : function(options) {
 					this.searchPage = 0;
 					this.searchView(options);
@@ -208,7 +208,7 @@ define(
 				
 				
 				searchView: function(options) {
-					var viewName = 'search-result',
+					var _self = this, viewName = 'search-result',
 					    imageList = this.collections[viewName];
 					    controller = this;
 
@@ -217,6 +217,18 @@ define(
 					
 					$.when(imageList.request).done(function() {
 						console.log("Fetch Complete");
+						console.log(imageList.length);
+						
+						if(imageList.length < 12)
+							$(".right-arrow-page-h").addClass("disable-arrow-link");
+						else
+							$(".right-arrow-page-h").removeClass("disable-arrow-link");							
+							
+						if(_self.searchPage == 0)
+							$(".left-arrow-page-h").addClass("disable-arrow-link");
+						else
+							$(".left-arrow-page-h").removeClass("disable-arrow-link");														
+							
 						var view = new ImageListView({
 							collection : imageList,
 							name : viewName,
@@ -252,6 +264,14 @@ define(
 						_self.searchPage++;
 						_self.searchView();
 					});
+					
+					
+					if(_self.searchPage == 0)
+						$(".left-arrow-page-h").addClass("disable-arrow-link");
+					else
+						$(".left-arrow-page-h").removeClass("disable-arrow-link");	
+					
+					
 				},
 				
 				url : function(options) {
