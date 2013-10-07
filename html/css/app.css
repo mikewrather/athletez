@@ -1127,3 +1127,22 @@ margin-top:10px;
 #regcontainer *{
     font-family: "HelveticaNeue", "Helvetica";
 }
+
+.search-result-outer {
+	position: relative;
+}
+
+.home-page-arrow {
+	position: absolute;
+}
+
+.left-arrow-page {
+	left: 0;
+	margin-top: 30%;
+}
+
+.right-arrow-page {
+	right: 0;
+	margin-top: 30%;
+}
+

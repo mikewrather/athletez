@@ -57,6 +57,7 @@ define(
 				cssArr = [ base_url + 'pages/home/home.css' ];
 
 			HomeController = Controller.extend({
+				searchPage: 0,
 				initialize : function(options) {
 					Channel('load:css').publish(cssArr);
 					_.bindAll(this);
@@ -183,7 +184,6 @@ define(
 								else if(i == "time")
 									this.urlOptions[this.viewOptions[i]] = "today";
 							}
-							
 						break;
 						case 'sports':
 							for(var i in this.sportsOptions) {
@@ -202,15 +202,16 @@ define(
 				},
 				
 				transitionView : function(options) {
-					
-					
-					//console.error(this.urlOptions);
-
+					this.searchPage = 0;
+					this.searchView(options);
+				},
+				
+				
+				searchView: function(options) {
 					var viewName = 'search-result',
 					    imageList = this.collections[viewName];
 					    controller = this;
 
-					console.log("CALLED",this.collections[viewName]);
 					imageList.url = this.url(options);
 					imageList.fetch();
 					
@@ -240,8 +241,21 @@ define(
 					}
 				},
 				
+				bindCickEvents: function() {
+					var _self = this;
+					$(document).on("click", ".left-arrow-page-h", function() {
+						_self.searchPage--;
+						_self.searchView();
+					});
+					
+					$(document).on("click", ".right-arrow-page-h", function() {
+						_self.searchPage++;
+						_self.searchView();
+					});
+				},
+				
 				url : function(options) {
-					var base = this.baseUrl + '?';
+					var base = this.baseUrl + '?offset='+this.searchPage+"&";
 					_.extend(this.urlOptions, options);
 					var tail = [];
 					 $.each(this.urlOptions, function(key, value) {
@@ -360,7 +374,7 @@ define(
 					});
 
 					this.layout = pageLayout;
-
+					this.bindCickEvents();
 					return this.layout;
 				}
 
