@@ -506,7 +506,7 @@ ul.ui-autocomplete {
 
 .ui-autocomplete li.ui-menu-item a {
 	padding: 5px 0 5px 15px !important;
-	border-radius: none;
+	border-radius: 0;
 }
 
 span.ui-helper-hidden-accessible {
@@ -617,7 +617,11 @@ margin-right: 100px;
 
 .team-template-outer .profile-heading {
 	background: #4b3dc6;
-	
+	color:#FFF;
+}
+
+.team-template-outer .profile-heading *{
+    color:#fff;
 }
 
 .profile-heading {
@@ -1002,7 +1006,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#84a934', end
 	font-size: 12px;
 	font-style: italic;
 	font-weight: normal;
-	background-color: none;	
+	background-color: transparent;
 	float:left;
 }
 .container_add_game .green-left-heading{
@@ -1151,3 +1155,20 @@ margin-top:10px;
 #imgpreview .selected{
 	border:2px solid #954121;
 }
+.search-result-outer {
+}
+
+.home-page-arrow {
+	position: absolute;
+}
+
+.left-arrow-page {
+	left: 0;
+	margin-top: 30%;
+}
+
+.right-arrow-page {
+	right: 0;
+	margin-top: 30%;
+}
+
