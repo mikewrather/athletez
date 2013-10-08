@@ -273,7 +273,7 @@ define([
 					collection: this.fans,
 					destination: "#fans-div",
 					//model: Backbone.Model.extend(),
-					name: "fans View"
+					name: "fansView"
 				});
 
 				this.scheme.push(this.fansListView);

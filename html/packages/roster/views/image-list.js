@@ -9,6 +9,7 @@ function(facade,  utils,   BaseImageListView) {
     ImageList = BaseImageListView.extend({
 
 	    imagetype: 'large_thumb',
+	    tagName: 'ul',
         setupAddView: function() {
             
         }

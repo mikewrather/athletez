@@ -9,7 +9,7 @@ function(facade,  utils,   BaseImageListView) {
     FansImageListView = BaseImageListView.extend({
 
 	    imagetype: 'large_thumb',
-		name: "fans List",
+		//name: "fans List",
         setupAddView: function() {
             
         }

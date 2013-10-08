@@ -82,7 +82,7 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 			sectionLocation : ".div-game-location_h",
 			txtLocationId : ".txt-game-location-id_h",
 
-			sectionIndividual : ".secction-individual-game_h",
+			sectionIndividual : ".section-individual-game_h",
 			txtIndividualGame : ".txt-individual-game_h",
 			btnIndividualFinish : ".btn-game-individual-Finish_h",
 
@@ -96,7 +96,8 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 			hdnSportsIdData : "hdn_sport_id",
 			hdnSportsId : "#hdn_sport_id",
 			hdnTimePeriodData : "hdn_time-period_h",
-			hdnTimePeriod : "#hdn_time-period_h"
+			hdnTimePeriod : "#hdn_time-period_h",
+			indicator : ".indicator_h"
 		},
 
 		attributes : {
@@ -165,7 +166,7 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 					name : "PM",
 					value : "PM"					
 				}
-			},]
+			}]
 			
 			var data = {};
                data.records = records;
@@ -173,13 +174,11 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 			   data.recordValue = 'value';
 			var DropDown = new DropDownList({
 					data: data,
-					title: "Select Sport",
 					elementId: self.controls.hdnTimePeriodData,
 					destination: self.controls.spnTimePeriod,
 					targetView: self,
 					selectedValue : "AM",
 					callback: function(result) {
-						//self.changeSport(result);						
 					}
 				});
 				
@@ -202,7 +201,7 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 				this.sports_id = options.sports_id || null;
 				this.team_id = options.teams_id || null;
 			}
-			console.log("CURRENT USER ID:", this,options);
+			//console.log("CURRENT USER ID:", this,options);
 		},
 
 		/*initialize must be a wrapper so any function definitions and calles must be called in init*/
@@ -211,7 +210,22 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 		},
 		setupView : function() {
 			self.setUpMainView();
-			self.fillSports();
+			if(self.team_id){
+				var teamModel = new TeamModel();
+					teamModel.id = self.team_id;
+					teamModel.fetchSuccess = function(model, response) {
+						var data = teamModel.parseAsRequired(response);
+						self.team = data;
+						console.log("&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&");
+						console.log("self.team",self.team);
+						self.sports_id = data.sports_id || null;
+						self.fillSports();
+						//self.setSelectedTeam(data);
+				};
+						teamModel.fetch();
+			}else{
+				self.fillSports();
+			}
 			//self.setFirstTeam();
 		},
 		setUpMainView : function() {
@@ -225,8 +239,6 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 				//List.user_id = self.user_id;
 				List.processResult = function(collection) {
 					var data = List.ParseForDropdown();
-					console.log("sport",collection);
-					console.log("data",data);
 					self.SetupSportsView(data);
 				};
 				List.fetch();
@@ -234,8 +246,6 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 		SetupSportsView : function(List) {
 
 			 self.sports = List;
-			 console.log("self.sports",self.sports);
-			
 			var data = {};
                data.records = self.sports;
                data.recordId = 'id';
@@ -254,7 +264,7 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 		},
 		/*Change sport_id when a sport is selected from dropdown*/
 		changeSport : function(result) {
-			console.log("result",result);
+		//	console.log("result",result);
 			if (result && result != 0) {
 				$(self.destination).find(self.controls.sectionTeams).show();
 				$(self.destination).find(self.controls.btnFinish).fadeIn();
@@ -284,13 +294,17 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 					}
 				}
 				if (!isTeamFound) {
+					if(self.team){
+						self.setSelectedTeam(self.team);
+					}else{
 					var teamModel = new TeamModel();
 					teamModel.id = self.team_id;
 					teamModel.fetchSuccess = function(model, response) {
 						var data = teamModel.parseAsRequired(response);
 						self.setSelectedTeam(data);
 					};
-					teamModel.fetch();
+						teamModel.fetch();
+					}
 				}
 				self.CheckTeamControlsVisibility();
 			}
@@ -305,6 +319,7 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 				$(self.destination).find(self.controls.sectionTeamOne).find(self.controls.spanddlteamone).hide();
 				$(self.destination).find(self.controls.sectionTeamOne).find(self.controls.btnNewTeam).hide();
 				$(self.destination).find(self.controls.sectionTeamOne).find(self.controls.txtTeam).val(teamname).show();
+				$(self.destination).find(self.controls.sectionTeamOne).find(self.controls.indicator).addClass("valid").removeClass("invalid").show();
 			}
 		},
 		fillTeams : function(sport_id) {
@@ -351,20 +366,22 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 					title: "Select Team",
 					elementId: "hdn_team_id",
 					targetView: self,					
-					destination: self.controls.spanddlteamtwo,					
+					destination: self.controls.spanddlteamtwo,
+					//selectedValue : 14446,					
 					callback: function(result) {
 						self.changeUserTeamTwo(result);						
 					}
 				});
 		},
 		changeUserTeamOne : function(result) {
-			console.log("result",result);
+			console.log("result1",result);
 			if(result == "-1"){
 				$(self.destination).find(self.controls.sectionTeamOne).find(self.controls.btnNewTeam).trigger('click');
 			}
 			else{
-			$(self.destination).find(self.controls.sectionTeamOne).find(self.controls.txtTeam).hide();
-			$(self.destination).find(self.controls.sectionTeamOne).find(self.controls.spanddlteamone).show();
+			//$(self.destination).find(self.controls.sectionTeamOne).find(self.controls.txtTeam).hide();
+//			$(self.destination).find(self.controls.sectionTeamOne).find(self.controls.indicator).hide();
+			//$(self.destination).find(self.controls.sectionTeamOne).find(self.controls.spanddlteamone).show();
 			$(self.destination).find(self.controls.sectionTeamOne).find(self.controls.btnNewTeam).show();
 			$(self.destination).find(self.controls.sectionTeamOne).find("input").attr(self.attributes.teamId, result);
 			$(self.destination).find(self.controls.sectionTeamOne).find("input:checked").removeAttr("checked");
@@ -378,6 +395,7 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 			}
 			else{
 			$(self.destination).find(self.controls.sectionTeamTwo).find(self.controls.txtTeam).hide();
+			$(self.destination).find(self.controls.sectionTeamOne).find(self.controls.indicator).hide();
 			$(self.destination).find(self.controls.sectionTeamTwo).find(self.controls.spanddlteamtwo).show();
 			$(self.destination).find(self.controls.sectionTeamTwo).find(self.controls.btnNewTeam).show();
 			$(self.destination).find(self.controls.sectionTeamTwo).find("input").attr(self.attributes.teamId, result);
@@ -398,6 +416,7 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 			//Show Link and DROPDOWN
 			$(e.target).hide();
 			$(e.target).parents(self.controls.sectionTeams).find(self.controls.txtTeam).val("").hide();
+			$(e.target).parents(self.controls.sectionTeams).find(self.controls.indicator).hide();
 			$(e.target).parents(self.controls.sectionTeams).find("input").removeAttr(self.attributes.teamId);
 			$(e.target).parents(self.controls.sectionTeams).find(self.controls.ddlUserTeams).val("").show();			
 			$(e.target).parents(self.controls.sectionTeams).find("input:checked").removeAttr("checked");
@@ -480,6 +499,8 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 						$(e.target).attr(self.attributes.stateId, self.states_id);
 						$(e.target).parents(self.controls.sectionTeams).find(self.controls.txtCity).attr(self.attributes.stateId, self.states_id).fadeIn();
 						$(e.target).parents(self.controls.sectionTeams).find(self.controls.txtTeam).attr(self.attributes.stateId, self.states_id).fadeOut();
+					$(e.target).parents(self.controls.sectionTeams).find(self.controls.indicator).hide();
+			
 					}
 
 				});
@@ -487,6 +508,7 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 			if (!isStateValid) {
 				self.states_id = 0;
 				$(e.target).parents(self.controls.sectionTeams).find(self.controls.txtTeam).removeAttr(self.attributes.stateId).fadeOut();
+				$(e.target).parents(self.controls.sectionTeams).find(self.controls.indicator).hide();
 				$(e.target).parents(self.controls.sectionTeams).find(self.controls.txtCity).removeAttr(self.attributes.stateId).fadeOut();
 			}
 			// Hide all other controls
@@ -577,7 +599,8 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 			}
 			if (!isCityValid) {
 				self.city_id = 0;
-				$(self.destination).find(self.controls.txtTeam).removeAttr(self.attributes.cityId).fadeOut();
+				//$(self.destination).find(self.controls.txtTeam).removeAttr(self.attributes.cityId).fadeOut();
+				//$(e.target).parents(self.controls.sectionTeams).find(self.controls.indicator).hide();
 			}
 			// Hide all other controls
 			self.CheckTeamControlsVisibility();
@@ -595,6 +618,7 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 			if (name != '' && isValidKey == true && name.length > 2) {
 				// Hide all other controls
 				$(e.target).removeAttr(self.attributes.teamId);
+				$(e.target).parents(self.controls.sectionTeams).find(self.controls.indicator).addClass("invalid").removeClass("valid").show();
 				self.CheckTeamControlsVisibility();
 
 				var List = new TeamsCollection();
@@ -639,6 +663,7 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 			} else {
 				// Hide all other controls
 				$(e.target).removeAttr(self.attributes.teamId);
+				$(e.target).parents(self.controls.sectionTeams).find(self.controls.indicator).addClass("invalid").removeClass("valid").show();
 				self.CheckTeamControlsVisibility();
 
 				if (self.isEnterKey(e))
@@ -658,12 +683,14 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 						isSchoolValid = true;
 						self.team_id = value['id'];
 						$(e.target).parents(self.controls.sectionTeams).find("input").attr(self.attributes.teamId, self.team_id);
+						$(e.target).parents(self.controls.sectionTeams).find(self.controls.indicator).removeClass("invalid").addClass("valid").show();
 					}
 				});
 			}
 			if (!isSchoolValid) {
 				// Hide all other controls
 				$(e.target).parents(self.controls.sectionTeams).find("input").removeAttr(self.attributes.teamId);
+				$(e.target).parents(self.controls.sectionTeams).find(self.controls.indicator).addClass("invalid").removeClass("valid").show();
 			}
 			self.CheckTeamControlsVisibility();
 		},

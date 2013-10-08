@@ -21,14 +21,27 @@ define(["facade", "sportorg/models/team"], function(facade, SportsOrgModel) {
 					fulladdress : ''
 				};
 
-				if (payload && payload.org_sport_link_obj && payload.org_sport_link_obj.org && payload.org_sport_link_obj.org.locations)
-					location = payload.org_sport_link_obj.org.locations;
+				var sport = {
+					id : null,
+					sport_name : "",
+				};
+
+				if (payload && payload.org_sport_link_obj) {
+					if (payload.org_sport_link_obj.org && payload.org_sport_link_obj.org.locations) {
+						location = payload.org_sport_link_obj.org.locations;
+					}
+					if (payload.org_sport_link_obj.sport) {
+						sport = payload.org_sport_link_obj.sport;
+					}
+				}
 
 				temp = {
 					team_id : payload.id,
 					team_name : payload.team_name,
 					location_id : location.id,
 					location_name : location.full_address,
+					sports_name : sport.sport_name,
+					sports_id : sport.id,
 				};
 			}
 			return temp;

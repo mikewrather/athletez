@@ -6,15 +6,18 @@
 
 define([
         'require', 
-        'text!imageup/templates/uploader.html', 
+        'text!imageup/templates/uploader.html',
+        'text!imageup/templates/select_all.html', 
+        'text!usercontrols/tag/templates/layout.html',
         'facade', 
         'views',
         'utils',
         'vendor',
     	"imageup/models/basic",
-    	"imageup/views/errors"
+    	"imageup/views/errors",
+    	'usercontrols/tag/views/main'
         ], 
-function(require, imageBasicTemplate) {
+function(require, imageBasicTemplate, selectAllTemplate,tagTemplate) {
 
     var ImageBasicView,
         facade = require('facade'),
@@ -27,9 +30,10 @@ function(require, imageBasicTemplate) {
 		ErrorDispView = require("imageup/views/errors"),
         $ = facade.$,
         _ = facade._,
-        debug = utils.debug;
+        debug = utils.debug,
+        TagView = require('usercontrols/tag/views/main');
+        
 	debug.log("SectionView: ",SectionView);
-
 
     ImageBasicView = SectionView.extend({
 	
@@ -39,7 +43,8 @@ function(require, imageBasicTemplate) {
 	            "click #imageup": "imageUploadClick",
 				"change #image_file" : "imagePreview",
 				"dragover #imageholder" : "drag",
-				"drop #imageholder":"drop"
+				"drop #imageholder":"drop",
+				"click #btn_select_all_h" : "selectAllImages"
 	    },
 	
         template: imageBasicTemplate,
@@ -52,6 +57,11 @@ function(require, imageBasicTemplate) {
 			debug.log("Image upload basic view");   
 			this.attr=attr;      
 			this.files_drag=[];
+			this.scheme = options.scheme;
+			this.layout = options.layout;
+
+				//ASSIGN CHANNEL FOR IMAGE TAGGING
+				Channel('tag-team-image-success').subscribe(this.tagFunction);
 
 			$('#imgUploadModal').modal('show') ;
 		    $('#imgUploadModal').on('hidden', function () {
@@ -59,9 +69,14 @@ function(require, imageBasicTemplate) {
 		    });
 			$('#imgUploadModal').on('hide', function () {
 		    	routing.trigger('refresh-onImageUpload');
-		    });
+		    }); 
 		    console.log($(".modal-body").html());
         },
+       /*render displays the view in browser*/
+       /*Use This To Add Any Other Functionality Along With Render*/
+		// render : function() {
+			// SectionView.prototype.render.call(this);
+		// },
 		drag: function(event) {
 			event.stopPropagation();
 		    event.preventDefault();
@@ -95,9 +110,9 @@ function(require, imageBasicTemplate) {
 				  _self.hideLoader();
 				};
 		      })(f);
+		      _self.setUpBottomView();
 		      reader.readAsDataURL(f);
 		    }
-		   
 		},
 		imagePreview: function(event) {
 			var _self = this;
@@ -126,24 +141,24 @@ function(require, imageBasicTemplate) {
 					routing.trigger("imageup-preview", data);
 				  	_self.hideLoader();
 				  }
-				  
 				};
 				
 		      })(f);
+		      _self.setUpBottomView();
 		      reader.readAsDataURL(f);
 		    }
+		    
 		},
         imageUploadClick: function(event)
         {
-	        
-
 	        event.preventDefault();
-
 			var thiss=this;			
 			$("#errormsg").hide();
 			$("#imageup").attr("disabled", "disabled");
 			$(".closepreview").attr("disabled", "disabled");
 			$(".rotate").attr("disabled", "disabled");
+			console.log("SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS");
+			console.log($(".previewimg").length)
 			if($(".previewimg").length==0)
 			{
 				var msg={"msg":"Image Field Empty","color":"alert-error"};
@@ -191,8 +206,46 @@ function(require, imageBasicTemplate) {
 				});
 				$("#imageup").removeAttr("disabled");
 			}
+        },
+        
+       /*******************/
+      setUpBottomView : function(){
+				      	this.setUpSelectAllView();
+				      	this.setUpTagView();
+      },
+      setUpSelectAllView : function(){
+      		var self = this;
+			$("#select-allup").html(selectAllTemplate);  
+			
+      },
+      setUpTagView : function(){
+      	//TagView      	
+      	//alert(self.id);    
+      	  	
+			var self = this;
+			this.tagView = new TagView({
+				model : this.model,
+				template : tagTemplate,
+				name : "tag-image",
+				destination : "#image-tagging",
+				user_id : self.user_id || null,
+				channel : 'tag-team-image-success',
+			});
 
-        }	
+			this.scheme.push(this.tagView);
+			this.layout.render();
+      },
+      tagFunction : function(data){
+      	alert("this is tag finish function from basic.js");
+      	alert(JSON.stringify(data));
+      },
+      
+      selectAllImages : function(e){
+		$(".previewimg").addClass("selected");	
+		$("#select-allup").hide();
+		$("#image-tagging").show();
+		
+		}	
                 
     });
 
