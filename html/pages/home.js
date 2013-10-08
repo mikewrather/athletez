@@ -61,8 +61,8 @@ define(
 				initialize : function(options) {
 					Channel('load:css').publish(cssArr);
 					_.bindAll(this);
-					 this.scheme = [];
 					this.handleOptions(options);
+					 this.scheme = [];
 					this.genderTypes = ['boys', 'girls', 'both'];
 					this.init();
 					return this;
@@ -389,8 +389,8 @@ define(
 					pageLayout = new LayoutView({
 						scheme : this.scheme,
 						destination : "#main",
-						template : pageLayoutTemplate/*,
-						displayWhen : "ready"*/
+						template : pageLayoutTemplate,
+						displayWhen : "ready"
 					});
 
 					this.layout = pageLayout;

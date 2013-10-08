@@ -124,25 +124,8 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
                 });
             });
             
-            var popupCallback = undefined, locationCallback = undefined;
-            
-            routing.off('edit_game_popup_open');
-            routing.on('edit_game_popup_open', function(view, location, callback) {
-            	if(callback)
-	            	popupCallback = callback;
-            	 var modelHTML = '<div id="modalPopup" class="modal photo-frame-model hide fade model-popup-h">'+
-					'<div class="modal-header">'+
- 					'<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>'+
-					'</div>'+
-					'<div class="modal-body page-content-h">'+
-					'</div></div>';
-					$(".model-popup-h").remove();
-					$('body').append(modelHTML);
-					var viewOb = new view(location);
-					$(".modal-body").html(viewOb.$el);
-					$('#modalPopup').modal();
-            });
-            
+            var locationCallback = undefined;
+
             routing.off('show_location');
             routing.on('show_location', function(lat, longitude, destination, callback) {
             	locationCallback = callback;
@@ -206,7 +189,7 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
 	    	this.cancelAjaxRequests();
 	    	this.loadStyles();
 	    	
-	    	$('body').empty();
+	    	$('body').unbind().empty();
 	    	
             chromeBootstrap();
             
