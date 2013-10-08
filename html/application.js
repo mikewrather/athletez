@@ -3,9 +3,9 @@
 // Requires define
 // Return {Object} App
 
-define( ["facade", "utils", "collections", "chrome", "controller", "profile", "imageup",'home','videopreview',"game", "team", "registration","profilesetting","userresume","packages/site/collections/phrases","usercontrols/tag/tag","usercontrols/addgame/addgame","signup","login", "usercontrols/photo-player/photo-player", "usercontrols/add-club/add-club", "utils/storage"],
+define( ["facade", "utils", "collections", "chrome", "controller", "profile", "imageup",'home','videopreview',"game", "team", "registration","profilesetting","userresume","packages/site/collections/phrases","usercontrols/tag/tag","usercontrols/addgame/addgame","signup","login", "usercontrols/photo-player/photo-player", "usercontrols/add-club/add-club", "utils/storage", 'usercontrols/location/views/view-location'],
 function (facade, utils, collections, chromeBootstrap, Controller, ProfileController, ImageController, HomeController, VideoPreviewController,
-	GameController, TeamController, RegistrationController,ProfileSetting,UserResume, SitePhraseList , TagController,AddGameController, SignupController,LoginController,PhotoPlayerController, AddClubController, Store) {
+	GameController, TeamController, RegistrationController,ProfileSetting,UserResume, SitePhraseList , TagController,AddGameController, SignupController,LoginController,PhotoPlayerController, AddClubController, Store, googleMapLocationview) {
 
 
 
@@ -124,7 +124,7 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
                 });
             });
             
-            var popupCallback = undefined;
+            var popupCallback = undefined, locationCallback = undefined;
             
             routing.off('location_popup_open');
             routing.on('location_popup_open', function(view, location, callback) {
@@ -139,19 +139,23 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
 					$(".model-popup-h").remove();
 					$('body').append(modelHTML);
 					var viewOb = new view(location);
-					console.log(viewOb);
-					console.log(viewOb.el);
 					$(".modal-body").html(viewOb.$el);
 					$('#modalPopup').modal();
-					
             });
             
+            routing.off('show_location');
+            routing.on('show_location', function(lat, longitude, destination, callback) {
+            	locationCallback = callback;
+            	var location = {latitude: lat, longitude: longitude};
+            	var viewOb = new googleMapLocationview(location);
+            	$(destination).html(viewOb.$el);
+            });            
             
             routing.off('popup-close');
             routing.on('popup-close', function() {
             	$('#modalPopup').modal('hide');
             	$(".model-popup-h").remove();
-            	if(popupCallback) popupCallback();
+            	if(locationCallback) locationCallback();
             });
         },
         

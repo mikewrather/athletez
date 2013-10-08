@@ -36,6 +36,12 @@ define(['require', 'text!usercontrols/add-club/templates/layout.html', 'facade',
 			this.setProfiles();
 		},
 		
+		openLocationPopup: function(latitude, longitude) {
+        	var _self = this;
+        	routing.trigger('show_location', latitude, longitude, '.location-map-h', function() {
+        	});
+        },
+		
 		// add club and school
 		addClub: function() {
 			var _self = this, submit = true;
@@ -91,6 +97,7 @@ define(['require', 'text!usercontrols/add-club/templates/layout.html', 'facade',
 				console.log(adressModel.toJSON());
 				_self.locationId = adressModel.get("payload").id;
 				if(_self.locationId) {
+					_self.openLocationPopup(adressModel.get("payload").lat, adressModel.get("payload").lon);
 					_self.$el.find('.address-error-status-h').addClass('hide');
 					_self.$el.find('.address-h').removeClass('address-field-error').addClass('address-verified');
 					_self.addressValid = true;
