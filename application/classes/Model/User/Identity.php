@@ -1,4 +1,4 @@
-<?php defined('SYSPATH') or die('No direct script access.');
+Thatemailaddressisalreadyinoursystem<?php defined('SYSPATH') or die('No direct script access.');
 /**
  * $description
  *
