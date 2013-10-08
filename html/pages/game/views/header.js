@@ -45,7 +45,14 @@ function(require, gameHeaderTemplate) {
         },
         
         initialize: function (options) {
-          SectionView.prototype.initialize.call(this, options);           
+          SectionView.prototype.initialize.call(this, options); 
+          console.error(this.model.toJSON());          
+        	var payload = this.model.get("payload"), title;
+        	if(payload.teams.length) {
+        		title = payload.teams[0].org_name +" VS "+ payload.teams[1].org_name;	
+        		title +=  " "+payload.shared.complevel +" | "+ payload.shared.sport +" | "+ payload.game_day;
+    			document.title = title;        	
+        	}
         },
         
         openLocationPopup: function() {
@@ -87,6 +94,7 @@ function(require, gameHeaderTemplate) {
         	_self.model.id = id;
         	_self.model.fetch();
         	$.when(_self.model.request).done(function() {
+        		console.error(_self.model.toJSON());
         		_self.render();
         	});
         },
