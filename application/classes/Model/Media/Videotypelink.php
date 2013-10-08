@@ -69,10 +69,12 @@ class Model_Media_Videotypelink extends ORM
 
 		foreach($vid_meta_res as $data)
 		{
-			if ($data->vid_val != "" && $data->vid_val != nulll)
-				$retArr[$data->vid_prop] = $data->vid_val;
+			if ($data->vid_val != "" && $data->vid_val != null)
+			{
+				if($data->vid_prop=='url') $retArr[$data->vid_prop] = Util::get_cdn($data->vid_val,true);
+				else $retArr[$data->vid_prop] = $data->vid_val;
+			}
 		}
-
 		return $retArr;
 	}
 }
