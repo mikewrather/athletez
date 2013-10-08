@@ -94,10 +94,10 @@ define(['require', 'text!usercontrols/add-club/templates/layout.html', 'facade',
 			adressModel.save({dataType:"json"});
 			_self.$el.find('.address-h').removeClass('address-verified');
 			$.when(adressModel.request).done(function() {
-				console.log(adressModel.toJSON());
 				_self.locationId = adressModel.get("payload").id;
 				if(_self.locationId) {
-					_self.openLocationPopup(adressModel.get("payload").lat, adressModel.get("payload").lon);
+					if(typeof callback != "function") 
+						_self.openLocationPopup(adressModel.get("payload").lat, adressModel.get("payload").lon);
 					_self.$el.find('.address-error-status-h').addClass('hide');
 					_self.$el.find('.address-h').removeClass('address-field-error').addClass('address-verified');
 					_self.addressValid = true;
