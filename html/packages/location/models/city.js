@@ -23,18 +23,17 @@ define([ 'models', 'facade' ], function(models, facade) {
 			this.request = $.ajax({
 				url : "/api/location/search/?search_text=" + term
 			}).done(function(data, textStatus, jqXHR) {
-				console.log(data);
 				 var collection = [];
 				 var payload = data.payload;
+				 console.log(payload);
 		         if(payload != null){
 		         	 for (i = 0; i < (payload.length > 10 ? 10 : payload.length) ; i++) {
-		         		 
 		         		 var item = {};
 		         		 item.label = payload[i].str;
 		         		 item.id = payload[i].id;
-		         		 var state_ob = (_.isUndefined(payload[i].obj.city))?payload[i].obj.states_obj:(!_.isUndefined(payload[i].obj.city.states_obj)?payload[i].obj.city.states_obj:{});
+		         		 var state_ob = (!_.isUndefined(payload[i].obj.states_obj))?payload[i].obj.states_obj:(!_.isUndefined(payload[i].obj.city) && !_.isUndefined(payload[i].obj.city.states_obj))?payload[i].obj.city.states_obj:{};
 		         		 item.state_id = state_ob.id;
-		         		 item.country_id = state_ob.country.id;
+		         		 item.country_id = (!_.isUndefined(state_ob.country))?state_ob.country.id:'';
 		         		 collection.push(item);
 		         	 }
 		         }

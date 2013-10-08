@@ -126,8 +126,8 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
             
             var popupCallback = undefined, locationCallback = undefined;
             
-            routing.off('location_popup_open');
-            routing.on('location_popup_open', function(view, location, callback) {
+            routing.off('edit_game_popup_open');
+            routing.on('edit_game_popup_open', function(view, location, callback) {
             	if(callback)
 	            	popupCallback = callback;
             	 var modelHTML = '<div id="modalPopup" class="modal photo-frame-model hide fade model-popup-h">'+

@@ -13,7 +13,9 @@ define([
         'game/models/basics',
         'votes/models/vote',
         'votes/models/follow',
-        'usercontrols/location/views/location'
+        'usercontrols/location/views/location',
+        'usercontrols/location/models/verify-adress',
+        'usercontrols/location/models/save'
         ], 
 function(require, gameHeaderTemplate) {
 
@@ -25,6 +27,8 @@ function(require, gameHeaderTemplate) {
         voteModel = require('votes/models/vote'),
         followModel = require('votes/models/follow'),
         LocationView = require('usercontrols/location/views/location'),
+        verifyAddress = require('usercontrols/location/models/verify-adress'),
+		saveLocation = require('usercontrols/location/models/save'),
 		SectionView = views.SectionView;
 
 	GameHeaderView = SectionView.extend({
@@ -37,12 +41,13 @@ function(require, gameHeaderTemplate) {
 	        "click .follow": "follow",
 	        "click .object-edit-h": "editObject",
 	        "click .object-delete-h": "deleteObject",
-	        "click .game-edit-btn-h" : "gameEditBtn",
 	        "submit .update-date-time-h": "updateDateTime",
-	        "click .cancel-time-edit-h" : "cancelDateTimeBtn",
-	        "click .address-info-h": "openLocationPopup"
-        	//'keyup .edit-score-input-h': 'resumeEditScore'
+	        "click .game-edit-btn-h": "openEditPopup",
+	        'click .verify-address-h': 'verifyAddress',
+	        'blur .address-h': 'verifyAddress'
         },
+        
+        location: {lat: undefined, lon: undefined},
         
         initialize: function (options) {
           SectionView.prototype.initialize.call(this, options); 
@@ -57,13 +62,63 @@ function(require, gameHeaderTemplate) {
         	document.title = title;        	
         },
         
-        openLocationPopup: function() {
-        	var _self = this;
-        	var location = { latitude : this.model.get("payload").location.lat, longitude : this.model.get("payload").location.lon, game_id: this.model.id}; 
-        	routing.trigger('location_popup_open', LocationView, location, function() {
-        		_self.updateHeaderData(_self.model.id);
+        openEditPopup: function() {
+			$('#modalPopup').modal();
+			this.location.lon = this.model.get("payload").location.lon;
+			this.location.lat = this.model.get("payload").location.lat;
+        	this.showLocation();
+        },
+        
+        
+        showLocation: function() {
+        	routing.trigger('show_location', this.location.lat, this.location.lon, '.view-map-h', function() {
+        		//_self.updateHeaderData(_self.model.id);
         	});
         },
+        
+        setLocation: function(e) {
+			var r = confirm("Are you sure want to set new address?");
+			if(r) {
+				if(this.locationId) {
+					var model = new saveLocation();
+					model.id = this.game_id;
+					model.set({locations_id: this.locationId, id: this.game_id});
+					model.save();
+					$.when(model.request).done(function(){		
+						routing.trigger("popup-close");
+					});
+				}
+			}
+		},
+        
+        verifyAddress: function() {
+			var _self = this, address = _self.$el.find('.address-h').val();
+			_self.adressModel = new verifyAddress();
+			_self.adressModel.address = address;
+			_self.adressModel.url();
+			_self.adressModel.set({address: address});
+			_self.adressModel.showError = function(model, error) {
+				try {
+					_self.$el.find('.set-address-h').addClass('link-disabled');
+					_self.$el.find('.address-error-status-h').removeClass('hide').html(error.responseJSON.exec_data.error_array[0].error);
+				} catch(e) {}
+				_self.$el.find('.address-h').addClass('address-field-error').removeClass('address-verified');
+			};
+			_self.adressModel.save({dataType:"json"});
+			_self.$el.find('.address-h').removeClass('address-verified');
+			$.when(_self.adressModel.request).done(function() {
+				console.log(_self.adressModel.toJSON());
+				_self.locationId = _self.adressModel.get("payload").id;
+				if(_self.locationId) {
+					_self.$el.find('.address-error-status-h').addClass('hide');
+					_self.$el.find('.address-h').removeClass('address-field-error').addClass('address-verified');
+					_self.location.lon = _self.adressModel.get("payload").lon;
+					_self.location.lat = _self.adressModel.get("payload").lat;
+					_self.showLocation();
+					_self.$el.find('.set-address-h').removeClass('link-disabled');
+				}
+			});
+		},
         
         editObject: function() {
         	alert("Coming soon");
@@ -78,15 +133,14 @@ function(require, gameHeaderTemplate) {
         },
         
         updateDateTime: function(e) {
-        	console.log(this.model);
         	e.preventDefault();
-        	this.$el.find('.update-date-time-h').addClass('hide');
-        	var _self = this, val = this.$el.find('.date-time-h').val(), basic = new basicModel();
-        	basic.id = this.model.id;
-        	basic.set({'game_datetime': val, 'id1': basic.id});
-        	basic.save();
-        	$.when(basic.request).done(function() {
-        		_self.updateHeaderData(basic.id);
+        	var _self = this, val = this.$el.find('.date-time-h').val(), model = new saveLocation();
+			model.id = this.model.id;
+			model.set({'game_datetime': val, 'locations_id': this.locationId, id: this.model.id});
+			model.save();
+    	
+        	$.when(model.request).done(function() {
+        		_self.updateHeaderData(model.id);
         	});
         },
         
@@ -97,6 +151,7 @@ function(require, gameHeaderTemplate) {
         	_self.model.fetch();
         	$.when(_self.model.request).done(function() {
         		console.error(_self.model.toJSON());
+        		$('#modalPopup').modal('hide');
         		_self.render();
         	});
         },
