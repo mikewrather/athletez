@@ -1,8 +1,8 @@
 // Team List
 // --------------
 
-define(['vendor', 'facade','views', 'utils', 'sportorg/views/team-item', 'text!sportorg/templates/team-list.html','utils/storage'], 
-function(vendor, facade,  views,   utils,   TeamItemView, TeamListViewTemplate, Store) {
+define(['vendor', 'facade','views', 'utils', 'sportorg/views/team-item','sportorg/collections/games'],
+function(vendor, facade,  views,   utils,  TeamItemView,GamesCollection) {
 
     var TeamListView, 
         TeamListAbstract,
@@ -15,7 +15,7 @@ function(vendor, facade,  views,   utils,   TeamItemView, TeamListViewTemplate, 
 
     TeamListAbstract = CollectionView.extend(SectionView.prototype);
 
-    TeamListView = TeamListAbstract.extend({
+    TeamListView = SectionView.extend({
 
         __super__: CollectionView.prototype,
 
@@ -23,51 +23,27 @@ function(vendor, facade,  views,   utils,   TeamItemView, TeamListViewTemplate, 
         name: "Team List",
         //tagName: "ul",
 
-		events: {
-			"click .add-game-h": "addGame"
-		},
-		
-        // Tag for the child views
-        _tagName: "li",
-        _className: "team",
-		template: TeamListViewTemplate,
-        // Store constructor for the child views
-        _view: TeamItemView,
-		listView : ".team-list-h",
         initialize: function(options) {
-	        this.renderTemplate();
-            CollectionView.prototype.initialize.call(this, options);
-            if (!this.collection) {
-                throw new Error("TeamListView expected options.collection.");
-            }
-            
+
+	        console.log("TeamListView",options);
+	        this.collection =
+	        this.createChildViews()
+            console.log(this.collection);
             _.bindAll(this);
+
             this.addSubscribers();
         },
-        
-        addGame: function() {
-        	var appStates = new Store("user","localStorage");
-        	console.log(appStates.data);
-        	var user = 0;
-        	if(appStates.data) {
- 	  	     	for(var userId in appStates.data) {
- 	  	     		user = userId;
- 	  	     		break;		
- 	  	     	}
-        	}
-        	if(user)	
-	        	routing.trigger('add-game', user);
-        },
-        
-        renderTemplate: function () {
-        	var data = {};
-        	data.data = this.collection.toJSON();
-	        console.log("Schedule Data",data.data);
-            var markup = Mustache.to_html(this.template, data);
-            this.$el.html(markup);
-            return this;
-        }  
 
+	    createChildViews:function()
+	    {
+		    $.each(this.collection,function(){
+			    var thisTeamView = new TeamItemView({
+				    'team':this,
+				    'team_id':this.id
+			    });
+			    thisTeamView.render();
+		    });
+	    }
     });
 
     return TeamListView;

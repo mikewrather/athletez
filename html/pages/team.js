@@ -26,7 +26,7 @@ define([
     "team/collections/comments",
     "profile/collections/commentsof",
 	"team/collections/commentson",
-	"team/collections/orgs",
+	"team/collections/games",
 	"team/collections/fans",
     
     "team/views/header",
@@ -41,7 +41,7 @@ define([
     "team/views/comment-list",
     "team/views/menu",
     "media/models/image",
-    "sportorg/views/team-list",
+    "sportorg/views/team-item",
     "roster/views/roster",
     "profile/views/fans-image-list"
     
@@ -59,7 +59,7 @@ define([
         TeamUpcomingScheduleList = require("team/collections/upcoming_schedules"),
         TeamRecentScheduleList = require("team/collections/recent_schedules"),
         TeamCompetitorTeamList = require("team/collections/competitor_teams"),
-        TeamOrgList = require("team/collections/orgs"),
+        TeamGameList = require("team/collections/games"),
         TeamVideoList = require("team/collections/videos"),
         TeamImageList = require("team/collections/images"),
         FansImageList = require("team/collections/fans"),
@@ -68,7 +68,7 @@ define([
 		TeamCommentOnList = require("team/collections/commentson"),
         TeamHeaderView = require("team/views/header"),
         TeamAddMediaView = require("team/views/add-media"),
-        TeamOrgListView = require("sportorg/views/team-list"),
+        TeamItemView = require("sportorg/views/team-item"),
         TeamScheduleListView = require("sportorg/views/schedule-list"),
         TeamCompetitorTeamListView = require("sportorg/views/competitorteam-list"),
         TeamVideoListView = require("team/views/video-list"),
@@ -123,7 +123,7 @@ define([
             
             function callback(sport_id, team_id, season_id) {
                 controller.refreshPage();
-                controller.games = new TeamOrgList();
+                controller.games = new TeamGameList();
 				controller.games.id = team_id;
 				controller.games.sport_id = sport_id;
 				controller.games.fetch();
@@ -305,8 +305,8 @@ define([
         
         setupAddMediaView: function() {
             var addMediaView;
-            console.error("add media model");
-            console.error(this.addmedia.toJSON());
+           /* console.error("add media model");
+            console.error(this.addmedia.toJSON());*/
             addMediaView = new TeamAddMediaView({
                 model: this.addmedia,
                 team_id: this.basics.id,
@@ -350,8 +350,9 @@ define([
         
         setupGameView: function () {
 	        console.log("Setting up game view",this.games, this.id);
-			this.gamesView = new TeamOrgListView({
+			this.gamesView = new TeamItemView({
 				teams_id: this.id,
+				team:this.basics,
 				collection: this.games,
 				destination: "#games_div",
 				name: "games view"

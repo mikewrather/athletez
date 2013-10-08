@@ -28,50 +28,26 @@ function (
         className: "org",
           
         events: {
-            "change #select-team": "selectTeam",
-            'click .team-info-h': 'showinfo'
-        },
-        
-        showinfo: function(e) {
-        	e.preventDefault();
-        	if(!$(e.target).parents('.org-popup').length) {
-	        	
-	        	if($(e.target).find('.org-popup').hasClass('hide')) {
-		        	$('.org-popup').addClass('hide');
-		        	$(e.target).find('.org-popup').removeClass('hide');
-		        } else {
-		        	$('.org-popup').addClass('hide');
-		        }
-		        
-		        
-		        
-        	}
         },
 
         initialize: function (options) {
-        	$("body").click(function(e) {
-        		//e.preventDefault();
-        		if(!$(e.target).hasClass('team-info-h') && !$(e.target).hasClass('org-popup') && $(e.target).parents('.org-popup').length === 0) {
-        			$('.org-popup').addClass('hide');
-        		}
-        	});
+	        console.log("ORG ITEM OPTIONS:",options);
             this.template = orgItemTemplate;
+			this.setupTeamsList();
         },
 
         render: function () {
         	console.error( this.model.toJSON());
             var markup = Mustache.to_html(this.template, this.model.toJSON());
             this.$el.html(markup);
-            this.select_team = this.$('#select-team');
-            this.selectTeam();
             return this;
         },
-        
-        selectTeam: function(event) {
-            var team_id = this.select_team.val();
-            this.$('.team-info').stop().slideUp();
-            this.$('.team-info-' + team_id).stop().slideDown();
-        }
+
+	    setupTeamsList: function()
+	    {
+		    console.log(this.model.get('payload'));
+	    }
+
 
       });
 

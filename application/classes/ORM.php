@@ -346,6 +346,7 @@ class ORM extends Kohana_ORM
 
 		//add current enttype to list of types not to call in recursive calls.  This will protect from infinite recursion.
 		$settings['called_entities'][] = $current_enttype;
+//		print_r($settings['called_entities']);
 
 		// Create return array variable and set the enttype ID of the current object
 		$retArr = ($settings['return_enttypes_id'] === TRUE) ? array("enttypes_id" => $current_enttype) : array();
@@ -422,6 +423,8 @@ class ORM extends Kohana_ORM
 		{
 			foreach($class_settings_arr['added_function_calls'] as $key_name => $callback)
 			{
+				if(is_array($settings['exclude_columns'])) if(in_array($key_name,$settings['exclude_columns'])) continue;
+
 				// if the callback is an array then there are additional instructions to be parsed
 				if(is_array($callback))
 				{

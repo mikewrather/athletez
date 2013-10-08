@@ -18,6 +18,7 @@ define([
 	"profile/models/basics",
 	"profile/models/addmedia",
 	"profile/collections/orgs",
+	"profile/collections/teams",
 	"profile/collections/relateds",
 	"profile/collections/fitnessbasics",
 	"profile/collections/videos",
@@ -27,7 +28,7 @@ define([
 	"profile/collections/fans",
 	"profile/views/header",
 	"profile/views/add-media",
-	"sportorg/views/org-list",
+	"sportorg/views/team-list",
 	"user/views/related-list",
 	"user/views/fitnessbasic-list",
 	"profile/views/video-list",
@@ -48,6 +49,7 @@ console.log(app);
 			ProfileBasicsModel = require("profile/models/basics"),
 			ProfileAddMediaModel = require("profile/models/addmedia"),
 			ProfileOrgList = require("profile/collections/orgs"),
+			ProfileTeamList = require("profile/collections/teams"),
 			ProfileRelatedList = require("profile/collections/relateds"),
 			ProfileFitnessBasicList = require("profile/collections/fitnessbasics"),
 			ProfileImageList = require("profile/collections/image-videos"),
@@ -58,7 +60,7 @@ console.log(app);
 			
 			ProfileHeaderView = require("profile/views/header"),
 			ProfileAddMediaView = require("profile/views/add-media"),
-			ProfileOrgListView = require("sportorg/views/org-list"),
+			ProfileTeamListView = require("sportorg/views/team-list"),
 			ProfileRelatedListView = require("user/views/related-list"),
 			ProfileFitnessBasicListView = require("user/views/fitnessbasic-list"),
 			ProfileImageListView = require("profile/views/image-video-list"),
@@ -140,6 +142,11 @@ console.log(app);
 					controller.orgs.id = controller.id;
 					controller.orgs.sport_id = sport_id;
 					controller.orgs.fetch();
+
+					controller.teams = new ProfileTeamList();
+					controller.teams.id = controller.id;
+					controller.teams.sport_id = sport_id;
+					controller.teams.fetch();
 
 					controller.relateds = new ProfileRelatedList();
 					controller.relateds.id = controller.id;
@@ -227,7 +234,11 @@ console.log(app);
 				var controller = this;
 
 				$.when(this.orgs.request).done(function () {
-				 	controller.setupOrgListView();
+				 //	controller.setupOrgListView();
+				});
+
+				$.when(this.teams.request).done(function () {
+					controller.setupGameListView();
 				});
 
 				$.when(this.relateds.request).done(function () {
@@ -323,16 +334,17 @@ console.log(app);
 				this.layout.render();
 			},
 
-			setupOrgListView: function () {
-				var orgListView;
-				this.orgListView = new ProfileOrgListView({
-					collection: this.orgs,
+			setupGameListView: function () {
+				var GameListView;
+				this.GameListView = new ProfileTeamListView({
+					collection: this.teams,
 					destination: "#games_div"
 				});
 
-				this.scheme.push(this.orgListView);
+				this.scheme.push(this.GameListView);
 				this.layout.render();
 			},
+
 
 			setupRelatedListView: function () {
 				var relatedListView;

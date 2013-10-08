@@ -1,78 +1,83 @@
-// team-item.js  
-// -------  
-// Requires `define`
-// Return {TeamItemView} object as constructor
+// Team List
+// --------------
 
-define([ 
-        'vendor', 
-        'views',
-        'utils', 
-        'text!sportorg/templates/team-item.html'
-        ], 
-function (
-        vendor,
-        views,
-        utils,
-        teamItemTemplate
-        ) {
+define(['vendor', 'facade','views', 'utils', 'sportorg/views/game-item', 'text!sportorg/templates/team-item.html','sportorg/collections/games'],
+function(vendor, facade,  views,   utils,  GameItemView, TeamItemViewTemplate, GamesCollection) {
 
-    var TeamItemView
-      , $ = vendor.$
-      , BaseView = views.BaseView
-      , Mustache = vendor.Mustache;
+    var TeamItemView, 
+        TeamItemAbstract,
+        $ = facade.$,
+        _ = facade._,
+        Channel = utils.lib.Channel,
+        CollectionView = views.CollectionView,
+        Mustache = vendor.Mustache;
+        SectionView = views.SectionView;
 
-      TeamItemView = BaseView.extend({
+    TeamItemAbstract = CollectionView.extend(SectionView.prototype);
 
-        tagName: "li",
+    TeamItemView = TeamItemAbstract.extend({
 
-        className: "team",
-           events: {
-	           'mouseover .team-info-h': 'showinfo',
-	           'mouseout .team-info-h': 'showinfo'
+        __super__: CollectionView.prototype,
+
+        //id: "team-list",
+        name: "Team List",
+        //tagName: "ul",
+
+		events: {
+			"click .add-game-h": "addGame"
+		},
+		
+        // Tag for the child views
+        _tagName: "li",
+        _className: "team",
+		template: TeamItemViewTemplate,
+        // Store constructor for the child views
+        _view: GameItemView,
+
+		listView : ".team-list-h",
+        initialize: function(options) {
+	        console.log("TeamItemView",options);
+	        if(options.team) this.team = options.team;
+	        if(!options.collection){
+		        options.collection = new GamesCollection({teams_id:options.team.id})
+	        }
+	        this.renderTemplate();
+            CollectionView.prototype.initialize.call(this, options);
+            if (!this.collection) {
+                throw new Error("TeamItemView expected options.collection.");
+            }
+            
+            _.bindAll(this);
+            this.addSubscribers();
+        },
+
+	    checkForUser: function() {
+		    if(!_.isUndefined(routing.userLoggedIn) && routing.userLoggedIn)
+			    return true;
+		    else
+			    return false;
+	    },
+        
+        addGame: function(e) {
+
+	        if(!this.checkForUser()) {
+		        $("#userlogin").trigger('click');
+		        return;
+	        }
+	        routing.trigger('add-game',0,$(e.currentTarget).data("team-id"),$(e.currentTarget).data("sport-id"));
         },
         
-        showinfo: function(e) {
-        	e.preventDefault();
-        	if(!$(e.target).parents('.game-info').length) {
-	        	
-	        	if($(e.target).find('.game-info').hasClass('hide')) {
-		        //	$('.game-info').addClass('hide');
-		        	$(e.target).find('.game-info').removeClass('hide');
-		        } else {
-		        	$('.game-info').addClass('hide');
-		        }
-		        
-		        
-		        
-        	}
-        },
-        initialize: function (options) {
-	        this.teams_id = options.teams_id || null;
-	        console.log("Teams_id:",options);
-	        this.mpay = this.model.get('payload');
-	        console.log("Team Item View",this.mpay);
-            this.template = teamItemTemplate;
-        },
-
-        render: function () {
-	        var string_to_use = this.createOpponentString();
-
-            var markup = Mustache.to_html(this.template, {id:this.mpay.id,summary:string_to_use});
+        renderTemplate: function () {
+        	var data = {};
+        	data.data = this.collection.toJSON();
+	        data.team = this.team.get('payload');
+	        console.log("Schedule Data",data);
+            var markup = Mustache.to_html(this.template, data);
             this.$el.html(markup);
             return this;
-        },
+        }  
 
-	    createOpponentString: function()
-	    {
-		    var str = this.mpay.game_day + " | ";
-		    console.log("Game info",this.mpay);
-		    $.each(this.mpay.teams,function(){
-				if(this.id > 0 && this.id != this.teams_id) str += " VS. " + this.org_name;
-		    });
-		    return str;
-	    }
-        
-      });
+    });
 
     return TeamItemView;
 });

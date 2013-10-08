@@ -1,5 +1,21 @@
 
-	<a href="/#game/{{id}}" class="background-blue team-info-h" tooltip="test">
-	<div class="game-info hide">
-		{{summary}}
-	</div> </a>
+{{#data}}
+{{#team}}
+<div class="org-name">
+	<span class="team-label">{{org_name}} | {{complevels_obj.complevel_name}} | {{seasons_obj.season_name}} {{year}}</span>
+	<a href="javascript: void(0);" data-team-id="{{id}}" data-sport-id="0" title="add game" class="add-game-h">Add Game</a>
+</div>
+{{/team}}
+	<div class="game-box-outer">
+		<ul class="team-list-h">
+			
+		</ul>
+	</div>
+{{/data}}
+{{^data}}
+<div class="info">
+	{{#team}}
+	No games on the docket.  <a href="javascript: void(0);" data-team-id="{{id}}" data-sport-id="0" title="add game" class="add-game-h">Add Game</a>
+	{{/team}}
+</div>
+{{/data}}

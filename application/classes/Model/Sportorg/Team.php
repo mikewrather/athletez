@@ -231,7 +231,8 @@ class Model_Sportorg_Team extends ORM
 			"team_location" => 'getTeamLocation',
 			"picture" => 'getImage',
 			"num_votes" => 'get_num_votes',
-			"num_followers" => 'get_num_followers'
+			"num_followers" => 'get_num_followers',
+			'schedule' => 'get_schedule'
 //			'num_followers' => 'get_num_followers',
 //			'num_votes' =>'get_num_votes',
 		),
@@ -247,6 +248,17 @@ class Model_Sportorg_Team extends ORM
 	public function get_num_followers()
 	{
 		return Model_User_Followers::num_followers($this);
+	}
+
+	public function get_schedule()
+	{
+		$sch = $this->getSchedule();
+		$retArr = array();
+		foreach($sch as $game)
+		{
+			$retArr[] = $game->getBasics();
+		}
+		return $retArr;
 	}
 
 	public function get_org_name()
@@ -467,7 +479,7 @@ class Model_Sportorg_Team extends ORM
 		return $user_teams_link_obj;
 	}
 	
-	public function getSchedule($count = NULL, $past_games = false )
+	public function getSchedule($count = NULL, $past_games = true )
 	{
 //		print_r($this);
 
