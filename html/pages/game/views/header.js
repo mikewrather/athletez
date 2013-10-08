@@ -46,7 +46,6 @@ function(require, gameHeaderTemplate) {
         
         initialize: function (options) {
           SectionView.prototype.initialize.call(this, options); 
-          console.error(this.model.toJSON());          
         	var payload = this.model.get("payload"), title;
         	if(payload.teams.length) {
         		title = payload.teams[0].org_name +" VS "+ payload.teams[1].org_name;	
