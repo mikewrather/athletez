@@ -3,9 +3,9 @@
 // Requires define
 // Return {Object} App
 
-define( ["facade", "utils", "collections", "chrome", "controller", "profile", "imageup",'home','videopreview',"game", "team", "registration","profilesetting","userresume","packages/site/collections/phrases","usercontrols/tag/tag","usercontrols/addgame/addgame","signup","login", "usercontrols/photo-player/photo-player", "usercontrols/add-club/add-club"],
+define( ["facade", "utils", "collections", "chrome", "controller", "profile", "imageup",'home','videopreview',"game", "team", "registration","profilesetting","userresume","packages/site/collections/phrases","usercontrols/tag/tag","usercontrols/addgame/addgame","signup","login", "usercontrols/photo-player/photo-player", "usercontrols/add-club/add-club", "utils/storage"],
 function (facade, utils, collections, chromeBootstrap, Controller, ProfileController, ImageController, HomeController, VideoPreviewController,
-	GameController, TeamController, RegistrationController,ProfileSetting,UserResume, SitePhraseList , TagController,AddGameController, SignupController,LoginController,PhotoPlayerController, AddClubController) {
+	GameController, TeamController, RegistrationController,ProfileSetting,UserResume, SitePhraseList , TagController,AddGameController, SignupController,LoginController,PhotoPlayerController, AddClubController, Store) {
 
 
 
@@ -67,6 +67,25 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
 			Controller.prototype.appStates = new ApplicationStates();
 	        this.getPhrases();
 	       // this.intializeImageAndVideo();
+        },
+        
+        // get user name by id
+        getUserName: function(id) {
+        	var appStates = new Store("user","localStorage");
+        	var name;
+        	if(appStates.data) {
+ 	  	     	for(var userId in appStates.data) {
+ 	  	     		if(userId == id) {
+ 	  	     			name =  appStates.data[userId].user_name;
+ 	  	     			break;	
+ 	  	     		}	
+ 	  	     	}
+        	}
+        	
+        	if(name)	
+        		return name;
+        	else
+        		return false;
         },
         
         intializeImageAndVideo: function() {
@@ -179,14 +198,17 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
 	    },
 	    
 	    showHome: function (action) {
+	    	var self = this;
 	    	this.cancelAjaxRequests();
 	    	this.loadStyles();
 	    	
 	    	$('body').empty();
 	    	
             chromeBootstrap();
+            
 	    	//self.removeCurrent();
-	    	function initHome() {
+	    	function initHome(id) {
+	    		
 	    		self.currentController = new HomeController({
 	    			route: "",
 	    			title: "Athletz"
@@ -214,7 +236,7 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
 			function initProfile(headerModelId) {
                 self.currentController = new ProfileController({
 	                "userId": (typeof userid != "undefined")?userid:headerModelId,
-	                title: "Profile page"
+	                title: self.getUserName(headerModelId)
 	            });
             }
             this.initialiRoutesInit(initProfile);
