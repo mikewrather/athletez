@@ -484,9 +484,10 @@ class Model_Media_Video extends ORM
 
 		foreach($vid_types_res as $type_link)
 		{
+
 			$obj = new stdClass();
 			$obj->video_type_name = $type_link->type->name;
-			//$obj->meta_details = $type_link->get_meta_as_array();
+			$obj->meta_details = $type_link->get_meta_as_array();
 			$retArr[] = $obj;
 		}
 
