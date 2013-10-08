@@ -765,7 +765,7 @@
 		//	print_r($facebook);
 			$retArr =  $facebook->get_user();
 
-		//	print_r($retArr);
+	//		print_r($retArr);
 
 			if(isset($retArr['message']))
 			{
@@ -787,13 +787,11 @@
 			{
 				if (isset($retArr['id']))
 				{
-					//$this->populateAuthVars();
-					$user_identity = ORM::factory('User_Identity');
-
 					//Check if already logged in.  If so, we will link them up.
 					if($this->is_logged_in)
 					{
-						$retArr['identity_exists'] = true;
+						//$this->populateAuthVars();
+						$user_identity = ORM::factory('User_Identity');
 						if($user = $user_identity->find_by_identity($retArr['id'],false))
 						{
 							if($user->id != $this->user->id)
@@ -829,14 +827,13 @@
 					}
 					else
 					{
-
+						$user_identity = ORM::factory('User_Identity');
 						// check for user for this facebook identity and force a login
 						if(!$user = $user_identity->find_by_identity($retArr['id']))
 						{
 							// create a user here based on fb data
 							$user = ORM::factory('User_Base');
 							$result = $user->add_from_facebook($retArr);
-
 
 							//Check for success / error
 							if(get_class($result) == get_class($this->mainModel))
