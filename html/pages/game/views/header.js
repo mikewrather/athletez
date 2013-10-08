@@ -50,9 +50,12 @@ function(require, gameHeaderTemplate) {
         	var payload = this.model.get("payload"), title;
         	if(payload.teams.length) {
         		title = payload.teams[0].org_name +" VS "+ payload.teams[1].org_name;	
-        		title +=  " "+payload.shared.complevel +" | "+ payload.shared.sport +" | "+ payload.game_day;
-    			document.title = title;        	
+        		title +=  " "+payload.shared.complevel;
+        	} else {
+        		title = payload.event_name;
         	}
+        	title += " | "+ payload.shared.sport +" | "+ payload.game_day;
+        	document.title = title;        	
         },
         
         openLocationPopup: function() {
