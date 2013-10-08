@@ -81,7 +81,6 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
  	  	     		}	
  	  	     	}
         	}
-        	
         	if(name)	
         		return name;
         	else
@@ -106,7 +105,6 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
         initTriggers: function() {
         	routing.off('photo-player-init');
             routing.on('photo-player-init', function(index, collection, userId, array) {
-            	
             	 var photoPlayer = new PhotoPlayerController({
                 	index: index,
                 	userId: userId,
@@ -119,13 +117,10 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
             routing.on('add-school-init', function(collection, userId, addType) {
             	 var addSchool = new AddClubController({
             	 	type: addType
-                	//userId: userId,
-                	//_collection: collection
                 });
             });
             
             var locationCallback = undefined;
-
             routing.off('show_location');
             routing.on('show_location', function(lat, longitude, destination, callback) {
             	locationCallback = callback;
@@ -149,7 +144,6 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
             	fn(id);
             });
             
-            
             // initialize add game popup common trigger 
             routing.off('add-game');
             routing.on('add-game', function(id,teams_id,sports_id,users_id) {
@@ -162,8 +156,6 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
                 	popup: true
                 });
             });
-            
-            
         },
 
         defaultRoute: function () {
@@ -188,9 +180,6 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
 	    	var self = this;
 	    	this.cancelAjaxRequests();
 	    	this.loadStyles();
-	    	
-	    	$('body').unbind().empty();
-	    	
             chromeBootstrap();
             
 	    	//self.removeCurrent();
@@ -215,7 +204,6 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
         	var self = this;
         	this.cancelAjaxRequests();
 	        self.loadStyles();
-           $('body').empty();
            // $('#main-header').empty();
             //$('#main-content').empty();
            chromeBootstrap();
@@ -237,13 +225,11 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
         	alert("Page not found");
         },
         
-        
          showTeam: function(id) {
          	var self = this;
             this.cancelAjaxRequests();
 			this.loadStyles();
            // alert('test showteam');
-            $('body').empty();
             chromeBootstrap();
             if(!id) { 
             	this.notFound('team');
@@ -281,7 +267,6 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
             this.cancelAjaxRequests();
             this.loadStyles();
             
-            $('body').empty();
             chromeBootstrap();
 			 this.removeCurrent();
             function initProfileSetting(id) {
@@ -297,7 +282,6 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
         ShowUserResume: function (userid) {
             this.cancelAjaxRequests();
             this.loadStyles();
-            $('body').empty();
             chromeBootstrap();
 			this.removeCurrent();
             function initUserResume(id) {
@@ -344,7 +328,6 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
         showGame: function (id) {
         	this.cancelAjaxRequests();
             this.loadStyles();
-           $('body').empty();
             chromeBootstrap();
              /*var gameController = new GameController({
                     "route": ""
@@ -372,7 +355,6 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
         showRegistration: function() {
         	this.cancelAjaxRequests();
             this.loadStyles();
-            $('body').empty();
             chromeBootstrap();
              this.removeCurrent();
             function initRegistration() {
@@ -387,7 +369,6 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
         showTag: function (userid) {
            this.cancelAjaxRequests();
             this.loadStyles();
-            $('body').empty();
             chromeBootstrap();
 			 this.removeCurrent();
             function initTag(id) {
@@ -402,11 +383,9 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
         showAddGame : function(userid){
         	this.cancelAjaxRequests();
         	this.loadStyles();
-            $('body').empty();
             chromeBootstrap();
 			this.removeCurrent();
             function initAddGame(id) {
-            	
                 self.currentController = new AddGameController({
                 	"id": userid==undefined ? id : userid
                 });
@@ -459,10 +438,7 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
         showRegistration: function() {
             this.cancelAjaxRequests();
             this.loadStyles();
-            
-            $('body').empty();
             chromeBootstrap();
-            
             function initRegistration() {
                 var registrationController = new RegistrationController({
                     "route": "",

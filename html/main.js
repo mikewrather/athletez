@@ -122,7 +122,6 @@ require.config({
 	    	deps : ['jquery','jqueryui'],
 	    	
 	    }
-
     },
     priority: ['text', 'modernizr', 'json2', 'vendor', 'utils', 'facade', 'syncs', 'models', 'views', 'collections', 'controller'],
     jquery: '1.9.0',
@@ -143,6 +142,7 @@ define([
 			$(function () { // doc ready
 				Backbone.noConflict();
 				routing = new app();
+				App = {};
 				routing.ajaxRequests = [];
 				routing.intializeImageAndVideo();
 				routing.initTriggers();
