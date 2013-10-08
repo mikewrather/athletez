@@ -117,13 +117,22 @@ define(["require",
 			var controller = this;
 			this.refreshPage();
 			this.register_facebook = new RegistrationFacebookModel();
+			this.register_facebook.bind('request', controller.handleProgress, this);
 			this.register_facebook.fetch();
-			$.when(this.register_facebook.request).done(function() {
-				controller.setupRegisterFacebookView();
-			});
+			$.when(this.register_facebook.request).done(function(){
+							controller.setupRegisterFacebookView();
+						}).fail(function(msg){
+
+							controller.setupRegisterFacebookView();
+						});
+
 
 		},
+		handleProgress:function(evt){
+			
+        	
 
+		},
 		setupRegisterFacebookView : function() {
 			 	
 			this.registerFacebookView = new RegistrationFacebookView({

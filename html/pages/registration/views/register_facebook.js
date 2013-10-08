@@ -23,6 +23,16 @@ define(['require', 'text!registration/templates/register_facebook.html','backbon
 		template : registrationFacebookTemplate,
 
 		initialize : function(options) {
+			
+			var response = jQuery.parseJSON(this.model.request.responseText);
+			//if error in api/fbreg
+			if(response.exec_data.exec_error){
+
+				var errorDisplay = true;
+				var errorValue= response.exec_data.error_array[0].error;
+				this.model.set('errorDisplay', true);
+				this.model.set('errorValue', errorValue);
+			}
 			var self = this;
 
 			if (!this.model) {

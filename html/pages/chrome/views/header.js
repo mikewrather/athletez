@@ -113,7 +113,7 @@ function (
                     if (response.status === 'connected') {
                         FB.api('/me', function(response) {
                             console.log(response);
-                            this.signupc = new scontroller({"route":""});
+                           // this.signupc = new scontroller({"route":""});
                             Channel('registration-with-facebook').publish();
                              this.pop = new popupview();
 
@@ -130,11 +130,11 @@ function (
             function login() {
                 FB.login(function(response) {
                     if (response.authResponse) {
-                        this.signupc = new scontroller({"route":""});
+                        
                         Channel('registration-with-facebook').publish();
                         this.pop = new popupview();
                     } else {
-                        alert('Cancelled');
+                        alert('Cancelled ');
                     }
                 },{scope: 'email, user_birthday, user_photos'});
             }
@@ -142,9 +142,8 @@ function (
             // Load the SDK Asynchronously
             function loadFBLogin() {
             	if (!this.registrationController) {
-                this.registrationController = new RegistrationController({
-                    "route": ""
-                });
+                this.registrationController = new RegistrationController();
+                this.signupc = new scontroller({"route":""});
             }
             this.registrationController.refreshPage();
                 var js, id = 'facebook-jssdk', ref = document.getElementsByTagName('script')[0];
