@@ -61,8 +61,17 @@ function(require, gameHeaderTemplate) {
         	title += " | "+ payload.shared.sport +" | "+ payload.game_day;
         	document.title = title;        	
         },
-        
+		checkForUser: function() {
+			if(!_.isUndefined(routing.userLoggedIn) && routing.userLoggedIn)
+				return true;
+			else
+				return false;
+		},
         openEditPopup: function() {
+	        if(!this.checkForUser()) {
+		        $(".signup-email").trigger('click');
+		        return;
+	        }
 			$('#modalPopup').modal();
 			this.location.lon = this.model.get("payload").location.lon;
 			this.location.lat = this.model.get("payload").location.lat;

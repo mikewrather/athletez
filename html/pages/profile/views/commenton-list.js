@@ -30,6 +30,7 @@ function(facade,   utils,   BaseCommentListView,       ProfileCommentFormView, S
 		},
 
         setupFormView: function () {
+	        console.log("called");
             var listView = this,
 	            formView = new ProfileCommentFormView({collection: this.collection}),
                 renderAddView = this.addChildView(formView);

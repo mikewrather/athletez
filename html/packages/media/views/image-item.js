@@ -263,7 +263,7 @@ define(['vendor', 'views', 'utils', 'text!media/templates/image-item.html', 'vot
 		   e.stopPropagation();
 		  
 		   if(!this.checkForUser()) {
-		  		$("#userlogin").trigger('click');
+		  		$(".signup-email").trigger('click');
 		    	return;
 	    	}
 		    var voteModelOb = new voteModel();
@@ -283,7 +283,7 @@ define(['vendor', 'views', 'utils', 'text!media/templates/image-item.html', 'vot
 		    console.log(e.target);
 		    e.stopPropagation();
 		     if(!this.checkForUser()) {
-		  		$("#userlogin").trigger('click');
+		  		$(".signup-email").trigger('click');
 		    	return;
 	    	}
 		    var followModelOb = new followModel();

@@ -158,6 +158,13 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
             });
         },
 
+	    checkForUser: function() {
+		    if(!_.isUndefined(routing.userLoggedIn) && routing.userLoggedIn)
+			    return true;
+		    else
+			    return false;
+	    },
+
         defaultRoute: function () {
             this.initApp();
         },
@@ -259,6 +266,10 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
         addImageTrigger: function(fn) {
         	routing.off('add-image');
             routing.on('add-image', function(url, attr) {
+	            if(!this.checkForUser()) {
+		            $(".signup-email").trigger('click');
+		            return;
+	            }
             	fn(url , attr);
             });
         },
@@ -314,8 +325,12 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
 		    //$('body').empty();
            // chromeBootstrap();chromeBootstrap();
 		    //console.log(VideoPreviewController);
-			
+			var self = this;
 		    function initVideoPreview(url,attr) {
+				if(!self.checkForUser()) {
+					$(".signup-email").trigger('click');
+					return;
+				}
 			    var VidPrevCtrl = new VideoPreviewController({"url":url,"attr":attr});
 			    //console.log(VidPrevCtrl);
 		    }
