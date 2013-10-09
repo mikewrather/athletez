@@ -50,7 +50,7 @@ function(require, commentFormTemplate,    ProfileCommentFormModel,        BaseCo
 	    },
 	    submitHandler: function (e) {
 		    e.preventDefault();
-		    if(!self.checkForUser()) {
+		    if(!this.checkForUser()) {
 			    $(".signup-email").trigger('click');
 			    return;
 		    }
