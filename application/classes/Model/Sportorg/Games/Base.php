@@ -236,7 +236,7 @@ class Model_Sportorg_Games_Base extends ORM
 		foreach($teams as $team_link)
 		{
 			$team = ORM::factory('Sportorg_Team',$team_link['teams_id']);
-			if($team->loaded()) $teams_arr[] = array_merge($team->getBasics(),array(
+			if($team->loaded()) $teams_arr[] = array_merge($team->getBasics(array('exclude_columns'=>array('schedule'))),array(
 				'points_scored'=>$team_link['points_scored'],
 				'games_teams_link_id'=>$team_link['gtl_id'],
 				'isWinner' => $team_link['isWinner'] == 1 ? true : false

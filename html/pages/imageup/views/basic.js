@@ -61,7 +61,12 @@ function(require, imageBasicTemplate, selectAllTemplate,tagTemplate) {
 			this.layout = options.layout;
 
 				//ASSIGN CHANNEL FOR IMAGE TAGGING
+				//Channel('tag-team-image-success').destroy();
+				Channel('tag-team-image-success').unsubscribe(this.tagFunction);
+				
 				Channel('tag-team-image-success').subscribe(this.tagFunction);
+//		debugger;
+			    this.setUpBottomView();		
 
 			$('#imgUploadModal').modal('show') ;
 		    $('#imgUploadModal').on('hidden', function () {
@@ -110,7 +115,7 @@ function(require, imageBasicTemplate, selectAllTemplate,tagTemplate) {
 				  _self.hideLoader();
 				};
 		      })(f);
-		      _self.setUpBottomView();
+		      _self.showSelectAllImages();
 		      reader.readAsDataURL(f);
 		    }
 		},
@@ -144,10 +149,9 @@ function(require, imageBasicTemplate, selectAllTemplate,tagTemplate) {
 				};
 				
 		      })(f);
-		      _self.setUpBottomView();
 		      reader.readAsDataURL(f);
 		    }
-		    
+		    _self.showSelectAllImages();
 		},
         imageUploadClick: function(event)
         {
@@ -226,7 +230,7 @@ function(require, imageBasicTemplate, selectAllTemplate,tagTemplate) {
 			this.tagView = new TagView({
 				model : this.model,
 				template : tagTemplate,
-				name : "tag-image",
+				name : "tag-image " + new Date().toString() ,
 				destination : "#image-tagging",
 				user_id : self.user_id || null,
 				channel : 'tag-team-image-success',
@@ -245,6 +249,11 @@ function(require, imageBasicTemplate, selectAllTemplate,tagTemplate) {
 		$("#select-allup").hide();
 		$("#image-tagging").show();
 		
+		},
+		
+		showSelectAllImages : function(){
+		$("#select-allup").show();
+		$("#image-tagging").hide();
 		}	
                 
     });

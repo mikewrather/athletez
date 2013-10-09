@@ -80,7 +80,7 @@ define([
 		FansImageListView = require("profile/views/fans-image-list"),
 		MenuPageView = require("team/views/menu"),
 		RosterView = require("roster/views/roster"),
-        MediaImageModel = require("media/models/image");
+        MediaImageModel = require("media/models/image"),
         LayoutView = views.LayoutView,
         $ = facade.$,
         _ = facade._,

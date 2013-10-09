@@ -163,6 +163,7 @@ define(['require', 'text!usercontrol/dropdown/template/layout.html', 'facade', '
 			}
 
 			var self = this, markup = Mustache.to_html(self.template, this.data);
+//			debugger;
 			$(self.el).html(markup);
 			this.targetView.$el.find(this.destination).html(this.el);
 			this.$el.find(".hidden-input-dropdown-h").val(this.selectedValue);

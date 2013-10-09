@@ -3,9 +3,9 @@
 // Requires define
 // Return {Object} App
 
-define( ["facade", "utils", "collections", "chrome", "controller", "profile", "imageup",'home','videopreview',"game", "team", "registration","profilesetting","userresume","packages/site/collections/phrases","usercontrols/tag/tag","usercontrols/addgame/addgame","signup","login", "usercontrols/photo-player/photo-player", "usercontrols/add-club/add-club", "utils/storage", 'usercontrols/location/views/view-location'],
+define( ["facade", "utils", "collections", "chrome", "controller", "profile", "imageup",'home','videopreview',"game", "team", "registration","profilesetting","userresume","packages/site/collections/phrases","usercontrols/tag/tag","usercontrols/addgame/addgame","signup","login", "usercontrols/photo-player/photo-player", "usercontrols/add-club/add-club", "utils/storage", 'usercontrols/location/views/view-location','signup/views/facebooksignup'],
 function (facade, utils, collections, chromeBootstrap, Controller, ProfileController, ImageController, HomeController, VideoPreviewController,
-	GameController, TeamController, RegistrationController,ProfileSetting,UserResume, SitePhraseList , TagController,AddGameController, SignupController,LoginController,PhotoPlayerController, AddClubController, Store, googleMapLocationview) {
+	GameController, TeamController, RegistrationController,ProfileSetting,UserResume, SitePhraseList , TagController,AddGameController, SignupController,LoginController,PhotoPlayerController, AddClubController, Store, googleMapLocationview,fbreg) {
 
 
 
@@ -57,6 +57,8 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
             'tag': 'showTag',
 			'user/login' : 'showLogin',
 			'addgame' : 'showAddGame',
+            'fbconnect':'showFbreg',
+            'logout':'callLogout'
            // 'user/create':'showUsercreate'
         },
 
@@ -91,6 +93,7 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
         	this.imageUpListeners();
 			this.videoPreview();
             this.showUsercreate();
+            this.showHomeRefresh();
             this.showLogin();
         },
         
@@ -182,7 +185,11 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
 		    var phrases = new SitePhraseList();
 		    phrases.fetch();
 	    },
-	    
+	    showFbreg:function(){
+            
+            fbregistration = new fbreg();
+            fbregistration.signupFacebook();
+        },
 	    showHome: function (action) {
 	    	var self = this;
 	    	this.cancelAjaxRequests();
@@ -408,8 +415,19 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
            this.initialiRoutesInit(initAddGame); 
             //Channel('app-inited').subscribe(initAddGame);
         },
-        
-        
+        RefreshHome:function(){
+          chromeBootstrap();  
+        },
+        showHomeRefresh:function(){
+           // this.addHomeTrigger(this.RefreshHome)
+            this.addHomeTrigger(this.showHome);
+        },
+        addHomeTrigger: function(fn) {
+            routing.off('reload-home');
+            routing.on('reload-home', function() {
+                fn();
+            });
+        },
 		// route to login template
 		showLogin: function(){
 		 //$('#main-content').empty();
@@ -480,6 +498,10 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
 
         removeSubscribers: function () {
             Channel('load:css').unsubscribe(this.loadCss);
+        },
+        callLogout:function(){
+          this.logout= new LoginController();
+          routing.trigger('Logout');
         },
 
         // Helpers

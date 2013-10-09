@@ -863,8 +863,12 @@ span.team-label{
 }
 
 #sports-info {
-	margin-top: 30px;
+/*	margin-top: 30px; */
 	margin-left: 0;
+}
+
+#sports-info ul#sport-list{
+    margin:0 0 0 0;
 }
 
 /** Popup CSS **/
