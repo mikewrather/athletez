@@ -4,10 +4,21 @@
 // Returns {RegistrationController} constructor
 
 define(["require",
-	"text!signup/templates/layout.html","text!registration/templates/layout.html", "facade", "controller", "models", "views", "utils", "registration/models/select_type", "registration/models/register_facebook", "registration/models/register_email", "registration/models/upload_image", "registration/models/select_org", "registration/views/select_type", "registration/views/register_facebook", "registration/views/register_email", "registration/views/upload_image", "registration/views/select_org"],
+	"text!signup/templates/layout.html","text!registration/templates/layout.html", "facade", "controller", "models", "views", "utils", "registration/models/select_type", "registration/models/register_facebook", "registration/models/register_email", "registration/models/upload_image", "registration/models/select_org", "registration/views/select_type", "registration/views/register_facebook", "registration/views/register_email", "registration/views/upload_image", "registration/views/select_org","signup/views/shopopup"],
 	function(require, pageLayoutTemplate) {
 
-	var RegistrationController, facade = require("facade"), Controller = require("controller"), models = require("models"), views = require("views"), utils = require("utils"), RegistrationSelectTypeModel = require("registration/models/select_type"), RegistrationFacebookModel = require("registration/models/register_facebook"), RegistrationEmailModel = require("registration/models/register_email"), RegistrationUploadImageModel = require("registration/models/upload_image"), RegistrationSelectOrgModel = require("registration/models/select_org"), RegistrationSelectTypeView = require("registration/views/select_type"), RegistrationFacebookView = require("registration/views/register_facebook"), RegistrationEmailView = require("registration/views/register_email"), RegistrationUploadImageView = require("registration/views/upload_image"), RegistrationSelectOrgView = require("registration/views/select_org"), LayoutView = views.LayoutView, $ = facade.$, _ = facade._, debug = utils.debug, Channel = utils.lib.Channel, cssArr = ["/pages/registration/registration.css", "/css/style.jrac.css"];
+	var RegistrationController, facade = require("facade"), Controller = require("controller"), models = require("models"), views = require("views"), utils = require("utils"), RegistrationSelectTypeModel = require("registration/models/select_type"), RegistrationFacebookModel = require("registration/models/register_facebook"), RegistrationEmailModel = require("registration/models/register_email"), RegistrationUploadImageModel = require("registration/models/upload_image"), RegistrationSelectOrgModel = require("registration/models/select_org"), RegistrationSelectTypeView = require("registration/views/select_type"),
+		RegistrationFacebookView = require("registration/views/register_facebook"), 
+		RegistrationEmailView = require("registration/views/register_email"), 
+		RegistrationUploadImageView = require("registration/views/upload_image"), 
+		RegistrationSelectOrgView = require("registration/views/select_org"),
+		popupview = require("signup/views/shopopup"),
+		LayoutView = views.LayoutView,
+		$ = facade.$,
+		_ = facade._,
+		debug = utils.debug, 
+		Channel = utils.lib.Channel, 
+		cssArr = ["/pages/registration/registration.css","/pages/signup/css/signupstyle.css", "/css/style.jrac.css"];
 
 	RegistrationController = Controller.extend({
 
@@ -40,12 +51,19 @@ define(["require",
 			
 			//controller.setupSelectTypeView();
 
+			 //Remove a previously-bound callback function from routing
+			routing.off('registration-with-facebook');
+          	//Bind a callback function to an object routing
+          	routing.on('registration-with-facebook', function() {
+            		controller.initRegisterFacebook();				
+            });	
+
 			function registerWithFacebook() {
 				controller.initRegisterFacebook();
 			}
 
 
-			Channel('registration-with-facebook').subscribe(registerWithFacebook);
+			//Channel('registration-with-facebook').subscribe(registerWithFacebook);
 
 			function registerWithEmail() {
 				controller.initRegisterEmail();
@@ -119,10 +137,19 @@ define(["require",
 			this.register_facebook = new RegistrationFacebookModel();
 			this.register_facebook.bind('request', controller.handleProgress, this);
 			this.register_facebook.fetch();
-			$.when(this.register_facebook.request).done(function(){
-							controller.setupRegisterFacebookView();
+			$.when(this.register_facebook.request).done(function(msg){
+							console.log(msg.payload.identity_exists,"payload");
+							if(msg.payload.identity_exists == true){
+								//if user already registered refresh the home page
+								routing.trigger('reload-home');
+							}
+							else{
+								this.pop = new popupview();
+								controller.setupRegisterFacebookView();
+							}
 						}).fail(function(msg){
 
+							this.pop = new popupview();
 							controller.setupRegisterFacebookView();
 						});
 
