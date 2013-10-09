@@ -7,6 +7,7 @@ define(["require",
 		"utils", 
 		"login/models/Loginmodel",
 		"login/views/Loginview",
+		"login/models/Logoutmodel",
 		
 	
 		], 
@@ -20,7 +21,7 @@ define(["require",
 		 		utils = require("utils"), 
 		 		loginBaseModel=require("login/models/Loginmodel"),
 		 		loginBaseView=require("login/views/Loginview"),
-		 		
+		 		logoutBaseModel= require("login/models/Logoutmodel"),
  		
 		 		LayoutView = views.LayoutView, 
 		 		$ = facade.$,
@@ -106,6 +107,20 @@ define(["require",
           				routing.on('Login', function() {
             				controller.setupLoginView();				
             			});
+
+            			routing.off('Logout');
+            			routing.on('Logout', function() {
+            				controller.setupLogout();				
+            			});
+					},
+					setupLogout:function(){
+						this.logoutcheck = new logoutBaseModel()
+						this.logoutcheck.fetch()
+						$.when(this.logoutcheck.request).done(function(){
+							alert("done logout");
+							routing.trigger('reload-home');
+						});
+
 					},
 					
 					setupLoginView : function() {
