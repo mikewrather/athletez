@@ -104,7 +104,16 @@ function (
                     event.preventDefault();
                      headView = new FbHeader();
                      headView.signupFacebook();
-         }
+         },
+         signupUser: function(event){
+
+                    event.preventDefault();
+                    
+                    this.signupc = new scontroller({"route":""});
+                    routing.trigger("register-basic");
+                    this.pop = new popupview();
+                  
+        }
         
       });
 
