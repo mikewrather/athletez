@@ -790,7 +790,7 @@
 					//Check if already logged in.  If so, we will link them up.
 					if($this->is_logged_in)
 					{
-						$retArr['identity_exists'] = ftrue;
+						$retArr['identity_exists'] = true;
 						//$this->populateAuthVars();
 						$user_identity = ORM::factory('User_Identity');
 						if($user = $user_identity->find_by_identity($retArr['id'],false))
