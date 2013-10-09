@@ -127,7 +127,7 @@ header .signup-facebook, header .signup-email {
 #main .video {
 	float: left;
 }
-#main .user-photo img {
+#main .user-photo img,#main .user-photo a img{
 	width: 45px;
 	margin-top: 10px;
 	margin-right: 10px;
@@ -506,7 +506,7 @@ ul.ui-autocomplete {
 
 .ui-autocomplete li.ui-menu-item a {
 	padding: 5px 0 5px 15px !important;
-	border-radius: none;
+	border-radius: 0;
 }
 
 span.ui-helper-hidden-accessible {
@@ -591,10 +591,12 @@ margin-right: 100px;
 	line-height: 12px;
 }
 
-.comment .user-photo img {
+.comment .user-photo img, .comment .user-photo a img{
     width:100% !important;
     height: 100%;
     margin-top:5px !important;
+    top:20px;
+    position: relative;
 }
 
 .add-comment-form-h{
@@ -615,7 +617,11 @@ margin-right: 100px;
 
 .team-template-outer .profile-heading {
 	background: #4b3dc6;
-	
+	color:#FFF;
+}
+
+.team-template-outer .profile-heading *{
+    color:#fff;
 }
 
 .profile-heading {
@@ -1000,7 +1006,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#84a934', end
 	font-size: 12px;
 	font-style: italic;
 	font-weight: normal;
-	background-color: none;	
+	background-color: transparent;
 	float:left;
 }
 .container_add_game .green-left-heading{
@@ -1128,7 +1134,7 @@ margin-top:10px;
 }
 
 .disable-arrow-link {
-	opacity: 0.5;
+	opacity: 0.1;
 	pointer-events: none;
 }
 
@@ -1149,3 +1155,20 @@ margin-top:10px;
 #imgpreview .selected{
 	border:2px solid #954121;
 }
+.search-result-outer {
+}
+
+.home-page-arrow {
+	position: absolute;
+}
+
+.left-arrow-page {
+	left: 0;
+	margin-top: 30%;
+}
+
+.right-arrow-page {
+	right: 0;
+	margin-top: 30%;
+}
+

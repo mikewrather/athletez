@@ -44,6 +44,10 @@ function(require, commentFormTemplate,    ProfileCommentFormModel,        BaseCo
 
 	    submitHandler: function (e) {
 		    e.preventDefault();
+		    if(!self.checkForUser()) {
+			    $(".signup-email").trigger('click');
+			    return;
+		    }
 		    this.createOnEnter(e);
 	    },
 
@@ -63,7 +67,12 @@ function(require, commentFormTemplate,    ProfileCommentFormModel,        BaseCo
 		    //console.log("yyyy=", this.collection);
 		    this.$("#new-comment").val("");
 		},
-        
+	    checkForUser: function() {
+		    if(!_.isUndefined(routing.userLoggedIn) && routing.userLoggedIn)
+			    return true;
+		    else
+			    return false;
+	    },
         // If you hit return in the main input field, create new **CommentForm** model,
         // persisting it to *localStorage*.
         createOnEnter: function(e) {

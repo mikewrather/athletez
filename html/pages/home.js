@@ -57,11 +57,12 @@ define(
 				cssArr = [ base_url + 'pages/home/home.css' ];
 
 			HomeController = Controller.extend({
+				searchPage: 0,
 				initialize : function(options) {
 					Channel('load:css').publish(cssArr);
 					_.bindAll(this);
-					 this.scheme = [];
 					this.handleOptions(options);
+					 this.scheme = [];
 					this.genderTypes = ['boys', 'girls', 'both'];
 					this.init();
 					return this;
@@ -183,7 +184,6 @@ define(
 								else if(i == "time")
 									this.urlOptions[this.viewOptions[i]] = "today";
 							}
-							
 						break;
 						case 'sports':
 							for(var i in this.sportsOptions) {
@@ -200,22 +200,35 @@ define(
 					}
 					this.transitionView();
 				},
-				
-				transitionView : function(options) {
-					
-					
-					//console.error(this.urlOptions);
 
-					var viewName = 'search-result',
+				transitionView : function(options) {
+					this.searchPage = 0;
+					this.searchView(options);
+				},
+				
+				
+				searchView: function(options) {
+					var _self = this, viewName = 'search-result',
 					    imageList = this.collections[viewName];
 					    controller = this;
 
-					console.log("CALLED",this.collections[viewName]);
 					imageList.url = this.url(options);
 					imageList.fetch();
 					
 					$.when(imageList.request).done(function() {
 						console.log("Fetch Complete");
+						console.log(imageList.length);
+						
+						if(imageList.length < 12)
+							$(".right-arrow-page-h").addClass("disable-arrow-link");
+						else
+							$(".right-arrow-page-h").removeClass("disable-arrow-link");							
+							
+						if(_self.searchPage == 0)
+							$(".left-arrow-page-h").addClass("disable-arrow-link");
+						else
+							$(".left-arrow-page-h").removeClass("disable-arrow-link");														
+							
 						var view = new ImageListView({
 							collection : imageList,
 							name : viewName,
@@ -240,8 +253,29 @@ define(
 					}
 				},
 				
+				bindCickEvents: function() {
+					var _self = this;
+					$(document).on("click", ".left-arrow-page-h", function() {
+						_self.searchPage--;
+						_self.searchView();
+					});
+					
+					$(document).on("click", ".right-arrow-page-h", function() {
+						_self.searchPage++;
+						_self.searchView();
+					});
+					
+					
+					if(_self.searchPage == 0)
+						$(".left-arrow-page-h").addClass("disable-arrow-link");
+					else
+						$(".left-arrow-page-h").removeClass("disable-arrow-link");	
+					
+					
+				},
+				
 				url : function(options) {
-					var base = this.baseUrl + '?';
+					var base = this.baseUrl + '?offset='+this.searchPage+"&";
 					_.extend(this.urlOptions, options);
 					var tail = [];
 					 $.each(this.urlOptions, function(key, value) {
@@ -355,12 +389,12 @@ define(
 					pageLayout = new LayoutView({
 						scheme : this.scheme,
 						destination : "#main",
-						template : pageLayoutTemplate/*,
-						displayWhen : "ready"*/
+						template : pageLayoutTemplate,
+						displayWhen : "ready"
 					});
 
 					this.layout = pageLayout;
-
+					this.bindCickEvents();
 					return this.layout;
 				}
 

@@ -59,7 +59,7 @@ function(facade,  views,   utils,   OrgItemView, Store) {
         
          addGame: function(e) {
          	 if(!this.checkForUser()) {
-		  		$("#userlogin").trigger('click');
+		  		$(".signup-email").trigger('click');
 		    	return;
 	    	}
 	        	routing.trigger('add-game',0,$(e.currentTarget).data("team-id"),$(e.currentTarget).data("sport-id"));

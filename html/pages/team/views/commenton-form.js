@@ -42,14 +42,24 @@ function(require, commentFormTemplate,    ProfileCommentFormModel,        BaseCo
                 this.model.fetch();
             }
         },
-
+	    checkForUser: function() {
+		    if(!_.isUndefined(routing.userLoggedIn) && routing.userLoggedIn)
+			    return true;
+		    else
+			    return false;
+	    },
 	    submitHandler: function (e) {
 		    e.preventDefault();
+		    if(!self.checkForUser()) {
+			    $(".signup-email").trigger('click');
+			    return;
+		    }
 		    this.createOnEnter(e);
 	    },
 	    
 	    showCommentBox: function() {
 	    	var $formDiv = this.$el.find('.add-comment-form-h');
+		    console.log($formDiv);
 	    	if($formDiv.hasClass('hide'))
 	    		$formDiv.removeClass('hide');
 	    	else

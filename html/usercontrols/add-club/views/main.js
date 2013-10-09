@@ -36,6 +36,12 @@ define(['require', 'text!usercontrols/add-club/templates/layout.html', 'facade',
 			this.setProfiles();
 		},
 		
+		openLocationPopup: function(latitude, longitude) {
+        	var _self = this;
+        	routing.trigger('show_location', latitude, longitude, '.location-map-h', function() {
+        	});
+        },
+		
 		// add club and school
 		addClub: function() {
 			var _self = this, submit = true;
@@ -88,9 +94,10 @@ define(['require', 'text!usercontrols/add-club/templates/layout.html', 'facade',
 			adressModel.save({dataType:"json"});
 			_self.$el.find('.address-h').removeClass('address-verified');
 			$.when(adressModel.request).done(function() {
-				console.log(adressModel.toJSON());
 				_self.locationId = adressModel.get("payload").id;
 				if(_self.locationId) {
+					if(typeof callback != "function") 
+						_self.openLocationPopup(adressModel.get("payload").lat, adressModel.get("payload").lon);
 					_self.$el.find('.address-error-status-h').addClass('hide');
 					_self.$el.find('.address-h').removeClass('address-field-error').addClass('address-verified');
 					_self.addressValid = true;
@@ -99,11 +106,6 @@ define(['require', 'text!usercontrols/add-club/templates/layout.html', 'facade',
 					_self.addressValid = false;
 				}
 			});
-			
-			
-			
-			
-			
 		},
 		
 		// set profile view dropdowns
@@ -112,15 +114,9 @@ define(['require', 'text!usercontrols/add-club/templates/layout.html', 'facade',
                 var data = {};
                data.records = [];
                for(var i in json[0].payload) {
-               		var a = {};
-               		a.name = [];
-               		a.id = [];
-               		//for(var j in json[0].payload[i].seasons) {
-               		//	a.name.push(json[0].payload[i].seasons[j].name);
-               		//	a.id.push(json[0].payload[i].seasons[j].id);
-               		//}
-               		//data.records.push({payload: {id: a.id.join(","), name: a.name.join(",")}});
-               		data.records.push({payload:{id: json[0].payload[i].id, name: json[0].payload[i].name}});
+   					for(var j in json[0].payload[i].seasons) {
+   						data.records.push({payload:{id: json[0].payload[i].seasons[j].id, name: json[0].payload[i].seasons[j].name}});
+   					}            		
                }
                data.recordId = 'id';
 			   data.recordValue = 'name';
@@ -148,15 +144,9 @@ define(['require', 'text!usercontrols/add-club/templates/layout.html', 'facade',
             	var json = _self.compLevel.toJSON(), data = {};
                data.records = [];
                for(var i in json[0].payload) {
-               		//var a = {};
-               		//a.name = [];
-               		//a.id = [];
-               		//for(var j in json[0].payload[i].levels) {
-               		//	a.name.push(json[0].payload[i].levels[j].name);
-               		//	a.id.push(json[0].payload[i].levels[j].id);
-               		//}
-               		//data.records.push({payload: {id: a.id.join(","), name: a.name.join(",")}});
-               		data.records.push({payload:{id: json[0].payload[i].id, name: json[0].payload[i].name}});
+               		for(var j in json[0].payload[i].levels) {
+   						data.records.push({payload:{id: json[0].payload[i].levels[j].id, name: json[0].payload[i].levels[j].name}});
+   					}  
                }
             	
                data.recordId = 'id';

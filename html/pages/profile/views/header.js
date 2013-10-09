@@ -112,11 +112,16 @@ function(require, profileHeaderTemplate, selectSportTemplate) {
             SectionView.prototype.render.call(this, domInsertion, dataDecorator, partials); 
         },
         
+        pageTitle: document.title,
+        
         selectSport: function(e) {
             var sport_id = (!e)?$(".sports-h img:first-child").data("id"):$(e.target).data("id");
+            var sport_name = (!e)?$(".sports-h img:first-child").data("name"):$(e.target).data("name");
             //this.select_sport.val();
             $(".sports-icon-h").removeClass('selected-sport-h');
             $(".sports-icon-h[data-id="+sport_id+"]").addClass('selected-sport-h');
+            
+            document.title = this.pageTitle + " | "+ sport_name;
             
             if(sport_id) {
 	            this.$('.sport-info').stop().slideUp();

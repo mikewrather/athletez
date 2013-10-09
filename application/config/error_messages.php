@@ -15,7 +15,7 @@ return array(
 	"not_found" => "The value entered for the :field field does not seem to exist",
 	"unique" => "The :field field must have a unique value",
 	"org_sport_not_exist" => "The organization is not yet associated with that sport.",
-	"unique_email" => "That email address is already in our system.  Maybe you made an account already?",
+	"unique_email" => "That email address is already in our system.  Maybe you made an account already?  If you are trying to connect with facebook, please log in first and try again.",
 	"subject_id_exist" => "Subject id doesn't exist",
 	"resume_data_id_exist" => "Resume data doesn't exist",
 	"stat_contexts_id_exist" => "Statistic contexts id doesn't exist",

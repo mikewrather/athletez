@@ -9,8 +9,17 @@ function (HeaderView, MainView, FooterView) {
     var chromeBootstrap;
 
     chromeBootstrap = function () {
-        var header = new HeaderView();
-        header.render().$el.prependTo('body');
+    	
+		$('#main').unbind().empty();
+        
+        if(App.header) {
+        	App.header.render();
+        } else {
+        	App.header = new HeaderView();
+        	App.header.render().$el.prependTo('body');
+        }
+        
+        //header.render().$el.prependTo('body');
         var main = new MainView();
         main.render().$el.appendTo('body');
         var footer = new FooterView();

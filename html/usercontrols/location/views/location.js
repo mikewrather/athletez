@@ -26,7 +26,6 @@ define(['require', 'text!usercontrols/location/templates/layout.html', 'facade',
 
 		/*initialize gets called by default when constructor is initialized*/
 		initialize : function(options) {
-			console.log(options);
 			_self = this;
 			_self.game_id = options.game_id;
 			_self.location = options;
