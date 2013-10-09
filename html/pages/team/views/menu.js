@@ -88,7 +88,8 @@ function(require, headerTemplate, selectSportTemplate) {
                 var data = {};
                data.records = self.season.toJSON();
                data.recordId = 'id';
-			   data.recordValue = 'team_name';
+			   data.recordValue = 'season_label';
+	           //console.log("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%",data);
                var DropDown = new DropDownList({
 					data: data,
 					title: "Team",

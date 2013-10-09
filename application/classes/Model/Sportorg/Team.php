@@ -231,7 +231,8 @@ class Model_Sportorg_Team extends ORM
 			"team_location" => 'getTeamLocation',
 			"picture" => 'getImage',
 			"num_votes" => 'get_num_votes',
-			"num_followers" => 'get_num_followers'
+			"num_followers" => 'get_num_followers',
+			"season_label" => "get_season_label"
 //			'num_followers' => 'get_num_followers',
 //			'num_votes' =>'get_num_votes',
 		),
@@ -239,6 +240,12 @@ class Model_Sportorg_Team extends ORM
 			//'username','email','password','dob'
 		),
 	);
+
+	public function get_season_label()
+	{
+		return $this->season->name." ".str_replace('20',"'",$this->year);
+	}
+
 	public function get_num_votes()
 	{
 		return Model_Site_Vote::getNumVotes($this);
