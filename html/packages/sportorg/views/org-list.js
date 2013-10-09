@@ -71,6 +71,7 @@ function(facade,  views,   utils,   OrgItemView, Store) {
             if (!this.collection) {
                 throw new Error("OrgListView expected options.collection.");
             }
+            
             _.bindAll(this);
             this.addSubscribers();
         }        
