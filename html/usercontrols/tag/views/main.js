@@ -4,9 +4,9 @@
  // Requires `define`, `require`
  // Returns {Awards VIEW} constructor
  */
-define(['require', 'text!usercontrols/tag/templates/layout.html', 'facade', 'views', 'utils', 'vendor', 'usercontrols/tag/models/basic_info', 'sportorg/collections/sports_listall', 'location/collections/states', 'usercontrols/tag/collections/schools', 'usercontrols/tag/collections/teams', 'location/collections/cities', 'user/collections/users', 'usercontrols/tag/collections/games', 'usercontrols/tag/models/complevel'], function(require, layoutTemplate) {
+define(['require', 'text!usercontrols/tag/templates/layout.html', 'facade', 'views', 'utils', 'vendor', 'usercontrols/tag/models/basic_info', 'sportorg/collections/sports_listall', 'location/collections/states', 'usercontrols/tag/collections/schools', 'usercontrols/tag/collections/teams', 'location/collections/cities', 'user/collections/users', 'usercontrols/tag/collections/games', 'usercontrols/tag/models/complevel', 'usercontrol/dropdown/view/dropdown'], function(require, layoutTemplate) {
 
-	var self, facade = require('facade'), views = require('views'), SectionView = views.SectionView, utils = require('utils'), Channel = utils.lib.Channel, vendor = require('vendor'), Mustache = vendor.Mustache, $ = facade.$, BasicModel = require('usercontrols/tag/models/basic_info'), SportsCollection = require('sportorg/collections/sports_listall'), StatesCollection = require('location/collections/states'), CityCollection = require('location/collections/cities'), SchoolCollection = require('usercontrols/tag/collections/schools'), UsersCollection = require('user/collections/users'), GamesCollection = require('usercontrols/tag/collections/games'), TeamsCollection = require('usercontrols/tag/collections/teams'), CompLevelModel = require('usercontrols/tag/models/complevel'),
+	var self, facade = require('facade'), views = require('views'), SectionView = views.SectionView, utils = require('utils'), Channel = utils.lib.Channel, vendor = require('vendor'), Mustache = vendor.Mustache, $ = facade.$, BasicModel = require('usercontrols/tag/models/basic_info'), SportsCollection = require('sportorg/collections/sports_listall'), StatesCollection = require('location/collections/states'), CityCollection = require('location/collections/cities'), SchoolCollection = require('usercontrols/tag/collections/schools'), UsersCollection = require('user/collections/users'), GamesCollection = require('usercontrols/tag/collections/games'), TeamsCollection = require('usercontrols/tag/collections/teams'), CompLevelModel = require('usercontrols/tag/models/complevel'), DropDownList = require('usercontrol/dropdown/view/dropdown'),
 
 	//Models
 	TagView = SectionView.extend({
@@ -64,6 +64,8 @@ define(['require', 'text!usercontrols/tag/templates/layout.html', 'facade', 'vie
 			btnEditSport : ".btn-tag-edit-sport_h",
 			btnSportsDone : '.btn-tag-sport_h',
 			ddlSports : '.ddl-tag-sports_h',
+			spnSports : ".span-ddl-sports-tag_h",
+			dropdownHeader : ".dropdown-header-box",
 
 			//Team
 			secTeam : ".section-team_h",
@@ -96,6 +98,7 @@ define(['require', 'text!usercontrols/tag/templates/layout.html', 'facade', 'vie
 			lnkGame : ".link-tag-Game_h",
 			sectionSelectedGames : ".section-team-games_h",
 			lblGameNames : ".lbl-tag-games-name_h",
+			spnGames : ".span-ddl-games-tag_h",
 
 			btnTeamFinish : '.btn-tag-Finish_h',
 			//Common
@@ -106,6 +109,11 @@ define(['require', 'text!usercontrols/tag/templates/layout.html', 'facade', 'vie
 			// LABELS
 			fieldMessage : '.field-message',
 			fieldError : '.field-error',
+
+			hdnSportsIdData : "hdn_sport_id",
+			hdnSportsId : "#hdn_sport_id",
+			hdnGamesIdData : "hdn_game_id",
+			hdnGamesId : "#hdn_game_id",
 		},
 
 		attributes : {
@@ -177,41 +185,67 @@ define(['require', 'text!usercontrols/tag/templates/layout.html', 'facade', 'vie
 			} else {
 				var List = new SportsCollection();
 				List.processResult = function(collection) {
-					self.SetupSportsView(collection);
+					var data = List.ParseForDropdown();
+					self.SetupSportsView(data);
 				};
 				List.fetch();
 			}
 		},
 		SetupSportsView : function(List) {
-			var models = List.toJSON();
-			if (models == null || models.length < 1) {
-				$(self.destination).find(self.controls.ddlSports).parent().find(self.controls.fieldMessage).html(self.messages.dataNotExist).stop().fadeIn();
-				return;
-			}
-			self.sports = [];
-			for (var key in models) {
-				self.sports.push(models[key].payload);
-			}
-			// Sort Sports Before Filling Up Into Drop-Down
-			self.sort(self.sports, 'sport_name', false);
-			self.setDropdownOptions(self.sports, 'sport_name', 'sport_id', $(self.destination).find(self.controls.ddlSports), 'Select Sport');
+			self.sports = List;
+			var data = {};
+			data.records = self.sports;
+			data.recordId = 'id';
+			data.recordValue = 'custom_name';
+			var DropDown = new DropDownList({
+				data : data,
+				title : "Select Sport",
+				elementId : self.controls.hdnSportsIdData,
+				destination : self.controls.spnSports,
+				targetView : self,
+				selectedValue : self.sports_id || null,
+				callback : function(result) {
+					self.changeSport(result);
+				}
+			});
+
+			// var models = List.toJSON();
+			// if (models == null || models.length < 1) {
+			// $(self.destination).find(self.controls.ddlSports).parent().find(self.controls.fieldMessage).html(self.messages.dataNotExist).stop().fadeIn();
+			// return;
+			// }
+			// self.sports = [];
+			// for (var key in models) {
+			// self.sports.push(models[key].payload);
+			// }
+			// // Sort Sports Before Filling Up Into Drop-Down
+			// self.sort(self.sports, 'sport_name', false);
+			// self.setDropdownOptions(self.sports, 'sport_name', 'sport_id', $(self.destination).find(self.controls.ddlSports), 'Select Sport');
 		},
 		/*Change sport_id when a sport is selected from dropdown*/
-		changeSport : function(e) {
-			if ($(e.target).val() && $(e.target).val() != 0)
-				$(e.target).parent().find(self.controls.btnSportsDone).fadeIn();
-			else
-				$(e.target).parent().find(self.controls.btnSportsDone).fadeOut();
+		changeSport : function(result) {
+			if (result && result != 0) {
+				$(self.destination).find(self.controls.btnSportsDone).fadeIn();
+				//	$(self.destination).find(self.controls.ddlSports).val(result);
+			} else {
+				$(self.destination).find(self.controls.btnSportsDone).fadeOut();
+			}
 		},
 		sportsDone : function(e) {
-			self.sportsId = $(self.destination).find(self.controls.ddlSports).val();
-			$(self.destination).find(self.controls.lblSportName).html($(self.destination).find(self.controls.ddlSports + ' option:selected').text())
+			self.sportsId = $(self.destination).find(self.controls.hdnSportsId).val();
+			$(self.destination).find(self.controls.lblSportName).html($(self.destination).find(self.controls.spnSports).find(self.controls.dropdownHeader).text())
 			$(e.target).parents(self.controls.secAddSports).fadeOut();
 			$(self.destination).find(self.controls.secSports).fadeIn();
 			$(self.destination).find(self.controls.secFooterLinks).fadeIn();
 		},
 
 		editSport : function() {
+
+			this.tagData = {
+				Game : {},
+				Player : {},
+				Team : {}
+			};
 			$(self.destination).find(self.controls.secSports).fadeOut();
 			$(self.destination).find(self.controls.secAddSports).fadeIn();
 			$(self.destination).find(self.controls.secFooterLinks).fadeOut();
@@ -225,6 +259,7 @@ define(['require', 'text!usercontrols/tag/templates/layout.html', 'facade', 'vie
 			$(self.destination).find(self.controls.secPlayer).fadeOut();
 			$(self.destination).find(self.controls.secGame).fadeOut();
 			$(self.destination).find(self.controls.secTagTeam).fadeIn();
+			$(self.destination).find(self.controls.secFooterLinks).fadeOut();
 			$(e.target).hide();
 		},
 
@@ -430,7 +465,7 @@ define(['require', 'text!usercontrols/tag/templates/layout.html', 'facade', 'vie
 				var List = new TeamsCollection();
 				List.states_id = $(e.target).attr(self.attributes.stateId);
 				//List.cities_id = self.city_id;
-				List.sports_id = $(self.destination).find(self.controls.ddlSports).val();
+				List.sports_id = $(self.destination).find(self.controls.hdnSportsId).val();
 				List.team_name = name;
 
 				console.log("Team Request Abort Request Function");
@@ -476,7 +511,6 @@ define(['require', 'text!usercontrols/tag/templates/layout.html', 'facade', 'vie
 				if (self.isEnterKey(e))
 					self.changeSchool(e);
 			}
-
 		},
 
 		/*Change school_id as per the selected record from auto complete for state created in keyupSchool*/
@@ -540,6 +574,7 @@ define(['require', 'text!usercontrols/tag/templates/layout.html', 'facade', 'vie
 
 				$(self.destination).find(self.controls.lnkPlayer).fadeIn();
 				$(self.destination).find(self.controls.lnkGame).fadeIn();
+				$(self.destination).find(self.controls.secFooterLinks).fadeIn();
 			} else {
 				self.$(e.target).parents(self.controls.secTagTeam).find(self.controls.fieldMessage).html(self.messages.selectOrganization).stop().fadeIn();
 			}
@@ -569,7 +604,7 @@ define(['require', 'text!usercontrols/tag/templates/layout.html', 'facade', 'vie
 					List.states_id = self.states_id;
 					// No Need to pass City Id in User Search as States Is is enough #961 (23/09/2013)
 					//List.cities_id = self.city_id;
-					List.sports_id = $(self.destination).find(self.controls.ddlSports).val();
+					List.sports_id = $(self.destination).find(self.controls.hdnSportsId).val();
 
 					console.log("Player Request Abort Request Function");
 					self.PlayerFetchRequest = self.abortRequest(self.PlayerFetchRequest);
@@ -666,7 +701,7 @@ define(['require', 'text!usercontrols/tag/templates/layout.html', 'facade', 'vie
 			$(self.destination).find(self.controls.secGame).fadeIn();
 		},
 		bindGamesData : function(e) {
-			var sportid = $(self.destination).find(self.controls.ddlSports).val();
+			var sportid = $(self.destination).find(self.controls.hdnSportsId).val();
 
 			if (self.sportsId) {
 				var List = new GamesCollection();
@@ -691,21 +726,38 @@ define(['require', 'text!usercontrols/tag/templates/layout.html', 'facade', 'vie
 
 		},
 		SetupGamesView : function(List) {
-			var models = List.toJSON();
+
+			var models = List;
 			if (models == null || models.length < 1) {
 				$(self.destination).find(self.controls.secGame).find(self.controls.fieldMessage).html(self.messages.dataNotExist).stop().fadeIn();
 				return;
 			}
-			self.games = [];
-			for (var key in models) {
-				self.games.push(models[key].payload);
-			}
-			// Sort Sports Before Filling Up Into Drop-Down
-			self.sort(self.games, 'game_name', false);
-			self.setDropdownOptions(self.games, 'game_name', 'id', $(self.destination).find(self.controls.ddlGame), 'Select Game');
+			self.games = List;
+			var data = {};
+			data.records = self.games;
+			data.recordId = 'id';
+			data.recordValue = 'game_name';
+			var DropDown = new DropDownList({
+				data : data,
+				title : "Select Game",
+				elementId : self.controls.hdnGamesIdData,
+				destination : self.controls.spnGames,
+				targetView : self,
+				selectedValue : self.sports_id || null,
+				callback : function(result) {
+					self.changeGame(result);
+				}
+			});
+			//
+			// for (var key in models) {
+			// self.games.push(models[key].payload);
+			// }
+			// // Sort Sports Before Filling Up Into Drop-Down
+			// self.sort(self.games, 'game_name', false);
+			// self.setDropdownOptions(self.games, 'game_name', 'id', $(self.destination).find(self.controls.ddlGame), 'Select Game');
 		},
-		changeGame : function(e) {
-			var gameId = $(e.target).val();
+		changeGame : function(result) {
+			var gameId = result;
 			if (gameId && gameId != "" && gameId != 0) {
 				$(e.target).parents(self.controls.secGame).find(self.controls.btnGameDone).fadeIn();
 			} else {
@@ -714,10 +766,10 @@ define(['require', 'text!usercontrols/tag/templates/layout.html', 'facade', 'vie
 		},
 		doneGameTagging : function(e) {
 			var self = this;
-			var gameId = $(e.target).parents(self.controls.secGame).find(self.controls.ddlGame).val();
+			var gameId = $(e.target).parents(self.controls.secGame).find(self.controls.hdnGamesId).val();
 			var gameName = '';
 			if (gameId && gameId != "" && gameId != 0) {
-				gameName = $(e.target).parents(self.controls.secGame).find(self.controls.ddlGame + " option:selected").text();
+				gameName = $(e.target).parents(self.controls.secGame).find(self.controls.spnGames).find(self.controls.dropdownHeader).text();
 				var data = {
 					game : {
 						game_id : gameId,
