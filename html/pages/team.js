@@ -354,6 +354,7 @@ define([
 				teams_id: this.id,
 				collection: this.games,
 				destination: "#games_div",
+				teamRecords: true,
 				name: "games view"
 			});
 
