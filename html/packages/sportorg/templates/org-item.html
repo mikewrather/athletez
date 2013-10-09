@@ -17,17 +17,20 @@
 			
 			<div class="game-box-outer">
 		<ul>
-			
 				{{#schedules}}
 				<li>
-				<a href="javascript: void(0);" class="win team-info-h">
+				<!--a href="/#game/{{id}}" class="background-blue team-info-h" tooltip="test">
+	<div class="game-info hide">
+		{{summary}}
+	</div> </a-->	
 					
-						<div class="org-popup hide">
-							<ul>
+					
+				<a href="#game/{{id}}" class="background-blue team-info-h" tooltip="test">
+					
+						<div class="game-info hide">
 							{{#teams}}
-								<li>{{gameDay}} | VS. {{team_name}} | Home | W 2-1</li>
+								{{gameDay}} | VS. {{team_name}}
 							{{/teams}}
-							</ul>
 						</div>
 				</a>
 				</li>

@@ -30,19 +30,20 @@ function(facade,  views,   utils,   OrgItemView, Store) {
         _view: OrgItemView,
         
         events: {
-        	'click .team-info-h': 'showinfo',
-        	"click .add-game-h": "addGame"
+        	"click .add-game-h": "addGame",
+        	'mouseover .team-info-h': 'showinfo',
+	        'mouseout .team-info-h': 'showinfo'
         },
         
          showinfo: function(e) {
         	e.preventDefault();
-        	if(!$(e.target).parents('.org-popup').length) {
+        	if(!$(e.target).parents('.game-info').length) {
 	        	
-	        	if($(e.target).find('.org-popup').hasClass('hide')) {
-		        	$('.org-popup').addClass('hide');
-		        	$(e.target).find('.org-popup').removeClass('hide');
+	        	if($(e.target).find('.game-info').hasClass('hide')) {
+		        //	$('.game-info').addClass('hide');
+		        	$(e.target).find('.game-info').removeClass('hide');
 		        } else {
-		        	$('.org-popup').addClass('hide');
+		        	$('.game-info').addClass('hide');
 		        }
 		        
 		        
