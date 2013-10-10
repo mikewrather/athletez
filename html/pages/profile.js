@@ -373,6 +373,7 @@ console.log(app);
 			setupImageListView: function () {
 				var self = this;
 				//Channel('image-upload-success').subscribe(this.updateImages);
+				routing.off('image-upload-success');
 				routing.on('image-upload-success', function(data) { 
         			self.updateImages(data);
         		});
