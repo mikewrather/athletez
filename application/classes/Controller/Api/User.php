@@ -1206,6 +1206,11 @@
 			return false;
 		}
 
+		public function action_get_logout()
+		{
+			return $this->action_post_logout();
+		}
+
 		/**
 		 * action_post_addrole() Add a new role for this User
 		 * via /api/user/addrole/{users_id}
