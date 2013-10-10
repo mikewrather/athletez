@@ -52,20 +52,7 @@ define(["require", 'text!usercontrols/photo-player/templates/comments.html',
 					'<div class="modal-body page-content-h">'+
 					'<div class="add-club-area-h photo-player"></div>'+
 					'</div></div>';
-			
-			/*routing.off('photo-player-section-reload');
-			routing.on('photo-player-section-reload', function(entity_id, id) {
-				_self.id = id;
-				_self.setUpCommentView(entity_id, id);
-				_self.setUpTagView(entity_id, id);
-			});
-			
-			routing.off('comments-fetch-new-form-data');
-	       	routing.on('comments-fetch-new-form-data', function(entity_id, id) {
-	       		_self.setUpCommentView(entity_id, id);
-				_self.setUpTagView(entity_id, id);
-	       	});*/
-
+		
   			// set up main layout view					
 			this.setupLayout().render();
 			this.setUpMainView();

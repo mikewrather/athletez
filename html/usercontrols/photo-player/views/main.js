@@ -264,9 +264,11 @@ define(['require', 'text!usercontrols/photo-player/templates/player.html','text!
 		},
 		
 		loadImage: function(trigger) {
+			
 			var _self = this, mpay = this.json[_self.index].payload, extra = {
 				_enttypes_id : mpay.enttypes_id,
 				_id : mpay.id,
+				_media_id: mpay.media_id,
 				_currentIndex: _self.index
 			};
 			
@@ -382,8 +384,7 @@ define(['require', 'text!usercontrols/photo-player/templates/player.html','text!
 			this.$el.find('.thumb-image-list-h li').removeClass('selected-photo-thumb');
 			this.$el.find('.thumb-link-h[data-index='+this.index+']').parents('li').addClass('selected-photo-thumb');
 
-			console.log(extra);
-			routing.trigger('photo-player-section-reload', extra._enttypes_id, extra._id);
+			routing.trigger('photo-player-section-reload', extra._enttypes_id, extra._media_id);
 		},
 
 		showImage: function($el){
