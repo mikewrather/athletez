@@ -164,7 +164,7 @@ define(["require",
 						
 							model : this.basic_type,
 							name : "Final registration",
-							destination : "#main-content-reg",
+							destination : "#main-contentreg",
 							attr: attr
 						});
 						//this.scheme.push(this.selectTypeView);*/
@@ -179,22 +179,22 @@ define(["require",
 						this.selectRegisterBasicFinalView = new signupUploadImageView({
 							model : this.basic_type,
 							name : "Final registration",
-							destination : "#main-content-reg",
+							destination : "#main-contentreg",
 							attr: attr
 						});
 						//this.scheme.push(this.selectTypeView);*/
 						this.layout.render();
 					},
 					setupSelectTypeView : function() {
-						
+						//$("#LoginPopup").remove();
 						this.selectTypeView = new signupBaseView({
 						 
 							model : this.select_type,
 							name : "Select Registration Type",
-							destination : "#main-content-reg"
+							destination : "#main-contentreg"
 						});
 
-						//this.scheme.push(this.selectTypeView);
+						this.scheme.push(this.selectTypeView);
 						this.layout.render();
 					},
 				});

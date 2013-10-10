@@ -1,5 +1,6 @@
 define(["require",
 		"text!login/templates/layout.html", 
+		"application",
 		"facade", 
 		"controller", 
 		"models", 
@@ -9,11 +10,13 @@ define(["require",
 		"login/views/Loginview",
 		"login/models/Logoutmodel",
 		
+		
 	
 		], 
-		 function(require, pageLayoutTemplate) {
+		 function(require, pageLayoutTemplate,apps) {
 
 				var SignupController,
+				
 		 		facade = require("facade"), 
 		 		Controller = require("controller"), 
 		 		models = require("models"), 
@@ -22,6 +25,7 @@ define(["require",
 		 		loginBaseModel=require("login/models/Loginmodel"),
 		 		loginBaseView=require("login/views/Loginview"),
 		 		logoutBaseModel= require("login/models/Logoutmodel"),
+		 		
  		
 		 		LayoutView = views.LayoutView, 
 		 		$ = facade.$,
@@ -109,16 +113,21 @@ define(["require",
             			});
 
             			routing.off('Logout');
-            			routing.on('Logout', function() {
-            				controller.setupLogout();				
+            			routing.on('Logout', function(attr) {
+            				controller.setupLogout(attr);				
             			});
 					},
-					setupLogout:function(){
+					setupLogout:function(attr){
+						var current = this
 						this.logoutcheck = new logoutBaseModel()
 						this.logoutcheck.fetch()
 						$.when(this.logoutcheck.request).done(function(){
-							alert("done logout");
-							routing.trigger('reload-home');
+							// clearing header model to delete local storage
+							attr.clear();
+							location.href="/";
+							// to avoid page reload please uncomment below
+							//attr.attributes.authorized = false;
+							//routing.trigger('reload-home');
 						});
 
 					},

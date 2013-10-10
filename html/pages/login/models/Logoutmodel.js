@@ -8,7 +8,8 @@
         defaults: {
                         
         },
-       url:'/user/logout',
+       url:'/api/user/logout',
+       
        payload:{} 
         
     });

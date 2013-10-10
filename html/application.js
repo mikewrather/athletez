@@ -420,7 +420,8 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
         },
         showHomeRefresh:function(){
            // this.addHomeTrigger(this.RefreshHome)
-            this.addHomeTrigger(this.showHome);
+            //this.addHomeTrigger(this.showHome);
+            this.addHomeTrigger(this.initApp);
         },
         addHomeTrigger: function(fn) {
             routing.off('reload-home');
