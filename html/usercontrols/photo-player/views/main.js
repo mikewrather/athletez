@@ -80,7 +80,6 @@ define(['require', 'text!usercontrols/photo-player/templates/player.html','text!
 			var $ul = this.$el.find(".thumb-image-list-h"), $li = this.$el.find(".selected-photo-thumb"),
 			liPos = $li.position(), ulPos = $ul.position(), ulWid = $ul.width(), scroll = 0, $tOuter = this.$el.find(".thumbs-outer"), outWid = $tOuter.width();
 			// get the li position 
-			
 			if((liPos.left + $li.width()) > outWid) {
 				scroll = liPos.left - outWid;
 				scroll += (ulPos.left < 0)?-(ulPos.left):-(ulPos.left);
@@ -89,10 +88,9 @@ define(['require', 'text!usercontrols/photo-player/templates/player.html','text!
 				var outerWid = (ulPos.left < 0)?-(ulPos.left):ulPos.left;
 				scroll = +(outerWid) - $li.width();//ulPos.left;
 			}
-			console.error(scroll);
 			// scrol to teh position
 			if(scroll)
-				this.$el.find(".thumbs-outer").animate({scrollLeft: scroll + 'px'}, 1000);
+				this.$el.find(".thumbs-outer").animate({scrollLeft: scroll + 'px'}, 400);
 		},
 		
 		initThumbsSection: function() {
@@ -260,7 +258,9 @@ define(['require', 'text!usercontrols/photo-player/templates/player.html','text!
 			this.id = extra._id;
 			var markup = Mustache.to_html(this.thumbTemplate, data);
 			this.$el.find('.thumb-image-list-h').html(markup);
-
+			setTimeout(function() {
+				_self.changeThumbPosition();				
+			}, 1000);
 		},
 		
 		loadImage: function(trigger) {
