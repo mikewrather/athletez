@@ -409,6 +409,7 @@ define([
         
         setupImages: function(data) {
         	var self = this;
+        	routing.off('image-upload-success');
         	routing.on('image-upload-success', function(data) { 
         		self.updateImages(data);
         	});
