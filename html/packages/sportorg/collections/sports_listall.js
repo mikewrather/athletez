@@ -29,12 +29,14 @@ function(facade, collections, SportsOrgCollection, utils) {
 						var payload = load.payload;
 						
 						var addition = "";
-						if(payload.male=="1")
-							addition = " (M)";
+						if(payload.male=="1" && payload.female == "1")
+							addition = "";
+						else if(payload.male=="1")
+							addition = "Men's ";
 						else if(payload.female == "1")
-							addition = " (F)";
+							addition = "Women's ";
 						
-						load.payload.custom_name = payload.sport_name + addition;	
+						load.payload.custom_name = addition + payload.sport_name;	
 						load.payload.team_type = payload.sport_type ? payload.sport_type.name || "" : "";
 					}
 				});
