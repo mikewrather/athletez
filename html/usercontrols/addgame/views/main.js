@@ -688,6 +688,19 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 					}
 				});
 			}
+			//Check if team name is equal to the team passed
+			if(self.team){
+				var teamname = self.team['team_name'];
+				var teamId = self.team['team_id'];
+				if (teamname == name) {
+						isSchoolValid = true;
+						self.team_id = teamId;
+						$(e.target).parents(self.controls.sectionTeams).find("input").attr(self.attributes.teamId, self.team_id);
+						$(e.target).parents(self.controls.sectionTeams).find(self.controls.indicator).removeClass("invalid").addClass("valid").show();
+					}
+				
+			}
+			
 			if (!isSchoolValid) {
 				// Hide all other controls
 				$(e.target).parents(self.controls.sectionTeams).find("input").removeAttr(self.attributes.teamId);
