@@ -1,53 +1,58 @@
-// org-item.js  
+// Schedule-item.js  
 // -------  
 // Requires `define`
-// Return {OrgListItemView} object as constructor
 
 define([ 
         'vendor', 
         'views',
         'utils', 
-        'text!sportorg/templates/org-item.html'
+        'text!schedules/templates/schedule-item.html',
+        'text!schedules/templates/schedule-single-item.html'
         ], 
 function (
         vendor,
         views,
         utils,
-        orgItemTemplate
+        ScheduleItemTemplate,
+        ScheduleSingleItemTemplate
         ) {
 
-    var OrgItemView
-      , $ = vendor.$
+    var $ = vendor.$
       , BaseView = views.BaseView
       , Mustache = vendor.Mustache;
 
-      OrgItemView = BaseView.extend({
-
+      return BaseView.extend({
         tagName: "li",
-
         className: "org",
-          
         events: {
             "change #select-team": "selectTeam"
         },
-       
 
         initialize: function (options) {
-        	$("body").click(function(e) {
+        	//$("body").click(function(e) {
         		//e.preventDefault();
-        		if(!$(e.target).hasClass('team-info-h') && !$(e.target).hasClass('org-popup') && $(e.target).parents('.org-popup').length === 0) {
-        			$('.org-popup').addClass('hide');
-        		}
-        	});
-            this.template = orgItemTemplate;
+        	//	if(!$(e.target).hasClass('team-info-h') && !$(e.target).hasClass('org-popup') && $(e.target).parents('.org-popup').length === 0) {
+        	//		$('.org-popup').addClass('hide');
+        	//	}
+        	//});
+        	if(options.teamView) this.teamView = options.teamView;
         },
 
         render: function () {
         	// var string_to_use = this.createOpponentString();
-
             //var markup = Mustache.to_html(this.template, {data: this.model.toJSON(), id:this.mpay.id,summary:string_to_use});
             
-            var markup = Mustache.to_html(this.template, this.model.toJSON());
+            if(this.teamView) {
+            	  this.mpay = this.model.get('payload');
+			    this.template = ScheduleSingleItemTemplate;
+			     var string_to_use = this.createOpponentString();
+            	 var markup = Mustache.to_html(this.template, {id:this.mpay.id,summary:string_to_use});
+        	 } else {
+	            this.template = ScheduleItemTemplate;
+	            var markup = Mustache.to_html(this.template, this.model.toJSON());
+	         }
+	                        
+            
             this.$el.html(markup);
             this.select_team = this.$('#select-team');
             this.selectTeam();

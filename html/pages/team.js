@@ -41,7 +41,7 @@ define([
     "team/views/comment-list",
     "team/views/menu",
     "media/models/image",
-    "sportorg/views/team-list",
+    "schedules/views/schedule-list",
     "roster/views/roster",
     "profile/views/fans-image-list"
     
@@ -68,7 +68,7 @@ define([
 		TeamCommentOnList = require("team/collections/commentson"),
         TeamHeaderView = require("team/views/header"),
         TeamAddMediaView = require("team/views/add-media"),
-        TeamOrgListView = require("sportorg/views/team-list"),
+        TeamOrgListView = require("schedules/views/schedule-list"),
         TeamScheduleListView = require("sportorg/views/schedule-list"),
         TeamCompetitorTeamListView = require("sportorg/views/competitorteam-list"),
         TeamVideoListView = require("team/views/video-list"),
@@ -80,7 +80,7 @@ define([
 		FansImageListView = require("profile/views/fans-image-list"),
 		MenuPageView = require("team/views/menu"),
 		RosterView = require("roster/views/roster"),
-        MediaImageModel = require("media/models/image");
+        MediaImageModel = require("media/models/image"),
         LayoutView = views.LayoutView,
         $ = facade.$,
         _ = facade._,
@@ -349,11 +349,12 @@ define([
         },
         
         setupGameView: function () {
-	        console.log("Setting up game view",this.games, this.id);
+	        console.error(this.games.toJSON());
 			this.gamesView = new TeamOrgListView({
 				teams_id: this.id,
 				collection: this.games,
 				destination: "#games_div",
+				teamRecords: true,
 				name: "games view"
 			});
 
@@ -408,6 +409,7 @@ define([
         
         setupImages: function(data) {
         	var self = this;
+        	routing.off('image-upload-success');
         	routing.on('image-upload-success', function(data) { 
         		self.updateImages(data);
         	});

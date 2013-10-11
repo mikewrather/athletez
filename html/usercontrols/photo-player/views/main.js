@@ -80,7 +80,6 @@ define(['require', 'text!usercontrols/photo-player/templates/player.html','text!
 			var $ul = this.$el.find(".thumb-image-list-h"), $li = this.$el.find(".selected-photo-thumb"),
 			liPos = $li.position(), ulPos = $ul.position(), ulWid = $ul.width(), scroll = 0, $tOuter = this.$el.find(".thumbs-outer"), outWid = $tOuter.width();
 			// get the li position 
-			
 			if((liPos.left + $li.width()) > outWid) {
 				scroll = liPos.left - outWid;
 				scroll += (ulPos.left < 0)?-(ulPos.left):-(ulPos.left);
@@ -89,10 +88,9 @@ define(['require', 'text!usercontrols/photo-player/templates/player.html','text!
 				var outerWid = (ulPos.left < 0)?-(ulPos.left):ulPos.left;
 				scroll = +(outerWid) - $li.width();//ulPos.left;
 			}
-			console.error(scroll);
 			// scrol to teh position
 			if(scroll)
-				this.$el.find(".thumbs-outer").animate({scrollLeft: scroll + 'px'}, 1000);
+				this.$el.find(".thumbs-outer").animate({scrollLeft: scroll + 'px'}, 400);
 		},
 		
 		initThumbsSection: function() {
@@ -260,28 +258,28 @@ define(['require', 'text!usercontrols/photo-player/templates/player.html','text!
 			this.id = extra._id;
 			var markup = Mustache.to_html(this.thumbTemplate, data);
 			this.$el.find('.thumb-image-list-h').html(markup);
-
+			setTimeout(function() {
+				_self.changeThumbPosition();				
+			}, 1000);
 		},
 		
 		loadImage: function(trigger) {
 			var _self = this, mpay = this.json[_self.index].payload, extra = {
 				_enttypes_id : mpay.enttypes_id,
 				_id : mpay.id,
+				_media_id: mpay.media_id,
 				_currentIndex: _self.index
 			};
-			
 			if(_self.index >= this.json.length - 1) {
 				this.$el.find('.next-arrow-h').addClass('disable-arrow-link');
 			} else {
 				this.$el.find('.next-arrow-h').removeClass('disable-arrow-link');
 			}
-			
 			if(_self.index == 0) {
 				this.$el.find('.back-arrow-h').addClass('disable-arrow-link');
 			} else {
 				this.$el.find('.back-arrow-h').removeClass('disable-arrow-link');
 			}
-
 			var image_object;
 			switch(mpay.enttypes_id) {
 				case '23':
@@ -309,7 +307,6 @@ define(['require', 'text!usercontrols/photo-player/templates/player.html','text!
 				case '8':
 					//games
 					extra._detailclass = "game";
-
 					extra._thumbnail = mpay.game_picture!==null ? mpay.game_picture.types.large_thumb.url : "http://lorempixel.com/output/sports-q-c-440-440-4.jpg";
 					extra._label = mpay.game_day;
 					extra._link = "/#game/" + mpay.id;
@@ -339,16 +336,11 @@ define(['require', 'text!usercontrols/photo-player/templates/player.html','text!
 			{
 				var self=this,loading_div = this.$el.find('div.loading_image');
 				loading_div.css('opacity','0');
-
 				function showImage(event){
 					var self = event.data.self,
 						image_object = event.data.image_object,
 						totalheight = parseInt(self.$el.height()) * .8,
 						image_height = parseInt(image_object.height) >= 380 ? parseInt(image_object.height) : 380;
-
-					console.log(totalheight,image_height,(totalheight-image_height)/2);
-
-					console.log(event.data,self);
 
 					if(image_object.width > image_object.height || image_object.width == image_object.height)
 					{
@@ -378,12 +370,9 @@ define(['require', 'text!usercontrols/photo-player/templates/player.html','text!
 				}
 				loading_div.find('.large-image-h').attr('src', image_object.url).on('load',{'el':loading_div,'self':this,'image_object':image_object},showImage);
 			}
-
 			this.$el.find('.thumb-image-list-h li').removeClass('selected-photo-thumb');
 			this.$el.find('.thumb-link-h[data-index='+this.index+']').parents('li').addClass('selected-photo-thumb');
-
-			console.log(extra);
-			routing.trigger('photo-player-section-reload', extra._enttypes_id, extra._id);
+			routing.trigger('photo-player-section-reload', extra._enttypes_id, extra._media_id);
 		},
 
 		showImage: function($el){

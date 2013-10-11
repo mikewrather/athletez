@@ -51,7 +51,6 @@ function(require, headerTemplate, selectSportTemplate) {
         },
 
         initialize: function (options) {
-        	console.error(options);
             this.controllerObject = options.controllerObject;
             SectionView.prototype.initialize.call(this, options);
             _.bindAll(this);
@@ -133,10 +132,16 @@ function(require, headerTemplate, selectSportTemplate) {
             }           
         },
         
+        // get user name by id
+        getName: function() {
+        	return this.model.get("payload").org_name;
+        },
+        
         // Child views...
         childViews: {},
         
         render: function (domInsertion, dataDecorator, partials) {
+        	document.title = this.getName() ;
             SectionView.prototype.render.call(this, domInsertion, dataDecorator, partials); 
         },
         

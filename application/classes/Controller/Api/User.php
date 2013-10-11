@@ -790,6 +790,7 @@
 					//Check if already logged in.  If so, we will link them up.
 					if($this->is_logged_in)
 					{
+						$retArr['identity_exists'] = true;
 						//$this->populateAuthVars();
 						$user_identity = ORM::factory('User_Identity');
 						if($user = $user_identity->find_by_identity($retArr['id'],false))
@@ -831,6 +832,7 @@
 						// check for user for this facebook identity and force a login
 						if(!$user = $user_identity->find_by_identity($retArr['id']))
 						{
+							$retArr['identity_exists'] = false;
 							// create a user here based on fb data
 							$user = ORM::factory('User_Base');
 							$result = $user->add_from_facebook($retArr);
@@ -841,7 +843,7 @@
 								//	this indicates success
 								//  facebook data will be returned at the end of this method
 								$retArr["users_id"] = $user->id;
-								$retArr['identity_exists'] = false;
+
 							}
 							elseif(get_class($result) == 'ORM_Validation_Exception')
 							{

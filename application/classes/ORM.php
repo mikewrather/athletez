@@ -422,6 +422,8 @@ class ORM extends Kohana_ORM
 		{
 			foreach($class_settings_arr['added_function_calls'] as $key_name => $callback)
 			{
+				if(is_array($settings['exclude_columns'])) if(in_array($key_name,$settings['exclude_columns'])) continue;
+
 				// if the callback is an array then there are additional instructions to be parsed
 				if(is_array($callback))
 				{

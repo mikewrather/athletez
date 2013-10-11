@@ -33,7 +33,7 @@ function(facade, collections, models, utils) {
         if(options.title)
         	 document.title = options.title;
         else
-        	document.title = "Athletz";
+        	document.title = "Athletez";
         	
         this.route = options.route;
         if (!Controller.prototype.appStates) {
