@@ -4,11 +4,14 @@
  // Requires `define`, `require`
  // Returns {Photo Player View} constructor
  */
-define(['require', 'text!usercontrols/photo-player/templates/player.html','text!usercontrols/photo-player/templates/image-thumbs.html', 'facade', 'views', 'utils', 'vendor', 'votes/models/vote' ], function(require, layoutTemplate,imageThumbsTemplate) {
+define(['require', 'text!usercontrols/photo-player/templates/player.html','text!usercontrols/photo-player/templates/image-thumbs.html', 'facade', 'views', 'utils', 'vendor', 'votes/models/vote','jwplayer'], function(require, layoutTemplate,imageThumbsTemplate) {
 
 	var self, facade = require('facade'), views = require('views'), SectionView = views.SectionView, 
 	utils = require('utils'), Channel = utils.lib.Channel, vendor = require('vendor'), 
 	Mustache = vendor.Mustache, $ = facade.$, voteModel = require('votes/models/vote');
+	console.log("jwplayer",jwplayer);
+	jwplayer.key = "yXOw2TpDcCoCnbWyVSCoEYA4tepkpjiVEtLEfSBIfZQ=";
+
 	//Models
 	PhotoPlayerView = SectionView.extend({
 		template : layoutTemplate,
@@ -264,6 +267,10 @@ define(['require', 'text!usercontrols/photo-player/templates/player.html','text!
 		},
 		
 		loadImage: function(trigger) {
+
+			if(!$('div#video_container').hasClass('hidden')) $('div#video_container').addClass('hidden');
+			if($('div.loading_image').hasClass('hidden')) $('div.loading_image').removeClass('hidden');
+
 			var _self = this, mpay = this.json[_self.index].payload, extra = {
 				_enttypes_id : mpay.enttypes_id,
 				_id : mpay.id,
@@ -284,6 +291,7 @@ define(['require', 'text!usercontrols/photo-player/templates/player.html','text!
 			switch(mpay.enttypes_id) {
 				case '23':
 					//videos
+					this.setupVideo(mpay);
 					extra._thumbnail = mpay.thumbs;
 					extra._label = mpay.media.name;
 					extra._link = "javascript: void(0);";
@@ -373,6 +381,59 @@ define(['require', 'text!usercontrols/photo-player/templates/player.html','text!
 			this.$el.find('.thumb-image-list-h li').removeClass('selected-photo-thumb');
 			this.$el.find('.thumb-link-h[data-index='+this.index+']').parents('li').addClass('selected-photo-thumb');
 			routing.trigger('photo-player-section-reload', extra._enttypes_id, extra._media_id);
+		},
+
+		setupVideo: function(mpay)
+		{
+
+			var self = this;
+			function videoShit(){
+				var jw = jwplayer("jw_container");
+				var c_el = self.$el;
+				var jps = {},sources = [];
+				for(var i=0;i<mpay.video_type.length;i++)
+				{
+					console.log(mpay.video_type[i]);
+					var thissource;
+					thissource = {file:mpay.video_type[i].meta_details.url};
+					sources.push(thissource);
+				}
+				jps.playlist = [{
+					image : mpay.thumbs,
+					mediaid : mpay.media.name,
+					sources : sources
+				}];
+				jps.title = mpay.media.name;
+				jps.primary = "html5";
+				jps.duration = mpay.video_type[0].meta_details.duration_in_ms * 1000;
+				jps.modes = [
+					{ type:"html5", src:"http://s3.amazonaws.com/mikewbucket/jw/jwplayer.html5.js"},
+					{ type:"flash", src:"http://s3.amazonaws.com/mikewbucket/jw/jwplayer.flash.swf" }
+				];
+				jps.skin = "http://s3.amazonaws.com/mikewbucket/jw/skins/glow.xml";
+				jps.height = (c_el.height()) * .8;
+				jps.width = c_el.width();
+				console.log(jps);
+				jw.setup(jps);
+			}
+
+			var checkforjw = setInterval(function(){
+
+
+				var jwc = $('#jw_container');
+				if(jwc.length > 0)
+				{
+					clearInterval(checkforjw);
+					videoShit();
+				}
+				else{
+					console.log("adding video thing");
+					$('div.image-bg div.loading_image').addClass('hidden');
+					$('div#video_container').removeClass('hidden');
+					var $container = $("<div></div>").attr('id','jw_container');
+					$('div#video_container').append($container).removeClass('hidden');
+				}
+			},500);
 		},
 
 		showImage: function($el){

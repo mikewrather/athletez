@@ -32,6 +32,7 @@ require.config({
 //	    'plupload-full'          : '/vendor/plugins/plupload.full.min',
 	    'plupload'          : '/plupload/js/plupload.full',
 //	    'jq.plupload'       : "/plupload/js/jquery.ui.plupload/jquery.ui.plupload",
+	    'jwplayer'          : "http://s3.amazonaws.com/mikewbucket/jw/jwplayer",
         
         'custom'       : '/vendor/custom',
 
@@ -113,6 +114,9 @@ require.config({
 		    deps: ['jquery']
 	    },
 	    'plupload': {
+		    deps: ['jquery']
+	    },
+	    'jwplayer': {
 		    deps: ['jquery']
 	    },
 	    'jqueryui' : {
