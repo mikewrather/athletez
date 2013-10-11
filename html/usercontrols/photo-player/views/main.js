@@ -264,6 +264,47 @@ define(['require', 'text!usercontrols/photo-player/templates/player.html','text!
 			setTimeout(function() {
 				_self.changeThumbPosition();				
 			}, 1000);
+
+			this.thumbScroll();
+		},
+
+		thumbScroll: function()
+		{
+
+			var self = this;
+			function moveul(li)
+			{
+				var fullsize = $('div.thumbs-outer').width(),
+				ratio = 200 / fullsize;
+
+				function leftrange(pos)	{return pos < (fullsize/2);}
+				function getRate(direction,pos)
+				{
+					var rate;
+					if(direction=='left') rate = ratio * pos;
+					else rate = 200-(pos * ratio);
+					rate = rate < 1 ? 1 : rate;
+					return 100/rate;
+				}
+				function moveList(direction,rate)
+				{
+					var scroll = (direction=="right") ? $('div.thumbs-outer').offset().left - rate : $('div.thumbs-outer').offset().left + rate;
+					self.$el.find(".thumbs-outer").animate({scrollLeft: scroll + 'px'}, 400);
+				}
+				li.bind('mousemove',function(e){
+					var mypos = e.pageX - $('div.thumbs-outer').offset().left, moverate,
+						direction = leftrange(mypos) ? "left" : "right;",
+						moverate = getRate(direction,mypos);
+					moveList(direction,moverate);
+				});
+			}
+
+			var chk_thumblist = setInterval(function(){
+				var li = $('ul.images-list li');
+				if(li.length > 0){	clearInterval(chk_thumblist); moveul(li);	}
+			},500);
+
+
 		},
 		
 		loadImage: function(trigger) {
