@@ -20,7 +20,6 @@ define([
 	"game/collections/images",
 	"game/collections/comments",
 	"game/collections/commentson",
-
 	"game/views/header",
 	"game/views/add-media",
 	"game/views/commenton-list",
@@ -266,14 +265,17 @@ define([
 		},
 
 		setupImageListView: function () {
-			var imageListView;
+			var self = this, imageListView;
 			imageListView = new ProfileImageListView({
 				collection: this.images,
 				name: "image list",
 				destination: "#image-wrap"
 			});
 			this.imageListView = imageListView;
-			Channel('image-upload-success').subscribe(this.updateImages);
+			//Channel('image-upload-success').subscribe(this.updateImages);
+			routing.on('image-upload-success', function(data) { 
+        			self.updateImages(data);
+        	});
 			this.scheme.push(imageListView);
 			this.layout.render();
 		},
