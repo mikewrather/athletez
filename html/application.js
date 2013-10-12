@@ -201,7 +201,7 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
 	    		
 	    		self.currentController = new HomeController({
 	    			route: "",
-	    			title: "Athletz"
+	    			title: "Athletez"
 	    		});
 	    	}
 	    	this.initialiRoutesInit(initHome);

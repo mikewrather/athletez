@@ -134,7 +134,6 @@ function(require, headerTemplate, selectSportTemplate) {
         
         // get user name by id
         getName: function() {
-        	console.error(this.model.get("payload"));
         	var title = this.model.get("payload").org_name;
         	
         	if(this.model.get("payload").complevels_obj.complevel_name)
