@@ -804,21 +804,7 @@ class Controller_Api_Base extends AuthController
 			$tag = ORM::factory('Site_Tag');
 			$tag->addTag($arguments);
 
-			//take care of other tags
-			if($this->request->post('tag')){
-
-				foreach($this->request->post('tag') as $subject_type_id => $subject_id){
-					usnet($tag);
-					$tag = ORM::factory('Site_Tag');
-					$tag->addTag(array(
-						"media_id" => $media_id,
-						"subject_type_id" => $subject_type_id,
-						"subject_id" => $subject_id
-					));
-					$tag->addTag($arguments);
-				}
-			}
-
+			if(strlen($this->request->post('tag')) > 0){ Site_Tag::addFromArray(json_decode($this->request->post('tag')),$media_id); }
 			return $result;
 		}
 		elseif(get_class($result) == 'ORM_Validation_Exception')

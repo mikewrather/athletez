@@ -187,9 +187,20 @@ class Model_Site_Tag extends Model_Site_Entdir
 
 	}
 
+	public static function addFromArray($array,$media_id)
+	{
+		foreach($array as $subject_type_id => $subject_id){
+			$tag = ORM::factory('Site_Tag');
+			$tag->addTag(array(
+				"media_id" => $media_id,
+				"subject_type_id" => $subject_type_id,
+				"subject_id" => $subject_id
+			));
+		}
+	}
+
 	protected function setLocation($subject_type_id,$subject_id)
 	{
-
 		$ent = Ent::eFact($subject_type_id,$subject_id);
 
 		$className = get_class($ent);
