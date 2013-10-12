@@ -133,6 +133,8 @@ function(require, profileHeaderTemplate, selectSportTemplate) {
 	            this.$('.sport-info-' + sport_id).stop().slideDown();
 	            routing.trigger("showTwmList", sport_id);
 	            //Channel('gamesports:select' + sport_id).publish();            
+        	} else {
+        		Channel('refresh-profilepage').publish();
         	}
         }
         
