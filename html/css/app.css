@@ -1155,10 +1155,6 @@ margin-top:10px;
 #regcontainer *{
     font-family: "HelveticaNeue", "Helvetica";
 }
-
-#imgpreview .selected{
-	border:2px solid #954121;
-}
 .search-result-outer {
 }
 
@@ -1175,4 +1171,3 @@ margin-top:10px;
 	right: 0;
 	margin-top: 30%;
 }
-
