@@ -799,9 +799,25 @@ class Controller_Api_Base extends AuthController
 
 		if(get_class($result) == 'Model_Media_Image')
 		{
-			$arguments['media_id'] = $result->media_id;
+			$media_id = $result->media_id;
+			$arguments['media_id'] = $media_id;
 			$tag = ORM::factory('Site_Tag');
 			$tag->addTag($arguments);
+
+			//take care of other tags
+			if($this->request->post('tag')){
+
+				foreach($this->request->post('tag') as $subject_type_id => $subject_id){
+					usnet($tag);
+					$tag = ORM::factory('Site_Tag');
+					$tag->addTag(array(
+						"media_id" => $media_id,
+						"subject_type_id" => $subject_type_id,
+						"subject_id" => $subject_id
+					));
+					$tag->addTag($arguments);
+				}
+			}
 
 			return $result;
 		}
