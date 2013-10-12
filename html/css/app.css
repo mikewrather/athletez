@@ -1214,3 +1214,29 @@ margin-top:10px;
 	background: #CCCCCC;
 	float: right;
 }
+
+/*      PLAY BUTTON     */
+.circle
+{
+    margin:-190px 30px 30px 30px;
+    width:130px;
+    height:130px;
+    border-radius:50%;
+    border:15px solid #fff;
+    font-size:50px;
+    background-color:transparent;
+    opacity:.2;
+}
+.circle:hover{ opacity:.4; }
+.play{
+    width: 0px;
+    height: 0px;
+    border-style: solid;
+    border-width: 50px 0 50px 86.6px;
+    border-color: transparent transparent transparent #fff;
+    position: relative;
+    left: 50%;
+    top: 50%;
+    margin-top: -51px;
+    margin-left: -32px;
+}

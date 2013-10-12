@@ -60,7 +60,7 @@ define(['vendor', 'views', 'utils', 'text!media/templates/image-item.html', 'vot
 							return $1.toUpperCase();
 						});
 				};
-
+			var show_play = false;
 			switch(mpay.enttypes_id)
 			{
 				case '23':
@@ -75,6 +75,7 @@ define(['vendor', 'views', 'utils', 'text!media/templates/image-item.html', 'vot
 						extra._thumbnail = mpay.thumbs;
 					}
 
+					show_play = true;
 					extra._label = mpay.media.name;
 					extra._link = "javascript: void(0);";
 					extra._has_link = false;
@@ -221,7 +222,16 @@ define(['vendor', 'views', 'utils', 'text!media/templates/image-item.html', 'vot
 					});
 			}
 
-			this.$el.find('.image-outer-h').mouseover(function() {
+			if(show_play){
+				this.$el.append('<div class="circle open-photo-player-h"><div class="play"></div></div>');
+			}
+
+			function show_details(e)
+			{
+				console.log($(this),e);
+
+			}
+			this.$el.find('.image-outer-h').mouseover(function(){
 				$(this).find('.detail-view').css({
 					'bottom' : '0px'
 				});
@@ -229,6 +239,17 @@ define(['vendor', 'views', 'utils', 'text!media/templates/image-item.html', 'vot
 					opacity : 90
 				});
 			});
+			this.$el.find('.circle').mouseover(function(){
+				$(this).parent().find('.detail-view').css({
+					'bottom' : '0px'
+				});
+				$(this).parent().find('.action-block').css({
+					opacity : 90
+				});
+			});
+
+		//	this.$el.find('.circle').mouseover(show_details());
+		//	this.$el.find('.play').mouseover(show_details());
 			
 			  this.$el.find('.vote-h').click(function(e) {
 	        	_self.vote(e);
