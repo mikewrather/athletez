@@ -9,6 +9,7 @@ function (HeaderView, MainView, FooterView) {
     var chromeBootstrap;
 
     chromeBootstrap = function () {
+        
     	
 		$('#main').unbind().empty();
         

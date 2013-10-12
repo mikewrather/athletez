@@ -15,7 +15,7 @@ require.config({
         'html5'        : '/vendor/html5',
         'zepto'        : '/vendor/zepto',
         'mustache'     : '/vendor/mustache',
-        'backbone'     : '/vendor/backbone',
+        'backbone'     : [cdn + 'vendor/backbone',s3 + 'vendor/backbone','/vendor/backbone'],
 		'underscore'   : '/vendor/underscore',
 		'jquery'       : '/vendor/jquery-2.0.0.min',
 		
@@ -29,9 +29,11 @@ require.config({
 		'fileupload'   :'/vendor/plugins/jquery.fileupload',
 		'jquery.ui.widget'	:'/vendor/plugins/jquery.ui.widget',
         'jquery.slimscroll' : '/vendor/plugins/jquery.slimscroll.min',
+	    'jquery.slimscroll.hor' : '/vendor/plugins/jquery.slimscroll.hor',
 //	    'plupload-full'          : '/vendor/plugins/plupload.full.min',
 	    'plupload'          : '/plupload/js/plupload.full',
 //	    'jq.plupload'       : "/plupload/js/jquery.ui.plupload/jquery.ui.plupload",
+	    'jwplayer'          : "http://s3.amazonaws.com/mikewbucket/jw/jwplayer",
         
         'custom'       : '/vendor/custom',
 
@@ -113,6 +115,9 @@ require.config({
 		    deps: ['jquery']
 	    },
 	    'plupload': {
+		    deps: ['jquery']
+	    },
+	    'jwplayer': {
 		    deps: ['jquery']
 	    },
 	    'jqueryui' : {

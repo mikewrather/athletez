@@ -31,7 +31,7 @@ define([
     
     "team/views/header",
     "team/views/add-media",
-    "sportorg/views/schedule-list",
+    //"sportorg/views/schedule-list",
     "sportorg/views/competitorteam-list",
     "team/views/commentof-list",
 	"team/views/commenton-list",
@@ -41,7 +41,7 @@ define([
     "team/views/comment-list",
     "team/views/menu",
     "media/models/image",
-    "schedules/views/schedule-list",
+    //"schedules/views/schedule-list",
     "roster/views/roster",
     "profile/views/fans-image-list"
     
@@ -68,8 +68,8 @@ define([
 		TeamCommentOnList = require("team/collections/commentson"),
         TeamHeaderView = require("team/views/header"),
         TeamAddMediaView = require("team/views/add-media"),
-        TeamOrgListView = require("schedules/views/schedule-list"),
-        TeamScheduleListView = require("sportorg/views/schedule-list"),
+       // TeamOrgListView = require("schedules/views/schedule-list"),
+       // TeamScheduleListView = require("sportorg/views/schedule-list"),
         TeamCompetitorTeamListView = require("sportorg/views/competitorteam-list"),
         TeamVideoListView = require("team/views/video-list"),
         TeamImageListView = require("team/views/image-list"),

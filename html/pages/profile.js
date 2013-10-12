@@ -27,7 +27,7 @@ define([
 	"profile/collections/fans",
 	"profile/views/header",
 	"profile/views/add-media",
-	"schedules/views/schedule-list",
+	//"schedules/views/schedule-list",
 	"user/views/related-list",
 	"user/views/fitnessbasic-list",
 	"profile/views/video-list",
@@ -58,7 +58,7 @@ console.log(app);
 			
 			ProfileHeaderView = require("profile/views/header"),
 			ProfileAddMediaView = require("profile/views/add-media"),
-			ProfileOrgListView = require("schedules/views/schedule-list"),
+			//ProfileOrgListView = require("schedules/views/schedule-list"),
 			ProfileRelatedListView = require("user/views/related-list"),
 			ProfileFitnessBasicListView = require("user/views/fitnessbasic-list"),
 			ProfileImageListView = require("profile/views/image-video-list"),

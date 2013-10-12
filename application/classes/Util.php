@@ -162,7 +162,7 @@ class Util {
 		$cdn = Kohana::$config->load('cdn');
 		foreach($cdn[$bucket] as $type)
 		{
-			if($type['type']==$cdntype){ return "http://".$type['domain'].$remainder; }
+			if($type['type']==$cdntype){ return "http://".$type['domain']."/cfx/st/mp4:".ltrim($remainder,'/'); }
 		}
 		return false;
 	}

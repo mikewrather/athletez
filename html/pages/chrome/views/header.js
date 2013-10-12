@@ -53,7 +53,8 @@ function (
             "click .signup-facebook": "signupFacebook",
             "click .signup-email": "signupUser",
             "click .account clearfix a": "login",
-            "click #userlogin":"userLogin"
+            "click #userlogin":"userLogin",
+            "click #logoutId" :"LogoutUser"
         },
 
         render: function () {
@@ -92,6 +93,7 @@ function (
         },
         userLogin:function(event){
                 event.preventDefault();
+                if(!this.logincontroller)
                this.logincontroller = new LoginController();
                routing.trigger("Login");
                
@@ -101,10 +103,30 @@ function (
         },
              
         signupFacebook: function(event) {
-                    event.preventDefault();
+                     event.preventDefault();
                      headView = new FbHeader();
                      headView.signupFacebook();
-         }
+         },
+         signupUser: function(event){
+
+                    event.preventDefault();
+                    
+                    this.signupc = new scontroller({"route":""});
+                    routing.trigger("register-basic");
+                    this.pop = new popupview();
+                  
+        },
+        LogoutUser:function(event){
+
+            event.preventDefault();
+            
+            
+
+            if(!this.logincontroller)
+              this.logincontroller = new LoginController();
+            routing.trigger("Logout",this.model);
+
+        }
         
       });
 

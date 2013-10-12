@@ -756,6 +756,11 @@
 			return false;
 		}
 
+		public function get_logout()
+		{
+			return $this->post_logout();
+		}
+
 		/**
 		 * post_savecrop() This is the method that can save the cropping information for an image being used as userpic.  It differs from those in the media controller in that it assumes this is going to be a userpic.
 		 *
