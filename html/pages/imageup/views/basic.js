@@ -49,6 +49,7 @@ function(require, imageBasicTemplate, selectAllTemplate,tagTemplate) {
 	
         template: imageBasicTemplate,
 		data :imageBasicTemplate,
+		tagCollection : [],
 
         initialize: function (options,attr) {
         	$("#errormsg, #preview").html("");
@@ -62,10 +63,13 @@ function(require, imageBasicTemplate, selectAllTemplate,tagTemplate) {
 
 				//ASSIGN CHANNEL FOR IMAGE TAGGING
 				//Channel('tag-team-image-success').destroy();
-				Channel('tag-team-image-success').unsubscribe(this.tagFunction);
+				// routing.off('tag-team-image-success');
+	        // routing.on('tag-team-image-success', function(data) {
+	        	// this.tagFunction(data);
+	        // });
+				Channel('tag-team-image-success').empty();
 				
-				Channel('tag-team-image-success').subscribe(this.tagFunction);
-//		debugger;
+				Channel('tag-team-image-success','nomemory').subscribe(this.tagFunction);
 			    this.setUpBottomView();		
 
 			$('#imgUploadModal').modal('show') ;
@@ -161,8 +165,6 @@ function(require, imageBasicTemplate, selectAllTemplate,tagTemplate) {
 			$("#imageup").attr("disabled", "disabled");
 			$(".closepreview").attr("disabled", "disabled");
 			$(".rotate").attr("disabled", "disabled");
-			console.log("SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS");
-			console.log($(".previewimg").length)
 			if($(".previewimg").length==0)
 			{
 				var msg={"msg":"Image Field Empty","color":"alert-error"};
@@ -183,6 +185,14 @@ function(require, imageBasicTemplate, selectAllTemplate,tagTemplate) {
 						for(var attrname in thiss.attr) {
 							data.append(attrname,thiss.attr[attrname]);
 						}
+						
+						// Assign Tag Data In Data
+						var tagIndex = $('#preview_'+i+"group").attr('tagIndex')
+						if(tagIndex != null && tagIndex > -1){
+							tagData = thiss.tagCollection[tagIndex] || {};
+							data.append('tag',JSON.stringify(tagData));
+						}
+
 						var dataum={"dataum":data,"id":i,"len":len};
 						routing.trigger("imageup-add-image", dataum);
 					}
@@ -204,6 +214,13 @@ function(require, imageBasicTemplate, selectAllTemplate,tagTemplate) {
 						for(var attrname in thiss.attr) {
 							data.append(attrname,thiss.attr[attrname]);
 						}	
+						// Assign Tag Data In Data
+						var tagIndex = $('#preview_'+i+"group").attr('tagIndex')
+						if(tagIndex != null && tagIndex > -1){
+							tagData = thiss.tagCollection[tagIndex] || {};
+							data.append('tag',JSON.stringify(tagData));
+						}
+						
 						var dataum={"dataum":data,"id":i,"len":$('#image_file')[0].files.length};
 						routing.trigger("imageup-add-image", dataum);
 					}
@@ -224,8 +241,6 @@ function(require, imageBasicTemplate, selectAllTemplate,tagTemplate) {
       },
       setUpTagView : function(){
       	//TagView      	
-      	//alert(self.id);    
-      	  	
 			var self = this;
 			this.tagView = new TagView({
 				model : this.model,
@@ -240,8 +255,16 @@ function(require, imageBasicTemplate, selectAllTemplate,tagTemplate) {
 			this.layout.render();
       },
       tagFunction : function(data){
-      	alert("this is tag finish function from basic.js");
-      	alert(JSON.stringify(data));
+      	// alert("this is tag finish function from basic.js");
+      	// alert(JSON.stringify(data));
+      	this.tagCollection.push(data);
+      	var selectedImages = $(".previewimg.selected");
+      	console.log("selected",selectedImages);
+      	var index = this.tagCollection.length - 1;
+      	if(index > -1)
+      	selectedImages.attr('tagIndex' , index);
+      	console.log("tagCollection" , this.tagCollection);
+      	this.setUpTagView();
       },
       
       selectAllImages : function(e){
