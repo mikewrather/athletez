@@ -56,10 +56,15 @@ function(require, imageBasicTemplate, selectAllTemplate,tagTemplate) {
         	
             SectionView.prototype.initialize.call(this, options);   
 			debug.log("Image upload basic view");   
-			this.attr=attr;      
+			this.attr=attr;    
 			this.files_drag=[];
 			this.scheme = options.scheme;
 			this.layout = options.layout;
+
+			if(this.attr)
+				this.sports_id = this.attr.sports_id || null;
+			else
+				this.sports_id = null;
 
 				//ASSIGN CHANNEL FOR IMAGE TAGGING
 				//Channel('tag-team-image-success').destroy();
@@ -249,6 +254,7 @@ function(require, imageBasicTemplate, selectAllTemplate,tagTemplate) {
 				name : "tag-image " + new Date().toString() ,
 				destination : "#image-tagging",
 				user_id : self.user_id || null,
+				sports_id : self.sports_id,
 				channel : 'tag-team-image-success',
 			});
 
