@@ -244,8 +244,6 @@ define([
                 position = $.inArray(this.imageListView, this.scheme);
                 if ( ~position ) this.scheme.splice(position, 1);
             }
-            
-            
         },
         
         handleDeferredsDynamic: function() {
@@ -417,6 +415,7 @@ define([
             this.imageListView = new TeamImageListView({
                 collection: this.images,
                 destination: "#image-wrap",
+                target_id : this.id,
                 name: "image_wrap "
             });
             
