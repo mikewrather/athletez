@@ -291,7 +291,8 @@ define([
 				barZ:9999,
 				wrapperPos:'absolute',
 				wrapperBottom:'0px',
-				opacity:.9
+				opacity:.7,
+				color:'#9cca3c'
 			});
 /*
 			var self = this;

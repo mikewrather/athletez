@@ -173,16 +173,10 @@ function(require, imageBasicTemplate, selectAllTemplate,tagTemplate) {
 			$("#imageup").attr("disabled", "disabled");
 			$(".closepreview").attr("disabled", "disabled");
 			$(".rotate").attr("disabled", "disabled");
-<<<<<<< HEAD
+
 			if($(".previewimg").length==0)
 			{
-=======
-			
-			
-			
-			
-			if($(".previewimg").length==0) {
->>>>>>> sanjay-branch
+
 				var msg={"msg":"Image Field Empty","color":"alert-error"};
 				routing.trigger("imageup-msg", msg);	
 				$("#imageup").removeAttr("disabled");
