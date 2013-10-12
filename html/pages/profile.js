@@ -380,6 +380,7 @@ console.log(app);
 				this.imageListView = new ProfileImageListView({
 					collection: this.images,
 					destination: "#image-wrap",
+					target_id : this.id,
 					//model: Backbone.Model.extend(),
 					name: "images View 2"
 				});

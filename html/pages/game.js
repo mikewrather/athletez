@@ -269,6 +269,7 @@ define([
 			imageListView = new ProfileImageListView({
 				collection: this.images,
 				name: "image list",
+				target_id : this.id,
 				destination: "#image-wrap"
 			});
 			this.imageListView = imageListView;

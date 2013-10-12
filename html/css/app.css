@@ -1206,3 +1206,11 @@ margin-top:10px;
 .container_batch_tag .section_inner{margin:5px 0;}
 .container_batch_tag .section_outer{margin:5px 0;}
 .bigger{font-size : 20px;}
+
+.image-drop-area {
+	border: 1px dotted #000;
+	width: 200px;
+	height: 200px;
+	background: #CCCCCC;
+	float: right;
+}
