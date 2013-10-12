@@ -48,8 +48,8 @@ define(["require", 'text!usercontrols/photo-player/templates/comments.html',
 			if(options.array) this.collectionArray = true;
 			if (options._collection) this._collection = options._collection;
 				this.modelHTML = '<div id="modalPopup" class="modal photo-frame-model hide fade model-popup-h">'+
-					'<div class="modal-body page-content-h">'+
 					'<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>'+
+					'<div class="modal-body page-content-h">'+
 					'<div class="photo-player-area-h photo-player"></div>'+
 					'<div class="photo-player-right-area"><div class="right-area-header"></div><div class="tags-area-h"></div><div class="comment-area coment-area-h"></div><div class="comment-input-outer-h comment-input-outer" class="clearfix"></div>'+
 					'</div></div></div>';

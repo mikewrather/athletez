@@ -56,6 +56,7 @@ define(['require', 'text!usercontrols/photo-player/templates/player.html','text!
 			//$current.parents('li').addClass('selected-photo-thumb');
 			this.index = $current.attr("data-index");
 			this.loadImage();
+			this.changeThumbPosition();
 		},
 		
 		backButton: function(e) {
@@ -182,9 +183,7 @@ define(['require', 'text!usercontrols/photo-player/templates/player.html','text!
 						extra._label = mpay.label;
 						extra._sublabel = "Coming Soon";
 						extra._link = "/#profile/" + mpay.id;
-	
 						if(mpay.hasOwnProperty('is_owner')) show_edit = mpay.is_owner;
-	
 						break;
 					case '8':
 						//games

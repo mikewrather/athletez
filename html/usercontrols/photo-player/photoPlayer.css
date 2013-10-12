@@ -130,16 +130,14 @@ div.right-arrow-container > img{
 }
 
 .images-list {
-    /*display: inline-block;*/
-    /*width: 100%;*/
+	padding: 0px 10px;
+	margin: 0;
     float: left;
-    /*position: relative;*/
 }
 
 .thumbs-outer {
     z-index: 1056;
     max-width: 100%;
-
     margin-top: 5px;
     height: 150px;
     overflow-x: scroll;
