@@ -1171,3 +1171,38 @@ margin-top:10px;
 	right: 0;
 	margin-top: 30%;
 }
+.m_top_50{margin-top:50px;
+	}
+.m_top_20{
+	 margin-top: 20px;
+}
+.m_bottom_10{
+	margin-bottom: 10px;
+}
+
+/*************ADDGAME**********************/
+.container_batch_tag{
+	text-align: left;
+	
+}
+.container_batch_tag h4{
+	font-size: 25px;
+	color : #888888;
+}
+.container_batch_tag .field-message{
+	background-color: rgba(0, 0, 0, 0);
+    border: medium none;
+    color: #77011C;
+    float: left;
+    font-size: 12px;
+    font-style: italic;
+    font-weight: normal;
+    margin-bottom: 4px;
+    margin-top: 4px;
+    width: 100%;
+}
+.container_batch_tag .margin{margin:4px 0;}
+.container_batch_tag input[type="text"]{margin:4px 0;}
+.container_batch_tag .section_inner{margin:5px 0;}
+.container_batch_tag .section_outer{margin:5px 0;}
+.bigger{font-size : 20px;}

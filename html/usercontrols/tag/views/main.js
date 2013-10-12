@@ -123,12 +123,14 @@ define(['require', 'text!usercontrols/tag/templates/layout.html', 'facade', 'vie
 			playersId : 'playerid',
 			cityId : 'cityid'
 		},
+		
 		inlineTemplates : {
 			sportOption : '{{#sports}}<option value="{{sport_id}}">{{sport_name}}</option>{{/sports}}',
 			compLevelOption : '{{#levels}}<option value="{{complevel_id}}">{{complevel_name}}</option>{{/levels}}',
 			seasonOption : '{{#seasons}}<option value="{{season_id}}">{{season_name}}</option>{{/seasons}}',
 			addPlayerText : '</br><input type="text" class="txt-tag-player-name_h additional_h" placeholder="Enter Name" value="" />'
 		},
+		
 		/*Messages Holds the messages, warning, alerts, errors, information variables*/
 		/*In Case of similar message create only one object and key*/
 		messages : {
@@ -146,7 +148,6 @@ define(['require', 'text!usercontrols/tag/templates/layout.html', 'facade', 'vie
 			self.setOptions(options);
 
 			this.init();
-
 		},
 
 		/*render displays the view in browser*/
@@ -162,17 +163,20 @@ define(['require', 'text!usercontrols/tag/templates/layout.html', 'facade', 'vie
 			} else {
 				this.channel = options.channel;
 			}
+			this.sports_id = options.sports_id || null
 		},
 
 		/*initialize must be a wrapper so any function definitions and calles must be called in init*/
 		init : function() {
 			self.setupView();
 		},
+		
 		setupView : function() {
 			self.setUpMainView();
 			self.fillSports();
 
 		},
+		
 		setUpMainView : function() {
 			var markup = Mustache.to_html(self.template, {});
 			$(self.el).html(markup);
@@ -260,6 +264,7 @@ define(['require', 'text!usercontrols/tag/templates/layout.html', 'facade', 'vie
 			$(self.destination).find(self.controls.secGame).fadeOut();
 			$(self.destination).find(self.controls.secTagTeam).fadeIn();
 			$(self.destination).find(self.controls.secFooterLinks).fadeOut();
+			$(self.destination).find(self.controls.btnTeamFinish).fadeOut();
 			$(e.target).hide();
 		},
 
@@ -566,7 +571,7 @@ define(['require', 'text!usercontrols/tag/templates/layout.html', 'facade', 'vie
 			if (teamId && teamId != "" && teamId != 0 && teamId && teamId != "" && teamId != 0) {
 				var teamName = $(self.destination).find(self.controls.txtTeamSchool).val();
 				data.teamName = teamName;
-				data.teamId = teamId;
+				data.id = teamId;
 				$(self.destination).find(self.controls.lblTeamName).html(teamName);
 
 				$(self.destination).find(self.controls.secTagTeam).fadeOut();
@@ -575,6 +580,8 @@ define(['require', 'text!usercontrols/tag/templates/layout.html', 'facade', 'vie
 				$(self.destination).find(self.controls.lnkPlayer).fadeIn();
 				$(self.destination).find(self.controls.lnkGame).fadeIn();
 				$(self.destination).find(self.controls.secFooterLinks).fadeIn();
+				
+				$(self.destination).find(self.controls.btnTeamFinish).fadeIn();
 			} else {
 				self.$(e.target).parents(self.controls.secTagTeam).find(self.controls.fieldMessage).html(self.messages.selectOrganization).stop().fadeIn();
 			}
@@ -586,6 +593,7 @@ define(['require', 'text!usercontrols/tag/templates/layout.html', 'facade', 'vie
 			$(self.destination).find(self.controls.secTagTeam).fadeOut();
 			$(self.destination).find(self.controls.secGame).fadeOut();
 			$(self.destination).find(self.controls.secPlayer).fadeIn();
+			$(self.destination).find(self.controls.btnTeamFinish).fadeOut();
 
 		},
 		addPlayer : function(e) {
@@ -667,7 +675,7 @@ define(['require', 'text!usercontrols/tag/templates/layout.html', 'facade', 'vie
 				if ($(this).attr(self.attributes.playersId) > 0) {
 					players.push({
 						name : $(this).val(),
-						user_id : $(this).attr(self.attributes.playersId)
+						id : $(this).attr(self.attributes.playersId)
 					})
 					playerNames += "," + $(this).val();
 
@@ -684,6 +692,7 @@ define(['require', 'text!usercontrols/tag/templates/layout.html', 'facade', 'vie
 				$(section).fadeIn();
 
 				$(self.destination).find(self.controls.secPlayer).fadeOut();
+				$(self.destination).find(self.controls.btnTeamFinish).fadeIn();
 
 			} else {
 				$(e.target).parents(self.controls.secGame).find(self.controls.fieldMessage).html(self.messages.selectPlayer).fadeIn();
@@ -699,6 +708,7 @@ define(['require', 'text!usercontrols/tag/templates/layout.html', 'facade', 'vie
 			$(self.destination).find(self.controls.secTagTeam).fadeOut();
 			$(self.destination).find(self.controls.secPlayer).fadeOut();
 			$(self.destination).find(self.controls.secGame).fadeIn();
+			$(self.destination).find(self.controls.btnTeamFinish).fadeOut();
 		},
 		bindGamesData : function(e) {
 			var sportid = $(self.destination).find(self.controls.hdnSportsId).val();
@@ -772,7 +782,7 @@ define(['require', 'text!usercontrols/tag/templates/layout.html', 'facade', 'vie
 				gameName = $(e.target).parents(self.controls.secGame).find(self.controls.spnGames).find(self.controls.dropdownHeader).text();
 				var data = {
 					game : {
-						game_id : gameId,
+						id : gameId,
 						game_name : gameName
 					}
 				};
@@ -783,6 +793,7 @@ define(['require', 'text!usercontrols/tag/templates/layout.html', 'facade', 'vie
 				$(section).fadeIn();
 
 				$(self.destination).find(self.controls.secGame).fadeOut();
+								$(self.destination).find(self.controls.btnTeamFinish).fadeIn();
 			} else {
 				var section = $(self.destination).find(self.controls.sectionSelectedGames);
 				$(section).find(self.controls.lblGameNames).html('');

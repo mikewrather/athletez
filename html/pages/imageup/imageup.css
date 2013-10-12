@@ -10,16 +10,17 @@
     vertical-align: middle;
     color: #CCCCCC;
     text-align: center;
-    font-size: 1.4em;
+    font-size: 16px;
     font-weight: normal;
-    font-family: "Avenir", "HelveticaNeue";
+    font-family: "HelveticaNeue",Helvetica,Arial,sans-serif;
+    width: 100%;
 }
 
 .previewimg {
     display: inline;
     float: left;
     margin: 10px 4px 80px;
-    height: 100px;
+    height: 250px;
 }
 
 #preview {
@@ -32,8 +33,7 @@
 }
 .tag_select_all{
 	float:left;
-	color : #999999;
-	border : 1px solid #999999;
+	color : #CCCCCC;
 }
 .m_top_10{
 	margin-top:10px;
@@ -52,10 +52,11 @@
 .previewimgsrc {
     height: inherit;
     position: relative;
+    float: left;
 }
 
 .previewrotate {
-    margin-bottom: 25%;
+  /*  margin-bottom: 25%;*/
 }
 
 .modal {
@@ -95,15 +96,15 @@
     width: 100%;
     float: left;
     height: 35%;
-    padding: 0%;
 }
 
 #image-tagging{
     width: 100%;
     float: left;
-    height: 50%;
+    text-align: none;
+/*    height: 50%;
     background-color: #f5f5f5;
-    padding: 0%;
+    padding: 0%; */
 }
 
 .main-body{
@@ -121,7 +122,8 @@
 }
 
 #imgUploadModal {
-    height: 700px;
+     max-height: 710px;
+    overflow-y: auto;
 }
 #Loginview {
 	height: 700px;
@@ -134,5 +136,43 @@ color: red;
 }
 
 #imgpreview .selected{
-	border:2px solid #954121;
+	border: 6px solid #954121;
+}
+
+.previewimg{
+	  border: 1px solid #CCCCCC;
+	position: relative;
+}
+.previewimg .lnkFooter{
+	background: none repeat scroll 0 0 #1B9FAE;
+    float: left;
+    font-size: 14px;
+    text-align: left;
+    width: 100%;
+  /*  margin-top: -32px; */
+    display:none;
+    bottom: 0;
+     position: absolute;
+}
+
+.previewimg .lnkFooter button{
+	background: none repeat scroll 0 0 rgba(0, 0, 0, 0);
+    border-radius: 0 0 0 0;
+    border-right: 2px solid #FFFFFF;
+    color: #FFFFFF;
+    float: left;
+    font-size: 14px;
+    text-shadow: none;
+    width: 100px;
+}
+.previewimg .lnkFooter button.close{
+	border: medium none;
+    font-size: 30px;
+    opacity: 1;
+    width: 56px;
+     padding: 6px 0;
+}
+.previewimg img {
+	border: none;
+	box-shadow: none;
 }
