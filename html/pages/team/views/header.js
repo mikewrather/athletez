@@ -134,14 +134,28 @@ function(require, headerTemplate, selectSportTemplate) {
         
         // get user name by id
         getName: function() {
-        	return this.model.get("payload").org_name;
+        	var title = this.model.get("payload").org_name;
+        	
+        	if(this.model.get("payload").complevels_obj.complevel_name)
+	        	title += " | "+ this.model.get("payload").complevels_obj.complevel_name;
+	        	
+	        if(this.model.get("payload").org_sport_link_obj.sport.sport_name)
+	        	title += " | "+ this.model.get("payload").org_sport_link_obj.sport.sport_name;	
+	        	
+	        if(this.model.get("payload").seasons_obj.season_name)
+	        	title += " | "+ this.model.get("payload").seasons_obj.season_name;
+	        	
+	       if(this.model.get("payload").year)
+	        	title += " | "+ this.model.get("payload").year;	
+	        	
+	       return title; 	
         },
         
         // Child views...
         childViews: {},
         
         render: function (domInsertion, dataDecorator, partials) {
-        	document.title = this.getName() ;
+        	document.title = this.getName();
             SectionView.prototype.render.call(this, domInsertion, dataDecorator, partials); 
         },
         
