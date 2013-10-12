@@ -109,7 +109,7 @@ function(require, imageBasicTemplate, selectAllTemplate,tagTemplate) {
 		        return function(e) {
 					var preview_id="preview_"+k;
 				  k++;
-				  dataum.push({"preview_id":preview_id,"width":"150","height":"150","filesrc":e.target.result,"title":escape(theFile.name)}); 
+				  dataum.push({"preview_id":preview_id,"width":"250","height":"250","filesrc":e.target.result,"title":escape(theFile.name)}); 
 				  if(k==files.length)
 				  {
 					data={"data":dataum};
@@ -143,7 +143,7 @@ function(require, imageBasicTemplate, selectAllTemplate,tagTemplate) {
 		        return function(e) {
 					var preview_id="preview_"+k;
 				  k++;
-				  dataum.push({"preview_id":preview_id,"width":"150","height":"150","filesrc":e.target.result,"title":escape(theFile.name)}); 
+				  dataum.push({"preview_id":preview_id,"width":"250","height":"250","filesrc":e.target.result,"title":escape(theFile.name)}); 
 				  if(k==files.length)
 				  {
 					data={"data":dataum};
@@ -231,6 +231,7 @@ function(require, imageBasicTemplate, selectAllTemplate,tagTemplate) {
         
        /*******************/
       setUpBottomView : function(){
+      	$("#main-content-tag-section").fadeIn();
 				      	this.setUpSelectAllView();
 				      	this.setUpTagView();
       },
