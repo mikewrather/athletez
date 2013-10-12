@@ -41,7 +41,7 @@ function(facade,  views,   utils,   ImageItemView,            ImageBoardView,   
 		},
 		
 		renderTemplate: function () {
-            var markup = Mustache.to_html(this.template);
+            var markup = Mustache.to_html(this.template, {target: this.target_id});
             this.$el.html(markup);
             return this;
        },

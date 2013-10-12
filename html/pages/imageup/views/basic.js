@@ -162,7 +162,14 @@ function(require, imageBasicTemplate, selectAllTemplate,tagTemplate) {
 			$(".closepreview").attr("disabled", "disabled");
 			$(".rotate").attr("disabled", "disabled");
 			
-			if(this.dropedImage) {
+			
+			
+			
+			if($(".previewimg").length==0) {
+				var msg={"msg":"Image Field Empty","color":"alert-error"};
+				routing.trigger("imageup-msg", msg);	
+				$("#imageup").removeAttr("disabled");
+			} else if (this.dropedImage) {
 				jQuery.each(this.dropedImage.data[0].drag_info, function(i, file) {
 					var data = new FormData();
 					if ($('#preview_'+i+"group").length > 0) {
@@ -180,15 +187,7 @@ function(require, imageBasicTemplate, selectAllTemplate,tagTemplate) {
 				});
 				this.files_drag=[];
 				$("#imageup").removeAttr("disabled");
-			}
-			
-			
-			if($(".previewimg").length==0) {
-				var msg={"msg":"Image Field Empty","color":"alert-error"};
-				routing.trigger("imageup-msg", msg);	
-				$("#imageup").removeAttr("disabled");
-			}
-			else if(this.files_drag.length>=1) {
+			} else if(this.files_drag.length>=1) {
 				var len=this.files_drag.length;
 				jQuery.each(this.files_drag, function(i, file) {
 					var data = new FormData();
