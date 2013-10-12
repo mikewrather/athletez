@@ -4,7 +4,18 @@
  // Requires `define`, `require`
  // Returns {Photo Player View} constructor
  */
-define(['require', 'text!usercontrols/photo-player/templates/player.html','text!usercontrols/photo-player/templates/image-thumbs.html', 'facade', 'views', 'utils', 'vendor', 'votes/models/vote','jwplayer'], function(require, layoutTemplate,imageThumbsTemplate) {
+define([
+	'require',
+	'text!usercontrols/photo-player/templates/player.html',
+	'text!usercontrols/photo-player/templates/image-thumbs.html',
+	'facade',
+	'views',
+	'utils',
+	'vendor',
+	'votes/models/vote',
+	'jwplayer',
+	'jqueryui',
+	'jquery.slimscroll.hor'], function(require, layoutTemplate,imageThumbsTemplate) {
 
 	var self, facade = require('facade'), views = require('views'), SectionView = views.SectionView, 
 	utils = require('utils'), Channel = utils.lib.Channel, vendor = require('vendor'), 
@@ -270,7 +281,19 @@ define(['require', 'text!usercontrols/photo-player/templates/player.html','text!
 
 		thumbScroll: function()
 		{
-
+			this.$el.find('.thumbs-outer').slimscrollHorizontal({
+				height: '110px',
+				width: '100%',
+				alwaysVisible: false,
+				start: 'left',
+				position: 'bottom',
+				wheelStep: 10,
+				barZ:9999,
+				wrapperPos:'absolute',
+				wrapperBottom:'0px',
+				opacity:.9
+			});
+/*
 			var self = this;
 			function moveul(li)
 			{
@@ -303,9 +326,7 @@ define(['require', 'text!usercontrols/photo-player/templates/player.html','text!
 				var li = $('ul.images-list li');
 				if(li.length > 0){	clearInterval(chk_thumblist); moveul(li);	}
 			},500);
-
-
-		},
+*/	},
 		
 		loadImage: function(trigger) {
 
