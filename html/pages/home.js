@@ -147,6 +147,9 @@ define(
 		        },
 		        
 		        changeViewFilter : function(str) {
+		        	
+		        	
+		        	
 		        	if(str.submenu === 'browse') {
 		        		options = {'orderby': str.value};
 		        	} else {
@@ -176,19 +179,27 @@ define(
 				},
 				
 				resetFilter: function(page) {
+					
+					for(var i in this.menuValues) {
+						if(this.menuValues[i].input) {
+							$(this.menuValues[i].src).val("");
+						} else {
+							$(this.menuValues[i].src).removeClass("select");
+						}
+					}
+					
 					switch(page) {
 						case 'view':
 							for(var i in this.viewOptions) {
-								if(this.viewOptions[i] == "orderby")
+								if(this.viewOptions[i] == "orderby") {
+									$(".dropdown-menu .browse").removeClass('select');
 									this.urlOptions[this.viewOptions[i]] = "random";
-								else if(i == "time")
+								} else if(i == "time")
 									this.urlOptions[this.viewOptions[i]] = "today";
 							}
 						break;
 						case 'sports':
 							for(var i in this.sportsOptions) {
-								console.log(this.sportsOptions[i]);
-								console.log(this.urlOptions);
 								this.urlOptions[this.sportsOptions[i]] = "0";
 							}
 						break;
@@ -216,9 +227,6 @@ define(
 					imageList.fetch();
 					
 					$.when(imageList.request).done(function() {
-						console.log("Fetch Complete");
-						console.log(imageList.length);
-						
 						if(imageList.length < 12)
 							$(".right-arrow-page-h").addClass("disable-arrow-link");
 						else
@@ -236,7 +244,6 @@ define(
 						});
 						controller.layout.transition(viewName, view);
 					});
-					
 					for(var i in this.menuValues) {
 						if(this.menuValues[i].input) {
 							var val = $(this.menuValues[i].src).val();
@@ -244,7 +251,6 @@ define(
 							var val = $(this.menuValues[i].src).text();
 						}
 						
-						console.log(val);
 						if(val != '') {
 							$(this.menuValues[i].target).html(val);
 						} else {
@@ -312,9 +318,7 @@ define(
 
 				setupImageListView : function(viewName) {
 					var imageListView;
-
-					console.log(this.collections[viewName]);
-
+					
 					imageListView = new ImageListView({
 						collection : this.collections[viewName],
 						name : viewName,
@@ -389,8 +393,8 @@ define(
 					pageLayout = new LayoutView({
 						scheme : this.scheme,
 						destination : "#main",
-						template : pageLayoutTemplate,
-						displayWhen : "ready"
+						template : pageLayoutTemplate
+						// displayWhen : "ready"
 					});
 
 					this.layout = pageLayout;
