@@ -59,11 +59,10 @@ function(require, imageBasicTemplate, selectAllTemplate,tagTemplate) {
 			this.files_drag=[];
 			this.scheme = options.scheme;
 			this.layout = options.layout;
-
+			this.dropedImage = options.dropedImage;
 				//ASSIGN CHANNEL FOR IMAGE TAGGING
 				//Channel('tag-team-image-success').destroy();
 				Channel('tag-team-image-success').unsubscribe(this.tagFunction);
-				
 				Channel('tag-team-image-success').subscribe(this.tagFunction);
 //		debugger;
 			    this.setUpBottomView();		
@@ -77,6 +76,7 @@ function(require, imageBasicTemplate, selectAllTemplate,tagTemplate) {
 		    }); 
 		    console.log($(".modal-body").html());
         },
+        
        /*render displays the view in browser*/
        /*Use This To Add Any Other Functionality Along With Render*/
 		// render : function() {
@@ -109,7 +109,7 @@ function(require, imageBasicTemplate, selectAllTemplate,tagTemplate) {
 				  if(k==files.length)
 				  {
 					data={"data":dataum};
-					$('#image_file').attr('disabled', 'disabled')
+					$('#image_file').attr('disabled', 'disabled');
 					routing.trigger("imageup-preview", data);
 				  }
 				  _self.hideLoader();
@@ -161,16 +161,34 @@ function(require, imageBasicTemplate, selectAllTemplate,tagTemplate) {
 			$("#imageup").attr("disabled", "disabled");
 			$(".closepreview").attr("disabled", "disabled");
 			$(".rotate").attr("disabled", "disabled");
-			console.log("SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS");
-			console.log($(".previewimg").length)
-			if($(".previewimg").length==0)
-			{
+			
+			if(this.dropedImage) {
+				jQuery.each(this.dropedImage.data[0].drag_info, function(i, file) {
+					var data = new FormData();
+					if ($('#preview_'+i+"group").length > 0) {
+						data.append('image_file',file);
+						if($('#preview_'+i+'rotang').val()>0)
+							data.append('rotate',$('#preview_'+i+'rotang').val());
+						else
+							data.append('rotate',"false");
+						for(var attrname in thiss.attr) {
+							data.append(attrname,thiss.attr[attrname]);
+						}
+						var dataum={"dataum":data,"id":i,"len":len};
+						routing.trigger("imageup-add-image", dataum);
+					}
+				});
+				this.files_drag=[];
+				$("#imageup").removeAttr("disabled");
+			}
+			
+			
+			if($(".previewimg").length==0) {
 				var msg={"msg":"Image Field Empty","color":"alert-error"};
 				routing.trigger("imageup-msg", msg);	
 				$("#imageup").removeAttr("disabled");
 			}
-			else if(this.files_drag.length>=1)
-			{
+			else if(this.files_drag.length>=1) {
 				var len=this.files_drag.length;
 				jQuery.each(this.files_drag, function(i, file) {
 					var data = new FormData();

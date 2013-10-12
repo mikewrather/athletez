@@ -108,7 +108,8 @@
 }
 
 #imgUploadModal {
-    height: 700px;
+    height: 500px;
+    overflow-y: auto;
 }
 #Loginview {
 	height: 700px;
