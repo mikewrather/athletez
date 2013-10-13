@@ -572,11 +572,14 @@ define(['require', 'text!usercontrols/tag/templates/layout.html', 'facade', 'vie
 			var teamId = $(self.destination).find(self.controls.txtTeamSchool).attr(self.attributes.teamId);
 			self.team_id = teamId
 			var seasonId = $(self.destination).find(self.controls.ddlTeamSeason).val();
-			var data = {};
+			//var data = {};
+			var data = [];
 			if (teamId && teamId != "" && teamId != 0 && teamId && teamId != "" && teamId != 0) {
-				var teamName = $(self.destination).find(self.controls.txtTeamSchool).val();
-				data.teamName = teamName;
-				data.id = teamId;
+			var teamName = $(self.destination).find(self.controls.txtTeamSchool).val();
+			//	data.teamName = teamName;
+			//	data.id = teamId;
+			data.push(teamId);
+				
 				$(self.destination).find(self.controls.lblTeamName).html(teamName);
 
 				$(self.destination).find(self.controls.secTagTeam).fadeOut();
@@ -586,11 +589,14 @@ define(['require', 'text!usercontrols/tag/templates/layout.html', 'facade', 'vie
 				$(self.destination).find(self.controls.lnkGame).fadeIn();
 				$(self.destination).find(self.controls.secFooterLinks).fadeIn();
 				
-				$(self.destination).find(self.controls.btnTeamFinish).fadeIn();
+			//	$(self.destination).find(self.controls.btnTeamFinish).fadeIn();
 			} else {
 				self.$(e.target).parents(self.controls.secTagTeam).find(self.controls.fieldMessage).html(self.messages.selectOrganization).stop().fadeIn();
 			}
-			self.tagData.Team = data;
+			
+			//self.tagData.Team = data;
+			var newData ={5 : data};
+			Channel(self.channel).publish(newData);
 		},
 
 		/***********************TAG PLAYER SECTION STARTS HERE*********************************************/
@@ -676,13 +682,16 @@ define(['require', 'text!usercontrols/tag/templates/layout.html', 'facade', 'vie
 		donePlayerTagging : function(e) {
 			var players = [];
 			var playerNames = "";
+			var nData = [];
 			$(self.destination).find(self.controls.txtPlayerName).each(function() {
-				if ($(this).attr(self.attributes.playersId) > 0) {
+				var playerId = $(this).attr(self.attributes.playersId);
+				if (playerId > 0) {
 					players.push({
 						name : $(this).val(),
-						id : $(this).attr(self.attributes.playersId)
+						id : playerId
 					})
 					playerNames += "," + $(this).val();
+					nData.push(playerId);
 
 				}
 			});
@@ -690,7 +699,7 @@ define(['require', 'text!usercontrols/tag/templates/layout.html', 'facade', 'vie
 				var data = {
 					players : players
 				};
-				self.tagData.Player = data;
+				//self.tagData.Player = data;
 
 				var section = $(self.destination).find(self.controls.sectionSelectedPlayers);
 				$(section).find(self.controls.lblPlayerNames).html(playerNames);
@@ -698,6 +707,9 @@ define(['require', 'text!usercontrols/tag/templates/layout.html', 'facade', 'vie
 
 				$(self.destination).find(self.controls.secPlayer).fadeOut();
 				$(self.destination).find(self.controls.btnTeamFinish).fadeIn();
+				
+			var newData ={1 : nData};
+			Channel(self.channel).publish(newData);
 
 			} else {
 				$(e.target).parents(self.controls.secGame).find(self.controls.fieldMessage).html(self.messages.selectPlayer).fadeIn();
@@ -792,13 +804,20 @@ define(['require', 'text!usercontrols/tag/templates/layout.html', 'facade', 'vie
 					}
 				};
 
+				var gData = [];
+				gData.push(gameId);
+
 				self.tagData.Game = data;
 				var section = $(self.destination).find(self.controls.sectionSelectedGames);
 				$(section).find(self.controls.lblGameNames).html(gameName);
 				$(section).fadeIn();
 
 				$(self.destination).find(self.controls.secGame).fadeOut();
-								$(self.destination).find(self.controls.btnTeamFinish).fadeIn();
+				$(self.destination).find(self.controls.btnTeamFinish).fadeIn();
+				
+			var newData ={8 : gData};
+			Channel(self.channel).publish(newData);
+			
 			} else {
 				var section = $(self.destination).find(self.controls.sectionSelectedGames);
 				$(section).find(self.controls.lblGameNames).html('');
@@ -808,7 +827,7 @@ define(['require', 'text!usercontrols/tag/templates/layout.html', 'facade', 'vie
 		},
 
 		finishTagging : function() {
-			Channel(self.channel).publish(this.tagData);
+			//Channel(self.channel).publish(this.tagData);
 		}
 	});
 	return TagView;

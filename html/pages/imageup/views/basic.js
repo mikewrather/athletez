@@ -50,6 +50,16 @@ function(require, imageBasicTemplate, selectAllTemplate,tagTemplate) {
         template: imageBasicTemplate,
 		data :imageBasicTemplate,
 		tagCollection : [],
+		tagData : {
+			1 : [],
+			5 : [],
+			8 : []
+		},
+		const : {
+			User : 1,
+			Team : 5,
+			Game : 8
+		},
 
         initialize: function (options,attr) {
         	$("#errormsg, #preview").html("");
@@ -84,7 +94,7 @@ function(require, imageBasicTemplate, selectAllTemplate,tagTemplate) {
 			$('#imgUploadModal').on('hide', function () {
 		    	routing.trigger('refresh-onImageUpload');
 		    }); 
-		    console.log($(".modal-body").html());
+		    //console.log($(".modal-body").html());
         },
        /*render displays the view in browser*/
        /*Use This To Add Any Other Functionality Along With Render*/
@@ -192,11 +202,13 @@ function(require, imageBasicTemplate, selectAllTemplate,tagTemplate) {
 						}
 						
 						// Assign Tag Data In Data
-						var tagIndex = $('#preview_'+i+"group").attr('tagIndex')
-						if(tagIndex != null && tagIndex > -1){
-							tagData = thiss.tagCollection[tagIndex] || {};
-							data.append('tag',JSON.stringify(tagData));
-						}
+						var t = thiss.getTagData($('#preview_'+i+"group"));
+						data.append('tag',JSON.stringify(t));
+						// var tagIndex = $('#preview_'+i+"group").attr('tagIndex')
+						// if(tagIndex != null && tagIndex > -1){
+							// tagData = thiss.tagCollection[tagIndex] || {};
+							// data.append('tag',JSON.stringify(tagData));
+						// }
 
 						var dataum={"dataum":data,"id":i,"len":len};
 						routing.trigger("imageup-add-image", dataum);
@@ -207,7 +219,7 @@ function(require, imageBasicTemplate, selectAllTemplate,tagTemplate) {
 			}
 			else
 			{
-				console.log($('#image_file')[0].files.length + "=file prasobh");
+			//	console.log($('#image_file')[0].files.length + "=file prasobh");
 				jQuery.each($('#image_file')[0].files, function(i, file) {
 					var data = new FormData();
 					if ($('#preview_'+i+"group").length > 0) {
@@ -220,11 +232,14 @@ function(require, imageBasicTemplate, selectAllTemplate,tagTemplate) {
 							data.append(attrname,thiss.attr[attrname]);
 						}	
 						// Assign Tag Data In Data
-						var tagIndex = $('#preview_'+i+"group").attr('tagIndex')
-						if(tagIndex != null && tagIndex > -1){
-							tagData = thiss.tagCollection[tagIndex] || {};
-							data.append('tag',JSON.stringify(tagData));
-						}
+						var t = thiss.getTagData($('#preview_'+i+"group"));
+						data.append('tag',JSON.stringify(t));
+						// var tagIndex = $('#preview_'+i+"group").attr('tagIndex')
+						// if(tagIndex != null && tagIndex > -1){
+							// tagData = thiss.tagCollection[tagIndex] || {};
+							// data.append('tag',JSON.stringify(tagData));
+						// }
+						
 						
 						var dataum={"dataum":data,"id":i,"len":$('#image_file')[0].files.length};
 						routing.trigger("imageup-add-image", dataum);
@@ -234,17 +249,50 @@ function(require, imageBasicTemplate, selectAllTemplate,tagTemplate) {
 			}
         },
         
+        getTagData : function(control){
+        //	console.log("tagData",this.tagData);
+        	var gameIndex = $(control).attr('gameIndex');
+        	var teamIndex = $(control).attr('teamIndex');
+        	var userIndex = $(control).attr('userIndex');
+        	// User : 1,
+			// Team : 5,
+			// Game : 8
+        	var tag = {
+        		1 : [],
+        		5 : [],
+        		8 : []
+        	};
+        	if(gameIndex > -1){
+        		var d = this.tagData[this.const.Game][gameIndex];
+        		if(d)
+        		tag[this.const.Game] = d;
+        	}
+        	if(teamIndex > -1){
+        		var d = this.tagData[this.const.Team][teamIndex];
+        		if(d)
+        		tag[this.const.Team] = d;
+        	}
+        	if(userIndex > -1){
+        		var d = this.tagData[this.const.User][userIndex];
+        		if(d)
+        		tag[this.const.User] = d;
+        	}
+				return tag;
+        },
        /*******************/
+      
       setUpBottomView : function(){
       	$("#main-content-tag-section").fadeIn();
 				      	this.setUpSelectAllView();
 				      	this.setUpTagView();
       },
+      
       setUpSelectAllView : function(){
       		var self = this;
 			$("#select-allup").html(selectAllTemplate);  
 			
       },
+      
       setUpTagView : function(){
       	//TagView      	
 			var self = this;
@@ -261,17 +309,40 @@ function(require, imageBasicTemplate, selectAllTemplate,tagTemplate) {
 			this.scheme.push(this.tagView);
 			this.layout.render();
       },
+      
       tagFunction : function(data){
       	// alert("this is tag finish function from basic.js");
-      	// alert(JSON.stringify(data));
+      	var self = this;
+      	//alert(JSON.stringify(data));
       	this.tagCollection.push(data);
+      	var index = 0;
       	var selectedImages = $(".previewimg.selected");
       	console.log("selected",selectedImages);
-      	var index = this.tagCollection.length - 1;
-      	if(index > -1)
-      	selectedImages.attr('tagIndex' , index);
-      	console.log("tagCollection" , this.tagCollection);
-      	this.setUpTagView();
+      	for(var key in data){
+      		self.tagData[key] = self.tagData[key] || [];
+      		
+      		//for(var k in data[key]){
+      			self.tagData[key].push(data[key]);
+      		//}
+      		//debugger;
+      		index = self.tagData[key].length - 1;
+      		if(key == self.const.Game){
+      			selectedImages.attr('gameIndex' , index);
+      		}
+      		else if(key == self.const.Team){
+      			selectedImages.attr('teamIndex' , index);
+      		} 
+      		else if(key == self.const.User){
+      			selectedImages.attr('userIndex' , index);
+      		}
+
+      	}
+//       	
+      	      	// //var index = this.tagCollection.length - 1;
+      	// if(index > -1)
+      	// selectedImages.attr('tagIndex' , index);
+      	// console.log("tagCollection" , this.tagCollection);
+      //	this.setUpTagView();
       },
       
       selectAllImages : function(e){
