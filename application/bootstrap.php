@@ -96,7 +96,7 @@ elseif (
 ){
 	// Localhost
 	Kohana::$environment = Kohana::PRODUCTION;
-	$base_url = "http://cdn.athletez.com/resources/html_build/";
+	$base_url = "/";
 	$use_cdn = true;
 
 	// Turn off notices and strict errors
