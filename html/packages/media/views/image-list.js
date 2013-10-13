@@ -79,7 +79,7 @@ function(facade,  views,   utils,   ImageItemView,            ImageBoardView,   
 		
 		openImageUploader: function(file) {
 			console.error(this.collection);
-			 var id = $('.selected-sport-h').data('id'), url = "/api/user/addimage/"+ this.target_id,
+			 var id = this.sport_id, url = this.target_url+ this.target_id,
 			    attr = {
 				    "sports_id" : id
 			    }, image = file;
@@ -99,7 +99,8 @@ function(facade,  views,   utils,   ImageItemView,            ImageBoardView,   
         		this.collection = options.collection;
         		
         	this.target_id = options.target_id;	
-        		
+        	this.target_url = options.target_url;
+        	this.sport_id = options.sport_id;
 			// render template
 			this.renderTemplate();
 	        //console.log(options);

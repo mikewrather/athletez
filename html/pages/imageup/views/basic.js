@@ -170,6 +170,7 @@ function(require, imageBasicTemplate, selectAllTemplate,tagTemplate) {
 				routing.trigger("imageup-msg", msg);	
 				$("#imageup").removeAttr("disabled");
 			} else if (this.dropedImage) {
+				var len=this.files_drag.length;
 				jQuery.each(this.dropedImage.data[0].drag_info, function(i, file) {
 					var data = new FormData();
 					if ($('#preview_'+i+"group").length > 0) {
@@ -179,9 +180,11 @@ function(require, imageBasicTemplate, selectAllTemplate,tagTemplate) {
 						else
 							data.append('rotate',"false");
 						for(var attrname in thiss.attr) {
+							console.error(attrname,thiss.attr[attrname]);
 							data.append(attrname,thiss.attr[attrname]);
 						}
 						var dataum={"dataum":data,"id":i,"len":len};
+						console.log(dataum);
 						routing.trigger("imageup-add-image", dataum);
 					}
 				});
@@ -198,9 +201,11 @@ function(require, imageBasicTemplate, selectAllTemplate,tagTemplate) {
 						else
 							data.append('rotate',"false");
 						for(var attrname in thiss.attr) {
+							console.error(attrname,thiss.attr[attrname]);
 							data.append(attrname,thiss.attr[attrname]);
 						}
 						var dataum={"dataum":data,"id":i,"len":len};
+						console.log(dataum);
 						routing.trigger("imageup-add-image", dataum);
 					}
 				});
