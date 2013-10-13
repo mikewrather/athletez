@@ -804,7 +804,7 @@ class Controller_Api_Base extends AuthController
 			$tag = ORM::factory('Site_Tag');
 			$tag->addTag($arguments);
 
-			if(strlen($this->request->post('tag')) > 0){ Site_Tag::addFromArray(json_decode($this->request->post('tag')),$media_id); }
+			if(strlen($this->request->post('tag')) > 0){ Model_Site_Tag::addFromArray(json_decode($this->request->post('tag')),$media_id); }
 			return $result;
 		}
 		elseif(get_class($result) == 'ORM_Validation_Exception')

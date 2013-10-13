@@ -4,7 +4,7 @@ class View_Index
 {
 	public $title = "Athletez - We Are Athletez";
     public $testpath = NULL;
-	private $force_cdn = true;
+	private $force_cdn = false;
 
     public function base_url() {
         return URL::base(true);

@@ -150,14 +150,19 @@ class Model_Site_Tag extends Model_Site_Entdir
 
 	public function addTag($args = array()){
 		extract($args);
+
+		$match = ORM::factory("Site_Tag");//find existing entry
+
 		if(isset($subject_type_id))
 		{
 			$this->subject_enttypes_id = $subject_type_id;
+			$match->where('subject_enttypes_id','=',$subject_type_id);
 		}
 
 		if(isset($subject_id))
 		{
 			$this->subject_id = $subject_id;
+			$match->where('subject_id','=',$subject_id);
 		}
 
 		if(isset($users_id))
@@ -172,8 +177,11 @@ class Model_Site_Tag extends Model_Site_Entdir
 		if(isset($media_id))
 		{
 			$this->media_id = $media_id;
+			$match->where('media_id','=',$media_id);
 		}
 
+		$match->find();
+		if($match->loaded()) return $match;
 		$this->setLocation($subject_type_id,$subject_id);
 
 		try {
@@ -189,14 +197,18 @@ class Model_Site_Tag extends Model_Site_Entdir
 
 	public static function addFromArray($array,$media_id)
 	{
-		foreach($array as $subject_type_id => $subject_id){
-			$tag = ORM::factory('Site_Tag');
-			$tag->addTag(array(
-				"media_id" => $media_id,
-				"subject_type_id" => $subject_type_id,
-				"subject_id" => $subject_id
-			));
+	//	print_r($array);
+		foreach($array as $subject_type_id => $subject_arr){
+			foreach($subject_arr as $subject_id){
+				$tag = ORM::factory('Site_Tag');
+				$tag->addTag(array(
+					"media_id" => $media_id,
+					"subject_type_id" => $subject_type_id,
+					"subject_id" => $subject_id
+				));
+			}
 		}
+		return;
 	}
 
 	protected function setLocation($subject_type_id,$subject_id)
