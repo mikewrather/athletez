@@ -81,13 +81,16 @@ define(['require', 'text!usercontrols/photo-player/templates/player.html','text!
 			var $ul = this.$el.find(".thumb-image-list-h"), $li = this.$el.find(".selected-photo-thumb"),
 			liPos = $li.position(), ulPos = $ul.position(), ulWid = $ul.width(), scroll = 0, $tOuter = this.$el.find(".thumbs-outer"), outWid = $tOuter.width();
 			// get the li position 
-			if((liPos.left + $li.width()) > outWid) {
+			
+			if(liPos.left < 0) {
+				scroll = liPos.left + ulPos.left;
+			} else if((liPos.left + $li.width()) > outWid) {
 				scroll = liPos.left - outWid;
 				scroll += (ulPos.left < 0)?-(ulPos.left):-(ulPos.left);
 				scroll += $li.width() + 20;
 			} else {
 				var outerWid = (ulPos.left < 0)?-(ulPos.left):ulPos.left;
-				scroll = +(outerWid) - $li.width();//ulPos.left;
+				scroll = +(outerWid) - $li.width();
 			}
 			// scrol to teh position
 			if(scroll)
