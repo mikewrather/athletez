@@ -1203,8 +1203,8 @@ margin-top:10px;
 }
 .container_batch_tag .margin{margin:4px 0;}
 .container_batch_tag input[type="text"]{margin:4px 0;}
-.container_batch_tag .section_inner{margin:5px 0;}
-.container_batch_tag .section_outer{margin:5px 0;}
+.container_batch_tag .section_inner{margin:5px 0;float: left;}
+.container_batch_tag .section_outer{margin:5px 0;float: left;}
 .bigger{font-size : 20px;}
 
 .image-drop-area {
@@ -1240,3 +1240,4 @@ margin-top:10px;
     margin-top: -51px;
     margin-left: -32px;
 }
+.container_batch_tag .dropdown{height:30px;margin:5px 0}
