@@ -62,7 +62,7 @@ define(
 					Channel('load:css').publish(cssArr);
 					_.bindAll(this);
 					this.handleOptions(options);
-					 this.scheme = [];
+					this.scheme = [];
 					this.genderTypes = ['boys', 'girls', 'both'];
 					this.init();
 					return this;
@@ -129,11 +129,12 @@ define(
 		        
 		        initSections : function () {
 		        	this.setupMenuView();
-		        	this.setupLocationDDView();
 		        	_.each(this.genderTypes, this.setupSportListView);
 		        	_.each(['top-rated', 'search-result'], this.setupImageListView);
+		        	this.setupLocationDDView();
 		        	this.setupScheme();
 		        	this.setupLayout().render();
+		        	if(this.cityView) this.cityView.initPlugin();
 		        },
 		        
 		        updateBaseUrl : function(urlNumber) {
@@ -362,29 +363,21 @@ define(
 				},
 
 				setupLocationDDView : function() {
-					var stateListView, cityView,
+					var stateListView,
 					    stateViewName = 'state',
 					    cityModel = new CityModel(),
 					    cityViewName = 'city';
 					
-					//stateListView = new StateListView({
-					//	collection : this.collections[stateViewName],
-					//	name : stateViewName,
-					//	destination : "#location .state"
-					//});
-
-					cityView = new CityView({
+					this.cityView = new CityView({
 						model : cityModel,
 						name : cityViewName,
 						destination : "#location .city"
 					});
 					
-					//stateListView.render();
-					cityView.render();
-					this.sections[cityViewName] = cityView;
+					this.cityView.render();
+					
+					this.sections[cityViewName] = this.cityView;
 					this.meta.activeViews.push(cityViewName);
-					//this.sections[stateViewName] = stateListView;
-					//this.meta.activeViews.push(stateViewName);
 				},
 
 				setupLayout : function() {
@@ -393,8 +386,8 @@ define(
 					pageLayout = new LayoutView({
 						scheme : this.scheme,
 						destination : "#main",
-						template : pageLayoutTemplate
-						// displayWhen : "ready"
+						template : pageLayoutTemplate,
+						displayWhen : "ready"
 					});
 
 					this.layout = pageLayout;

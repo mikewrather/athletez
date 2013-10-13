@@ -8,7 +8,7 @@ define(["require", 'text!usercontrols/photo-player/templates/comments.html',
 	   "usercontrols/photo-player/views/main",
 	   "usercontrols/photo-player/views/comments",
 	   "usercontrols/photo-player/collections/tags",
-	   "usercontrols/photo-player/views/tags",
+	   "usercontrols/photo-player/views/tags"
 	    ], function(require, modelBoxCommentTemplate) {
 
 	var PhotoPlayerController, facade = require("facade"), Controller = require("controller"),

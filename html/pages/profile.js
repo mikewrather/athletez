@@ -381,6 +381,8 @@ console.log(app);
 					collection: this.images,
 					destination: "#image-wrap",
 					target_id : this.id,
+					target_url : "/api/user/addimage/",
+					sport_id: $(".selected-sport-h").data("id"),
 					//model: Backbone.Model.extend(),
 					name: "images View 2"
 				});
