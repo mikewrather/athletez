@@ -112,7 +112,7 @@ div.left-arrow-container{
     left:0px;
 }
 
-div.right-arrow-container > img, div.left-arrow-container > img{
+div.right-arrow-container > img, div.left-arrow-container > img {
     display: block;
     position: relative;
     top:40%;
@@ -131,7 +131,7 @@ div.right-arrow-container > img{
 
 .images-list {
 	padding: 0px 10px;
-	margin: 0;
+	margin: 35px 0 0 0;
     float: left;
 }
 

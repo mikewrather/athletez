@@ -1159,6 +1159,7 @@ margin-top:10px;
 #imgpreview .selected{
 	border:2px solid #954121;
 }
+
 .search-result-outer {
 }
 
@@ -1177,10 +1178,16 @@ margin-top:10px;
 }
 
 .image-drop-area {
-	border: 1px dotted #000;
+	border: 2px dashed #000;
 	width: 200px;
-	height: 200px;
+	text-align: center;
+	height: 220px;
 	background: #CCCCCC;
 	float: right;
+	margin-right: 20px;
 }
 
+
+.image-drop-area .drop-text {
+	margin-top: 25%;
+}
