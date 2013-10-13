@@ -4,7 +4,6 @@
 
 define(["require", 'text!usercontrols/photo-player/templates/comments.html',
 	   "facade", "controller", "models", "views",
-	   "user/models/basic_info",
 	   "usercontrols/photo-player/collections/comments",
 	   "usercontrols/photo-player/views/main",
 	   "usercontrols/photo-player/views/comments",
@@ -18,7 +17,6 @@ define(["require", 'text!usercontrols/photo-player/templates/comments.html',
 	 Channel = utils.lib.Channel, LayoutView = views.LayoutView,
 	Backbone = facade.Backbone,
 	// models
-	BasicModel = require("user/models/basic_info"),
 	
 	//collections
 	CommentsCollection = require("usercontrols/photo-player/collections/comments"),
