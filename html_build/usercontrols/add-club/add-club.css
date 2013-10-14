@@ -1,5 +1,5 @@
 .club-season-profile, .comptetion-level-type {
-	height: 50px;
+	height: 80px;
 }
 .address-verified {
 	border: 2px solid green;
@@ -10,4 +10,13 @@
 .address-error{
 	color: red;
 float: right;
+}
+.add-club-school-outer {
+	max-height: 500px;
+	height: 500px;
+	overflow-y: auto;
+	overflow-x: hidden; 
+}
+.location-buttons {
+	margin-top: 30px;
 }

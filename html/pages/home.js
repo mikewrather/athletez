@@ -91,9 +91,9 @@ define(
 					};
 					
 					this.menuValues = [
-						{src : '.view-options-h .browse.select', target: '.view-link-h .option-heading-h', input: false, defaultValue: 'VIEWS'},
-     					{src: '.sports-option-h .sport.select', target: '.sport-link-h', input: false, defaultValue: 'SPORT'},
-     					{src: '#city', target: '.location-link-h', input: true, defaultValue: 'LOCATION'}
+						{src : '.view-options-h .browse.select', target: '.view-link-h .option-heading-h', input: false, defaultValue: 'SORT'},
+     					{src: '.sports-option-h .sport.select', target: '.sport-link-h .option-heading-h', input: false, defaultValue: 'SPORT'},
+     					{src: '#city', target: '.location-link-h .option-heading-h', input: true, defaultValue: 'PLACE'}
 					];
 					
 					this.viewOptions = ['orderby', 'time'];

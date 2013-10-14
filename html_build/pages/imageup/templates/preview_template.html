@@ -1,11 +1,19 @@
 {{#data}} 
 	<div class="previewimg" id="{{preview_id}}group"align="center">
-		<div id="{{preview_id}}rot" class="previewrotate"><button id="{{preview_id}}pre img" value="{{preview_id}}" class="btn rotate">Rotate</button></div>
+		
 		<div class="previewimgsrc" id="{{preview_id}}pre" align="center">
 			<img src="{{filesrc}}" class="img-polaroid" width="{{width}}" height="{{height}}" title="{{title}}" draggable="false">
-			<button type="button" class="close closepreview" value ="{{preview_id}}"data-dismiss="{{preview_id}}">&times;</button>
+			<!-- <button type="button" class="close closepreview" value ="{{preview_id}}"data-dismiss="{{preview_id}}">&times;</button> -->
 			<input type="hidden" id="{{preview_id}}rotang" value="0">
 		</div>
+		<div class="clear"></div>
+		<div id="{{preview_id}}rot" class="previewrotate lnkFooter">
+			<button id="{{preview_id}}pre img" value="{{preview_id}}" class="btn rotate">Rotate</button>
+			<button type="button" class="btn" value ="{{preview_id}}"data-dismiss="{{preview_id}}">Sport</button>
+			<button type="button" class="btn close closepreview" value ="{{preview_id}}"data-dismiss="{{preview_id}}">&times;</button>
+		</div>
+		<div class="clear"></div>
 		<div id="{{preview_id}}" class="previewprogress"></div>
+		<div class="clear"></div>
 	</div>
 {{/data}} 

@@ -1,4 +1,4 @@
-.floatLeft {
+/*.floatLeft {
 	float: left;
 }
 .floatRight {
@@ -28,10 +28,26 @@ input[type='text'], select {
 	    font-size: 15px;
     height: auto;
 }
-
+*/
 label{   display: inline;}
 
 .pointer {cursor: pointer;}
 .ui-autocomplete{max-height: 250px;overflow-y:auto;overflow-x: :hidden;}
 select.displayNone, textarea.displayNone, input[type="text"].displayNone{display:none}
 
+.container_batch_tag .field-message{
+	background-color: rgba(0, 0, 0, 0);
+    border: medium none;
+    color: #77011C;
+    float: left;
+    font-size: 12px;
+    font-style: italic;
+    font-weight: normal;
+    margin-bottom: 4px;
+    margin-top: 4px;
+    width: 100%;
+}
+.container_batch_tag .margin{margin:4px 0;}
+.container_batch_tag input[type="text"]{margin:4px 0;border: 1px solid #777777;}
+.container_batch_tag .section_inner{margin:5px 0;}
+.container_batch_tag .section_outer{margin:5px 0;}

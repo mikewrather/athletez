@@ -165,7 +165,7 @@ define(["require",
 			this.registerFacebookView = new RegistrationFacebookView({
 				model : this.register_facebook,
 				name : "Registration with Facebook",
-				destination : "#main-content-reg"
+				destination : "#main-contentreg"
 				//destination:"#main-content-reg"
 			});
 			this.scheme.push(this.registerFacebookView);

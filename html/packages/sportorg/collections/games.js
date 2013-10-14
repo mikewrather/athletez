@@ -37,7 +37,21 @@ function(facade, collections, SportorgGameModel, utils) {
         },
         // **MEthod:** Override this function in inherited class if any action is required 
 		processResult : function (collection) {
-		}
+		},
+		ParseForDropdown : function(){
+    	var self = this;
+
+			var models = self.toJSON();
+			if (models.length) {
+				$.each(models, function(index, load) {
+					if (load != null && load.payload != null) {
+						var payload = load.payload;
+						load.payload.custom_name = payload.game_name;	
+					}
+				});
+			}
+			return models;
+    } 
 
     });
 

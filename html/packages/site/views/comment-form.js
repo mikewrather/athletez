@@ -8,13 +8,14 @@
 
 define([
         'require', 
-        'text!site/templates/comment-form.html', 
+        "text!site/templates/comment-form.html",
         'facade', 
         'views', 
         'site/models/comment'
-        ], function(require, commentFormTemplate) {
+        ], function(require) {
 
     var CommentFormView,
+	    commentFormTemplate = require("text!site/templates/comment-form.html"),
         facade = require('facade'),
         views = require('views'),
         CommentModel = require('site/models/comment'),

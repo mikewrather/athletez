@@ -22,7 +22,7 @@
 	background-clip: padding-box;
 }
 
-.dd:after {
+/*.dd:after {
 	border-color: #ffffff transparent;
 	border-width: 0 20px 20px 0.01px;
 	border-style: solid;
@@ -30,7 +30,7 @@
 	left : 0px;
 	position: absolute;
 	content: "";
-}
+}*/
 
 .select, .select a {
 	background-color: #0081C2;
@@ -59,8 +59,31 @@ li.sport:hover, li.sport a:hover {
 
 #menu {
 	float: left; width: 100%;
+
 }
 
+#menu #menu{
+    border: 8px solid #eaeaea;
+    width: 90%;
+    padding:15px 0 0 15px;
+}
+#menu .menu{
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+#menu .menu-link-h{
+    font-weight: bolder;
+    font-family: "Avenir", "HelveticaNeue";
+    font-size: 1.2em;
+    color:#333;
+    text-transform: uppercase;
+
+}
+
+.type-icons, .seach-box{
+    margin:0 15px 0 15px;
+}
 img.tiny-sport-icon{
     max-width: 20px;
     max-height: 20px;
@@ -80,4 +103,25 @@ li.sport.select a {
 
 li.sport a:hover {
 	color: #FFF;
+}
+
+.caret-large-container{
+    background-color: #333;
+    height: 14px;
+    width: 14px;
+    padding: 3px;
+    display: inline-block;
+    margin: 0 0 0 8px;
+    text-align: center;
+    top: 3px;
+    position: relative;
+}
+.caret-large{
+    width: 0px;
+    height: 0px;
+    border-style: solid;
+    border-width: 9px 6px 0 6px;
+    border-color: #FFF transparent transparent transparent;
+    display: inline-block;
+    margin: 0 0 3px 0;
 }

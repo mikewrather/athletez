@@ -23,9 +23,9 @@
 		'fileupload': 'vendor/plugins/jquery.fileupload',
 		'jquery.ui.widget': 'vendor/plugins/jquery.ui.widget',
 		'jquery.slimscroll': 'vendor/plugins/jquery.slimscroll.min',
-		//	    'plupload-full'          : '/vendor/plugins/plupload.full.min',
+		'jquery.slimscroll.hor' : 'vendor/plugins/jquery.slimscroll.hor',
 		'plupload': 'plupload/js/plupload.full',
-		//	    'jq.plupload'       : "/plupload/js/jquery.ui.plupload/jquery.ui.plupload",
+		'jwplayer'          : "empty:",
 
 		'custom': 'vendor/custom',
 
@@ -85,7 +85,12 @@
 		'home': 'pages/home',
 		'profilesetting': 'pages/profilesetting',
 		'userresume': 'pages/userresume',
-		'usercontrol': 'usercontrols/',
+		'usercontrol'       : 'usercontrols/',
+		'add-club'          : 'usercontrols/add-club/add-club',
+		'addgame'           : 'usercontrols/addgame/addgame',
+		'photo-player'      : 'usercontrols/photo-player/photo-player',
+		'tag'               : 'usercontrols/tag/tag',
+	//	'imagecropper'      : 'usercontrols/imagecropper/imagecropper',
 
 		// Application - bootstrap for frontend app
 		'application': 'application'
@@ -109,8 +114,7 @@
 			deps : ['jquery']
 		},
 		'jquerytimepicker' : {
-			deps : ['jquery','jqueryui'],
-
+			deps : ['jquery','jqueryui']
 		}
 
 	},
@@ -137,8 +141,11 @@
 		{
 			name: 'collections',
 			exclude: ['vendor', 'facade', 'utils', 'syncs', 'models', 'views']
-		},
-		{
+		}, /*
+
+		PAGES START
+
+	*/  {
 			name: 'chrome',
 			exclude: ['vendor', 'facade', 'utils', 'syncs', 'models', 'views', 'collections']
 		},
@@ -181,6 +188,33 @@
 		{
 			name: 'userresume',
 			exclude: ['vendor', 'facade', 'utils', 'syncs', 'models', 'views', 'collections']
+		},
+		{
+			name: 'login',
+			exclude: ['vendor', 'facade', 'utils', 'syncs', 'models', 'views', 'collections']
+		}, /*
+
+		END PAGES
+
+	  {
+			name: 'add-club',
+			exclude: ['vendor', 'facade', 'utils', 'syncs', 'models', 'views', 'collections']
+		},
+		{
+			name: 'addgame',
+			exclude: ['vendor', 'facade', 'utils', 'syncs', 'models', 'views', 'collections']
+		},
+		{
+			name: 'photo-player',
+			exclude: ['vendor', 'facade', 'utils', 'syncs', 'models', 'views', 'collections']
+		},
+		{
+			name: 'tag',
+			exclude: ['vendor', 'facade', 'utils', 'syncs', 'models', 'views', 'collections']
 		}
-	]
+	/*	{
+			name: 'imagecropper',
+			exclude: ['vendor', 'facade', 'utils', 'syncs', 'models', 'views', 'collections']
+		}
+*/	]
 })

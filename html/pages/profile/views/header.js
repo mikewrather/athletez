@@ -15,7 +15,7 @@ define([
         'vendor',
         'profile/collections/sports',
         'profile/views/sport-list',
-        , "utils/storage"
+        "utils/storage"
         ], 
 function(require, profileHeaderTemplate, selectSportTemplate) {
 

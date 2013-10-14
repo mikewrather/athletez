@@ -1,5 +1,5 @@
 define(["require",
-		"text!login/templates/layout.html", 
+		"text!login/templates/layout.html",
 		"facade", 
 		"controller", 
 		"models", 
@@ -7,28 +7,27 @@ define(["require",
 		"utils", 
 		"login/models/Loginmodel",
 		"login/views/Loginview",
-		"login/models/Logoutmodel",
-		
-	
+		"login/models/Logoutmodel"
 		], 
-		 function(require, pageLayoutTemplate) {
+		 function(require,pageLayoutTemplate) {
 
 				var SignupController,
-		 		facade = require("facade"), 
-		 		Controller = require("controller"), 
-		 		models = require("models"), 
-		 		views = require("views"), 
-		 		utils = require("utils"), 
-		 		loginBaseModel=require("login/models/Loginmodel"),
-		 		loginBaseView=require("login/views/Loginview"),
-		 		logoutBaseModel= require("login/models/Logoutmodel"),
+			        facade = require("facade"),
+			        Controller = require("controller"),
+			        models = require("models"),
+			        views = require("views"),
+			        utils = require("utils"),
+			        loginBaseModel=require("login/models/Loginmodel"),
+			        loginBaseView=require("login/views/Loginview"),
+			        logoutBaseModel= require("login/models/Logoutmodel"),
+		 		
  		
-		 		LayoutView = views.LayoutView, 
-		 		$ = facade.$,
-		 		_ = facade._,
-		 		debug = utils.debug,
-		 		Channel = utils.lib.Channel,
-		 		cssArr = ["/pages/imageup/imageup.css"];
+			        LayoutView = views.LayoutView,
+			        $ = facade.$,
+			        _ = facade._,
+			        debug = utils.debug,
+			        Channel = utils.lib.Channel,
+			        cssArr = ["/pages/imageup/imageup.css"];
 
 				LoginController = Controller.extend({
 
@@ -109,16 +108,21 @@ define(["require",
             			});
 
             			routing.off('Logout');
-            			routing.on('Logout', function() {
-            				controller.setupLogout();				
+            			routing.on('Logout', function(attr) {
+            				controller.setupLogout(attr);				
             			});
 					},
-					setupLogout:function(){
+					setupLogout:function(attr){
+						var current = this
 						this.logoutcheck = new logoutBaseModel()
 						this.logoutcheck.fetch()
 						$.when(this.logoutcheck.request).done(function(){
-							alert("done logout");
-							routing.trigger('reload-home');
+							// clearing header model to delete local storage
+							attr.clear();
+							location.href="/";
+							// to avoid page reload please uncomment below
+							//attr.attributes.authorized = false;
+							//routing.trigger('reload-home');
 						});
 
 					},

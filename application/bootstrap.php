@@ -65,6 +65,8 @@ ini_set('unserialize_callback_func', 'spl_autoload_call');
 I18n::lang('en-us');
 
 Cookie::$salt = "nawson";
+$cdn_url = "http://cdn.athletez.com/resources/html_build/";
+$s3_url = "http://athletez.s3.amazonaws.com/resources/html_build/";
 /**
  * Set Kohana::$environment if a 'KOHANA_ENV' environment variable has been supplied.
  *
@@ -81,6 +83,8 @@ if (strpos($_SERVER['HTTP_HOST'], 'newsite') !== FALSE || strpos($_SERVER['HTTP_
 	// Localhost
 	Kohana::$environment = Kohana::LOCALHOST;
 
+	$base_url = "/";
+	$use_cdn = false;
 	// Turn off notices and strict errors
 	error_reporting(E_ALL ^ E_NOTICE);
 }
@@ -92,12 +96,16 @@ elseif (
 ){
 	// Localhost
 	Kohana::$environment = Kohana::PRODUCTION;
+	$base_url = "http://cdn.athletez.com/resources/";
+	$use_cdn = true;
 
 	// Turn off notices and strict errors
 	error_reporting(E_ALL ^ E_NOTICE ^ E_STRICT);
 }
 else
 {
+	$base_url = "/";
+	$use_cdn = false;
 	// Localhost
 	Kohana::$environment = Kohana::DEVELOPMENT;
 
@@ -105,6 +113,12 @@ else
 	error_reporting(E_ALL ^ E_NOTICE ^ E_STRICT);
 }
 
+$GLOBALS['env_globals'] = array(
+	'base_url' => $base_url,
+	'use_cdn' => $use_cdn,
+	'cdn_url' => $cdn_url,
+	's3_url' => $s3_url
+);
 
 /**
  * Initialize Kohana, setting the default options.
@@ -122,7 +136,7 @@ else
  * - boolean  expose      set the X-Powered-By header                        FALSE
  */
 Kohana::init(array(
-	'base_url' => '/',
+	'base_url' => $base_url,
 	'index_file' => false,
 	'errors' => TRUE
 ));

@@ -84,7 +84,6 @@ define(["facade", "utils/debug"], function(facade, debug) {
             allowedFlags = ['once', 'memory', 'unique', 'stopOnFalse'], flagsOk;
 
 	    //debug.log(channels);
-
         if (!topic) {
             if (flags && typeof flags === 'string') {
                 flag = flags.split(' ');
@@ -96,6 +95,7 @@ define(["facade", "utils/debug"], function(facade, debug) {
                     }
                 });
                 if (flags === 'nomemory') {
+                	//debugger;
                     callbacks = Callbacks();
                 } else if (flagsOk) {
                     callbacks = Callbacks(flags);
@@ -111,7 +111,8 @@ define(["facade", "utils/debug"], function(facade, debug) {
                 publish: callbacks.fire,
                 subscribe: callbacks.add,
                 unsubscribe: callbacks.remove,
-                disable: callbacks.disable
+                disable: callbacks.disable,
+                empty : callbacks.empty
             };
             if (id) {
                 channels[id] = topic;

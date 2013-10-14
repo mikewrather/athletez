@@ -1176,6 +1176,41 @@ margin-top:10px;
 	right: 0;
 	margin-top: 30%;
 }
+.m_top_50{margin-top:50px;
+	}
+.m_top_20{
+	 margin-top: 20px;
+}
+.m_bottom_10{
+	margin-bottom: 10px;
+}
+
+/*************ADDGAME**********************/
+.container_batch_tag{
+	text-align: left;
+	
+}
+.container_batch_tag h4{
+	font-size: 25px;
+	color : #888888;
+}
+.container_batch_tag .field-message{
+	background-color: rgba(0, 0, 0, 0);
+    border: medium none;
+    color: #77011C;
+    float: left;
+    font-size: 12px;
+    font-style: italic;
+    font-weight: normal;
+    margin-bottom: 4px;
+    margin-top: 4px;
+    width: 100%;
+}
+.container_batch_tag .margin{margin:4px 0;}
+.container_batch_tag input[type="text"]{margin:4px 0;}
+.container_batch_tag .section_inner{margin:5px 0;float: left;}
+.container_batch_tag .section_outer{margin:5px 0;float: left;}
+.bigger{font-size : 20px;}
 
 .image-drop-area {
 	border: 2px dashed #000;
@@ -1186,6 +1221,34 @@ margin-top:10px;
 	float: right;
 	margin-right: 20px;
 }
+
+
+/*      PLAY BUTTON     */
+.circle
+{
+    margin:-190px 30px 30px 30px;
+    width:130px;
+    height:130px;
+    border-radius:50%;
+    border:15px solid #fff;
+    font-size:50px;
+    background-color:transparent;
+    opacity:.2;
+}
+.circle:hover{ opacity:.4; }
+.play{
+    width: 0px;
+    height: 0px;
+    border-style: solid;
+    border-width: 50px 0 50px 86.6px;
+    border-color: transparent transparent transparent #fff;
+    position: relative;
+    left: 50%;
+    top: 50%;
+    margin-top: -51px;
+    margin-left: -32px;
+}
+.container_batch_tag .dropdown{height:30px;margin:5px 0}
 
 
 .image-drop-area .drop-text {

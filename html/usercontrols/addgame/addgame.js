@@ -16,7 +16,7 @@ define(["require", "text!usercontrols/addgame/templates/layout.html",
 	   
 	    
 	    //Views
-	    "usercontrols/addgame/views/main",
+	    "usercontrols/addgame/views/main"
 	     
 	    ], function(require, pageLayoutTemplate) {
 
@@ -134,10 +134,10 @@ define(["require", "text!usercontrols/addgame/templates/layout.html",
 				destination : (this.popup)?".page-content-h":"#main",
 				user_id : self.id,
 				channel : 'add-game-success',
-				// sports_id : "7",
-				// teams_id : "49",
-				sports_id : this.sports_id,
-				teams_id : this.teams_id
+			sports_id : "2",
+			teams_id : "49",
+				// sports_id : this.sports_id,
+				// teams_id : this.teams_id
 			});
 
 			this.scheme.push(this.addGameView);
