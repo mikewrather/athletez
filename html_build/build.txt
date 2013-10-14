@@ -624,6 +624,11 @@ pages/team/views/comment-form.js
 pages/team/views/comment-list.js
 text!team/templates/menu.html
 pages/team/views/menu.js
+text!schedules/templates/schedule-item.html
+text!schedules/templates/schedule-single-item.html
+packages/game-schedules/views/schedule-item.js
+text!schedules/templates/schedule-list.html
+packages/game-schedules/views/schedule-list.js
 pages/profile/views/fans-image-list.js
 pages/team.js
 text!profilesetting/templates/layout.html
@@ -972,6 +977,11 @@ pages/team/views/comment-form.js
 pages/team/views/comment-list.js
 text!team/templates/menu.html
 pages/team/views/menu.js
+text!schedules/templates/schedule-item.html
+text!schedules/templates/schedule-single-item.html
+packages/game-schedules/views/schedule-item.js
+text!schedules/templates/schedule-list.html
+packages/game-schedules/views/schedule-list.js
 text!roster/templates/roster.html
 packages/roster/models/roster.js
 packages/sportorg/models/teamroster.js

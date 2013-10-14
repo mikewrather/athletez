@@ -69,6 +69,7 @@
 		'sport': 'packages/sport',
 		'votes': 'packages/vote',
 		'roster': 'packages/roster',
+		'schedules'         : 'packages/game-schedules',
 
 		// Pages
 
