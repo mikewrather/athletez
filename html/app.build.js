@@ -86,10 +86,10 @@
 		'profilesetting': 'pages/profilesetting',
 		'userresume': 'pages/userresume',
 		'usercontrol'       : 'usercontrols/',
-		'add-club'          : 'usercontrols/add-club/add-club',
-		'addgame'           : 'usercontrols/addgame/addgame',
-		'photo-player'      : 'usercontrols/photo-player/photo-player',
-		'tag'               : 'usercontrols/tag/tag',
+	//	'add-club'          : 'usercontrols/add-club/add-club',
+	//	'addgame'           : 'usercontrols/addgame/addgame',
+	//	'photo-player'      : 'usercontrols/photo-player/photo-player',
+	//	'tag'               : 'usercontrols/tag/tag',
 	//	'imagecropper'      : 'usercontrols/imagecropper/imagecropper',
 
 		// Application - bootstrap for frontend app
