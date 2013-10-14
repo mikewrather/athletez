@@ -94,7 +94,6 @@ elseif (
 	strpos($_SERVER['HTTP_HOST'], '50.19.123.141') !== FALSE ||
 	strpos($_SERVER['HTTP_HOST'], 'athletez') !== FALSE
 ){
-	// Localhost
 	Kohana::$environment = Kohana::PRODUCTION;
 	$base_url = "/";
 	$use_cdn = true;
@@ -119,7 +118,6 @@ $GLOBALS['env_globals'] = array(
 	'cdn_url' => $cdn_url,
 	's3_url' => $s3_url
 );
-
 /**
  * Initialize Kohana, setting the default options.
  *
