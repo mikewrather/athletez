@@ -197,8 +197,6 @@ define(['require', 'text!usercontrols/tag/templates/layout.html', 'facade', 'vie
 		},
 		SetupSportsView : function(List) {
 			//alert("sportsID " + self.sports_id);
-	console.log("JJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJ");
-			console.log("sports",List);
 			self.sports = List;
 			var data = {};
 			data.records = self.sports;
@@ -732,10 +730,10 @@ define(['require', 'text!usercontrols/tag/templates/layout.html', 'facade', 'vie
 
 			if (self.sportsId) {
 				var List = new GamesCollection();
-				//List.states_id = self.states_id;
+				List.states_id = self.states_id;
 				//List.cities_id = self.city_id;
 				List.sports_id = self.sportsId;
-				//List.teams_id = self.team_id;
+				List.teams_id = self.team_id;
 
 				$(e.target).parents(self.controls.secGame).find(self.controls.fieldMessage).html('').fadeOut();
 				List.processResult = function(collection) {
