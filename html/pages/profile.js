@@ -124,9 +124,9 @@ console.log(app);
 				this.fans.id = this.id;
 				this.fans.fetch();
 				
-				this.images = new ProfileImageList();
-				this.images.id = this.id;
-				this.images.fetch();
+				//this.images = new ProfileImageList();
+				//this.images.id = this.id;
+				//this.images.fetch();
 
 				// I added this in here even though it might not be the best place for it.
 				// If I take it out it won't render images if no sport is selected
@@ -377,12 +377,14 @@ console.log(app);
 				routing.on('image-upload-success', function(data) { 
         			self.updateImages(data);
         		});
-
 				this.imageListView = new ProfileImageListView({
 					collection: this.images,
 					destination: "#image-wrap",
+					target_id : this.id,
+					target_url : "/api/user/addimage/",
+					sport_id: $(".selected-sport-h").data("id"),
 					//model: Backbone.Model.extend(),
-					name: "imagesView"
+					name: "images View 2"
 				});
 
 				this.scheme.push(this.imageListView);

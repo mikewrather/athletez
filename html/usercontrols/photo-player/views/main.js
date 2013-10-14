@@ -70,6 +70,7 @@ define([
 			//$current.parents('li').addClass('selected-photo-thumb');
 			this.index = $current.attr("data-index");
 			this.loadImage();
+			this.changeThumbPosition();
 		},
 		
 		backButton: function(e) {
@@ -94,13 +95,16 @@ define([
 			var $ul = this.$el.find(".thumb-image-list-h"), $li = this.$el.find(".selected-photo-thumb"),
 			liPos = $li.position(), ulPos = $ul.position(), ulWid = $ul.width(), scroll = 0, $tOuter = this.$el.find(".thumbs-outer"), outWid = $tOuter.width();
 			// get the li position 
-			if((liPos.left + $li.width()) > outWid) {
+			
+			if(liPos.left < 0) {
+				scroll = liPos.left + ulPos.left;
+			} else if((liPos.left + $li.width()) > outWid) {
 				scroll = liPos.left - outWid;
 				scroll += (ulPos.left < 0)?-(ulPos.left):-(ulPos.left);
 				scroll += $li.width() + 20;
 			} else {
 				var outerWid = (ulPos.left < 0)?-(ulPos.left):ulPos.left;
-				scroll = +(outerWid) - $li.width();//ulPos.left;
+				scroll = +(outerWid) - $li.width();
 			}
 			// scrol to teh position
 			if(scroll)
@@ -196,9 +200,7 @@ define([
 						extra._label = mpay.label;
 						extra._sublabel = "Coming Soon";
 						extra._link = "/#profile/" + mpay.id;
-	
 						if(mpay.hasOwnProperty('is_owner')) show_edit = mpay.is_owner;
-	
 						break;
 					case '8':
 						//games
@@ -291,7 +293,8 @@ define([
 				barZ:9999,
 				wrapperPos:'absolute',
 				wrapperBottom:'0px',
-				opacity:.9
+				opacity:.7,
+				color:'#9cca3c'
 			});
 /*
 			var self = this;

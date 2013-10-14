@@ -16,7 +16,7 @@ define(["require", "text!usercontrols/addgame/templates/layout.html",
 	   
 	    
 	    //Views
-	    "usercontrols/addgame/views/main",
+	    "usercontrols/addgame/views/main"
 	     
 	    ], function(require, pageLayoutTemplate) {
 

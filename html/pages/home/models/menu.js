@@ -10,26 +10,26 @@ define([ 'models' ], function(models) {
 			name : null,
 			views : {
 				browse : [ {
-					name : 'Up Votes',
+					name : 'VOTES',
 					value: 'votes'
 				}, {
-					name : 'Newest',
+					name : 'RECENT',
 					value: 'newest'
 				}, {
-					name : 'Fans',
+					name : 'FANS',
 					value: 'followers'
 				} ],
 				time : [ {
-					name : 'Today',
+					name : 'TODAY',
 					value: 'DAY'
 				}, {
-					name : 'Week',
+					name : 'THIS WEEK',
 					value: 'WEEK'
 				}, {
-					name : 'Month',
+					name : 'THIS MONTH',
 					value: 'MONTH'
 				}, {
-					name : 'Year',
+					name : 'ALL TIME',
 					value: 'YEAR'
 				} ]
 			}

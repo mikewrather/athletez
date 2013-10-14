@@ -1,4 +1,14 @@
+{{#errorDisplay}}
+<div class="span8" style="color:red;"> Error:  {{errorValue}} </div>
+{{/errorDisplay}}
+
+{{^errorDisplay}}
+ 
+
+
 {{#payload}}
+
+
 <h1>Register with Facebook</h1>
 <div class="row-fluid">
 	<div class="span4">
@@ -36,3 +46,5 @@
 	<a href="javascript:void(0);" class="next btn-common btn-green">What's Next</a>
 </div>
 {{/payload}}
+
+{{/errorDisplay}}

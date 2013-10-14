@@ -7,23 +7,18 @@ define([
 	'text!usercontrols/imagecropper/templates/layout.html',
 	"facade",
 	"controller",
-	"models",
-	"views",
+	"views"
 	], function (require, cropperLayoutTemplate) {
 
 	var ImageCropperController,
 		facade = require("facade"),
 		Controller = require("controller"),
-		models = require("models"),
 		views = require("views"),
 		utils = require("utils"),
 		$ = facade.$,
 		_ = facade._,
-		debug = utils.debug,
 
-		Channel = utils.lib.Channel, LayoutView = views.LayoutView,
-		Backbone = facade.Backbone,
-		BasicModel = require("user/models/basic_info");
+		Channel = utils.lib.Channel, LayoutView = views.LayoutView;
 
 		ImageCropperController = Controller.extend({
 			// define css files to load

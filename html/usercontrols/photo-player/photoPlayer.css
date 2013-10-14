@@ -113,7 +113,7 @@ div.left-arrow-container{
     left:0px;
 }
 
-div.right-arrow-container > img, div.left-arrow-container > img{
+div.right-arrow-container > img, div.left-arrow-container > img {
     display: block;
     position: relative;
     top:40%;
@@ -131,16 +131,14 @@ div.right-arrow-container > img{
 }
 
 .images-list {
-    /*display: inline-block;*/
-    /*width: 100%;*/
+	padding: 0px 10px;
+	margin: 35px 0 0 0;
     float: left;
-    /*position: relative;*/
 }
 
 .thumbs-outer {
     z-index: 1056;
     max-width: 100%;
-
     margin-top: 5px;
     height: 150px;
     overflow-x: scroll;

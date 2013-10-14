@@ -29,7 +29,6 @@ define(
 					
 				},
 				
-				
 				resetView: function() {
 					var page = "view";
 					Channel('resetFilter').publish(page);
@@ -149,9 +148,6 @@ define(
 				
 				afterRender: function() {
 					this.hideAllDropdowns();
-					
-					var data = this.model.toJSON();
-					console.error(data.views);
 				}
 
 			});

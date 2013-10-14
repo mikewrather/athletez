@@ -269,6 +269,9 @@ define([
 			imageListView = new ProfileImageListView({
 				collection: this.images,
 				name: "image list",
+				target_id : this.id,
+				target_url : "/api/game/addimage/",
+				sport_id: $(".sport-h").data("id"),   
 				destination: "#image-wrap"
 			});
 			this.imageListView = imageListView;

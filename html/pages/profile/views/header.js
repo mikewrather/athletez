@@ -15,7 +15,7 @@ define([
         'vendor',
         'profile/collections/sports',
         'profile/views/sport-list',
-        , "utils/storage"
+        "utils/storage"
         ], 
 function(require, profileHeaderTemplate, selectSportTemplate) {
 
@@ -126,14 +126,21 @@ function(require, profileHeaderTemplate, selectSportTemplate) {
             $(".sports-icon-h").removeClass('selected-sport-h');
             $(".sports-icon-h[data-id="+sport_id+"]").addClass('selected-sport-h');
             
-            document.title = this.getUserName() + " | "+ sport_name;
+            var title = this.getUserName();
+
             
             if(sport_id) {
+            	title += " | "+ sport_name;
 	            this.$('.sport-info').stop().slideUp();
 	            this.$('.sport-info-' + sport_id).stop().slideDown();
 	            routing.trigger("showTwmList", sport_id);
 	            //Channel('gamesports:select' + sport_id).publish();            
+        	} else {
+        		Channel('refresh-profilepage').publish();
         	}
+        	
+        	document.title = title;
+        	
         }
         
                 

@@ -32,8 +32,7 @@ define(["require", "text!userresume/templates/layout.html",
 	     "userresume/views/academic",
 	     "userresume/views/awards",
 	     "userresume/views/contacts",
-	     "userresume/views/references",
-	     
+	     "userresume/views/references"
 	     ], function(require, pageLayoutTemplate, sentResumeHtml, basicInfoHtml, rdTreeHtml,academicHtml,awardsHtml,contactHtml,referenceHtml) {
 
 	var UserResumeController, facade = require("facade"), Controller = require("controller"), models = require("models"), views = require("views"), utils = require("utils"), $ = facade.$, _ = facade._, debug = utils.debug, Channel = utils.lib.Channel, LayoutView = views.LayoutView,

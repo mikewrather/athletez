@@ -25,9 +25,6 @@ define([ 'require', 'text!location/templates/city.html', 'views', 'facade', 'uti
 		},
 		
 		initPlugin : function() {
-			
-			//var input = this.$el.find('.city');
-			//console.log($);
 			var view = this;
 			var id = this.model.id;
 			
@@ -39,11 +36,10 @@ define([ 'require', 'text!location/templates/city.html', 'views', 'facade', 'uti
 					var term = request.term;
 					var appStates = controller.prototype.appStates;
 					
-					console.log(appStates);
 					if (appStates) {
 						var collection = appStates.findByNameInStorage(term);
 						if(collection){response(collection.data);
-						return;
+							return;
 						}
 					}
 					var myResponse = function(collection) {

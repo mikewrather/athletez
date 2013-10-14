@@ -65,8 +65,8 @@ ini_set('unserialize_callback_func', 'spl_autoload_call');
 I18n::lang('en-us');
 
 Cookie::$salt = "nawson";
-$cdn_url = "http://cdn.athletez.com/resources/html_build/";
-$s3_url = "http://athletez.s3.amazonaws.com/resources/html_build/";
+$cdn_url = "/"; //"http://cdn.athletez.com/resources/html_build/";
+$s3_url = "/"; //"http://athletez.s3.amazonaws.com/resources/html_build/";
 /**
  * Set Kohana::$environment if a 'KOHANA_ENV' environment variable has been supplied.
  *
@@ -96,7 +96,7 @@ elseif (
 ){
 	// Localhost
 	Kohana::$environment = Kohana::PRODUCTION;
-	$base_url = "http://cdn.athletez.com/resources/";
+	$base_url = "/";
 	$use_cdn = true;
 
 	// Turn off notices and strict errors

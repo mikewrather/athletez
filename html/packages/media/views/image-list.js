@@ -35,14 +35,57 @@ function(facade,  views,   utils,   ImageItemView,            ImageBoardView,   
 		//template: imageListTemplate,
 		events: {
 			'click .see-more-h': 'seeMore',
-			"click .open-photo-player-h": "initPhotoPlayer"
+			"click .open-photo-player-h": "initPhotoPlayer",
+			"dragover #image-place-holder" : "drag",
+			"drop #image-place-holder":"drop"
 		},
 		
 		renderTemplate: function () {
-            var markup = Mustache.to_html(this.template);
+            var markup = Mustache.to_html(this.template, {target: this.target_id});
             this.$el.html(markup);
             return this;
        },
+       
+       
+       drag: function(event) {
+			event.stopPropagation();
+		    event.preventDefault();
+		    event.originalEvent.dataTransfer.dropEffect = 'copy';
+		},
+		drop: function(event) {
+			var _self = this;
+			event.stopPropagation();
+			event.preventDefault();
+			var files = event.originalEvent.dataTransfer.files;
+			this.files_drag=event.originalEvent.dataTransfer.files;
+		    var output = [], dataum=[], k=0;
+		    for (var i = 0, f; f = files[i]; i++) {
+		      if (!f.type.match('image.*'))  continue;
+		      var reader = new FileReader();
+		      reader.onload = (function(theFile) {
+		        return function(e) {
+					var preview_id="preview_"+k;
+				  k++;
+				  dataum.push({"preview_id":preview_id, drag_info: _self.files_drag, "width":"150","height":"150","filesrc":e.target.result,"title":escape(theFile.name)}); 
+				  if(k==files.length) {
+					data={"data":dataum};
+					_self.openImageUploader(data);
+				  }
+				};
+		      })(f);
+		      reader.readAsDataURL(f);
+		    }
+		},
+		
+		openImageUploader: function(file) {
+			console.error(this.collection);
+			 var id = this.sport_id, url = this.target_url+ this.target_id,
+			    attr = {
+				    "sports_id" : id
+			    }, image = file;
+			
+			routing.trigger('add-image', url, attr, image);
+		},
        
       
 
@@ -55,6 +98,9 @@ function(facade,  views,   utils,   ImageItemView,            ImageBoardView,   
         	if(options.collecton)
         		this.collection = options.collection;
         		
+        	this.target_id = options.target_id;	
+        	this.target_url = options.target_url;
+        	this.sport_id = options.sport_id;
 			// render template
 			this.renderTemplate();
 	        //console.log(options);
@@ -79,7 +125,6 @@ function(facade,  views,   utils,   ImageItemView,            ImageBoardView,   
         },
         
         initPhotoPlayer: function(e) {
-        	console.log(this.collection);
 			var index = ($(e.target).parents('li').index() - 1);  
 			if(index< 0) index = 0;
        		routing.trigger('photo-player-init', index, this.allData, this.collection.id, true);

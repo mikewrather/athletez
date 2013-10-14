@@ -3,21 +3,22 @@
     background: green;
 }
 .imageholder {
-    border: 3px dashed #ccc;
+    border: 3px dashed #1B9FAE;
     margin: 10px;
     padding:30px 0 30px 0;
     vertical-align: middle;
     color: #CCCCCC;
     text-align: center;
-    font-size: 1.4em;
+    font-size: 16px;
     font-weight: normal;
-    font-family: "Avenir", "HelveticaNeue";
+    font-family: "HelveticaNeue",Helvetica,Arial,sans-serif;
+    width: 100%;
 }
 .previewimg {
     display: inline;
     float: left;
     margin: 10px 4px 80px;
-    height: 100px;
+    height: 250px;
 }
 #preview {
     display: inline-block;
@@ -26,21 +27,35 @@
 .fileuploader {
     margin: 10px 5px 0 10px;
 }
+.tag_select_all{
+	float:left;
+	color : #CCCCCC;
+}
+.m_top_10{
+	margin-top:10px;
+}
+.tag_select_all span{
+	float: left;
+    margin-bottom: 10px;
+    text-align: center;
+    width: 100%;
+}
 .previewprogress {
     margin: -63px 0 0 0px;
 }
 .previewimgsrc {
     height: inherit;
     position: relative;
+    float: left;
 }
 .previewrotate {
-    margin-bottom: 25%;
+  
 }
 .modal {
-    left: 10%;
+    left: 5%;
     z-index: 1050;
-    width: 80%;
-    margin-left: 0px;
+    width: 90%;
+    margin-left: -25px;
 }
 .modal * {
     z-index: 1051;
@@ -63,31 +78,31 @@
     display:inline-block;
 }
 #main-content-img {
-    width: 100%;
+    width: 92%;
     float: left;
     height: 35%;
-    padding: 0%;
 }
 #image-tagging{
-    width: 100%;
+    width: 92%;
     float: left;
-    height: 50%;
-    background-color: #f5f5f5;
-    padding: 0%;
+    text-align: left;
 }
 .main-body{
     width:70%;
 }
 .side-panel{
     width:25%;
-    height:100%;
+    height:92%;
     display:inline-block;
 }
 #imageuploadForm input[type="file"] {
     width: 90%;
 }
 #imgUploadModal {
-    height: 700px;
+    top:5% !important;
+    max-height: 90%;
+    height: 90%;
+    overflow-y: auto;
 }
 #Loginview {
 	height: 700px;
@@ -97,4 +112,43 @@ height: 700px;
 }
 .errormsg{
 color: red;
+}
+#imgpreview .selected{
+	border: 6px solid #954121;
+}
+.previewimg{
+	  border: 1px solid #CCCCCC;
+	position: relative;
+}
+.previewimg .lnkFooter{
+	background: none repeat scroll 0 0 #1B9FAE;
+    float: left;
+    font-size: 14px;
+    text-align: left;
+    width: 100%;
+  
+    display:none;
+    bottom: 0;
+     position: absolute;
+}
+.previewimg .lnkFooter button{
+	background: none repeat scroll 0 0 rgba(0, 0, 0, 0);
+    border-radius: 0 0 0 0;
+    border-right: 2px solid #FFFFFF;
+    color: #FFFFFF;
+    float: left;
+    font-size: 14px;
+    text-shadow: none;
+    width: 100px;
+}
+.previewimg .lnkFooter button.close{
+	border: medium none;
+    font-size: 30px;
+    opacity: 1;
+    width: 56px;
+     padding: 6px 0;
+}
+.previewimg img {
+	border: none;
+	box-shadow: none;
 }
