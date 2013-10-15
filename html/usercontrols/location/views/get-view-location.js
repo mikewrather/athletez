@@ -19,7 +19,8 @@ define(['require', 'text!usercontrols/location/templates/get-view-location.html'
 		// set to true if requires multiple selection
 		/*Bind Events on controls present in current view template*/
 		events : {
-			'click .verify-address-h': 'verifyAddress'
+			'click .verify-address-h': 'verifyAddress',
+			'blur .address-h': 'verifyAddress'
 		},
 
 		/*initialize gets called by default when constructor is initialized*/
@@ -76,7 +77,8 @@ define(['require', 'text!usercontrols/location/templates/get-view-location.html'
 		},
 		
 		createMap: function() {
-			var pos = new google.maps.LatLng(_self.location.latitude, _self.location.longitude),
+			var _self = this;
+			var pos = new google.maps.LatLng(_self.location.latitude, _self.location.latitude),
 			mapOptions = {
 			    zoom: 8,
 			    center: pos,
@@ -84,9 +86,8 @@ define(['require', 'text!usercontrols/location/templates/get-view-location.html'
 			    zoomControl: true,
 			    mapTypeId: google.maps.MapTypeId.ROADMAP
 			  };
-			  var mapEl = this.$el.find('#map-canvas');
-			  mapEl.show();
-			  this.map = new google.maps.Map(mapEl[0], mapOptions);
+			 // this.$el.find('#map-canvas-h').show();
+			  this.map = new google.maps.Map(document.getElementById('map-canvas-h'), mapOptions);
 			  this.marker = new google.maps.Marker({position: pos, map: this.map});
   			  this.marker.setMap(this.map);
 

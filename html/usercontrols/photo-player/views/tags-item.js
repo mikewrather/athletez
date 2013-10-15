@@ -158,6 +158,7 @@ function (
 					extra._label = team_str;
 					break;	
 			}
+			
 			extra.show_edit = show_edit==true ? true : undefined;
 			var markup = Mustache.to_html(this.template, extra);
 			this.$el.html(markup);
