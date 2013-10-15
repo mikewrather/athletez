@@ -5,19 +5,17 @@
  // Returns {Add Game VIEW} constructor
  */
 define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 'views', 'utils', 'vendor', 'sportorg/collections/sports_listall', 'location/collections/states', 'usercontrols/addgame/collections/teams', 'location/collections/cities', 'usercontrols/addgame/collections/teams_user', 'usercontrols/addgame/collections/teams', 'usercontrols/addgame/collections/games_search', 'usercontrols/addgame/models/team', 'usercontrols/addgame/models/team_add', 'usercontrols/addgame/models/game', 'usercontrols/addgame/models/uslgamelink',
-'usercontrol/dropdown/view/dropdown'
+'usercontrol/dropdown/view/dropdown', 'usercontrol/location/views/get-view-location'
 ], function(require, layoutTemplate) {
 
 	var self, facade = require('facade'), views = require('views'), SectionView = views.SectionView, utils = require('utils'), Channel = utils.lib.Channel, vendor = require('vendor'), Mustache = vendor.Mustache, $ = facade.$, BasicModel = require('usercontrols/tag/models/basic_info'), SportsCollection = require('sportorg/collections/sports_listall'), StatesCollection = require('location/collections/states'), CityCollection = require('location/collections/cities'), UserTeamsCollection = require('usercontrols/addgame/collections/teams_user'), TeamsCollection = require('usercontrols/addgame/collections/teams'), TeamModel = require('usercontrols/addgame/models/team'), TeamAddModel = require('usercontrols/addgame/models/team_add'), GameModel = require('usercontrols/addgame/models/game'), GamesSearchCollection = require('usercontrols/addgame/collections/games_search'),
 	DropDownList = require('usercontrol/dropdown/view/dropdown'),
-	
+	LocationView = require('usercontrol/location/views/get-view-location'),
 	//Models
 	UserGameLinkModel = require('usercontrols/addgame/models/uslgamelink'),
 	
 	AddGameView = SectionView.extend({
-
 		template : layoutTemplate,
-
 		/*Data to be sent as parameter in call back function*/
 		gameData : {
 
@@ -166,7 +164,7 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 					name : "PM",
 					value : "PM"					
 				}
-			}]
+			}];
 			
 			var data = {};
                data.records = records;
@@ -190,7 +188,18 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 				// changeYear : true
 			// });
 		},
-
+		
+		afterRender: function() {
+			var _self = this, location = new LocationView({
+				callback: function(id) {
+					var disable = (id != '')?true:false;
+					_self.$el.find(".btn-game-Finish_h").attr("disable", disable);
+					_self.$el.find(".txt-game-location-id_h").val(id);
+				}
+			});
+			this.$el.find('.location-view-h').html(location.el);
+		},
+  
 		// **Method** `setOptions` - called by BaseView's initialize method
 		setOptions : function(options) {
 			this.user_id = options.user_id;
@@ -331,7 +340,7 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 				var item = {
 					team_name : "Team Not Found",
 					id : -1
-				}
+				};
 				
 				var list = List.AppendItem(item);
 				self.setUpUserTeams(list);
