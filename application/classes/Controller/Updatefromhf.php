@@ -37,7 +37,7 @@ class Controller_Updatefromhf extends Controller
 
 		$sc_orgs = DB::select()->from('test.schools_highlightfront')
 			->where('id','>',$sr)
-			->limit(1000)
+			->limit(2500)
 			->execute();
 
 		mysql_select_db('athletesup_main');

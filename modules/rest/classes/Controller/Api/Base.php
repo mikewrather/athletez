@@ -567,12 +567,15 @@ class Controller_Api_Base extends AuthController
 			$arguments["subject_id"] = (int)trim($this->request->post('subject_id'));
 		}
 
-		if((int)trim($this->request->post('users_id')) > 0)
+	/*	if((int)trim($this->request->post('users_id')) > 0)
 		{
 			$arguments["users_id"] = (int)trim($this->request->post('users_id'));
 		}else{
 			$arguments["users_id"] = $this->user->id;
-		}
+		}   */
+
+		$arguments["users_id"] = $this->user->id;
+
 
 		if(trim($this->request->post('bib_number')) != "")
 		{
@@ -581,20 +584,35 @@ class Controller_Api_Base extends AuthController
 
 		if((int)trim($this->request->post('media_id')) > 0)
 		{
-			$arguments["media_id"] = (int)trim($this->request->post('media_id'));
+			$arguments["media_id"] = $media_id = (int)trim($this->request->post('media_id'));
+		}
+		else
+		{
+			$this->modelNotSetError();
+			return;
 		}
 
-		$result = $this->mainModel->addTag($arguments);
-		if(get_class($result) == get_class($this->mainModel))
+		if($tag_array = json_decode(trim($this->request->post('tag_array'))))
 		{
-			return $result;
+			Model_Site_Tag::addFromArray($tag_array,$media_id);
+			return Model_Media_Base::getTaggedObjects($media_id);
 		}
-		elseif(get_class($result) == 'ORM_Validation_Exception')
+		else
 		{
-			//parse error and add to error array
-			$this->processValidationError($result,$this->mainModel->error_message_path);
-			return false;
+			$result = $this->mainModel->addTag($arguments);
+			if(get_class($result) == get_class($this->mainModel))
+			{
+				return $result;
+			}
+			elseif(get_class($result) == 'ORM_Validation_Exception')
+			{
+				//parse error and add to error array
+				$this->processValidationError($result,$this->mainModel->error_message_path);
+				return false;
+			}
 		}
+
+
 	}
 
 	public function action_get_tags()
