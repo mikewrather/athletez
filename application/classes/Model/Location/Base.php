@@ -169,7 +169,7 @@ class Model_Location_Base extends ORM
 		$json = file_get_contents("http://maps.google.com/maps/api/geocode/json?address=$address&sensor=false");
 		$json = get_object_vars(json_decode($json));
 
-		print_r($json);
+		//print_r($json);
 		if($json['status']=='ZERO_RESULTS'){
 			return false;
 		}

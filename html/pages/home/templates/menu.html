@@ -1,80 +1,98 @@
 <div class="demo-select">
 
-	</div>	
+</div>
 <div class="menu-outer-h">
-<div id="views" class="menu span2">
-	<a href="javascript:void(0)" class="menu-link-h view-link-h"><span class="option-heading-h">SORT</span>
-		<div class="caret-large-container">
-			<span class="caret-large"></span>
-		</div></a>
-	<div class="dd menu-detail-h reset-view-area-h view-options-h">
-		<a href="javascript: void(0);" class="btn views-reset-btn-h">Reset</a>
-		
-		<div class="dropdown">
-			<span> SORT BY</span>
-			<div class="clearfix"></div>
-			<ul class="dropdown-menu" style="display: block; position: relative; margin-bottom:15px;">
-				{{#views.browse}}
-				<li><a class="browse" data-id="{{value}}" href="javascript:void(0);">{{name}}</a></li>
-				{{/views.browse}}
-			</ul>
-		</div>
-		<br />
-		<div class="clearfix">
-			<span>TIME FRAME</span>
-			<div class="clearfix"></div>
-			<ul class="dropdown-menu" style="display: block; position: relative;">
-				{{#views.time}}
-				<li><a class="time" data-id="{{value}}" href="javascript: void(0)">{{name}}</a></li>
-				{{/views.time}}
-			</ul>
-		</div>
-	</div>
-</div>
 
-<div id="sport" class="menu span2">
-	<a href="javascript:void(0)" class="menu-link-h sport-link-h">
-		<span class="option-heading-h">SPORT</span>
-		<div class="caret-large-container">
-			<span class="caret-large"></span>
-		</div>
-	</a>
-	<div class="dd menu-detail-h reset-sport-area-h sports-option-h">
-		<a href="javascript: void(0);" class="btn sport-reset-btn-h">Reset</a>
-		<div class="left text-center">
-			<strong>Guys</strong>
-			<div id='boys' class="text-left sport-list"></div>
-		</div>
-		<div class="left text-center">
-			<strong>Girls</strong>
-			<div id='girls' class="text-left sport-list"></div>
-		</div>
-		<div class="left text-center">
-			<strong>Both</strong>
-			<div id='both' class="text-left sport-list"></div>
+	<div id="sport" class="menu span3">
+		<a href="javascript:void(0)" class="menu-link-h sport-link-h">
+			<span class="option-heading-h">ALL SPORTS</span>
+
+			<div class="caret-large-container">
+				<span class="caret-large"></span>
+			</div>
+		</a>
+
+		<div class="dd menu-detail-h reset-sport-area-h sports-option-h">
+			<a href="javascript: void(0);" class="btn sport-reset-btn-h">Reset</a>
+
+			<div class="left text-center">
+				<strong>Guys</strong>
+
+				<div id='boys' class="text-left sport-list"></div>
+			</div>
+			<div class="left text-center">
+				<strong>Girls</strong>
+
+				<div id='girls' class="text-left sport-list"></div>
+			</div>
+			<div class="left text-center">
+				<strong>Both</strong>
+
+				<div id='both' class="text-left sport-list"></div>
+			</div>
 		</div>
 	</div>
-</div>
-<div id="location" class="menu span2">
-	<a href="javascript:void(0)"  class="menu-link-h location-link-h"> <span class="option-heading-h">PLACE</span>
-		<div class="caret-large-container">
-			<span class="caret-large"></span>
-		</div></a>
-	<div class="dd menu-detail-h reset-location-area-h">
-		<a href="javascript: void(0);" class="btn location-reset-btn-h">Reset</a>
-		<!--div class="state"></div-->
-		<div class="city"></div>
+	<div id="location" class="menu span3">
+		<a href="javascript:void(0)" class="menu-link-h location-link-h"> <span class="option-heading-h">ANYWHERE</span>
+
+			<div class="caret-large-container">
+				<span class="caret-large"></span>
+			</div>
+		</a>
+
+		<div class="dd menu-detail-h reset-location-area-h">
+			<a href="javascript: void(0);" class="btn location-reset-btn-h">Reset</a>
+			<!--div class="state"></div-->
+			<div class="city"></div>
+		</div>
 	</div>
-</div>
-	<div class="pull-right type-icons">
-		<a id="video" class="searchBtn" data-number="0" href="javascript:void(0)"><i class="icon-facetime-video"></i></a>
-		<a id="image" class="searchBtn" data-number="1" href="javascript:void(0)"><i class="icon-picture"></i></a>
-		<a id="user" class="searchBtn" data-number="2" href="javascript:void(0)"><i class="icon-user"></i></a>
-		<a id="game" class="searchBtn" data-number="3" href="javascript:void(0)"><i class="icon-user"></i></a>
+
+	<div id="views" class="menu span2">
+		<a href="javascript:void(0)" class="menu-link-h view-link-h"><span class="option-heading-h">ORDER</span>
+
+			<div class="caret-large-container">
+				<span class="caret-large"></span>
+			</div>
+		</a>
+
+		<div class="dd menu-detail-h reset-view-area-h view-options-h">
+			<a href="javascript: void(0);" class="btn views-reset-btn-h">Reset</a>
+
+			<div class="dropdown">
+				<span> SORT BY</span>
+
+				<div class="clearfix"></div>
+				<ul class="dropdown-menu" style="display: block; position: relative; margin-bottom:15px;">
+					{{#views.browse}}
+					<li><a class="browse" data-id="{{value}}" href="javascript:void(0);">{{name}}</a></li>
+					{{/views.browse}}
+				</ul>
+			</div>
+			<br/>
+
+			<div class="clearfix">
+				<span>TIME FRAME</span>
+
+				<div class="clearfix"></div>
+				<ul class="dropdown-menu" style="display: block; position: relative;">
+					{{#views.time}}
+					<li><a class="time" data-id="{{value}}" href="javascript: void(0)">{{name}}</a></li>
+					{{/views.time}}
+				</ul>
+			</div>
+		</div>
 	</div>
+
 	<div class="pull-right search-box">
-		<input type="text" id="search" placeholder="SEARCH" />
+		<input type="text" id="search" placeholder="SEARCH"/>
 	</div>
 
 
+
+</div>
+<div class="pull-left type-icons">
+	<a id="video" class="searchBtn" data-number="0" href="javascript:void(0)"><i class="icon-facetime-video"></i>Videos</a>
+	<a id="image" class="searchBtn" data-number="1" href="javascript:void(0)"><i class="icon-picture"></i>Images</a>
+	<a id="user" class="searchBtn" data-number="2" href="javascript:void(0)"><i class="icon-user"></i>Athletes</a>
+	<a id="game" class="searchBtn" data-number="3" href="javascript:void(0)"><i class="icon-user"></i>Games</a>
 </div>

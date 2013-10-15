@@ -142,7 +142,7 @@ define(["require", "text!usercontrols/addgame/templates/layout.html",
 			this.layout.render();
 		},
 		addGameFunction : function(data){
-			alert(JSON.stringify(data));
+			//alert(JSON.stringify(data));
 		}
 	});
 	return AddGameController;
