@@ -124,7 +124,9 @@ define(["require",
 						$.when(this.logoutcheck.request).done(function(){
 							// clearing header model to delete local storage
 							attr.clear();
-							localStorage.clear() ;
+							window.localStorage.clear() ;
+							
+							//console.log(localStorage);
 							//console.log(window.localStorage.getItem("user"),"localStorage aftr user remove");
 							location.href="/";
 							// to avoid page reload please uncomment below
