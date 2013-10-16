@@ -1058,13 +1058,19 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 			if (data.location_id) {
 				self.location_id = data.location_id || 0;
 				$(self.destination).find(self.controls.txtLocationId).val('').fadeOut();
-				$(self.destination).find(self.controls.sectionLocation).html(data.location_name).attr(self.attributes.locationId, data.location_id);
+				// setting the location inside location view
+				$(".address-h").val(data.location_name);
+				$(".txt-game-location-id_h").val(data.location_id);
+				$(".verify-address-h").trigger('click');
+				//$(self.destination).find(self.controls.sectionLocation).html(data.location_name).attr(self.attributes.locationId, data.location_id);
 			} else {
 				$(self.destination).find(self.controls.txtLocationId).val('').fadeIn();
 			}
 		},
 		clearLocation : function() {
-			$(self.destination).find(self.controls.sectionLocation).html('').removeAttr(self.attributes.locationId);
+			$(".address-h").val("");
+			$(".txt-game-location-id_h").val("");
+			//$(self.destination).find(self.controls.sectionLocation).html('').removeAttr(self.attributes.locationId);
 		},
 
 		finishGame : function() {
