@@ -115,6 +115,8 @@ class Model_User_Resume_Data_Profile extends ORM
 		//get positions for user
 		$pos_arr = $user->getPositions();
 
+	//	print_r($pos_arr);
+
 		//get sports for user
 		$sports_arr = $user->getSports('array');
 
@@ -130,17 +132,19 @@ class Model_User_Resume_Data_Profile extends ORM
 			$use_and_where = true;
 		}
 
-		$qry->where_open();
+
 
 		if(sizeof($pos_arr) > 0)
 		{
+			$qry->where_open();
 			foreach($pos_arr as $positions_id => $position)
 			{
 				$qry->or_where('positions_id','=',$positions_id);
 			}
+			$qry->where_close();
 		}
 
-		$qry->where_close()->or_where_open();
+		$qry->or_where_open();
 
 		if(sizeof($sports_arr) > 0)
 			foreach($sports_arr as $sports_id => $sport)
@@ -152,7 +156,6 @@ class Model_User_Resume_Data_Profile extends ORM
 		if($use_and_where) $qry->and_where_close();
 
 		$res = $qry->group_by('resume_data_profiles_id')->execute();
-	//	print_r($res);
 
 		if($format=='res') return $res;
 

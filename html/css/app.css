@@ -564,10 +564,10 @@ span.ui-helper-hidden-accessible {
     -webkit-transform: rotate(-25deg); -ms-transform: rotate(-25deg); transform: rotate(-25deg);
 }
 
-
-	.see-more-h {
+.see-more-h {
 	float: right;
-margin-right: 100px;
+    margin: 0 40px 30px 0;
+    color: #333;
 }
 
 #comment_div {
@@ -1264,4 +1264,25 @@ margin-top:10px;
 
 .image-drop-area .drop-text {
 	margin-top: 25%;
+}
+
+#addPhoto, #addVideo, .add-comment-h{
+    background-repeat: no-repeat;
+    padding:0 0 0 35px;
+    color:#333;
+    display: inline-block;
+    min-height: 25px;
+    margin-left:15px;
+}
+
+#addPhoto{
+    background-image: url('http://cdn.athletez.com/resources/img/photo.png');
+}
+
+#addVideo{
+    background-image: url('http://cdn.athletez.com/resources/img/video.png');
+}
+
+.add-comment-h{
+    background-image: url('http://cdn.athletez.com/resources/img/comment.png');
 }
