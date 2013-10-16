@@ -4,7 +4,7 @@
 // Package Game
 // Requires define
 // Returns {GameCommentList} constructor
-console.log("Called");
+//console.log("Called");
 define(['facade','media/collections/images', 'utils'], 
 function(facade, MediaImageList , utils) {
 

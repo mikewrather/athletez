@@ -158,7 +158,7 @@ define(['facade','views/base','utils'], function (facade, BaseView, utils) {
         render: function (callback) {
         	
             var options = this.options;
-			console.log("--------------->>>>   "+options.displayWhen);
+			//console.log("--------------->>>>   "+options.displayWhen);
             if (options.displayWhen) {
                 if (options.displayWhen === 'ready') {
                     this.displayWhenReady(callback);

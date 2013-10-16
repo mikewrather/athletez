@@ -34,12 +34,12 @@ define([ 'require', 'text!location/templates/city.html', 'views', 'facade', 'uti
 			$('#city').autocomplete({
 				minLength: 2,
 				source: function(request, response) {
-					console.log(request);
-					console.log(response);
+					//console.log(request);
+					//console.log(response);
 					var term = request.term;
 					var appStates = controller.prototype.appStates;
 					
-					console.log(appStates);
+				//	console.log(appStates);
 					if (appStates) {
 						var collection = appStates.findByNameInStorage(term);
 						if(collection){response(collection.data);
@@ -58,7 +58,7 @@ define([ 'require', 'text!location/templates/city.html', 'views', 'facade', 'uti
 							appStates.save(term);
 						}
 						response(collection);
-						console.log(appStates.findByNameInStorage(term));
+						//console.log(appStates.findByNameInStorage(term));
 					};
 					Channel('response :'+term).subscribe(myResponse);
 					Channel('changeInput'+id).publish(term);
@@ -72,7 +72,7 @@ define([ 'require', 'text!location/templates/city.html', 'views', 'facade', 'uti
 		
 		addSubscribers : function() {
 			var view = this;
-			console.log("Subscriber added");
+			//console.log("Subscriber added");
 			Channel('layout:ready').subscribe(view.initPlugin);
 		}
 	

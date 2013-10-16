@@ -284,7 +284,7 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
         showProfileSetting: function (userid) {
             this.cancelAjaxRequests();
             this.loadStyles();
-            
+           
             chromeBootstrap();
 			 this.removeCurrent();
             function initProfileSetting(id) {

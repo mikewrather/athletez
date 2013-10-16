@@ -313,7 +313,7 @@ define(
 				setupImageListView : function(viewName) {
 					var imageListView;
 
-					console.log(this.collections[viewName]);
+					//console.log(this.collections[viewName]);
 
 					imageListView = new ImageListView({
 						collection : this.collections[viewName],

@@ -22,12 +22,12 @@
                        alert(accessToken);
                       FB.api('/me', function(response) {
                           alert('tested');
-                          console.log(response);
+                        //  console.log(response);
                         
                         //  Channel('registration-with-facebook').publish();
                         });
                     } else if (response.status === 'not_authorized') {
-                        console.log('not_authorized');
+                        //console.log('not_authorized');
                         login();
                     } else {
                         login();
@@ -38,7 +38,7 @@
             function login() {
                 FB.login(function(response) {
                     if (response.authResponse) {
-                       console.log(response);
+                      // console.log(response);
                     } else {
                         alert('Cancelled');
                     }

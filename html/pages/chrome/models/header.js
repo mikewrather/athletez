@@ -40,8 +40,8 @@ define( ["models/base",'utils/storage'], function (BaseModel,Store) {
         
         url: function() {
             if (testpath)
-                return testpath + '/authcheck';
-            return '/authcheck';
+                return testpath + '/authcheck?time='+new Date().getTime();
+            return '/authcheck?time='+new Date().getTime();
         },
 	    saveCookie: function () {
 		    var appStates = new Store("user","localStorage");

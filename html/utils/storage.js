@@ -70,6 +70,9 @@ define(["facade", "utils/cookies", "utils/debug"], function (facade, docCookies,
         // Save the current state of the **Store** to its storage method propery.
         save: function (options) {
             this.storage.setItem(this.name, JSON.stringify(this.data), options);
+			console.log(window.localStorage);
+			
+			
         },
 
         // Add a model, giving it a (hopefully)-unique GUID, if it doesn't already

@@ -151,7 +151,7 @@ define(
 					this.hideAllDropdowns();
 					
 					var data = this.model.toJSON();
-					console.error(data.views);
+					//console.error(data.views);
 				}
 
 			});
