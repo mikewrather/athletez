@@ -347,8 +347,10 @@ define([
         },
         
         setupGameView: function () {
-	        console.error(this.games.toJSON());
-			this.gamesView = new TeamOrgListView({
+			var teamView = TeamOrgListView.extend({
+				tagName: 'div'
+			});	        
+			this.gamesView = new teamView({
 				teams_id: this.id,
 				collection: this.games,
 				destination: "#games_div",
