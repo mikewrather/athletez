@@ -578,10 +578,11 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 					"id" => $val->loaded() ? $val->id : 0,
 					"resume_data_id" => $data->id,
 				);
-				if(is_string($data->large_icon) && strlen($data->large_icon) > 5) $profiles[$group->id]["data"][$data->id]['icon'] = $data->large_icon;
+				if(is_string($data->large_icon) && strlen($data->large_icon) > 5) $profiles[$rdp_id]["data"][$data->id]['icon'] = $data->large_icon;
 			}
 		}
 	}
+	//print_r($profiles);
 
 	return $profiles;
 

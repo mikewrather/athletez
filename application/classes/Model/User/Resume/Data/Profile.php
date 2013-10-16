@@ -123,6 +123,12 @@ class Model_User_Resume_Data_Profile extends ORM
 		//select profiles and sports
 		$qry = DB::select()->from('rdp_sports_link');
 
+		if($overview){
+			$qry->join('resume_data_profiles')->on('resume_data_profiles.id','=','rdp_sports_link.resume_data_profiles_id')
+				->where('resume_data_profiles.is_overview','=',1)
+				->order_by('resume_data_profiles.overview_priority')
+				->limit(1);
+		}
 
 
 		if(is_integer($sports_id) && $sports_id > 0)
@@ -163,7 +169,10 @@ class Model_User_Resume_Data_Profile extends ORM
 		foreach($res as $rs)
 		{
 			$rdp = ORM::factory('User_Resume_Data_Profile',$rs['resume_data_profiles_id']);
-			if($rdp->loaded()) $rdps[$rdp->id] = $rdp;
+			if($rdp->loaded()) {
+				if($overview && !$rdp->is_overview) continue;
+				$rdps[$rdp->id] = $rdp;
+			}
 		}
 
 		return $rdps;
