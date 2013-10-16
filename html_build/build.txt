@@ -727,6 +727,8 @@ usercontrols/addgame/models/team.js
 usercontrols/addgame/models/team_add.js
 usercontrols/addgame/models/game.js
 usercontrols/addgame/models/uslgamelink.js
+text!usercontrols/location/templates/get-view-location.html
+usercontrols//location/views/get-view-location.js
 usercontrols/addgame/views/main.js
 usercontrols/addgame/addgame.js
 text!usercontrols/photo-player/templates/comments.html
