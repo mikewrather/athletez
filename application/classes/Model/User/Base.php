@@ -558,7 +558,7 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 
 		if($overview)
 		{
-			$datagroups->where('user_resume_data_group.is_overview','=',1);
+		//	$datagroups->where('user_resume_data_group.is_overview','=',1);
 		}
 
 		$datagroups = $datagroups->find_all();
