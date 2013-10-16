@@ -150,6 +150,16 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
             	fn(id);
             });
             
+            routing.off('popup-close');
+            routing.on('popup-close', function() {
+            	$("#modalPopup").unbind().remove();
+            });
+            
+            $(document).off('hidden.bs.modal', '#modalPopup');
+            $(document).on('hidden.bs.modal', '#modalPopup', function () {
+  				routing.trigger('popup-close');
+			});
+            
             // initialize add game popup common trigger 
             routing.off('add-game');
             routing.on('add-game', function(id,teams_id,sports_id,users_id) {
