@@ -86,7 +86,7 @@ define(['require', 'text!usercontrols/location/templates/get-view-location.html'
 			    zoomControl: true,
 			    mapTypeId: google.maps.MapTypeId.ROADMAP
 			  };
-			 // this.$el.find('#map-canvas-h').show();
+			  this.$el.find('#map-canvas-h').show();
 			  this.map = new google.maps.Map(document.getElementById('map-canvas-h'), mapOptions);
 			  this.marker = new google.maps.Marker({position: pos, map: this.map});
   			  this.marker.setMap(this.map);
