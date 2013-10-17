@@ -164,8 +164,8 @@ class Model_Location_Base extends ORM
 	public function google_verify($address){
 		$final = array();
 
-		$address = urlencode($address);
-
+		echo $address = urlencode($address);
+		echo "\n";
 		$json = file_get_contents("http://maps.google.com/maps/api/geocode/json?address=$address&sensor=false");
 		$json = get_object_vars(json_decode($json));
 
@@ -174,6 +174,7 @@ class Model_Location_Base extends ORM
 			return false;
 		}
 
+		print_r($json['status']);
 		foreach($json["results"] as $key=>$res)
 		{
 			if(is_object($res)) $res = get_object_vars($res);

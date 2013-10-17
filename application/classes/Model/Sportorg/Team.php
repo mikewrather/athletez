@@ -528,6 +528,7 @@ class Model_Sportorg_Team extends ORM
 			'Sportorg_Games_Base' => 'sportorg_games_base'
 		);
 		$game_list_obj = ORM::_sql_exclude_deleted($classes_arr, $game_list_obj);
+		$game_list_obj->order_by('gameDay','ASC');
 		$games = $game_list_obj->find_all()->as_array();
 
 		return $games;
