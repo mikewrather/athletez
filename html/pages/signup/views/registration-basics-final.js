@@ -19,9 +19,9 @@ define([
 			SignupBasicView = SectionView.extend({
               
               initialize: function (options) {
-                    this.template =  _.template(signupBasicTemplate, {page: (options.openAsaPage)?true:false});
+                    this.template =  _.template(signupBasicTemplate, {page: (options.openAsPopUp)?true:false});
                     if(options.destination) this.$el = $(options.destination);
-                    if(options.openAsaPage) this.openAsaPage = options.openAsaPage;
+                    if(options.openAsPopUp) this.openAsPopUp = options.openAsPopUp;
                     this.render();
                 },
                 render: function(){
@@ -97,7 +97,6 @@ define([
                     this.$el.find(".seconddiv").append(date);
                     var years = this.option(year,"borndyear");
                     this.$el.find(".seconddiv").append(years);
-        
                 },
                 option: function(elem,classes){
                     var element = $('<select/>').attr({
