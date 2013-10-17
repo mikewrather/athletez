@@ -89,9 +89,9 @@ function(require, imageBasicTemplate, selectAllTemplate,tagTemplate) {
 	        // });
 				Channel('tag-team-image-success').empty();
 				
-				Channel('tag-team-image-success','nomemory').subscribe(this.tagFunction);
-
-				Channel('tag-team-image-success').unsubscribe(this.tagFunction);
+				// Channel('tag-team-image-success','nomemory').subscribe(this.tagFunction);
+// 
+				// Channel('tag-team-image-success').unsubscribe(this.tagFunction);
 				Channel('tag-team-image-success').subscribe(this.tagFunction);
 
 			    this.setUpBottomView();		

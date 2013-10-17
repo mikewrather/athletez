@@ -3,13 +3,16 @@
 */
 
 define(["require", 'text!usercontrols/photo-player/templates/comments.html',
+		'text!usercontrols/tag/templates/layout.html',
 	   "facade", "controller", "models", "views",
 	   "usercontrols/photo-player/collections/comments",
 	   "usercontrols/photo-player/views/main",
 	   "usercontrols/photo-player/views/comments",
 	   "usercontrols/photo-player/collections/tags",
-	   "usercontrols/photo-player/views/tags"
-	    ], function(require, modelBoxCommentTemplate) {
+	   "usercontrols/photo-player/views/tags",
+	   'usercontrols/tag/views/main',
+	   'usercontrols/tag/models/basic_info',
+	    ], function(require, modelBoxCommentTemplate, tagTemplate) {
 
 	var PhotoPlayerController, facade = require("facade"), Controller = require("controller"),
 	 models = require("models"), views = require("views"), utils = require("utils"), 
@@ -25,7 +28,8 @@ define(["require", 'text!usercontrols/photo-player/templates/comments.html',
 	PhotoPlayerView = require("usercontrols/photo-player/views/main"),
 	CommentSectionView = require("usercontrols/photo-player/views/comments"),
 	TagsSectionView = require("usercontrols/photo-player/views/tags"),
-	
+	TagView = require('usercontrols/tag/views/main'),
+	UserModel = require('usercontrols/tag/models/basic_info'),
 	PhotoPlayerController = Controller.extend({
 		// define css files to load
 		cssArr : ["/usercontrols/photo-player/photoPlayer.css"],
@@ -38,6 +42,10 @@ define(["require", 'text!usercontrols/photo-player/templates/comments.html',
 			var _self = this;
 			// load css file
 			Channel('load:css').publish(this.cssArr);
+			// Channel('tag-image-success-photo').empty();
+			// Channel('tag-image-success-photo').subscribe(this.tagFunction);
+			
+			
 			_.bindAll(this);
 			// model box html 
 			if (options.id) this.id = options.id;
@@ -48,20 +56,27 @@ define(["require", 'text!usercontrols/photo-player/templates/comments.html',
 				this.modelHTML = '<div id="modalPopup" class="modal photo-frame-model hide fade model-popup-h">'+
 					'<div class="modal-body page-content-h">'+
 					'<div class="photo-player-area-h photo-player"></div>'+
-					'<div class="photo-player-right-area"><div class="right-area-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button></div><div class="tags-area-h"></div><div class="comment-area coment-area-h"></div><div class="comment-input-outer-h comment-input-outer" class="clearfix"></div>'+
+					'<div class="photo-player-right-area"><div class="right-area-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button></div><div class="tags-area-h"></div>' +
+					'<div class="comment-area coment-area-h"></div><div class="comment-input-outer-h comment-input-outer" class="clearfix"></div>'+
+					'<div id="image-tagging-photo"></div>'+
 					'</div></div></div>';
 			
 			routing.off('photo-player-section-reload');
 			routing.on('photo-player-section-reload', function(entity_id, id) {
 				_self.id = id;
+				//alert("en reload");
+				$("#image-tagging-photo").html('');
 				_self.setUpCommentView(entity_id, id);
 				_self.setUpTagView(entity_id, id);
+				//_self.setUpTagPhotoView(entity_id, id);
 			});
 			
 			routing.off('comments-fetch-new-form-data');
 	       	routing.on('comments-fetch-new-form-data', function(entity_id, id) {
+	       	//	alert("en data");
+	       	$("#image-tagging-photo").html('');
 	       		_self.setUpCommentView(entity_id, id);
-				_self.setUpTagView(entity_id, id);
+				//_self.setUpTagView(entity_id, id);
 	       	});
 
   			// set up main layout view					
@@ -105,7 +120,11 @@ define(["require", 'text!usercontrols/photo-player/templates/comments.html',
 				model : collection,
 				name : "photo player",
 				destination : ".photo-player-area-h",
-				index : self.index
+				index : self.index,
+				user_id : self.userId || null,
+				sports_id : self.sports_id || null,
+				scheme : this.scheme,
+				layout : this.layout
 			});
 			
 			this.scheme.push(photoPlayerMain);
@@ -172,7 +191,54 @@ define(["require", 'text!usercontrols/photo-player/templates/comments.html',
 		
 		setUpOthersView: function() {
 			
-		}
+		},
+		
+		setUpTagPhotoView : function(entity_id, id){
+      	//TagView      	
+  //    	var _self = this,
+      	console.log("tagtemplate",tagTemplate)
+			var self = this;
+			this.tagViewPhoto = new TagView({
+				model : new UserModel(),
+				template : tagTemplate,
+				name : "tag-image " + new Date().toString() ,
+				destination : "#image-tagging-photo",
+				user_id : self.userId || null,
+				sports_id : self.sports_id,
+				channel : 'tag-image-success-photo'
+			});
+				self.scheme.push(this.tagViewPhoto);
+				self.layout.render();
+			//this.scheme.push(this.tagViewPhoto);
+			//this.layout.render();
+      },
+      tagFunction : function(data){
+      	// alert("this is tag finish function from basic.js");
+      	var self = this;
+      	alert(JSON.stringify(data));
+      	// this.tagCollection.push(data);
+      	// var index = 0;
+      	// var selectedImages = $(".previewimg.selected");
+      	// console.log("selected",selectedImages);
+      	// for(var key in data){
+      		// self.tagData[key] = self.tagData[key] || [];
+//       		
+      		// //for(var k in data[key]){
+      			// self.tagData[key].push(data[key]);
+      		// //}
+      		// //debugger;
+      		// index = self.tagData[key].length - 1;
+      		// if(key == self.const.Game){
+      			// selectedImages.attr('gameIndex' , index);
+      		// }
+      		// else if(key == self.const.Team){
+      			// selectedImages.attr('teamIndex' , index);
+      		// } 
+      		// else if(key == self.const.User){
+      			// selectedImages.attr('userIndex' , index);
+      		// }
+// 
+      	}
 	});
 	return PhotoPlayerController;
 
