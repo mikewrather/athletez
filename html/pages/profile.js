@@ -38,7 +38,7 @@ define([
 	"application"
 ],
 	function (require, pageLayoutTemplate, app, voteView) {
-console.log(app);
+//console.log(app);
 		var ProfileController,
 			facade = require("facade"),
 			Controller = require("controller"),
@@ -325,7 +325,7 @@ console.log(app);
 
 			setupOrgListView: function () {
 				var orgListView;
-				console.error(this.orgs.toJSON());
+				//console.error(this.orgs.toJSON());
 				this.orgListView = new ProfileOrgListView({
 					collection: this.orgs,
 					destination: "#games_div"
@@ -430,7 +430,7 @@ console.log(app);
 
 			setupCommentOnListView: function () {
 				var commentOnListView;
-				console.log(this.commentson);
+				//console.log(this.commentson);
 				this.commentOnListView = new ProfileCommentOnListView({
 					collection: this.commentson,
 					destination: "#commenton-wrap"

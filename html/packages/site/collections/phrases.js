@@ -34,12 +34,12 @@ function(facade, collections, SitePhraseModel, utils,controller) {
 				});
 				appStates.save('phrases');
 			}
-			console.log(appStates.findByNameInStorage('phrases'));
+			//console.log(appStates.findByNameInStorage('phrases'));
 		},
 
 		// **Method:** `fetchSuccess` - resolve the deferred here in success
 		fetchSuccess : function (collection, response) {
-			console.log('fetchsuccess');
+			//console.log('fetchsuccess');
             collection.reset();
 
             var payload = response.payload;

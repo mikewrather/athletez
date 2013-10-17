@@ -25,7 +25,7 @@ define([ 'models', 'facade' ], function(models, facade) {
 			}).done(function(data, textStatus, jqXHR) {
 				 var collection = [];
 				 var payload = data.payload;
-				 console.log(payload);
+				 //console.log(payload);
 		         if(payload != null){
 		         	 for (i = 0; i < (payload.length > 10 ? 10 : payload.length) ; i++) {
 		         		 var item = {};

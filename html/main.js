@@ -148,7 +148,12 @@ define([
 		//Backbone.noConflict();
 		//apping = new app();
 		//Backbone.history.start();
-		$(function () { // doc ready
+		
+
+		$(function () {
+
+
+		 // doc ready
 			Backbone.noConflict();
 			routing = new app();
 			App = {};

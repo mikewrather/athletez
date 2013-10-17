@@ -16,7 +16,7 @@ define([
 			, SectionView = views.SectionView;
 
 
-		console.log(SectionView);
+		//console.log(SectionView);
 		VideoPreviewView = SectionView.extend({
 
 			name: "Video Preview View",

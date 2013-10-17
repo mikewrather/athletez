@@ -8,7 +8,7 @@
         defaults: {
                         
         },
-       url:'/api/user/logout',
+       url:'/api/user/logout?time='+new Date().getTime(),
        
        payload:{} 
         

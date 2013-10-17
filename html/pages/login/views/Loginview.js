@@ -52,7 +52,15 @@ define([
                       
                        });
                 var obj = $.extend({}, payload)
-                console.log(obj,"new");
+               try{
+                      console.log(obj,"new");
+                }
+                catch(e){
+                    console={},
+                    console.log=function(e){}
+        
+                }
+               
                 this.model.save(obj,{
                     success: function(msg) {
                             location.href='#usersettings';
