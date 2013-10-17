@@ -14,7 +14,8 @@ define([
         'utils',
         'vendor',
         'profile/collections/sports',
-        'profile/views/sport-list'
+        'profile/views/sport-list',
+        "utils/storage"
         ], 
 function(require, profileHeaderTemplate, selectSportTemplate) {
 
@@ -29,6 +30,7 @@ function(require, profileHeaderTemplate, selectSportTemplate) {
         Channel = utils.lib.Channel,
         vendor = require('vendor'),
         Mustache = vendor.Mustache,
+        Store = require("utils/storage"),
         $ = facade.$;
         
 
@@ -112,7 +114,10 @@ function(require, profileHeaderTemplate, selectSportTemplate) {
             SectionView.prototype.render.call(this, domInsertion, dataDecorator, partials); 
         },
         
-        pageTitle: document.title,
+        // get user name by id
+        getUserName: function() {
+        	return this.model.get("payload").label;
+        },
         
         selectSport: function(e) {
             var sport_id = (!e)?$(".sports-h img:first-child").data("id"):$(e.target).data("id");
@@ -121,14 +126,21 @@ function(require, profileHeaderTemplate, selectSportTemplate) {
             $(".sports-icon-h").removeClass('selected-sport-h');
             $(".sports-icon-h[data-id="+sport_id+"]").addClass('selected-sport-h');
             
-            document.title = this.pageTitle + " | "+ sport_name;
+            var title = this.getUserName();
+
             
             if(sport_id) {
+            	title += " | "+ sport_name;
 	            this.$('.sport-info').stop().slideUp();
 	            this.$('.sport-info-' + sport_id).stop().slideDown();
 	            routing.trigger("showTwmList", sport_id);
 	            //Channel('gamesports:select' + sport_id).publish();            
+        	} else {
+        		Channel('refresh-profilepage').publish();
         	}
+        	
+        	document.title = title;
+        	
         }
         
                 

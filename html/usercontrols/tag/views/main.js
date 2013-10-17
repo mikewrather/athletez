@@ -4,9 +4,9 @@
  // Requires `define`, `require`
  // Returns {Awards VIEW} constructor
  */
-define(['require', 'text!usercontrols/tag/templates/layout.html', 'facade', 'views', 'utils', 'vendor', 'usercontrols/tag/models/basic_info', 'sportorg/collections/sports_listall', 'location/collections/states', 'usercontrols/tag/collections/schools', 'usercontrols/tag/collections/teams', 'location/collections/cities', 'user/collections/users', 'usercontrols/tag/collections/games', 'usercontrols/tag/models/complevel', 'usercontrol/dropdown/view/dropdown'], function(require, layoutTemplate) {
+define(['require', 'text!usercontrols/tag/templates/layout.html', 'facade', 'views', 'utils', 'vendor', 'usercontrols/tag/models/basic_info', 'sportorg/collections/sports_listall', 'location/collections/states', 'usercontrols/tag/collections/schools', 'usercontrols/tag/collections/teams', 'location/collections/cities', 'user/collections/users', 'usercontrols/tag/collections/games', 'usercontrols/tag/models/complevel', 'usercontrol/dropdown/view/dropdown'], function(require) {
 
-	var self, facade = require('facade'), views = require('views'), SectionView = views.SectionView, utils = require('utils'), Channel = utils.lib.Channel, vendor = require('vendor'), Mustache = vendor.Mustache, $ = facade.$, BasicModel = require('usercontrols/tag/models/basic_info'), SportsCollection = require('sportorg/collections/sports_listall'), StatesCollection = require('location/collections/states'), CityCollection = require('location/collections/cities'), SchoolCollection = require('usercontrols/tag/collections/schools'), UsersCollection = require('user/collections/users'), GamesCollection = require('usercontrols/tag/collections/games'), TeamsCollection = require('usercontrols/tag/collections/teams'), CompLevelModel = require('usercontrols/tag/models/complevel'), DropDownList = require('usercontrol/dropdown/view/dropdown'),
+	var layoutTemplate=require('text!usercontrols/tag/templates/layout.html'),self, facade = require('facade'), views = require('views'), SectionView = views.SectionView, utils = require('utils'), Channel = utils.lib.Channel, vendor = require('vendor'), Mustache = vendor.Mustache, $ = facade.$, BasicModel = require('usercontrols/tag/models/basic_info'), SportsCollection = require('sportorg/collections/sports_listall'), StatesCollection = require('location/collections/states'), CityCollection = require('location/collections/cities'), SchoolCollection = require('usercontrols/tag/collections/schools'), UsersCollection = require('user/collections/users'), GamesCollection = require('usercontrols/tag/collections/games'), TeamsCollection = require('usercontrols/tag/collections/teams'), CompLevelModel = require('usercontrols/tag/models/complevel'), DropDownList = require('usercontrol/dropdown/view/dropdown'),
 
 	//Models
 	TagView = SectionView.extend({
@@ -123,12 +123,14 @@ define(['require', 'text!usercontrols/tag/templates/layout.html', 'facade', 'vie
 			playersId : 'playerid',
 			cityId : 'cityid'
 		},
+		
 		inlineTemplates : {
 			sportOption : '{{#sports}}<option value="{{sport_id}}">{{sport_name}}</option>{{/sports}}',
 			compLevelOption : '{{#levels}}<option value="{{complevel_id}}">{{complevel_name}}</option>{{/levels}}',
 			seasonOption : '{{#seasons}}<option value="{{season_id}}">{{season_name}}</option>{{/seasons}}',
 			addPlayerText : '</br><input type="text" class="txt-tag-player-name_h additional_h" placeholder="Enter Name" value="" />'
 		},
+		
 		/*Messages Holds the messages, warning, alerts, errors, information variables*/
 		/*In Case of similar message create only one object and key*/
 		messages : {
@@ -146,7 +148,6 @@ define(['require', 'text!usercontrols/tag/templates/layout.html', 'facade', 'vie
 			self.setOptions(options);
 
 			this.init();
-
 		},
 
 		/*render displays the view in browser*/
@@ -162,17 +163,20 @@ define(['require', 'text!usercontrols/tag/templates/layout.html', 'facade', 'vie
 			} else {
 				this.channel = options.channel;
 			}
+			this.sports_id = options.sports_id || null;
 		},
 
 		/*initialize must be a wrapper so any function definitions and calles must be called in init*/
 		init : function() {
 			self.setupView();
 		},
+		
 		setupView : function() {
 			self.setUpMainView();
 			self.fillSports();
 
 		},
+		
 		setUpMainView : function() {
 			var markup = Mustache.to_html(self.template, {});
 			$(self.el).html(markup);
@@ -192,6 +196,7 @@ define(['require', 'text!usercontrols/tag/templates/layout.html', 'facade', 'vie
 			}
 		},
 		SetupSportsView : function(List) {
+			//alert("sportsID " + self.sports_id);
 			self.sports = List;
 			var data = {};
 			data.records = self.sports;
@@ -208,7 +213,9 @@ define(['require', 'text!usercontrols/tag/templates/layout.html', 'facade', 'vie
 					self.changeSport(result);
 				}
 			});
-
+					if(self.sports_id){
+						self.sportsDone();	
+					}
 			// var models = List.toJSON();
 			// if (models == null || models.length < 1) {
 			// $(self.destination).find(self.controls.ddlSports).parent().find(self.controls.fieldMessage).html(self.messages.dataNotExist).stop().fadeIn();
@@ -234,7 +241,7 @@ define(['require', 'text!usercontrols/tag/templates/layout.html', 'facade', 'vie
 		sportsDone : function(e) {
 			self.sportsId = $(self.destination).find(self.controls.hdnSportsId).val();
 			$(self.destination).find(self.controls.lblSportName).html($(self.destination).find(self.controls.spnSports).find(self.controls.dropdownHeader).text())
-			$(e.target).parents(self.controls.secAddSports).fadeOut();
+			$(self.destination).find(self.controls.secAddSports).fadeOut();
 			$(self.destination).find(self.controls.secSports).fadeIn();
 			$(self.destination).find(self.controls.secFooterLinks).fadeIn();
 		},
@@ -260,6 +267,7 @@ define(['require', 'text!usercontrols/tag/templates/layout.html', 'facade', 'vie
 			$(self.destination).find(self.controls.secGame).fadeOut();
 			$(self.destination).find(self.controls.secTagTeam).fadeIn();
 			$(self.destination).find(self.controls.secFooterLinks).fadeOut();
+			$(self.destination).find(self.controls.btnTeamFinish).fadeOut();
 			$(e.target).hide();
 		},
 
@@ -338,7 +346,7 @@ define(['require', 'text!usercontrols/tag/templates/layout.html', 'facade', 'vie
 						isStateValid = true;
 						self.states_id = value['id'];
 						$(e.target).attr(self.attributes.stateId, self.states_id);
-						$(e.target).parent().find(self.controls.txtTeamCity).removeAttr('disabled').attr(self.attributes.stateId, self.states_id).fadeIn();
+					//	$(e.target).parent().find(self.controls.txtTeamCity).removeAttr('disabled').attr(self.attributes.stateId, self.states_id).fadeIn();
 						$(e.target).parent().find(self.controls.txtTeamSchool).removeAttr('disabled').attr(self.attributes.stateId, self.states_id);
 					}
 
@@ -347,7 +355,7 @@ define(['require', 'text!usercontrols/tag/templates/layout.html', 'facade', 'vie
 			if (!isStateValid) {
 				self.states_id = 0;
 				$(self.destination).find(self.controls.txtTeamSchool).attr('disabled', 'disabled').removeAttr(self.attributes.stateId).fadeOut();
-				$(self.destination).find(self.controls.txtTeamCity).attr('disabled', 'disabled').removeAttr(self.attributes.stateId).fadeOut();
+			//	$(self.destination).find(self.controls.txtTeamCity).attr('disabled', 'disabled').removeAttr(self.attributes.stateId).fadeOut();
 			}
 			// Hide all other controls
 			self.CheckTeamControlsVisibility();
@@ -537,13 +545,13 @@ define(['require', 'text!usercontrols/tag/templates/layout.html', 'facade', 'vie
 
 		CheckTeamControlsVisibility : function() {
 			var value = $(self.destination).find(self.controls.txtTeamState).attr(self.attributes.stateId);
-			if (value && value != "" && value != 0) {
-				$(self.destination).find(self.controls.txtTeamCity).show();
-			} else {
-				$(self.destination).find(self.controls.txtTeamCity).val('').removeAttr(self.attributes.cityId).hide();
-			}
-
-			value = $(self.destination).find(self.controls.txtTeamCity).attr(self.attributes.cityId);
+			// if (value && value != "" && value != 0) {
+				// $(self.destination).find(self.controls.txtTeamCity).show();
+			// } else {
+				// $(self.destination).find(self.controls.txtTeamCity).val('').removeAttr(self.attributes.cityId).hide();
+			// }
+// 
+			// value = $(self.destination).find(self.controls.txtTeamCity).attr(self.attributes.cityId);
 			if (value && value != "" && value != 0) {
 				$(self.destination).find(self.controls.txtTeamSchool).show();
 			} else {
@@ -562,11 +570,14 @@ define(['require', 'text!usercontrols/tag/templates/layout.html', 'facade', 'vie
 			var teamId = $(self.destination).find(self.controls.txtTeamSchool).attr(self.attributes.teamId);
 			self.team_id = teamId
 			var seasonId = $(self.destination).find(self.controls.ddlTeamSeason).val();
-			var data = {};
+			//var data = {};
+			var data = [];
 			if (teamId && teamId != "" && teamId != 0 && teamId && teamId != "" && teamId != 0) {
-				var teamName = $(self.destination).find(self.controls.txtTeamSchool).val();
-				data.teamName = teamName;
-				data.teamId = teamId;
+			var teamName = $(self.destination).find(self.controls.txtTeamSchool).val();
+			//	data.teamName = teamName;
+			//	data.id = teamId;
+			data.push(teamId);
+				
 				$(self.destination).find(self.controls.lblTeamName).html(teamName);
 
 				$(self.destination).find(self.controls.secTagTeam).fadeOut();
@@ -575,10 +586,15 @@ define(['require', 'text!usercontrols/tag/templates/layout.html', 'facade', 'vie
 				$(self.destination).find(self.controls.lnkPlayer).fadeIn();
 				$(self.destination).find(self.controls.lnkGame).fadeIn();
 				$(self.destination).find(self.controls.secFooterLinks).fadeIn();
+				
+			//	$(self.destination).find(self.controls.btnTeamFinish).fadeIn();
 			} else {
 				self.$(e.target).parents(self.controls.secTagTeam).find(self.controls.fieldMessage).html(self.messages.selectOrganization).stop().fadeIn();
 			}
-			self.tagData.Team = data;
+			
+			//self.tagData.Team = data;
+			var newData ={5 : data};
+			Channel(self.channel).publish(newData);
 		},
 
 		/***********************TAG PLAYER SECTION STARTS HERE*********************************************/
@@ -586,6 +602,7 @@ define(['require', 'text!usercontrols/tag/templates/layout.html', 'facade', 'vie
 			$(self.destination).find(self.controls.secTagTeam).fadeOut();
 			$(self.destination).find(self.controls.secGame).fadeOut();
 			$(self.destination).find(self.controls.secPlayer).fadeIn();
+			$(self.destination).find(self.controls.btnTeamFinish).fadeOut();
 
 		},
 		addPlayer : function(e) {
@@ -663,13 +680,16 @@ define(['require', 'text!usercontrols/tag/templates/layout.html', 'facade', 'vie
 		donePlayerTagging : function(e) {
 			var players = [];
 			var playerNames = "";
+			var nData = [];
 			$(self.destination).find(self.controls.txtPlayerName).each(function() {
-				if ($(this).attr(self.attributes.playersId) > 0) {
+				var playerId = $(this).attr(self.attributes.playersId);
+				if (playerId > 0) {
 					players.push({
 						name : $(this).val(),
-						user_id : $(this).attr(self.attributes.playersId)
+						id : playerId
 					})
 					playerNames += "," + $(this).val();
+					nData.push(playerId);
 
 				}
 			});
@@ -677,13 +697,17 @@ define(['require', 'text!usercontrols/tag/templates/layout.html', 'facade', 'vie
 				var data = {
 					players : players
 				};
-				self.tagData.Player = data;
+				//self.tagData.Player = data;
 
 				var section = $(self.destination).find(self.controls.sectionSelectedPlayers);
 				$(section).find(self.controls.lblPlayerNames).html(playerNames);
 				$(section).fadeIn();
 
 				$(self.destination).find(self.controls.secPlayer).fadeOut();
+				$(self.destination).find(self.controls.btnTeamFinish).fadeIn();
+				
+			var newData ={1 : nData};
+			Channel(self.channel).publish(newData);
 
 			} else {
 				$(e.target).parents(self.controls.secGame).find(self.controls.fieldMessage).html(self.messages.selectPlayer).fadeIn();
@@ -699,6 +723,7 @@ define(['require', 'text!usercontrols/tag/templates/layout.html', 'facade', 'vie
 			$(self.destination).find(self.controls.secTagTeam).fadeOut();
 			$(self.destination).find(self.controls.secPlayer).fadeOut();
 			$(self.destination).find(self.controls.secGame).fadeIn();
+			$(self.destination).find(self.controls.btnTeamFinish).fadeOut();
 		},
 		bindGamesData : function(e) {
 			var sportid = $(self.destination).find(self.controls.hdnSportsId).val();
@@ -706,7 +731,7 @@ define(['require', 'text!usercontrols/tag/templates/layout.html', 'facade', 'vie
 			if (self.sportsId) {
 				var List = new GamesCollection();
 				List.states_id = self.states_id;
-				List.cities_id = self.city_id;
+				//List.cities_id = self.city_id;
 				List.sports_id = self.sportsId;
 				List.teams_id = self.team_id;
 
@@ -727,12 +752,12 @@ define(['require', 'text!usercontrols/tag/templates/layout.html', 'facade', 'vie
 		},
 		SetupGamesView : function(List) {
 
-			var models = List;
+			var models = List.toJSON();
 			if (models == null || models.length < 1) {
 				$(self.destination).find(self.controls.secGame).find(self.controls.fieldMessage).html(self.messages.dataNotExist).stop().fadeIn();
 				return;
 			}
-			self.games = List;
+			self.games = models;
 			var data = {};
 			data.records = self.games;
 			data.recordId = 'id';
@@ -759,9 +784,9 @@ define(['require', 'text!usercontrols/tag/templates/layout.html', 'facade', 'vie
 		changeGame : function(result) {
 			var gameId = result;
 			if (gameId && gameId != "" && gameId != 0) {
-				$(e.target).parents(self.controls.secGame).find(self.controls.btnGameDone).fadeIn();
+				$(self.destination).find(self.controls.secGame).find(self.controls.btnGameDone).fadeIn();
 			} else {
-				$(e.target).parents(self.controls.secGame).find(self.controls.btnGameDone).fadeOut();
+				$(self.destination).find(self.controls.secGame).find(self.controls.btnGameDone).fadeOut();
 			}
 		},
 		doneGameTagging : function(e) {
@@ -772,10 +797,13 @@ define(['require', 'text!usercontrols/tag/templates/layout.html', 'facade', 'vie
 				gameName = $(e.target).parents(self.controls.secGame).find(self.controls.spnGames).find(self.controls.dropdownHeader).text();
 				var data = {
 					game : {
-						game_id : gameId,
+						id : gameId,
 						game_name : gameName
 					}
 				};
+
+				var gData = [];
+				gData.push(gameId);
 
 				self.tagData.Game = data;
 				var section = $(self.destination).find(self.controls.sectionSelectedGames);
@@ -783,6 +811,11 @@ define(['require', 'text!usercontrols/tag/templates/layout.html', 'facade', 'vie
 				$(section).fadeIn();
 
 				$(self.destination).find(self.controls.secGame).fadeOut();
+				$(self.destination).find(self.controls.btnTeamFinish).fadeIn();
+				
+			var newData ={8 : gData};
+			Channel(self.channel).publish(newData);
+			
 			} else {
 				var section = $(self.destination).find(self.controls.sectionSelectedGames);
 				$(section).find(self.controls.lblGameNames).html('');
@@ -792,7 +825,7 @@ define(['require', 'text!usercontrols/tag/templates/layout.html', 'facade', 'vie
 		},
 
 		finishTagging : function() {
-			Channel(self.channel).publish(this.tagData);
+			//Channel(self.channel).publish(this.tagData);
 		}
 	});
 	return TagView;

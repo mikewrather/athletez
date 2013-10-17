@@ -34,25 +34,39 @@ class Model_User_Teamslink_Positionlink extends ORM
 
 	public function savePositionLink($args){
 		extract($args);
+
+		$check = ORM::factory('User_Teamslink_Positionlink');
 		if (isset($users_teams_link_id)){
 			$this->users_teams_link_id = $users_teams_link_id;
+			$check->where('users_teams_link_id','=',$users_teams_link_id);
 		}
 
 		if (isset($positions_id)){
 			$this->positions_id = $positions_id;
+			$check->where('positions_id','=',$positions_id);
 		}
 
-		try{
-			$external_validate = Validation::factory($args);
-			$external_validate->rule('users_teams_link_id','utl_position_link_exist', array($users_teams_link_id, $positions_id));
-			$external_validate->rule('positions_id', 'positions_id_exist');
-			if ($this->check($external_validate)){
-				$this->save();
-			}
-			return $this;
-		} catch(ORM_Validation_Exception $e){
-			return $e;
+		$check->find();
+		if(ORM::is_deleted($check))
+		{
+			$check->undo_delete_with_deps();
+			return $check;
 		}
+		else
+		{
+			try{
+				$external_validate = Validation::factory($args);
+				$external_validate->rule('users_teams_link_id','utl_position_link_exist', array($users_teams_link_id, $positions_id));
+				$external_validate->rule('positions_id', 'positions_id_exist');
+				if ($this->check($external_validate)){
+					$this->save();
+				}
+				return $this;
+			} catch(ORM_Validation_Exception $e){
+				return $e;
+			}
+		}
+
 	}
 
 	public function getBasics($settings = array())

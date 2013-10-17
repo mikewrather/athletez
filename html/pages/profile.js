@@ -27,7 +27,7 @@ define([
 	"profile/collections/fans",
 	"profile/views/header",
 	"profile/views/add-media",
-	//"schedules/views/schedule-list",
+	"schedules/views/schedule-list",
 	"user/views/related-list",
 	"user/views/fitnessbasic-list",
 	"profile/views/video-list",
@@ -58,7 +58,7 @@ define([
 			
 			ProfileHeaderView = require("profile/views/header"),
 			ProfileAddMediaView = require("profile/views/add-media"),
-			//ProfileOrgListView = require("schedules/views/schedule-list"),
+			ProfileOrgListView = require("schedules/views/schedule-list"),
 			ProfileRelatedListView = require("user/views/related-list"),
 			ProfileFitnessBasicListView = require("user/views/fitnessbasic-list"),
 			ProfileImageListView = require("profile/views/image-video-list"),
@@ -124,9 +124,9 @@ define([
 				this.fans.id = this.id;
 				this.fans.fetch();
 				
-				this.images = new ProfileImageList();
-				this.images.id = this.id;
-				this.images.fetch();
+				//this.images = new ProfileImageList();
+				//this.images.id = this.id;
+				//this.images.fetch();
 
 				// I added this in here even though it might not be the best place for it.
 				// If I take it out it won't render images if no sport is selected
@@ -373,15 +373,18 @@ define([
 			setupImageListView: function () {
 				var self = this;
 				//Channel('image-upload-success').subscribe(this.updateImages);
+				routing.off('image-upload-success');
 				routing.on('image-upload-success', function(data) { 
         			self.updateImages(data);
         		});
-
 				this.imageListView = new ProfileImageListView({
 					collection: this.images,
 					destination: "#image-wrap",
+					target_id : this.id,
+					target_url : "/api/user/addimage/",
+					sport_id: $(".selected-sport-h").data("id"),
 					//model: Backbone.Model.extend(),
-					name: "imagesView"
+					name: "images View 2"
 				});
 
 				this.scheme.push(this.imageListView);

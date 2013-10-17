@@ -4,11 +4,25 @@
  // Requires `define`, `require`
  // Returns {Photo Player View} constructor
  */
-define(['require', 'text!usercontrols/photo-player/templates/player.html','text!usercontrols/photo-player/templates/image-thumbs.html', 'facade', 'views', 'utils', 'vendor', 'votes/models/vote' ], function(require, layoutTemplate,imageThumbsTemplate) {
+define([
+	'require',
+	'text!usercontrols/photo-player/templates/player.html',
+	'text!usercontrols/photo-player/templates/image-thumbs.html',
+	'facade',
+	'views',
+	'utils',
+	'vendor',
+	'votes/models/vote',
+	'jwplayer',
+	'jqueryui',
+	'jquery.slimscroll.hor'], function(require, layoutTemplate,imageThumbsTemplate) {
 
 	var self, facade = require('facade'), views = require('views'), SectionView = views.SectionView, 
 	utils = require('utils'), Channel = utils.lib.Channel, vendor = require('vendor'), 
 	Mustache = vendor.Mustache, $ = facade.$, voteModel = require('votes/models/vote');
+	console.log("jwplayer",jwplayer);
+	jwplayer.key = "yXOw2TpDcCoCnbWyVSCoEYA4tepkpjiVEtLEfSBIfZQ=";
+
 	//Models
 	PhotoPlayerView = SectionView.extend({
 		template : layoutTemplate,
@@ -56,6 +70,7 @@ define(['require', 'text!usercontrols/photo-player/templates/player.html','text!
 			//$current.parents('li').addClass('selected-photo-thumb');
 			this.index = $current.attr("data-index");
 			this.loadImage();
+			this.changeThumbPosition();
 		},
 		
 		backButton: function(e) {
@@ -81,18 +96,19 @@ define(['require', 'text!usercontrols/photo-player/templates/player.html','text!
 			liPos = $li.position(), ulPos = $ul.position(), ulWid = $ul.width(), scroll = 0, $tOuter = this.$el.find(".thumbs-outer"), outWid = $tOuter.width();
 			// get the li position 
 			
-			if((liPos.left + $li.width()) > outWid) {
+			if(liPos.left < 0) {
+				scroll = liPos.left + ulPos.left;
+			} else if((liPos.left + $li.width()) > outWid) {
 				scroll = liPos.left - outWid;
 				scroll += (ulPos.left < 0)?-(ulPos.left):-(ulPos.left);
 				scroll += $li.width() + 20;
 			} else {
 				var outerWid = (ulPos.left < 0)?-(ulPos.left):ulPos.left;
-				scroll = +(outerWid) - $li.width();//ulPos.left;
+				scroll = +(outerWid) - $li.width();
 			}
-			console.error(scroll);
 			// scrol to teh position
 			if(scroll)
-				this.$el.find(".thumbs-outer").animate({scrollLeft: scroll + 'px'}, 1000);
+				this.$el.find(".thumbs-outer").animate({scrollLeft: scroll + 'px'}, 400);
 		},
 		
 		initThumbsSection: function() {
@@ -184,9 +200,7 @@ define(['require', 'text!usercontrols/photo-player/templates/player.html','text!
 						extra._label = mpay.label;
 						extra._sublabel = "Coming Soon";
 						extra._link = "/#profile/" + mpay.id;
-	
 						if(mpay.hasOwnProperty('is_owner')) show_edit = mpay.is_owner;
-	
 						break;
 					case '8':
 						//games
@@ -260,32 +274,89 @@ define(['require', 'text!usercontrols/photo-player/templates/player.html','text!
 			this.id = extra._id;
 			var markup = Mustache.to_html(this.thumbTemplate, data);
 			this.$el.find('.thumb-image-list-h').html(markup);
+			setTimeout(function() {
+				_self.changeThumbPosition();				
+			}, 1000);
 
+			this.thumbScroll();
 		},
+
+		thumbScroll: function()
+		{
+			this.$el.find('.thumbs-outer').slimscrollHorizontal({
+				height: '110px',
+				width: '100%',
+				alwaysVisible: false,
+				start: 'left',
+				position: 'bottom',
+				wheelStep: 10,
+				barZ:9999,
+				wrapperPos:'absolute',
+				wrapperBottom:'0px',
+				opacity:.7,
+				color:'#9cca3c'
+			});
+/*
+			var self = this;
+			function moveul(li)
+			{
+				var fullsize = $('div.thumbs-outer').width(),
+				ratio = 200 / fullsize;
+
+				function leftrange(pos)	{return pos < (fullsize/2);}
+				function getRate(direction,pos)
+				{
+					var rate;
+					if(direction=='left') rate = ratio * pos;
+					else rate = 200-(pos * ratio);
+					rate = rate < 1 ? 1 : rate;
+					return 100/rate;
+				}
+				function moveList(direction,rate)
+				{
+					var scroll = (direction=="right") ? $('div.thumbs-outer').offset().left - rate : $('div.thumbs-outer').offset().left + rate;
+					self.$el.find(".thumbs-outer").animate({scrollLeft: scroll + 'px'}, 400);
+				}
+				li.bind('mousemove',function(e){
+					var mypos = e.pageX - $('div.thumbs-outer').offset().left, moverate,
+						direction = leftrange(mypos) ? "left" : "right;",
+						moverate = getRate(direction,mypos);
+					moveList(direction,moverate);
+				});
+			}
+
+			var chk_thumblist = setInterval(function(){
+				var li = $('ul.images-list li');
+				if(li.length > 0){	clearInterval(chk_thumblist); moveul(li);	}
+			},500);
+*/	},
 		
 		loadImage: function(trigger) {
+
+			if(!$('div#video_container').hasClass('hidden')) $('div#video_container').addClass('hidden');
+			if($('div.loading_image').hasClass('hidden')) $('div.loading_image').removeClass('hidden');
+
 			var _self = this, mpay = this.json[_self.index].payload, extra = {
 				_enttypes_id : mpay.enttypes_id,
 				_id : mpay.id,
+				_media_id: mpay.media_id,
 				_currentIndex: _self.index
 			};
-			
 			if(_self.index >= this.json.length - 1) {
 				this.$el.find('.next-arrow-h').addClass('disable-arrow-link');
 			} else {
 				this.$el.find('.next-arrow-h').removeClass('disable-arrow-link');
 			}
-			
 			if(_self.index == 0) {
 				this.$el.find('.back-arrow-h').addClass('disable-arrow-link');
 			} else {
 				this.$el.find('.back-arrow-h').removeClass('disable-arrow-link');
 			}
-
 			var image_object;
 			switch(mpay.enttypes_id) {
 				case '23':
 					//videos
+					this.setupVideo(mpay);
 					extra._thumbnail = mpay.thumbs;
 					extra._label = mpay.media.name;
 					extra._link = "javascript: void(0);";
@@ -309,7 +380,6 @@ define(['require', 'text!usercontrols/photo-player/templates/player.html','text!
 				case '8':
 					//games
 					extra._detailclass = "game";
-
 					extra._thumbnail = mpay.game_picture!==null ? mpay.game_picture.types.large_thumb.url : "http://lorempixel.com/output/sports-q-c-440-440-4.jpg";
 					extra._label = mpay.game_day;
 					extra._link = "/#game/" + mpay.id;
@@ -339,16 +409,11 @@ define(['require', 'text!usercontrols/photo-player/templates/player.html','text!
 			{
 				var self=this,loading_div = this.$el.find('div.loading_image');
 				loading_div.css('opacity','0');
-
 				function showImage(event){
 					var self = event.data.self,
 						image_object = event.data.image_object,
 						totalheight = parseInt(self.$el.height()) * .8,
 						image_height = parseInt(image_object.height) >= 380 ? parseInt(image_object.height) : 380;
-
-					console.log(totalheight,image_height,(totalheight-image_height)/2);
-
-					console.log(event.data,self);
 
 					if(image_object.width > image_object.height || image_object.width == image_object.height)
 					{
@@ -378,12 +443,62 @@ define(['require', 'text!usercontrols/photo-player/templates/player.html','text!
 				}
 				loading_div.find('.large-image-h').attr('src', image_object.url).on('load',{'el':loading_div,'self':this,'image_object':image_object},showImage);
 			}
-
 			this.$el.find('.thumb-image-list-h li').removeClass('selected-photo-thumb');
 			this.$el.find('.thumb-link-h[data-index='+this.index+']').parents('li').addClass('selected-photo-thumb');
+			routing.trigger('photo-player-section-reload', extra._enttypes_id, extra._media_id);
+		},
 
-			console.log(extra);
-			routing.trigger('photo-player-section-reload', extra._enttypes_id, extra._id);
+		setupVideo: function(mpay)
+		{
+
+			var self = this;
+			function videoShit(){
+				var jw = jwplayer("jw_container");
+				var c_el = self.$el;
+				var jps = {},sources = [];
+				for(var i=0;i<mpay.video_type.length;i++)
+				{
+					console.log(mpay.video_type[i]);
+					var thissource;
+					thissource = {file:mpay.video_type[i].meta_details.url};
+					sources.push(thissource);
+				}
+				jps.playlist = [{
+					image : mpay.thumbs,
+					mediaid : mpay.media.name,
+					sources : sources
+				}];
+				jps.title = mpay.media.name;
+				jps.primary = "html5";
+				jps.duration = mpay.video_type[0].meta_details.duration_in_ms * 1000;
+				jps.modes = [
+					{ type:"html5", src:"http://s3.amazonaws.com/mikewbucket/jw/jwplayer.html5.js"},
+					{ type:"flash", src:"http://s3.amazonaws.com/mikewbucket/jw/jwplayer.flash.swf" }
+				];
+				jps.skin = "http://s3.amazonaws.com/mikewbucket/jw/skins/glow.xml";
+				jps.height = (c_el.height()) * .8;
+				jps.width = c_el.width();
+				console.log(jps);
+				jw.setup(jps);
+			}
+
+			var checkforjw = setInterval(function(){
+
+
+				var jwc = $('#jw_container');
+				if(jwc.length > 0)
+				{
+					clearInterval(checkforjw);
+					videoShit();
+				}
+				else{
+					console.log("adding video thing");
+					$('div.image-bg div.loading_image').addClass('hidden');
+					$('div#video_container').removeClass('hidden');
+					var $container = $("<div></div>").attr('id','jw_container');
+					$('div#video_container').append($container).removeClass('hidden');
+				}
+			},500);
 		},
 
 		showImage: function($el){

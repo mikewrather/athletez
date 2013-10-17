@@ -2,7 +2,6 @@
 // --------------  
 // Requires define
 // Return {Object} App
-
 define( ["facade", "utils", "collections", "chrome", "controller", "profile", "imageup",'home','videopreview',"game", "team", "registration","profilesetting","userresume","packages/site/collections/phrases","usercontrols/tag/tag","usercontrols/addgame/addgame","signup","login", "usercontrols/photo-player/photo-player", "usercontrols/add-club/add-club", "utils/storage", 'usercontrols/location/views/view-location','signup/views/facebooksignup'],
 function (facade, utils, collections, chromeBootstrap, Controller, ProfileController, ImageController, HomeController, VideoPreviewController,
 	GameController, TeamController, RegistrationController,ProfileSetting,UserResume, SitePhraseList , TagController,AddGameController, SignupController,LoginController,PhotoPlayerController, AddClubController, Store, googleMapLocationview,fbreg) {
@@ -141,9 +140,13 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
         },
         
         initialiRoutesInit: function(fn, title) {
-        	var self = this;
+        	var self = this, closeModelBox = function() {
+        		$("#modalPopup, .modal-backdrop").unbind().remove();
+        	};
+        	
         	routing.off('app-inited');
             routing.on('app-inited', function(id) {
+            	closeModelBox();
             	fn(id);
             });
             
@@ -201,7 +204,7 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
 	    		
 	    		self.currentController = new HomeController({
 	    			route: "",
-	    			title: "Athletz"
+	    			title: "Athletez"
 	    		});
 	    	}
 	    	this.initialiRoutesInit(initHome);
@@ -264,20 +267,21 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
         
         
 		imageUpListeners: function () {
-            function showImage(url,attr) {
-                var imageController = new ImageController({"route": "","url":url,"attr":attr});
+            function showImage(url,attr, data) {
+                var imageController = new ImageController({"route": "","url":url,"attr":attr, data: data});
             }
 			this.addImageTrigger(showImage);
         },
         
         addImageTrigger: function(fn) {
         	routing.off('add-image');
-            routing.on('add-image', function(url, attr) {
+            routing.on('add-image', function(url, attr, data) {
+            	console.log(url, attr, data);
 	            if(!this.checkForUser()) {
 		            $(".signup-email").trigger('click');
 		            return;
 	            }
-            	fn(url , attr);
+            	fn(url , attr, data);
             });
         },
 		

@@ -2,7 +2,7 @@
 	{{#data}}
 		<div class="fitness-overview-data-piece" style="">
 			<img title="{{name}}" src="{{icon}}" style=""/>
-			<span style="font-family: 'Avenir';font-weight: bolder; font-size: 2em;">{{val}}</span>
+			<span style="font-family: 'Avenir';font-weight: bolder; font-size: 2em;">{{#val}}{{val}}{{/val}}{{^val}}--{{/val}}</span>
 		</div>
 	{{/data}}
 {{/payload}}

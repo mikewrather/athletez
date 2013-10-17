@@ -2,7 +2,7 @@
 <div class="row-fluid">
     <div class="logo">
     {{#branding}}
-    <a class="brand" href="/">
+    <a class="brand" title="home" href="#home">
         <img style="height: 30px;" src="{{base_url}}{{src}}" alt="{{alt}}" />
     </a>
     {{/branding}}
@@ -25,7 +25,9 @@
                     {{#nav}}
                         <li><a href="{{link}}">{{page}}</a></li>
                     {{/nav}}
-                    <li><a href="{{logout_url}}">{{logout_label}}</a></li>
+                    <li><a href="{{fbreg_url}}">{{fbreg_label}}</a></li>
+                    <li><a href='null' id="logoutId">{{logout_label}}</a></li>
+
                 </ul>
             </div>
         {{/authorized}}    

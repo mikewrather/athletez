@@ -32,7 +32,9 @@ define(['require',
 		events : {
 			"click .rotate" : "imageRotate",
 			"click .close" : "closePreview",
-			"click .previewimg" : "selectImage"
+			"click .previewimgsrc" : "selectImage",
+			"mouseover .previewimg" : "showFooter",
+			"mouseout .previewimg" : "hideFooter",
 		},
 		initialize : function(options) {
 			SectionView.prototype.initialize.call(this, options);
@@ -85,6 +87,12 @@ define(['require',
       		$("#select-allup").hide();
 			$("#image-tagging").show();
 		},
+		showFooter : function(e){
+			$(e.target).parents(".previewimg").find(".lnkFooter").show()
+		},
+		hideFooter : function(e){
+			$(e.target).parents(".previewimg").find(".lnkFooter").hide()
+		}
 	});
 
 	return PreviewBasicView;

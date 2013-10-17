@@ -521,18 +521,73 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 		if(!$this->loaded()) return array();
 		//loop through teams and get positions for each.
 
-		foreach($this->utl->find_all() as $link)
+		$utl = $this->utl;
+		$utl = ORM::_sql_exclude_deleted(array("User_Teamslink"=>'user_teamslink'),$utl);
+		foreach($utl->find_all() as $link)
 		{
-			$positions = $link->positions->find_all();
+			$positions = DB::select()->from('utl_position_link')
+				->where('users_teams_link_id','=',$link->id)
+				->join('positions')->on('utl_position_link.positions_id','=','positions.id');
+
+			$classes_arr = array(
+				'User_Teamslink_Positionlink'=>'utl_position_link'
+			);
+			$positions = ORM::_sql_exclude_deleted($classes_arr, $positions);
+			$positions = $positions->execute();
+			//print_r($positions);
 			foreach($positions as $position)
 			{
-				$pos_arr[$position->id] = $position;
+			//	print_r($position);
+				$pos_arr[$position['id']] = $position['name'];
 			}
 		}
 		return $pos_arr;
 	}
 
 	public function getResumeDataTree($sports_id=NULL,$overview=false)
+{
+	if(!$this->loaded()) return false;
+
+	$rdp = ORM::factory('User_Resume_Data_Profile');
+	$rdps = $rdp->getRDPForUser($this,'array',$sports_id,$overview);
+
+	$profiles = array();
+	foreach($rdps as $rdp_id => $rdp)
+	{
+		$datagroups = $rdp->datagroups;
+
+		if($overview)
+		{
+		//	$datagroups->where('user_resume_data_group.is_overview','=',1);
+		}
+
+		$datagroups = $datagroups->find_all();
+
+		$profiles[$rdp_id] = $rdp->as_array();
+
+		foreach($datagroups as $group)
+		{
+			$resdata = $group->resdata->find_all();
+			foreach($resdata as $data)
+			{
+				$val = $data->datavals->where('users_id','=',$this->id)->find();
+				$profiles[$rdp_id]["data"][$data->id] = array(
+					"name" => $data->name,
+					"type" => $data->resume_data_type,
+					"val" => $val->loaded() ? $val->user_value : false,
+					"id" => $val->loaded() ? $val->id : 0,
+					"resume_data_id" => $data->id,
+				);
+				if(is_string($data->large_icon) && strlen($data->large_icon) > 5) $profiles[$group->id]["data"][$data->id]['icon'] = $data->large_icon;
+			}
+		}
+	}
+
+	return $profiles;
+
+}
+
+	public function getResumeDataTree_BAK($sports_id=NULL,$overview=false)
 	{
 		if(!$this->loaded()) return false;
 
@@ -542,7 +597,7 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 		$profiles = array();
 		foreach($rdps as $rdp_id => $rdp)
 		{
-		//	print_r($rdp->as_array());
+			//	print_r($rdp->as_array());
 
 			$datagroups = $rdp->datagroups;
 
@@ -553,10 +608,11 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 
 			$datagroups = $datagroups->find_all();
 
-		//	print_r($datagroups);
+			//		print_r($datagroups);
 
 			foreach($datagroups as $group)
 			{
+				//		print_r($group);
 
 				if(array_key_exists($group->id,$profiles))
 				{
@@ -599,6 +655,7 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 		return $profiles;
 
 	}
+
 	public function getUploadedVideos($obj, $sports_id = null)
 	{
 		return Model_Media_Video::getVideos($obj, $sports_id);

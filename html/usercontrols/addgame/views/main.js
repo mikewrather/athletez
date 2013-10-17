@@ -4,20 +4,18 @@
  // Requires `define`, `require`
  // Returns {Add Game VIEW} constructor
  */
-define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 'views', 'utils', 'vendor', 'user/models/basic_info', 'sportorg/collections/sports_listall', 'location/collections/states', 'usercontrols/addgame/collections/teams', 'location/collections/cities', 'usercontrols/addgame/collections/teams_user', 'usercontrols/addgame/collections/teams', 'usercontrols/addgame/collections/games_search', 'usercontrols/addgame/models/team', 'usercontrols/addgame/models/team_add', 'usercontrols/addgame/models/game', 'usercontrols/addgame/models/uslgamelink',
-'usercontrol/dropdown/view/dropdown'
+define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 'views', 'utils', 'vendor', 'sportorg/collections/sports_listall', 'location/collections/states', 'usercontrols/addgame/collections/teams', 'location/collections/cities', 'usercontrols/addgame/collections/teams_user', 'usercontrols/addgame/collections/teams', 'usercontrols/addgame/collections/games_search', 'usercontrols/addgame/models/team', 'usercontrols/addgame/models/team_add', 'usercontrols/addgame/models/game', 'usercontrols/addgame/models/uslgamelink',
+'usercontrol/dropdown/view/dropdown', 'usercontrol/location/views/get-view-location'
 ], function(require, layoutTemplate) {
 
 	var self, facade = require('facade'), views = require('views'), SectionView = views.SectionView, utils = require('utils'), Channel = utils.lib.Channel, vendor = require('vendor'), Mustache = vendor.Mustache, $ = facade.$, BasicModel = require('usercontrols/tag/models/basic_info'), SportsCollection = require('sportorg/collections/sports_listall'), StatesCollection = require('location/collections/states'), CityCollection = require('location/collections/cities'), UserTeamsCollection = require('usercontrols/addgame/collections/teams_user'), TeamsCollection = require('usercontrols/addgame/collections/teams'), TeamModel = require('usercontrols/addgame/models/team'), TeamAddModel = require('usercontrols/addgame/models/team_add'), GameModel = require('usercontrols/addgame/models/game'), GamesSearchCollection = require('usercontrols/addgame/collections/games_search'),
 	DropDownList = require('usercontrol/dropdown/view/dropdown'),
-	
+	LocationView = require('usercontrol/location/views/get-view-location'),
 	//Models
 	UserGameLinkModel = require('usercontrols/addgame/models/uslgamelink'),
 	
 	AddGameView = SectionView.extend({
-
 		template : layoutTemplate,
-
 		/*Data to be sent as parameter in call back function*/
 		gameData : {
 
@@ -166,7 +164,7 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 					name : "PM",
 					value : "PM"					
 				}
-			}]
+			}];
 			
 			var data = {};
                data.records = records;
@@ -190,7 +188,18 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 				// changeYear : true
 			// });
 		},
-
+		
+		afterRender: function() {
+			var _self = this, location = new LocationView({
+				callback: function(id) {
+					var disable = (id != '')?true:false;
+					_self.$el.find(".btn-game-Finish_h").attr("disable", disable);
+					_self.$el.find(".txt-game-location-id_h").val(id);
+				}
+			});
+			this.$el.find('.location-view-h').html(location.el);
+		},
+  
 		// **Method** `setOptions` - called by BaseView's initialize method
 		setOptions : function(options) {
 			this.user_id = options.user_id;
@@ -301,6 +310,7 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 					teamModel.id = self.team_id;
 					teamModel.fetchSuccess = function(model, response) {
 						var data = teamModel.parseAsRequired(response);
+						self.team = data;
 						self.setSelectedTeam(data);
 					};
 						teamModel.fetch();
@@ -330,7 +340,7 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 				var item = {
 					team_name : "Team Not Found",
 					id : -1
-				}
+				};
 				
 				var list = List.AppendItem(item);
 				self.setUpUserTeams(list);
@@ -351,7 +361,7 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 			   
 			var DropDownOne = new DropDownList({
 					data: data,
-					title: "Select Team",
+					//title: "Select Team",
 					elementId: "hdn_team_id",
 					targetView: self,					
 					destination: self.controls.spanddlteamone,			
@@ -361,17 +371,17 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 					}
 				});
 			
-			var DropDownTwo = new DropDownList({
-					data: data,
-					title: "Select Team",
-					elementId: "hdn_team_id",
-					targetView: self,					
-					destination: self.controls.spanddlteamtwo,
-					//selectedValue : 14446,					
-					callback: function(result) {
-						self.changeUserTeamTwo(result);						
-					}
-				});
+			// var DropDownTwo = new DropDownList({
+					// data: data,
+					// title: "Select Team",
+					// elementId: "hdn_team_id",
+					// targetView: self,					
+					// destination: self.controls.spanddlteamtwo,
+					// //selectedValue : 14446,					
+					// callback: function(result) {
+						// self.changeUserTeamTwo(result);						
+					// }
+				// });
 		},
 		changeUserTeamOne : function(result) {
 			console.log("result1",result);
@@ -380,7 +390,7 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 			}
 			else{
 			//$(self.destination).find(self.controls.sectionTeamOne).find(self.controls.txtTeam).hide();
-//			$(self.destination).find(self.controls.sectionTeamOne).find(self.controls.indicator).hide();
+			//$(self.destination).find(self.controls.sectionTeamOne).find(self.controls.indicator).hide();
 			//$(self.destination).find(self.controls.sectionTeamOne).find(self.controls.spanddlteamone).show();
 			$(self.destination).find(self.controls.sectionTeamOne).find(self.controls.btnNewTeam).show();
 			$(self.destination).find(self.controls.sectionTeamOne).find("input").attr(self.attributes.teamId, result);
@@ -394,9 +404,9 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 				$(self.destination).find(self.controls.sectionTeamTwo).find(self.controls.btnNewTeam).trigger('click');
 			}
 			else{
-			$(self.destination).find(self.controls.sectionTeamTwo).find(self.controls.txtTeam).hide();
-			$(self.destination).find(self.controls.sectionTeamOne).find(self.controls.indicator).hide();
-			$(self.destination).find(self.controls.sectionTeamTwo).find(self.controls.spanddlteamtwo).show();
+			//$(self.destination).find(self.controls.sectionTeamTwo).find(self.controls.txtTeam).hide();
+			//$(self.destination).find(self.controls.sectionTeamTwo).find(self.controls.indicator).hide();
+			//$(self.destination).find(self.controls.sectionTeamTwo).find(self.controls.spanddlteamtwo).show();
 			$(self.destination).find(self.controls.sectionTeamTwo).find(self.controls.btnNewTeam).show();
 			$(self.destination).find(self.controls.sectionTeamTwo).find("input").attr(self.attributes.teamId, result);
 			$(self.destination).find(self.controls.sectionTeamTwo).find("input:checked").removeAttr("checked");
@@ -687,6 +697,19 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 					}
 				});
 			}
+			//Check if team name is equal to the team passed
+			if(self.team){
+				var teamname = self.team['team_name'];
+				var teamId = self.team['team_id'];
+				if (teamname == name) {
+						isSchoolValid = true;
+						self.team_id = teamId;
+						$(e.target).parents(self.controls.sectionTeams).find("input").attr(self.attributes.teamId, self.team_id);
+						$(e.target).parents(self.controls.sectionTeams).find(self.controls.indicator).removeClass("invalid").addClass("valid").show();
+					}
+				
+			}
+			
 			if (!isSchoolValid) {
 				// Hide all other controls
 				$(e.target).parents(self.controls.sectionTeams).find("input").removeAttr(self.attributes.teamId);
@@ -1035,13 +1058,19 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 			if (data.location_id) {
 				self.location_id = data.location_id || 0;
 				$(self.destination).find(self.controls.txtLocationId).val('').fadeOut();
-				$(self.destination).find(self.controls.sectionLocation).html(data.location_name).attr(self.attributes.locationId, data.location_id);
+				// setting the location inside location view
+				$(".address-h").val(data.location_name);
+				$(".txt-game-location-id_h").val(data.location_id);
+				$(".verify-address-h").trigger('click');
+				//$(self.destination).find(self.controls.sectionLocation).html(data.location_name).attr(self.attributes.locationId, data.location_id);
 			} else {
 				$(self.destination).find(self.controls.txtLocationId).val('').fadeIn();
 			}
 		},
 		clearLocation : function() {
-			$(self.destination).find(self.controls.sectionLocation).html('').removeAttr(self.attributes.locationId);
+			$(".address-h").val("");
+			$(".txt-game-location-id_h").val("");
+			//$(self.destination).find(self.controls.sectionLocation).html('').removeAttr(self.attributes.locationId);
 		},
 
 		finishGame : function() {

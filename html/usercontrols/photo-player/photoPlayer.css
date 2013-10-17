@@ -5,6 +5,7 @@
     left:5% !important;
     margin: 0 !important;
     border-radius: 0; -webkit-border-radius: 0; -moz-border-radius: 0;
+    padding: 0;
 }
 
 .photo-frame-model .modal-body {
@@ -112,7 +113,7 @@ div.left-arrow-container{
     left:0px;
 }
 
-div.right-arrow-container > img, div.left-arrow-container > img{
+div.right-arrow-container > img, div.left-arrow-container > img {
     display: block;
     position: relative;
     top:40%;
@@ -130,16 +131,14 @@ div.right-arrow-container > img{
 }
 
 .images-list {
-    /*display: inline-block;*/
-    /*width: 100%;*/
+	padding: 0px 10px;
+	margin: 0;
     float: left;
-    /*position: relative;*/
 }
 
 .thumbs-outer {
     z-index: 1056;
     max-width: 100%;
-
     margin-top: 5px;
     height: 150px;
     overflow-x: scroll;
@@ -244,4 +243,29 @@ div.right-arrow-container > img{
 .game-score {
 	float: right;
 	width: 30%;
+}
+
+.photo-player-arrow {
+	position: absolute;
+	top: 40%;
+}
+
+#video_container{
+    width: 100%;
+    height: 100%;
+    text-align: left;
+    z-index: 9999;
+}/*
+#video_container span{
+    position: absolute;
+    font-size: 2.5em;
+    width:100%;
+    padding-top: 200px;
+    text-align: center;
+}*/
+.hidden{
+    display: none;
+}
+#jw_container{
+    z-index: 9999;
 }

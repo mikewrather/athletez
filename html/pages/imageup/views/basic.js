@@ -49,23 +49,51 @@ function(require, imageBasicTemplate, selectAllTemplate,tagTemplate) {
 	
         template: imageBasicTemplate,
 		data :imageBasicTemplate,
+		tagCollection : [],
+		tagData : {
+			1 : [],
+			5 : [],
+			8 : []
+		},
+		const : {
+			User : 1,
+			Team : 5,
+			Game : 8
+		},
 
         initialize: function (options,attr) {
         	$("#errormsg, #preview").html("");
         	
             SectionView.prototype.initialize.call(this, options);   
 			debug.log("Image upload basic view");   
-			this.attr=attr;      
+			this.attr=attr;    
 			this.files_drag=[];
 			this.scheme = options.scheme;
 			this.layout = options.layout;
 
+			this.dropedImage = options.dropedImage;
+
+
+			if(this.attr)
+				this.sports_id = this.attr.sports_id || null;
+			else
+				this.sports_id = null;
+
+
 				//ASSIGN CHANNEL FOR IMAGE TAGGING
 				//Channel('tag-team-image-success').destroy();
-				Channel('tag-team-image-success').unsubscribe(this.tagFunction);
+
+				// routing.off('tag-team-image-success');
+	        // routing.on('tag-team-image-success', function(data) {
+	        	// this.tagFunction(data);
+	        // });
+				Channel('tag-team-image-success').empty();
 				
+				Channel('tag-team-image-success','nomemory').subscribe(this.tagFunction);
+
+				Channel('tag-team-image-success').unsubscribe(this.tagFunction);
 				Channel('tag-team-image-success').subscribe(this.tagFunction);
-//		debugger;
+
 			    this.setUpBottomView();		
 
 			$('#imgUploadModal').modal('show') ;
@@ -75,8 +103,9 @@ function(require, imageBasicTemplate, selectAllTemplate,tagTemplate) {
 			$('#imgUploadModal').on('hide', function () {
 		    	routing.trigger('refresh-onImageUpload');
 		    }); 
-		    console.log($(".modal-body").html());
+		    //console.log($(".modal-body").html());
         },
+        
        /*render displays the view in browser*/
        /*Use This To Add Any Other Functionality Along With Render*/
 		// render : function() {
@@ -105,11 +134,11 @@ function(require, imageBasicTemplate, selectAllTemplate,tagTemplate) {
 		        return function(e) {
 					var preview_id="preview_"+k;
 				  k++;
-				  dataum.push({"preview_id":preview_id,"width":"150","height":"150","filesrc":e.target.result,"title":escape(theFile.name)}); 
+				  dataum.push({"preview_id":preview_id,"width":"250","height":"250","filesrc":e.target.result,"title":escape(theFile.name)}); 
 				  if(k==files.length)
 				  {
 					data={"data":dataum};
-					$('#image_file').attr('disabled', 'disabled')
+					$('#image_file').attr('disabled', 'disabled');
 					routing.trigger("imageup-preview", data);
 				  }
 				  _self.hideLoader();
@@ -139,7 +168,7 @@ function(require, imageBasicTemplate, selectAllTemplate,tagTemplate) {
 		        return function(e) {
 					var preview_id="preview_"+k;
 				  k++;
-				  dataum.push({"preview_id":preview_id,"width":"150","height":"150","filesrc":e.target.result,"title":escape(theFile.name)}); 
+				  dataum.push({"preview_id":preview_id,"width":"250","height":"250","filesrc":e.target.result,"title":escape(theFile.name)}); 
 				  if(k==files.length)
 				  {
 					data={"data":dataum};
@@ -161,16 +190,35 @@ function(require, imageBasicTemplate, selectAllTemplate,tagTemplate) {
 			$("#imageup").attr("disabled", "disabled");
 			$(".closepreview").attr("disabled", "disabled");
 			$(".rotate").attr("disabled", "disabled");
-			console.log("SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS");
-			console.log($(".previewimg").length)
+
 			if($(".previewimg").length==0)
 			{
+
 				var msg={"msg":"Image Field Empty","color":"alert-error"};
 				routing.trigger("imageup-msg", msg);	
 				$("#imageup").removeAttr("disabled");
-			}
-			else if(this.files_drag.length>=1)
-			{
+			} else if (this.dropedImage) {
+				var len=this.files_drag.length;
+				jQuery.each(this.dropedImage.data[0].drag_info, function(i, file) {
+					var data = new FormData();
+					if ($('#preview_'+i+"group").length > 0) {
+						data.append('image_file',file);
+						if($('#preview_'+i+'rotang').val()>0)
+							data.append('rotate',$('#preview_'+i+'rotang').val());
+						else
+							data.append('rotate',"false");
+						for(var attrname in thiss.attr) {
+							console.error(attrname,thiss.attr[attrname]);
+							data.append(attrname,thiss.attr[attrname]);
+						}
+						var dataum={"dataum":data,"id":i,"len":len};
+						console.log(dataum);
+						routing.trigger("imageup-add-image", dataum);
+					}
+				});
+				this.files_drag=[];
+				$("#imageup").removeAttr("disabled");
+			} else if(this.files_drag.length>=1) {
 				var len=this.files_drag.length;
 				jQuery.each(this.files_drag, function(i, file) {
 					var data = new FormData();
@@ -181,9 +229,21 @@ function(require, imageBasicTemplate, selectAllTemplate,tagTemplate) {
 						else
 							data.append('rotate',"false");
 						for(var attrname in thiss.attr) {
+							console.error(attrname,thiss.attr[attrname]);
 							data.append(attrname,thiss.attr[attrname]);
 						}
+						
+						// Assign Tag Data In Data
+						var t = thiss.getTagData($('#preview_'+i+"group"));
+						data.append('tag',JSON.stringify(t));
+						// var tagIndex = $('#preview_'+i+"group").attr('tagIndex')
+						// if(tagIndex != null && tagIndex > -1){
+							// tagData = thiss.tagCollection[tagIndex] || {};
+							// data.append('tag',JSON.stringify(tagData));
+						// }
+
 						var dataum={"dataum":data,"id":i,"len":len};
+						console.log(dataum);
 						routing.trigger("imageup-add-image", dataum);
 					}
 				});
@@ -192,7 +252,7 @@ function(require, imageBasicTemplate, selectAllTemplate,tagTemplate) {
 			}
 			else
 			{
-				console.log($('#image_file')[0].files.length + "=file prasobh");
+			//	console.log($('#image_file')[0].files.length + "=file prasobh");
 				jQuery.each($('#image_file')[0].files, function(i, file) {
 					var data = new FormData();
 					if ($('#preview_'+i+"group").length > 0) {
@@ -204,6 +264,16 @@ function(require, imageBasicTemplate, selectAllTemplate,tagTemplate) {
 						for(var attrname in thiss.attr) {
 							data.append(attrname,thiss.attr[attrname]);
 						}	
+						// Assign Tag Data In Data
+						var t = thiss.getTagData($('#preview_'+i+"group"));
+						data.append('tag',JSON.stringify(t));
+						// var tagIndex = $('#preview_'+i+"group").attr('tagIndex')
+						// if(tagIndex != null && tagIndex > -1){
+							// tagData = thiss.tagCollection[tagIndex] || {};
+							// data.append('tag',JSON.stringify(tagData));
+						// }
+						
+						
 						var dataum={"dataum":data,"id":i,"len":$('#image_file')[0].files.length};
 						routing.trigger("imageup-add-image", dataum);
 					}
@@ -212,20 +282,52 @@ function(require, imageBasicTemplate, selectAllTemplate,tagTemplate) {
 			}
         },
         
+        getTagData : function(control){
+        //	console.log("tagData",this.tagData);
+        	var gameIndex = $(control).attr('gameIndex');
+        	var teamIndex = $(control).attr('teamIndex');
+        	var userIndex = $(control).attr('userIndex');
+        	// User : 1,
+			// Team : 5,
+			// Game : 8
+        	var tag = {
+        		1 : [],
+        		5 : [],
+        		8 : []
+        	};
+        	if(gameIndex > -1){
+        		var d = this.tagData[this.const.Game][gameIndex];
+        		if(d)
+        		tag[this.const.Game] = d;
+        	}
+        	if(teamIndex > -1){
+        		var d = this.tagData[this.const.Team][teamIndex];
+        		if(d)
+        		tag[this.const.Team] = d;
+        	}
+        	if(userIndex > -1){
+        		var d = this.tagData[this.const.User][userIndex];
+        		if(d)
+        		tag[this.const.User] = d;
+        	}
+				return tag;
+        },
        /*******************/
+      
       setUpBottomView : function(){
+      	$("#main-content-tag-section").fadeIn();
 				      	this.setUpSelectAllView();
 				      	this.setUpTagView();
       },
+      
       setUpSelectAllView : function(){
       		var self = this;
 			$("#select-allup").html(selectAllTemplate);  
 			
       },
+      
       setUpTagView : function(){
       	//TagView      	
-      	//alert(self.id);    
-      	  	
 			var self = this;
 			this.tagView = new TagView({
 				model : this.model,
@@ -233,15 +335,47 @@ function(require, imageBasicTemplate, selectAllTemplate,tagTemplate) {
 				name : "tag-image " + new Date().toString() ,
 				destination : "#image-tagging",
 				user_id : self.user_id || null,
-				channel : 'tag-team-image-success',
+				sports_id : self.sports_id,
+				channel : 'tag-team-image-success'
 			});
 
 			this.scheme.push(this.tagView);
 			this.layout.render();
       },
+      
       tagFunction : function(data){
-      	alert("this is tag finish function from basic.js");
-      	alert(JSON.stringify(data));
+      	// alert("this is tag finish function from basic.js");
+      	var self = this;
+      	//alert(JSON.stringify(data));
+      	this.tagCollection.push(data);
+      	var index = 0;
+      	var selectedImages = $(".previewimg.selected");
+      	console.log("selected",selectedImages);
+      	for(var key in data){
+      		self.tagData[key] = self.tagData[key] || [];
+      		
+      		//for(var k in data[key]){
+      			self.tagData[key].push(data[key]);
+      		//}
+      		//debugger;
+      		index = self.tagData[key].length - 1;
+      		if(key == self.const.Game){
+      			selectedImages.attr('gameIndex' , index);
+      		}
+      		else if(key == self.const.Team){
+      			selectedImages.attr('teamIndex' , index);
+      		} 
+      		else if(key == self.const.User){
+      			selectedImages.attr('userIndex' , index);
+      		}
+
+      	}
+//       	
+      	      	// //var index = this.tagCollection.length - 1;
+      	// if(index > -1)
+      	// selectedImages.attr('tagIndex' , index);
+      	// console.log("tagCollection" , this.tagCollection);
+      //	this.setUpTagView();
       },
       
       selectAllImages : function(e){

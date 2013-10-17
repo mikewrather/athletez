@@ -433,7 +433,7 @@ class Model_Sportorg_Team extends ORM
 			foreach($words as $word)
 			{
 				$this->and_where_open();
-				$this->where('orgs.name', 'like', $word."%");
+				$this->where('orgs.name', 'like', "%".$word."%");
 				$this->or_where('complevels.name', '=', $word);
 				$this->or_where('sportorg_team.year', 'like', $word.'%');
 				$this->or_where('sportorg_team.unique_ident', 'like',$word."%");

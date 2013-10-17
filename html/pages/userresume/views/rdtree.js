@@ -126,9 +126,11 @@ define(['require', 'text!userresume/templates/rdtree.html', 'facade', 'views', '
 				console.log("response",response);
 				if(response.payload != null){
 					if(response.payload.id > 0){
+						console.log(response.payload);
 						$(e.target).attr('treeId',response.payload.id);
 					}
 				}
+				$('.txtRdTrees_h[resumedataid="'+ response.payload.resume_data_id +'"]').val(response.payload.user_value)
 				$(e.target).parent().find(".error_h").html('').fadeOut();
 				$(e.target).parent().find(".success_h").html('').fadeOut();
 			});

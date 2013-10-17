@@ -22,6 +22,42 @@ class Controller_Updatefromhf extends Controller
 	//	$this->update_tags();
 	}
 
+	public function action_getlocs()
+	{
+		ini_set('memory_limit', '1024M');
+		set_time_limit(0);
+
+		$start_record = DB::select('id')->from('athletesup_main.orgs')
+			->where('locations_id','IS NOT',null)
+			->order_by('id','DESC')
+			->limit(1)
+			->execute();
+
+		$sr = $start_record[0]['id'];
+
+		$sc_orgs = DB::select()->from('test.schools_highlightfront')
+			->where('id','>',$sr)
+			->limit(2500)
+			->execute();
+
+		mysql_select_db('athletesup_main');
+		foreach($sc_orgs as $org)
+		{
+			echo $org['id'];
+
+			$args = array( 'address'=>$org['address_n_c_s'] );
+			$location = ORM::factory('Location_Base');
+			$location = $location->addLocation($args);
+			if(is_subclass_of($location,'Kohana_Exception')) return;
+			if($location->loaded())
+			{
+				DB::update('orgs')->set(array('locations_id'=>$location->id))
+					->where('id','=',$org['id'])
+					->execute();
+			}
+		}
+	}
+
 	public function action_entersmallthumbs()
 	{
 		$videos = ORM::factory('Media_Video')

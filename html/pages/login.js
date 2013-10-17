@@ -1,6 +1,5 @@
 define(["require",
-		"text!login/templates/layout.html", 
-		"application",
+		"text!login/templates/layout.html",
 		"facade", 
 		"controller", 
 		"models", 
@@ -8,31 +7,27 @@ define(["require",
 		"utils", 
 		"login/models/Loginmodel",
 		"login/views/Loginview",
-		"login/models/Logoutmodel",
-		
-		
-	
+		"login/models/Logoutmodel"
 		], 
-		 function(require, pageLayoutTemplate,apps) {
+		 function(require,pageLayoutTemplate) {
 
 				var SignupController,
-				
-		 		facade = require("facade"), 
-		 		Controller = require("controller"), 
-		 		models = require("models"), 
-		 		views = require("views"), 
-		 		utils = require("utils"), 
-		 		loginBaseModel=require("login/models/Loginmodel"),
-		 		loginBaseView=require("login/views/Loginview"),
-		 		logoutBaseModel= require("login/models/Logoutmodel"),
+			        facade = require("facade"),
+			        Controller = require("controller"),
+			        models = require("models"),
+			        views = require("views"),
+			        utils = require("utils"),
+			        loginBaseModel=require("login/models/Loginmodel"),
+			        loginBaseView=require("login/views/Loginview"),
+			        logoutBaseModel= require("login/models/Logoutmodel"),
 		 		
  		
-		 		LayoutView = views.LayoutView, 
-		 		$ = facade.$,
-		 		_ = facade._,
-		 		debug = utils.debug,
-		 		Channel = utils.lib.Channel,
-		 		cssArr = ["/pages/imageup/imageup.css"];
+			        LayoutView = views.LayoutView,
+			        $ = facade.$,
+			        _ = facade._,
+			        debug = utils.debug,
+			        Channel = utils.lib.Channel,
+			        cssArr = ["/pages/imageup/imageup.css"];
 
 				LoginController = Controller.extend({
 

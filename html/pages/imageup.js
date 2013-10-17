@@ -23,11 +23,13 @@ define(["require", "text!imageup/templates/basic.html", "text!imageup/templates/
 		init : function(option) {
 			this.url = option.url;
 			this.attr = option.attr;
+			this.data = option.data;
 			this.count = 0;
-			debug.log("Imagecontroller Init");
+			
 			this.setupLayout();
 			this.handleDeferreds();
 			this.showuploader();
+			if(this.data) this.showPreviewDropImage();
 		},
 		handleDeferreds : function() {
 			var controller = this;
@@ -47,7 +49,6 @@ define(["require", "text!imageup/templates/basic.html", "text!imageup/templates/
 				controller.rerender();
 			}
 
-
 			routing.off('imageup-add-image');
 			routing.on('imageup-add-image', function(param) {
 				imageuploader(param);
@@ -60,6 +61,7 @@ define(["require", "text!imageup/templates/basic.html", "text!imageup/templates/
 
 			routing.off('imageup-preview');
 			routing.on('imageup-preview', function(param) {
+				console.log(param);
 				previewShow(param);
 			});
 
@@ -67,12 +69,14 @@ define(["require", "text!imageup/templates/basic.html", "text!imageup/templates/
 			routing.on('imageup-rerender', function(param) {
 				rerenderShow(param);
 			});
+			
 
 			//Channel('imageup-add-image').subscribe(imageuploader);
 			//Channel('imageup-msg').subscribe(msgShow);
 			//Channel('imageup-preview', 'unique').subscribe(previewShow);
 			//Channel('imageup-rerender').subscribe(rerenderShow);
 		},
+		
 		showuploader : function() {
 			//this.basics = new ImageBasicModel();
 
@@ -80,15 +84,16 @@ define(["require", "text!imageup/templates/basic.html", "text!imageup/templates/
 				scheme : this.scheme,
 				layout : this.layout,
 				name : "Add Media",
+				dropedImage: this.data,
 				model : new ImageBasicModel(),
-				destination : "#left_upload",
-
+				destination : "#left_upload"
 			}, this.attr);
 			debug.log("Imagecontroller Show");
 			console.log(this.scheme);
 			this.scheme.push(addBasicView);
 			this.layout.render();
 		},
+		
 		setupLayout : function() {
 			var pageLayout;
 			debug.log("Imagecontroller Layout");
@@ -105,6 +110,7 @@ define(["require", "text!imageup/templates/basic.html", "text!imageup/templates/
 
 			return this.layout;
 		},
+		
 		previewShowup : function(dataum) {
 			var previewShowList = new PreviewShowList(dataum);
 			for (var x in this.scheme) {
@@ -127,6 +133,12 @@ define(["require", "text!imageup/templates/basic.html", "text!imageup/templates/
 		rerender : function() {
 			this.showuploader();
 		},
+		
+		showPreviewDropImage: function() {
+			var _self = this;
+			if(_self.data) routing.trigger('imageup-preview', _self.data);				
+		},
+		
 		imageUpload : function(data) {
 			console.log(data);
 			debug.log("image uploading starts");
@@ -150,7 +162,6 @@ define(["require", "text!imageup/templates/basic.html", "text!imageup/templates/
 
 					routing.trigger("image-upload-success", data);
 
-					debug.log(data);
 					$("imageup").attr("disabled", "disabled");
 					thiss.count++;
 					if (thiss.count == length) {
@@ -163,7 +174,9 @@ define(["require", "text!imageup/templates/basic.html", "text!imageup/templates/
 						$("#image_file").removeAttr("disabled");
 						$(".closepreview").removeAttr("disabled");
 						$(".previewimgsrc").fadeOut('slow').removeClass('fade-out');
+						
 					}
+					$("#preview").unbind().html("");
 				},
 				error : function(data) {
 					$("#preview_" + id).fadeOut("slow");

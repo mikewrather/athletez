@@ -62,7 +62,7 @@ define(
 					Channel('load:css').publish(cssArr);
 					_.bindAll(this);
 					this.handleOptions(options);
-					 this.scheme = [];
+					this.scheme = [];
 					this.genderTypes = ['boys', 'girls', 'both'];
 					this.init();
 					return this;
@@ -91,9 +91,9 @@ define(
 					};
 					
 					this.menuValues = [
-						{src : '.view-options-h .browse.select', target: '.view-link-h .option-heading-h', input: false, defaultValue: 'VIEWS'},
-     					{src: '.sports-option-h .sport.select', target: '.sport-link-h', input: false, defaultValue: 'SPORT'},
-     					{src: '#city', target: '.location-link-h', input: true, defaultValue: 'LOCATION'}
+						{src : '.view-options-h .browse.select', target: '.view-link-h .option-heading-h', input: false, defaultValue: 'ORDER'},
+     					{src: '.sports-option-h .sport.select', target: '.sport-link-h .option-heading-h', input: false, defaultValue: 'ALL SPORTS'},
+     					{src: '#city', target: '.location-link-h .option-heading-h', input: true, defaultValue: 'ANYWHERE'}
 					];
 					
 					this.viewOptions = ['orderby', 'time'];
@@ -129,11 +129,12 @@ define(
 		        
 		        initSections : function () {
 		        	this.setupMenuView();
-		        	this.setupLocationDDView();
 		        	_.each(this.genderTypes, this.setupSportListView);
 		        	_.each(['top-rated', 'search-result'], this.setupImageListView);
+		        	this.setupLocationDDView();
 		        	this.setupScheme();
 		        	this.setupLayout().render();
+		        	if(this.cityView) this.cityView.initPlugin();
 		        },
 		        
 		        updateBaseUrl : function(urlNumber) {
@@ -147,6 +148,9 @@ define(
 		        },
 		        
 		        changeViewFilter : function(str) {
+		        	
+		        	
+		        	
 		        	if(str.submenu === 'browse') {
 		        		options = {'orderby': str.value};
 		        	} else {
@@ -176,19 +180,27 @@ define(
 				},
 				
 				resetFilter: function(page) {
+					
+					for(var i in this.menuValues) {
+						if(this.menuValues[i].input) {
+							$(this.menuValues[i].src).val("");
+						} else {
+							$(this.menuValues[i].src).removeClass("select");
+						}
+					}
+					
 					switch(page) {
 						case 'view':
 							for(var i in this.viewOptions) {
-								if(this.viewOptions[i] == "orderby")
+								if(this.viewOptions[i] == "orderby") {
+									$(".dropdown-menu .browse").removeClass('select');
 									this.urlOptions[this.viewOptions[i]] = "random";
-								else if(i == "time")
+								} else if(i == "time")
 									this.urlOptions[this.viewOptions[i]] = "today";
 							}
 						break;
 						case 'sports':
 							for(var i in this.sportsOptions) {
-								console.log(this.sportsOptions[i]);
-								console.log(this.urlOptions);
 								this.urlOptions[this.sportsOptions[i]] = "0";
 							}
 						break;
@@ -216,9 +228,6 @@ define(
 					imageList.fetch();
 					
 					$.when(imageList.request).done(function() {
-						console.log("Fetch Complete");
-						console.log(imageList.length);
-						
 						if(imageList.length < 12)
 							$(".right-arrow-page-h").addClass("disable-arrow-link");
 						else
@@ -236,7 +245,6 @@ define(
 						});
 						controller.layout.transition(viewName, view);
 					});
-					
 					for(var i in this.menuValues) {
 						if(this.menuValues[i].input) {
 							var val = $(this.menuValues[i].src).val();
@@ -244,7 +252,6 @@ define(
 							var val = $(this.menuValues[i].src).text();
 						}
 						
-						console.log(val);
 						if(val != '') {
 							$(this.menuValues[i].target).html(val);
 						} else {
@@ -313,8 +320,6 @@ define(
 				setupImageListView : function(viewName) {
 					var imageListView;
 
-					//console.log(this.collections[viewName]);
-
 					imageListView = new ImageListView({
 						collection : this.collections[viewName],
 						name : viewName,
@@ -358,29 +363,21 @@ define(
 				},
 
 				setupLocationDDView : function() {
-					var stateListView, cityView,
+					var stateListView,
 					    stateViewName = 'state',
 					    cityModel = new CityModel(),
 					    cityViewName = 'city';
 					
-					//stateListView = new StateListView({
-					//	collection : this.collections[stateViewName],
-					//	name : stateViewName,
-					//	destination : "#location .state"
-					//});
-
-					cityView = new CityView({
+					this.cityView = new CityView({
 						model : cityModel,
 						name : cityViewName,
 						destination : "#location .city"
 					});
 					
-					//stateListView.render();
-					cityView.render();
-					this.sections[cityViewName] = cityView;
+					this.cityView.render();
+					
+					this.sections[cityViewName] = this.cityView;
 					this.meta.activeViews.push(cityViewName);
-					//this.sections[stateViewName] = stateListView;
-					//this.meta.activeViews.push(stateViewName);
 				},
 
 				setupLayout : function() {

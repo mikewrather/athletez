@@ -27,13 +27,12 @@ define(['require', 'text!usercontrols/location/templates/layout.html', 'facade',
 		/*initialize gets called by default when constructor is initialized*/
 		initialize : function(options) {
 			_self = this;
-			_self.game_id = options.game_id;
+			_self.game_id = options.game_id || undefined;
 			_self.location = options;
 			_self.selectedOptions = [];
 			_self.setOptions(options);
 			_self.render();
 		},
-		
 		
 		setLocation: function(e) {
 			var r = confirm("Are you sure want to set new address?");
