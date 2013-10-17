@@ -178,7 +178,7 @@ input[disabled].hasDatepicker, input[readonly].hasDatepicker {
 	text-align: center;
 	margin: 25px 0;
 
-    font-family: "Avenir", "HelveticaNeue", "Helvetica";
+    font-family: 'Nunito', "HelveticaNeue", "Helvetica";
     font-size:1.0em;
     font-weight: bolder;
     text-transform: uppercase;
@@ -738,7 +738,7 @@ span.ui-helper-hidden-accessible {
 
 .stats-header{
     background-color:#b9b9ba;
-    font-family: 'Avenir','HelveticaNeue';
+    font-family: 'Nunito','HelveticaNeue';
     font-weight: bold;
     font-size: 1.7em;
     padding:10px;
@@ -761,7 +761,7 @@ span.ui-helper-hidden-accessible {
 span.team-label{
     display: inline-block;
     margin-left:100px;
-    font-family: 'Avenir','HelveticaNeue';
+    font-family: 'Nunito','HelveticaNeue';
     font-weight: bolder;
     font-size: 1.1em;
 }
