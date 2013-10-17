@@ -20,7 +20,17 @@ define([
 	var self, facade = require('facade'), views = require('views'), SectionView = views.SectionView, 
 	utils = require('utils'), Channel = utils.lib.Channel, vendor = require('vendor'), 
 	Mustache = vendor.Mustache, $ = facade.$, voteModel = require('votes/models/vote');
-	console.log("jwplayer",jwplayer);
+	
+	try{
+		console.log("jwplayer",jwplayer);
+	}
+	catch(e){
+		console={},
+		console.log=function(e){}
+		
+	}
+	
+	
 	jwplayer.key = "yXOw2TpDcCoCnbWyVSCoEYA4tepkpjiVEtLEfSBIfZQ=";
 
 	//Models

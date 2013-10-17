@@ -94,7 +94,16 @@ define(
 				hideAllDropdowns: function() {
 					var _self = this;
 					$("html, #search").click(function(e) {
-						console.log($(e.target).parents("#views").length);
+						
+						try{
+                     		 console.log($(e.target).parents("#views").length);
+                		}
+                		catch(e){
+                   			console={},
+                    		console.log=function(e){}
+        
+                		}
+						
 						if(!$(e.target).parents(".menu").length)
 							_self.hideDropdown();
 					});
@@ -151,7 +160,14 @@ define(
 
 					
 					var data = this.model.toJSON();
-					console.error(data.views);
+					try{
+						console.error(data.views);
+					}
+					catch(e){
+						console={},
+						console.log=function(e){}
+					}
+					
 
 				}
 
