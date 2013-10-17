@@ -3,7 +3,7 @@ body { font-size:100%; font-family: "HelveticaNeue","Helvetica"; }
 /*****  Common styles   ******/
 
 
-.common-btn { -webkit-box-shadow: inset 0px -3px 2px rgba(0,0,0,0.5); -moz-box-shadow: inset 0px -3px 2px rgba(0,0,0,0.5);  box-shadow: inset 0px -3px 2px rgba(0,0,0,0.5);  text-decoration: none; padding:8px 50px; font-size: 1.5em; color: #FFFFFF; text-align:center; display:inline-block; font-family: "HelveticaNeue Bold","Avenir","Helvetica"}
+.common-btn { -webkit-box-shadow: inset 0px -3px 2px rgba(0,0,0,0.5); -moz-box-shadow: inset 0px -3px 2px rgba(0,0,0,0.5);  box-shadow: inset 0px -3px 2px rgba(0,0,0,0.5);  text-decoration: none; padding:8px 50px; font-size: 1.5em; color: #FFFFFF; text-align:center; display:inline-block; font-family: "HelveticaNeue Bold",'Nunito',"Helvetica"}
 .common-btn:hover, .common-btn:active { text-decoration: none;  color: #FFFFFF; -webkit-box-shadow: inset 1px 4px 2px rgba(0,0,0,0.5); -moz-box-shadow: inset 1px 4px 2px rgba(0,0,0,0.5);  box-shadow: inset 1px 4px 2px rgba(0,0,0,0.5);  }
 .common-btn-direction {background:#1AA0AE;}
 .common-btn-validation { background:#9CCA3C; }

@@ -9,7 +9,8 @@
         defaults: {
                         
         },
-       url:'api/user/login',
+       url:'api/user/login?time='+new Date().getTime(),
+
        payload:{} 
         
     });

@@ -62,7 +62,7 @@ function (
             this.model.fetchSuccess = this.model.fetchError = function(model, res) {
                 var markup = Mustache.to_html(self.template, model.toJSON());
                 self.$el.html(markup);
-                console.log(model.toJSON());
+               // console.log(model.toJSON());
 
                 if(typeof(model.get('user_photo'))=='object')
                     if(typeof(model.get('user_photo').types)=='object')
@@ -87,7 +87,10 @@ function (
                     routing.trigger('app-inited');
                 }
             };
-                
+
+           
+           // $.ajaxSetup({ cache: false });
+           
             this.model.fetch();
             return this;
         },

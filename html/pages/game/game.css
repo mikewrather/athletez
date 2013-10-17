@@ -4,7 +4,7 @@
 	float: left;
 	width: 100%;
 	padding: 0;
-    font-family: "Avenir","HelveticaNeue","Helvetica";
+    font-family: 'Nunito',"HelveticaNeue","Helvetica";
 }
 
 .game-heading > * {
@@ -76,7 +76,7 @@ ul.teams-list li.team-item{
     margin-top:10px;
     display:block;
     border-bottom:1px solid #CCCCCC;
-    font-family:'Avenir','HelveticaNeue','Helvetica';
+    font-family:'Nunito','HelveticaNeue','Helvetica';
 }
 
 ul.teams-list li.team-item:last-child{

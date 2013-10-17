@@ -20,7 +20,7 @@
 
 html,body{width: 100%; height: 100%;}
 
-#image-editor {  width: 100%; height: 100%; z-index: 8;  text-align:center; font-family:'Avenir','HelveticaNeue','Helvetica';}
+#image-editor {  width: 100%; height: 100%; z-index: 8;  text-align:center; font-family:'Nunito','HelveticaNeue','Helvetica';}
 
 #image-editor > div.main { width: 100%; height: 100%; margin: 0 auto; text-align:center;  z-index: 7; position: relative;}
 #image-editor > div.main > div.content {width:100%; height: 100%; }

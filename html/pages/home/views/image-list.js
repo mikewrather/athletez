@@ -29,8 +29,8 @@ define(
 
 				initialize : function(options) {
 					var _self = this;
-					console.log(options);
-					console.log(this);
+					//console.log(options);
+					//console.log(this);
 					this.name = options.name || this.name;
 					CollectionView.prototype.initialize.call(this, options);
 					if (!this.collection) {

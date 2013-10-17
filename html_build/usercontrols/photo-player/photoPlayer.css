@@ -77,11 +77,7 @@ div.image-controls{
     z-index: 1055;
 }
 div.right-arrow-container, div.left-arrow-container{
-    height:100%;
-    position: relative;
     width:20%;
-    vertical-align: middle;
-    text-align: center;
 }
 div.right-arrow-container{
     right:0px;

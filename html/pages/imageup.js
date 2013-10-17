@@ -147,7 +147,8 @@ define(["require", "text!imageup/templates/basic.html", "text!imageup/templates/
 			//url gets set
 			//this.url="/api/"+$("#url_tag").val()+"/addimage/"+$("#id_tag").val();
 
-			$("#preview_" + id).html('<div class="loader image-loading-div"></div>');
+			//$("#preview_" + id).html('<div class="loader image-loading-div"></div>');
+			$("#preview_" + id).addClass("image_upload_loader_new");
 			$(".previewimgsrc").addClass('fade-out');
 			$.ajax({
 				url : this.url,
@@ -173,10 +174,10 @@ define(["require", "text!imageup/templates/basic.html", "text!imageup/templates/
 						$("#imageup").removeAttr("disabled");
 						$("#image_file").removeAttr("disabled");
 						$(".closepreview").removeAttr("disabled");
-						$(".previewimgsrc").fadeOut('slow').removeClass('fade-out');
+						//$(".previewimgsrc").fadeOut('slow').removeClass('fade-out');
 						
 					}
-					$("#preview").unbind().html("");
+					$("#preview_" + id).unbind().removeClass("image_upload_loader_new").html("");
 				},
 				error : function(data) {
 					$("#preview_" + id).fadeOut("slow");

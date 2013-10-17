@@ -20,7 +20,7 @@
 	margin: 5px 30px 10px 30px;
     padding:8px 0 8px 0;
 	cursor: pointer;
-    font-family: "Avenir", "HelveticaNeue";
+    font-family: 'Nunito', "HelveticaNeue";
 }
 .sub-section-prof-setting input[type='text'], .sub-section-prof-setting select {
 	width: 235px;
@@ -73,7 +73,7 @@
 .org-sport-list .org-sport-list-header{
     width: 100%;
  
-    font-family: "Avenir";
+    font-family: 'Nunito';
     font-weight: bold;
 }
 .org-sport-list .org-sport-list-header:first-child{ border: none; }
@@ -150,13 +150,13 @@ div#edit_profile_info_section div span{
     height: auto;
     width: 100%;
     
-    font-family: "Avenir";
+    font-family: 'Nunito';
     font-weight: bold;
     font-size: 1.1em;
     color:#515252;
 }
 .rd-entry{ vertical-align:middle;padding:5px 0 0 30px;}
-.rd-entry > span{ display: inline-block;font-family: "Avenir";font-weight:normal; color:#515252; font-size: 1.0em;}
+.rd-entry > span{ display: inline-block;font-family: 'Nunito';font-weight:normal; color:#515252; font-size: 1.0em;}
 .rd-entry > span:first-child{ width:30%; }
 .rd-entry > span:first-child > img{ width:30px; margin-right:10px;}
 .resume_button{
@@ -164,7 +164,7 @@ div#edit_profile_info_section div span{
     background-color: #515252;
     color: #eef4da;
     padding:7px 20px 7px 20px;
-    font-family: "Avenir","HelveticaNeue";
+    font-family: 'Nunito',"HelveticaNeue";
     font-weight: bolder;
     margin-right:5px;
 }
@@ -221,7 +221,7 @@ a.remove{ background-image: url(http://athletez.s3.amazonaws.com/resources/img/x
     height: auto;
     width: 100%;
     
-    font-family: "Avenir";
+    font-family: 'Nunito';
     font-weight: bold;
     font-size: 1.1em;
     color:#515252;

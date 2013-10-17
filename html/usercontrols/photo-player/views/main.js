@@ -8,6 +8,7 @@ define([
 	'require',
 	'text!usercontrols/photo-player/templates/player.html',
 	'text!usercontrols/photo-player/templates/image-thumbs.html',
+	'text!usercontrols/tag/templates/layout.html',
 	'facade',
 	'views',
 	'utils',
@@ -15,12 +16,24 @@ define([
 	'votes/models/vote',
 	'jwplayer',
 	'jqueryui',
-	'jquery.slimscroll.hor'], function(require, layoutTemplate,imageThumbsTemplate) {
+	'jquery.slimscroll.hor', 'usercontrols/tag/models/basic_info','usercontrols/tag/views/main'], function(require, layoutTemplate,imageThumbsTemplate, tagTemplate) {
 
 	var self, facade = require('facade'), views = require('views'), SectionView = views.SectionView, 
 	utils = require('utils'), Channel = utils.lib.Channel, vendor = require('vendor'), 
+	TagView = require('usercontrols/tag/views/main'),
+	UserModel = require('usercontrols/tag/models/basic_info'),
 	Mustache = vendor.Mustache, $ = facade.$, voteModel = require('votes/models/vote');
-	console.log("jwplayer",jwplayer);
+	
+	try{
+		console.log("jwplayer",jwplayer);
+	}
+	catch(e){
+		console={},
+		console.log=function(e){}
+		
+	}
+	
+	
 	jwplayer.key = "yXOw2TpDcCoCnbWyVSCoEYA4tepkpjiVEtLEfSBIfZQ=";
 
 	//Models
@@ -31,12 +44,14 @@ define([
 			'click .back-arrow-h' : 'backButton',
 			'click .next-arrow-h' : 'nextButton',
 			'click .thumb-link-h' : 'changeImage',
-			'click .photo-player-vote-h': 'vote'
+			'click .photo-player-vote-h': 'vote',
+			'click .photo-player-tag-photo-h': 'setUpTagPhotoView'
 		},
 
 		/*initialize gets called by default when constructor is initialized*/
 		initialize : function(options) {
 			this.collection = options.collection;
+			this.setOptions(options);
 			this.id = options.id;
 			this.index = options.index;
 			SectionView.prototype.initialize.call(this, options);
@@ -47,14 +62,17 @@ define([
 			this.initThumbsSection();
 			this.loadImage(true);
 			
+			Channel('tag-image-success-photo').empty();
+			Channel('tag-image-success-photo').subscribe(this.tagFunction);
+			
 		},
 		
 		vote: function(e) {
-			
+			console.log("vote",this.json);
 			if($(e.currentTarget).hasClass('voted'))
 				return;
 				
-			var _self = ths, vote = new voteModel();
+			var _self = this, vote = new voteModel();
 			vote.userId = this.json[this.index].payload.id;
 			vote.entity_id = this.json[this.index].payload.enttypes_id;
 			vote.set({subject_type_id:vote.entity_id , subject_id: vote.userId});
@@ -82,6 +100,7 @@ define([
 		},
 		
 		nextButton: function(e) {
+			console.log("next");
 			if(this.index < this.json.length) {
 				this.index++;	
 				this.loadImage();
@@ -507,13 +526,77 @@ define([
 
 		// **Method** `setOptions` - called by BaseView's initialize method
 		setOptions : function(options) {
+			this.userId = options.user_id || null;
+			this.sportsId = options.sports_id || null;
+			this.scheme = options.scheme;
+			this.layout = options.layout;
 		},
 
 		setUpMainView : function() {
 			var self = this;
 			var markup = Mustache.to_html(self.template, {});
 			$(self.$el).html(markup);
-		}
+		},
+		setUpTagPhotoView : function(){
+      	//TagView      	
+  //    	var _self = this,
+      	console.log("tagtemplate",tagTemplate)
+			var self = this;
+			this.tagViewPhoto = new TagView({
+				model : new UserModel(),
+				template : tagTemplate,
+				name : "tag-image " + new Date().toString() ,
+				destination : "#image-tagging-photo",
+				user_id : self.userId || null,
+				sports_id : self.sportsId,
+				channel : 'tag-image-success-photo'
+			});
+				self.scheme.push(this.tagViewPhoto);
+				self.layout.render();
+			//this.scheme.push(this.tagViewPhoto);
+			//this.layout.render();
+      },
+      tagFunction : function(data){
+      	// alert("this is tag finish function from basic.js");
+      
+      	var self = this;
+      	
+      	var fData = data || {};
+      	fData.user_id = self.userId;
+      	fData.media_id = this.json[this.index].payload.media_id;
+      	
+      //	alert(JSON.stringify(data));
+      	console.log("Final Data For Tag Is = ",fData);
+      	console.log("Tagged data is =", JSON.stringify(data));
+      	// var usersID = this.json[this.index].payload.id;
+		// var mediaID = this.json[this.index].payload.enttypes_id;
+		// console.log()
+// 
+// alert(usersID);
+// alert(mediaID);
+      	// this.tagCollection.push(data);
+      	// var index = 0;
+      	// var selectedImages = $(".previewimg.selected");
+      	// console.log("selected",selectedImages);
+      	// for(var key in data){
+      		// self.tagData[key] = self.tagData[key] || [];
+//       		
+      		// //for(var k in data[key]){
+      			// self.tagData[key].push(data[key]);
+      		// //}
+      		// //debugger;
+      		// index = self.tagData[key].length - 1;
+      		// if(key == self.const.Game){
+      			// selectedImages.attr('gameIndex' , index);
+      		// }
+      		// else if(key == self.const.Team){
+      			// selectedImages.attr('teamIndex' , index);
+      		// } 
+      		// else if(key == self.const.User){
+      			// selectedImages.attr('userIndex' , index);
+      		// }
+// 
+      	}
 	});
 	return PhotoPlayerView;
 });

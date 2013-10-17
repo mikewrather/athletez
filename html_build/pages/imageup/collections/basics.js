@@ -1,1 +1,1 @@
-console.log("Called"),define(["facade","media/collections/images","utils"],function(e,t,n){var r,i=e._,s=n.lib.Channel;return r=t.extend({url:function(){return testpath?testpath+"/user/"+this.id+"/images/":"/api/user/images/"}}),r});
+define(["facade","media/collections/images","utils"],function(e,t,n){var r,i=e._,s=n.lib.Channel;return r=t.extend({url:function(){return testpath?testpath+"/user/"+this.id+"/images/":"/api/user/images/"}}),r});

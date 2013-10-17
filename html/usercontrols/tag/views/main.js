@@ -467,6 +467,7 @@ define(['require', 'text!usercontrols/tag/templates/layout.html', 'facade', 'vie
 			if (name != '' && isValidKey == true && name.length > 2) {
 
 				// Hide all other controls
+				self.$(e.target).parent().find(self.controls.fieldMessage).html('').stop().fadeOut();
 				$(e.target).removeAttr(self.attributes.teamId);
 				self.CheckTeamControlsVisibility();
 
