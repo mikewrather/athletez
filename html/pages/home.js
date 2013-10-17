@@ -13,6 +13,7 @@ define(
 		  //models
 		  "pages/home/models/menu",
 		  "packages/location/models/city",
+		  "signup/models/registerbasic",
 
 		  //collections
 		  "packages/sport/collections/sports",
@@ -24,6 +25,7 @@ define(
 		  "pages/home/views/image-list",
 		  "pages/home/views/state-list",
 		  "packages/sport/views/sport-list",
+		  "signup/views/registerbasic",
 		  "packages/location/views/city"],
 		function(require, pageLayoutTemplate) {
 
@@ -42,9 +44,11 @@ define(
 				//models
 				MenuModel = require("pages/home/models/menu"), 
 				CityModel = require('packages/location/models/city'), 
+				signupBaseModel=require("signup/models/registerbasic"),
 				
 				//views
 				MenuView = require("pages/home/views/menu"), 
+				signupBaseView=require("signup/views/registerbasic"),
 				ImageListView = require("pages/home/views/image-list"),
 				StateListView = require('pages/home/views/state-list'), 
 				SportListView = require('packages/sport/views/sport-list'), 
@@ -131,9 +135,11 @@ define(
 		        	this.setupMenuView();
 		        	_.each(this.genderTypes, this.setupSportListView);
 		        	_.each(['top-rated', 'search-result'], this.setupImageListView);
+		        	
 		        	this.setupLocationDDView();
 		        	this.setupScheme();
 		        	this.setupLayout().render();
+		        	this.setUpRegistrationView();
 		        	if(this.cityView) this.cityView.initPlugin();
 		        },
 		        
@@ -305,6 +311,8 @@ define(
 					_.each(this.genderTypes, function(name) {
 						collections[name] = new SportList([], {name : name});
 					});
+					
+					
 					//console.log(collections);
 				},
 
@@ -344,6 +352,28 @@ define(
 					sportListView.render();
 					this.sections[viewName] = sportListView;
 					this.meta.activeViews.push(viewName);
+				},
+				
+				setUpRegistrationView: function() {
+					var registerView;
+					 this.select_type = new signupBaseModel();
+					///registerView = new signupBaseView({
+					//	model : this.select_type,
+					//	name : 'register View',
+						//id : viewName,
+					//	destination : '.register-wrapper-h'
+					//});
+
+					//registerView.render();
+					//this.sections['register View'] = registerView;
+					//this.meta.activeViews.push('register View');
+					
+					this.selectTypeView = new signupBaseView({
+							model : this.select_type,
+							name : "Select Registration Type",
+							destination : ".register-wrapper-h",
+							openAsaPage: true
+						});
 				},
 
 				setupMenuView : function() {
