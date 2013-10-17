@@ -29,10 +29,8 @@ define([
 						
 					//alert(options.destination);
                     this.registrationController = new RegistrationController({
-                    "route": ""
+                    	"route": ""
                      });
-                     
-                     
                      
             		this.template =  _.template(signupBasicTemplate, {onlyRegister: (this.openAsaPage)?true:false});
             		this.$el = $(options.destination);
@@ -57,7 +55,6 @@ define([
             		        		
         		},
         		render: function(){
-console.error(this.$el);
         			this.$el.html(this.template);
         		},
         		events:{
@@ -86,14 +83,12 @@ console.error(this.$el);
 							model : this.basic_type,
 							name : "Final registration",
 							attr: {"attr": fields},
-							openAsaPage: true
+							openAsPopUp: true
 						};
-						console.error(options);
 						this.selectRegisterBasicFinalView = new signupBaseFinalView(options);
-						console.error(this.selectRegisterBasicFinalView);
-						$(".register-wrapper-h").unbind().html("");
-						$(".register-wrapper-h").html(this.selectRegisterBasicFinalView.$el);
-						
+						//$(".register-wrapper-h").unbind().html("");
+						$("#RegModal .modal-body").append(this.selectRegisterBasicFinalView.$el);
+						$('#RegModal').modal('show') ;
                     } else {
                    		if(flag) routing.trigger("register-basic-final", fields, page);          
         			}

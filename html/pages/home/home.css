@@ -132,7 +132,57 @@ li.sport a:hover {
     margin: 0 0 3px 0;
 }
 
-.register-wrapper #regcontainer {
+.register-wrapper {
 	background: url(/images/background/register_background.jpg) no-repeat;
 	background-size: cover;
+	opacity: 0.5;
+	position: absolute;
+	width: 100%;
+	max-width: 1000px;
+	height: 384px;
+	top: 62px;
+}
+
+.register-wrapper-h #regcontainer {
+	padding: 0;
+}
+
+#regcontainer #mainreg {
+	background-color: transparent;
+	opacity: 1;
+}
+
+#regcontainer #firstreg {
+	
+}
+
+
+#regpane #firstreg input {
+	margin-top: 0;
+	background-color: #FFF;
+	width: 300px;
+height: 35px;
+}
+
+#regpane input.regsubmit {
+	margin: 0 -10px 0 0;
+	padding: 0 10px;
+	float: right;
+	height: 40px;
+}
+
+#regcontainer #fbpane {
+	border-style: initial;
+}
+
+#regcontainer .regheader {
+	padding: 0 0 0 35px;
+	font-size: 3.3em;
+	font-weight: bold;
+}
+
+#mainreg #regor {
+	text-align: left;
+	margin-left: 84px;
+	color: #FFF;
 }
