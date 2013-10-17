@@ -66,6 +66,7 @@ define(
 					Channel('load:css').publish(cssArr);
 					_.bindAll(this);
 					this.handleOptions(options);
+					if(options.userId) this.userId = options.userId;
 					this.scheme = [];
 					this.genderTypes = ['boys', 'girls', 'both'];
 					this.init();
@@ -141,6 +142,7 @@ define(
 		        	this.setupLayout().render();
 		        	this.setUpRegistrationView();
 		        	if(this.cityView) this.cityView.initPlugin();
+		        	if(this.userId) $(".register-wrapper, .register-wrapper-h").hide().html("");
 		        },
 		        
 		        updateBaseUrl : function(urlNumber) {
@@ -327,7 +329,7 @@ define(
 
 				setupImageListView : function(viewName) {
 					var imageListView;
-
+					
 					imageListView = new ImageListView({
 						collection : this.collections[viewName],
 						name : viewName,

@@ -212,9 +212,11 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
 	    	//self.removeCurrent();
 	    	function initHome(id) {
 	    		$("body").addClass("homePage");
+	    		
 	    		self.currentController = new HomeController({
 	    			route: "",
-	    			title: "Athletez"
+	    			title: "Athletez",
+	    			userId : id
 	    		});
 	    	}
 	    	this.initialiRoutesInit(initHome);
