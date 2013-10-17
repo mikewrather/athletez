@@ -36,7 +36,6 @@ define(["require",
 
 		init : function() {
 			this.setupLayout().render();
-			
 			this.refreshPage();
 			this.createData();
 			this.handleDeferreds();

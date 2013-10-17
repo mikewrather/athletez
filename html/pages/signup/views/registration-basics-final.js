@@ -19,13 +19,12 @@ define([
 			SignupBasicView = SectionView.extend({
               
               initialize: function (options) {
-                    this.template =  _.template(signupBasicTemplate);
-                    this.$el = $(options.destination);
+                    this.template =  _.template(signupBasicTemplate, {page: (options.openAsaPage)?true:false});
+                    if(options.destination) this.$el = $(options.destination);
+                    if(options.openAsaPage) this.openAsaPage = options.openAsaPage;
                     this.render();
-                                    
                 },
                 render: function(){
-
                     this.$el.html(this.template);
                     this.registrationElements();
                     this.payload=this.finalRegistrationPayload(this.options.attr);
@@ -93,11 +92,11 @@ define([
 
                     
                     var months = this.option(month,"born");
-                    $(".seconddiv").append(months);
+                    this.$el.find(".seconddiv").append(months);
                     var date = this.option(day,"borndate");
-                    $(".seconddiv").append(date);
+                    this.$el.find(".seconddiv").append(date);
                     var years = this.option(year,"borndyear");
-                    $(".seconddiv").append(years);
+                    this.$el.find(".seconddiv").append(years);
         
                 },
                 option: function(elem,classes){
@@ -116,8 +115,8 @@ define([
                 },
                 fetchpayload: function(payload){
                     
-                  $("#first_name").val(payload.firstname+' '+ payload.lastname);
-                  $("#emailInput").val(payload.email); 
+                  this.$el.find("#first_name").val(payload.firstname+' '+ payload.lastname);
+                  this.$el.find("#emailInput").val(payload.email); 
                 },
                 next: function(event){
                     var current = this;

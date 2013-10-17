@@ -9,7 +9,8 @@ define([
     'signup/views/facebooksignup', 
     'facade', 
     'utils', 
-
+    "signup/views/registration-basics-final",
+    "signup/models/registration-basics-final"
 	],function(require,  signupBasicTemplate,backbone,_,RegistrationController) {
 			
 		var SignupBasicView,
@@ -18,34 +19,45 @@ define([
         	FbHeader=require('signup/views/facebooksignup'),
         	utils = require('utils'),
         	Channel = utils.lib.Channel,
-        	
+        	signupBaseFinalView=require("signup/views/registration-basics-final"),
+        	signupBaseFinalModel=require("signup/models/registration-basics-final"),
         	SectionView = backbone.View;
 			SignupBasicView = SectionView.extend({
 				
 				initialize: function (options) {
+					if(options.openAsaPage) this.openAsaPage = options.openAsaPage;
+						
+					//alert(options.destination);
                     this.registrationController = new RegistrationController({
                     "route": ""
                      });
-            		this.template =  _.template(signupBasicTemplate);
+                     
+                     
+                     
+            		this.template =  _.template(signupBasicTemplate, {onlyRegister: (this.openAsaPage)?true:false});
             		this.$el = $(options.destination);
                     $("#errormsg, #preview").html("");
             
                      SectionView.prototype.initialize.call(this, options);   
                      debug.log("Image upload basic view");   
-                     $('#RegModal').modal('show') ;
-                     $('#RegModal').on('hidden', function () {
-               
-                        //routing.trigger('refresh-onImageUpload');
-                    });
-                    $('#RegModal').on('hide', function () {
-                        $('div#modalPopup').remove();
-                        //routing.trigger('refresh-onImageUpload');
-                      });
+                     
+                     if(!this.openAsaPage) {
+	                     $('#RegModal').modal('show') ;
+	                     
+	                     $('#RegModal').on('hidden', function () {
+	               
+	                        //routing.trigger('refresh-onImageUpload');
+	                    });
+	                    $('#RegModal').on('hide', function () {
+	                        $('div#modalPopup').remove();
+	                        //routing.trigger('refresh-onImageUpload');
+	                      });
+                     }
             		this.render();
             		        		
         		},
         		render: function(){
-
+console.error(this.$el);
         			this.$el.html(this.template);
         		},
         		events:{
@@ -65,13 +77,26 @@ define([
                         flag = false;
                         return false;
                        }
-                      
                     });
-                   if(flag)
-                   //Channel('register-basic-final').publish(fields);
-                	routing.trigger("register-basic-final", fields);           
-
                     
+                    if(this.openAsaPage && flag) {
+                    	
+                    	this.basic_type	= new signupBaseFinalModel();
+						var options = {
+							model : this.basic_type,
+							name : "Final registration",
+							attr: {"attr": fields},
+							openAsaPage: true
+						};
+						console.error(options);
+						this.selectRegisterBasicFinalView = new signupBaseFinalView(options);
+						console.error(this.selectRegisterBasicFinalView);
+						$(".register-wrapper-h").unbind().html("");
+						$(".register-wrapper-h").html(this.selectRegisterBasicFinalView.$el);
+						
+                    } else {
+                   		if(flag) routing.trigger("register-basic-final", fields, page);          
+        			}
         		},
                 //*************//
                 

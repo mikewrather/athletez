@@ -131,3 +131,8 @@ li.sport a:hover {
     display: inline-block;
     margin: 0 0 3px 0;
 }
+
+.register-wrapper #regcontainer {
+	background: url(/images/background/register_background.jpg) no-repeat;
+	background-size: cover;
+}
