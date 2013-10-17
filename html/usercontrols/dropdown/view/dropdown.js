@@ -140,7 +140,6 @@ define(['require', 'text!usercontrol/dropdown/template/layout.html', 'facade', '
 				if (_self.selectedValue && _self.selectedValue == this.payload[_self.data.recordId])
 					return "selected";
 			}
-
 		},
 
 		// get record value by recordValue
@@ -175,9 +174,13 @@ define(['require', 'text!usercontrol/dropdown/template/layout.html', 'facade', '
 					self.callback(this.selectedOptions);
 			} else {
 				setTimeout(function() {
-					console.log("self.callback",self.callback,self.selectedOptions);
-					if (self.callback)
-						self.callback(self.selectedOptions);
+					if(!self.$el.find('li.selected').length) {
+						var $li = self.$el.find('.common-dropdown li:first-child');
+						$li.addClass('selected');
+						self.$el.find("#" + self.elementId).val($li.find('a').data("id"));						
+						self.showSelectedValue();
+					}
+					if (self.callback) self.callback(self.selectedOptions);
 				}, 200);
 			}
 			return true;

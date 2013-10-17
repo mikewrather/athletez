@@ -41,7 +41,7 @@ define([
     "team/views/comment-list",
     "team/views/menu",
     "media/models/image",
-    //"schedules/views/schedule-list",
+    "schedules/views/schedule-list",
     "roster/views/roster",
     "profile/views/fans-image-list"
     
@@ -68,7 +68,7 @@ define([
 		TeamCommentOnList = require("team/collections/commentson"),
         TeamHeaderView = require("team/views/header"),
         TeamAddMediaView = require("team/views/add-media"),
-       // TeamOrgListView = require("schedules/views/schedule-list"),
+        TeamOrgListView = require("schedules/views/schedule-list"),
        // TeamScheduleListView = require("sportorg/views/schedule-list"),
         TeamCompetitorTeamListView = require("sportorg/views/competitorteam-list"),
         TeamVideoListView = require("team/views/video-list"),
@@ -347,8 +347,10 @@ define([
         },
         
         setupGameView: function () {
-	        console.error(this.games.toJSON());
-			this.gamesView = new TeamOrgListView({
+			var teamView = TeamOrgListView.extend({
+				tagName: 'div'
+			});	        
+			this.gamesView = new teamView({
 				teams_id: this.id,
 				collection: this.games,
 				destination: "#games_div",

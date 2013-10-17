@@ -7,7 +7,141 @@
 	<!--[if IE]>
 	<link rel="stylesheet" media="all" type="text/css" href="css/pro_dropline_ie.css" />
 	<![endif]-->
+<style>
+	.bordered {
+		border: solid #ccc 1px;
+		-moz-border-radius: 6px;
+		-webkit-border-radius: 6px;
+		border-radius: 6px;
+		-webkit-box-shadow: 0 1px 1px #ccc;
+		-moz-box-shadow: 0 1px 1px #ccc;
+		box-shadow: 0 1px 1px #ccc;
+	}
 
+	.bordered tr:hover {
+		background: #fbf8e9;
+		-o-transition: all 0.1s ease-in-out;
+		-webkit-transition: all 0.1s ease-in-out;
+		-moz-transition: all 0.1s ease-in-out;
+		-ms-transition: all 0.1s ease-in-out;
+		transition: all 0.1s ease-in-out;
+	}
+
+	.bordered td, .bordered th {
+		border-left: 1px solid #ccc;
+		border-top: 1px solid #ccc;
+		padding: 10px;
+		text-align: left;
+		max-width: 500px;
+	}
+
+	.bordered th {
+		background-color: #dce9f9;
+		background-image: -webkit-gradient(linear, left top, left bottom, from(#ebf3fc), to(#dce9f9));
+		background-image: -webkit-linear-gradient(top, #ebf3fc, #dce9f9);
+		background-image:    -moz-linear-gradient(top, #ebf3fc, #dce9f9);
+		background-image:     -ms-linear-gradient(top, #ebf3fc, #dce9f9);
+		background-image:      -o-linear-gradient(top, #ebf3fc, #dce9f9);
+		background-image:         linear-gradient(top, #ebf3fc, #dce9f9);
+		-webkit-box-shadow: 0 1px 0 rgba(255,255,255,.8) inset;
+		-moz-box-shadow:0 1px 0 rgba(255,255,255,.8) inset;
+		box-shadow: 0 1px 0 rgba(255,255,255,.8) inset;
+		border-top: none;
+		text-shadow: 0 1px 0 rgba(255,255,255,.5);
+	}
+
+	.bordered td:first-child, .bordered th:first-child {
+		border-left: none;
+	}
+
+	.bordered th:first-child {
+		-moz-border-radius: 6px 0 0 0;
+		-webkit-border-radius: 6px 0 0 0;
+		border-radius: 6px 0 0 0;
+	}
+
+	.bordered th:last-child {
+		-moz-border-radius: 0 6px 0 0;
+		-webkit-border-radius: 0 6px 0 0;
+		border-radius: 0 6px 0 0;
+	}
+
+	.bordered th:only-child{
+		-moz-border-radius: 6px 6px 0 0;
+		-webkit-border-radius: 6px 6px 0 0;
+		border-radius: 6px 6px 0 0;
+	}
+
+	.bordered tr:last-child td:first-child {
+		-moz-border-radius: 0 0 0 6px;
+		-webkit-border-radius: 0 0 0 6px;
+		border-radius: 0 0 0 6px;
+	}
+
+	.bordered tr:last-child td:last-child {
+		-moz-border-radius: 0 0 6px 0;
+		-webkit-border-radius: 0 0 6px 0;
+		border-radius: 0 0 6px 0;
+	}
+
+	.bordered tr td:last-child{
+		max-width: 250px;
+		height: 25px;
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
+	}
+	.bordered tr td img.delicon{
+		width:20px;
+		height:20px;
+	}
+
+	.bordered tr td{
+		vertical-align: middle;
+	}
+
+	.bordered tr.opened td{
+		background-color: #dfffe1;
+	}
+
+	.bordered tr.error td{
+		background-color: #ffdee8;
+	}
+
+	.bordered tr td[onclick]{
+		cursor: pointer;
+	}
+	.bordered tr td[onclick]:hover{
+		background-color: #efefef;
+	}
+	.bordered tr td input{
+		width:90%;
+		height: 25px;
+	}
+
+	.bordered tr td textarea{
+		width: 90%;
+		height: 50px;
+	}
+
+	.bordered tr td div.description{
+		font-size: 10px;
+		font-weight: lighter;
+		font-style: italic;
+		color: #666;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		-o-text-overflow: ellipsis;
+		white-space: nowrap;
+		width: 100%;
+	}
+
+	.bordered tr td img.thumb{
+		max-width: 50px;
+		max-height: 50px;
+	}
+
+</style>
 	<!--  jquery core-->
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 
@@ -165,15 +299,28 @@
 		<div class="nav">
 			<div class="table">
 
-				<ul class="select"><li><a href="#nogo"><b>Entity Types</b><!--[if IE 7]><!--></a><!--<![endif]-->
-					<!--[if lte IE 6]><table><tr><td><![endif]-->
-					<div class="select_sub">
-						<ul class="sub">
-							<li><a href="#" onclick="loadContent('/admin/list_ents');">List All</a></li>
-						</ul>
-					</div>
-					<!--[if lte IE 6]></td></tr></table></a><![endif]-->
-				</li>
+				<ul class="select">
+					<li><a href="#nogo"><b>Entity Types</b><!--[if IE 7]><!--></a><!--<![endif]-->
+						<!--[if lte IE 6]><table><tr><td><![endif]-->
+						<div class="select_sub">
+							<ul class="sub">
+								<li><a href="#" onclick="loadContent('/admin/list_ents');">List All</a></li>
+							</ul>
+						</div>
+						<!--[if lte IE 6]></td></tr></table></a><![endif]-->
+					</li>
+				</ul>
+
+				<ul class="select">
+					<li><a href="#nogo"><b>Emails</b><!--[if IE 7]><!--></a><!--<![endif]-->
+						<!--[if lte IE 6]><table><tr><td><![endif]-->
+						<div class="select_sub">
+							<ul class="sub">
+								<li><a href="#" onclick="loadContent('/admin/emailsent');">Sent Emails</a></li>
+							</ul>
+						</div>
+						<!--[if lte IE 6]></td></tr></table></a><![endif]-->
+					</li>
 				</ul>
 
 				<div class="nav-divider">&nbsp;</div>

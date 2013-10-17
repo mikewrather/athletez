@@ -63,8 +63,12 @@ li.sport:hover, li.sport a:hover {
     color:#333;
     text-transform: uppercase;
 }
-.type-icons, .seach-box{
+.seach-box{
     margin:0 15px 0 15px;
+}
+.type-icons a{
+    color: #333;
+    padding: 0 10px 0 5px;
 }
 img.tiny-sport-icon{
     max-width: 20px;

@@ -87,4 +87,28 @@ class Controller_Admin extends AuthController
 		$renderer = Kostache::factory();
 		$this->response->body($renderer->render(new Admin_View_Postparams($this->request->query('entID'),$this->request->query('httpverb')),'admin/entpost'));
 	}
+
+	public function action_emailsent()
+	{
+		$emailsent = ORM::factory('Email_Sent');
+
+		if(isset($_REQUEST['schedule_id'])) $emailsent->where('email_schedule_id','=',$_REQUEST['schedule_id']);
+		if(isset($_REQUEST['college_coach_id'])) $emailsent->where('college_coaches_id','=',$_REQUEST['college_coach_id']);
+		if(isset($_REQUEST['user_id']))$emailsent->where('user_id','=',$_REQUEST['user_id']);
+		if(isset($_REQUEST['error'])) $emailsent->where('sendError','=',$_REQUEST['error']);
+		if(isset($_REQUEST['opened'])) $emailsent->where('pingTime','IS NOT',NULL);
+		$data["sent"] = $emailsent->reset(FALSE)->find_all();
+
+		$openedorm = clone $emailsent;
+		$errororm = clone $emailsent;
+
+		$data["opened"] = $openedorm->where('pingTime','IS NOT',NULL)->find_all()->count();
+		$data["errors"] = $errororm->where('sendError','>',0)->find_all()->count();
+
+		$view = new View('sentmail',$data);
+		$this->response->body($view);
+
+	}
+
+
 }

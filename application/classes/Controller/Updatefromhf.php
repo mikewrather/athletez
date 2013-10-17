@@ -26,8 +26,18 @@ class Controller_Updatefromhf extends Controller
 	{
 		ini_set('memory_limit', '1024M');
 		set_time_limit(0);
+
+		$start_record = DB::select('id')->from('athletesup_main.orgs')
+			->where('locations_id','IS NOT',null)
+			->order_by('id','DESC')
+			->limit(1)
+			->execute();
+
+		$sr = $start_record[0]['id'];
+
 		$sc_orgs = DB::select()->from('test.schools_highlightfront')
-			->offset(11611)->limit(1000)
+			->where('id','>',$sr)
+			->limit(2500)
 			->execute();
 
 		mysql_select_db('athletesup_main');

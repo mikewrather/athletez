@@ -624,6 +624,11 @@ pages/team/views/comment-form.js
 pages/team/views/comment-list.js
 text!team/templates/menu.html
 pages/team/views/menu.js
+text!schedules/templates/schedule-item.html
+text!schedules/templates/schedule-single-item.html
+packages/game-schedules/views/schedule-item.js
+text!schedules/templates/schedule-list.html
+packages/game-schedules/views/schedule-list.js
 pages/profile/views/fans-image-list.js
 pages/team.js
 text!profilesetting/templates/layout.html
@@ -722,6 +727,8 @@ usercontrols/addgame/models/team.js
 usercontrols/addgame/models/team_add.js
 usercontrols/addgame/models/game.js
 usercontrols/addgame/models/uslgamelink.js
+text!usercontrols/location/templates/get-view-location.html
+usercontrols//location/views/get-view-location.js
 usercontrols/addgame/views/main.js
 usercontrols/addgame/addgame.js
 text!usercontrols/photo-player/templates/comments.html
@@ -972,6 +979,11 @@ pages/team/views/comment-form.js
 pages/team/views/comment-list.js
 text!team/templates/menu.html
 pages/team/views/menu.js
+text!schedules/templates/schedule-item.html
+text!schedules/templates/schedule-single-item.html
+packages/game-schedules/views/schedule-item.js
+text!schedules/templates/schedule-list.html
+packages/game-schedules/views/schedule-list.js
 text!roster/templates/roster.html
 packages/roster/models/roster.js
 packages/sportorg/models/teamroster.js

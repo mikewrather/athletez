@@ -145,14 +145,23 @@ function (
 					if(mpay.hasOwnProperty('is_owner')) show_edit = mpay.is_owner;
 					extra._label = team_str;
 					break;
+					
+				case '5':
+					//team
+					extra._detailclass = "team";
+					standard_thumb = mpay.subject.picture!==null ? mpay.subject.picture : {height:440,width:440,url:"http://lorempixel.com/output/sports-q-g-440-440-3.jpg"};
+					extra._thumbnail = standard_thumb;
+					//extra._label = mpay.subject.game_day;
+					extra._link = "/#team/" + mpay.subject_id;
+					var team_str = mpay.subject.team_name;
+					if(mpay.hasOwnProperty('is_owner')) show_edit = mpay.is_owner;
+					extra._label = team_str;
+					break;	
 			}
+			
 			extra.show_edit = show_edit==true ? true : undefined;
-
 			var markup = Mustache.to_html(this.template, extra);
 			this.$el.html(markup);
-
-
-
         },
         
 

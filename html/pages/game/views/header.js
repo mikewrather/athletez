@@ -72,7 +72,7 @@ function(require, gameHeaderTemplate) {
 		        $(".signup-email").trigger('click');
 		        return;
 	        }
-			$('#modalPopup').modal();
+			$('#modalPopupGameEdit').modal();
 			this.location.lon = this.model.get("payload").location.lon;
 			this.location.lat = this.model.get("payload").location.lat;
         	this.showLocation();
@@ -160,7 +160,7 @@ function(require, gameHeaderTemplate) {
         	_self.model.fetch();
         	$.when(_self.model.request).done(function() {
         		console.error(_self.model.toJSON());
-        		$('#modalPopup').modal('hide');
+        		$('#modalPopupGameEdit').modal('hide');
         		_self.render();
         	});
         },

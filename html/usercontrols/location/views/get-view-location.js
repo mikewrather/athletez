@@ -3,13 +3,12 @@
  // Pages
  // Requires `define`, `require`
  */
-define(['require', 'text!usercontrols/location/templates/layout.html', 'facade', 'views', 'utils', 'vendor', 'usercontrols/location/models/verify-adress', 'usercontrols/location/models/save'], function(require, layoutTemplate) {
+define(['require', 'text!usercontrols/location/templates/get-view-location.html', 'facade', 'views', 'utils', 'vendor', 'usercontrols/location/models/verify-adress'], function(require, layoutTemplate) {
 
 	var self, facade = require('facade'), views = require('views'), 
 	SectionView = views.SectionView, utils = require('utils'), 
 	Channel = utils.lib.Channel, vendor = require('vendor'), 
 	verifyAddress = require('usercontrols/location/models/verify-adress'),
-	saveLocation = require('usercontrols/location/models/save'),
 	Mustache = vendor.Mustache, $ = facade.$;
 	var BaseView = views.BaseView, Backbone = facade.Backbone, _self;
 	//Models
@@ -21,32 +20,23 @@ define(['require', 'text!usercontrols/location/templates/layout.html', 'facade',
 		/*Bind Events on controls present in current view template*/
 		events : {
 			'click .verify-address-h': 'verifyAddress',
-			'click .set-address-h' : 'setLocation'
+			'blur .address-h': 'verifyAddress'
 		},
 
 		/*initialize gets called by default when constructor is initialized*/
 		initialize : function(options) {
 			_self = this;
-			_self.game_id = options.game_id || undefined;
-			_self.location = options;
-			_self.selectedOptions = [];
+			_self.location = {};
+			
+			if(options.callback) this.callback = options.callback;
+				
+			_self.location.latitude = (!_.isUndefined(options) && !_.isUndefined(options.latitude))?options.latitude:undefined;
+			_self.location.longitude = (!_.isUndefined(options) && !_.isUndefined(options.longitude))?options.longitude:undefined;
 			_self.setOptions(options);
 			_self.render();
-		},
+		},		
 		
-		setLocation: function(e) {
-			var r = confirm("Are you sure want to set new address?");
-			if(r) {
-				if(this.locationId) {
-					var model = new saveLocation();
-					model.id = this.game_id;
-					model.set({locations_id: this.locationId, id: this.game_id});
-					model.save();
-					$.when(model.request).done(function(){		
-						routing.trigger("popup-close");
-					});
-				}
-			}
+		intializeMap: function() {
 		},
 		
 		verifyAddress: function() {
@@ -64,6 +54,7 @@ define(['require', 'text!usercontrols/location/templates/layout.html', 'facade',
 			};
 			_self.adressModel.save({dataType:"json"});
 			_self.$el.find('.address-h').removeClass('address-verified');
+			_self.callback("");
 			$.when(_self.adressModel.request).done(function() {
 				console.log(_self.adressModel.toJSON());
 				_self.locationId = _self.adressModel.get("payload").id;
@@ -73,18 +64,21 @@ define(['require', 'text!usercontrols/location/templates/layout.html', 'facade',
 					_self.location.latitude = _self.adressModel.get("payload").lat;
 					_self.location.latitude = _self.adressModel.get("payload").lon;
 					_self.$el.find('.set-address-h').removeClass('link-disabled');
-					//_self.$el.find('#map-canvas').unbind().empty();
-					//_self.intializeMap();
-					var pos = new google.maps.LatLng(_self.adressModel.get("payload").lat, _self.adressModel.get("payload").lon);
-					_self.marker.setPosition(pos);
-					_self.map.panTo(pos);
+					_self.callback(_self.locationId);
+					if(_self.map) {
+						var pos = new google.maps.LatLng(_self.adressModel.get("payload").lat, _self.adressModel.get("payload").lon);
+						_self.marker.setPosition(pos);
+						_self.map.panTo(pos);
+					} else {
+						_self.createMap();
+					}
 				}
 			});
 		},
 		
-		intializeMap: function() {
-			console.log(_self.location);
-			var pos = new google.maps.LatLng(_self.location.latitude, _self.location.longitude),
+		createMap: function() {
+			var _self = this;
+			var pos = new google.maps.LatLng(_self.location.latitude, _self.location.latitude),
 			mapOptions = {
 			    zoom: 8,
 			    center: pos,
@@ -92,10 +86,11 @@ define(['require', 'text!usercontrols/location/templates/layout.html', 'facade',
 			    zoomControl: true,
 			    mapTypeId: google.maps.MapTypeId.ROADMAP
 			  };
-			  
-			  this.map = new google.maps.Map(this.$el.find('#map-canvas')[0], mapOptions);
+			  this.$el.find('#map-canvas-h').show();
+			  this.map = new google.maps.Map(document.getElementById('map-canvas-h'), mapOptions);
 			  this.marker = new google.maps.Marker({position: pos, map: this.map});
   			  this.marker.setMap(this.map);
+
 		},
 
 		//render displays the view in browser

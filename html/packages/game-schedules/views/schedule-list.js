@@ -21,7 +21,7 @@ function(vendor, facade,  views,   utils,   ScheduleItemView, Store, ScheduleLis
 
         id: "schedule-list",
         name: "schedule List",
-        //tagName: "ul",
+        tagName: "ul",
 
         // Tag for the child views
         _tagName: "li",
@@ -74,8 +74,6 @@ function(vendor, facade,  views,   utils,   ScheduleItemView, Store, ScheduleLis
         		this.renderTemplate();
         		this.listView = ".schedule-list-h";
         		this.singleView = true;
-        	} else {
-        		this.tagName = "ul";
         	}
         	
             CollectionView.prototype.initialize.call(this, options);
