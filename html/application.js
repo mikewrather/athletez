@@ -116,9 +116,10 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
             });
             
             routing.off('add-school-init');
-            routing.on('add-school-init', function(collection, userId, addType) {
+            routing.on('add-school-init', function(collection, userId, addType, callback) {
             	 var addSchool = new AddClubController({
-            	 	type: addType
+            	 	type: addType,
+            	 	callback: callback
                 });
             });
             
@@ -151,13 +152,22 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
             });
             
             routing.off('popup-close');
-            routing.on('popup-close', function() {
-            	$("#modalPopup").unbind().remove();
+            routing.on('popup-close', function(e) {
+            	if(e) {
+	            	$(e.currentTarget).modal('hide');
+   		         	$(e.currentTarget).unbind().remove();            		
+            	} else {
+	            	$("#modalPopup").modal('hide');
+   		         	$("#modalPopup").unbind().remove();				            		
+            	}
+
             });
             
-            $(document).off('hidden.bs.modal', '#modalPopup');
-            $(document).on('hidden.bs.modal', '#modalPopup', function () {
-  				routing.trigger('popup-close');
+            
+            
+            $(document).off('hidden.bs.modal', '#modalPopup, #photoPlayerModal');
+            $(document).on('hidden.bs.modal', '#modalPopup, #photoPlayerModal', function (e) {
+  				routing.trigger('popup-close', e);
 			});
             
             // initialize add game popup common trigger 

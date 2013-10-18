@@ -53,7 +53,7 @@ define(["require", 'text!usercontrols/photo-player/templates/comments.html',
 			if(options.userId) this.userId = options.userId;
 			if(options.array) this.collectionArray = true;
 			if (options._collection) this._collection = options._collection;
-				this.modelHTML = '<div id="modalPopup" class="modal photo-frame-model hide fade model-popup-h">'+
+				this.modelHTML = '<div id="photoPlayerModal" class="modal photo-frame-model hide fade model-popup-h">'+
 					'<div class="modal-body page-content-h">'+
 					'<div class="photo-player-area-h photo-player"></div>'+
 					'<div class="photo-player-right-area"><div class="right-area-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button></div><div class="tags-area-h"></div>' +
@@ -101,7 +101,7 @@ define(["require", 'text!usercontrols/photo-player/templates/comments.html',
 				displayWhen : "ready"
 			});
             this.layout=pageLayout;
-           $('#modalPopup').modal();
+            $('#photoPlayerModal').modal('show');
             return this.layout;
 		},
 		
