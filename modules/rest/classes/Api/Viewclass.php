@@ -60,6 +60,13 @@ class Api_Viewclass
 		return $retArr;
 	}
 
+	public function post_addtag()
+	{
+		$retArr = $this->obj->getBasics();
+
+		return $retArr;
+	}
+
 	public function post_addvideo()
 	{
 		return $this->obj->getBasics();
