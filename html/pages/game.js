@@ -296,6 +296,7 @@ define([
 
 			//add the model to the view's collection
 			this.imageListView.collection.add(newImageModel);
+			if(this.imageListView.allData) this.imageListView.allData.push(newImageModel.toJSON());
 		},
 
 		setupCommentListView: function () {
