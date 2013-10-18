@@ -145,6 +145,7 @@ li.sport a:hover {
 
 .register-wrapper-h #regcontainer {
 	padding: 0;
+	background-color: transparent;
 }
 
 #regcontainer #mainreg {
@@ -152,8 +153,17 @@ li.sport a:hover {
 	opacity: 1;
 }
 
+.homePage #main {
+	padding-top: 0px;
+}
+
 #regcontainer #firstreg {
-	
+	float: left;
+width: 350px;
+}
+
+#mainreg #regpane {
+	width: 470px;
 }
 
 
@@ -165,7 +175,7 @@ height: 35px;
 }
 
 #regpane input.regsubmit {
-	margin: 0 -10px 0 0;
+	margin: 108px -10px 0 0;
 	padding: 0 10px;
 	float: right;
 	height: 40px;

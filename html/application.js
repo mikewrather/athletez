@@ -143,7 +143,7 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
         	var self = this, closeModelBox = function() {
         		$("#modalPopup, .modal-backdrop").unbind().remove();
         	};
-        	
+        	$("body").removeClass("homePage");
         	routing.off('app-inited');
             routing.on('app-inited', function(id) {
             	closeModelBox();
@@ -211,7 +211,7 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
             
 	    	//self.removeCurrent();
 	    	function initHome(id) {
-	    		
+	    		$("body").addClass("homePage");
 	    		self.currentController = new HomeController({
 	    			route: "",
 	    			title: "Athletez"
