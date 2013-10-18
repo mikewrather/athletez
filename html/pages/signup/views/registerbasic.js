@@ -34,6 +34,8 @@ define([
                      
             		this.template =  _.template(signupBasicTemplate, {onlyRegister: (this.openAsaPage)?true:false});
             		this.$el = $(options.destination);
+					console.log("REG BLOCK:",this.$el);
+
                     $("#errormsg, #preview").html("");
             
                      SectionView.prototype.initialize.call(this, options);   

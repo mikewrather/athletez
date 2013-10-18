@@ -138,7 +138,6 @@ li.sport a:hover {
 	opacity: 0.5;
 	position: absolute;
 	width: 100%;
-	max-width: 1000px;
 	height: 330px;
 	top: 62px;
 }

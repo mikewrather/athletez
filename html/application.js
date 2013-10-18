@@ -225,9 +225,13 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
 	    		
 	    		self.currentController = new HomeController({
 	    			route: "",
-	    			title: "Athletez",
+	    			title: "Athletez - We Are Athletez",
 	    			userId : id
 	    		});
+
+			    if(!id){
+				    $('body header').after('<div class="register-wrapper"></div><div class="register-wrapper-h"></div>');
+			    }
 	    	}
 	    	this.initialiRoutesInit(initHome);
 	    },
