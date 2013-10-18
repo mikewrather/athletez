@@ -143,7 +143,8 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
         initialiRoutesInit: function(fn, title) {
         	var self = this, closeModelBox = function() {
         		$("#modalPopup, .modal-backdrop").unbind().remove();
-        	};
+		        };
+	        this.hideSignup();
         	$("body").removeClass("homePage");
         	routing.off('app-inited');
             routing.on('app-inited', function(id) {
@@ -229,7 +230,7 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
 	    			userId : id
 	    		});
 
-			    if(!id){
+			    if(!id && $('div.register-wrapper').length == 0){
 				    $('body header').after('<div class="register-wrapper"></div><div class="register-wrapper-h"></div>');
 			    }
 	    	}
@@ -263,6 +264,10 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
             //Channel('app-inited').subscribe(initProfile);
 
         },
+		hideSignup : function(){
+		    $('div.register-wrapper').remove();
+		    $('div.register-wrapper-h').remove();
+	    },
         
         notFound: function(page) {
         	alert("Page not found");
