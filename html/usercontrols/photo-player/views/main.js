@@ -16,13 +16,18 @@ define([
 	'votes/models/vote',
 	'jwplayer',
 	'jqueryui',
-	'jquery.slimscroll.hor', 'usercontrols/tag/models/basic_info','usercontrols/tag/views/main'], function(require, layoutTemplate,imageThumbsTemplate, tagTemplate) {
+	'jquery.slimscroll.hor', 
+	'usercontrols/tag/models/basic_info',
+	'usercontrols/tag/views/main',
+	'media/models/tag'
+	], function(require, layoutTemplate,imageThumbsTemplate, tagTemplate) {
 
 	var self, facade = require('facade'), views = require('views'), SectionView = views.SectionView, 
 	utils = require('utils'), Channel = utils.lib.Channel, vendor = require('vendor'), 
 	TagView = require('usercontrols/tag/views/main'),
 	UserModel = require('usercontrols/tag/models/basic_info'),
-	Mustache = vendor.Mustache, $ = facade.$, voteModel = require('votes/models/vote');
+	Mustache = vendor.Mustache, $ = facade.$, voteModel = require('votes/models/vote'),
+	TagMediaModel = require('media/models/tag');
 	
 	try{
 		console.log("jwplayer",jwplayer);
@@ -539,22 +544,31 @@ define([
 		},
 		setUpTagPhotoView : function(){
       	//TagView      	
-  //    	var _self = this,
+		var self = this;
+		console.log("image payload",this.json[this.index].payload);
       	console.log("tagtemplate",tagTemplate)
-			var self = this;
+				var data = 	this.json[this.index].payload;
+				var isOwner = null;
+				var sportsId = null
+				var userId = null;
+				if(data && data.media_obj){					
+					sportsId = data.media_obj.sports_id || null;
+					userId = data.media_obj.users_id || null;
+					isOwner = data.media_obj.is_owner || null;
+		}
+			
 			this.tagViewPhoto = new TagView({
 				model : new UserModel(),
 				template : tagTemplate,
 				name : "tag-image " + new Date().toString() ,
 				destination : "#image-tagging-photo",
-				user_id : self.userId || null,
-				sports_id : self.sportsId,
+				user_id : userId,
+				sports_id : sportsId,
+				is_owner : isOwner,
 				channel : 'tag-image-success-photo'
 			});
 				self.scheme.push(this.tagViewPhoto);
 				self.layout.render();
-			//this.scheme.push(this.tagViewPhoto);
-			//this.layout.render();
       },
       tagFunction : function(data){
       	// alert("this is tag finish function from basic.js");
@@ -562,41 +576,28 @@ define([
       	var self = this;
       	
       	var fData = data || {};
-      	fData.user_id = self.userId;
-      	fData.media_id = this.json[this.index].payload.media_id;
-      	
-      //	alert(JSON.stringify(data));
+      	var payload = {
+				media_id : this.json[this.index].payload.media_id,
+				tag_array : JSON.stringify(fData)
+			};
       	console.log("Final Data For Tag Is = ",fData);
       	console.log("Tagged data is =", JSON.stringify(data));
-      	// var usersID = this.json[this.index].payload.id;
-		// var mediaID = this.json[this.index].payload.enttypes_id;
-		// console.log()
-// 
-// alert(usersID);
-// alert(mediaID);
-      	// this.tagCollection.push(data);
-      	// var index = 0;
-      	// var selectedImages = $(".previewimg.selected");
-      	// console.log("selected",selectedImages);
-      	// for(var key in data){
-      		// self.tagData[key] = self.tagData[key] || [];
-//       		
-      		// //for(var k in data[key]){
-      			// self.tagData[key].push(data[key]);
-      		// //}
-      		// //debugger;
-      		// index = self.tagData[key].length - 1;
-      		// if(key == self.const.Game){
-      			// selectedImages.attr('gameIndex' , index);
-      		// }
-      		// else if(key == self.const.Team){
-      			// selectedImages.attr('teamIndex' , index);
-      		// } 
-      		// else if(key == self.const.User){
-      			// selectedImages.attr('userIndex' , index);
-      		// }
-// 
+
+      	var tagModel = new TagMediaModel(payload);
+      	tagModel.save();
+      	      
+			// var gpaModel = new GpaModel(payload);
+			// gpaModel.user_id = self.user_id;
+			// gpaModel.target = $(e.target);
+			// gpaModel.save();
+//       	
+//       	
+//       	
+//       	
+//       	
+      	
       	}
+      	
 	});
 	return PhotoPlayerView;
 });
