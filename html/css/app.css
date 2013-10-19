@@ -46,6 +46,7 @@ body {
 #main{
     max-width: 1000px;
     margin: 10px auto;
+    min-height: 600px;
 }
 
 .template-container {
@@ -1329,4 +1330,20 @@ margin-top:10px;
 }
 .display_none_important{
 	display : none !important;
+}
+
+.complevels-container {
+	height: 210px;
+	overflow: hidden;
+	width: 100%;
+	position: relative;
+}
+
+.complevels-inner {
+	position: absolute;
+	width: 100%;
+}
+
+.season-array {
+	height: 70px;
 }
