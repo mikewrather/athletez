@@ -183,13 +183,13 @@ input[disabled].hasDatepicker, input[readonly].hasDatepicker {
 	background: #9cca3c;
 	color: #FFF;
 
-	padding: 5px 15px;
+	padding: 5px 25px;
 	text-align: center;
-	margin: 25px 0;
+	margin: 10px 0;
 
     font-family: 'Nunito', "HelveticaNeue", "Helvetica";
-    font-size:1.0em;
-    font-weight: bolder;
+    font-size:1.3em;
+    font-weight: 300;
     text-transform: uppercase;
 
 }

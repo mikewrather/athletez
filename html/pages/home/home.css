@@ -54,7 +54,7 @@ li.sport:hover, li.sport a:hover {
 }
 
 #image-list, #menu {
-	margin: 20px 0;
+	margin: 5px 0;
 }
 
 #menu {
@@ -63,7 +63,7 @@ li.sport:hover, li.sport a:hover {
 }
 
 #menu #menu{
-    border: 8px solid #eaeaea;
+    border: 0;
     width: 90%;
     padding:15px 0 0 15px;
 }
