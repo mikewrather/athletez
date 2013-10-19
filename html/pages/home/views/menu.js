@@ -14,7 +14,7 @@ define(
 					"blur #search" : "updateSearch",
 					"focus #search": "hideDropdown",
 					"click .searchBtn" : "changeBaseUrl",
-					"click .dropdown-menu > li > a" : "select",
+					"click .dropdown-menu-alias > li > a" : "select",
 					"click .dd" : "doNothing",
 					//"click .menu" : "toggle",
 					"click .menu-link-h" : "showMenuDropdown",
@@ -124,6 +124,7 @@ define(
 				select : function(e) {
 					e.preventDefault();
 					e.stopPropagation();
+					
 					var target = $(e.currentTarget);
 					var targetClass = target.attr('class');
 					$('.dropdown-menu > li > a'+'.'+targetClass).removeClass('select');
