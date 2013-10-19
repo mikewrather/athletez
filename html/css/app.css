@@ -157,6 +157,17 @@ footer{
 	opacity: 0.5;
 }
 
+#Loginview{
+    width:500px;
+    margin-left:-250px;
+    left:50%;
+}
+
+#RegModal{
+    width:550px;
+    left:50%;
+    margin-left: -250px;
+}
 .floatLeft {
 	float: left;
 }
@@ -1168,6 +1179,7 @@ margin-top:10px;
 /********* Login ************/
 #logincontainer{
     margin: auto;
+    width:85%;
 }
 
 #logincontainer *{
