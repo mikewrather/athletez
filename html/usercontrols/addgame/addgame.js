@@ -65,9 +65,8 @@ define(["require", "text!usercontrols/addgame/templates/layout.html",
    			 					'<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>'+
     							'<h3>Add Game</h3>'+
   								'</div>'+
-								'<div class="modal-body page-content-h"></div><div class="modal-footer">'+
-    							'<button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>'+
-  								'</div></div>';
+								'<div class="modal-body page-content-h"></div>'+
+    							'</div>';
 				}
 			
 			if(options.gender){

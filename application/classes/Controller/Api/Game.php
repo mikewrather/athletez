@@ -294,10 +294,26 @@
 				$event_name = trim($this->request->post('event_name'));
 			}
 
+			if((int)trim($this->request->post('sports_id')) > 0)
+			{
+				$sports_id = (int)trim($this->request->post('sports_id'));
+			}
+
+			if((int)trim($this->request->post('users_id')) > 0)
+			{
+				$users_id = (int)trim($this->request->post('users_id'));
+			}
+			else
+			{
+				$users_id = Auth::instance()->get_user()->id;
+			}
+
 			$args = array(
 				'game_datetime' => $game_datetime,
 				'locations_id' => $locations_id,
-				'event_name' => $event_name
+				'event_name' => $event_name,
+				'sports_id' => $sports_id,
+				'users_id' => $users_id
 			);
 
 			$result =  $this->mainModel->addGame($args);

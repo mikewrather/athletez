@@ -119,6 +119,7 @@ footer{
 #main {
 	padding-top: 15px;
 	padding-bottom: 15px;
+    min-height: 1000px;
 }
 #main .sports-info {
 	margin-top: 20px;
@@ -257,8 +258,8 @@ div.image-item-container > img{
 
 }
 .action-block{
-    height:30px;
-    width:30px;
+  /*  height:30px;
+    width:30px;*/
     margin:8px;
     display: block;
     opacity: 0;
@@ -268,7 +269,7 @@ div.image-item-container > img{
     -ms-transition: opacity .3s;
 
     color: white;
-    font-size: 2.1em;
+    font-size: 1.1em;
     text-align: center;
     padding:5px;
 }
@@ -975,9 +976,8 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#84a934', end
 
 
 .add-game-modal{
-    width:80%;
-    left:10%;
-    height: 70%;
+    width:50%;
+    left:25%;
 }
 /*
 .add-game-modal div.modal-body{
