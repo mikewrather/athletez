@@ -109,6 +109,13 @@ header .signup-facebook, header .signup-email {
 	margin: 0 5px;
 }
 
+footer{
+    background-color: black;
+    height: 50px;
+    width: 100%;
+    padding:0 !important;
+}
+
 #main {
 	padding-top: 15px;
 	padding-bottom: 15px;
@@ -664,7 +671,7 @@ span.ui-helper-hidden-accessible {
 
 #main {
 /*	background: #e0e0e0;*/
-    padding-bottom: 150px;
+    padding-bottom: 0;
 }
 
 .profile-pic-outer {
