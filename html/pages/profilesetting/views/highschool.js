@@ -99,7 +99,24 @@ define(['require', 'text!profilesetting/templates/highschool.html', 'text!profil
 		
 		/* Add club popup  */
 		openAddHighSchoolPopup: function() {
-			routing.trigger('add-school-init', '', '', 'school');
+			var _self = this;
+			routing.trigger('add-school-init', '', '', 'school', function(res) {
+				console.log(res);
+				_self.$el.find(_self.controls.txtSchools).val(res.name);
+				_self.$el.find(_self.controls.txtStates).val(res.locationState.name);
+				
+				_self.states_id = "";
+				_self.orgs_id = "";
+				_self.states_id = res.locationState.id;
+				_self.$(self.controls.txtSchools).removeAttr('disabled');
+				
+				_self.orgs_id = res.org_id;
+				if (_self.$el.find(_self.controls.divMainSportsSection).find(_self.controls.ddlSports).length < 1) {
+					_self.fillSports(_self.orgs_id, _self.controls.divMainSportsSection);
+				}
+				_self.$el.find(".add-school-h").hide();
+				
+			});
 		},
 		
 		/*initialize must be a wrapper so any function definitions and calles must be called in init*/
@@ -122,7 +139,7 @@ define(['require', 'text!profilesetting/templates/highschool.html', 'text!profil
 
 		// **Method** `setOptions` - called by BaseView's initialize method
 		setOptions : function(options) {
-			this.user_id = options.user_id, this.gender = options.gender
+			this.user_id = options.user_id, this.gender = options.gender;
 		},
 
 		/*Event Called when a key is pressed
@@ -656,6 +673,7 @@ define(['require', 'text!profilesetting/templates/highschool.html', 'text!profil
 			self.states_id = undefined;
 			self.$(self.controls.txtSchools).attr('disabled', 'disabled').val('');
 			self.orgs_id = undefined;
+			self.$el.find(".add-school-h").show();
 			self.$el.find(self.controls.divAddSportSection).fadeOut();
 		},
 		// EDIT VIEW FOR A TEAM IF USER CLICKS EDIT LINK FOR TEAMS

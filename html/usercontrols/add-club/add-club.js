@@ -42,6 +42,7 @@ define(["require", 'text!usercontrols/photo-player/templates/comments.html',
 			if (options.index) this.index = options.index;
 			if(options.userId) this.userId = options.userId;
 			if(options.type) this.type = options.type;
+			this.callback = options.callback;
 			
 			
 			if (options._collection) this._collection = options._collection;
@@ -84,7 +85,8 @@ define(["require", 'text!usercontrols/photo-player/templates/comments.html',
 					model : self.seasonProfile,
 					name : "add club",
 					destination : ".add-club-area-h",
-					addType: self.type
+					addType: self.type,
+					callback: self.callback
 				});
 				self.scheme.push(photoPlayerMain);
 				self.layout.render();				

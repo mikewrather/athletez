@@ -36,7 +36,34 @@
 		###########################    GET METHODS    ##############################
 		############################################################################
 
-		
+		/**
+		 * action_get_games() This gets events for a user's individual sport links
+		 * via /api/user/games/{users_id}
+		 *
+		 */
+		public function action_get_games()
+		{
+			$this->payloadDesc = "This gets events for a user's individual sport links";
+			$arguments = array();
+
+			if(!$this->mainModel->id)
+			{
+				$this->modelNotSetError();
+				return false;
+			}
+
+			// CHECK FOR PARAMETERS:
+			// sports_id
+			// the sport we are pulling events for
+			if((int)trim($this->request->query('sports_id')) > 0)
+			{
+				$arguments["sports_id"] = (int)trim($this->request->query('sports_id'));
+			}
+
+			return $this->mainModel->getGames($arguments);
+
+		}
+
 		/**
 		 * action_get_basics() Basic information about the user.
 		 * via /api/user/basics/{users_id}

@@ -96,7 +96,7 @@ function (
         },
         userLogin:function(event){
                 event.preventDefault();
-                if(!this.logincontroller)
+               // if(!this.logincontroller)
                this.logincontroller = new LoginController();
                routing.trigger("Login");
                

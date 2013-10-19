@@ -27,6 +27,28 @@
 		public function get_demo(){
 			return $this->obj;
 		}
+
+		/**
+		 * get_games() This gets events for a user's individual sport links
+		 *
+		 * @retun array
+		 */
+		public function get_games()
+		{
+			$retArr = array();
+
+			// Scaffolding Code For Array:
+
+			$rs = $this->obj->execute();
+			foreach($rs as $row)
+			{
+				$event = ORM::factory('Sportorg_Games_Base',$row['games_id']);
+				$retArr[$event->id] = $event->getBasics();
+			}
+
+			return $retArr;
+		}
+
 		
 		/**
 		 * get_teams() List of teams the user is associated with

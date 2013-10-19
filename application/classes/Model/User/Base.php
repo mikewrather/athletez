@@ -1039,6 +1039,29 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 		}
 	}
 
+	public function getGames($args=array())
+	{
+		extract($args);
+
+		$qry = DB::select()->from('user_sport_link')
+			->join('usl_game_link')->on('user_sport_link.id','=','usl_game_link.user_sport_link_id')
+			->where('user_sport_link.users_id','=',$this->id);
+
+
+		if($sports_id)
+		{
+			$qry->where('user_sport_link.sports_id','=',$sports_id);
+		}
+
+		$classes_arr = array(
+			'User_Sportlink' => 'user_sport_link',
+			'User_Sportlink_Gamelink' => 'usl_game_link'
+		);
+
+		$res = ORM::_sql_exclude_deleted($classes_arr,$qry);
+		return $res;
+	}
+
 	public function getAwards($args = array()){
 		extract($args);
 		$awards_model = ORM::factory('User_Awards');
