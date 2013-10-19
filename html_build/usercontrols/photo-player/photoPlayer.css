@@ -35,7 +35,7 @@
 .photo-player-right-area {
     width: 30%;
     float: right;
-    height: 520px;
+    height: 100%;
     overflow-y: auto;
 }
 .photo-player-right-area .right-area-header{
@@ -209,4 +209,26 @@ div.right-arrow-container > img{
 }
 #jw_container{
     z-index: 9999;
+}
+ul#tags-list {
+	margin: 5px 0 0 5px;
+}
+ul#tags-list li {
+	margin: 5px 0 0 0;
+}
+ul#tags-list .tags-name img {
+	width: 40px;
+	height: 40px;
+}
+ul#tags-list .tags-name a span {
+	font-size: .8em;
+	width: 200px;
+	display: inline-block;
+	margin-left: 5px;
+	white-space:nowrap; 
+	text-overflow:ellipsis;
+	overflow:hidden; 
+}
+ul#tags-list .tags-number {
+	margin-top: 3px;
 }
