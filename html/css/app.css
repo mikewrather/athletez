@@ -119,12 +119,18 @@ footer{
     height: 50px;
     width: 100%;
     padding:0 !important;
+    color: white;
+}
+
+footer span{
+    position: relative;
+    top:15px;
 }
 
 #main {
 	padding-top: 15px;
 	padding-bottom: 15px;
-    min-height: 1000px;
+    min-height: 100%;
 }
 #main .sports-info {
 	margin-top: 20px;
@@ -524,6 +530,12 @@ ul.ui-autocomplete {
 	padding: 10px 0 !important;
 	background: rgb(255, 255, 255) !important;
     z-index: 1060;
+}
+
+.ui-autocomplete-loading{
+    background-image: url(http://cdn.athletez.com/resources/img/17-1.gif) !important;
+    background-position: right !important;
+    background-repeat: no-repeat !important;
 }
 
 .ui-autocomplete li.ui-menu-item {
