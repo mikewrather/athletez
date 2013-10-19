@@ -79,10 +79,15 @@ header .logo {
 	margin: 6px 0;
 }
 header a{
-    color: shite;
+    color: white;
 }
 header .account {
 	float: right;
+    margin: 10px;
+}
+
+header #header_logo{
+    height: 20px;
 }
 header .photo {
 	float: left;
