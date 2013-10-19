@@ -23,12 +23,15 @@ define(['require', 'text!usercontrols/add-club/templates/layout.html', 'facade',
 			'click .finish-h': 'addClub',
 			'blur .address-h': 'verifyAddress'
 		},
+		
+		stateData: {},
 
 		/*initialize gets called by default when constructor is initialized*/
 		initialize : function(options) {
 			this.model = options.model;
 			this.id = options.id;
 			this.addType = options.addType;
+			this.callback = options.callback;
 			this.addressValid = false;
 			SectionView.prototype.initialize.call(this, options);
 			this.setUpMainView();
@@ -59,7 +62,6 @@ define(['require', 'text!usercontrols/add-club/templates/layout.html', 'facade',
 						_self.saveData();
 				});
 			}
-			
 		},
 		
 		// save data
@@ -71,15 +73,23 @@ define(['require', 'text!usercontrols/add-club/templates/layout.html', 'facade',
 			data.season_profiles_id = this.$el.find("#profile-h").val();
 			data.sports_club = (_self.addType == "school")?'0':'1';
 			addModel.set(data);
+
 			addModel.save();
 			$.when(addModel.request).done(function() {
+				console.log(addModel.get("payload"));
+				var d = addModel.get("payload");
+				data.locationState = _self.stateData;
+				data.org_id = d.id;
+				if(_self.callback) _self.callback(data);
 				alert(_self.addType+" added successfully");
+				routing.trigger('popup-close');
 			});
 		},
 		
 		// verify address
 		verifyAddress: function(callback) {
 			var _self = this, address = _self.$el.find('.address-h').val(), adressModel = new AdressModel();
+			_self.stateData = {};
 			adressModel.address = address;
 			adressModel.url();
 			adressModel.set({address: address});
@@ -95,6 +105,7 @@ define(['require', 'text!usercontrols/add-club/templates/layout.html', 'facade',
 			_self.$el.find('.address-h').removeClass('address-verified');
 			$.when(adressModel.request).done(function() {
 				_self.locationId = adressModel.get("payload").id;
+				_self.stateData = adressModel.get("payload").states_obj;
 				if(_self.locationId) {
 					if(typeof callback != "function") 
 						_self.openLocationPopup(adressModel.get("payload").lat, adressModel.get("payload").lon);
