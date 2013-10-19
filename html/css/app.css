@@ -38,9 +38,14 @@ html, body {
 	height: 100%;
 }
 body {
-	max-width: 1000px;
+
 	margin: 0 auto;
 	background: #e0e0e0;
+}
+
+#main{
+    max-width: 1000px;
+    margin: 10px auto;
 }
 
 .template-container {
@@ -73,12 +78,8 @@ header .logo {
 	float: left;
 	margin: 6px 0;
 }
-header .searchform {
-	float: left;
-	margin: 6px 15px;
-}
-header .searchform form {
-	margin-bottom: 0;
+header a{
+    color: shite;
 }
 header .account {
 	float: right;
@@ -106,6 +107,13 @@ header .userlinks .dropdown-menu {
 }
 header .signup-facebook, header .signup-email {
 	margin: 0 5px;
+}
+
+footer{
+    background-color: black;
+    height: 50px;
+    width: 100%;
+    padding:0 !important;
 }
 
 #main {
@@ -341,7 +349,11 @@ div.image-item-container > img{
 .detail-view h6{
     margin: 15px 8px 8px 8px;
     text-transform:uppercase;
-    font-size: 1.6em;
+    font-size: 1.4em;
+}
+.detail-view span{
+    margin: 10px 8px 8px 8px;
+    font-size: .8em;
 }
 /***** Image Styles Ends *****/
 
@@ -659,7 +671,7 @@ span.ui-helper-hidden-accessible {
 
 #main {
 /*	background: #e0e0e0;*/
-    padding-bottom: 150px;
+    padding-bottom: 0;
 }
 
 .profile-pic-outer {
@@ -1285,4 +1297,7 @@ margin-top:10px;
 
 .add-comment-h{
     background-image: url('http://cdn.athletez.com/resources/img/comment.png');
+}
+.display_none_important{
+	display : none !important;
 }

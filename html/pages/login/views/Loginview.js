@@ -63,7 +63,7 @@ define([
                
                 this.model.save(obj,{
                     success: function(msg) {
-                            location.href='#usersettings';
+                            location.href='#profile';
                              $('#Loginview').modal('hide');
                             },
                     error: function(msg) {

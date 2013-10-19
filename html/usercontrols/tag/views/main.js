@@ -158,6 +158,11 @@ define(['require', 'text!usercontrols/tag/templates/layout.html', 'facade', 'vie
 		// **Method** `setOptions` - called by BaseView's initialize method
 		setOptions : function(options) {
 			this.user_id = options.user_id;
+			if(options.is_owner == undefined || options.is_owner == null )
+				this.is_owner = null;
+			else
+			this.is_owner = options.is_owner;
+				
 			if (!options.channel) {
 				throw new Error("call back channel is must for this");
 			} else {
@@ -174,12 +179,13 @@ define(['require', 'text!usercontrols/tag/templates/layout.html', 'facade', 'vie
 		setupView : function() {
 			self.setUpMainView();
 			self.fillSports();
-
 		},
 		
 		setUpMainView : function() {
 			var markup = Mustache.to_html(self.template, {});
 			$(self.el).html(markup);
+			console.log("isowner",self.is_owner);
+			
 		},
 
 		/*Fill Sports dropdown with sports on basis of gender and sports_club type*/
@@ -215,6 +221,10 @@ define(['require', 'text!usercontrols/tag/templates/layout.html', 'facade', 'vie
 			});
 					if(self.sports_id){
 						self.sportsDone();	
+						if(self.is_owner == false){
+								console.log("insideoop");
+								$(self.destination).find(self.controls.btnEditSport).addClass("display_none_important");
+					}
 					}
 			// var models = List.toJSON();
 			// if (models == null || models.length < 1) {
