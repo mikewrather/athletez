@@ -116,9 +116,10 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
             });
             
             routing.off('add-school-init');
-            routing.on('add-school-init', function(collection, userId, addType) {
+            routing.on('add-school-init', function(collection, userId, addType, callback) {
             	 var addSchool = new AddClubController({
-            	 	type: addType
+            	 	type: addType,
+            	 	callback: callback
                 });
             });
             
@@ -142,7 +143,8 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
         initialiRoutesInit: function(fn, title) {
         	var self = this, closeModelBox = function() {
         		$("#modalPopup, .modal-backdrop").unbind().remove();
-        	};
+		        };
+	        this.hideSignup();
         	$("body").removeClass("homePage");
         	routing.off('app-inited');
             routing.on('app-inited', function(id) {
@@ -151,13 +153,22 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
             });
             
             routing.off('popup-close');
-            routing.on('popup-close', function() {
-            	$("#modalPopup").unbind().remove();
+            routing.on('popup-close', function(e) {
+            	if(e) {
+	            	$(e.currentTarget).modal('hide');
+   		         	$(e.currentTarget).unbind().remove();            		
+            	} else {
+	            	$("#modalPopup").modal('hide');
+   		         	$("#modalPopup").unbind().remove();				            		
+            	}
+
             });
             
-            $(document).off('hidden.bs.modal', '#modalPopup');
-            $(document).on('hidden.bs.modal', '#modalPopup', function () {
-  				routing.trigger('popup-close');
+            
+            
+            $(document).off('hidden.bs.modal', '#modalPopup, #photoPlayerModal');
+            $(document).on('hidden.bs.modal', '#modalPopup, #photoPlayerModal', function (e) {
+  				routing.trigger('popup-close', e);
 			});
             
             // initialize add game popup common trigger 
@@ -215,9 +226,13 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
 	    		
 	    		self.currentController = new HomeController({
 	    			route: "",
-	    			title: "Athletez",
+	    			title: "Athletez - We Are Athletez",
 	    			userId : id
 	    		});
+
+			    if(!id && $('div.register-wrapper').length == 0){
+				    $('body header').after('<div class="register-wrapper"></div><div class="register-wrapper-h"></div>');
+			    }
 	    	}
 	    	this.initialiRoutesInit(initHome);
 	    },
@@ -249,6 +264,10 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
             //Channel('app-inited').subscribe(initProfile);
 
         },
+		hideSignup : function(){
+		    $('div.register-wrapper').remove();
+		    $('div.register-wrapper-h').remove();
+	    },
         
         notFound: function(page) {
         	alert("Page not found");

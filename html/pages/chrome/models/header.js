@@ -21,7 +21,7 @@ define( ["models/base",'utils/storage'], function (BaseModel,Store) {
             },
             
             login_url: "#user/login",
-            login_label: "Log In",
+            login_label: "SIGN IN",
             
             //logout_url: "/user/logout",
 			logout_url: "#logout",
