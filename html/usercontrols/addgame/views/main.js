@@ -5,10 +5,10 @@
  // Returns {Add Game VIEW} constructor
  */
 define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 'views', 'utils', 'vendor', 'sportorg/collections/sports_listall', 'location/collections/states', 'usercontrols/addgame/collections/teams', 'location/collections/cities', 'usercontrols/addgame/collections/teams_user', 'usercontrols/addgame/collections/teams', 'usercontrols/addgame/collections/games_search', 'usercontrols/addgame/models/team', 'usercontrols/addgame/models/team_add', 'usercontrols/addgame/models/game', 'usercontrols/addgame/models/uslgamelink',
-'usercontrol/dropdown/view/dropdown', 'usercontrol/location/views/get-view-location'
+'usercontrol/dropdown/view/dropdown', 'usercontrol/location/views/get-view-location', 'usercontrols/addgame/models/event'
 ], function(require, layoutTemplate) {
 
-	var self, facade = require('facade'), views = require('views'), SectionView = views.SectionView, utils = require('utils'), Channel = utils.lib.Channel, vendor = require('vendor'), Mustache = vendor.Mustache, $ = facade.$, BasicModel = require('usercontrols/tag/models/basic_info'), SportsCollection = require('sportorg/collections/sports_listall'), StatesCollection = require('location/collections/states'), CityCollection = require('location/collections/cities'), UserTeamsCollection = require('usercontrols/addgame/collections/teams_user'), TeamsCollection = require('usercontrols/addgame/collections/teams'), TeamModel = require('usercontrols/addgame/models/team'), TeamAddModel = require('usercontrols/addgame/models/team_add'), GameModel = require('usercontrols/addgame/models/game'), GamesSearchCollection = require('usercontrols/addgame/collections/games_search'),
+	var self, facade = require('facade'), views = require('views'), SectionView = views.SectionView, utils = require('utils'), Channel = utils.lib.Channel, vendor = require('vendor'), Mustache = vendor.Mustache, $ = facade.$, BasicModel = require('usercontrols/tag/models/basic_info'), SportsCollection = require('sportorg/collections/sports_listall'), StatesCollection = require('location/collections/states'), CityCollection = require('location/collections/cities'), UserTeamsCollection = require('usercontrols/addgame/collections/teams_user'), TeamsCollection = require('usercontrols/addgame/collections/teams'), TeamModel = require('usercontrols/addgame/models/team'), TeamAddModel = require('usercontrols/addgame/models/team_add'), GameModel = require('usercontrols/addgame/models/game'), EventModel = require('usercontrols/addgame/models/event'), GamesSearchCollection = require('usercontrols/addgame/collections/games_search'),
 	DropDownList = require('usercontrol/dropdown/view/dropdown'),
 	LocationView = require('usercontrol/location/views/get-view-location'),
 	//Models
@@ -133,7 +133,6 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 			team : "team",
 			rgxTime : /^(0?[1-9]|1[012])(:[0-5]\d)$/,
 			rgxTimeWhole : /^(0?[1-9]|1[012])$/
-			
 		},
 
 		/*initialize gets called by default when constructor is initialized*/
@@ -856,7 +855,7 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 			if (!date || !timeText) {
 				$(self.destination).find(self.controls.sectionDate).find(self.controls.fieldMessage).html(self.messages.selectDateAndTime).fadeIn();
 				isDataValid = false;
-			}else{
+			} else {
 					var validTime = timeText.match(self.tags.rgxTime) || timeText.match(self.tags.rgxTimeWhole);
 					console.log("orginal date",date);
 					console.log("orginal time",timeText);
@@ -864,7 +863,7 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 					if(!validTime){
 						$(self.destination).find(self.controls.sectionDate).find(self.controls.fieldMessage).html(self.messages.selectValidTime).fadeIn();
 						isDataValid = false;
-					}else{
+					} else {
 						$(self.destination).find(self.controls.sectionDate).find(self.controls.fieldMessage).html('').fadeOut();
 						try{
 						var array = timeText.split(':');
@@ -904,11 +903,12 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 					sports_id : sportsId
 
 				};
-				var gameModel = new GameModel(payload);
+				var eventModel = new EventModel();
+				eventModel.sports_id = sportsId;
+				eventModel.set(payload);
+				eventModel.save();
 
-				gameModel.save({});
-
-				$.when(gameModel.request).done(function(response) {
+				$.when(eventModel.request).done(function(response) {
 				self.game_id = response.payload.id;
 				self.gameData = {
 							game_datetime : completeDate,
@@ -916,7 +916,7 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 							event_name : eventName,
 							locations_id : locationId,
 							sports_id : sportsId
-						}
+					};
 						Channel(self.channel).publish(self.gameData);
 				});
 			} else {
