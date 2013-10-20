@@ -6,6 +6,7 @@ Facebook Query Language: http://developers.facebook.com/docs/reference/fql/
 */
 //if(Kohana::$environment == Kohana::PRODUCTION)
 if(Kohana::$environment == Kohana::DEVELOPMENT || Kohana::$environment == Kohana::LOCALHOST || Kohana::$environment == Kohana::PRODUCTION){
+{
 	return array(
 		'appId'			=> '219148511595084',
 		'secret'		=> '9fbebcbf568334f8a7efa0b12ccc3c8b',
