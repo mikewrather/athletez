@@ -903,7 +903,8 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 					game_datetime : completeDate,
 					locations_id : locationId,
 					event_name : eventName,
-					sports_id : sportsId
+					sports_id : sportsId,
+					users_id : 	self.user_id,
 
 				};
 				var gameModel = new GameModel(payload);
@@ -917,7 +918,8 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 							games_id : self.game_id,
 							event_name : eventName,
 							locations_id : locationId,
-							sports_id : sportsId
+							sports_id : sportsId,
+							users_id : 	self.user_id
 						}
 						Channel(self.channel).publish(self.gameData);
 				});
