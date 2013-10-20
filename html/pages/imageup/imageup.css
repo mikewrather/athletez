@@ -172,6 +172,8 @@ color: red;
 .previewimg img {
 	border: none;
 	box-shadow: none;
+	height: 242px;
+    width: 250px;
 }
 .image_upload_loader_new {
 	background: url("http://cdn.athletez.com/resources/img/green_loading.gif") repeat scroll 0 0 rgba(0, 0, 0, 0);

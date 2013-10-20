@@ -133,6 +133,7 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 			team : "team",
 			rgxTime : /^(0?[1-9]|1[012])(:[0-5]\d)$/,
 			rgxTimeWhole : /^(0?[1-9]|1[012])$/
+			
 		},
 
 		/*initialize gets called by default when constructor is initialized*/
@@ -601,6 +602,7 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 						self.city_id = value['id'];
 						$(e.target).attr(self.attributes.cityId, self.city_id);
 					}
+
 				});
 			}
 			if (!isCityValid) {
@@ -745,26 +747,16 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 					self.eventNotFound(e);
 					}
 					else{
-						self.eventFound(e);
 						self.$(e.target).parent().find(self.controls.fieldMessage).html('').stop().fadeOut();
 					}
 					self.individualGames = [];
 					for (var key in models) {
 						self.individualGames.push(models[key].payload);
 					}
-					
-					
-					var name = self.$el.find(".txt-individual-game_h").val();
 					self.individualGames.forEach(function(value, index) {
 						//	var name = value['game_name'] + "( " + +" )";
-						
-						var eveName = value['event_name'] + " " + value['game_name']; 
-						console.log(name +"----"+ eveName);
-						if(name == eveName) {
-							alert("sdsd");
-						self.individual_game_id = value['id'];
-						}
-						arr.push(eveName);
+						var name = value['event_name'] + " " + value['game_name']; 
+						arr.push(name);
 					//	arr.push({label:name,value:value['id']});
 					});
 
@@ -778,23 +770,12 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 					//console.log("s.arr", arr);
 					$(e.target).autocomplete({
 						source : arr,
-						select :  function (event, ui) {
-							var name = ui.item.value;
-							self.individualGames.forEach(function(value, index) {
-								var eveName = value['event_name'] + " " + value['game_name']; 
-								if(name == eveName) {
-									self.individual_game_id = value['id'];
-								}
-							});
-									
-							
-							//self.individual_game_id = value['id'];
-							//alert("here");
+						// select :  function (event, ui) {
 							// self.$(e.target).val(ui.item.label);
 							// //self.changeIndividualGame(event,ui);
 					          // // display the selected text
 					        // // $("#txtAllowSearchID").val(ui.item.value); // save selected id to hidden input
-					     }
+					    // }
 					});
 					//Trigger keydown to display the autocomplete dropdown just created
 					$(e.target).trigger('keydown');
@@ -846,9 +827,6 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 		//	btnIndividualGameCreate : ".btn-game-individual-Create_h",
 		eventNotFound : function(e) {
 			//$(self.destination).find(self.controls.txtIndividualLocation).show();
-			this.$el.find(this.controls.sectionMainLocation).show();
-			this.$el.find(this.controls.sectionDate).show();			
-			
 			$(self.destination).find(self.controls.btnIndividualGameCreate).show();
 			$(self.destination).find(self.controls.btnIndividualFinish).hide();
 			$(e.target).parent().find(self.controls.fieldMessage).html('').stop().fadeOut();
@@ -856,9 +834,6 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 		},
 		eventFound : function(e) {
 			//$(self.destination).find(self.controls.txtIndividualLocation).hide();
-			this.$el.find(".address-h").val("");
-			$(self.destination).find(self.controls.sectionMainLocation).hide();
-			$(self.destination).find(self.controls.sectionDate).hide();
 			$(self.destination).find(self.controls.btnIndividualGameCreate).hide();
 			$(self.destination).find(self.controls.btnIndividualFinish).show();
 			$(e.target).parent().find(self.controls.fieldMessage).html(self.messages.gameFound).fadeIn();
@@ -920,15 +895,18 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 			}
 
 			if (isDataValid) {
-				var completeDate = date; //+ " " + timeText + " " + timeZone;
+				var completeDate = date ; //+ " " + timeText + " " + timeZone;
 				$(e.target).parent().find(self.controls.fieldMessage).html('').fadeOut();
 				var payload = {
 					game_datetime : completeDate,
 					locations_id : locationId,
 					event_name : eventName,
-					sports_id : sportsId
+					sports_id : sportsId,
+					users_id : 	self.user_id,
+
 				};
 				var gameModel = new GameModel(payload);
+
 				gameModel.save({});
 
 				$.when(gameModel.request).done(function(response) {
@@ -938,8 +916,9 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 							games_id : self.game_id,
 							event_name : eventName,
 							locations_id : locationId,
-							sports_id : sportsId
-					};
+							sports_id : sportsId,
+							users_id : 	self.user_id
+						}
 						Channel(self.channel).publish(self.gameData);
 				});
 			} else {
@@ -948,12 +927,13 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 		},
 		
 		goThereIndividualGame : function(e){
+			
 			var sportsId = $(self.destination).find(self.controls.hdnSportsId).val();
 			var payload = {
 				users_id : 	self.user_id,
 				sports_id : sportsId,
 				games_id : self.individual_game_id				
-			};
+			}
 				var model = new UserGameLinkModel(payload);
 				model.save();
 				
@@ -971,7 +951,8 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 							event_name : game.event_name,
 							game_location : game.game_location,
 							games_id : game.id,							
-							sports_id : response.payload.usl ? response.payload.usl.sports_id : null
+							sports_id : response.payload.usl ? response.payload.usl.sports_id : null,
+							users_id : self.user_id
 					};
 			Channel(self.channel).publish(self.gameData);
 			}
@@ -1182,7 +1163,8 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 					locations_id : locationId,
 					teamOneId : teamOneId,
 					teamTwoId : teamTwoId,
-					sports_id : sportsId 
+					sports_id : sportsId,
+					users_id : self.user_id
 
 				};
 				////console.log("payload", payload);
@@ -1201,8 +1183,9 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 							games_id : self.game_id,
 							home_team : isHome || false,
 							locations_id : self.location_id,
-							score : scoreOne
-						};
+							score : scoreOne,
+							users_id : self.user_id
+						}
 
 						var addTeamModelOne = new TeamAddModel(payloadOne);
 						addTeamModelOne.teams_id = teamOneId;
@@ -1213,8 +1196,9 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 							games_id : self.game_id,
 							home_team : isHome || false,
 							locations_id : self.location_id,
-							score : scoreTwo
-						};
+							score : scoreTwo,
+							users_id : self.user_id
+						}
 
 						isHome = $(self.destination).find(self.controls.rdoTeamTwo).is(':checked');
 
@@ -1231,7 +1215,8 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 							games_id : self.game_id,
 							team_id_one : teamOneId,
 							team_id_two : teamTwoId,
-							sports_id : sportsId 
+							sports_id : sportsId,
+							users_id : self.user_id 
 						}
 						Channel(self.channel).publish(self.gameData);
 					}
