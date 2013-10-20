@@ -29,7 +29,9 @@ define(['require', 'text!profilesetting/templates/club.html', 'text!profilesetti
 			"click .btn-Finish-Sports" : "FinishSports",
 			"click .edit-team" : "EditTeam",
 			"click .btnOpenPositions" : "displayPositionPopup",
-			"click .add-club-h" : "openAddClubPopup"
+			"click .add-club-h" : "openAddClubPopup",
+			"click .up-arrow-h": "levelUpArrow",
+			"click .down-arrow-h": "levelDownArrow"			
 		},
 
 		/*Holds */
@@ -78,7 +80,7 @@ define(['require', 'text!profilesetting/templates/club.html', 'text!profilesetti
 		},
 
 		properties : {
-			show_prev_year : 2
+			show_prev_year : 30
 		},
 
 		/*Selected States By API*/
@@ -93,6 +95,28 @@ define(['require', 'text!profilesetting/templates/club.html', 'text!profilesetti
 			self = this;
 			self.setOptions(options);
 			this.init();
+		},
+		
+				/* level Up Arrow */
+		levelUpArrow: function(e) {
+			
+			var $parent = $(e.currentTarget).parents(".complevels-wrapper");
+			var scrollTop =  $parent.find(".complevels-container").scrollTop();
+			var height = $parent.find(".complevels-container").height();
+			if(scrollTop > height)
+				var top = scrollTop - height;
+			else
+				var top = 0;
+			$parent.find('.complevels-container').animate({scrollTop: top});
+		},
+		
+		
+		/* level Down Arrow */
+		levelDownArrow: function(e) {
+			var $parent = $(e.currentTarget).parents(".complevels-wrapper");
+			var scrollTop =  $parent.find(".complevels-container").scrollTop();
+			var top = scrollTop + $parent.find(".complevels-container").height();
+			$parent.find('.complevels-container').animate({scrollTop: top});	
 		},
 		
 		/* Add club popup  */
