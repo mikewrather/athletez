@@ -746,6 +746,7 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 					self.eventNotFound(e);
 					}
 					else{
+						self.eventFound(e);
 						self.$(e.target).parent().find(self.controls.fieldMessage).html('').stop().fadeOut();
 					}
 					self.individualGames = [];
@@ -826,6 +827,7 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 		//	btnIndividualGameCreate : ".btn-game-individual-Create_h",
 		eventNotFound : function(e) {
 			//$(self.destination).find(self.controls.txtIndividualLocation).show();
+			this.$el.find(this.controls.sectionMainLocation).show();
 			$(self.destination).find(self.controls.btnIndividualGameCreate).show();
 			$(self.destination).find(self.controls.btnIndividualFinish).hide();
 			$(e.target).parent().find(self.controls.fieldMessage).html('').stop().fadeOut();
@@ -833,6 +835,8 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 		},
 		eventFound : function(e) {
 			//$(self.destination).find(self.controls.txtIndividualLocation).hide();
+			this.$el.find(".address-h").val("");
+			$(self.destination).find(self.controls.sectionMainLocation).hide();
 			$(self.destination).find(self.controls.btnIndividualGameCreate).hide();
 			$(self.destination).find(self.controls.btnIndividualFinish).show();
 			$(e.target).parent().find(self.controls.fieldMessage).html(self.messages.gameFound).fadeIn();
@@ -901,7 +905,6 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 					locations_id : locationId,
 					event_name : eventName,
 					sports_id : sportsId
-
 				};
 				var gameModel = new GameModel(payload);
 				gameModel.save({});
@@ -1178,7 +1181,7 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 							home_team : isHome || false,
 							locations_id : self.location_id,
 							score : scoreOne
-						}
+						};
 
 						var addTeamModelOne = new TeamAddModel(payloadOne);
 						addTeamModelOne.teams_id = teamOneId;
@@ -1190,7 +1193,7 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 							home_team : isHome || false,
 							locations_id : self.location_id,
 							score : scoreTwo
-						}
+						};
 
 						isHome = $(self.destination).find(self.controls.rdoTeamTwo).is(':checked');
 
