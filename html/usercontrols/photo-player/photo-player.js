@@ -74,9 +74,13 @@ define(["require", 'text!usercontrols/photo-player/templates/comments.html',
 			routing.off('comments-fetch-new-form-data');
 	       	routing.on('comments-fetch-new-form-data', function(entity_id, id) {
 	       	//	alert("en data");
-	       	$("#image-tagging-photo").html('');
 	       		_self.setUpCommentView(entity_id, id);
-				//_self.setUpTagView(entity_id, id);
+	       	});
+	       	
+	       	routing.off('tags-fetch-new-form-data');
+	       	routing.on('tags-fetch-new-form-data', function(entity_id, id) {
+	       	//	alert("en data");
+	       		_self.setUpTagView(entity_id, id);
 	       	});
 
   			// set up main layout view					

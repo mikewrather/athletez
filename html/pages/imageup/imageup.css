@@ -123,16 +123,11 @@
 
 #imgUploadModal {
     top:5% !important;
-    max-height: 90%;
-    height: 90%;
+    max-height: 85%;
+    height: 85%;
     overflow-y: auto;
 }
-#Loginview {
-	height: 700px;
-}
-#RegModal{
-height: 700px;
-}
+
 .errormsg{
 color: red;
 }

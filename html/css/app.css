@@ -80,10 +80,15 @@ header .logo {
 	margin: 6px 0;
 }
 header a{
-    color: shite;
+    color: white;
 }
 header .account {
 	float: right;
+    margin: 10px;
+}
+
+header #header_logo{
+    height: 20px;
 }
 header .photo {
 	float: left;
@@ -115,11 +120,18 @@ footer{
     height: 50px;
     width: 100%;
     padding:0 !important;
+    color: white;
+}
+
+footer span{
+    position: relative;
+    top:15px;
 }
 
 #main {
 	padding-top: 15px;
 	padding-bottom: 15px;
+    min-height: 100%;
 }
 #main .sports-info {
 	margin-top: 20px;
@@ -157,6 +169,17 @@ footer{
 	opacity: 0.5;
 }
 
+#Loginview{
+    width:500px;
+    margin-left:-250px;
+    left:50%;
+}
+
+#RegModal{
+    width:550px;
+    left:50%;
+    margin-left: -250px;
+}
 .floatLeft {
 	float: left;
 }
@@ -183,13 +206,13 @@ input[disabled].hasDatepicker, input[readonly].hasDatepicker {
 	background: #9cca3c;
 	color: #FFF;
 
-	padding: 5px 15px;
+	padding: 5px 25px;
 	text-align: center;
-	margin: 25px 0;
+	margin: 10px 0;
 
     font-family: 'Nunito', "HelveticaNeue", "Helvetica";
-    font-size:1.0em;
-    font-weight: bolder;
+    font-size:1.3em;
+    font-weight: 300;
     text-transform: uppercase;
 
 }
@@ -258,8 +281,8 @@ div.image-item-container > img{
 
 }
 .action-block{
-    height:30px;
-    width:30px;
+  /*  height:30px;
+    width:30px;*/
     margin:8px;
     display: block;
     opacity: 0;
@@ -269,7 +292,7 @@ div.image-item-container > img{
     -ms-transition: opacity .3s;
 
     color: white;
-    font-size: 2.1em;
+    font-size: 1.1em;
     text-align: center;
     padding:5px;
 }
@@ -508,6 +531,12 @@ ul.ui-autocomplete {
 	padding: 10px 0 !important;
 	background: rgb(255, 255, 255) !important;
     z-index: 1060;
+}
+
+.ui-autocomplete-loading{
+    background-image: url(http://cdn.athletez.com/resources/img/17-1.gif) !important;
+    background-position: right !important;
+    background-repeat: no-repeat !important;
 }
 
 .ui-autocomplete li.ui-menu-item {
@@ -976,9 +1005,8 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#84a934', end
 
 
 .add-game-modal{
-    width:80%;
-    left:10%;
-    height: 70%;
+    width:50%;
+    left:25%;
 }
 /*
 .add-game-modal div.modal-body{
@@ -1169,6 +1197,7 @@ margin-top:10px;
 /********* Login ************/
 #logincontainer{
     margin: auto;
+    width:85%;
 }
 
 #logincontainer *{

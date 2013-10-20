@@ -122,10 +122,27 @@ class Model_Sportorg_Games_Base extends ORM
 		}
 
 		try {
-			if(isset($event_name))
+			if(isset($event_name)){
 				$this->event_name = $event_name;
+			}
 
 			$this->save();
+
+			if(isset($event_name)){
+				if($sports_id){
+					if(!$users_id){
+						$user = Auth::instance()->get_user();
+						$users_id = $user->id;
+					}
+					$usl = ORM::factory('User_Sportlink')->where('users_id','=',$users_id)->where('sports_id','=',$sports_id)->find();
+					if($usl->loaded()){
+						$gamelink = ORM::factory('User_Sportlink_Gamelink');
+						$gamelink->user_sport_link_id = $usl->id;
+						$gamelink->games_id = $this->id;
+						$gamelink->save();
+					}
+				}
+			}
 			Model_Site_Feed::addToFeed($this,$feed_action);
 
 			return $this;

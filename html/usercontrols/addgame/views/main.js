@@ -949,7 +949,8 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 							event_name : game.event_name,
 							game_location : game.game_location,
 							games_id : game.id,							
-							sports_id : response.payload.usl ? response.payload.usl.sports_id : null
+							sports_id : response.payload.usl ? response.payload.usl.sports_id : null,
+							users_id : self.user_id
 					};
 			Channel(self.channel).publish(self.gameData);
 			}
@@ -1160,7 +1161,8 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 					locations_id : locationId,
 					teamOneId : teamOneId,
 					teamTwoId : teamTwoId,
-					sports_id : sportsId 
+					sports_id : sportsId,
+					users_id : self.user_id
 
 				};
 				////console.log("payload", payload);
@@ -1179,7 +1181,8 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 							games_id : self.game_id,
 							home_team : isHome || false,
 							locations_id : self.location_id,
-							score : scoreOne
+							score : scoreOne,
+							users_id : self.user_id
 						}
 
 						var addTeamModelOne = new TeamAddModel(payloadOne);
@@ -1191,7 +1194,8 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 							games_id : self.game_id,
 							home_team : isHome || false,
 							locations_id : self.location_id,
-							score : scoreTwo
+							score : scoreTwo,
+							users_id : self.user_id
 						}
 
 						isHome = $(self.destination).find(self.controls.rdoTeamTwo).is(':checked');
@@ -1209,7 +1213,8 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 							games_id : self.game_id,
 							team_id_one : teamOneId,
 							team_id_two : teamTwoId,
-							sports_id : sportsId 
+							sports_id : sportsId,
+							users_id : self.user_id 
 						}
 						Channel(self.channel).publish(self.gameData);
 					}

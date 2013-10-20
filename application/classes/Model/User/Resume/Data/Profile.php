@@ -130,18 +130,20 @@ class Model_User_Resume_Data_Profile extends ORM
 			->limit(1);
 	}
 
-
+	$use_and_where = false;
 	if(is_integer($sports_id) && $sports_id > 0)
 	{
 		$qry->where('sports_id','=',$sports_id);
-		$qry->and_where_open();
-		$use_and_where = true;
 	}
 
 
 
 	if(sizeof($pos_arr) > 0)
 	{
+		if(!$use_and_where){
+			$qry->and_where_open();
+			$use_and_where = true;
+		}
 		$qry->where_open();
 		foreach($pos_arr as $positions_id => $position)
 		{
@@ -150,14 +152,23 @@ class Model_User_Resume_Data_Profile extends ORM
 		$qry->where_close();
 	}
 
-	$qry->or_where_open();
+
 
 	if(sizeof($sports_arr) > 0)
+	{
+		if(!$use_and_where){
+			$qry->and_where_open();
+			$use_and_where = true;
+		}
+		$qry->or_where_open();
 		foreach($sports_arr as $sports_id => $sport)
 		{
 			$qry->or_where('sports_id','=',$sports_id);
 		}
-	$qry->or_where_close();
+		$qry->or_where_close();
+	}
+
+
 
 	if($use_and_where) $qry->and_where_close();
 

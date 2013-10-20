@@ -4,12 +4,13 @@
 // Return {ImageItemView} object as constructor
 
 define(['vendor', 'views', 'utils', 'text!media/templates/image-item.html', 'votes/models/vote',
-        'votes/models/follow','utils/storage'], function(vendor, views, utils, imageItemTemplate) {
+        'votes/models/follow','utils/storage','chrome/views/header'], function(vendor, views, utils, imageItemTemplate) {
 
 	var ImageItemView, $ = vendor.$, BaseView = views.BaseView, Mustache = vendor.Mustache,
 	voteModel = require('votes/models/vote'),
 	Store = require('utils/storage'),
-    followModel = require('votes/models/follow');
+    followModel = require('votes/models/follow'),
+    header = require('chrome/views/header');
 
 	ImageItemView = BaseView.extend({
 
@@ -29,6 +30,7 @@ define(['vendor', 'views', 'utils', 'text!media/templates/image-item.html', 'vot
 
 		initialize : function(options) {
 			this.template = imageItemTemplate;
+			this.signup = new header();
 			//this.render();
 		},
 		
@@ -282,9 +284,24 @@ define(['vendor', 'views', 'utils', 'text!media/templates/image-item.html', 'vot
 	    {
 		   e.preventDefault();
 		   e.stopPropagation();
-		  
+		   
 		   if(!this.checkForUser()) {
-		  		$(".signup-email").trigger('click');
+		  		
+		  		try{
+		  			
+		  			this.signup.signupUser();
+		  			//$(".signup-email").trigger('click');
+		    		}
+		    	catch(e){
+		    		try{
+						console.log(e);
+					}
+					catch(e){
+						console={},
+						console.log=function(e){}
+		
+					}
+		    	}	
 		    	return;
 	    	}
 		    var voteModelOb = new voteModel();
@@ -304,7 +321,25 @@ define(['vendor', 'views', 'utils', 'text!media/templates/image-item.html', 'vot
 		    console.log(e.target);
 		    e.stopPropagation();
 		     if(!this.checkForUser()) {
-		  		$(".signup-email").trigger('click');
+		  		
+		     		try{
+		  			
+		  				this.signup.signupUser();
+		  				//$(".signup-email").trigger('click');
+		    		}
+		    		catch(e){
+		    			try{
+							console.log(e);
+						}
+						catch(e){
+							console={},
+							console.log=function(e){}
+						
+						}
+		    		}	
+
+
+		  		//$(".signup-email").trigger('click');
 		    	return;
 	    	}
 		    var followModelOb = new followModel();

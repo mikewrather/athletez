@@ -13,8 +13,8 @@ define(
 				events : {
 					"blur #search" : "updateSearch",
 					"focus #search": "hideDropdown",
-					"click .searchBtn" : "changeBaseUrl",
-					"click .dropdown-menu > li > a" : "select",
+					"click .restype" : "changeBaseUrl",
+					"click .dropdown-menu-alias > li > a" : "select",
 					"click .dd" : "doNothing",
 					//"click .menu" : "toggle",
 					"click .menu-link-h" : "showMenuDropdown",
@@ -70,6 +70,8 @@ define(
 				
 				changeBaseUrl : function(e) {
 					var target = $(e.currentTarget);
+					target.parents('ul').find('.restype').removeClass('select');
+					target.addClass('select');
 					var num = target.data("number");
 					Channel('baseUrlChanged').publish(num);
 				},
@@ -124,6 +126,7 @@ define(
 				select : function(e) {
 					e.preventDefault();
 					e.stopPropagation();
+					
 					var target = $(e.currentTarget);
 					var targetClass = target.attr('class');
 					$('.dropdown-menu > li > a'+'.'+targetClass).removeClass('select');
