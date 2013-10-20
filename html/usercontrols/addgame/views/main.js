@@ -126,6 +126,7 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 			selectSport : "Please select sport",
 			selectValidTime : "Please enter valid time in format hh:mm (12 hours)"
 		},
+		
 		/*tags to be used to tag the type of game in games data*/
 		tags : {
 			individual : "individual",
@@ -225,11 +226,8 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 					teamModel.fetchSuccess = function(model, response) {
 						var data = teamModel.parseAsRequired(response);
 						self.team = data;
-						console.log("&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&");
-						console.log("self.team",self.team);
 						self.sports_id = data.sports_id || null;
 						self.fillSports();
-						//self.setSelectedTeam(data);
 				};
 						teamModel.fetch();
 			}else{
@@ -828,14 +826,14 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 		//txtIndividualLocation : ".txt-individual-location_h",
 		//	btnIndividualGameCreate : ".btn-game-individual-Create_h",
 		eventNotFound : function(e) {
-			$(self.destination).find(self.controls.txtIndividualLocation).show();
+			//$(self.destination).find(self.controls.txtIndividualLocation).show();
 			$(self.destination).find(self.controls.btnIndividualGameCreate).show();
 			$(self.destination).find(self.controls.btnIndividualFinish).hide();
 			$(e.target).parent().find(self.controls.fieldMessage).html('').stop().fadeOut();
 			$(e.target).removeAttr(self.attributes.gameId);
 		},
 		eventFound : function(e) {
-			$(self.destination).find(self.controls.txtIndividualLocation).hide();
+			//$(self.destination).find(self.controls.txtIndividualLocation).hide();
 			$(self.destination).find(self.controls.btnIndividualGameCreate).hide();
 			$(self.destination).find(self.controls.btnIndividualFinish).show();
 			$(e.target).parent().find(self.controls.fieldMessage).html(self.messages.gameFound).fadeIn();
@@ -847,7 +845,7 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 			var date = $(self.destination).find(self.controls.txtGameDate).datepicker('getDate');
 			var timeText = $(self.destination).find(self.controls.txtGameTime).val();
 			var timeZone = $(self.destination).find(self.controls.hdnTimePeriod).val();;
-			var locationId = self.location_id || $(self.controls.txtIndividualLocation).val() || 0;
+			var locationId = self.location_id || $(self.controls.txtLocationId).val() || 0;
 			var eventName = $(self.destination).find(self.controls.txtIndividualGame).val();
 			var sportsId = $(self.destination).find(self.controls.hdnSportsId).val();
 			if(!sportsId){
@@ -973,12 +971,11 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 					$(self.destination).find(self.controls.sectionTeams).hide();
 					$(self.destination).find(self.controls.sectionScore).hide();
 					$(self.destination).find(self.controls.btnFinish).hide();
-					$(self.destination).find(self.controls.sectionMainLocation).hide();
+					//$(self.destination).find(self.controls.sectionMainLocation).hide();
 			
 					$(self.destination).find(self.controls.sectionIndividual).show();
 			//		$(self.destination).find(self.controlsbtnIndividualFinish).show();
 				} else {
-					
 					var date = $(self.destination).find(self.controls.txtGameDate).datepicker('getDate');
 					var currentDate = new Date();
 					if (date != null && currentDate >= date) {

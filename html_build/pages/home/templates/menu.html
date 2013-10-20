@@ -62,7 +62,7 @@
 				<span> SORT BY</span>
 
 				<div class="clearfix"></div>
-				<ul class="dropdown-menu" style="display: block; position: relative; margin-bottom:15px;">
+				<ul class="dropdown-menu dropdown-menu-alias" style="display: block; position: relative; margin-bottom:15px;">
 					{{#views.browse}}
 					<li><a class="browse" data-id="{{value}}" href="javascript:void(0);">{{name}}</a></li>
 					{{/views.browse}}
@@ -74,12 +74,31 @@
 				<span>TIME FRAME</span>
 
 				<div class="clearfix"></div>
-				<ul class="dropdown-menu" style="display: block; position: relative;">
+				<ul class="dropdown-menu dropdown-menu-alias" style="display: block; position: relative;">
 					{{#views.time}}
 					<li><a class="time" data-id="{{value}}" href="javascript: void(0)">{{name}}</a></li>
 					{{/views.time}}
 				</ul>
 			</div>
+		</div>
+	</div>
+	<div id="resulttype" class="menu span2">
+		<a href="javascript:void(0)" class="menu-link-h restype-link-h"><span class="option-heading-h">Athletes</span>
+
+			<div class="caret-large-container">
+				<span class="caret-large"></span>
+			</div>
+		</a>
+
+		<div class="dd menu-detail-h reset-view-area-h restype-options-h">
+
+			<div class="clearfix"></div>
+				<ul class="dropdown-menu" style="display: block; position: relative;">
+					<li><a id="user" class="restype" data-number="2" href="javascript:void(0)">Athletes</a></li>
+					<li><a id="image" class="restype" data-number="1" href="javascript:void(0)">Images</a></li>
+					<li><a id="video" class="restype"  data-number="0" href="javascript:void(0)">Videos</a></li>
+					<li><a id="game" class="restype" data-number="3" href="javascript:void(0)">Games</a></li>
+				</ul>
 		</div>
 	</div>
 
@@ -90,9 +109,9 @@
 
 
 </div>
-<div class="pull-left type-icons">
+<!--<div class="pull-left type-icons">
 	<a id="video" class="searchBtn" data-number="0" href="javascript:void(0)"><i class="icon-facetime-video"></i>Videos</a>
 	<a id="image" class="searchBtn" data-number="1" href="javascript:void(0)"><i class="icon-picture"></i>Images</a>
 	<a id="user" class="searchBtn" data-number="2" href="javascript:void(0)"><i class="icon-user"></i>Athletes</a>
 	<a id="game" class="searchBtn" data-number="3" href="javascript:void(0)"><i class="icon-user"></i>Games</a>
-</div>
+</div>-->

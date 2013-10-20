@@ -110,9 +110,9 @@ function (
                      headView = new FbHeader();
                      headView.signupFacebook();
          },
-         signupUser: function(event){
+         signupUser: function(){
 
-                    event.preventDefault();
+                   // event.preventDefault();
                     
                     this.signupc = new scontroller({"route":""});
                     routing.trigger("register-basic");
