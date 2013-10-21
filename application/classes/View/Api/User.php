@@ -158,7 +158,7 @@
 
 			$team_obj = is_object($team) ? ORM::factory('Sportorg_Team', $team->team_id) :  ORM::factory('Sportorg_Team', $team['team_id']);
 
-			$schedule = $team_obj->getSchedule(3,true);
+			$schedule = $team_obj->getSchedule(30,true);
 
 		//	$schedule[] = array(); //I put this in because I kept getting an error from the foreach if i didn't do this.
 			$sArr = array();

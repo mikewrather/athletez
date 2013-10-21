@@ -71,8 +71,8 @@ ul {
 
 header {
 	border-bottom: 1px solid #ccc;
-	padding-top: 10px;
-	padding-bottom: 10px;
+	padding-top: 2px;
+	padding-bottom: 2px;
 	background-color: #000;
 }
 header .logo {
@@ -84,9 +84,11 @@ header a{
 }
 header .account {
 	float: right;
-    margin: 10px;
 }
-
+header .account #userlogin{
+    position: relative;
+    top:8px;
+}
 header #header_logo{
     height: 20px;
 }

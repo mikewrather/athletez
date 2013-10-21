@@ -13,6 +13,7 @@ define(['require', 'text!userresume/templates/rdtree.html', 'facade', 'views', '
 		/*Bind Events on controls present in current view template*/
 		events : {
 			"click .btn-edit-rdtree_h" : "MarkEdit",
+			"click .txtRdTrees_h" : "MakeEdit",
 			"click .btn-Finish-RdTree_h" : "FinishEdit",
 			"blur .txtRdTrees_h" : "SaveResumeData"
 		},
@@ -27,7 +28,7 @@ define(['require', 'text!userresume/templates/rdtree.html', 'facade', 'views', '
 			// Containers
 			sectionRdTreeItems : ".section-rdtree-items_h",
 			// TEXTBOXES
-			txtRdTree : ".txtRdTrees_h",
+			txtRdTree : ".txtRdTrees_h"
 		},
 
 		/*Messages Holds the messages, warning, alerts, errors, information variables*/
@@ -86,8 +87,15 @@ define(['require', 'text!userresume/templates/rdtree.html', 'facade', 'views', '
 		},
 
 		MarkEdit : function(e) {
+			console.log(e);
 			$(e.target).fadeOut();
 			$(e.target).parents(self.controls.sectionRdTreeItems).find(self.controls.txtRdTree).removeAttr('disabled');
+			$(e.target).parents(self.controls.sectionRdTreeItems).find(self.controls.btnFinishRdTree).fadeIn();
+		},
+		MarkEdit : function(e) {
+			console.log(e);
+			$(e.target).fadeOut();
+			$(e.target).removeAttr('disabled');
 			$(e.target).parents(self.controls.sectionRdTreeItems).find(self.controls.btnFinishRdTree).fadeIn();
 		},
 		FinishEdit : function(e) {

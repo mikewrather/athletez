@@ -8,7 +8,7 @@ class Policy_Teams extends Policy
 		$config = Kohana::$config->load('sysconfig');
 		$roles = $config->get('role_name');
 		$has_admin = $user->has('roles', ORM::factory('Role', array('name' => $roles['admin'])));
-		//$has_user = $user->has('roles', ORM::factory('Role', array('name' => $roles['user'])));
+		$has_user = $user->has('roles', ORM::factory('Role', array('name' => $roles['user'])));
 		//$has_coach = $user->has('roles', ORM::factory('Role', array('name' => $roles['coach'])));
 		$has_moderator = $user->has('roles', ORM::factory('Role', array('name' => $roles['moderator'])));
 		$obj = $extra['obj'];
@@ -32,7 +32,7 @@ class Policy_Teams extends Policy
 
 			{
 				case 'addGame':
-					if($has_admin || ($is_team_member )){
+					if($has_admin || $is_team_member || $has_user){
 						$have_permission = true;
 					}
 					return $have_permission;
@@ -46,13 +46,13 @@ class Policy_Teams extends Policy
 //					return $have_permission;
 					break;
 				case 'modify':
-					if($has_admin || ( $is_follower || $is_team_member )){
+					if($has_admin || $is_follower || $is_team_member || $has_user){
 						$have_permission = true;
 					}
 					return $have_permission;
 					break;
 				case 'delete':
-					if($has_admin || ( $is_follower || $is_team_member )){
+					if($has_admin || $has_moderator){
 						$have_permission = true;
 					}
 					return $have_permission;

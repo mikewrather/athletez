@@ -232,13 +232,13 @@ body {
 }
 
 a {
-  color: #0088cc;
+  color: #333333;
   text-decoration: none;
 }
 
 a:hover,
 a:focus {
-  color: #005580;
+  color: #6a6a6a;
 }
 
 .img-rounded {
