@@ -174,7 +174,7 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 					elementId: self.controls.hdnTimePeriodData,
 					destination: self.controls.spnTimePeriod,
 					targetView: self,
-					selectedValue : "AM",
+					selectedValue : "PM",
 					callback: function(result) {
 					}
 				});
