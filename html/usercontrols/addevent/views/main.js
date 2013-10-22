@@ -4,7 +4,7 @@
  // Requires `define`, `require`
  // Returns {Add Game VIEW} constructor
  */
-define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 'views', 'utils', 'vendor', 'sportorg/collections/sports_listall', 'location/collections/states', 'usercontrols/addgame/collections/teams', 'location/collections/cities', 'usercontrols/addgame/collections/teams_user', 'usercontrols/addgame/collections/teams', 'usercontrols/addgame/collections/games_search', 'usercontrols/addgame/models/team', 'usercontrols/addgame/models/team_add', 'usercontrols/addgame/models/game', 'usercontrols/addgame/models/uslgamelink',
+define(['require', 'text!usercontrols/addevent/templates/layout.html', 'facade', 'views', 'utils', 'vendor', 'sportorg/collections/sports_listall', 'location/collections/states', 'usercontrols/addgame/collections/teams', 'location/collections/cities', 'usercontrols/addgame/collections/teams_user', 'usercontrols/addgame/collections/teams', 'usercontrols/addgame/collections/games_search', 'usercontrols/addgame/models/team', 'usercontrols/addgame/models/team_add', 'usercontrols/addgame/models/game', 'usercontrols/addgame/models/uslgamelink',
 'usercontrol/dropdown/view/dropdown', 'usercontrol/location/views/get-view-location'
 ], function(require, layoutTemplate) {
 
@@ -924,15 +924,7 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 				gameModel.save({});
 
 				$.when(gameModel.request).done(function(response) {
-				self.game_id = response.payload.id;
-				self.gameData = {
-							game_datetime : completeDate,
-							games_id : self.game_id,
-							event_name : eventName,
-							locations_id : locationId,
-							sports_id : sportsId
-					};
-						Channel(self.channel).publish(self.gameData);
+					Channel(self.channel).publish(response);
 				});
 			} else {
 				$(e.target).parent().find(self.controls.fieldMessage).html(message).fadeIn();
@@ -1225,7 +1217,7 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 							team_id_one : teamOneId,
 							team_id_two : teamTwoId,
 							sports_id : sportsId 
-						}
+						};
 						Channel(self.channel).publish(self.gameData);
 					}
 

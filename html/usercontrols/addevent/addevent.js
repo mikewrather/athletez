@@ -51,6 +51,7 @@ define(["require", "text!usercontrols/addevent/templates/layout.html",
 			if (options.id) this.id = options.id;
 			if (options.sports_id) this.sports_id = options.sports_id;
 			if (options.users_id) this.users_id = options.users_id;
+			this.callback = options.callback;
 			if(options.popup) {
 				this.popup = true;
 				this.modelHTML = '<div id="modalPopup" class="modal hide fade model-popup-h add-game-modal">'+
@@ -131,7 +132,8 @@ define(["require", "text!usercontrols/addevent/templates/layout.html",
 			this.layout.render();
 		},
 		addTeamFunction : function(data){
-			alert(JSON.stringify(data));
+			if(this.callback) this.callback(data);
+			//alert(JSON.stringify(data));
 		}
 	});
 	return AddGameController;
