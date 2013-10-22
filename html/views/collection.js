@@ -46,6 +46,7 @@ define(['facade','views/base','utils'], function (facade, BaseView, utils) {
             this._id = this.options.id || this._id;
             this._temp = this.options._template || this._template;
             this.singleView = this.options.singleView || this.singleView;
+            this.eventView = this.options.eventView || this.eventView;
             //this.listView = this.options.listView || undefined;
             this._views = [];
             _(this).bindAll('add', 'remove', 'reset');
@@ -99,6 +100,7 @@ define(['facade','views/base','utils'], function (facade, BaseView, utils) {
                 "tagName": this._tagName,
                 "model": model,
                 "teamView": this.singleView,
+                "eventView": this.eventView,
                 "template": this._temp,
                 "className": this._className,
                 "decorator": this._decorator

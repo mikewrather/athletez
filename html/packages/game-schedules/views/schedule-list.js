@@ -2,7 +2,7 @@
 // --------------
 
 define(['vendor','facade','views', 'utils', 'schedules/views/schedule-item','utils/storage',  'text!schedules/templates/schedule-list.html','chrome/views/header'], 
-function(vendor, facade,  views,   utils,   ScheduleItemView, Store, ScheduleListTemplate,header) {
+function(vendor, facade,  views,   utils,   ScheduleItemView, Store, ScheduleListTemplate,header, UserGames) {
 
     var OrgListView, 
         OrgListAbstract,
@@ -75,12 +75,9 @@ function(vendor, facade,  views,   utils,   ScheduleItemView, Store, ScheduleLis
                         console.log(e);
                     }
                     catch(e){
-                        console={},
-                        console.log=function(e){}
         
                     }
                 }
-
                 //$(".signup-email").trigger('click');
 		    	return;
 	    	}
@@ -106,24 +103,38 @@ function(vendor, facade,  views,   utils,   ScheduleItemView, Store, ScheduleLis
         },
 
         initialize: function(options) {
-        	this.teamRecords = options.teamRecords;
-        	if(!_.isUndefined(options.teamRecords) && options.teamRecords) {
-        		var json = options.collection.toJSON();
-        		this.renderTemplate();
-        		this.listView = ".schedule-list-h";
-        		this.singleView = true;
+        	var _self = this;
+        	_self.eventPage = options.eventPage || false;
+        	_self.teamRecords = options.teamRecords;
+        	if((!_.isUndefined(options.teamRecords) && options.teamRecords)) {
+        		//var json = options.collection.toJSON();
+        		_self.renderTemplate();
+        		_self.listView = ".schedule-list-h";
+        		_self.singleView = true;
         	}
         	
-            CollectionView.prototype.initialize.call(this, options);
-            if (!this.collection) {
+        	
+        	if(!_.isUndefined(options.eventPage) && options.eventPage) {
+        		//var json = options.collection.toJSON();
+        		_self.renderTemplate(_self.eventPage);
+        		_self.listView = ".schedule-list-h";
+        		_self.eventView = true;
+        	}
+        	
+            CollectionView.prototype.initialize.call(_self, options);
+            if (!_self.collection) {
                 throw new Error("Schedulr expected options.collection.");
             }
-            _.bindAll(this);
-            this.addSubscribers();
+		            
+            _.bindAll(_self);          
+            _self.addSubscribers();   
+            
+
+
         },
         
-        renderTemplate: function () {
-            var markup = Mustache.to_html(ScheduleListTemplate, {data: this.collection.length});
+        renderTemplate: function (eventPage) {
+            var markup = Mustache.to_html(ScheduleListTemplate, {data: this.collection.length, eventPage: eventPage});
             console.error(markup);
             this.$el.html(markup);
             return this;
