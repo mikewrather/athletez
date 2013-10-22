@@ -1,8 +1,8 @@
 // Games Schedule List
 // --------------
 
-define(['vendor','facade','views', 'utils', 'schedules/views/schedule-item','utils/storage',  'text!schedules/templates/schedule-list.html','chrome/views/header'], 
-function(vendor, facade,  views,   utils,   ScheduleItemView, Store, ScheduleListTemplate,header) {
+define(['vendor','facade','views', 'utils', 'schedules/views/schedule-item','utils/storage',  'text!schedules/templates/schedule-list.html'], 
+function(vendor, facade,  views,   utils,   ScheduleItemView, Store, ScheduleListTemplate) {
 
     var OrgListView, 
         OrgListAbstract,
@@ -57,23 +57,7 @@ function(vendor, facade,  views,   utils,   ScheduleItemView, Store, ScheduleLis
         
          addGame: function(e) {
          	 if(!this.checkForUser()) {
-		  		 this.signup = new header(); 
-                  try{
-                    
-                    this.signup.signupUser();
-                    //$(".signup-email").trigger('click');
-                    }
-                catch(e){
-                    try{
-                        console.log(e);
-                    }
-                    catch(e){
-                        console={},
-                        console.log=function(e){}
-        
-                    }
-                }
-
+		  		 routing.trigger('showSignup');
                 //$(".signup-email").trigger('click');
 		    	return;
 	    	}

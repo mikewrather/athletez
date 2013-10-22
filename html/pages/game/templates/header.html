@@ -47,7 +47,13 @@
 		{{#teams}}
 		<li class="team-item">
 			<div class='score-box score-box-h {{#isWinner}}win{{/isWinner}}'>
-				<a href="javascript: void(0);" title="edit score" class="edit-score-h"> <span>{{points_scored}}</span> </a>
+				<a href="javascript: void(0);" title="edit score" class="edit-score-h"> <span>{{#points_scored}}
+					{{points_scored}}
+				{{/points_scored}}	
+				{{^points_scored}}
+					&nbsp;
+				{{/points_scored}}
+				</span> </a>
 				<input type="hidden" value="{{points_scored}}" data-id="{{games_teams_link_id}}" class="edit-score-input-h input-mini" />
 			</div>
 			<div class="org-info">

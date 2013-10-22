@@ -52,25 +52,8 @@ function(require, commentFormTemplate,    commentFormModel,        BaseCommentFo
 	    submitHandler: function (e) {
 		    e.preventDefault();
 		    if(!self.checkForUser()) {
-			   this.signup = new header();
-			    try{
-		  			
-		  			this.signup.signupUser();
-		  			//$(".signup-email").trigger('click');
-		    		}
-		    	catch(e){
-		    		try{
-						console.log(e);
-					}
-					catch(e){
-						console={},
-						console.log=function(e){}
-		
-					}
-		    	}
-			   
-			   // $(".signup-email").trigger('click');
-			    return;
+				routing.trigger('showSignup');
+				return;
 		    }
 		    this.createOnEnter(e);
 	    },
