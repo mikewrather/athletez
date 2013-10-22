@@ -74,7 +74,7 @@ li.sport:hover, li.sport a:hover {
 }
 #menu .menu-link-h,#menu span.show{
     font-weight: bolder;
-    font-family: 'Nunito', "HelveticaNeue";
+    font-family: 'Raleway', "HelveticaNeue";
     font-size: 1.2em;
     color:#333;
     text-transform: uppercase;
@@ -197,7 +197,7 @@ height: 35px;
 
 #regcontainer .regheader {
 	padding: 0 0 0 35px;
-	font-size: 3.3em;
+	font-size: 2.5em;
 	font-weight: bold;
 }
 

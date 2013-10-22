@@ -213,8 +213,8 @@ input[disabled].hasDatepicker, input[readonly].hasDatepicker {
 	margin: 10px 0;
 
     font-family: 'Nunito', "HelveticaNeue", "Helvetica";
-    font-size:1.3em;
-    font-weight: 300;
+    font-size:1em;
+    font-weight: 700;
     text-transform: uppercase;
 
 }
@@ -578,7 +578,6 @@ span.ui-helper-hidden-accessible {
 }
 
 .bubble .content{
-    font-family: "HelveticaNeue","Helvetica";
     position: relative;
     padding:10px;
     z-index:1;
@@ -588,14 +587,14 @@ span.ui-helper-hidden-accessible {
     font-family: inherit;
     font-weight: bold;
     color:#818181;
-    font-size: .9em;
+    font-size: .8em;
     display: block;
 }
 
 .bubble .content p.comment-text{
     font-family: inherit;
     font-weight: normal;
-    font-size: 1.1em;
+    font-size: .9em;
     padding:4px;
 }
 
@@ -1204,11 +1203,9 @@ margin-top:10px;
 
 #logincontainer *{
     font-size:1em;
-    font-family: "HelveticaNeue","Helvetica";
 }
 
 #regcontainer *{
-    font-family: "HelveticaNeue", "Helvetica";
 }
 
 #imgpreview .selected{
