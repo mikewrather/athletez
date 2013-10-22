@@ -49,6 +49,7 @@ function(require, profileHeaderTemplate, selectSportTemplate) {
 
         initialize: function (options) {
             SectionView.prototype.initialize.call(this, options);
+	        console.log("HEADER VIEW CREATED");
             this.initSportList();            
         },
         
@@ -60,7 +61,8 @@ function(require, profileHeaderTemplate, selectSportTemplate) {
             $.when(this.sports.request).done(function() {
                 self.setupSportListView();
                 //self.select_sport = self.$('#select-sport');
-              	self.selectSport();
+	            console.log(self.sports);
+	            self.selectSport();
             });
         },
         

@@ -267,6 +267,7 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
            chromeBootstrap();
            self.removeCurrent();
 			function initProfile(headerModelId) {
+				Channel('refresh-profilepage').empty();
                 self.currentController = new ProfileController({
 	                "userId": (typeof userid != "undefined")?userid:headerModelId,
 	                title: self.getUserName(headerModelId)

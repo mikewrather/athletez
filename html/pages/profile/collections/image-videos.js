@@ -11,7 +11,6 @@ function(facade, MediaImageList, utils) {
     var ProfileImageVideosList;
 
     ProfileImageVideosList = MediaImageList.extend({
-        
         url: function() {
             if (testpath)
                 return testpath + '/user/media/' + this.id + '/' + this.sport_id;
