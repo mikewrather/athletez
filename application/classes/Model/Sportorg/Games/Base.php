@@ -289,6 +289,21 @@ class Model_Sportorg_Games_Base extends ORM
 		return $matches;
 	}
 
+	protected function setIsWinner()
+	{
+		if(!$this->loaded())return false;
+		DB::update('games_teams_link')
+			->set(array("isWinner"=>0))
+			->where('games_id','=',$this->id)
+			->execute();
+		DB::update('games_teams_link')
+			->set(array("isWinner"=>1))
+			->where('games_id','=',$this->id)
+			->order_by('points_scored','DESC')
+			->limit(1)
+			->execute();
+	}
+
 	public function updateScore($args)
 	{
 		extract($args);
@@ -299,6 +314,7 @@ class Model_Sportorg_Games_Base extends ORM
 				->set(array('score'=>$score,'points_scored'=>$score))
 				->where('id','=',$games_teams_link_id)
 				->execute();
+			$this->setIsWinner();
 			return array("score"=>$score);
 		}
 		else if (isset($teams_id) && isset($score))
@@ -308,6 +324,7 @@ class Model_Sportorg_Games_Base extends ORM
 				->where('games_id','=',$this->id)
 				->and_where('teams_id','=',$teams_id)
 				->execute();
+			$this->setIsWinner();
 			return array("score"=>$score);
 		}
 		else

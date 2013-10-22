@@ -2,11 +2,9 @@
 // --------------  
 // Requires define
 // Return {Object} App
-define( ["facade", "utils", "collections", "chrome", "controller", "profile", "imageup",'home','videopreview',"game", "team", "registration","profilesetting","userresume","packages/site/collections/phrases","usercontrols/tag/tag","usercontrols/addgame/addgame","signup","login", "usercontrols/photo-player/photo-player", "usercontrols/add-club/add-club", "utils/storage", 'usercontrols/location/views/view-location','signup/views/facebooksignup','chrome/views/header'],
+define( ["facade", "utils", "collections", "chrome", "controller", "profile", "imageup",'home','videopreview',"game", "team", "registration","profilesetting","userresume","packages/site/collections/phrases","usercontrols/tag/tag","usercontrols/addgame/addgame","signup","login", "usercontrols/photo-player/photo-player", "usercontrols/add-club/add-club", "utils/storage", 'usercontrols/location/views/view-location','signup/views/facebooksignup',"usercontrols/addevent/addevent",'chrome/views/header'],
 function (facade, utils, collections, chromeBootstrap, Controller, ProfileController, ImageController, HomeController, VideoPreviewController,
-	GameController, TeamController, RegistrationController,ProfileSetting,UserResume, SitePhraseList , TagController,AddGameController, SignupController,LoginController,PhotoPlayerController, AddClubController, Store, googleMapLocationview,fbreg,header) {
-
-
+	GameController, TeamController, RegistrationController,ProfileSetting,UserResume, SitePhraseList , TagController,AddGameController, SignupController,LoginController,PhotoPlayerController, AddClubController, Store, googleMapLocationview,fbreg, AddEventController,header) {
 
     //App;
     	
@@ -185,6 +183,20 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
                 	popup: true
                 });
             });
+            
+            
+            // initialize add event popup common trigger 
+            routing.off('add-event');
+            routing.on('add-event', function(id,sports_id,users_id) {
+            	//alert(id+"--"+sports_id +"--"+ users_id);
+            	 var addGameview = new AddEventController({
+		             "sports_id": 51, //sports_id,
+		            "users_id" : users_id,
+                	popup: true
+                });
+            });
+            
+            
         },
 
 	    checkForUser: function() {
@@ -240,10 +252,10 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
 	    },
 	    
 	    removeCurrent: function() {
-	    	/*if(this.currentController) {
+	    	if(this.currentController) {
 	    		console.log(this.currentController.layout);
-	    		this.currentController.remove();
-	    	}*/
+	    	//	this.currentController.remove();
+	    	}
 	    },
 	    
         showProfile: function (userid) {
@@ -253,18 +265,15 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
            // $('#main-header').empty();
             //$('#main-content').empty();
            chromeBootstrap();
-           self.removeCurrent();
+	        //if(this.currentController) this.currentController.remove();
 			function initProfile(headerModelId) {
+				Channel('refresh-profilepage').empty();
                 self.currentController = new ProfileController({
 	                "userId": (typeof userid != "undefined")?userid:headerModelId,
 	                title: self.getUserName(headerModelId)
 	            });
             }
             this.initialiRoutesInit(initProfile);
-
-            
-            //Channel('app-inited').subscribe(initProfile);
-
         },
 		hideSignup : function(){
 		    $('div.register-wrapper').remove();

@@ -45,7 +45,7 @@ function(require, RegistrationSelectTypeModel, registrationSelectTypeTemplate) {
             // Additional JS functions here
             window.fbAsyncInit = function() {
                 FB.init({
-                    //appId      : '239430712864961', // App ID
+                    //appId      : '219148511595084', // App ID
                     appId      :'219148511595084',
                     status     : true, // check login status
                     cookie     : true, // enable cookies to allow the server to access the session

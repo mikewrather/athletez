@@ -375,7 +375,7 @@
 		 */
 		public function action_post_game()
 		{
-			$this->payloadDesc = "Add a new game to a team\'s schedule";
+			$this->payloadDesc = "Add a new game to a team's schedule";
 
 		     // CHECK FOR PARAMETERS:
 			// games_id 

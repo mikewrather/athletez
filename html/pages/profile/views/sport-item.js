@@ -33,6 +33,7 @@ function (
         className: "sport",
         
         initialize: function (options) {
+	        console.log("CALLED SPORT ITEM VIEW",options);
             this.template = sportItemTemplate;
             var self = this;
             this.id = options.model.collection.id;            
@@ -40,6 +41,7 @@ function (
             
             function callback(sport_id) {
                 self.initTeamList();
+	            console.log("CALLED REFRESH PROFILE CHANNEL");
                 Channel('refresh-profilepage').publish(sport_id);
             }
             

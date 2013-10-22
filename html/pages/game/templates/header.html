@@ -47,17 +47,12 @@
 		{{#teams}}
 		<li class="team-item">
 			<div class='score-box score-box-h {{#isWinner}}win{{/isWinner}}'>
-				<a href="javascript: void(0);" title="edit score" class="edit-score-h"> <span>{{#points_scored}}
-					{{points_scored}}
-				{{/points_scored}}	
-				{{^points_scored}}
-					&nbsp;
-				{{/points_scored}}
-				</span> </a>
+				<a href="javascript: void(0);" title="edit score" class="edit-score-h"> <span style="width:100%; height: 100%">{{points_scored}}</span> </a>
+
 				<input type="hidden" value="{{points_scored}}" data-id="{{games_teams_link_id}}" class="edit-score-input-h input-mini" />
 			</div>
 			<div class="org-info">
-				<span class="org-name"> {{org_sport_link_obj.org.org_name}}, {{complevels_obj.complevel_name}}, {{seasons_obj.season_name}} {{year}} </span>
+				<span class="org-name"><a href="/#team/{{id}}">{{org_sport_link_obj.org.org_name}}, {{complevels_obj.complevel_name}}, {{seasons_obj.season_name}} {{year}}</a></span>
 				<span class="org-location"> {{team_location}} </span>
 			</div>
 		</li>

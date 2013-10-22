@@ -81,7 +81,7 @@ define([
 		ProfileController = Controller.extend({
 			
 			initialize: function (options) {
-				
+				this.callbackcount = 1;
 				var self = this;
 				debug.log("start initialize");
 				Channel('load:css').publish(cssArr);
@@ -101,8 +101,13 @@ define([
 
 
 			init: function () {
+				console.log("LAYOUT RENDER");
 				this.setupLayout().render();
+
+				console.log("CREATE DATA");
 				this.createData();
+
+				console.log("HANDLE DEFERREDS");
 				this.handleDeferreds();
 			},
 
@@ -132,9 +137,14 @@ define([
 				// If I take it out it won't render images if no sport is selected
 
 				var controller = this;
+				console.log(controller);
 
 				function callback(sport_id) {
+
 					controller.refreshPage();
+					console.log("CALLBACK COUNT",controller.callbackcount);
+					controller.callbackcount ++;
+					controller.sports_id = sport_id;
 
 					controller.orgs = new ProfileOrgList();
 					controller.orgs.id = controller.id;
@@ -156,12 +166,11 @@ define([
 					//controller.videos.sport_id = sport_id;
 					//controller.videos.fetch();
 
+					console.log("CALLING IMAGE LIST HERE----------------",sport_id);
 					controller.images = new ProfileImageList();
 					controller.images.id = controller.id;
 					controller.images.sport_id = sport_id;
 					controller.images.fetch();
-					
-					
 
 					controller.handleDeferredsDynamic();
 				}
@@ -180,8 +189,8 @@ define([
 						controller.setupFansListView();
 					});
 				}
-				Channel('new-fan').subscribe(refreshFans);
-				Channel('refresh-profilepage').subscribe(callback);
+				Channel('new-fan','nomemory unique').subscribe(refreshFans);
+				Channel('refresh-profilepage','unique').subscribe(callback);
 			},
 
 			handleDeferreds: function () {
@@ -247,7 +256,7 @@ define([
 				});
 
 				$.when(this.images.request).done(function (x) {
-					//console.log("Images Ready (called in profile.js handleDeferredDynamic)",x);
+					console.log("Images Ready (called in profile.js handleDeferredDynamic)",x);
 					controller.setupImageListView();
 				});
 				
@@ -299,6 +308,7 @@ define([
 
 				headerView = new ProfileHeaderView({
 					model: this.basics,
+					sports_id:this.sports_id > 0 ? this.sports_id : null,
 					name: "Header",
 					destination: "#main-header"
 				});
@@ -377,6 +387,9 @@ define([
 				routing.on('image-upload-success', function(data) { 
         			self.updateImages(data);
         		});
+
+				console.log("CURRENT IMAGE LIST VIEW:",this.imageListView);
+
 				this.imageListView = new ProfileImageListView({
 					collection: this.images,
 					destination: "#image-wrap",

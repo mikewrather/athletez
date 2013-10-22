@@ -49,6 +49,7 @@ function(require, profileHeaderTemplate, selectSportTemplate) {
 
         initialize: function (options) {
             SectionView.prototype.initialize.call(this, options);
+	        this.sports_id = options.sports_id; //we have to set the sports_id because if somebody comes back to the profile page we don't need to reload everything.
             this.initSportList();            
         },
         
@@ -60,7 +61,8 @@ function(require, profileHeaderTemplate, selectSportTemplate) {
             $.when(this.sports.request).done(function() {
                 self.setupSportListView();
                 //self.select_sport = self.$('#select-sport');
-              	self.selectSport();
+	            console.log(self.sports);
+	            if(!self.sports_id) self.selectSport(); //this will signify it's the first viewing of the profile page.
             });
         },
         

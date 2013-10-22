@@ -4,8 +4,7 @@
 Permissions list: https://developers.facebook.com/docs/reference/api/permissions/
 Facebook Query Language: http://developers.facebook.com/docs/reference/fql/
 */
-//if(Kohana::$environment == Kohana::PRODUCTION)
-if(Kohana::$environment == Kohana::DEVELOPMENT || Kohana::$environment == Kohana::LOCALHOST || Kohana::$environment == Kohana::PRODUCTION){
+if(Kohana::$environment == Kohana::PRODUCTION)
 {
 	return array(
 		'appId'			=> '219148511595084',
