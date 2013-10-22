@@ -254,7 +254,7 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
 	    removeCurrent: function() {
 	    	if(this.currentController) {
 	    		console.log(this.currentController.layout);
-	    		this.currentController.remove();
+	    	//	this.currentController.remove();
 	    	}
 	    },
 	    
@@ -265,7 +265,7 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
            // $('#main-header').empty();
             //$('#main-content').empty();
            chromeBootstrap();
-           self.removeCurrent();
+	        //if(this.currentController) this.currentController.remove();
 			function initProfile(headerModelId) {
 				Channel('refresh-profilepage').empty();
                 self.currentController = new ProfileController({
