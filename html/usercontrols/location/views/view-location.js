@@ -35,7 +35,7 @@ define(['require', 'text!usercontrols/location/templates/view-location.html', 'f
 			console.log(_self.location);
 			var pos = new google.maps.LatLng(_self.location.latitude, _self.location.longitude),
 			mapOptions = {
-			    zoom: 8,
+			    zoom: 12,
 			    center: pos,
 			    scaleControl: true,
 			    zoomControl: true,
