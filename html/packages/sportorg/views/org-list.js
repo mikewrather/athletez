@@ -1,9 +1,9 @@
 // Org List
 // --------------
 
-define(['facade','views', 'utils', 'sportorg/views/org-item','utils/storage'], 
-function(facade,  views,   utils,   OrgItemView, Store) {
-
+define(['facade','views', 'utils', 'sportorg/views/org-item','utils/storage','chrome/views/header'], 
+function(facade,  views,   utils,   OrgItemView, Store,header) {
+ 
     var OrgListView, 
         OrgListAbstract,
         $ = facade.$,
@@ -60,7 +60,23 @@ function(facade,  views,   utils,   OrgItemView, Store) {
         
          addGame: function(e) {
          	 if(!this.checkForUser()) {
-		  		$(".signup-email").trigger('click');
+		  		this.signup = new header();
+                try{
+                    
+                    this.signup.signupUser();
+                    //$(".signup-email").trigger('click');
+                    }
+                catch(e){
+                    try{
+                        console.log(e);
+                    }
+                    catch(e){
+                        console={},
+                        console.log=function(e){}
+        
+                    }
+                }
+                //$(".signup-email").trigger('click');
 		    	return;
 	    	}
 	        	routing.trigger('add-game',0,$(e.currentTarget).data("team-id"),$(e.currentTarget).data("sport-id"));

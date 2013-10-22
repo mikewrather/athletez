@@ -2,11 +2,9 @@
 // --------------  
 // Requires define
 // Return {Object} App
-define( ["facade", "utils", "collections", "chrome", "controller", "profile", "imageup",'home','videopreview',"game", "team", "registration","profilesetting","userresume","packages/site/collections/phrases","usercontrols/tag/tag","usercontrols/addgame/addgame","signup","login", "usercontrols/photo-player/photo-player", "usercontrols/add-club/add-club", "utils/storage", 'usercontrols/location/views/view-location','signup/views/facebooksignup',"usercontrols/addevent/addevent"],
+define( ["facade", "utils", "collections", "chrome", "controller", "profile", "imageup",'home','videopreview',"game", "team", "registration","profilesetting","userresume","packages/site/collections/phrases","usercontrols/tag/tag","usercontrols/addgame/addgame","signup","login", "usercontrols/photo-player/photo-player", "usercontrols/add-club/add-club", "utils/storage", 'usercontrols/location/views/view-location','signup/views/facebooksignup',"usercontrols/addevent/addevent",'chrome/views/header'],
 function (facade, utils, collections, chromeBootstrap, Controller, ProfileController, ImageController, HomeController, VideoPreviewController,
-	GameController, TeamController, RegistrationController,ProfileSetting,UserResume, SitePhraseList , TagController,AddGameController, SignupController,LoginController,PhotoPlayerController, AddClubController, Store, googleMapLocationview,fbreg, AddEventController) {
-
-
+	GameController, TeamController, RegistrationController,ProfileSetting,UserResume, SitePhraseList , TagController,AddGameController, SignupController,LoginController,PhotoPlayerController, AddClubController, Store, googleMapLocationview,fbreg, AddEventController,header) {
 
     //App;
     	
@@ -316,11 +314,28 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
         },
         
         addImageTrigger: function(fn) {
+        	this.signup = new header();
         	routing.off('add-image');
             routing.on('add-image', function(url, attr, data) {
             	console.log(url, attr, data);
 	            if(!this.checkForUser()) {
-		            $(".signup-email").trigger('click');
+		            
+	            	try{
+		  			
+		  				this.signup.signupUser();
+		  				//$(".signup-email").trigger('click');
+		    		}
+		    		catch(e){
+		    			try{
+							console.log(e);
+						}
+						catch(e){
+							console={},
+							console.log=function(e){}
+		
+						}
+		    		}
+		            //$(".signup-email").trigger('click');
 		            return;
 	            }
             	fn(url , attr, data);
@@ -374,6 +389,7 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
 		   
              this.cancelAjaxRequests();
             this.loadStyles();
+            this.signup = new header();
 		   // chromeBootstrap();
 		    //$('body').empty();
            // chromeBootstrap();chromeBootstrap();
@@ -381,7 +397,19 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
 			var self = this;
 		    function initVideoPreview(url,attr) {
 				if(!self.checkForUser()) {
-					$(".signup-email").trigger('click');
+					try{
+		  				this.signup.signupUser();
+		    		}
+		    		catch(e){
+		    			try{
+							console.log(e);
+						}
+						catch(e){
+							console={},
+							console.log=function(e){}
+						}
+		    		}	
+					//$(".signup-email").trigger('click');
 					return;
 				}
 			    var VidPrevCtrl = new VideoPreviewController({"url":url,"attr":attr});
