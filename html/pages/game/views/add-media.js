@@ -54,29 +54,48 @@ define([
 			
 			openAddImagePopup: function (event)
 			{
-				
-				
-				// create a team using the ID from the first team in the game
-				var teamModel = new SportorgTeamModel({
-					id: this.game_model.attributes.payload.teams[0].id
-				});
 
-				// get data for team
-				teamModel.fetch();
-
-				// stash as variable for deferred function
-				var self = this;
-
-				// wait for fetch to finish to create the data for the popup
-				$.when(teamModel.request).done(function()
-				{
-					var url = "/api/game/addimage/" + self.game_model.attributes.id,
+				if(this.game_model.attributes.payload.sports_id > 0){
+					var url = "/api/game/addimage/" + this.game_model.attributes.id,
 						attr = {
-							"sports_id" : teamModel.attributes.payload.org_sport_link_obj.sports_id
+							"sports_id" : this.game_model.attributes.payload.sports_id
 						};
 					// open the popup
 					routing.trigger("add-image", url, attr);
-				});
+				}
+				else
+				{
+					try{
+						// create a team using the ID from the first team in the game
+						var teamModel = new SportorgTeamModel({
+							id: this.game_model.attributes.payload.teams[0].id
+						});
+
+						// get data for team
+						teamModel.fetch();
+
+						// stash as variable for deferred function
+						var self = this;
+
+						// wait for fetch to finish to create the data for the popup
+						$.when(teamModel.request).done(function()
+						{
+							var url = "/api/game/addimage/" + self.game_model.attributes.id,
+								attr = {
+									"sports_id" : teamModel.attributes.payload.org_sport_link_obj.sports_id
+								};
+							// open the popup
+							routing.trigger("add-image", url, attr);
+						});
+					} catch(ex){
+
+						alert("Whaaaa...?  It seems like the sport isn't set for this game (weird), which means we can't add the photo.  Shoot an email to support@athletez.com and we'll figure out what went wrong.");
+
+					}
+				}
+
+
+
 			}
 
 
