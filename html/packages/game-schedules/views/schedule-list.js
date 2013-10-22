@@ -63,28 +63,41 @@ function(vendor, facade,  views,   utils,   ScheduleItemView, Store, ScheduleLis
 		},
         
          addGame: function(e) {
+         	var _self = this;
          	 if(!this.checkForUser()) {
 		  		 routing.trigger('showSignup');
 		    	return;
 	    	}
 	    	if(!_.isUndefined(this.teamRecords) && this.teamRecords) {
-	    		routing.trigger('add-game',0,$("#team-h").val(),$("#sports-h").val());
+	    		routing.trigger('add-game',0,$("#team-h").val(),$("#sports-h").val(), function(data) {
+	    			_self.collection.add(data);
+	    			routing.trigger('popup-close');
+	    		});
 	    	} else {
-	        	routing.trigger('add-game',0,$(e.currentTarget).data("team-id"),$(e.currentTarget).data("sport-id"));
+	        	routing.trigger('add-game',0,$(e.currentTarget).data("team-id"),$(e.currentTarget).data("sport-id"), function(data) {
+	    			_self.collection.add(data);
+	    			routing.trigger('popup-close');
+	    		});
         	}
         },
         
         // Add an Event
         addEvent: function(e) {
+        	var _self = this;
         	if(!this.checkForUser()) {
 		  		$(".signup-email").trigger('click');
 		    	return;
 	    	}
 	    	if(!_.isUndefined(this.teamRecords) && this.teamRecords) {
-	    		alert("team");
-	    		routing.trigger('add-event',0,$("#sports-h").val(), this.getUserId());
+	    		routing.trigger('add-event',0,$("#sports-h").val(), this.getUserId(), function(data) {
+	    			_self.collection.add(data);
+	    			routing.trigger('popup-close');						    			
+	    		});
 	    	} else {
-	        	routing.trigger('add-event',0,$(".selected-sport-h").data("id"), this.getUserId());
+	        	routing.trigger('add-event',0,$(".selected-sport-h").data("id"), this.getUserId(), function(data) {
+	    			_self.collection.add(data);
+	    			routing.trigger('popup-close');
+	    		});
         	}
         },
 

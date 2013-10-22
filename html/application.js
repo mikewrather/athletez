@@ -173,30 +173,30 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
             
             // initialize add game popup common trigger 
             routing.off('add-game');
-            routing.on('add-game', function(id,teams_id,sports_id,users_id) {
+            routing.on('add-game', function(id,teams_id,sports_id,users_id, callback) {
             	//fn(id);
             	 var addGameview = new AddGameController({
 		            "teams_id":teams_id,
 		             "sports_id":sports_id,
 		            "users_id" : users_id,
                 	"id": id,
-                	popup: true
+                	popup: true,
+                	callback: callback
                 });
             });
             
             
             // initialize add event popup common trigger 
             routing.off('add-event');
-            routing.on('add-event', function(id,sports_id,users_id) {
+            routing.on('add-event', function(id,sports_id,users_id, callback) {
             	//alert(id+"--"+sports_id +"--"+ users_id);
             	 var addGameview = new AddEventController({
 		             "sports_id": 51, //sports_id,
 		            "users_id" : users_id,
-                	popup: true
+                	popup: true,
+                	callback: callback
                 });
             });
-            
-            
         },
 
 	    checkForUser: function() {
