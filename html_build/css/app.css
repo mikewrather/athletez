@@ -36,9 +36,13 @@ html, body {
 	height: 100%;
 }
 body {
-	max-width: 1000px;
 	margin: 0 auto;
 	background: #e0e0e0;
+}
+#main{
+    max-width: 1000px;
+    margin: 10px auto;
+    min-height: 600px;
 }
 .template-container {
 	background: #FFF;
@@ -67,15 +71,15 @@ header .logo {
 	float: left;
 	margin: 6px 0;
 }
-header .searchform {
-	float: left;
-	margin: 6px 15px;
-}
-header .searchform form {
-	margin-bottom: 0;
+header a{
+    color: white;
 }
 header .account {
 	float: right;
+    margin: 10px;
+}
+header #header_logo{
+    height: 20px;
 }
 header .photo {
 	float: left;
@@ -101,9 +105,21 @@ header .userlinks .dropdown-menu {
 header .signup-facebook, header .signup-email {
 	margin: 0 5px;
 }
+footer{
+    background-color: black;
+    height: 50px;
+    width: 100%;
+    padding:0 !important;
+    color: white;
+}
+footer span{
+    position: relative;
+    top:15px;
+}
 #main {
 	padding-top: 15px;
 	padding-bottom: 15px;
+    min-height: 100%;
 }
 #main .sports-info {
 	margin-top: 20px;
@@ -138,6 +154,16 @@ header .signup-facebook, header .signup-email {
 .fade-out {
 	opacity: 0.5;
 }
+#Loginview{
+    width:500px;
+    margin-left:-250px;
+    left:50%;
+}
+#RegModal{
+    width:550px;
+    left:50%;
+    margin-left: -250px;
+}
 .floatLeft {
 	float: left;
 }
@@ -161,12 +187,12 @@ input[disabled].hasDatepicker, input[readonly].hasDatepicker {
 	float: left;
 	background: #9cca3c;
 	color: #FFF;
-	padding: 5px 15px;
+	padding: 5px 25px;
 	text-align: center;
-	margin: 25px 0;
+	margin: 10px 0;
     font-family: 'Nunito', "HelveticaNeue", "Helvetica";
-    font-size:1.0em;
-    font-weight: bolder;
+    font-size:1.3em;
+    font-weight: 300;
     text-transform: uppercase;
 }
 .btn-common {
@@ -208,8 +234,7 @@ div.image-item-container > img{
     top:0px;
 }
 .action-block{
-    height:30px;
-    width:30px;
+  
     margin:8px;
     display: block;
     opacity: 0;
@@ -218,7 +243,7 @@ div.image-item-container > img{
     -o-transition: opacity .3s;
     -ms-transition: opacity .3s;
     color: white;
-    font-size: 2.1em;
+    font-size: 1.1em;
     text-align: center;
     padding:5px;
 }
@@ -284,7 +309,11 @@ div.image-item-container > img{
 .detail-view h6{
     margin: 15px 8px 8px 8px;
     text-transform:uppercase;
-    font-size: 1.6em;
+    font-size: 1.4em;
+}
+.detail-view span{
+    margin: 10px 8px 8px 8px;
+    font-size: .8em;
 }
 input {
 	background: #CCCCCC;
@@ -400,6 +429,11 @@ ul.ui-autocomplete {
 	padding: 10px 0 !important;
 	background: rgb(255, 255, 255) !important;
     z-index: 1060;
+}
+.ui-autocomplete-loading{
+    background-image: url(http://cdn.athletez.com/resources/img/17-1.gif) !important;
+    background-position: right !important;
+    background-repeat: no-repeat !important;
 }
 .ui-autocomplete li.ui-menu-item {
 	color: #000 !important;
@@ -523,7 +557,7 @@ span.ui-helper-hidden-accessible {
 		background: #FFF;
 }
 #main {
-    padding-bottom: 150px;
+    padding-bottom: 0;
 }
 .profile-pic-outer {
 	margin: 40px 15px;
@@ -763,9 +797,8 @@ background: linear-gradient(to bottom,  #84a934 0%,#9cca3c 100%);
 filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#84a934', endColorstr='#9cca3c',GradientType=0 ); 
 }
 .add-game-modal{
-    width:80%;
-    left:10%;
-    height: 70%;
+    width:50%;
+    left:25%;
 }
 .container_add_game{
 	font-size:12px ;
@@ -919,6 +952,7 @@ margin-top:10px;
 }
 #logincontainer{
     margin: auto;
+    width:85%;
 }
 #logincontainer *{
     font-size:1em;
@@ -1029,4 +1063,20 @@ margin-top:10px;
 }
 .add-comment-h{
     background-image: url('http://cdn.athletez.com/resources/img/comment.png');
+}
+.display_none_important{
+	display : none !important;
+}
+.complevels-container {
+	height: 210px;
+	overflow: hidden;
+	width: 100%;
+	position: relative;
+}
+.complevels-inner {
+	position: absolute;
+	width: 100%;
+}
+.season-array {
+	height: 70px;
 }

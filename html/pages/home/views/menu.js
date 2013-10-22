@@ -13,7 +13,7 @@ define(
 				events : {
 					"blur #search" : "updateSearch",
 					"focus #search": "hideDropdown",
-					"click .searchBtn" : "changeBaseUrl",
+					"click .restype" : "changeBaseUrl",
 					"click .dropdown-menu-alias > li > a" : "select",
 					"click .dd" : "doNothing",
 					//"click .menu" : "toggle",
@@ -70,6 +70,8 @@ define(
 				
 				changeBaseUrl : function(e) {
 					var target = $(e.currentTarget);
+					target.parents('ul').find('.restype').removeClass('select');
+					target.addClass('select');
 					var num = target.data("number");
 					Channel('baseUrlChanged').publish(num);
 				},

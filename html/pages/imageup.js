@@ -69,12 +69,6 @@ define(["require", "text!imageup/templates/basic.html", "text!imageup/templates/
 			routing.on('imageup-rerender', function(param) {
 				rerenderShow(param);
 			});
-			
-
-			//Channel('imageup-add-image').subscribe(imageuploader);
-			//Channel('imageup-msg').subscribe(msgShow);
-			//Channel('imageup-preview', 'unique').subscribe(previewShow);
-			//Channel('imageup-rerender').subscribe(rerenderShow);
 		},
 		
 		showuploader : function() {
@@ -113,6 +107,7 @@ define(["require", "text!imageup/templates/basic.html", "text!imageup/templates/
 		
 		previewShowup : function(dataum) {
 			var previewShowList = new PreviewShowList(dataum);
+			
 			for (var x in this.scheme) {
 				if (this.scheme[x].id == "imgpreview")
 					delete this.scheme[x];
@@ -177,7 +172,7 @@ define(["require", "text!imageup/templates/basic.html", "text!imageup/templates/
 						//$(".previewimgsrc").fadeOut('slow').removeClass('fade-out');
 						
 					}
-					$("#preview_" + id).unbind().removeClass("image_upload_loader_new").html("");
+					$("#preview_" + id).unbind().removeClass("image_upload_loader_new").html("").attr("disabled","disabled");
 				},
 				error : function(data) {
 					$("#preview_" + id).fadeOut("slow");

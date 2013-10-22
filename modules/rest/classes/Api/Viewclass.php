@@ -62,8 +62,14 @@ class Api_Viewclass
 
 	public function post_addtag()
 	{
-		$retArr = $this->obj->getBasics();
-
+		if(is_subclass_of($this->obj,'ORM')) $retArr = $this->obj->getBasics();
+		else{
+			$retArr = array();
+			foreach($this->obj as $tag)
+			{
+				$retArr = $tag->getBasics();
+			}
+		}
 		return $retArr;
 	}
 

@@ -30,7 +30,9 @@ define(['require', 'text!profilesetting/templates/highschool.html', 'text!profil
 			"click .btn-Finish-Sports" : "FinishSports",
 			"click .edit-team" : "EditTeam",
 			"click .btnOpenPositions" : "displayPositionPopup",
-			"click .add-school-h": "openAddHighSchoolPopup"
+			"click .add-school-h": "openAddHighSchoolPopup",
+			"click .up-arrow-h" : "levelUpArrow",
+			"click .down-arrow-h": "levelDownArrow"
 		},
 
 		/*Holds */
@@ -65,7 +67,7 @@ define(['require', 'text!profilesetting/templates/highschool.html', 'text!profil
 			chkSeasons : ".chkSeasons",
 			btnAddLevel : ".btn-add-level"
 		},
-
+		
 		/*Messages Holds the messages, warning, alerts, errors, information variables*/
 		/*In Case of similar message create only one object and key*/
 		messages : {
@@ -79,7 +81,7 @@ define(['require', 'text!profilesetting/templates/highschool.html', 'text!profil
 		},
 
 		properties : {
-			show_prev_year : 2
+			show_prev_year : 30
 		},
 
 		/*Selected States By API*/
@@ -99,7 +101,24 @@ define(['require', 'text!profilesetting/templates/highschool.html', 'text!profil
 		
 		/* Add club popup  */
 		openAddHighSchoolPopup: function() {
-			routing.trigger('add-school-init', '', '', 'school');
+			var _self = this;
+			routing.trigger('add-school-init', '', '', 'school', function(res) {
+				console.log(res);
+				_self.$el.find(_self.controls.txtSchools).val(res.name);
+				_self.$el.find(_self.controls.txtStates).val(res.locationState.name);
+				
+				_self.states_id = "";
+				_self.orgs_id = "";
+				_self.states_id = res.locationState.id;
+				_self.$(self.controls.txtSchools).removeAttr('disabled');
+				
+				_self.orgs_id = res.org_id;
+				if (_self.$el.find(_self.controls.divMainSportsSection).find(_self.controls.ddlSports).length < 1) {
+					_self.fillSports(_self.orgs_id, _self.controls.divMainSportsSection);
+				}
+				_self.$el.find(".add-school-h").hide();
+				
+			});
 		},
 		
 		/*initialize must be a wrapper so any function definitions and calles must be called in init*/
@@ -122,7 +141,7 @@ define(['require', 'text!profilesetting/templates/highschool.html', 'text!profil
 
 		// **Method** `setOptions` - called by BaseView's initialize method
 		setOptions : function(options) {
-			this.user_id = options.user_id, this.gender = options.gender
+			this.user_id = options.user_id, this.gender = options.gender;
 		},
 
 		/*Event Called when a key is pressed
@@ -311,8 +330,6 @@ define(['require', 'text!profilesetting/templates/highschool.html', 'text!profil
 					if (List.isError())
 						return;
 
-					console.log("Sports List",List);
-
 					var models = List.toJSON();
 					if (models == null || models.length < 1)
 						self.$el.find(self.controls.ddlSports).parent().find(self.controls.fieldMessage).html(self.messages.dataNotExist).stop().fadeIn();
@@ -403,6 +420,7 @@ define(['require', 'text!profilesetting/templates/highschool.html', 'text!profil
 				$(destination).html('');
 			}
 		},
+		
 		/*On CompLevel DropDown Change Its value is to be assigned into a variable*/
 		changeCompLevel : function(event) {
 			var value = $(event.target).val();
@@ -423,8 +441,6 @@ define(['require', 'text!profilesetting/templates/highschool.html', 'text!profil
 		SetUpCompLevelView : function(orgs_id, destination, sport) {
 			var sports_id = sport.sports_id;
 			var data = self.GetSeasonsData(self.seasons, orgs_id, sports_id);
-			console.log("Data", data);
-			console.log(destination);
 			var markup = Mustache.to_html(levelTemplate, {
 				levels : self.compLevel,
 				Data : data,
@@ -435,6 +451,32 @@ define(['require', 'text!profilesetting/templates/highschool.html', 'text!profil
 			var controlPositions = self.$(destination).find(self.controls.modalPositionBody);
 			self.fillPositions(sports_id, controlPositions);
 		},
+		
+		
+		/* level Up Arrow */
+		levelUpArrow: function(e) {
+			
+			var $parent = $(e.currentTarget).parents(".complevels-wrapper");
+			var scrollTop =  $parent.find(".complevels-container").scrollTop();
+			var height = $parent.find(".complevels-container").height();
+			if(scrollTop > height)
+				var top = scrollTop - height;
+			else
+				var top = 0;
+			$parent.find('.complevels-container').animate({scrollTop: top});
+		},
+		
+		
+		/* level Down Arrow */
+		levelDownArrow: function(e) {
+			var $parent = $(e.currentTarget).parents(".complevels-wrapper");
+			var scrollTop =  $parent.find(".complevels-container").scrollTop();
+			var top = scrollTop + $parent.find(".complevels-container").height();
+			$parent.find('.complevels-container').animate({scrollTop: top});	
+		},
+		
+		
+		
 		/*FETCH SEASONS AS PER THE SCHOOL AND DISPLAY ACCORDINGLY*/
 		GetSeasonsData : function(collection, orgs_id, sports_id) {
 			var data = [];
@@ -449,6 +491,8 @@ define(['require', 'text!profilesetting/templates/highschool.html', 'text!profil
 				data.push(temp);
 				y--;
 			}
+			
+			
 			return data;
 		},
 		/*Calls Positions View To Fill Data In Positions PopUp*/
@@ -656,6 +700,7 @@ define(['require', 'text!profilesetting/templates/highschool.html', 'text!profil
 			self.states_id = undefined;
 			self.$(self.controls.txtSchools).attr('disabled', 'disabled').val('');
 			self.orgs_id = undefined;
+			self.$el.find(".add-school-h").show();
 			self.$el.find(self.controls.divAddSportSection).fadeOut();
 		},
 		// EDIT VIEW FOR A TEAM IF USER CLICKS EDIT LINK FOR TEAMS
@@ -722,7 +767,6 @@ define(['require', 'text!profilesetting/templates/highschool.html', 'text!profil
 						}
 
 						$.each(sport.complevels, function(index, complevel) {
-
 							self.SetUpCompLevelView(orgId, destination, sport);
 
 							var currDestinations = self.$(destination).find(self.controls.divSubLevels);

@@ -3,7 +3,7 @@
     <div class="logo">
     {{#branding}}
     <a class="brand" title="home" href="#home">
-        <img style="height: 30px;" src="{{base_url}}{{src}}" alt="{{alt}}" />
+        <img src="{{base_url}}{{src}}" id="header_logo" alt="{{alt}}" />
     </a>
     {{/branding}}
     </div>
@@ -37,12 +37,13 @@
     </div>
 </div>
 
+<!--
 {{^authorized}}
 <div class="row-fluid textright">
     {{signup_social_label}} <a href="{{signup_facebook_link}}" class="signup-facebook">{{signup_facebook_label}}</a>
 	<a href="{{signup_email_link}}" class="signup-email">{{signup_email_label}}</a>
 </div>
-{{/authorized}}
+{{/authorized}} -->
 <!--
  <div class="alert global-alert"></div>
 <div class="alert alert-info global-messages"></div>

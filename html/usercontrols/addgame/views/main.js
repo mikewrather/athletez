@@ -126,6 +126,7 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 			selectSport : "Please select sport",
 			selectValidTime : "Please enter valid time in format hh:mm (12 hours)"
 		},
+		
 		/*tags to be used to tag the type of game in games data*/
 		tags : {
 			individual : "individual",
@@ -225,11 +226,8 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 					teamModel.fetchSuccess = function(model, response) {
 						var data = teamModel.parseAsRequired(response);
 						self.team = data;
-						console.log("&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&");
-						console.log("self.team",self.team);
 						self.sports_id = data.sports_id || null;
 						self.fillSports();
-						//self.setSelectedTeam(data);
 				};
 						teamModel.fetch();
 			}else{
@@ -828,14 +826,14 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 		//txtIndividualLocation : ".txt-individual-location_h",
 		//	btnIndividualGameCreate : ".btn-game-individual-Create_h",
 		eventNotFound : function(e) {
-			$(self.destination).find(self.controls.txtIndividualLocation).show();
+			//$(self.destination).find(self.controls.txtIndividualLocation).show();
 			$(self.destination).find(self.controls.btnIndividualGameCreate).show();
 			$(self.destination).find(self.controls.btnIndividualFinish).hide();
 			$(e.target).parent().find(self.controls.fieldMessage).html('').stop().fadeOut();
 			$(e.target).removeAttr(self.attributes.gameId);
 		},
 		eventFound : function(e) {
-			$(self.destination).find(self.controls.txtIndividualLocation).hide();
+			//$(self.destination).find(self.controls.txtIndividualLocation).hide();
 			$(self.destination).find(self.controls.btnIndividualGameCreate).hide();
 			$(self.destination).find(self.controls.btnIndividualFinish).show();
 			$(e.target).parent().find(self.controls.fieldMessage).html(self.messages.gameFound).fadeIn();
@@ -847,7 +845,7 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 			var date = $(self.destination).find(self.controls.txtGameDate).datepicker('getDate');
 			var timeText = $(self.destination).find(self.controls.txtGameTime).val();
 			var timeZone = $(self.destination).find(self.controls.hdnTimePeriod).val();;
-			var locationId = self.location_id || $(self.controls.txtIndividualLocation).val() || 0;
+			var locationId = self.location_id || $(self.controls.txtLocationId).val() || 0;
 			var eventName = $(self.destination).find(self.controls.txtIndividualGame).val();
 			var sportsId = $(self.destination).find(self.controls.hdnSportsId).val();
 			if(!sportsId){
@@ -903,7 +901,8 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 					game_datetime : completeDate,
 					locations_id : locationId,
 					event_name : eventName,
-					sports_id : sportsId
+					sports_id : sportsId,
+					users_id : 	self.user_id,
 
 				};
 				var gameModel = new GameModel(payload);
@@ -917,7 +916,8 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 							games_id : self.game_id,
 							event_name : eventName,
 							locations_id : locationId,
-							sports_id : sportsId
+							sports_id : sportsId,
+							users_id : 	self.user_id
 						}
 						Channel(self.channel).publish(self.gameData);
 				});
@@ -951,7 +951,8 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 							event_name : game.event_name,
 							game_location : game.game_location,
 							games_id : game.id,							
-							sports_id : response.payload.usl ? response.payload.usl.sports_id : null
+							sports_id : response.payload.usl ? response.payload.usl.sports_id : null,
+							users_id : self.user_id
 					};
 			Channel(self.channel).publish(self.gameData);
 			}
@@ -970,12 +971,11 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 					$(self.destination).find(self.controls.sectionTeams).hide();
 					$(self.destination).find(self.controls.sectionScore).hide();
 					$(self.destination).find(self.controls.btnFinish).hide();
-					$(self.destination).find(self.controls.sectionMainLocation).hide();
+					//$(self.destination).find(self.controls.sectionMainLocation).hide();
 			
 					$(self.destination).find(self.controls.sectionIndividual).show();
 			//		$(self.destination).find(self.controlsbtnIndividualFinish).show();
 				} else {
-					
 					var date = $(self.destination).find(self.controls.txtGameDate).datepicker('getDate');
 					var currentDate = new Date();
 					if (date != null && currentDate >= date) {
@@ -1163,7 +1163,8 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 					locations_id : locationId,
 					teamOneId : teamOneId,
 					teamTwoId : teamTwoId,
-					sports_id : sportsId 
+					sports_id : sportsId,
+					users_id : self.user_id
 
 				};
 				////console.log("payload", payload);
@@ -1182,7 +1183,8 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 							games_id : self.game_id,
 							home_team : isHome || false,
 							locations_id : self.location_id,
-							score : scoreOne
+							score : scoreOne,
+							users_id : self.user_id
 						}
 
 						var addTeamModelOne = new TeamAddModel(payloadOne);
@@ -1194,7 +1196,8 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 							games_id : self.game_id,
 							home_team : isHome || false,
 							locations_id : self.location_id,
-							score : scoreTwo
+							score : scoreTwo,
+							users_id : self.user_id
 						}
 
 						isHome = $(self.destination).find(self.controls.rdoTeamTwo).is(':checked');
@@ -1212,7 +1215,8 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 							games_id : self.game_id,
 							team_id_one : teamOneId,
 							team_id_two : teamTwoId,
-							sports_id : sportsId 
+							sports_id : sportsId,
+							users_id : self.user_id 
 						}
 						Channel(self.channel).publish(self.gameData);
 					}

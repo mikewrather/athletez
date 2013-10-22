@@ -717,7 +717,6 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 				array('users.id', 'user_id'),
 				array('orgs.id', 'org_id'),
 				array('orgs.name', 'org_name'),
-				array('cities.name', 'city_name'),
 				array('states.abbr', 'state_name'),
 				'teams.*',
 				array('sports.name','sport'),
@@ -735,8 +734,7 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 			->join('org_sport_link')->on('org_sport_link.id','=','teams.org_sport_link_id')
 			->join('sports')->on('org_sport_link.sports_id','=','sports.id')
 			->join('orgs')->on('orgs.id','=','org_sport_link.orgs_id')
-			->join('cities')->on('orgs.cities_id','=','cities.id')
-			->join('states')->on('cities.states_id','=','states.id')
+			->join('states')->on('orgs.states_id','=','states.id')
 			->join('complevels', 'LEFT')->on('complevels.id','=','teams.complevels_id')
 			->join('seasons', 'LEFT')->on('seasons.id','=','teams.seasons_id')
 			->join('statvals', 'LEFT')->on('statvals.teams_id','=','teams.id')
@@ -787,7 +785,6 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 				$orgs[$team['org_id']] = array(
 					'org_id' => $team['org_id'],
 					'org_name' => $team['org_name'],
-					'city' => $team['city_name'],
 					'state' => $team['state_name']
 				);
 			}
@@ -1037,6 +1034,29 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 			}
 			return $sports_arr;
 		}
+	}
+
+	public function getGames($args=array())
+	{
+		extract($args);
+
+		$qry = DB::select()->from('user_sport_link')
+			->join('usl_game_link')->on('user_sport_link.id','=','usl_game_link.user_sport_link_id')
+			->where('user_sport_link.users_id','=',$this->id);
+
+
+		if($sports_id)
+		{
+			$qry->where('user_sport_link.sports_id','=',$sports_id);
+		}
+
+		$classes_arr = array(
+			'User_Sportlink' => 'user_sport_link',
+			'User_Sportlink_Gamelink' => 'usl_game_link'
+		);
+
+		$res = ORM::_sql_exclude_deleted($classes_arr,$qry);
+		return $res;
 	}
 
 	public function getAwards($args = array()){

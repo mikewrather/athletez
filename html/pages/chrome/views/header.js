@@ -81,6 +81,7 @@ function (
                     var id = model.get('id');
                     self.model.saveCookie();
                     routing.userLoggedIn = true;
+                     routing.loggedInUserId = id;
                     routing.trigger('app-inited', id);
                 } else {
                     routing.userLoggedIn = false;
@@ -96,7 +97,7 @@ function (
         },
         userLogin:function(event){
                 event.preventDefault();
-                if(!this.logincontroller)
+               // if(!this.logincontroller)
                this.logincontroller = new LoginController();
                routing.trigger("Login");
                

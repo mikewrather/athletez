@@ -60,6 +60,8 @@ function(require, imageBasicTemplate, selectAllTemplate,tagTemplate) {
 			Team : 5,
 			Game : 8
 		},
+		files_byUploader: [],
+		files_drag : [],
 
         initialize: function (options,attr) {
         	$("#errormsg, #preview").html("");
@@ -78,20 +80,8 @@ function(require, imageBasicTemplate, selectAllTemplate,tagTemplate) {
 				this.sports_id = this.attr.sports_id || null;
 			else
 				this.sports_id = null;
-
-
-				//ASSIGN CHANNEL FOR IMAGE TAGGING
-				//Channel('tag-team-image-success').destroy();
-
-				// routing.off('tag-team-image-success');
-	        // routing.on('tag-team-image-success', function(data) {
-	        	// this.tagFunction(data);
-	        // });
-				Channel('tag-team-image-success').empty();
 				
-				// Channel('tag-team-image-success','nomemory').subscribe(this.tagFunction);
-// 
-				// Channel('tag-team-image-success').unsubscribe(this.tagFunction);
+				Channel('tag-team-image-success').empty();
 				Channel('tag-team-image-success').subscribe(this.tagFunction);
 
 			    this.setUpBottomView();		
@@ -121,26 +111,30 @@ function(require, imageBasicTemplate, selectAllTemplate,tagTemplate) {
 			event.stopPropagation();
 			event.preventDefault();
 			$("#errormsg").hide();
+			this.files_drag = this.files_drag || [];
+			
 			var files = event.originalEvent.dataTransfer.files;
-			this.files_drag=event.originalEvent.dataTransfer.files;
 			if(files.length > 0) _self.showLoader(_self);
-		    var output = [];var dataum=[];var k=0;
+		    var output = []; _self.dataum= _self.dataum || [];var k=_self.dataum.length;
 		    for (var i = 0, f; f = files[i]; i++) {
 		      if (!f.type.match('image.*')) {
 		        continue;
 		      }
+		      
+		      this.files_drag.push(f);
+		      
 		      var reader = new FileReader();
 		      reader.onload = (function(theFile) {
 		        return function(e) {
 					var preview_id="preview_"+k;
 				  k++;
-				  dataum.push({"preview_id":preview_id,"width":"250","height":"250","filesrc":e.target.result,"title":escape(theFile.name)}); 
-				  if(k==files.length)
-				  {
-					data={"data":dataum};
+				  _self.dataum.push({"preview_id":preview_id,"width":"250px","height":"250px","filesrc":e.target.result,"title":escape(theFile.name)}); 
+				//  if(k==files.length)
+				//  {
+					data={"data":_self.dataum};
 					$('#image_file').attr('disabled', 'disabled');
 					routing.trigger("imageup-preview", data);
-				  }
+				//  }
 				  _self.hideLoader();
 				};
 		      })(f);
@@ -153,28 +147,34 @@ function(require, imageBasicTemplate, selectAllTemplate,tagTemplate) {
 			debug.log("Image preview view");
 			$("#preview").hide();
 			$("#errormsg").hide();
+			this.files_byUploader = this.files_byUploader || [];
+			
 			var files = $('#image_file')[0].files; 
-			console.log(files.length);
 			if(files.length > 0) _self.showLoader(_self);
-			var dataum=[];var i = 0, f,k=0;
+			_self.dataum = _self.dataum || [];var f, k=_self.dataum.length;var i = 0;
+			//var dataum=[];var i = 0, f,k=0;
 		    for (; f = files[i]; i++) {
 
 		      if (!f.type.match('image.*')) {
 		        continue;
 		      }
+		      
+		      _self.files_byUploader.push(f);
 		      var reader = new FileReader();
 		     
 		      reader.onload = (function(theFile) {
 		        return function(e) {
 					var preview_id="preview_"+k;
 				  k++;
-				  dataum.push({"preview_id":preview_id,"width":"250","height":"250","filesrc":e.target.result,"title":escape(theFile.name)}); 
-				  if(k==files.length)
-				  {
-					data={"data":dataum};
+				  _self.dataum.push({"preview_id":preview_id,"width":"250px","height":"250px","filesrc":e.target.result,"title":escape(theFile.name)}); 
+				  //if(k==files.length)
+				  //{
+				  	console.log("data**************************");
+					data={"data":_self.dataum};
+					console.log(data);
 					routing.trigger("imageup-preview", data);
 				  	_self.hideLoader();
-				  }
+				  //}
 				};
 				
 		      })(f);
@@ -193,7 +193,6 @@ function(require, imageBasicTemplate, selectAllTemplate,tagTemplate) {
 
 			if($(".previewimg").length==0)
 			{
-
 				var msg={"msg":"Image Field Empty","color":"alert-error"};
 				routing.trigger("imageup-msg", msg);	
 				$("#imageup").removeAttr("disabled");
@@ -253,8 +252,11 @@ function(require, imageBasicTemplate, selectAllTemplate,tagTemplate) {
 			else
 			{
 			//	console.log($('#image_file')[0].files.length + "=file prasobh");
-				jQuery.each($('#image_file')[0].files, function(i, file) {
+			console.log("file_byUploader");
+			console.log(this.files_byUploader);
+				jQuery.each(thiss.files_byUploader, function(i, file) {
 					var data = new FormData();
+					debugger;
 					if ($('#preview_'+i+"group").length > 0) {
 						data.append('image_file',file);
 						if($('#preview_'+i+'rotang').val()>0)
@@ -267,19 +269,16 @@ function(require, imageBasicTemplate, selectAllTemplate,tagTemplate) {
 						// Assign Tag Data In Data
 						var t = thiss.getTagData($('#preview_'+i+"group"));
 						data.append('tag',JSON.stringify(t));
-						// var tagIndex = $('#preview_'+i+"group").attr('tagIndex')
-						// if(tagIndex != null && tagIndex > -1){
-							// tagData = thiss.tagCollection[tagIndex] || {};
-							// data.append('tag',JSON.stringify(tagData));
-						// }
 						
 						
-						var dataum={"dataum":data,"id":i,"len":$('#image_file')[0].files.length};
+						var dataum={"dataum":data,"id":i,"len":thiss.files_byUploader.length};
 						routing.trigger("imageup-add-image", dataum);
 					}
 				});
+				thiss.files_byUploader = [];
 				$("#imageup").removeAttr("disabled");
 			}
+			this.dataum = [];
         },
         
         getTagData : function(control){

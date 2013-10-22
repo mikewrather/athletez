@@ -29,7 +29,9 @@ define(['require', 'text!profilesetting/templates/club.html', 'text!profilesetti
 			"click .btn-Finish-Sports" : "FinishSports",
 			"click .edit-team" : "EditTeam",
 			"click .btnOpenPositions" : "displayPositionPopup",
-			"click .add-club-h" : "openAddClubPopup"
+			"click .add-club-h" : "openAddClubPopup",
+			"click .up-arrow-h": "levelUpArrow",
+			"click .down-arrow-h": "levelDownArrow"			
 		},
 
 		/*Holds */
@@ -78,7 +80,7 @@ define(['require', 'text!profilesetting/templates/club.html', 'text!profilesetti
 		},
 
 		properties : {
-			show_prev_year : 2
+			show_prev_year : 30
 		},
 
 		/*Selected States By API*/
@@ -95,9 +97,48 @@ define(['require', 'text!profilesetting/templates/club.html', 'text!profilesetti
 			this.init();
 		},
 		
+				/* level Up Arrow */
+		levelUpArrow: function(e) {
+			
+			var $parent = $(e.currentTarget).parents(".complevels-wrapper");
+			var scrollTop =  $parent.find(".complevels-container").scrollTop();
+			var height = $parent.find(".complevels-container").height();
+			if(scrollTop > height)
+				var top = scrollTop - height;
+			else
+				var top = 0;
+			$parent.find('.complevels-container').animate({scrollTop: top});
+		},
+		
+		
+		/* level Down Arrow */
+		levelDownArrow: function(e) {
+			var $parent = $(e.currentTarget).parents(".complevels-wrapper");
+			var scrollTop =  $parent.find(".complevels-container").scrollTop();
+			var top = scrollTop + $parent.find(".complevels-container").height();
+			$parent.find('.complevels-container').animate({scrollTop: top});	
+		},
+		
 		/* Add club popup  */
 		openAddClubPopup: function() {
-			routing.trigger('add-school-init', '', '', 'club');
+			var _self = this;
+			routing.trigger('add-school-init', '', '', 'club', function(res) {
+				console.log(res);
+				_self.$el.find(_self.controls.txtSchools).val(res.name);
+				_self.$el.find(_self.controls.txtStates).val(res.locationState.name);
+				
+				_self.states_id = "";
+				_self.orgs_id = "";
+				_self.states_id = res.locationState.id;
+				_self.$(self.controls.txtSchools).removeAttr('disabled');
+				
+				_self.orgs_id = res.org_id;
+				if (_self.$el.find(_self.controls.divMainSportsSection).find(_self.controls.ddlSports).length < 1) {
+						self.fillSports(_self.orgs_id, _self.controls.divMainSportsSection);
+				}
+				_self.$el.find(".add-club-h").hide();
+				
+			});
 		},
 
 		/*initialize must be a wrapper so any function definitions and calles must be called in init*/
@@ -122,7 +163,7 @@ define(['require', 'text!profilesetting/templates/club.html', 'text!profilesetti
 
 		// **Method** `setOptions` - called by BaseView's initialize method
 		setOptions : function(options) {
-			this.user_id = options.user_id, this.gender = options.gender
+			this.user_id = options.user_id, this.gender = options.gender;
 		},
 
 		/*Event Called when a key is pressed
@@ -631,6 +672,7 @@ define(['require', 'text!profilesetting/templates/club.html', 'text!profilesetti
 			self.ClearAddNewForm();
 			self.init();
 		},
+		
 		// CLEAR THE COMPLEE FORM WHICH IS USED TO ADD NEW ORGANIZATION AND RELATED DATA
 		ClearAddNewForm : function() {
 			self.RemoveSportsSection();
@@ -639,6 +681,7 @@ define(['require', 'text!profilesetting/templates/club.html', 'text!profilesetti
 			self.$(self.controls.txtSchools).attr('disabled', 'disabled').val('');
 			self.orgs_id = undefined;
 			self.$el.find(self.controls.divAddSportSection).fadeOut();
+			self.$el.find(".add-club-h").show();
 		},
 		// EDIT VIEW FOR A TEAM IF USER CLICKS EDIT LINK FOR TEAMS
 		EditTeam : function(event) {

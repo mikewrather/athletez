@@ -159,12 +159,12 @@ class Kohana_FacebookAuth {
 				$me['profile_picture'] = 'https://graph.facebook.com/'. $me['id'] .'/picture?type=large';
 			}
 			catch( FacebookApiException $e ){
-				$me['message'] = 'User not authenticate.';
+				$me['error_message'] = 'Seems like we were unable to authenticate you.  :(';
 			}
 		}
 		else
 		{
-			$me['message'] = 'User not login.';
+			$me['error_message'] = "Seems like you're not logged in.";
 		}
 		return $me;
 	}
@@ -192,12 +192,12 @@ class Kohana_FacebookAuth {
 				}
 			}
 			catch( FacebookApiException $e ){
-				$me['error_message'] = 'User not authenticate.';
+				$me['error_message'] = 'Seems like we were unable to authenticate you.  :(';
 			}
 		}
 		else
 		{
-			$me['error_message'] = 'User not login.';
+			$me['error_message'] = "Seems like you're not logged in.";
 		}
 		return $me;
 	}

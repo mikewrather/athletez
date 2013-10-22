@@ -55,8 +55,14 @@ function(require, gameHeaderTemplate) {
           SectionView.prototype.initialize.call(this, options); 
         	var payload = this.model.get("payload"), title;
         	if(payload.teams.length) {
-        		title = payload.teams[0].org_name +" VS "+ payload.teams[1].org_name;	
-        		title +=  " "+payload.shared.complevel;
+		        try{
+			        title = payload.teams[0].org_name +" VS "+ payload.teams[1].org_name;
+			        title +=  " "+payload.shared.complevel;
+		        }catch(e){
+			        title = "Game Page";
+		        }
+
+
         	} else {
         		title = payload.event_name;
         	}
