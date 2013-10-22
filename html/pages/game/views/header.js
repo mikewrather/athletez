@@ -15,7 +15,8 @@ define([
         'votes/models/follow',
         'usercontrols/location/views/location',
         'usercontrols/location/models/verify-adress',
-        'usercontrols/location/models/save'
+        'usercontrols/location/models/save',
+		'chrome/views/header',
         ], 
 function(require, gameHeaderTemplate) {
 
@@ -29,6 +30,7 @@ function(require, gameHeaderTemplate) {
         LocationView = require('usercontrols/location/views/location'),
         verifyAddress = require('usercontrols/location/models/verify-adress'),
 		saveLocation = require('usercontrols/location/models/save'),
+		header = require('chrome/views/header'),
 		SectionView = views.SectionView;
 
 	GameHeaderView = SectionView.extend({
@@ -69,7 +71,23 @@ function(require, gameHeaderTemplate) {
 		},
         openEditPopup: function() {
 	        if(!this.checkForUser()) {
-		        $(".signup-email").trigger('click');
+		        this.signup = new header();
+			    try{
+		  			
+		  			this.signup.signupUser();
+		  			//$(".signup-email").trigger('click');
+		    		}
+		    	catch(e){
+		    		try{
+						console.log(e);
+					}
+					catch(e){
+						console={},
+						console.log=function(e){}
+		
+					}
+		    	}
+				//$(".signup-email").trigger('click');
 		        return;
 	        }
 			$('#modalPopupGameEdit').modal();

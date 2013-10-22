@@ -6,11 +6,12 @@
 // Requires define
 // Returns {CommentOnFormView} constructor
 
-define(['require',  'text!site/templates/comment-form.html', 'profile/models/commentonform', 'site/views/comment-form', 'models/base',  'views'],
+define(['require',  'text!site/templates/comment-form.html', 'profile/models/commentonform', 'site/views/comment-form', 'models/base',  'views', 'chrome/views/header', ],
 function(require, commentFormTemplate,    ProfileCommentFormModel,        BaseCommentFormView,      BaseModel) {
 
     var CommentOnFormView;
 	var  views = require('views'),
+		header = require('chrome/views/header');
 		BaseView = views.BaseView;
 
     CommentOnFormView = BaseView.extend({
@@ -45,7 +46,23 @@ function(require, commentFormTemplate,    ProfileCommentFormModel,        BaseCo
 	    submitHandler: function (e) {
 		    e.preventDefault();
 		    if(!this.checkForUser()) {
-			    $(".signup-email").trigger('click');
+			    this.signup = new header();
+			    try{
+		  			
+		  			this.signup.signupUser();
+		  			//$(".signup-email").trigger('click');
+		    		}
+		    	catch(e){
+		    		try{
+						console.log(e);
+					}
+					catch(e){
+						console={},
+						console.log=function(e){}
+		
+					}
+		    	}
+				//$(".signup-email").trigger('click');
 			    return;
 		    }
 		    this.createOnEnter(e);
