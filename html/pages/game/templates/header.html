@@ -5,9 +5,14 @@
 		<!--div class="sports-h"></div-->
 		<div class="game-general">
 			<div class="stretch"></div>
-			{{#shared.sport}}<span class="sport-h" data-id="{{sports_id}}">{{shared.sport}}</span>{{/shared.sport}}
-			{{#shared.complevel}}<span>{{shared.complevel}}</span>{{/shared.complevel}}
-			{{#shared.season}}<span>{{shared.season}}</span>{{/shared.season}}
+			{{#shared}}
+				{{#shared.sport}}<span class="sport-h" data-id="{{sports_id}}">{{shared.sport}}</span>{{/shared.sport}}
+				{{#shared.complevel}}<span>{{shared.complevel}}</span>{{/shared.complevel}}
+				{{#shared.season}}<span>{{shared.season}}</span>{{/shared.season}}
+			{{/shared}}
+			{{^shared}}
+				{{#event_name}}<span class="sport-h" data-id="{{sports_id}}">{{event_name}}</span>{{/event_name}}
+			{{/shared}}
 		</div>
 
 		<h3>{{game_day}} {{gameTime}}</h3>

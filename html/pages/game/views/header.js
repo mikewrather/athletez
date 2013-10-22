@@ -54,16 +54,16 @@ function(require, gameHeaderTemplate) {
         	
           SectionView.prototype.initialize.call(this, options); 
         	var payload = this.model.get("payload"), title;
-        	if(payload.teams.length) {
-		        try{
-			        title = payload.teams[0].org_name +" VS "+ payload.teams[1].org_name;
-			        title +=  " "+payload.shared.complevel;
-		        }catch(e){
-			        title = "Game Page";
+	        if(payload.teams){
+		        if(payload.teams.length) {
+			        try{
+				        title = payload.teams[0].org_name +" VS "+ payload.teams[1].org_name;
+				        title +=  " "+payload.shared.complevel;
+			        }catch(e){
+				        title = "Game Page";
+			        }
 		        }
-
-
-        	} else {
+	        } else {
         		title = payload.event_name;
         	}
         	title += " | "+ payload.shared.sport +" | "+ payload.game_day;
