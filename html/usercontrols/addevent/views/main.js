@@ -451,6 +451,7 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 					self.stateFetchRequest.push(self.teamFetchRequest || []);
 
 					self.stateFetchRequest = self.abortRequest(self.stateFetchRequest);
+					$(e.target).addClass('ui-autocomplete-loading');
 					var tempCollection = stateList.fetch();
 					self.stateFetchRequest.push(tempCollection);
 					$.when(stateList.request).done(function() {
@@ -543,7 +544,7 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 					//console.log("City Request Abort Request Function AddGame/Main.js");
 					self.cityFetchRequest = self.cityFetchRequest || [];
 					self.cityFetchRequest.push(self.teamFetchRequest || []);
-
+					$(e.target).addClass('ui-autocomplete-loading');
 					self.cityFetchRequest = self.abortRequest(self.stateFetchRequest);
 					var tempCollection = List.fetch();
 					self.cityFetchRequest.push(tempCollection);
@@ -632,7 +633,7 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 				List.city_id = $(e.target).attr(self.attributes.cityId);
 				List.sports_id = $(e.target).attr(self.attributes.sportId);
 				List.team_name = name;
-
+				$(e.target).addClass('ui-autocomplete-loading');
 				self.TeamFetchRequest = self.abortRequest(self.TeamFetchRequest);
 				var tempCollection = List.fetch();
 				self.TeamFetchRequest.push(tempCollection);
@@ -730,7 +731,7 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 				var List = new GamesSearchCollection();
 				//List.sports_id = $(e.target).attr(self.attributes.sportId);
 				List.game_name = name;
-
+				$(e.target).addClass('ui-autocomplete-loading');
 				self.individualGameFetchRequest = self.abortRequest(self.individualGameFetchRequest);
 				var tempCollection = List.fetch();
 				self.individualGameFetchRequest.push(tempCollection);
