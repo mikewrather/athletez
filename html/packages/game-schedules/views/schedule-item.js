@@ -50,7 +50,7 @@ function (
 			     this.template = ScheduleSingleItemTemplate;
 			     var string_to_use = this.createOpponentString();
             	 var markup = Mustache.to_html(this.template, {id:this.mpay.id,summary:string_to_use});
-        	 } else if (this.eventView) {
+        	 } else if (this.eventView && this.eventView != '') {
 	            this.template = EventItemTemplate;
 	            var markup = Mustache.to_html(this.template, this.model.toJSON());        	 	
         	 } else {

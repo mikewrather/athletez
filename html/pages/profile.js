@@ -347,12 +347,14 @@ define([
 				var _self = this;
 				 this.orgs = new UserGames();
             	this.orgs.userId = _self.id;
+            	this.orgs.sports_id = $(".selected-sport-h").data("id");
+            	
             	this.orgs.fetch();
             	$.when(this.orgs.request).done(function() {
          		_self.orgListView = new ProfileOrgListView({
 						collection: _self.orgs,
 						destination: "#games_div",
-						eventPage: true
+						eventPage: $(".selected-sport-h").data("name")
 					});
 					
 					_self.scheme.push(_self.orgListView);

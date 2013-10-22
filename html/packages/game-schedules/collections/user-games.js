@@ -14,10 +14,11 @@ function(facade, collections, SportorgTeamModel, utils) {
 
     return BaseCollection.extend({
 		userId: undefined,
+		sports_id: undefined,
         // Reference to this collection's model.
         model: facade.Backbone.Model.extend({}),
         url: function() {
-        	return "/api/user/games/"+this.userId;
+        	return "/api/user/games/"+this.userId+"?sports_id="+this.sports_id;
         },
         // **Method:** `fetchSuccess` - resolve the deferred here in success
         fetchSuccess: function (collection, response) {
