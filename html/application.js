@@ -252,10 +252,10 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
 	    },
 	    
 	    removeCurrent: function() {
-	    	/*if(this.currentController) {
+	    	if(this.currentController) {
 	    		console.log(this.currentController.layout);
 	    		this.currentController.remove();
-	    	}*/
+	    	}
 	    },
 	    
         showProfile: function (userid) {
@@ -274,10 +274,6 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
 	            });
             }
             this.initialiRoutesInit(initProfile);
-
-            
-            //Channel('app-inited').subscribe(initProfile);
-
         },
 		hideSignup : function(){
 		    $('div.register-wrapper').remove();

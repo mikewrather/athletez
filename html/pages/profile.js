@@ -144,7 +144,7 @@ define([
 					controller.refreshPage();
 					console.log("CALLBACK COUNT",controller.callbackcount);
 					controller.callbackcount ++;
-
+					controller.sports_id = sport_id;
 
 					controller.orgs = new ProfileOrgList();
 					controller.orgs.id = controller.id;
@@ -308,6 +308,7 @@ define([
 
 				headerView = new ProfileHeaderView({
 					model: this.basics,
+					sports_id:this.sports_id > 0 ? this.sports_id : null,
 					name: "Header",
 					destination: "#main-header"
 				});
