@@ -62,7 +62,7 @@
 			font-size: 16px;
 			font-weight: bold;
 			cursor: pointer;
-			border-style: outset;
+			border-style: none;
 		}
 		#regcontainer{
 			margin: 0 auto;
@@ -70,7 +70,7 @@
 			height: auto;
 		}
 		.regheader{
-			font-size: 29px;
+			font-size: 20px;
 			padding: 59px;
 		}
 		.regsubmit{
@@ -80,7 +80,7 @@
 			margin-left: 38px;
 			color: white;
 			font-size: 20px;
-			border-style: outset;
+			border-style: none;
 		}
 		.regsubmitfinal{
 			background-color: #1BA0AF;
@@ -89,7 +89,7 @@
 			margin-left: 38px;
 			color: white;
 			font-size: 20px;
-			border-style: outset;
+			border-style: none;
 			margin-left: 69%;
 		}
 		#fblogo{
@@ -101,7 +101,7 @@
 		#header{
 			padding-top: 16px;
 			padding-bottom: 20px;
-			font:  bold 12px/30px Georgia,serif;
+			font:  bold 12px/20px;
 		}
 		#regor{
 			text-align: center;
@@ -203,7 +203,7 @@
    		}
    		.imgup{
     		background-color: #1BA0AF;
-    		border-style: outset;
+    		border-style: none;
    			color: #FFFFFF;
    			font-size: 14px;
     		height: 31px;
