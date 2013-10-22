@@ -55,7 +55,7 @@ define([
 			openAddImagePopup: function (event)
 			{
 				
-				alert("pages/game/views/add-media");
+				
 				// create a team using the ID from the first team in the game
 				var teamModel = new SportorgTeamModel({
 					id: this.game_model.attributes.payload.teams[0].id
