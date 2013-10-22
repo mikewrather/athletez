@@ -745,6 +745,7 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 					self.eventNotFound(e);
 					}
 					else{
+						self.eventFound(e);
 						self.$(e.target).parent().find(self.controls.fieldMessage).html('').stop().fadeOut();
 					}
 					self.individualGames = [];
@@ -768,12 +769,25 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 					//console.log("s.arr", arr);
 					$(e.target).autocomplete({
 						source : arr,
-						// select :  function (event, ui) {
+						select :  function (event, ui) {
+							
+							self.individualGames.forEach(function(value, index) {
+								//	var name = value['game_name'] + "( " + +" )";
+								console.log(ui.item.label +"----"+ name);
+								var name = value['event_name'] + " " + value['game_name']; 
+								if (ui.item.label == name) {
+									self.individual_game_id = value['id'];
+								}
+								//	arr.push({label:name,value:value['id']});
+							});
+							
+							self.$el.find(".section-main-location_h").hide();
+							self.$el.find(".section-game-date_h").hide();
 							// self.$(e.target).val(ui.item.label);
 							// //self.changeIndividualGame(event,ui);
 					          // // display the selected text
 					        // // $("#txtAllowSearchID").val(ui.item.value); // save selected id to hidden input
-					    // }
+					    }
 					});
 					//Trigger keydown to display the autocomplete dropdown just created
 					$(e.target).trigger('keydown');
@@ -824,6 +838,8 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 		//txtIndividualLocation : ".txt-individual-location_h",
 		//	btnIndividualGameCreate : ".btn-game-individual-Create_h",
 		eventNotFound : function(e) {
+			this.$el.find(".section-main-location_h").show();
+			this.$el.find(".section-game-date_h").show();
 			//$(self.destination).find(self.controls.txtIndividualLocation).show();
 			$(self.destination).find(self.controls.btnIndividualGameCreate).show();
 			$(self.destination).find(self.controls.btnIndividualFinish).hide();
@@ -831,6 +847,8 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 			$(e.target).removeAttr(self.attributes.gameId);
 		},
 		eventFound : function(e) {
+			this.$el.find(".section-main-location_h").hide();
+			this.$el.find(".section-game-date_h").hide();			
 			//$(self.destination).find(self.controls.txtIndividualLocation).hide();
 			$(self.destination).find(self.controls.btnIndividualGameCreate).hide();
 			$(self.destination).find(self.controls.btnIndividualFinish).show();
