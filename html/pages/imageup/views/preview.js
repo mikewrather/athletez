@@ -38,7 +38,7 @@ define(['require',
 		},
 		initialize : function(options) {
 			SectionView.prototype.initialize.call(this, options);
-			debug.log("preview view");
+			console.log("preview view");
 			this.degree = 0;
 			this.scheme = options.scheme;
 			this.layout = options.layout;
