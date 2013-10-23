@@ -10,11 +10,13 @@
 			</a>
 		</div>
 	</div>
-	<ul class="common-dropdown">
-		{{#records}}
+	<div class="common-container">
+		<ul class="common-dropdown">
+			{{#records}}
 			<li class="{{#dropView.defaultSelected}}{{dropView.defaultSelected}}{{/dropView.defaultSelected}}">
 				<a data-id="{{#dropView.getRecordId}}{{dropView.getRecordId}}{{/dropView.getRecordId}}" href="javascript: void(0);">{{#dropView.getRecordValue}}{{dropView.getRecordValue}}{{/dropView.getRecordValue}}</a>
 			</li>
-		{{/records}}
-	</ul>
+			{{/records}}
+		</ul>
+	</div>
 </div>
