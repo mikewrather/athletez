@@ -301,7 +301,7 @@ define(['require', 'text!usercontrols/tag/templates/layout.html', 'facade', 'vie
 					self.stateFetchRequest = self.stateFetchRequest || [];
 					self.stateFetchRequest.push(self.cityFetchRequest || []);
 					self.stateFetchRequest.push(self.teamFetchRequest || []);
-
+					$(e.target).addClass('ui-autocomplete-loading');
 					self.stateFetchRequest = self.abortRequest(self.stateFetchRequest);
 					var tempCollection = stateList.fetch();
 					self.stateFetchRequest.push(tempCollection);
@@ -401,7 +401,7 @@ define(['require', 'text!usercontrols/tag/templates/layout.html', 'facade', 'vie
 					console.log("City Request Abort Request Function AddGame/Main.js");
 					self.cityFetchRequest = self.cityFetchRequest || [];
 					self.cityFetchRequest.push(self.teamFetchRequest || []);
-
+					$(e.target).addClass('ui-autocomplete-loading');
 					self.cityFetchRequest = self.abortRequest(self.cityFetchRequest);
 					var tempCollection = List.fetch();
 					self.cityFetchRequest.push(tempCollection);
@@ -486,7 +486,7 @@ define(['require', 'text!usercontrols/tag/templates/layout.html', 'facade', 'vie
 				//List.cities_id = self.city_id;
 				List.sports_id = $(self.destination).find(self.controls.hdnSportsId).val();
 				List.team_name = name;
-
+				$(e.target).addClass('ui-autocomplete-loading');
 				console.log("Team Request Abort Request Function");
 				self.TeamFetchRequest = self.abortRequest(self.TeamFetchRequest);
 				var tempCollection = List.fetch();
@@ -633,7 +633,7 @@ define(['require', 'text!usercontrols/tag/templates/layout.html', 'facade', 'vie
 					// No Need to pass City Id in User Search as States Is is enough #961 (23/09/2013)
 					//List.cities_id = self.city_id;
 					List.sports_id = $(self.destination).find(self.controls.hdnSportsId).val();
-
+					$(e.target).addClass('ui-autocomplete-loading');
 					console.log("Player Request Abort Request Function");
 					self.PlayerFetchRequest = self.abortRequest(self.PlayerFetchRequest);
 					var tempCollection = List.fetch();

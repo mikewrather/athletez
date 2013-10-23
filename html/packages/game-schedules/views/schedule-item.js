@@ -7,14 +7,16 @@ define([
         'views',
         'utils', 
         'text!schedules/templates/schedule-item.html',
-        'text!schedules/templates/schedule-single-item.html'
+        'text!schedules/templates/schedule-single-item.html',
+        'text!schedules/templates/schedule-event-item.html'
         ], 
 function (
         vendor,
         views,
         utils,
         ScheduleItemTemplate,
-        ScheduleSingleItemTemplate
+        ScheduleSingleItemTemplate,
+        EventItemTemplate
         ) {
 
     var $ = vendor.$
@@ -36,6 +38,7 @@ function (
         	//	}
         	//});
         	if(options.teamView) this.teamView = options.teamView;
+        	if(options.eventView) this.eventView = options.eventView;
         },
 
         render: function () {
@@ -43,10 +46,13 @@ function (
             //var markup = Mustache.to_html(this.template, {data: this.model.toJSON(), id:this.mpay.id,summary:string_to_use});
             
             if(this.teamView) {
-            	  this.mpay = this.model.get('payload');
-			    this.template = ScheduleSingleItemTemplate;
+            	 this.mpay = this.model.get('payload');
+			     this.template = ScheduleSingleItemTemplate;
 			     var string_to_use = this.createOpponentString();
             	 var markup = Mustache.to_html(this.template, {id:this.mpay.id,summary:string_to_use});
+        	 } else if (this.eventView && this.eventView != '') {
+	            this.template = EventItemTemplate;
+	            var markup = Mustache.to_html(this.template, this.model.toJSON());        	 	
         	 } else {
 	            this.template = ScheduleItemTemplate;
 	            var markup = Mustache.to_html(this.template, this.model.toJSON());

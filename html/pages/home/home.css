@@ -143,7 +143,7 @@ li.sport a:hover {
 	position: absolute;
 	width: 100%;
 	height: 330px;
-	top: 38px;
+	top: 37px;
 }
 
 .register-wrapper-h #regcontainer {
@@ -154,6 +154,7 @@ li.sport a:hover {
 #regcontainer #mainreg {
 	background-color: transparent;
 	opacity: 1;
+    height: 330px;
 }
 
 .homePage #main {

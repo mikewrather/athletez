@@ -1,8 +1,8 @@
 // Games Schedule List
 // --------------
 
-define(['vendor','facade','views', 'utils', 'schedules/views/schedule-item','utils/storage',  'text!schedules/templates/schedule-list.html'], 
-function(vendor, facade,  views,   utils,   ScheduleItemView, Store, ScheduleListTemplate) {
+define(['vendor','facade','views', 'utils', 'schedules/views/schedule-item','utils/storage',  'text!schedules/templates/schedule-list.html','chrome/views/header'], 
+function(vendor, facade,  views,   utils,   ScheduleItemView, Store, ScheduleListTemplate,header, UserGames) {
 
     var OrgListView, 
         OrgListAbstract,
@@ -63,51 +63,77 @@ function(vendor, facade,  views,   utils,   ScheduleItemView, Store, ScheduleLis
 		},
         
          addGame: function(e) {
+         	var _self = this;
          	 if(!this.checkForUser()) {
 		  		 routing.trigger('showSignup');
-                //$(".signup-email").trigger('click');
 		    	return;
 	    	}
 	    	if(!_.isUndefined(this.teamRecords) && this.teamRecords) {
-	    		routing.trigger('add-game',0,$("#team-h").val(),$("#sports-h").val());
+	    		routing.trigger('add-game',0,$("#team-h").val(),$("#sports-h").val(), function(data) {
+	    			_self.collection.add(data);
+	    			routing.trigger('popup-close');
+	    		});
 	    	} else {
-	        	routing.trigger('add-game',0,$(e.currentTarget).data("team-id"),$(e.currentTarget).data("sport-id"));
+	        	routing.trigger('add-game',0,$(e.currentTarget).data("team-id"),$(e.currentTarget).data("sport-id"), function(data) {
+	    			_self.collection.add(data);
+	    			routing.trigger('popup-close');
+	    		});
         	}
         },
         
         // Add an Event
         addEvent: function(e) {
+        	var _self = this;
         	if(!this.checkForUser()) {
 		  		$(".signup-email").trigger('click');
 		    	return;
 	    	}
 	    	if(!_.isUndefined(this.teamRecords) && this.teamRecords) {
-	    		alert("team");
-	    		routing.trigger('add-event',0,$("#sports-h").val(), this.getUserId());
+	    		routing.trigger('add-event',0,$("#sports-h").val(), this.getUserId(), function(data) {
+	    			_self.collection.add(data);
+	    			routing.trigger('popup-close');						    			
+	    		});
 	    	} else {
-	        	routing.trigger('add-event',0,$(".selected-sport-h").data("id"), this.getUserId());
+	        	routing.trigger('add-event',0,$(".selected-sport-h").data("id"), this.getUserId(), function(data) {
+	    			_self.collection.add(data);
+	    			routing.trigger('popup-close');
+	    		});
         	}
         },
 
         initialize: function(options) {
-        	this.teamRecords = options.teamRecords;
-        	if(!_.isUndefined(options.teamRecords) && options.teamRecords) {
-        		var json = options.collection.toJSON();
-        		this.renderTemplate();
-        		this.listView = ".schedule-list-h";
-        		this.singleView = true;
+        	var _self = this;
+        	_self.eventPage = options.eventPage || false;
+        	_self.teamRecords = options.teamRecords;
+        	if((!_.isUndefined(options.teamRecords) && options.teamRecords)) {
+        		//var json = options.collection.toJSON();
+        		_self.renderTemplate();
+        		_self.listView = ".schedule-list-h";
+        		_self.singleView = true;
         	}
         	
-            CollectionView.prototype.initialize.call(this, options);
-            if (!this.collection) {
+        	
+        	if(!_.isUndefined(options.eventPage) && options.eventPage) {
+        		//var json = options.collection.toJSON();
+        		_self.renderTemplate(_self.eventPage);
+        		_self.listView = ".schedule-list-h";
+        		_self.eventView = true;
+        	}
+        	
+            CollectionView.prototype.initialize.call(_self, options);
+            if (!_self.collection) {
                 throw new Error("Schedulr expected options.collection.");
             }
-            _.bindAll(this);
-            this.addSubscribers();
+		            
+            _.bindAll(_self);          
+            _self.addSubscribers();   
+            
+
+
         },
         
-        renderTemplate: function () {
-            var markup = Mustache.to_html(ScheduleListTemplate, {data: this.collection.length});
+        renderTemplate: function (eventPage) {
+            var markup = Mustache.to_html(ScheduleListTemplate, {data: this.collection.length, eventPage: eventPage});
             console.error(markup);
             this.$el.html(markup);
             return this;

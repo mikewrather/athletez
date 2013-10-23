@@ -4,7 +4,7 @@
  // Requires `define`, `require`
  // Returns {Add Game VIEW} constructor
  */
-define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 'views', 'utils', 'vendor', 'sportorg/collections/sports_listall', 'location/collections/states', 'usercontrols/addgame/collections/teams', 'location/collections/cities', 'usercontrols/addgame/collections/teams_user', 'usercontrols/addgame/collections/teams', 'usercontrols/addgame/collections/games_search', 'usercontrols/addgame/models/team', 'usercontrols/addgame/models/team_add', 'usercontrols/addgame/models/game', 'usercontrols/addgame/models/uslgamelink',
+define(['require', 'text!usercontrols/addevent/templates/layout.html', 'facade', 'views', 'utils', 'vendor', 'sportorg/collections/sports_listall', 'location/collections/states', 'usercontrols/addgame/collections/teams', 'location/collections/cities', 'usercontrols/addgame/collections/teams_user', 'usercontrols/addgame/collections/teams', 'usercontrols/addgame/collections/games_search', 'usercontrols/addgame/models/team', 'usercontrols/addgame/models/team_add', 'usercontrols/addgame/models/game', 'usercontrols/addgame/models/uslgamelink',
 'usercontrol/dropdown/view/dropdown', 'usercontrol/location/views/get-view-location'
 ], function(require, layoutTemplate) {
 
@@ -174,7 +174,7 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 					elementId: self.controls.hdnTimePeriodData,
 					destination: self.controls.spnTimePeriod,
 					targetView: self,
-					selectedValue : "AM",
+					selectedValue : "PM",
 					callback: function(result) {
 					}
 				});
@@ -451,6 +451,7 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 					self.stateFetchRequest.push(self.teamFetchRequest || []);
 
 					self.stateFetchRequest = self.abortRequest(self.stateFetchRequest);
+					$(e.target).addClass('ui-autocomplete-loading');
 					var tempCollection = stateList.fetch();
 					self.stateFetchRequest.push(tempCollection);
 					$.when(stateList.request).done(function() {
@@ -543,7 +544,7 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 					//console.log("City Request Abort Request Function AddGame/Main.js");
 					self.cityFetchRequest = self.cityFetchRequest || [];
 					self.cityFetchRequest.push(self.teamFetchRequest || []);
-
+					$(e.target).addClass('ui-autocomplete-loading');
 					self.cityFetchRequest = self.abortRequest(self.stateFetchRequest);
 					var tempCollection = List.fetch();
 					self.cityFetchRequest.push(tempCollection);
@@ -632,7 +633,7 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 				List.city_id = $(e.target).attr(self.attributes.cityId);
 				List.sports_id = $(e.target).attr(self.attributes.sportId);
 				List.team_name = name;
-
+				$(e.target).addClass('ui-autocomplete-loading');
 				self.TeamFetchRequest = self.abortRequest(self.TeamFetchRequest);
 				var tempCollection = List.fetch();
 				self.TeamFetchRequest.push(tempCollection);
@@ -730,7 +731,7 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 				var List = new GamesSearchCollection();
 				//List.sports_id = $(e.target).attr(self.attributes.sportId);
 				List.game_name = name;
-
+				$(e.target).addClass('ui-autocomplete-loading');
 				self.individualGameFetchRequest = self.abortRequest(self.individualGameFetchRequest);
 				var tempCollection = List.fetch();
 				self.individualGameFetchRequest.push(tempCollection);
@@ -745,6 +746,7 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 					self.eventNotFound(e);
 					}
 					else{
+						self.eventFound(e);
 						self.$(e.target).parent().find(self.controls.fieldMessage).html('').stop().fadeOut();
 					}
 					self.individualGames = [];
@@ -768,12 +770,25 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 					//console.log("s.arr", arr);
 					$(e.target).autocomplete({
 						source : arr,
-						// select :  function (event, ui) {
+						select :  function (event, ui) {
+							
+							self.individualGames.forEach(function(value, index) {
+								//	var name = value['game_name'] + "( " + +" )";
+								console.log(ui.item.label +"----"+ name);
+								var name = value['event_name'] + " " + value['game_name']; 
+								if (ui.item.label == name) {
+									self.individual_game_id = value['id'];
+								}
+								//	arr.push({label:name,value:value['id']});
+							});
+							
+							self.$el.find(".section-main-location_h").hide();
+							self.$el.find(".section-game-date_h").hide();
 							// self.$(e.target).val(ui.item.label);
 							// //self.changeIndividualGame(event,ui);
 					          // // display the selected text
 					        // // $("#txtAllowSearchID").val(ui.item.value); // save selected id to hidden input
-					    // }
+					    }
 					});
 					//Trigger keydown to display the autocomplete dropdown just created
 					$(e.target).trigger('keydown');
@@ -824,6 +839,8 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 		//txtIndividualLocation : ".txt-individual-location_h",
 		//	btnIndividualGameCreate : ".btn-game-individual-Create_h",
 		eventNotFound : function(e) {
+			this.$el.find(".section-main-location_h").show();
+			this.$el.find(".section-game-date_h").show();
 			//$(self.destination).find(self.controls.txtIndividualLocation).show();
 			$(self.destination).find(self.controls.btnIndividualGameCreate).show();
 			$(self.destination).find(self.controls.btnIndividualFinish).hide();
@@ -831,6 +848,8 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 			$(e.target).removeAttr(self.attributes.gameId);
 		},
 		eventFound : function(e) {
+			this.$el.find(".section-main-location_h").hide();
+			this.$el.find(".section-game-date_h").hide();			
 			//$(self.destination).find(self.controls.txtIndividualLocation).hide();
 			$(self.destination).find(self.controls.btnIndividualGameCreate).hide();
 			$(self.destination).find(self.controls.btnIndividualFinish).show();
@@ -906,15 +925,7 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 				gameModel.save({});
 
 				$.when(gameModel.request).done(function(response) {
-				self.game_id = response.payload.id;
-				self.gameData = {
-							game_datetime : completeDate,
-							games_id : self.game_id,
-							event_name : eventName,
-							locations_id : locationId,
-							sports_id : sportsId
-					};
-						Channel(self.channel).publish(self.gameData);
+					Channel(self.channel).publish(response);
 				});
 			} else {
 				$(e.target).parent().find(self.controls.fieldMessage).html(message).fadeIn();
@@ -1207,7 +1218,7 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 							team_id_one : teamOneId,
 							team_id_two : teamTwoId,
 							sports_id : sportsId 
-						}
+						};
 						Channel(self.channel).publish(self.gameData);
 					}
 

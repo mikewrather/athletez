@@ -107,6 +107,7 @@ function(require, findMyClubTemplate) {
             if (state != '') {
                 var stateList = new RegistrationStatesCollection();
                 stateList.state_name = state;
+	            $(event.target).addClass('ui-autocomplete-loading');
                 stateList.fetch();
                 $.when(stateList.request).done(function() {
                 	/*Don't Show Auto Complete In Case Of Error*/
@@ -161,6 +162,7 @@ function(require, findMyClubTemplate) {
                 var sportList = new RegistrationSportsCollection();
                 sportList.sport_name = sport_name;
                 sportList.gender = gender;
+	            $(event.target).addClass('ui-autocomplete-loading');
                 sportList.fetch();
                 $.when(sportList.request).done(function() {
                     if (sportList.isError())
@@ -210,6 +212,7 @@ function(require, findMyClubTemplate) {
                 clubList.states_id = self.states_id;
                 clubList.sports_id = self.sports_id;
                 clubList.club_name = club_name;
+	            $(event.target).addClass('ui-autocomplete-loading');
                 clubList.fetch();
 
                 $.when(clubList.request).done(function() {

@@ -189,6 +189,7 @@ define(['require', 'text!profilesetting/templates/club.html', 'text!profilesetti
 					self.stateFetchRequest.push(self.schoolFetchRequest || []);
 
 					self.stateFetchRequest = self.abortRequest(self.stateFetchRequest);
+					$(event.target).addClass('ui-autocomplete-loading');
 					var tempCollection = stateList.fetch();
 					self.stateFetchRequest.push(tempCollection);
 					$.when(stateList.request).done(function() {
@@ -271,6 +272,7 @@ define(['require', 'text!profilesetting/templates/club.html', 'text!profilesetti
 				
 				console.log("School Request Abort Request Function");
 				self.schoolFetchRequest = self.abortRequest(self.schoolFetchRequest);
+				$(event.target).addClass('ui-autocomplete-loading');
 				var tempCollection = List.fetch();
 				self.schoolFetchRequest.push(tempCollection);
 

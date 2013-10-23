@@ -176,7 +176,7 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 					elementId: self.controls.hdnTimePeriodData,
 					destination: self.controls.spnTimePeriod,
 					targetView: self,
-					selectedValue : "AM",
+					selectedValue : "PM",
 					callback: function(result) {
 					}
 				});
@@ -451,7 +451,7 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 					self.stateFetchRequest = self.stateFetchRequest || [];
 					self.stateFetchRequest.push(self.cityFetchRequest || []);
 					self.stateFetchRequest.push(self.teamFetchRequest || []);
-
+					$(e.target).addClass('ui-autocomplete-loading');
 					self.stateFetchRequest = self.abortRequest(self.stateFetchRequest);
 					var tempCollection = stateList.fetch();
 					self.stateFetchRequest.push(tempCollection);
@@ -545,7 +545,7 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 					//console.log("City Request Abort Request Function AddGame/Main.js");
 					self.cityFetchRequest = self.cityFetchRequest || [];
 					self.cityFetchRequest.push(self.teamFetchRequest || []);
-
+					$(e.target).addClass('ui-autocomplete-loading');
 					self.cityFetchRequest = self.abortRequest(self.stateFetchRequest);
 					var tempCollection = List.fetch();
 					self.cityFetchRequest.push(tempCollection);
@@ -634,7 +634,7 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 				List.city_id = $(e.target).attr(self.attributes.cityId);
 				List.sports_id = $(e.target).attr(self.attributes.sportId);
 				List.team_name = name;
-
+				$(e.target).addClass('ui-autocomplete-loading');
 				self.TeamFetchRequest = self.abortRequest(self.TeamFetchRequest);
 				var tempCollection = List.fetch();
 				self.TeamFetchRequest.push(tempCollection);
@@ -732,7 +732,7 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 				var List = new GamesSearchCollection();
 				//List.sports_id = $(e.target).attr(self.attributes.sportId);
 				List.game_name = name;
-
+				$(e.target).addClass('ui-autocomplete-loading');
 				self.individualGameFetchRequest = self.abortRequest(self.individualGameFetchRequest);
 				var tempCollection = List.fetch();
 				self.individualGameFetchRequest.push(tempCollection);
@@ -1073,12 +1073,30 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 			//$(self.destination).find(self.controls.sectionLocation).html('').removeAttr(self.attributes.locationId);
 		},
 
+		formatDate: function(date,time,ampm)
+		{
+			var newDate = $.datepicker.formatDate('yy-mm-dd',date);
+			try{
+				var array = time.split(':');
+
+				console.log(array);
+				if(array.length==1) time += ":00";
+				time += " " + ampm;
+
+				newDate += " " + time;
+				return newDate;
+
+			}catch(ex){
+				return false;
+			}
+		},
+
 		finishGame : function() {
 			$(self.destination).find(self.controls.fieldMessage).html('').hide();
 			var isDataValid = true;
 			var date = $(self.destination).find(self.controls.txtGameDate).datepicker('getDate');
 			var timeText = $(self.destination).find(self.controls.txtGameTime).val();
-			var timeZone = $(self.destination).find(self.controls.hdnTimePeriod).val();
+			var ampm = $(self.destination).find(self.controls.hdnTimePeriod).val();
 			
 			var teamOneId = $(self.destination).find(self.controls.sectionTeamOne).find(self.controls.txtTeam).attr(self.attributes.teamId);
 			var scoreOne = $(self.destination).find(self.controls.sectionTeamOne).find(self.controls.txtScore).val();
@@ -1101,26 +1119,15 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 					var validTime = timeText.match(self.tags.rgxTime) || timeText.match(self.tags.rgxTimeWhole);	
 					console.log("orginal date",date);
 					console.log("orginal time",timeText);
-					console.log("timeZone",timeZone);					
+					console.log("ampm",ampm);					
 					if(!validTime){
+						console.log("NOT VALID");
 						$(self.destination).find(self.controls.sectionDate).find(self.controls.fieldMessage).html(self.messages.selectValidTime).fadeIn();
 						isDataValid = false;
 					}else{
 						$(self.destination).find(self.controls.sectionDate).find(self.controls.fieldMessage).html('').fadeOut();
-						try{
-						var array = timeText.split(':');
-						if(array){								
-							console.log(array);
-							console.log(array[0]);
-							if(timeZone != "PM" && array[0] != "12")							
-								date.setHours(array[0]);
-							if(array.length > 1)
-								date.setMinutes(array[1]);
-							
-							if(timeZone == "PM")
-								date.addHours(12);
-						}
-						}catch(ex){}
+						date = this.formatDate(date,timeText,ampm);
+						if(!date) isDataValid = false;
 					}
 			}
 				console.log("new date",date);
@@ -1157,7 +1164,7 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 			}
 
 			if (isDataValid) {
-				var completeDate = date;// + " " + timeText + "00";// + timeZone;
+				var completeDate = date;// + " " + timeText + "00";// + ampm;
 				var payload = {
 					game_datetime : completeDate,
 					locations_id : locationId,
