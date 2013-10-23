@@ -82,15 +82,24 @@ function(vendor, facade,  views,   utils,   ScheduleItemView, Store, ScheduleLis
                 //$(".signup-email").trigger('click');
 		    	return;
 	    	}
+	    	
 	    	if(!_.isUndefined(this.teamRecords) && this.teamRecords) {
-	    		routing.trigger('add-game',0,$("#team-h").val(),$("#sports-h").val(), function(data) {
-	    			_self.collection.add(data);
+	    		routing.trigger('add-game',0,$("#team-h").val(),$("#sports-h").val(), undefined, function(data) {
+	    			if(_self.controller) _self.controller.getOrgData();
 	    			routing.trigger('popup-close');
 	    		});
 	    	} else {
-	        	routing.trigger('add-game',0,$(e.currentTarget).data("team-id"),$(e.currentTarget).data("sport-id"), function(data) {
-	    			_self.collection.add(data);
+	        	routing.trigger('add-game',0,$(e.currentTarget).data("team-id"),$(e.currentTarget).data("sport-id"), undefined, function(data) {
+	    			//console.error(data);
+	    			//console.error(_self.collection);
+	    			//if(!_.isUndefined(_self.collection.models) && !_.isUndefined(_self.collection.models[0].get("payload").teams) && !_.isUndefined(_self.collection.models[0].get("payload").teams[0].schedules)) {
+	    			//	_self.collection.models[0].get("payload").teams[0].schedules.push(data);
+	    				//_self.collection.add(data);
+	    			//	_self.render();	
+	    			//}
+	    			if(_self.controller) _self.controller.getOrgData();
 	    			routing.trigger('popup-close');
+	    			
 	    		});
         	}
         },
@@ -104,12 +113,12 @@ function(vendor, facade,  views,   utils,   ScheduleItemView, Store, ScheduleLis
 	    	}
 	    	if(!_.isUndefined(this.teamRecords) && this.teamRecords) {
 	    		routing.trigger('add-event',0,$("#sports-h").val(), this.getUserId(), function(data) {
-	    			_self.collection.add(data);
+	    			if(_self.controller) _self.controller.getOrgData();
 	    			routing.trigger('popup-close');						    			
 	    		});
 	    	} else {
 	        	routing.trigger('add-event',0,$(".selected-sport-h").data("id"), this.getUserId(), function(data) {
-	    			_self.collection.add(data);
+	    			if(_self.controller) _self.controller.getOrgData();
 	    			routing.trigger('popup-close');
 	    		});
         	}
@@ -119,6 +128,7 @@ function(vendor, facade,  views,   utils,   ScheduleItemView, Store, ScheduleLis
         	var _self = this;
         	_self.eventPage = options.eventPage || false;
         	_self.teamRecords = options.teamRecords;
+        	_self.controller = options.controller || false;
         	if((!_.isUndefined(options.teamRecords) && options.teamRecords)) {
         		//var json = options.collection.toJSON();
         		_self.renderTemplate();
@@ -135,14 +145,14 @@ function(vendor, facade,  views,   utils,   ScheduleItemView, Store, ScheduleLis
         	}
         	
             CollectionView.prototype.initialize.call(_self, options);
-            if (!_self.collection) {
+            if(!_self.collection) {
                 throw new Error("Schedulr expected options.collection.");
             }
 		            
-            _.bindAll(_self);          
-            _self.addSubscribers();   
-            
-
+            _.bindAll(_self);
+            _self.addSubscribers();
+            console.error(_self.collection);
+			
 
         },
         

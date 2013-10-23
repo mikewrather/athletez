@@ -954,7 +954,7 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 							sports_id : response.payload.usl ? response.payload.usl.sports_id : null,
 							users_id : self.user_id
 					};
-			Channel(self.channel).publish(self.gameData);
+				Channel(self.channel).publish(response);
 			}
 			}
 		},
@@ -1180,7 +1180,7 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 				gameModel.save({});
 
 				$.when(gameModel.request).done(function(response) {
-					////console.log(response);
+					console.log(response);
 					if (response != null && response.payload != null) {
 						self.game_id = response.payload.id;
 						var isHome = $(self.destination).find(self.controls.rdoTeamOne).is(':checked');
@@ -1192,7 +1192,7 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 							locations_id : self.location_id,
 							score : scoreOne,
 							users_id : self.user_id
-						}
+						};
 
 						var addTeamModelOne = new TeamAddModel(payloadOne);
 						addTeamModelOne.teams_id = teamOneId;
@@ -1205,7 +1205,7 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 							locations_id : self.location_id,
 							score : scoreTwo,
 							users_id : self.user_id
-						}
+						};
 
 						isHome = $(self.destination).find(self.controls.rdoTeamTwo).is(':checked');
 
@@ -1224,8 +1224,8 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 							team_id_two : teamTwoId,
 							sports_id : sportsId,
 							users_id : self.user_id 
-						}
-						Channel(self.channel).publish(self.gameData);
+						};
+						Channel(self.channel).publish(response);
 					}
 
 				});

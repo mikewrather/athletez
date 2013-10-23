@@ -58,6 +58,8 @@ define(["require", "text!usercontrols/addgame/templates/layout.html",
 				this.teams_id = options.teams_id;
 			}
 			
+			this.callback = options.callback;
+			
 			if(options.popup) {
 				this.popup = true;
 				this.modelHTML = '<div id="modalPopup" class="modal hide fade model-popup-h add-game-modal">'+
@@ -141,6 +143,7 @@ define(["require", "text!usercontrols/addgame/templates/layout.html",
 			this.layout.render();
 		},
 		addGameFunction : function(data){
+			if(this.callback) this.callback(data);
 			//alert(JSON.stringify(data));
 		}
 	});

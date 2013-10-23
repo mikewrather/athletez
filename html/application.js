@@ -189,7 +189,7 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
             routing.on('add-event', function(id,sports_id,users_id, callback) {
             	//alert(id+"--"+sports_id +"--"+ users_id);
             	 var addGameview = new AddEventController({
-		             "sports_id": 51, //sports_id,
+		             "sports_id": sports_id,
 		            "users_id" : users_id,
                 	popup: true,
                 	callback: callback
