@@ -24,6 +24,7 @@ define([
 	"profile/collections/image-videos",
 	"profile/collections/commentsof",
 	"profile/collections/commentson",
+	'schedules/collections/user-games',
 	"profile/collections/fans",
 	"profile/views/header",
 	"profile/views/add-media",
@@ -54,6 +55,7 @@ define([
 			//ProfileImageList = require("profile/collections/images"),
 			ProfileCommentOfList = require("profile/collections/commentsof"),
 			ProfileCommentOnList = require("profile/collections/commentson"),
+			UserGames = require('schedules/collections/user-games'),
 			FansImageList = require("profile/collections/fans"),
 			
 			ProfileHeaderView = require("profile/views/header"),
@@ -335,7 +337,32 @@ define([
 
 			setupOrgListView: function () {
 				var orgListView;
-				//console.error(this.orgs.toJSON());
+				if(this.orgs.length)
+					this.setUpOrgView();
+				else
+					this.setUpUserSportView();					
+			},
+			
+			setUpUserSportView: function() {
+				var _self = this;
+				 this.orgs = new UserGames();
+            	this.orgs.userId = _self.id;
+            	this.orgs.sports_id = $(".selected-sport-h").data("id");
+            	
+            	this.orgs.fetch();
+            	$.when(this.orgs.request).done(function() {
+         		_self.orgListView = new ProfileOrgListView({
+						collection: _self.orgs,
+						destination: "#games_div",
+						eventPage: $(".selected-sport-h").data("name")
+					});
+					
+					_self.scheme.push(_self.orgListView);
+					_self.layout.render();
+            	});
+			},
+			
+			setUpOrgView: function() {
 				this.orgListView = new ProfileOrgListView({
 					collection: this.orgs,
 					destination: "#games_div"
@@ -344,6 +371,7 @@ define([
 				this.scheme.push(this.orgListView);
 				this.layout.render();
 			},
+			
 
 			setupRelatedListView: function () {
 				var relatedListView;

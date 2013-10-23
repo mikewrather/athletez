@@ -24,12 +24,28 @@ define([ 'require', 'text!votes/templates/vote.html','views', 'vendor', 'facade'
 		},
 		
 		vote: function() {
+			if(!this.checkForUser()) {
+		  		
+		  	   	routing.trigger('showSignup');	
+		    	return;
+	    	}
 			this.voteModelOb.save();
 		},
 		
 		follow: function() {
+			if(!this.checkForUser()) {
+		  		
+		  	   	routing.trigger('showSignup');	
+		    	return;
+	    	}
 			this.followModelOb.save();
 			Channel('new-fan').publish();
+		},
+		checkForUser: function() {
+			if(!_.isUndefined(routing.userLoggedIn) && routing.userLoggedIn)
+				return true;
+			else	
+        		return false;
 		},
 		
 		initialize : function(options) {

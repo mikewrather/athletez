@@ -87,11 +87,13 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
         },
         
         intializeImageAndVideo: function() {
+
         	this.imageUpListeners();
 			this.videoPreview();
             this.showUsercreate();
             this.showHomeRefresh();
             this.showLogin();
+            this.triggerSignup();
         },
         
         cancelAjaxRequests: function() {
@@ -171,30 +173,30 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
             
             // initialize add game popup common trigger 
             routing.off('add-game');
-            routing.on('add-game', function(id,teams_id,sports_id,users_id) {
+            routing.on('add-game', function(id,teams_id,sports_id,users_id, callback) {
             	//fn(id);
             	 var addGameview = new AddGameController({
 		            "teams_id":teams_id,
 		             "sports_id":sports_id,
 		            "users_id" : users_id,
                 	"id": id,
-                	popup: true
+                	popup: true,
+                	callback: callback
                 });
             });
             
             
             // initialize add event popup common trigger 
             routing.off('add-event');
-            routing.on('add-event', function(id,sports_id,users_id) {
+            routing.on('add-event', function(id,sports_id,users_id, callback) {
             	//alert(id+"--"+sports_id +"--"+ users_id);
             	 var addGameview = new AddEventController({
 		             "sports_id": 51, //sports_id,
 		            "users_id" : users_id,
-                	popup: true
+                	popup: true,
+                	callback: callback
                 });
             });
-            
-            
         },
 
 	    checkForUser: function() {
@@ -314,27 +316,11 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
         },
         
         addImageTrigger: function(fn) {
-        	this.signup = new header();
         	routing.off('add-image');
             routing.on('add-image', function(url, attr, data) {
             	console.log(url, attr, data);
 	            if(!this.checkForUser()) {
-		            
-	            	try{
-		  			
-		  				this.signup.signupUser();
-		  				//$(".signup-email").trigger('click');
-		    		}
-		    		catch(e){
-		    			try{
-							console.log(e);
-						}
-						catch(e){
-							console={},
-							console.log=function(e){}
-		
-						}
-		    		}
+		            routing.trigger('showSignup');
 		            //$(".signup-email").trigger('click');
 		            return;
 	            }
@@ -384,20 +370,12 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
             
             //Channel('app-inited').subscribe(initImage);
 		},
-
-	    videoPreview: function () {
-		   
-             this.cancelAjaxRequests();
-            this.loadStyles();
-            this.signup = new header();
-		   // chromeBootstrap();
-		    //$('body').empty();
-           // chromeBootstrap();chromeBootstrap();
-		    //console.log(VideoPreviewController);
-			var self = this;
-		    function initVideoPreview(url,attr) {
-				if(!self.checkForUser()) {
-					try{
+		triggerSignup:function(){
+			
+			this.signup = new header();
+			routing.off('showSignup');
+            routing.on('showSignup', function() {
+              try{
 		  				this.signup.signupUser();
 		    		}
 		    		catch(e){
@@ -408,7 +386,23 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
 							console={},
 							console.log=function(e){}
 						}
-		    		}	
+		    		}	 
+
+            });
+		},
+	    videoPreview: function () {
+		   
+             this.cancelAjaxRequests();
+            this.loadStyles();
+             // chromeBootstrap();
+		    //$('body').empty();
+           // chromeBootstrap();
+		    //console.log(VideoPreviewController);
+			var self = this;
+		    function initVideoPreview(url,attr) {
+
+				if(!self.checkForUser()) {
+					routing.trigger('showSignup');
 					//$(".signup-email").trigger('click');
 					return;
 				}

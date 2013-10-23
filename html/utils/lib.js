@@ -82,7 +82,7 @@ define(["facade", "utils/debug"], function(facade, debug) {
     Lib.prototype.Channel = function(id, flags) {
         var callbacks, method, topic = id && channels[id], msg,
             allowedFlags = ['once', 'memory', 'unique', 'stopOnFalse'], flagsOk;
-	    console.log("CHANNEL CALLED:",id);
+	    //console.log("CHANNEL CALLED:",id);
 	    //debug.log(channels);
         if (!topic) {
             if (flags && typeof flags === 'string') {
