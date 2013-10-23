@@ -1,5 +1,7 @@
 <!--<h1>Auth module using the ORM driver for Kohana 3.1</h1>-->
+<style>
 
+</style>
 <div id="regcontainer">
 	<div id="mainreg">
 		<div id="header">
@@ -12,12 +14,12 @@
 			</div>
 			<div id="fblogo"><span></span></div>
 		</div>
-		<div id="regor">
+		<div class ="regor">
 			or
 		</div>
-		<div id="regpane">
-			<form action="#/user/create" method="post" accept-charset="utf-8">
-				<div id="firstreg">
+		<div id="regpanemain">
+			<form action="#/user/create" method="post" class="signupform" accept-charset="utf-8">
+				<div id="firstregbase">
 				<input type="text" name="firstname" placeholder="First name" />
 				<div class="error">
 				</div>
@@ -26,12 +28,14 @@
 				<div class="error">
 				</div>
 				</div>
-				<input type="submit" name="create" value="Sign Up" class="regsubmit" />
+				<div class = "signupsubmit">
+					<input type="submit" name="create" value="Sign Up" class="regsubmit" />
+				</div>
 			</form>
 			<%  if(!onlyRegister) { %>
 			
 				<div id="reglogin">
-				<span>Been here before <a href="#">sign in</a></span>
+				<span>Been here before <a href="javascript:void(0);">sign in</a></span>
 				</div>
 				
 			<% } %>	
