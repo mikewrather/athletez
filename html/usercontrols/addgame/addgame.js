@@ -16,8 +16,8 @@ define(["require", "text!usercontrols/addgame/templates/layout.html",
 	   
 	    
 	    //Views
-	    "usercontrols/addgame/views/main"
-	     
+	    "usercontrols/addgame/views/main",
+		"jquery.slimscroll"
 	    ], function(require, pageLayoutTemplate) {
 
 	var AddGameController, facade = require("facade"), Controller = require("controller"),
@@ -60,13 +60,7 @@ define(["require", "text!usercontrols/addgame/templates/layout.html",
 			
 			if(options.popup) {
 				this.popup = true;
-				this.modelHTML = '<div id="modalPopup" class="modal hide fade model-popup-h add-game-modal">'+
-								'<div class="modal-header">'+
-   			 					'<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>'+
-    							'<h3>Add Game</h3>'+
-  								'</div>'+
-								'<div class="modal-body page-content-h"></div>'+
-    							'</div>';
+				this.modelHTML = '<div id="modalPopup" class="modal hide fade model-popup-h add-game-modal"></div>';
 				}
 			
 			if(options.gender){
@@ -130,7 +124,7 @@ define(["require", "text!usercontrols/addgame/templates/layout.html",
 				model : new BasicModel(),
 				template : pageLayoutTemplate,
 				name : "add-game-main",
-				destination : (this.popup)?".page-content-h":"#main",
+				destination : '#modalPopup',
 				user_id : self.id,
 				channel : 'add-game-success',
 				sports_id : this.sports_id,
@@ -139,6 +133,12 @@ define(["require", "text!usercontrols/addgame/templates/layout.html",
 
 			this.scheme.push(this.addGameView);
 			this.layout.render();
+			$('#modalPopup .modal-body').slimScroll({
+				height:'430px',
+				railVisible:true,
+				allowPageScroll:true,
+				disableFadeOut:true
+			});
 		},
 		addGameFunction : function(data){
 			//alert(JSON.stringify(data));

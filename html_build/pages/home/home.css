@@ -56,12 +56,16 @@ li.sport:hover, li.sport a:hover {
     white-space: nowrap;
     text-overflow: ellipsis;
 }
-#menu .menu-link-h{
+#menu .menu-link-h,#menu span.show{
     font-weight: bolder;
-    font-family: 'Nunito', "HelveticaNeue";
+    font-family: 'Raleway', "HelveticaNeue";
     font-size: 1.2em;
     color:#333;
     text-transform: uppercase;
+}
+#menu span.show{
+    margin-top:3px;
+    margin-right: 5px;
 }
 .seach-box{
     margin:0 15px 0 15px;
@@ -113,7 +117,7 @@ li.sport a:hover {
 	position: absolute;
 	width: 100%;
 	height: 330px;
-	top: 60px;
+	top: 37px;
 }
 .register-wrapper-h #regcontainer {
 	padding: 0;
@@ -122,6 +126,7 @@ li.sport a:hover {
 #regcontainer #mainreg {
 	background-color: transparent;
 	opacity: 1;
+    height: 330px;
 }
 .homePage #main {
 	padding-top: 0px;
@@ -156,7 +161,7 @@ height: 35px;
 }
 #regcontainer .regheader {
 	padding: 0 0 0 35px;
-	font-size: 3.3em;
+	font-size: 2.5em;
 	font-weight: bold;
 }
 #mainreg #regor {

@@ -67,7 +67,7 @@ function(require, imageBasicTemplate, selectAllTemplate,tagTemplate) {
         	$("#errormsg, #preview").html("");
         	
             SectionView.prototype.initialize.call(this, options);   
-			debug.log("Image upload basic view");   
+			console.log("Image upload basic view");   
 			this.attr=attr;    
 			this.files_drag=[];
 			this.scheme = options.scheme;
@@ -84,8 +84,11 @@ function(require, imageBasicTemplate, selectAllTemplate,tagTemplate) {
 				Channel('tag-team-image-success').empty();
 				Channel('tag-team-image-success').subscribe(this.tagFunction);
 
-			    this.setUpBottomView();		
-
+				// Channel('tag-team-image-bottom').empty();
+				// Channel('tag-team-image-bottom').subscribe(this.setUpBottomView);
+				// //Test
+			    // this.setUpBottomView();		
+// 
 			$('#imgUploadModal').modal('show') ;
 		    $('#imgUploadModal').on('hidden', function () {
 		    	routing.trigger('refresh-onImageUpload');
@@ -138,7 +141,8 @@ function(require, imageBasicTemplate, selectAllTemplate,tagTemplate) {
 				  _self.hideLoader();
 				};
 		      })(f);
-		      _self.showSelectAllImages();
+		      //_self.showSelectAllImages();
+		      _self.setUpBottomView();
 		      reader.readAsDataURL(f);
 		    }
 		},
@@ -180,7 +184,8 @@ function(require, imageBasicTemplate, selectAllTemplate,tagTemplate) {
 		      })(f);
 		      reader.readAsDataURL(f);
 		    }
-		    _self.showSelectAllImages();
+		    //_self.showSelectAllImages();
+		     _self.setUpBottomView();
 		},
         imageUploadClick: function(event)
         {
@@ -256,7 +261,6 @@ function(require, imageBasicTemplate, selectAllTemplate,tagTemplate) {
 			console.log(this.files_byUploader);
 				jQuery.each(thiss.files_byUploader, function(i, file) {
 					var data = new FormData();
-					debugger;
 					if ($('#preview_'+i+"group").length > 0) {
 						data.append('image_file',file);
 						if($('#preview_'+i+'rotang').val()>0)
@@ -322,7 +326,7 @@ function(require, imageBasicTemplate, selectAllTemplate,tagTemplate) {
       setUpSelectAllView : function(){
       		var self = this;
 			$("#select-allup").html(selectAllTemplate);  
-			
+			self.showSelectAllImages();
       },
       
       setUpTagView : function(){

@@ -1140,11 +1140,8 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 				$(self.destination).find(self.controls.sectionTeamOne).find(self.controls.fieldMessage).html(self.messages.selectTeam).fadeIn();
 				isDataValid = false;
 			}
-			var isTeam = self.getTeamType();
-			if (isTeam) {
-
-				var currentDate = new Date();
-				//console.log("date", date, currentDate);
+//			var isTeam = self.getTeamType();
+//			if (isTeam) {
 
 				if (!(teamTwoId > 0)) {
 					$(self.destination).find(self.controls.sectionTeamTwo).find(self.controls.fieldMessage).html(self.messages.selectTeam).fadeIn();
@@ -1161,7 +1158,7 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 					// isDataValid = false;
 				// }
 
-			}
+//			}
 
 			if (isDataValid) {
 				var completeDate = date;// + " " + timeText + "00";// + ampm;

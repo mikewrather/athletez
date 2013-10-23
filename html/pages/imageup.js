@@ -61,7 +61,7 @@ define(["require", "text!imageup/templates/basic.html", "text!imageup/templates/
 
 			routing.off('imageup-preview');
 			routing.on('imageup-preview', function(param) {
-				console.log(param);
+				console.log("this is");
 				previewShow(param);
 			});
 
