@@ -125,7 +125,7 @@ class Model_Sportorg_Games_Base extends ORM
 			if(isset($event_name)){
 				$this->event_name = $event_name;
 			}
-
+			if(isset($sports_id)) $this->sports_id = $sports_id;
 			$this->save();
 
 			if(isset($event_name)){
