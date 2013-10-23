@@ -5,13 +5,15 @@ define([
     'backbone',
     'underscore',
     'registration',
+    'login',
     'views',
     'signup/views/facebooksignup', 
     'facade', 
     'utils', 
     "signup/views/registration-basics-final",
-    "signup/models/registration-basics-final"
-	],function(require,  signupBasicTemplate,backbone,_,RegistrationController) {
+    "signup/models/registration-basics-final",
+    
+	],function(require, signupBasicTemplate,backbone,_,RegistrationController,loginController) {
 			
 		var SignupBasicView,
         	facade = require('facade'),
@@ -61,7 +63,8 @@ define([
         		},
         		events:{
         		"click .regsubmit":"next",
-                "click #fbpane":"signupFacebook"
+                "click #fbpane":"signupFacebook",
+                "click #reglogin a":"showLogin"
                  
         		},
         		next: function(event){
@@ -106,6 +109,14 @@ define([
                      headView.signupFacebook();
             
                },
+               showLogin:function(event){
+                event.preventDefault();
+                $('#RegModal').modal('hide') ;
+                this.logincontroller = new LoginController();
+                routing.trigger("Login");
+
+               }
+
 
 
         		
