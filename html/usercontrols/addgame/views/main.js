@@ -918,8 +918,9 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 							locations_id : locationId,
 							sports_id : sportsId,
 							users_id : 	self.user_id
-						}
-						Channel(self.channel).publish(self.gameData);
+					};
+					routing.trigger(self.channel, self.gameData);
+						//Channel(self.channel).publish(self.gameData);
 				});
 			} else {
 				$(e.target).parent().find(self.controls.fieldMessage).html(message).fadeIn();
@@ -933,7 +934,7 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 				users_id : 	self.user_id,
 				sports_id : sportsId,
 				games_id : self.individual_game_id				
-			}
+			};
 				var model = new UserGameLinkModel(payload);
 				model.save();
 				
@@ -954,7 +955,8 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 							sports_id : response.payload.usl ? response.payload.usl.sports_id : null,
 							users_id : self.user_id
 					};
-				Channel(self.channel).publish(response);
+				routing.trigger(self.channel, response);
+				//Channel(self.channel).publish(response);
 			}
 			}
 		},
@@ -1225,7 +1227,9 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 							sports_id : sportsId,
 							users_id : self.user_id 
 						};
-						Channel(self.channel).publish(response);
+						
+						routing.trigger(self.channel, response);
+						//Channel(self.channel).publish(response);
 					}
 
 				});
