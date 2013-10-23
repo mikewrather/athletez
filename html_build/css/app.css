@@ -735,7 +735,9 @@ span.team-label{
     font-size: .9em;
 }
 .modal-body {
-	width: 99%;
+    position: absolute;
+    height: 90%;
+	width: 96%;
     padding: 0;
 }
 div.game-info{
@@ -800,7 +802,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#84a934', end
 }
 .add-game-modal{
     height:75%;
-    max-height: 75%;
+    max-height: 500px;
     width:550px;
     left:50%;
     margin-left: -275px;

@@ -109,6 +109,7 @@ color: red;
 }
 #imgpreview .selected{
 	border: 6px solid #954121;
+	 margin-bottom: 71px;
 }
 .previewimg{
 	  border: 1px solid #CCCCCC;
