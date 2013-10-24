@@ -83,8 +83,8 @@ define(['vendor', 'views', 'utils', 'text!media/templates/image-item.html', 'vot
 					}
 
 					show_play = true;
-					extra._enttypes_id = typeof(mpay.media_obj == "object") ? mpay.media_obj.enttypes_id : 0;
-					extra._id = typeof(mpay.media_obj == "object") ? mpay.media_obj.id : 0;
+					extra._enttypes_id = typeof(mpay.media == "object") ? mpay.media.enttypes_id : 0;
+					extra._id = typeof(mpay.media == "object") ? mpay.media.id : 0;
 					extra._label = mpay.media.name;
 					extra._link = "javascript: void(0);";
 					extra._has_link = false;

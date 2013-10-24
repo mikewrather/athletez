@@ -59,9 +59,22 @@ class Controller_Authcheck extends AuthController
 			"link"=>"/#usersettings"
 		);
 		$retArr['nav'][] = array(
-			"page"=>"Resume Settings",
+			"page"=>"Athletic Resume",
 			"link"=>"/#resume"
 		);
+
+		$retArr['nav'][] = array(
+			"page" => $retArr['authorized'] ? "Facebook Linked" : "Link to Facebook",
+			"link" => $retArr['authorized'] ? "javascript:void(0);" : "/#fbconnect"
+		);
+
+		$retArr['nav'][] = array(
+			"page" => "Log Out",
+			"link" => "/#logout",
+			"id" => "logoutId"
+		);
+
+
 	/*	$retArr['nav'][] = array(
 			"page"=>"Tag",
 			"link"=>"/#tag"

@@ -125,9 +125,16 @@ function(require, profileHeaderTemplate, selectSportTemplate) {
             var sport_id = (!e)?$(".sports-h img:first-child").data("id"):$(e.target).data("id");
             var sport_name = (!e)?$(".sports-h img:first-child").data("name"):$(e.target).data("name");
             //this.select_sport.val();
-            $(".sports-icon-h").removeClass('selected-sport-h');
+            $(".sports-icon-h.selected-sport-h").each(function(){
+	            console.log(this);
+	            var srcNoExt = String($(this).attr('src')).split("_selected.png")[0];
+	            srcNoExt = srcNoExt.split('.png')[0] + ".png";
+	            $(this).attr('src',srcNoExt);
+            });
             $(".sports-icon-h[data-id="+sport_id+"]").addClass('selected-sport-h');
-            
+	        var srcNoExt = String($(".sports-icon-h[data-id="+sport_id+"]").attr('src')).split(".png")[0] + "_selected.png";
+	        $(".sports-icon-h[data-id="+sport_id+"]").attr('src',srcNoExt);
+
             var title = this.getUserName();
 
             
@@ -138,7 +145,7 @@ function(require, profileHeaderTemplate, selectSportTemplate) {
 	            routing.trigger("showTwmList", sport_id);
 	            //Channel('gamesports:select' + sport_id).publish();            
         	} else {
-        		Channel('refresh-profilepage').publish();
+        	//	Channel('refresh-profilepage').publish();
         	}
         	
         	document.title = title;
