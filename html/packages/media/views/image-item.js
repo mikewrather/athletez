@@ -4,13 +4,16 @@
 // Return {ImageItemView} object as constructor
 
 define(['vendor', 'views', 'utils', 'text!media/templates/image-item.html', 'votes/models/vote',
-        'votes/models/follow','utils/storage'], function(vendor, views, utils, imageItemTemplate) {
+
+        'votes/models/follow','utils/storage','chrome/views/header', 'common/models/delete'], function(vendor, views, utils, imageItemTemplate) {
 
 	var ImageItemView, $ = vendor.$, BaseView = views.BaseView, Mustache = vendor.Mustache,
 	voteModel = require('votes/models/vote'),
 	Store = require('utils/storage'),
     followModel = require('votes/models/follow'),
-    
+
+    DeleteModel = require('common/models/delete'),
+    header = require('chrome/views/header');
 
 	ImageItemView = BaseView.extend({
 
@@ -36,6 +39,7 @@ define(['vendor', 'views', 'utils', 'text!media/templates/image-item.html', 'vot
 		
 		
 		checkForUser: function() {
+			
 			if(!_.isUndefined(routing.userLoggedIn) && routing.userLoggedIn)
 				return true;
 			else	
@@ -44,6 +48,7 @@ define(['vendor', 'views', 'utils', 'text!media/templates/image-item.html', 'vot
 		
 		
 		render : function() {
+			console.log("in render");
 			var _self = this, mpay = this.model.attributes.payload,
 				extra = {
 					_enttypes_id : mpay.enttypes_id,
@@ -307,8 +312,22 @@ define(['vendor', 'views', 'utils', 'text!media/templates/image-item.html', 'vot
 		    console.log(e.target);
 		    e.stopPropagation();
 		     if(!this.checkForUser()) {
+
+		  		
+		     		try{
+		  			
+		  				this.signup.signupUser();
+		    		}
+		    		catch(e){
+
+		    		}	
+
+
+		  		//$(".signup-email").trigger('click');
+		    	return;
+			     /* old way of doing this
 		  		routing.trigger('showSignup');
-				return;
+				return;*/
 	    	}
 		    var followModelOb = new followModel();
 			followModelOb.userId = this.model.get("payload").id;
@@ -327,14 +346,12 @@ define(['vendor', 'views', 'utils', 'text!media/templates/image-item.html', 'vot
 			});
 	    },
 
-		edit: function(e)
-		{
+		edit: function(e) {
 			e.stopPropagation();
 			e.preventDefault();
 			
 			var _self = this, mpay = this.model.get("payload");
-			switch(mpay.enttypes_id)
-			{
+			switch(mpay.enttypes_id) {
 				case '23':
 					//videos
 					//extra._link = "javascript: void(0);";
@@ -350,19 +367,30 @@ define(['vendor', 'views', 'utils', 'text!media/templates/image-item.html', 'vot
 				case '8':
 					//games
 					window.location.hash = "game/" + mpay.id;
-					break;
-
+				break;
 			}
-			
-			
 			console.log(this.model);
 		},
 
-		'delete': function(e)
-		{
+		'delete': function(e) {
 			e.stopPropagation();
 			e.preventDefault();
-			console.log("delete");
+			console.log(this.model);
+			//this.model.destroy();
+			
+			//var subject_id = $(e.currentTarget).attr("subject-type-id");
+			//var entity_id = $(e.currentTarget).attr("subject-id");			
+			var _self = this, deleteModel = new DeleteModel();
+			deleteModel.subject_id = $(e.currentTarget).attr("subject-type-id");
+			deleteModel.entity_id = this.model.get("payload").media_id;//$(e.currentTarget).attr("subject-id");
+			//deleteModel.url();
+			deleteModel.destroy();
+			
+			$.when(deleteModel.request).done(function() {
+				$(e.currentTarget).parents("li.image").addClass('remove-item');
+				//routing.trigger('remove-media', _self.model.id);
+			});
+			
 		}
 
 	});
