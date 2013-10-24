@@ -1,7 +1,7 @@
 //Menu View
 
 define(
-		[ 'require', 'text!pages/home/templates/menu.html', 'facade', 'views' ],
+		[ 'require', 'text!pages/home/templates/menu.html', 'facade', 'views', 'jquery.slimscroll' ],
 		function(require, menuTemplate) {
 
 			var MenuView, facade = require('facade'), views = require('views'), SectionView = views.SectionView;
@@ -161,7 +161,7 @@ define(
 				afterRender: function() {
 					this.hideAllDropdowns();
 
-					
+					$(this.el).find('.sport-list').slimScroll();
 					var data = this.model.toJSON();
 					try{
 						console.error(data.views);
