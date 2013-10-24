@@ -65,21 +65,7 @@ function(vendor, facade,  views,   utils,   ScheduleItemView, Store, ScheduleLis
          addGame: function(e) {
          	var _self = this;
          	 if(!this.checkForUser()) {
-		  		 this.signup = new header(); 
-                  try{
-                    
-                    this.signup.signupUser();
-                    //$(".signup-email").trigger('click');
-                    }
-                catch(e){
-                    try{
-                        console.log(e);
-                    }
-                    catch(e){
-        
-                    }
-                }
-                //$(".signup-email").trigger('click');
+		  		 routing.trigger('showSignup');
 		    	return;
 	    	}
 	    	

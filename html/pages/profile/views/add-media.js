@@ -48,7 +48,7 @@ function(require, profileAddMediaTemplate,application) {
 
 	    openAddImagePopup: function(event)
 	    {
-			 
+			
              var id = $('.selected-sport-h').data('id'), url = "/api/user/addimage/" + this.model.userid,
                 url = "/api/user/addimage/" + this.model.userid,
 			    attr = {

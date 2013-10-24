@@ -7,8 +7,8 @@ class Policy_Teams extends Policy
 	{
 		$config = Kohana::$config->load('sysconfig');
 		$roles = $config->get('role_name');
-		$has_admin = $user->has('roles', ORM::factory('Role', array('name' => $roles['admin'])));
-		$has_user = $user->has('roles', ORM::factory('Role', array('name' => $roles['user'])));
+		$has_admin = $user->has('roles', ORM::factory('Role',2));
+		$has_user = $user->has('roles', ORM::factory('Role',1));
 		//$has_coach = $user->has('roles', ORM::factory('Role', array('name' => $roles['coach'])));
 		$has_moderator = $user->has('roles', ORM::factory('Role', array('name' => $roles['moderator'])));
 		$obj = $extra['obj'];

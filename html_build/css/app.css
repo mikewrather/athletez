@@ -63,8 +63,8 @@ ul {
 }
 header {
 	border-bottom: 1px solid #ccc;
-	padding-top: 10px;
-	padding-bottom: 10px;
+	padding-top: 2px;
+	padding-bottom: 2px;
 	background-color: #000;
 }
 header .logo {
@@ -76,7 +76,10 @@ header a{
 }
 header .account {
 	float: right;
-    margin: 10px;
+}
+header .account #userlogin{
+    position: relative;
+    top:8px;
 }
 header #header_logo{
     height: 20px;
@@ -191,8 +194,8 @@ input[disabled].hasDatepicker, input[readonly].hasDatepicker {
 	text-align: center;
 	margin: 10px 0;
     font-family: 'Nunito', "HelveticaNeue", "Helvetica";
-    font-size:1.3em;
-    font-weight: 300;
+    font-size:1em;
+    font-weight: 700;
     text-transform: uppercase;
 }
 .btn-common {
@@ -431,9 +434,8 @@ ul.ui-autocomplete {
     z-index: 1060;
 }
 .ui-autocomplete-loading{
-    background-image: url(http://cdn.athletez.com/resources/img/17-1.gif) !important;
-    background-position: right !important;
-    background-repeat: no-repeat !important;
+    background-image: url(http://athletez.s3.amazonaws.com/resources/img/gray_loading.gif) !important;
+    background-repeat: repeat;
 }
 .ui-autocomplete li.ui-menu-item {
 	color: #000 !important;
@@ -461,7 +463,6 @@ span.ui-helper-hidden-accessible {
     -webkit-border-radius: 15px; -moz-border-radius: 15px; border-radius: 15px;
 }
 .bubble .content{
-    font-family: "HelveticaNeue","Helvetica";
     position: relative;
     padding:10px;
     z-index:1;
@@ -470,13 +471,13 @@ span.ui-helper-hidden-accessible {
     font-family: inherit;
     font-weight: bold;
     color:#818181;
-    font-size: .9em;
+    font-size: .8em;
     display: block;
 }
 .bubble .content p.comment-text{
     font-family: inherit;
     font-weight: normal;
-    font-size: 1.1em;
+    font-size: .9em;
     padding:4px;
 }
 .pointer{
@@ -734,7 +735,10 @@ span.team-label{
     font-size: .9em;
 }
 .modal-body {
-	width: 100%;
+    position: absolute;
+    height: 90%;
+	width: 96%;
+    padding: 0;
 }
 div.game-info{
     top:-80px;
@@ -797,8 +801,11 @@ background: linear-gradient(to bottom,  #84a934 0%,#9cca3c 100%);
 filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#84a934', endColorstr='#9cca3c',GradientType=0 ); 
 }
 .add-game-modal{
-    width:50%;
-    left:25%;
+    height:75%;
+    max-height: 500px;
+    width:550px;
+    left:50%;
+    margin-left: -275px;
 }
 .container_add_game{
 	font-size:12px ;
@@ -865,17 +872,17 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#84a934', end
 .container_add_game .ui-autocomplete li.ui-menu-item {
 	font-size: 14px;
 }
-.container_add_game input.txtDate{
+.container_add_game input.txtDate, .modal-body .update-date-time-h input.txtDate{
 width: 90px;	
 float:left;
 }
-.container_add_game input.txtTime{
+.container_add_game input.txtTime, .modal-body .update-date-time-h input.txtTime{
 	float:left;
 	width:40px;
 	margin-left: 4px;
     margin-right: 4px;
 }
-.container_add_game .ddlTime{
+.container_add_game .ddlTime, .modal-body .update-date-time-h .ddlTime{
 	width:50px;
 	float:left;
 	margin-left:8px;
@@ -910,8 +917,8 @@ float:left;
 .container_add_game .spn-ddl-time-period_h .region-dark{
 	padding: 4px 1%;
 }
-.container_add_game .spn-ddl-time-period_h .dropdown-wrapper{
-	width:60px;
+.spn-ddl-time-period_h .dropdown-wrapper{
+	width:75px;
 }
 .container_add_game .spn-ddl-time-period_h .drop-down-outer{
 	height: 28px;
@@ -956,10 +963,8 @@ margin-top:10px;
 }
 #logincontainer *{
     font-size:1em;
-    font-family: "HelveticaNeue","Helvetica";
 }
 #regcontainer *{
-    font-family: "HelveticaNeue", "Helvetica";
 }
 #imgpreview .selected{
 	border:2px solid #954121;

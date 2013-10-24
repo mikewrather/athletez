@@ -17,7 +17,7 @@ define([
         'usercontrols/location/models/verify-adress',
         'usercontrols/location/models/save',
 		'chrome/views/header',
-		'usercontrol/dropdown/view/dropdown',
+		'usercontrol/dropdown/view/dropdown'
         ], 
 function(require, gameHeaderTemplate) {
 
@@ -32,7 +32,6 @@ function(require, gameHeaderTemplate) {
 	    DropDownList = require('usercontrol/dropdown/view/dropdown'),
         verifyAddress = require('usercontrols/location/models/verify-adress'),
 		saveLocation = require('usercontrols/location/models/save'),
-		header = require('chrome/views/header'),
 		SectionView = views.SectionView;
 
 	GameHeaderView = SectionView.extend({
@@ -65,18 +64,19 @@ function(require, gameHeaderTemplate) {
         location: {lat: undefined, lon: undefined},
         
         initialize: function (options) {
+        	
           SectionView.prototype.initialize.call(this, options); 
         	var payload = this.model.get("payload"), title;
-        	if(payload.teams.length) {
-		        try{
-			        title = payload.teams[0].org_name +" VS "+ payload.teams[1].org_name;
-			        title +=  " "+payload.shared.complevel;
-		        }catch(e){
-			        title = "Game Page";
+	        if(payload.teams){
+		        if(payload.teams.length) {
+			        try{
+				        title = payload.teams[0].org_name +" VS "+ payload.teams[1].org_name;
+				        title +=  " "+payload.shared.complevel;
+			        }catch(e){
+				        title = "Game Page";
+			        }
 		        }
-
-
-        	} else {
+	        } else {
         		title = payload.event_name;
         	}
         	title += " | "+ payload.shared.sport +" | "+ payload.game_day;
@@ -112,22 +112,7 @@ function(require, gameHeaderTemplate) {
 		},
         openEditPopup: function() {
 	        if(!this.checkForUser()) {
-		        this.signup = new header();
-			    try{
-		  			
-		  			this.signup.signupUser();
-		  			//$(".signup-email").trigger('click');
-		    		}
-		    	catch(e){
-		    		try{
-						console.log(e);
-					}
-					catch(e){
-						console={},
-						console.log=function(e){}
-		
-					}
-		    	}
+		        routing.trigger('showSignup');
 				//$(".signup-email").trigger('click');
 		        return;
 	        }
@@ -323,12 +308,22 @@ function(require, gameHeaderTemplate) {
 	    },
         
         editScore: function(e) {
-        	//alert("sdsd");
+        	if(!this.checkForUser()) {
+		  		
+		  	   	routing.trigger('showSignup');	
+		    	return;
+	    	}
         	$(e.currentTarget).hide();
         	$(e.currentTarget).parents(".score-box-h").find(".edit-score-input-h").attr("type", "text").focus();
         	//this.$el.find(".edit-score-input-h")
         },
         
+        checkForUser: function() {
+			if(!_.isUndefined(routing.userLoggedIn) && routing.userLoggedIn)
+				return true;
+			else	
+        		return false;
+		},
         resumeEditScore: function(e) {
         	var score = new scoreModel();
         	score.teams_id = $(e.currentTarget).data("id");

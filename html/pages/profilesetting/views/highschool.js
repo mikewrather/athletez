@@ -168,6 +168,7 @@ define(['require', 'text!profilesetting/templates/highschool.html', 'text!profil
 					self.stateFetchRequest.push(self.schoolFetchRequest || []);
 
 					self.stateFetchRequest = self.abortRequest(self.stateFetchRequest);
+					$(event.target).addClass('ui-autocomplete-loading');
 					var tempCollection = stateList.fetch();
 					self.stateFetchRequest.push(tempCollection);
 					
@@ -250,6 +251,7 @@ define(['require', 'text!profilesetting/templates/highschool.html', 'text!profil
 				List.org_name = name;
 				console.log("School Request Abort Request Function");
 				self.schoolFetchRequest = self.abortRequest(self.schoolFetchRequest);
+				$(event.target).addClass('ui-autocomplete-loading');
 				var tempCollection = List.fetch();
 				self.schoolFetchRequest.push(tempCollection);
 

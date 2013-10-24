@@ -87,11 +87,13 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
         },
         
         intializeImageAndVideo: function() {
+
         	this.imageUpListeners();
 			this.videoPreview();
             this.showUsercreate();
             this.showHomeRefresh();
             this.showLogin();
+            this.triggerSignup();
         },
         
         cancelAjaxRequests: function() {
@@ -226,6 +228,13 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
             fbregistration = new fbreg();
             fbregistration.signupFacebook();
         },
+
+		gaPageView: function(page,title){
+			ga('send','pageview',{
+				"page":page,
+				"title":title
+			});
+		},
 	    showHome: function (action) {
 	    	var self = this;
 	    	this.cancelAjaxRequests();
@@ -235,16 +244,16 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
 	    	//self.removeCurrent();
 	    	function initHome(id) {
 	    		$("body").addClass("homePage");
-	    		
+				var title = "Athletez - We Are Athletez"
 	    		self.currentController = new HomeController({
 	    			route: "",
-	    			title: "Athletez - We Are Athletez",
+	    			title: title,
 	    			userId : id
 	    		});
-
 			    if(!id && $('div.register-wrapper').length == 0){
 				    $('body header').after('<div class="register-wrapper"></div><div class="register-wrapper-h"></div>');
 			    }
+			    self.gaPageView("Home Page",title);
 	    	}
 	    	this.initialiRoutesInit(initHome);
 	    },
@@ -266,10 +275,12 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
 	        //if(this.currentController) this.currentController.remove();
 			function initProfile(headerModelId) {
 				Channel('refresh-profilepage').empty();
+				var title =  self.getUserName(headerModelId);
                 self.currentController = new ProfileController({
 	                "userId": (typeof userid != "undefined")?userid:headerModelId,
-	                title: self.getUserName(headerModelId)
+	                title:title
 	            });
+				self.gaPageView("Profile Page",title);
             }
             this.initialiRoutesInit(initProfile);
         },
@@ -297,9 +308,10 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
             	
                 self.currentController = new TeamController({
                     "teamId": id,
-                     title: "team page",
+                     title: "Team Page",
                     "userId": headerModelId
                 });
+	            self.gaPageView("Team Page","NA");
             }
             this.initialiRoutesInit(initTeam);
            // Channel('app-inited').subscribe(initTeam);
@@ -314,27 +326,11 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
         },
         
         addImageTrigger: function(fn) {
-        	this.signup = new header();
         	routing.off('add-image');
             routing.on('add-image', function(url, attr, data) {
             	console.log(url, attr, data);
 	            if(!this.checkForUser()) {
-		            
-	            	try{
-		  			
-		  				this.signup.signupUser();
-		  				//$(".signup-email").trigger('click');
-		    		}
-		    		catch(e){
-		    			try{
-							console.log(e);
-						}
-						catch(e){
-							console={},
-							console.log=function(e){}
-		
-						}
-		    		}
+		            routing.trigger('showSignup');
 		            //$(".signup-email").trigger('click');
 		            return;
 	            }
@@ -348,11 +344,13 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
            
             chromeBootstrap();
 			 this.removeCurrent();
+	        var _self = this;
             function initProfileSetting(id) {
                self.currentController = new ProfileSetting({
                 	"id": userid==undefined ? id : userid,
-                	title: "Profile setting"
+                	title: "Profile Settings"
                 });
+	            _self.gaPageView("Profile Settings","NA");
             }
             this.initialiRoutesInit(initProfileSetting);
             //Channel('app-inited').subscribe(initProfileSetting);
@@ -368,6 +366,7 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
                 self.currentController = new UserResume({
                 	"id": userid==undefined ? id : userid
                 });
+	            self.gaPageView("User Resume Page","NA");
             }
              this.initialiRoutesInit(initUserResume);
             //Channel('app-inited').subscribe(initUserResume);
@@ -384,20 +383,12 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
             
             //Channel('app-inited').subscribe(initImage);
 		},
-
-	    videoPreview: function () {
-		   
-             this.cancelAjaxRequests();
-            this.loadStyles();
-            this.signup = new header();
-		   // chromeBootstrap();
-		    //$('body').empty();
-           // chromeBootstrap();chromeBootstrap();
-		    //console.log(VideoPreviewController);
-			var self = this;
-		    function initVideoPreview(url,attr) {
-				if(!self.checkForUser()) {
-					try{
+		triggerSignup:function(){
+			
+			this.signup = new header();
+			routing.off('showSignup');
+            routing.on('showSignup', function() {
+              try{
 		  				this.signup.signupUser();
 		    		}
 		    		catch(e){
@@ -408,11 +399,28 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
 							console={},
 							console.log=function(e){}
 						}
-		    		}	
+		    		}	 
+
+            });
+		},
+	    videoPreview: function () {
+		   
+             this.cancelAjaxRequests();
+            this.loadStyles();
+             // chromeBootstrap();
+		    //$('body').empty();
+           // chromeBootstrap();
+		    //console.log(VideoPreviewController);
+			var self = this;
+		    function initVideoPreview(url,attr) {
+
+				if(!self.checkForUser()) {
+					routing.trigger('showSignup');
 					//$(".signup-email").trigger('click');
 					return;
 				}
 			    var VidPrevCtrl = new VideoPreviewController({"url":url,"attr":attr});
+
 			    //console.log(VidPrevCtrl);
 		    }
 			//** creating a call back list and adding the method
@@ -437,6 +445,7 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
             	return; 
             }
              this.removeCurrent();
+	        var _self = this;
             function initGame(headerModelId) {
                 self.currentController = new GameController({
                     "route": "",
@@ -444,6 +453,8 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
                     title: "Game Page",
                     "userId": headerModelId
                 });
+
+	            _self.gaPageView("Game Page","NA");
             }
              this.initialiRoutesInit(initGame);
         },
@@ -458,6 +469,7 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
                     "route": "",
                     title: "Register"
                 });
+	            self.gaPageView("Registration Page","NA");
             }
             this.initialiRoutesInit(initRegistration);
         },

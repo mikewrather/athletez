@@ -33,10 +33,11 @@
     height: 100%;
 }
 .photo-player-right-area {
-    width: 30%;
     float: right;
     height: 100%;
     overflow-y: auto;
+    padding-left: 2%;
+    width: 28%;
 }
 .photo-player-right-area .right-area-header{
     height:40px;
@@ -219,6 +220,7 @@ ul#tags-list li {
 ul#tags-list .tags-name img {
 	width: 40px;
 	height: 40px;
+	float:left
 }
 ul#tags-list .tags-name a span {
 	font-size: .8em;
@@ -228,7 +230,11 @@ ul#tags-list .tags-name a span {
 	white-space:nowrap; 
 	text-overflow:ellipsis;
 	overflow:hidden; 
+	margin-left: 20px;
+	float:left;
 }
 ul#tags-list .tags-number {
-	margin-top: 3px;
+	margin-top: 4px;
+	margin-left: 10px;
+	width: 4px;
 }

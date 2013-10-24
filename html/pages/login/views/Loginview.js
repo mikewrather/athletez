@@ -67,11 +67,10 @@ define([
                              $('#Loginview').modal('hide');
                             },
                     error: function(msg) {
-                                console.log(msg);
-                                $( ".errormsg" ).empty();
+                               $( ".errormsg" ).empty();
                                 var errors= jQuery.parseJSON( msg.request.responseText);
-                                console.log(errors.desc);
-                                $( ".errormsg" ).html(errors.desc);
+                                $( ".errormsg" ).html(errors.exec_data.error_array[0].error);
+                                
                             }
 
                 });

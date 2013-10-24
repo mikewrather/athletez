@@ -536,9 +536,8 @@ ul.ui-autocomplete {
 }
 
 .ui-autocomplete-loading{
-    background-image: url(http://cdn.athletez.com/resources/img/17-1.gif) !important;
-    background-position: right !important;
-    background-repeat: no-repeat !important;
+    background-image: url(http://athletez.s3.amazonaws.com/resources/img/gray_loading.gif) !important;
+    background-repeat: repeat;
 }
 
 .ui-autocomplete li.ui-menu-item {
@@ -927,7 +926,9 @@ span.team-label{
 
 /** Popup CSS **/
 .modal-body {
-	width: 99%;
+    position: absolute;
+    height: 90%;
+	width: 96%;
     padding: 0;
 }
 
@@ -1008,7 +1009,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#84a934', end
 
 .add-game-modal{
     height:75%;
-    max-height: 75%;
+    max-height: 500px;
     width:550px;
     left:50%;
     margin-left: -275px;

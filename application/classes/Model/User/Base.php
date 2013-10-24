@@ -503,7 +503,7 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 
 	public function get_height_ft()
 	{
-		return ($this->height_in > 0) ? floor($this->height_in / 12) .'"' . $this->height_in % 12 . "'" : 'NA';
+		return ($this->height_in > 0) ? floor($this->height_in / 12) ."' " . $this->height_in % 12 . '"' : 'NA';
 	}
 	 
 	public function getPrimaryVideo()
