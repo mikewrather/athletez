@@ -20,13 +20,20 @@ define(
 					"click .menu-link-h" : "showMenuDropdown",
 					'click .views-reset-btn-h' : 'resetView',
 					'click .sport-reset-btn-h' : 'resetSport',
-					'click .location-reset-btn-h' : 'resetLocation'
+					'click .location-reset-btn-h' : 'resetLocation',
+					'click .reset-all-btn-h' : 'resetAll'
 					//'change #state-list' : 'stateListChange'
 				},
 				
 				
 				demoSelect: function() {
 					
+				},
+
+				resetAll: function(){
+					this.resetView();
+					this.resetLocation();
+					this.resetSport();
 				},
 				
 				resetView: function() {
