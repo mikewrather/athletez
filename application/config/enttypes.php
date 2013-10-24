@@ -792,6 +792,15 @@ return array(
 		'id1' => 'user_contact_id',
 		'id2' => '',
 	),
-
+	'Media_Imagetypelink' => array(
+		'id' => '88',
+		'name' => 'Image Type Link',
+		'api_name' => 'imagetypelink',
+		'class_name' => 'Media_Imagetypelink',
+		'db_table' => 'image_type_link',
+		'description' => 'Links images to the type.  Stores all the different formats an image is kept in',
+		'id1' => 'image_type_link_id',
+		'id2' => '',
+	)
 
 );

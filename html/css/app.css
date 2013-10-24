@@ -650,6 +650,12 @@ span.ui-helper-hidden-accessible {
     padding:10px;
 }
 
+a.comment-delete{
+    float: right;
+    top: 10px;
+    position: absolute;
+    right: 10px;
+}
 /**
 ####################################  END COMMENTS ###########################################
 **/
@@ -1350,4 +1356,9 @@ margin-top:10px;
 
 .season-array {
 	height: 70px;
+}
+
+.remove-item {
+	opacity: 0.5;
+	pointer-events: none;
 }

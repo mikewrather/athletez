@@ -29,7 +29,75 @@
 		###########################    GET METHODS    ##############################
 		############################################################################
 
-		
+		/**
+		 * action_get_users() This will get a list of users associated with the event.  Because this number can be huge, there is a default limit and search parameters allow you to narrow the list.
+		 * via /api/game/users/{games_id}
+		 *
+		 */
+		public function action_get_users()
+		{
+			$this->payloadDesc = "This will get a list of users associated with the event.  Because this number can be huge, there is a default limit and search parameters allow you to narrow the list.";
+			$arguments = array();
+
+			if(!($this->mainModel->loaded())){
+				$this->modelNotSetError();
+				return false;
+			}
+			// CHECK FOR PARAMETERS:
+			// limit
+			// This is the number of records you would like returned
+
+			if((int)trim($this->request->query('limit')) > 0)
+			{
+				$arguments["limit"] = (int)trim($this->request->query('limit'));
+			}
+
+			// offset
+			// Record to start with
+
+			if((int)trim($this->request->query('offset')) > 0)
+			{
+				$arguments["offset"] = (int)trim($this->request->query('offset'));
+			}
+
+			// search_text
+			// For instance, the name of a person
+
+			if(trim($this->request->query('search_text')) != "")
+			{
+				$arguments["search_text"] = trim($this->request->query('search_text'));
+			}
+
+			// male
+			// Whether to return male results.  Defaults to 1
+
+			if($this->request->query('male') != "")
+			{
+				//convert male to a boolean
+				$arguments["male"] = (bool)$this->request->query('male');
+			}
+
+			// female
+			// Whether to return female results.  Defaults to 1.
+
+			if($this->request->query('female') != "")
+			{
+				//convert female to a boolean
+				$arguments["female"] = (bool)$this->request->query('female');
+			}
+
+			// orderby
+			// How to order the results
+
+			if(trim($this->request->query('orderby')) != "")
+			{
+				$arguments["orderby"] = trim($this->request->query('orderby'));
+			}
+
+			$result = $this->mainModel->getUsers($arguments);
+			return $result;
+
+		}
 		/**
 		 * action_get_basics() Basic information about the game
 		 * via /api/game/basics/{games_id}
