@@ -69,9 +69,11 @@ function (
 	    {
 		    var str = this.mpay.game_day + " | ";
 		    console.log("Game info",this.mpay);
-		    $.each(this.mpay.teams,function(){
-				if(this.id > 0 && this.id != this.teams_id) str += " VS. " + this.org_name;
-		    });
+		    if(!_.isUndefined(this.mpay.teams) && this.mpay.teams.length) {
+		  	  $.each(this.mpay.teams,function(){
+					if(this.id > 0 && this.id != this.teams_id) str += " VS. " + this.org_name;
+			  });
+		    }
 		    return str;
 	    },
         

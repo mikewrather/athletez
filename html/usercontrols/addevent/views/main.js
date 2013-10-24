@@ -925,7 +925,8 @@ define(['require', 'text!usercontrols/addevent/templates/layout.html', 'facade',
 				gameModel.save({});
 
 				$.when(gameModel.request).done(function(response) {
-					Channel(self.channel).publish(response);
+					routing.trigger(self.channel, response);
+					//Channel(self.channel).publish(response);
 				});
 			} else {
 				$(e.target).parent().find(self.controls.fieldMessage).html(message).fadeIn();
@@ -959,7 +960,8 @@ define(['require', 'text!usercontrols/addevent/templates/layout.html', 'facade',
 							games_id : game.id,							
 							sports_id : response.payload.usl ? response.payload.usl.sports_id : null
 					};
-			Channel(self.channel).publish(self.gameData);
+			routing.trigger(self.channel, self.gameData);
+			//Channel(self.channel).publish(self.gameData);
 			}
 			}
 		},
@@ -1219,7 +1221,8 @@ define(['require', 'text!usercontrols/addevent/templates/layout.html', 'facade',
 							team_id_two : teamTwoId,
 							sports_id : sportsId 
 						};
-						Channel(self.channel).publish(self.gameData);
+						routing.trigger(self.channel, self.gameData);
+						//Channel(self.channel).publish(self.gameData);
 					}
 
 				});

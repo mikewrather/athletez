@@ -58,6 +58,8 @@ define(["require", "text!usercontrols/addgame/templates/layout.html",
 				this.teams_id = options.teams_id;
 			}
 			
+			this.callback = options.callback;
+			
 			if(options.popup) {
 				this.popup = true;
 				this.modelHTML = '<div id="modalPopup" class="modal hide fade model-popup-h add-game-modal"></div>';
@@ -118,7 +120,13 @@ define(["require", "text!usercontrols/addgame/templates/layout.html",
 		/* Set  Up  User References  View  View */
 		setUpMainView : function() {
 	//		console.log("Set Up Main View Add Game");
-			Channel('add-game-success').subscribe(this.addGameFunction);
+			var _self = this;
+			routing.off('add-game-success');
+			routing.on('add-game-success', function(data) {
+				_self.addGameFunction(data);
+			});			
+			
+			//Channel('add-game-success').subscribe(this.addGameFunction);
 			var self = this;
 			this.addGameView = new AddGameView({
 				model : new BasicModel(),
@@ -141,6 +149,7 @@ define(["require", "text!usercontrols/addgame/templates/layout.html",
 			});
 		},
 		addGameFunction : function(data){
+			if(this.callback) this.callback(data);
 			//alert(JSON.stringify(data));
 		}
 	});

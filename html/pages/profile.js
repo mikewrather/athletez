@@ -334,10 +334,26 @@ define([
 				this.scheme.push(addMediaView);
 				this.layout.render();
 			},
+			
+			getOrgData: function () {
+				var position;
+
+				if (this.orgListView) {
+					$(this.orgListView.destination).html('');
+					position = $.inArray(this.orgListView, this.scheme);
+					if (~position) this.scheme.splice(position, 1);
+				}
+				var _self = this;
+				_self.orgs.fetch();
+				$.when(_self.orgs.request).done(function() {
+					_self.setupOrgListView();
+				});
+			},
+			
 
 			setupOrgListView: function () {
 				var orgListView;
-				if(this.orgs.length)
+				if(this.orgs.length && (!this.orgViewname || (this.orgViewname && this.orgViewname == "org")))
 					this.setUpOrgView();
 				else
 					this.setUpUserSportView();					
@@ -345,6 +361,7 @@ define([
 			
 			setUpUserSportView: function() {
 				var _self = this;
+				this.orgViewname = "sport";
 				 this.orgs = new UserGames();
             	this.orgs.userId = _self.id;
             	this.orgs.sports_id = $(".selected-sport-h").data("id");
@@ -353,6 +370,7 @@ define([
             	$.when(this.orgs.request).done(function() {
          		_self.orgListView = new ProfileOrgListView({
 						collection: _self.orgs,
+						controller: _self,
 						destination: "#games_div",
 						eventPage: $(".selected-sport-h").data("name")
 					});
@@ -363,8 +381,10 @@ define([
 			},
 			
 			setUpOrgView: function() {
+				this.orgViewname = "org";
 				this.orgListView = new ProfileOrgListView({
 					collection: this.orgs,
+					controller: this,
 					destination: "#games_div"
 				});
 

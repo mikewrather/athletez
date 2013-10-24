@@ -93,8 +93,9 @@ define([
     TeamController = Controller.extend({
 
         initialize: function (options) {
+        	var self = this;
             Channel('load:css').publish(cssArr);
-            _.bindAll(this);
+            _.bindAll(self);
             this.scheme = [];
             this.handleOptions(options);
             
@@ -346,16 +347,32 @@ define([
             this.layout.render();
         },
         
+        getOrgData: function () {
+				var position, _self = this;;
+				 if (this.gamesView) {
+                	$(this.gamesView.destination).html('');
+                	position = $.inArray(this.gamesView, this.scheme);
+                	if ( ~position ) this.scheme.splice(position, 1);
+            	}
+            
+				_self.games.fetch();
+				$.when(_self.games.request).done(function () {
+					_self.setupGameView();
+				});
+			},
+        
         setupGameView: function () {
+        	
 			var teamView = TeamOrgListView.extend({
 				tagName: 'div'
 			});	        
 			this.gamesView = new teamView({
 				teams_id: this.id,
+				controller: this,
 				collection: this.games,
 				destination: "#games_div",
-				teamRecords: true,
-				name: "games view"
+				teamRecords: true
+				//name: "games view"
 			});
 
 			this.scheme.push(this.gamesView);
