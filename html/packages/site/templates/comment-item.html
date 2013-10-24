@@ -9,13 +9,16 @@
     
     <div>
 	    <div class="bubble">  
-		<div class="pointer"></div>
-	        <div class="content">
-	        	
-	        	<span class="comment-date"><a href="#profile/{{user.id}}" title="{{user.name}}">{{user.name}}</a>  {{poster}} {{comment_date}}</span>
-	        	<p class="comment-text">{{comment}}</p>
-	        </div>
-	    </div>
+			<div class="pointer"></div>
+		        <div class="content">
+		        	
+		        	<span class="comment-date"><a href="#profile/{{user.id}}" title="{{user.name}}">{{user.name}}</a>  {{poster}} {{comment_date}}</span>
+		        	<p class="comment-text">{{comment}}</p>
+		        
+		        	<a href="javascript: void(0);" title="delete" class="delete-comment-h comment-delete">Delete</a>
+		        
+		        </div>
+		    </div>
 	</div>
 </div>
 {{/payload}}

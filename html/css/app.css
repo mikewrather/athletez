@@ -1350,3 +1350,8 @@ margin-top:10px;
 .season-array {
 	height: 70px;
 }
+
+.remove-item {
+	opacity: 0.5;
+	pointer-events: none;
+}
