@@ -1,0 +1,1 @@
+define(["models","facade"],function(e,t){var n=e.BaseModel,r=t.Backbone,i=t.$,s=t._;return n.extend({subject_id:undefined,enttypes_id:undefined,id:1,url:function(){return"/api/ent/delete/"+this.enttypes_id+"/"+this.subject_id}})});

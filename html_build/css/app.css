@@ -521,6 +521,12 @@ span.ui-helper-hidden-accessible {
 .add-comment-form-h textarea{
     padding:10px;
 }
+a.comment-delete{
+    float: right;
+    top: 10px;
+    position: absolute;
+    right: 10px;
+}
 #complevel-list, #sport-list {
 	display: inline-block;
 }
@@ -1084,4 +1090,8 @@ margin-top:10px;
 }
 .season-array {
 	height: 70px;
+}
+.remove-item {
+	opacity: 0.5;
+	pointer-events: none;
 }
