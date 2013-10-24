@@ -207,3 +207,12 @@ height: 35px;
 	margin-left: 84px;
 	color: #FFF;
 }
+.row-fluid .span2{
+		width: 11%;
+}
+.row-fluid .span3 {
+    width: 22.077%;
+}
+.underline-text{
+		text-decoration: underline;
+}
