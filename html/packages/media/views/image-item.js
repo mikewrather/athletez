@@ -4,22 +4,16 @@
 // Return {ImageItemView} object as constructor
 
 define(['vendor', 'views', 'utils', 'text!media/templates/image-item.html', 'votes/models/vote',
-<<<<<<< HEAD
+
         'votes/models/follow','utils/storage','chrome/views/header', 'common/models/delete'], function(vendor, views, utils, imageItemTemplate) {
-=======
-        'votes/models/follow','utils/storage'], function(vendor, views, utils, imageItemTemplate) {
->>>>>>> dcae649e4bbec51e47a95adef07608d8baa8c349
 
 	var ImageItemView, $ = vendor.$, BaseView = views.BaseView, Mustache = vendor.Mustache,
 	voteModel = require('votes/models/vote'),
 	Store = require('utils/storage'),
     followModel = require('votes/models/follow'),
-<<<<<<< HEAD
+
     DeleteModel = require('common/models/delete'),
     header = require('chrome/views/header');
-=======
-    
->>>>>>> dcae649e4bbec51e47a95adef07608d8baa8c349
 
 	ImageItemView = BaseView.extend({
 
@@ -318,7 +312,7 @@ define(['vendor', 'views', 'utils', 'text!media/templates/image-item.html', 'vot
 		    console.log(e.target);
 		    e.stopPropagation();
 		     if(!this.checkForUser()) {
-<<<<<<< HEAD
+
 		  		
 		     		try{
 		  			
@@ -331,10 +325,9 @@ define(['vendor', 'views', 'utils', 'text!media/templates/image-item.html', 'vot
 
 		  		//$(".signup-email").trigger('click');
 		    	return;
-=======
+			     /* old way of doing this
 		  		routing.trigger('showSignup');
-				return;
->>>>>>> dcae649e4bbec51e47a95adef07608d8baa8c349
+				return;*/
 	    	}
 		    var followModelOb = new followModel();
 			followModelOb.userId = this.model.get("payload").id;
