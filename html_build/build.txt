@@ -395,6 +395,7 @@ packages/sport/collections/sports.js
 pages/home/models/image.js
 pages/home/collections/image.js
 text!pages/home/templates/menu.html
+vendor/plugins/jquery.slimscroll.min.js
 pages/home/views/menu.js
 pages/home/views/image-list.js
 text!packages/location/templates/state-item.html
@@ -403,7 +404,6 @@ packages/location/views/state-list.js
 pages/home/views/state-list.js
 text!sport/templates/sport-item.html
 packages/sport/views/sport-item.js
-vendor/plugins/jquery.slimscroll.min.js
 packages/sport/views/sport-list.js
 text!signup/templates/registration.html
 pages/signup/models/registration-basics-final.js
@@ -845,6 +845,7 @@ packages/sport/collections/sports.js
 pages/home/models/image.js
 pages/home/collections/image.js
 text!pages/home/templates/menu.html
+vendor/plugins/jquery.slimscroll.min.js
 pages/home/views/menu.js
 text!media/templates/image-item.html
 packages/vote/models/vote.js
@@ -857,7 +858,6 @@ packages/location/views/state-list.js
 pages/home/views/state-list.js
 text!sport/templates/sport-item.html
 packages/sport/views/sport-item.js
-vendor/plugins/jquery.slimscroll.min.js
 packages/sport/views/sport-list.js
 text!location/templates/city.html
 packages/location/views/city.js
@@ -1371,6 +1371,7 @@ packages/sport/collections/sports.js
 pages/home/models/image.js
 pages/home/collections/image.js
 text!pages/home/templates/menu.html
+vendor/plugins/jquery.slimscroll.min.js
 pages/home/views/menu.js
 pages/home/views/image-list.js
 text!packages/location/templates/state-item.html
@@ -1379,7 +1380,6 @@ packages/location/views/state-list.js
 pages/home/views/state-list.js
 text!sport/templates/sport-item.html
 packages/sport/views/sport-item.js
-vendor/plugins/jquery.slimscroll.min.js
 packages/sport/views/sport-list.js
 text!signup/templates/registration.html
 pages/signup/models/registration-basics-final.js
@@ -1857,6 +1857,7 @@ packages/sport/collections/sports.js
 pages/home/models/image.js
 pages/home/collections/image.js
 text!pages/home/templates/menu.html
+vendor/plugins/jquery.slimscroll.min.js
 pages/home/views/menu.js
 pages/home/views/image-list.js
 text!packages/location/templates/state-item.html
@@ -1865,7 +1866,6 @@ packages/location/views/state-list.js
 pages/home/views/state-list.js
 text!sport/templates/sport-item.html
 packages/sport/views/sport-item.js
-vendor/plugins/jquery.slimscroll.min.js
 packages/sport/views/sport-list.js
 text!signup/templates/registration.html
 pages/signup/models/registration-basics-final.js
@@ -2301,6 +2301,7 @@ packages/sport/collections/sports.js
 pages/home/models/image.js
 pages/home/collections/image.js
 text!pages/home/templates/menu.html
+vendor/plugins/jquery.slimscroll.min.js
 pages/home/views/menu.js
 pages/home/views/image-list.js
 text!packages/location/templates/state-item.html
@@ -2309,7 +2310,6 @@ packages/location/views/state-list.js
 pages/home/views/state-list.js
 text!sport/templates/sport-item.html
 packages/sport/views/sport-item.js
-vendor/plugins/jquery.slimscroll.min.js
 packages/sport/views/sport-list.js
 text!location/templates/city.html
 packages/location/views/city.js
@@ -2574,6 +2574,7 @@ pages/home/collections/image.js
 packages/location/models/state.js
 packages/location/collections/states.js
 text!pages/home/templates/menu.html
+vendor/plugins/jquery.slimscroll.min.js
 pages/home/views/menu.js
 text!media/templates/image-item.html
 packages/vote/models/vote.js
@@ -2586,7 +2587,6 @@ packages/location/views/state-list.js
 pages/home/views/state-list.js
 text!sport/templates/sport-item.html
 packages/sport/views/sport-item.js
-vendor/plugins/jquery.slimscroll.min.js
 packages/sport/views/sport-list.js
 text!signup/templates/registration.html
 text!signup/templates/layout.html
@@ -3313,6 +3313,7 @@ packages/sport/collections/sports.js
 pages/home/models/image.js
 pages/home/collections/image.js
 text!pages/home/templates/menu.html
+vendor/plugins/jquery.slimscroll.min.js
 pages/home/views/menu.js
 pages/home/views/image-list.js
 text!packages/location/templates/state-item.html
@@ -3321,7 +3322,6 @@ packages/location/views/state-list.js
 pages/home/views/state-list.js
 text!sport/templates/sport-item.html
 packages/sport/views/sport-item.js
-vendor/plugins/jquery.slimscroll.min.js
 packages/sport/views/sport-list.js
 text!location/templates/city.html
 packages/location/views/city.js
