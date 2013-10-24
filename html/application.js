@@ -144,6 +144,9 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
         	var self = this, closeModelBox = function() {
         		$("#modalPopup, .modal-backdrop").unbind().remove();
 		        };
+
+	        _gaq.push(['trackEvent','PageView','Full Page']);
+
 	        this.hideSignup();
         	$("body").removeClass("homePage");
         	routing.off('app-inited');
