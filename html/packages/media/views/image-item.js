@@ -83,6 +83,8 @@ define(['vendor', 'views', 'utils', 'text!media/templates/image-item.html', 'vot
 					}
 
 					show_play = true;
+					extra._enttypes_id = typeof(mpay.media_obj == "object") ? mpay.media_obj.enttypes_id : 0;
+					extra._id = typeof(mpay.media_obj == "object") ? mpay.media_obj.id : 0;
 					extra._label = mpay.media.name;
 					extra._link = "javascript: void(0);";
 					extra._has_link = false;
@@ -92,6 +94,8 @@ define(['vendor', 'views', 'utils', 'text!media/templates/image-item.html', 'vot
 					break;
 				case '21':
 					//images
+					extra._enttypes_id = typeof(mpay.media_obj == "object") ? mpay.media_obj.enttypes_id : 0;
+					extra._id = typeof(mpay.media_obj == "object") ? mpay.media_obj.id : 0;
 					if ( typeof (mpay.types) == 'object')
 					{
 						//console.log(mpay.types);
@@ -381,8 +385,8 @@ define(['vendor', 'views', 'utils', 'text!media/templates/image-item.html', 'vot
 			//var subject_id = $(e.currentTarget).attr("subject-type-id");
 			//var entity_id = $(e.currentTarget).attr("subject-id");			
 			var _self = this, deleteModel = new DeleteModel();
-			deleteModel.subject_id = $(e.currentTarget).attr("subject-type-id");
-			deleteModel.entity_id = this.model.get("payload").media_id;//$(e.currentTarget).attr("subject-id");
+			deleteModel.subject_id = $(e.currentTarget).attr("subject-id");
+			deleteModel.enttypes_id = $(e.currentTarget).attr("subject-type-id");
 			//deleteModel.url();
 			deleteModel.destroy();
 			

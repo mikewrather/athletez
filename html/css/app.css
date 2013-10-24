@@ -650,6 +650,12 @@ span.ui-helper-hidden-accessible {
     padding:10px;
 }
 
+a.comment-delete{
+    float: right;
+    top: 10px;
+    position: absolute;
+    right: 10px;
+}
 /**
 ####################################  END COMMENTS ###########################################
 **/
