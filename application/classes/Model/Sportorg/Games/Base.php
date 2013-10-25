@@ -33,7 +33,13 @@ class Model_Sportorg_Games_Base extends ORM
 		'uslgamelink' => array(
 			'model' => 'User_Sportlink_Gamelink',
 			'foreign_key' => 'games_id'
-		)
+		),
+		'user_sport_links'=> array(
+			'model' => 'User_Sportlink',
+			'through' => 'usl_game_link',
+			'foreign_key' => 'games_id',
+			'far_key' => 'user_sport_link_id'
+		),
 	);
 
 	public function rules(){
@@ -160,6 +166,31 @@ class Model_Sportorg_Games_Base extends ORM
 		return null;
 	}
 
+	public function getUsers($args){
+		//extract($args);
+		$users = array();
+
+		$uslgamelink = $this->uslgamelink->find_all();
+		foreach($uslgamelink as $gamelink)
+		{
+
+			$user = $gamelink->usl->user;
+			$users[$user->id] = $user->getBasics();
+			//create result time
+			$total_seconds = $gamelink->result_time;
+			$hours = floor($total_seconds / 3600);
+			$remaining_minutes = $total_seconds % 3600;
+			$minutes = floor($remaining_minutes / 60);
+			$remaining_seconds = floor($remaining_minutes % 60);
+			$seconds = floor($minutes % 60);
+
+			$new_result = str_pad($hours,2,'00',STR_PAD_LEFT).":".str_pad($minutes,2,'00',STR_PAD_LEFT).":".str_pad($seconds,2,'00',STR_PAD_LEFT).":".substr($total_seconds,-2,2);
+			$users[$user->id]["result_time"] = $new_result;
+			$users[$user->id]["result_place"] = $gamelink->result_place;
+			$users[$user->id]["bib_number"] = $gamelink->bib_number;
+		}
+		return $users;
+	}
 
 
 	public $get_basics_class_standards = array(

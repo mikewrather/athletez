@@ -61,6 +61,7 @@
 
 		// Packages
 		'packages': 'packages',
+		'common'    :'packages/common',
 		'user': 'packages/user',
 		'media': 'packages/media',
 		'site': 'packages/site',

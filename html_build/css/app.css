@@ -521,6 +521,12 @@ span.ui-helper-hidden-accessible {
 .add-comment-form-h textarea{
     padding:10px;
 }
+a.comment-delete{
+    float: right;
+    top: 10px;
+    position: absolute;
+    right: 10px;
+}
 #complevel-list, #sport-list {
 	display: inline-block;
 }
@@ -636,17 +642,35 @@ span.ui-helper-hidden-accessible {
 	width: 100%;
 	text-align: left;
 }
-span.team-label{
+span.team-label, span.event-sport-label{
     display: inline-block;
     margin-left:100px;
     font-family: 'Nunito','HelveticaNeue';
     font-weight: bolder;
     font-size: 1.1em;
 }
+a.add-event-h.right-with-icon, a.add-game-h.right-with-icon{
+    font-size: 1em;
+    background-repeat: no-repeat;
+    padding:0 0 0 35px;
+    color:#333;
+    display: inline-block;
+    min-height: 25px;
+    margin:0px 75px 5px 15px;
+    float:right;
+    position: relative;
+    bottom:5px;
+}
+a.add-event-h{
+}
+a.add-game-h{
+    background-image: url(http://cdn.athletez.com/resources/img/court.png);
+}
 .game-box-outer ul {
     background: #bbbbbc;
     border-radius:5px;
     height: 8px;
+    margin: 0;
 }
 .game-box-outer li {
     position:relative;
@@ -664,6 +688,9 @@ span.team-label{
 }
 .game-box-outer li a.win{
     background-color: #dc6526;
+}
+.game-box-outer li a.noscore{
+    background-color: #bbbbbc;
 }
 .game-box-outer li a.loss{
     background-color: #555ad1;
@@ -741,15 +768,44 @@ span.team-label{
     padding: 0;
 }
 div.game-info{
-    top:-80px;
- 
-    width:400px;
-    height:45px;
+    line-height: 25px;
+    bottom: 40px;
+    margin-left: -190px;
+    padding: 9px;
+    width: 460px;
+    height: auto;
     background-color: white;
     position: absolute;
     float: left;
-    color:#333;
-    box-shadow:10px 10px 5px #333;
+    color: #333;
+    box-shadow: 4px 4px 5px #333;
+    border:1px solid #ccc;
+}
+div.game-info .game-day{
+    font-weight: bold;
+}
+div.game-info .team-name{
+    color:#818181;
+}
+div.game-info .game-score{
+    float: right;
+}
+div.game-info .game-score .team-score{
+    color: #ffffff;
+    background-color: #333;
+    min-width: 20px;
+    padding:5px;
+    margin:3px;
+    font-weight: bolder;
+    min-width: 20px;
+    display: inline-block;
+    text-align: center;
+}
+div.game-info .game-score .team-score.loss{
+    background-color: #e49f6f;
+}
+div.game-info .game-score .team-score.win{
+    background-color: #d36011;
 }
 .btn-green{
 	color:#FFF;	
@@ -1084,4 +1140,8 @@ margin-top:10px;
 }
 .season-array {
 	height: 70px;
+}
+.remove-item {
+	opacity: 0.5;
+	pointer-events: none;
 }

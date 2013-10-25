@@ -4,22 +4,16 @@
 // Return {ImageItemView} object as constructor
 
 define(['vendor', 'views', 'utils', 'text!media/templates/image-item.html', 'votes/models/vote',
-<<<<<<< HEAD
+
         'votes/models/follow','utils/storage','chrome/views/header', 'common/models/delete'], function(vendor, views, utils, imageItemTemplate) {
-=======
-        'votes/models/follow','utils/storage'], function(vendor, views, utils, imageItemTemplate) {
->>>>>>> dcae649e4bbec51e47a95adef07608d8baa8c349
 
 	var ImageItemView, $ = vendor.$, BaseView = views.BaseView, Mustache = vendor.Mustache,
 	voteModel = require('votes/models/vote'),
 	Store = require('utils/storage'),
     followModel = require('votes/models/follow'),
-<<<<<<< HEAD
+
     DeleteModel = require('common/models/delete'),
     header = require('chrome/views/header');
-=======
-    
->>>>>>> dcae649e4bbec51e47a95adef07608d8baa8c349
 
 	ImageItemView = BaseView.extend({
 
@@ -89,6 +83,8 @@ define(['vendor', 'views', 'utils', 'text!media/templates/image-item.html', 'vot
 					}
 
 					show_play = true;
+					extra._enttypes_id = typeof(mpay.media == "object") ? mpay.media.enttypes_id : 0;
+					extra._id = typeof(mpay.media == "object") ? mpay.media.id : 0;
 					extra._label = mpay.media.name;
 					extra._link = "javascript: void(0);";
 					extra._has_link = false;
@@ -98,6 +94,8 @@ define(['vendor', 'views', 'utils', 'text!media/templates/image-item.html', 'vot
 					break;
 				case '21':
 					//images
+					extra._enttypes_id = typeof(mpay.media_obj == "object") ? mpay.media_obj.enttypes_id : 0;
+					extra._id = typeof(mpay.media_obj == "object") ? mpay.media_obj.id : 0;
 					if ( typeof (mpay.types) == 'object')
 					{
 						//console.log(mpay.types);
@@ -318,7 +316,7 @@ define(['vendor', 'views', 'utils', 'text!media/templates/image-item.html', 'vot
 		    console.log(e.target);
 		    e.stopPropagation();
 		     if(!this.checkForUser()) {
-<<<<<<< HEAD
+
 		  		
 		     		try{
 		  			
@@ -331,10 +329,9 @@ define(['vendor', 'views', 'utils', 'text!media/templates/image-item.html', 'vot
 
 		  		//$(".signup-email").trigger('click');
 		    	return;
-=======
+			     /* old way of doing this
 		  		routing.trigger('showSignup');
-				return;
->>>>>>> dcae649e4bbec51e47a95adef07608d8baa8c349
+				return;*/
 	    	}
 		    var followModelOb = new followModel();
 			followModelOb.userId = this.model.get("payload").id;
@@ -388,8 +385,8 @@ define(['vendor', 'views', 'utils', 'text!media/templates/image-item.html', 'vot
 			//var subject_id = $(e.currentTarget).attr("subject-type-id");
 			//var entity_id = $(e.currentTarget).attr("subject-id");			
 			var _self = this, deleteModel = new DeleteModel();
-			deleteModel.subject_id = $(e.currentTarget).attr("subject-type-id");
-			deleteModel.entity_id = this.model.get("payload").media_id;//$(e.currentTarget).attr("subject-id");
+			deleteModel.subject_id = $(e.currentTarget).attr("subject-id");
+			deleteModel.enttypes_id = $(e.currentTarget).attr("subject-type-id");
 			//deleteModel.url();
 			deleteModel.destroy();
 			

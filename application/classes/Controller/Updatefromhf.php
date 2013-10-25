@@ -22,6 +22,14 @@ class Controller_Updatefromhf extends Controller
 	//	$this->update_tags();
 	}
 
+	public function action_movetofullyear(){
+		//loop teams for seasons 1-4
+				DB::update('teams')
+					->set(array("seasons_id"=>7))
+					->where('seasons_id','in',array(1,2,3,4))
+					->execute();
+	}
+
 	public function action_getlocs()
 	{
 		ini_set('memory_limit', '1024M');

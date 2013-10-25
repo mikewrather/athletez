@@ -103,6 +103,7 @@ function(vendor, facade,  views,   utils,   ScheduleItemView, Store, ScheduleLis
 	    			routing.trigger('popup-close');						    			
 	    		});
 	    	} else {
+			    console.log($(".selected-sport-h").data("id"));
 	        	routing.trigger('add-event',0,$(".selected-sport-h").data("id"), this.getUserId(), function(data) {
 	    			if(_self.controller) _self.controller.getOrgData();
 	    			routing.trigger('popup-close');
@@ -112,17 +113,18 @@ function(vendor, facade,  views,   utils,   ScheduleItemView, Store, ScheduleLis
 
         initialize: function(options) {
         	var _self = this;
+	        console.log("OPTIONS",options);
         	_self.eventPage = options.eventPage || false;
         	_self.teamRecords = options.teamRecords;
         	_self.controller = options.controller || false;
         	if((!_.isUndefined(options.teamRecords) && options.teamRecords)) {
         		//var json = options.collection.toJSON();
+		        console.log("Team Records",options.teamRecords,options);
         		_self.renderTemplate();
         		_self.listView = ".schedule-list-h";
         		_self.singleView = true;
         	}
-        	
-        	
+
         	if(!_.isUndefined(options.eventPage) && options.eventPage) {
         		//var json = options.collection.toJSON();
         		_self.renderTemplate(_self.eventPage);
@@ -132,7 +134,7 @@ function(vendor, facade,  views,   utils,   ScheduleItemView, Store, ScheduleLis
         	
             CollectionView.prototype.initialize.call(_self, options);
             if(!_self.collection) {
-                throw new Error("Schedulr expected options.collection.");
+                throw new Error("Schedule expected options.collection.");
             }
 		            
             _.bindAll(_self);
@@ -141,6 +143,10 @@ function(vendor, facade,  views,   utils,   ScheduleItemView, Store, ScheduleLis
 			
 
         },
+
+	    afterRender: function(){
+		 //   $(this.el).attr('data-team-id',this.teams_id);
+	    },
         
         renderTemplate: function (eventPage) {
             var markup = Mustache.to_html(ScheduleListTemplate, {data: this.collection.length, eventPage: eventPage});

@@ -1,7 +1,7 @@
 //Menu View
 
 define(
-		[ 'require', 'text!pages/home/templates/menu.html', 'facade', 'views' ],
+		[ 'require', 'text!pages/home/templates/menu.html', 'facade', 'views', 'jquery.slimscroll' ],
 		function(require, menuTemplate) {
 
 			var MenuView, facade = require('facade'), views = require('views'), SectionView = views.SectionView;
@@ -20,13 +20,20 @@ define(
 					"click .menu-link-h" : "showMenuDropdown",
 					'click .views-reset-btn-h' : 'resetView',
 					'click .sport-reset-btn-h' : 'resetSport',
-					'click .location-reset-btn-h' : 'resetLocation'
+					'click .location-reset-btn-h' : 'resetLocation',
+					'click .reset-all-btn-h' : 'resetAll'
 					//'change #state-list' : 'stateListChange'
 				},
 				
 				
 				demoSelect: function() {
 					
+				},
+
+				resetAll: function(){
+					this.resetView();
+					this.resetLocation();
+					this.resetSport();
 				},
 				
 				resetView: function() {
@@ -161,7 +168,10 @@ define(
 				afterRender: function() {
 					this.hideAllDropdowns();
 
-					
+					if($.slimScroll){
+						$(this.el).find('.sport-list').slimScroll();
+					}
+
 					var data = this.model.toJSON();
 					try{
 						console.error(data.views);
