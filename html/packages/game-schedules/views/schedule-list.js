@@ -124,8 +124,7 @@ function(vendor, facade,  views,   utils,   ScheduleItemView, Store, ScheduleLis
         		_self.listView = ".schedule-list-h";
         		_self.singleView = true;
         	}
-        	
-        	
+
         	if(!_.isUndefined(options.eventPage) && options.eventPage) {
         		//var json = options.collection.toJSON();
         		_self.renderTemplate(_self.eventPage);

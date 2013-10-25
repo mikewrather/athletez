@@ -50,7 +50,6 @@ function (
             if(this.teamView) {
             	 this.mpay = this.model.get('payload');
 			     this.template = ScheduleSingleItemTemplate;
-			     var string_to_use = this.createOpponentString();
             	 var markup = Mustache.to_html(this.template, {payload:this.mpay,teams_id:this.teams_id});
 	             $(this.el).attr('data-team-id',this.teams_id);
         	 } else if (this.eventView && this.eventView != '') {
@@ -92,18 +91,6 @@ function (
 			      $(this).find('span.team-name[data-team-id="' + team_id + '"]').hide();
 		      });
 	      },
-
-	      createOpponentString: function()
-	    {
-		    var str = this.mpay.game_day + " | ";
-		    console.log("Game info",this.mpay);
-		    if(!_.isUndefined(this.mpay.teams) && this.mpay.teams.length) {
-		  	  $.each(this.mpay.teams,function(){
-					if(this.id > 0 && this.id != this.teams_id) str += " VS. " + this.org_name;
-			  });
-		    }
-		    return str;
-	    },
         
         selectTeam: function(event) {
             var team_id = this.select_team.val();

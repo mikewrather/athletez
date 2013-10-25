@@ -1,9 +1,4 @@
-<!--	<a href="/#game/{{id}}" class="background-blue team-info-h" tooltip="test">
-	<div class="game-info hide">
-		{{summary}}
-	</div> </a>
--->
-		{{#payload}}
+{{#payload}}
 <a href="#game/{{id}}" data-team-id="{{teams_id}}" class="background-blue team-info-h">
 	<div class="game-info hide">
 		<span class="game-day">{{gameDay}}</span>{{#teams}}<span class="team-name" data-winner="{{isWinner}}" data-team-id="{{id}}">
@@ -11,4 +6,4 @@
 		<span class="game-score">{{#teams}}{{#points_scored}}<span class="team-score {{#isWinner}}win{{/isWinner}}{{^isWinner}}loss{{/isWinner}}">{{points_scored}}</span>{{/points_scored}}{{/teams}}</span>
 	</div>
 </a>
-		{{/payload}}
+{{/payload}}

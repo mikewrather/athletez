@@ -142,7 +142,7 @@ define(["require", "text!usercontrols/addgame/templates/layout.html",
 			this.scheme.push(this.addGameView);
 			this.layout.render();
 			$('#modalPopup .modal-body').slimScroll({
-				height:'430px',
+				height:'410px',
 				railVisible:true,
 				allowPageScroll:true,
 				disableFadeOut:true

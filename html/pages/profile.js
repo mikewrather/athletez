@@ -143,6 +143,7 @@ define([
 
 				function callback(sport_id) {
 
+					delete controller.orgViewname;
 					controller.refreshPage();
 					controller.sports_id = sport_id;
 
@@ -349,6 +350,7 @@ define([
 			
 
 			setupOrgListView: function () {
+				console.log("Called setup org list view which is where the game list type is decided upon",this.orgs,this.orgViewname);
 				var orgListView;
 				if(this.orgs.length && (!this.orgViewname || (this.orgViewname && this.orgViewname == "org")))
 					this.setUpOrgView();
@@ -357,6 +359,7 @@ define([
 			},
 			
 			setUpUserSportView: function() {
+				console.log("Called event-based user-sport list view");
 				var _self = this;
 				this.orgViewname = "sport";
 				this.orgs = new UserGames();
@@ -378,6 +381,7 @@ define([
 			},
 			
 			setUpOrgView: function() {
+				console.log("Called normal org list view");
 				this.orgViewname = "org";
 				this.orgListView = new ProfileOrgListView({
 					collection: this.orgs,

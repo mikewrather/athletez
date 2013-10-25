@@ -1,12 +1,13 @@
 {{#data}}
 	<div>
 		{{#eventPage}}
-			<strong style="margin-left:100px;">{{eventPage}} Events</strong>
-			<a href="javascript: void(0);" title="add team" class="add-event-h">Click here to Add Event.</a>	
+			<span class="event-sport-label">{{eventPage}} Events</span>
+			<a href="javascript: void(0);" title="add team" class="add-event-h right-with-icon">Add Event / Meet</a>
 		{{/eventPage}}
 
 		{{^eventPage}}
-			<a href="javascript: void(0);" title="add game" class="add-game-h">Click here to Add Game.</a>
+			<span class="event-sport-label">&nbsp;</span>
+			<a href="javascript: void(0);" title="add game" class="add-game-h right-with-icon">Add Game.</a>
 		{{/eventPage}}
 	</div>
 <div class="select-team">
@@ -22,12 +23,12 @@
 <div class="info">
 	{{#eventPage}}
 	<div>
-		<a href="javascript: void(0);" title="Add an Event" class="add-event-h">Click here to Add Event.</a>
+		<a href="javascript: void(0);" title="Add an Event" class="add-event-h right-with-icon">Add Event / Meet</a>
 	</div>
 	{{/eventPage}}
 	{{^eventPage}}
 	<div>
-		No games on the docket.  <a href="javascript: void(0);" title="add game" class="add-game-h">Click here to Add Game.</a>
+		<a href="javascript: void(0);" title="add game" class="add-game-h right-with-icon">Add Game.</a>
 	</div>
 	{{/eventPage}}
 
