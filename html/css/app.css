@@ -840,6 +840,10 @@ span.team-label{
     background-color: #dc6526;
 }
 
+.game-box-outer li a.noscore{
+    background-color: #bbbbbc;
+}
+
 .game-box-outer li a.loss{
     background-color: #555ad1;
 }
@@ -943,16 +947,49 @@ span.team-label{
 /*********** TEMP ****************/
 
 div.game-info{
-    top:-80px;
- /*   left:50%; */
-    width:400px;
-    height:45px;
+    line-height: 25px;
+    bottom: 40px;
+    margin-left: -190px;
+    padding: 9px;
+    width: 460px;
+    height: auto;
     background-color: white;
     position: absolute;
     float: left;
-    color:#333;
-    box-shadow:10px 10px 5px #333;
+    color: #333;
+    box-shadow: 4px 4px 5px #333;
+    border:1px solid #ccc;
 }
+div.game-info .game-day{
+    font-weight: bold;
+}
+
+div.game-info .team-name{
+    color:#818181;
+}
+
+div.game-info .game-score{
+    float: right;
+}
+div.game-info .game-score .team-score{
+    color: #ffffff;
+    background-color: #333;
+    min-width: 20px;
+    padding:5px;
+    margin:3px;
+    font-weight: bolder;
+    min-width: 20px;
+    display: inline-block;
+    text-align: center;
+}
+div.game-info .game-score .team-score.loss{
+    background-color: #e49f6f;
+}
+
+div.game-info .game-score .team-score.win{
+    background-color: #d36011;
+}
+
 
 /*********BootStrap Inherited********/
 .btn-green{

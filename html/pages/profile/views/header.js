@@ -129,14 +129,13 @@ function(require, profileHeaderTemplate, selectSportTemplate) {
 	            console.log(this);
 	            var srcNoExt = String($(this).attr('src')).split("_selected.png")[0];
 	            srcNoExt = srcNoExt.split('.png')[0] + ".png";
-	            $(this).attr('src',srcNoExt);
+	            $(this).attr('src',srcNoExt).removeClass("selected-sport-h");
             });
             $(".sports-icon-h[data-id="+sport_id+"]").addClass('selected-sport-h');
 	        var srcNoExt = String($(".sports-icon-h[data-id="+sport_id+"]").attr('src')).split(".png")[0] + "_selected.png";
 	        $(".sports-icon-h[data-id="+sport_id+"]").attr('src',srcNoExt);
 
             var title = this.getUserName();
-
             
             if(sport_id) {
             	title += " | "+ sport_name;

@@ -74,19 +74,6 @@ class Controller_Authcheck extends AuthController
 			"id" => "logoutId"
 		);
 
-
-	/*	$retArr['nav'][] = array(
-			"page"=>"Tag",
-			"link"=>"/#tag"
-		);
-	*/
-	/*	if($this->user->teams->find_all()->count() > 0)
-		{
-			$retArr['nav'][] = array(
-				"page"=>"My Teams",
-				"link"=>"/team"
-			);
-		}   */
 		echo json_encode($retArr);
 	}
 }

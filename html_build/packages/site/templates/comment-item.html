@@ -15,7 +15,7 @@
 		        	<span class="comment-date"><a href="#profile/{{user.id}}" title="{{user.name}}">{{user.name}}</a>  {{poster}} {{comment_date}}</span>
 		        	<p class="comment-text">{{comment}}</p>
 		        
-		        	<a href="javascript: void(0);" title="delete" class="delete-comment-h comment-delete">Delete</a>
+		        	{{#is_owner}}<a href="javascript: void(0);" title="delete" class="delete-comment-h comment-delete">Delete</a>{{/is_owner}}
 		        
 		        </div>
 		    </div>

@@ -117,6 +117,9 @@ require.config({
 			deps: ['underscore', 'jquery', 'json2', 'html5', 'jqueryui', 'custom', 'jquerytimepicker'],
 			exports: 'Backbone'
 		},
+		'jquery.slimscroll':{
+			deps: ['jquery']
+		},
 		'bootstrap': {
 			deps: ['jquery']
 		},
