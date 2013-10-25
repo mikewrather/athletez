@@ -415,8 +415,9 @@ class Model_Sportorg_Team extends ORM
 			->where('subject_enttypes_id','=',$enttype_id);
 
 		if (!isset($orderby)){
-			$this->join(array($counts,'filtered'), 'left')->on('filtered.teams_id', '=', 'sportorg_team.id');
-			$this->order_by('num_votes', 'asc');
+			$this->order_by('orgs.name','ASC');
+			//$this->join(array($counts,'filtered'), 'left')->on('filtered.teams_id', '=', 'sportorg_team.id');
+			//$this->order_by('num_votes', 'asc');
 		}else{
 			//TODO, add by jeffrey
 			//$this->order_by($orderby, 'asc');
@@ -450,6 +451,7 @@ class Model_Sportorg_Team extends ORM
 
 		$search = ORM::_sql_exclude_deleted($classes_arr, $this);
 		$search->limit(10);
+		//print_r($search->find_all());
 		return $search;
 	}
 	
