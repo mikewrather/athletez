@@ -1,24 +1,24 @@
 
 {{#payload}}
 <div class="row-fluid" data-id="bbbbbbbb">
-    <div class="user-photo">
-    	<a href="#profile/{{user.id}}" title="{{user.name}}">
-    		<img src="{{base_url}}{{poster_picture}}" alt="{{poster}}" />
-    	</a>
-    </div>
-    
-    <div>
-	    <div class="bubble">  
+	<div class="user-photo">
+		<a href="#profile/{{user.id}}" title="{{user.name}}">
+			<img src="{{base_url}}{{poster_picture}}" alt="{{poster}}" />
+		</a>
+	</div>
+
+	<div>
+		<div class="bubble">
 			<div class="pointer"></div>
-		        <div class="content">
-		        	
-		        	<span class="comment-date"><a href="#profile/{{user.id}}" title="{{user.name}}">{{user.name}}</a>  {{poster}} {{comment_date}}</span>
-		        	<p class="comment-text">{{comment}}</p>
-		        
-		        	{{#is_owner}}<a href="javascript: void(0);" title="delete" class="delete-comment-h comment-delete">Delete</a>{{/is_owner}}
-		        
-		        </div>
-		    </div>
+			<div class="content">
+
+				<span class="comment-date"><a href="#profile/{{user.id}}" title="{{user.name}}">{{user.name}}</a>  {{poster}} {{comment_date}}</span>
+				<p class="comment-text">{{comment}}</p>
+
+				{{#is_owner}}<a href="javascript: void(0);" title="delete" class="delete-comment-h comment-delete">Delete</a>{{/is_owner}}
+
+			</div>
+		</div>
 	</div>
 </div>
 {{/payload}}

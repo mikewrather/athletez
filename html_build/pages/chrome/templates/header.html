@@ -23,10 +23,8 @@
                 <a class="dropdown-toggle" data-toggle="dropdown">{{user_name}} <b class="caret"></b></a>
                 <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
                     {{#nav}}
-                        <li><a href="{{link}}">{{page}}</a></li>
+                        <li><a href="{{link}}" {{#id}} id="{{id}}" {{/id}} >{{page}}</a></li>
                     {{/nav}}
-                    <li><a href="{{fbreg_url}}">{{fbreg_label}}</a></li>
-                    <li><a href='null' id="logoutId">{{logout_label}}</a></li>
 
                 </ul>
             </div>
