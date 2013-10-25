@@ -51,7 +51,7 @@ function(require, commentFormTemplate,    commentFormModel,        BaseCommentFo
 	    },
 	    submitHandler: function (e) {
 		    e.preventDefault();
-		    if(!self.checkForUser()) {
+		    if(!this.checkForUser()) {
 				routing.trigger('showSignup');
 				return;
 		    }
