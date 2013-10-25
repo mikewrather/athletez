@@ -20,10 +20,10 @@ class Controller_Authcheck extends AuthController
 		$facebook = FacebookAuth::factory();
 
 		//	print_r($facebook);
-		$retArr["facebook"] =  $facebook->get_user();
+//		$retArr["facebook"] =  $facebook->get_user();
 
 		$retArr['authorized'] = $this->user ? true : false;
-
+/*
 		if(!$this->user)
 		{
 			if (isset($retArr['facebook']['id']))
@@ -41,7 +41,7 @@ class Controller_Authcheck extends AuthController
 				echo json_encode($retArr);
 				return;
 			}
-		}
+		}*/
 
 		$retArr['id'] = $this->user->id;
 	//	$retArr['user_photo'] = $this->user->getAvatar();
@@ -64,8 +64,8 @@ class Controller_Authcheck extends AuthController
 		);
 
 		$retArr['nav'][] = array(
-			"page" => $retArr['authorized'] ? "Facebook Linked" : "Link to Facebook",
-			"link" => $retArr['authorized'] ? "javascript:void(0);" : "/#fbconnect"
+//			"page" => $retArr['authorized'] ? "Facebook Linked" : "Link to Facebook",
+//			"link" => $retArr['authorized'] ? "javascript:void(0);" : "/#fbconnect"
 		);
 
 		$retArr['nav'][] = array(
