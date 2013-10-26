@@ -759,22 +759,30 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 //		print_r($org_sport_link_obj->execute());
 		$res = $org_sport_link_obj->execute();
 		$orgs = array();
+		$first_run = true;
 		foreach($res as $row)
 		{
-			if(!isset($current_org) || $current_org != $row['org_id']){
-				$current_org = $row['org_id'];
-				$orgs[$current_org]["name"] = ucwords(strtolower($row['org_name']));
+			if(!isset($curr_sport_id) || $curr_sport_id != $row['sports_id'] || (!isset($curr_org_id) || $curr_org_id != $row['org_id'])){
+				if(!$first_run) $current_org["sports"][] = $current_sport;
+				$curr_sport_id = $row['sports_id'];
+				$current_sport = array("name" => ucwords(strtolower($row['sport'])));
 			}
-			if(!isset($current_sport) || $current_sport != $row['sport']){
-				$current_sport = $row['sport'];
-			//	$orgs[$current_org][$current_sport] = ucwords(strtolower($row['org_name']));
+			if(!isset($curr_org_id) || $curr_org_id != $row['org_id']){
+				if(!$first_run) $orgs[] = $current_org;
+				$curr_org_id = $row['org_id'];
+				$current_org = array("name" => ucwords(strtolower($row['org_name'])));
 			}
-			$orgs[$current_org][$current_sport]["teams"][$row['team_id']] = array(
+			$first_run=false;
+			$team = array(
+				"id" => $row['team_id'],
 				"season" => $row['season'],
 				"complevel" => $row['complevel_name'],
 				"year" => $row['year']
 			);
+			$current_sport["teams"][] = $team;
 		}
+		$current_org["sports"][] = $current_sport;
+		$orgs[] = $current_org;
 		return $orgs;
 	}
 
