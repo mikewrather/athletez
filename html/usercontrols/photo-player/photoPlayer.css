@@ -304,3 +304,131 @@ ul#tags-list .tags-number {
 	margin-left: 10px;
 	width: 4px;
 }
+
+
+.game-match-name{
+        background-color: #948BDE;
+        color: white;
+        height: 45px;
+        font-family: serif;
+        font-size: small;
+        
+    }
+    .game-score{
+        background-color: #4C3DC7;
+        color: white;
+        height: 45px;
+        text-align: center;
+        width: 65px;
+        float: left!important;
+        font-size: 2.2em;
+        font-weight: bolder;
+
+    }
+    .game-match-name1{
+        background-color: #E69F71;
+        float: left;
+        width: 70%;
+        color: white;
+        height: 45px;
+        font-family: serif;
+        font-size: small;
+        
+    }
+    .game-score1{
+        background-color: #D45F10;
+        color: white;
+        height: 45px;
+        text-align: center;
+        width: 65px;
+        float: left!important;
+        font-size: 2.2em;
+        font-weight: bolder;
+    }
+    .teamName-area{
+        padding-top: 9%;
+        padding-bottom: 35%;
+        font-size: small;
+    }
+    .scoreAlign{
+        top: 20%;
+        position: relative;
+    }
+    .labelSpan{
+        font-family: serif;
+        font-size: small;
+        font-weight: bolder;
+    }
+
+
+    .user-photo {
+    float: left;
+    height: 45px;
+    width: 45px;
+
+}
+.comment .user-photo img, .comment .user-photo a img {
+    height: 100%;
+    margin-top: 5px !important;
+    position: relative;
+    top:0px;
+    width: 100% !important;
+}
+.photo-player-coment .user-photo {
+    float: left;
+    height: 40px;
+    width: 40px;
+}
+#comment-list{
+margin-left: 7px;
+margin-top: 0px;
+}
+.user-comment, .comment-text{
+    font-family: serif;
+    font-size: small!important;
+}
+.user-comment{
+    font-weight: bold;
+}
+.user-photo-profile{
+   width: 76px; 
+   
+    float: left;
+}
+}
+.content-prof-sub{
+    width: 299px;
+    padding-top: 39px;
+    margin-left: 22px;
+}
+.prof-name-area{
+    width: 227px;
+}
+.firstheader{
+float:left;
+margin-left:5%;
+color:white;
+ top:10px;
+  position:relative;
+}
+.secheader{
+float:left;
+ margin-left: 6%;
+ color:white; 
+ top:10px; 
+ position:relative;
+}
+.thirdheader{
+float:left;
+ margin-left: 8%;
+ color:white; 
+ top:10px; 
+ position:relative;
+}
+.headerinfo{
+  
+font-family: serif;
+font-size: 23px;
+font-weight: bolder;
+}
+}

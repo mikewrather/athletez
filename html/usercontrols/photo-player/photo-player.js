@@ -10,6 +10,7 @@ define(["require", 'text!usercontrols/photo-player/templates/comments.html',
 	   "usercontrols/photo-player/views/comments",
 	   "usercontrols/photo-player/collections/tags",
 	   "usercontrols/photo-player/views/tags",
+	   "usercontrols/photo-player/models/tags",
 	   'usercontrols/tag/views/main',
 	   'usercontrols/tag/models/basic_info',
 	    ], function(require, modelBoxCommentTemplate, tagTemplate) {
@@ -28,6 +29,7 @@ define(["require", 'text!usercontrols/photo-player/templates/comments.html',
 	PhotoPlayerView = require("usercontrols/photo-player/views/main"),
 	CommentSectionView = require("usercontrols/photo-player/views/comments"),
 	TagsSectionView = require("usercontrols/photo-player/views/tags"),
+	TagsSectionmodel = require("usercontrols/photo-player/models/tags"),
 	TagView = require('usercontrols/tag/views/main'),
 	UserModel = require('usercontrols/tag/models/basic_info'),
 	PhotoPlayerController = Controller.extend({
@@ -53,10 +55,16 @@ define(["require", 'text!usercontrols/photo-player/templates/comments.html',
 			if(options.userId) this.userId = options.userId;
 			if(options.array) this.collectionArray = true;
 			if (options._collection) this._collection = options._collection;
-				this.modelHTML = '<div id="photoPlayerModal" class="modal photo-frame-model hide fade model-popup-h">'+
+				/*this.modelHTML = '<div id="photoPlayerModal" class="modal photo-frame-model hide fade model-popup-h">'+
 					'<div class="modal-body page-content-h">'+
 					'<div class="photo-player-area-h photo-player"></div>'+
 					'<div class="photo-player-right-area"><div class="right-area-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button></div><div class="tags-area-h"></div>' +
+					'<div class="comment-area coment-area-h"></div><div class="comment-input-outer-h comment-input-outer" class="clearfix"></div>'+
+					'<div id="image-tagging-photo"></div>'+
+					'</div></div></div>';*/
+					this.modelHTML = '<div id="photoPlayerModal" class="modal photo-frame-model hide fade model-popup-h">'+
+					'<div class="modal-body page-content-h">'+
+					'<div class="photo-player-area-h photo-player"></div>'+'<div class="photo-player-right-area"><div class="right-area-header"><div class="headerinfo"></div><button type="button" class="close" data-dismiss="modal" aria-hidden="true">	&times;</button></div><div class="prof-name-area"></div><div class="teamName-area"></div><div class="tags-area-h"></div>' +
 					'<div class="comment-area coment-area-h"></div><div class="comment-input-outer-h comment-input-outer" class="clearfix"></div>'+
 					'<div id="image-tagging-photo"></div>'+
 					'</div></div></div>';
@@ -150,10 +158,12 @@ define(["require", 'text!usercontrols/photo-player/templates/comments.html',
 			_self.tags.fetch();
 			//$(".coment-area-h").html();
 			$.when(_self.tags.request).done(function () {
+				var modeltag = new TagsSectionmodel();
 				var tagView = new TagsSectionView({
 					collection : _self.tags,
 					userId: _self.userId,
 					name : _self.oldTagView,
+					model:modeltag,
 					entity_type_id: entity_id,
 					destination : ".tags-area-h"
 				});
