@@ -128,7 +128,7 @@ define(["require", "text!usercontrols/addevent/templates/layout.html",
 				template : pageLayoutTemplate,
 				name : "add-event-main",
 				destination : (this.popup)?".page-content-h":"#main",
-				user_id : self.id,
+				user_id : self.users_id,
 				channel : 'add-event-success',
 				sports_id : this.sports_id,
 				teams_id : this.teams_id
