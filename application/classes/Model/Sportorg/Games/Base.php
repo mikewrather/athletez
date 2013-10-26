@@ -320,7 +320,7 @@ class Model_Sportorg_Games_Base extends ORM
 		return $matches;
 	}
 
-	protected function setIsWinner()
+	public function setIsWinner()
 	{
 		if(!$this->loaded())return false;
 		DB::update('games_teams_link')
