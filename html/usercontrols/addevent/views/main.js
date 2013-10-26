@@ -918,9 +918,10 @@ define(['require', 'text!usercontrols/addevent/templates/layout.html', 'facade',
 					game_datetime : completeDate,
 					locations_id : locationId,
 					event_name : eventName,
-					sports_id : sportsId
-
+					sports_id : sportsId,
+					users_id : self.user_id
 				};
+				
 				var gameModel = new GameModel(payload);
 				gameModel.save({});
 
@@ -1170,7 +1171,8 @@ define(['require', 'text!usercontrols/addevent/templates/layout.html', 'facade',
 					locations_id : locationId,
 					teamOneId : teamOneId,
 					teamTwoId : teamTwoId,
-					sports_id : sportsId 
+					sports_id : sportsId,
+					users_id : self.user_id
 
 				};
 				////console.log("payload", payload);
