@@ -697,6 +697,7 @@ a.comment-delete{
 }
 
 .profile-heading div.sports-h img{
+	cursor: pointer;
     max-width: 70px;
     max-height: 50px;
 }

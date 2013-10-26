@@ -70,19 +70,12 @@ function(vendor, facade,  views,   utils,   ScheduleItemView, Store, ScheduleLis
 	    	}
 	    	
 	    	if(!_.isUndefined(this.teamRecords) && this.teamRecords) {
-	    		routing.trigger('add-game',0,$("#team-h").val(),$("#sports-h").val(), undefined, function(data) {
+	    		routing.trigger('add-game',0,$("#team-h").val(),$("#sports-h").val(), _self.controller.id, function(data) {
 	    			if(_self.controller) _self.controller.getOrgData();
 	    			routing.trigger('popup-close');
 	    		});
 	    	} else {
-	        	routing.trigger('add-game',0,$(e.currentTarget).data("team-id"),$(e.currentTarget).data("sport-id"), undefined, function(data) {
-	    			//console.error(data);
-	    			//console.error(_self.collection);
-	    			//if(!_.isUndefined(_self.collection.models) && !_.isUndefined(_self.collection.models[0].get("payload").teams) && !_.isUndefined(_self.collection.models[0].get("payload").teams[0].schedules)) {
-	    			//	_self.collection.models[0].get("payload").teams[0].schedules.push(data);
-	    				//_self.collection.add(data);
-	    			//	_self.render();	
-	    			//}
+	        	routing.trigger('add-game',0,$(e.currentTarget).data("team-id"),$(e.currentTarget).data("sport-id"), _self.controller.id, function(data) {
 	    			if(_self.controller) _self.controller.getOrgData();
 	    			routing.trigger('popup-close');
 	    			
@@ -94,17 +87,17 @@ function(vendor, facade,  views,   utils,   ScheduleItemView, Store, ScheduleLis
         addEvent: function(e) {
         	var _self = this;
         	if(!this.checkForUser()) {
-		  		$(".signup-email").trigger('click');
+		  		$("#userlogin").trigger('click');
 		    	return;
 	    	}
 	    	if(!_.isUndefined(this.teamRecords) && this.teamRecords) {
-	    		routing.trigger('add-event',0,$("#sports-h").val(), this.getUserId(), function(data) {
+	    		routing.trigger('add-event',0,$("#sports-h").val(), _self.controller.id, function(data) {
 	    			if(_self.controller) _self.controller.getOrgData();
 	    			routing.trigger('popup-close');						    			
 	    		});
 	    	} else {
 			    console.log($(".selected-sport-h").data("id"));
-	        	routing.trigger('add-event',0,$(".selected-sport-h").data("id"), this.getUserId(), function(data) {
+	        	routing.trigger('add-event',0,$(".selected-sport-h").data("id"), _self.controller.id, function(data) {
 	    			if(_self.controller) _self.controller.getOrgData();
 	    			routing.trigger('popup-close');
 	    		});
