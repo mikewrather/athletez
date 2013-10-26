@@ -118,8 +118,16 @@ define([
                   this.$el.find("#emailInput").val(payload.email); 
                 },
                 next: function(event){
+                	 event.preventDefault();
+                	var termsAndCondition = $(".terms-condition-h").is(":checked");
+                	
+                	if(!termsAndCondition) {
+                		
+                		alert("Please select terms and condition.");
+                		return;
+                	}
                     var current = this;
-                    event.preventDefault();
+                   
                    
                     console.log(this.payload);
                     //
@@ -137,7 +145,7 @@ define([
                     this.payload.re_password=$("#re_password").val();
                     this.payload.dob= $(".borndate").val()+'-'+$(".born").val()+'-'+ $(".borndyear").val();
                     //this.payload.dob="10-6-2005"; 
-                    this.payload.accept_terms=true;
+                    this.payload.accept_terms = termsAndCondition;
                     
                     this.model.save(this.payload,
                         {
