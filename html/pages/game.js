@@ -18,6 +18,7 @@ define([
 	"game/collections/teamrosters",
 	"game/collections/videos",
 	"game/collections/images",
+	"game/collections/participants",
 	"game/collections/comments",
 	"game/collections/commentson",
 	"game/views/header",
@@ -28,7 +29,8 @@ define([
 	"profile/views/image-video-list",
 	"game/views/comment-list",
 	"game/views/commenton-list",
-	"roster/views/roster"
+	"roster/views/roster",
+	"game/views/participants-list"
 
 ], function (require, pageLayoutTemplate, voteView)
 {
@@ -46,7 +48,7 @@ define([
 		GameImageList = require("game/collections/images"),
 		GameCommentList = require("game/collections/comments"),
 		GameCommentOnList = require("game/collections/commentson"),
-		
+		ParticipantsList = require("game/collections/participants"),
 		GameHeaderView = require("game/views/header"),
 		GameAddMediaView = require("game/views/add-media"),
 		GameTeamRosterListView = require("sportorg/views/teamroster-list"),
@@ -56,6 +58,7 @@ define([
 		GameCommentOnListView = require("game/views/commenton-list"),
 		MediaImageModel = require("media/models/image"),
 		RosterView = require("roster/views/roster"),
+		ParticipantsListView = require("game/views/participants-list"),
 
 		LayoutView = views.LayoutView,
 		$ = facade.$,
@@ -118,6 +121,7 @@ define([
 			var controller = this;
 
 			$.when(this.basics.request).done(function () {
+				console.error(controller.basics);
 				controller.setupHeaderView();
 				//controller.initVoteView();
 				controller.setupAddMediaView();
@@ -136,6 +140,25 @@ define([
 				controller.commentson.subject_entity_type = subject_type_id;
 				controller.commentson.id = controller.id;
 				controller.commentson.fetch();
+				
+				
+				// check if there is no team then intialize the participants view
+				var basicPayload = controller.basics.get("payload"),
+					teamsCount = (!_.isUndefined(basicPayload.teams) && basicPayload.teams)?basicPayload.teams.length:0;
+				
+				if(!teamsCount) {
+					
+					// get the participants
+					controller.participants = new ParticipantsList();
+					controller.participants.id = controller.id;
+					controller.participants.fetch();
+					$.when(controller.participants.request).done(function () {
+						console.error(controller.participants);
+						controller.setupParticipantsListView();
+					});
+				
+				}
+				
 				
 				$.when(controller.commentson.request).done(function () {
 					controller.setupCommentsOnListView();
@@ -220,6 +243,17 @@ define([
 			addMediaView.game_model = this.basics;
 
 			this.scheme.push(addMediaView);
+			this.layout.render();
+		},
+		
+		setupParticipantsListView: function() {
+			
+			this.scheme.push(new ParticipantsListView({
+					collection: this.participants,
+					name: "participants view",
+					destination: "#participants_div"
+				})
+			);
 			this.layout.render();
 		},
 
