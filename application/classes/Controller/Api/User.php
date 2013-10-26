@@ -37,6 +37,27 @@
 		############################################################################
 
 		/**
+		 * action_get_teamlist() This is a teamlist with minimal information which should be a quicker service and is intended specifically for the header of the user profile.
+		 * via /api/user/teamlist/{users_id}
+		 *
+		 */
+		public function action_get_teamlist()
+		{
+			$this->payloadDesc = "This is a teamlist with minimal information which should be a quicker service and is intended specifically for the header of the user profile.";
+			$arguments = array();
+			// CHECK FOR PARAMETERS:
+			// sports_id
+			// Pull teams for this sports ID
+
+			if((int)trim($this->request->query('sports_id')) > 0)
+			{
+				$arguments["sports_id"] = (int)trim($this->request->query('sports_id'));
+			}
+
+			return $this->mainModel->getTeamsLite($arguments);
+
+		}
+		/**
 		 * action_get_games() This gets events for a user's individual sport links
 		 * via /api/user/games/{users_id}
 		 *
