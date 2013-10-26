@@ -244,9 +244,11 @@ class Model_Sportorg_Team extends ORM
 	{
 		$sch = $this->getSchedule();
 		$retArr = array();
-		foreach($sch as $game)
-		{
-			$retArr[] = $game->getBasics();
+		if(is_array($sch)){
+			foreach($sch as $game)
+			{
+				$retArr[] = $game->getBasics();
+			}
 		}
 		return $retArr;
 	}
