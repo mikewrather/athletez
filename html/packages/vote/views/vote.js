@@ -14,7 +14,7 @@ define([ 'require', 'text!votes/templates/vote.html','views', 'vendor', 'facade'
         Mustache = vendor.Mustache,
         Channel = utils.lib.Channel,
         voteModel = require('votes/models/vote'),
-        followModel = require('votes/models/follow')
+        followModel = require('votes/models/follow');
 	
 	VoteView = SectionView.extend({
 		template: voteTemplate,
@@ -23,22 +23,27 @@ define([ 'require', 'text!votes/templates/vote.html','views', 'vendor', 'facade'
 			'click .follow-action-h': 'follow'
 		},
 		
-		vote: function() {
+		vote: function(e) {
 			if(!this.checkForUser()) {
 		  		
 		  	   	routing.trigger('showSignup');	
 		    	return;
 	    	}
 			this.voteModelOb.save();
+			$.when(this.voteModelOb.request).done(function() {
+				$(e.currentTarget).addClass('link-disabled');
+			});
 		},
 		
-		follow: function() {
+		follow: function(e) {
 			if(!this.checkForUser()) {
-		  		
 		  	   	routing.trigger('showSignup');	
 		    	return;
 	    	}
 			this.followModelOb.save();
+			$.when(this.followModelOb.request).done(function() {
+				$(e.currentTarget).addClass('link-disabled');
+			});
 			Channel('new-fan').publish();
 		},
 		checkForUser: function() {
@@ -50,36 +55,29 @@ define([ 'require', 'text!votes/templates/vote.html','views', 'vendor', 'facade'
 		
 		initialize : function(options) {
 			var _self = this;
-			
-			console.log(options);
-			
 			_.bindAll(this);
 			SectionView.prototype.initialize.call(this, options);
-			var payload = this.model.get('payload');
-			console.log(payload);
-			this.voteModelOb = new voteModel();
-			this.voteModelOb.userId = options.userId;
-			this.voteModelOb.entity_id = payload.enttypes_id;
-			
-			this.voteModelOb.setData();
-			
-			this.followModelOb = new followModel();
-			this.followModelOb.userId = options.userId;
-			this.followModelOb.entity_id = payload.enttypes_id;
-			//this.followModelOb.setData();
-			// $(document).off('click', '.team-action-h');
-			// $(document).off('click', '.follow-action-h');
-			// $(document).on('click', '.team-action-h', function() {
-				// _self.vote();
-			// });
-// 			
-			// $(document).on('click', '.follow-action-h', function() {
-				// _self.follow();
-			// });
 		},
 		
 		render: function (domInsertion, dataDecorator, partials) {
             SectionView.prototype.render.call(this, domInsertion, dataDecorator, partials); 
+            var payload = this.model.get('payload');
+            if(!payload.has_voted) {
+				this.voteModelOb = new voteModel();
+				this.voteModelOb.subject_id = payload.id;
+				this.voteModelOb.entity_id = payload.enttypes_id;
+				this.voteModelOb.setData();								
+			} else {
+				this.$el.find(".team-action-h").addClass('link-disabled');
+			}
+			
+			if(!payload.is_following) {
+				this.followModelOb = new followModel();
+				this.followModelOb.subject_id = payload.id;
+				this.followModelOb.entity_id = payload.enttypes_id;
+			} else {
+				this.$el.find(".follow-action-h").addClass('link-disabled');
+			}
         }
 		
 	});
