@@ -3,19 +3,33 @@ body { font-size:100%; font-family: "Raleway","Helvetica"; }
 /*****  Common styles   ******/
 
 
-.common-btn { -webkit-box-shadow: inset 0px -3px 2px rgba(0,0,0,0.5); -moz-box-shadow: inset 0px -3px 2px rgba(0,0,0,0.5);  box-shadow: inset 0px -3px 2px rgba(0,0,0,0.5);  text-decoration: none; padding:8px 50px; font-size: 1.5em; color: #FFFFFF; text-align:center; display:inline-block; font-family: "HelveticaNeue Bold",'Nunito',"Helvetica"}
-.common-btn:hover, .common-btn:active { text-decoration: none;  color: #FFFFFF; -webkit-box-shadow: inset 1px 4px 2px rgba(0,0,0,0.5); -moz-box-shadow: inset 1px 4px 2px rgba(0,0,0,0.5);  box-shadow: inset 1px 4px 2px rgba(0,0,0,0.5);  }
+.common-btn { text-decoration: none; padding:8px 50px; font-size: 1.5em; color: #FFFFFF; text-align:center;
+    display:inline-block;}
+.common-btn:hover, .common-btn:active {  border-top:0; text-decoration: none;  color: #FFFFFF; }
 .common-btn-direction {background:#1AA0AE;}
 .common-btn-validation { background:#9CCA3C; }
 
 
-.common-primary-orange-dark { background: #d36011;}
+.common-primary-orange-dark {
+    background: #d36011;
+}
 .common-primary-orange-light { background: #e49f6f;}
 
-.common-primary-blue-dark { background: #4b3ec6; }
+.common-primary-blue-dark {
+    background: #4b3ec6;
+
+}
 .common-primary-blue-light { background: #928add; }
 
-.common-default-sky-dark { background: #107f8d; }
+.common-default-sky-dark {
+    border-top:2px solid #0f5764;
+    border-bottom:2px solid #107f8d;
+    background: #107f8d;
+}
+.common-default-sky-dark:hover {
+    border-top:2px solid #107f8d;
+    border-bottom:2px solid #0f5764;
+}
 .common-default-sky-inter { background:#1aa0ae; }
 .common-default-sky-light { background: #76c5ce; }
 
@@ -28,6 +42,3 @@ input::-webkit-input-placeholder, textarea::-webkit-input-placeholder { color: #
 input:-moz-placeholder, textarea:-moz-placeholder { color: #9a9fa5; }
 input:-ms-placeholder, textarea:-ms-placeholder { color: #9a9fa5; }
 input:-o-placeholder, textarea:-o-placeholder { color: #9a9fa5; }
-
-
-

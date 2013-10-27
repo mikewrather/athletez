@@ -253,7 +253,7 @@ class Model_Sportorg_Games_Base extends ORM
 	}
 
 	public function get_game_location(){
-		return $this->location->address;
+		return $this->location->full_address;
 	}
 
 	public function get_game_name(){
