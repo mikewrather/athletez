@@ -1415,7 +1415,25 @@ margin-top:10px;
 	height: 70px;
 }
 
+
+
 .remove-item {
 	opacity: 0.5;
 	pointer-events: none;
+}
+
+#vote-view {
+	position: relative;
+	height: 40px;
+	float: right;
+	top: -23px;
+	right: 10px;
+}
+
+
+#vote-view .action-block {
+	opacity: 1;
+	width: 100px;
+	margin-right: 10px;
+	display: inline;
 }
