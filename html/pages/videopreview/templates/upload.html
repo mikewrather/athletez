@@ -12,14 +12,14 @@
 <div id="file_upload"></div>
 <form class="form" id="upload_form" method="post">
 	<div id="container_plupload">
-	<div id="filelist"></div>
 
+	<div style="padding:5px 0 20px 10px;">The video uploader will let you upload large videos to our servers.  Once the upload is finished, it takes a couple minutes for everything to process.
+	So nothing will happen right away, but it will be on your profile within a couple minutes of when you hit upload.</div>
 	<span class="file-wrapper">
 				<div class="qq-upload-button" id="pickfiles" style="float:left; width:95%;">
-					<span>Select a Video File</span>
+					<a class="btn-common common-default-sky-dark">Select a Video File</a>
 					<span style="font-size:11px; display:block; color:#880000;" id="fileVal"></span>
 				</div></span><br/>
-		<label>Title:</label>
 		<input type="text" id="title" name="title" style="width:95%" placeholder="Enter a Title"/>
 		<label style="margin-bottom: 2px;">Sport</label>
 		<select name="sports_id" id="sports_id" style="width:95%;" class="">
@@ -68,11 +68,19 @@
 			<option value="47">Diving</option>
 			<option value="48">Squash</option>
 			<option value="49">Squash</option>
-			<option value="50">Marathon</option>
+			<option value="50">Long Distance Running</option>
 			<option value="51">Triathalon</option>
+			<option value="52">Beach Volleyball</option>
+			<option value="53">Men's Boxing</option>
+			<option value="54">Women's Boxing</option>
+			<option value="55">Men's Brazilian Jujitsu</option>
+			<option value="56">Women's Brazilian Jujitsu</option>
+			<option value="57">Men's MMA</option>
+			<option value="58">Women's MMA</option>
 		</select>
-		<div id="uploadfiles" class="qq-upload-button" style="width:70px;">Upload</div>
 
+		<div id="uploadfiles" class="common-default-sky-dark btn-common" style="width:70px;">Upload</div>
+		<div id="filelist"></div>
 	</div>
 </form>
 
