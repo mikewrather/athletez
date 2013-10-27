@@ -104,7 +104,7 @@ define([
         				
         			}
         			
-						$('#RegModal #main-contentreg').slimScroll({
+						$('#RegModal .modal-body').slimScroll({
 							height:'500px',
 							railVisible:true,
 							allowPageScroll:true,

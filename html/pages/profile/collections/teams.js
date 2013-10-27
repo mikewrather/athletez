@@ -13,9 +13,7 @@ function(facade, SportorgTeamList, utils) {
     ProfileTeamList = SportorgTeamList.extend({
         
         url: function() {
-            if (testpath)
-                return testpath + '/user/teamlist/' + this.sport_id;
-            return '/api/user/teamlist/?sports_id=' + this.sports_id;
+            return '/api/user/teamlist/' + this.id + '?sports_id=' + this.sports_id;
         }
 
     });

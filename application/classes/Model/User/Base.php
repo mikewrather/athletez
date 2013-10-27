@@ -756,7 +756,6 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 
 		$org_sport_link_obj = ORM::_sql_exclude_deleted($classes_arr, $org_sport_link_obj);
 
-//		print_r($org_sport_link_obj->execute());
 		$res = $org_sport_link_obj->execute();
 		$orgs = array();
 		$first_run = true;
