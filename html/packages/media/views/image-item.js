@@ -90,7 +90,7 @@ define(['vendor', 'views', 'utils', 'text!media/templates/image-item.html', 'vot
 					extra._has_link = false;
 
 					if(mpay.media.hasOwnProperty('is_owner')) show_edit = mpay.media.is_owner;
-
+					extra._noicon_text = "play";
 					break;
 				case '21':
 					//images
@@ -127,6 +127,7 @@ define(['vendor', 'views', 'utils', 'text!media/templates/image-item.html', 'vot
 					extra._link = "javascript: void(0);";
 					extra._has_link = false;
 					if(mpay.media_obj.hasOwnProperty('is_owner')) show_edit = mpay.media_obj.is_owner;
+					extra._noicon_text = "view";
 
 					break;
 				case '1':
@@ -155,7 +156,7 @@ define(['vendor', 'views', 'utils', 'text!media/templates/image-item.html', 'vot
 							}
 						}
 					}
-
+					extra._noicon_text = "hi";
 					extra._label = mpay.label;
 					extra._sublabel = "Votes: " + mpay.num_votes + ", Followers: " + mpay.num_followers;
 					extra._link = "/#profile/" + mpay.id;
@@ -187,6 +188,7 @@ define(['vendor', 'views', 'utils', 'text!media/templates/image-item.html', 'vot
 					else{
 						extra._sublabel = mpay.event_name;
 					}
+					extra._noicon_text = "vs";
 					console.log(extra);
 					break;
 
