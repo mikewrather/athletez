@@ -44,6 +44,7 @@ function(facade, vendor,  utils, views) {
 	         this.collection = options.collection;
 	         console.log(this.collection.toJSON());
 			 _self.allData = this.collection.toArray();
+			_self.cleardata();
 			_self.getprofile();
 			_self.seeMore();
 			console.log(this.collection.toJSON());
@@ -98,6 +99,11 @@ function(facade, vendor,  utils, views) {
                 	        $(".prof-name-area").html(element);                        
                     	})
 			});
+        },
+        cleardata:function(){
+        	$(".headerinfo").empty();
+        	$(".teamName-area").empty();
+        	$(".prof-name-area").empty();
         },
 	    // Child views...
         childViews: {}
