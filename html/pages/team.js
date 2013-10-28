@@ -327,7 +327,7 @@ define([
         	 this.votesView = new VotesView({
                 model: this.basics,
                 id: this.id,
-                destination: "#vote-view",
+                destination: "#votes-area-h",
                 name: "votes_view"
             });
             this.scheme.push(this.votesView);

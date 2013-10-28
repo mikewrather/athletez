@@ -282,6 +282,21 @@ div.image-item-container > img{
     top:0px;
 
 }
+#votes-area-h a.team-action-h{
+    background-color: #9cca3c;
+}
+#votes-area-h a.follow-action-h{
+    background-color:#33aeab;
+}
+
+#votes-area-h a.team-noaction-h{
+    background-color: #9cca3c;
+    opacity: .5;
+}
+#votes-area-h a.follow-noaction-h{
+    background-color:#33aeab;
+    opacity: .5;
+}
 .action-block{
   /*  height:30px;
     width:30px;*/
@@ -1434,7 +1449,7 @@ margin-top:10px;
 	pointer-events: none;
 }
 
-#vote-view {
+#vote-view, #votes-area-h {
 	position: relative;
 	height: 40px;
 	float: right;
@@ -1443,9 +1458,11 @@ margin-top:10px;
 }
 
 
-#vote-view .action-block {
+#vote-view .action-block, #votes-area-h .vote, #votes-area-h .follow {
 	opacity: 1;
-	width: 100px;
+	width: 55px;
 	margin-right: 10px;
-	display: inline;
+	display: inline-block;
+    padding:4px;
+    text-align: center;
 }
