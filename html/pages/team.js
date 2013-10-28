@@ -43,7 +43,8 @@ define([
     "media/models/image",
     "schedules/views/schedule-list",
     "roster/views/roster",
-    "profile/views/fans-image-list"
+    "profile/views/fans-image-list",
+     'votes/views/vote'
     
     ], function (require, pageLayoutTemplate, voteView) {
 
@@ -81,6 +82,7 @@ define([
 		MenuPageView = require("team/views/menu"),
 		RosterView = require("roster/views/roster"),
         MediaImageModel = require("media/models/image"),
+        VotesView = require('votes/views/vote'),
         LayoutView = views.LayoutView,
         $ = facade.$,
         _ = facade._,
@@ -147,6 +149,9 @@ define([
 				controller.commentson.id = team_id;
 				controller.commentson.fetch();
                 controller.handleDeferredsDynamic();
+                
+                
+                
             }
             
             routing.on('refresh-teampage', function(sport_id, team_id,season_id) {
@@ -161,6 +166,7 @@ define([
                 controller.setupHeaderView();  
 				controller.setupRosterView();
                 controller.setupAddMediaView();
+                if(controller.userId) controller.setUpVoteView();
             });
         },
         
@@ -207,14 +213,13 @@ define([
         },
 
 		setupCommentOnListView: function () {
-				this.commentOnListView = new TeamCommentOnListView({
-					collection: this.commentson,
-					destination: ".commentson-outer-box-h",
-					name: "team comments on view "			
-				});
-				this.scheme.push(this.commentOnListView);
-				this.layout.render();
-			
+			this.commentOnListView = new TeamCommentOnListView({
+				collection: this.commentson,
+				destination: ".commentson-outer-box-h",
+				name: "team comments on view "			
+			});
+			this.scheme.push(this.commentOnListView);
+			this.layout.render();
 		},
         
         refreshPage: function() {
@@ -264,7 +269,6 @@ define([
             $.when(this.images.request).done(function () {
                 controller.setupImages();
             });
-            
         },
         
         setupFansListView: function () {
@@ -277,7 +281,7 @@ define([
 
 				this.scheme.push(this.fansListView);
 				this.layout.render();
-			},
+		},
         
         setupHeaderView: function() {
             var headerView, _self = this;
@@ -317,11 +321,25 @@ define([
             this.layout.render();
         },
         
+        
+        setUpVoteView: function() {
+        	// votes view
+        	 this.votesView = new VotesView({
+                model: this.basics,
+                id: this.id,
+                destination: "#vote-view",
+                name: "votes_view"
+            });
+            this.scheme.push(this.votesView);
+            this.layout.render();
+        },
+        
         setupUpcomingSchedules: function() {
             var UpcomingScheduleListView;
             UpcomingScheduleListView = TeamScheduleListView.extend({
                 name: "Upcoming_Schedule_List" 
             });
+            
             this.upcomingScheduleListView = new UpcomingScheduleListView({
                 collection: this.upcoming_schedules,
                 destination: "#upcoming-schedule",
