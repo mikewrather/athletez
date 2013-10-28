@@ -90,7 +90,7 @@ define(['vendor', 'views', 'utils', 'text!media/templates/image-item.html', 'vot
 					extra._has_link = false;
 
 					if(mpay.media.hasOwnProperty('is_owner')) show_edit = mpay.media.is_owner;
-
+					extra._noicon_text = "play";
 					break;
 				case '21':
 					//images
@@ -127,6 +127,7 @@ define(['vendor', 'views', 'utils', 'text!media/templates/image-item.html', 'vot
 					extra._link = "javascript: void(0);";
 					extra._has_link = false;
 					if(mpay.media_obj.hasOwnProperty('is_owner')) show_edit = mpay.media_obj.is_owner;
+					extra._noicon_text = "view";
 
 					break;
 				case '1':
@@ -155,7 +156,7 @@ define(['vendor', 'views', 'utils', 'text!media/templates/image-item.html', 'vot
 							}
 						}
 					}
-
+					extra._noicon_text = "hi";
 					extra._label = mpay.label;
 					extra._sublabel = "Votes: " + mpay.num_votes + ", Followers: " + mpay.num_followers;
 					extra._link = "/#profile/" + mpay.id;
@@ -166,14 +167,14 @@ define(['vendor', 'views', 'utils', 'text!media/templates/image-item.html', 'vot
 				case '8':
 					//games
 					extra._detailclass = "game";
-					standard_thumb = mpay.game_picture!==null ? mpay.game_picture.types.standard_thumb : {height:440,width:440,url:"http://cdn.athletez.com/resources/icons/game/square_game.png"};
+					standard_thumb = mpay.game_picture!==null ? mpay.game_picture.types.standard_thumb : false;
 					extra._thumbnail = standard_thumb.url;
 					extra._label = mpay.game_day;
 					extra._link = "/#game/" + mpay.id;
 					extra._has_link = true;
 					var team_str = "", teams = mpay.teams;
 					if(teams != null) var teamLength = teams.length;
-
+					console.log(mpay);
 					for (var i = 0; i < teamLength; i++) {
 						team_str += '<span>';
 
@@ -183,7 +184,12 @@ define(['vendor', 'views', 'utils', 'text!media/templates/image-item.html', 'vot
 							team_str += " VS. ";
 					}
 					if(mpay.hasOwnProperty('is_owner')) show_edit = mpay.is_owner;
-					extra._sublabel = team_str;
+					if(team_str != "") extra._sublabel = team_str;
+					else{
+						extra._sublabel = mpay.event_name;
+					}
+					extra._noicon_text = "vs";
+					console.log(extra);
 					break;
 
 			}

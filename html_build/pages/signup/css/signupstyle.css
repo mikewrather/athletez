@@ -14,7 +14,6 @@
 			margin-left: 18%;
 			text-align: center;
 			color: white;
-			font-family: Tahoma;
 			font-size: 16px;
 			font-weight: bold;
 			cursor: pointer;
@@ -34,7 +33,6 @@
 			background-color: #FFFFFF;
 			border-style: none;
 			color: #68686A;
-			font-family: Tahoma;
 			font-size: 16px;
 			font-weight: bold;
 			height: 29px;
@@ -86,7 +84,6 @@
 			background-color: #E4E3E9;
     		border-style: none;
     		color: #68686A;
-    		font-family: Tahoma;
     		font-size: 16px;
     		font-weight: bold;
     		height: 38px;
@@ -141,12 +138,10 @@
 		.regsubmitfinal{
 			background-color: #1BA0AF;
 			width: 224px;
-			height: 51px;
-			margin-left: 38px;
+			height: 35px;
 			color: white;
 			font-size: 20px;
 			border-style: none;
-			margin-left: 69%;
 		}
 		#fblogo{
 			background-image: url(new-facebook-logo.png);
@@ -158,7 +153,6 @@
 		#regor{
 			text-align: center;
 			padding-top: 14px;
-			font-family: Tahoma;
 			font-size: 16px;
 			font-weight: bold;
 			color: #68686A;
@@ -166,21 +160,20 @@
 		
 		
 		.label{
-			width: 123px;
+			width: 100px;
 			position: relative;
 			float: left;
 			color:black;
 			background-color: white;
 		}
 		.firstdiv,.seconddiv,.thirddiv,.fourthdiv,.fifthdiv,.sixthdiv,.seventhdiv{
-			padding-bottom: 10px;
 		}
-		#finalreg input{
-			width: 180px;
-			height: 30px;
+		#finalreg input[type="text"]{
+			width: 235px;
+			height: 20px;
 			background-color: #E4E3E9;
 			border: 0;
-			border-radius: 4px;
+			border-radius: 0;
 		}
 		#radioinput input{
 			width: 21px;
@@ -188,11 +181,6 @@
 			background-color: #E4E3E9;
 			border: 0;
 			border-radius: 4px;
-		}
-	
-		#finalreg{
-			color: #6B6F72;
-			font-family: Tahoma;
 		}
 		#gender input, #Role input{
 			width: 20px;
@@ -273,3 +261,8 @@
 		#skip{
 			width:82px;
 		}	
+		
+.terms-condition {
+	width: 30px !important;
+	margin-left: 107px !important;
+}

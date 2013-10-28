@@ -69,7 +69,6 @@ define([
         		},
         		next: function(event){
         			event.preventDefault();
-        			
         			//backbone.validation.bind(this);
         			var fields = this.$(":input").serializeArray();
                     var flag= true;
@@ -80,6 +79,8 @@ define([
                         return false;
                        }
                     });
+                    
+                    try {
                     
                     if(this.openAsaPage && flag) {
                     	
@@ -94,9 +95,22 @@ define([
 						//$(".register-wrapper-h").unbind().html("");
 						$("#RegModal .modal-body").append(this.selectRegisterBasicFinalView.$el);
 						$('#RegModal').modal('show') ;
+						
+						
                     } else {
-                   		if(flag) routing.trigger("register-basic-final", fields, page);          
+                   		if(flag) routing.trigger("register-basic-final", fields);          
         			}
+        			} catch(e) {
+        				
+        			}
+        			
+						$('#RegModal .modal-body').slimScroll({
+							height:'500px',
+							railVisible:true,
+							allowPageScroll:true,
+							disableFadeOut:true
+						});
+        			
         		},
                 //*************//
                 

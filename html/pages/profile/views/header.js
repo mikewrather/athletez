@@ -122,8 +122,10 @@ function(require, profileHeaderTemplate, selectSportTemplate) {
         },
         
         selectSport: function(e) {
+
             var sport_id = (!e)?$(".sports-h img:first-child").data("id"):$(e.target).data("id");
             var sport_name = (!e)?$(".sports-h img:first-child").data("name"):$(e.target).data("name");
+	        ga('send', 'event', 'Profile-Action', 'Sport-Change', sport_name, sport_id);
             //this.select_sport.val();
             $(".sports-icon-h.selected-sport-h").each(function(){
 	            console.log(this);

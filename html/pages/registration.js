@@ -35,6 +35,7 @@ define(["require",
 		},
 
 		init : function() {
+			ga('send', 'event', 'Signup', 'Header', 'Loading reg header');
 			this.setupLayout().render();
 			this.refreshPage();
 			this.createData();

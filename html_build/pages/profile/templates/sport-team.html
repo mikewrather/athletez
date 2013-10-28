@@ -1,4 +1,9 @@
 {{#records}}
-    <a href="/#team/{{payload.id}}">{{#payload.team_name}}{{payload.team_name}}{{/payload.team_name}}</a><br />
+	<div class="teamlist-header">{{payload.name}}</div>
+	{{#payload.sports}}
+	{{#teams}}
+	    <span class="team-item"><a href="/#team/{{id}}">{{complevel}} {{season}} {{year}}</a></span>
+    {{/teams}}
+    {{/payload.sports}}
+    <br/>
 {{/records}}
-

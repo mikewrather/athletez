@@ -23,22 +23,24 @@ define([ 'require', 'text!votes/templates/vote.html','views', 'vendor', 'facade'
 			'click .follow-action-h': 'follow'
 		},
 		
-		vote: function() {
+		vote: function(e) {
 			if(!this.checkForUser()) {
 		  		
 		  	   	routing.trigger('showSignup');	
 		    	return;
 	    	}
 			this.voteModelOb.save();
+			$(e.target).removeClass('team-action-h').addClass('team-noaction-h');
 		},
 		
-		follow: function() {
+		follow: function(e) {
 			if(!this.checkForUser()) {
 		  		
 		  	   	routing.trigger('showSignup');	
 		    	return;
 	    	}
 			this.followModelOb.save();
+			$(e.target).removeClass('follow-action-h').addClass('follow-noaction-h');
 			Channel('new-fan').publish();
 		},
 		checkForUser: function() {

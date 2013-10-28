@@ -309,13 +309,24 @@ div.image-item-container > img{
 .detail-view.game span.team:last-child:after{
     content : '';
 }
+div.game-tile{
+    height: 100%;
+    text-align: center;
+    vertical-align: middle;
+    padding-top: 80px;
+    font-size: 4.5em;
+    font-weight: bolder;
+    color: white;
+    background-color:#d36011;
+}
 .detail-view h6{
     margin: 15px 8px 8px 8px;
     text-transform:uppercase;
     font-size: 1.4em;
 }
 .detail-view span{
-    margin: 10px 8px 8px 8px;
+    display: inline-block;
+    padding: 2px 8px 8px 8px;
     font-size: .8em;
 }
 input {
@@ -557,6 +568,7 @@ a.comment-delete{
     float:right;
 }
 .profile-heading div.sports-h img{
+	cursor: pointer;
     max-width: 70px;
     max-height: 50px;
 }

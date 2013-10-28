@@ -10,6 +10,7 @@
 
 .photo-frame-model .modal-body {
     height: 100%;
+    width: 100%;
     max-height: 100% !important;
     padding: 0 !important;
 }
@@ -238,12 +239,12 @@ div.right-arrow-container > img{
 	width: 20%;
 }
 
-.game-match-name {
+#photoPlayerModal .game-match-name {
 	float: left;
 	width: 70%;
 }
 
-.game-score {
+#photoPlayerModal .game-score {
 	float: right;
 	width: 30%;
 }
@@ -310,7 +311,6 @@ ul#tags-list .tags-number {
         background-color: #948BDE;
         color: white;
         height: 45px;
-        //font-family: serif;
         font-size: small;
         
     }
@@ -331,7 +331,6 @@ ul#tags-list .tags-number {
         width: 70%;
         color: white;
         height: 45px;
-        //font-family: serif;
         font-size: small;
         
     }
@@ -340,7 +339,7 @@ ul#tags-list .tags-number {
         color: white;
         height: 45px;
         text-align: center;
-        width: 65px;
+        width: 30%;
         float: left!important;
         font-size: 2.2em;
         font-weight: bolder;
@@ -355,7 +354,6 @@ ul#tags-list .tags-number {
         position: relative;
     }
     .labelSpan{
-        //font-family: serif;
         font-size: small;
         font-weight: bolder;
     }
@@ -384,18 +382,16 @@ margin-left: 7px;
 margin-top: 0px;
 }
 .user-comment, .comment-text{
-    //font-family: serif;
     font-size: small!important;
 }
 .user-comment{
     font-weight: bold;
 }
 .user-photo-profile{
-   width: 76px; 
-   
+   width: 76px;
     float: left;
 }
-}
+
 .content-prof-sub{
     width: 299px;
     padding-top: 39px;
@@ -432,11 +428,13 @@ margin-top: 0px;
 .headerinfo{
     color: #FFFFFF;
     float: left;
-    //font-family: serif;
+
+   
     font-size: 16px;
     font-weight: bolder;
+
     height: inherit;
-   // position: relative;
+   
     width: 90%;
 }
 .closer{
@@ -483,4 +481,4 @@ margin-top: 0px;
         opacity: 1;
         padding-right: 9px;
     }
-    
+ 
