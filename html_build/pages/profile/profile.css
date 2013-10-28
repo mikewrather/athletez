@@ -20,17 +20,3 @@
     margin:5px;
     color:white;
 }
-#votes-area-h a.team-action-h{
-    background-color: #9cca3c;
-}
-#votes-area-h a.follow-action-h{
-    background-color:#33aeab;
-}
-#votes-area-h a.team-noaction-h{
-    background-color: #9cca3c;
-    opacity: .5;
-}
-#votes-area-h a.follow-noaction-h{
-    background-color:#33aeab;
-    opacity: .5;
-}
