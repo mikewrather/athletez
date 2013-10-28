@@ -1,3 +1,43 @@
 
 /* Profile Page Styles */
 
+.teamlist-header{
+    font-size: 1em;
+    font-weight: bold;
+    margin-top: 10px;
+    color:#333;
+}
+
+.team-item{
+    padding-left:8px;
+    width: 90%;
+    display: block;
+}
+
+#votes-area-h{
+    position:relative;
+    top:-40px;
+}
+#votes-area-h a{
+    display: inline-block;
+    padding:4px;
+    margin:5px;
+
+    color:white;
+}
+
+#votes-area-h a.team-action-h{
+    background-color: #9cca3c;
+}
+#votes-area-h a.follow-action-h{
+    background-color:#33aeab;
+}
+
+#votes-area-h a.team-noaction-h{
+    background-color: #9cca3c;
+    opacity: .5;
+}
+#votes-area-h a.follow-noaction-h{
+    background-color:#33aeab;
+    opacity: .5;
+}

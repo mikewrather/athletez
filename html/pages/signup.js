@@ -52,6 +52,7 @@ define(["require",
 						return this;
 					},
 					init : function() {
+						ga('send', 'event', 'Signup', 'Open', 'User opened registration box');
 						this.refreshPage();
 						this.setupLayout()
 						this.createData();

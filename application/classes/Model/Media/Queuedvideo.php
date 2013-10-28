@@ -60,12 +60,14 @@ class Model_Media_Queuedvideo extends ORM
 			return;
 		}
 
-		$this->is_processing = 1;
-		$this->save();
-
-		if(isset($this->local_file) && $this->local_file != '')
+		if(isset($this->local_file) && $this->local_file != '' && file_exists($this->local_file))
 		{
-			//check if file exists
+			$res = DB::update('queuedvideos')
+				->set(array('is_processing'=>1))
+				->where('id','=',$this->id)
+				->execute();
+
+			print_r($res);
 
 			//upload
 			$cloudRaw = s3::upload($this->local_file,$this->users_id);
@@ -82,7 +84,7 @@ class Model_Media_Queuedvideo extends ORM
 		}
 		else
 		{
-			return;
+			return false;
 		}
 
 		$this->url = $cloudRaw;

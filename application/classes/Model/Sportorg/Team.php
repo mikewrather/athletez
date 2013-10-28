@@ -177,6 +177,7 @@ class Model_Sportorg_Team extends ORM
 				$games_model->gameTime = $gameTime;
 				$games_model->locations_id = $locations_id;
 				$games_model->save();
+				$games_model->setIsWinner();
 
 				$new_games_id = $games_model->pk();
 					$games_teams_link->teams_id = $teams_id;
@@ -188,6 +189,8 @@ class Model_Sportorg_Team extends ORM
 			}
 			else
 			{
+				$games_model = ORM::factory("Sportorg_Games_Base",$games_id);
+				$games_model->setIsWinner();
 				$games_teams_link->teams_id = $this->id;
 				$games_teams_link->games_id = $games_id;
 				$games_teams_link->points_scored = $points_scored;

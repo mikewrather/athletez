@@ -49,7 +49,17 @@
 			return $retArr;
 		}
 
-		
+		/**
+		 * get_teamlist() This is a teamlist with minimal information which should be a quicker service and is intended specifically for the header of the user profile.
+		 *
+		 * @retun array
+		 */
+		public function get_teamlist()
+		{
+			return $this->obj;
+		}
+
+
 		/**
 		 * get_teams() List of teams the user is associated with
 		 *
