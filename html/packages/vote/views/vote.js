@@ -16,7 +16,7 @@ define([ 'require', 'text!votes/templates/vote.html','views', 'vendor', 'facade'
         voteModel = require('votes/models/vote'),
         followModel = require('votes/models/follow');
 	
-	VoteView = facade.Backbone.View.extend({
+	VoteView = SectionView.extend({
 		template: voteTemplate,
 		events: {
 			'click .team-action-h': 'vote',
@@ -65,18 +65,12 @@ define([ 'require', 'text!votes/templates/vote.html','views', 'vendor', 'facade'
 		initialize : function(options) {
 			var _self = this;
 			_.bindAll(this);
-			for(var i in options) {
-				this[i] = options[i];
-			}
-			this.render();
-			//SectionView.prototype.initialize.call(this, options);
+			SectionView.prototype.initialize.call(this, options);
 		},
 		
-		render: function () {
-			var payload = this.model.get('payload');
-			var markup = Mustache.to_html(this.template, {data: payload});
-            this.$el.html(markup);
-            
+		render: function (domInsertion, dataDecorator, partials) {
+            SectionView.prototype.render.call(this, domInsertion, dataDecorator, partials); 
+            var payload = this.model.get('payload');
             if(!payload.has_voted) {
 				this.voteModelOb = new voteModel();
 				this.voteModelOb.subject_id = payload.id;
@@ -93,8 +87,6 @@ define([ 'require', 'text!votes/templates/vote.html','views', 'vendor', 'facade'
 			} else {
 				this.$el.find(".follow-action-h").addClass('link-disabled');
 			}
-			
-			return this.$el.html();
         }
 		
 	});
