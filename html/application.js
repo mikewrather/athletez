@@ -215,7 +215,7 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
            	//this.showGame();
             //this.showTeam();
            // alert("this profile");
-            
+	        ga('send', 'event', 'app', 'initialized','Browser Reload');
 			this.showHome(null);
         },
 
@@ -224,7 +224,7 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
 		    phrases.fetch();
 	    },
 	    showFbreg:function(){
-            
+		    ga('send', 'event', 'popup', 'open', 'FB Reg');
             fbregistration = new fbreg();
             fbregistration.signupFacebook();
         },
@@ -384,7 +384,7 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
             //Channel('app-inited').subscribe(initImage);
 		},
 		triggerSignup:function(){
-			
+			//ga('send', 'event', 'menu', 'Sign Up','Action-Triggered');
 			this.signup = new header();
 			routing.off('showSignup');
             routing.on('showSignup', function() {
@@ -460,6 +460,7 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
         },
 
         showRegistration: function() {
+	        ga('send', 'event', 'popup', 'Registration');
         	this.cancelAjaxRequests();
             this.loadStyles();
             chromeBootstrap();
@@ -489,6 +490,7 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
         },
         
         showAddGame : function(userid){
+	        ga('send', 'event', 'popup', 'Add Game','',userid);
         	this.cancelAjaxRequests();
         	this.loadStyles();
             chromeBootstrap();
@@ -517,6 +519,7 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
         },
 		// route to login template
 		showLogin: function(){
+
 		 //$('#main-content').empty();
 		   //$('body').empty();
            // chromeBootstrap();
@@ -587,6 +590,7 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
             Channel('load:css').unsubscribe(this.loadCss);
         },
         callLogout:function(){
+	      ga('send', 'event', 'menu', 'Log Out','Action-Triggered',routing.userLoggedIn);
           this.logout= new LoginController();
           routing.trigger('Logout');
         },

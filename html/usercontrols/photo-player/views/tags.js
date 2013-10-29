@@ -1,7 +1,7 @@
 // The CommentOn List
 // --------------
 
-define(['facade', 'vendor', 'utils', 'views', "text!usercontrol/photo-player/templates/tags.html", "usercontrol/photo-player/views/tags-item"],
+define(['facade', 'vendor', 'utils', 'views', "text!usercontrol/photo-player/templates/tags.html", "usercontrol/photo-player/views/tags-item","usercontrols/photo-player/models/tags","jquery.slimscroll"],
 function(facade, vendor,  utils, views) {
 
     var TagListView, _ = facade._,
@@ -10,8 +10,8 @@ function(facade, vendor,  utils, views) {
 		Mustache = vendor.Mustache,
         Channel = utils.lib.Channel,
 	    tagListTemlate = require("text!usercontrol/photo-player/templates/tags.html"),
-	    TagItemView = require("usercontrol/photo-player/views/tags-item");
-
+	    TagItemView = require("usercontrol/photo-player/views/tags-item"),
+	    TagsSectionmodel = require("usercontrols/photo-player/models/tags");
 	CommentListAbstract = CollectionView.extend(SectionView.prototype);
 
     TagListView = CommentListAbstract.extend({
@@ -44,6 +44,11 @@ function(facade, vendor,  utils, views) {
 	         this.collection = options.collection;
 	         console.log(this.collection.toJSON());
 			 _self.allData = this.collection.toArray();
+			_self.cleardata();
+			_self.getprofile();
+			$(".photo-player-right-area").slimScroll({
+   			 height: 'auto'
+			});
 			_self.seeMore();
 			console.log(this.collection.toJSON());
             CollectionView.prototype.initialize.call(this, options);
@@ -55,6 +60,7 @@ function(facade, vendor,  utils, views) {
         },
         
         seeMore: function(e) {
+        	
         	var len = this.allData.length, limit = (len < this.page_limit)?len:this.page_limit, start = len - (this.page * limit), end = start + this.page_limit;
 			
 			if(start <= 0) {
@@ -80,7 +86,28 @@ function(facade, vendor,  utils, views) {
 	            if(this.setupAddView) this.setupAddView();   
         	}
         },
-
+        getprofile:function(){
+        	var mainurl = window.location.href;
+			var userid = mainurl.split('/');
+			var currId = userid[userid.length-1];
+			this.id=currId;
+			//var urlmain ='/api/user/basics/' + this.id;
+			//this.model.set('url',urlmain);
+			//alert("check point");
+			var mymodel = new TagsSectionmodel({id:currId});
+			mymodel.fetch({
+				success: (function (msg) {
+                	        //alert(' Service request success: '); 
+                	        var element = '<div class="user-photo-profile"><img src='+msg.attributes.payload.user_picture_obj.image_path+' alt=""></div><div class="content-prof-sub"><span class="user-comment">'+msg.attributes.payload.label+'</span><p class="comment-text">'+msg.attributes.payload.user_picture_obj.media_obj.timePosted+'</p></div>'; 
+                	        $(".prof-name-area").html(element);                        
+                    	})
+			});
+        },
+        cleardata:function(){
+        	$(".headerinfo").empty();
+        	$(".teamName-area").empty();
+        	$(".prof-name-area").empty();
+        },
 	    // Child views...
         childViews: {}
     });

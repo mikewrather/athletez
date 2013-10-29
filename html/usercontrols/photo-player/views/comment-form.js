@@ -38,6 +38,7 @@ function(require, commentFormTemplate,    commentFormModel,        BaseCommentFo
             if (!this.model) {
 	            console.log("this.collection.id =", this.collection.id);
                 this.model = new commentFormModel({id: this.collection.id});
+               
                 console.log(this.model.toJSON());
                 this.model.fetch();
             }

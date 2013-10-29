@@ -30,9 +30,13 @@ define([ 'require', 'text!votes/templates/vote.html','views', 'vendor', 'facade'
 		    	return;
 	    	}
 			this.voteModelOb.save();
+
+		//	$(e.target).removeClass('team-action-h').addClass('team-noaction-h');
+
 			$.when(this.voteModelOb.request).done(function() {
 				$(e.currentTarget).addClass('link-disabled');
 			});
+
 		},
 		
 		follow: function(e) {
@@ -41,9 +45,13 @@ define([ 'require', 'text!votes/templates/vote.html','views', 'vendor', 'facade'
 		    	return;
 	    	}
 			this.followModelOb.save();
+
+		//	$(e.target).removeClass('follow-action-h').addClass('follow-noaction-h');
+
 			$.when(this.followModelOb.request).done(function() {
 				$(e.currentTarget).addClass('link-disabled');
 			});
+
 			Channel('new-fan').publish();
 		},
 		

@@ -18,7 +18,7 @@
 							<label for="Name">Name</label>
 						</div>
 						<input type="text" id="first_name" name="Name" placeholder="Name" />
-						<a id="editname">edit</a>
+						<a id="editname" class="hide">edit</a>
 					</div>
 					<div class="seconddiv" id="dob">
 						<div class="label">
@@ -33,32 +33,28 @@
 						<input type="text" name="email" id="emailInput" placeholder="Email" />
 					</div>
 					<div class="fourthdiv">
+
 						<div class="label">
-							<label for="Name">Gender</label>
-						</div>	
-						<div class="radioinput" id="radioinput">
-							<input type="radio" id="male" name="gender" value="M">
+							<label for="Gender">Gender</label>
 						</div>
-						<div class="radio">
-							<label for="male">male</label>
-						</div>
-						<div class="radioinput" id="radioinput">
-							<input type="radio" id="Female" name="gender" value="F">
-						</div>
-						<div class="radio">
-							<label for="female">female</label>
+						<div class="Gender" id="Gender">
+
+							<div class="radioinput" id="radioinput1"><input type="radio" id="male" name="gender" value="M"></div>
+							<div class="radio"><label for="male">Male</label></div>
+							<div class="radioinput" id="radioinput2"><input type="radio" id="Female" name="gender" value="F"></div>
+							<div class="radio"><label for="Female">Female</label></div>
 						</div>
 						
 					</div>
 					<div class="fifthdiv">
 						<div class="label">
-							<label for="Name">I am</label>
+							<label>I am</label>
 						</div>
 						<div class="Role" id="Role">
-							<div class="radioinput"><input type="radio" id="athlet" name="athlet" value="A"></div>
-							<div class="radio"><label for="athlet">an athlet</label></div>
-							<div class="radioinput"><input type="radio" id="Fan" name="athlet" value="F"></div>
-							<div class="radio"><label for="fan">a fan</label></div>
+							<div class="radioinput"><input type="radio" id="athlete" name="role" value="A" /></div>
+							<div class="radio"><label for="athlete">An Athlete</label></div>
+							<div class="radioinput"><input type="radio" id="Fan" name="role" value="F"></div>
+							<div class="radio"><label for="Fan">A Fan</label></div>
 						</div>
 					
 					</div>
@@ -74,13 +70,19 @@
 						</div>	
 						<input type="password" name="re_password" id="re_password" placeholder="Password" />
 					</div>
+					
+					<div>
+						<input type="checkbox" name="re_terms_conditions" class="terms-condition terms-condition-h" />
+						I Accept<a href="tos.html" target="_blank">Terms and Conditions</a>
+					</div>
+					
 					</div>
 					<div id="submitbutton">
 						<input type="submit" name="create" value="Sign Up" class="regsubmitfinal" />
 					</div>	
 				</form>
 				
-			<%  if(!page) { %>	
+			<%  if(!page) { %>	<br /><br/>
 				<div id="reglogin">
 					<span>Been here before <a href="#">sign in</a></span>
 				</div>

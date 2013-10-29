@@ -6,10 +6,12 @@
     margin: 0 !important;
     border-radius: 0; -webkit-border-radius: 0; -moz-border-radius: 0;
     padding: 0;
+    border:none !important;
 }
 
 .photo-frame-model .modal-body {
     height: 100%;
+    width: 100%;
     max-height: 100% !important;
     padding: 0 !important;
 }
@@ -147,7 +149,7 @@ div.right-arrow-container > img{
     overflow-x: scroll;
     overflow-y: hidden;
     position: absolute;
-    bottom:0px;
+    bottom:13px;
 }
 
 .thumbs-inner {
@@ -238,12 +240,12 @@ div.right-arrow-container > img{
 	width: 20%;
 }
 
-.game-match-name {
+#photoPlayerModal .game-match-name {
 	float: left;
 	width: 70%;
 }
 
-.game-score {
+#photoPlayerModal .game-score {
 	float: right;
 	width: 30%;
 }
@@ -274,7 +276,7 @@ div.right-arrow-container > img{
 }
 
 ul#tags-list {
-	margin: 5px 0 0 5px;
+	margin: 5px 0 60px 5px;
 }
 
 ul#tags-list li {
@@ -304,3 +306,180 @@ ul#tags-list .tags-number {
 	margin-left: 10px;
 	width: 4px;
 }
+
+
+.game-match-name{
+        background-color: #948BDE;
+        color: white;
+        height: 45px;
+        font-size: small;
+        
+    }
+    .game-score{
+        background-color: #4C3DC7;
+        color: white;
+        height: 45px;
+        text-align: center;
+        width: 65px;
+        float: left!important;
+        font-size: 2.2em;
+        font-weight: bolder;
+
+    }
+    .game-match-name1{
+        background-color: #E69F71;
+        float: left;
+        width: 70%;
+        color: white;
+        height: 45px;
+        font-size: small;
+        
+    }
+    .game-score1{
+        background-color: #D45F10;
+        color: white;
+        height: 45px;
+        text-align: center;
+        width: 30%;
+        float: left!important;
+        font-size: 2.2em;
+        font-weight: bolder;
+    }
+    .teamName-area{
+        padding-top: 9%;
+        padding-bottom: 35%;
+        font-size: small;
+    }
+    .scoreAlign{
+        top: 20%;
+        position: relative;
+    }
+    .labelSpan{
+        font-size: small;
+        font-weight: bolder;
+    }
+
+
+    .user-photo {
+    float: left;
+    height: 45px;
+    width: 45px;
+
+}
+.comment .user-photo img, .comment .user-photo a img {
+    height: 100%;
+    margin-top: 5px !important;
+    position: relative;
+    top:0px;
+    width: 100% !important;
+}
+.photo-player-coment .user-photo {
+    float: left;
+    height: 40px;
+    width: 40px;
+}
+#comment-list{
+margin-left: 7px;
+margin-top: 0px;
+}
+.user-comment, .comment-text{
+    font-size: small!important;
+}
+.user-comment{
+    font-weight: bold;
+}
+.user-photo-profile{
+   width: 76px;
+    float: left;
+}
+
+.content-prof-sub{
+    width: 299px;
+    padding-top: 39px;
+    margin-left: 22px;
+}
+.prof-name-area{
+    width: 227px;
+    height: 70px;
+}
+.firstheader{
+    color: #FFFFFF;
+    float: left;
+    margin-right: 1%;
+    position: relative;
+    top: 10px;
+    width: 109px;
+}
+.secheader{
+    color: #FFFFFF;
+    float: left;
+   // margin-left: 5%;
+     position: relative;
+    top: 10px;
+   // width: 90px;
+}
+.thirdheader{
+   color: #FFFFFF;
+    float: right;
+    margin-left: 6%;
+    position: relative;
+    top: 10px;
+    width: 31px;
+}
+.headerinfo{
+    color: #FFFFFF;
+    float: left;
+
+   
+    font-size: 16px;
+    font-weight: bolder;
+
+    height: inherit;
+   
+    width: 90%;
+}
+.closer{
+    float: right;
+    height: inherit;
+    margin-top: 2.5%;
+    width: 10%;
+}
+.modal-body {
+    overflow-y: hidden!important;
+     width: 100%!important;
+}
+.name{
+    float: left;
+    height: inherit;
+    padding-left: 3%;
+    width: 30%;
+
+    }
+    .game{
+    float: left;
+    height: inherit;
+    padding-left: 8%;
+    position: inherit;
+    text-align: right;
+    width: 30%
+
+    }
+    .season{
+    float: left;
+    height: inherit;
+    position: inherit;
+    text-align: right;
+    width: 29%;
+    }
+    .topalign{
+        position: relative;
+        top: 19%;
+    }
+    .close{
+        padding-right: 9px!important;
+        color: #FFFFFF;
+        font-size: 26px;
+        opacity: 1;
+        padding-right: 9px;
+    }
+ 

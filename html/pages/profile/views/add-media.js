@@ -43,12 +43,13 @@ function(require, profileAddMediaTemplate,application) {
         },
         
         openAddGamePopup: function() {
+	        ga('send', 'event', 'Open-Add-Popup', 'Game', 'User opened game adder', this.model.userid);
         	routing.trigger('add-game', this.model.userid);
         },
 
 	    openAddImagePopup: function(event)
 	    {
-			
+		    ga('send', 'event', 'Open-Add-Popup', 'Image', 'User opened image uploader', this.model.userid);
              var id = $('.selected-sport-h').data('id'), url = "/api/user/addimage/" + this.model.userid,
                 url = "/api/user/addimage/" + this.model.userid,
 			    attr = {
@@ -61,8 +62,8 @@ function(require, profileAddMediaTemplate,application) {
 		openAddvideoPopup: function(event){
 			
 			//** firing the call back list
-			
-			
+
+			ga('send', 'event', 'Open-Add-Popup', 'Video', 'User opened video uploader', this.model.userid);
 			var url = "/api/user/addvideo/" + this.model.userid;
 			
 			Channel('add-video').publish(url);

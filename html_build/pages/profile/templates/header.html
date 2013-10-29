@@ -4,8 +4,7 @@
 	<div class="profile-heading">
 		<div class="sports-h"></div>
             <h3 class="username">{{name}} {{#grad_year}}'{{grad_year}}{{/grad_year}}</h3>
-            <h4>&nbsp;</h4>
-
+			<h3>&nbsp;</h3>
     </div>
 	
 	<div class="row-fluid profile-pic-outer">
@@ -13,6 +12,7 @@
 		    <div class="span6 textcenter">
 		        {{#user_picture_obj}}
 		        <img src="{{base_url}}{{image_path}}" alt="{{name}}" />
+			    <div id="votes-area-h"></div>
 		        {{/user_picture_obj}}
 		    </div>
 		    
