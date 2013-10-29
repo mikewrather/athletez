@@ -565,18 +565,23 @@ define(['require', 'text!usercontrols/photo-player/templates/player.html', 'text
 		},
 		TagMyself : function(){
 			var self = this;
-			var newData ={1 : [this.userId]};
+			var newData ={1 : [this.getUserId()]};
 			var payload = {
 				media_id : this.json[this.index].payload.media_id,
 				tag_array : JSON.stringify(newData)
 			};
 			
 			var tagMyselfModel = new TagMyselfModel(payload);
-			tagMyselfModel.user_id = this.userId;
+			tagMyselfModel.user_id = this.getUserId();
 			tagMyselfModel.save();
 			$.when(tagMyselfModel.request).done(function() {
 				self.setUpTagViewSection();
 			});
+		},
+		getUserId: function() {
+			if(!_.isUndefined(routing.userLoggedIn) && routing.userLoggedIn) return routing.loggedInUserId;
+			return null;
+
 		},
 
 	});
