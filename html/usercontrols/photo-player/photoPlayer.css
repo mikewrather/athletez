@@ -198,10 +198,11 @@ div.right-arrow-container > img{
     padding: 5px;
     background: #CCC;
     float: left;
+    margin-left: 5px;
 }
 
 .image-actions li:first-child {
-    margin-right: 5px;
+   /* margin-right: 5px;*/
 }
 
 .image-actions li a {

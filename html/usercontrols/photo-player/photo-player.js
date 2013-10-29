@@ -40,6 +40,7 @@ define(["require", 'text!usercontrols/photo-player/templates/comments.html',
 		
 		// controller intialize function
 		initialize : function(options) {
+			console.log("LLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL",options);
 			console.log("init");
 			var _self = this;
 			// load css file
