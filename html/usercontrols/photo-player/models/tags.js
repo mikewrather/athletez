@@ -11,8 +11,11 @@ define( ["facade", "models/base"], function (facade, BaseModel) {
     TagModel = BaseModel.extend({
         
        
-        
+   url: function() {
+            return '/api/user/basics/' + this.id;
+        },
     });
+
 
     return TagModel;
 });

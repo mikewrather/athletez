@@ -80,7 +80,7 @@ define(['require', 'text!usercontrols/location/templates/get-view-location.html'
 			var _self = this;
 			var pos = new google.maps.LatLng(_self.location.latitude, _self.location.latitude),
 			mapOptions = {
-			    zoom: 8,
+			    zoom: 13,
 			    center: pos,
 			    scaleControl: true,
 			    zoomControl: true,

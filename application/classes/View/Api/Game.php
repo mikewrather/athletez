@@ -28,6 +28,21 @@
 
 			return $retArr;
 		}
+
+		/**
+		 * get_users() This will get a list of users associated with the event.  Because this number can be huge, there is a default limit and search parameters allow you to narrow the list.
+		 *
+		 * @retun array
+		 */
+		public function get_users()
+		{
+			$retArr = array();
+
+			if(is_array($this->obj))
+			{
+				return $this->obj;
+			}
+		}
 		
 		/**
 		 * get_teams() All teams competing in the game

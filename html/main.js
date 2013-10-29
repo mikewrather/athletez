@@ -72,6 +72,7 @@ require.config({
 
 		// Packages
 		'packages'          : [cdn + 'packages' , s3 + 'packages' , '/packages'],
+		'common'			: [cdn + 'packages/common', s3 + 'packages/common' , '/packages/common'],
 		'user'              : [cdn + 'packages/user' , s3 + 'packages/user' , '/packages/user'],
 		'media'             : [cdn + 'packages/media', s3 + 'packages/media', '/packages/media'],
 		'site'              : [cdn + 'packages/site', s3 + 'packages/site', '/packages/site'],
@@ -115,6 +116,9 @@ require.config({
 		'backbone': {
 			deps: ['underscore', 'jquery', 'json2', 'html5', 'jqueryui', 'custom', 'jquerytimepicker'],
 			exports: 'Backbone'
+		},
+		'jquery.slimscroll':{
+			deps: ['jquery']
 		},
 		'bootstrap': {
 			deps: ['jquery']

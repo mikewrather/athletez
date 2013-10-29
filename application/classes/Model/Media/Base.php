@@ -245,12 +245,12 @@ class Model_Media_Base extends ORM
 
 		if(is_array($mediaType))
 		{
-			$tags->or_where_open();
+			$tags->and_where_open();
 			foreach($mediaType as $type)
 			{
-				$tags->where('media.media_type','=',strtolower($type));
+				$tags->or_where('media.media_type','=',strtolower($type));
 			}
-			$tags->or_where_close();
+			$tags->and_where_close();
 		}
 		else
 		{
@@ -279,6 +279,7 @@ class Model_Media_Base extends ORM
 
 		$res = $qry->execute();
 
+//		print_r($res);
 		if($res->count() > 0)
 		{
 			// This will only be the case if $limit is set to multiple and there are multiple results

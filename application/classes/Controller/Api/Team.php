@@ -401,9 +401,9 @@
 			{
 				$games_id = (int)trim($this->request->post('games_id'));
 
-				if(trim($this->request->post('points_scored') != ""))
+				if(trim($this->request->post('score') != ""))
 				{
-					$points_scored = (int)trim($this->request->post('points_scored'));
+					$points_scored = (int)trim($this->request->post('score'));
 				}
 
 				$args = array(

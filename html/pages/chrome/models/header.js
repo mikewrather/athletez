@@ -22,14 +22,10 @@ define( ["models/base",'utils/storage'], function (BaseModel,Store) {
             
             login_url: "#user/login",
             login_label: "SIGN IN",
-            
-            //logout_url: "/user/logout",
+
 			logout_url: "#logout",
             logout_label: "Log Out",
-			
-            fbreg_url: "#fbconnect",
-            fbreg_label: "Facebook",
-			
+
             signup_social_label: "Sign up for Free",
             signup_facebook_label: "Facebook",
             signup_email_label: "Email",

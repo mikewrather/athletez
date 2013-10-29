@@ -191,7 +191,7 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
             routing.on('add-event', function(id,sports_id,users_id, callback) {
             	//alert(id+"--"+sports_id +"--"+ users_id);
             	 var addGameview = new AddEventController({
-		             "sports_id": 51, //sports_id,
+		             "sports_id": sports_id,
 		            "users_id" : users_id,
                 	popup: true,
                 	callback: callback
@@ -215,7 +215,7 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
            	//this.showGame();
             //this.showTeam();
            // alert("this profile");
-            
+	        ga('send', 'event', 'app', 'initialized','Browser Reload');
 			this.showHome(null);
         },
 
@@ -224,10 +224,17 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
 		    phrases.fetch();
 	    },
 	    showFbreg:function(){
-            
+		    ga('send', 'event', 'popup', 'open', 'FB Reg');
             fbregistration = new fbreg();
             fbregistration.signupFacebook();
         },
+
+		gaPageView: function(page,title){
+			ga('send','pageview',{
+				"page":page,
+				"title":title
+			});
+		},
 	    showHome: function (action) {
 	    	var self = this;
 	    	this.cancelAjaxRequests();
@@ -237,16 +244,16 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
 	    	//self.removeCurrent();
 	    	function initHome(id) {
 	    		$("body").addClass("homePage");
-	    		
+				var title = "Athletez - We Are Athletez"
 	    		self.currentController = new HomeController({
 	    			route: "",
-	    			title: "Athletez - We Are Athletez",
+	    			title: title,
 	    			userId : id
 	    		});
-
 			    if(!id && $('div.register-wrapper').length == 0){
 				    $('body header').after('<div class="register-wrapper"></div><div class="register-wrapper-h"></div>');
 			    }
+			    self.gaPageView("Home Page",title);
 	    	}
 	    	this.initialiRoutesInit(initHome);
 	    },
@@ -268,10 +275,12 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
 	        //if(this.currentController) this.currentController.remove();
 			function initProfile(headerModelId) {
 				Channel('refresh-profilepage').empty();
+				var title =  self.getUserName(headerModelId);
                 self.currentController = new ProfileController({
 	                "userId": (typeof userid != "undefined")?userid:headerModelId,
-	                title: self.getUserName(headerModelId)
+	                title:title
 	            });
+				self.gaPageView("Profile Page",title);
             }
             this.initialiRoutesInit(initProfile);
         },
@@ -299,9 +308,10 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
             	
                 self.currentController = new TeamController({
                     "teamId": id,
-                     title: "team page",
+                     title: "Team Page",
                     "userId": headerModelId
                 });
+	            self.gaPageView("Team Page","NA");
             }
             this.initialiRoutesInit(initTeam);
            // Channel('app-inited').subscribe(initTeam);
@@ -334,11 +344,13 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
            
             chromeBootstrap();
 			 this.removeCurrent();
+	        var _self = this;
             function initProfileSetting(id) {
                self.currentController = new ProfileSetting({
                 	"id": userid==undefined ? id : userid,
-                	title: "Profile setting"
+                	title: "Profile Settings"
                 });
+	            _self.gaPageView("Profile Settings","NA");
             }
             this.initialiRoutesInit(initProfileSetting);
             //Channel('app-inited').subscribe(initProfileSetting);
@@ -354,6 +366,7 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
                 self.currentController = new UserResume({
                 	"id": userid==undefined ? id : userid
                 });
+	            self.gaPageView("User Resume Page","NA");
             }
              this.initialiRoutesInit(initUserResume);
             //Channel('app-inited').subscribe(initUserResume);
@@ -371,7 +384,7 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
             //Channel('app-inited').subscribe(initImage);
 		},
 		triggerSignup:function(){
-			
+			//ga('send', 'event', 'menu', 'Sign Up','Action-Triggered');
 			this.signup = new header();
 			routing.off('showSignup');
             routing.on('showSignup', function() {
@@ -407,6 +420,7 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
 					return;
 				}
 			    var VidPrevCtrl = new VideoPreviewController({"url":url,"attr":attr});
+
 			    //console.log(VidPrevCtrl);
 		    }
 			//** creating a call back list and adding the method
@@ -431,6 +445,7 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
             	return; 
             }
              this.removeCurrent();
+	        var _self = this;
             function initGame(headerModelId) {
                 self.currentController = new GameController({
                     "route": "",
@@ -438,11 +453,14 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
                     title: "Game Page",
                     "userId": headerModelId
                 });
+
+	            _self.gaPageView("Game Page","NA");
             }
              this.initialiRoutesInit(initGame);
         },
 
         showRegistration: function() {
+	        ga('send', 'event', 'popup', 'Registration');
         	this.cancelAjaxRequests();
             this.loadStyles();
             chromeBootstrap();
@@ -452,6 +470,7 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
                     "route": "",
                     title: "Register"
                 });
+	            self.gaPageView("Registration Page","NA");
             }
             this.initialiRoutesInit(initRegistration);
         },
@@ -471,6 +490,7 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
         },
         
         showAddGame : function(userid){
+	        ga('send', 'event', 'popup', 'Add Game','',userid);
         	this.cancelAjaxRequests();
         	this.loadStyles();
             chromeBootstrap();
@@ -499,6 +519,7 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
         },
 		// route to login template
 		showLogin: function(){
+
 		 //$('#main-content').empty();
 		   //$('body').empty();
            // chromeBootstrap();
@@ -569,6 +590,7 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
             Channel('load:css').unsubscribe(this.loadCss);
         },
         callLogout:function(){
+	      ga('send', 'event', 'menu', 'Log Out','Action-Triggered',routing.userLoggedIn);
           this.logout= new LoginController();
           routing.trigger('Logout');
         },

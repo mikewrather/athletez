@@ -5,13 +5,15 @@ define([
     'backbone',
     'underscore',
     'registration',
+    'login',
     'views',
     'signup/views/facebooksignup', 
     'facade', 
     'utils', 
     "signup/views/registration-basics-final",
-    "signup/models/registration-basics-final"
-	],function(require,  signupBasicTemplate,backbone,_,RegistrationController) {
+    "signup/models/registration-basics-final",
+    
+	],function(require, signupBasicTemplate,backbone,_,RegistrationController,loginController) {
 			
 		var SignupBasicView,
         	facade = require('facade'),
@@ -61,12 +63,12 @@ define([
         		},
         		events:{
         		"click .regsubmit":"next",
-                "click #fbpane":"signupFacebook"
+                "click #fbpane":"signupFacebook",
+                "click #reglogin a":"showLogin"
                  
         		},
         		next: function(event){
         			event.preventDefault();
-        			
         			//backbone.validation.bind(this);
         			var fields = this.$(":input").serializeArray();
                     var flag= true;
@@ -77,6 +79,8 @@ define([
                         return false;
                        }
                     });
+                    
+                    try {
                     
                     if(this.openAsaPage && flag) {
                     	
@@ -91,9 +95,22 @@ define([
 						//$(".register-wrapper-h").unbind().html("");
 						$("#RegModal .modal-body").append(this.selectRegisterBasicFinalView.$el);
 						$('#RegModal').modal('show') ;
+						
+						
                     } else {
-                   		if(flag) routing.trigger("register-basic-final", fields, page);          
+                   		if(flag) routing.trigger("register-basic-final", fields);          
         			}
+        			} catch(e) {
+        				
+        			}
+        			
+						$('#RegModal .modal-body').slimScroll({
+							height:'500px',
+							railVisible:true,
+							allowPageScroll:true,
+							disableFadeOut:true
+						});
+        			
         		},
                 //*************//
                 
@@ -106,6 +123,14 @@ define([
                      headView.signupFacebook();
             
                },
+               showLogin:function(event){
+                event.preventDefault();
+                $('#RegModal').modal('hide') ;
+                this.logincontroller = new LoginController();
+                routing.trigger("Login");
+
+               }
+
 
 
         		

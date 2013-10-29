@@ -168,6 +168,12 @@ div#edit_profile_info_section div span{
     font-weight: bolder;
     margin-right:5px;
 }
+.resume_button#edit_profile_info, .resume_button#save_user_data{
+    float: left;
+    width: 40px;
+    cursor: pointer;
+    text-align: center;
+}
 .btn-Finish-RdTree_h{ margin-top:-50px; }
 a.edit,a.remove{
     content:'';

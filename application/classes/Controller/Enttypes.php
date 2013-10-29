@@ -58,6 +58,27 @@ class Controller_Enttypes extends Controller
 		foreach($res as $row)
 		{
 			//	print_r($row);
+			echo "'".$row['id']."' => array(";
+			foreach($row as $key => $val)
+			{
+				echo "
+	'".$key."' => '".addslashes($val)."',";
+			}
+			echo "
+),
+			";
+		}
+	}
+
+	public function action_by_id1()
+	{
+		$res = DB::select()
+			->from('enttypes')
+			->execute();
+
+		foreach($res as $row)
+		{
+			//	print_r($row);
 			echo "'".$row['id1']."' => array(";
 			foreach($row as $key => $val)
 			{

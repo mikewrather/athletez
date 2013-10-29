@@ -82,6 +82,10 @@
     float: left;
     height: 35%;
 }
+#main-content-img.video{
+    float: none;
+    height: auto;
+}
 #image-tagging{
     width: 92%;
     float: left;
@@ -109,6 +113,7 @@ color: red;
 }
 #imgpreview .selected{
 	border: 6px solid #954121;
+	 margin-bottom: 71px;
 }
 .previewimg{
 	  border: 1px solid #CCCCCC;

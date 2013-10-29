@@ -114,15 +114,21 @@ define(["require", "text!usercontrols/addevent/templates/layout.html",
 		
 		/* Set  Up  User References  View  View */
 		setUpMainView : function() {
-	//		console.log("Set Up Main View Add Game");
-			Channel('add-event-success').subscribe(this.addTeamFunction);
+			//		console.log("Set Up Main View Add Game");
+			var _self = this;
+			routing.off('add-event-success');
+			routing.on('add-event-success', function(data) {
+				_self.addTeamFunction(data);
+			});	
+			//Channel('add-event-success').subscribe(this.addTeamFunction);
+			
 			var self = this;
 			this.addGameView = new AddGameView({
 				model : new BasicModel(),
 				template : pageLayoutTemplate,
 				name : "add-event-main",
 				destination : (this.popup)?".page-content-h":"#main",
-				user_id : self.id,
+				user_id : self.users_id,
 				channel : 'add-event-success',
 				sports_id : this.sports_id,
 				teams_id : this.teams_id
@@ -130,6 +136,12 @@ define(["require", "text!usercontrols/addevent/templates/layout.html",
 
 			this.scheme.push(this.addGameView);
 			this.layout.render();
+			$('#modalPopup .modal-body').slimScroll({
+				height:'430px',
+				railVisible:true,
+				allowPageScroll:true,
+				disableFadeOut:true
+			});
 		},
 		addTeamFunction : function(data){
 			if(this.callback) this.callback(data);

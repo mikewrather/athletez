@@ -4,13 +4,16 @@
 // Return {ImageItemView} object as constructor
 
 define(['vendor', 'views', 'utils', 'text!media/templates/image-item.html', 'votes/models/vote',
-        'votes/models/follow','utils/storage'], function(vendor, views, utils, imageItemTemplate) {
+
+        'votes/models/follow','utils/storage','chrome/views/header', 'common/models/delete'], function(vendor, views, utils, imageItemTemplate) {
 
 	var ImageItemView, $ = vendor.$, BaseView = views.BaseView, Mustache = vendor.Mustache,
 	voteModel = require('votes/models/vote'),
 	Store = require('utils/storage'),
     followModel = require('votes/models/follow'),
-    
+
+    DeleteModel = require('common/models/delete'),
+    header = require('chrome/views/header');
 
 	ImageItemView = BaseView.extend({
 
@@ -36,6 +39,7 @@ define(['vendor', 'views', 'utils', 'text!media/templates/image-item.html', 'vot
 		
 		
 		checkForUser: function() {
+			
 			if(!_.isUndefined(routing.userLoggedIn) && routing.userLoggedIn)
 				return true;
 			else	
@@ -44,6 +48,7 @@ define(['vendor', 'views', 'utils', 'text!media/templates/image-item.html', 'vot
 		
 		
 		render : function() {
+			console.log("in render");
 			var _self = this, mpay = this.model.attributes.payload,
 				extra = {
 					_enttypes_id : mpay.enttypes_id,
@@ -78,15 +83,19 @@ define(['vendor', 'views', 'utils', 'text!media/templates/image-item.html', 'vot
 					}
 
 					show_play = true;
+					extra._enttypes_id = typeof(mpay.media == "object") ? mpay.media.enttypes_id : 0;
+					extra._id = typeof(mpay.media == "object") ? mpay.media.id : 0;
 					extra._label = mpay.media.name;
 					extra._link = "javascript: void(0);";
 					extra._has_link = false;
 
 					if(mpay.media.hasOwnProperty('is_owner')) show_edit = mpay.media.is_owner;
-
+					extra._noicon_text = "play";
 					break;
 				case '21':
 					//images
+					extra._enttypes_id = typeof(mpay.media_obj == "object") ? mpay.media_obj.enttypes_id : 0;
+					extra._id = typeof(mpay.media_obj == "object") ? mpay.media_obj.id : 0;
 					if ( typeof (mpay.types) == 'object')
 					{
 						//console.log(mpay.types);
@@ -118,6 +127,7 @@ define(['vendor', 'views', 'utils', 'text!media/templates/image-item.html', 'vot
 					extra._link = "javascript: void(0);";
 					extra._has_link = false;
 					if(mpay.media_obj.hasOwnProperty('is_owner')) show_edit = mpay.media_obj.is_owner;
+					extra._noicon_text = "view";
 
 					break;
 				case '1':
@@ -146,7 +156,7 @@ define(['vendor', 'views', 'utils', 'text!media/templates/image-item.html', 'vot
 							}
 						}
 					}
-
+					extra._noicon_text = "hi";
 					extra._label = mpay.label;
 					extra._sublabel = "Votes: " + mpay.num_votes + ", Followers: " + mpay.num_followers;
 					extra._link = "/#profile/" + mpay.id;
@@ -157,14 +167,14 @@ define(['vendor', 'views', 'utils', 'text!media/templates/image-item.html', 'vot
 				case '8':
 					//games
 					extra._detailclass = "game";
-					standard_thumb = mpay.game_picture!==null ? mpay.game_picture.types.standard_thumb : {height:440,width:440,url:"http://cdn.athletez.com/resources/icons/game/square_game.png"};
+					standard_thumb = mpay.game_picture!==null ? mpay.game_picture.types.standard_thumb : false;
 					extra._thumbnail = standard_thumb.url;
 					extra._label = mpay.game_day;
 					extra._link = "/#game/" + mpay.id;
 					extra._has_link = true;
 					var team_str = "", teams = mpay.teams;
 					if(teams != null) var teamLength = teams.length;
-
+					console.log(mpay);
 					for (var i = 0; i < teamLength; i++) {
 						team_str += '<span>';
 
@@ -174,7 +184,12 @@ define(['vendor', 'views', 'utils', 'text!media/templates/image-item.html', 'vot
 							team_str += " VS. ";
 					}
 					if(mpay.hasOwnProperty('is_owner')) show_edit = mpay.is_owner;
-					extra._sublabel = team_str;
+					if(team_str != "") extra._sublabel = team_str;
+					else{
+						extra._sublabel = mpay.event_name;
+					}
+					extra._noicon_text = "vs";
+					console.log(extra);
 					break;
 
 			}
@@ -307,8 +322,22 @@ define(['vendor', 'views', 'utils', 'text!media/templates/image-item.html', 'vot
 		    console.log(e.target);
 		    e.stopPropagation();
 		     if(!this.checkForUser()) {
+
+		  		
+		     		try{
+		  			
+		  				this.signup.signupUser();
+		    		}
+		    		catch(e){
+
+		    		}	
+
+
+		  		//$(".signup-email").trigger('click');
+		    	return;
+			     /* old way of doing this
 		  		routing.trigger('showSignup');
-				return;
+				return;*/
 	    	}
 		    var followModelOb = new followModel();
 			followModelOb.userId = this.model.get("payload").id;
@@ -327,14 +356,12 @@ define(['vendor', 'views', 'utils', 'text!media/templates/image-item.html', 'vot
 			});
 	    },
 
-		edit: function(e)
-		{
+		edit: function(e) {
 			e.stopPropagation();
 			e.preventDefault();
 			
 			var _self = this, mpay = this.model.get("payload");
-			switch(mpay.enttypes_id)
-			{
+			switch(mpay.enttypes_id) {
 				case '23':
 					//videos
 					//extra._link = "javascript: void(0);";
@@ -350,19 +377,30 @@ define(['vendor', 'views', 'utils', 'text!media/templates/image-item.html', 'vot
 				case '8':
 					//games
 					window.location.hash = "game/" + mpay.id;
-					break;
-
+				break;
 			}
-			
-			
 			console.log(this.model);
 		},
 
-		'delete': function(e)
-		{
+		'delete': function(e) {
 			e.stopPropagation();
 			e.preventDefault();
-			console.log("delete");
+			console.log(this.model);
+			//this.model.destroy();
+			
+			//var subject_id = $(e.currentTarget).attr("subject-type-id");
+			//var entity_id = $(e.currentTarget).attr("subject-id");			
+			var _self = this, deleteModel = new DeleteModel();
+			deleteModel.subject_id = $(e.currentTarget).attr("subject-id");
+			deleteModel.enttypes_id = $(e.currentTarget).attr("subject-type-id");
+			//deleteModel.url();
+			deleteModel.destroy();
+			
+			$.when(deleteModel.request).done(function() {
+				$(e.currentTarget).parents("li.image").addClass('remove-item');
+				//routing.trigger('remove-media', _self.model.id);
+			});
+			
 		}
 
 	});

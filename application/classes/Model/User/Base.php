@@ -709,6 +709,81 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 		return $return_obj;
 	}
 
+	public function getTeamsLite($args){
+		extract($args);
+		$org_sport_link_obj = DB::select(
+			array('users_teams_link.id', 'utl_id'),
+			array('users.id', 'user_id'),
+			array('orgs.id', 'org_id'),
+			array('orgs.name', 'org_name'),
+			array('states.abbr', 'state_name'),
+			'teams.*',
+			array('sports.name','sport'),
+			array('sports.id','sports_id'),
+			array('sports.small_icon','icon'),
+			array('teams.id', 'team_id'),
+			array('complevels.name', 'complevel_name'),
+			array('seasons.name', 'season'),
+			array('seasons.id', 'seasons_id')
+		)
+			->from('users')
+			->join('users_teams_link')->on('users.id','=','users_teams_link.users_id')
+			->join('teams')->on('teams.id','=','users_teams_link.teams_id')
+			->join('org_sport_link')->on('org_sport_link.id','=','teams.org_sport_link_id')
+			->join('sports')->on('org_sport_link.sports_id','=','sports.id')
+			->join('orgs')->on('orgs.id','=','org_sport_link.orgs_id')
+			->join('states')->on('orgs.states_id','=','states.id')
+			->join('complevels', 'LEFT')->on('complevels.id','=','teams.complevels_id')
+			->join('seasons', 'LEFT')->on('seasons.id','=','teams.seasons_id')
+			->where('users.id','=',$this->id);
+		$classes_arr['User_Base'] = 'users';
+		$classes_arr['User_Teamslink'] = 'users_teams_link';
+		$classes_arr['Sportorg_Team'] = 'teams';
+		$classes_arr['Sportorg_Orgsportlink'] = 'org_sport_link';
+		$classes_arr['Sportorg_Sport'] = 'sports';
+		$classes_arr['Sportorg_Org'] = 'orgs';
+		$classes_arr['Sportorg_Complevel_Base'] = 'complevels';
+		$classes_arr['Sportorg_Seasons_Base'] = 'seasons';
+
+		if ($sports_id){
+			$org_sport_link_obj->where('org_sport_link.sports_id', '=', $sports_id);
+		}
+
+		$org_sport_link_obj->group_by('teams.id')
+			->order_by('org_id')
+			->order_by('sports_id')
+			->order_by('complevels_id');
+
+		$org_sport_link_obj = ORM::_sql_exclude_deleted($classes_arr, $org_sport_link_obj);
+
+		$res = $org_sport_link_obj->execute();
+		$orgs = array();
+		$first_run = true;
+		foreach($res as $row)
+		{
+			if(!isset($curr_sport_id) || $curr_sport_id != $row['sports_id'] || (!isset($curr_org_id) || $curr_org_id != $row['org_id'])){
+				if(!$first_run) $current_org["sports"][] = $current_sport;
+				$curr_sport_id = $row['sports_id'];
+				$current_sport = array("name" => ucwords(strtolower($row['sport'])));
+			}
+			if(!isset($curr_org_id) || $curr_org_id != $row['org_id']){
+				if(!$first_run) $orgs[] = $current_org;
+				$curr_org_id = $row['org_id'];
+				$current_org = array("name" => ucwords(strtolower($row['org_name'])));
+			}
+			$first_run=false;
+			$team = array(
+				"id" => $row['team_id'],
+				"season" => $row['season'],
+				"complevel" => $row['complevel_name'],
+				"year" => $row['year']
+			);
+			$current_sport["teams"][] = $team;
+		}
+		$current_org["sports"][] = $current_sport;
+		$orgs[] = $current_org;
+		return $orgs;
+	}
 
 	public function getOrgs($sports_id,$groupby=NULL,$org_type=NULL)
 	{
@@ -747,7 +822,7 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 		$classes_arr['Sportorg_Org'] = 'orgs';
 		$classes_arr['Sportorg_Complevel_Base'] = 'complevels';
 		$classes_arr['Sportorg_Seasons_Base'] = 'seasons';
-		$classes_arr['Stats_Vals'] = 'statvals';
+
 
 		if ($sports_id){
 			$org_sport_link_obj->where('org_sport_link.sports_id', '=', $sports_id);

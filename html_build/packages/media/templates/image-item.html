@@ -1,9 +1,12 @@
 <a href="{{_link}}" data-index="{{index}}" class="image-outer-h {{^_has_link}}open-photo-player-h{{/_has_link}}">
 	<div class="image-item-container">
-	<img class="list-thumbnail" src="{{_thumbnail}}" alt=""/>
+		{{#_thumbnail}}<img class="list-thumbnail" src="{{_thumbnail}}" alt=""/>{{/_thumbnail}}
+		{{^_thumbnail}}
+			<div class="game-tile">{{_noicon_text}}</div>
+		{{/_thumbnail}}
 		<div class="action-section">
 			{{#show_edit}}
-				<div class="action-block left-block edit edit-h" subject-type-id="{{_enttypes_id}}" subject-id="{{_id}}"><span>edit</span></div>
+				<!--<div class="action-block left-block edit edit-h" subject-type-id="{{_enttypes_id}}" subject-id="{{_id}}"><span>edit</span></div>-->
 				<div class="action-block right-block delete delete-h" subject-type-id="{{_enttypes_id}}" subject-id="{{_id}}"><span>delete</span></div>
 			{{/show_edit}}
 			{{^show_edit}}

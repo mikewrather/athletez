@@ -37,7 +37,9 @@ function (
 			},
 			show_edit = false,
 			standard_thumb = null;
-
+			extra.Sportsteam = null;
+			//alert(extra._enttypes_id + "entity type");
+			console.log(mpay.subject,"for testing");
 			switch(extra._enttypes_id)
 			{
 				case '23':
@@ -128,21 +130,44 @@ function (
 									return $1.toUpperCase();
 								});
 						};
-					for (var i = 0; i < teamLength; i++) {
-						team_str += '<span class="game-match-name">';
 
-						team_str += ucwords(mpay.subject.teams[i].team_name);
-						team_str += '</span>';
+					for (var i = 0; i < teamLength; i++) {
+						if((i%2)==1){
+							var className = "game-match-name1";
+							var scoreClass = "game-score1";
+						}
+						else{
+							var className = "game-match-name";
+							var scoreClass = "game-score";
+						}
+						team_str += '<div class="'+className+'">';
 						
-						team_str += '<span class="game-score">';
+						console.log(mpay.subject.teams[i].team_name + ",score="+ mpay.subject.teams[i].points_scored+",i="+i);
+						team_str += ucwords(mpay.subject.teams[i].team_name);
+						team_str += '</div>';
+						
+						team_str += '<div class="'+scoreClass+'">';
+						team_str += '<span class="scoreAlign">';
 						team_str += mpay.subject.teams[i].points_scored;
 						team_str += '</span>';
+						team_str += '</div>';
 						
-						if (i + 1 < mpay.subject.teams.length)
-							team_str += " VS. ";
+						//if (i + 1 < mpay.subject.teams.length)
+						//	team_str += " VS. ";
 					}
 					if(mpay.hasOwnProperty('is_owner')) show_edit = mpay.is_owner;
-					extra._label = team_str;
+					//extra._label = team_str;
+					
+					if(!this.Sportsteam)
+					{
+						this.Sportsteam=true;
+						var str = mpay.subject.shared.season;
+						var n = str.split(" ");
+						var headerdata = '<div class="name"><span class="topalign">'+ mpay.subject.shared.sport+'</span></div>	<div class="game"><span class="topalign">'+mpay.subject.shared.complevel+'</span></div><div class="season"><span class="topalign">'+n[2]+'</span></div>';
+						$(".headerinfo").html(headerdata);
+						$(".teamName-area").html(team_str);
+					}
+
 					break;
 					
 				case '5':

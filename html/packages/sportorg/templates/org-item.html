@@ -1,45 +1,26 @@
 {{#payload}}
-
-
 <div class="select-team">
-	
-			{{#teams}}
-			
+{{#teams}}
 		<div class="org-name">
 			<span class="team-label">{{org_name}} | {{complevel}} | {{season}} {{year}}</span>
-			{{^schedules}}
-				<span>&nbsp;(No games on the docket)</span>
-			{{/schedules}}<a href="javascript: void(0);" data-team-id="{{team_id}}" data-sport-id="0" title="add game" class="add-game-h">Add Game</a>
+			<a href="javascript: void(0);" data-team-id="{{team_id}}" data-sport-id="0" title="add game" class="add-game-h right-with-icon">Add Game</a>
 		</div>
-
-
-			
-			
-			<div class="game-box-outer">
+		<div class="game-box-outer">
 		<ul>
-				{{#schedules}}
-				<li>
-				<!--a href="/#game/{{id}}" class="background-blue team-info-h" tooltip="test">
-	<div class="game-info hide">
-		{{summary}}
-	</div> </a-->	
-					
-					
-				<a href="#game/{{id}}" class="background-blue team-info-h" tooltip="test">
-					
-						<div class="game-info hide">
-							{{#teams}}
-								{{gameDay}} | VS. {{team_name}}
-							{{/teams}}
-						</div>
-				</a>
-				</li>
-				{{/schedules}}
-				
-			
-			</ul>
+		{{#schedules}}
+		<li data-game-id="{{id}}">
+			<a href="#game/{{id}}" data-team-id="{{team_id}}" class="{{#isWinner}}win{{/isWinner}}{{^isWinner}}background-blue{{/isWinner}} team-info-h">
+				<div class="game-info hide">
+					<span class="game-day">{{gameDay}}</span>{{#teams}}<span class="team-name" data-winner="{{isWinner}}" data-team-id="{{id}}">
+							&nbsp; vs. {{team_name}}</span>{{/teams}}
+					<span class="game-score">{{#teams}}{{#points_scored}}<span class="team-score {{#isWinner}}win{{/isWinner}}{{^isWinner}}loss{{/isWinner}}">{{points_scored}}</span>{{/points_scored}}{{/teams}}</span>
+				</div>
+			</a>
+		</li>
+		{{/schedules}}
+		</ul>
 	</div>
-			{{/teams}}
+{{/teams}}
 
 </div>
 </div>

@@ -143,9 +143,8 @@ define([
 
 				function callback(sport_id) {
 
+					delete controller.orgViewname;
 					controller.refreshPage();
-					console.log("CALLBACK COUNT",controller.callbackcount);
-					controller.callbackcount ++;
 					controller.sports_id = sport_id;
 
 					controller.orgs = new ProfileOrgList();
@@ -168,7 +167,6 @@ define([
 					//controller.videos.sport_id = sport_id;
 					//controller.videos.fetch();
 
-					console.log("CALLING IMAGE LIST HERE----------------",sport_id);
 					controller.images = new ProfileImageList();
 					controller.images.id = controller.id;
 					controller.images.sport_id = sport_id;
@@ -334,25 +332,45 @@ define([
 				this.scheme.push(addMediaView);
 				this.layout.render();
 			},
+			
+			getOrgData: function () {
+				var position;
+
+				if (this.orgListView) {
+					$(this.orgListView.destination).html('');
+					position = $.inArray(this.orgListView, this.scheme);
+					if (~position) this.scheme.splice(position, 1);
+				}
+				var _self = this;
+				_self.orgs.fetch();
+				$.when(_self.orgs.request).done(function() {
+					_self.setupOrgListView();
+				});
+			},
+			
 
 			setupOrgListView: function () {
+				console.log("Called setup org list view which is where the game list type is decided upon",this.orgs,this.orgViewname);
 				var orgListView;
-				if(this.orgs.length)
+				if(this.orgs.length && (!this.orgViewname || (this.orgViewname && this.orgViewname == "org")))
 					this.setUpOrgView();
 				else
 					this.setUpUserSportView();					
 			},
 			
 			setUpUserSportView: function() {
+				console.log("Called event-based user-sport list view");
 				var _self = this;
-				 this.orgs = new UserGames();
+				this.orgViewname = "sport";
+				this.orgs = new UserGames();
             	this.orgs.userId = _self.id;
             	this.orgs.sports_id = $(".selected-sport-h").data("id");
             	
             	this.orgs.fetch();
             	$.when(this.orgs.request).done(function() {
-         		_self.orgListView = new ProfileOrgListView({
+         	    	_self.orgListView = new ProfileOrgListView({
 						collection: _self.orgs,
+						controller: _self,
 						destination: "#games_div",
 						eventPage: $(".selected-sport-h").data("name")
 					});
@@ -363,8 +381,11 @@ define([
 			},
 			
 			setUpOrgView: function() {
+				console.log("Called normal org list view");
+				this.orgViewname = "org";
 				this.orgListView = new ProfileOrgListView({
 					collection: this.orgs,
+					controller: this,
 					destination: "#games_div"
 				});
 

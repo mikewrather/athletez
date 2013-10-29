@@ -1,0 +1,1 @@
+define(["facade","collections","utils"],function(e,t,n){var r=e._,i=t.BaseCollection,s=n.lib.Channel;return i.extend({id:undefined,url:function(){return testpath?testpath+"/game/users/"+this.id:"/api/game/users/"+this.id}})});

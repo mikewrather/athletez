@@ -123,7 +123,7 @@ define(["require",
 						this.logoutcheck.fetch()
 						$.when(this.logoutcheck.request).done(function(){
 							// clearing header model to delete local storage
-							attr.clear();
+							if(attr != undefined) attr.clear();
 							window.localStorage.clear() ;
 							
 							//console.log(localStorage);

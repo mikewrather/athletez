@@ -918,8 +918,9 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 							locations_id : locationId,
 							sports_id : sportsId,
 							users_id : 	self.user_id
-						}
-						Channel(self.channel).publish(self.gameData);
+					};
+					routing.trigger(self.channel, self.gameData);
+						//Channel(self.channel).publish(self.gameData);
 				});
 			} else {
 				$(e.target).parent().find(self.controls.fieldMessage).html(message).fadeIn();
@@ -933,7 +934,7 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 				users_id : 	self.user_id,
 				sports_id : sportsId,
 				games_id : self.individual_game_id				
-			}
+			};
 				var model = new UserGameLinkModel(payload);
 				model.save();
 				
@@ -954,7 +955,8 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 							sports_id : response.payload.usl ? response.payload.usl.sports_id : null,
 							users_id : self.user_id
 					};
-			Channel(self.channel).publish(self.gameData);
+				routing.trigger(self.channel, response);
+				//Channel(self.channel).publish(response);
 			}
 			}
 		},
@@ -1140,11 +1142,8 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 				$(self.destination).find(self.controls.sectionTeamOne).find(self.controls.fieldMessage).html(self.messages.selectTeam).fadeIn();
 				isDataValid = false;
 			}
-			var isTeam = self.getTeamType();
-			if (isTeam) {
-
-				var currentDate = new Date();
-				//console.log("date", date, currentDate);
+//			var isTeam = self.getTeamType();
+//			if (isTeam) {
 
 				if (!(teamTwoId > 0)) {
 					$(self.destination).find(self.controls.sectionTeamTwo).find(self.controls.fieldMessage).html(self.messages.selectTeam).fadeIn();
@@ -1161,7 +1160,7 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 					// isDataValid = false;
 				// }
 
-			}
+//			}
 
 			if (isDataValid) {
 				var completeDate = date;// + " " + timeText + "00";// + ampm;
@@ -1180,7 +1179,7 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 				gameModel.save({});
 
 				$.when(gameModel.request).done(function(response) {
-					////console.log(response);
+					console.log(response);
 					if (response != null && response.payload != null) {
 						self.game_id = response.payload.id;
 						var isHome = $(self.destination).find(self.controls.rdoTeamOne).is(':checked');
@@ -1192,7 +1191,7 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 							locations_id : self.location_id,
 							score : scoreOne,
 							users_id : self.user_id
-						}
+						};
 
 						var addTeamModelOne = new TeamAddModel(payloadOne);
 						addTeamModelOne.teams_id = teamOneId;
@@ -1205,7 +1204,7 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 							locations_id : self.location_id,
 							score : scoreTwo,
 							users_id : self.user_id
-						}
+						};
 
 						isHome = $(self.destination).find(self.controls.rdoTeamTwo).is(':checked');
 
@@ -1224,8 +1223,10 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 							team_id_two : teamTwoId,
 							sports_id : sportsId,
 							users_id : self.user_id 
-						}
-						Channel(self.channel).publish(self.gameData);
+						};
+						
+						routing.trigger(self.channel, response);
+						//Channel(self.channel).publish(response);
 					}
 
 				});

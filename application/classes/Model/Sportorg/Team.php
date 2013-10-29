@@ -177,6 +177,7 @@ class Model_Sportorg_Team extends ORM
 				$games_model->gameTime = $gameTime;
 				$games_model->locations_id = $locations_id;
 				$games_model->save();
+				$games_model->setIsWinner();
 
 				$new_games_id = $games_model->pk();
 					$games_teams_link->teams_id = $teams_id;
@@ -188,6 +189,8 @@ class Model_Sportorg_Team extends ORM
 			}
 			else
 			{
+				$games_model = ORM::factory("Sportorg_Games_Base",$games_id);
+				$games_model->setIsWinner();
 				$games_teams_link->teams_id = $this->id;
 				$games_teams_link->games_id = $games_id;
 				$games_teams_link->points_scored = $points_scored;
@@ -244,9 +247,11 @@ class Model_Sportorg_Team extends ORM
 	{
 		$sch = $this->getSchedule();
 		$retArr = array();
-		foreach($sch as $game)
-		{
-			$retArr[] = $game->getBasics();
+		if(is_array($sch)){
+			foreach($sch as $game)
+			{
+				$retArr[] = $game->getBasics();
+			}
 		}
 		return $retArr;
 	}
@@ -415,8 +420,9 @@ class Model_Sportorg_Team extends ORM
 			->where('subject_enttypes_id','=',$enttype_id);
 
 		if (!isset($orderby)){
-			$this->join(array($counts,'filtered'), 'left')->on('filtered.teams_id', '=', 'sportorg_team.id');
-			$this->order_by('num_votes', 'asc');
+			$this->order_by('orgs.name','ASC');
+			//$this->join(array($counts,'filtered'), 'left')->on('filtered.teams_id', '=', 'sportorg_team.id');
+			//$this->order_by('num_votes', 'asc');
 		}else{
 			//TODO, add by jeffrey
 			//$this->order_by($orderby, 'asc');
@@ -450,6 +456,7 @@ class Model_Sportorg_Team extends ORM
 
 		$search = ORM::_sql_exclude_deleted($classes_arr, $this);
 		$search->limit(10);
+		//print_r($search->find_all());
 		return $search;
 	}
 	

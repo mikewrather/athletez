@@ -68,15 +68,17 @@ function(vendor, facade,  views,   utils,   ScheduleItemView, Store, ScheduleLis
 		  		 routing.trigger('showSignup');
 		    	return;
 	    	}
+	    	
 	    	if(!_.isUndefined(this.teamRecords) && this.teamRecords) {
-	    		routing.trigger('add-game',0,$("#team-h").val(),$("#sports-h").val(), function(data) {
-	    			_self.collection.add(data);
+	    		routing.trigger('add-game',0,$("#team-h").val(),$("#sports-h").val(), _self.controller.id, function(data) {
+	    			if(_self.controller) _self.controller.getOrgData();
 	    			routing.trigger('popup-close');
 	    		});
 	    	} else {
-	        	routing.trigger('add-game',0,$(e.currentTarget).data("team-id"),$(e.currentTarget).data("sport-id"), function(data) {
-	    			_self.collection.add(data);
+	        	routing.trigger('add-game',0,$(e.currentTarget).data("team-id"),$(e.currentTarget).data("sport-id"), _self.controller.id, function(data) {
+	    			if(_self.controller) _self.controller.getOrgData();
 	    			routing.trigger('popup-close');
+	    			
 	    		});
         	}
         },
@@ -85,17 +87,18 @@ function(vendor, facade,  views,   utils,   ScheduleItemView, Store, ScheduleLis
         addEvent: function(e) {
         	var _self = this;
         	if(!this.checkForUser()) {
-		  		$(".signup-email").trigger('click');
+		  		$("#userlogin").trigger('click');
 		    	return;
 	    	}
 	    	if(!_.isUndefined(this.teamRecords) && this.teamRecords) {
-	    		routing.trigger('add-event',0,$("#sports-h").val(), this.getUserId(), function(data) {
-	    			_self.collection.add(data);
+	    		routing.trigger('add-event',0,$("#sports-h").val(), _self.controller.id, function(data) {
+	    			if(_self.controller) _self.controller.getOrgData();
 	    			routing.trigger('popup-close');						    			
 	    		});
 	    	} else {
-	        	routing.trigger('add-event',0,$(".selected-sport-h").data("id"), this.getUserId(), function(data) {
-	    			_self.collection.add(data);
+			    console.log($(".selected-sport-h").data("id"));
+	        	routing.trigger('add-event',0,$(".selected-sport-h").data("id"), _self.controller.id, function(data) {
+	    			if(_self.controller) _self.controller.getOrgData();
 	    			routing.trigger('popup-close');
 	    		});
         	}
@@ -103,16 +106,18 @@ function(vendor, facade,  views,   utils,   ScheduleItemView, Store, ScheduleLis
 
         initialize: function(options) {
         	var _self = this;
+	        console.log("OPTIONS",options);
         	_self.eventPage = options.eventPage || false;
         	_self.teamRecords = options.teamRecords;
+        	_self.controller = options.controller || false;
         	if((!_.isUndefined(options.teamRecords) && options.teamRecords)) {
         		//var json = options.collection.toJSON();
+		        console.log("Team Records",options.teamRecords,options);
         		_self.renderTemplate();
         		_self.listView = ".schedule-list-h";
         		_self.singleView = true;
         	}
-        	
-        	
+
         	if(!_.isUndefined(options.eventPage) && options.eventPage) {
         		//var json = options.collection.toJSON();
         		_self.renderTemplate(_self.eventPage);
@@ -121,16 +126,20 @@ function(vendor, facade,  views,   utils,   ScheduleItemView, Store, ScheduleLis
         	}
         	
             CollectionView.prototype.initialize.call(_self, options);
-            if (!_self.collection) {
-                throw new Error("Schedulr expected options.collection.");
+            if(!_self.collection) {
+                throw new Error("Schedule expected options.collection.");
             }
 		            
-            _.bindAll(_self);          
-            _self.addSubscribers();   
-            
-
+            _.bindAll(_self);
+            _self.addSubscribers();
+            console.error(_self.collection);
+			
 
         },
+
+	    afterRender: function(){
+		 //   $(this.el).attr('data-team-id',this.teams_id);
+	    },
         
         renderTemplate: function (eventPage) {
             var markup = Mustache.to_html(ScheduleListTemplate, {data: this.collection.length, eventPage: eventPage});

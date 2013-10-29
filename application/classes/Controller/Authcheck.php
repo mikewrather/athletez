@@ -20,27 +20,27 @@ class Controller_Authcheck extends AuthController
 		$facebook = FacebookAuth::factory();
 
 		//	print_r($facebook);
-		$retArr["facebook"] =  $facebook->get_user();
+//		$retArr["facebook"] =  $facebook->get_user();
 
 		$retArr['authorized'] = $this->user ? true : false;
 
 		if(!$this->user)
 		{
-			if (isset($retArr['facebook']['id']))
-			{
-				$user_identity = ORM::factory('User_Identity');
+		//	if (isset($retArr['facebook']['id']))
+		//	{
+		//		$user_identity = ORM::factory('User_Identity');
 
-				if(!$user = $user_identity->find_by_identity($retArr['facebook']['id']))
-				{
-					echo json_encode($retArr);
-					return;
-				}
-			}
-			else
-			{
+		//		if(!$user = $user_identity->find_by_identity($retArr['facebook']['id']))
+		//		{
+		//			echo json_encode($retArr);
+		//			return;
+		//		}
+		//	}
+		//	else
+		//	{
 				echo json_encode($retArr);
 				return;
-			}
+		//	}
 		}
 
 		$retArr['id'] = $this->user->id;
@@ -59,21 +59,21 @@ class Controller_Authcheck extends AuthController
 			"link"=>"/#usersettings"
 		);
 		$retArr['nav'][] = array(
-			"page"=>"Resume Settings",
+			"page"=>"Athletic Resume",
 			"link"=>"/#resume"
 		);
-	/*	$retArr['nav'][] = array(
-			"page"=>"Tag",
-			"link"=>"/#tag"
+
+//		$retArr['nav'][] = array(
+//			"page" => $retArr['authorized'] ? "Facebook Linked" : "Link to Facebook",
+//			"link" => $retArr['authorized'] ? "javascript:void(0);" : "/#fbconnect"
+//		);
+
+		$retArr['nav'][] = array(
+			"page" => "Log Out",
+			"link" => "/#logout",
+			"id" => "logoutId"
 		);
-	*/
-	/*	if($this->user->teams->find_all()->count() > 0)
-		{
-			$retArr['nav'][] = array(
-				"page"=>"My Teams",
-				"link"=>"/team"
-			);
-		}   */
+
 		echo json_encode($retArr);
 	}
 }

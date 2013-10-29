@@ -37,6 +37,12 @@ define([
 			initialize: function (options) {
 				SectionView.prototype.initialize.call(this, options);
 			},
+			
+			openAddvideoPopup: function(event){
+				//** firing the call back list
+				var url = "/api/user/addvideo/" + this.model.id;
+				Channel('add-video').publish(url);
+			},
 
 			// **Method** `setOptions` - called by BaseView's initialize method
 			setOptions: function (options) {
