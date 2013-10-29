@@ -455,7 +455,8 @@ define([
                 target_id : this.id,
                 target_url : "/api/team/addimage/",
 				sport_id: $("#sports-h").val(),                
-                name: "image_wrap "
+                name: "image_wrap ",
+                user_id : this.userId
             });
             
             this.scheme.push(this.imageListView);

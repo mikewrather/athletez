@@ -31,8 +31,6 @@ function (
         
         
         filterData: function() {
-        	//alert("calling filter data once");
-        	console.log(this.model.get('payload'));
     		var _self = this, mpay = this.model.get("payload"), extra = {
 			_enttypes_id : mpay.subject_enttypes_id,
 			_id : mpay.id
@@ -176,7 +174,7 @@ function (
 					//team
 					extra._detailclass = "team";
 					standard_thumb = mpay.subject.picture!==null ? mpay.subject.picture : {height:440,width:440,url:"http://lorempixel.com/output/sports-q-g-440-440-3.jpg"};
-					extra._thumbnail = standard_thumb;
+					extra._thumbnail = "";// standard_thumb;
 					//extra._label = mpay.subject.game_day;
 					extra._link = "/#team/" + mpay.subject_id;
 					var team_str = mpay.subject.team_name;

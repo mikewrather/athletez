@@ -101,6 +101,7 @@ function(facade,  views,   utils,   ImageItemView,            ImageBoardView,   
         	this.target_id = options.target_id;	
         	this.target_url = options.target_url;
         	this.sport_id = options.sport_id;
+        	this.user_id = options.user_id;
 			// render template
 			this.renderTemplate();
 	        //console.log(options);
@@ -127,7 +128,7 @@ function(facade,  views,   utils,   ImageItemView,            ImageBoardView,   
         initPhotoPlayer: function(e) {
 			var index = ($(e.target).parents('li').index());  
 			if(index< 0) index = 0;
-       		routing.trigger('photo-player-init', index, this.allData, this.collection.id, true);
+       		routing.trigger('photo-player-init', index, this.allData, this.user_id, true);
        	},
 
         

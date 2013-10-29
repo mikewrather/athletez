@@ -4,9 +4,15 @@
  // Requires `define`, `require`
  // Returns {Photo Player View} constructor
  */
-define(['require', 'text!usercontrols/photo-player/templates/player.html', 'text!usercontrols/photo-player/templates/image-thumbs.html', 'text!usercontrols/tag/templates/layout.html', 'facade', 'views', 'utils', 'vendor', 'votes/models/vote', 'jwplayer', 'jqueryui', 'jquery.slimscroll.hor', 'usercontrols/tag/models/basic_info', 'usercontrols/tag/views/main', 'media/models/tag'], function(require, layoutTemplate, imageThumbsTemplate, tagTemplate) {
+define(['require', 'text!usercontrols/photo-player/templates/player.html', 'text!usercontrols/photo-player/templates/image-thumbs.html', 'text!usercontrols/tag/templates/layout.html', 'facade', 'views', 'utils', 'vendor', 'votes/models/vote', 'jwplayer', 'jqueryui', 'jquery.slimscroll.hor', 'usercontrols/tag/models/basic_info', 'usercontrols/tag/views/main', 'media/models/tag','usercontrols/photo-player/models/tag-myself'], function(require, layoutTemplate, imageThumbsTemplate, tagTemplate) {
 
-	var self, facade = require('facade'), views = require('views'), SectionView = views.SectionView, utils = require('utils'), Channel = utils.lib.Channel, vendor = require('vendor'), TagView = require('usercontrols/tag/views/main'), UserModel = require('usercontrols/tag/models/basic_info'), Mustache = vendor.Mustache, $ = facade.$, voteModel = require('votes/models/vote'), TagMediaModel = require('media/models/tag');
+	var self, facade = require('facade'), views = require('views'), SectionView = views.SectionView, utils = require('utils'),
+	 Channel = utils.lib.Channel, vendor = require('vendor'), 
+	 TagView = require('usercontrols/tag/views/main'), 
+	 UserModel = require('usercontrols/tag/models/basic_info'), 
+	 Mustache = vendor.Mustache, $ = facade.$, voteModel = require('votes/models/vote'), 
+	 TagMediaModel = require('media/models/tag'),
+	 TagMyselfModel = require('usercontrols/photo-player/models/tag-myself');
 
 	try {
 		console.log("jwplayer", jwplayer);
@@ -26,12 +32,14 @@ define(['require', 'text!usercontrols/photo-player/templates/player.html', 'text
 			'click .next-arrow-h' : 'nextButton',
 			'click .thumb-link-h' : 'changeImage',
 			'click .photo-player-vote-h' : 'vote',
-			'click .photo-player-tag-photo-h' : 'setUpTagPhotoView'
+			'click .photo-player-tag-photo-h' : 'setUpTagPhotoView',
+			'click .photo-player-tag-myself-h' : 'TagMyself',
 		},
 
 		/*initialize gets called by default when constructor is initialized*/
 		initialize : function(options) {
 			this.collection = options.collection;
+			console.log("***************************************************************************************options",options);
 			this.setOptions(options);
 			this.id = options.id;
 			this.index = options.index;
@@ -554,6 +562,26 @@ define(['require', 'text!usercontrols/photo-player/templates/player.html', 'text
 				_currentIndex : _self.index
 			};
 			routing.trigger('tags-fetch-new-form-data', extra._enttypes_id, extra._media_id);
+		},
+		TagMyself : function(){
+			var self = this;
+			var newData ={1 : [this.getUserId()]};
+			var payload = {
+				media_id : this.json[this.index].payload.media_id,
+				tag_array : JSON.stringify(newData)
+			};
+			
+			var tagMyselfModel = new TagMyselfModel(payload);
+			tagMyselfModel.user_id = this.getUserId();
+			tagMyselfModel.save();
+			$.when(tagMyselfModel.request).done(function() {
+				self.setUpTagViewSection();
+			});
+		},
+		getUserId: function() {
+			if(!_.isUndefined(routing.userLoggedIn) && routing.userLoggedIn) return routing.loggedInUserId;
+			return null;
+
 		},
 
 	});
