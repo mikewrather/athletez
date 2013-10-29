@@ -1,4 +1,2 @@
-{{#payload}}
-<a href="javascript:void(0);" class="vote {{#has_voted}}team-noaction-h link-disabled{{/has_voted}}{{^has_voted}}team-action-h{{/has_voted}}">Vote</a>
-<a href="javascript:void(0);" class="follow {{#is_following}}follow-noaction-h link-disabled{{/is_following}}{{^is_following}}follow-action-h{{/is_following}}">Follow</a>
-{{/payload}}
+<a href="javascript:void(0);" class="vote {{#data.has_voted}}team-noaction-h link-disabled{{/data.has_voted}}{{^data.has_voted}}team-action-h{{/data.has_voted}}">Vote</a>
+<a href="javascript:void(0);" class="follow {{#data.is_following}}follow-noaction-h link-disabled{{/data.is_following}}{{^data.is_following}}follow-action-h{{/data.is_following}}">Follow</a>

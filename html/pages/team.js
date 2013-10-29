@@ -43,9 +43,7 @@ define([
     "media/models/image",
     "schedules/views/schedule-list",
     "roster/views/roster",
-    "profile/views/fans-image-list",
-     'votes/views/vote'
-    
+    "profile/views/fans-image-list"
     ], function (require, pageLayoutTemplate, voteView) {
 
     var TeamController,
@@ -82,7 +80,7 @@ define([
 		MenuPageView = require("team/views/menu"),
 		RosterView = require("roster/views/roster"),
         MediaImageModel = require("media/models/image"),
-        VotesView = require('votes/views/vote'),
+       
         LayoutView = views.LayoutView,
         $ = facade.$,
         _ = facade._,
@@ -233,6 +231,18 @@ define([
                 if ( ~position ) this.scheme.splice(position, 1);
             }
             
+           
+             if (this.votesView) {
+            	//alert("dest");
+            	//this.votesView.unbind().remove();
+                $(this.votesView.destination).unbind().html('');
+                position = $.inArray(this.votesView, this.scheme);
+                if ( ~position ) this.scheme.splice(position, 1);
+                
+                this.setUpVoteView();
+                
+            } 
+            
             if (this.gamesView) {
                 $(this.gamesView.destination).html('');
                 position = $.inArray(this.gamesView, this.scheme);
@@ -324,14 +334,15 @@ define([
         
         setUpVoteView: function() {
         	// votes view
-        	 this.votesView = new VotesView({
+        	//alert("sdsd"+ $("#vote-view").length);
+        	/* this.votesView = new VotesView({
                 model: this.basics,
                 id: this.id,
                 destination: "#votes-area-h",
                 name: "votes_view"
             });
             this.scheme.push(this.votesView);
-            this.layout.render();
+            this.layout.render();*/
         },
         
         setupUpcomingSchedules: function() {

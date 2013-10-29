@@ -18,7 +18,8 @@ define([
         'team/views/sport-list',
         'usercontrol/dropdown/view/dropdown',
         'team/collections/seasonteams',
-        'team/collections/complevels'
+        'team/collections/complevels',
+        'votes/views/vote'
         ],
 function(require, headerTemplate, selectSportTemplate) {
 
@@ -32,7 +33,7 @@ function(require, headerTemplate, selectSportTemplate) {
         DropDownList = require('usercontrol/dropdown/view/dropdown'), 
 		SeasonTeams = require('team/collections/seasonteams'),
         CompLevels = require('team/collections/complevels'),
-        
+         VotesView = require('votes/views/vote'),
         utils = require('utils'),
         Channel = utils.lib.Channel,
         vendor = require('vendor'),
@@ -157,6 +158,14 @@ function(require, headerTemplate, selectSportTemplate) {
         render: function (domInsertion, dataDecorator, partials) {
         	document.title = this.getName();
             SectionView.prototype.render.call(this, domInsertion, dataDecorator, partials); 
+            console.error(this.$el.find("#votes-area-h"));
+             	var view = new VotesView({
+                model: this.model,
+                id: this.model.id
+            });
+            
+            this.$el.find("#votes-area-h").html(view.render());
+            
         },
         
        
