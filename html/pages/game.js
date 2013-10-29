@@ -147,7 +147,6 @@ define([
 					teamsCount = (!_.isUndefined(basicPayload.teams) && basicPayload.teams)?basicPayload.teams.length:0;
 				
 				if(!teamsCount) {
-					
 					// get the participants
 					controller.participants = new ParticipantsList();
 					controller.participants.id = controller.id;
@@ -246,14 +245,36 @@ define([
 			this.layout.render();
 		},
 		
-		setupParticipantsListView: function() {
+		
+		reloadParticipateView: function() {
+			// get the participants
+			var controller = this, position;
 			
-			this.scheme.push(new ParticipantsListView({
+			
+			if (this.participants) {
+				$(this.participants.destination).html('');
+				position = $.inArray(this.participants, this.scheme);
+				if (~position) this.scheme.splice(position, 1);
+			}
+			
+			
+			controller.participants.fetch();
+			$.when(controller.participants.request).done(function () {
+				console.error(controller.participants);
+				controller.setupParticipantsListView();
+			});
+		},
+				
+		setupParticipantsListView: function() {
+			console.error(this.basics);
+			this.participants = new ParticipantsListView({
 					collection: this.participants,
 					name: "participants view",
+					controller: this,
+					sport_id: this.basics.get("payload").sports_id,
 					destination: "#participants_div"
-				})
-			);
+			});
+			this.scheme.push();
 			this.layout.render();
 		},
 
