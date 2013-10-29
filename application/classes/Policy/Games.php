@@ -7,8 +7,8 @@ class Policy_Games extends Policy
 	{
 		$config = Kohana::$config->load('sysconfig');
 		$roles = $config->get('role_name');
-		$has_admin = $user->has('roles', ORM::factory('Role', array('name' => $roles['admin'])));
-		//$has_user = $user->has('roles', ORM::factory('Role', array('name' => $roles['user'])));
+		$has_admin = $user->has('roles', ORM::factory('Role', array('id' =>2)));
+		$has_user = $user->has('roles', ORM::factory('Role', array('id' => 1)));
 		//$has_coach = $user->has('roles', ORM::factory('Role', array('name' => $roles['coach'])));
 		//$has_moderator = $user->has('roles', ORM::factory('Role', array('name' => $roles['moderator'])));
 		$obj = $extra['obj'];
@@ -56,14 +56,14 @@ class Policy_Games extends Policy
 					return true;
 					break;
 				case 'addMatch':
-					if($has_admin || $is_team_member || $is_follower){
+					if($has_admin || $is_team_member || $is_follower || $has_user){
 						$have_permission = true;
 					}
 					return $have_permission;
 					break;
 				case 'modify':
 					//TODO, add by Jeffrey, maybe we need add coach later
-					if($has_admin || ( $is_follower || $is_team_member )){
+					if($has_admin || ( $is_follower || $is_team_member || $has_user ) ){
 						$have_permission = true;
 					}
 					return $have_permission;

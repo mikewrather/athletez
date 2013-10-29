@@ -347,8 +347,8 @@ ul#tags-list .tags-number {
         font-weight: bolder;
     }
     .teamName-area{
-        padding-top: 9%;
-        padding-bottom: 35%;
+    /*    padding-top: 9%;
+        padding-bottom: 35%;*/
         font-size: small;
     }
     .scoreAlign{
