@@ -69,8 +69,7 @@ class Model_User_Sportlink extends ORM
 			return $e;
 		}
 	}
-
-	public function getId($users_id, $sports_id){
+	public function getId($users_id, $sports_id,$make_new=false){
 		$usl_model = ORM::factory("User_Sportlink");
 		$usl_model->select("id")
 			->where('sports_id', '=', $sports_id)
@@ -78,6 +77,14 @@ class Model_User_Sportlink extends ORM
 			->find();
 		if ($usl_model->loaded()){
 			return $usl_model->id;
+		}
+		if($make_new)
+		{
+			$new_usl = ORM::factory("User_Sportlink");
+			$new_usl->sports_id = $sports_id;
+			$new_usl->users_id = $users_id;
+			$new_usl->save();
+			if($new_usl->loaded()) return $new_usl->id;
 		}
 		return null;
 	}
