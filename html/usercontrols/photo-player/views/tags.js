@@ -1,7 +1,7 @@
 // The CommentOn List
 // --------------
 
-define(['facade', 'vendor', 'utils', 'views', "text!usercontrol/photo-player/templates/tags.html", "usercontrol/photo-player/views/tags-item","usercontrols/photo-player/models/tags"],
+define(['facade', 'vendor', 'utils', 'views', "text!usercontrol/photo-player/templates/tags.html", "usercontrol/photo-player/views/tags-item","usercontrols/photo-player/models/tags","jquery.slimscroll"],
 function(facade, vendor,  utils, views) {
 
     var TagListView, _ = facade._,
@@ -46,6 +46,9 @@ function(facade, vendor,  utils, views) {
 			 _self.allData = this.collection.toArray();
 			_self.cleardata();
 			_self.getprofile();
+			$(".photo-player-right-area").slimScroll({
+   			 height: 'auto'
+			});
 			_self.seeMore();
 			console.log(this.collection.toJSON());
             CollectionView.prototype.initialize.call(this, options);
@@ -57,7 +60,7 @@ function(facade, vendor,  utils, views) {
         },
         
         seeMore: function(e) {
-        	//alert("test seemore");
+        	
         	var len = this.allData.length, limit = (len < this.page_limit)?len:this.page_limit, start = len - (this.page * limit), end = start + this.page_limit;
 			
 			if(start <= 0) {

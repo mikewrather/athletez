@@ -165,7 +165,7 @@ function (
 						this.Sportsteam=true;
 						var str = mpay.subject.shared.season;
 						var n = str.split(" ");
-						var headerdata = '<div class="firstheader">'+ mpay.subject.shared.sport+'</div>	<div class="secheader">'+mpay.subject.shared.complevel+'</div><div class="thirdheader">'+n[2]+'</div>';
+						var headerdata = '<div class="name"><span class="topalign">'+ mpay.subject.shared.sport+'</span></div>	<div class="game"><span class="topalign">'+mpay.subject.shared.complevel+'</span></div><div class="season"><span class="topalign">'+n[2]+'</span></div>';
 						$(".headerinfo").html(headerdata);
 						$(".teamName-area").html(team_str);
 					}
