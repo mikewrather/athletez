@@ -30,7 +30,7 @@ define([
 	"game/views/comment-list",
 	"game/views/commenton-list",
 	"roster/views/roster",
-	"game/views/participants-list"
+	"game/views/participants-list-main"
 
 ], function (require, pageLayoutTemplate, voteView)
 {
@@ -58,7 +58,7 @@ define([
 		GameCommentOnListView = require("game/views/commenton-list"),
 		MediaImageModel = require("media/models/image"),
 		RosterView = require("roster/views/roster"),
-		ParticipantsListView = require("game/views/participants-list"),
+		ParticipantsListView = require("game/views/participants-list-main"),
 
 		LayoutView = views.LayoutView,
 		$ = facade.$,
@@ -266,15 +266,15 @@ define([
 		},
 				
 		setupParticipantsListView: function() {
-			console.error(this.basics);
 			this.participants = new ParticipantsListView({
-					collection: this.participants,
-					name: "participants view",
-					controller: this,
-					sport_id: this.basics.get("payload").sports_id,
-					destination: "#participants_div"
+				collection: this.participants,
+				name: "participants view",
+				controller: this,
+				sport_id: this.basics.get("payload").sports_id,
+				destination: "#participants_div",
+				
 			});
-			this.scheme.push();
+			this.scheme.push(this.participants);
 			this.layout.render();
 		},
 

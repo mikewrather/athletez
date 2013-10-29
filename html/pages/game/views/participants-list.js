@@ -18,11 +18,7 @@ function(facade,  views,   utils,   ItemView,  templateList, Participate) {
 
     return ParticipantsView.extend({
 
-      //  __super__: CollectionView.prototype,
-
-       // id: "image-list",
-        //name: "Image List",
-       // tagName: "ul",
+        __super__: CollectionView.prototype,
 		template : templateList,
         // Tag for the child views
         _tagName: "li",
@@ -32,7 +28,6 @@ function(facade,  views,   utils,   ItemView,  templateList, Participate) {
 		listView : ".image-list",
         // Store constructor for the child views
         _view: ItemView,
-		//template: imageListTemplate,
 		events: {
 			'click .see-more-h': 'seeMore'
 			//'click .add-comment': 'addParticipant'
@@ -42,11 +37,11 @@ function(facade,  views,   utils,   ItemView,  templateList, Participate) {
 		renderTemplate: function () {
             var markup = Mustache.to_html(this.template, {target: this.target_id});
             this.$el.html(markup);
-            $("#participants_div").html(this.$el.html());
+           // $("#participants_div").html(this.$el.html());
             return this;
-       },
+        },
        
-       addParticipant: function() {
+        addParticipant: function() {
        		var participants = new Participate(), _self = this;
        		//games_id={games_id}&sports_id={sports_id}
        		participants.set({games_id: this.game_id, sports_id: this.sports_id});
@@ -54,13 +49,13 @@ function(facade,  views,   utils,   ItemView,  templateList, Participate) {
        		$.when(participants.request).done(function() {
        			_self.controller.reloadParticipateView();
        		});
-       },
+        },
              
         initialize: function(options) {
-        	this.renderTemplate();
+        	
         	var _self = this;
-        	$(document).off("click", ".add-comment");
-        	$(document).on("click", ".add-comment", function() {
+        	$(document).off("click", ".add-to-event");
+        	$(document).on("click", ".add-to-event", function() {
         		_self.addParticipant();
         	});
         	$(".participants-heading-h").removeClass("hide");
@@ -70,25 +65,23 @@ function(facade,  views,   utils,   ItemView,  templateList, Participate) {
         		this.name = "image list";
         	
         	if(options.collecton) this.collection = options.collection;
-        	
         	this.sports_id = options.sports_id;
-        	
-        	console.error(this.collection);
-        	
         	this.game_id = this.collection.id;
-        		
+        	
+        	this.renderTemplate();
+        	
         	var json = this.collection.toArray();  
         	var a = json[0].get("payload"), b = [];
         	for(var i in a) {
+        		console.error(routing.loggedInUserId == a[i].id);
+        		if(routing.loggedInUserId == a[i].id){
+        			this.$el.find(".add-to-event").hide();
+        		}
+        		
         		b.push({payload: a[i]});
         	}
         	
-        	
-        	
         	this.collection.reset(b);   
-        	
-        	
-        	     	
         	this.target_id = options.target_id;	
         	this.target_url = options.target_url;
         	this.sport_id = options.sport_id;
@@ -106,7 +99,7 @@ function(facade,  views,   utils,   ItemView,  templateList, Participate) {
            
             _.bindAll(this);
             this.addSubscribers();
-        	//this.setupAddView();
+        	this.setupAddView();
         	//$(document).off('click','.image-outer-h');
         	//$(document).on('click','.image-outer-h', function() {
 			//	_self.initPhotoPlayer();
@@ -124,12 +117,10 @@ function(facade,  views,   utils,   ItemView,  templateList, Participate) {
             	this.collection.add(this.allData.slice(start,end));
             else
 	            this.collection.reset(this.allData.slice(start,end));
-	           
 	         this.page++;  
-	           
 	        if(e) {    
 				if(this.addSubscribers) this.addSubscribers();
-	           // if(this.setupAddView) this.setupAddView();   
+	            if(this.setupAddView) this.setupAddView();   
         	}
         },
             
