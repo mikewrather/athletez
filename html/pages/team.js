@@ -43,9 +43,7 @@ define([
     "media/models/image",
     "schedules/views/schedule-list",
     "roster/views/roster",
-    "profile/views/fans-image-list",
-     'votes/views/vote'
-    
+    "profile/views/fans-image-list"
     ], function (require, pageLayoutTemplate, voteView) {
 
     var TeamController,
@@ -82,7 +80,7 @@ define([
 		MenuPageView = require("team/views/menu"),
 		RosterView = require("roster/views/roster"),
         MediaImageModel = require("media/models/image"),
-        VotesView = require('votes/views/vote'),
+       
         LayoutView = views.LayoutView,
         $ = facade.$,
         _ = facade._,
@@ -337,14 +335,14 @@ define([
         setUpVoteView: function() {
         	// votes view
         	//alert("sdsd"+ $("#vote-view").length);
-        	 this.votesView = new VotesView({
+        	/* this.votesView = new VotesView({
                 model: this.basics,
                 id: this.id,
                 destination: "#votes-area-h",
                 name: "votes_view"
             });
             this.scheme.push(this.votesView);
-            this.layout.render();
+            this.layout.render();*/
         },
         
         setupUpcomingSchedules: function() {
