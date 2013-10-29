@@ -46,6 +46,7 @@ define([ 'require', 'text!votes/templates/vote.html','views', 'vendor', 'facade'
 			});
 			Channel('new-fan').publish();
 		},
+		
 		checkForUser: function() {
 			if(!_.isUndefined(routing.userLoggedIn) && routing.userLoggedIn)
 				return true;
@@ -66,7 +67,7 @@ define([ 'require', 'text!votes/templates/vote.html','views', 'vendor', 'facade'
 				this.voteModelOb = new voteModel();
 				this.voteModelOb.subject_id = payload.id;
 				this.voteModelOb.entity_id = payload.enttypes_id;
-				this.voteModelOb.setData();								
+				this.voteModelOb.setData();							
 			} else {
 				this.$el.find(".team-action-h").addClass('link-disabled');
 			}

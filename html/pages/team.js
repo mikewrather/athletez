@@ -233,6 +233,18 @@ define([
                 if ( ~position ) this.scheme.splice(position, 1);
             }
             
+           
+             if (this.votesView) {
+            	//alert("dest");
+            	//this.votesView.unbind().remove();
+                $(this.votesView.destination).unbind().html('');
+                position = $.inArray(this.votesView, this.scheme);
+                if ( ~position ) this.scheme.splice(position, 1);
+                
+                this.setUpVoteView();
+                
+            } 
+            
             if (this.gamesView) {
                 $(this.gamesView.destination).html('');
                 position = $.inArray(this.gamesView, this.scheme);
@@ -324,6 +336,7 @@ define([
         
         setUpVoteView: function() {
         	// votes view
+        	//alert("sdsd"+ $("#vote-view").length);
         	 this.votesView = new VotesView({
                 model: this.basics,
                 id: this.id,
