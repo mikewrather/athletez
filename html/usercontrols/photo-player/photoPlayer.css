@@ -6,6 +6,7 @@
     margin: 0 !important;
     border-radius: 0; -webkit-border-radius: 0; -moz-border-radius: 0;
     padding: 0;
+    border:none !important;
 }
 
 .photo-frame-model .modal-body {
@@ -148,7 +149,7 @@ div.right-arrow-container > img{
     overflow-x: scroll;
     overflow-y: hidden;
     position: absolute;
-    bottom:0px;
+    bottom:13px;
 }
 
 .thumbs-inner {

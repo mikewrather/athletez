@@ -175,7 +175,7 @@ class Model_Sportorg_Games_Base extends ORM
 		{
 
 			$user = $gamelink->usl->user;
-			$users[$user->id] = $user->getBasics();
+
 			//create result time
 			$total_seconds = $gamelink->result_time;
 			$hours = floor($total_seconds / 3600);
@@ -185,11 +185,17 @@ class Model_Sportorg_Games_Base extends ORM
 			$seconds = floor($minutes % 60);
 
 			$new_result = str_pad($hours,2,'00',STR_PAD_LEFT).":".str_pad($minutes,2,'00',STR_PAD_LEFT).":".str_pad($seconds,2,'00',STR_PAD_LEFT).":".substr($total_seconds,-2,2);
+
+			$users[$user->id] = $user->getBasics();
 			$users[$user->id]["result_time"] = $new_result;
 			$users[$user->id]["result_place"] = $gamelink->result_place;
 			$users[$user->id]["bib_number"] = $gamelink->bib_number;
 		}
-		return $users;
+		$newArr = array();
+		foreach($users as $key=>$val){
+			$newArr[] = $val;
+		}
+		return $newArr;
 	}
 
 
