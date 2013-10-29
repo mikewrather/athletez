@@ -238,9 +238,11 @@ function(require, gameHeaderTemplate) {
 	        }
 	        console.log("new date",date);
 
+	        var event_name = $(self.el).find('#event_name').val();
         	var _self = this, model = new saveLocation();
 			model.id = this.model.id;
-			model.set({'game_datetime': date, 'locations_id': this.locationId, id: this.model.id});
+	        console.log(model,event_name);
+			model.set({'game_datetime': date, 'locations_id': this.locationId, id: this.model.id, event_name:event_name});
 			model.save();
     	
         	$.when(model.request).done(function() {
