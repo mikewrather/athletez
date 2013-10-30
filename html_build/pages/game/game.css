@@ -36,6 +36,19 @@ margin:10px;
     text-align: center;
     text-transform: uppercase;
 }
+#modalPopupGameEdit{
+    width:550px;
+    margin-left:-275px;
+    left:50%;
+}
+#modalPopupGameEdit .modal-body{
+    width: 98%;
+    height: 87%;
+    min-height: 87%;
+}
+#modalPopupGameEdit .modal-footer{
+    padding: 0;
+}
 .game-heading .game-general span:after{
     content: '  |';
 }

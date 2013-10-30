@@ -1,5 +1,6 @@
 body { font-size:100%; font-family: "Raleway","Helvetica"; }
 .common-btn { text-decoration: none; padding:8px 50px; font-size: 1.5em; color: #FFFFFF; text-align:center;
+    border-style: none;
     display:inline-block;}
 .common-btn:hover, .common-btn:active {  border-top:0; text-decoration: none;  color: #FFFFFF; }
 .common-btn-direction {background:#1AA0AE;}
