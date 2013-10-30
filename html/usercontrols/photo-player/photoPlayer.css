@@ -192,6 +192,7 @@ div.right-arrow-container > img{
     position: absolute;
     top: 30px;
     left: 50px;
+    z-index: 10000;
 }
 
 .image-actions li {
