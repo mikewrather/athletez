@@ -7,7 +7,7 @@ define([
 	"require",
 	"text!profile/templates/layout.html",
 	"application",
-	'votes/views/vote',
+	'votes/views/vote-section',
 	"facade",
 	"controller",
 	"models",
