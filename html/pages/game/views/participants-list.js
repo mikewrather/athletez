@@ -49,6 +49,8 @@ function(facade,  views,   utils,   ItemView,  templateList, Participate) {
        		$.when(participants.request).done(function() {
        			_self.controller.reloadParticipateView();
        		});
+       		
+       		_self.controller.reloadParticipateView();
         },
              
         initialize: function(options) {
@@ -65,6 +67,8 @@ function(facade,  views,   utils,   ItemView,  templateList, Participate) {
         		this.name = "image list";
         	
         	if(options.collecton) this.collection = options.collection;
+        	
+        	this.controller = options.controller;
         	this.sports_id = options.sports_id;
         	this.game_id = this.collection.id;
         	
