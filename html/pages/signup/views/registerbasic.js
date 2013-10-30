@@ -93,10 +93,16 @@ define([
 						};
 						this.selectRegisterBasicFinalView = new signupBaseFinalView(options);
 						//$(".register-wrapper-h").unbind().html("");
-						$("#RegModal .modal-body").append(this.selectRegisterBasicFinalView.$el);
-						$('#RegModal').modal('show') ;
 						
-						
+						if(!$("#RegModal").length) {
+							$("body").append('<div id="RegModal" class="modal hide fade" tabindex="-1" role="dialog"'+
+							 'aria-labelledby="myModalLabel" aria-hidden="true"><div class="modal-header"><button type="button"'+
+							 ' class="close" data-dismiss="modal" aria-hidden="true">×</button>'+
+							'</div><div id="main-contentreg"></div>'+
+							'<div class="modal-body"><div class="inner-content-h"></div><div id="errormsg"></div><div id="preview"></div></div></div>');
+						}
+						$("#RegModal .inner-content-h").html(this.selectRegisterBasicFinalView.$el);
+						$('#RegModal').modal('show');
                     } else {
                    		if(flag) routing.trigger("register-basic-final", fields);          
         			}
