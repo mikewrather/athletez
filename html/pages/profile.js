@@ -198,7 +198,6 @@ define([
 
 				$.when(this.basics.request).done(function () {
 					controller.setupHeaderView();
-					controller.initVoteView();
 					controller.setupAddMediaView();
 
 					var subject_type_id = controller.basics.get("payload").enttypes_id;
