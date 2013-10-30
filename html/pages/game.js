@@ -251,9 +251,9 @@ define([
 			var controller = this, position;
 			
 			
-			if (this.participants) {
-				$(this.participants.destination).html('');
-				position = $.inArray(this.participants, this.scheme);
+			if (this.participantsView) {
+				$(this.participantsView.destination).html('');
+				position = $.inArray(this.participantsView, this.scheme);
 				if (~position) this.scheme.splice(position, 1);
 			}
 			
@@ -266,7 +266,7 @@ define([
 		},
 				
 		setupParticipantsListView: function() {
-			this.participants = new ParticipantsListView({
+			this.participantsView = new ParticipantsListView({
 				collection: this.participants,
 				name: "participants view",
 				controller: this,
@@ -274,7 +274,7 @@ define([
 				destination: "#participants_div",
 				
 			});
-			this.scheme.push(this.participants);
+			this.scheme.push(this.participantsView);
 			this.layout.render();
 		},
 
