@@ -259,7 +259,6 @@ define(['require', 'text!usercontrols/photo-player/templates/player.html', 'text
 							'value' : overflow + 'px'
 						}];
 				}
-
 				data.data.push(extra);
 			}
 			this.id = extra._id;
@@ -323,11 +322,12 @@ define(['require', 'text!usercontrols/photo-player/templates/player.html', 'text
 		},
 
 		loadImage : function(trigger) {
-
-			if (!$('div#video_container').hasClass('hidden'))
-				$('div#video_container').addClass('hidden');
-			if ($('div.loading_image').hasClass('hidden'))
-				$('div.loading_image').removeClass('hidden');
+			
+			var $videoContainer = $('div#video_container'),
+			$loadingImage = $('div.loading_image');
+			if (!$videoContainer.hasClass('hidden')) $videoContainer.addClass('hidden');
+			if ($loadingImage.hasClass('hidden'))
+				$loadingImage.removeClass('hidden');
 
 			var _self = this, mpay = this.json[_self.index].payload, extra = {
 				_enttypes_id : mpay.enttypes_id,
@@ -335,16 +335,19 @@ define(['require', 'text!usercontrols/photo-player/templates/player.html', 'text
 				_media_id : mpay.media_id,
 				_currentIndex : _self.index
 			};
+			
 			if (_self.index >= this.json.length - 1) {
 				this.$el.find('.next-arrow-h').addClass('disable-arrow-link');
 			} else {
 				this.$el.find('.next-arrow-h').removeClass('disable-arrow-link');
 			}
+			
 			if (_self.index == 0) {
 				this.$el.find('.back-arrow-h').addClass('disable-arrow-link');
 			} else {
 				this.$el.find('.back-arrow-h').removeClass('disable-arrow-link');
 			}
+			
 			var image_object;
 			switch(mpay.enttypes_id) {
 				case '23':
@@ -440,7 +443,8 @@ define(['require', 'text!usercontrols/photo-player/templates/player.html', 'text
 
 			var self = this;
 			function videoShit() {
-				var jw = jwplayer("jw_container");
+				var jw = jwplayer(self.playerId);
+				
 				var c_el = self.$el;
 				var jps = {}, sources = [];
 				for (var i = 0; i < mpay.video_type.length; i++) {
@@ -469,23 +473,39 @@ define(['require', 'text!usercontrols/photo-player/templates/player.html', 'text
 				jps.skin = "http://s3.amazonaws.com/mikewbucket/jw/skins/glow.xml";
 				jps.height = (c_el.height()) * .8;
 				jps.width = c_el.width();
-				console.log(jps);
+				console.error(jps);
 				jw.setup(jps);
 			}
 
 			var checkforjw = setInterval(function() {
-
 				var jwc = $('#jw_container');
-				if (jwc.length > 0) {
-					clearInterval(checkforjw);
-					videoShit();
-				} else {
-					console.log("adding video thing");
+				if (!jwc.length) {
 					$('div.image-bg div.loading_image').addClass('hidden');
 					$('div#video_container').removeClass('hidden');
-					var $container = $("<div></div>").attr('id', 'jw_container');
-					$('div#video_container').append($container).removeClass('hidden');
 				}
+				
+				if(self.playerId) {
+					$("#"+self.playerId).remove();
+				}
+				
+				self.playerId = 'jw-container-'+Math.floor(Math.random() * 90 + 10);
+				var $container = $("<div></div>").attr('id', self.playerId);
+				$('div#video_container').append($container).removeClass('hidden');
+				clearInterval(checkforjw);
+				videoShit();
+				
+				//if (jwc.length > 0) {
+					
+					//$("#jw_container").empty();
+					
+				//	clearInterval(checkforjw);
+				//	videoShit();
+				//} else {
+				//	$('div.image-bg div.loading_image').addClass('hidden');
+				//	$('div#video_container').removeClass('hidden');
+				//	var $container = $("<div></div>").attr('id', 'jw_container');
+				//	$('div#video_container').append($container).removeClass('hidden');
+				//}
 			}, 500);
 		},
 
