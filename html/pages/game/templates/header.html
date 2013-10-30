@@ -72,8 +72,13 @@
 			&times;
 		</button>
 	</div>
+	<form action="#" class="update-date-time-h" name="update-date-time">
 	<div class="modal-body page-content-h">
-		<form action="#" class="update-date-time-h" name="update-date-time">
+
+			<div class="row-fluid">
+				<label>Event Name</label>
+				<input type="text" id="event_name" value="{{event_name}}" />
+			</div>
 			<div class="row-fluid">
 			<label>Date &amp; Time</label>
 			<input type="text" class="txt-game-date_h txtDate" placeholder="Enter Date" value="{{gameDay}}" readonly="readonly" />
@@ -86,8 +91,10 @@
 			<a href="javascript: void(0);" title="Verify Address" class="verify-address-h">Verify Address</a>
 			<span class="address-error hide address-error-status-h"></span>
 			<div class="view-map-h"></div>
-			<input type="submit" class="common-btn common-btn-validation" name="submit_edit-form" value="Update" />		
-		</form>
+
+
 	</div>
+	<div class="modal-footer"><input type="submit" class="common-btn common-btn-validation" name="submit_edit-form" value="Update" />	</div>
+	</form>
 </div>
 {{/payload}}
