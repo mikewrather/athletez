@@ -7,7 +7,7 @@ define([
 	"require",
 	"text!profile/templates/layout.html",
 	"application",
-	'votes/views/vote',
+	'votes/views/vote-section',
 	"facade",
 	"controller",
 	"models",
@@ -198,6 +198,7 @@ define([
 
 				$.when(this.basics.request).done(function () {
 					controller.setupHeaderView();
+					controller.initVoteView();
 					controller.setupAddMediaView();
 
 					var subject_type_id = controller.basics.get("payload").enttypes_id;
