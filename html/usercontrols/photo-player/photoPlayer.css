@@ -259,6 +259,7 @@ div.right-arrow-container > img{
 .photo-player-arrow {
 	position: absolute;
 	top: 40%;
+    z-index: 10000;
 }
 
 #video_container{

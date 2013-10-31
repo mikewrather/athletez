@@ -147,7 +147,7 @@ function (
 						
 						team_str += '<div class="'+scoreClass+'">';
 						team_str += '<span class="scoreAlign">';
-						team_str += mpay.subject.teams[i].points_scored;
+						team_str += mpay.subject.teams[i].points_scored != null ? mpay.subject.teams[i].points_scored : "--";
 						team_str += '</span>';
 						team_str += '</div>';
 						
