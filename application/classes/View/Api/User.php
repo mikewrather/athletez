@@ -748,7 +748,18 @@
 
 			return $retArr;
 		}
-		
+
+		/**
+		 * post_pw_reset()
+		 *
+		 * @retun array
+		 */
+		public function post_pw_reset()
+		{
+			$retArr = $this->obj->getBasics();
+			return $retArr;
+		}
+
 		/**
 		 * get_fbreg() Get facebook user information
 		 *

@@ -491,6 +491,8 @@ define(['require', 'text!usercontrols/photo-player/templates/player.html', 'text
 				self.playerId = 'jw-container-'+Math.floor(Math.random() * 90 + 10);
 				var $container = $("<div></div>").attr('id', self.playerId);
 				$('div#video_container').append($container).removeClass('hidden');
+				$('#'+self.playerId).css('z-index','9999');
+				console.log("Set CSS",$('#'+self.playerId).css('z-index','9999'));
 				clearInterval(checkforjw);
 				videoShit();
 				
