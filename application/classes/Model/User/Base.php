@@ -226,7 +226,7 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 		//validate argument exists in db
 		$this->where('email','=',$args['email'])->find();
 		if(!$this->loaded()){
-
+			echo "email not found";
 			return false;
 		}
 
