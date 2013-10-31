@@ -221,6 +221,33 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 			return true;
 		}
     }
+
+	public function password_reset($args){
+		//validate argument exists in db
+		$this->where('email','=',$args['email'])->find();
+		if(!$this->loaded()){
+
+			return false;
+		}
+
+		//generate password
+		$new_password = Util::random_password(10);
+
+		$ai = Auth::instance();
+		$this->password = $ai->hash($new_password);
+		try{
+			$this->save();
+			//send reset notification
+			Email::send_mail(
+				$args['email'],
+				'Your New Athletez Password',
+				"New Password: \"".$new_password."\"<br /><br />Please visit http://athletez.com/ and use this new password to log in.");
+			return $this;
+		}catch(ORM_Validation_Exception $e){
+			return $e;
+		}
+
+	}
     
     public function updateUser($args = array())
     {

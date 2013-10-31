@@ -5,7 +5,7 @@ class Email {
 	public static function send_mail($to, $subject, $body, $cc = "", $bcc = ""){
 		$pm = new Postmark();
 		$from = "donotreply@highlightfront.com";
-		$from_name_alias = null;
+		$from_name_alias = 'Mike From Athletez';
 		$to_name_alias = null;
 		$pm	->from($from, $from_name_alias)
 			->subject($subject)
@@ -17,6 +17,7 @@ class Email {
 			$pm->addTo($to, $to_name_alias);
 		}
 		//TODO, add by jeffrey, allow to cc,bcc many receipents.
+
 		return $pm->send();
 	}
 

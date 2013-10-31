@@ -794,6 +794,56 @@
 		}
 
 		/**
+		 * action_post_pw_reset()
+		 * via /api/user/pw_reset/{users_id}
+		 *
+		 */
+		public function action_post_pw_reset()
+		{
+			$this->payloadDesc = "";
+			$arguments = array();
+			// CHECK FOR PARAMETERS:
+			// email
+			// Email address where new password will be sent
+
+			if(trim($this->request->post('email')) != "")
+			{
+				$arguments["email"] = trim($this->request->post('email'));
+			}
+			else
+			{
+				$error_array = array(
+					"error" => "This Facebook account is already linked up with a different AthletesUp account than the one you're logged in to now.  Try logging out and logging back in using facebook."
+
+				);
+
+				// Set whether it is a fatal error
+				$is_fatal = true;
+
+				// Call method to throw an error
+				$this->addError($error_array,$is_fatal);
+			}
+
+			$user = ORM::factory('User_Base');
+			$result = $user->password_reset($arguments);
+			if(get_class($result) == get_class($this->mainModel))
+			{
+				//	this indicates success
+				//  facebook data will be returned at the end of this method
+				$retArr["users_id"] = $user->id;
+
+			}
+			elseif(get_class($result) == 'ORM_Validation_Exception')
+			{
+				//parse error and add to error array
+				$this->processValidationError($result,$this->mainModel->error_message_path);
+				return false;
+			}
+
+			return;
+		}
+
+		/**
 		 * This is an alias for post_addgpa()
 		 * @return bool
 		 */

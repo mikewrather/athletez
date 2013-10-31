@@ -950,6 +950,18 @@
 			}
 			return false;
 		}
+
+		public static function email_exists($value){
+			$user_model = ORM::factory("User_Base");
+			$user_model->select("id")
+				->where('email', '=', $value)
+				->find();
+			if (!$user_model->loaded()){
+				return true;
+			}
+			return false;
+		}
+
 		//checked exclude
 		public static function gamesteams_combine_primary_key_exist($teams_id, $games_id){
 			$exists_obj = DB::select('*')

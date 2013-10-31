@@ -96,7 +96,6 @@ div.image-controls{
     position: absolute;
     width: 100%;
     height: 100%;
-    z-index: 1055;
 }
 
 div.right-arrow-container, div.left-arrow-container{
@@ -106,7 +105,7 @@ div.right-arrow-container, div.left-arrow-container{
     text-align: center;
   */
     width:20%;
-
+    z-index: 10000;
 }
 
 div.right-arrow-container{
@@ -192,6 +191,7 @@ div.right-arrow-container > img{
     position: absolute;
     top: 30px;
     left: 50px;
+    z-index: 10000;
 }
 
 .image-actions li {
@@ -290,13 +290,13 @@ ul#tags-list li {
 }
 
 ul#tags-list .tags-name img {
-	width: 40px;
+	width: 10%;
 	height: 40px;
 	float:left
 }
 
 ul#tags-list .tags-name a{
-    width:90%;
+    width:80%;
 }
 ul#tags-list .tags-name a span {
 	font-size: .7em;
@@ -330,7 +330,7 @@ ul#tags-list .tags-number {
     text-overflow: ellipsis;
     word-wrap: normal;
     float: left;
-    padding: 10px 0px 5px 10px;
+    padding: 5px 0px 10px 10px;
 }
 
 #photoPlayerModal .game-match-name{
