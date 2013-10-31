@@ -6,7 +6,8 @@ define([
     'signup',
     'views',
     'facade', 
-    'utils'
+    'utils',
+    'login/models/Forgotmodel'
 	],function(require,signInTemplate,backbone,_,signupController) {
 			
 		var SignupBasicView,
@@ -15,7 +16,7 @@ define([
         	
         	utils = require('utils'),
         	Channel = utils.lib.Channel,
-        	
+        	ForgotPasswordModel = require('login/models/Forgotmodel'),
         	SectionView = backbone.View;
 			SigninBasicView = SectionView.extend({
               
@@ -38,11 +39,31 @@ define([
                         //routing.trigger('refresh-onImageUpload');
                       });
                    
-                },     
+                },
+                  
                 events:{
                   "click a#signup": "signupUser", 
-                  "click .loginUser":"userLogin"
+                  "click .loginUser":"userLogin",
+                  "click .forgot-password-h": "forgotPassword",
+                  "submit .forgot-password-form-h": "forgotPasswordForm",
+                  "click .log-in-link-h": "loginPageView"
                 },
+                
+                
+                forgotPasswordForm: function(e) {
+                	e.preventDefault();
+                	var _self = this, model = new ForgotPasswordModel();
+                	model.email = $(e.target).find(".forgot-password-email-h").val();
+                	model.save({email: model.email});
+                	$.when(model.request).done(function() {
+                		_self.$el.find(".success-message").removeClass('hide');
+                	});
+                	$.when(model.request).fail(function() {
+                		_self.$el.find(".error-message").removeClass('hide');
+                	});
+
+                },
+                
                 userLogin:function(event){
                 event.preventDefault();
                 var fields = this.$(":input").serializeArray();
@@ -58,24 +79,37 @@ define([
                 catch(e){
                     console={},
                     console.log=function(e){}
-        
                 }
                
                 this.model.save(obj,{
                     success: function(msg) {
-                            location.href='#profile';
-                             $('#Loginview').modal('hide');
-                            },
+                        location.href='#profile';
+                        $('#Loginview').modal('hide');
+                    },
                     error: function(msg) {
-                               $( ".errormsg" ).empty();
-                                var errors= jQuery.parseJSON( msg.request.responseText);
-                                $( ".errormsg" ).html(errors.exec_data.error_array[0].error);
-                                
-                            }
-
+                        $( ".errormsg" ).empty();
+                        var errors= jQuery.parseJSON( msg.request.responseText);
+                        $( ".errormsg" ).html(errors.exec_data.error_array[0].error);            
+                    }
                 });
 
                 },
+                
+                forgotPassword: function() {
+					//alert("forgot password"); 
+					this.$el.find(".success-message").addClass('hide');
+					this.$el.find(".error-message").addClass('hide');
+					$("#Loginview h3#label").html("Forgot Password");
+					$("#logincontainer").addClass("hide");               	
+                	$(".forgot-password-container").removeClass("hide");
+                },
+                
+                loginPageView: function() {
+                	$("#Loginview h3#label").html("Login");
+					$("#logincontainer").removeClass("hide");               	
+                	$(".forgot-password-container").addClass("hide");
+                },
+                
                 signupUser: function(event){
                 	event.preventDefault();
                     $('#Loginview').modal('hide');

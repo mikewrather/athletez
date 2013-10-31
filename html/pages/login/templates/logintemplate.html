@@ -6,7 +6,24 @@
 <p>(Remember Me keeps you logged in for 2 weeks)</p>
 <div class="errormsg"></div>
 <input type="submit" name="login" class="loginUser" value="Login" /></form>
-
+<a href="javascript: void(0);" class="forgot-password-h" title="Forgot My Password">Forgot My Password</a>
 <p>Or <a id= "signup" href="#">create a new account</a></p>
 </div>
+
+
+<div class="forgot-password-container hide">
+	<div class="success-message hide">Password Reset link has been sent to your email address. Please check.</div>
+	<div class="error-message hide">Sorry we couldn't find the match record. Please try again with valid Email.</div>	
+	<form action="" method="POST" class="forgot-password-form-h">
+		<label for="">Email</label>
+		<input type="email" name="forgot_password_email" class="forgot-password-email-h" />
+		
+		<br/>
+		<input type="submit" name="forgot-password-btn" class="forgot-pasword-btn-h" value="Request Password" />
+		<br/><br/>
+		<p><a class="log-in-link-h" href="javascript: void(0);">Log In</a></p>
+	</form>
+</div>
+
+
 </div>
