@@ -34,6 +34,11 @@ define(['vendor', 'views', 'utils', 'text!media/templates/image-item.html', 'vot
 		initialize : function(options) {
 			this.template = imageItemTemplate;
 			
+			if(options.length)
+			for(var i in options) {
+				this[i] = options[i];
+			}
+			
 			//this.render();
 		},
 		
@@ -200,8 +205,9 @@ define(['vendor', 'views', 'utils', 'text!media/templates/image-item.html', 'vot
 			this.$el.html(markup);
 
 			var game_detail_view_height = '120px', detail_view_height = '92px';
-
-			this.$el.find('.image-outer-h').mouseout(function() {
+				
+			//alert("sdsad sd sd");	
+			this.$el.find('.image-item-container').mouseout(function() {
 				$(this).find('.action-block').css({
 					opacity : 0
 				});
@@ -248,7 +254,7 @@ define(['vendor', 'views', 'utils', 'text!media/templates/image-item.html', 'vot
 				console.log($(this),e);
 
 			}
-			this.$el.find('.image-outer-h').mouseover(function(){
+			this.$el.find('.image-item-container').mouseover(function(){
 				$(this).find('.detail-view').css({
 					'bottom' : '0px'
 				});

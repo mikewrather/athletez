@@ -15,8 +15,9 @@ define([
         'vendor',
         'profile/collections/sports',
         'profile/views/sport-list',
-        "utils/storage"
-        ], 
+        "utils/storage",
+        "media/views/image-item"
+        ],
 function(require, profileHeaderTemplate, selectSportTemplate) {
 
     var ProfileHeaderView,
@@ -31,6 +32,7 @@ function(require, profileHeaderTemplate, selectSportTemplate) {
         vendor = require('vendor'),
         Mustache = vendor.Mustache,
         Store = require("utils/storage"),
+        ImageItem = require("media/views/image-item"),
         $ = facade.$;
         
 
@@ -114,6 +116,18 @@ function(require, profileHeaderTemplate, selectSportTemplate) {
         
         render: function (domInsertion, dataDecorator, partials) {
             SectionView.prototype.render.call(this, domInsertion, dataDecorator, partials); 
+            
+            // render image for image item view
+            this.renderImage();
+        },
+        
+        renderImage: function() {
+        	this.headerImage = new ImageItem({
+        		model: this.model
+        	});
+        	
+        	this.headerImage.render();
+        	this.$el.find(".image-outer-h").html(this.headerImage.$el);
         },
         
         // get user name by id
