@@ -55,6 +55,8 @@ class Model_Media_Queuedvideo extends ORM
 	public function process()
 	{
 
+		ini_set('memory_limit','500M');
+
 		if(!$this->loaded())
 		{
 			return;
@@ -89,7 +91,6 @@ class Model_Media_Queuedvideo extends ORM
 
 		$this->url = $cloudRaw;
 		$video = ORM::factory('Media_Video',$this->videos_id);
-		$video->jobID =
 
 		$zenres = Model_Media_Video::_zencode($cloudRaw);
 
