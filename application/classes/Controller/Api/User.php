@@ -809,11 +809,41 @@
 			if(trim($this->request->post('email')) != "")
 			{
 				$arguments["email"] = trim($this->request->post('email'));
+
+				if(!Valid::email_exists($arguments['email'])){
+					$error_array = array(
+						"error" => "That email address is not in our system."
+
+					);
+
+					// Set whether it is a fatal error
+					$is_fatal = true;
+
+					// Call method to throw an error
+					$this->addError($error_array,$is_fatal);
+					return;
+				}
 			}
 			else
 			{
 				$error_array = array(
-					"error" => "This Facebook account is already linked up with a different AthletesUp account than the one you're logged in to now.  Try logging out and logging back in using facebook."
+				"error" => "Email is a required field for this service."
+
+			);
+
+				// Set whether it is a fatal error
+				$is_fatal = true;
+
+				// Call method to throw an error
+				$this->addError($error_array,$is_fatal);
+				return;
+			}
+
+			$user = ORM::factory('User_Base');
+			$result = $user->password_reset($arguments);
+			if(!$result){
+				$error_array = array(
+					"error" => "Something went terribly wrong."
 
 				);
 
@@ -822,10 +852,8 @@
 
 				// Call method to throw an error
 				$this->addError($error_array,$is_fatal);
+				return false;
 			}
-
-			$user = ORM::factory('User_Base');
-			$result = $user->password_reset($arguments);
 			if(get_class($result) == get_class($this->mainModel))
 			{
 				//	this indicates success
