@@ -810,10 +810,9 @@
 			{
 				$arguments["email"] = trim($this->request->post('email'));
 
-				if(!Valid::email_exists($arguments['email'])){
+				if(Valid::email_exists($arguments['email'])){
 					$error_array = array(
 						"error" => "That email address is not in our system."
-
 					);
 
 					// Set whether it is a fatal error
