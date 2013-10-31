@@ -17,7 +17,8 @@ define([
         'usercontrols/location/models/verify-adress',
         'usercontrols/location/models/save',
 		'chrome/views/header',
-		'usercontrol/dropdown/view/dropdown'
+		'usercontrol/dropdown/view/dropdown',
+		"media/views/image-item"
         ], 
 function(require, gameHeaderTemplate) {
 
@@ -28,6 +29,7 @@ function(require, gameHeaderTemplate) {
         basicModel = require('game/models/basics'),
         voteModel = require('votes/models/vote'),
         followModel = require('votes/models/follow'),
+        ImageItem = require("media/views/image-item"),
         LocationView = require('usercontrols/location/views/location'),
 	    DropDownList = require('usercontrol/dropdown/view/dropdown'),
         verifyAddress = require('usercontrols/location/models/verify-adress'),
@@ -380,7 +382,20 @@ function(require, gameHeaderTemplate) {
 		        callback: function(result) {
 		        }
 	        });
-		}
+	        
+	         // render image for image item view
+            this.renderImage();
+	        
+		},
+		
+		  renderImage: function() {
+        	this.headerImage = new ImageItem({
+        		model: this.model
+        	});
+        	
+        	this.headerImage.render();
+        	this.$el.find(".image-outer-h").html(this.headerImage.$el);
+        },
     });
 
     return GameHeaderView;

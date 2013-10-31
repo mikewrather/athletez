@@ -38,7 +38,6 @@ define([
                         $('div#LoginPopup').empty();
                         //routing.trigger('refresh-onImageUpload');
                       });
-                   
                 },
                   
                 events:{
@@ -57,6 +56,9 @@ define([
                 	model.save({email: model.email});
                 	$.when(model.request).done(function() {
                 		_self.$el.find(".success-message").removeClass('hide');
+                		setTimeout(function() {
+                           _self.loginPageView(); 			
+                		}, 3000);
                 	});
                 	$.when(model.request).fail(function() {
                 		_self.$el.find(".error-message").removeClass('hide');
@@ -105,6 +107,8 @@ define([
                 },
                 
                 loginPageView: function() {
+                	this.$el.find(".success-message").addClass('hide');
+					this.$el.find(".error-message").addClass('hide');
                 	$("#Loginview h3#label").html("Login");
 					$("#logincontainer").removeClass("hide");               	
                 	$(".forgot-password-container").addClass("hide");
