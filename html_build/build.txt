@@ -462,7 +462,10 @@ packages/roster/models/roster.js
 packages/roster/collections/roster.js
 packages/roster/views/image-list.js
 packages/roster/views/roster.js
+text!game/templates/participats-list.html
+pages/game/models/addparticipate.js
 pages/game/views/participants-list.js
+pages/game/views/participants-list-main.js
 pages/game.js
 text!team/templates/layout.html
 pages/team/models/basics.js
@@ -628,6 +631,7 @@ text!usercontrols/photo-player/templates/player.html
 text!usercontrols/photo-player/templates/image-thumbs.html
 vendor/plugins/jquery.slimscroll.hor.js
 packages/media/models/tag.js
+usercontrols/photo-player/models/tag-myself.js
 usercontrols/photo-player/views/main.js
 usercontrols/photo-player/models/commentonform.js
 usercontrols/photo-player/views/comment-form.js
@@ -939,7 +943,10 @@ packages/roster/models/roster.js
 packages/roster/collections/roster.js
 packages/roster/views/image-list.js
 packages/roster/views/roster.js
+text!game/templates/participats-list.html
+pages/game/models/addparticipate.js
 pages/game/views/participants-list.js
+pages/game/views/participants-list-main.js
 pages/game.js
 text!team/templates/layout.html
 pages/team/models/basics.js
@@ -1114,6 +1121,7 @@ text!usercontrols/photo-player/templates/player.html
 text!usercontrols/photo-player/templates/image-thumbs.html
 vendor/plugins/jquery.slimscroll.hor.js
 packages/media/models/tag.js
+usercontrols/photo-player/models/tag-myself.js
 usercontrols/photo-player/views/main.js
 usercontrols/photo-player/models/commentonform.js
 usercontrols/photo-player/views/comment-form.js
@@ -1582,6 +1590,7 @@ text!usercontrols/photo-player/templates/player.html
 text!usercontrols/photo-player/templates/image-thumbs.html
 vendor/plugins/jquery.slimscroll.hor.js
 packages/media/models/tag.js
+usercontrols/photo-player/models/tag-myself.js
 usercontrols/photo-player/views/main.js
 usercontrols/photo-player/models/commentonform.js
 usercontrols/photo-player/views/comment-form.js
@@ -1626,7 +1635,10 @@ pages/game/views/video-list.js
 pages/game/models/commentform.js
 pages/game/views/comment-form.js
 pages/game/views/comment-list.js
+text!game/templates/participats-list.html
+pages/game/models/addparticipate.js
 pages/game/views/participants-list.js
+pages/game/views/participants-list-main.js
 pages/game.js
 
 pages/team.js
@@ -1922,8 +1934,10 @@ packages/roster/models/roster.js
 packages/roster/collections/roster.js
 packages/roster/views/image-list.js
 packages/roster/views/roster.js
-text!media/templates/image-list.html
+text!game/templates/participats-list.html
+pages/game/models/addparticipate.js
 pages/game/views/participants-list.js
+pages/game/views/participants-list-main.js
 pages/game.js
 text!profilesetting/templates/layout.html
 pages/profilesetting/models/basic_info.js
@@ -2031,6 +2045,7 @@ text!usercontrols/photo-player/templates/player.html
 text!usercontrols/photo-player/templates/image-thumbs.html
 vendor/plugins/jquery.slimscroll.hor.js
 packages/media/models/tag.js
+usercontrols/photo-player/models/tag-myself.js
 usercontrols/photo-player/views/main.js
 usercontrols/photo-player/models/commentonform.js
 usercontrols/photo-player/views/comment-form.js
@@ -2068,6 +2083,7 @@ text!media/templates/image-board.html
 packages/media/views/image-board.js
 text!media/templates/add-image.html
 packages/media/views/add-image.js
+text!media/templates/image-list.html
 packages/media/views/image-list.js
 pages/team/models/addimage.js
 pages/team/views/add-image.js
@@ -2374,7 +2390,10 @@ packages/roster/models/roster.js
 packages/roster/collections/roster.js
 packages/roster/views/image-list.js
 packages/roster/views/roster.js
+text!game/templates/participats-list.html
+pages/game/models/addparticipate.js
 pages/game/views/participants-list.js
+pages/game/views/participants-list-main.js
 pages/game.js
 text!team/templates/layout.html
 pages/team/models/basics.js
@@ -2540,6 +2559,7 @@ text!usercontrols/photo-player/templates/player.html
 text!usercontrols/photo-player/templates/image-thumbs.html
 vendor/plugins/jquery.slimscroll.hor.js
 packages/media/models/tag.js
+usercontrols/photo-player/models/tag-myself.js
 usercontrols/photo-player/views/main.js
 usercontrols/photo-player/models/commentonform.js
 usercontrols/photo-player/views/comment-form.js
@@ -2808,7 +2828,10 @@ packages/roster/models/roster.js
 packages/roster/collections/roster.js
 packages/roster/views/image-list.js
 packages/roster/views/roster.js
+text!game/templates/participats-list.html
+pages/game/models/addparticipate.js
 pages/game/views/participants-list.js
+pages/game/views/participants-list-main.js
 pages/game.js
 text!team/templates/layout.html
 pages/team/models/basics.js
@@ -2984,6 +3007,7 @@ text!usercontrols/photo-player/templates/player.html
 text!usercontrols/photo-player/templates/image-thumbs.html
 vendor/plugins/jquery.slimscroll.hor.js
 packages/media/models/tag.js
+usercontrols/photo-player/models/tag-myself.js
 usercontrols/photo-player/views/main.js
 usercontrols/photo-player/models/commentonform.js
 usercontrols/photo-player/views/comment-form.js
@@ -3394,7 +3418,10 @@ packages/roster/models/roster.js
 packages/roster/collections/roster.js
 packages/roster/views/image-list.js
 packages/roster/views/roster.js
+text!game/templates/participats-list.html
+pages/game/models/addparticipate.js
 pages/game/views/participants-list.js
+pages/game/views/participants-list-main.js
 pages/game.js
 text!team/templates/layout.html
 pages/team/models/basics.js
@@ -3560,6 +3587,7 @@ text!usercontrols/photo-player/templates/player.html
 text!usercontrols/photo-player/templates/image-thumbs.html
 vendor/plugins/jquery.slimscroll.hor.js
 packages/media/models/tag.js
+usercontrols/photo-player/models/tag-myself.js
 usercontrols/photo-player/views/main.js
 usercontrols/photo-player/models/commentonform.js
 usercontrols/photo-player/views/comment-form.js

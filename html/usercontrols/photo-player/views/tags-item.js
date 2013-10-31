@@ -31,8 +31,6 @@ function (
         
         
         filterData: function() {
-        	//alert("calling filter data once");
-        	console.log(this.model.get('payload'));
     		var _self = this, mpay = this.model.get("payload"), extra = {
 			_enttypes_id : mpay.subject_enttypes_id,
 			_id : mpay.id
@@ -112,7 +110,6 @@ function (
 					}
 
 					extra._label = mpay.subject.label;
-					extra._sublabel = "Coming Soon";
 					extra._link = "/#profile/" + mpay.subject.id;
 					if(mpay.hasOwnProperty('is_owner')) show_edit = mpay.is_owner;
 					break;
@@ -157,6 +154,9 @@ function (
 						//if (i + 1 < mpay.subject.teams.length)
 						//	team_str += " VS. ";
 					}
+					extra._label = team_str;
+
+					console.log(extra._label);
 					if(mpay.hasOwnProperty('is_owner')) show_edit = mpay.is_owner;
 					//extra._label = team_str;
 					
@@ -167,7 +167,7 @@ function (
 						var n = str.split(" ");
 						var headerdata = '<div class="name"><span class="topalign">'+ mpay.subject.shared.sport+'</span></div>	<div class="game"><span class="topalign">'+mpay.subject.shared.complevel+'</span></div><div class="season"><span class="topalign">'+n[2]+'</span></div>';
 						$(".headerinfo").html(headerdata);
-						$(".teamName-area").html(team_str);
+						//$(".teamName-area").html(team_str);
 					}
 
 					break;
@@ -176,7 +176,7 @@ function (
 					//team
 					extra._detailclass = "team";
 					standard_thumb = mpay.subject.picture!==null ? mpay.subject.picture : {height:440,width:440,url:"http://lorempixel.com/output/sports-q-g-440-440-3.jpg"};
-					extra._thumbnail = standard_thumb;
+					extra._thumbnail = "";// standard_thumb;
 					//extra._label = mpay.subject.game_day;
 					extra._link = "/#team/" + mpay.subject_id;
 					var team_str = mpay.subject.team_name;
@@ -186,6 +186,7 @@ function (
 			}
 			
 			extra.show_edit = show_edit==true ? true : undefined;
+	        console.log(extra);
 			var markup = Mustache.to_html(this.template, extra);
 			this.$el.html(markup);
         },

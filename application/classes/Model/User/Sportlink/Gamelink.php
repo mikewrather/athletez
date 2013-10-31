@@ -42,6 +42,8 @@ class Model_User_Sportlink_Gamelink extends ORM
 		extract($args);
 		//$this->users_id = $users_id;
 		$this->games_id = $games_id;
+
+		if(!isset($sports_id)) $sports_id = $this->game->sports_id;
 		$post_values = array('users_id' => $users_id, 'sports_id' => $sports_id);
 
 		$this->result_place = $result_place;
@@ -59,7 +61,7 @@ class Model_User_Sportlink_Gamelink extends ORM
 			{
 				//check org_sport in db.
 				$usl_model = ORM::factory("User_Sportlink");
-				$user_sport_link_id = $usl_model->getId($users_id, $sports_id);
+				$user_sport_link_id = $usl_model->getId($users_id, $sports_id,true);
 				$this->user_sport_link_id = $user_sport_link_id;
 
 				$valid_array = array('games_id' => $games_id, 'user_sport_link_id' => $user_sport_link_id);

@@ -1,0 +1,1 @@
+define(["facade","media/models/image","utils"],function(e,t,n){var r,i=e._,s=n.lib.Channel;return r=t.extend({url:function(){return testpath?testpath+"/uslgamelink/add/":"/api/uslgamelink/add/"}}),r});

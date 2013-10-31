@@ -45,7 +45,7 @@ function(facade, vendor,  utils, views) {
 	         console.log(this.collection.toJSON());
 			 _self.allData = this.collection.toArray();
 			_self.cleardata();
-			_self.getprofile();
+
 			$(".photo-player-right-area").slimScroll({
    			 height: 'auto'
 			});
@@ -61,7 +61,10 @@ function(facade, vendor,  utils, views) {
         
         seeMore: function(e) {
         	
-        	var len = this.allData.length, limit = (len < this.page_limit)?len:this.page_limit, start = len - (this.page * limit), end = start + this.page_limit;
+        	var len = this.allData.length,
+		        limit = (len < this.page_limit)?len:this.page_limit,
+		        start = len - (this.page * limit),
+		        end = start + this.page_limit;
 			
 			if(start <= 0) {
 				 this.$el.find('.see-more-h').hide();
@@ -95,13 +98,13 @@ function(facade, vendor,  utils, views) {
 			//this.model.set('url',urlmain);
 			//alert("check point");
 			var mymodel = new TagsSectionmodel({id:currId});
-			mymodel.fetch({
+			/*mymodel.fetch({
 				success: (function (msg) {
                 	        //alert(' Service request success: '); 
                 	        var element = '<div class="user-photo-profile"><img src='+msg.attributes.payload.user_picture_obj.image_path+' alt=""></div><div class="content-prof-sub"><span class="user-comment">'+msg.attributes.payload.label+'</span><p class="comment-text">'+msg.attributes.payload.user_picture_obj.media_obj.timePosted+'</p></div>'; 
                 	        $(".prof-name-area").html(element);                        
                     	})
-			});
+			});*/
         },
         cleardata:function(){
         	$(".headerinfo").empty();

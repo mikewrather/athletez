@@ -954,17 +954,17 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#84a934', end
 .container_add_game .ui-autocomplete li.ui-menu-item {
 	font-size: 14px;
 }
-.container_add_game input.txtDate, .modal-body .update-date-time-h input.txtDate{
+.container_add_game input.txtDate, .update-date-time-h input.txtDate{
 width: 90px;	
 float:left;
 }
-.container_add_game input.txtTime, .modal-body .update-date-time-h input.txtTime{
+.container_add_game input.txtTime, .update-date-time-h input.txtTime{
 	float:left;
 	width:40px;
 	margin-left: 4px;
     margin-right: 4px;
 }
-.container_add_game .ddlTime, .modal-body .update-date-time-h .ddlTime{
+.container_add_game .ddlTime,.update-date-time-h .ddlTime{
 	width:50px;
 	float:left;
 	margin-left:8px;

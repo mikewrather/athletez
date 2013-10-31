@@ -1,0 +1,1 @@
+define(["facade","views","utils","game/views/participants-list"],function(e,t,n,r){return r.extend({imagetype:"large_thumb",setupAddView:function(){}})});

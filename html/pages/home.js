@@ -250,7 +250,9 @@ define(
 						var view = new ImageListView({
 							collection : imageList,
 							name : viewName,
-							destination : '#'+viewName
+							destination : '#'+viewName,
+							user_id : this.userId
+							
 						});
 						controller.layout.transition(viewName, view);
 					});
@@ -334,7 +336,8 @@ define(
 					imageListView = new ImageListView({
 						collection : this.collections[viewName],
 						name : viewName,
-						destination : '#'+viewName
+						destination : '#'+viewName,
+						user_id : this.userId
 					});
 					
 					imageListView.render();

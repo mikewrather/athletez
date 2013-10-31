@@ -153,6 +153,9 @@ class Model_Site_Tag extends Model_Site_Entdir
 
 		$match = ORM::factory("Site_Tag");//find existing entry
 
+		//$subject_type_id = isset($enttypes_id) ? $enttypes_id : isset($subject_type_id) ? $subject_type_id : null;
+		if(!$subject_type_id) return false;
+
 		if(isset($subject_type_id))
 		{
 			$this->subject_enttypes_id = $subject_type_id;
@@ -186,6 +189,7 @@ class Model_Site_Tag extends Model_Site_Entdir
 
 		try {
 			$this->save();
+			$this->autoTag($args);
 			Model_Site_Feed::addToFeed($this);
 
 			return $this;
@@ -193,6 +197,30 @@ class Model_Site_Tag extends Model_Site_Entdir
 			return $e;
 		}
 
+	}
+
+	public function autoTag($args)
+	{
+		extract($args);
+		$tagged_obj = Ent::eFact($subject_type_id,$subject_id);
+		switch(get_class($tagged_obj))
+		{
+			case 'Model_Sportorg_Games_Base':
+				$teams = $tagged_obj->teams->find_all();
+				foreach($teams as $team)
+				{
+			//		print_r($team);
+					$new_args = array(
+						'subject_type_id' => Ent::getMyEntTypeID($team),
+						'subject_id' => $team->id,
+						'media_id' => $media_id
+					);
+					$tag = ORM::factory('Site_Tag')->addTag($new_args);
+				}
+				break;
+			default:
+				break;
+		}
 	}
 
 	public static function addFromArray($array,$media_id)

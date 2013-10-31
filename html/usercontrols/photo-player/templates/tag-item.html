@@ -2,8 +2,9 @@
 <div class="row-fluid">
     <div class="tags-name">
     	<span>
-		<img src="{{_thumbnail}}" />
-			<a href="{{_link}}" title="{{{_label}}}">
+		{{#_thumbnail}}<img src="{{_thumbnail}}" />{{/_thumbnail}}
+		    {{^_thumbnail}}<div style="width:40px; height:40px; display: inline-block; border:1px solid #CCC;">&nbsp;</div>{{/_thumbnail}}
+			<a href="{{_link}}" style="display: inline-block;">
 				
 				<span class="labelSpan">{{{_label}}}</span>
 							</a>

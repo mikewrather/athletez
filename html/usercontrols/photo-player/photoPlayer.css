@@ -43,11 +43,11 @@
 }
 
 .photo-player-right-area {
-    float: right;
+    /*float: right;*/
     height: 100%;
     overflow-y: auto;
-    padding-left: 2%;
-    width: 28%;
+    /*padding-left: 2%;*/
+    width: 30%;
 }
 
 .photo-player-right-area .right-area-header{
@@ -198,10 +198,11 @@ div.right-arrow-container > img{
     padding: 5px;
     background: #CCC;
     float: left;
+    margin-left: 5px;
 }
 
 .image-actions li:first-child {
-    margin-right: 5px;
+   /* margin-right: 5px;*/
 }
 
 .image-actions li a {
@@ -228,6 +229,11 @@ div.right-arrow-container > img{
 
 .tags-name > span {
 	float: left;
+    width:100%;
+}
+
+.tags-name span a{
+    display: inline-block;
 }
 
 .tags-name > span > a img {
@@ -289,12 +295,15 @@ ul#tags-list .tags-name img {
 	float:left
 }
 
+ul#tags-list .tags-name a{
+    width:90%;
+}
 ul#tags-list .tags-name a span {
-	font-size: .8em;
-	width: 200px;
+	font-size: .7em;
+	width: 100%;
 	display: inline-block;
 	margin-left: 5px;
-	white-space:nowrap; 
+/*	white-space:nowrap; */
 	text-overflow:ellipsis;
 	overflow:hidden; 
 	margin-left: 20px;
@@ -308,46 +317,56 @@ ul#tags-list .tags-number {
 }
 
 
-.game-match-name{
-        background-color: #948BDE;
-        color: white;
-        height: 45px;
-        font-size: small;
-        
-    }
-    .game-score{
-        background-color: #4C3DC7;
-        color: white;
-        height: 45px;
-        text-align: center;
-        width: 65px;
-        float: left!important;
-        font-size: 2.2em;
-        font-weight: bolder;
+#photoPlayerModal .game-match-name, #photoPlayerModal .game-match-name1{
 
-    }
-    .game-match-name1{
-        background-color: #E69F71;
-        float: left;
-        width: 70%;
-        color: white;
-        height: 45px;
-        font-size: small;
-        
-    }
-    .game-score1{
-        background-color: #D45F10;
-        color: white;
-        height: 45px;
-        text-align: center;
-        width: 30%;
-        float: left!important;
-        font-size: 2.2em;
-        font-weight: bolder;
-    }
+    color: white;
+    height: 30px;
+    font-size: small;
+    max-width: 85%;
+    width: 80%;
+    display:inline-block;
+    text-wrap:normal;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    word-wrap: normal;
+    float: left;
+    padding: 10px 0px 5px 10px;
+}
+
+#photoPlayerModal .game-match-name{
+    background-color: #948BDE;
+}
+#photoPlayerModal .game-match-name1{
+    background-color: #E69F71;
+}
+
+#photoPlayerModal .game-score, #photoPlayerModal .game-score1{
+    color: white;
+    height: 45px;
+    text-align: center;
+    width: 10%;
+    min-width: 25px;
+    float: left!important;
+    font-size: 2.2em;
+    font-weight: bolder;
+    display: inline-block;
+}
+#photoPlayerModal .game-score{
+    background-color: #4C3DC7;
+}
+
+#photoPlayerModal .game-score1{
+    background-color: #D45F10;
+}
+
+#photoPlayerModal .game-score span.scoreAlign,#photoPlayerModal .game-score1 span.scoreAlign{
+    margin:0;
+    padding: 0;
+}
+
     .teamName-area{
-        padding-top: 9%;
-        padding-bottom: 35%;
+    /*    padding-top: 9%;
+        padding-bottom: 35%;*/
         font-size: small;
     }
     .scoreAlign{
