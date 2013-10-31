@@ -230,6 +230,7 @@ div.image-item-container > img{
     position: absolute;
     min-width: 220px;
     min-height: 220px;
+    left: 0;
 }
 .action-section{
     width:100%;

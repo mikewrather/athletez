@@ -274,7 +274,7 @@ text!profile/templates/layout.html
 text!votes/templates/vote.html
 packages/vote/models/vote.js
 packages/vote/models/follow.js
-packages/vote/views/vote.js
+packages/vote/views/vote-section.js
 pages/profile/models/basics.js
 pages/profile/models/addmedia.js
 packages/sportorg/models/org.js
@@ -309,6 +309,9 @@ text!sportorg/templates/team-list.html
 packages/sportorg/views/team-list.js
 pages/profile/views/sport-item.js
 pages/profile/views/sport-list.js
+text!media/templates/image-item.html
+packages/common/models/delete.js
+packages/media/views/image-item.js
 pages/profile/views/header.js
 text!media/templates/add-media.html
 pages/profile/views/add-media.js
@@ -334,9 +337,6 @@ packages/media/views/video-list.js
 pages/profile/models/addvideo.js
 pages/profile/views/add-video.js
 pages/profile/views/video-list.js
-text!media/templates/image-item.html
-packages/common/models/delete.js
-packages/media/views/image-item.js
 text!media/templates/image-board.html
 packages/media/views/image-board.js
 text!media/templates/add-image.html
@@ -429,6 +429,7 @@ text!videopreview/templates/preview.html
 pages/videopreview/views/preview.js
 pages/videopreview.js
 text!game/templates/layout.html
+packages/vote/views/vote.js
 pages/game/models/basics.js
 pages/game/models/addmedia.js
 packages/sportorg/models/teamroster.js
@@ -660,6 +661,7 @@ usercontrols/addevent/addevent.js
 application.js
 pages/login/models/Loginmodel.js
 text!login/templates/logintemplate.html
+pages/login/models/Forgotmodel.js
 pages/login/views/Loginview.js
 pages/login/models/Logoutmodel.js
 pages/login.js
@@ -799,6 +801,7 @@ pages/signup/models/image-upload.js
 text!signup/templates/imageupload.html
 pages/signup/views/image-upload.js
 pages/signup.js
+pages/login/models/Forgotmodel.js
 pages/login/views/Loginview.js
 pages/login/models/Logoutmodel.js
 pages/login.js
@@ -1148,6 +1151,7 @@ text!usercontrols/addevent/templates/layout.html
 usercontrols/addevent/views/main.js
 usercontrols/addevent/addevent.js
 application.js
+packages/vote/views/vote-section.js
 pages/profile/models/basics.js
 pages/profile/collections/orgs.js
 packages/user/models/related.js
@@ -1273,6 +1277,7 @@ pages/chrome/models/footer.js
 pages/chrome/views/footer.js
 pages/chrome.js
 text!profile/templates/layout.html
+packages/vote/views/vote-section.js
 pages/profile/models/basics.js
 pages/profile/models/addmedia.js
 packages/sportorg/models/org.js
@@ -1303,6 +1308,9 @@ text!sportorg/templates/team-list.html
 packages/sportorg/views/team-list.js
 pages/profile/views/sport-item.js
 pages/profile/views/sport-list.js
+text!media/templates/image-item.html
+packages/common/models/delete.js
+packages/media/views/image-item.js
 pages/profile/views/header.js
 text!media/templates/add-media.html
 pages/profile/views/add-media.js
@@ -1328,9 +1336,6 @@ packages/media/views/video-list.js
 pages/profile/models/addvideo.js
 pages/profile/views/add-video.js
 pages/profile/views/video-list.js
-text!media/templates/image-item.html
-packages/common/models/delete.js
-packages/media/views/image-item.js
 text!media/templates/image-board.html
 packages/media/views/image-board.js
 text!media/templates/add-image.html
@@ -1619,6 +1624,7 @@ usercontrols/addevent/addevent.js
 application.js
 pages/login/models/Loginmodel.js
 text!login/templates/logintemplate.html
+pages/login/models/Forgotmodel.js
 pages/login/views/Loginview.js
 pages/login/models/Logoutmodel.js
 pages/login.js
@@ -1786,6 +1792,7 @@ pages/chrome/models/footer.js
 pages/chrome/views/footer.js
 pages/chrome.js
 text!profile/templates/layout.html
+packages/vote/views/vote-section.js
 pages/profile/models/basics.js
 pages/profile/collections/orgs.js
 packages/user/models/related.js
@@ -2074,6 +2081,7 @@ usercontrols/addevent/addevent.js
 application.js
 pages/login/models/Loginmodel.js
 text!login/templates/logintemplate.html
+pages/login/models/Forgotmodel.js
 pages/login/views/Loginview.js
 pages/login/models/Logoutmodel.js
 pages/login.js
@@ -2213,7 +2221,7 @@ text!profile/templates/layout.html
 text!votes/templates/vote.html
 packages/vote/models/vote.js
 packages/vote/models/follow.js
-packages/vote/views/vote.js
+packages/vote/views/vote-section.js
 pages/profile/models/basics.js
 pages/profile/models/addmedia.js
 packages/sportorg/models/org.js
@@ -2248,6 +2256,9 @@ text!sportorg/templates/team-list.html
 packages/sportorg/views/team-list.js
 pages/profile/views/sport-item.js
 pages/profile/views/sport-list.js
+text!media/templates/image-item.html
+packages/common/models/delete.js
+packages/media/views/image-item.js
 pages/profile/views/header.js
 text!media/templates/add-media.html
 pages/profile/views/add-media.js
@@ -2273,9 +2284,6 @@ packages/media/views/video-list.js
 pages/profile/models/addvideo.js
 pages/profile/views/add-video.js
 pages/profile/views/video-list.js
-text!media/templates/image-item.html
-packages/common/models/delete.js
-packages/media/views/image-item.js
 text!media/templates/image-board.html
 packages/media/views/image-board.js
 text!media/templates/add-image.html
@@ -2357,6 +2365,7 @@ text!videopreview/templates/preview.html
 pages/videopreview/views/preview.js
 pages/videopreview.js
 text!game/templates/layout.html
+packages/vote/views/vote.js
 pages/game/models/basics.js
 pages/game/models/addmedia.js
 packages/sportorg/models/teamroster.js
@@ -2588,6 +2597,7 @@ usercontrols/addevent/addevent.js
 application.js
 pages/login/models/Loginmodel.js
 text!login/templates/logintemplate.html
+pages/login/models/Forgotmodel.js
 pages/login/views/Loginview.js
 pages/login/models/Logoutmodel.js
 pages/login.js
@@ -2674,7 +2684,7 @@ pages/chrome/views/footer.js
 pages/chrome.js
 text!profile/templates/layout.html
 text!votes/templates/vote.html
-packages/vote/views/vote.js
+packages/vote/views/vote-section.js
 pages/profile/models/basics.js
 pages/profile/models/addmedia.js
 packages/sportorg/models/org.js
@@ -2795,6 +2805,7 @@ text!videopreview/templates/preview.html
 pages/videopreview/views/preview.js
 pages/videopreview.js
 text!game/templates/layout.html
+packages/vote/views/vote.js
 pages/game/models/basics.js
 pages/game/models/addmedia.js
 packages/sportorg/models/teamroster.js
@@ -3036,6 +3047,7 @@ usercontrols/addevent/addevent.js
 application.js
 pages/login/models/Loginmodel.js
 text!login/templates/logintemplate.html
+pages/login/models/Forgotmodel.js
 pages/login/views/Loginview.js
 pages/login/models/Logoutmodel.js
 pages/login.js
@@ -3241,7 +3253,7 @@ text!profile/templates/layout.html
 text!votes/templates/vote.html
 packages/vote/models/vote.js
 packages/vote/models/follow.js
-packages/vote/views/vote.js
+packages/vote/views/vote-section.js
 pages/profile/models/basics.js
 pages/profile/models/addmedia.js
 packages/sportorg/models/org.js
@@ -3276,6 +3288,9 @@ text!sportorg/templates/team-list.html
 packages/sportorg/views/team-list.js
 pages/profile/views/sport-item.js
 pages/profile/views/sport-list.js
+text!media/templates/image-item.html
+packages/common/models/delete.js
+packages/media/views/image-item.js
 pages/profile/views/header.js
 text!media/templates/add-media.html
 pages/profile/views/add-media.js
@@ -3301,9 +3316,6 @@ packages/media/views/video-list.js
 pages/profile/models/addvideo.js
 pages/profile/views/add-video.js
 pages/profile/views/video-list.js
-text!media/templates/image-item.html
-packages/common/models/delete.js
-packages/media/views/image-item.js
 text!media/templates/image-board.html
 packages/media/views/image-board.js
 text!media/templates/add-image.html
@@ -3385,6 +3397,7 @@ text!videopreview/templates/preview.html
 pages/videopreview/views/preview.js
 pages/videopreview.js
 text!game/templates/layout.html
+packages/vote/views/vote.js
 pages/game/models/basics.js
 pages/game/models/addmedia.js
 packages/sportorg/models/teamroster.js
@@ -3616,6 +3629,7 @@ usercontrols/addevent/addevent.js
 application.js
 pages/login/models/Loginmodel.js
 text!login/templates/logintemplate.html
+pages/login/models/Forgotmodel.js
 pages/login/views/Loginview.js
 pages/login/models/Logoutmodel.js
 pages/login.js
