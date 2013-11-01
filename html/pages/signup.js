@@ -194,7 +194,7 @@ define(["require",
 							name : "Select Registration Type",
 							destination : "#main-contentreg"
 						});
-
+						console.log(this.selectTypeView);
 						this.scheme.push(this.selectTypeView);
 						this.layout.render();
 					},

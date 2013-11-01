@@ -396,8 +396,8 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
 							console.log(e);
 						}
 						catch(e){
-							console={},
-							console.log=function(e){}
+							console={};
+							console.log=function(e){};
 						}
 		    		}	 
 

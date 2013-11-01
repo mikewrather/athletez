@@ -40,11 +40,12 @@ define([ 'require', 'text!votes/templates/vote.html','views', 'vendor', 'facade'
 		},
 		
 		follow: function(e) {
+			console.log(e);
 			if(!this.checkForUser()) {
 		  	   	routing.trigger('showSignup');	
 		    	return;
 	    	}
-			this.followModelOb.save();
+			this.followModelOb.save();fitness-overview-data-piece
 
 		//	$(e.target).removeClass('follow-action-h').addClass('follow-noaction-h');
 

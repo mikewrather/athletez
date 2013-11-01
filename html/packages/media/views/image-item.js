@@ -328,22 +328,8 @@ define(['vendor', 'views', 'utils', 'text!media/templates/image-item.html', 'vot
 		    console.log(e.target);
 		    e.stopPropagation();
 		     if(!this.checkForUser()) {
-
-		  		
-		     		try{
-		  			
-		  				this.signup.signupUser();
-		    		}
-		    		catch(e){
-
-		    		}	
-
-
-		  		//$(".signup-email").trigger('click');
-		    	return;
-			     /* old way of doing this
-		  		routing.trigger('showSignup');
-				return;*/
+			     routing.trigger('showSignup');
+			     return;
 	    	}
 		    var followModelOb = new followModel();
 			followModelOb.subject_id = this.model.get("payload").id;
