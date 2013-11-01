@@ -167,6 +167,30 @@ footer span{
     left:50%;
     margin-left: -250px;
 }
+#RegModal .modal-body{
+    overflow: hidden;
+}
+#RegModal #mainreg #header.regheader{
+    font-size: 2.3em;
+    font-weight: bolder;
+}
+#RegModal div#regpanemain{
+    width: auto;
+}
+#RegModal div#regpanemain .signupsubmit{
+    margin-left:75px;
+}
+#RegModal div#regpanemain .signupsubmit input.regsubmit{
+    margin-left:16px;
+}
+#RegModal div#regpanemain #firstregbase input{
+    border:1px solid #CCC;
+}
+#RegModal #reglogin span{
+    float: right;
+    padding-right:15px;
+    z-index: 1052;
+}
 .floatLeft {
 	float: left;
 }
@@ -634,16 +658,29 @@ a.comment-delete{
 	width: 100%;
 	text-align: left;
 }
+li.fitnessbasic{
+  
+}
 .fitness-overview-data-piece{
-    width:30%;
+    width:45%;
     display:inline-block;
+    margin-top:15px;
+    margin-bottom: 15px;
+}
+.fitness-overview-data-piece:nth-child(odd){
     float:left;
-    height:30px;
-    margin:15px 20px 30px 30px;
+    margin-left:25px;
+}
+.fitness-overview-data-piece:nth-child(even){
+    float: right;
+    margin-right: 0;
+}
+.fitness-overview-data-piece span{
+    font-weight: bolder; font-size: 1.6em;
 }
 .fitness-overview-data-piece img{
-    width:40px;
-    height: 40px;
+    width:55px;
+    height: 55px;
 }
 .stats-panel{
     background-color:#e0e0e0;
@@ -780,6 +817,7 @@ a.add-game-h{
 }
 #sports-info ul#sport-list{
     margin:0 0 0 0;
+    width: 100%;
 }
 #sports-info ul#sport-list .sport:hover{
     background:none;
