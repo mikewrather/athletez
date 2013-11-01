@@ -134,15 +134,17 @@ class Model_Site_Tag extends Model_Site_Entdir
 	}
 
 	public function owner(){
-		if(!$this->id){
+		if(!$this->loaded()){
 			return "";
 		}
-		return intval($this->users_id);
+		return array(intval($this->users_id),$this->subject_id);
 	}
 
 	public function is_owner($user){
 		if (is_object($user)){
-			return intval($user->id) == $this->owner();
+			$has_admin = $user->has('roles', ORM::factory('Role', array('id' =>2)));
+			if($has_admin) return true;
+			return in_array(intval($user->id),$this->owner());
 		}else{
 			return intval($user) == $this->owner();
 		}

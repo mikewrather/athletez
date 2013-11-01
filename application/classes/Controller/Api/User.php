@@ -2072,6 +2072,10 @@
 				$arguments["email"] = urldecode(trim($this->put('email')));
 			}
 
+			if(trim($this->put('name')) != "")
+			{
+				$arguments["name"] = trim($this->put('name'));
+			}
 			// firstname
 			// Updated First Name
 
@@ -2088,21 +2092,37 @@
 				$arguments["lastname"] = trim($this->put('lastname'));
 			}
 
+			if($this->put('current_password'))
+			{
+				$arguments["current_password"] = trim($this->put('current_password'));
+				$ai = Auth::instance();
+				if($ai->hash($arguments['current_password']) == $this->mainModel->password){
+					if(trim($this->put('password')) != "")
+					{
+						$arguments["password"] = trim($this->put('password'));
+					}
+					if(trim($this->put('re_password')) != "")
+					{
+						$arguments["re_password"] = trim($this->put('re_password'));
+					}
+				}
+			}
+			else
+			{
+				if(trim($this->put('password')) != "")
+				{
+					$arguments["password"] = trim($this->put('password'));
+				}
+				if(trim($this->put('re_password')) != "")
+				{
+					$arguments["re_password"] = trim($this->put('re_password'));
+				}
+			}
+
 			// password
 			// New Password
 
-			if(trim($this->put('password')) != "")
-			{
-				$arguments["password"] = trim($this->put('password'));
-			}
 
-			// re_password
-			// Re-entered Password for verification
-
-			if(trim($this->put('re_password')) != "")
-			{
-				$arguments["re_password"] = trim($this->put('re_password'));
-			}
 
 			// cities_id
 			// User's Home City

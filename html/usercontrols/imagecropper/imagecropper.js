@@ -44,7 +44,7 @@ define([
 
 				this.modelHTML =
 					'<div id="modalPopup" class="modal imagecropper hide fade model-popup-h">' +
-						'<div class="modal-header"><span>Userpic Editor</span>' +
+						'<div class="modal-header"><span>Athletez Profile Pic Editor</span>' +
 							'<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>' +
 						'</div>' +
 						'<div class="modal-body page-content-h"></div>' +

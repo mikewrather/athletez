@@ -34,11 +34,11 @@ define(['require',
 			"click .close" : "closePreview",
 			"click .previewimgsrc" : "selectImage",
 			"mouseover .previewimg" : "showFooter",
-			"mouseout .previewimg" : "hideFooter",
+			"mouseout .previewimg" : "hideFooter"
 		},
 		initialize : function(options) {
 			SectionView.prototype.initialize.call(this, options);
-			console.log("preview view");
+			console.log("preview view",options);
 			this.degree = 0;
 			this.scheme = options.scheme;
 			this.layout = options.layout;
@@ -61,6 +61,12 @@ define(['require',
 			$("#" + val + "rotang").val(this.degree);
 		},
 		closePreview : function(event) {
+			var nda = [];
+			_.each(this.model.get('data'),function(el,i,list){
+				console.log(el.preview_id,event.currentTarget.value);
+				if(el.preview_id!=event.currentTarget.value) nda.push(el);
+			});
+			this.model.set('data',nda);
 			id = event.currentTarget.value + "group";
 			var elem = document.getElementById(id);
 			elem.parentNode.removeChild(elem);

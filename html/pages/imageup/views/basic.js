@@ -155,7 +155,10 @@ function(require, imageBasicTemplate, selectAllTemplate,tagTemplate) {
 			
 			var files = $('#image_file')[0].files; 
 			if(files.length > 0) _self.showLoader(_self);
-			_self.dataum = _self.dataum || [];var f, k=_self.dataum.length;var i = 0;
+			_self.dataum = [];
+			var f, k=_self.dataum.length;
+			var i = 0;
+
 			//var dataum=[];var i = 0, f,k=0;
 		    for (; f = files[i]; i++) {
 
@@ -171,19 +174,21 @@ function(require, imageBasicTemplate, selectAllTemplate,tagTemplate) {
 					var preview_id="preview_"+k;
 				  k++;
 				  _self.dataum.push({"preview_id":preview_id,"width":"250px","height":"250px","filesrc":e.target.result,"title":escape(theFile.name)}); 
-				  //if(k==files.length)
-				  //{
-				  	console.log("data**************************");
-					data={"data":_self.dataum};
-					console.log(data);
-					routing.trigger("imageup-preview", data);
-				  	_self.hideLoader();
-				  //}
+				  if(k==files.length)
+				  {
+			        console.log("data**************************");
+			        data={"data":_self.dataum};
+			        console.log(data);
+			        routing.trigger("imageup-preview", data);
+			        _self.hideLoader();
+				  }
 				};
 				
 		      })(f);
 		      reader.readAsDataURL(f);
 		    }
+
+
 		    //_self.showSelectAllImages();
 		     _self.setUpBottomView();
 		},

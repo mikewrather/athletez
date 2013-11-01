@@ -117,7 +117,21 @@
 			foreach ($sports as $sport)
 			{
 				?>
-				<option value="<?php echo $sport->id; ?>"><?php echo $sport->name; ?></option><?php
+				<option value="<?php echo $sport->id; ?>"><?php
+
+				echo str_replace(array("Men's","Women's"),'',$sport->name);
+				if($sport->male==1 && $sport->female==0){
+					echo " (Men's) ";
+				}
+				elseif($sport->female==1 && $sport->male==0)
+				{
+					echo " (Women's) ";
+				}
+				else if($sport->female==1 && $sport->male==1){
+					echo " (Individual) ";
+				}
+
+				?></option><?php
 			}
 			?></select>
 

@@ -249,6 +249,8 @@ class Model_Site_Comment extends Model_Site_Entdir
 
 	public function is_owner($user){
 		if (is_object($user)){
+			$has_admin = $user->has('roles', ORM::factory('Role', array('id' =>2)));
+			if($has_admin) return true;
 			return intval($user->id) == $this->owner();
 		}else{
 			return intval($user) == $this->owner();

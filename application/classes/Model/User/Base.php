@@ -261,8 +261,16 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
         }
 	    else
 	    {
-		    $args['email'] = $this->email;
+		    $args['email'] = $email = $this->email;
 	    }
+
+	    if(isset($name))
+	    {
+		    $name = explode(' ',$name);
+		    $args['firstname'] = $this->first_name = $name[0];
+		    $args['lastname'] = $this->last_name = $name[sizeof($name)-1];
+	    }
+
         // firstname 
         // Updated First Name
         if(isset($firstname))
@@ -284,7 +292,6 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
         {
 	        $args['lastname'] = $this->last_name;
         }
-
 
         // cities_id 
         // User's Home City
@@ -338,12 +345,12 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 
 			if (isset($password)){
 				$extra_validate->rule('password','not_empty');
-				$extra_validate->rule('password','min_length', array(':value', 4));
-				$extra_validate->rule('password','max_length', array(':value', 8));
+				$extra_validate->rule('password','min_length', array(':value', 6));
+				$extra_validate->rule('password','max_length', array(':value', 16));
 
 				$extra_validate->rule('re_password','not_empty');
-				$extra_validate->rule('re_password','min_length', array(':value', 4));
-				$extra_validate->rule('re_password','max_length', array(':value', 8));
+				$extra_validate->rule('re_password','min_length', array(':value', 6));
+				$extra_validate->rule('re_password','max_length', array(':value', 16));
 				$extra_validate->rule('re_password','matches', array(':validation', ':field', 'password'));
 				$extra_validate->rule('cities_id','cities_id_exist');
 
@@ -387,12 +394,6 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 			$user_model->last_name  = $lastname;
 		}
 
-		// password
-		// New Password
-		if(isset($lastname))
-		{
-			$user_model->last_name  = $lastname;
-		}
 		// cities_id
 		// User's Home City
 		if(isset($cities_id))

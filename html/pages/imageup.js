@@ -106,6 +106,7 @@ define(["require", "text!imageup/templates/basic.html", "text!imageup/templates/
 		},
 		
 		previewShowup : function(dataum) {
+	//		console.log(dataum);
 			var previewShowList = new PreviewShowList(dataum);
 			
 			for (var x in this.scheme) {
