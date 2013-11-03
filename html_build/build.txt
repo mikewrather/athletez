@@ -467,6 +467,7 @@ packages/roster/views/image-list.js
 packages/roster/views/roster.js
 text!game/templates/participats-list.html
 pages/game/models/addparticipate.js
+packages/common/models/add.js
 pages/game/views/participants-list.js
 pages/game/views/participants-list-main.js
 pages/game.js
@@ -954,6 +955,7 @@ packages/roster/views/image-list.js
 packages/roster/views/roster.js
 text!game/templates/participats-list.html
 pages/game/models/addparticipate.js
+packages/common/models/add.js
 pages/game/views/participants-list.js
 pages/game/views/participants-list-main.js
 pages/game.js
@@ -1651,6 +1653,7 @@ pages/game/views/comment-form.js
 pages/game/views/comment-list.js
 text!game/templates/participats-list.html
 pages/game/models/addparticipate.js
+packages/common/models/add.js
 pages/game/views/participants-list.js
 pages/game/views/participants-list-main.js
 pages/game.js
@@ -1953,6 +1956,7 @@ packages/roster/views/image-list.js
 packages/roster/views/roster.js
 text!game/templates/participats-list.html
 pages/game/models/addparticipate.js
+packages/common/models/add.js
 pages/game/views/participants-list.js
 pages/game/views/participants-list-main.js
 pages/game.js
@@ -2413,6 +2417,7 @@ packages/roster/views/image-list.js
 packages/roster/views/roster.js
 text!game/templates/participats-list.html
 pages/game/models/addparticipate.js
+packages/common/models/add.js
 pages/game/views/participants-list.js
 pages/game/views/participants-list-main.js
 pages/game.js
@@ -2855,6 +2860,7 @@ packages/roster/views/image-list.js
 packages/roster/views/roster.js
 text!game/templates/participats-list.html
 pages/game/models/addparticipate.js
+packages/common/models/add.js
 pages/game/views/participants-list.js
 pages/game/views/participants-list-main.js
 pages/game.js
@@ -3449,6 +3455,7 @@ packages/roster/views/image-list.js
 packages/roster/views/roster.js
 text!game/templates/participats-list.html
 pages/game/models/addparticipate.js
+packages/common/models/add.js
 pages/game/views/participants-list.js
 pages/game/views/participants-list-main.js
 pages/game.js
