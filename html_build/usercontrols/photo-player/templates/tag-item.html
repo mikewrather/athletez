@@ -4,10 +4,9 @@
     	<span>
 		{{#_thumbnail}}<img src="{{_thumbnail}}" />{{/_thumbnail}}
 		    {{^_thumbnail}}<div style="width:40px; height:40px; display: inline-block; border:1px solid #CCC;">&nbsp;</div>{{/_thumbnail}}
-			<a href="{{_link}}" style="display: inline-block;">
-				
-				<span class="labelSpan">{{{_label}}}</span>
-							</a>
+			<a href="{{_link}}" style="display: inline-block;"><span class="labelSpan">{{{_label}}}</span></a>
+				{{#show_edit}}<br /><a href="javascript:void(0);" class="deleteTag" data-enttypes-id="{{_enttypes_id}}" data-subject-id="{{_id}}"><span class="labelSpan">delete</span></a>{{/show_edit}}
+
 		</span>
 		<span class="tags-number">{{count}}</span>
     </div>

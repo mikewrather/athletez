@@ -382,6 +382,8 @@ packages/sportorg/models/complevel.js
 usercontrols/tag/models/complevel.js
 text!usercontrol/dropdown/template/layout.html
 usercontrols//dropdown/view/dropdown.js
+usercontrols/tag/models/sport.js
+usercontrols/tag/collections/events.js
 usercontrols/tag/views/main.js
 pages/imageup/views/basic.js
 text!imageup/templates/preview_template.html
@@ -715,6 +717,8 @@ packages/sportorg/models/complevel.js
 usercontrols/tag/models/complevel.js
 text!usercontrol/dropdown/template/layout.html
 usercontrols//dropdown/view/dropdown.js
+usercontrols/tag/models/sport.js
+usercontrols/tag/collections/events.js
 usercontrols/tag/views/main.js
 pages/imageup/views/basic.js
 text!imageup/templates/preview_template.html
@@ -843,6 +847,8 @@ packages/sportorg/models/complevel.js
 usercontrols/tag/models/complevel.js
 text!usercontrol/dropdown/template/layout.html
 usercontrols//dropdown/view/dropdown.js
+usercontrols/tag/models/sport.js
+usercontrols/tag/collections/events.js
 usercontrols/tag/views/main.js
 pages/imageup/views/basic.js
 text!imageup/templates/preview_template.html
@@ -1380,6 +1386,8 @@ packages/sportorg/models/complevel.js
 usercontrols/tag/models/complevel.js
 text!usercontrol/dropdown/template/layout.html
 usercontrols//dropdown/view/dropdown.js
+usercontrols/tag/models/sport.js
+usercontrols/tag/collections/events.js
 usercontrols/tag/views/main.js
 pages/imageup/views/basic.js
 text!imageup/templates/preview_template.html
@@ -1861,6 +1869,8 @@ packages/user/models/common.js
 packages/user/collections/users.js
 usercontrols/tag/collections/games.js
 usercontrols/tag/models/complevel.js
+usercontrols/tag/models/sport.js
+usercontrols/tag/collections/events.js
 usercontrols/tag/views/main.js
 pages/imageup/views/basic.js
 text!imageup/templates/preview_template.html
@@ -2329,6 +2339,8 @@ packages/sportorg/models/complevel.js
 usercontrols/tag/models/complevel.js
 text!usercontrol/dropdown/template/layout.html
 usercontrols//dropdown/view/dropdown.js
+usercontrols/tag/models/sport.js
+usercontrols/tag/collections/events.js
 usercontrols/tag/views/main.js
 pages/imageup/views/basic.js
 text!imageup/templates/preview_template.html
@@ -2790,6 +2802,8 @@ packages/sportorg/models/complevel.js
 usercontrols/tag/models/complevel.js
 text!usercontrol/dropdown/template/layout.html
 usercontrols//dropdown/view/dropdown.js
+usercontrols/tag/models/sport.js
+usercontrols/tag/collections/events.js
 usercontrols/tag/views/main.js
 pages/imageup/views/basic.js
 text!imageup/templates/preview_template.html
@@ -3361,6 +3375,8 @@ packages/sportorg/models/complevel.js
 usercontrols/tag/models/complevel.js
 text!usercontrol/dropdown/template/layout.html
 usercontrols//dropdown/view/dropdown.js
+usercontrols/tag/models/sport.js
+usercontrols/tag/collections/events.js
 usercontrols/tag/views/main.js
 pages/imageup/views/basic.js
 text!imageup/templates/preview_template.html
