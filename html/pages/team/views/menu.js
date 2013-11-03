@@ -89,7 +89,6 @@ function(require, headerTemplate, selectSportTemplate) {
                data.records = self.season.toJSON();
                data.recordId = 'id';
 			   data.recordValue = 'season_label';
-	           //console.log("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%",data);
                var DropDown = new DropDownList({
 					data: data,
 					title: "Team",
@@ -125,7 +124,7 @@ function(require, headerTemplate, selectSportTemplate) {
 					title: "Season",
 					elementId: "season-h",
 					destination: '.season-h',
-					selectedValue: self.model.get("payload").complevels_obj.complevel_profiles_id,
+					selectedValue: self.model.get("payload").complevels_obj.complevel_id,
 					targetView: self,
 					callback: function(result) {
 						console.error("comp level call");
