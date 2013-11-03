@@ -138,7 +138,7 @@ require.config({
 	},
 	priority: ['text', 'modernizr', 'json2', 'vendor', 'utils', 'facade', 'syncs', 'models', 'views', 'collections', 'controller'],
 	jquery: '1.9.0',
-	waitSeconds: 30
+	waitSeconds: 60
 });
 
 // initializing the router "application" on startup

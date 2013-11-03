@@ -66,7 +66,7 @@
     margin-left: -25px;
 }
 
-.modal * {
+.modal > * {
     z-index: 1051;
 }
 

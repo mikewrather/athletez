@@ -94,24 +94,36 @@ class Model_Site_Vote extends Model_Site_Entdir
 
 	public function addVote($args = array()){
 		extract($args);
+		$check = ORM::factory('Site_Vote');
 		if(isset($subject_type_id))
 		{
 			$this->subject_enttypes_id = $subject_type_id;
+			$check->where('subject_enttypes_id','=',$subject_type_id);
 		}
 
 		if(isset($subject_id))
 		{
 			$this->subject_id = $subject_id;
+			$check->where('subject_id','=',$subject_id);
 		}
 
 		if(isset($voter_users_id))
 		{
 			$this->voter_users_id = $voter_users_id;
+			$check->where('voter_users_id','=',$voter_users_id);
 		}
 
 		if(isset($media_id))
 		{
 			$this->media_id = $media_id;
+			$check->where('media_id','=',$media_id);
+		}
+
+		$check = ORM::_sql_exclude_deleted(array('Site_Vote'=>'site_vote'),$check);
+		$result = $check->find();
+
+		if($result->loaded()){
+			return $result;
 		}
 
 		try {

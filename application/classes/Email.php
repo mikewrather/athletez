@@ -18,7 +18,7 @@ class Email {
 	}
 	public static function send_mail($to, $subject, $body, $cc = "", $bcc = ""){
 		$pm = new Postmark();
-		$from = "donotreply@highlightfront.com";
+		$from = "weare@athletez.com";
 		$from_name_alias = 'Mike From Athletez';
 		$to_name_alias = null;
 		$pm	->from($from, $from_name_alias)

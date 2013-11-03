@@ -211,7 +211,7 @@ var iEdit = {
                '<div class="container">' +
                //'<div class="head"><h1>'+values.title+'</h1></div>' +
                '<img id="displayonly" src="'+iEdit._settings.edited+'">' +
-               '<div class="nav"><a onclick="iEdit.nav.edit();">Edit Image</a></div>' +
+               '<div class="nav"><a onclick="iEdit.nav.edit();">Make a Tweak</a><br /><a onclick="closeWindow();" href="javascript:void(0);">I\'m Finished Here</a> </div>' +
                '</div>' +
                '</td></tr>' +
                '</table>';
@@ -220,6 +220,10 @@ var iEdit = {
            $(document).find('div.display-main').html(html);
        }
    }
+};
+
+var closeWindow = function(){
+	$(window.parent.document).find('div#modalPopup.imagecropper').hide();
 };
 
 //Size of JavaScript Object
