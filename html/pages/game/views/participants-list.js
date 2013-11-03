@@ -1,8 +1,8 @@
 // The Participants List
 // --------------
 
-define(['facade','views', 'utils', 'media/views/image-item','text!game/templates/participats-list.html', 'game/models/addparticipate'], 
-function(facade,  views,   utils,   ItemView,  templateList, Participate) {
+define(['facade','views', 'utils', 'media/views/image-item','text!game/templates/participats-list.html', 'game/models/addparticipate', 'common/models/add'], 
+function(facade,  views,   utils,   ItemView,  templateList, Participate, addModel) {
 
     var ImageListView, 
         ImageListAbstract,
@@ -37,24 +37,22 @@ function(facade,  views,   utils,   ItemView,  templateList, Participate) {
 		renderTemplate: function () {
             var markup = Mustache.to_html(this.template, {target: this.target_id});
             this.$el.html(markup);
-           // $("#participants_div").html(this.$el.html());
             return this;
         },
        
         addParticipant: function() {
        		var participants = new Participate(), _self = this;
-       		//games_id={games_id}&sports_id={sports_id}
        		participants.set({games_id: this.game_id, sports_id: this.sports_id});
        		participants.save();
        		$.when(participants.request).done(function() {
-       			_self.controller.reloadParticipateView();
+       			var newAddModel = new addModel();
+				newAddModel.processItemFromPayload(participants.toJSON());
+       			_self.collection.add(newAddModel);
        		});
-       		
-       		_self.controller.reloadParticipateView();
         },
              
+             
         initialize: function(options) {
-        	
         	var _self = this;
         	$(document).off("click", ".add-to-event");
         	$(document).on("click", ".add-to-event", function() {
@@ -78,10 +76,9 @@ function(facade,  views,   utils,   ItemView,  templateList, Participate) {
         	var a = json[0].get("payload"), b = [];
         	for(var i in a) {
         		console.error(routing.loggedInUserId == a[i].id);
-        		if(routing.loggedInUserId == a[i].id){
-        			this.$el.find(".add-to-event").hide();
+        		if(routing.loggedInUserId == a[i].id) {
+        			//this.$el.find(".add-to-event").hide();
         		}
-        		
         		b.push({payload: a[i]});
         	}
         	
