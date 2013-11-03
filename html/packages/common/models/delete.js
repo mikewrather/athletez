@@ -8,9 +8,17 @@ define([ 'models', 'facade' ], function(models, facade) {
 	return BaseModel.extend({
 		subject_id: undefined,
 		enttypes_id: undefined,
+		removeNode : undefined,
 		id:1,
 		url: function() {
 			return "/api/ent/delete/"+this.enttypes_id+"/"+this.subject_id;
+		},
+		destroyAndRemove : function()
+		{
+			var self = this;
+			this.destroy({success: function(model,response){
+				self.removeNode.remove();
+			}});
 		}
 	});
 });

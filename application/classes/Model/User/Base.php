@@ -1349,9 +1349,12 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 
 		if (isset($sports_id)){
 			$user_model->join('org_sport_link')->on('org_sport_link.id', '=', 'teams.org_sport_link_id');
-			$user_model->where('org_sport_link.sports_id', '=', $sports_id);
+			$user_model->join('user_sport_link')->on('user_sport_link.users_id', '=', 'users.id');
+			$user_model->and_where_open();
+				$user_model->where('org_sport_link.sports_id', '=', $sports_id);
+				$user_model->or_where('user_sport_link.sports_id','=',$sports_id);
+			$user_model->and_where_close();
 			$classes_arr['Sportorg_Orgsportlink'] = 'org_sport_link';
-
 		}
 
 		if (isset($states_id) && (int)$this->cities_id > 0){
@@ -1786,6 +1789,7 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 
 				// Log in the user that was just created
 				Auth::instance()->login($this->email,$password,TRUE);
+				Email::registration_email($this);
 
 				return $this;
 			}

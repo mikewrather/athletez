@@ -1658,21 +1658,7 @@
 				$email = $arguments['email'];
 				$password = $arguments['password'];
 				//Process user's info,set it to session
-				Auth::instance()->login($email, $password);
-				//Here to send mail
-				if (Email::send_mail($email, 'register success', 'test content')){
-					//TODO, add by jeffrey, give message to user.
-				}else{
-					if(!$this->mainModel->id)
-					{
-						$error_array = array(
-							"error" => "Something wrong to send register notification mail",
-							"desc" => "Something wrong to send register notification mail"
-						);
-						$this->modelNotSetError($error_array);
-						return false;
-					}
-				}
+
 				return $result;
 			}
 			elseif(get_class($result) == 'ORM_Validation_Exception')

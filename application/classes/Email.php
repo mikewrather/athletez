@@ -2,6 +2,20 @@
 
 class Email {
 
+	public static function registration_email($user)
+	{
+		$facebook_url = 'https://www.facebook.com/athletez';
+		$twitter_url = 'http://twitter.com/RealAthletez';
+		$body = View::factory('email/email')
+			->bind('user',$user)
+			->bind('twitter_url',$twitter_url)
+			->bind('facebook_url',$facebook_url);
+		$body = $body->render();
+		$subject = "Welcome to Athletez!";
+		$to = $user->email;
+		self::send_mail($to,$subject,$body);
+
+	}
 	public static function send_mail($to, $subject, $body, $cc = "", $bcc = ""){
 		$pm = new Postmark();
 		$from = "donotreply@highlightfront.com";
@@ -16,8 +30,7 @@ class Email {
 		}else{
 			$pm->addTo($to, $to_name_alias);
 		}
-		//TODO, add by jeffrey, allow to cc,bcc many receipents.
-
+	//	print_r($pm);
 		return $pm->send();
 	}
 

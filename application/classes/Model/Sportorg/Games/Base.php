@@ -404,7 +404,7 @@ class Model_Sportorg_Games_Base extends ORM
 		}
 
 		if (isset($sports_id)){
-			$this->where('org_sport_link.sports_id', '=', $sports_id);
+			$this->where('sportorg_games_base.sports_id', '=', $sports_id);
 		}
 
 //		if (isset($complevels_id)){

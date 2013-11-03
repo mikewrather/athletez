@@ -7,13 +7,15 @@ define([
         'vendor', 
         'views',
         'utils', 
-        'text!usercontrol/photo-player/templates/tag-item.html'
+        'text!usercontrol/photo-player/templates/tag-item.html',
+		'common/models/delete'
         ], 
 function (
         vendor,
         views,
         utils,
-        tagItemTemplate
+        tagItemTemplate,
+        DeleteModel
         ) {
 
     var TagItemView,
@@ -24,6 +26,9 @@ function (
         tagName: "li",
         template: tagItemTemplate,
         className: "tag",
+	    events:{
+		    "click .deleteTag":"deleteTag"
+	    },
           
         initialize: function (options) {
         	//console.log(this.model.toJSON());
@@ -32,7 +37,7 @@ function (
         
         filterData: function() {
     		var _self = this, mpay = this.model.get("payload"), extra = {
-			_enttypes_id : mpay.subject_enttypes_id,
+			_enttypes_id : mpay.enttypes_id,
 			_id : mpay.id
 			},
 			show_edit = false,
@@ -40,7 +45,7 @@ function (
 			extra.Sportsteam = null;
 			//alert(extra._enttypes_id + "entity type");
 			console.log(mpay.subject,"for testing");
-			switch(extra._enttypes_id)
+			switch(mpay.subject_enttypes_id)
 			{
 				case '23':
 					//videos
@@ -120,7 +125,7 @@ function (
 					extra._thumbnail = standard_thumb.url;
 					//extra._label = mpay.subject.game_day;
 					extra._link = "/#game/" + mpay.subject.id;
-					var team_str = "", teamLength = mpay.subject.teams.length,
+					var team_str = "",
 						ucwords = function(str)
 						{
 							str = str.toLowerCase();
@@ -129,6 +134,9 @@ function (
 									return $1.toUpperCase();
 								});
 						};
+
+					var teamLength = mpay.subject.teams ? mpay.subject.teams.length : 0;
+
 
 					for (var i = 0; i < teamLength; i++) {
 						if((i%2)==1){
@@ -154,13 +162,13 @@ function (
 						//if (i + 1 < mpay.subject.teams.length)
 						//	team_str += " VS. ";
 					}
-					extra._label = team_str;
+					extra._label = team_str != "" ? team_str : mpay.subject.event_name;
 
 					console.log(extra._label);
 					if(mpay.hasOwnProperty('is_owner')) show_edit = mpay.is_owner;
 					//extra._label = team_str;
 					
-					if(!this.Sportsteam)
+					if(!this.Sportsteam && teamLength)
 					{
 						this.Sportsteam=true;
 						var str = mpay.subject.shared.season;
@@ -210,8 +218,17 @@ function (
             // }
             
             return this;
-        }        
-        
+        },
+
+		deleteTag: function (e) {
+			var deleteModel = new DeleteModel();
+			deleteModel.subject_id  = $(e.target).parent().attr('data-subject-id');
+			deleteModel.enttypes_id = $(e.target).parent().attr('data-enttypes-id');
+			deleteModel.removeNode  = $(e.target).parents("li.tags-li");
+			console.log(deleteModel);
+			deleteModel.destroyAndRemove();
+		}
+
       });
 
     return TagItemView;
