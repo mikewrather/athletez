@@ -128,10 +128,11 @@ function(require, commentFormTemplate,    ProfileCommentFormModel,        BaseCo
         },
 
 	    render: function () {
-	    	
 		    BaseView.prototype.render.call(this);
 		    this.input = this.$("#new-comment");
-		    console.log("run here now", this.el);
+		    if(!this.collection.length) {
+		    	$(".add-comment-h").trigger("click");
+		    }
 		    return this;
 	    }
     });

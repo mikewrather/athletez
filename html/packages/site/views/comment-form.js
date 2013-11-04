@@ -42,12 +42,14 @@ define([
                 //this.model.fetch();
             }            
         },
-
+        
         render: function () {
 	        console.log("RENDER CALLED!!!!");
             BaseView.prototype.render.call(this);
-            this.input = this.$("#new-comment");            
-            
+            this.input = this.$("#new-comment");    
+             if(!this.model.length) {
+		    	$(".add-comment-h").trigger("click");
+		    }
             var payload = this.model.get('payload');
 	        console.log("return payloady", payload);
             var self = this;
