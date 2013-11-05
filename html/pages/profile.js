@@ -116,6 +116,7 @@ define([
 			createData: function () {
 				this.basics = new ProfileBasicsModel({id: this.id});
 				this.basics.id = this.id;
+				this.basics.targetElement = "#main";
 				this.basics.fetch();
 
 				this.addmedia = new ProfileAddMediaModel();
@@ -125,10 +126,9 @@ define([
 				//this.commentsof.id = this.id;
 				//this.commentsof.fetch();
 
-				
-		
 				this.fans = new FansImageList();
 				this.fans.id = this.id;
+				this.fans.targetElement = "#fans-div";
 				this.fans.fetch();
 				
 				//this.images = new ProfileImageList();
@@ -146,12 +146,13 @@ define([
 					delete controller.orgViewname;
 					controller.refreshPage();
 					controller.sports_id = sport_id;
-
+					
 					controller.orgs = new ProfileOrgList();
 					controller.orgs.id = controller.id;
 					controller.orgs.sport_id = sport_id;
+					controller.orgs.targetElement = "#games_div";
 					controller.orgs.fetch();
-
+					
 					controller.relateds = new ProfileRelatedList();
 					controller.relateds.id = controller.id;
 					controller.relateds.sport_id = sport_id;
@@ -162,14 +163,10 @@ define([
 					controller.fitnessbasics.sport_id = sport_id;
 					controller.fitnessbasics.fetch();
 
-					//controller.videos = new ProfileVideoList();
-					//controller.videos.id = controller.id;
-					//controller.videos.sport_id = sport_id;
-					//controller.videos.fetch();
-
 					controller.images = new ProfileImageList();
 					controller.images.id = controller.id;
 					controller.images.sport_id = sport_id;
+					controller.images.targetElement = "#image-wrap";
 					controller.images.fetch();
 
 					controller.handleDeferredsDynamic();
@@ -205,19 +202,12 @@ define([
 					controller.commentson = new ProfileCommentOnList();
 					controller.commentson.subject_entity_type = subject_type_id;
 					controller.commentson.id = controller.id;
+					controller.commentson.targetElement = '#commenton-wrap';
 					controller.commentson.fetch();
 					$.when(controller.commentson.request).done(function () {
 						controller.setupCommentOnListView();
 					});
-					
 				});
-
-				//$.when(this.commentsof.request).done(function () {
-				//	controller.setupCommentOfListView();
-				//});
-
-
-				
 			},
 			
 			 // intialize vote view
@@ -259,8 +249,6 @@ define([
 					console.log("Images Ready (called in profile.js handleDeferredDynamic)",x);
 					controller.setupImageListView();
 				});
-				
-				
 			},
 
 			refreshPage: function () {
@@ -305,21 +293,18 @@ define([
 
 			setupHeaderView: function () {
 				var headerView;
-
 				headerView = new ProfileHeaderView({
 					model: this.basics,
 					sports_id:this.sports_id > 0 ? this.sports_id : null,
 					name: "Header",
 					destination: "#main-header"
 				});
-
 				this.scheme.push(headerView);
 				this.layout.render();
 			},
 
 			setupAddMediaView: function () {
 				var addMediaView;
-
 				addMediaView = new ProfileAddMediaView({
 					model: this.addmedia,
 					name: "Add Media",
@@ -335,7 +320,6 @@ define([
 			
 			getOrgData: function () {
 				var position;
-
 				if (this.orgListView) {
 					$(this.orgListView.destination).html('');
 					position = $.inArray(this.orgListView, this.scheme);
@@ -392,7 +376,6 @@ define([
 				this.scheme.push(this.orgListView);
 				this.layout.render();
 			},
-			
 
 			setupRelatedListView: function () {
 				var relatedListView;
@@ -460,22 +443,19 @@ define([
 					//model: Backbone.Model.extend(),
 					name: "fansView"
 				});
-
 				this.scheme.push(this.fansListView);
 				this.layout.render();
 			},
+			
 
 			updateImages: function (data) {
 				//create new image model to hold newly uploaded image
 				var newImageModel = new MediaImageModel();
-
 				//set the model to use the data from the new image
 				newImageModel.processItemFromPayload(data);
-
 				//select the image list view's display type and
 				//by setting the url to the correct one of its types
 				newImageModel.selectImageType(this.imageListView.imagetype);
-
 				//add the model to the view's collection
 				this.imageListView.collection.add(newImageModel);
 				if(this.imageListView.allData) this.imageListView.allData.push(newImageModel.toJSON());
@@ -503,8 +483,6 @@ define([
 				this.layout.render();
 			},
 			
-			
-
 			setupLayout: function () {
 				var pageLayout;
 

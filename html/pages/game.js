@@ -93,7 +93,7 @@ define([
 
 		createData: function () {
 			this.basics = new GameBasicsModel({id: this.id});
-			//this.basics.id = '425983';
+			this.basics.targetElement = "#main";
 			this.basics.fetch();
 			//this.id = this.basics.id;
 
@@ -129,6 +129,7 @@ define([
 				var data = controller.basics.get("payload"), subject_type_id = data.enttypes_id;
 				controller.images = new GameImageList();
 				controller.images.id = controller.id;
+				controller.images.targetElement = "#image-wrap";
 				controller.images.fetch();
 				
 				var teams = data.teams, teamLength = (teams)?teams.length:0;
@@ -139,6 +140,7 @@ define([
 				controller.commentson = new GameCommentOnList();
 				controller.commentson.subject_entity_type = subject_type_id;
 				controller.commentson.id = controller.id;
+				controller.commentson.targetElement = "#comment_div";
 				controller.commentson.fetch();
 				
 				
@@ -150,14 +152,12 @@ define([
 					// get the participants
 					controller.participants = new ParticipantsList();
 					controller.participants.id = controller.id;
+					controller.commentson.targetElement = "#roster-wrap";
 					controller.participants.fetch();
 					$.when(controller.participants.request).done(function () {
-						console.error(controller.participants);
 						controller.setupParticipantsListView();
 					});
-				
 				}
-				
 				
 				$.when(controller.commentson.request).done(function () {
 					controller.setupCommentsOnListView();
