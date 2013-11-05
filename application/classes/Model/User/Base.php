@@ -1349,11 +1349,19 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 
 		if (isset($sports_id)){
 			$user_model->join('org_sport_link')->on('org_sport_link.id', '=', 'teams.org_sport_link_id');
-			$user_model->join('user_sport_link')->on('user_sport_link.users_id', '=', 'users.id');
+
+
+
+			$usl_subquery = DB::select(DB::expr('COUNT(id)'))->from('user_sport_link')
+				->where('user_sport_link.users_id','=',DB::expr('users.id'))
+				->where('user_sport_link.sports_id','=',$sports_id);
+			$usl_subquery = ORM::_sql_exclude_deleted(array('User_Sportlink'=>'user_sport_link'),$usl_subquery);
+
 			$user_model->and_where_open();
-				$user_model->where('org_sport_link.sports_id', '=', $sports_id);
-				$user_model->or_where('user_sport_link.sports_id','=',$sports_id);
+			$user_model->where('org_sport_link.sports_id', '=', $sports_id);
+			$user_model->or_where($usl_subquery,'>',0);
 			$user_model->and_where_close();
+
 			$classes_arr['Sportorg_Orgsportlink'] = 'org_sport_link';
 		}
 
@@ -1451,6 +1459,7 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 
 		$exclude_deleted_users_array['User_Base'] = 'users';
 		$user_model = ORM::_sql_exclude_deleted($exclude_deleted_users_array, $user_model);
+	//	print_r($user_model->execute());
 		return $user_model;
 	}
 
