@@ -9,7 +9,7 @@ function (HeaderView, MainView, FooterView) {
     var chromeBootstrap;
 
     chromeBootstrap = function () {
-		$('#main').unbind().empty();
+		$('#main').unbind().empty().addClass("region-loader");
         
         // CHECK IF HEADER EXISTS
         if(App.header) {

@@ -87,6 +87,9 @@ function (
                     routing.userLoggedIn = false;
                     routing.trigger('app-inited');
                 }
+                
+                
+                $('#main').removeClass("region-loader");
             };
 
            
