@@ -1509,9 +1509,10 @@ margin-top:10px;
 }
 
 .region-loader {
-	background: url(../images/loader/loading.gif) no-repeat;
-	width: 100%;
-	min-height: 50px;
-	margin: 0 auto;
-	background-position: 50% 0;
+    background: url(http://cdn.athletez.com/resources/img/gray_loading.gif) repeat;
+    width: 95% !important;
+    min-height: 110px;
+    margin: 20px auto;
+    content: 'Loading';
+    border-radius: 10px;
 }
