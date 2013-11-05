@@ -377,11 +377,13 @@ define(['require', 'text!profilesetting/templates/highschool.html', 'text!profil
 			$(destination).parents(self.controls.divSportsWrapper).fadeIn();
 		},
 
-		findSportById: function(sports_id){
-			if(self.sports.length < 1) return 0;
-			for (var k=0; k< self.sports.length; k++)
-			{
-				if(self.sports[k].id==sports_id) return self.sports[k];
+		findSportById: function(sports_id) {
+			if(self.sports && self.sports.length < 1) {
+				for (var k=0; k< self.sports.length; k++) {
+					if(self.sports[k].id==sports_id) return self.sports[k];
+				}
+			} else {
+				 return 0;				
 			}
 		},
 
