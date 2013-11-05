@@ -194,7 +194,7 @@ define(['facade', 'utils'], function(facade, utils) {
 		
 		 afterFetch: function(model, response) {
 			if(this.targetElement) $(this.targetElement).removeClass("region-loader");
-			this.fetchSuccess(model, response);
+			if(this.fetchSuccess) this.fetchSuccess(model, response);
         },
 
 		// Default success and error handlers used with this.fetch() ...
