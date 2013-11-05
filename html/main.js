@@ -17,7 +17,7 @@ require.config({
 		'mustache'      : [cdn + 'vendor/mustache', s3 + 'vendor/mustache', '/vendor/mustache'],
 		'backbone'      : [cdn + 'vendor/backbone', s3 + 'vendor/backbone', '/vendor/backbone'],
 		'underscore'    : [cdn + 'vendor/underscore', s3 + 'vendor/underscore', '/vendor/underscore'],
-		'jquery'        : [cdn + 'vendor/jquery-2.0.0.min', s3 + 'vendor/jquery-2.0.0.min', '/vendor/jquery-2.0.0.min'],
+		'jquery'        : ['//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min'],
 
 		// Plugins
 		'bootstrap'             : [cdn + 'vendor/plugins/bootstrap', s3 + 'vendor/plugins/bootstrap', '/vendor/plugins/bootstrap'],
@@ -110,26 +110,30 @@ require.config({
 
 	},
 	shim: {
+		'jquery':{
+			exports: '$'
+		},
+		'jqueryui': {
+			deps: ['jquery']
+		},
 		'underscore': {
-			exports: '_'
+			exports: '_',
+			deps: ['jquery']
 		},
 		'backbone': {
 			deps: ['underscore', 'jquery', 'json2', 'html5', 'jqueryui', 'custom', 'jquerytimepicker'],
 			exports: 'Backbone'
 		},
 		'jquery.slimscroll':{
-			deps: ['jquery']
+			deps: ['jquery', 'jqueryui']
 		},
 		'bootstrap': {
-			deps: ['jquery']
+			deps: ['jquery', 'jqueryui']
 		},
 		'plupload': {
 			deps: ['jquery']
 		},
 		'jwplayer': {
-			deps: ['jquery']
-		},
-		'jqueryui': {
 			deps: ['jquery']
 		},
 		'jquerytimepicker': {

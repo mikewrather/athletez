@@ -26,6 +26,25 @@
 				return true;
 			}
 		}
+
+		public static function utl_position_sport_match($users_teams_link_id, $positions_id)
+		{
+			$position = ORM::factory('Sportorg_Position',$positions_id);
+			if($position->loaded()){
+				$pos_sport = $position->sport;
+			} else { return false; }
+
+			$utl = ORM::factory("User_Teamslink",$users_teams_link_id);
+			if($utl->loaded()){
+				$utl_sport = $utl->team->getSport();
+			} else { return false; }
+
+			if($pos_sport->id == $utl_sport->id){
+				return true;
+			}
+			return false;
+		}
+
 		//checked exclude
 		public static function academics_tests_topics_id_exist($value){
 			$topics = ORM::factory("Academics_Tests_Topics");
