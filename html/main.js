@@ -27,6 +27,7 @@ require.config({
 		'jquery.jrac'           : [cdn + 'vendor/plugins/jquery.jrac', s3 + 'vendor/plugins/jquery.jrac', '/vendor/plugins/jquery.jrac'],
 		'iframe-transport'      : [cdn + 'vendor/plugins/jquery.iframe-transport', s3 + 'vendor/plugins/jquery.iframe-transport', '/vendor/plugins/jquery.iframe-transport'],
 		'fileupload'            : [cdn + 'vendor/plugins/jquery.fileupload', s3 + 'vendor/plugins/jquery.fileupload', '/vendor/plugins/jquery.fileupload'],
+		'browser'            : [cdn + 'vendor/jquery.browser', s3 + 'vendor/jquery.browser', 'vendor/jquery.browser'],
 		'jquery.ui.widget'      : [cdn + 'vendor/plugins/jquery.ui.widget', s3 + 'vendor/plugins/jquery.ui.widget' , '/vendor/plugins/jquery.ui.widget'],
 		'jquery.slimscroll'     : [cdn + 'vendor/plugins/jquery.slimscroll.min', s3 + 'vendor/plugins/jquery.slimscroll.min', '/vendor/plugins/jquery.slimscroll.min'],
 		'jquery.slimscroll.hor' : [cdn + 'vendor/plugins/jquery.slimscroll.hor', s3 + 'vendor/plugins/jquery.slimscroll.hor' , '/vendor/plugins/jquery.slimscroll.hor'],
@@ -116,12 +117,15 @@ require.config({
 		'jqueryui': {
 			deps: ['jquery']
 		},
+		'browser': {
+			deps: ['jquery']
+		},
 		'underscore': {
 			exports: '_',
 			deps: ['jquery']
 		},
 		'backbone': {
-			deps: ['underscore', 'jquery', 'json2', 'html5', 'jqueryui', 'custom', 'jquerytimepicker'],
+			deps: ['underscore', 'jquery', 'json2', 'html5', 'jqueryui', 'custom', 'jquerytimepicker','browser'],
 			exports: 'Backbone'
 		},
 		'jquery.slimscroll':{

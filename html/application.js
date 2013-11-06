@@ -65,8 +65,30 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
 	       
 			Controller.prototype.appStates = new ApplicationStates();
 	        this.getPhrases();
+	        this.detectBrowser();
 	       // this.intializeImageAndVideo();
         },
+
+		detectBrowser: function(){
+			console.log($.browser);
+			var showBrowserWindow = false;
+			var showMobileWindow = false;
+			if($.browser.ipad || $.browser.iphone || $.browser.android){
+				showMobileWindow = true;
+			}
+			if($.browser.msie){
+				if(parseInt($.browser.version) < 10){
+					showBrowserWindow = true;
+					console.log("IE under version 9");
+				}
+			}
+			if($.browser.mozilla){
+				if(parseInt($.browser.version) < 24){
+					showBrowserWindow = true;
+					console.log("Old Version of FF.");
+				}
+			}
+		},
         
         // get user name by id
         getUserName: function(id) {
