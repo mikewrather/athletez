@@ -65,7 +65,7 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
 	        this.addSubscribers();
 	        Controller.prototype.appStates = new ApplicationStates();
 	        this.getPhrases();
-	        this.detectBrowser();
+	    //    this.detectBrowser();
 	       // this.intializeImageAndVideo();
         },
 
