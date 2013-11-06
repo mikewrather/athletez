@@ -7,7 +7,8 @@ define([
     'views',
     'facade', 
     'utils',
-    'login/models/Forgotmodel'
+    'login/models/Forgotmodel',
+    'signup/views/facebooksignup'
 	],function(require,signInTemplate,backbone,_,signupController) {
 			
 		var SignupBasicView,
@@ -17,6 +18,7 @@ define([
         	utils = require('utils'),
         	Channel = utils.lib.Channel,
         	ForgotPasswordModel = require('login/models/Forgotmodel'),
+            FbHeader=require('signup/views/facebooksignup'),
         	SectionView = backbone.View;
 			SigninBasicView = SectionView.extend({
               
@@ -41,11 +43,12 @@ define([
                 },
                   
                 events:{
-                  "click a#signup": "signupUser", 
+                  "click button#signup": "signupUser", 
                   "click .loginUser":"userLogin",
                   "click .forgot-password-h": "forgotPassword",
                   "submit .forgot-password-form-h": "forgotPasswordForm",
-                  "click .log-in-link-h": "loginPageView"
+                  "click .log-in-link-h": "loginPageView",
+                  "click #fbpane":"signupFacebook",
                 },
                 
                 
@@ -65,7 +68,13 @@ define([
                 	});
 
                 },
-                
+                signupFacebook: function(event) {
+                    event.preventDefault();
+                    $('#RegModal').modal('hide') ;
+                     headView = new FbHeader();
+                     headView.signupFacebook();
+            
+               },
                 userLogin:function(event){
                 event.preventDefault();
                 var fields = this.$(":input").serializeArray();
@@ -97,12 +106,14 @@ define([
 
                 },
                 
-                forgotPassword: function() {
+                forgotPassword: function(event) {
+                    event.preventDefault();
 					//alert("forgot password"); 
 					this.$el.find(".success-message").addClass('hide');
 					this.$el.find(".error-message").addClass('hide');
 					$("#Loginview h3#label").html("Forgot Password");
-					$("#logincontainer").addClass("hide");               	
+					//$("#logincontainer").addClass("hide");
+                    $("#loginmain").addClass("hide");               	
                 	$(".forgot-password-container").removeClass("hide");
                 },
                 
@@ -110,7 +121,7 @@ define([
                 	this.$el.find(".success-message").addClass('hide');
 					this.$el.find(".error-message").addClass('hide');
                 	$("#Loginview h3#label").html("Login");
-					$("#logincontainer").removeClass("hide");               	
+					$("#loginmain").removeClass("hide");               	
                 	$(".forgot-password-container").addClass("hide");
                 },
                 
