@@ -2,7 +2,7 @@
 // --------------  
 // Requires define
 // Return {Object} App
-define( ["facade", "utils", "collections", "chrome", "controller", "profile", "imageup",'home','videopreview',"game", "team", "registration","profilesetting","userresume","packages/site/collections/phrases","usercontrols/tag/tag","usercontrols/addgame/addgame","signup","login", "usercontrols/photo-player/photo-player", "usercontrols/add-club/add-club", "utils/storage", 'usercontrols/location/views/view-location','signup/views/facebooksignup',"usercontrols/addevent/addevent",'chrome/views/header'],
+define( ["facade", "utils", "collections", "chrome", "controller", "profile", "imageup",'home','videopreview',"game", "team", "registration","profilesetting","userresume","packages/site/collections/phrases","usercontrols/tag/tag","usercontrols/addgame/addgame","signup","login", "usercontrols/photo-player/photo-player", "usercontrols/add-club/add-club", "utils/storage", 'usercontrols/location/views/view-location','signup/views/facebooksignup',"usercontrols/addevent/addevent",'chrome/views/header','browserpop/views/browser'],
 function (facade, utils, collections, chromeBootstrap, Controller, ProfileController, ImageController, HomeController, VideoPreviewController,
 	GameController, TeamController, RegistrationController,ProfileSetting,UserResume, SitePhraseList , TagController,AddGameController, SignupController,LoginController,PhotoPlayerController, AddClubController, Store, googleMapLocationview,fbreg, AddEventController,header) {
 
@@ -13,6 +13,7 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
         _ = facade._,
         Backbone = facade.Backbone,
         Channel = utils.lib.Channel,
+	    browserView = require('browserpop/views/browser');
         debug = utils.debug;
    		App = Backbone.Router.extend({
         routes: {
@@ -61,33 +62,51 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
 
         initialize: function (options) {
             _.bindAll(this);
-            this.addSubscribers();
-	       
-			Controller.prototype.appStates = new ApplicationStates();
+	        this.addSubscribers();
+	        Controller.prototype.appStates = new ApplicationStates();
 	        this.getPhrases();
 	        this.detectBrowser();
 	       // this.intializeImageAndVideo();
         },
 
 		detectBrowser: function(){
-			console.log($.browser);
-			var showBrowserWindow = false;
-			var showMobileWindow = false;
-			if($.browser.ipad || $.browser.iphone || $.browser.android){
-				showMobileWindow = true;
-			}
-			if($.browser.msie){
-				if(parseInt($.browser.version) < 10){
-					showBrowserWindow = true;
-					console.log("IE under version 9");
+			var self = this;
+			var tryBrowser = setInterval(function(){
+				try{
+					$.browser.android;
+					clearInterval(tryBrowser);
+
+					var showBrowserWindow = false;
+					var showMobileWindow = false;
+					if($.browser.ipad || $.browser.iphone || $.browser.android){
+						showMobileWindow = true;
+					}
+					if($.browser.msie){
+						if(parseInt($.browser.version) < 10){
+							showBrowserWindow = true;
+							console.log("IE under version 9");
+						}
+					}
+					if($.browser.mozilla){
+						if(parseInt($.browser.version) < 26){
+							showBrowserWindow = true;
+							console.log("Old Version of FF.");
+						}
+					}
+
+					if(showBrowserWindow || showMobileWindow){
+						self.showBrowserWindow();
+					}
+				} catch(ex){
+
 				}
-			}
-			if($.browser.mozilla){
-				if(parseInt($.browser.version) < 24){
-					showBrowserWindow = true;
-					console.log("Old Version of FF.");
-				}
-			}
+			},500);
+
+		},
+
+		showBrowserWindow: function(){
+			var browserPop = new browserView();
+
 		},
         
         // get user name by id

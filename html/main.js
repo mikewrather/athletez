@@ -105,6 +105,7 @@ require.config({
 		'addgame'           : [cdn + 'usercontrols/addgame/addgame', s3 + 'usercontrols/addgame/addgame', '/usercontrols/addgame/addgame'],
 		'photo-player'      : [cdn + 'usercontrols/photo-player/photo-player', s3 + 'usercontrols/photo-player/photo-player', '/usercontrols/photo-player/photo-player'],
 		'tag'               : [cdn + 'usercontrols/tag/tag', s3 + 'usercontrols/tag/tag', '/usercontrols/tag/tag'],
+		'browserpop'        : [cdn + 'usercontrols/detection', s3 + 'usercontrols/detection', 'usercontrols/detection'],
 
 		// Application - bootstrap for frontend app
 		'application'       : [cdn + 'application' , s3 + 'application', '/application']
@@ -127,6 +128,9 @@ require.config({
 		'backbone': {
 			deps: ['underscore', 'jquery', 'json2', 'html5', 'jqueryui', 'custom', 'jquerytimepicker','browser'],
 			exports: 'Backbone'
+		},
+		'browserpop': {
+			deps:['jqueryui']
 		},
 		'jquery.slimscroll':{
 			deps: ['jquery', 'jqueryui']
