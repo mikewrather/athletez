@@ -118,6 +118,7 @@ define([
         
         createData: function () {
             this.basics = new TeamBasicsModel({id:this.id});
+            this.basics.targetElement = "#main";
             this.basics.fetch();
             this.addmedia = new TeamAddMediaModel();
             this.addmedia.id = this.id;
@@ -129,17 +130,19 @@ define([
                 controller.games = new TeamOrgList();
 				controller.games.id = team_id;
 				controller.games.sport_id = sport_id;
+				controller.games.targetElement = "#games_div";
 				controller.games.fetch();
-                
                 
                 controller.images = new TeamImageList();
                 controller.images.team_id = team_id;
                 controller.images.sport_id = sport_id;
+ 				controller.images.targetElement = "#image-wrap";               
                 controller.images.fetch();
                
                 controller.fans = new FansImageList();
 				controller.fans.id = team_id;
 				controller.fans.sport_id = sport_id;
+				controller.fans.targetElement = "#fans-div";				
 				controller.fans.fetch();
                
                 var subject_type_id = controller.basics.get("payload").enttypes_id;
@@ -147,11 +150,9 @@ define([
 	        	controller.commentson.subject_entity_type = subject_type_id;
 	        	controller.commentson.savePath = "/team/addcomment/"+team_id;
 				controller.commentson.id = team_id;
+				controller.commentson.targetElement = "#comment_div";				
 				controller.commentson.fetch();
                 controller.handleDeferredsDynamic();
-                
-                
-                
             }
             
             routing.on('refresh-teampage', function(sport_id, team_id,season_id) {

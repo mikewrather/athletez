@@ -63,8 +63,7 @@ define(["require", 'text!usercontrols/photo-player/templates/comments.html',
 					'<div class="comment-area coment-area-h"></div><div class="comment-input-outer-h comment-input-outer" class="clearfix"></div>'+
 					'<div id="image-tagging-photo"></div>'+
 					'</div></div></div>';*/
-					this.modelHTML = '<div id="photoPlayerModal" class="modal photo-frame-model hide fade model-popup-h">'+
-					'<div class="modal-body page-content-h">'+
+					this.modelHTML = ''+
 					'<div class="photo-player-area-h photo-player"></div>'+'<div class="photo-player-right-area"><div class="right-area-header"><div class="headerinfo"></div><div class="closer"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">	&times;</button></div></div><div class="teamName-area"></div><div class="tags-area-h"></div>' +
 					'<div class="comment-area coment-area-h"></div><div class="comment-input-outer-h comment-input-outer" class="clearfix"></div>'+
 					'<div id="image-tagging-photo"></div>'+
@@ -105,8 +104,7 @@ define(["require", 'text!usercontrols/photo-player/templates/comments.html',
 		// setup main layout
 		setupLayout : function() {
 			this.scheme=[];
-			$(".model-popup-h").remove();
-			$('body').append(this.modelHTML);
+			$('.page-content-h').html(this.modelHTML);
             var pageLayout = new LayoutView({
 				scheme : this.scheme,
 				destination : "#modalPopup",
@@ -114,7 +112,10 @@ define(["require", 'text!usercontrols/photo-player/templates/comments.html',
 				displayWhen : "ready"
 			});
             this.layout=pageLayout;
-            $('#photoPlayerModal').modal('show');
+            var options = {};
+            options.height = "500px";
+            options.width = "90%";            
+			routing.trigger('common-popup-open', options);
             return this.layout;
 		},
 		

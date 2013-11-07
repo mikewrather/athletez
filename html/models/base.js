@@ -24,6 +24,8 @@ define(['facade', 'utils'], function(facade, utils) {
 				this.options = options;
 				this.setOptions();
 			}
+			
+			_.bindAll(this);
 			this.deferred = new $.Deferred();
 			// Backbone.Model.prototype.initialize.call(this, arguments);
 		},
@@ -176,8 +178,11 @@ define(['facade', 'utils'], function(facade, utils) {
 		// Wrap Backbone.Model.prototype.fetch with support for deferreds
 		fetch : function(options) {
 			options = options || {};
+			if(this.targetElement && this.targetElement != '') {
+				$(this.targetElement).addClass("region-loader");
+			}
 			if (!options.success) {
-				options.success = this.fetchSuccess;
+				options.success = this.afterFetch;
 			}
 			if (!options.error) {
 				options.error = this.fetchError;
@@ -186,6 +191,11 @@ define(['facade', 'utils'], function(facade, utils) {
 			return this.request = Backbone.Model.prototype.fetch.call(this, options);
 			
 		},
+		
+		 afterFetch: function(model, response) {
+			if(this.targetElement) $(this.targetElement).removeClass("region-loader");
+			if(this.fetchSuccess) this.fetchSuccess(model, response);
+        },
 
 		// Default success and error handlers used with this.fetch() ...
 

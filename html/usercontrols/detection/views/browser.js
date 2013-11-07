@@ -3,7 +3,7 @@
  // Pages
  // Requires `define`, `require`
  */
-define(['require', 'text!usercontrols/detection/templates/browser.html', 'facade', 'views', 'utils', 'vendor','browser'], function(require) {
+define(['require', 'text!usercontrols/detection/templates/browser.html','text!usercontrols/detection/browser.css', 'facade', 'views', 'utils', 'vendor','browser'], function(require) {
 
 	var self, facade = require('facade'), views = require('views'), 
 	SectionView = views.SectionView, utils = require('utils'), 
@@ -21,9 +21,10 @@ define(['require', 'text!usercontrols/detection/templates/browser.html', 'facade
 		events : {
 			"click .close":"closePopup"
 		},
-
+		cssArr : ["usercontrols/detection/browser.css"],
 		/*initialize gets called by default when constructor is initialized*/
 		initialize : function(options) {
+			Channel('load:css').publish(this.cssArr);
 			_self = this;
 			_self.data = {};
 			_self.selectedOptions = [];
@@ -53,8 +54,20 @@ define(['require', 'text!usercontrols/detection/templates/browser.html', 'facade
 		},
 		//render displays the view in browser
 		render : function() {
-			console.log(layoutTemplate);
 			var _self = this, markup = Mustache.to_html(_self.template,_self.data);
+			//console.error(markup);
+			//this.el = markup;
+			//console.error(this.el);
+			var options = {};
+			options.width = "90%";
+					options.height = "500px";
+					options.title = "Your Browser Might be an Issue";
+					options.html = markup;
+					options.id = "Browser-detect";
+					console.error(options);
+					routing.trigger('common-popup-open', options);
+			
+			return this;
 			//markup should open up in a popup
 		},
 

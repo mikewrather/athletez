@@ -55,52 +55,42 @@ define(["require",
 						this.refreshPage();
 						this.handleDeferreds();
 					},
+					
 					//popup layput
-					setupLayout: function ()
-					{
-						
+					setupLayout: function () {
 						this.scheme=[];
-						$('div#LoginPopup').remove();
-						$('body').append('<div id="LoginPopup"></div>');
+						//$('div#LoginPopup').remove();
+						//$('body').append('<div id="LoginPopup"></div>');
 						pageLayout = new LayoutView({
-						scheme: this.scheme,
-						destination: "#LoginPopup",
-						template : pageLayoutTemplate,
-						displayWhen : "ready"
+							scheme: this.scheme,
+							destination: "#LoginPopup",
+							template : pageLayoutTemplate,
+							displayWhen : "ready"
 						});
 						this.layout=pageLayout;
-						
 						return this.layout;
-
-					},	
+					},
 					
 					createData : function() {
 						this.login_type = new loginBaseModel();
 					},
 					refreshPage : function() {
-						
 						if (this.loginView) {
-							
 							$(this.loginView.destination).html('');
 								position = $.inArray(this.loginView, this.scheme);
 								if (~position)
 									this.scheme.splice(position, 1);
 						}
-
-
 					},
+					
 					showPopup:function(){
-						
-							$('#imgUploadModal').modal('show') ;
-                     		$('#imgUploadModal').on('hidden', function () {
-               
-                        		//routing.trigger('refresh-onImageUpload');
-              			      });
-                   			 $('#imgUploadModal').on('hide', function () {
-               
-                        	//routing.trigger('refresh-onImageUpload');
-                      		});
-
+						$('#imgUploadModal').modal('show') ;
+                 		$('#imgUploadModal').on('hidden', function () {
+                    		//routing.trigger('refresh-onImageUpload');
+          			      });
+               			 $('#imgUploadModal').on('hide', function () {
+                    	//routing.trigger('refresh-onImageUpload');
+                  		});
 					},
 					handleDeferreds : function() {
 						var controller = this;
@@ -117,15 +107,14 @@ define(["require",
             				controller.setupLogout(attr);				
             			});
 					},
-					setupLogout:function(attr){
-						var current = this
-						this.logoutcheck = new logoutBaseModel()
-						this.logoutcheck.fetch()
+					setupLogout:function(attr) {
+						var current = this;
+						this.logoutcheck = new logoutBaseModel();
+						this.logoutcheck.fetch();
 						$.when(this.logoutcheck.request).done(function(){
 							// clearing header model to delete local storage
 							if(attr != undefined) attr.clear();
 							window.localStorage.clear() ;
-							
 							//console.log(localStorage);
 							//console.log(window.localStorage.getItem("user"),"localStorage aftr user remove");
 							location.href="/";
@@ -133,21 +122,25 @@ define(["require",
 							//attr.attributes.authorized = false;
 							//routing.trigger('reload-home');
 						});
-
 					},
 					
 					setupLoginView : function() {
+						var id = "modal-popup-"+Math.floor(Math.random() * Math.random() * 50 * Math.random() * 50), dest = "#"+id+" #modalBody", options = {};
+			            options.height = "500px";
+			            options.width = "90%";    
+			            options.title = "Login";   
+			            options.id = id;
+						routing.trigger('common-popup-open', options); 
 						
 						this.loginView = new loginBaseView({
-						 
 							model : this.login_type,
 							name : "Login View",
-							destination : "#main-content-reg"
+							destination : dest
 						});
 						
 						this.scheme.push(this.selectTypeView);
 						this.layout.render();
-					},
+					}
 				});
 				return LoginController;
 			});	

@@ -127,15 +127,9 @@ define([
                 
                 signupUser: function(event){
                 	event.preventDefault();
-                    $('#Loginview').modal('hide');
+                   // $('#Loginview').modal('hide');
                     routing.trigger("register-basic");
-
-					//routing.trigger("add-user");
                 },
-               
-               
-
-
             });
             
             return SigninBasicView;

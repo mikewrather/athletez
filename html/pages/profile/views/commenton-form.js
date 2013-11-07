@@ -22,7 +22,6 @@ function(require, commentFormTemplate,    ProfileCommentFormModel,        BaseCo
          },
 	    el: "#comment_div",
 	    template: commentFormTemplate,
-
 	    events: {
 		    "click #comment-submit": "submitHandler",
 		    'click .add-comment-h': 'showCommentBox'
@@ -33,7 +32,6 @@ function(require, commentFormTemplate,    ProfileCommentFormModel,        BaseCo
             if (!this.collection) {
                 throw new Error("ProfileCommentOnFormView expected options.collection.");
             }
-            
             if (!this.model) {
 	            console.log("this.collection.id =", this.collection.id);
                 this.model = new ProfileCommentFormModel({id: this.collection.id});
@@ -130,6 +128,9 @@ function(require, commentFormTemplate,    ProfileCommentFormModel,        BaseCo
 	    render: function () {
 		    BaseView.prototype.render.call(this);
 		    this.input = this.$("#new-comment");
+		    if(!this.collection.length) {
+		    	$(".add-comment-h").trigger("click");
+		    }
 		    console.log("run here now", this.el);
 		    return this;
 	    }

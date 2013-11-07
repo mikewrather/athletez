@@ -11,12 +11,12 @@ define(
 				// Reference to this collection's model.
 				model : HomeImageModel,
 				//url : '/api/user/search',
-
 				initialize : function(models, options) {
 					debug.log("HomeImageList initialize...");
 					this.cid = this.cid || _.uniqueId('c');
 					this.deferred = new $.Deferred();
 					this.num = options.num;
+					 _.bindAll(this);
 				},
 				// **Method:** `fetchSuccess` - resolve the deferred here in
 				// success
