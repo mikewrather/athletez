@@ -36,7 +36,7 @@
 			font-size: 16px;
 			font-weight: bold;
 			height: 29px;
-			margin-left: 16px;
+			margin-left: 14px;
 			margin-top: 5px;
 			padding-left: 14px;
 			width: 297px;
@@ -265,4 +265,35 @@
 .terms-condition {
 	width: 30px !important;
 	margin-left: 107px !important;
+}
+#firstregbase input {
+border: 1px solid #CCC;
+}
+.loguser{
+}
+.loguser input{
+	float: left;
+    margin-left: 1px !important;
+    width: 46px !important;
+}
+.loguser label{
+	padding: 9px;
+}
+.loguser p {
+	margin-left: 15px;
+}
+#regpanemain {
+   	position: relative!important;
+    width: 547px;
+}
+.subtweak{
+}
+.btn-common{
+	color:blue;
+}
+.addsub{
+	padding-top: 9px;
+}
+.loginUser ,.addsub{
+	margin-left: 15px;
 }

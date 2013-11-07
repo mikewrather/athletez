@@ -47,15 +47,21 @@
 						    '<div class="container">' +
 								//'<div class="head"><h1>'+values.title+'</h1></div>' +
 								'<img id="displayonly" src="'+values.edited+'">' + 
-								'<div class="nav"><a id="goEdit">Edit Image</a></div>' +
+								'<div class="nav"><a id="goEdit">Make Adjustment</a><a id="closeWindow">All Finished</a></div>' +
+
 							'</div>' +
 						'</td></tr>' +
-					'</table>'; 
+					'</table>';
+
+
 	   
 		$container.find('div.display-main').append(html);             
 		$container.find('#goEdit').bind('click', function() {
 			showEdit();
 		});
+	    $container.find('#closeWindow').bind('click', function() {
+		    console.log(window.parent);
+	    });
     }
     
     function setEditDefaults( that, options ) {

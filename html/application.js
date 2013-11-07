@@ -2,7 +2,7 @@
 // --------------  
 // Requires define
 // Return {Object} App
-define( ["facade", "utils", "collections", "chrome", "controller", "profile", "imageup",'home','videopreview',"game", "team", "registration","profilesetting","userresume","packages/site/collections/phrases","usercontrols/tag/tag","usercontrols/addgame/addgame","signup","login", "usercontrols/photo-player/photo-player", "usercontrols/add-club/add-club", "utils/storage", 'usercontrols/location/views/view-location','signup/views/facebooksignup',"usercontrols/addevent/addevent",'chrome/views/header'],
+define( ["facade", "utils", "collections", "chrome", "controller", "profile", "imageup",'home','videopreview',"game", "team", "registration","profilesetting","userresume","packages/site/collections/phrases","usercontrols/tag/tag","usercontrols/addgame/addgame","signup","login", "usercontrols/photo-player/photo-player", "usercontrols/add-club/add-club", "utils/storage", 'usercontrols/location/views/view-location','signup/views/facebooksignup',"usercontrols/addevent/addevent",'chrome/views/header','browserpop/views/browser'],
 function (facade, utils, collections, chromeBootstrap, Controller, ProfileController, ImageController, HomeController, VideoPreviewController,
 	GameController, TeamController, RegistrationController,ProfileSetting,UserResume, SitePhraseList , TagController,AddGameController, SignupController,LoginController,PhotoPlayerController, AddClubController, Store, googleMapLocationview,fbreg, AddEventController,header) {
 
@@ -13,6 +13,7 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
         _ = facade._,
         Backbone = facade.Backbone,
         Channel = utils.lib.Channel,
+	    browserView = require('browserpop/views/browser');
         debug = utils.debug;
    		App = Backbone.Router.extend({
         routes: {
@@ -61,12 +62,51 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
 
         initialize: function (options) {
             _.bindAll(this);
-            this.addSubscribers();
-	       
-			Controller.prototype.appStates = new ApplicationStates();
+	        this.addSubscribers();
+	        Controller.prototype.appStates = new ApplicationStates();
 	        this.getPhrases();
+	    //    this.detectBrowser();
 	       // this.intializeImageAndVideo();
         },
+
+		detectBrowser: function(){
+			var self = this;
+			var tryBrowser = setInterval(function(){
+				try{
+					$.browser.android; //if browser doesn't exist yet this will throw an error
+					clearInterval(tryBrowser);
+
+					var showBrowserWindow = false;
+					var showMobileWindow = false;
+					if($.browser.ipad || $.browser.iphone || $.browser.android){
+						showMobileWindow = true;
+					}
+					if($.browser.msie){
+						if(parseInt($.browser.version) < 10){
+							showBrowserWindow = true;
+					//		console.log("IE under version 9");
+						}
+					}
+					if($.browser.mozilla){
+						if(parseInt($.browser.version) < 25){
+							showBrowserWindow = true;
+					//		console.log("Old Version of FF.");
+						}
+					}
+
+					if(showBrowserWindow || showMobileWindow){
+						self.showBrowserWindow();
+					}
+				} catch(ex){
+
+				}
+			},500);
+
+		},
+
+		showBrowserWindow: function(){
+			var browserPop = new browserView();
+		},
         
         // get user name by id
         getUserName: function(id) {
@@ -133,7 +173,7 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
             
             routing.off('popup-close');
             routing.on('popup-close', function() {
-            	$('#modalPopup').modal('hide');
+				$('#modalPopup').modal('hide');
             	$(".model-popup-h").remove();
             	if(locationCallback) locationCallback();
             });
@@ -141,9 +181,10 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
         
         initialiRoutesInit: function(fn, title) {
         	var self = this, closeModelBox = function() {
-        		$("#modalPopup, .modal-backdrop").unbind().remove();
-        		routing.trigger('common-popup-close');
-		        };
+        		$("#modalPopup, #photoPlayerModal, .modal-backdrop").unbind().remove();
+		        $(".modal").modal('hide');
+		        routing.trigger('common-popup-close');
+		    };
 	        this.hideSignup();
         	$("body").removeClass("homePage");
         	routing.off('app-inited');

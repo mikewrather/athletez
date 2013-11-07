@@ -168,7 +168,7 @@ define(['require', 'text!profilesetting/templates/highschool.html', 'text!profil
 					self.stateFetchRequest.push(self.schoolFetchRequest || []);
 
 					self.stateFetchRequest = self.abortRequest(self.stateFetchRequest);
-					$(event.target).addClass('ui-autocomplete-loading');
+					$(e.target).addClass('ui-autocomplete-loading');
 					var tempCollection = stateList.fetch();
 					self.stateFetchRequest.push(tempCollection);
 					

@@ -467,6 +467,7 @@ packages/roster/views/image-list.js
 packages/roster/views/roster.js
 text!game/templates/participats-list.html
 pages/game/models/addparticipate.js
+packages/common/models/add.js
 pages/game/views/participants-list.js
 pages/game/views/participants-list-main.js
 pages/game.js
@@ -660,6 +661,8 @@ usercontrols/location/views/view-location.js
 text!usercontrols/addevent/templates/layout.html
 usercontrols/addevent/views/main.js
 usercontrols/addevent/addevent.js
+text!usercontrols/detection/templates/browser.html
+usercontrols/detection/views/browser.js
 application.js
 pages/login/models/Loginmodel.js
 text!login/templates/logintemplate.html
@@ -954,6 +957,7 @@ packages/roster/views/image-list.js
 packages/roster/views/roster.js
 text!game/templates/participats-list.html
 pages/game/models/addparticipate.js
+packages/common/models/add.js
 pages/game/views/participants-list.js
 pages/game/views/participants-list-main.js
 pages/game.js
@@ -1156,6 +1160,8 @@ usercontrols/location/views/view-location.js
 text!usercontrols/addevent/templates/layout.html
 usercontrols/addevent/views/main.js
 usercontrols/addevent/addevent.js
+text!usercontrols/detection/templates/browser.html
+usercontrols/detection/views/browser.js
 application.js
 packages/vote/views/vote-section.js
 pages/profile/models/basics.js
@@ -1629,6 +1635,8 @@ usercontrols/location/views/view-location.js
 text!usercontrols/addevent/templates/layout.html
 usercontrols/addevent/views/main.js
 usercontrols/addevent/addevent.js
+text!usercontrols/detection/templates/browser.html
+usercontrols/detection/views/browser.js
 application.js
 pages/login/models/Loginmodel.js
 text!login/templates/logintemplate.html
@@ -1651,6 +1659,7 @@ pages/game/views/comment-form.js
 pages/game/views/comment-list.js
 text!game/templates/participats-list.html
 pages/game/models/addparticipate.js
+packages/common/models/add.js
 pages/game/views/participants-list.js
 pages/game/views/participants-list-main.js
 pages/game.js
@@ -1953,6 +1962,7 @@ packages/roster/views/image-list.js
 packages/roster/views/roster.js
 text!game/templates/participats-list.html
 pages/game/models/addparticipate.js
+packages/common/models/add.js
 pages/game/views/participants-list.js
 pages/game/views/participants-list-main.js
 pages/game.js
@@ -2088,6 +2098,8 @@ usercontrols/location/views/view-location.js
 text!usercontrols/addevent/templates/layout.html
 usercontrols/addevent/views/main.js
 usercontrols/addevent/addevent.js
+text!usercontrols/detection/templates/browser.html
+usercontrols/detection/views/browser.js
 application.js
 pages/login/models/Loginmodel.js
 text!login/templates/logintemplate.html
@@ -2413,6 +2425,7 @@ packages/roster/views/image-list.js
 packages/roster/views/roster.js
 text!game/templates/participats-list.html
 pages/game/models/addparticipate.js
+packages/common/models/add.js
 pages/game/views/participants-list.js
 pages/game/views/participants-list-main.js
 pages/game.js
@@ -2606,6 +2619,8 @@ usercontrols/location/views/view-location.js
 text!usercontrols/addevent/templates/layout.html
 usercontrols/addevent/views/main.js
 usercontrols/addevent/addevent.js
+text!usercontrols/detection/templates/browser.html
+usercontrols/detection/views/browser.js
 application.js
 pages/login/models/Loginmodel.js
 text!login/templates/logintemplate.html
@@ -2855,6 +2870,7 @@ packages/roster/views/image-list.js
 packages/roster/views/roster.js
 text!game/templates/participats-list.html
 pages/game/models/addparticipate.js
+packages/common/models/add.js
 pages/game/views/participants-list.js
 pages/game/views/participants-list-main.js
 pages/game.js
@@ -3058,6 +3074,8 @@ usercontrols/location/views/view-location.js
 text!usercontrols/addevent/templates/layout.html
 usercontrols/addevent/views/main.js
 usercontrols/addevent/addevent.js
+text!usercontrols/detection/templates/browser.html
+usercontrols/detection/views/browser.js
 application.js
 pages/login/models/Loginmodel.js
 text!login/templates/logintemplate.html
@@ -3449,6 +3467,7 @@ packages/roster/views/image-list.js
 packages/roster/views/roster.js
 text!game/templates/participats-list.html
 pages/game/models/addparticipate.js
+packages/common/models/add.js
 pages/game/views/participants-list.js
 pages/game/views/participants-list-main.js
 pages/game.js
@@ -3642,6 +3661,8 @@ usercontrols/location/views/view-location.js
 text!usercontrols/addevent/templates/layout.html
 usercontrols/addevent/views/main.js
 usercontrols/addevent/addevent.js
+text!usercontrols/detection/templates/browser.html
+usercontrols/detection/views/browser.js
 application.js
 pages/login/models/Loginmodel.js
 text!login/templates/logintemplate.html

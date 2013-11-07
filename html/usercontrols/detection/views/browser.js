@@ -1,0 +1,72 @@
+/* // Location View
+ // ---------
+ // Pages
+ // Requires `define`, `require`
+ */
+define(['require', 'text!usercontrols/detection/templates/browser.html', 'facade', 'views', 'utils', 'vendor','browser'], function(require) {
+
+	var self, facade = require('facade'), views = require('views'), 
+	SectionView = views.SectionView, utils = require('utils'), 
+	Channel = utils.lib.Channel, vendor = require('vendor'), 
+	Mustache = vendor.Mustache, $ = facade.$;
+	var BaseView = views.BaseView, Backbone = facade.Backbone, _self,
+		layoutTemplate = require('text!usercontrols/detection/templates/browser.html');
+	//Models
+
+	return Backbone.View.extend({
+		// template for dropdown
+		template : layoutTemplate,
+		// set to true if requires multiple selection
+		/*Bind Events on controls present in current view template*/
+		events : {
+			"click .close":"closePopup"
+		},
+
+		/*initialize gets called by default when constructor is initialized*/
+		initialize : function(options) {
+			_self = this;
+			_self.data = {};
+			_self.selectedOptions = [];
+			_self.setOptions(options);
+			_self.populateData();
+		},
+
+		populateData: function(){
+			var self = this;
+			var tryBrowser = setInterval(function(){
+				try{
+					$.browser.android; //if browser doesn't exist yet this will throw an error
+					clearInterval(tryBrowser);
+					if($.browser.ipad || $.browser.iphone || $.browser.android){
+						self.data.mobile = true;
+					}
+					if($.browser.msie){
+						self.data.old_ie = true;
+					}
+					if($.browser.mozilla){
+						self.data.old_ff = true;
+					}
+					self.data.current_version = $.browser.version
+					self.render();
+				} catch(ex){}
+			},500);
+		},
+		//render displays the view in browser
+		render : function() {
+			console.log(layoutTemplate);
+			var _self = this, markup = Mustache.to_html(_self.template,_self.data);
+			//markup should open up in a popup
+		},
+
+		// **Method** `setOptions` - called by BaseView's initialize method
+		setOptions : function(options) {
+			for (var i in options) {
+				this[i] = options[i];
+			}
+		},
+
+		closePopup:function(){
+			//whatever will close the popup
+		}
+	});
+});

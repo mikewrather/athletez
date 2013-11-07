@@ -430,8 +430,9 @@ div.game-tile{
 }
 .detail-view span{
     display: inline-block;
-    padding: 2px 8px 8px 8px;
+    padding: 2px 8px 2px 8px;
     font-size: .8em;
+    line-height: 15px;
 }
 /***** Image Styles Ends *****/
 
@@ -1470,6 +1471,7 @@ margin-top:10px;
 	overflow: hidden;
 	width: 100%;
 	position: relative;
+    float: right;
 }
 
 .complevels-inner {

@@ -1198,6 +1198,7 @@ margin-top:10px;
 	overflow: hidden;
 	width: 100%;
 	position: relative;
+    float: right;
 }
 .complevels-inner {
 	position: absolute;

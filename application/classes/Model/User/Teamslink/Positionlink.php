@@ -57,6 +57,7 @@ class Model_User_Teamslink_Positionlink extends ORM
 			try{
 				$external_validate = Validation::factory($args);
 				$external_validate->rule('users_teams_link_id','utl_position_link_exist', array($users_teams_link_id, $positions_id));
+				$external_validate->rule('users_teams_link_id','utl_position_sport_match', array($users_teams_link_id, $positions_id));
 				$external_validate->rule('positions_id', 'positions_id_exist');
 				if ($this->check($external_validate)){
 					$this->save();
@@ -66,7 +67,6 @@ class Model_User_Teamslink_Positionlink extends ORM
 				return $e;
 			}
 		}
-
 	}
 
 	public function getBasics($settings = array())

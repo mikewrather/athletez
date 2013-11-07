@@ -21,6 +21,7 @@
 		'jquery.jrac': 'vendor/plugins/jquery.jrac',
 		'iframe-transport': 'vendor/plugins/jquery.iframe-transport',
 		'fileupload': 'vendor/plugins/jquery.fileupload',
+		'browser': 'vendor/jquery.browser',
 		'jquery.ui.widget': 'vendor/plugins/jquery.ui.widget',
 		'jquery.slimscroll': 'vendor/plugins/jquery.slimscroll.min',
 		'jquery.slimscroll.hor' : 'vendor/plugins/jquery.slimscroll.hor',
@@ -39,6 +40,8 @@
 		// Create a rotate effect events
 		'rotate': 'vendor/plugins/jQueryRotate',
 
+		// load async files
+		'async' :  'vendor/plugins/async',
 
 		// Vendor libs, packaged group of common dependencies
 		'vendor': 'vendor',
@@ -87,12 +90,14 @@
 		'home': 'pages/home',
 		'profilesetting': 'pages/profilesetting',
 		'userresume': 'pages/userresume',
+
 		'usercontrol'       : 'usercontrols/',
 	//	'add-club'          : 'usercontrols/add-club/add-club',
 	//	'addgame'           : 'usercontrols/addgame/addgame',
 	//	'photo-player'      : 'usercontrols/photo-player/photo-player',
 	//	'tag'               : 'usercontrols/tag/tag',
 	//	'imagecropper'      : 'usercontrols/imagecropper/imagecropper',
+		'browserpop' : 'usercontrols/detection',
 
 		// Application - bootstrap for frontend app
 		'application': 'application'

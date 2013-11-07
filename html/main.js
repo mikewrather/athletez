@@ -17,7 +17,7 @@ require.config({
 		'mustache'      : [cdn + 'vendor/mustache', s3 + 'vendor/mustache', '/vendor/mustache'],
 		'backbone'      : [cdn + 'vendor/backbone', s3 + 'vendor/backbone', '/vendor/backbone'],
 		'underscore'    : [cdn + 'vendor/underscore', s3 + 'vendor/underscore', '/vendor/underscore'],
-		'jquery'        : [cdn + 'vendor/jquery-2.0.0.min', s3 + 'vendor/jquery-2.0.0.min', '/vendor/jquery-2.0.0.min'],
+		'jquery'        : ['//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min'],
 
 		// Plugins
 		'bootstrap'             : [cdn + 'vendor/plugins/bootstrap', s3 + 'vendor/plugins/bootstrap', '/vendor/plugins/bootstrap'],
@@ -27,6 +27,7 @@ require.config({
 		'jquery.jrac'           : [cdn + 'vendor/plugins/jquery.jrac', s3 + 'vendor/plugins/jquery.jrac', '/vendor/plugins/jquery.jrac'],
 		'iframe-transport'      : [cdn + 'vendor/plugins/jquery.iframe-transport', s3 + 'vendor/plugins/jquery.iframe-transport', '/vendor/plugins/jquery.iframe-transport'],
 		'fileupload'            : [cdn + 'vendor/plugins/jquery.fileupload', s3 + 'vendor/plugins/jquery.fileupload', '/vendor/plugins/jquery.fileupload'],
+		'browser'            : [cdn + 'vendor/jquery.browser', s3 + 'vendor/jquery.browser', 'vendor/jquery.browser'],
 		'jquery.ui.widget'      : [cdn + 'vendor/plugins/jquery.ui.widget', s3 + 'vendor/plugins/jquery.ui.widget' , '/vendor/plugins/jquery.ui.widget'],
 		'jquery.slimscroll'     : [cdn + 'vendor/plugins/jquery.slimscroll.min', s3 + 'vendor/plugins/jquery.slimscroll.min', '/vendor/plugins/jquery.slimscroll.min'],
 		'jquery.slimscroll.hor' : [cdn + 'vendor/plugins/jquery.slimscroll.hor', s3 + 'vendor/plugins/jquery.slimscroll.hor' , '/vendor/plugins/jquery.slimscroll.hor'],
@@ -104,32 +105,43 @@ require.config({
 		'addgame'           : [cdn + 'usercontrols/addgame/addgame', s3 + 'usercontrols/addgame/addgame', '/usercontrols/addgame/addgame'],
 		'photo-player'      : [cdn + 'usercontrols/photo-player/photo-player', s3 + 'usercontrols/photo-player/photo-player', '/usercontrols/photo-player/photo-player'],
 		'tag'               : [cdn + 'usercontrols/tag/tag', s3 + 'usercontrols/tag/tag', '/usercontrols/tag/tag'],
+		'browserpop'        : [cdn + 'usercontrols/detection', s3 + 'usercontrols/detection', 'usercontrols/detection'],
 
 		// Application - bootstrap for frontend app
 		'application'       : [cdn + 'application' , s3 + 'application', '/application']
 
 	},
 	shim: {
+		'jquery':{
+			exports: '$'
+		},
+		'jqueryui': {
+			deps: ['jquery']
+		},
+		'browser': {
+			deps: ['jquery']
+		},
 		'underscore': {
-			exports: '_'
+			exports: '_',
+			deps: ['jquery']
 		},
 		'backbone': {
-			deps: ['underscore', 'jquery', 'json2', 'html5', 'jqueryui', 'custom', 'jquerytimepicker'],
+			deps: ['underscore', 'jquery', 'json2', 'html5', 'jqueryui', 'custom', 'jquerytimepicker','browser'],
 			exports: 'Backbone'
 		},
+		'browserpop': {
+			deps:['jqueryui']
+		},
 		'jquery.slimscroll':{
-			deps: ['jquery']
+			deps: ['jquery', 'jqueryui']
 		},
 		'bootstrap': {
-			deps: ['jquery']
+			deps: ['jquery', 'jqueryui']
 		},
 		'plupload': {
 			deps: ['jquery']
 		},
 		'jwplayer': {
-			deps: ['jquery']
-		},
-		'jqueryui': {
 			deps: ['jquery']
 		},
 		'jquerytimepicker': {
@@ -138,7 +150,7 @@ require.config({
 	},
 	priority: ['text', 'modernizr', 'json2', 'vendor', 'utils', 'facade', 'syncs', 'models', 'views', 'collections', 'controller'],
 	jquery: '1.9.0',
-	waitSeconds: 30
+	waitSeconds: 60
 });
 
 // initializing the router "application" on startup
