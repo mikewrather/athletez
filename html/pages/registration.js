@@ -236,11 +236,12 @@ define(["require",
 					{
 						this.scheme=[];
 						//$('div#modalPopup').remove();
-						//$('body').append('<div id="modalPopup"></div>');
+						if(!$("#regModelPopup").length)
+						$('body').append('<div id="regModelPopup"></div>');
 
 						pageLayout = new LayoutView({
 						scheme: this.scheme,
-						destination: "#modalBody",
+						destination: "#setupLayout",
 						template : pageLayoutTemplate,
 						displayWhen : "ready"
 						});
