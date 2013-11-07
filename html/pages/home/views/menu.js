@@ -167,10 +167,13 @@ define(
 				
 				afterRender: function() {
 					this.hideAllDropdowns();
-
-					if($.slimScroll){
-						$(this.el).find('.sport-list').slimScroll();
-					}
+					var self=this;
+					var trySlimscroll = setInterval(function(){
+						try{
+							$(self.el).find('.sport-list').slimScroll();
+							clearInterval(trySlimscroll);
+						}catch(ex){}
+					},1000);
 
 					var data = this.model.toJSON();
 					try{

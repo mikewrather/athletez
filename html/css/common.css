@@ -38,8 +38,16 @@ body { font-size:100%; font-family: "Raleway","Helvetica"; }
 .common-default-green-inter { background:#9CCA3C; }
 .common-default-green-light { background: #c4df89; }
 
+.common-btn-small{
+    font-size: 1em;
+    height: auto;
+    padding:5px 10px;
+}
+
 input  { background: #f3f5f7; color:#000; }
 input::-webkit-input-placeholder, textarea::-webkit-input-placeholder { color: #9a9fa5; }
 input:-moz-placeholder, textarea:-moz-placeholder { color: #9a9fa5; }
 input:-ms-placeholder, textarea:-ms-placeholder { color: #9a9fa5; }
 input:-o-placeholder, textarea:-o-placeholder { color: #9a9fa5; }
+
+.no-padding{padding:0;}

@@ -178,11 +178,22 @@ div.right-arrow-container > img{
 }
 .tags-name {
 	float: left;
-	width: 100%;
+	width: 96%;
+    padding:4px;
+}
+.tags-name:hover{
+    background-color: #F4F4F4;
 }
 .tags-name > span {
-	float: left;
     width:100%;
+}
+.tag-thumb{
+    min-height:40px;
+    max-width: 10%;
+    width:10%;
+    display: block;
+    border: 1px solid #CCC;
+    float: left;
 }
 .tags-name span a{
     display: inline-block;
@@ -228,14 +239,17 @@ ul#tags-list li {
 }
 ul#tags-list .tags-name img {
 	width: 10%;
-	height: 40px;
 	float:left
 }
+a.deleteTag{
+    font-size: 2em;
+    font-weight: bolder;
+}
 ul#tags-list .tags-name a{
-    width:80%;
+    width:85%;
 }
 ul#tags-list .tags-name a span {
-	font-size: .7em;
+	font-size: .8em;
 	width: 100%;
 	display: inline-block;
 	margin-left: 5px;
@@ -273,7 +287,7 @@ ul#tags-list .tags-number {
     color: white;
     height: 45px;
     text-align: center;
-    width: 10%;
+    width: 15%;
     min-width: 25px;
     float: left!important;
     font-size: 2.2em;
@@ -335,12 +349,17 @@ margin-top: 0px;
 }
 .content-prof-sub{
     width: 299px;
-    padding-top: 39px;
+    padding-top: 10px;
     margin-left: 22px;
 }
 .prof-name-area{
+    display: block;
     width: 227px;
     height: 70px;
+    margin: 0 0 15px 5px;
+}
+.prof-name-area:empty{
+    display: none;
 }
 .firstheader{
     color: #FFFFFF;
@@ -353,10 +372,8 @@ margin-top: 0px;
 .secheader{
     color: #FFFFFF;
     float: left;
-   // margin-left: 5%;
      position: relative;
     top: 10px;
-   // width: 90px;
 }
 .thirdheader{
    color: #FFFFFF;
