@@ -43,3 +43,5 @@ input::-webkit-input-placeholder, textarea::-webkit-input-placeholder { color: #
 input:-moz-placeholder, textarea:-moz-placeholder { color: #9a9fa5; }
 input:-ms-placeholder, textarea:-ms-placeholder { color: #9a9fa5; }
 input:-o-placeholder, textarea:-o-placeholder { color: #9a9fa5; }
+
+.no-padding{padding:0;}
