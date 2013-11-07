@@ -104,6 +104,7 @@ define(["require", 'text!usercontrols/photo-player/templates/comments.html',
 		// setup main layout
 		setupLayout : function() {
 			this.scheme=[];
+			this.modelBoxId = "modal-popup-"+Math.floor(Math.random() * Math.random() * 50 * Math.random() * 50);              
 			$('.page-content-h').html(this.modelHTML);
             var pageLayout = new LayoutView({
 				scheme : this.scheme,
@@ -114,7 +115,8 @@ define(["require", 'text!usercontrols/photo-player/templates/comments.html',
             this.layout=pageLayout;
             var options = {};
             options.height = "500px";
-            options.width = "90%";            
+            options.width = "90%";  
+            options.id = this.modelBoxId;          
 			routing.trigger('common-popup-open', options);
             return this.layout;
 		},
@@ -133,7 +135,7 @@ define(["require", 'text!usercontrols/photo-player/templates/comments.html',
 			var photoPlayerMain = new PhotoPlayerView({
 				model : collection,
 				name : "photo player",
-				destination : ".photo-player-area-h",
+				destination : "#"+this.modelBoxId+" #modalBody",
 				index : self.index,
 				user_id : self.userId || null,
 				sports_id : self.sports_id || null,
