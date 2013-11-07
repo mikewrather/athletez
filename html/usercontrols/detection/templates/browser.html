@@ -1,15 +1,18 @@
 {{#old_ie}}
-	<div><img src="http://cdn.athletez.com/resources/img/ie.png" /></div>
-	<div>It appears you're using an old version of IE ({{current_version}}).  Unfortunately our site is still in beta and we are not yet supporting versions older than IE 10.  If you're on Windows XP and are unable to upgrade to this version, please consider using Google Chrome, which is an outstanding browser that I recommend not just for this website, but for all websites.</div>
-	<div><a href="https://www.google.com/intl/en/chrome/browser/" target="_blank"><img src="http://cdn.athletez.com/resources/img/chrome.png" /> Here is a link to download Google's Chrome browser</a></div>
-{{/old_ie}}
+	<div class="curr-browser"><img src="http://cdn.athletez.com/resources/img/ie.png" /></div>
+	<div class="notify-text">It appears you're using an old version of IE ({{current_version}}).  Unfortunately our site is still in beta and we are not yet supporting versions older than IE 10.  If you're on Windows XP and are unable to upgrade to this version, please consider using Google Chrome, which is an outstanding browser that I recommend not just for this website, but for all websites.</div>
+	{{/old_ie}}
 {{#old_ff}}
 	<div><img src="http://cdn.athletez.com/resources/img/ff.png" /></div>
 	<div>It appears you're using an old version of Firefox ({{current_version}}).  Unfortunately our site is still in beta and we are not yet supporting versions older than Firefox 25.  Please consider using Google Chrome, which is an outstanding browser that I recommend not just for this website, but for all websites.</div>
-	<div><a href="https://www.google.com/intl/en/chrome/browser/" target="_blank"><img src="http://cdn.athletez.com/resources/img/chrome.png" /> Here is a link to download Google's Chrome browser</a></div>
-	<div><a href="http://www.mozilla.org/en-US/firefox/new/" target="_blank"><img src="http://cdn.athletez.com/resources/img/ff.png" />If you prefer to keep using firefox, you can click this link or go the help menu to update to the latest version.</a></div>
 {{/old_ff}}
 {{#mobile}}
 	<div><img src="http://cdn.athletez.com/resources/img/mobile.png" /></div>
 	<div>Looks like you're on a mobile browser.  Though it's high up on our priority list, Athletez is still in beta and we don't yet have support for mobile devices.  So trying to navigate on your phone will drive you insane.  If you don't want to go insane, maybe hold off on trying out Athletez until you get home.  Sorry for the inconvenience.  </div>
 {{/mobile}}
+
+<div id="recommendations">
+	<span class="largeText">Here are the browsers we recommend (in order of preference)</span>
+	<div class="r-item"><a href="https://www.google.com/intl/en/chrome/browser/" target="_blank"><img src="http://cdn.athletez.com/resources/img/chrome.png" /></a></div>
+	<div><a href="http://www.mozilla.org/en-US/firefox/new/" target="_blank"><img src="http://cdn.athletez.com/resources/img/ff.png" /></a></div>
+</div>

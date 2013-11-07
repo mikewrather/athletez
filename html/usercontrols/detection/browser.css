@@ -1,0 +1,31 @@
+.curr-browser{
+    float:left;
+    width: 15%;
+}
+
+.curr-browser img{
+    width:100%;
+}
+
+.notify-text{
+    float: right;
+    width: 75%;
+    height: 120px;
+    padding: 10px;
+}
+
+#recommendations{
+    text-align: center;
+    display: block;
+    width: 100%;
+    float: left;
+    margin-top: 35px;
+}
+#recommendations span{
+    display: block;
+    font-size: 2em;
+    font-weight: bold;
+}
+#recommendations div{
+    display: inline-block;
+}
