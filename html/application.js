@@ -73,7 +73,7 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
 			var self = this;
 			var tryBrowser = setInterval(function(){
 				try{
-					$.browser.android;
+					$.browser.android; //if browser doesn't exist yet this will throw an error
 					clearInterval(tryBrowser);
 
 					var showBrowserWindow = false;
@@ -84,13 +84,13 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
 					if($.browser.msie){
 						if(parseInt($.browser.version) < 10){
 							showBrowserWindow = true;
-							console.log("IE under version 9");
+					//		console.log("IE under version 9");
 						}
 					}
 					if($.browser.mozilla){
-						if(parseInt($.browser.version) < 26){
+						if(parseInt($.browser.version) < 25){
 							showBrowserWindow = true;
-							console.log("Old Version of FF.");
+					//		console.log("Old Version of FF.");
 						}
 					}
 
@@ -106,7 +106,6 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
 
 		showBrowserWindow: function(){
 			var browserPop = new browserView();
-
 		},
         
         // get user name by id
