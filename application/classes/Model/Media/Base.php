@@ -157,6 +157,8 @@ class Model_Media_Base extends ORM
 
 	public function is_owner($user)
 	{
+		$curr_user = Auth::instance()->get_user();
+		if($curr_user->has('roles', ORM::factory('Role', array('id' =>2))) || $curr_user->has('roles', ORM::factory('Role', array('id' =>10)))) return true;
 		if (is_object($user)){
 			return intval($user->id) == $this->owner();
 		}else{

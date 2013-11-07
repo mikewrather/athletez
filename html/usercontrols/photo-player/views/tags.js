@@ -45,7 +45,7 @@ function(facade, vendor,  utils, views) {
 	         console.log(this.collection.toJSON());
 			 _self.allData = this.collection.toArray();
 			_self.cleardata();
-
+	        _self.getprofile();
 			$(".photo-player-right-area").slimScroll({
    			 height: 'auto'
 			});
@@ -94,17 +94,17 @@ function(facade, vendor,  utils, views) {
 			var userid = mainurl.split('/');
 			var currId = userid[userid.length-1];
 			this.id=currId;
-			//var urlmain ='/api/user/basics/' + this.id;
-			//this.model.set('url',urlmain);
+			var urlmain ='/api/user/basics/' + this.id;
+			this.model.set('url',urlmain);
 			//alert("check point");
 			var mymodel = new TagsSectionmodel({id:currId});
-			/*mymodel.fetch({
+			mymodel.fetch({
 				success: (function (msg) {
                 	        //alert(' Service request success: '); 
-                	        var element = '<div class="user-photo-profile"><img src='+msg.attributes.payload.user_picture_obj.image_path+' alt=""></div><div class="content-prof-sub"><span class="user-comment">'+msg.attributes.payload.label+'</span><p class="comment-text">'+msg.attributes.payload.user_picture_obj.media_obj.timePosted+'</p></div>'; 
+                	        var element = '<div class="user-photo-profile"><img src='+msg.attributes.payload.user_picture_obj.image_path+' alt=""></div><div class="content-prof-sub"><span class="user-comment">Uploaded By&nbsp;</span><span class="user-comment">'+msg.attributes.payload.label+'</span><p class="comment-text">'+msg.attributes.payload.user_picture_obj.media_obj.timePosted+'</p></div>';
                 	        $(".prof-name-area").html(element);                        
                     	})
-			});*/
+			});
         },
         cleardata:function(){
         	$(".headerinfo").empty();

@@ -185,8 +185,7 @@ define(['vendor', 'views', 'utils', 'text!media/templates/image-item.html', 'vot
 
 						team_str += ucwords(mpay.teams[i].team_name);
 						team_str += '</span>';
-						if (i + 1 < mpay.teams.length)
-							team_str += " VS. ";
+
 					}
 					if(mpay.hasOwnProperty('is_owner')) show_edit = mpay.is_owner;
 					if(team_str != "") extra._sublabel = team_str;
