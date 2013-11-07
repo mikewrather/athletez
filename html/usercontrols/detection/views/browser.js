@@ -53,8 +53,20 @@ define(['require', 'text!usercontrols/detection/templates/browser.html', 'facade
 		},
 		//render displays the view in browser
 		render : function() {
-			console.log(layoutTemplate);
 			var _self = this, markup = Mustache.to_html(_self.template,_self.data);
+			//console.error(markup);
+			//this.el = markup;
+			//console.error(this.el);
+			var options = {};
+			options.width = "90%";
+					options.height = "500px";
+					options.title = "Older browser";
+					options.html = markup;
+					options.id = "Browser-detect";
+					console.error(options);
+					routing.trigger('common-popup-open', options);
+			
+			return this;
 			//markup should open up in a popup
 		},
 

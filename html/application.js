@@ -65,47 +65,45 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
 	        this.addSubscribers();
 	        Controller.prototype.appStates = new ApplicationStates();
 	        this.getPhrases();
-	    //    this.detectBrowser();
 	       // this.intializeImageAndVideo();
         },
 
-		detectBrowser: function(){
+		detectBrowser: function() {
 			var self = this;
 			var tryBrowser = setInterval(function(){
 				try{
 					$.browser.android; //if browser doesn't exist yet this will throw an error
 					clearInterval(tryBrowser);
 
-					var showBrowserWindow = false;
-					var showMobileWindow = false;
+					var showBrowserWindow = showMobileWindow = false;
 					if($.browser.ipad || $.browser.iphone || $.browser.android){
 						showMobileWindow = true;
 					}
-					if($.browser.msie){
+					if(!_.isUndefined($.browser.msie) && $.browser.msie){
 						if(parseInt($.browser.version) < 10){
 							showBrowserWindow = true;
 					//		console.log("IE under version 9");
 						}
 					}
-					if($.browser.mozilla){
+					if(!_.isUndefined($.browser.version) && $.browser.mozilla){
 						if(parseInt($.browser.version) < 25){
 							showBrowserWindow = true;
 					//		console.log("Old Version of FF.");
 						}
 					}
-
+					
 					if(showBrowserWindow || showMobileWindow){
 						self.showBrowserWindow();
 					}
 				} catch(ex){
-
+					//alert(ex);
 				}
-			},500);
-
+			},1000);
 		},
 
 		showBrowserWindow: function(){
 			var browserPop = new browserView();
+			
 		},
         
         // get user name by id
@@ -181,8 +179,8 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
         
         initialiRoutesInit: function(fn, title) {
         	var self = this, closeModelBox = function() {
-        		$("#modalPopup, #photoPlayerModal, .modal-backdrop").unbind().remove();
-		        $(".modal").modal('hide');
+        		//$("#modalPopup, #photoPlayerModal, .modal-backdrop").unbind().remove();
+		        $(".modal:not(#Browser-detect)").remove();
 		        routing.trigger('common-popup-close');
 		    };
 	        this.hideSignup();
@@ -204,10 +202,6 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
             	}
             	routing.trigger('common-popup-close');
             });
-            
-            
-            
-            
             
             routing.off('common-popup-open');
             routing.on('common-popup-open', function(options) {
@@ -248,10 +242,9 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
             
             routing.off('common-popup-close');
             routing.on('common-popup-close', function(e) {
-				$(".common-modal").remove();
-  				$(".modal-backdrop").remove();
+				$(".common-modal:not(#Browser-detect)").remove();
+  				if(!$(".common-modal").length) $(".modal-backdrop").remove();
             });
-            
             
             $(document).off('hidden.bs.modal', '#modalPopup, #photoPlayerModal');
             $(document).on('hidden.bs.modal', '#modalPopup, #photoPlayerModal', function (e) {
@@ -292,6 +285,7 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
                 	callback: callback
                 });
             });
+            this.detectBrowser();
         },
 
 	    checkForUser: function() {

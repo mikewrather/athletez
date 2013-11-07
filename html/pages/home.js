@@ -141,7 +141,7 @@ define(
 		        	this.setupLocationDDView();
 		        	this.setupScheme();
 		        	this.setupLayout().render();
-		        	this.setUpRegistrationView();
+		        	//this.setUpRegistrationView();
 		        	if(this.cityView) this.cityView.initPlugin();
 		        	if(this.userId) $(".register-wrapper, .register-wrapper-h").hide().html("");
 		        },
