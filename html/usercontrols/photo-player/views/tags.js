@@ -47,7 +47,7 @@ function(facade, vendor,  utils, views) {
 			_self.cleardata();
 	        _self.getprofile();
 			$(".photo-player-right-area").slimScroll({
-   			 height: 'auto'
+   			 height: '100%'
 			});
 			_self.seeMore();
 			console.log(this.collection.toJSON());
