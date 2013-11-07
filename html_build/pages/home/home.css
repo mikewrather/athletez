@@ -3,40 +3,38 @@
 	z-index: 1000;
 	display: none;
 	float: left;
-	padding: 15px;
+	padding: 5px 10px 5px 10px;
 	margin: 2px 0 0;
 	list-style: none;
 	background-color: #ffffff;
-	border: 1px solid #ccc;
-	border: 1px solid rgba(0, 0, 0, 0.2);
-	*border-right-width: 2px;
-	*border-bottom-width: 2px;
-	-webkit-border-radius: 6px;
-	-moz-border-radius: 6px;
-	border-radius: 0px 6px 6px 6px;
-	-webkit-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
-	-moz-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
-	box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
-	-webkit-background-clip: padding-box;
-	-moz-background-clip: padding;
-	background-clip: padding-box;
+	border: 10px solid #ccc;
+	border: 10px solid rgba(0, 0, 0, 0.2);
+}
+.dropdown span{
+    float: left;
+    padding:5px;
+    font-weight: bolder;
+}
+li.sport{
+    line-height: 25px;
+}
+li.sport a{
+    padding:3px 0 3px 5px;
+}
+input[type="text"]#city{
+    margin: 0;
 }
 .select, .select a {
-	background-color: #0081C2;
-    background-image: linear-gradient(to bottom, #0088CC, #0077B3);
-    background-repeat: repeat-x;
-    color: #FFFFFF;
+	background-color: #33aeab;
+    color: #FFFFFF !important;
     text-decoration: none;
 }
 li.sport:hover, li.sport a:hover {
-	background-color: #0081C2;
-    background-image: linear-gradient(to bottom, #0088CC, #0077B3);
-    background-repeat: repeat-x;
-    color: #FFFFFF;
+	background-color: #33aeab;
+    color: #FFFFFF !important;
     text-decoration: none;
 }
 .sport-list {
-	border-radius : 5px;
 	background-color : #FEFEFE;
 	margin : 0 15px 0 0;
 }
