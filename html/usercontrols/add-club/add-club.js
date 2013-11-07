@@ -44,15 +44,8 @@ define(["require", 'text!usercontrols/photo-player/templates/comments.html',
 			if(options.type) this.type = options.type;
 			this.callback = options.callback;
 			
-			
 			if (options._collection) this._collection = options._collection;
-				this.modelHTML = '<div id="modalPopup" class="modal add-club-model hide fade model-popup-h">'+
-					'<div class="modal-header">'+
- 					'<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>'+
-					'</div>'+
-					'<div class="modal-body page-content-h">'+
-					'<div class="add-club-area-h photo-player"></div>'+
-					'</div></div>';
+				this.modelHTML = '<div class="add-club-area-h photo-player"></div>';
 		
   			// set up main layout view					
 			this.setupLayout().render();
@@ -62,16 +55,21 @@ define(["require", 'text!usercontrols/photo-player/templates/comments.html',
 		// setup main layout
 		setupLayout : function() {
 			this.scheme=[];
-			$(".model-popup-h").remove();
-			$('body').append(this.modelHTML);
+			//$(".model-popup-h").remove();
+			//$('body').append(this.modelHTML);
             var pageLayout = new LayoutView({
 				scheme : this.scheme,
-				destination : "#modalPopup",
+				destination : "#modalBody",
 				template : '',
 				displayWhen : "ready"
 			});
             this.layout=pageLayout;
-           $('#modalPopup').modal();
+          // $('#modalPopup').modal();
+          var options = {};
+            options.height = "500px";
+            options.width = "90%";    
+            options.title = (this.type == "school")?"Add School":"Add Club";         
+			routing.trigger('common-popup-open', options); 
             return this.layout;
 		},
 		
@@ -84,14 +82,13 @@ define(["require", 'text!usercontrols/photo-player/templates/comments.html',
 				var photoPlayerMain = new MainView({
 					model : self.seasonProfile,
 					name : "add club",
-					destination : ".add-club-area-h",
+					destination : "#modalBody",
 					addType: self.type,
 					callback: self.callback
 				});
 				self.scheme.push(photoPlayerMain);
 				self.layout.render();				
 			});
-
 		}
 	});
 

@@ -63,12 +63,11 @@ define(["require",
 					setupLayout: function ()
 					{
 						this.scheme=[];
-						$('div#modalPopup').remove();
-						$('body').append('<div id="modalPopup"></div>');
-
+						//$('div#modalPopup').remove();
+						//$('body').append('<div id="modalPopup"></div>');
 						pageLayout = new LayoutView({
 						scheme: this.scheme,
-						destination: "#modalPopup",
+						destination: "#modalBody",
 						template : pageLayoutTemplate,
 						displayWhen : "ready"
 						});
@@ -98,16 +97,12 @@ define(["require",
 						this.select_type = new signupBaseModel();
 					},
 					refreshPage : function() {
-						
 						if (this.selectTypeView) {
-							
 							$(this.selectTypeView.destination).html('');
 								position = $.inArray(this.selectTypeView, this.scheme);
 								if (~position)
 									this.scheme.splice(position, 1);
 						}
-
-
 					},
 					showPopup:function(){
 						
@@ -165,7 +160,7 @@ define(["require",
 						
 							model : this.basic_type,
 							name : "Final registration",
-							destination : "#main-contentreg",
+							destination : "#modalBody",
 							attr: attr
 						});
 						//this.scheme.push(this.selectTypeView);*/
@@ -173,31 +168,38 @@ define(["require",
 
 					},
 					uploadUserImage:function(attr){
-
-
 						this.basic_type	= new signupUploadImageModel();
 						//alert("initRegisterBasicFinal2");
 						this.selectRegisterBasicFinalView = new signupUploadImageView({
 							model : this.basic_type,
 							name : "Final registration",
-							destination : "#main-contentreg",
+							destination : "#modalBody",
 							attr: attr
 						});
 						//this.scheme.push(this.selectTypeView);*/
 						this.layout.render();
+						var options = {};
+						options.height = "500px";
+			             options.width = "90%";    
+			            options.title = "Register";         
+						routing.trigger('common-popup-open', options); 
 					},
 					setupSelectTypeView : function() {
 						//$("#LoginPopup").remove();
 						this.selectTypeView = new signupBaseView({
-						 
 							model : this.select_type,
 							name : "Select Registration Type",
-							destination : "#main-contentreg"
+							destination : "#modalBody"
 						});
 						console.log(this.selectTypeView);
 						this.scheme.push(this.selectTypeView);
 						this.layout.render();
-					},
+						var options = {};
+			            options.height = "500px";
+			            options.width = "90%";    
+			            options.title = "Register";         
+						routing.trigger('common-popup-open', options); 
+					}
 				});
 				return SignupController;
 			});	

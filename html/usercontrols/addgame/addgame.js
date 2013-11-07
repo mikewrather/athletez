@@ -62,7 +62,7 @@ define(["require", "text!usercontrols/addgame/templates/layout.html",
 			
 			if(options.popup) {
 				this.popup = true;
-				this.modelHTML = '<div id="modalPopup" class="modal hide fade model-popup-h add-game-modal"></div>';
+				this.modelHTML = '<div id="addGamePopup"></div>';
 				}
 			
 			if(options.gender){
@@ -97,42 +97,44 @@ define(["require", "text!usercontrols/addgame/templates/layout.html",
 				displayWhen : "ready"
 			});
 			this.layout = pageLayout;
-
 			return this.layout;
 		},
 		
 		setupPopupLayout: function () {
             var pageLayout;
 			this.scheme=[];
-			$(".model-popup-h").remove();
-			$('body').append(this.modelHTML);
             var pageLayout = new LayoutView({
 				scheme : this.scheme,
-				destination : "#modalPopup",
+				destination : "#modalBody",
 				template : '',
 				displayWhen : "ready"
 			});
             this.layout=pageLayout;
-           $('#modalPopup').modal();
+            
+          this.modelBoxId = "modal-popup-"+Math.floor(Math.random() * Math.random() * 50 * Math.random() * 50);  
+          var options = {};
+            options.height = "500px";
+            options.width = "90%";      
+            options.title = "Add Game";
+            options.id = this.modelBoxId;         
+			routing.trigger('common-popup-open', options);
             return this.layout;
         },
 		
 		/* Set  Up  User References  View  View */
 		setUpMainView : function() {
-	//		console.log("Set Up Main View Add Game");
 			var _self = this;
 			routing.off('add-game-success');
 			routing.on('add-game-success', function(data) {
 				_self.addGameFunction(data);
 			});			
 			
-			//Channel('add-game-success').subscribe(this.addGameFunction);
-			var self = this;
+			var self = this, destination = '#'+this.modelBoxId+' #modalBody';
 			this.addGameView = new AddGameView({
 				model : new BasicModel(),
 				template : pageLayoutTemplate,
 				name : "add-game-main",
-				destination : '#modalPopup',
+				destination : destination,
 				user_id : self.id,
 				channel : 'add-game-success',
 				sports_id : this.sports_id,
@@ -141,16 +143,10 @@ define(["require", "text!usercontrols/addgame/templates/layout.html",
 
 			this.scheme.push(this.addGameView);
 			this.layout.render();
-			$('#modalPopup .modal-body').slimScroll({
-				height:'410px',
-				railVisible:true,
-				allowPageScroll:true,
-				disableFadeOut:true
-			});
 		},
+		
 		addGameFunction : function(data){
 			if(this.callback) this.callback(data);
-			//alert(JSON.stringify(data));
 		}
 	});
 	return AddGameController;

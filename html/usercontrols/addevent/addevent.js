@@ -82,7 +82,6 @@ define(["require", "text!usercontrols/addevent/templates/layout.html",
 		/*pageLayoutTemplate is just the skeleton for user setting page modules like High School,Clubs,Individual Sports,
 		 *  Their respective implementation is done in their own view respectively*/
 		setupLayout : function() {
-//			console.log("Set Up Layout Tag");
 			if (this.layout)
 				return this.layout;
 			var pageLayout = new LayoutView({
@@ -92,42 +91,43 @@ define(["require", "text!usercontrols/addevent/templates/layout.html",
 				displayWhen : "ready"
 			});
 			this.layout = pageLayout;
-
 			return this.layout;
 		},
 		
 		setupPopupLayout: function () {
             var pageLayout;
 			this.scheme=[];
-			$(".model-popup-h").remove();
-			$('body').append(this.modelHTML);
             var pageLayout = new LayoutView({
 				scheme : this.scheme,
-				destination : "#modalPopup",
+				destination : "#modalBody",
 				template : '',
 				displayWhen : "ready"
 			});
             this.layout=pageLayout;
-           $('#modalPopup').modal();
+            this.modelBoxId = "modal-popup-"+Math.floor(Math.random() * Math.random() * 50 * Math.random() * 50);              
+            var options = {};
+            options.height = "500px";
+            options.width = "90%";
+            options.title = "Add Event";
+            options.id = this.modelBoxId;
+			routing.trigger('common-popup-open', options);
             return this.layout;
         },
 		
 		/* Set  Up  User References  View  View */
 		setUpMainView : function() {
-			//		console.log("Set Up Main View Add Game");
 			var _self = this;
 			routing.off('add-event-success');
 			routing.on('add-event-success', function(data) {
 				_self.addTeamFunction(data);
 			});	
-			//Channel('add-event-success').subscribe(this.addTeamFunction);
 			
 			var self = this;
 			this.addGameView = new AddGameView({
 				model : new BasicModel(),
 				template : pageLayoutTemplate,
 				name : "add-event-main",
-				destination : (this.popup)?".page-content-h":"#main",
+				destination : (this.popup)?'#'+this.modelBoxId+' #modalBody':"#main",
 				user_id : self.users_id,
 				channel : 'add-event-success',
 				sports_id : this.sports_id,
@@ -145,7 +145,6 @@ define(["require", "text!usercontrols/addevent/templates/layout.html",
 		},
 		addTeamFunction : function(data){
 			if(this.callback) this.callback(data);
-			//alert(JSON.stringify(data));
 		}
 	});
 	return AddGameController;

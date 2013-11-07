@@ -157,9 +157,6 @@ define(
 		        },
 		        
 		        changeViewFilter : function(str) {
-		        	
-		        	
-		        	
 		        	if(str.submenu === 'browse') {
 		        		options = {'orderby': str.value};
 		        	} else {
@@ -180,7 +177,6 @@ define(
 		        },
 		        
 				changeCityFilter : function(item) {
-					//console.log(item);
 					if(item.label)
 						$("#city").val(item.label);
 						
@@ -234,6 +230,7 @@ define(
 					    controller = this;
 
 					imageList.url = this.url(options);
+					imageList.targetElement = "#search-result";
 					imageList.fetch();
 					
 					$.when(imageList.request).done(function() {
@@ -303,22 +300,24 @@ define(
 				},
 				
 				createData : function() {
-					var collections = this.collections = {};
-					collections['search-result'] = new ImageList([], {
-						url : this.url(),
-						num : '12'
+					var _self = this;
+					_self.collections = {};
+					_self.collections['search-result'] = new ImageList([], {
+						url : _self.url(),
+						num : '12',
+						targetElement: "#search-result"
 					});
-					collections['state'] = new StateList(); 
-					collections['top-rated'] = new ImageList([], {
+					
+					_self.collections['state'] = new StateList(); 
+					_self.collections['top-rated'] = new ImageList([], {
 						url : '/api/user/search',
-						num : '4'
-					});
-					_.each(this.genderTypes, function(name) {
-						collections[name] = new SportList([], {name : name});
+						num : '4',
+						targetElement: "#top-rated"
 					});
 					
-					
-					//console.log(collections);
+					_.each(_self.genderTypes, function(name) {
+						_self.collections[name] = new SportList([], {name : name});
+					});
 				},
 
 				handleDeferreds : function() {

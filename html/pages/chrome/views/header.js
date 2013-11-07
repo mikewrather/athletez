@@ -63,7 +63,6 @@ function (
                 var markup = Mustache.to_html(self.template, model.toJSON());
                 self.$el.html(markup);
                // console.log(model.toJSON());
-
                 if(typeof(model.get('user_photo'))=='object')
                     if(typeof(model.get('user_photo').types)=='object')
                         if(typeof(model.get('user_photo').types.small_thumb)=='object')
@@ -75,7 +74,6 @@ function (
                         else var user_photo = "";
 
               self.$('.photo img').attr("src",user_photo);
-
                 var authorized = model.get('authorized');
                 if (authorized) {
                     var id = model.get('id');
@@ -87,52 +85,38 @@ function (
                     routing.userLoggedIn = false;
                     routing.trigger('app-inited');
                 }
-                
-                
                 $('#main').removeClass("region-loader");
             };
-
-           
            // $.ajaxSetup({ cache: false });
-           
             this.model.fetch();
             return this;
         },
         userLogin:function(event){
-                event.preventDefault();
-               // if(!this.logincontroller)
-               this.logincontroller = new LoginController();
-               routing.trigger("Login");
-               
+            event.preventDefault();
+           // if(!this.logincontroller)
+           this.logincontroller = new LoginController();
+           routing.trigger("Login");
         },
         signupFBTest:function(event){
                      
         },
              
         signupFacebook: function(event) {
-                     event.preventDefault();
-                     headView = new FbHeader();
-                     headView.signupFacebook();
+             event.preventDefault();
+             headView = new FbHeader();
+             headView.signupFacebook();
          },
          signupUser: function(){
-
-                   // event.preventDefault();
-                    
-                    this.signupc = new scontroller({"route":""});
-                    routing.trigger("register-basic");
-                    this.pop = new popupview();
-                  
+           // event.preventDefault();
+            this.signupc = new scontroller({"route":""});
+            routing.trigger("register-basic");
+            this.pop = new popupview();
         },
         LogoutUser:function(event){
-
             event.preventDefault();
-            
-            
-
             if(!this.logincontroller)
               this.logincontroller = new LoginController();
             routing.trigger("Logout",this.model);
-
         }
         
       });

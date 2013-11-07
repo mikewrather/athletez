@@ -242,9 +242,7 @@ input[disabled].hasDatepicker, input[readonly].hasDatepicker {
     font-size:1em;
     font-weight: 700;
     text-transform: uppercase;
-
 }
-
 
 /****** common styles  *****/
 
@@ -1357,12 +1355,12 @@ margin-top:10px;
 
 .left-arrow-page {
 	left: 0;
-	margin-top: 30%;
+	margin-top: -30%;
 }
 
 .right-arrow-page {
 	right: 0;
-	margin-top: 30%;
+	margin-top: -30%;
 }
 .m_top_50{margin-top:50px;
 	}
@@ -1509,9 +1507,17 @@ margin-top:10px;
 }
 
 .region-loader {
-	background: url(../images/loader/loading.gif) no-repeat;
+	background: url(../images/loader/gray_loading.gif) repeat;
 	width: 100%;
-	min-height: 50px;
+	height: 100%;
+	min-height: 100px;
 	margin: 0 auto;
-	background-position: 50% 0;
+}
+
+.button.close {
+	color: #000;
+}
+
+#search-result {
+	display: inline-block;
 }
