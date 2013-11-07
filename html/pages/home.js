@@ -86,13 +86,13 @@ define(
 					                   '/api/game/search'];
 					this.baseUrl = this.searchUrls[2];
 					this.urlOptions = {
-						'sports_id' : '0',
-						'cities_id' : '0',
-						'orderby' : 'random',
-						'time' : 'DAY',
-						'states_id' : '0',
-						'searchtext' : '',
-						'country_id' : '0'
+						sports_id : '0',
+						cities_id : '0',
+						orderby : 'random',
+						time : 'DAY',
+						states_id : '0',
+						searchtext : '',
+						country_id : '0'
 					};
 					
 					this.menuValues = [
@@ -162,6 +162,8 @@ define(
 		        	} else {
 		        		options = {'time' : str.value};
 		        	}
+			        if(options.orderby == 'random') $('.left-arrow-page').fadeOut();
+			        else $('.left-arrow-page').fadeIn();
 		        	this.transitionView(options);
 		        },
 		        
@@ -239,7 +241,7 @@ define(
 						else
 							$(".right-arrow-page-h").removeClass("disable-arrow-link");							
 							
-						if(_self.searchPage == 0)
+						if(_self.searchPage == 0 || controller.urlOptions.orderby=='random')
 							$(".left-arrow-page-h").addClass("disable-arrow-link");
 						else
 							$(".left-arrow-page-h").removeClass("disable-arrow-link");														
@@ -271,12 +273,12 @@ define(
 				bindCickEvents: function() {
 					var _self = this;
 					$(document).on("click", ".left-arrow-page-h", function() {
-						_self.searchPage--;
+						_self.searchPage-=12;
 						_self.searchView();
 					});
 					
 					$(document).on("click", ".right-arrow-page-h", function() {
-						_self.searchPage++;
+						_self.searchPage+=12;
 						_self.searchView();
 					});
 					
