@@ -40,11 +40,14 @@ define(["require", 'text!usercontrols/photo-player/templates/comments.html',
 		
 		// controller intialize function
 		initialize : function(options) {
+			console.log("LLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL",options);
+			console.log("init");
 			var _self = this;
 			// load css file
 			Channel('load:css').publish(this.cssArr);
 			// Channel('tag-image-success-photo').empty();
 			// Channel('tag-image-success-photo').subscribe(this.tagFunction);
+			
 			
 			_.bindAll(this);
 			// model box html 
@@ -60,20 +63,21 @@ define(["require", 'text!usercontrols/photo-player/templates/comments.html',
 					'<div class="comment-area coment-area-h"></div><div class="comment-input-outer-h comment-input-outer" class="clearfix"></div>'+
 					'<div id="image-tagging-photo"></div>'+
 					'</div></div></div>';*/
-				this.modelHTML = '<div id="photoPlayerModal"><div class="photo-player-area-h photo-player"></div>'+
-					'<div class="photo-player-right-area"><div class="right-area-header">'+
-					'<div class="headerinfo"></div><div class="closer"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">	&times;</button></div>'+
-					'</div><div class="teamName-area"></div><div class="tags-area-h"></div>' +
+					this.modelHTML = '<div id="photoPlayerModal" class="modal photo-frame-model hide fade model-popup-h">'+
+					'<div class="modal-body page-content-h">'+
+					'<div class="photo-player-area-h photo-player"></div>'+'<div class="photo-player-right-area"><div class="right-area-header"><div class="headerinfo"></div><div class="closer"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">	&times;</button></div></div><div class="teamName-area"></div><div class="tags-area-h"></div>' +
 					'<div class="comment-area coment-area-h"></div><div class="comment-input-outer-h comment-input-outer" class="clearfix"></div>'+
 					'<div id="image-tagging-photo"></div>'+
-					'</div></div></div></div>';
+					'</div></div></div>';
 			
 			routing.off('photo-player-section-reload');
 			routing.on('photo-player-section-reload', function(entity_id, id) {
 				_self.id = id;
+				//alert("en reload");
 				$("#image-tagging-photo").html('');
 				_self.setUpCommentView(entity_id, id);
 				_self.setUpTagView(entity_id, id);
+				//_self.setUpTagPhotoView(entity_id, id);
 			});
 			
 			routing.off('comments-fetch-new-form-data');
@@ -100,26 +104,17 @@ define(["require", 'text!usercontrols/photo-player/templates/comments.html',
 		
 		// setup main layout
 		setupLayout : function() {
-			
 			this.scheme=[];
-			this.modelBoxId = "modal-popup-"+Math.floor(Math.random() * Math.random() * 50 * Math.random() * 50); 
-			 var options = {};
-            options.height = "500px";
-            options.width = "90%";  
-            options.id = this.modelBoxId;   
-            options.slimScroll = false;       
-			routing.trigger('common-popup-open', options);             
-			$('#'+this.modelBoxId+' #modalBody').html(this.modelHTML);
-			
+			$(".model-popup-h").remove();
+			$('body').append(this.modelHTML);
             var pageLayout = new LayoutView({
 				scheme : this.scheme,
-				destination : ".photo-player-area-h",
+				destination : "#modalPopup",
 				template : '',
 				displayWhen : "ready"
 			});
-			
             this.layout=pageLayout;
-           
+            $('#photoPlayerModal').modal('show');
             return this.layout;
 		},
 		
@@ -137,7 +132,7 @@ define(["require", 'text!usercontrols/photo-player/templates/comments.html',
 			var photoPlayerMain = new PhotoPlayerView({
 				model : collection,
 				name : "photo player",
-				destination : "#"+this.modelBoxId+" .photo-player-area-h",
+				destination : ".photo-player-area-h",
 				index : self.index,
 				user_id : self.userId || null,
 				sports_id : self.sports_id || null,
@@ -216,6 +211,7 @@ define(["require", 'text!usercontrols/photo-player/templates/comments.html',
 		setUpTagPhotoView : function(entity_id, id){
       	//TagView      	
   //    	var _self = this,
+      	console.log("tagtemplate",tagTemplate)
 			var self = this;
 			this.tagViewPhoto = new TagView({
 				model : new UserModel(),
