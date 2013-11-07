@@ -47,7 +47,6 @@ define(['require', 'text!usercontrols/detection/templates/browser.html','text!us
 					if($.browser.mozilla){
 						self.data.old_ff = true;
 					}
-					self.data.old_ie = true;
 					self.data.current_version = $.browser.version
 					self.render();
 				} catch(ex){}
@@ -61,8 +60,8 @@ define(['require', 'text!usercontrols/detection/templates/browser.html','text!us
 			//console.error(this.el);
 			var options = {};
 			options.width = "90%";
-					options.height = "80%";
-					options.title = "You're Browser isn't quite supported...";
+					options.height = "500px";
+					options.title = "Your Browser Might be an Issue";
 					options.html = markup;
 					options.id = "Browser-detect";
 					console.error(options);

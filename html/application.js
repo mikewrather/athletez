@@ -91,7 +91,6 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
 					//		console.log("Old Version of FF.");
 						}
 					}
-					showBrowserWindow = true;
 					if(showBrowserWindow || showMobileWindow){
 						self.showBrowserWindow();
 					}

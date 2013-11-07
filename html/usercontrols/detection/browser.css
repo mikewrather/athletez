@@ -23,9 +23,14 @@
 }
 #recommendations span{
     display: block;
-    font-size: 2em;
+    font-size: 1.2em;
     font-weight: bold;
 }
 #recommendations div{
     display: inline-block;
+    width: 100px;
+    margin:9px;
+}
+#recommendations div img{
+
 }
