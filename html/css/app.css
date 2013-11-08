@@ -1523,3 +1523,14 @@ margin-top:10px;
 #search-result {
 	display: inline-block;
 }
+
+.image-list {
+	float: left;
+	width: 100%;
+}
+
+.add-to-event {
+	margin-right: 25px;
+}
+
+
