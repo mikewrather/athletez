@@ -340,6 +340,7 @@ define(['require', 'text!profilesetting/templates/highschool.html', 'text!profil
 					for (var key in models) {
 						self.sports.push(models[key].payload);
 					}
+					
 					// Sort Sports Before Filling Up Into Drop-Down
 					self.sort(self.sports, 'sport_name', false);
 
@@ -378,6 +379,7 @@ define(['require', 'text!profilesetting/templates/highschool.html', 'text!profil
 		},
 
 		findSportById: function(sports_id) {
+			
 			if(self.sports && self.sports.length < 1) {
 				for (var k=0; k< self.sports.length; k++) {
 					if(self.sports[k].id==sports_id) return self.sports[k];
@@ -395,27 +397,24 @@ define(['require', 'text!profilesetting/templates/highschool.html', 'text!profil
 			// Destroy complevel id if request received to refill the comp level
 			if (orgs_id && orgs_id > 0) {
 				var List = new CompLevelModel();
-				console.log("List",List);
 				List.orgs_id = orgs_id;
-				
-				console.log("Complevels Request Abort Request Function");
 				self.compFetchRequest = self.abortRequest(self.compFetchRequest);
 				var tempCollection = List.fetch();
 				self.compFetchRequest.push(tempCollection);
-
 				$.when(List.request).done(function() {
-					if (List.isError())
-						return;
-
+					if (List.isError()) return;
 					var models = List.toJSON();
 					self.compLevel = [];
 					if (models != null && models.payload != null || models.payload.complevels != null && models.payload.complevels.length) {
-
 						self.seasons = models.payload.seasons || [];
 						for (var key in models.payload.complevels) {
 							self.compLevel.push(models.payload.complevels[key]);
 						}
 						var sport = self.findSportById(sportsId);
+						
+						if(!sport)
+							sport = sportsId;
+						
 						self.SetUpCompLevelView(orgs_id, destination, sport);
 					} else {
 					}
@@ -429,11 +428,9 @@ define(['require', 'text!profilesetting/templates/highschool.html', 'text!profil
 		changeCompLevel : function(event) {
 			var value = $(event.target).val();
 			self.compLevel_id = 0;
-
 			for (var key in self.compLevel) {
 				if (self.compLevel[key].complevel_id == value) {
 					self.compLevel_id = value;
-					console.log("if");
 					self.$(event.target).attr('disabled', 'disabled');
 					self.$(event.target).parents(self.controls.divSubLevels).find(self.controls.divSeasons).fadeIn();
 					return;
@@ -441,9 +438,13 @@ define(['require', 'text!profilesetting/templates/highschool.html', 'text!profil
 			}
 			self.$(event.target).parents(self.controls.divSubLevels).find(self.controls.divSeasons).fadeOut();
 		},
+		
 		/*SET UP LEVEL VIEW AS PER THE DESTINATION WHERE TO APPEND THE VIEW*/
 		SetUpCompLevelView : function(orgs_id, destination, sport) {
 			var sports_id = sport.sports_id;
+			
+			if(!sports_id) sports_id = sport;
+			
 			var data = self.GetSeasonsData(self.seasons, orgs_id, sports_id);
 			var markup = Mustache.to_html(levelTemplate, {
 				levels : self.compLevel,
@@ -451,7 +452,6 @@ define(['require', 'text!profilesetting/templates/highschool.html', 'text!profil
 				'sport' : sport
 			});
 			self.$(destination).append(markup);
-
 			var controlPositions = self.$(destination).find(self.controls.modalPositionBody);
 			self.fillPositions(sports_id, controlPositions);
 		},
@@ -459,7 +459,6 @@ define(['require', 'text!profilesetting/templates/highschool.html', 'text!profil
 		
 		/* level Up Arrow */
 		levelUpArrow: function(e) {
-			
 			var $parent = $(e.currentTarget).parents(".complevels-wrapper");
 			var scrollTop =  $parent.find(".complevels-container").scrollTop();
 			var height = $parent.find(".complevels-container").height();
@@ -523,9 +522,7 @@ define(['require', 'text!profilesetting/templates/highschool.html', 'text!profil
 				var teamId = $(event.target).attr('teamid');
 				console.log($(event.target).parents(self.controls.divSubLevels).find(self.controls.modalPositionsTitle));
 				if ($(event.target).parents(self.controls.divSubLevels).find(self.controls.modalPositionsTitle).length > 0) {
-
 					self.$(event.target).parents(self.controls.divSubLevels).find(self.controls.modalPositionsTitle).attr('teamid', teamId).removeClass('active');
-
 					// Iterate through the existing positions and mark them active
 					var ids = $(event.target).attr('positions');
 					console.log("ids", ids);
@@ -581,7 +578,6 @@ define(['require', 'text!profilesetting/templates/highschool.html', 'text!profil
 
 		/*ADD LEVEL IF USER CLICKS ON ADD LEVEL BUTTON*/
 		AddLevel : function(event) {
-
 			var destination = self.$(event.target).parents(self.controls.divsportsLevel).find(self.controls.divLevels);
 			var orgsId = $(event.target).attr('orgsid');
 			var sportsId = $(event.target).attr('sportid');
