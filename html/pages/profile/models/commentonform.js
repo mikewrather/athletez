@@ -18,6 +18,7 @@ define( ["facade", "site/models/comment", "utils"], function (facade, SiteCommen
         },
         
         initialize: function (attributes, options) {
+        	_.bindAll(this);
             SiteCommentModel.prototype.initialize.call(attributes, options);            
         },
         
