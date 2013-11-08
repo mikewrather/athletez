@@ -47,6 +47,7 @@ function(facade,  views,   utils,   ItemView,  templateList, Participate, addMod
        		$.when(participants.request).done(function() {
        			var newAddModel = new addModel();
 				newAddModel.processItemFromPayload(participants.toJSON());
+				_self.$el.find(".add-to-event").hide();
        			_self.collection.add(newAddModel);
        		});
         },
@@ -77,7 +78,7 @@ function(facade,  views,   utils,   ItemView,  templateList, Participate, addMod
         	for(var i in a) {
         		console.error(routing.loggedInUserId == a[i].id);
         		if(routing.loggedInUserId == a[i].id) {
-        			//this.$el.find(".add-to-event").hide();
+        			this.$el.find(".add-to-event").hide();
         		}
         		b.push({payload: a[i]});
         	}
