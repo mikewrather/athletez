@@ -15,10 +15,13 @@ define([ 'models', 'facade' ], function(models, facade) {
 		},
 		destroyAndRemove : function()
 		{
-			var self = this;
-			this.destroy({success: function(model,response){
-				self.removeNode.remove();
-			}});
+			if(confirm("Are you sure you want to delete this?"))
+			{
+				var self = this;
+				this.destroy({success: function(model,response){
+					self.removeNode.remove();
+				}});
+			}
 		}
 	});
 });
