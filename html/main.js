@@ -17,7 +17,7 @@ require.config({
 		'mustache'      : [cdn + 'vendor/mustache', s3 + 'vendor/mustache', '/vendor/mustache'],
 		'backbone'      : [cdn + 'vendor/backbone', s3 + 'vendor/backbone', '/vendor/backbone'],
 		'underscore'    : [cdn + 'vendor/underscore', s3 + 'vendor/underscore', '/vendor/underscore'],
-		'jquery'        : ['//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min'],
+		jquery        : '/vendor/jquery.1.10.2.min',
 
 		// Plugins
 		'bootstrap'             : [cdn + 'vendor/plugins/bootstrap', s3 + 'vendor/plugins/bootstrap', '/vendor/plugins/bootstrap'],
@@ -34,7 +34,7 @@ require.config({
 //	    'plupload-full'         : [cdn + 'vendor/plugins/plupload.full.min',s3 + 'vendor/plugins/plupload.full.min' ,'/vendor/plugins/plupload.full.min'],
 		'plupload'              : [cdn + 'plupload/js/plupload.full', s3 + 'plupload/js/plupload.full' , '/plupload/js/plupload.full'],
 //	    'jq.plupload'           : "/plupload/js/jquery.ui.plupload/jquery.ui.plupload",
-		'jwplayer'              : "http://s3.amazonaws.com/mikewbucket/jw/jwplayer",
+		'jwplayer'              : [cdn + 'vendor/plugins/jwplayer',s3 + 'vendor/plugins/jwplayer','/vendor/plugins/jwplayer'],
 
 		'custom'                : [cdn + 'vendor/custom', s3 + 'vendor/custom' , '/vendor/custom'],
 
@@ -149,7 +149,7 @@ require.config({
 		}
 	},
 	priority: ['text', 'modernizr', 'json2', 'vendor', 'utils', 'facade', 'syncs', 'models', 'views', 'collections', 'controller'],
-	jquery: '1.9.0',
+	jquery: '1.10.2',
 	waitSeconds: 60
 });
 
@@ -167,10 +167,9 @@ define([
 		
 
 		$(function () {
-
-
 		 // doc ready
 			Backbone.noConflict();
+	//		jQuery.noConflict();
 			routing = new app();
 			App = {};
 			routing.ajaxRequests = [];
