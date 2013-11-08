@@ -47,10 +47,10 @@ define([
 	        console.log("RENDER CALLED!!!!");
             BaseView.prototype.render.call(this);
             this.input = this.$("#new-comment");    
-             if(!this.model.length) {
+     /*        if(!this.model.length) {
 		    	$(".add-comment-h").trigger("click");
 		    }
-            var payload = this.model.get('payload');
+       */     var payload = this.model.get('payload');
 	        console.log("return payloady", payload);
             var self = this;
             if (payload) {

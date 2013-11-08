@@ -3,7 +3,7 @@
  // Pages
  // Requires `define`, `require`
  */
-define(['require', 'text!usercontrols/detection/templates/browser.html', 'facade', 'views', 'utils', 'vendor','browser'], function(require) {
+define(['require', 'text!usercontrols/detection/templates/browser.html','text!usercontrols/detection/browser.css', 'facade', 'views', 'utils', 'vendor','browser'], function(require) {
 
 	var self, facade = require('facade'), views = require('views'), 
 	SectionView = views.SectionView, utils = require('utils'), 
@@ -21,9 +21,10 @@ define(['require', 'text!usercontrols/detection/templates/browser.html', 'facade
 		events : {
 			"click .close":"closePopup"
 		},
-
+		cssArr : ["usercontrols/detection/browser.css"],
 		/*initialize gets called by default when constructor is initialized*/
 		initialize : function(options) {
+			Channel('load:css').publish(this.cssArr);
 			_self = this;
 			_self.data = {};
 			_self.selectedOptions = [];
@@ -60,7 +61,7 @@ define(['require', 'text!usercontrols/detection/templates/browser.html', 'facade
 			var options = {};
 			options.width = "90%";
 					options.height = "500px";
-					options.title = "Older browser";
+					options.title = "Your Browser Might be an Issue";
 					options.html = markup;
 					options.id = "Browser-detect";
 					console.error(options);

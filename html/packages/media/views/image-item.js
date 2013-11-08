@@ -385,13 +385,9 @@ define(['vendor', 'views', 'utils', 'text!media/templates/image-item.html', 'vot
 			var _self = this, deleteModel = new DeleteModel();
 			deleteModel.subject_id = $(e.currentTarget).attr("subject-id");
 			deleteModel.enttypes_id = $(e.currentTarget).attr("subject-type-id");
-			//deleteModel.url();
-			deleteModel.destroy();
-			
-			$.when(deleteModel.request).done(function() {
-				$(e.currentTarget).parents("li.image").addClass('remove-item');
-				//routing.trigger('remove-media', _self.model.id);
-			});
+			deleteModel.removeNode =$(e.currentTarget).parents("li.image");
+			deleteModel.destroyAndRemove();
+
 			
 		}
 

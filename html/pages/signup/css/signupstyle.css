@@ -296,7 +296,10 @@ border: 1px solid #CCC;
 
 }
 .loguser p {
-	margin-left: 15px;
+	 font-size: 13px;
+    font-weight: bold;
+    margin-left: 15px;
+    margin-top: -8px;
 }
 
 #regpanemain {
@@ -310,8 +313,14 @@ border: 1px solid #CCC;
 	color:blue;
 }
 .addsub{
-	padding-top: 9px;
+	padding-top: 15px;
 }
 .loginUser ,.addsub{
 	margin-left: 15px;
+}
+.errormsg {
+    color: #FF0000;
+    font-size: 12px!important;
+    font-weight: bold!important;
+    padding-left: 17px!important;
 }
