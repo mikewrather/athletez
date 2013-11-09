@@ -1029,7 +1029,24 @@ a.add-game-h{
     padding: 0;
 }
 
+.common-modal .modal-body {
+	width: 100% !important;
+}
 
+.common-modal .modal-body .well-large {
+	width: 60%;
+	float: left;
+}
+
+.popup-action-button {
+	width: 30%;
+}
+
+.popup-action-button button {
+	position: fixed;
+	right: 100px;
+	top: 514px;
+}
 
 /*********** TEMP ****************/
 
