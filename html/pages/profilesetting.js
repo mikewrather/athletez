@@ -5,7 +5,7 @@
  // Returns {ProfileSettingController} constructor
  */
 
-define(["require", "text!profilesetting/templates/layout.html", "facade", "controller", "models", "views", "utils", "profilesetting/models/basic_info", "profilesetting/views/basic_info", "profilesetting/views/highschool", "profilesetting/views/club", "profilesetting/models/high_school","profilesetting/views/individuals"], function(require, pageLayoutTemplate) {
+define(["require", "text!profilesetting/templates/layout.html", "facade", "controller", "models", "views", "utils", "profilesetting/models/basic_info", "profilesetting/views/basic_info", "profilesetting/views/org", "profilesetting/views/club", "profilesetting/models/high_school","profilesetting/views/individuals"], function(require, pageLayoutTemplate) {
 
 	var ProfileSettingController, facade = require("facade"), Controller = require("controller"), models = require("models"), views = require("views"), utils = require("utils"), $ = facade.$, _ = facade._, debug = utils.debug, Channel = utils.lib.Channel, LayoutView = views.LayoutView,
 
@@ -16,7 +16,7 @@ define(["require", "text!profilesetting/templates/layout.html", "facade", "contr
 
 	/*VIEW SECTION*/
 	BasicInfoView = require("profilesetting/views/basic_info"), 
-	HighSchoolView = require("profilesetting/views/highschool");
+	OrgView = require("profilesetting/views/org");
 	ClubView = require("profilesetting/views/club"),
 	IndividualSportsView = require("profilesetting/views/individuals");
 
@@ -101,12 +101,14 @@ define(["require", "text!profilesetting/templates/layout.html", "facade", "contr
 
 		/*Add School View if user clicks on Add School*/
 		addHighSchool : function() {
-			var self = this;
-			this.schoolView = new HighSchoolView({
-				model : new HighSchoolModel(),
+			var self = this, modal = new HighSchoolModel();
+			modal.set("type", "School");
+			this.schoolView = new OrgView({
+				model : modal,
 				name : "settings-high-school",
 				destination : "#content-school-prof-setting",
 				user_id : self.id,
+				type: "school",
 				gender : self.gender
 			});
 			this.scheme.push(this.schoolView);
@@ -129,10 +131,12 @@ define(["require", "text!profilesetting/templates/layout.html", "facade", "contr
 		},
 		/*Add School View if user clicks on Add School*/
 		SetUpClubView : function() {
-			var self = this;
-			this.clubView = new ClubView({
-				model : new HighSchoolModel(),
+			var self = this, modal = new HighSchoolModel();
+			modal.set("type", "Club");
+			this.clubView = new OrgView({
+				model : modal,
 				name : "settings-club",
+				type: "club",
 				destination : "#content-club-prof-setting",
 				user_id : self.id,
 				gender : self.gender
