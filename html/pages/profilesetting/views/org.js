@@ -347,6 +347,28 @@ define(['require', 'text!profilesetting/templates/highschool.html', 'text!profil
 				}
 			});
 		},
+		
+		/* Add club popup  */
+		openAddClubPopup: function() {
+			var _self = this;
+			routing.trigger('add-school-init', '', '', 'club', function(res) {
+				console.log(res);
+				_self.$el.find(_self.controls.txtSchools).val(res.name);
+				_self.$el.find(_self.controls.txtStates).val(res.locationState.name);
+				
+				_self.states_id = "";
+				_self.orgs_id = "";
+				_self.states_id = res.locationState.id;
+				_self.$(self.controls.txtSchools).removeAttr('disabled');
+				
+				_self.orgs_id = res.org_id;
+				if (_self.$el.find(_self.controls.divMainSportsSection).find(_self.controls.ddlSports).length < 1) {
+						self.fillSports(_self.orgs_id, _self.controls.divMainSportsSection);
+				}
+				_self.$el.find(".add-club-h").hide();
+				
+			});
+		},
 
 		/*IN CASE USER CHANGES SCHOOL OR STATE THE SPORT SECTION MUST BE DESTROYED AND RECONSTRUCTED*/
 		RemoveSportsSection : function() {
