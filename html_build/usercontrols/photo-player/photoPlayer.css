@@ -70,7 +70,7 @@
 .image-bg {
     text-align: center;
     background: #333;
-    height:480px;
+    height:100%;
     position: relative;
 }
 div.image-controls{
@@ -435,8 +435,4 @@ margin-top: 0px;
         opacity: 1;
         padding-right: 9px;
     }
-    
-.image-bg { 
-	height: 482px;
-}
  
