@@ -6,6 +6,19 @@ define([ 'models', 'facade' ], function(models, facade) {
 	return BaseModel.extend({
 
 		mpay:{},
+		thumb_size:220,
+		display_width:220,
+		display_height:220,
+		parsedData: {},
+
+		initialize: function(options){
+			if(options.mpay) this.mpay = options.mpay;
+			if(options.thumb_size) this.thumb_size = options.thumb_size;
+			if(options.display_width) this.display_width = options.display_width;
+			if(options.display_height) this.display_height = options.display_height;
+
+			this.parseResult();
+		},
 		ucwords: function(str)
 		{
 			str = str.toLowerCase();
@@ -15,250 +28,190 @@ define([ 'models', 'facade' ], function(models, facade) {
 				});
 		},
 
+		findCorrectType: function(types){
+
+			var current_winner = false,
+				self = this;
+
+			_.each(types,function(type){
+				current_winner = current_winner || type;
+				if(type.height >= self.display_height && type.width >= self.display_width){
+					//check if current winner is smaller than display
+					if(current_winner.height < self.display_height && current_winner.width < self.display_width){
+						current_winner = type;
+					}
+					else if(current_winner.height > type.height && current_winner.width > type.width){
+						current_winner = type;
+					}
+				}
+			});
+
+			this.closest_image_format = current_winner;
+		},
+
 		parseResult: function(){
 
-			var _self = this, mpay = this.model.attributes.payload,
+			var _self = this, mpay = this.mpay,
 				return_data = {
 					_enttypes_id : mpay.enttypes_id,
 					_id : mpay.id,
 					_has_voted: mpay.has_voted,
 					_is_following: mpay.is_following,
-					_can_follow: mpay.can_follow
-				},
-
-				show_edit = false,
-				standard_thumb = null,
-				show_play = false;
-
+					_can_follow: mpay.can_follow,
+					show_play:false,
+					show_edit:false
+				};
 			switch(mpay.enttypes_id)
 			{
 				case '23':
-					//videos
-					if(typeof(mpay.standard_thumb)=='object')
-					{
-						standard_thumb = mpay.standard_thumb;
-						extra._thumbnail = standard_thumb.url;
-					}
-					else
-					{
-						extra._thumbnail = mpay.thumbs;
-					}
-
-					show_play = true;
-					extra._enttypes_id = typeof(mpay.media == "object") ? mpay.media.enttypes_id : 0;
-					extra._id = typeof(mpay.media == "object") ? mpay.media.id : 0;
-					extra._label = mpay.media.name;
-					extra._link = "javascript: void(0);";
-					extra._has_link = false;
-
-					if(mpay.media.hasOwnProperty('is_owner')) show_edit = mpay.media.is_owner;
-					extra._noicon_text = "play";
+					return_data = _self.parse_video(mpay,return_data);
 					break;
-
-
 				case '21':
-					//images
-					extra._enttypes_id = typeof(mpay.media_obj == "object") ? mpay.media_obj.enttypes_id : 0;
-					extra._id = typeof(mpay.media_obj == "object") ? mpay.media_obj.id : 0;
-					if ( typeof (mpay.types) == 'object')
-					{
-						//console.log(mpay.types);
-						if(typeof(mpay.types.standard_thumb)=='object')
-						{
-							standard_thumb = mpay.types.standard_thumb;
-							extra._thumbnail = standard_thumb.url;
-						}
-						else if(typeof(mpay.types.large_thumb)=='object')
-						{
-							standard_thumb = mpay.types.large_thumb;
-							extra._thumbnail = standard_thumb.url;
-						}
-						else if(typeof(mpay.types.original)=='object')
-						{
-							//console.log(mpay.types.original);
-							standard_thumb = mpay.types['original'];
-							extra._thumbnail = standard_thumb.url;
-						}
-					}
-					//else
-
-					extra._label = (!_.isUndefined(mpay.media_obj.users_obj.label))?mpay.media_obj.users_obj.label:'';
-					if(typeof(mpay.media_obj.sports_obj) == 'object')
-					{
-						extra._sublabel = ucwords(mpay.media_obj.sports_obj.sport_name);
-					}
-
-					extra._link = "javascript: void(0);";
-					extra._has_link = false;
-					if(mpay.media_obj.hasOwnProperty('is_owner')) show_edit = mpay.media_obj.is_owner;
-					extra._noicon_text = "view";
-
+					return_data = _self.parse_image(mpay,return_data);
 					break;
-
-
 				case '1':
-					//users
-
-
-					if ( typeof (mpay.user_picture_obj) == 'object')
-					{
-						if(typeof(mpay.user_picture_obj.types) == 'object')
-						{
-							if(typeof(mpay.user_picture_obj.types.standard_thumb)=='object')
-							{
-								standard_thumb = mpay.user_picture_obj.types.standard_thumb;
-								extra._thumbnail = standard_thumb.url;
-							}
-							else if(typeof(mpay.user_picture_obj.types.large_thumb)=='object')
-							{
-								standard_thumb = mpay.user_picture_obj.types.large_thumb;
-								extra._thumbnail = standard_thumb.url;
-							}
-							else if(typeof(mpay.user_picture_obj.types.original)=='object')
-							{
-								//console.log(mpay.types.original);
-								standard_thumb = mpay.user_picture_obj.types['original'];
-								extra._thumbnail = standard_thumb.url;
-							}
-						}
-					}
-					extra._noicon_text = "hi";
-					extra._label = mpay.label;
-					extra._sublabel = "Votes: " + mpay.num_votes + ", Followers: " + mpay.num_followers;
-					extra._link = "/#profile/" + mpay.id;
-					extra._has_link = true;
-					if(mpay.hasOwnProperty('is_owner')) show_edit = mpay.is_owner;
-
+					return_data = _self.parse_user(mpay,return_data);
 					break;
 				case '8':
-					//games
-					extra._detailclass = "game";
-					standard_thumb = mpay.game_picture!==null ? mpay.game_picture.types.standard_thumb : false;
-					extra._thumbnail = standard_thumb.url;
-					extra._label = mpay.game_day;
-					extra._link = "/#game/" + mpay.id;
-					extra._has_link = true;
-					var team_str = "", teams = mpay.teams;
-					if(teams != null) var teamLength = teams.length;
-					console.log(mpay);
-					for (var i = 0; i < teamLength; i++) {
-						team_str += '<span>';
-
-						team_str += ucwords(mpay.teams[i].team_name);
-						team_str += '</span>';
-
-					}
-					if(mpay.hasOwnProperty('is_owner')) show_edit = mpay.is_owner;
-					if(team_str != "") extra._sublabel = team_str;
-					else{
-						extra._sublabel = mpay.event_name;
-					}
-					extra._noicon_text = "vs";
-					console.log(extra);
+					return_data = _self.parse_game(mpay,return_data);
 					break;
-
-			}
-			extra.show_edit = show_edit==true ? true : undefined;
-
-			//console.log("Called Image Render", extra);
-			var markup = Mustache.to_html(this.template, extra);
-			this.$el.html(markup);
-
-			var game_detail_view_height = '120px', detail_view_height = '92px';
-
-			//alert("sdsad sd sd");
-			this.$el.find('.image-item-container').mouseout(function() {
-				$(this).find('.action-block').css({
-					opacity : 0
-				});
-				$(this).find('.detail-view').css({
-					'bottom' : '-' + detail_view_height
-				});
-				$(this).find('.detail-view.game').css({
-					'bottom' : '-' + game_detail_view_height
-				});
-			});
-
-			if(standard_thumb != "undefined" && standard_thumb != null)
-			{
-
-				var ratio_x = standard_thumb.width / 220,
-					ratio_y = standard_thumb.height / 220;
-
-				standard_thumb.width = parseInt(standard_thumb.width);
-				standard_thumb.height = parseInt(standard_thumb.height);
-
-				var overflow = (standard_thumb.width > standard_thumb.height) ?
-					-((standard_thumb.width / ratio_y) -220) / 2:
-					-((standard_thumb.height / ratio_x)-220) / 2;
-				if(overflow > 0) overflow = 0;
-
-				if(standard_thumb.width > standard_thumb.height)
-					this.$el.find('img.list-thumbnail').css({
-						'max-width':standard_thumb.width / ratio_y,
-						'left':overflow
-					});
-				else
-					this.$el.find('img.list-thumbnail').css({
-						'max-height':standard_thumb.height / ratio_x,
-						'top':overflow
-					});
 			}
 
-			if(show_play){
-				this.$el.append('<div class="circle open-photo-player-h"><div class="play"></div></div>');
-			}
+			if(_self.closest_image_format != "undefined" && _self.closest_image_format != null) return_data = _self.imageFormat(return_data);
+			else{ return_data.imgData = ""; }
+			_self.parsedData = return_data;
 
-			function show_details(e)
-			{
-				console.log($(this),e);
-
-			}
-			this.$el.find('.image-item-container').mouseover(function(){
-				$(this).find('.detail-view').css({
-					'bottom' : '0px'
-				});
-				$(this).find('.action-block').css({
-					opacity : 90
-				});
-			});
-			this.$el.find('.circle').mouseover(function(){
-				$(this).parent().find('.detail-view').css({
-					'bottom' : '0px'
-				});
-				$(this).parent().find('.action-block').css({
-					opacity : 90
-				});
-			});
-
-			//	this.$el.find('.circle').mouseover(show_details());
-			//	this.$el.find('.play').mouseover(show_details());
-
-			this.$el.find('.vote-h').click(function(e) {
-				_self.vote(e);
-			});
-
-			this.$el.find('.follow-h').click(function(e) {
-				_self.follow(e);
-			});
-
-			this.$el.find('.edit-h').click(function(e) {
-				_self.edit(e);
-			});
-
-			this.$el.find('.delete-h').click(function(e) {
-				_self['delete'](e);
-			});
-			return this;
-
-			//console.log("Called Image Render",this.model);
-			//var markup = Mustache.to_html(this.template, this.model.toJSON());
-			//this.$el.html(markup);
-			//return this;
 		},
 
-		imageFormat: function(){
+		parse_user: function(mpay,return_data){
 
+			if ( typeof (mpay.user_picture_obj) == 'object')
+			{
+				if(typeof(mpay.user_picture_obj.types) == 'object')
+				{
+					this.findCorrectType(mpay.user_picture_obj.types);
+				}
+			}
+			return_data._noicon_text = "hi";
+			return_data._label = mpay.label;
+			return_data._sublabel = "Votes: " + mpay.num_votes + ", Followers: " + mpay.num_followers;
+			return_data._link = "/#profile/" + mpay.id;
+			return_data._has_link = true;
+			if(mpay.hasOwnProperty('is_owner')) return_data.show_edit = mpay.is_owner;
+
+			return return_data;
+		},
+
+		parse_video: function(mpay,return_data){
+			if(typeof(mpay.standard_thumb)=='object')
+			{
+				this.closest_image_format = mpay.standard_thumb;
+				return_data._thumbnail = this.closest_image_format.url;
+			}
+			else
+			{
+				return_data._thumbnail = mpay.thumbs;
+			}
+
+			//non-thumb related data
+			return_data.show_play = true;
+			return_data._enttypes_id = typeof(mpay.media == "object") ? mpay.media.enttypes_id : 0;
+			return_data._id = typeof(mpay.media == "object") ? mpay.media.id : 0;
+			return_data._label = mpay.media.name;
+			return_data._link = "javascript: void(0);";
+			return_data._has_link = false;
+
+			if(mpay.media.hasOwnProperty('is_owner')) show_edit = mpay.media.is_owner;
+			return_data._noicon_text = "play";
+			return return_data;
+		},
+
+		parse_image: function(mpay,return_data){
+			//images
+			return_data._enttypes_id = typeof(mpay.media_obj == "object") ? mpay.media_obj.enttypes_id : 0;
+			return_data._id = typeof(mpay.media_obj == "object") ? mpay.media_obj.id : 0;
+			if ( typeof (mpay.types) == 'object')
+			{
+				this.findCorrectType(mpay.types);
+			}
+			//else
+	
+			return_data._label = (!_.isUndefined(mpay.media_obj.users_obj.label))?mpay.media_obj.users_obj.label:'';
+			if(typeof(mpay.media_obj.sports_obj) == 'object')
+			{
+				return_data._sublabel = this.ucwords(mpay.media_obj.sports_obj.sport_name);
+			}
+	
+			return_data._link = "javascript: void(0);";
+			return_data._has_link = false;
+			if(mpay.media_obj.hasOwnProperty('is_owner')) return_data.show_edit = mpay.media_obj.is_owner;
+			return_data._noicon_text = "look";
+			return return_data;
+		},
+
+		parse_game: function(mpay,return_data){
+			return_data._detailclass = "game";
+
+			if ( typeof (mpay.game_picture) == 'object' && mpay.game_picture !=null)
+			{
+				if(typeof(mpay.game_picture.types) == 'object')
+				{
+					this.findCorrectType(mpay.game_picture.types);
+					return_data._thumbnail = this.closest_image_format.url;
+				}
+			}
+
+			return_data._label = mpay.game_day;
+			return_data._link = "/#game/" + mpay.id;
+			return_data._has_link = true;
+			var team_str = "", teams = mpay.teams;
+			if(teams != null) var teamLength = teams.length;
+			console.log(mpay);
+			for (var i = 0; i < teamLength; i++) {
+				team_str += '<span>';
+
+				team_str += this.ucwords(mpay.teams[i].team_name);
+				team_str += '</span>';
+
+			}
+			if(mpay.hasOwnProperty('is_owner')) return_data.show_edit = mpay.is_owner;
+			if(team_str != "") return_data._sublabel = team_str;
+			else{
+				return_data._sublabel = mpay.event_name;
+			}
+			return_data._noicon_text = "vs";
+			console.log(return_data);
+			return return_data;
+		},
+
+		imageFormat: function(return_data){
+			var _self = this;
+			return_data._thumbnail = this.closest_image_format.url;
+			var imgData = _self.closest_image_format;
+
+			var ratio_x = imgData.width / 220,
+				ratio_y = imgData.height / 220;
+
+			imgData.width = parseInt(imgData.width);
+			imgData.height = parseInt(imgData.height);
+
+			var overflow = (imgData.width > imgData.height) ?
+				-((imgData.width / ratio_y) -220) / 2:
+				-((imgData.height / ratio_x)-220) / 2;
+			if(overflow > 0) overflow = 0;
+
+			if(imgData.width > imgData.height){
+				imgData.maxwidth = imgData.width / ratio_y;
+				imgData.left = overflow;
+			}
+
+			else
+			{
+				imgData.maxheight = imgData.height / ratio_x;
+				imgData.top = overflow;
+			}
+			return_data.imgData = imgData;
+			return return_data;
 		}
 	});
 });
