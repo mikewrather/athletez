@@ -136,12 +136,21 @@ define([ 'models', 'facade' ], function(models, facade) {
 			}
 			//else
 	
-			return_data._label = (!_.isUndefined(mpay.media_obj.users_obj.label))?mpay.media_obj.users_obj.label:'';
+			var uploader = (!_.isUndefined(mpay.media_obj.users_obj.label))?mpay.media_obj.users_obj.label:false;
 			if(typeof(mpay.media_obj.sports_obj) == 'object')
 			{
-				return_data._sublabel = this.ucwords(mpay.media_obj.sports_obj.sport_name);
+				var sport;
+				if((parseInt(mpay.media_obj.sports_obj.male) == 1) && (parseInt(mpay.media_obj.sports_obj.female) == 0)) sport = "Men's ";
+				else if((parseInt(mpay.media_obj.sports_obj.female) == 1) && (parseInt(mpay.media_obj.sports_obj.male) == 0)) sport = "Women's ";
+				else if((parseInt(mpay.media_obj.sports_obj.male) == 1) && (parseInt(mpay.media_obj.sports_obj.female) == 1)) sport = "Coed ";
+				sport += this.ucwords(mpay.media_obj.sports_obj.sport_name);
 			}
-	
+			return_data._sublabel = [];
+
+			if(uploader) return_data._sublabel.push({label:"Uploaded by " + uploader});
+			if(sport) return_data._sublabel.push({label:"Sport: " + sport});
+
+
 			return_data._link = "javascript: void(0);";
 			return_data._has_link = false;
 			if(mpay.media_obj.hasOwnProperty('is_owner')) return_data.show_edit = mpay.media_obj.is_owner;
