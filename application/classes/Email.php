@@ -16,7 +16,7 @@ class Email {
 		self::send_mail($to,$subject,$body);
 
 	}
-	public static function send_mail($to, $subject, $body, $cc = "", $bcc = ""){
+	public static function send_mail($to, $subject, $body, $users_id=0,$cc = "", $bcc = ""){
 		$pm = new Postmark();
 		$from = "weare@athletez.com";
 		$from_name_alias = 'Mike From Athletez';
@@ -31,7 +31,53 @@ class Email {
 			$pm->addTo($to, $to_name_alias);
 		}
 	//	print_r($pm);
-		return $pm->send();
+
+		try{
+			$result = $pm->send();
+			print_r($result);
+			if($result){
+				$sent = ORM::factory('Email_Sent');
+				$sent->saveSent(array(
+					'users_id' => $users_id
+				));
+			}
+		} catch(Exception $e){
+			print_r($e);
+		}
+	}
+
+	public static function sendFromQueue($queueID)
+	{
+
+		$queue = ORM::factory('Email_Queue', $queueID);
+		if(!$queue->loaded()) return false;
+
+		$user = ORM::factory('User_Base', $queue->users_id);
+
+		$pm = new Postmark();
+		$from = "weare@athletez.com";
+		$from_name_alias = 'Athletez Mail Room';
+		$to_name_alias = null;
+
+		$pm->from($from, $from_name_alias)
+			->subject($queue->subject_line)
+			->messageHtml($queue->message_body);
+
+		$pm->addTo($queue->to_address, $user->name());
+
+			$result = $pm->send();
+			if ($result)
+			{
+				$sent = ORM::factory('Email_Sent');
+				$sent->saveSent(array(
+					'users_id' => $queue->users_id,
+					'queue' => $queue
+				));
+			}
+	}
+
+	public static function generateUniqueString(){
+		return hash('sha256',microtime(true).mt_rand(10000,90000));
 	}
 
 }

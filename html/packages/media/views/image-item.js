@@ -66,8 +66,7 @@ define(['vendor', 'views', 'utils', 'text!media/templates/image-item.html', 'vot
 			this.$el.html(markup);
 
 			var game_detail_view_height = '120px', detail_view_height = '92px';
-				
-			//alert("sdsad sd sd");	
+
 			this.$el.find('.image-item-container').mouseout(function() {
 				$(this).find('.action-block').css({
 					opacity : 0

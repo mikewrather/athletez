@@ -55,4 +55,24 @@ class Model_Email_Sent extends ORM
 		parent::__construct($id);
 	}
 
+	public function saveSent($args){
+		extract($args);
+		$this->user_id = $users_id;
+		$this->uniqueString = $queue->uniqueString;
+
+		try{
+			$this->save();
+			if($this->loaded() && $queue->loaded()){
+				$queue->email_sent_id = $this->id;
+				$queue->save();
+			}
+		}
+		catch (ORM_Validation_Exception $e)
+		{
+
+		}
+
+		return $this;
+	}
+
 }
