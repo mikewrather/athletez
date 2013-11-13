@@ -80,6 +80,7 @@ define([ 'models', 'facade' ], function(models, facade) {
 			if(_self.closest_image_format != "undefined" && _self.closest_image_format != null) return_data = _self.imageFormat(return_data);
 			else{ return_data.imgData = ""; }
 			_self.parsedData = return_data;
+			console.log(return_data);
 
 		},
 
@@ -177,11 +178,8 @@ define([ 'models', 'facade' ], function(models, facade) {
 			if(teams != null) var teamLength = teams.length;
 			console.log(mpay);
 			for (var i = 0; i < teamLength; i++) {
-				team_str += '<span>';
-
 				team_str += this.ucwords(mpay.teams[i].team_name);
-				team_str += '</span>';
-
+				team_str += i<teamLength - 1 ? ' vs ' : '';
 			}
 			if(mpay.hasOwnProperty('is_owner')) return_data.show_edit = mpay.is_owner;
 			if(team_str != "") return_data._sublabel = team_str;
