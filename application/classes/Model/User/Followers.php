@@ -154,13 +154,21 @@ class Model_User_Followers extends ORM
 
 				//get tag subject
 				$subject = $obj->getSubject();
+				$poster = $subject['tagger'];
 
 				//Find any follows of this subject
 				$direct_followers = self::get_followers($subject,'follows');
-
 				foreach($direct_followers as $follow)
 				{
 					Model_Site_Feedfollow::addFeedFollow($feed->id,$follow->id);
+					$args = array(
+						'users_id' => $follow->follower_users_id,
+						'subject_line' => $poster->name()." Tagged something you follow.", //TODO: replace this with a real subject line
+						'to_address' => "mike.wrather@gmail.com",
+						'message_body' => self::constructEmail($obj,$subject,$type)
+					);
+					$queue = ORM::factory('Email_Queue');
+					$queue->addToQueue($args);
 				}
 
 				//check if the tag is resume data val
@@ -184,7 +192,7 @@ class Model_User_Followers extends ORM
 
 	}
 
-	protected function constructEmail($obj,$sub,$type)
+	protected static function constructEmail($obj,$sub,$type)
 	{
 
 		$enttype = ORM::factory('Site_Enttype',Ent::getMyEntTypeID($sub));
@@ -208,6 +216,7 @@ class Model_User_Followers extends ORM
 				}
 				break;
 			case 'media':
+			//	if($subject);
 				break;
 			case 'image':
 				break;
@@ -215,6 +224,9 @@ class Model_User_Followers extends ORM
 
 				break;
 			case 'gamematch':
+				break;
+			case 'team':
+				$subject['title'] = $subject['team_name'];
 				break;
 			default:
 				break;
