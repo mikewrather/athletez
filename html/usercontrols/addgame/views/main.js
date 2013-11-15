@@ -5,21 +5,21 @@
  // Returns {Add Game VIEW} constructor
  */
 define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 'views', 'utils', 'vendor', 'sportorg/collections/sports_listall', 'location/collections/states', 'usercontrols/addgame/collections/teams', 'location/collections/cities', 'usercontrols/addgame/collections/teams_user', 'usercontrols/addgame/collections/teams', 'usercontrols/addgame/collections/games_search', 'usercontrols/addgame/models/team', 'usercontrols/addgame/models/team_add', 'usercontrols/addgame/models/game', 'usercontrols/addgame/models/uslgamelink',
-'usercontrol/dropdown/view/dropdown', 'usercontrol/location/views/get-view-location'
+'usercontrol/dropdown/view/dropdown', 'usercontrol/location/views/get-view-location','component/forms'
 ], function(require, layoutTemplate) {
 
 	var self, facade = require('facade'), views = require('views'), SectionView = views.SectionView, utils = require('utils'), Channel = utils.lib.Channel, vendor = require('vendor'), Mustache = vendor.Mustache, $ = facade.$, BasicModel = require('usercontrols/tag/models/basic_info'), SportsCollection = require('sportorg/collections/sports_listall'), StatesCollection = require('location/collections/states'), CityCollection = require('location/collections/cities'), UserTeamsCollection = require('usercontrols/addgame/collections/teams_user'), TeamsCollection = require('usercontrols/addgame/collections/teams'), TeamModel = require('usercontrols/addgame/models/team'), TeamAddModel = require('usercontrols/addgame/models/team_add'), GameModel = require('usercontrols/addgame/models/game'), GamesSearchCollection = require('usercontrols/addgame/collections/games_search'),
 	DropDownList = require('usercontrol/dropdown/view/dropdown'),
 	LocationView = require('usercontrol/location/views/get-view-location'),
+	FormComponent = require('component/forms'),
 	//Models
 	UserGameLinkModel = require('usercontrols/addgame/models/uslgamelink'),
 	
 	AddGameView = SectionView.extend({
 		template : layoutTemplate,
 		/*Data to be sent as parameter in call back function*/
-		gameData : {
-
-		},
+		
+		gameData : {},
 
 		teams : [],
 		/*Bind Events on controls present in current view template*/
@@ -70,7 +70,6 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 			btnFinish : ".btn-game-Finish_h",
 			sectionTeamOne : ".team-one_h",
 			sectionTeamTwo : ".team-two_h",
-
 			sectionScore : ".section-score_h",
 			sectionRadio : ".section-game-radio_h",
 			rdoTeamOne : ".rdo-game-location-one-home_h",
@@ -79,11 +78,9 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 			sectionMainLocation : ".section-main-location_h",
 			sectionLocation : ".div-game-location_h",
 			txtLocationId : ".txt-game-location-id_h",
-
 			sectionIndividual : ".section-individual-game_h",
 			txtIndividualGame : ".txt-individual-game_h",
 			btnIndividualFinish : ".btn-game-individual-Finish_h",
-
 			txtIndividualLocation : ".txt-individual-location_h",
 			btnIndividualGameCreate : ".btn-game-individual-Create_h",
 			// LABELS
@@ -108,10 +105,12 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 			locationId : 'locationid',
 			gameId : 'gameid'
 		},
+		
 		inlineTemplates : {
 			
 
 		},
+		
 		/*Messages Holds the messages, warning, alerts, errors, information variables*/
 		/*In Case of similar message create only one object and key*/
 		messages : {
@@ -147,7 +146,124 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 		/*render displays the view in browser*/
 		render : function() {
 			SectionView.prototype.render.call(this);
-			$(self.el).find(self.controls.txtGameDate).datepicker({
+			var _self = this;
+			
+			var form = new FormComponent({
+		        date: {type: 'Text', attr: { 'placeholder': 'Enter Date', 'class': "txt-game-date_h txtDate"}, showLable: false, validators: ['required'], bindDatePicker: true},
+		        time: {type: 'Text', attr: { 'placeholder': 'Time', 'class': "txt-game-time_h hasDatepicker txtTime"}, showLable: false, validators: ['required']},
+		        'Day_light': {
+	        		type: 'DropDown', 
+	        		options: {
+						data: { records: [{
+								payload : {
+									name : "AM",
+									value : "AM"
+								}
+							},
+							{
+								payload : {
+									name : "PM",
+									value : "PM"					
+							}
+							}], recordId: 'name', recordValue: 'value', selectedValue : "PM"},
+						elementId: _self.controls.hdnTimePeriodData,
+						callback: function(result) {}
+					},
+					showLable: false
+				},
+				
+				'Sports': {
+	        		type: 'DropDown', 
+	        		options: {
+						data: { records: undefined, recordId: 'id', recordValue: 'custom_name', selectedValue : "PM"},
+						elementId: _self.controls.hdnTimePeriodData,
+						getData: function(value, callback) {
+							var List = new SportsCollection();
+							//List.user_id = self.user_id;
+							List.processResult = function(collection) {
+								var data = List.ParseForDropdown();
+								if(callback) callback(data);
+							};
+							List.fetch();
+						},
+						callback: function(result) {}
+					}, showLable: false
+				},
+				
+				'Select_Team_1': {
+	        		type: 'DropDown', 
+	        		options: {
+						data: { records: undefined, recordId: 'id', recordValue: 'team_name', selectedValue : "PM"},
+						elementId: _self.controls.hdnTimePeriodData,
+						getData: function(value, callback) {
+							var List = new UserTeamsCollection();
+							List.user_id = self.user_id;
+							List.sports_id = $(".selected-sport-h").data("id");
+							List.processResult = function(collection) {
+								var item = {
+									team_name : "Team Not Found",
+									id : -1
+								};
+								var list = List.AppendItem(item);
+								if(callback) callback(list);
+							};
+							List.fetch();
+						},
+						
+					
+						callback: function(result) { }
+					}
+				},
+				
+				'team_1': { type: 'Radio', options: ['Home', 'Away'], showLable: false },
+ 				'Select_Team_2': { type: 'AutoComplete', getData: function(value, callback) {
+		        	var List = new CityCollection();
+					List.states_id = _self.states_id;
+					List.city_name = value;
+		        	List.fetch();
+		        	$.when(List.request).done(function() {
+		        		if(callback) callback(List.toJSON());
+		        	});
+		        }},
+		        'team_2': { type: 'Radio', options: ['Home', 'Away'], showLable: false },
+		        'Location': { type: 'Location'},		        
+		        'submit': {type: 'Submit', attr: { 'value': 'Create'}, showLable: false, onSubmit: function(e) {
+		        	alert("submit");
+		        	var errors = form.commit(); 
+		        	if(errors)
+			        	console.error(errors);
+			        else 
+			        	console.error(form.getValue());
+		        }},
+		        'button': {type: 'Button', attr: { 'value': 'Cancel'}, showLable: false},
+		    }, this.$el.find('.add-game-container-h'));
+
+			/*$(self.el).find(self.controls.txtGameDate).datepicker({
+				dateFormat: 'yy-mm-dd',
+				changeMonth : true,
+				changeYear : true
+			});*/
+
+				/*
+				 * new DropDownList({
+							data: data,
+							elementId: _self.controls.hdnTimePeriodData,
+							destination: _self.controls.spnTimePeriod,
+							targetView: _self,
+							selectedValue : "PM",
+							callback: function(result) {}
+						})
+				 * */
+		        
+		       // 'Select Team 1': { type: 'DropDown', getData: function(value, callback) {
+		       // 	if(callback) callback();
+		       // }},
+		        
+
+
+
+            			
+			/*$(self.el).find(self.controls.txtGameDate).datepicker({
 				dateFormat: 'yy-mm-dd',
 				changeMonth : true,
 				changeYear : true
@@ -167,7 +283,18 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 				}
 			}];
 			
-			var data = {};
+			var data = {records: [{
+				payload : {
+					name : "AM",
+					value : "AM"
+				}
+			},
+			{
+				payload : {
+					name : "PM",
+					value : "PM"					
+				}
+			}], recordId: 'name', recordValue: 'value'};
                data.records = records;
                data.recordId = 'name';
 			   data.recordValue = 'value';
@@ -180,6 +307,9 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 					callback: function(result) {
 					}
 				});
+				*/
+				
+				
 				
 			// $(self.el).find(self.controls.txtGameDate).datetimepicker({
 				// timeFormat : 'hh:mm tt',
@@ -220,7 +350,7 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 		},
 		setupView : function() {
 			self.setUpMainView();
-			if(self.team_id){
+			if(self.team_id) {
 				var teamModel = new TeamModel();
 					teamModel.id = self.team_id;
 					teamModel.fetchSuccess = function(model, response) {
@@ -228,9 +358,9 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 						self.team = data;
 						self.sports_id = data.sports_id || null;
 						self.fillSports();
-				};
+					};
 						teamModel.fetch();
-			}else{
+			} else {
 				self.fillSports();
 			}
 			//self.setFirstTeam();
@@ -252,7 +382,7 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 		},
 		SetupSportsView : function(List) {
 
-			 self.sports = List;
+			self.sports = List;
 			var data = {};
                data.records = self.sports;
                data.recordId = 'id';
@@ -282,7 +412,6 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 				if(isTeam){
 					self.fillTeams(result);
 				}
-				
 			} else {
 				$(self.destination).find(self.controls.btnFinish).fadeOut();
 				$(self.destination).find(self.controls.sectionTeams).fadeOut();
@@ -330,6 +459,7 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 				$(self.destination).find(self.controls.sectionTeamOne).find(self.controls.indicator).addClass("valid").removeClass("invalid").show();
 			}
 		},
+		
 		fillTeams : function(sport_id) {
 			var List = new UserTeamsCollection();
 			List.user_id = self.user_id;
@@ -339,15 +469,14 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 					team_name : "Team Not Found",
 					id : -1
 				};
-				
 				var list = List.AppendItem(item);
 				self.setUpUserTeams(list);
 			};
 			//self.TeamFetchRequest = self.abortRequest(self.TeamFetchRequest);
 			var tempCollection = List.fetch();
 			//self.TeamFetchRequest.push(tempCollection);
-
 		},
+		
 		setUpUserTeams : function(List) {
 			self.teams = List || [];
 			self.setFirstTeam(self.team_id);
@@ -368,19 +497,8 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 						self.changeUserTeamOne(result);						
 					}
 				});
-			
-			// var DropDownTwo = new DropDownList({
-					// data: data,
-					// title: "Select Team",
-					// elementId: "hdn_team_id",
-					// targetView: self,					
-					// destination: self.controls.spanddlteamtwo,
-					// //selectedValue : 14446,					
-					// callback: function(result) {
-						// self.changeUserTeamTwo(result);						
-					// }
-				// });
 		},
+		
 		changeUserTeamOne : function(result) {
 			console.log("result1",result);
 			if(result == "-1"){
@@ -461,15 +579,19 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 							return;
 
 						var models = stateList.toJSON();
-						if (models == null || models.length < 1)
+						if (models == null || models.length < 1) {
 							self.$(e.target).parent().find(self.controls.fieldMessage).html(self.messages.dataNotExist).stop().fadeIn();
-						else
+							//self.$(e.target).
+						} else {
 							self.$(e.target).parent().find(self.controls.fieldMessage).html('').fadeOut();
-
+						}
+						
 						self.states = [];
+						
 						for (var key in models) {
 							self.states.push(models[key].payload);
 						}
+						
 						self.states.forEach(function(value, index) {
 							stateArr.push(value['name']);
 						});
@@ -832,14 +954,15 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 			$(e.target).parent().find(self.controls.fieldMessage).html('').stop().fadeOut();
 			$(e.target).removeAttr(self.attributes.gameId);
 		},
+		
 		eventFound : function(e) {
 			//$(self.destination).find(self.controls.txtIndividualLocation).hide();
 			$(self.destination).find(self.controls.btnIndividualGameCreate).hide();
 			$(self.destination).find(self.controls.btnIndividualFinish).show();
 			$(e.target).parent().find(self.controls.fieldMessage).html(self.messages.gameFound).fadeIn();
 		},
+		
 		createIndividualEvent : function(e) {
-			
 			var isDataValid = true;
 			var message = '';
 			var date = $(self.destination).find(self.controls.txtGameDate).datepicker('getDate');
@@ -848,13 +971,15 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 			var locationId = self.location_id || $(self.controls.txtLocationId).val() || 0;
 			var eventName = $(self.destination).find(self.controls.txtIndividualGame).val();
 			var sportsId = $(self.destination).find(self.controls.hdnSportsId).val();
-			if(!sportsId){
+			if(!sportsId) {
 				$(self.destination).find(self.controls.secSports).find(self.controls.fieldMessage).html(self.messages.selectSport).fadeIn();
 				isDataValid = false;
 			}
 			
 			if (!date || !timeText) {
 				$(self.destination).find(self.controls.sectionDate).find(self.controls.fieldMessage).html(self.messages.selectDateAndTime).fadeIn();
+				this.focusOnErrorField(".section-Add-Sports_h");
+				//self.$el.find(".section-Add-Sports_h").
 				isDataValid = false;
 			}else{
 					var validTime = timeText.match(self.tags.rgxTime) || timeText.match(self.tags.rgxTimeWhole);
