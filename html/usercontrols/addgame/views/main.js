@@ -301,8 +301,76 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 		        	var errors = form.commit(); 
 		        	if(errors)
 			        	console.error(errors);
-			        else 
+			        else {
 			        	console.error(form.getValue());
+			        
+			        var formData = form.getValue(), self = _self;
+			        	
+			        date = self.formatDate(formData.date,formData.time,formData.Day_light);
+						if(!date) isDataValid = false;	
+			        	
+		        	var completeDate = date;// + " " + timeText + "00";// + ampm;
+		        	
+		        	var scoreOne = scoreTwo = '';
+		        	
+				var payload = {
+					game_datetime : completeDate,
+					locations_id : formData.Location,
+					teamOneId : formData.Select_Team_1,
+					teamTwoId : formData.Select_Team_2,
+					sports_id : formData.Sports,
+					users_id : self.user_id
+
+				};
+				////console.log("payload", payload);
+				var gameModel = new GameModel(payload);
+
+				gameModel.save({});
+
+				$.when(gameModel.request).done(function(response) {
+					console.log(response);
+					if (response != null && response.payload != null) {
+						self.game_id = response.payload.id;
+						var isHome = $(self.destination).find("input[value=Home]").is(':checked');
+
+						var payloadOne = {
+							game_datetime : completeDate,
+							games_id : self.game_id,
+							home_team : isHome || false,
+							locations_id : self.location_id,
+							score : scoreOne,
+							users_id : self.user_id
+						};
+
+						var addTeamModelOne = new TeamAddModel(payloadOne);
+						addTeamModelOne.teams_id = formData.Select_Team_1;
+						addTeamModelOne.save();
+						var payloadTwo = {
+							game_datetime : completeDate,
+							games_id : self.game_id,
+							home_team : isHome || false,
+							locations_id : self.location_id,
+							score : scoreTwo,
+							users_id : self.user_id
+						};
+						isHome = $(self.destination).find(self.controls.rdoTeamTwo).is(':checked');
+
+						var addTeamModelTwo = new TeamAddModel(payloadTwo);
+						addTeamModelTwo.teams_id = formData.Select_Team_2;
+						addTeamModelTwo.save();
+						self.gameData = {
+							type : self.tags.team,
+							game_datetime : completeDate,
+							team_id_one : formData.Select_Team_1,
+							team_id_two : formData.Select_Team_2,
+							sports_id : formData.Sports,
+							games_id : self.game_id,
+							users_id : self.user_id 
+						};
+						routing.trigger(self.channel, response);
+					}
+				});
+		        	}
 		        }},
 		        'button': {type: 'Button', attr: { 'value': 'Cancel'}, showLable: false},
 		    }, this.$el.find('.add-game-container-h'));
@@ -1303,7 +1371,7 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 			var locationId = self.location_id || $(self.controls.txtLocationId).val() || 0;
 			
 			
-			if(!sportsId){
+			if(!sportsId) {
 				$(self.destination).find(self.controls.secSports).find(self.controls.fieldMessage).html(self.messages.selectSport).fadeIn();
 				isDataValid = false;
 			}
@@ -1311,7 +1379,7 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 			if (!date || !timeText) {
 				$(self.destination).find(self.controls.sectionDate).find(self.controls.fieldMessage).html(self.messages.selectDateAndTime).fadeIn();
 				isDataValid = false;
-			}else{
+			} else {
 					var validTime = timeText.match(self.tags.rgxTime) || timeText.match(self.tags.rgxTimeWhole);	
 					console.log("orginal date",date);
 					console.log("orginal time",timeText);

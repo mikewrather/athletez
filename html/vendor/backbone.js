@@ -2810,11 +2810,6 @@ Form.editors.Text = Form.Editor.extend({
     if (schema && schema.editorAttrs && schema.editorAttrs.type) type = schema.type;
     if (schema && schema.dataType) type = schema.dataType;
 
-	console.error(this.schema);
-
-	
-
-
 	this.setAllAttr(this.schema.attr);
     this.$el.attr('type', type);
     
@@ -2863,7 +2858,10 @@ Form.editors.Text = Form.Editor.extend({
    * @return {String}
    */
   getValue: function() {
-    return this.$el.val();
+  	if(this.schema.bindDatePicker)
+  		return this.$el.datepicker('getDate');
+  	else
+    	return this.$el.val();
   },
 
   /**
@@ -3057,7 +3055,6 @@ Form.editors.Location = Form.editors.Text.extend({
   select: function() {
     this.$el.select();
   }
-
 });
 
 
