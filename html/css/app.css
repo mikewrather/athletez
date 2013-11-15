@@ -474,7 +474,20 @@ input {
 	width: 80%;
 	position: absolute;
 	z-index: 1000;
-	
+}
+
+form fieldset .dropdown-container {
+	position: relative;
+}
+
+
+form fieldset .common-container {
+	position: absolute;
+	width: 100%;
+	top: 30px;
+	padding: 0;
+	margin: 0;
+	background: #FFF;
 }
 
 .increase-dropown-zindex {
@@ -491,6 +504,8 @@ ul.common-dropdown {
 	clear: both;
 	margin-bottom: 10px;
 	margin-top: 10px;
+	overflow-y: auto;
+	overflow-x: hidden;
 }
 
 ul.common-dropdown li a {
@@ -510,6 +525,7 @@ ul.common-dropdown li {
 	text-align: center;
 	padding: 3px 0px;
 	margin: 3px 5px;
+	width: 100%;
 }
 
 ul.common-dropdown li.selected a {
@@ -1549,5 +1565,10 @@ margin-top:10px;
 .add-to-event {
 	margin-right: 25px;
 }
+
+form fieldset ul li { float: left; margin: 0 20px; }
+form fieldset ul li input, form fieldset ul li label { float: left; margin: 0 20px; }
+form fieldset > div { float: left; width: 100%; }
+
 
 
