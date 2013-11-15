@@ -2905,56 +2905,48 @@ Form.editors.Location = Form.editors.Text.extend({
 			 <div id="map-canvas-h" style="width: 90%; height: 300px; margin-top: 40px; display: none;"></div>',
 
   events: {
-	'click .verify-address-h': function() {
-		 var self = this;
-      setTimeout(function() {
-        self.verifyAddress();
-      }, 0);
-		//alert("click");
-		 //this.trigger('verifyAddress', this);
-	},
-	'blur .verify-address-h': function() {
-		 this.trigger('verifyAddress', this);
-	}
+	'click .verify-address-h': 'verifyAddress',
+	'blur .verify-address-h': 'verifyAddress'
   },	
   
   // Verify Address
   verifyAddress: function() {
-  	alert("asdsd");
 		var _self = this, address = _self.$el.find('.address-h').val();
-		_self.adressModel = new verifyAddress();
-		_self.adressModel.address = address;
-		_self.adressModel.url();
-		_self.adressModel.set({address: address});
-		_self.adressModel.showError = function(model, error) {
-		try {
-			_self.$el.find('.set-address-h').addClass('link-disabled');
-			_self.$el.find('.address-error-status-h').removeClass('hide').html(error.responseJSON.exec_data.error_array[0].error);
-		} catch(e) {}
-			_self.$el.find('.address-h').addClass('address-field-error').removeClass('address-verified');
-		};
-		_self.adressModel.save({dataType:"json"});
-		_self.$el.find('.address-h').removeClass('address-verified');
-		_self.callback("");
-		$.when(_self.adressModel.request).done(function() {
-			console.log(_self.adressModel.toJSON());
-			_self.locationId = _self.adressModel.get("payload").id;
-			if(_self.locationId) {
-				_self.$el.find('.address-error-status-h').addClass('hide');
-				_self.$el.find('.address-h').removeClass('address-field-error').addClass('address-verified');
-				_self.location.latitude = _self.adressModel.get("payload").lat;
-				_self.location.latitude = _self.adressModel.get("payload").lon;
-				_self.$el.find('.set-address-h').removeClass('link-disabled');
-				_self.callback(_self.locationId);
-				if(_self.map) {
-					var pos = new google.maps.LatLng(_self.adressModel.get("payload").lat, _self.adressModel.get("payload").lon);
-					_self.marker.setPosition(pos);
-					_self.map.panTo(pos);
-				} else {
-					_self.createMap();
+		
+		var verifyAddress = require('usercontrols/location/models/verify-adress'); 
+			_self.adressModel = new verifyAddress();
+			_self.adressModel.address = address;
+			_self.adressModel.url();
+			_self.adressModel.set({address: address});
+			_self.adressModel.showError = function(model, error) {
+			try {
+				_self.$el.find('.set-address-h').addClass('link-disabled');
+				_self.$el.find('.address-error-status-h').removeClass('hide').html(error.responseJSON.exec_data.error_array[0].error);
+			} catch(e) {}
+				_self.$el.find('.address-h').addClass('address-field-error').removeClass('address-verified');
+			};
+			_self.adressModel.save({dataType:"json"});
+			_self.$el.find('.address-h').removeClass('address-verified');
+			//_self.callback("");
+			$.when(_self.adressModel.request).done(function() {
+				console.log(_self.adressModel.toJSON());
+				_self.locationId = _self.adressModel.get("payload").id;
+				if(_self.locationId) {
+					_self.$el.find('.address-error-status-h').addClass('hide');
+					_self.$el.find('.address-h').removeClass('address-field-error').addClass('address-verified');
+					_self.location.latitude = _self.adressModel.get("payload").lat;
+					_self.location.latitude = _self.adressModel.get("payload").lon;
+					_self.$el.find('.set-address-h').removeClass('link-disabled');
+					//_self.callback(_self.locationId);
+					if(_self.map) {
+						var pos = new google.maps.LatLng(_self.adressModel.get("payload").lat, _self.adressModel.get("payload").lon);
+						_self.marker.setPosition(pos);
+						_self.map.panTo(pos);
+					} else {
+						_self.createMap();
+					}
 				}
-			}
-		});
+			});
   },
   
 	createMap: function() {
@@ -3011,6 +3003,7 @@ Form.editors.Location = Form.editors.Text.extend({
    * Override Text constructor so type property isn't set (issue #261)
    */
   initialize: function(options) {
+  	_.bindAll(this);
     Form.editors.Base.prototype.initialize.call(this, options);
      var schema = options.schema;
     //Allow customising text type (email, phone etc.) for HTML5 browsers
@@ -3040,7 +3033,7 @@ Form.editors.Location = Form.editors.Text.extend({
    * @return {String}
    */
   getValue: function() {
-    return this.$el.val();
+    return this.locationId;
   },
 
   /**
@@ -3048,7 +3041,7 @@ Form.editors.Location = Form.editors.Text.extend({
    * @param {String}
    */
   setValue: function(value) {
-    this.$el.val(value);
+   this.locationId = value;
   },
 
   focus: function() {
@@ -3287,6 +3280,20 @@ Form.editors.DropDown = Form.editors.Text.extend({
 			if(_self.getData) {
 				_self.getData('', function(data) {
 					_self.data.records = data;
+					if (!_self.selectedValue) {
+						if (_self.data.records && _self.data.records.length)
+							var val = _self.data.records[0].payload[_self.data.recordId];
+							// for multiple push into array
+							if (_self.multiple) {
+								_self.selectedValue = [];
+								_self.selectedValue.push(val);
+							} else {
+								_self.selectedValue = val;
+							}
+							
+						// show selected value
+						_self.showDefaultValueSelected();	
+					}
 					_self.render();
 				});
 			}
@@ -3324,7 +3331,7 @@ Form.editors.DropDown = Form.editors.Text.extend({
 	// set default values selected
 	defaultSelected : function(val) {
 		if (_self.multiple) {
-			if (_.isArray(_self.selectedValue)) {
+			if (_self.selectedValue && _.isArray(_self.selectedValue)) {
 				for (var i in _self.selectedValue) {
 					if (_self.selectedValue[i] == this.payload[_self.data.recordId]) {
 						return "selected";
@@ -3341,22 +3348,23 @@ Form.editors.DropDown = Form.editors.Text.extend({
 	render : function() {
 		var self = this;
 		this.data.dropView = self;
-		if (!this.data.selectedValue) {
-			if (this.data.records.length)
+		this.selectedValue = this.data.selectedValue;
+		this.selectedOptions = [];
+		if (typeof this.selectedValue == "undefined" || !this.selectedValue) {
+			if (this.data.records && this.data.records.length)
 				var val = this.data.records[0].payload[this.data.recordId];
-			// for multiple push into array
-			if (this.multiple) {
-				this.selectedValue = [];
-				this.selectedValue.push(val);
-			} else {
-				this.selectedValue = val;
+				// for multiple push into array
+				if (this.multiple) {
+					this.selectedValue = [];
+					this.selectedValue.push(val);
+				} else {
+					this.selectedValue = val;
+				}
 			}
-		}
-	
+			
 		// compile temoplate
 		var self = this, markup = _.template(this.template, this.data);//Mustache.to_html(self.template, this.data);
 		this.$el.html(markup);
-		
 		// set input value
 		this.setValue(this.data.selectedValue);
 		
@@ -3372,16 +3380,26 @@ Form.editors.DropDown = Form.editors.Text.extend({
 		} else {
 			// if there is no selected value passed then select the first record by default
 			setTimeout(function() {
-				if(!self.$el.find('li.selected').length) {
-					var $li = self.$el.find('.common-dropdown li:first-child');
-					$li.addClass('selected');
-					self.$el.find("#" + self.elementId).val($li.find('a').data("id"));						
-					self.showSelectedValue();
-				}
+				self.showDefaultValueSelected();
 				if (self.callback) self.callback(self.selectedOptions);
 			}, 200);
 		}
 		return this;
+	},
+	
+	showDefaultValueSelected: function() {
+		var self = this;
+		if(!self.$el.find('li.selected').length) {
+			var $li = self.$el.find('.common-dropdown li:first-child');
+			$li.addClass('selected');
+		} else {
+			var $li = self.$el.find('li.selected');
+		}
+		var id = $li.find('a').data("id");
+		if(id) {
+			self.$el.find('.hidden-input-dropdown-h').val($li.find('a').data("id"));
+			self.showSelectedValue();
+		}
 	},
 
 	// **Method** `setOptions` - called by BaseView's initialize method
@@ -3879,7 +3897,7 @@ Form.editors.Select = Form.editors.Base.extend({
       if (_.isObject(option)) {
         if (option.group) {
           html.push('<optgroup label="'+option.group+'">');
-          html.push(this._getOptionsHtml(option.options))
+          html.push(this._getOptionsHtml(option.options));
           html.push('</optgroup>');
         } else {
           var val = (option.val || option.val === 0) ? option.val : '';
@@ -3911,6 +3929,7 @@ Form.editors.Radio = Form.editors.Select.extend({
     'change input[type=radio]': function() {
       this.trigger('change', this);
     },
+    'click': 'clickHandler',    
     'focus input[type=radio]': function() {
       if (this.hasFocus) return;
       this.trigger('focus', this);
@@ -3946,6 +3965,17 @@ Form.editors.Radio = Form.editors.Select.extend({
   blur: function() {
     if (!this.hasFocus) return;
     this.$('input[type=radio]:focus').blur();
+  },
+  
+  initialize: function(options) {
+  	Form.editors.Base.prototype.initialize.call(this, options);
+    if (!this.schema || !this.schema.options) throw "Missing required 'schema.options'";
+
+  	console.error(options);
+  	this.clickHandler = (this.schema.onClickFn)?this.schema.onClickFn:function() {
+  		alert("click handler is not defined");
+  	};
+  	
   },
 
   /**

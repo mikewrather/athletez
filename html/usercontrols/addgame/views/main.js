@@ -175,7 +175,7 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 				'Sports': {
 	        		type: 'DropDown', 
 	        		options: {
-						data: { records: undefined, recordId: 'id', recordValue: 'custom_name', selectedValue : "PM"},
+						data: { records: undefined, recordId: 'id', recordValue: 'custom_name', selectedValue: undefined },
 						elementId: _self.controls.hdnTimePeriodData,
 						getData: function(value, callback) {
 							var List = new SportsCollection();
@@ -193,7 +193,7 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 				'Select_Team_1': {
 	        		type: 'DropDown', 
 	        		options: {
-						data: { records: undefined, recordId: 'id', recordValue: 'team_name', selectedValue : "PM"},
+						data: { records: undefined, recordId: 'id', recordValue: 'team_name', selectedValue: undefined },
 						elementId: _self.controls.hdnTimePeriodData,
 						getData: function(value, callback) {
 							var List = new UserTeamsCollection();
@@ -209,13 +209,48 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 							};
 							List.fetch();
 						},
-						
-					
-						callback: function(result) { }
+						callback: function(options) {
+							//alert("callback");
+							//alert($(self.destination).find("input[name=team_1]").length);
+							
+							console.error(options);							
+							if(options.length) $(self.destination).find("input[name=team_1]").attr("teamId", options[0]);
+							
+							$(self.destination).find("input[name=team_1]").attr("abcdef", "abcdef");
+						}
 					}
 				},
 				
-				'team_1': { type: 'Radio', options: ['Home', 'Away'], showLable: false },
+				'team_1': { type: 'Radio', options: ['Home', 'Away'], attr: {'team': 'one'}, showLable: false, onClickFn: function(e) { 
+						var value = e ? $(e.target).val() : "away", teamId = 0;
+						if (value == "home") {
+							teamId = $(e.target).attr(self.attributes.teamId);
+						} else {
+							var $selectedItems = $(self.destination).find("input[name=team_1]:checked, input[name=team_2]:checked");
+							$selectedItems.each(function() {
+								value = $(this).val();
+								if (value == "Home") {
+									teamId = $(this).attr(self.attributes.teamId);
+								}
+							});
+						}
+						
+						if (teamId) {
+							var teamModel = new TeamModel();
+							teamModel.id = teamId;
+							teamModel.fetchSuccess = function(model, response) {
+								var data = teamModel.parseAsRequired(response);
+								_self.location_id = data.location_id || 0;
+								var $form = $(e.target).parents('form');
+								$form.find('.address-h').val(data.location_name).trigger('blur');
+								$form.find('.verify-address-h').val(data.location_name).trigger('click');								
+							};
+							teamModel.fetch();
+						} else {
+							$(e.target).parents('form').find('.address-h').val('').trigger('blur');
+						}
+					}},
+ 				
  				'Select_Team_2': { type: 'AutoComplete', getData: function(value, callback) {
 		        	var List = new CityCollection();
 					List.states_id = _self.states_id;
@@ -224,11 +259,45 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 		        	$.when(List.request).done(function() {
 		        		if(callback) callback(List.toJSON());
 		        	});
-		        }},
-		        'team_2': { type: 'Radio', options: ['Home', 'Away'], showLable: false },
-		        'Location': { type: 'Location'},		        
+		        },
+		        
+		        callback: function(options) {
+					if(options.length) {
+						$("input[name=team_2]").attr("teamId", options[0]);
+					}
+				}},
+				
+		        'team_2': { type: 'Radio', options: ['Home', 'Away'], showLable: false, onClickFn: function(e) { 
+						var value = e ? $(e.target).val() : "away", teamId = 0;
+						if (value == "home") {
+							teamId = $(e.target).attr(self.attributes.teamId);
+						} else {
+							var $selectedItems = $(self.destination).find("input[name=team_1]:checked, input[name=team_2]:checked");
+							$selectedItems.each(function() {
+								value = $(this).val();
+								if (value == "Home") {
+									teamId = $(this).attr(self.attributes.teamId);
+								}
+							});
+						}
+						
+						if (teamId) {
+							var teamModel = new TeamModel();
+							teamModel.id = teamId;
+							teamModel.fetchSuccess = function(model, response) {
+								var data = teamModel.parseAsRequired(response);
+								_self.location_id = data.location_id || 0;
+								var $form = $(e.target).parents('form');
+								$form.find('.address-h').val(data.location_name).trigger('blur');
+								$form.find('.verify-address-h').val(data.location_name).trigger('click');								
+							};
+							teamModel.fetch();
+						} else {
+							$(e.target).parents('form').find('.address-h').val('').trigger('blur');
+						}
+					}},
+		        'Location': { type: 'Location'},
 		        'submit': {type: 'Submit', attr: { 'value': 'Create'}, showLable: false, onSubmit: function(e) {
-		        	alert("submit");
 		        	var errors = form.commit(); 
 		        	if(errors)
 			        	console.error(errors);
@@ -1152,6 +1221,7 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 			}
 			return false;
 		},
+		
 		showLocation : function(e) {
 			$(self.destination).find(self.controls.sectionMainLocation).show();
 			var teamId = 0;
@@ -1166,7 +1236,6 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 						teamId = $(this).attr(self.attributes.teamId);
 					}
 				});
-
 			}
 			if (teamId) {
 				var teamModel = new TeamModel();
