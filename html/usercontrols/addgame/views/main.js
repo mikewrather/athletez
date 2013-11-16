@@ -367,7 +367,9 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 				});
 		        	}
 		        }},
-		        'button': {type: 'Button', attr: { 'value': 'Cancel'}, showLable: false},
+		        'button': {type: 'Button', attr: { 'value': 'Cancel'}, onCancel: function() {
+		        	routing.trigger('common-popup-close');
+		        }, showLable: false},
 		    }, this.$el.find('.add-game-container-h'));
 
 			/*$(self.el).find(self.controls.txtGameDate).datepicker({
