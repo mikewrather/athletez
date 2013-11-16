@@ -2789,18 +2789,26 @@ Form.editors.Text = Form.Editor.extend({
         self.determineChange();
       }, 0);
     },
-    'select':   function(event) {
+    'select': function(event) {
       this.trigger('select', this);
     },
-    'focus':    function(event) {
+    'focus': function(event) {
       this.trigger('focus', this);
     },
-    'blur':     function(event) {
+    'blur': function(event) {
       this.trigger('blur', this);
-    }
+    },
+    'change': 'change'
   },
+  
+  change: function(e) {
+  	if(this.chnageEvent) this.chnageEvent(e);
+  },
+  
+  
 
   initialize: function(options) {
+    _.bindAll(this);
     Form.editors.Base.prototype.initialize.call(this, options);
     var schema = this.schema;
 
@@ -2809,6 +2817,7 @@ Form.editors.Text = Form.Editor.extend({
 
     if (schema && schema.editorAttrs && schema.editorAttrs.type) type = schema.type;
     if (schema && schema.dataType) type = schema.dataType;
+    if (schema && schema.chnageEvent) this.chnageEvent = schema.chnageEvent;
 
 	this.setAllAttr(this.schema.attr);
     this.$el.attr('type', type);
@@ -2824,6 +2833,8 @@ Form.editors.Text = Form.Editor.extend({
 		changeMonth : true,
 		changeYear : true
 	});
+	
+	//chnageEvent
   },
   
   setAllAttr: function(options) {
