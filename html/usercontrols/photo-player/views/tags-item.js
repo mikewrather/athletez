@@ -222,8 +222,8 @@ function (
 
 		deleteTag: function (e) {
 			var deleteModel = new DeleteModel();
-			deleteModel.subject_id  = $(e.target).parent().attr('data-subject-id');
-			deleteModel.enttypes_id = $(e.target).parent().attr('data-enttypes-id');
+			deleteModel.subject_id  = $(e.target).attr('data-subject-id');
+			deleteModel.enttypes_id = $(e.target).attr('data-enttypes-id');
 			deleteModel.removeNode  = $(e.target).parents("li.tags-li");
 			console.log(deleteModel);
 			deleteModel.destroyAndRemove();

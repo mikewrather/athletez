@@ -108,6 +108,8 @@ class Model_User_Followers extends ORM
 		$enttype = ORM::factory('Site_Enttype',Ent::getMyEntTypeID($obj));
 		$type = $enttype->api_name;
 
+		$baseview = View::factory('email/notification/base');
+
 		switch($type)
 		{
 			case 'comment':
@@ -152,18 +154,22 @@ class Model_User_Followers extends ORM
 				break;
 			case 'tag':
 
+		//		echo "called";
+
 				//get tag subject
 				$subject = $obj->getSubject();
-				$poster = $subject['tagger'];
+				$gb = $obj->getBasics();
+				$poster = $gb['tagger'];
 
 				//Find any follows of this subject
 				$direct_followers = self::get_followers($subject,'follows');
 				foreach($direct_followers as $follow)
 				{
 					Model_Site_Feedfollow::addFeedFollow($feed->id,$follow->id);
+
 					$args = array(
 						'users_id' => $follow->follower_users_id,
-						'subject_line' => $poster->name()." Tagged something you follow.", //TODO: replace this with a real subject line
+						'subject_line' => $poster['name']." Tagged Something You Should Know About", //TODO: replace this with a real subject line
 						'to_address' => "mike.wrather@gmail.com",
 						'message_body' => self::constructEmail($obj,$subject,$type)
 					);
@@ -176,6 +182,7 @@ class Model_User_Followers extends ORM
 				{
 
 				}
+
 				break;
 			case 'resumedataval':
 				break;
@@ -199,6 +206,15 @@ class Model_User_Followers extends ORM
 		$subtype = $enttype->api_name;
 		$subject = $sub->getBasics();
 
+	//	print_r($subtype);
+
+		if($type == 'tag'){
+			$mobj = ($obj['media_obj']['media_type'] == 'image') ?
+				ORM::factory('Media_Image')->where('media_id','=',$obj['media_id'])->find() :
+				ORM::factory('Media_Video')->where('media_id','=',$obj['media_id'])->find();
+			$mobj = $mobj->getBasics();
+		}
+
 		switch($subtype)
 		{
 			case 'user':
@@ -216,12 +232,12 @@ class Model_User_Followers extends ORM
 				}
 				break;
 			case 'media':
+
 			//	if($subject);
 				break;
 			case 'image':
 				break;
 			case 'video':
-
 				break;
 			case 'gamematch':
 				break;
@@ -232,15 +248,19 @@ class Model_User_Followers extends ORM
 				break;
 		}
 
+
+
+
+
 	//	print_r($sub->getBasics());
 		$subheader = View::factory('email/notification/content/subjectheader')
 			->bind('subject',$subject);
 
 		$action = View::factory("email/notification/content/$type")
-			->bind('comment',$obj->getBasics());
+			->bind('obj',$obj->getBasics());
 
 		$email_reason = "I said so";
-		$pingback = "http://athletez.com/api/emailsent/pingback/";
+
 
 		$baseview = View::factory('email/notification/base')
 			->bind('subject_header',$subheader->render())

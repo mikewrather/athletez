@@ -186,7 +186,15 @@ class Model_Site_Tag extends Model_Site_Entdir
 		}
 
 		$match->find();
-		if($match->loaded()) return $match;
+		if($match->loaded()){
+
+			$del = DB::delete('deleted')
+				->where('subject_enttypes_id','=',Ent::getMyEntTypeID($match))
+				->and_where('subject_id','=',$match->id)
+				->execute();
+			Model_Site_Feed::addToFeed($match);
+			return $match;
+		}
 		$this->setLocation($subject_type_id,$subject_id);
 
 		try {

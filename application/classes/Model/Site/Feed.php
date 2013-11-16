@@ -65,6 +65,7 @@ class Model_Site_Feed extends ORM
 
 	public static function addToFeed($obj,$action='add')
 	{
+	//	echo "Called";
 		// if it's not a valid action set it to default (add)
 		if($action != 'add' && $action != 'delete' && $action != 'update') $action = "add";
 
