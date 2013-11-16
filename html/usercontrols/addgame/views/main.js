@@ -293,7 +293,21 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 		        'Location': { type: 'Location'},
 		        'submit': {type: 'Submit', attr: { 'value': 'Create'}, showLable: false, onSubmit: function(e) {
 		        	var errors = form.commit(); 
-		        	if(!errors) {
+		        	if(errors) {
+		        		// auto scroll to focus element which has error
+						for(var i in errors) {
+							var $ob = $("*[name="+i+"]"), $pos = $ob.position();
+							console.error($ob);
+							$ob.parents(".common-modal #modalBody").animate({scrollTop:$pos.top}, '500', function() { 
+				   				$ob.addClass('focus-error-animation');
+				   				setTimeout(function() {
+					   				$ob.removeClass('focus-error-animation');   					
+				   				}, 2000);
+							});
+							console.error($ob.position());
+							break;
+						}
+		        	} else {
 			        var formData = form.getValue(), self = _self;
 			        date = self.formatDate(formData.date,formData.time,formData.Day_light);
 			        	
