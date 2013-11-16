@@ -172,7 +172,6 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 					},
 					showLable: false
 				},
-				
 				'Sports': {
 	        		type: 'DropDown', 
 	        		options: {
@@ -187,7 +186,20 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 							};
 							List.fetch();
 						},
-						callback: function(result) {}
+						
+						callback: function(result) {
+							result = result[0];
+							if(form && form.fields.Select_Team_1.editor.checkForData)
+								form.fields.Select_Team_1.editor.checkForData(true);
+							if (result && result != 0) {
+								$(self.destination).find("input").attr(self.attributes.sportId, result);
+								if(_self.getTeamType(result)) _self.fillTeams(result);
+						} else {
+							$(self.destination).find("input").removeAttr(self.attributes.stateId);
+						}
+						_self.CheckTeamControlsVisibility();
+							
+						}
 					}, showLable: false
 				},
 				
@@ -197,18 +209,18 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 						data: { records: undefined, recordId: 'id', recordValue: 'team_name', selectedValue: undefined },
 						elementId: _self.controls.hdnTimePeriodData,
 						getData: function(value, callback) {
-							var List = new UserTeamsCollection();
-							List.user_id = self.user_id;
-							List.sports_id = $(".selected-sport-h").data("id");
-							List.processResult = function(collection) {
+							_self.teamsCollectionList = new UserTeamsCollection();
+							_self.teamsCollectionList.user_id = _self.user_id;
+							_self.teamsCollectionList.sports_id = $(".selected-sport-h").data("id");
+							_self.teamsCollectionList.processResult = function(collection) {
 								var item = {
 									team_name : "Team Not Found",
 									id : -1
 								};
-								var list = List.AppendItem(item);
+								var list = _self.teamsCollectionList.AppendItem(item);
 								if(callback) callback(list);
 							};
-							List.fetch();
+							_self.teamsCollectionList.fetch();
 						},
 						callback: function(options) {
 							if(options.length) $(self.destination).find("input[name=team_1]").attr("teamId", options[0]);
@@ -317,14 +329,14 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 			        date = self.formatDate(formData.date,formData.time,formData.Day_light);
 			        	
 		        	var completeDate = date, scoreOne = $(self.destination).find('input[name=score_1]').val(), scoreTwo = $(self.destination).find('input[name=score_2]').val();
-				var payload = {
-					game_datetime : completeDate,
-					locations_id : formData.Location,
-					teamOneId : formData.Select_Team_1,
-					teamTwoId : formData.Select_Team_2,
-					sports_id : formData.Sports,
-					users_id : self.user_id
-				};
+					var payload = {
+						game_datetime : completeDate,
+						locations_id : formData.Location,
+						teamOneId : formData.Select_Team_1,
+						teamTwoId : formData.Select_Team_2,
+						sports_id : formData.Sports,
+						users_id : self.user_id
+					};
 				
 				var gameModel = new GameModel(payload);
 				gameModel.save({});
@@ -457,6 +469,7 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 					}
 				});
 		},
+		
 		/*Change sport_id when a sport is selected from dropdown*/
 		changeSport : function(result) {
 		//	console.log("result",result);
@@ -476,8 +489,8 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 				$(self.destination).find("input").removeAttr(self.attributes.stateId);
 			}
 			self.CheckTeamControlsVisibility();
-
 		},
+		
 		setFirstTeam : function(teamId) {
 			console.log("setFirstTeam");
 			var isTeamFound = false;
@@ -1152,12 +1165,10 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 				//console.log("value");
 				var isTeam = self.getTeamType(value);
 				if (!isTeam) {
-					
 					$(self.destination).find(self.controls.sectionTeams).hide();
 					$(self.destination).find(self.controls.sectionScore).hide();
 					$(self.destination).find(self.controls.btnFinish).hide();
 					//$(self.destination).find(self.controls.sectionMainLocation).hide();
-			
 					$(self.destination).find(self.controls.sectionIndividual).show();
 			//		$(self.destination).find(self.controlsbtnIndividualFinish).show();
 				} else {
@@ -1176,10 +1187,8 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 					$(self.destination).find(self.controls.sectionTeams).show();
 					$(self.destination).find(self.controls.btnFinish).show();
 					$(self.destination).find(self.controls.sectionMainLocation).show();
-
 				}
 			} else {
-				//console.log("value null");
 				$(self.destination).find(self.controls.sectionIndividual).hide();
 				$(self.destination).find(self.controls.btnIndividualFinish).hide();
 				$(self.destination).find(self.controls.sectionTeams).hide();

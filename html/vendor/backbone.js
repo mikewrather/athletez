@@ -3292,7 +3292,13 @@ Form.editors.DropDown = Form.editors.Text.extend({
 		_self.setOptions(options.schema.options);
 		
 		// If records are defined if not check for getData function if it's defined then call that and wait for array on objects
-		if(_self.data.records)
+		_self.checkForData();
+		_self.$el.find(".hidden-input-dropdown-h").attr("id", _self.elementId);
+	},
+	
+	checkForData: function(loadNewRecords) {
+		var _self = this;
+		if(_self.data.records && !loadNewRecords)
 			_self.render();
 		else {
 			if(_self.getData) {
@@ -3316,7 +3322,6 @@ Form.editors.DropDown = Form.editors.Text.extend({
 				});
 			}
 		}
-		_self.$el.find(".hidden-input-dropdown-h").attr("id", _self.elementId);
 	},
 
 	// hide dropdown
