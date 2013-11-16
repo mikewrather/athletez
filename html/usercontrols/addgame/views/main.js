@@ -367,7 +367,7 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 				});
 		        	}
 		        }},
-		        'button': {type: 'Button', attr: { 'value': 'Cancel'}, onCancel: function() {
+		        'button': {type: 'Button', attr: { 'value': 'Cancel'}, onClick: function() {
 		        	routing.trigger('common-popup-close');
 		        }, showLable: false},
 		    }, this.$el.find('.add-game-container-h'));

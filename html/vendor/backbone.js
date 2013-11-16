@@ -3603,8 +3603,8 @@ Form.editors.Button = Form.editors.Text.extend({
   		if(options.schema && options.schema.attr && options.schema.attr.value) {
     	this.defaultValue = options.schema.attr.value;
     }
-    if(options.schema && options.schema.onCancel) {
-    	this.onCancel = options.schema.onCancel;
+    if(options.schema && options.schema.onClick) {
+    	this.onClick = options.schema.onClick;
     }
     
     Form.editors.Text.prototype.initialize.call(this, options);
@@ -3616,7 +3616,7 @@ Form.editors.Button = Form.editors.Text.extend({
   
    submitHandler: function(e) {
   	e.preventDefault();
-  	if(this.onCancel) this.onCancel(e);
+  	if(this.onClick) this.onClick(e);
   },
   
   setAllAttr: function(options) {
