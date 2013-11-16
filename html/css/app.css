@@ -1566,9 +1566,15 @@ margin-top:10px;
 	margin-right: 25px;
 }
 
-form fieldset ul li { float: left; margin: 0 20px; }
-form fieldset ul li input, form fieldset ul li label { float: left; margin: 0 20px; }
+form fieldset ul li { height: 25px; }
+form fieldset ul li { float: left; margin: 0 20px 0 0; }
+form fieldset ul li input, form fieldset ul li label { float: left; margin: 0 0 0 20px; }
 form fieldset > div { float: left; width: 100%; }
+form fieldset > div > div { float: left; }
+
+div[data-error] {
+	color: #FF0000;
+}
 
 
 

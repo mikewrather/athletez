@@ -3090,22 +3090,29 @@ Form.editors.AutoComplete = Form.editors.Text.extend({
   determineChange: function(event) {
     var _self = this, currentValue = this.$el.val();
     _self.$el.addClass('ui-autocomplete-loading');
-	if(this.getData) this.getData(currentValue, function(data) {
-		_self.cities = [];
-		
+	if(this.getData) this.getData(currentValue, function(data, attr) {
+		_self.records = [];
+		if(!attr) attr = 'city';
 		for (var key in data) {
-			_self.cities.push(data[key]);
+			_self.records.push(data[key]);
 		}
-		var cityArr = [];
-		_self.cities.forEach(function(value, index) {
-			cityArr.push(value['city']);
+		
+		var arr = [];
+		_self.records.forEach(function(value, index) {
+			var v = (value.payload)?value.payload[attr]:value[attr], id = (value.payload)?value.payload['id']:value['id'];
+			var ob = {id: id, value: v};
+			arr.push(ob);
 		});
 		
 		// Destroy existing autocomplete from text box before attaching it again
 		// try catch as for the first time it gives error
 		try { _self.$el.autocomplete("destroy"); } catch(ex) {}
 		_self.$el.autocomplete({
-			source : cityArr
+			source : arr,
+			select: function( event, ui ) {
+				console.error(ui);
+				_self.$el.attr("data-id", (ui.item.id)?ui.item.id:ui.item.value);
+			}
 		});
 		//Trigger keydown to display the autocomplete dropdown just created
 		_self.$el.trigger('keydown');
@@ -3115,7 +3122,10 @@ Form.editors.AutoComplete = Form.editors.Text.extend({
   /* Autocomplete  */ 
   autoComplete: function() {
   	$(e.target).autocomplete({
-		source : arr
+		source : arr,
+		select: function( event, ui ) {
+			_self.$el.attr("data-id",  (ui.item.id)?ui.item.id:ui.item.value);
+		}
 	});
   },
 
@@ -3135,7 +3145,7 @@ Form.editors.AutoComplete = Form.editors.Text.extend({
    * @return {String}
    */
   getValue: function() {
-    return this.$el.val();
+  	return this.$el.attr("data-id");
   },
 
   /**
@@ -3143,7 +3153,7 @@ Form.editors.AutoComplete = Form.editors.Text.extend({
    * @param {String}
    */
   setValue: function(value) {
-    this.$el.val(value);
+    this.$el.attr("data-id", value);
   },
 
   focus: function() {

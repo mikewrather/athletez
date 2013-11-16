@@ -86,8 +86,6 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 			// LABELS
 			fieldMessage : '.field-message_h',
 			secSports : ".section-game-sports_h",
-			//fieldError : '.field-error',
-			
 			hdnSportsIdData : "hdn_sport_id",
 			hdnSportsId : "#hdn_sport_id",
 			hdnTimePeriodData : "hdn_time-period_h",
@@ -107,8 +105,6 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 		},
 		
 		inlineTemplates : {
-			
-
 		},
 		
 		/*Messages Holds the messages, warning, alerts, errors, information variables*/
@@ -132,7 +128,6 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 			team : "team",
 			rgxTime : /^(0?[1-9]|1[012])(:[0-5]\d)$/,
 			rgxTimeWhole : /^(0?[1-9]|1[012])$/
-			
 		},
 
 		/*initialize gets called by default when constructor is initialized*/
@@ -150,7 +145,7 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 			
 			var form = new FormComponent({
 		        date: {type: 'Text', attr: { 'placeholder': 'Enter Date', 'class': "txt-game-date_h txtDate"}, showLable: false, validators: ['required'], bindDatePicker: true},
-		        time: {type: 'Text', attr: { 'placeholder': 'Time', 'class': "txt-game-time_h hasDatepicker txtTime"}, showLable: false, validators: ['required']},
+		        time: {type: 'Text', attr: { 'placeholder': 'Time', 'class': "txt-game-time_h hasDatepicker txtTime"}, showLable: false, validators: [{type:'required', message: 'Please ente time'}, /^(0?[1-9]|1[012])(:[0-5]\d)$/]},
 		        'Day_light': {
 	        		type: 'DropDown', 
 	        		options: {
@@ -210,12 +205,7 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 							List.fetch();
 						},
 						callback: function(options) {
-							//alert("callback");
-							//alert($(self.destination).find("input[name=team_1]").length);
-							
-							console.error(options);							
 							if(options.length) $(self.destination).find("input[name=team_1]").attr("teamId", options[0]);
-							
 							$(self.destination).find("input[name=team_1]").attr("abcdef", "abcdef");
 						}
 					}
@@ -252,12 +242,16 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 					}},
  				
  				'Select_Team_2': { type: 'AutoComplete', getData: function(value, callback) {
-		        	var List = new CityCollection();
-					List.states_id = _self.states_id;
-					List.city_name = value;
-		        	List.fetch();
+		        	var List = new TeamsCollection();
+		        	List.states_id = _self.states_id;
+					//List.city_id = $(e.target).attr(self.attributes.cityId);
+					List.sports_id = this.$el.attr("sportid");
+					List.team_name = value;
+		        	
+					if(_self.teamList) _self.teamList.abort();
+		        	_self.teamList = List.fetch();
 		        	$.when(List.request).done(function() {
-		        		if(callback) callback(List.toJSON());
+		        		if(callback) callback(List.toJSON(), 'team_name');
 		        	});
 		        },
 		        
@@ -299,20 +293,11 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 		        'Location': { type: 'Location'},
 		        'submit': {type: 'Submit', attr: { 'value': 'Create'}, showLable: false, onSubmit: function(e) {
 		        	var errors = form.commit(); 
-		        	if(errors)
-			        	console.error(errors);
-			        else {
-			        	console.error(form.getValue());
-			        
+		        	if(!errors) {
 			        var formData = form.getValue(), self = _self;
-			        	
 			        date = self.formatDate(formData.date,formData.time,formData.Day_light);
-						if(!date) isDataValid = false;	
 			        	
-		        	var completeDate = date;// + " " + timeText + "00";// + ampm;
-		        	
-		        	var scoreOne = scoreTwo = '';
-		        	
+		        	var completeDate = date, scoreOne = scoreTwo = '';
 				var payload = {
 					game_datetime : completeDate,
 					locations_id : formData.Location,
@@ -320,19 +305,15 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 					teamTwoId : formData.Select_Team_2,
 					sports_id : formData.Sports,
 					users_id : self.user_id
-
 				};
-				////console.log("payload", payload);
+				
 				var gameModel = new GameModel(payload);
-
 				gameModel.save({});
-
 				$.when(gameModel.request).done(function(response) {
 					console.log(response);
 					if (response != null && response.payload != null) {
 						self.game_id = response.payload.id;
 						var isHome = $(self.destination).find("input[value=Home]").is(':checked');
-
 						var payloadOne = {
 							game_datetime : completeDate,
 							games_id : self.game_id,
