@@ -4,21 +4,14 @@
  // Requires `define`, `require`
  // Returns {Add Game VIEW} constructor
  */
-define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 'views', 'utils', 'vendor', 'sportorg/collections/sports_listall', 'location/collections/states', 'usercontrols/addgame/collections/teams', 'location/collections/cities', 'usercontrols/addgame/collections/teams_user', 'usercontrols/addgame/collections/teams', 'usercontrols/addgame/collections/games_search', 'usercontrols/addgame/models/team', 'usercontrols/addgame/models/team_add', 'usercontrols/addgame/models/game', 'usercontrols/addgame/models/uslgamelink',
-'usercontrol/dropdown/view/dropdown', 'usercontrol/location/views/get-view-location','component/forms'
-], function(require, layoutTemplate) {
+define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 'views', 'utils', 'vendor', 'sportorg/collections/sports_listall', 'location/collections/states', 'usercontrols/addgame/collections/teams', 'location/collections/cities', 'usercontrols/addgame/collections/teams_user', 'usercontrols/addgame/collections/teams', 'usercontrols/addgame/collections/games_search', 'usercontrols/addgame/models/team', 'usercontrols/addgame/models/team_add', 'usercontrols/addgame/models/game', 'usercontrols/addgame/models/uslgamelink', 'usercontrol/dropdown/view/dropdown', 'usercontrol/location/views/get-view-location', 'component/forms'], function(require, layoutTemplate) {
 
-	var self, facade = require('facade'), views = require('views'), SectionView = views.SectionView, utils = require('utils'), Channel = utils.lib.Channel, vendor = require('vendor'), Mustache = vendor.Mustache, $ = facade.$, BasicModel = require('usercontrols/tag/models/basic_info'), SportsCollection = require('sportorg/collections/sports_listall'), StatesCollection = require('location/collections/states'), CityCollection = require('location/collections/cities'), UserTeamsCollection = require('usercontrols/addgame/collections/teams_user'), TeamsCollection = require('usercontrols/addgame/collections/teams'), TeamModel = require('usercontrols/addgame/models/team'), TeamAddModel = require('usercontrols/addgame/models/team_add'), GameModel = require('usercontrols/addgame/models/game'), GamesSearchCollection = require('usercontrols/addgame/collections/games_search'),
-	DropDownList = require('usercontrol/dropdown/view/dropdown'),
-	LocationView = require('usercontrol/location/views/get-view-location'),
-	FormComponent = require('component/forms'),
+	var self, facade = require('facade'), views = require('views'), SectionView = views.SectionView, utils = require('utils'), Channel = utils.lib.Channel, vendor = require('vendor'), Mustache = vendor.Mustache, $ = facade.$, BasicModel = require('usercontrols/tag/models/basic_info'), SportsCollection = require('sportorg/collections/sports_listall'), StatesCollection = require('location/collections/states'), CityCollection = require('location/collections/cities'), UserTeamsCollection = require('usercontrols/addgame/collections/teams_user'), TeamsCollection = require('usercontrols/addgame/collections/teams'), TeamModel = require('usercontrols/addgame/models/team'), TeamAddModel = require('usercontrols/addgame/models/team_add'), GameModel = require('usercontrols/addgame/models/game'), GamesSearchCollection = require('usercontrols/addgame/collections/games_search'), DropDownList = require('usercontrol/dropdown/view/dropdown'), LocationView = require('usercontrol/location/views/get-view-location'), FormComponent = require('component/forms'),
 	//Models
-	UserGameLinkModel = require('usercontrols/addgame/models/uslgamelink'),
-	
-	AddGameView = SectionView.extend({
+	UserGameLinkModel = require('usercontrols/addgame/models/uslgamelink'), AddGameView = SectionView.extend({
 		template : layoutTemplate,
 		/*Data to be sent as parameter in call back function*/
-		
+
 		gameData : {},
 
 		teams : [],
@@ -51,7 +44,7 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 			sectionDate : ".section-game-date_h",
 			txtGameDate : ".txt-game-date_h",
 			txtGameTime : ".txt-game-time_h",
-			spnTimePeriod :".spn-ddl-time-period_h",
+			spnTimePeriod : ".spn-ddl-time-period_h",
 			ddlTimePeriod : ".ddl-time-period_h",
 			spnSports : ".span-ddl-sports_h",
 			ddlSports : ".ddl-game-sports_h",
@@ -103,10 +96,10 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 			locationId : 'locationid',
 			gameId : 'gameid'
 		},
-		
+
 		inlineTemplates : {
 		},
-		
+
 		/*Messages Holds the messages, warning, alerts, errors, information variables*/
 		/*In Case of similar message create only one object and key*/
 		messages : {
@@ -121,7 +114,7 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 			selectSport : "Please select sport",
 			selectValidTime : "Please enter valid time in format hh:mm (12 hours)"
 		},
-		
+
 		/*tags to be used to tag the type of game in games data*/
 		tags : {
 			individual : "individual",
@@ -142,93 +135,180 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 		render : function() {
 			SectionView.prototype.render.call(this);
 			var _self = this;
-			var form = new FormComponent({
-		        date: {type: 'Text', attr: { 'placeholder': 'Enter Date', 'class': "txt-game-date_h txtDate"}, showLable: false, validators: ['required'], bindDatePicker: true, chnageEvent: function() {
-		        	var date = this.getValue(), currentDate = new Date();
-					if (date != null && currentDate >= date) {
-						$(".txt-score-team-h").removeClass('hidden');
-					} else {
-						$(".txt-score-team-h").addClass('hidden').val("");
+			var formData = new FormComponent({
+				'date' : {
+					options: {
+						post_to_server	: false,
+						serverKey : "game_date",
+						objectValuesToUpdate: ["game_datetime"],
+						getValue: function() {
+							return this.$el.val();
+						}
+					},
+					type : 'Text',
+					attr : {
+						'placeholder' : 'Enter Date',
+						'class' : "txt-game-date_h txtDate"
+					},
+					
+					showLable : false,
+					validators : [{type : 'required',
+						message : 'Please select date.'}],
+					bindDatePicker : true,
+					chnageEvent : function() {
+						var date = this.getValue(), currentDate = new Date();
+						if (date != null && currentDate >= date) {
+							$(".txt-score-team-h").removeClass('hidden');
+						} else {
+							$(".txt-score-team-h").addClass('hidden').val("");
+						}
 					}
-		        }},
-		        time: {type: 'Text', attr: { 'placeholder': 'Time', 'class': "txt-game-time_h hasDatepicker txtTime"}, showLable: false, validators: [{type:'required', message: 'Please ente time'}, /^(0?[1-9]|1[012])(:[0-5]\d)$/]},
-		        'Day_light': {
-	        		type: 'DropDown', 
-	        		options: {
-						data: { records: [{
+				},
+				'time' : {
+					options: {							
+						post_to_server	: false,					
+						serverKey: "game_time",
+						objectValuesToUpdate: ["game_datetime"]						
+					},
+					type : 'Text',
+					attr : {
+						'placeholder' : 'Time',
+						'class' : "txt-game-time_h hasDatepicker txtTime"
+					},
+					showLable : false,
+					validators : [{
+						type : 'required',
+						message : 'Please ente time.'
+					}, /^(0?[1-9]|1[012])(:[0-5]\d)$/]
+				},
+				'Day_light' : {
+					type : 'DropDown',
+					options : {
+						post_to_server	: false,					
+						serverKey : "game_ampm",
+						objectValuesToUpdate: ["game_datetime"],
+						data : {
+							records : [{
 								payload : {
 									name : "AM",
 									value : "AM"
 								}
-							},
-							{
+							}, {
 								payload : {
 									name : "PM",
-									value : "PM"					
-							}
-							}], recordId: 'name', recordValue: 'value', selectedValue : "PM"},
-						elementId: _self.controls.hdnTimePeriodData,
-						callback: function(result) {}
-					},
-					showLable: false
-				},
-				'Sports': {
-	        		type: 'DropDown', 
-	        		options: {
-						data: { records: undefined, recordId: 'id', recordValue: 'custom_name', selectedValue: undefined },
-						elementId: _self.controls.hdnTimePeriodData,
-						getData: function(value, callback) {
-							var List = new SportsCollection();
-							//List.user_id = self.user_id;
-							List.processResult = function(collection) {
-								var data = List.ParseForDropdown();
-								if(callback) callback(data);
-							};
-							List.fetch();
+									value : "PM"
+								}
+							}],
+							recordId : 'name',
+							recordValue : 'value',
+							selectedValue : "PM"
 						},
-						
-						callback: function(result) {
+						elementId : _self.controls.hdnTimePeriodData,
+						callback : function(result) {
+						}
+					},
+					showLable : false
+				},
+				
+				
+				'game_datetime'	: {
+					type: "Hidden",
+					options : {
+						valueBindings : ['date','time','Day_light'],					
+						///getValue: function() {
+						//	return this.;
+						//},
+						post_to_server	: true
+					}
+				},
+				
+				
+				'Sports' : {
+
+					type : 'DropDown',
+					showLable : false,
+					
+					options : {
+						serverKey : "sports_id",
+						post_to_server	: true,	
+						objectValuesToUpdate: ["Select_Team_1", "score_1"],
+						source_collection : SportsCollection,
+						request_finished : function() {
+								
+						},
+
+						data : {
+							records : undefined,
+							recordId : 'id',
+							recordValue : 'custom_name',
+							selectedValue : undefined
+						},
+						elementId : _self.controls.hdnTimePeriodData,
+						callback : function(result) {
 							result = result[0];
-							if(form && form.fields.Select_Team_1.editor.checkForData)
+							if (form && form.fields.Select_Team_1.editor.checkForData)
 								form.fields.Select_Team_1.editor.checkForData(true);
 							if (result && result != 0) {
 								$(self.destination).find("input").attr(self.attributes.sportId, result);
-								if(_self.getTeamType(result)) _self.fillTeams(result);
-						} else {
-							$(self.destination).find("input").removeAttr(self.attributes.stateId);
+								if (_self.getTeamType(result))
+									_self.fillTeams(result);
+							} else {
+								$(self.destination).find("input").removeAttr(self.attributes.stateId);
+							}
+							_self.CheckTeamControlsVisibility();
+
 						}
-						_self.CheckTeamControlsVisibility();
-							
-						}
-					}, showLable: false
+					}
 				},
-				
-				'Select_Team_1': {
-	        		type: 'DropDown', 
-	        		options: {
-						data: { records: undefined, recordId: 'id', recordValue: 'team_name', selectedValue: undefined },
-						elementId: _self.controls.hdnTimePeriodData,
-						getData: function(value, callback) {
-							_self.teamsCollectionList = new UserTeamsCollection();
-							_self.teamsCollectionList.user_id = _self.user_id;
-							_self.teamsCollectionList.sports_id = $(".selected-sport-h").data("id");
-							_self.teamsCollectionList.processResult = function(collection) {
-								var item = {
-									team_name : "Team Not Found",
-									id : -1
-								};
-								var list = _self.teamsCollectionList.AppendItem(item);
-								if(callback) callback(list);
-							};
-							_self.teamsCollectionList.fetch();
+
+				'Select_Team_1' : {
+
+					options : {
+					serverKey : "teamOneId",
+					type : 'DropDown',						
+						request_fields : [{
+							key : 'user_id',
+							value : function() { return _self.user_id; }
+						}, {
+							key : 'sports_id',
+							value : function() { return _self.sports_id; }
+						}],
+						source_collection : UserTeamsCollection,
+						request_finished : function() {
 						},
-						callback: function(options) {
-							if(options.length) $(self.destination).find("input[name=team_1]").attr("teamId", options[0]);
+						
+						data : {
+							records : undefined,
+							recordId : 'id',
+							recordValue : 'team_name',
+							selectedValue : undefined
+						},
+						
+						elementId : _self.controls.hdnTimePeriodData,
+						callback : function(options) {
+							if (options.length)
+								$(self.destination).find("input[name=team_1]").attr("teamId", options[0]);
 						}
 					}
 				},
-				'score_1': {type: 'Text', attr: { 'placeholder': 'Score', 'class': "txt-score-team-h hidden"}, showLable: false},
-				'team_1': { type: 'Radio', options: ['Home', 'Away'], attr: {'team': 'one'}, showLable: false, onClickFn: function(e) { 
+				'score_1' : {
+					serverKey : "score-1",
+					type : 'Text',
+					attr : {
+						'placeholder' : 'Score',
+						'class' : "txt-score-team-h hidden"
+					},
+					showLable : false
+				},
+				'team_1' : {
+					serverKey : "",
+					type : 'Radio',
+					options : ['Home', 'Away'],
+					attr : {
+						'team' : 'one'
+					},
+					showLable : false,
+					onClickFn : function(e) {
 						var value = e ? $(e.target).val() : "away", teamId = 0;
 						if (value == "home") {
 							teamId = $(e.target).attr(self.attributes.teamId);
@@ -241,7 +321,7 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 								}
 							});
 						}
-						
+
 						if (teamId) {
 							var teamModel = new TeamModel();
 							teamModel.id = teamId;
@@ -250,35 +330,57 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 								_self.location_id = data.location_id || 0;
 								var $form = $(e.target).parents('form');
 								$form.find('.address-h').val(data.location_name).trigger('blur');
-								$form.find('.verify-address-h').val(data.location_name).trigger('click');								
+								$form.find('.verify-address-h').val(data.location_name).trigger('click');
 							};
 							teamModel.fetch();
 						} else {
 							$(e.target).parents('form').find('.address-h').val('').trigger('blur');
 						}
-					}},
- 				
- 				'Select_Team_2': { type: 'AutoComplete', getData: function(value, callback) {
-		        	var List = new TeamsCollection();
-		        	List.states_id = _self.states_id;
-					//List.city_id = $(e.target).attr(self.attributes.cityId);
-					List.sports_id = this.$el.attr("sportid");
-					List.team_name = value;
-		        	
-					if(_self.teamList) _self.teamList.abort();
-		        	_self.teamList = List.fetch();
-		        	$.when(List.request).done(function() {
-		        		if(callback) callback(List.toJSON(), 'team_name');
-		        	});
-		        },
-		        
-		        callback: function(options) {
-					if(options.length) {
-						$("input[name=team_2]").attr("teamId", options[0]);
 					}
-				}},
-				'score_2': {type: 'Text', attr: { 'placeholder': 'Score', 'class': "txt-score-team-h hidden"}, showLable: false},
-		        'team_2': { type: 'Radio', options: ['Home', 'Away'], showLable: false, onClickFn: function(e) { 
+				},
+
+				'Select_Team_2' : {
+					serverKey : "",
+					type : 'AutoComplete',
+					options: {
+						keyNameInPayload: 'team_name',
+						request_fields : [{
+								key : 'states_id',
+								value : _self.states_id
+							}, {
+								key : 'sports_id',
+								value : $(".selected-sport-h").data("id")
+							},
+							{
+								key : 'team_name',
+								value: ''
+							}
+						],
+						source_collection : TeamsCollection,
+						request_finished : function() {
+						}
+					},
+					 callback : function(options) {
+						if (options.length) {
+							 $("input[name=team_2]").attr("teamId", options[0]);
+					 	}
+					 }
+				},
+				'score_2' : {
+					serverKey : "",
+					type : 'Text',
+					attr : {
+						'placeholder' : 'Score',
+						'class' : "txt-score-team-h hidden"
+					},
+					showLable : false
+				},
+				'team_2' : {
+					serverKey : "",
+					type : 'Radio',
+					options : ['Home', 'Away'],
+					showLable : false,
+					onClickFn : function(e) {
 						var value = e ? $(e.target).val() : "away", teamId = 0;
 						if (value == "home") {
 							teamId = $(e.target).attr(self.attributes.teamId);
@@ -291,7 +393,6 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 								}
 							});
 						}
-						
 						if (teamId) {
 							var teamModel = new TeamModel();
 							teamModel.id = teamId;
@@ -300,108 +401,139 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 								_self.location_id = data.location_id || 0;
 								var $form = $(e.target).parents('form');
 								$form.find('.address-h').val(data.location_name).trigger('blur');
-								$form.find('.verify-address-h').val(data.location_name).trigger('click');								
+								$form.find('.verify-address-h').val(data.location_name).trigger('click');
 							};
 							teamModel.fetch();
 						} else {
 							$(e.target).parents('form').find('.address-h').val('').trigger('blur');
 						}
-					}},
-		        'Location': { type: 'Location'},
-		        'submit': {type: 'Submit', attr: { 'value': 'Create'}, showLable: false, onSubmit: function(e) {
-		        	var errors = form.commit(); 
-		        	if(errors) {
-		        		// auto scroll to focus element which has error
-						for(var i in errors) {
-							var $ob = $("*[name="+i+"]"), $pos = $ob.position();
-							console.error($ob);
-							$ob.parents(".common-modal #modalBody").animate({scrollTop:$pos.top}, '500', function() { 
-				   				$ob.addClass('focus-error-animation');
-				   				setTimeout(function() {
-					   				$ob.removeClass('focus-error-animation');   					
-				   				}, 2000);
-							});
-							console.error($ob.position());
-							break;
-						}
-		        	} else {
-			        var formData = form.getValue(), self = _self;
-			        date = self.formatDate(formData.date,formData.time,formData.Day_light);
-			        	
-		        	var completeDate = date, scoreOne = $(self.destination).find('input[name=score_1]').val(), scoreTwo = $(self.destination).find('input[name=score_2]').val();
-					var payload = {
-						game_datetime : completeDate,
-						locations_id : formData.Location,
-						teamOneId : formData.Select_Team_1,
-						teamTwoId : formData.Select_Team_2,
-						sports_id : formData.Sports,
-						users_id : self.user_id
-					};
-				
-				var gameModel = new GameModel(payload);
-				gameModel.save({});
-				$.when(gameModel.request).done(function(response) {
-					console.log(response);
-					if (response != null && response.payload != null) {
-						self.game_id = response.payload.id;
-						var isHome = $(self.destination).find("input[value=Home]").is(':checked');
-						var payloadOne = {
-							game_datetime : completeDate,
-							games_id : self.game_id,
-							home_team : isHome || false,
-							locations_id : self.location_id,
-							score : scoreOne,
-							users_id : self.user_id
-						};
-
-						var addTeamModelOne = new TeamAddModel(payloadOne);
-						addTeamModelOne.teams_id = formData.Select_Team_1;
-						addTeamModelOne.save();
-						var payloadTwo = {
-							game_datetime : completeDate,
-							games_id : self.game_id,
-							home_team : isHome || false,
-							locations_id : self.location_id,
-							score : scoreTwo,
-							users_id : self.user_id
-						};
-						isHome = $(self.destination).find(self.controls.rdoTeamTwo).is(':checked');
-
-						var addTeamModelTwo = new TeamAddModel(payloadTwo);
-						addTeamModelTwo.teams_id = formData.Select_Team_2;
-						addTeamModelTwo.save();
-						self.gameData = {
-							type : self.tags.team,
-							game_datetime : completeDate,
-							team_id_one : formData.Select_Team_1,
-							team_id_two : formData.Select_Team_2,
-							sports_id : formData.Sports,
-							games_id : self.game_id,
-							users_id : self.user_id 
-						};
-						routing.trigger(self.channel, response);
 					}
-				});
-		        	}
-		        }},
-		        'button': {type: 'Button', attr: { 'value': 'Cancel'}, onClick: function() {
-		        	routing.trigger('common-popup-close');
-		        }, showLable: false},
-		    }, this.$el.find('.add-game-container-h'));
-		    
+				},
+				'Location' : {
+					serverKey : "",
+					type : 'Location'
+				},
+				'users_id'	: {
+					type: "Hidden",
+					value: _self.users_id,
+					post_to_server	: true,
+				},
+				'submit' : {
+					type : 'Submit',
+					attr : {
+						'value' : 'Create'
+					},
+					showLable : false,
+					onSubmit : function(e) {
+						var errors = form.commit();
+						if (errors) {
+							// auto scroll to focus element which has error
+							for (var i in errors) {
+								var $ob = $("*[name=" + i + "]"), $pos = $ob.position();
+								console.error($ob);
+								$ob.parents(".common-modal #modalBody").animate({
+									scrollTop : $pos.top
+								}, '500', function() {
+									$ob.addClass('focus-error-animation');
+									setTimeout(function() {
+										$ob.removeClass('focus-error-animation');
+									}, 2000);
+								});
+								console.error($ob.position());
+								break;
+							}
+						} else {
+							var formData = form.getValue(), self = _self;
+							date = self.formatDate(formData.date, formData.time, formData.Day_light);
+
+							var completeDate = date, scoreOne = $(self.destination).find('input[name=score_1]').val(), scoreTwo = $(self.destination).find('input[name=score_2]').val();
+							var payload = {
+								game_datetime : completeDate,
+								locations_id : formData.Location,
+								teamOneId : formData.Select_Team_1,
+								teamTwoId : formData.Select_Team_2,
+								sports_id : formData.Sports,
+								users_id : self.user_id
+							};
+
+							var gameModel = new GameModel(payload);
+							gameModel.save({});
+							$.when(gameModel.request).done(function(response) {
+								console.log(response);
+								if (response != null && response.payload != null) {
+									self.game_id = response.payload.id;
+									var isHome = $(self.destination).find("input[value=Home]").is(':checked');
+									var payloadOne = {
+										game_datetime : completeDate,
+										games_id : self.game_id,
+										home_team : isHome || false,
+										locations_id : self.location_id,
+										score : scoreOne,
+										users_id : self.user_id
+									};
+
+									var addTeamModelOne = new TeamAddModel(payloadOne);
+									addTeamModelOne.teams_id = formData.Select_Team_1;
+									addTeamModelOne.save();
+									var payloadTwo = {
+										game_datetime : completeDate,
+										games_id : self.game_id,
+										home_team : isHome || false,
+										locations_id : self.location_id,
+										score : scoreTwo,
+										users_id : self.user_id
+									};
+									isHome = $(self.destination).find(self.controls.rdoTeamTwo).is(':checked');
+
+									var addTeamModelTwo = new TeamAddModel(payloadTwo);
+									addTeamModelTwo.teams_id = formData.Select_Team_2;
+									addTeamModelTwo.save();
+									self.gameData = {
+										type : self.tags.team,
+										game_datetime : completeDate,
+										team_id_one : formData.Select_Team_1,
+										team_id_two : formData.Select_Team_2,
+										sports_id : formData.Sports,
+										games_id : self.game_id,
+										users_id : self.user_id
+									};
+									routing.trigger(self.channel, response);
+								}
+							});
+						}
+					}
+				},
+				'button' : {
+					type : 'Button',
+					attr : {
+						'value' : 'Cancel'
+					},
+					onClick : function() {
+						routing.trigger('common-popup-close');
+					},
+					showLable : false
+				},
+			}, this.$el.find('.add-game-container-h'));
+			
+			var form = formData.form;
+			this.formValues = formData.formValues;
+			console.error(this.formValues.fields);
+			console.error(this.formValues.getFormValues());
 		},
 		
-		afterRender: function() {
+
+
+		afterRender : function() {
 			var _self = this, location = new LocationView({
-				callback: function(id) {
-					var disable = (id != '')?true:false;
+				callback : function(id) {
+					var disable = (id != '') ? true : false;
 					_self.$el.find(".btn-game-Finish_h").attr("disable", disable);
 					_self.$el.find(".txt-game-location-id_h").val(id);
 				}
 			});
 			this.$el.find('.location-view-h').html(location.el);
 		},
-  
+
 		// **Method** `setOptions` - called by BaseView's initialize method
 		setOptions : function(options) {
 			this.user_id = options.user_id;
@@ -420,67 +552,67 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 		},
 		setupView : function() {
 			self.setUpMainView();
-			if(self.team_id) {
+			if (self.team_id) {
 				var teamModel = new TeamModel();
-					teamModel.id = self.team_id;
-					teamModel.fetchSuccess = function(model, response) {
-						var data = teamModel.parseAsRequired(response);
-						self.team = data;
-						self.sports_id = data.sports_id || null;
-						self.fillSports();
-					};
-						teamModel.fetch();
+				teamModel.id = self.team_id;
+				teamModel.fetchSuccess = function(model, response) {
+					var data = teamModel.parseAsRequired(response);
+					self.team = data;
+					self.sports_id = data.sports_id || null;
+					self.fillSports();
+				};
+				teamModel.fetch();
 			} else {
 				self.fillSports();
 			}
 		},
-		
+
 		setUpMainView : function() {
 			var markup = Mustache.to_html(self.template, {});
 			$(self.el).html(markup);
 		},
 
 		/*Fill Sports dropdown with sports on basis of gender and sports_club type*/
-		fillSports : function() {			
-				var List = new SportsCollection();
-				//List.user_id = self.user_id;
-				List.processResult = function(collection) {
-					var data = List.ParseForDropdown();
-					self.SetupSportsView(data);
-				};
-				List.fetch();
+		fillSports : function() {
+			var List = new SportsCollection();
+			//List.user_id = self.user_id;
+			List.processResult = function(collection) {
+				var data = List.ParseForDropdown();
+				self.SetupSportsView(data);
+			};
+			List.fetch();
 		},
 		SetupSportsView : function(List) {
 
 			self.sports = List;
 			var data = {};
-               data.records = self.sports;
-               data.recordId = 'id';
-			   data.recordValue = 'custom_name';
+			data.records = self.sports;
+			data.recordId = 'id';
+			data.recordValue = 'custom_name';
 			var DropDown = new DropDownList({
-					data: data,
-					title: "Select Sport",
-					elementId: self.controls.hdnSportsIdData,
-					destination: self.controls.spnSports,
-					targetView: self,
-					selectedValue : self.sports_id || null,
-					callback: function(result) {
-						self.changeSport(result);						
-					}
-				});
+				data : data,
+				title : "Select Sport",
+				elementId : self.controls.hdnSportsIdData,
+				destination : self.controls.spnSports,
+				targetView : self,
+				selectedValue : self.sports_id || null,
+				callback : function(result) {
+					self.changeSport(result);
+				}
+			});
 		},
-		
+
 		/*Change sport_id when a sport is selected from dropdown*/
 		changeSport : function(result) {
-		//	console.log("result",result);
+			//	console.log("result",result);
 			if (result && result != 0) {
 				$(self.destination).find(self.controls.sectionTeams).show();
 				$(self.destination).find(self.controls.btnFinish).fadeIn();
 				$(self.destination).find("input").attr(self.attributes.sportId, result);
-				
+
 				// Fill Teams Only if Its Team Game
 				var isTeam = self.getTeamType(result);
-				if(isTeam){
+				if (isTeam) {
 					self.fillTeams(result);
 				}
 			} else {
@@ -490,7 +622,7 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 			}
 			self.CheckTeamControlsVisibility();
 		},
-		
+
 		setFirstTeam : function(teamId) {
 			console.log("setFirstTeam");
 			var isTeamFound = false;
@@ -501,16 +633,16 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 					}
 				}
 				if (!isTeamFound) {
-					if(self.team){
+					if (self.team) {
 						self.setSelectedTeam(self.team);
-					}else{
-					var teamModel = new TeamModel();
-					teamModel.id = self.team_id;
-					teamModel.fetchSuccess = function(model, response) {
-						var data = teamModel.parseAsRequired(response);
-						self.team = data;
-						self.setSelectedTeam(data);
-					};
+					} else {
+						var teamModel = new TeamModel();
+						teamModel.id = self.team_id;
+						teamModel.fetchSuccess = function(model, response) {
+							var data = teamModel.parseAsRequired(response);
+							self.team = data;
+							self.setSelectedTeam(data);
+						};
 						teamModel.fetch();
 					}
 				}
@@ -520,7 +652,7 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 		setSelectedTeam : function(data) {
 			console.log("setSelectedTeam");
 			if (data) {
-				console.log("data",data);
+				console.log("data", data);
 				var teamname = data['team_name'];
 				var teamId = data['team_id'];
 				$(self.destination).find(self.controls.sectionTeamOne).find("input").attr(self.attributes.teamId, teamId);
@@ -530,7 +662,7 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 				$(self.destination).find(self.controls.sectionTeamOne).find(self.controls.indicator).addClass("valid").removeClass("invalid").show();
 			}
 		},
-		
+
 		fillTeams : function(sport_id) {
 			var List = new UserTeamsCollection();
 			List.user_id = self.user_id;
@@ -547,57 +679,55 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 			var tempCollection = List.fetch();
 			//self.TeamFetchRequest.push(tempCollection);
 		},
-		
+
 		setUpUserTeams : function(List) {
 			self.teams = List || [];
 			self.setFirstTeam(self.team_id);
 			//spanddlteam
 			var data = {};
-               data.records = self.teams;
-               data.recordId = 'id';
-			   data.recordValue = 'team_name';
-			   
+			data.records = self.teams;
+			data.recordId = 'id';
+			data.recordValue = 'team_name';
+
 			var DropDownOne = new DropDownList({
-					data: data,
-					//title: "Select Team",
-					elementId: "hdn_team_id",
-					targetView: self,					
-					destination: self.controls.spanddlteamone,			
-					selectedValue : self.team_id || null,
-					callback: function(result) {
-						self.changeUserTeamOne(result);						
-					}
-				});
+				data : data,
+				//title: "Select Team",
+				elementId : "hdn_team_id",
+				targetView : self,
+				destination : self.controls.spanddlteamone,
+				selectedValue : self.team_id || null,
+				callback : function(result) {
+					self.changeUserTeamOne(result);
+				}
+			});
 		},
-		
+
 		changeUserTeamOne : function(result) {
-			console.log("result1",result);
-			if(result == "-1"){
+			console.log("result1", result);
+			if (result == "-1") {
 				$(self.destination).find(self.controls.sectionTeamOne).find(self.controls.btnNewTeam).trigger('click');
-			}
-			else{
-			//$(self.destination).find(self.controls.sectionTeamOne).find(self.controls.txtTeam).hide();
-			//$(self.destination).find(self.controls.sectionTeamOne).find(self.controls.indicator).hide();
-			//$(self.destination).find(self.controls.sectionTeamOne).find(self.controls.spanddlteamone).show();
-			$(self.destination).find(self.controls.sectionTeamOne).find(self.controls.btnNewTeam).show();
-			$(self.destination).find(self.controls.sectionTeamOne).find("input").attr(self.attributes.teamId, result);
-			$(self.destination).find(self.controls.sectionTeamOne).find("input:checked").removeAttr("checked");
-			self.showLocation();
+			} else {
+				//$(self.destination).find(self.controls.sectionTeamOne).find(self.controls.txtTeam).hide();
+				//$(self.destination).find(self.controls.sectionTeamOne).find(self.controls.indicator).hide();
+				//$(self.destination).find(self.controls.sectionTeamOne).find(self.controls.spanddlteamone).show();
+				$(self.destination).find(self.controls.sectionTeamOne).find(self.controls.btnNewTeam).show();
+				$(self.destination).find(self.controls.sectionTeamOne).find("input").attr(self.attributes.teamId, result);
+				$(self.destination).find(self.controls.sectionTeamOne).find("input:checked").removeAttr("checked");
+				self.showLocation();
 			}
 		},
 		changeUserTeamTwo : function(result) {
-			console.log("result",result);
-			if(result == "-1"){
+			console.log("result", result);
+			if (result == "-1") {
 				$(self.destination).find(self.controls.sectionTeamTwo).find(self.controls.btnNewTeam).trigger('click');
-			}
-			else{
-			//$(self.destination).find(self.controls.sectionTeamTwo).find(self.controls.txtTeam).hide();
-			//$(self.destination).find(self.controls.sectionTeamTwo).find(self.controls.indicator).hide();
-			//$(self.destination).find(self.controls.sectionTeamTwo).find(self.controls.spanddlteamtwo).show();
-			$(self.destination).find(self.controls.sectionTeamTwo).find(self.controls.btnNewTeam).show();
-			$(self.destination).find(self.controls.sectionTeamTwo).find("input").attr(self.attributes.teamId, result);
-			$(self.destination).find(self.controls.sectionTeamTwo).find("input:checked").removeAttr("checked");
-			self.showLocation();
+			} else {
+				//$(self.destination).find(self.controls.sectionTeamTwo).find(self.controls.txtTeam).hide();
+				//$(self.destination).find(self.controls.sectionTeamTwo).find(self.controls.indicator).hide();
+				//$(self.destination).find(self.controls.sectionTeamTwo).find(self.controls.spanddlteamtwo).show();
+				$(self.destination).find(self.controls.sectionTeamTwo).find(self.controls.btnNewTeam).show();
+				$(self.destination).find(self.controls.sectionTeamTwo).find("input").attr(self.attributes.teamId, result);
+				$(self.destination).find(self.controls.sectionTeamTwo).find("input:checked").removeAttr("checked");
+				self.showLocation();
 			}
 		},
 		showAddTeam : function(e) {
@@ -615,7 +745,7 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 			$(e.target).parents(self.controls.sectionTeams).find(self.controls.txtTeam).val("").hide();
 			$(e.target).parents(self.controls.sectionTeams).find(self.controls.indicator).hide();
 			$(e.target).parents(self.controls.sectionTeams).find("input").removeAttr(self.attributes.teamId);
-			$(e.target).parents(self.controls.sectionTeams).find(self.controls.ddlUserTeams).val("").show();			
+			$(e.target).parents(self.controls.sectionTeams).find(self.controls.ddlUserTeams).val("").show();
 			$(e.target).parents(self.controls.sectionTeams).find("input:checked").removeAttr("checked");
 			self.showLocation();
 		},
@@ -656,13 +786,13 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 						} else {
 							self.$(e.target).parent().find(self.controls.fieldMessage).html('').fadeOut();
 						}
-						
+
 						self.states = [];
-						
+
 						for (var key in models) {
 							self.states.push(models[key].payload);
 						}
-						
+
 						self.states.forEach(function(value, index) {
 							stateArr.push(value['name']);
 						});
@@ -700,8 +830,8 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 						$(e.target).attr(self.attributes.stateId, self.states_id);
 						$(e.target).parents(self.controls.sectionTeams).find(self.controls.txtCity).attr(self.attributes.stateId, self.states_id).fadeIn();
 						$(e.target).parents(self.controls.sectionTeams).find(self.controls.txtTeam).attr(self.attributes.stateId, self.states_id).fadeOut();
-					$(e.target).parents(self.controls.sectionTeams).find(self.controls.indicator).hide();
-			
+						$(e.target).parents(self.controls.sectionTeams).find(self.controls.indicator).hide();
+
 					}
 
 				});
@@ -889,18 +1019,18 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 				});
 			}
 			//Check if team name is equal to the team passed
-			if(self.team){
+			if (self.team) {
 				var teamname = self.team['team_name'];
 				var teamId = self.team['team_id'];
 				if (teamname == name) {
-						isSchoolValid = true;
-						self.team_id = teamId;
-						$(e.target).parents(self.controls.sectionTeams).find("input").attr(self.attributes.teamId, self.team_id);
-						$(e.target).parents(self.controls.sectionTeams).find(self.controls.indicator).removeClass("invalid").addClass("valid").show();
-					}
-				
+					isSchoolValid = true;
+					self.team_id = teamId;
+					$(e.target).parents(self.controls.sectionTeams).find("input").attr(self.attributes.teamId, self.team_id);
+					$(e.target).parents(self.controls.sectionTeams).find(self.controls.indicator).removeClass("invalid").addClass("valid").show();
+				}
+
 			}
-			
+
 			if (!isSchoolValid) {
 				// Hide all other controls
 				$(e.target).parents(self.controls.sectionTeams).find("input").removeAttr(self.attributes.teamId);
@@ -935,11 +1065,10 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 						return;
 
 					var models = List.toJSON();
-					if (models == null || models.length < 1){
-					//	self.$(e.target).parent().find(self.controls.fieldMessage).html(self.messages.dataNotExist).stop().fadeIn();
-					self.eventNotFound(e);
-					}
-					else{
+					if (models == null || models.length < 1) {
+						//	self.$(e.target).parent().find(self.controls.fieldMessage).html(self.messages.dataNotExist).stop().fadeIn();
+						self.eventNotFound(e);
+					} else {
 						self.$(e.target).parent().find(self.controls.fieldMessage).html('').stop().fadeOut();
 					}
 					self.individualGames = [];
@@ -948,9 +1077,9 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 					}
 					self.individualGames.forEach(function(value, index) {
 						//	var name = value['game_name'] + "( " + +" )";
-						var name = value['event_name'] + " " + value['game_name']; 
+						var name = value['event_name'] + " " + value['game_name'];
 						arr.push(name);
-					//	arr.push({label:name,value:value['id']});
+						//	arr.push({label:name,value:value['id']});
 					});
 
 					// Destroy existing autocomplete from text box before attaching it again
@@ -964,11 +1093,11 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 					$(e.target).autocomplete({
 						source : arr,
 						// select :  function (event, ui) {
-							// self.$(e.target).val(ui.item.label);
-							// //self.changeIndividualGame(event,ui);
-					          // // display the selected text
-					        // // $("#txtAllowSearchID").val(ui.item.value); // save selected id to hidden input
-					    // }
+						// self.$(e.target).val(ui.item.label);
+						// //self.changeIndividualGame(event,ui);
+						// // display the selected text
+						// // $("#txtAllowSearchID").val(ui.item.value); // save selected id to hidden input
+						// }
 					});
 					//Trigger keydown to display the autocomplete dropdown just created
 					$(e.target).trigger('keydown');
@@ -984,16 +1113,16 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 		},
 
 		/*Change school_id as per the selected record from auto complete for state created in keyupSchool*/
-		changeIndividualGame : function(e,ui) {			
+		changeIndividualGame : function(e, ui) {
 			var name = $(e.target).val();
 			var isGameValid = false;
 			self.individual_game_id = 0;
 			//if(ui && ui.item != null && ui.item.value){
-//			self.individual_game_id = ui.item.value;			
-	//		isGameValid = true;
+			//			self.individual_game_id = ui.item.value;
+			//		isGameValid = true;
 			if (self.individualGames) {
 				self.individualGames.forEach(function(value, index) {
-					var gamename = value['event_name']+ " "  + value['game_name'];
+					var gamename = value['event_name'] + " " + value['game_name'];
 					if (gamename == name) {
 						isGameValid = true;
 						self.individual_game_id = value['id'];
@@ -1002,7 +1131,7 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 					}
 				});
 			}
-		//	}
+			//	}
 			if (!isGameValid) {
 				// Hide all other controls
 				self.eventNotFound(e);
@@ -1025,59 +1154,61 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 			$(e.target).parent().find(self.controls.fieldMessage).html('').stop().fadeOut();
 			$(e.target).removeAttr(self.attributes.gameId);
 		},
-		
+
 		eventFound : function(e) {
 			//$(self.destination).find(self.controls.txtIndividualLocation).hide();
 			$(self.destination).find(self.controls.btnIndividualGameCreate).hide();
 			$(self.destination).find(self.controls.btnIndividualFinish).show();
 			$(e.target).parent().find(self.controls.fieldMessage).html(self.messages.gameFound).fadeIn();
 		},
-		
+
 		createIndividualEvent : function(e) {
 			var isDataValid = true;
 			var message = '';
 			var date = $(self.destination).find(self.controls.txtGameDate).datepicker('getDate');
 			var timeText = $(self.destination).find(self.controls.txtGameTime).val();
-			var timeZone = $(self.destination).find(self.controls.hdnTimePeriod).val();;
+			var timeZone = $(self.destination).find(self.controls.hdnTimePeriod).val();
+			;
 			var locationId = self.location_id || $(self.controls.txtLocationId).val() || 0;
 			var eventName = $(self.destination).find(self.controls.txtIndividualGame).val();
 			var sportsId = $(self.destination).find(self.controls.hdnSportsId).val();
-			if(!sportsId) {
+			if (!sportsId) {
 				$(self.destination).find(self.controls.secSports).find(self.controls.fieldMessage).html(self.messages.selectSport).fadeIn();
 				isDataValid = false;
 			}
-			
+
 			if (!date || !timeText) {
 				$(self.destination).find(self.controls.sectionDate).find(self.controls.fieldMessage).html(self.messages.selectDateAndTime).fadeIn();
 				this.focusOnErrorField(".section-Add-Sports_h");
 				//self.$el.find(".section-Add-Sports_h").
 				isDataValid = false;
-			}else{
-					var validTime = timeText.match(self.tags.rgxTime) || timeText.match(self.tags.rgxTimeWhole);
-					console.log("orginal date",date);
-					console.log("orginal time",timeText);
-					console.log("timeZone",timeZone);					
-					if(!validTime){
-						$(self.destination).find(self.controls.sectionDate).find(self.controls.fieldMessage).html(self.messages.selectValidTime).fadeIn();
-						isDataValid = false;
-					}else{
-						$(self.destination).find(self.controls.sectionDate).find(self.controls.fieldMessage).html('').fadeOut();
-						try{
+			} else {
+				var validTime = timeText.match(self.tags.rgxTime) || timeText.match(self.tags.rgxTimeWhole);
+				console.log("orginal date", date);
+				console.log("orginal time", timeText);
+				console.log("timeZone", timeZone);
+				if (!validTime) {
+					$(self.destination).find(self.controls.sectionDate).find(self.controls.fieldMessage).html(self.messages.selectValidTime).fadeIn();
+					isDataValid = false;
+				} else {
+					$(self.destination).find(self.controls.sectionDate).find(self.controls.fieldMessage).html('').fadeOut();
+					try {
 						var array = timeText.split(':');
-						if(array){	
+						if (array) {
 							console.log(array);
-							if(timeZone != "PM" && array[0] != "12")							
-							date.setHours(array[0]);
-							
-							if(array.length > 1)
+							if (timeZone != "PM" && array[0] != "12")
+								date.setHours(array[0]);
+
+							if (array.length > 1)
 								date.setMinutes(array[1]);
-							
-							if(timeZone == "PM")
+
+							if (timeZone == "PM")
 								date.addHours(12);
 						}
-						}catch(ex){}
+					} catch(ex) {
 					}
-					console.log("new date",date);
+				}
+				console.log("new date", date);
 			}
 
 			if (!locationId) {
@@ -1091,14 +1222,15 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 			}
 
 			if (isDataValid) {
-				var completeDate = date ; //+ " " + timeText + " " + timeZone;
+				var completeDate = date;
+				//+ " " + timeText + " " + timeZone;
 				$(e.target).parent().find(self.controls.fieldMessage).html('').fadeOut();
 				var payload = {
 					game_datetime : completeDate,
 					locations_id : locationId,
 					event_name : eventName,
 					sports_id : sportsId,
-					users_id : 	self.user_id,
+					users_id : self.user_id,
 
 				};
 				var gameModel = new GameModel(payload);
@@ -1106,61 +1238,61 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 				gameModel.save({});
 
 				$.when(gameModel.request).done(function(response) {
-				self.game_id = response.payload.id;
-				self.gameData = {
-							game_datetime : completeDate,
-							games_id : self.game_id,
-							event_name : eventName,
-							locations_id : locationId,
-							sports_id : sportsId,
-							users_id : 	self.user_id
+					self.game_id = response.payload.id;
+					self.gameData = {
+						game_datetime : completeDate,
+						games_id : self.game_id,
+						event_name : eventName,
+						locations_id : locationId,
+						sports_id : sportsId,
+						users_id : self.user_id
 					};
 					routing.trigger(self.channel, self.gameData);
-						//Channel(self.channel).publish(self.gameData);
+					//Channel(self.channel).publish(self.gameData);
 				});
 			} else {
 				$(e.target).parent().find(self.controls.fieldMessage).html(message).fadeIn();
 			}
 		},
-		
-		goThereIndividualGame : function(e){
-			
+
+		goThereIndividualGame : function(e) {
+
 			var sportsId = $(self.destination).find(self.controls.hdnSportsId).val();
 			var payload = {
-				users_id : 	self.user_id,
+				users_id : self.user_id,
 				sports_id : sportsId,
-				games_id : self.individual_game_id				
+				games_id : self.individual_game_id
 			};
-				var model = new UserGameLinkModel(payload);
-				model.save();
-				
+			var model = new UserGameLinkModel(payload);
+			model.save();
+
 			$.when(model.request).done(function(response) {
 				self.goThereSuccess(response);
 			});
 		},
-		goThereSuccess : function(response){
-			if(response && response.payload != null){
-			var game = response.payload.game;
-			if(game){
-			self.gameData = {
-					type : self.tags.individual,
-					game_datetime : game.gameDay,
-					event_name : game.event_name,
-					game_location : game.game_location,
-					games_id : game.id,							
-					sports_id : response.payload.usl ? response.payload.usl.sports_id : null,
-					users_id : self.user_id
-			};
-			routing.trigger(self.channel, response);
-				//Channel(self.channel).publish(response);
-			}
+		goThereSuccess : function(response) {
+			if (response && response.payload != null) {
+				var game = response.payload.game;
+				if (game) {
+					self.gameData = {
+						type : self.tags.individual,
+						game_datetime : game.gameDay,
+						event_name : game.event_name,
+						game_location : game.game_location,
+						games_id : game.id,
+						sports_id : response.payload.usl ? response.payload.usl.sports_id : null,
+						users_id : self.user_id
+					};
+					routing.trigger(self.channel, response);
+					//Channel(self.channel).publish(response);
+				}
 			}
 		},
 
 		/**********Create Event Ends Here*****************/
 
 		CheckTeamControlsVisibility : function() {
-			var value = $(self.destination).find(self.controls.hdnSportsId).val();			
+			var value = $(self.destination).find(self.controls.hdnSportsId).val();
 			if (value && value != "" && value != 0) {
 				//console.log("value");
 				var isTeam = self.getTeamType(value);
@@ -1170,7 +1302,7 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 					$(self.destination).find(self.controls.btnFinish).hide();
 					//$(self.destination).find(self.controls.sectionMainLocation).hide();
 					$(self.destination).find(self.controls.sectionIndividual).show();
-			//		$(self.destination).find(self.controlsbtnIndividualFinish).show();
+					//		$(self.destination).find(self.controlsbtnIndividualFinish).show();
 				} else {
 					var date = $(self.destination).find(self.controls.txtGameDate).datepicker('getDate');
 					var currentDate = new Date();
@@ -1206,10 +1338,10 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 		getTeamType : function(value) {
 			if (value && value != "" && value != 0) {
 				var isTeam = true;
-				console.log("getteamtype",value);
+				console.log("getteamtype", value);
 				for (var key in self.sports) {
 					if (self.sports[key].payload.id == value) {
-						console.log("payload",self.sports[key].payload);
+						console.log("payload", self.sports[key].payload);
 						if (self.sports[key].payload.team_type == "Individual") {
 							isTeam = false;
 						}
@@ -1219,7 +1351,7 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 			}
 			return false;
 		},
-		
+
 		showLocation : function(e) {
 			$(self.destination).find(self.controls.sectionMainLocation).show();
 			var teamId = 0;
@@ -1267,20 +1399,20 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 			//$(self.destination).find(self.controls.sectionLocation).html('').removeAttr(self.attributes.locationId);
 		},
 
-		formatDate: function(date,time,ampm)
-		{
-			var newDate = $.datepicker.formatDate('yy-mm-dd',date);
-			try{
+		formatDate : function(date, time, ampm) {
+			var newDate = $.datepicker.formatDate('yy-mm-dd', date);
+			try {
 				var array = time.split(':');
 
 				console.log(array);
-				if(array.length==1) time += ":00";
+				if (array.length == 1)
+					time += ":00";
 				time += " " + ampm;
 
 				newDate += " " + time;
 				return newDate;
 
-			}catch(ex){
+			} catch(ex) {
 				return false;
 			}
 		},
@@ -1291,7 +1423,7 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 			var date = $(self.destination).find(self.controls.txtGameDate).datepicker('getDate');
 			var timeText = $(self.destination).find(self.controls.txtGameTime).val();
 			var ampm = $(self.destination).find(self.controls.hdnTimePeriod).val();
-			
+
 			var teamOneId = $(self.destination).find(self.controls.sectionTeamOne).find(self.controls.txtTeam).attr(self.attributes.teamId);
 			var scoreOne = $(self.destination).find(self.controls.sectionTeamOne).find(self.controls.txtScore).val();
 			var teamTwoId = $(self.destination).find(self.controls.sectionTeamTwo).find(self.controls.txtTeam).attr(self.attributes.teamId);
@@ -1299,62 +1431,50 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 			var sportsId = $(self.destination).find(self.controls.hdnSportsId).val();
 
 			var locationId = self.location_id || $(self.controls.txtLocationId).val() || 0;
-			
-			if(!sportsId) {
+
+			if (!sportsId) {
 				$(self.destination).find(self.controls.secSports).find(self.controls.fieldMessage).html(self.messages.selectSport).fadeIn();
 				isDataValid = false;
 			}
-						
+
 			if (!date || !timeText) {
 				$(self.destination).find(self.controls.sectionDate).find(self.controls.fieldMessage).html(self.messages.selectDateAndTime).fadeIn();
 				isDataValid = false;
 			} else {
-					var validTime = timeText.match(self.tags.rgxTime) || timeText.match(self.tags.rgxTimeWhole);	
-					console.log("orginal date",date);
-					console.log("orginal time",timeText);
-					console.log("ampm",ampm);					
-					if(!validTime) {
-						console.log("NOT VALID");
-						$(self.destination).find(self.controls.sectionDate).find(self.controls.fieldMessage).html(self.messages.selectValidTime).fadeIn();
+				var validTime = timeText.match(self.tags.rgxTime) || timeText.match(self.tags.rgxTimeWhole);
+				console.log("orginal date", date);
+				console.log("orginal time", timeText);
+				console.log("ampm", ampm);
+				if (!validTime) {
+					console.log("NOT VALID");
+					$(self.destination).find(self.controls.sectionDate).find(self.controls.fieldMessage).html(self.messages.selectValidTime).fadeIn();
+					isDataValid = false;
+				} else {
+					$(self.destination).find(self.controls.sectionDate).find(self.controls.fieldMessage).html('').fadeOut();
+					date = this.formatDate(date, timeText, ampm);
+					if (!date)
 						isDataValid = false;
-					} else {
-						$(self.destination).find(self.controls.sectionDate).find(self.controls.fieldMessage).html('').fadeOut();
-						date = this.formatDate(date,timeText,ampm);
-						if(!date) isDataValid = false;
-					}
+				}
 			}
-				console.log("new date",date);
+			console.log("new date", date);
 			if (!locationId) {
 				$(self.destination).find(self.controls.sectionMainLocation).find(self.controls.fieldMessage).html(self.messages.selectLocation).fadeIn();
 				isDataValid = false;
 			}
-			
+
 			if (!(teamOneId > 0 )) {
 				$(self.destination).find(self.controls.sectionTeamOne).find(self.controls.fieldMessage).html(self.messages.selectTeam).fadeIn();
 				isDataValid = false;
 			}
-//			var isTeam = self.getTeamType();
-//			if (isTeam) {
 
-				if (!(teamTwoId > 0)) {
-					$(self.destination).find(self.controls.sectionTeamTwo).find(self.controls.fieldMessage).html(self.messages.selectTeam).fadeIn();
-					isDataValid = false;
-				}
-
-				// if (scoreOne == '' && date != null && currentDate > date) {
-					// $(self.destination).find(self.controls.sectionTeamOne).find(self.controls.fieldMessage).html(self.messages.selectScore).fadeIn();
-					// isDataValid = false;
-				// }
-// 
-				// if (scoreTwo == '' && date != null && currentDate > date) {
-					// $(self.destination).find(self.controls.sectionTeamTwo).find(self.controls.fieldMessage).html(self.messages.selectScore).fadeIn();
-					// isDataValid = false;
-				// }
-
-//			}
+			if (!(teamTwoId > 0)) {
+				$(self.destination).find(self.controls.sectionTeamTwo).find(self.controls.fieldMessage).html(self.messages.selectTeam).fadeIn();
+				isDataValid = false;
+			}
 
 			if (isDataValid) {
-				var completeDate = date;// + " " + timeText + "00";// + ampm;
+				var completeDate = date;
+				// + " " + timeText + "00";// + ampm;
 				var payload = {
 					game_datetime : completeDate,
 					locations_id : locationId,
@@ -1399,8 +1519,6 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 
 						isHome = $(self.destination).find(self.controls.rdoTeamTwo).is(':checked');
 
-						//console.log("home",isHome);
-
 						var addTeamModelTwo = new TeamAddModel(payloadTwo);
 						addTeamModelTwo.teams_id = teamTwoId;
 						//addTeamModelTwq.games_id = self.game_id;
@@ -1413,17 +1531,12 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 							team_id_one : teamOneId,
 							team_id_two : teamTwoId,
 							sports_id : sportsId,
-							users_id : self.user_id 
+							users_id : self.user_id
 						};
-						
 						routing.trigger(self.channel, response);
-						//Channel(self.channel).publish(response);
 					}
-
 				});
-
 			}
-
 		}
 	});
 	return AddGameView;

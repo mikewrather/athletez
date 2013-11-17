@@ -1622,19 +1622,26 @@ var Form = Backbone.View.extend({
    */
   initialize: function(options) {
     var self = this;
-
     options = options || {};
+	console.error(options);
 
+	if(options.formValues) this.formValues = options.formValues;
+	
     //Find the schema to use
     var schema = this.schema = (function() {
       //Prefer schema from options
       if (options.schema) return _.result(options, 'schema');
-
       //Then schema on model
       var model = options.model;
       if (model && model.schema) {
-        return (_.isFunction(model.schema)) ? model.schema() : model.schema;
+         return (_.isFunction(model.schema)) ? model.schema() : model.schema;
       }
+      
+      //Then schema on formValues
+     // var formValues = options.formValues;
+      //if (formValues && formValues.schema) {
+      //  return (_.isFunction(formValues.schema)) ? formValues.schema() : formValues.schema;
+      //}
 
       //Then built-in schema
       if (self.schema) {
@@ -1716,9 +1723,7 @@ var Form = Backbone.View.extend({
     }
 
     var field = new this.Field(options);
-
     this.listenTo(field.editor, 'all', this.handleEditorEvent);
-
     return field;
   },
 
@@ -1738,6 +1743,7 @@ var Form = Backbone.View.extend({
     //Trigger additional events
     switch (event) {
       case 'change':
+      console.error("change");
         this.trigger('change', this);
         break;
 
@@ -1746,6 +1752,7 @@ var Form = Backbone.View.extend({
         break;
 
       case 'blur':
+      	this.updateFields(editor);
         if (this.hasFocus) {
           //TODO: Is the timeout etc needed?
           var self = this;
@@ -1759,6 +1766,10 @@ var Form = Backbone.View.extend({
         }
         break;
     }
+  },
+  
+  updateFields: function(editor) {
+  	if(this.formValues) this.formValues.updateFormValues(editor);
   },
 
   render: function() {
@@ -2821,10 +2832,16 @@ Form.editors.Text = Form.Editor.extend({
 
 	this.setAllAttr(this.schema.attr);
     this.$el.attr('type', type);
-    
+    this.setOptions(options.schema.options);
     if(this.schema.bindDatePicker) {
 		this.bindDatePickerFn();
     }
+  },
+  
+  setOptions : function(options) {
+	for (var i in options) {
+		this[i] = options[i];
+	}
   },
   
   bindDatePickerFn: function() {
@@ -3030,12 +3047,11 @@ Form.editors.Location = Form.editors.Text.extend({
   
   
   render: function() {
-  		// compile temoplate
+  	// compile temoplate
 	var self = this, markup = _.template(this.template, {});//Mustache.to_html(self.template, this.data);
 	this.$el.html(markup);
 	return this;
   },
-  
   
     /**
    * Returns the current editor value
@@ -3097,27 +3113,26 @@ Form.editors.AutoComplete = Form.editors.Text.extend({
     }
   },	
   
-  
   determineChange: function(event) {
     var _self = this, currentValue = this.$el.val();
     _self.$el.addClass('ui-autocomplete-loading');
-	if(this.getData) this.getData(currentValue, function(data, attr) {
+	if(this.getData) this.getData(currentValue, function(data) {
 		_self.records = [];
-		if(!attr) attr = 'city';
+		if(!_self.keyNameInPayload) _self.keyNameInPayload = 'name';
+		var attr = _self.keyNameInPayload;
 		for (var key in data) {
 			_self.records.push(data[key]);
 		}
-		
 		var arr = [];
 		_self.records.forEach(function(value, index) {
 			var v = (value.payload)?value.payload[attr]:value[attr], id = (value.payload)?value.payload['id']:value['id'];
-			var ob = {id: id, value: v};
-			arr.push(ob);
+			arr.push({value: v, label: v, id: id});
 		});
 		
 		// Destroy existing autocomplete from text box before attaching it again
 		// try catch as for the first time it gives error
 		try { _self.$el.autocomplete("destroy"); } catch(ex) {}
+		_self.$el.removeClass('ui-autocomplete-loading');
 		_self.$el.autocomplete({
 			source : arr,
 			select: function( event, ui ) {
@@ -3125,13 +3140,14 @@ Form.editors.AutoComplete = Form.editors.Text.extend({
 				_self.$el.attr("data-id", (ui.item.id)?ui.item.id:ui.item.value);
 			}
 		});
+		
 		//Trigger keydown to display the autocomplete dropdown just created
 		_self.$el.trigger('keydown');
 	});
   },
   
   /* Autocomplete  */ 
-  autoComplete: function() {
+  autoComplete: function(e) {
   	$(e.target).autocomplete({
 		source : arr,
 		select: function( event, ui ) {
@@ -3139,17 +3155,72 @@ Form.editors.AutoComplete = Form.editors.Text.extend({
 		}
 	});
   },
+  
+  setOptions : function(options) {
+	for (var i in options) {
+		this[i] = options[i];
+	}
+  },
 
   /**
    * Override Text constructor so type property isn't set (issue #261)
    */
+  
   initialize: function(options) {
     Form.editors.Base.prototype.initialize.call(this, options);
-     var schema = options.schema;
+     var _self = this, schema = options.schema;
     //Allow customising text type (email, phone etc.) for HTML5 browsers
-    if (schema && schema.getData) this.getData = schema.getData;    
+    //if (schema && schema.getData) this.getData = schema.getData;    
     this.$el.attr('type', 'text');
+    this.setOptions(options.schema.options);
+    
+	this.getData();
   },
+  
+  	getData: function(value, callback) {
+		var _self = this;
+		if(this.source_collection) {
+			if(this.collectionFetchOb) this.collectionFetchOb.abort();
+			this.collection = new this.source_collection();
+			// set the payload
+			
+			if(this.request_fields) {
+				for(var i in this.request_fields) {
+					this.collection[this.request_fields[i].key] = (this.request_fields[i].value && typeof this.request_fields[i].value == "function")?this.request_fields[i].value():this.request_fields[i].value;
+				}
+			}
+			
+			this.collectionFetchOb = this.collection.fetch();
+			
+			$.when(this.collection.request).done(function() {
+				if(_self.request_finished) _self.request_finished();				
+				if (callback) callback(_self.collection.toJSON());
+			});
+		
+		}
+	},
+	
+	// checkForData: function(loadNewRecords) {
+		// var _self = this;
+		// _self.getData('', function(data) {
+			// _self.data.records = data;
+			// if (!_self.selectedValue) {
+				// if (_self.data.records && _self.data.records.length)
+					// var val = _self.data.records[0].payload[_self.data.recordId];
+					// // for multiple push into array
+					// if (_self.multiple) {
+						// _self.selectedValue = [];
+						// _self.selectedValue.push(val);
+					// } else {
+						// _self.selectedValue = val;
+					// }
+				// // show selected value
+				// _self.showDefaultValueSelected();	
+			// }
+			// _self.render();
+		// });
+	// },
+  
   
     /**
    * Returns the current editor value
@@ -3296,31 +3367,49 @@ Form.editors.DropDown = Form.editors.Text.extend({
 		_self.$el.find(".hidden-input-dropdown-h").attr("id", _self.elementId);
 	},
 	
+	getData: function(value, callback) {
+		var _self = this;
+		if(this.source_collection) {
+			this.collection = new this.source_collection();
+			
+			// set the payload
+			if(this.request_fields) {
+				for(var i in this.request_fields) {
+					this.collection[this.request_fields[i].key] = (this.request_fields[i].value && typeof this.request_fields[i].value == "function")?this.request_fields[i].value():this.request_fields[i].value;
+				}
+			}
+			
+			this.collection.fetch();
+			this.collection.processResult = function() {
+				var data = _self.collection.ParseForDropdown();
+				if(_self.request_finished) _self.request_finished();				
+				if(callback) callback(data);
+			};
+		}
+	},
+	
 	checkForData: function(loadNewRecords) {
 		var _self = this;
 		if(_self.data.records && !loadNewRecords)
 			_self.render();
 		else {
-			if(_self.getData) {
-				_self.getData('', function(data) {
-					_self.data.records = data;
-					if (!_self.selectedValue) {
-						if (_self.data.records && _self.data.records.length)
-							var val = _self.data.records[0].payload[_self.data.recordId];
-							// for multiple push into array
-							if (_self.multiple) {
-								_self.selectedValue = [];
-								_self.selectedValue.push(val);
-							} else {
-								_self.selectedValue = val;
-							}
-							
-						// show selected value
-						_self.showDefaultValueSelected();	
-					}
-					_self.render();
-				});
-			}
+			_self.getData('', function(data) {
+				_self.data.records = data;
+				if (!_self.selectedValue) {
+					if (_self.data.records && _self.data.records.length)
+						var val = _self.data.records[0].payload[_self.data.recordId];
+						// for multiple push into array
+						if (_self.multiple) {
+							_self.selectedValue = [];
+							_self.selectedValue.push(val);
+						} else {
+							_self.selectedValue = val;
+						}
+					// show selected value
+					_self.showDefaultValueSelected();	
+				}
+				_self.render();
+			});
 		}
 	},
 
@@ -3652,8 +3741,16 @@ Form.editors.Hidden = Form.editors.Text.extend({
 
   initialize: function(options) {
     Form.editors.Text.prototype.initialize.call(this, options);
-
+console.error(options);
     this.$el.attr('type', 'hidden');
+     this.$el.attr('value', 'hidden');
+     this.setOptions(options.schema.options);
+  },
+  
+  setOptions : function(options) {
+	for (var i in options) {
+		this[i] = options[i];
+	}
   },
 
   focus: function() {
