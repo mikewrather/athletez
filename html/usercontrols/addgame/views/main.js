@@ -178,7 +178,7 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 					showLable : false,
 					validators : [{
 						type : 'required',
-						message : 'Please ente time.'
+						message : 'Please enter time.'
 					}, /^(0?[1-9]|1[012])(:[0-5]\d)$/]
 				},
 				'Day_light' : {
@@ -262,10 +262,9 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 				},
 
 				'Select_Team_1' : {
-
+					type : 'DropDown',
 					options : {
-					serverKey : "teamOneId",
-					type : 'DropDown',						
+						serverKey : "teamOneId",
 						request_fields : [{
 							key : 'user_id',
 							value : function() { return _self.user_id; }

@@ -3107,9 +3107,6 @@ Form.editors.AutoComplete = Form.editors.Text.extend({
     },
     'focus':    function(event) {
       this.trigger('focus', this);
-    },
-    'blur':     function(event) {
-      this.trigger('blur', this);
     }
   },	
   
@@ -3136,8 +3133,8 @@ Form.editors.AutoComplete = Form.editors.Text.extend({
 		_self.$el.autocomplete({
 			source : arr,
 			select: function( event, ui ) {
-				console.error(ui);
 				_self.$el.attr("data-id", (ui.item.id)?ui.item.id:ui.item.value);
+				_self.trigger("blur", _self);
 			}
 		});
 		
@@ -3302,14 +3299,20 @@ Form.editors.DropDown = Form.editors.Text.extend({
 	// set selected options  from dropdown
 	selectOptions : function(e) {
 		var val = $(e.target).data("id");
-		if (this.multiple)
+		if (this.multiple) {
 			this.setMultipleOptions(val, e);
-		else
+			this.setValue(this.selectedOptions.join(", "));
+		} else {
 			this.setSingleOption(val, e);
-
+			this.setValue(val);
+		}
+		
 		this.showSelectedValue();
 		if (this.callback)
 			this.callback(this.selectedOptions);
+			
+		this.trigger("blur", this);
+			
 	},
 	
 	showSelectedValue: function() {
