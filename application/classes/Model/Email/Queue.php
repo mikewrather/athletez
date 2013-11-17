@@ -50,7 +50,7 @@ class Model_Email_Queue extends ORM
 		}
 		else
 		{
-			return false;
+		//	return false;
 		}
 
 		if(isset($args['message_body']))
@@ -59,7 +59,7 @@ class Model_Email_Queue extends ORM
 		}
 		else
 		{
-			return false;
+		//	return false;
 		}
 
 		if(isset($args['to_address']))
@@ -68,7 +68,7 @@ class Model_Email_Queue extends ORM
 		}
 		else
 		{
-			return false;
+		//	return false;
 		}
 
 		if(isset($args['cc_array']) && is_array($args['cc_array']))
@@ -87,16 +87,32 @@ class Model_Email_Queue extends ORM
 			$this->save();
 			return $this;
 		} catch(Kohana_Exception $e){
-			print_r($e->getMessage());
+		//	print_r($e->getMessage());
+			return false;
 		}
 	}
 
 	public function processQueue(){
-		$unsent = $this->where('email_sent_id','IS',null)->find_all();
+		$unsent = $this
+			->where('email_sent_id','IS',null)
+			->and_where('to_address','IS NOT',null)
+			->and_where('subject_line','IS NOT',null)
+			->find_all();
+
 		foreach($unsent as $message)
 		{
 			Email::sendFromQueue($message->id);
 		}
+	}
+
+	public function setSubjectLine($subjectLine)
+	{
+		if($this->loaded() && strlen($subjectLine) > 0) {
+			$this->subject_line = $subjectLine;
+			$this->save();
+			return $this;
+		}
+		return false;
 	}
 
 }

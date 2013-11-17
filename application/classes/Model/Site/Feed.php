@@ -58,6 +58,17 @@ class Model_Site_Feed extends ORM
 		return $this->_following_user;
 	}
 
+	public function getAuthor()
+	{
+		if(!$this->loaded()) return false;
+		if($this->users_id > 0)
+		{
+			$user = ORM::factory('Users_Base',$this->users_id);
+			if($user->loaded()) return $user;
+			return false;
+		}
+	}
+
 	public function getFeedItems()
 	{
 
@@ -74,6 +85,7 @@ class Model_Site_Feed extends ORM
 		$me->enttypes_id = Ent::getMyEntTypeID($obj);
 		$me->ent_id = $obj->id;
 		$me->action = $action;
+		$me->users_id = Auth::instance()->get_user()->id;
 		$me->save();
 
 		if($me->loaded())

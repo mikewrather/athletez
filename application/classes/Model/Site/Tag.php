@@ -170,13 +170,15 @@ class Model_Site_Tag extends Model_Site_Entdir
 			$match->where('subject_id','=',$subject_id);
 		}
 
-		if(isset($users_id))
+		$logged_user = Auth::instance()->get_user();
+		if(isset($users_id) && $logged_user->has('roles', ORM::factory('Role', array('id' =>2))))
 		{
 			$this->users_id = $users_id;
 		}
-		else
+
+		if(!isset($this->users_id))
 		{
-			$this->users_id = Auth::instance()->get_user()->id;
+			$this->users_id = $logged_user->id;
 		}
 
 		if(isset($media_id))
