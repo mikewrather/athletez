@@ -307,15 +307,18 @@ class Model_Sportorg_Games_Base extends ORM
 
 	public function name()
 	{
-		$name = $this->event_name != "" ? $this->event_name : false;
-		if(!$name)
-		$teams = $this->teams->find_all();
-		foreach($teams as $team)
-		{
-			$team = $team->getBasics();
-			$name .= $team['org_name']." vs ";
+
+		return $name = $this->event_name != "" ? $this->event_name : false;
+		if(!$name){
+			$teams = $this->teams->find_all();
+			foreach($teams as $team)
+			{
+				$team = $team->getBasics();
+				$name .= $team['org_name']." vs ";
+			}
+			return rtrim($name,' vs ');
 		}
-		return rtrim($name,' vs ');
+		return $name;
 	}
 
 	public function getLocation(){
