@@ -2832,7 +2832,7 @@ Form.editors.Text = Form.Editor.extend({
 
 	this.setAllAttr(this.schema.attr);
     this.$el.attr('type', type);
-    this.setOptions(options.schema.options);
+    this.setOptions(options.schema.form_values);
     if(this.schema.bindDatePicker) {
 		this.bindDatePickerFn();
     }
@@ -3363,7 +3363,7 @@ Form.editors.DropDown = Form.editors.Text.extend({
 		Form.editors.Base.prototype.initialize.call(this, options);
 		var _self = this;
 		_self.selectedOptions = [];
-		_self.setOptions(options.schema.options);
+		_self.setOptions(options.schema.form_values);
 		
 		// If records are defined if not check for getData function if it's defined then call that and wait for array on objects
 		_self.checkForData();
@@ -3857,13 +3857,11 @@ Form.editors.Select = Form.editors.Base.extend({
 
   initialize: function(options) {
     Form.editors.Base.prototype.initialize.call(this, options);
-
     if (!this.schema || !this.schema.options) throw "Missing required 'schema.options'";
   },
 
   render: function() {
     this.setOptions(this.schema.options);
-
     return this;
   },
 
@@ -4103,11 +4101,11 @@ Form.editors.Radio = Form.editors.Select.extend({
   
   initialize: function(options) {
   	Form.editors.Base.prototype.initialize.call(this, options);
+  	console.error(this.schema);
     if (!this.schema || !this.schema.options) throw "Missing required 'schema.options'";
 
-  	console.error(options);
   	this.clickHandler = (this.schema.onClickFn)?this.schema.onClickFn:function() {
-  		alert("click handler is not defined");
+  		//alert("click handler is not defined");
   	};
   	
   },

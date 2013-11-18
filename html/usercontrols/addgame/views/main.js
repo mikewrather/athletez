@@ -137,7 +137,7 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 			var _self = this;
 			var formData = new FormComponent({
 				'date' : {
-					options: {
+					form_values: {
 						post_to_server	: false,
 						serverKey : "game_date",
 						objectValuesToUpdate: ["game_datetime"],
@@ -165,7 +165,7 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 					}
 				},
 				'time' : {
-					options: {							
+					form_values: {							
 						post_to_server	: false,					
 						serverKey: "game_time",
 						objectValuesToUpdate: ["game_datetime"]						
@@ -183,7 +183,7 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 				},
 				'Day_light' : {
 					type : 'DropDown',
-					options : {
+					form_values : {
 						post_to_server	: false,					
 						serverKey : "game_ampm",
 						objectValuesToUpdate: ["game_datetime"],
@@ -213,7 +213,7 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 				
 				'game_datetime'	: {
 					type: "Hidden",
-					options : {
+					form_values : {
 						valueBindings : ['date','time','Day_light'],					
 						///getValue: function() {
 						//	return this.;
@@ -224,17 +224,15 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 				
 				
 				'Sports' : {
-
 					type : 'DropDown',
 					showLable : false,
 					
-					options : {
+					form_values : {
 						serverKey : "sports_id",
 						post_to_server	: true,	
 						objectValuesToUpdate: ["Select_Team_1", "score_1"],
 						source_collection : SportsCollection,
 						request_finished : function() {
-								
 						},
 
 						data : {
@@ -263,7 +261,7 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 
 				'Select_Team_1' : {
 					type : 'DropDown',
-					options : {
+					form_values : {
 						serverKey : "teamOneId",
 						request_fields : [{
 							key : 'user_id',
@@ -341,7 +339,7 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 				'Select_Team_2' : {
 					serverKey : "",
 					type : 'AutoComplete',
-					options: {
+					form_values: {
 						keyNameInPayload: 'team_name',
 						request_fields : [{
 								key : 'states_id',
@@ -365,8 +363,11 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 					 	}
 					 }
 				},
+				
 				'score_2' : {
-					serverKey : "",
+					form_values: {
+						serverKey : ""
+					},
 					type : 'Text',
 					attr : {
 						'placeholder' : 'Score',
@@ -374,8 +375,11 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 					},
 					showLable : false
 				},
+				
 				'team_2' : {
-					serverKey : "",
+					form_values: {
+						serverKey : ""
+					},
 					type : 'Radio',
 					options : ['Home', 'Away'],
 					showLable : false,
@@ -409,13 +413,20 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 					}
 				},
 				'Location' : {
-					serverKey : "",
+					form_values: {
+						serverKey : "locations_id",
+						post_to_server	: true
+					},
+
 					type : 'Location'
 				},
 				'users_id'	: {
+					form_values: {
+						serverKey: _self.users_id,
+						post_to_server	: true
+					},
 					type: "Hidden",
-					value: _self.users_id,
-					post_to_server	: true,
+					value: _self.users_id
 				},
 				'submit' : {
 					type : 'Submit',
@@ -444,7 +455,7 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 						} else {
 							var formData = form.getValue(), self = _self;
 							date = self.formatDate(formData.date, formData.time, formData.Day_light);
-
+							
 							var completeDate = date, scoreOne = $(self.destination).find('input[name=score_1]').val(), scoreTwo = $(self.destination).find('input[name=score_2]').val();
 							var payload = {
 								game_datetime : completeDate,
