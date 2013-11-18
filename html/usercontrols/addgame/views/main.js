@@ -262,6 +262,7 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 
 				'Select_Team_1' : {
 					type : 'DropDown',
+					fieldClass: "large-dropdown-field",	
 					form_values : {
 						serverKey : "teamOneId",
 						request_fields : [{
@@ -447,7 +448,6 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 							// auto scroll to focus element which has error
 							for (var i in errors) {
 								var $ob = $("*[name=" + i + "]"), $pos = $ob.position();
-								console.error($ob);
 								$ob.parents(".common-modal #modalBody").animate({
 									scrollTop : $pos.top
 								}, '500', function() {
@@ -456,7 +456,6 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 										$ob.removeClass('focus-error-animation');
 									}, 2000);
 								});
-								console.error($ob.position());
 								break;
 							}
 						} else {
@@ -542,8 +541,6 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 			
 			var form = formData.form;
 			this.formValues = formData.formValues;
-			//console.error(this.formValues.fields);
-			//console.error(this.formValues.getFormValues());
 		},
 		
 

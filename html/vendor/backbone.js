@@ -1623,7 +1623,6 @@ var Form = Backbone.View.extend({
   initialize: function(options) {
     var self = this;
     options = options || {};
-	console.error(options);
 
 	if(options.formValues) this.formValues = options.formValues;
 	
@@ -1743,7 +1742,6 @@ var Form = Backbone.View.extend({
     //Trigger additional events
     switch (event) {
       case 'change':
-      console.error("change");
         this.trigger('change', this);
         break;
 
@@ -2449,8 +2447,6 @@ Form.Field = Backbone.View.extend({
     if (schema.fieldClass) $field.addClass("input-field "+schema.fieldClass);
     if (schema.fieldAttrs) $field.attr(schema.fieldAttrs);
 
-	console.error(this);
-	
     //Render editor
     $field.find('[data-editor]').add($field).each(function(i, el) {
       var $container = $(el),
@@ -4102,7 +4098,6 @@ Form.editors.Radio = Form.editors.Select.extend({
   
   initialize: function(options) {
   	Form.editors.Base.prototype.initialize.call(this, options);
-  	console.error(this.schema);
     if (!this.schema || !this.schema.options) throw "Missing required 'schema.options'";
 
   	this.clickHandler = (this.schema.onClickFn)?this.schema.onClickFn:function() {

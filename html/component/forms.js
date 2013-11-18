@@ -42,10 +42,8 @@ define(['require', 'facade', 'views', 'utils', 'vendor'], function(require) {
 						var v = "";
 						if(formValues.fields[i].deps && formValues.fields[i].deps.length) {
 							for(var j in formValues.fields[i].deps) {
-								//var formValue = form.fields[formValues.fields[i].deps[j]].editor.getValue();
 								v += form.fields[formValues.fields[i].deps[j]].editor.getValue() || '';
 							}
-							console.error(v);
 						} else {
 							v = form.fields[i].editor.getValue();
 						}
@@ -60,10 +58,8 @@ define(['require', 'facade', 'views', 'utils', 'vendor'], function(require) {
 			
 			// update form values after field update
 			formValues.updateFormValues = function(editor) {
-				console.error(editor);
 				if(editor && editor.objectValuesToUpdate) {
 					for(var i in editor.objectValuesToUpdate) {
-						console.error(editor.objectValuesToUpdate[i]);
 						var ob = form.fields[editor.objectValuesToUpdate[i]].editor;
 						var v = [];
 						if(ob.valueBindings) {

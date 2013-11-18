@@ -1620,4 +1620,7 @@ div[data-error] {
 .input-field .dropdown-wrapper {
 	width: 100%
 }
+.large-dropdown-field.dropdown-wrapper {
+	width: 100%
+}
 
