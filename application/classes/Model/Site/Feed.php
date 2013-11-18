@@ -63,7 +63,7 @@ class Model_Site_Feed extends ORM
 		if(!$this->loaded()) return false;
 		if($this->users_id > 0)
 		{
-			$user = ORM::factory('Users_Base',$this->users_id);
+			$user = ORM::factory('User_Base',$this->users_id);
 			if($user->loaded()) return $user;
 			return false;
 		}

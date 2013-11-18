@@ -119,151 +119,33 @@ class Model_User_Followers extends ORM
 
 			$args = array(
 				'users_id' => $follow->follower_users_id,
+				'to_address' => 'mike.wrather@gmail.com'
 			);
+
 			$queue = ORM::factory('Email_Queue');
 			$queued = $queue->addToQueue($args);
 			if(is_object($queued))
 			{
 				$pingBack = $_SERVER['SERVER_NAME'] . '/api/emailsent/pingback/' . $queued->uniqueString;
-				$subjectline = self::genSubjectLine($type,$subject,$author);
+				$subjectline = self::genSubjectLine($type,$subject,$feed);
+				$queued->setSubjectLine($subjectline);
+
+				$subheader = View::factory('email/notification/content/subjectheader')
+					->bind('subject',$subject_as_array = $subject->getBasics());
+
+				$action = View::factory("email/notification/content/$type")
+					->bind('obj',$obj_as_array = $obj->getBasics());
+
 				$baseview = View::factory('email/notification/base')
 					->bind('pingBack',$pingBack)
-					->bind('doc_title',$subjectline);
+					->bind('doc_title',$subjectline)
+					->bind('subject_header',$subheader->render())
+					->bind('action_notification',$action->render());
 
-				$queued->setSubjectLine($subjectline);
+				$queued->setMessageBody($baseview->render());
 
 			}
 		}
-
-
-
-
-
-		switch($type)
-		{
-			case 'comment':
-
-
-
-
-				break;
-			case 'tag':
-
-		//		echo "called";
-
-				//get tag subject
-				$subject = $obj->getSubject();
-				$gb = $obj->getBasics();
-				$author = $gb['tagger'];
-
-				//Find any follows of this subject
-				$direct_followers = self::get_followers($subject,'follows');
-				foreach($direct_followers as $follow)
-				{
-					Model_Site_Feedfollow::addFeedFollow($feed->id,$follow->id);
-
-					$args = array(
-						'users_id' => $follow->follower_users_id,
-						'subject_line' => $author['name']." Tagged Something You Should Know About", //TODO: replace this with a real subject line
-						'to_address' => "mike.wrather@gmail.com",
-						'message_body' => self::constructEmail($obj,$subject,$type)
-					);
-					$queue = ORM::factory('Email_Queue');
-					$queue->addToQueue($args);
-				}
-
-				//check if the tag is resume data val
-				if(get_class($subject)=='Model_User_Resume_Data_Vals')
-				{
-
-				}
-
-				break;
-			case 'resumedataval':
-				break;
-			case 'statval':
-				break;
-			case 'game':
-				break;
-			case 'gamematch':
-				break;
-			default:
-				break;
-		}
-
-
-	}
-
-	protected static function constructEmail($obj,$sub,$type)
-	{
-
-		$enttype = ORM::factory('Site_Enttype',Ent::getMyEntTypeID($sub));
-		$subtype = $enttype->api_name;
-		$subject = $sub->getBasics();
-
-	//	print_r($subtype);
-
-		if($type == 'tag'){
-			$mobj = ($obj['media_obj']['media_type'] == 'image') ?
-				ORM::factory('Media_Image')->where('media_id','=',$obj['media_id'])->find() :
-				ORM::factory('Media_Video')->where('media_id','=',$obj['media_id'])->find();
-			$mobj = $mobj->getBasics();
-		}
-
-		switch($subtype)
-		{
-			case 'user':
-				$subject['title'] = $subject['name'];
-				break;
-			case 'game':
-
-				$subject['title'] = $subject['event_name'] != "" ? $subject['event_name'] : false;
-				if(!$subject['title'] && !empty($subject['teams'])){
-					$subject['title'] = "";
-					foreach($subject['teams'] as $team){
-						$subject['title'] .= $team['org_name'] . " vs ";
-					}
-					$subject['title'] = rtrim($subject['title'],' vs ');
-				}
-				break;
-			case 'media':
-
-			//	if($subject);
-				break;
-			case 'image':
-				break;
-			case 'video':
-				break;
-			case 'gamematch':
-				break;
-			case 'team':
-				$subject['title'] = $subject['team_name'];
-				break;
-			default:
-				break;
-		}
-
-
-
-
-
-	//	print_r($sub->getBasics());
-		$subheader = View::factory('email/notification/content/subjectheader')
-			->bind('subject',$subject);
-
-		$action = View::factory("email/notification/content/$type")
-			->bind('obj',$obj->getBasics());
-
-		$email_reason = "I said so";
-
-
-		$baseview = View::factory('email/notification/base')
-			->bind('subject_header',$subheader->render())
-			->bind('action_notification',$action->render())
-			->bind('email_reason',$email_reason)
-			->bind('pingback',$pingback);
-
-		return $baseview->render();
 	}
 
 	public function addFollower(Model_User_Base $user, ORM $object)
@@ -287,22 +169,43 @@ class Model_User_Followers extends ORM
 		return $this->id;
 	}
 
-	public static function genSubjectLine($type,$subject,$author)
+	public static function genSubjectLine($type,$subject,$feed)
 	{
 		$sub_line = "Something Happened";
 		switch($type)
 		{
 			case 'comment':
-				$sub_line = "New Comment on " . ucwords($subject['name']);
+				$sub_line = "New Comment on " . self::getPageName($subject);
 				break;
 			case 'tag':
+				$sub_line = "New Tag";
 				break;
 			case 'game':
+				$sub_line = "New Game";
 				break;
 			default:
 				break;
 		}
 
 		return $sub_line;
+	}
+
+	public static function getPageName($entity)
+	{
+		$enttype = ORM::factory('Site_Enttype',Ent::getMyEntTypeID($entity));
+		$type = $enttype->api_name;
+
+		if($type=='user'){
+			return $entity->name()."'s Profile";
+		}
+
+		if($type=='game'){
+			return "The " . $entity->name() . "Page";
+		}
+
+		if($type=='media'){
+			if($entity->media_type == 'image') return " an Image";
+			elseif($entity->media_type == 'video') return " a Video";
+		}
 	}
 }

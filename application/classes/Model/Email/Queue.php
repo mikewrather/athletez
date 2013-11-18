@@ -115,4 +115,14 @@ class Model_Email_Queue extends ORM
 		return false;
 	}
 
+	public function setMessageBody($message_body)
+	{
+		if($this->loaded() && strlen($message_body) > 0) {
+			$this->message_body = $message_body;
+			$this->save();
+			return $this;
+		}
+		return false;
+	}
+
 }

@@ -263,7 +263,7 @@ class Model_Sportorg_Games_Base extends ORM
 	}
 
 	public function get_game_name(){
-		return Util::format_time($this->gameTime);
+		return $this->name();
 	}
 
 	public function format_game_day(){
@@ -307,13 +307,15 @@ class Model_Sportorg_Games_Base extends ORM
 
 	public function name()
 	{
-		$name = "";
+		$name = $this->event_name != "" ? $this->event_name : false;
+		if(!$name)
 		$teams = $this->teams->find_all();
 		foreach($teams as $team)
 		{
-			$name .= $team->name().", ";
+			$team = $team->getBasics();
+			$name .= $team['org_name']." vs ";
 		}
-		return rtrim($name,', ');
+		return rtrim($name,' vs ');
 	}
 
 	public function getLocation(){
