@@ -2302,6 +2302,7 @@ Form.Fieldset = Backbone.View.extend({
 
 Form.Field = Backbone.View.extend({
 
+
   /**
    * Constructor
    * 
@@ -2445,9 +2446,11 @@ Form.Field = Backbone.View.extend({
 
     //Render field
     var $field = $($.trim(this.template(_.result(this, 'templateData'))));
-    if (schema.fieldClass) $field.addClass(schema.fieldClass);
+    if (schema.fieldClass) $field.addClass("input-field "+schema.fieldClass);
     if (schema.fieldAttrs) $field.attr(schema.fieldAttrs);
 
+	console.error(this);
+	
     //Render editor
     $field.find('[data-editor]').add($field).each(function(i, el) {
       var $container = $(el),
@@ -2557,7 +2560,7 @@ Form.Field = Backbone.View.extend({
   //STATICS
 
   template: _.template('\
-    <div>\
+    <div class="field-row">\
       <label for="<%= editorId %>"><%= title %></label>\
       <div>\
         <span data-editor></span>\
@@ -3741,13 +3744,11 @@ Form.editors.Button = Form.editors.Text.extend({
 Form.editors.Hidden = Form.editors.Text.extend({
 
   defaultValue: '',
-
   initialize: function(options) {
     Form.editors.Text.prototype.initialize.call(this, options);
-console.error(options);
     this.$el.attr('type', 'hidden');
-     this.$el.attr('value', 'hidden');
-     this.setOptions(options.schema.options);
+    if(this.value) this.$el.attr('value', this.value);
+    this.setOptions(options.schema.options);
   },
   
   setOptions : function(options) {

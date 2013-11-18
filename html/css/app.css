@@ -1570,11 +1570,54 @@ form fieldset ul li { height: 25px; }
 form fieldset ul li { float: left; margin: 0 20px 0 0; }
 form fieldset ul li input, form fieldset ul li label { float: left; margin: 0 0 0 20px; }
 form fieldset > div { float: left; width: 100%; }
-form fieldset > div > div { float: left; }
+/*form fieldset > div > div { float: left; }*/
 
 div[data-error] {
 	color: #FF0000;
 }
 
+.focus-error-animation {
+	border: 5px solid #FF0000 !important;
+	border-radius: 5px !important;
+	color: #000 !important;
+}
 
+.hidden {
+	display: none !important;
+}
+
+/*  Google map issue with twitter bootstrap fix */
+#map-canvas-h img {
+  max-width: none;
+}
+
+
+/*  Add Game Css  */
+.date-picker-field {
+	width: 100px;
+}
+
+.time-picker-field {
+	width: 50px;
+}
+
+.ampm-field {
+	width: 80px;
+}
+
+.input-field {
+	margin-right: 10px;
+}
+
+.input-field input {
+	width: 90%;
+}
+
+.button-field {
+	width: 100px;
+}
+
+.input-field .dropdown-wrapper {
+	width: 100%
+}
 
