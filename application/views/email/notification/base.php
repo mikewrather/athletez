@@ -71,7 +71,7 @@
 							<tr>
 								<td cellpadding="0" cellspacing="0" border="0" valign="middle" id="headerTable" style="border-collapse: collapse;background-color: #000000;height: 35px;">
 									<img class="image_fix" src="http://cdn.athletez.com/resources/img/athletez_logo_small.png" alt="Athletez Logo" title="Athletez.com" width="100" height="22" style="margin-top:12px; outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;display: block;padding-left: 5px;">
-									<img src="<? echo $pingback; ?>" width="0" height="0" alt="" style="outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;padding-left: 5px;">
+									<img src="<? echo $pingBack; ?>" width="0" height="0" alt="" style="outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;padding-left: 5px;">
 								</td>
 							</tr>
 						</table>
