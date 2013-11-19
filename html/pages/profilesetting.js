@@ -101,10 +101,10 @@ define(["require", "text!profilesetting/templates/layout.html", "facade", "contr
 
 		/*Add School View if user clicks on Add School*/
 		addHighSchool : function() {
-			var self = this, modal = new HighSchoolModel();
-			modal.set("type", "School");
+			var self = this, schoolmodel = new HighSchoolModel();
+			schoolmodel.set("type", "School");
 			this.schoolView = new OrgView({
-				model : modal,
+				model : schoolmodel,
 				name : "settings-high-school",
 				destination : "#content-school-prof-setting",
 				user_id : self.id,
@@ -131,10 +131,10 @@ define(["require", "text!profilesetting/templates/layout.html", "facade", "contr
 		},
 		/*Add School View if user clicks on Add School*/
 		SetUpClubView : function() {
-			var self = this, modal = new HighSchoolModel();
-			modal.set("type", "Club");
+			var self = this, clubmodel = new HighSchoolModel();
+			clubmodel.set("type", "Club");
 			this.clubView = new OrgView({
-				model : modal,
+				model : clubmodel,
 				name : "settings-club",
 				type: "club",
 				destination : "#content-club-prof-setting",
