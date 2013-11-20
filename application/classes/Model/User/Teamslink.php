@@ -90,4 +90,15 @@ class Model_User_Teamslink extends ORM
 		return $this;
 	}
 
+	public function getSubject(){
+		if($this->loaded())
+		{
+			$retArr = array();
+			$retArr[] = $this->user;
+			$retArr[] = $this->team;
+			return $retArr;
+		}
+		return false;
+	}
+
 }

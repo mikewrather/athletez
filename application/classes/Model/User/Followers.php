@@ -100,16 +100,9 @@ class Model_User_Followers extends ORM
 		return $retObj;
 	}
 
-
-	public static function processFeedItem($obj,$feed)
-	{
-		$enttype = ORM::factory('Site_Enttype',Ent::getMyEntTypeID($obj));
-		$type = $enttype->api_name;
-
-		$subject = $obj->getSubject();
-		$author = $feed->getAuthor();
-
+	public static function loopThroughFollowers($subject,$author,$obj,$feed,$type){
 		$direct_followers = self::get_followers($subject,'follows');
+		print_r($direct_followers);
 		foreach($direct_followers as $follow)
 		{
 			// do nothing if the author is also the follower
@@ -148,6 +141,26 @@ class Model_User_Followers extends ORM
 		}
 	}
 
+	public static function processFeedItem($obj,$feed)
+	{
+		$enttype = ORM::factory('Site_Enttype',Ent::getMyEntTypeID($obj));
+		$type = $enttype->api_name;
+
+		$subject = $obj->getSubject();
+		$author = $feed->getAuthor();
+
+		if(is_array($subject)){
+			foreach($subject as $this_subject){
+				echo get_class($this_subject);
+				self::loopThroughFollowers($this_subject,$author,$obj,$feed,$type);
+			}
+		}
+		else{
+			self::loopThroughFollowers($subject,$author,$obj,$feed,$type);
+		}
+
+	}
+
 	public function addFollower(Model_User_Base $user, ORM $object)
 	{
 		if(!$object->loaded()) return false;
@@ -182,6 +195,9 @@ class Model_User_Followers extends ORM
 				break;
 			case 'game':
 				$sub_line = "New Game";
+				break;
+			case 'userteamslink':
+				$sub_line = "New Team Member!";
 				break;
 			default:
 				break;
