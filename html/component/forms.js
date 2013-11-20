@@ -26,7 +26,7 @@ define(['require', 'facade', 'views', 'utils', 'vendor'], function(require) {
 			formValues.fields = {};
 			for (var key in formData) {
 				formValues.fields[key] =  {
-					currentValue : formData[key],
+					currentValue : function() { return form.fields[key].editor.getValue(); } ,
 					form_field : form.fields[key].editor,
 					deps : (form.fields[key].editor.valueBindings)?form.fields[key].editor.valueBindings:[],
 					post_to_server : (typeof form.fields[key].editor.post_to_server != "undefined")?form.fields[key].editor.post_to_server:true,
@@ -63,7 +63,7 @@ define(['require', 'facade', 'views', 'utils', 'vendor'], function(require) {
 			};
 			
 			// get field value by object
-			formValues.getFieldValueByObject = function(fieldName) {
+			formValues.getFieldValue = function(fieldName) {
 				if(form.fields && fieldName && form.fields[fieldName]) {
 					var v = [];
 					if(formValues.fields[fieldName].deps && formValues.fields[fieldName].deps.length) {
