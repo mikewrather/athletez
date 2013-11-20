@@ -7,7 +7,6 @@
  * */
 
 define(['require', 'facade', 'views', 'utils', 'vendor'], function(require) {
-
 	return function(fields, $target) {
 		var formValues = {}, self, facade = require('facade'), views = require('views');
 		var FormModel = facade.Backbone.Model.extend({
@@ -54,6 +53,14 @@ define(['require', 'facade', 'views', 'utils', 'vendor'], function(require) {
 					}
 				}
 				return ob;
+			};
+			
+
+			// update form values ui field when we 
+			formValues.updateUiAfterUpdatingObject = function(fieldName, value) {
+				if(form.fields && fieldName && form.fields[fieldName]) {
+					form.fields[fieldName].editor.setValue(value);
+				}
 			};
 			
 			// update form values after field update

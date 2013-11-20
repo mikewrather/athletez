@@ -3065,7 +3065,9 @@ Form.editors.Location = Form.editors.Text.extend({
    * @param {String}
    */
   setValue: function(value) {
-   this.locationId = value;
+   //this.locationId = value;
+   this.$el.find(".address-h").val(value);
+   this.$el.find(".verify-address-h").trigger("click");
   },
 
   focus: function() {
@@ -3537,7 +3539,11 @@ Form.editors.DropDown = Form.editors.Text.extend({
    * @param {String}
    */
   setValue: function(value) {
-   this.$el.find(".hidden-input-dropdown-h").val(value);
+  	this.$el.find(".common-dropdown li").removeClass("selected");
+  	this.$el.find(".common-dropdown a[data-id="+value+"]").parent("li").addClass("selected");
+  	var selectedVal = this.$el.find(".common-dropdown li.selected a").data("id");
+  	if(selectedVal && selectedVal != "") this.$el.find(".hidden-input-dropdown-h").val(selectedVal);
+    this.showSelectedValue();
   },
 
   select: function() {
