@@ -143,6 +143,7 @@ class Model_User_Followers extends ORM
 
 	public static function processFeedItem($obj,$feed)
 	{
+		/*
 		$enttype = ORM::factory('Site_Enttype',Ent::getMyEntTypeID($obj));
 		$type = $enttype->api_name;
 
@@ -158,7 +159,7 @@ class Model_User_Followers extends ORM
 		else{
 			self::loopThroughFollowers($subject,$author,$obj,$feed,$type);
 		}
-
+		*/
 	}
 
 	public function addFollower(Model_User_Base $user, ORM $object)

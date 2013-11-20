@@ -146,6 +146,8 @@ define([
 				// check if there is no team then intialize the participants view
 				var basicPayload = controller.basics.get("payload"),
 					teamsCount = (!_.isUndefined(basicPayload.teams) && basicPayload.teams)?basicPayload.teams.length:0;
+
+				controller.teamsCount = teamsCount;
 				
 				if(!teamsCount) {
 					// get the participants
