@@ -139,6 +139,7 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 				'date' : {
 					form_values: {
 						post_to_server	: false,
+						defaultValue: "2013-12-12",
 						serverKey : "game_date",
 						objectValuesToUpdate: ["game_datetime"],
 						getValue: function() {
@@ -167,7 +168,8 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 				},
 				'time' : {
 					form_values: {							
-						post_to_server	: false,					
+						post_to_server	: false,	
+						defaultValue: "10:00",				
 						serverKey: "game_time",
 						objectValuesToUpdate: ["game_datetime"]						
 					},
@@ -483,7 +485,6 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 							var gameModel = new GameModel(payload);
 							gameModel.save({});
 							$.when(gameModel.request).done(function(response) {
-								console.log(response);
 								if (response != null && response.payload != null) {
 									self.game_id = response.payload.id;
 									var isHome = $(self.destination).find("input[value=Home]").is(':checked');
@@ -508,7 +509,6 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 										users_id : self.user_id
 									};
 									isHome = $(self.destination).find(self.controls.rdoTeamTwo).is(':checked');
-
 									var addTeamModelTwo = new TeamAddModel(payloadTwo);
 									addTeamModelTwo.teams_id = formData.Select_Team_2;
 									addTeamModelTwo.save();
@@ -541,7 +541,7 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 			}, this.$el.find('.add-game-container-h'));
 			
 			var form = formData.form;
-			this.formValues = formData.formValues;
+			window.formValues1 = this.formValues = formData.formValues;
 		},
 		
 

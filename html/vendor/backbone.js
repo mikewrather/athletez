@@ -2815,16 +2815,12 @@ Form.editors.Text = Form.Editor.extend({
   	if(this.chnageEvent) this.chnageEvent(e);
   },
   
-  
-
   initialize: function(options) {
     _.bindAll(this);
     Form.editors.Base.prototype.initialize.call(this, options);
     var schema = this.schema;
-
     //Allow customising text type (email, phone etc.) for HTML5 browsers
     var type = 'text';
-
     if (schema && schema.editorAttrs && schema.editorAttrs.type) type = schema.type;
     if (schema && schema.dataType) type = schema.dataType;
     if (schema && schema.chnageEvent) this.chnageEvent = schema.chnageEvent;
@@ -2832,6 +2828,9 @@ Form.editors.Text = Form.Editor.extend({
 	this.setAllAttr(this.schema.attr);
     this.$el.attr('type', type);
     this.setOptions(options.schema.form_values);
+    
+    if(this.defaultValue) this.value = this.defaultValue;
+    
     if(this.schema.bindDatePicker) {
 		this.bindDatePickerFn();
     }
@@ -2864,7 +2863,6 @@ Form.editors.Text = Form.Editor.extend({
    */
   render: function() {
     this.setValue(this.value);
-
     return this;
   },
 
