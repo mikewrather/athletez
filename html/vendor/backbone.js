@@ -3062,8 +3062,12 @@ Form.editors.Location = Form.editors.Text.extend({
    * Sets the value of the form element
    * @param {String}
    */
+  
+  
+  
+  
   setValue: function(value) {
-   //this.locationId = value;
+  // this.locationId = value;
    this.$el.find(".address-h").val(value);
    this.$el.find(".verify-address-h").trigger("click");
   },

@@ -55,11 +55,27 @@ define(['require', 'facade', 'views', 'utils', 'vendor'], function(require) {
 				return ob;
 			};
 			
-
 			// update form values ui field when we 
 			formValues.updateUiAfterUpdatingObject = function(fieldName, value) {
 				if(form.fields && fieldName && form.fields[fieldName]) {
 					form.fields[fieldName].editor.setValue(value);
+				}
+			};
+			
+			// get field value by object
+			formValues.getFieldValueByObject = function(fieldName) {
+				if(form.fields && fieldName && form.fields[fieldName]) {
+					var v = [];
+					if(formValues.fields[fieldName].deps && formValues.fields[fieldName].deps.length) {
+						for(var j in formValues.fields[fieldName].deps) {
+							v.push(form.fields[formValues.fields[fieldName].deps[j]].editor.getValue() || '');
+						}
+					} else {
+						v.push(form.fields[i].editor.getValue());
+					}
+					return v.join(" ");
+				} else {
+					return undefined;
 				}
 			};
 			

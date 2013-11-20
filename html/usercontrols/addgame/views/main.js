@@ -139,13 +139,13 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 				'date' : {
 					form_values: {
 						post_to_server	: false,
-						defaultValue: "2013-12-12",
+						defaultValue: "2013-11-21",
 						serverKey : "game_date",
 						objectValuesToUpdate: ["game_datetime"],
 						getValue: function() {
 							return this.$el.val();
 						}
-					},
+ 					},
 					fieldClass: "date-picker-field",
 					type : 'Text',
 					attr : {
@@ -472,10 +472,10 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 							var formData = _self.formValues.getFormValues(), self = _self;
 							//date = self.formatDate(formData.date, formData.time, formData.Day_light);
 							
-							var completeDate = date, scoreOne = $(self.destination).find('input[name=score_1]').val(), scoreTwo = $(self.destination).find('input[name=score_2]').val();
+							//var completeDate = date, scoreOne = $(self.destination).find('input[name=score_1]').val(), scoreTwo = $(self.destination).find('input[name=score_2]').val();
 							var payload = {
 								game_datetime : formData.game_datetime,
-								locations_id : formData.locations_id,
+								locations_id : formData['Location'],
 								teamOneId : formData.teamOneId,
 								teamTwoId : formData.teamTwoId,
 								sports_id : formData.sports_id,
@@ -492,8 +492,8 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 										game_datetime : formData.game_datetime,
 										games_id : self.game_id,
 										home_team : isHome || false,
-										locations_id : self.location_id,
-										score : scoreOne,
+										locations_id : self['Location'],
+										score : formData.score_1,
 										users_id : self.user_id
 									};
 
@@ -504,8 +504,8 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 										game_datetime : formData.game_datetime,
 										games_id : self.game_id,
 										home_team : isHome || false,
-										locations_id : self.location_id,
-										score : scoreTwo,
+										locations_id : self['Location'],
+										score : formData.score_2,
 										users_id : self.user_id
 									};
 									isHome = $(self.destination).find(self.controls.rdoTeamTwo).is(':checked');
