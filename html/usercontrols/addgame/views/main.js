@@ -346,7 +346,8 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 				'Select_Team_2' : {
 					type : 'AutoComplete',
 					form_values: {
-						serverKey: 'team_name',
+						keyNameInPayload: 'team_name',
+						serverKey: 'teamTwoId',
 						request_fields : [{
 								key : 'states_id',
 								value : _self.states_id

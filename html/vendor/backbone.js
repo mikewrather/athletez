@@ -3127,7 +3127,7 @@ Form.editors.AutoComplete = Form.editors.Text.extend({
 		
 		// Destroy existing autocomplete from text box before attaching it again
 		// try catch as for the first time it gives error
-		try { _self.$el.autocomplete("destroy"); } catch(ex) {}
+		try { _self.$el.autocomplete("destroy"); } catch(ex) {  }
 		_self.$el.removeClass('ui-autocomplete-loading');
 		_self.$el.autocomplete({
 			source : arr,
@@ -3165,15 +3165,16 @@ Form.editors.AutoComplete = Form.editors.Text.extend({
   initialize: function(options) {
     Form.editors.Base.prototype.initialize.call(this, options);
      var _self = this, schema = options.schema;
+     
+     
     //Allow customising text type (email, phone etc.) for HTML5 browsers
-    //if (schema && schema.getData) this.getData = schema.getData;    
+    //if (schema && schema.form_values && schema.form_values) this.getData = schema.getData;    
     this.$el.attr('type', 'text');
-    this.setOptions(options.schema.options);
-    
-	this.getData();
+    this.setOptions(options.schema.form_values);
   },
   
   	getData: function(value, callback) {
+  		console.error("here", this.source_collection);
 		var _self = this;
 		if(this.source_collection) {
 			if(this.collectionFetchOb) this.collectionFetchOb.abort();
@@ -3187,7 +3188,6 @@ Form.editors.AutoComplete = Form.editors.Text.extend({
 			}
 			
 			this.collectionFetchOb = this.collection.fetch();
-			
 			$.when(this.collection.request).done(function() {
 				if(_self.request_finished) _self.request_finished();				
 				if (callback) callback(_self.collection.toJSON());
