@@ -140,10 +140,9 @@ define([
 				controller.commentson = new GameCommentOnList();
 				controller.commentson.subject_entity_type = subject_type_id;
 				controller.commentson.id = controller.id;
-				controller.commentson.targetElement = "#comment_div";
+				controller.commentson.targetElement = "#commenton-wrap";
 				controller.commentson.fetch();
-				
-				
+					
 				// check if there is no team then intialize the participants view
 				var basicPayload = controller.basics.get("payload"),
 					teamsCount = (!_.isUndefined(basicPayload.teams) && basicPayload.teams)?basicPayload.teams.length:0;
@@ -152,7 +151,7 @@ define([
 					// get the participants
 					controller.participants = new ParticipantsList();
 					controller.participants.id = controller.id;
-					controller.commentson.targetElement = "#roster-wrap";
+					controller.participants.targetElement = "#roster-wrap";
 					controller.participants.fetch();
 					$.when(controller.participants.request).done(function () {
 						controller.setupParticipantsListView();
