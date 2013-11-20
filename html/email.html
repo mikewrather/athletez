@@ -1,50 +1,257 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns="http://www.w3.org/1999/xhtml">
+<!-- ***************************************************
+********************************************************
+
+HOW TO USE: Use these code examples as a guideline for formatting your HTML email. You may want to create your own template based on these snippets or just pick and choose the ones that fix your specific rendering issue(s). There are two main areas in the template: 1. The header (head) area of the document. You will find global styles, where indicated, to move inline. 2. The body section contains more specific fixes and guidance to use where needed in your design.
+
+DO NOT COPY OVER COMMENTS AND INSTRUCTIONS WITH THE CODE to your message or risk spam box banishment :).
+
+It is important to note that sometimes the styles in the header area should not be or don't need to be brought inline. Those instances will be marked accordingly in the comments.
+
+********************************************************
+**************************************************** -->
+
+<!-- Using the xHTML doctype is a good practice when sending HTML email. While not the only doctype you can use, it seems to have the least inconsistencies. For more information on which one may work best for you, check out the resources below.
+
+UPDATED: Now using xHTML strict based on the fact that gmail and hotmail uses it.  Find out more about that, and another great boilerplate, here: http://www.emailology.org/#1
+
+More info/Reference on doctypes in email:
+Campaign Monitor - http://www.campaignmonitor.com/blog/post/3317/correct-doctype-to-use-in-html-email/
+Email on Acid - http://www.emailonacid.com/blog/details/C18/doctype_-_the_black_sheep_of_html_email_design
+-->
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-	<title>*|MC:SUBJECT|*</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+	<title>Your Message Subject or Title</title>
+	<style type="text/css">
+
+		/***********
+		Originally based on The MailChimp Reset from Fabio Carneiro, MailChimp User Experience Design
+		More info and templates on Github: https://github.com/mailchimp/Email-Blueprints
+		http://www.mailchimp.com &amp; http://www.fabio-carneiro.com
+
+		INLINE: Yes.
+		***********/
+		/* Client-specific Styles */
+		#outlook a {padding:0;} /* Force Outlook to provide a "view in browser" menu link. */
+		body{width:100% !important; -webkit-text-size-adjust:100%; -ms-text-size-adjust:100%; margin:0; padding:0; font-family: "Helvetica",sans-serif; color: #454545;}
+		/* Prevent Webkit and Windows Mobile platforms from changing default font sizes, while not breaking desktop design. */
+		.ExternalClass {width:100%;} /* Force Hotmail to display emails at full width */
+		.ExternalClass, .ExternalClass p, .ExternalClass span, .ExternalClass font, .ExternalClass td, .ExternalClass div {line-height: 100%;} /* Force Hotmail to display normal line spacing.  More on that: http://www.emailonacid.com/forum/viewthread/43/ */
+		#backgroundTable {margin:0; padding:0; width:100% !important; line-height: 100% !important;background-color: #f7f7f7}
+		#headerTable{background-color: #000000; height: 35px;}
+		#headerTable img{padding-left:5px;}
+		#contentTable{ border:1px solid #c9c9c9;}
+		#entInfo span{display: block; line-height: 25px; font-size: 14px;}
+		#footerTable{ border-left:1px solid #c9c9c9;border-right: 1px solid #c9c9c9; border-bottom: 1px solid #c9c9c9; background-color: #e8e8e8;}
+		#finalText{color: #b1b1b1; font-size: 10px;}
+		/* End reset */
+
+		/* Some sensible defaults for images
+		1. "-ms-interpolation-mode: bicubic" works to help ie properly resize images in IE. (if you are resizing them using the width and height attributes)
+		2. "border:none" removes border when linking images.
+		3. Updated the common Gmail/Hotmail image display fix: Gmail and Hotmail unwantedly adds in an extra space below images when using non IE browsers. You may not always want all of your images to be block elements. Apply the "image_fix" class to any image you need to fix.
+
+		Bring inline: Yes.
+		*/
+		img {outline:none; text-decoration:none; -ms-interpolation-mode: bicubic;}
+		a img {border:none;}
+		.image_fix {display:block;}
+
+		/** Yahoo paragraph fix: removes the proper spacing or the paragraph (p) tag. To correct we set the top/bottom margin to 1em in the head of the document. Simple fix with little effect on other styling. NOTE: It is also common to use two breaks instead of the paragraph tag but I think this way is cleaner and more semantic. NOTE: This example recommends 1em. More info on setting web defaults: http://www.w3.org/TR/CSS21/sample.html or http://meiert.com/en/blog/20070922/user-agent-style-sheets/
+
+		Bring inline: Yes.
+		**/
+		p {margin: 1em 0;}
+
+		/** Hotmail header color reset: Hotmail replaces your header color styles with a green color on H2, H3, H4, H5, and H6 tags. In this example, the color is reset to black for a non-linked header, blue for a linked header, red for an active header (limited support), and purple for a visited header (limited support).  Replace with your choice of color. The !important is really what is overriding Hotmail's styling. Hotmail also sets the H1 and H2 tags to the same size.
+
+		Bring inline: Yes.
+		**/
+		h1, h2, h3, h4, h5, h6 {color: black !important;}
+
+		h1 a, h2 a, h3 a, h4 a, h5 a, h6 a {color: blue !important;}
+
+		h1 a:active, h2 a:active,  h3 a:active, h4 a:active, h5 a:active, h6 a:active {
+			color: red !important; /* Preferably not the same color as the normal header link color.  There is limited support for psuedo classes in email clients, this was added just for good measure. */
+		 }
+
+		h1 a:visited, h2 a:visited,  h3 a:visited, h4 a:visited, h5 a:visited, h6 a:visited {
+			color: purple !important; /* Preferably not the same color as the normal header link color. There is limited support for psuedo classes in email clients, this was added just for good measure. */
+		}
+
+		/** Outlook 07, 10 Padding issue: These "newer" versions of Outlook add some padding around table cells potentially throwing off your perfectly pixeled table.  The issue can cause added space and also throw off borders completely.  Use this fix in your header or inline to safely fix your table woes.
+
+		More info: http://www.ianhoar.com/2008/04/29/outlook-2007-borders-and-1px-padding-on-table-cells/
+		http://www.campaignmonitor.com/blog/post/3392/1px-borders-padding-on-table-cells-in-outlook-07/
+
+		H/T @edmelly
+
+		Bring inline: No.
+		**/
+
+
+		/** Remove spacing around Outlook 07, 10 tables
+
+		More info : http://www.campaignmonitor.com/blog/post/3694/removing-spacing-from-around-tables-in-outlook-2007-and-2010/
+
+		Bring inline: Yes
+		**/
+		table { border-collapse:collapse; mso-table-lspace:0pt; mso-table-rspace:0pt; }
+
+		/* Styling your links has become much simpler with the new Yahoo.  In fact, it falls in line with the main credo of styling in email, bring your styles inline.  Your link colors will be uniform across clients when brought inline.
+
+		Bring inline: Yes. */
+		a {color: orange;}
+
+		/* Or to go the gold star route...
+		a:link { color: orange; }
+		a:visited { color: blue; }
+		a:hover { color: green; }
+		*/
+
+		/***************************************************
+		****************************************************
+		MOBILE TARGETING
+
+		Use @media queries with care.  You should not bring these styles inline -- so it's recommended to apply them AFTER you bring the other stlying inline.
+
+		Note: test carefully with Yahoo.
+		Note 2: Don't bring anything below this line inline.
+		****************************************************
+		***************************************************/
+
+	</style>
+
+	<!-- Targeting Windows Mobile -->
+	<!--[if IEMobile 7]>
+	<style type="text/css">
+
+	</style>
+	<![endif]-->
+
+	<!-- ***********************************************
+	****************************************************
+	END MOBILE TARGETING
+	****************************************************
+	************************************************ -->
+
+	<!--[if gte mso 9]>
+	<style>
+		/* Target Outlook 2007 and 2010 */
+	</style>
+	<![endif]-->
 </head>
-<body leftmargin="0" marginwidth="0" topmargin="0" marginheight="0" offset="0" style="-webkit-text-size-adjust: none !important; -ms-text-size-adjust: 100%; height: 100% !important; width: 100% !important; min-width: 100% !important; background-color: #DEE0E2; margin: 0; padding: 0;" bgcolor="#DEE0E2"><style type="text/css">
-	.preheaderContent a:visited { color: #606060 !important; font-weight: normal !important; text-decoration: underline !important; }
-	.headerContent a:visited { color: #EB4102 !important; font-weight: normal !important; text-decoration: underline !important; }
-	.bodyContent a:visited { color: #EB4102 !important; font-weight: normal !important; text-decoration: underline !important; }
-	.footerContent a:visited { color: #606060 !important; font-weight: normal !important; text-decoration: underline !important; }
-	&gt;</style>&#13;
-<center>&#13;
-	<table align="center" border="0" cellpadding="0" cellspacing="0" height="100%" width="100%" style="-webkit-text-size-adjust: none !important; -ms-text-size-adjust: 100%; mso-table-lspace: 0pt; mso-table-rspace: 0pt; border-collapse: collapse !important; height: 100% !important; width: 100% !important; background-color: #DEE0E2; margin: 0; padding: 0;" bgcolor="#DEE0E2"><tr><td align="center" valign="top" style="-webkit-text-size-adjust: none !important; -ms-text-size-adjust: 100%; mso-table-lspace: 0pt; mso-table-rspace: 0pt; height: 100% !important; width: 100% !important; border-top-width: 4px; border-top-color: #BBBBBB; border-top-style: solid; margin: 0; padding: 10px;">&#13;
-		&#13;
-		<table border="0" cellpadding="0" cellspacing="0" style="-webkit-text-size-adjust: none !important; -ms-text-size-adjust: 100%; mso-table-lspace: 0pt; mso-table-rspace: 0pt; border-collapse: collapse !important; width: 100% !important; max-width: 600px !important; border: 1px solid #bbbbbb;"><tr><td align="center" valign="top" style="-webkit-text-size-adjust: none !important; -ms-text-size-adjust: 100%; mso-table-lspace: 0pt; mso-table-rspace: 0pt;">&#13;
-			&#13;
-			<table border="0" cellpadding="0" cellspacing="0" width="100%" style="-webkit-text-size-adjust: none !important; -ms-text-size-adjust: 100%; mso-table-lspace: 0pt; mso-table-rspace: 0pt; border-collapse: collapse !important; border-bottom-color: #CCCCCC; border-bottom-width: 1px; border-bottom-style: solid; display: none !important; background-color: #F4F4F4;" bgcolor="#F4F4F4"><tr><td valign="top" style="-webkit-text-size-adjust: none !important; -ms-text-size-adjust: 100%; mso-table-lspace: 0pt; mso-table-rspace: 0pt; color: #808080; font-family: Helvetica; font-size: 10px; line-height: 125%; text-align: left; padding: 10px 20px;" mc:edit="preheader_content00" align="left">&#13;
-				Welcome to Athletez <?php echo $user->first_name; ?>!&#13;
-			</td>&#13;
-				&#13;
-				<td valign="top" width="180" style="-webkit-text-size-adjust: none !important; -ms-text-size-adjust: 100%; mso-table-lspace: 0pt; mso-table-rspace: 0pt; color: #808080; font-family: Helvetica; font-size: 10px; line-height: 125%; text-align: left; padding: 10px 20px 10px 0;" mc:edit="preheader_content01" align="left">&#13;
-					&#13;
-				</td>&#13;
-				&#13;
-			</tr></table></td>&#13;
-		</tr><tr><td align="center" valign="top" style="-webkit-text-size-adjust: none !important; -ms-text-size-adjust: 100%; mso-table-lspace: 0pt; mso-table-rspace: 0pt;">&#13;
-			&#13;
-			<table border="0" cellpadding="0" cellspacing="0" width="100%" style="-webkit-text-size-adjust: none !important; -ms-text-size-adjust: 100%; mso-table-lspace: 0pt; mso-table-rspace: 0pt; border-collapse: collapse !important; border-top-width: 1px; border-top-color: #FFFFFF; border-top-style: solid; border-bottom-width: 1px; border-bottom-color: #CCCCCC; border-bottom-style: solid; background-color: #F4F4F4;" bgcolor="#F4F4F4"><tr><td valign="top" style="-webkit-text-size-adjust: none !important; -ms-text-size-adjust: 100%; mso-table-lspace: 0pt; mso-table-rspace: 0pt; color: #505050; font-family: Helvetica; font-size: 20px !important; font-weight: bold; line-height: 125% !important; text-align: left; vertical-align: middle; padding: 0;" align="left">&#13;
-				<img src="http://cdn.athletez.com/resources/img/logo_.png" style="max-width: 600px !important; -ms-interpolation-mode: bicubic; height: auto !important; line-height: 100%; outline: none; text-decoration: none; width: 100% !important; border: 0;" mc:label="header_image" mc:edit="header_image" mc:allowdesigner="" mc:allowtext="" /></td>&#13;
-			</tr></table></td>&#13;
-		</tr><tr><td align="center" valign="top" style="-webkit-text-size-adjust: none !important; -ms-text-size-adjust: 100%; mso-table-lspace: 0pt; mso-table-rspace: 0pt;">&#13;
-			&#13;
-			<table border="0" cellpadding="0" cellspacing="0" width="100%" style="-webkit-text-size-adjust: none !important; -ms-text-size-adjust: 100%; mso-table-lspace: 0pt; mso-table-rspace: 0pt; border-collapse: collapse !important; border-top-width: 1px; border-top-color: #FFFFFF; border-top-style: solid; border-bottom-width: 1px; border-bottom-color: #CCCCCC; border-bottom-style: solid; background-color: #F4F4F4;" bgcolor="#F4F4F4"><tr><td valign="top" mc:edit="body_content" style="-webkit-text-size-adjust: none !important; -ms-text-size-adjust: 100%; mso-table-lspace: 0pt; mso-table-rspace: 0pt; color: #505050; font-family: Helvetica; font-size: 14px !important; line-height: 125% !important; text-align: left; padding: 20px;" align="left">&#13;
-				<h2 style="color: #202020 !important; display: block; font-family: Helvetica; font-size: 24px !important; font-style: normal; font-weight: bold; line-height: 100% !important; letter-spacing: normal; text-align: left; margin: 0 0 10px;" align="left">Thanks for Joining Our Community</h2>&#13;
-				We’ve made it our mission to help every athlete enjoy their time in the spotlight, and with you on board we’re one step closer to our goal. So please, take a look around, connect with your teams and gyms, engage with your supporters and scope out the competition, but most importantly... show us what you’ve got!<br /></td>&#13;
-			</tr></table></td>&#13;
-		</tr><tr><td align="center" valign="top" style="-webkit-text-size-adjust: none !important; -ms-text-size-adjust: 100%; mso-table-lspace: 0pt; mso-table-rspace: 0pt;">&#13;
-			&#13;
-			<table border="0" cellpadding="0" cellspacing="0" width="100%" style="-webkit-text-size-adjust: none !important; -ms-text-size-adjust: 100%; mso-table-lspace: 0pt; mso-table-rspace: 0pt; border-collapse: collapse !important; border-top-color: #FFFFFF; border-top-width: 1px; border-top-style: solid; background-color: #F4F4F4;" bgcolor="#F4F4F4"><tr><td valign="top" mc:edit="footer_content00" style="-webkit-text-size-adjust: none !important; -ms-text-size-adjust: 100%; mso-table-lspace: 0pt; mso-table-rspace: 0pt; color: #808080; font-family: Helvetica; font-size: 14px !important; line-height: 115% !important; text-align: left; padding: 20px;" align="left">&#13;
-				<a href="<?php echo $twitter_url; ?>" style="-webkit-text-size-adjust: none !important; -ms-text-size-adjust: 100%; color: #606060; font-weight: normal; text-decoration: underline; display: block !important;">Follow on Twitter</a>   <a href="<?php echo $facebook_url; ?>" style="-webkit-text-size-adjust: none !important; -ms-text-size-adjust: 100%; color: #606060; font-weight: normal; text-decoration: underline; display: block !important;">Friend on Facebook</a>
-			</td>&#13;
-			</tr><tr><td valign="top" style="-webkit-text-size-adjust: none !important; -ms-text-size-adjust: 100%; mso-table-lspace: 0pt; mso-table-rspace: 0pt; color: #808080; font-family: Helvetica; font-size: 14px !important; line-height: 115% !important; text-align: left; padding: 0 20px 20px;" mc:edit="footer_content01" align="left">&#13;
-				<em>Copyright © 2014 DHJ Partners LLC, All rights reserved.</em>&#13;
-			</td>&#13;
-			</tr></table></td>&#13;
-		</tr></table></td>&#13;
-	</tr></table></center>&#13;
+<body>
+	<!-- Wrapper/Container Table: Use a wrapper table to control the width and the background color consistently of your email. Use this approach instead of setting attributes on the body tag. -->
+	<table cellpadding="0" cellspacing="0" border="0" id="backgroundTable">
+	<tr>
+		<td cellpadding="0" cellspacing="0" border="0" align="center">
+			<br/><br/>
+
+			<table width="600">
+				<tr>
+					<td cellpadding="0" cellspacing="0" border="0" >
+						<!-- Tables are the most common way to format your email consistently. Set your table widths inside cells and in most cases reset cellpadding, cellspacing, and border to zero. Use nested tables as a way to space effectively in your message. -->
+						<table cellpadding="0" cellspacing="0" border="0" align="left" width="100%" >
+							<tr>
+								<td cellpadding="0" cellspacing="0" border="0" valign="middle" id="headerTable">
+									<img class="image_fix" src="http://cdn.athletez.com/resources/img/athletez_logo_small.png" alt="Athletez Logo" title="Your title text" width="100" height="22" />
+
+
+								</td>
+							</tr>
+						</table>
+						<table cellpadding="0" cellspacing="0" border="0" align="center" width="100%" id="contentTable">
+							<tr>
+								<td cellpadding="0" cellspacing="0" border="0" valign="top" align="center">
+								<!-- START OF TEST CONTENT -->
+									<br/>
+									<br/>
+									<table cellpadding="0" cellspacing="0" border="0" align="center" width="90%">
+										<tr>
+											<td align="left" style="width:160px;">
+												<img src="<?php
+
+			if($subject['enttypes_id']==1){
+				echo $subject['user_picture_obj']['types']['standard_thumb']['url'];
+			}
+			elseif($subject['enttypes_id']==8){
+				echo $subject['game_picture']['types']['standard_thumb']['url'];
+			}
+			elseif($subject['enttypes_id']==5){
+				echo $subject['user_picture_obj']['types']['standard_thumb']['url'];
+			}
+			elseif($subject['enttypes_id']==21){
+				echo $subject['types']['standard_thumb']['url'];
+			}
+			elseif($subject['enttypes_id']==20){
+				echo $subject['types']['standard_thumb']['url'];
+			}
+			?>" width="150" />
+
+											</td>
+											<td align="left" valign="top" id="entInfo">
+												<span style="font-size: 20px; font-weight: bolder;"><?php echo $subject['name']; ?></span>
+												<span>Total Votes: <?php echo $subject['num_votes']; ?></span>
+												<span>Total Followers: <?php echo $subject['num_followers']; ?></span>
+											</td>
+										</tr>
+									</table>
+									<br/>
+									<br/>
+									<table cellpadding="0" cellspacing="0" border="0" align="center" width="100%" id="contentTable">
+										<tr>
+											<td cellpadding="0" cellspacing="0" border="0" valign="top" align="center">
+
+												<table cellpadding="0" cellspacing="0" border="0" align="center" width="80%">
+													<tr>
+														<td align="center" style="width:70px;">
+															<img src="<?php echo $comment['user']['user_picture_obj']['types']['small_thumb']['url']; ?>" width="55" height="55" />
+														</td>
+														<td border="1">
+															<span style="font-weight: bold; font-size: 12px;"><?php echo $comment['name']; ?> Posted a New Comment on <?php echo $comment['comment_date']; ?>:</span><br>
+															<span style="font-size: 12px;"><?php $comment['comment']; ?></span>
+														</td>
+													</tr>
+												</table>
+												<br/>
+											</td>
+										</tr>
+									</table>
+									<br/>
+								<!-- END OF TEST CONTENT -->
+								</td>
+							</tr>
+						</table>
+
+						<table cellpadding="0" cellspacing="0" border="0" align="center" width="100%" id="footerTable">
+							<tr>
+								<td cellpadding="0" cellspacing="0" border="0" valign="middle" align="center">
+									<button style="border:1px solid #9d9d9d; height: 35px; width:150px; margin: 10px; font-weight: bold; font-size: 12px;">Get in on the Action!</button>
+								</td>
+							</tr>
+						</table>
+
+					</td>
+				</tr>
+			</table>
+			<br/>
+			<table width="600"><tr><td align="left">
+				<span id="finalText">You received this message because you are following Jeff Stephens on Athletez.<br/>
+			DHJ Partners LLC holds a copyright and trademark on the name Athletez</span>
+			</td></tr></table>
+
+<br/><br/><br/>
+
+
+
+		</td>
+	</tr>
+	</table>
+	<!-- End of wrapper table -->
 </body>
 </html>

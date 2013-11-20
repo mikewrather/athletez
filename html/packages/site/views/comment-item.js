@@ -64,12 +64,8 @@ function (
 	        console.log("payload",this.model.get('payload'));
 			deleteModel.subject_id = this.model.get("payload").id;
 			deleteModel.enttypes_id = this.model.get("payload").enttypes_id;
-
-			deleteModel.destroy();
-			
-			$.when(deleteModel.request).done(function() {
-				$(e.currentTarget).parents("li.comment").addClass('remove-item');
-			});
+			deleteModel.removeNode =$(e.currentTarget).parents("li.comment");
+			deleteModel.destroyAndRemove();
         }       
         
       });

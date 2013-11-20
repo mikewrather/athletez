@@ -112,20 +112,41 @@ class Model_User_Followers extends ORM
 		{
 			case 'comment':
 
-				//check for followers of poster
+				$subject = $obj->getSubject();
 				$poster = $obj->getUser();
+
+				//check for followers of poster
 				$direct_followers = self::get_followers($poster,'follows');
 				foreach($direct_followers as $follow)
 				{
+					if($follow->follower_users_id == $poster->id) continue;
+
 					Model_Site_Feedfollow::addFeedFollow($feed->id,$follow->id);
+					$args = array(
+						'users_id' => $follow->follower_users_id,
+						'subject_line' => $poster->name()." Left a Comment.",
+						'to_address' => "mike.wrather@gmail.com",
+						'message_body' => self::constructEmail($obj,$subject,$type)
+					);
+					$queue = ORM::factory('Email_Queue');
+					$queue->addToQueue($args);
 				}
 
 				//check for followers of subject
-				$subject = $obj->getSubject();
 				$direct_followers = self::get_followers($subject,'follows');
 				foreach($direct_followers as $follow)
 				{
+					if($follow->follower_users_id == $poster->id) continue;
+
 					Model_Site_Feedfollow::addFeedFollow($feed->id,$follow->id);
+					$args = array(
+						'users_id' => $follow->follower_users_id,
+						'subject_line' => $poster->name()." Left a Comment.",
+						'to_address' => "mike.wrather@gmail.com",
+						'message_body' => self::constructEmail($obj,$subject,$type)
+					);
+					$queue = ORM::factory('Email_Queue');
+					$queue->addToQueue($args);
 				}
 
 				break;
@@ -133,13 +154,21 @@ class Model_User_Followers extends ORM
 
 				//get tag subject
 				$subject = $obj->getSubject();
+				$poster = $subject['tagger'];
 
 				//Find any follows of this subject
 				$direct_followers = self::get_followers($subject,'follows');
-
 				foreach($direct_followers as $follow)
 				{
 					Model_Site_Feedfollow::addFeedFollow($feed->id,$follow->id);
+					$args = array(
+						'users_id' => $follow->follower_users_id,
+						'subject_line' => $poster->name()." Tagged something you follow.", //TODO: replace this with a real subject line
+						'to_address' => "mike.wrather@gmail.com",
+						'message_body' => self::constructEmail($obj,$subject,$type)
+					);
+					$queue = ORM::factory('Email_Queue');
+					$queue->addToQueue($args);
 				}
 
 				//check if the tag is resume data val
@@ -161,6 +190,65 @@ class Model_User_Followers extends ORM
 		}
 
 
+	}
+
+	protected static function constructEmail($obj,$sub,$type)
+	{
+
+		$enttype = ORM::factory('Site_Enttype',Ent::getMyEntTypeID($sub));
+		$subtype = $enttype->api_name;
+		$subject = $sub->getBasics();
+
+		switch($subtype)
+		{
+			case 'user':
+				$subject['title'] = $subject['name'];
+				break;
+			case 'game':
+
+				$subject['title'] = $subject['event_name'] != "" ? $subject['event_name'] : false;
+				if(!$subject['title'] && !empty($subject['teams'])){
+					$subject['title'] = "";
+					foreach($subject['teams'] as $team){
+						$subject['title'] .= $team['org_name'] . " vs ";
+					}
+					$subject['title'] = rtrim($subject['title'],' vs ');
+				}
+				break;
+			case 'media':
+			//	if($subject);
+				break;
+			case 'image':
+				break;
+			case 'video':
+
+				break;
+			case 'gamematch':
+				break;
+			case 'team':
+				$subject['title'] = $subject['team_name'];
+				break;
+			default:
+				break;
+		}
+
+	//	print_r($sub->getBasics());
+		$subheader = View::factory('email/notification/content/subjectheader')
+			->bind('subject',$subject);
+
+		$action = View::factory("email/notification/content/$type")
+			->bind('comment',$obj->getBasics());
+
+		$email_reason = "I said so";
+		$pingback = "http://athletez.com/api/emailsent/pingback/";
+
+		$baseview = View::factory('email/notification/base')
+			->bind('subject_header',$subheader->render())
+			->bind('action_notification',$action->render())
+			->bind('email_reason',$email_reason)
+			->bind('pingback',$pingback);
+
+		return $baseview->render();
 	}
 
 	public function addFollower(Model_User_Base $user, ORM $object)

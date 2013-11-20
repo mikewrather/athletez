@@ -130,9 +130,18 @@ div#edit_profile_info_section div span{
     padding:10px;
 }
 #section-basics-prof-setting .profile-image a{
+    display: block;
     font-size: 1.3em;
     font-weight: bold;
     text-align: center;
+    border:4px dashed white;
+    position: relative;
+    top:-80px;
+    height: 40px;
+    background-color: #d36011;
+    color: white;
+    padding-top:15px;
+    opacity:.7;
 }
 .main-container{
     margin : auto; background-color: white; width:100%; padding-bottom: 60px;
@@ -170,7 +179,7 @@ div#edit_profile_info_section div span{
 }
 .resume_button#edit_profile_info, .resume_button#save_user_data{
     float: left;
-    width: 40px;
+    width: auto;
     cursor: pointer;
     text-align: center;
 }

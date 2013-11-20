@@ -1,7 +1,8 @@
 //var a =
 	({
-	appDir: '.',
-	baseUrl: '.',
+	appDir: './',
+	baseUrl: './',
+//	mainConfigFile: './main.js',
 	dir: '../html_build',
 	optimize: 'uglify',
 	paths: {
@@ -12,7 +13,7 @@
 		'mustache': 'vendor/mustache',
 		'backbone': 'vendor/backbone',
 		'underscore': 'vendor/underscore',
-		'jquery': 'vendor/jquery-2.0.0.min',
+		'jquery': 'vendor/jquery.1.10.2.min',
 		// Plugins
 		'bootstrap': 'vendor/plugins/bootstrap',
 		'jquery.pstrength': 'vendor/plugins/jquery.pstrength-min.1.2',
@@ -26,7 +27,7 @@
 		'jquery.slimscroll': 'vendor/plugins/jquery.slimscroll.min',
 		'jquery.slimscroll.hor' : 'vendor/plugins/jquery.slimscroll.hor',
 		'plupload': 'plupload/js/plupload.full',
-		'jwplayer'          : "empty:",
+		'jwplayer': "vendor/plugins/jwplayer",
 
 		'custom': 'vendor/custom',
 
@@ -104,29 +105,41 @@
 
 	},
 	shim: {
+		'jqueryui': {
+			deps: ['jquery']
+		},
+		'browser': {
+			deps: ['jquery']
+		},
 		'underscore': {
-			exports: '_'
+			exports: '_',
+			deps: ['jquery']
 		},
 		'backbone': {
-			deps: ['underscore', 'jquery', 'json2', 'html5', 'jqueryui', 'custom','jquerytimepicker'],
+			deps: ['underscore', 'jquery', 'json2', 'html5', 'jqueryui', 'custom', 'jquerytimepicker','browser'],
 			exports: 'Backbone'
 		},
+		'browserpop': {
+			deps:['jqueryui']
+		},
+		'jquery.slimscroll':{
+			deps: ['jquery', 'jqueryui']
+		},
 		'bootstrap': {
-			deps: ['jquery']
+			deps: ['jquery', 'jqueryui']
 		},
 		'plupload': {
 			deps: ['jquery']
 		},
-		'jqueryui' : {
-			deps : ['jquery']
+		'jwplayer': {
+			deps: ['jquery']
 		},
-		'jquerytimepicker' : {
-			deps : ['jquery','jqueryui']
+		'jquerytimepicker': {
+			deps: ['jquery', 'jqueryui']
 		}
-
 	},
 	priority: ['text', 'modernizr', 'json2', 'vendor', 'utils', 'facade', 'syncs', 'models', 'views', 'collections', 'controller'],
-	jquery: '1.9.0',
+	jquery: '1.10.2',
 	modules: [
 		// Common libraries, Utilities, Syncs, Models, Views, Collections
 		{
@@ -135,19 +148,19 @@
 		},
 		{
 			name: 'syncs',
-			exclude: ['vendor', 'facade', 'utils']
+			exclude: ['jquery','vendor', 'facade', 'utils']
 		},
 		{
 			name: 'models',
-			exclude: ['vendor', 'facade', 'utils', 'syncs']
+			exclude: ['jquery','vendor', 'facade', 'utils', 'syncs']
 		},
 		{
 			name: 'views',
-			exclude: ['vendor', 'facade', 'utils', 'syncs', 'models']
+			exclude: ['jquery','vendor', 'facade', 'utils', 'syncs', 'models']
 		},
 		{
 			name: 'collections',
-			exclude: ['vendor', 'facade', 'utils', 'syncs', 'models', 'views']
+			exclude: ['jquery','vendor', 'facade', 'utils', 'syncs', 'models', 'views']
 		}, /*
 
 		PAGES START
@@ -199,7 +212,7 @@
 		{
 			name: 'login',
 			exclude: ['vendor', 'facade', 'utils', 'syncs', 'models', 'views', 'collections']
-		}, /*
+		}/*
 
 		END PAGES
 

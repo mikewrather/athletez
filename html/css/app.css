@@ -119,10 +119,13 @@ header .signup-facebook, header .signup-email {
 
 footer{
     background-color: black;
-    height: 50px;
+    height: 20px;
+    position: fixed;
+    bottom: 0;
     width: 100%;
-    padding:0 !important;
+    padding:5px !important;
     color: white;
+    text-align: center;
 }
 
 footer span{
@@ -777,7 +780,7 @@ a.comment-delete{
 
 #main {
 /*	background: #e0e0e0;*/
-    padding-bottom: 0;
+    padding-bottom: 60px;
 }
 
 .profile-pic-outer {
