@@ -158,7 +158,7 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 						message : 'Please select date.'}],
 					bindDatePicker : true,
 					chnageEvent : function() {
-						var date = this.getValue(), currentDate = new Date();
+						var date = new Date(this.getValue()), currentDate = new Date();
 						if (date != null && currentDate >= date) {
 							$(".txt-score-team-h").removeClass('hidden');
 						} else {
@@ -214,7 +214,6 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 					},
 					showLable : false
 				},
-				
 				
 				'game_datetime'	: {
 					type: "Hidden",
@@ -541,7 +540,7 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 			}, this.$el.find('.add-game-container-h'));
 			
 			var form = formData.form;
-			window.formValues1 = this.formValues = formData.formValues;
+			this.formValues = formData.formValues;
 		},
 		
 
