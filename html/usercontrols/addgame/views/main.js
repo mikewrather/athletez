@@ -154,6 +154,7 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 					},
 					
 					showLable : false,
+					label: "Date",
 					validators : [{type : 'required',
 						message : 'Please select date.'}],
 					bindDatePicker : true,
@@ -180,6 +181,7 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 						'class' : "txt-game-time_h hasDatepicker txtTime"
 					},
 					showLable : false,
+					label: "Time",
 					validators : [{
 						type : 'required',
 						message : 'Please enter time.'
@@ -212,7 +214,8 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 						callback : function(result) {
 						}
 					},
-					showLable : false
+					showLable : false,
+					label: ""
 				},
 				
 				'game_datetime'	: {
@@ -228,13 +231,14 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 				'Sports' : {
 					type : 'DropDown',
 					showLable : false,
-					
+					label: "Sports",
 					form_values : {
 						serverKey : "sports_id",
 						post_to_server	: true,	
 						objectValuesToUpdate: ["Select_Team_1", "score_1"],
 						source_collection : SportsCollection,
 						request_finished : function() {
+						
 						},
 
 						data : {
@@ -243,6 +247,7 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 							recordValue : 'custom_name',
 							selectedValue : undefined
 						},
+						
 						elementId : _self.controls.hdnTimePeriodData,
 						callback : function(result) {
 							result = result[0];
@@ -264,6 +269,7 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 				'Select_Team_1' : {
 					type : 'DropDown',
 					fieldClass: "large-dropdown-field",	
+					label: "Select Team 1",
 					form_values : {
 						serverKey : "teamOneId",
 						request_fields : [{
@@ -301,7 +307,8 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 						'placeholder' : 'Score',
 						'class' : "txt-score-team-h hidden"
 					},
-					showLable : false
+					showLable : false,
+					label: "Score 1"
 				},
 				'team_1' : {
 					form_values: {
@@ -313,6 +320,7 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 						'team' : 'one'
 					},
 					showLable : false,
+					label: "Team 1",
 					onClickFn : function(e) {
 						var value = e ? $(e.target).val() : "away", teamId = 0;
 						if (value == "home") {
@@ -346,6 +354,7 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 
 				'Select_Team_2' : {
 					type : 'AutoComplete',
+					label: "Select Team 2",
 					form_values: {
 						keyNameInPayload: 'team_name',
 						serverKey: 'teamTwoId',
@@ -382,7 +391,8 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 						'placeholder' : 'Score',
 						'class' : "txt-score-team-h hidden"
 					},
-					showLable : false
+					showLable : false,
+					label: "Score 2"
 				},
 				
 				'team_2' : {
@@ -392,6 +402,7 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 					type : 'Radio',
 					options : ['Home', 'Away'],
 					showLable : false,
+					label: "Team 2",
 					onClickFn : function(e) {
 						var value = e ? $(e.target).val() : "away", teamId = 0;
 						if (value == "home") {
@@ -426,7 +437,8 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 						serverKey : "locations_id",
 						post_to_server	: true
 					},
-					type : 'Location'
+					type : 'Location',
+					label: "Location"
 				},
 				'users_id'	: {
 					form_values: {

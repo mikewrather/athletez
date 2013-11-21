@@ -1627,3 +1627,7 @@ div[data-error] {
 	width: 100%
 }
 
+a.add-to-event {
+	display: none;
+}
+

@@ -2338,16 +2338,13 @@ Form.Field = Backbone.View.extend({
    */
   createSchema: function(schema) {
     if (_.isString(schema)) schema = { type: schema };
-
     //Set defaults
     if(_.isUndefined(schema.showLable) || schema.showLable) {
-    
 	    schema = _.extend({
 	      type: 'Text',
-	      title: this.createTitle()
+	      title: (schema.label)?schema.label:''
 	    }, schema);
     }
-
     //Get the real constructor function i.e. if type is a string such as 'Text'
     schema.type = (_.isString(schema.type)) ? Form.editors[schema.type] : schema.type;
     return schema;
@@ -2399,13 +2396,14 @@ Form.Field = Backbone.View.extend({
    * @return {String}
    */
   createTitle: function() {
-    var str = this.key;
+  	console.error(this);
+    var str = (this.schema && this.schema.label)?this.schema.label:this.key;
 
     //Add spaces
-    str = str.replace(/([A-Z])/g, ' $1');
+    //str = str.replace(/([A-Z])/g, ' $1');
 
     //Uppercase first character
-    str = str.replace(/^./, function(str) { return str.toUpperCase(); });
+    //str = str.replace(/^./, function(str) { return str.toUpperCase(); });
 
     return str;
   },
@@ -3175,10 +3173,12 @@ Form.editors.AutoComplete = Form.editors.Text.extend({
     //if (schema && schema.form_values && schema.form_values) this.getData = schema.getData;    
     this.$el.attr('type', 'text');
     this.setOptions(options.schema.form_values);
+    
+    // append error image
+    this.$el.after().append('<span class="indicator_h invalid"></span>');
   },
   
   	getData: function(value, callback) {
-  		console.error("here", this.source_collection);
 		var _self = this;
 		if(this.source_collection) {
 			if(this.collectionFetchOb) this.collectionFetchOb.abort();
@@ -3544,7 +3544,13 @@ Form.editors.DropDown = Form.editors.Text.extend({
   	this.$el.find(".common-dropdown li").removeClass("selected");
   	this.$el.find(".common-dropdown a[data-id="+value+"]").parent("li").addClass("selected");
   	var selectedVal = this.$el.find(".common-dropdown li.selected a").data("id");
-  	if(selectedVal && selectedVal != "") this.$el.find(".hidden-input-dropdown-h").val(selectedVal);
+  	
+  	if( selectedVal && selectedVal != "" ) { 
+  		this.$el.find(".hidden-input-dropdown-h").val(selectedVal);
+  	} else {
+  		this.$el.find(".common-dropdown li:first-child").addClass("selected");
+  		this.$el.find(".hidden-input-dropdown-h").val(this.$el.find(".common-dropdown li.selected a").data("id"));
+  	}
     this.showSelectedValue();
   },
 
