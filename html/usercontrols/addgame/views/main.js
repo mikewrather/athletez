@@ -139,7 +139,7 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 				'date' : {
 					form_values: {
 						post_to_server	: false,
-						defaultValue: "2013-11-21",
+						//defaultValue: "2013-11-21",
 						serverKey : "game_date",
 						objectValuesToUpdate: ["game_datetime"],
 						getValue: function() {
@@ -170,7 +170,7 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 				'time' : {
 					form_values: {							
 						post_to_server	: false,	
-						defaultValue: "10:00",				
+						//defaultValue: "10:00",				
 						serverKey: "game_time",
 						objectValuesToUpdate: ["game_datetime"]						
 					},
@@ -245,7 +245,7 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 							records : undefined,
 							recordId : 'id',
 							recordValue : 'custom_name',
-							selectedValue : undefined
+							selectedValue : _self.sports_id
 						},
 						
 						elementId : _self.controls.hdnTimePeriodData,
@@ -379,7 +379,9 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 						if (options.length) {
 							 $("input[name=team_2]").attr("teamId", options[0]);
 					 	}
-					}
+					},
+					validators : [{type : 'required',
+						message : 'Please select Team 2.'}],
 				},
 				
 				'score_2' : {
@@ -438,7 +440,9 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 						post_to_server	: true
 					},
 					type : 'Location',
-					label: "Location"
+					label: "Location",
+					validators : [{type : 'required',
+						message : 'Please select location.'}],
 				},
 				'users_id'	: {
 					form_values: {
