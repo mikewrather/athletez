@@ -81,16 +81,11 @@ define(['require', 'facade', 'views', 'utils', 'vendor'], function(require) {
 			
 			// update form values after field update
 			formValues.updateFormValues = function(editor) {
+				console.error(editor);
 				if(editor && editor.objectValuesToUpdate) {
 					for(var i in editor.objectValuesToUpdate) {
 						var ob = form.fields[editor.objectValuesToUpdate[i]].editor;
-						var v = [];
-						if(ob.valueBindings) {
-							for(var k in ob.valueBindings) {
-								v.push(form.fields[ob.valueBindings[k]].editor.getValue());
-							}
-						}
-						ob.setValue(v.join(" "));
+						ob.setValue("");
 					}
 				}
 			};
