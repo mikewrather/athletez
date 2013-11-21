@@ -1,7 +1,7 @@
 // Games Schedule List
 // --------------
 
-define(['vendor','facade','views', 'utils', 'schedules/views/schedule-item','utils/storage',  'text!schedules/templates/schedule-list.html','chrome/views/header'], 
+define(['vendor','facade','views', 'utils', 'schedules/views/schedule-item','utils/storage',  'text!schedules/templates/schedule-list.html','chrome/views/header', 'common/models/add'], 
 function(vendor, facade,  views,   utils,   ScheduleItemView, Store, ScheduleListTemplate,header, UserGames) {
 
     var OrgListView, 
@@ -11,6 +11,7 @@ function(vendor, facade,  views,   utils,   ScheduleItemView, Store, ScheduleLis
         Channel = utils.lib.Channel,
         CollectionView = views.CollectionView,
          Mustache = vendor.Mustache,
+         
         SectionView = views.SectionView;
 
     OrgListAbstract = CollectionView.extend(SectionView.prototype);
@@ -58,8 +59,13 @@ function(vendor, facade,  views,   utils,   ScheduleItemView, Store, ScheduleLis
 		
 		getUserId: function() {
 			if(!_.isUndefined(routing.userLoggedIn) && routing.userLoggedIn) return routing.loggedInUserId;
-			
-
+		},
+		
+		addRecordToCollection: function(data) {
+			var newAddModel = new addModel();
+			newAddModel.processItemFromPayload(participants.toJSON());
+			_self.$el.find(".add-to-event").hide();
+   			_self.collection.add(newAddModel);
 		},
         
          addGame: function(e) {
@@ -71,11 +77,12 @@ function(vendor, facade,  views,   utils,   ScheduleItemView, Store, ScheduleLis
 	    	
 	    	if(!_.isUndefined(this.teamRecords) && this.teamRecords) {
 	    		routing.trigger('add-game',0,$("#team-h").val(),$("#sports-h").val(), _self.controller.id, function(data) {
-	    			if(_self.controller) _self.controller.getOrgData();
+	    			_self.addRecordToCollection(data);
 	    			routing.trigger('common-popup-close');
 	    		});
 	    	} else {
-	        	routing.trigger('add-game',0,$(e.currentTarget).data("team-id"),$(e.currentTarget).data("sport-id"), _self.controller.id, function(data) {
+	    		var sport_id = $(".selected-sport-h").data("id") || $("#sports-h").val();
+	        	routing.trigger('add-game',0,$(e.currentTarget).data("team-id"),sport_id, _self.controller.id, function(data) {
 	    			if(_self.controller) _self.controller.getOrgData();
 	    			routing.trigger('common-popup-close');
 	    			
@@ -137,7 +144,7 @@ function(vendor, facade,  views,   utils,   ScheduleItemView, Store, ScheduleLis
 
         },
 
-	    afterRender: function(){
+	    afterRender: function() {
 		 //   $(this.el).attr('data-team-id',this.teams_id);
 	    },
         

@@ -3179,6 +3179,7 @@ Form.editors.AutoComplete = Form.editors.Text.extend({
 					this.collection[this.request_fields[i].key] = (this.request_fields[i].value && typeof this.request_fields[i].value == "function")?this.request_fields[i].value():this.request_fields[i].value;
 				}
 			}
+			
 			_self.$el.parent().find(".indicator-h").removeClass("valid").addClass("invalid");
 			this.collectionFetchOb = this.collection.fetch();
 			$.when(this.collection.request).done(function() {
