@@ -2,9 +2,15 @@
 // --------------  
 // Requires define
 // Return {Object} App
-define( ["facade", "utils", "collections", "chrome", "controller", "profile", "imageup",'home','videopreview',"game", "team", "registration","profilesetting","userresume","packages/site/collections/phrases","usercontrols/tag/tag","usercontrols/addgame/addgame","signup","login", "usercontrols/photo-player/photo-player", "usercontrols/add-club/add-club", "utils/storage", 'usercontrols/location/views/view-location','signup/views/facebooksignup',"usercontrols/addevent/addevent",'chrome/views/header','browserpop/views/browser','landingpage/views/landing'],
+define( ["facade", "utils", "collections", "chrome", "controller", "profile", "imageup",'home','videopreview',
+	"game", "team", "registration","profilesetting","userresume","packages/site/collections/phrases","usercontrols/tag/tag",
+	"usercontrols/addgame/addgame","signup","login", "usercontrols/photo-player/photo-player", "usercontrols/add-club/add-club",
+	"utils/storage", 'usercontrols/location/views/view-location','signup/views/facebooksignup',"usercontrols/addevent/addevent",'chrome/views/header',
+	'browserpop/views/browser','landingpage/views/landing'],
 function (facade, utils, collections, chromeBootstrap, Controller, ProfileController, ImageController, HomeController, VideoPreviewController,
-	GameController, TeamController, RegistrationController,ProfileSetting,UserResume, SitePhraseList , TagController,AddGameController, SignupController,LoginController,PhotoPlayerController, AddClubController, Store, googleMapLocationview,fbreg, AddEventController,header) {
+	GameController, TeamController, RegistrationController,ProfileSetting,UserResume, SitePhraseList , TagController,
+	AddGameController, SignupController,LoginController,PhotoPlayerController, AddClubController,
+	Store, googleMapLocationview,fbreg, AddEventController,header) {
 
     //App;
     	
@@ -235,6 +241,17 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
 			            $('#'+id).addClass(cssclass);
 		            });
 	            }
+	            
+	            if(options.background_image){
+		            console.log(options.background_image);
+			        $('#'+id).css({
+				        'background': 'url(' + options.background_image + ') no-repeat center center fixed #FFF',
+				        '-webkit-background-size': 'cover',
+				        '-moz-background-size': 'cover',
+				        '-o-background-size': 'cover',
+				        'background-size': 'cover'
+			        });
+                }
 
 	            $('#'+id+ ' .close').attr("data-id",id);
 
@@ -276,6 +293,8 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
 					allowPageScroll:true,
 					disableFadeOut:true
 				});
+
+	            Channel('popup-finished-launch-' + id).publish();
 
             });
             
@@ -515,9 +534,11 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
 		triggerSignup:function(){
 			//ga('send', 'event', 'menu', 'Sign Up','Action-Triggered');
 			this.signup = new header();
+
 			routing.off('showSignup');
             routing.on('showSignup', function() {
               try{
+	              console.log(this.signup);
 		  				this.signup.signupUser();
 		    		}
 		    		catch(e){

@@ -3,7 +3,15 @@
  // Pages
  // Requires `define`, `require`
  */
-define(['require', 'text!usercontrols/landing/templates/landing.html','text!usercontrols/landing/landing.css', 'facade', 'views', 'utils', 'vendor','landing'], function(require) {
+define(['require',
+
+	'text!usercontrols/landing/templates/landing.html',
+	'text!usercontrols/landing/landing.css',
+	'facade',
+	'views',
+	'utils',
+	'vendor',
+	'landing'], function(require) {
 
 	var self, facade = require('facade'), views = require('views'), 
 	SectionView = views.SectionView, utils = require('utils'), 
@@ -40,14 +48,26 @@ define(['require', 'text!usercontrols/landing/templates/landing.html','text!user
 			//console.error(this.el);
 			var options = {};
 			options.width = "100%";
-					options.height = "100%";
-					options.title = "Welcome to Athletez!";
-					options.html = markup;
-					options.id = "landing";
-					options.addClass = ['noBorder'];
-					console.error(options);
-					routing.trigger('common-popup-open', options);
-			
+			options.height = "100%";
+			options.title = "Welcome to Athletez!";
+			options.html = markup;
+			options.id = "landing";
+			options.addClass = ['noBorder'];
+
+			var rand = Math.ceil(Math.random()*100);
+			console.log(rand,rand%3);
+			var bgs = ['4.jpg','5.jpg','6.jpg'];
+
+			options.background_image = "http://cdn.athletez.com/resources/img/landing/" + bgs[rand%3];
+			console.error(options);
+			routing.trigger('common-popup-open', options);
+
+			function onPop(){
+
+				Channel('popup-finished-launch-'+options.id).unsubscribe();
+			}
+
+			Channel('popup-finished-launch-'+options.id).subscribe(onPop);
 			return this;
 			//markup should open up in a popup
 		},

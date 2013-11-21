@@ -85,7 +85,7 @@ define(
 					                   '/api/user/search', 
 					                   '/api/game/search',
 										'/api/team/search'];
-					this.baseUrl = this.searchUrls[2];
+					this.baseUrl = this.searchUrls[1];
 					this.urlOptions = {
 						sports_id : '0',
 						cities_id : '0',
