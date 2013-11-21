@@ -51,11 +51,17 @@ define(["require", "text!usercontrols/addgame/templates/layout.html",
 			if (options.id) {
 				this.id = options.id;
 			}
+			
 			if (options.sports_id) {
 				this.sports_id = options.sports_id;
 			}
+			
 			if (options.teams_id) {
 				this.teams_id = options.teams_id;
+			}
+			
+			if(options.user_id) {
+				this.user_id = options.user_id;
 			}
 			
 			this.callback = options.callback;
@@ -63,7 +69,7 @@ define(["require", "text!usercontrols/addgame/templates/layout.html",
 			if(options.popup) {
 				this.popup = true;
 				this.modelHTML = '<div id="addGamePopup"></div>';
-				}
+			}
 			
 			if(options.gender){
 				this.gender = options.gender;
@@ -135,7 +141,7 @@ define(["require", "text!usercontrols/addgame/templates/layout.html",
 				template : pageLayoutTemplate,
 				name : "add-game-main",
 				destination : destination,
-				user_id : self.id,
+				user_id : self.user_id,
 				channel : 'add-game-success',
 				sports_id : this.sports_id,
 				teams_id : this.teams_id

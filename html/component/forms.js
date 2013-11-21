@@ -38,17 +38,17 @@ define(['require', 'facade', 'views', 'utils', 'vendor'], function(require) {
 				var ob = {};
 				if(formValues.fields) {
 					for(var i in formValues.fields) {
-						var v = "";
-						if(formValues.fields[i].deps && formValues.fields[i].deps.length) {
-							for(var j in formValues.fields[i].deps) {
-								v += form.fields[formValues.fields[i].deps[j]].editor.getValue() || '';
-							}
-						} else {
-							v = form.fields[i].editor.getValue();
-						}
 						if(formValues.fields[i].post_to_server) {
-							var key = form.fields[i].editor.serverKey || i;
-							ob[key] = v;
+							var v = [];
+							if(formValues.fields[i].deps && formValues.fields[i].deps.length) {
+								for(var j in formValues.fields[i].deps) {
+									v.push(form.fields[formValues.fields[i].deps[j]].editor.getValue() || '');
+								}
+							} else {
+								v.push(form.fields[i].editor.getValue());
+							}
+								var key = form.fields[i].editor.serverKey || i;
+								ob[key] = v.join(" ");
 						}
 					}
 				}
@@ -89,6 +89,14 @@ define(['require', 'facade', 'views', 'utils', 'vendor'], function(require) {
 					}
 				}
 			};
+			
+			
+			// display server error after submitting form
+			formValues.showFormValues = function(jsonData) {
+				
+			};
+			
+			
 		}
 		return {
 			form : form,
