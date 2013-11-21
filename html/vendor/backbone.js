@@ -2361,9 +2361,7 @@ Form.Field = Backbone.View.extend({
       _.pick(this, 'schema', 'form', 'key', 'model', 'value'),
       { id: this.createEditorId() }
     );
-
     var constructorFn = this.schema.type;
-
     return new constructorFn(options);
   },
 
@@ -2375,7 +2373,6 @@ Form.Field = Backbone.View.extend({
   createEditorId: function() {
     var prefix = this.idPrefix,
         id = this.key;
-
     //Replace periods with underscores (e.g. for when using paths)
     id = id.replace(/\./g, '_');
 
@@ -2385,7 +2382,6 @@ Form.Field = Backbone.View.extend({
 
     //Otherwise, if there is a model use it's CID to avoid conflicts when multiple forms are on the page
     if (this.model) return this.model.cid + '_' + id;
-
     return id;
   },
 
@@ -2396,15 +2392,11 @@ Form.Field = Backbone.View.extend({
    * @return {String}
    */
   createTitle: function() {
-  	console.error(this);
     var str = (this.schema && this.schema.label)?this.schema.label:this.key;
-
     //Add spaces
-    //str = str.replace(/([A-Z])/g, ' $1');
-
+    str = str.replace(/([A-Z])/g, ' $1');
     //Uppercase first character
-    //str = str.replace(/^./, function(str) { return str.toUpperCase(); });
-
+    str = str.replace(/^./, function(str) { return str.toUpperCase(); });
     return str;
   },
 
@@ -2415,7 +2407,6 @@ Form.Field = Backbone.View.extend({
    */
   templateData: function() {
     var schema = this.schema;
-
     return {
       help: schema.help || '',
       title: schema.title,
@@ -2469,7 +2460,6 @@ Form.Field = Backbone.View.extend({
     } else {
       this.clearError();
     }
-
     return error;
   },
 
@@ -2693,6 +2683,7 @@ Form.Editor = Form.editors.Base = Backbone.View.extend({
    *
    * @return {Mixed} error
    */
+  
   commit: function(options) {
     var error = this.validate();
     if (error) return error;
@@ -2870,7 +2861,6 @@ Form.editors.Text = Form.Editor.extend({
 
     if (changed) {
       this.previousValue = currentValue;
-
       this.trigger('change', this);
     }
   },
@@ -3131,9 +3121,11 @@ Form.editors.AutoComplete = Form.editors.Text.extend({
 		// try catch as for the first time it gives error
 		try { _self.$el.autocomplete("destroy"); } catch(ex) {  }
 		_self.$el.removeClass('ui-autocomplete-loading');
+		
 		_self.$el.autocomplete({
 			source : arr,
 			select: function( event, ui ) {
+				_self.$el.parent().find(".indicator-h").removeClass("invalid").addClass("valid");			
 				_self.$el.attr("data-id", (ui.item.id)?ui.item.id:ui.item.value);
 				_self.trigger("blur", _self);
 			}
@@ -3168,14 +3160,12 @@ Form.editors.AutoComplete = Form.editors.Text.extend({
     Form.editors.Base.prototype.initialize.call(this, options);
      var _self = this, schema = options.schema;
      
-     
     //Allow customising text type (email, phone etc.) for HTML5 browsers
     //if (schema && schema.form_values && schema.form_values) this.getData = schema.getData;    
     this.$el.attr('type', 'text');
     this.setOptions(options.schema.form_values);
-    
     // append error image
-    this.$el.after().append('<span class="indicator_h invalid"></span>');
+    //this.$el.after().append('<span class="indicator_h invalid"></span>');
   },
   
   	getData: function(value, callback) {
@@ -3184,19 +3174,19 @@ Form.editors.AutoComplete = Form.editors.Text.extend({
 			if(this.collectionFetchOb) this.collectionFetchOb.abort();
 			this.collection = new this.source_collection();
 			// set the payload
-			
 			if(this.request_fields) {
 				for(var i in this.request_fields) {
 					this.collection[this.request_fields[i].key] = (this.request_fields[i].value && typeof this.request_fields[i].value == "function")?this.request_fields[i].value():this.request_fields[i].value;
 				}
 			}
-			
+			_self.$el.parent().find(".indicator-h").removeClass("valid").addClass("invalid");
 			this.collectionFetchOb = this.collection.fetch();
 			$.when(this.collection.request).done(function() {
+				if(!_self.$el.parent().find(".indicator-h").length)
+					 _self.$el.after('<span class="indicator-h field-error-img"></span>');
 				if(_self.request_finished) _self.request_finished();				
 				if (callback) callback(_self.collection.toJSON());
 			});
-		
 		}
 	},
 	

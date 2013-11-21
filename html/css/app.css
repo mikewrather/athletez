@@ -1336,6 +1336,14 @@ margin-top:10px;
 	background : url(images/validS.png) no-repeat;
 }
 
+
+.field-error-img {
+	display: inline-block;
+	width: 30px;
+	height: 18px;
+	margin-left: 10px;
+}
+
 .invalid{
 	background : url(images/invalidS.png) no-repeat;
 }
