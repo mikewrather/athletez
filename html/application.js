@@ -2,7 +2,7 @@
 // --------------  
 // Requires define
 // Return {Object} App
-define( ["facade", "utils", "collections", "chrome", "controller", "profile", "imageup",'home','videopreview',"game", "team", "registration","profilesetting","userresume","packages/site/collections/phrases","usercontrols/tag/tag","usercontrols/addgame/addgame","signup","login", "usercontrols/photo-player/photo-player", "usercontrols/add-club/add-club", "utils/storage", 'usercontrols/location/views/view-location','signup/views/facebooksignup',"usercontrols/addevent/addevent",'chrome/views/header','browserpop/views/browser'],
+define( ["facade", "utils", "collections", "chrome", "controller", "profile", "imageup",'home','videopreview',"game", "team", "registration","profilesetting","userresume","packages/site/collections/phrases","usercontrols/tag/tag","usercontrols/addgame/addgame","signup","login", "usercontrols/photo-player/photo-player", "usercontrols/add-club/add-club", "utils/storage", 'usercontrols/location/views/view-location','signup/views/facebooksignup',"usercontrols/addevent/addevent",'chrome/views/header','browserpop/views/browser','landingpage/views/landing'],
 function (facade, utils, collections, chromeBootstrap, Controller, ProfileController, ImageController, HomeController, VideoPreviewController,
 	GameController, TeamController, RegistrationController,ProfileSetting,UserResume, SitePhraseList , TagController,AddGameController, SignupController,LoginController,PhotoPlayerController, AddClubController, Store, googleMapLocationview,fbreg, AddEventController,header) {
 
@@ -13,7 +13,8 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
         _ = facade._,
         Backbone = facade.Backbone,
         Channel = utils.lib.Channel,
-	    browserView = require('browserpop/views/browser');
+	    browserView = require('browserpop/views/browser'),
+		landingView = require('landingpage/views/landing');
         debug = utils.debug;
    		App = Backbone.Router.extend({
         routes: {
@@ -66,6 +67,7 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
 	        Controller.prototype.appStates = new ApplicationStates();
 	        this.getPhrases();
 	       // this.intializeImageAndVideo();
+	        this.showLandingInfo();
         },
 
 		detectBrowser: function() {
@@ -103,6 +105,14 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
 		showBrowserWindow: function(){
 			var browserPop = new browserView();
 			
+		},
+
+		showLandingInfo: function(){
+			var self = this;
+			setTimeout(function(){
+				if(!self.checkForUser())
+					var landing = new landingView();
+			},2000);
 		},
         
         // get user name by id
@@ -218,6 +228,16 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
         		'</div>';
         		
             	$("body").append(html);
+
+	            if(options.addClass != undefined && options.addClass.length){
+		            _.each(options.addClass,function(cssclass){
+			            console.log(cssclass);
+			            $('#'+id).addClass(cssclass);
+		            });
+	            }
+
+	            $('#'+id+ ' .close').attr("data-id",id);
+
             	if(options.title) {
             	  $("#"+id).find(".modal-header-h").html(options.title);
             	   $("#"+id).find(".modal-header").show();
@@ -225,8 +245,27 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
             	  $("#"+id).find(".modal-header").hide();
             	}
             	
-            	if(options.width) $("#"+id).css({"width": options.width});
-            	if(options.height) $("#"+id).css({"height": options.height});         	
+            	if(options.width){
+		            $("#"+id).css({"width": options.width});
+		            if(options.width.indexOf('%')){
+			            var percentage_number = options.width.replace('%',''),
+				            left = (100 - percentage_number) / 2;
+			            $("#"+id).css({"left":left+"%"});
+		            }
+
+	            }
+            	if(options.height){
+		            $("#"+id).css({"height": options.height});
+		            if(options.height.indexOf('%')){
+			            var percentage_number = options.height.replace('%',''),
+				            top = (100 - percentage_number) / 2;
+			            $("#"+id).css({"top":top+"%"});
+			            console.log(top);
+		            }
+
+	            }
+
+
             	// if we have HTML then place it in popup
             	if(options.html) $("#"+id).find("#modalBody").html(options.html);
             	// open modal popup
@@ -237,6 +276,7 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
 					allowPageScroll:true,
 					disableFadeOut:true
 				});
+
             });
             
             routing.off('common-popup-close');
@@ -284,6 +324,7 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
                 	callback: callback
                 });
             });
+
             this.detectBrowser();
         },
 

@@ -75,6 +75,12 @@ define([ 'models', 'facade' ], function(models, facade) {
 				case '8':
 					return_data = _self.parse_game(mpay,return_data);
 					break;
+				case '2':
+					return_data = _self.parse_org(mpay,return_data);
+					break;
+				case '5':
+					return_data = _self.parse_team(mpay,return_data);
+					break;
 			}
 
 			if(_self.closest_image_format != "undefined" && _self.closest_image_format != null) return_data = _self.imageFormat(return_data);
@@ -82,6 +88,43 @@ define([ 'models', 'facade' ], function(models, facade) {
 			_self.parsedData = return_data;
 			console.log(return_data);
 
+		},
+
+		get_selected_icon: function(sports_obj,size){
+			if(!size) var size = "large";
+
+			if(size=="large")
+				var location = sports_obj.large_icon;
+			if(size=="small")
+				var location = sports_obj.small_icon;
+
+			return location.split(".png")[0] + "_selected.png";
+		},
+
+		parse_team: function(mpay,return_data){
+	//		return_data._detailclass = "game";
+			return_data._noicon_text = mpay.org_name;
+			return_data._sports_icon = this.get_selected_icon(mpay.org_sport_link_obj.sport);
+			return_data._label = mpay.complevels_obj.abbr + " " + mpay.org_sport_link_obj.sport.sport_name + " " + mpay.year;
+	//		return_data._sublabel = mpay.complevels_obj.abbr + " " + mpay.org_sport_link_obj.sport.sport_name + " " + mpay.year;
+			return_data._sublabel = "Votes: " + mpay.num_votes + ", Followers: " + mpay.num_followers;
+			return_data._link = "/#team/" + mpay.id;
+			return_data._has_link = true;
+			if(mpay.hasOwnProperty('is_owner')) return_data.show_edit = mpay.is_owner;
+
+			return return_data;
+		},
+
+		parse_org: function(mpay,return_data){
+
+			return_data._noicon_text = "org";
+			return_data._label = mpay.name;
+			return_data._sublabel = "Votes: " + mpay.num_votes + ", Followers: " + mpay.num_followers;
+			return_data._link = "/#team/" + mpay.id;
+			return_data._has_link = true;
+			if(mpay.hasOwnProperty('is_owner')) return_data.show_edit = mpay.is_owner;
+
+			return return_data;
 		},
 
 		parse_user: function(mpay,return_data){
@@ -170,6 +213,8 @@ define([ 'models', 'facade' ], function(models, facade) {
 					return_data._thumbnail = this.closest_image_format.url;
 				}
 			}
+
+			if(mpay.sports_obj) return_data._sports_icon = this.get_selected_icon(mpay.sports_obj);
 
 			return_data._label = mpay.game_day;
 			return_data._link = "/#game/" + mpay.id;

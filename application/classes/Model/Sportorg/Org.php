@@ -283,32 +283,98 @@ class Model_Sportorg_Org extends ORM
 
 	public function get_search($args = array()){
 		extract($args);
-		$orgs_model = ORM::factory("Sportorg_Org");
 
-		if (isset($sports_id)){
-			$orgs_model->join('org_sport_link')
-				->on('org_sport_link.orgs_id', '=', 'sportorg_org.id');
-			$orgs_model->where('org_sport_link.sports_id', '=', $sports_id);
+		$org_qry = ORM::factory('Sportorg_Org');
+
+		$classes_arr['Sportorg_Org'] = 'sportorg_org';
+
+		if (isset($sports_id))
+		{
+			$org_qry->join('org_sport_link','LEFT')
+				->on('org_sport_link.orgs_id', '=', 'sportorg_org.id')
+				->where('org_sport_link.sports_id','=',$sports_id);
+
+			$classes_arr['Sportorg_Orgsportlink'] = 'org_sport_link';
+
 		}
 
 		if (isset($cities_id)){
-			$orgs_model->join('locations')
-				->on('locations.id', '=', 'sportorg_org.locations_id');
-			$orgs_model->where('locations.cities_id', '=', cities_id);
-		}
-		if (isset($sports_club)){
-			$orgs_model->where('sportorg_org.sports_club', '=', $sports_club);
+			$org_qry->join('locations')
+				->on('locations.id', '=', 'sportorg_org.locations_id')
+				->where('locations.cities_id', '=', $cities_id);
 		}
 
-		if (isset($name)){
-			$orgs_model->where('sportorg_org.name', 'like',$name."%");
+		if (isset($sports_club))
+		{
+			$org_qry->where('sportorg_org.sports_club', '=', $sports_club);
 		}
 
+		if (isset($name))
+		{
+			$org_qry->where('sportorg_org.name', 'LIKE',$name."%");
+		}
 
-		$orgs_model->where('sportorg_org.states_id', '=', $states_id)->limit(10);
+		if(isset($states_id)){
+			$org_qry->where('sportorg_org.states_id', '=', $states_id);
+		}
 
+		$enttype_id = Ent::getMyEntTypeID($this);
+		if (!isset($orderby) || $orderby == 'votes')
+		{
 
-		return $orgs_model;
+			$num_votes = DB::select(array(DB::expr('COUNT(*)'),'num_votes'))
+				->from('votes')
+				//	->join('users','LEFT')->on('users.id','=','votes.subject_id')
+				->where('subject_enttypes_id','=',$enttype_id)
+				->where('votes.subject_id','=',DB::expr('`sportorg_org`.`id`'));
+
+			$vote_class['Site_Vote'] = '`votes`.`id`';
+			$num_votes = ORM::_sql_exclude_deleted_abstract($vote_class, $num_votes);
+
+			$org_qry->select(array($num_votes,'num_votes'));
+			$org_qry->order_by('num_votes', 'desc');
+
+		}
+		// NUM FOLLOWERS
+		else if ($orderby == 'followers')
+		{
+			$followers = DB::select(array(DB::expr('COUNT(*)'),'num_followers'))
+				->from('followers')
+				->where('subject_enttypes_id','=',$enttype_id)
+				->where('subject_id','=',DB::expr('`orgs`.`id`'));
+
+			$follower_class_arr['User_Follower'] = '`followers`.`id`';
+			$followers = ORM::_sql_exclude_deleted_abstract($follower_class_arr, $followers);
+
+			$org_qry->select(array($followers,'num_followers'));
+			$org_qry->order_by('num_followers', 'desc');
+		}
+		else if ($orderby == 'newest')
+		{
+			$org_qry->order_by('sportorg_org.id', 'desc');
+		}
+		elseif($orderby=='random')
+		{
+			$org_qry->order_by(DB::expr('RAND()'));
+		}
+
+		$org_qry->distinct(TRUE);
+
+		if (isset($limit))
+		{
+			$org_qry->limit($limit);
+		}
+		else $org_qry->limit(12);
+
+		if(isset($offset))
+		{
+			$org_qry->offset($offset);
+		}
+
+		$qry = ORM::_sql_exclude_deleted($classes_arr,$org_qry);
+	//	print_r($qry->execute());
+
+		return $qry;
 	}
 
 	public function getGames()
@@ -342,7 +408,6 @@ class Model_Sportorg_Org extends ORM
 	public $get_basics_class_standards = array(
 		/**/
 		'alternate_fk_names' => array(
-			//'leagues_id' => 'leagues_id'
 		),
 		'added_function_calls' => array(
 			'org_id' => 'org_id',
@@ -352,13 +417,22 @@ class Model_Sportorg_Org extends ORM
 			'seasons' => 'seasons',
 			'complevel_profile' => 'complevel_profile',
 			'complevels' => 'complevels',
-			'locations' => 'locations'
-
+			'locations' => 'locations',
+			'num_followers' => 'get_num_followers',
+			'num_votes' =>'get_num_votes'
 		),
 		'exclude_columns' => array(
-			//'username','email','password','dob'
 		),
 	);
+
+	public function get_num_votes()
+	{
+		return Model_Site_Vote::getNumVotes($this);
+	}
+	public function get_num_followers()
+	{
+		return Model_User_Followers::num_followers($this);
+	}
 
 	public function org_id(){
 		return $this->id;
