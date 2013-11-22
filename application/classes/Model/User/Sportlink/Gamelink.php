@@ -50,6 +50,10 @@ class Model_User_Sportlink_Gamelink extends ORM
 		$this->bib_number = $bib_number;
 		$this->result_time = $result_time;
 
+		$usl_model = ORM::factory("User_Sportlink");
+		$user_sport_link_id = $usl_model->getId($users_id, $sports_id,true);
+		$this->user_sport_link_id = $user_sport_link_id;
+
 		try
 		{
 			$external_validate = Validation::factory($post_values)
@@ -59,11 +63,6 @@ class Model_User_Sportlink_Gamelink extends ORM
 			//if check pass,add org_id,sports_id to db,generate org_sport_id for use
 			if ($this->check($external_validate))
 			{
-				//check org_sport in db.
-				$usl_model = ORM::factory("User_Sportlink");
-				$user_sport_link_id = $usl_model->getId($users_id, $sports_id,true);
-				$this->user_sport_link_id = $user_sport_link_id;
-
 				$valid_array = array('games_id' => $games_id, 'user_sport_link_id' => $user_sport_link_id);
 				$external_validate_games = Validation::factory($valid_array);
 				$external_validate_games

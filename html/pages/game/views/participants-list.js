@@ -39,25 +39,14 @@ function(facade,  views,   utils,   ItemView,  templateList, Participate, addMod
             this.$el.html(markup);
             return this;
         },
-        
-        processItemFromPayload: function(model, response) {
-        	var payload = response;
-			model.id = Math.ceil(Math.random() * 100000);
-
-			// this gives a payload, desc, and exec_data to every item in collection based on the main response
-			model.set('payload', payload);
-			model.set('desc', "");
-			model.set('exec_data', "");
-			return model;
-        },
        
         addParticipant: function() {
-       		var _self = this, participants = new Participate(), _self = this;
+       		var participants = new Participate(), _self = this;
        		participants.set({games_id: this.game_id, sports_id: this.sports_id});
        		participants.save();
        		$.when(participants.request).done(function() {
-       			var newAddModel = new addModel(), record = participants.toJSON();
-				newAddModel = _self.processItemFromPayload(newAddModel, record.payload.usl.user);
+       			var newAddModel = new addModel();
+				newAddModel.processItemFromPayload(participants.toJSON());
 				$(".add-to-event").hide();
        			_self.collection.add(newAddModel);
        		});
@@ -66,12 +55,10 @@ function(facade,  views,   utils,   ItemView,  templateList, Participate, addMod
              
         initialize: function(options) {
         	var _self = this;
-        	
         	$(document).off("click", ".add-to-event");
         	$(document).on("click", ".add-to-event", function() {
         		_self.addParticipant();
         	});
-        	
         	$(".participants-heading-h").removeClass("hide");
         	if(options.name)
         		this.name = options.name;
@@ -79,13 +66,16 @@ function(facade,  views,   utils,   ItemView,  templateList, Participate, addMod
         		this.name = "image list";
         	
         	if(options.collecton) this.collection = options.collection;
+        	
         	this.controller = options.controller;
         	this.sports_id = options.sports_id;
         	this.game_id = this.collection.id;
+        	
         	this.renderTemplate();
         	
         	var json = this.collection.toArray(), a = json[0].get("payload"), b = [], found = false;
         	for(var i in a) {
+        		console.error(routing.loggedInUserId == a[i].id);
         		if(routing.loggedInUserId == a[i].id) {
         			found = true;
         			$(".add-to-event").hide();
@@ -94,12 +84,14 @@ function(facade,  views,   utils,   ItemView,  templateList, Participate, addMod
         	}
         	
         	if(!found)	$(".add-to-event").show();
+
         	
         	this.collection.reset(b);   
         	this.target_id = options.target_id;	
         	this.target_url = options.target_url;
         	this.sport_id = options.sport_id;
 			// render template
+			
 	        //console.log(options);
 	       
 	        var _self = this;
@@ -117,6 +109,7 @@ function(facade,  views,   utils,   ItemView,  templateList, Participate, addMod
         	//$(document).on('click','.image-outer-h', function() {
 			//	_self.initPhotoPlayer();
 			//});
+        	
         },
                 
         seeMore: function(e) {

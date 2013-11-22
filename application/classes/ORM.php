@@ -57,6 +57,42 @@ class ORM extends Kohana_ORM
 		return false;
 	}
 
+	public function getAuthor(){
+		$enttype = ORM::factory('Site_Enttype',Ent::getMyEntTypeID($this));
+		$type = $enttype->api_name;
+
+		if(!isset($type)) return false;
+
+		switch($type)
+		{
+			case 'comment':
+				$author = $this->getUser();
+				break;
+			case 'tag':
+
+				break;
+			case 'resumedataval':
+				break;
+
+			case 'game':
+				$author = $this->getUser();
+				break;
+			case 'gamematch':
+				$author = $this->getUser();
+				break;
+			default:
+				break;
+		}
+
+		if(is_object($author)) return $author;
+
+		if((int)$this->users_id > 0)
+			$author = ORM::factory('Users_Base',$this->users_id);
+
+
+
+	}
+
 	/*
 	 * $class_names should include the obj itself, comment by Jeffrey
 	 *

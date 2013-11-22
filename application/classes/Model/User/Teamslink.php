@@ -82,11 +82,23 @@ class Model_User_Teamslink extends ORM
 			$this->users_id = $users_id;
 		try {
 			$this->save();
+			Model_Site_Feed::addToFeed($this);
 			return $this;
 		} catch(ORM_Validation_Exception $e){
 			return $e;
 		}
 		return $this;
+	}
+
+	public function getSubject(){
+		if($this->loaded())
+		{
+			$retArr = array();
+			$retArr[] = $this->user;
+			$retArr[] = $this->team;
+			return $retArr;
+		}
+		return false;
 	}
 
 }

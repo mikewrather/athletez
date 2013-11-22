@@ -227,6 +227,10 @@ class Model_Site_Comment extends Model_Site_Entdir
 		return $user;
 	}
 
+	public function getAuthor(){
+
+	}
+
 	public static function getNumComments($obj){
 		$subject_enttypes_id = Model_Site_Enttype::getMyEntTypeID($obj);
 		$subject_id = $obj->id;

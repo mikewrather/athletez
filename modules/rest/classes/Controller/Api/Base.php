@@ -47,6 +47,13 @@ class Controller_Api_Base extends AuthController
 		$this->myID = (int)$this->request->param('id') > 0 ? (int)$this->request->param('id') : 0;
 		$this->myID2 = (int)$this->request->param('id2') > 0 ? (int)$this->request->param('id2') : 0;
 
+		if(($this->myId == 0) &&
+			(is_string($this->request->param('id')) && strlen($this->request->param('id')) > 60))
+				$this->myID = $this->request->param('id');
+
+		if(($this->myId2 == 0) &&
+			(is_string($this->request->param('id2')) && strlen($this->request->param('id2')) > 60))
+			$this->myID2 = $this->request->param('id2');
 
 		if($this->request->is_initial()==false && $this->request->sr_id > 0)
 		{

@@ -170,13 +170,15 @@ class Model_Site_Tag extends Model_Site_Entdir
 			$match->where('subject_id','=',$subject_id);
 		}
 
-		if(isset($users_id))
+		$logged_user = Auth::instance()->get_user();
+		if(isset($users_id) && $logged_user->has('roles', ORM::factory('Role', array('id' =>2))))
 		{
 			$this->users_id = $users_id;
 		}
-		else
+
+		if(!isset($this->users_id))
 		{
-			$this->users_id = Auth::instance()->get_user()->id;
+			$this->users_id = $logged_user->id;
 		}
 
 		if(isset($media_id))
@@ -186,7 +188,15 @@ class Model_Site_Tag extends Model_Site_Entdir
 		}
 
 		$match->find();
-		if($match->loaded()) return $match;
+		if($match->loaded()){
+
+			$del = DB::delete('deleted')
+				->where('subject_enttypes_id','=',Ent::getMyEntTypeID($match))
+				->and_where('subject_id','=',$match->id)
+				->execute();
+			Model_Site_Feed::addToFeed($match);
+			return $match;
+		}
 		$this->setLocation($subject_type_id,$subject_id);
 
 		try {

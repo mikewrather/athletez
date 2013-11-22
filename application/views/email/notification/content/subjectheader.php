@@ -34,3 +34,4 @@
 		</td>
 	</tr>
 </table>
+	<?php print_r($subject); ?>

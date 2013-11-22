@@ -71,6 +71,7 @@ define(['require', 'text!profilesetting/templates/highschool.html', 'text!profil
 		initialize : function(options) {
 		//	debugger;
 			if(options.type && options.type == "school") {
+				this.type = "school";
 				this.controls  = {
 					txtStates : '#txt-school-state',
 					txtSchools : '#txt-school-school',
@@ -102,6 +103,7 @@ define(['require', 'text!profilesetting/templates/highschool.html', 'text!profil
 				};
 				this.template = highSchoolTemplate;
 			} else {
+				this.type = "club";
 				this.controls  = {
 					txtStates : '#txt-club-state',
 					txtSchools : '#txt-club-club',
@@ -164,6 +166,7 @@ define(['require', 'text!profilesetting/templates/highschool.html', 'text!profil
 		
 		/*initialize must be a wrapper so any function definitions and calles must be called in init*/
 		init : function() {
+			var _self = this;
 			_self.setupView();
 			_self.SetUpTeamsView();
 		},
@@ -689,12 +692,12 @@ define(['require', 'text!profilesetting/templates/highschool.html', 'text!profil
 		/*SHOW EXISTING TEAM SECTION AT THE BOTTOM OF HIGHSCHOOL SECTION*/
 		SetUpTeamsView : function() {
 			var _self = this;
-			console.log("Highschool teams view Set Up Teams View");
+			console.log("Highschool teams view Set Up Teams View",_self.type);
 			this.teamsView = new TeamsView({
 				user_id : _self.user_id,
 				destination : _self.controls.divTeamListDetail,
 				sports_club : (_self.type == "school")?0:1,
-				org_type : "school"
+				org_type : _self.type
 
 			});
 		},
@@ -777,6 +780,7 @@ define(['require', 'text!profilesetting/templates/highschool.html', 'text!profil
 		},
 		//REFRESH TEAM LIST AS SOON AS USER IS DONE WITH THE CHANGES AND CLICKS FINISH
 		FinishSports : function() {
+			console.log("Current state of view",this);
 			var _self = this;
 			_self.ClearAddNewForm();
 			_self.init();
@@ -791,6 +795,8 @@ define(['require', 'text!profilesetting/templates/highschool.html', 'text!profil
 			_self.orgs_id = undefined;
 			_self.$el.find(".add-school-h").show();
 			_self.$el.find(_self.controls.divAddSportSection).fadeOut();
+
+			console.log(this);
 		},
 		// EDIT VIEW FOR A TEAM IF USER CLICKS EDIT LINK FOR TEAMS
 		EditTeam : function(event) {
