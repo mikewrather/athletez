@@ -477,7 +477,11 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
 			routing.off('showSignup');
             routing.on('showSignup', function() {
               try{
-		  				this.signup.signupUser();
+		  				
+		  				if($("#userlogin").length)
+			  				$("#userlogin").trigger('click');
+		  				else
+		  					if(this.signup.signupUser) this.signup.signupUser();
 		    		}
 		    		catch(e){
 		    			try{
