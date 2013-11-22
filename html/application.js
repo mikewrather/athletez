@@ -287,12 +287,15 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
             	if(options.html) $("#"+id).find("#modalBody").html(options.html);
             	// open modal popup
 				$("#"+id).modal('show');
-				$("#"+id).find('#modalBody').slimScroll({
-					height:(options.height)?options.height:'400px',
-					railVisible:true,
-					allowPageScroll:true,
-					disableFadeOut:true
-				});
+
+	            if(_.isUndefined(options.slimScroll) || !options.slimScroll) {
+		            $("#"+id).find('#modalBody').slimScroll({
+			            height:(options.height)?options.height:'400px',
+			            railVisible:true,
+			            allowPageScroll:true,
+			            disableFadeOut:true
+		            });
+	            }
 
 	            Channel('popup-finished-launch-' + id).publish();
 
@@ -325,7 +328,7 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
             	 var addGameview = new AddGameController({
 		            "teams_id":teams_id,
 		             "sports_id":sports_id,
-		            "users_id" : users_id,
+		            "user_id" : users_id,
                 	"id": id,
                 	popup: true,
                 	callback: callback
@@ -348,10 +351,7 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
         },
 
 	    checkForUser: function() {
-		    if(!_.isUndefined(routing.userLoggedIn) && routing.userLoggedIn)
-			    return true;
-		    else
-			    return false;
+		    return (!_.isUndefined(routing.userLoggedIn) && routing.userLoggedIn)?true:false;
 	    },
 
         defaultRoute: function () {
@@ -538,8 +538,10 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
 			routing.off('showSignup');
             routing.on('showSignup', function() {
               try{
-	              console.log(this.signup);
-		  				this.signup.signupUser();
+		  				if($("#userlogin").length)
+			  				$("#userlogin").trigger('click');
+		  				else
+		  					if(this.signup.signupUser) this.signup.signupUser();
 		    		}
 		    		catch(e){
 		    			try{
