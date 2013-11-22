@@ -15,10 +15,11 @@ define(["facade", "sportorg/models/position"], function(facade, SportsOrgModel) 
 			}
 
 			if (this.type == "save")
-				return '/api/user/position/' + this.user_id;
+				return '/api/user/position/' + this.user_id +'?time='+new Date().getTime();
+			+new Date().getTime();
 			if (this.type == "delete")
-				return '/api/user/position/' + this.user_id + '?user_id=' + this.user_id;
-				return '/api/user/position/' + this.user_id;
+				return '/api/user/position/' + this.user_id + '?user_id=' + this.user_id+'?time='+new Date().getTime();
+				return '/api/user/position/' + this.user_id+'?time='+new Date().getTime();
 				// return '/api/user/sport/' + this.user_id + '?sports_id=' + this.sports_id + '&sport_id=' + this.sports_id + 
 				// '&user_id=' + this.user_id;
 		}

@@ -500,6 +500,7 @@ define(['require', 'text!profilesetting/templates/club.html', 'text!profilesetti
 		/*PARAMETERS:
 		 e: event, checkbox click event consisting of all information of event triggered*/
 		displayPositionPopup : function(event) {
+			alert('test');
 			self.clickedPositionTarget = $(event.target);
 			var teamId = $(event.target).attr('teamid');
 			if ($(event.target).parent().find(self.controls.chkSeasons).is(':checked')) {
