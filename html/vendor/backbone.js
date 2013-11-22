@@ -1768,6 +1768,7 @@ var Form = Backbone.View.extend({
   
   updateFields: function(editor) {
   	if(this.formValues) this.formValues.updateFormValues(editor);
+  	if(this.validate) this.validate({fields: [editor]});
   },
 
   render: function() {
@@ -2069,9 +2070,7 @@ var Form = Backbone.View.extend({
 //==================================================================================================
 
 Form.validators = (function() {
-
   var validators = {};
-
   validators.errMessages = {
     required: 'Required',
     regexp: 'Invalid',
@@ -2088,19 +2087,16 @@ Form.validators = (function() {
      
     return function required(value) {
       options.value = value;
-      
       var err = {
         type: options.type,
         message: _.isFunction(options.message) ? options.message(options) : options.message
       };
-      
       if (value === null || value === undefined || value === false || value === '') return err;
     };
   };
   
   validators.regexp = function(options) {
     if (!options.regexp) throw new Error('Missing required "regexp" option for "regexp" validator');
-  
     options = _.extend({
       type: 'regexp',
       message: this.errMessages.regexp
@@ -2108,7 +2104,6 @@ Form.validators = (function() {
     
     return function regexp(value) {
       options.value = value;
-      
       var err = {
         type: options.type,
         message: _.isFunction(options.message) ? options.message(options) : options.message
@@ -2116,7 +2111,6 @@ Form.validators = (function() {
       
       //Don't check empty values (add a 'required' validator for this)
       if (value === null || value === undefined || value === '') return;
-
       if (!options.regexp.test(value)) return err;
     };
   };
@@ -2163,7 +2157,6 @@ Form.validators = (function() {
       if (value !== attrs[options.field]) return err;
     };
   };
-
 
   return validators;
 
@@ -2293,13 +2286,11 @@ Form.Fieldset = Backbone.View.extend({
 
 });
 
-
 //==================================================================================================
 //FIELD
 //==================================================================================================
 
 Form.Field = Backbone.View.extend({
-
 
   /**
    * Constructor
@@ -2802,6 +2793,7 @@ Form.editors.Text = Form.Editor.extend({
   
   change: function(e) {
   	if(this.chnageEvent) this.chnageEvent(e);
+  	if(this.validate) this.validate();
   },
   
   initialize: function(options) {
@@ -2925,6 +2917,8 @@ Form.editors.Location = Form.editors.Text.extend({
 		var _self = this, address = _self.$el.find('.address-h').val();
 		
 		var verifyAddress = require('usercontrols/location/models/verify-adress'); 
+			_self.locationId = undefined;
+			
 			_self.adressModel = new verifyAddress();
 			_self.adressModel.address = address;
 			_self.adressModel.url();
@@ -2933,12 +2927,11 @@ Form.editors.Location = Form.editors.Text.extend({
 			try {
 				_self.$el.find('.set-address-h').addClass('link-disabled');
 				_self.$el.find('.address-error-status-h').removeClass('hide').html(error.responseJSON.exec_data.error_array[0].error);
-			} catch(e) {}
+			} catch(e) {  }
 				_self.$el.find('.address-h').addClass('address-field-error').removeClass('address-verified');
 			};
 			_self.adressModel.save({dataType:"json"});
 			_self.$el.find('.address-h').removeClass('address-verified');
-			//_self.callback("");
 			$.when(_self.adressModel.request).done(function() {
 				console.log(_self.adressModel.toJSON());
 				_self.locationId = _self.adressModel.get("payload").id;
@@ -2948,7 +2941,6 @@ Form.editors.Location = Form.editors.Text.extend({
 					_self.location.latitude = _self.adressModel.get("payload").lat;
 					_self.location.latitude = _self.adressModel.get("payload").lon;
 					_self.$el.find('.set-address-h').removeClass('link-disabled');
-					//_self.callback(_self.locationId);
 					if(_self.map) {
 						var pos = new google.maps.LatLng(_self.adressModel.get("payload").lat, _self.adressModel.get("payload").lon);
 						_self.marker.setPosition(pos);
@@ -2956,6 +2948,7 @@ Form.editors.Location = Form.editors.Text.extend({
 					} else {
 						_self.createMap();
 					}
+					_self.trigger("blur", _self);
 				}
 			});
   },
@@ -3179,12 +3172,13 @@ Form.editors.AutoComplete = Form.editors.Text.extend({
 					this.collection[this.request_fields[i].key] = (this.request_fields[i].value && typeof this.request_fields[i].value == "function")?this.request_fields[i].value():this.request_fields[i].value;
 				}
 			}
+			if(!_self.$el.parent().find(".indicator-h").length)
+				_self.$el.after('<span class="indicator-h field-error-img"></span>');
 			
 			_self.$el.parent().find(".indicator-h").removeClass("valid").addClass("invalid");
 			this.collectionFetchOb = this.collection.fetch();
 			$.when(this.collection.request).done(function() {
-				if(!_self.$el.parent().find(".indicator-h").length)
-					 _self.$el.after('<span class="indicator-h field-error-img"></span>');
+
 				if(_self.request_finished) _self.request_finished();				
 				if (callback) callback(_self.collection.toJSON());
 			});
