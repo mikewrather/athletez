@@ -472,7 +472,7 @@ input {
 
 
 .dropdown-container {
-	background: #CCCCCC;
+	background: #6b6e71;
 	display: inline-block;
 	width: 80%;
 	position: absolute;
@@ -547,6 +547,9 @@ ul.common-dropdown li.selected a {
 		white-space: nowrap;
 	overflow: hidden;
     text-overflow: ellipsis;
+    position: absolute;
+	left: 0;
+	right: 0;
 }
 
 .down-arrow-outer {
@@ -557,6 +560,9 @@ ul.common-dropdown li.selected a {
 	height: 100%;
 	text-align: center;
 	color: #FFF;
+	position: absolute;
+	right: 0;
+	max-width: 50px;
 }
 
 .down-arrow-outer a {
