@@ -47,7 +47,7 @@ function(facade,  views,   utils,   ItemView,  templateList, Participate, addMod
        		$.when(participants.request).done(function() {
        			var newAddModel = new addModel();
 				newAddModel.processItemFromPayload(participants.toJSON());
-				_self.$el.find(".add-to-event").hide();
+				$(".add-to-event").hide();
        			_self.collection.add(newAddModel);
        		});
         },
@@ -73,15 +73,18 @@ function(facade,  views,   utils,   ItemView,  templateList, Participate, addMod
         	
         	this.renderTemplate();
         	
-        	var json = this.collection.toArray();  
-        	var a = json[0].get("payload"), b = [];
+        	var json = this.collection.toArray(), a = json[0].get("payload"), b = [], found = false;
         	for(var i in a) {
         		console.error(routing.loggedInUserId == a[i].id);
         		if(routing.loggedInUserId == a[i].id) {
-        			this.$el.find(".add-to-event").hide();
+        			found = true;
+        			$(".add-to-event").hide();
         		}
         		b.push({payload: a[i]});
         	}
+        	
+        	if(!found)	$(".add-to-event").show();
+
         	
         	this.collection.reset(b);   
         	this.target_id = options.target_id;	

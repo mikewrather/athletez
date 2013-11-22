@@ -106,7 +106,8 @@ class Model_Media_Base extends ORM
 	 */
 	public static function getTaggedObjects($media_id)
 	{
-		$result = ORM::factory("Site_Tag")->where('media_id', '=', $media_id)->find_all();
+		$qry = ORM::factory("Site_Tag")->where('media_id', '=', $media_id);
+		$result = ORM::_sql_exclude_deleted(array('Site_Tag'=>'site_tag'),$qry)->find_all();
 		return $result;
 	}
 

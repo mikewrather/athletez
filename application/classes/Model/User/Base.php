@@ -1640,6 +1640,7 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 				if(ORM::is_deleted($user_teams_link)) $user_teams_link->undo_delete_with_deps();
 
 				$user_teams_link->save();
+				Model_Site_Feed::addToFeed($user_teams_link);
 				return $this;
 			} catch (ORM_Validation_Exception $e)
 			{
@@ -1716,6 +1717,7 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 						$user_teams_link->users_id = $this->id;
 						$user_teams_link->teams_id = $new_team->id;
 						$user_teams_link->save();
+						Model_Site_Feed::addToFeed($user_teams_link);
 					}
 					else
 					{
@@ -1725,6 +1727,7 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 							->find();
 						//print_r($user_teams_link);
 						if(ORM::is_deleted($user_teams_link)) $user_teams_link->undo_delete_with_deps();
+						Model_Site_Feed::addToFeed($user_teams_link);
 					}
 
 					$result[] = $new_team;

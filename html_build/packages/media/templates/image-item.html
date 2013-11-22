@@ -19,8 +19,15 @@
 			{{/show_edit}}
 		</div>
 		<div class="detail-view {{#_detailclass}}{{_detailclass}}{{/_detailclass}}">
-			<h6>{{_label}}</h6>
-			<span>{{& _sublabel}}</span>
+			{{#_label}}<h6>{{_label}}</h6>{{/_label}}
+			{{#_sublabel}}
+				{{#label}}
+					<span>{{label}}</span>
+				{{/label}}
+				{{^label}}
+					<span>{{_sublabel}}</span>
+				{{/label}}
+			{{/_sublabel}}
 		</div>
 	</div>
 </a>
