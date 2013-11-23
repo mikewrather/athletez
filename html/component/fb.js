@@ -13,7 +13,7 @@ define(['require', 'facade', 'views', 'utils', 'vendor'], function(require) {
 		init = function() {
 			window.fbAsyncInit = function() {
                 FB.init({
-                    appId      : '396541317103569',//'219148511595084', // App ID
+                    appId      : '219148511595084',//'396541317103569', // App ID
                     status     : true, // check login status
                     cookie     : true, // enable cookies to allow the server to access the session
                     xfbml      : true,  // parse XFBML
