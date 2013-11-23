@@ -121,10 +121,10 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
 
 		showLandingInfo: function(){
 			var self = this;
-			setTimeout(function(){
+		/*	setTimeout(function(){
 				if(!self.checkForUser())
 					var landing = new landingView();
-			},2000);
+			},2000);*/
 		},
         
         // get user name by id
