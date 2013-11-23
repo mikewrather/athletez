@@ -423,6 +423,7 @@ define([
 					target_url : "/api/user/addimage/",
 					sport_id: $(".selected-sport-h").data("id"),
 					media_id: this.media_id,
+					user_id: this.id,
 					name: "images View 2"
 				});
 

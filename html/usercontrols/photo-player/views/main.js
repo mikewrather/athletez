@@ -4,7 +4,7 @@
  // Requires `define`, `require`
  // Returns {Photo Player View} constructor
  */
-define(['require', 'text!usercontrols/photo-player/templates/player.html', 'text!usercontrols/photo-player/templates/image-thumbs.html', 'text!usercontrols/tag/templates/layout.html', 'facade', 'views', 'utils', 'vendor', 'votes/models/vote', 'jwplayer', 'jqueryui', 'jquery.slimscroll.hor', 'usercontrols/tag/models/basic_info', 'usercontrols/tag/views/main', 'media/models/tag','usercontrols/photo-player/models/tag-myself'], function(require, layoutTemplate, imageThumbsTemplate, tagTemplate) {
+define(['require', 'text!usercontrols/photo-player/templates/player.html', 'text!usercontrols/photo-player/templates/image-thumbs.html', 'text!usercontrols/tag/templates/layout.html', 'facade', 'views', 'utils', 'vendor', 'votes/models/vote', 'jwplayer', 'jqueryui', 'jquery.slimscroll.hor', 'usercontrols/tag/models/basic_info', 'usercontrols/tag/views/main', 'media/models/tag','usercontrols/photo-player/models/tag-myself', 'component/fb'], function(require, layoutTemplate, imageThumbsTemplate, tagTemplate) {
 
 	var self, facade = require('facade'), views = require('views'), SectionView = views.SectionView, utils = require('utils'),
 	 Channel = utils.lib.Channel, vendor = require('vendor'), 
@@ -13,14 +13,7 @@ define(['require', 'text!usercontrols/photo-player/templates/player.html', 'text
 	 Mustache = vendor.Mustache, $ = facade.$, voteModel = require('votes/models/vote'), 
 	 TagMediaModel = require('media/models/tag'),
 	 TagMyselfModel = require('usercontrols/photo-player/models/tag-myself');
-
-	try {
-		console.log("jwplayer", jwplayer);
-	} catch(e) {
-		console = {}, console.log = function(e) {
-		}
-	}
-
+	 FbComponent = require('component/fb'),
 	jwplayer.key = "yXOw2TpDcCoCnbWyVSCoEYA4tepkpjiVEtLEfSBIfZQ=";
 
 	//Models
@@ -32,6 +25,7 @@ define(['require', 'text!usercontrols/photo-player/templates/player.html', 'text
 			'click .next-arrow-h' : 'nextButton',
 			'click .thumb-link-h' : 'changeImage',
 			'click .photo-player-vote-h' : 'vote',
+			'click .share-on-facebook-h' : 'shareOnFacebook',
 			'click .photo-player-tag-photo-h' : 'setUpTagPhotoView',
 			'click .photo-player-tag-myself-h' : 'TagMyself',
 		},
@@ -39,28 +33,24 @@ define(['require', 'text!usercontrols/photo-player/templates/player.html', 'text
 		/*initialize gets called by default when constructor is initialized*/
 		initialize : function(options) {
 			this.collection = options.collection;
-			console.log("***************************************************************************************options",options);
 			this.setOptions(options);
 			this.id = options.id;
+			this.user_id = options.user_id;
 			this.index = options.index;
 			SectionView.prototype.initialize.call(this, options);
 			this.setUpMainView();
-			//console.log(this.model.toJSON());
 			this.json = this.model.toJSON();
 			this.render();
 			this.initThumbsSection();
 			this.loadImage(true);
-
 			Channel('tag-image-success-photo').empty();
 			Channel('tag-image-success-photo').subscribe(this.tagFunction);
-
 		},
 
 		vote : function(e) {
 			console.log("vote", this.json);
-			if ($(e.currentTarget).hasClass('voted'))
-				return;
-
+			if ($(e.currentTarget).hasClass('voted')) return;
+			
 			var _self = this, vote = new voteModel();
 			vote.userId = this.json[this.index].payload.id;
 			vote.entity_id = this.json[this.index].payload.enttypes_id;
@@ -71,6 +61,28 @@ define(['require', 'text!usercontrols/photo-player/templates/player.html', 'text
 			vote.save();
 			$.when(vote.request).done(function() {
 				_self.$el.find('.photo-player-vote-h').addClass('voted');
+			});
+		},
+		
+		// share media on facebook
+		shareOnFacebook: function() {
+			var record = this.json[this.index], fUrl = "http://www.facebook.com/sharer/sharer.php?m2w",
+			link = "http://localhost:8888/#profile/"+this.user_id+"/sport/"+record.payload.media_obj.sports_id+"/player/"+record.payload.media_id, caption = 'Image', image = record.payload.image_path, description = 'Test Description';
+			
+			var fb = new FbComponent();
+			fb.shareOnFacebook({
+				method: 'feed',
+			    name: 'Facebook Dialogs',
+			    link: link,
+			    picture: image,
+			    caption: caption,
+			    description: description,
+			    success: function() {
+			    	alert("Shared successfully.");
+			    },
+			    error: function() {
+			    	alert("Not Shared successfully.");
+			    }
 			});
 		},
 
@@ -272,7 +284,9 @@ define(['require', 'text!usercontrols/photo-player/templates/player.html', 'text
 		},
 
 		thumbScroll : function() {
-			this.$el.find('.thumbs-outer').slimscrollHorizontal({
+			
+			
+			/*this.$el.find('.thumbs-outer').slimscrollHorizontal({
 				height : '110px',
 				width : '100%',
 				alwaysVisible : false,
@@ -284,7 +298,7 @@ define(['require', 'text!usercontrols/photo-player/templates/player.html', 'text
 				wrapperBottom : '0px',
 				opacity : .7,
 				color : '#9cca3c'
-			});
+			});*/
 			/*
 			 var self = this;
 			 function moveul(li)
@@ -531,11 +545,9 @@ define(['require', 'text!usercontrols/photo-player/templates/player.html', 'text
 		setUpTagPhotoView : function() {
 			//TagView
 			var self = this;
-			console.log("image payload", this.json[this.index].payload);
-			console.log("tagtemplate", tagTemplate)
 			var data = this.json[this.index].payload;
 			var isOwner = null;
-			var sportsId = null
+			var sportsId = null;
 			var userId = null;
 			if (data && data.media_obj) {
 				sportsId = data.media_obj.sports_id || null;
