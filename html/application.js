@@ -384,7 +384,7 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
         	var self = this;
         	this.cancelAjaxRequests();
 	        self.loadStyles();
-           chromeBootstrap();
+            chromeBootstrap();
 			function initProfile(headerModelId) {
 				Channel('refresh-profilepage').empty();
 				var title =  self.getUserName(headerModelId);

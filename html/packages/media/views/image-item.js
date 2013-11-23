@@ -55,12 +55,11 @@ define(['vendor', 'views', 'utils', 'text!media/templates/image-item.html', 'vot
 		
 		render : function() {
 
-			var _self = this;
-
+			var _self = this, payload = this.model.get('payload');
 			//the extra object is created here using the entity parsing model
-			var parser = new entParser({mpay:this.model.get('payload')});
+			var parser = new entParser({mpay:payload});
 			var extra = parser.parsedData;
-
+			extra._media_id = payload.media_id;
 			//console.log("Called Image Render", extra);
 			var markup = Mustache.to_html(this.template, extra);
 			this.$el.html(markup);

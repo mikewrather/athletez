@@ -94,7 +94,6 @@ define([
 				
 				if(options.sport_id) this.sport_id = options.sport_id;
 				if(options.media_id) this.media_id = options.media_id;				
-				
 				if (options.userId) {
 					self.id = options.userId;
 					self.init();
@@ -423,7 +422,7 @@ define([
 					target_id : this.id,
 					target_url : "/api/user/addimage/",
 					sport_id: $(".selected-sport-h").data("id"),
-					//model: Backbone.Model.extend(),
+					media_id: this.media_id,
 					name: "images View 2"
 				});
 

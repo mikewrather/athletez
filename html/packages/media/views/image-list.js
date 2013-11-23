@@ -78,7 +78,6 @@ function(facade,  views,   utils,   ImageItemView,            ImageBoardView,   
 		},
 		
 		openImageUploader: function(file) {
-			console.error(this.collection);
 			 var id = this.sport_id, url = this.target_url+ this.target_id,
 			    attr = {
 				    "sports_id" : id
@@ -102,6 +101,7 @@ function(facade,  views,   utils,   ImageItemView,            ImageBoardView,   
         	this.target_url = options.target_url;
         	this.sport_id = options.sport_id;
         	this.user_id = options.user_id;
+        	this.media_id = options.media_id;
 			// render template
 			this.renderTemplate();
 	        //console.log(options);
@@ -122,6 +122,12 @@ function(facade,  views,   utils,   ImageItemView,            ImageBoardView,   
         	//$(document).on('click','.image-outer-h', function() {
 			//	_self.initPhotoPlayer();
 			//});
+			
+			if(_self.media_id) {
+				setTimeout(function() {
+					_self.$el.find(".open-photo-player-h[data-id="+_self.media_id+"]").trigger("click");					
+				}, 2000);
+			}
         	
         },
         
@@ -198,7 +204,6 @@ function(facade,  views,   utils,   ImageItemView,            ImageBoardView,   
                 addView.render();
                 $(this.listView).prepend(addView.el);
             });
-           
             
             function changeBoard(data) {
                 addView.model = data;
