@@ -27,11 +27,14 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
             '': 'defaultRoute',
             'home': 'showHome',
             'home/': 'showHome',
+	        '!home/': 'showHome',
             'home/:action': 'initApp',
+
             
             'profile': 'showProfile',
             'profile/': 'showProfile',
             'profile/:userid': 'showProfile',
+	        '!profile/:userid': 'showProfile',
 
  			 'usersettings': 'showProfileSetting',
              'usersettings/': 'showProfileSetting',
@@ -49,17 +52,20 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
             'game/': 'showGame',
             //'game/:action': 'showGame',
             'game/:id' : 'showGame',
+	        '!game/:id' : 'showGame',
             
             'team': 'showTeam',
             'team/': 'showTeam',
             //'team/:action': 'showTeam',
             'team/:id' : 'showTeam',
+	        '!team/:id' : 'showTeam',
             
-            'registration': 'showRegistration',
+            '!registration': 'showRegistration',
             'registration/': 'showRegistration',
-            'registration/:action': 'showRegistration' , 
+	        '!registration/:action': 'showRegistration' ,
+	        'registration/:action': 'showRegistration' ,
             
-            'tag': 'showTag',
+    //        'tag': 'showTag',
 			'user/login' : 'showLogin',
 			'addgame' : 'showAddGame',
             'fbconnect':'showFbreg',
@@ -261,27 +267,52 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
             	} else {
             	  $("#"+id).find(".modal-header").hide();
             	}
-            	
+            	console.log(options);
+
             	if(options.width){
 		            $("#"+id).css({"width": options.width});
-		            if(options.width.indexOf('%')){
-			            var percentage_number = options.width.replace('%',''),
-				            left = (100 - percentage_number) / 2;
-			            $("#"+id).css({"left":left+"%"});
-		            }
 
+		            var added_width = parseInt($("#"+id).css('border-left'),10) +
+			            parseInt($("#"+id).css('border-right'),10) +
+			            parseInt($("#"+id).css('padding-left'),10) +
+			            parseInt($("#"+id).css('padding-right'),10);
+
+					var true_width;
+		            if(options.width.indexOf('%') > 0)
+		            {
+			            var percentage_number = parseInt(options.width,10);
+				        true_width = (window.innerWidth * (percentage_number/100)) + added_width;
+		            }
+		            else true_width = (parseInt(options.width,10) + added_width);
+
+
+		            $("#"+id).css({
+			            "left":'50%',
+			            "margin-left": true_width<window.innerWidth ? -true_width/2 : '-50%'
+		            });
 	            }
+
             	if(options.height){
 		            $("#"+id).css({"height": options.height});
-		            if(options.height.indexOf('%')){
-			            var percentage_number = options.height.replace('%',''),
-				            top = (100 - percentage_number) / 2;
-			            $("#"+id).css({"top":top+"%"});
-			            console.log(top);
+
+		            var added_height = parseInt($("#"+id).css('border-top'),10) +
+			            parseInt($("#"+id).css('border-bottom'),10) +
+			            parseInt($("#"+id).css('padding-top'),10) +
+			            parseInt($("#"+id).css('padding-bottom'),10);
+
+		            var true_height;
+		            if(options.height.indexOf('%') > 0){
+			            var percentage_number = parseInt(options.height,10);
+			            true_height = (window.innerHeight * (percentage_number/100)) + added_height;
 		            }
+					else true_height = (parseInt(options.height,10) + added_height);
 
+		            $("#"+id).css({
+			            "top":window.innerHeight/2,
+			            "margin-top":true_height<window.innerHeight ? -true_height/2 : -window.innerHeight/2
+		            });
+		            console.log(true_height<window.innerHeight ? -true_height/2 : '-50%');
 	            }
-
 
             	// if we have HTML then place it in popup
             	if(options.html) $("#"+id).find("#modalBody").html(options.html);
