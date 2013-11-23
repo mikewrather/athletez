@@ -24,7 +24,11 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
             
             'profile': 'showProfile',
             'profile/': 'showProfile',
+            'profile/:sport/:sports_id': 'showProfileOurSport',
+            'profile/:sport/:sports_id/:player/:media_id': 'showProfileOurSportAndPlayer',            
             'profile/:userid': 'showProfile',
+            'profile/:userid/:sport/:sports_id': 'showUserProfileSport',
+            'profile/:userid/:sport/:sports_id/:player/:media_id': 'showUserProfileSportAndMedia',
 
  			 'usersettings': 'showProfileSetting',
              'usersettings/': 'showProfileSetting',
@@ -353,20 +357,44 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
 	    	}
 	    },
 	    
-        showProfile: function (userid) {
+	    
+	    // show current user profile ith sport
+	    showProfileOurSport: function(sport, sport_id) {
+	    	this.showProfile(undefined, sport, sport_id);
+	    },
+	    
+	    // show current user profile ith sport
+	    showProfileOurSportAndPlayer: function(sport, sport_id, player, media_id) {
+	    	this.showProfile(undefined, sport, sport_id, player, media_id);	    	
+	    },
+
+
+	    // show current user profile ith sport
+	    showUserProfileSport: function(user_id, sport, sport_id) {
+	    	this.showProfile(user_id, sport, sport_id);	    	
+	    },
+
+	    // show current user profile ith sport
+	    showUserProfileSportAndMedia: function(user_id, sport, sport_id, player, media_id) {
+	    	this.showProfile(user_id, sport, sport_id, player, media_id);	    	
+	    },
+
+	    
+        showProfile: function (userid, sport, sport_id, player, media_id) {
         	var self = this;
         	this.cancelAjaxRequests();
 	        self.loadStyles();
-           // $('#main-header').empty();
-            //$('#main-content').empty();
            chromeBootstrap();
-	        //if(this.currentController) this.currentController.remove();
 			function initProfile(headerModelId) {
 				Channel('refresh-profilepage').empty();
 				var title =  self.getUserName(headerModelId);
                 self.currentController = new ProfileController({
 	                "userId": (typeof userid != "undefined")?userid:headerModelId,
-	                title:title
+	                title:title,
+	                'sport' : sport,
+	                'sport_id': sport_id,
+	                'player': player,
+	                'media_id': media_id
 	            });
 				self.gaPageView("Profile Page",title);
             }
@@ -477,11 +505,10 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
 			routing.off('showSignup');
             routing.on('showSignup', function() {
               try{
-		  				
-		  				if($("#userlogin").length)
-			  				$("#userlogin").trigger('click');
-		  				else
-		  					if(this.signup.signupUser) this.signup.signupUser();
+	  				if($("#userlogin").length)
+		  				$("#userlogin").trigger('click');
+	  				else
+	  					if(this.signup.signupUser) this.signup.signupUser();
 		    		}
 		    		catch(e){
 		    			try{

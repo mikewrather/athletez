@@ -90,26 +90,23 @@ define([
 				_.bindAll(self);
 				self.handleOptions(options);
 				self.scheme = [];
+				
+				
+				if(options.sport_id) this.sport_id = options.sport_id;
+				if(options.media_id) this.media_id = options.media_id;				
+				
 				if (options.userId) {
-					debug.log(options.userId);
 					self.id = options.userId;
 					self.init();
-				}
-				else {
+				} else {
 					self.init();
 				}
 				return self;
 			},
 
-
 			init: function () {
-				console.log("LAYOUT RENDER");
 				this.setupLayout().render();
-
-				console.log("CREATE DATA");
 				this.createData();
-
-				console.log("HANDLE DEFERREDS");
 				this.handleDeferreds();
 			},
 
@@ -142,7 +139,6 @@ define([
 				console.log(controller);
 
 				function callback(sport_id) {
-
 					delete controller.orgViewname;
 					controller.refreshPage();
 					controller.sports_id = sport_id;
@@ -168,12 +164,10 @@ define([
 					controller.images.sport_id = sport_id;
 					controller.images.targetElement = "#image-wrap";
 					controller.images.fetch();
-
 					controller.handleDeferredsDynamic();
 				}
 
-				function refreshFans()
-				{
+				function refreshFans() {
 					controller.fans = new FansImageList();
 					controller.fans.id = controller.id;
 					controller.fans.fetch();
@@ -297,6 +291,7 @@ define([
 					model: this.basics,
 					sports_id:this.sports_id > 0 ? this.sports_id : null,
 					name: "Header",
+					sports_id : this.sport_id,
 					destination: "#main-header"
 				});
 				this.scheme.push(headerView);

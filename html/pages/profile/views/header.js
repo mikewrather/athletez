@@ -62,15 +62,12 @@ function(require, profileHeaderTemplate, selectSportTemplate) {
             this.sports.fetch();
             $.when(this.sports.request).done(function() {
                 self.setupSportListView();
-                //self.select_sport = self.$('#select-sport');
 	            console.log(self.sports);
-	            if(!self.sports_id) self.selectSport(); //this will signify it's the first viewing of the profile page.
+	            self.selectSport(); //this will signify it's the first viewing of the profile page.
             });
         },
         
         setupSportListView: function() {
-        	console.log(this.sports);
-
 
             var self = this,
                 sportListView = new SportListView({
@@ -116,7 +113,6 @@ function(require, profileHeaderTemplate, selectSportTemplate) {
         
         render: function (domInsertion, dataDecorator, partials) {
             SectionView.prototype.render.call(this, domInsertion, dataDecorator, partials); 
-            
             // render image for image item view
             this.renderImage();
         },
@@ -136,8 +132,7 @@ function(require, profileHeaderTemplate, selectSportTemplate) {
         },
         
         selectSport: function(e) {
-
-            var sport_id = (!e)?$(".sports-h img:first-child").data("id"):$(e.target).data("id");
+            var sport_id = (!e)?((this.sports_id)?this.sports_id:$(".sports-h img:first-child").data("id")):$(e.target).data("id");
             var sport_name = (!e)?$(".sports-h img:first-child").data("name"):$(e.target).data("name");
 	        ga('send', 'event', 'Profile-Action', 'Sport-Change', sport_name, sport_id);
             //this.select_sport.val();
@@ -147,6 +142,7 @@ function(require, profileHeaderTemplate, selectSportTemplate) {
 	            srcNoExt = srcNoExt.split('.png')[0] + ".png";
 	            $(this).attr('src',srcNoExt).removeClass("selected-sport-h");
             });
+            
             $(".sports-icon-h[data-id="+sport_id+"]").addClass('selected-sport-h');
 	        var srcNoExt = String($(".sports-icon-h[data-id="+sport_id+"]").attr('src')).split(".png")[0] + "_selected.png";
 	        $(".sports-icon-h[data-id="+sport_id+"]").attr('src',srcNoExt);
@@ -162,9 +158,7 @@ function(require, profileHeaderTemplate, selectSportTemplate) {
         	} else {
         	//	Channel('refresh-profilepage').publish();
         	}
-        	
         	document.title = title;
-        	
         }
         
                 
