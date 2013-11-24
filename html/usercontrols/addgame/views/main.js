@@ -156,8 +156,8 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 					
 					showLable : false,
 					label: "Date",
-					//validators : [{type : 'required',
-					//	message : 'Please select date.'}],
+					validators : [{type : 'required',
+						message : 'Please select date.'}],
 					bindDatePicker : true,
 					chnageEvent : function() {
 						var date = new Date(this.getValue()), currentDate = new Date();
