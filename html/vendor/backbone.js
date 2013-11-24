@@ -1832,12 +1832,68 @@ var Form = Backbone.View.extend({
 
     //Set the main element
     this.setElement($form);
-    
     //Set class
     $form.addClass(this.className);
-
     return this;
   },
+  
+  
+  /**
+   *  Show error message
+   * */
+	
+
+	ShowValidateMessage: function(options) {
+   		if(!options) return;
+   		
+   		var self = this,
+        field = options.field,
+        errorsMessage = options.message;
+console.error(field, errorsMessage);
+return;
+    //Collect errors from schema validation
+    //_.each(fields, function(field) {
+     // var error = field.validate();
+      //if (error) {
+       // errors[field.key] = error;
+      //}
+    //});
+
+    //Get errors from default Backbone model validator
+    if (!options.skipModelValidate && model && model.validate) {
+      var modelErrors = model.validate(this.getValue());
+
+      if (modelErrors) {
+        var isDictionary = _.isObject(modelErrors) && !_.isArray(modelErrors);
+
+        //If errors are not in object form then just store on the error object
+        if (!isDictionary) {
+          errors._others = errors._others || [];
+          errors._others.push(modelErrors);
+        }
+
+        //Merge programmatic errors (requires model.validate() to return an object e.g. { fieldKey: 'error' })
+        if (isDictionary) {
+          _.each(modelErrors, function(val, key) {
+            //Set error on field if there isn't one already
+            if (fields[key] && !errors[key]) {
+              fields[key].setError(val);
+              errors[key] = val;
+            } else {
+              //Otherwise add to '_others' key
+              errors._others = errors._others || [];
+              var tmpErr = {};
+              tmpErr[key] = val;
+              errors._others.push(tmpErr);
+            }
+          });
+        }
+      }
+    }
+	
+    return _.isEmpty(errors) ? null : errors;
+  },
+
 
   /**
    * Validate the data
@@ -2796,6 +2852,20 @@ Form.editors.Text = Form.Editor.extend({
   	if(this.validate) this.validate();
   },
   
+  // validate field from sever
+  validateField: function(editor, error_message) {
+  	this.serverValidate({field: editor, message: error_message});
+  	//alert("validate field");
+  	// var error = this.editor.validate();
+
+   // if (error) {
+     // this.setError(error_message);
+    //} else {
+      //this.clearError();
+    //}
+    //return error;
+  },
+  
   initialize: function(options) {
     _.bindAll(this);
     Form.editors.Base.prototype.initialize.call(this, options);
@@ -3118,9 +3188,11 @@ Form.editors.AutoComplete = Form.editors.Text.extend({
 		_self.$el.autocomplete({
 			source : arr,
 			select: function( event, ui ) {
-				_self.$el.parent().find(".indicator-h").removeClass("invalid").addClass("valid");			
-				_self.$el.attr("data-id", (ui.item.id)?ui.item.id:ui.item.value);
+				_self.$el.parent().find(".indicator-h").removeClass("invalid").addClass("valid");	
+				var id = (ui.item.id)?ui.item.id:ui.item.value;		
+				_self.$el.attr("data-id", id);
 				_self.trigger("blur", _self);
+				if(_self.callback) _self.callback(id);
 			}
 		});
 		
@@ -4274,43 +4346,40 @@ Form.editors.Object = Form.editors.Base.extend({
     });
 
     this._observeFormEvents();
-
     this.$el.html(this.nestedForm.render().el);
-
     if (this.hasFocus) this.trigger('blur', this);
-
     return this;
   },
 
   getValue: function() {
     if (this.nestedForm) return this.nestedForm.getValue();
-
     return this.value;
   },
 
   setValue: function(value) {
     this.value = value;
-
     this.render();
   },
 
   focus: function() {
     if (this.hasFocus) return;
-
     this.nestedForm.focus();
   },
 
   blur: function() {
     if (!this.hasFocus) return;
-
     this.nestedForm.blur();
   },
 
   remove: function() {
     this.nestedForm.remove();
-
     Backbone.View.prototype.remove.call(this);
   },
+
+  serverValidate: function(options) {
+    return this.nestedForm.ShowValidateMessage(options);
+  },
+	
 
   validate: function() {
     return this.nestedForm.validate();

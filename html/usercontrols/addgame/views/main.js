@@ -139,8 +139,8 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 				'date' : {
 					form_values: {
 						post_to_server	: false,
-						//defaultValue: "2013-11-21",
 						serverKey : "game_date",
+						serverDbField: 'gameDay',
 						objectValuesToUpdate: ["game_datetime"],
 						getValue: function() {
 							return this.$el.val();
@@ -155,8 +155,8 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 					
 					showLable : false,
 					label: "Date",
-					validators : [{type : 'required',
-						message : 'Please select date.'}],
+					//validators : [{type : 'required',
+					//	message : 'Please select date.'}],
 					bindDatePicker : true,
 					chnageEvent : function() {
 						var date = new Date(this.getValue()), currentDate = new Date();
@@ -170,7 +170,7 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 				'time' : {
 					form_values: {							
 						post_to_server	: false,	
-						//defaultValue: "10:00",				
+						serverDbField: 'gameTime',			
 						serverKey: "game_time",
 						objectValuesToUpdate: ["game_datetime"]						
 					},
@@ -272,6 +272,7 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 					label: "Select Team 1",
 					form_values : {
 						serverKey : "teamOneId",
+						serverDbField: 'teams_id',
 						request_fields : [{
 							key : 'user_id',
 							value : function() { return _self.user_id; }
@@ -329,7 +330,7 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 							var $selectedItems = $(self.destination).find("input[name=team_1]:checked, input[name=team_2]:checked");
 							$selectedItems.each(function() {
 								value = $(this).val();
-								if (value == "Home") {
+								if (value == "Home" && !teamId) {
 									teamId = $(this).attr(self.attributes.teamId);
 								}
 							});
@@ -358,6 +359,7 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 					form_values: {
 						keyNameInPayload: 'team_name',
 						serverKey: 'teamTwoId',
+						serverDbField: 'teams_id',
 						request_fields : [{
 								key : 'states_id',
 								value : _self.states_id
@@ -372,14 +374,13 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 						],
 						source_collection : TeamsCollection,
 						request_finished : function() {
+						},
+						callback : function(id) {
+							$("input[name=team_2]").attr("teamId", id);
 						}
 					},
 					
-					callback : function(options) {
-						if (options.length) {
-							 $("input[name=team_2]").attr("teamId", options[0]);
-					 	}
-					},
+
 					validators : [{type : 'required',
 						message : 'Please select Team 2.'}],
 				},
@@ -407,14 +408,14 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 					label: "Team 2",
 					onClickFn : function(e) {
 						var value = e ? $(e.target).val() : "away", teamId = 0;
-						if (value == "home") {
+						if (value == "Home") {
 							teamId = $(e.target).attr(self.attributes.teamId);
 						} else {
 							var $selectedItems = $(self.destination).find("input[name=team_1]:checked, input[name=team_2]:checked");
 							$selectedItems.each(function() {
 								value = $(this).val();
 								if (value == "Home") {
-									teamId = $(this).attr(self.attributes.teamId);
+									teamId = $(this).attr("teamId");
 								}
 							});
 						}
@@ -437,7 +438,8 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 				'Location' : {
 					form_values: {
 						serverKey : "locations_id",
-						post_to_server	: true
+						post_to_server	: true,
+						serverDbField: 'locations_id'
 					},
 					type : 'Location',
 					label: "Location",
@@ -451,7 +453,6 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 						value: _self.user_id
 					},
 					type: "Hidden",
-					
 				},
 				'submit' : {
 					type : 'Submit',
@@ -485,9 +486,6 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 							}
 							
 							var formData = _self.formValues.getFormValues(), self = _self;
-							//date = self.formatDate(formData.date, formData.time, formData.Day_light);
-							
-							//var completeDate = date, scoreOne = $(self.destination).find('input[name=score_1]').val(), scoreTwo = $(self.destination).find('input[name=score_2]').val();
 							var payload = {
 								game_datetime : formData.game_datetime,
 								locations_id : formData['Location'],
@@ -498,13 +496,16 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 							};
 
 							var gameModel = new GameModel(payload);
-							
 							gameModel.save({});
+							
+							//window.formValues1.showServersErrors([{ key: "gameDay", message: "error_message" }]);
+							
+							$.when(gameModel.request).fail(function() {
+							    alert("error");
+							 });
+							
 							$.when(gameModel.request).done(function(response) {
 								if (response != null && response.payload != null) {
-									
-									
-									
 									self.game_id = response.payload.id;
 									var isHome = $(self.destination).find("input[value=Home]").is(':checked');
 									var payloadOne = {
@@ -527,6 +528,7 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 										score : formData.score_2,
 										users_id : self.user_id
 									};
+									
 									isHome = $(self.destination).find(self.controls.rdoTeamTwo).is(':checked');
 									var addTeamModelTwo = new TeamAddModel(payloadTwo);
 									addTeamModelTwo.teams_id = formData.teamTwoId;
@@ -560,7 +562,7 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 			}, this.$el.find('.add-game-container-h'));
 			
 			var form = formData.form;
-			this.formValues = formData.formValues;
+			window.formValues1 = this.formValues = formData.formValues;
 		},
 		
 
