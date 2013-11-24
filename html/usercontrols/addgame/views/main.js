@@ -335,11 +335,8 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 							teamModel.id = _self.team_id;
 							teamModel.fetchSuccess = function(model, response) {
 								var data = teamModel.parseAsRequired(response);
-								_that.$el.val(data.team_name);
-								_that.setValue(data.team_id);
+								_that.setValue(data.team_id, data.team_name);
 								$(self.destination).find("input[name=team_1]").attr("teamId", data.team_id);
-								if(!_that.$el.parent().find(".indicator-h").length) _that.$el.after('<span class="indicator-h field-error-img"></span>');
-								_that.$el.parent().find(".indicator-h").removeClass("invalid").addClass("valid");
 							};
 							teamModel.fetch();
 						},

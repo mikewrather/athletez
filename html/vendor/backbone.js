@@ -3297,8 +3297,17 @@ Form.editors.AutoComplete = Form.editors.Text.extend({
    * Sets the value of the form element
    * @param {String}
    */
-  setValue: function(value) {
+  setValue: function(value, text) {
+  	
+  if(!this.$el.parent().find(".indicator-h").length) this.$el.after('<span class="indicator-h field-error-img"></span>');
+  	
+  	if(!value && value == "")
+  		this.$el.parent().find(".indicator-h").removeClass("valid").addClass("invalid");
+	else
+  		this.$el.parent().find(".indicator-h").removeClass("invalid").addClass("valid");
+  				
     this.$el.attr("data-id", value);
+    this.$el.val(text);    
   },
 
   focus: function() {

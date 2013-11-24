@@ -81,22 +81,32 @@ define(['require', 'facade', 'views', 'utils', 'vendor'], function(require) {
 			
 			// update form values after field update
 			formValues.updateFormValues = function(editor) {
-				console.error(editor);
 				if(editor && editor.objectValuesToUpdate) {
 					for(var i in editor.objectValuesToUpdate) {
 						var ob = form.fields[editor.objectValuesToUpdate[i]].editor;
-						ob.setValue("");
+						console.error(ob);
+						ob.setValue("", "");
 					}
 				}
 			};
 			
-			
 			// display server error after submitting form
-			formValues.showFormValues = function(jsonData) {
-				
+			//  [{ key: "game_day", message: "error_message" }]
+			formValues.showServersErrors = function(jsonData) {
+				if(form.fields) {
+					for(var i in form.fields) {
+						if(form.fields[i].editor.serverDbField) {
+							for(var k in jsonData) {
+								if(jsonData[k].key == form.fields[i].editor.serverDbField) {
+									var id = form.fields[i].editor.id;
+									$("#"+id).parents(".field-row").find("*[data-error='']").html(jsonData[k].message).show();
+									break;
+								}
+							}
+						}
+					}
+				}
 			};
-			
-			
 		}
 		return {
 			form : form,
