@@ -8,13 +8,12 @@
 
 define(['require', 'facade', 'views', 'utils', 'vendor'], function(require) {
 	return function() {
-		var _self = this, facebookLoad = false, scriptId = 'facebook-jssdk',
+		var _self = this, scriptId = 'facebook-jssdk-api',
 		// initialize function
 		init = function() {
 			window.fbAsyncInit = function() {
                 FB.init({
-                    appId      : '219148511595084',//'396541317103569', // App ID
-                    status     : true, // check login status
+                    appId      : '219148511595084',//'396541317103569', // App ID                     status     : true, // check login status
                     cookie     : true, // enable cookies to allow the server to access the session
                     xfbml      : true,  // parse XFBML
                     oauth      : true
@@ -32,7 +31,7 @@ define(['require', 'facade', 'views', 'utils', 'vendor'], function(require) {
 		
 		// check if script is already injected or not
 		checkIfScriptExists = function() {
-			return (document.getElementById(scriptId) || facebookLoad)?true:false;
+			return (document.getElementById(scriptId))?true:false;
 		},
 		
 		// load facebook API file
@@ -43,17 +42,22 @@ define(['require', 'facade', 'views', 'utils', 'vendor'], function(require) {
 		         js = document.createElement('script'); js.id = scriptId; js.async = true;
 		         js.src = "//connect.facebook.net/en_US/all.js";
 		         ref.parentNode.insertBefore(js, ref);
-		         facebookLoad = true;
 	        }
 		};
 		
 		// share on facebook
 		this.shareOnFacebook = function(options) {
 			if(checkIfScriptExists() && "undefined" != typeof FB) {
+				if(options.link)
+					 var link = window.location.protocol+"//"+window.location.host+"/"+options.link+"/";
+				else
+					var link = undefined;
+						 
+				alert(link);
 				  FB.ui({
 				    method: options.method || '',
 				    name: options.name || 'Facebook Dialogs',
-				    link: options.link || 'http://localhost/',
+				    link: link || 'http://localhost/',
 				    picture: options.picture || '',
 				    caption: options.caption || '',
 				    description: options.description || ''

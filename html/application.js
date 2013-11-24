@@ -33,9 +33,17 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
             'profile/': 'showProfile',
             'profile/:sport/:sports_id': 'showProfileOurSport',
             'profile/:sport/:sports_id/:player/:media_id': 'showProfileOurSportAndPlayer',            
+            '!profile/:sport/:sports_id': 'showProfileOurSport',
+            '!profile/:sport/:sports_id/:player/:media_id': 'showProfileOurSportAndPlayer',  
+                                  
             'profile/:userid': 'showProfile',
+            
             'profile/:userid/:sport/:sports_id': 'showUserProfileSport',
             'profile/:userid/:sport/:sports_id/:player/:media_id': 'showUserProfileSportAndMedia',
+            
+            '!profile/:userid/:sport/:sports_id': 'showUserProfileSport',
+            '!profile/:userid/:sport/:sports_id/:player/:media_id': 'showUserProfileSportAndMedia',
+            
 	        '!profile/:userid': 'showProfile',
 
  			 'usersettings': 'showProfileSetting',
