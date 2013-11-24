@@ -124,20 +124,17 @@ function(facade,  views,   utils,   ImageItemView,            ImageBoardView,   
 			//	_self.initPhotoPlayer();
 			//});
 			
-			
 			if(_self.media_id) {
 				setTimeout(function() {
-					var index = -1;					
 					if(_self.allData) {
 						for(var i in _self.allData) {
 							if(_self.media_id == _self.allData[i].get("payload").media_id) {
-								index = i;
+								routing.trigger('photo-player-init', i, _self.allData, _self.user_id, true);
 								break;
 							}
 						}
 					}
-					if(index != -1)
-						routing.trigger('photo-player-init', index, _self.allData, _self.user_id, true);
+						
 				}, 500);
 			}
         	

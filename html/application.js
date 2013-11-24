@@ -97,7 +97,6 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
         },
         
         showOwnPage: function(pageName, page1, Page1_id, page2, Page2_id) {
-        	alert("asdsd");
 			// create the function name        	
         	var functionName = "show"+pageName.charAt(0).toUpperCase() + pageName.slice(1);
         	// generating params
@@ -454,7 +453,7 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
 			});
 		},
 		
-	    showHome: function (action) {
+	    showHome: function (action, paramsArr) {
 	    	var self = this;
 	    	this.cancelAjaxRequests();
 	    	this.loadStyles();
@@ -467,7 +466,8 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
 	    		self.currentController = new HomeController({
 	    			route: "",
 	    			title: title,
-	    			userId : id
+	    			userId : id,
+	    			params: paramsArr
 	    		});
 			    if(!id && $('div.register-wrapper').length == 0){
 				    $('body header').after('<div class="register-wrapper"></div><div class="register-wrapper-h"></div>');
