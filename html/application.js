@@ -28,59 +28,87 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
             'home/': 'showHome',
 	        '!home/': 'showHome',
             'home/:action': 'initApp',
-            
             'profile': 'showProfile',
             'profile/': 'showProfile',
-            'profile/:sport/:sports_id': 'showProfileOurSport',
-            'profile/:sport/:sports_id/:player/:media_id': 'showProfileOurSportAndPlayer',            
-            '!profile/:sport/:sports_id': 'showProfileOurSport',
-            '!profile/:sport/:sports_id/:player/:media_id': 'showProfileOurSportAndPlayer',  
-                                  
-            'profile/:userid': 'showProfile',
+            'team': 'showTeam',
+            'team/': 'showTeam',
             
-            'profile/:userid/:sport/:sports_id': 'showUserProfileSport',
-            'profile/:userid/:sport/:sports_id/:player/:media_id': 'showUserProfileSportAndMedia',
+            //'team/:action': 'showTeam',
+            'team/:id' : 'showTeam',
+	        '!team/:id' : 'showTeam',
             
-            '!profile/:userid/:sport/:sports_id': 'showUserProfileSport',
-            '!profile/:userid/:sport/:sports_id/:player/:media_id': 'showUserProfileSportAndMedia',
-            
-	        '!profile/:userid': 'showProfile',
-
- 			 'usersettings': 'showProfileSetting',
-             'usersettings/': 'showProfileSetting',
-         /*    'usersettings/:userid': 'showProfileSetting', This is not necessary because we will only be seeing settings for currently logged in user*/
-
- 			 'resume': 'ShowUserResume',
-             'resume/': 'ShowUserResume',
-
-			//'imageup': 'imageUp',
-
-	        //'videoprev': 'videoPreview',
-	        //'videoprev/': 'videoPreview',
-
             'game': 'showGame',
             'game/': 'showGame',
             //'game/:action': 'showGame',
             'game/:id' : 'showGame',
 	        '!game/:id' : 'showGame',
             
-            'team': 'showTeam',
-            'team/': 'showTeam',
-            //'team/:action': 'showTeam',
-            'team/:id' : 'showTeam',
-	        '!team/:id' : 'showTeam',
+            ':page/:id/:param/:id': 'showPage',
+            ':page/:id/:param/:id/:param/:id': 'showPage',            
             
+            ':page/:param/:id': 'showOwnPage',
+            ':page/:param/:id/:param/:id': 'showOwnPage',  
+           
+            ':!page/:id/:param/:id': 'showPage',
+            ':!page/:id/:param/:id/:param/:id': 'showPage',            
+            
+            ':!page/:param/:id': 'showOwnPage',
+            ':!page/:param/:id/:param/:id': 'showOwnPage',  
+                                  
+            //':page/:sport/:sports_id/:player/:media_id': 'getPage',
+            'profile/:userid': 'showProfile',
+            //'profile/:userid/:sport/:sports_id': 'showUserProfileSport',
+            //'profile/:userid/:sport/:sports_id/:player/:media_id': 'showUserProfileSportAndMedia',
+            //'!profile/:userid/:sport/:sports_id': 'showUserProfileSport',
+            //'!profile/:userid/:sport/:sports_id/:player/:media_id': 'showUserProfileSportAndMedia',            
+	        //'!profile/:userid': 'showProfile',
+
+ 			 'usersettings': 'showProfileSetting',
+             'usersettings/': 'showProfileSetting',
+         /* 'usersettings/:userid': 'showProfileSetting', This is not necessary because we will only be seeing settings for currently logged in user*/
+ 			 'resume': 'ShowUserResume',
+             'resume/': 'ShowUserResume',
+
+			//'imageup': 'imageUp',
+	        //'videoprev': 'videoPreview',
+	        //'videoprev/': 'videoPreview',
+ 
             '!registration': 'showRegistration',
             'registration/': 'showRegistration',
-	        '!registration/:action': 'showRegistration' ,
-	        'registration/:action': 'showRegistration' ,
+	        '!registration/:action': 'showRegistration',
+	        'registration/:action': 'showRegistration',
             
-    //        'tag': 'showTag',
+    		// 'tag': 'showTag',
 			'user/login' : 'showLogin',
 			'addgame' : 'showAddGame',
             'fbconnect':'showFbreg',
             'logout':'callLogout'
            // 'user/create':'showUsercreate'
+        },
+        
+        showPage: function(pageName, id, page1, Page1_id, page2, Page2_id) {
+			// create the function name        	
+        	var functionName = "show"+pageName.charAt(0).toUpperCase() + pageName.slice(1);
+        	// generating params
+        	var arr = [];
+        	if(page1) arr.push({key: page1 +"_id", value: Page1_id});
+        	if(page2) arr.push({key: page2 +"_id", value: Page2_id});
+        	if(this[functionName] && _.isFunction(this[functionName])) this[functionName](id, arr);
+        },
+        
+        showOwnPage: function(pageName, page1, Page1_id, page2, Page2_id) {
+        	alert("asdsd");
+			// create the function name        	
+        	var functionName = "show"+pageName.charAt(0).toUpperCase() + pageName.slice(1);
+        	// generating params
+        	var arr = [];
+        	if(page1) arr.push({key: page1 +"_id", value: Page1_id});
+        	if(page2) arr.push({key: page2 +"_id", value: Page2_id});
+        	
+        	console.error(arr);
+        	
+        	if(this[functionName] && _.isFunction(this[functionName])) this[functionName](undefined, arr);
+        	//console.error(a, b, c, d, e, f);
         },
 
         initialize: function (options) {
@@ -129,7 +157,7 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
 			
 		},
 
-		showLandingInfo: function(){
+		showLandingInfo: function() {
 			var self = this;
 		/*	setTimeout(function(){
 				if(!self.checkForUser())
@@ -146,7 +174,7 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
  	  	     		if(userId == id) {
  	  	     			name =  appStates.data[userId].user_name;
  	  	     			break;	
- 	  	     		}	
+ 	  	     		}
  	  	     	}
         	}
         	if(name)	
@@ -412,7 +440,8 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
 		    var phrases = new SitePhraseList();
 		    phrases.fetch();
 	    },
-	    showFbreg:function(){
+	    
+	    showFbreg:function() {
 		    ga('send', 'event', 'popup', 'open', 'FB Reg');
             fbregistration = new fbreg();
             fbregistration.signupFacebook();
@@ -424,6 +453,7 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
 				"title":title
 			});
 		},
+		
 	    showHome: function (action) {
 	    	var self = this;
 	    	this.cancelAjaxRequests();
@@ -454,7 +484,6 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
 	    	}
 	    },
 	    
-	    
 	    // show current user profile ith sport
 	    showProfileOurSport: function(sport, sport_id) {
 	    	this.showProfile(undefined, sport, sport_id);
@@ -464,7 +493,6 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
 	    showProfileOurSportAndPlayer: function(sport, sport_id, player, media_id) {
 	    	this.showProfile(undefined, sport, sport_id, player, media_id);	    	
 	    },
-
 
 	    // show current user profile ith sport
 	    showUserProfileSport: function(user_id, sport, sport_id) {
@@ -476,8 +504,7 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
 	    	this.showProfile(user_id, sport, sport_id, player, media_id);	    	
 	    },
 
-	    
-        showProfile: function (userid, sport, sport_id, player, media_id) {
+        showProfile: function (userid, paramsArr) {
         	var self = this;
         	this.cancelAjaxRequests();
 	        self.loadStyles();
@@ -487,17 +514,15 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
 				var title =  self.getUserName(headerModelId);
                 self.currentController = new ProfileController({
 	                "userId": (typeof userid != "undefined")?userid:headerModelId,
-	                title:title,
-	                'sport' : sport,
-	                'sport_id': sport_id,
-	                'player': player,
-	                'media_id': media_id
+	                title: title,
+	                params: paramsArr
 	            });
 				self.gaPageView("Profile Page",title);
             }
             this.initialiRoutesInit(initProfile);
         },
-		hideSignup : function(){
+        
+		hideSignup : function() {
 		    $('div.register-wrapper').remove();
 		    $('div.register-wrapper-h').remove();
 	    },
@@ -506,7 +531,7 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
         	alert("Page not found");
         },
         
-         showTeam: function(id) {
+         showTeam: function(id, paramsArr) {
          	var self = this;
             this.cancelAjaxRequests();
 			this.loadStyles();
@@ -522,7 +547,8 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
                 self.currentController = new TeamController({
                     "teamId": id,
                      title: "Team Page",
-                    "userId": headerModelId
+                    "userId": headerModelId,
+                      params: paramsArr
                 });
 	            self.gaPageView("Team Page","NA");
             }
@@ -634,7 +660,7 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
 			Channel('add-video').subscribe(initVideoPreview);
 	    },
         
-        showGame: function (id) {
+        showGame: function (id, paramsArr) {
         	this.cancelAjaxRequests();
             this.loadStyles();
             chromeBootstrap();
@@ -644,8 +670,7 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
             //this callback function is called from /pages/chrom/views/header.js
             //it getting headerModelId
           // $('#main-content').empty();
-            
-            if(!id) { 
+            if(!id) {
             	this.notFound('team');
             	return; 
             }
@@ -656,9 +681,9 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
                     "route": "",
                     "gameId" : id,
                     title: "Game Page",
-                    "userId": headerModelId
+                    "userId": headerModelId,
+                     params: paramsArr
                 });
-
 	            _self.gaPageView("Game Page","NA");
             }
              this.initialiRoutesInit(initGame);

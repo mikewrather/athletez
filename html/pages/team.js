@@ -93,7 +93,7 @@ define([
         ];
 
     TeamController = Controller.extend({
-
+    	
         initialize: function (options) {
         	var self = this;
             Channel('load:css').publish(cssArr);
@@ -101,6 +101,8 @@ define([
             this.scheme = [];
             this.handleOptions(options);
             
+            // setParams Array in current class
+			if(options.params) this.setParamsArray(options.params);
             this.init();
             return this;
         },
@@ -470,7 +472,8 @@ define([
                 target_url : "/api/team/addimage/",
 				sport_id: $("#sports-h").val(),                
                 name: "image_wrap ",
-                user_id : this.userId
+                user_id : this.userId,
+                media_id: this.media_id
             });
             
             this.scheme.push(this.imageListView);

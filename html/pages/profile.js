@@ -91,9 +91,9 @@ define([
 				self.handleOptions(options);
 				self.scheme = [];
 				
+				// setParams Array in current class
+				if(options.params) this.setParamsArray(options.params);
 				
-				if(options.sport_id) this.sport_id = options.sport_id;
-				if(options.media_id) this.media_id = options.media_id;				
 				if (options.userId) {
 					self.id = options.userId;
 					self.init();
@@ -102,7 +102,7 @@ define([
 				}
 				return self;
 			},
-
+			
 			init: function () {
 				this.setupLayout().render();
 				this.createData();

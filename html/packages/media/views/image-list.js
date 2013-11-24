@@ -94,6 +94,7 @@ function(facade,  views,   utils,   ImageItemView,            ImageBoardView,   
         	else
         		this.name = "image list";
         	
+        	
         	if(options.collecton)
         		this.collection = options.collection;
         		
@@ -123,10 +124,21 @@ function(facade,  views,   utils,   ImageItemView,            ImageBoardView,   
 			//	_self.initPhotoPlayer();
 			//});
 			
+			
 			if(_self.media_id) {
 				setTimeout(function() {
-					_self.$el.find(".open-photo-player-h[data-id="+_self.media_id+"]").trigger("click");					
-				}, 2000);
+					var index = -1;					
+					if(_self.allData) {
+						for(var i in _self.allData) {
+							if(_self.media_id == _self.allData[i].get("payload").media_id) {
+								index = i;
+								break;
+							}
+						}
+					}
+					if(index != -1)
+						routing.trigger('photo-player-init', index, _self.allData, _self.user_id, true);
+				}, 500);
 			}
         	
         },
