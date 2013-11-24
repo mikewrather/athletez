@@ -184,6 +184,27 @@
 				$arguments["cities_id"] = trim($this->request->query('cities_id'));
 			}
 
+			$legal_orderby = array('votes', 'followers', 'newest','random');
+			if(trim($this->request->query('orderby')) != "")
+			{
+				$arguments["orderby"] = trim($this->request->query('orderby'));
+				if (!in_array($arguments["orderby"], $legal_orderby)){
+					$error_array = array(
+						"error" => "Invalid order by column",
+						"desc" => "Currently only support 'votes', 'followers', 'newest'"
+					);
+					$this->modelNotSetError($error_array);
+				}
+			}
+
+			// limit
+			// The number or records to retrieve
+			$arguments["limit"] = ((int)trim($this->request->query('limit')) > 0) ? (int)trim($this->request->query('limit')) : 12;
+
+			// offset
+			// The record to start with
+			$arguments["offset"] = ((int)trim($this->request->query('offset')) > 0) ? (int)trim($this->request->query('offset')) : 0;
+
 			$teams_model = ORM::factory("Sportorg_Team");
 
 			return $teams_model->getSearch($arguments);

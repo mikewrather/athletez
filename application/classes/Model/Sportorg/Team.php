@@ -450,13 +450,26 @@ class Model_Sportorg_Team extends ORM
 			$this->and_where_close();
 		}
 
-		if (isset($cities_id)){
+		if (isset($cities_id) && $cities_id > 0){
 			$this->where('orgs.cities_id', '=', $cities_id);
 		}
 
+		if (isset($limit))
+		{
+			$this->limit($limit);
+		}
+		else $this->limit(12);
+
+		if(isset($offset))
+		{
+			$this->offset($offset);
+		}
+
 		$search = ORM::_sql_exclude_deleted($classes_arr, $this);
-		$search->limit(10);
-		//print_r($search->find_all());
+
+
+
+	//	print_r($search->find_all());
 		return $search;
 	}
 	

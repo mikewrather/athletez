@@ -62,10 +62,15 @@ class Model_Email_Sent extends ORM
 
 		try{
 			$this->save();
-			if($this->loaded() && $queue->loaded()){
-				$queue->email_sent_id = $this->id;
-				$queue->save();
+
+			if(is_object($queue))
+			{
+				if($this->loaded() && $queue->loaded()){
+					$queue->email_sent_id = $this->id;
+					$queue->save();
+				}
 			}
+
 		}
 		catch (ORM_Validation_Exception $e)
 		{

@@ -34,7 +34,7 @@ class Email {
 
 		try{
 			$result = $pm->send();
-			print_r($result);
+	//		print_r($result);
 			if($result){
 				$sent = ORM::factory('Email_Sent');
 				$sent->saveSent(array(

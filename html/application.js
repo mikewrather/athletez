@@ -2,24 +2,31 @@
 // --------------  
 // Requires define
 // Return {Object} App
-define( ["facade", "utils", "collections", "chrome", "controller", "profile", "imageup",'home','videopreview',"game", "team", "registration","profilesetting","userresume","packages/site/collections/phrases","usercontrols/tag/tag","usercontrols/addgame/addgame","signup","login", "usercontrols/photo-player/photo-player", "usercontrols/add-club/add-club", "utils/storage", 'usercontrols/location/views/view-location','signup/views/facebooksignup',"usercontrols/addevent/addevent",'chrome/views/header','browserpop/views/browser'],
+define( ["facade", "utils", "collections", "chrome", "controller", "profile", "imageup",'home','videopreview',
+	"game", "team", "registration","profilesetting","userresume","packages/site/collections/phrases","usercontrols/tag/tag",
+	"usercontrols/addgame/addgame","signup","login", "usercontrols/photo-player/photo-player", "usercontrols/add-club/add-club",
+	"utils/storage", 'usercontrols/location/views/view-location','signup/views/facebooksignup',"usercontrols/addevent/addevent",'chrome/views/header',
+	'browserpop/views/browser','usercontrols/landing/views/landing'],
 function (facade, utils, collections, chromeBootstrap, Controller, ProfileController, ImageController, HomeController, VideoPreviewController,
-	GameController, TeamController, RegistrationController,ProfileSetting,UserResume, SitePhraseList , TagController,AddGameController, SignupController,LoginController,PhotoPlayerController, AddClubController, Store, googleMapLocationview,fbreg, AddEventController,header) {
+	GameController, TeamController, RegistrationController,ProfileSetting,UserResume, SitePhraseList , TagController,
+	AddGameController, SignupController,LoginController,PhotoPlayerController, AddClubController,
+	Store, googleMapLocationview,fbreg, AddEventController,header) {
 
     //App;
-    	
         var App, ApplicationStates = collections.ApplicationStates,
         $ = facade.$,
         _ = facade._,
         Backbone = facade.Backbone,
         Channel = utils.lib.Channel,
-	    browserView = require('browserpop/views/browser');
+	    browserView = require('browserpop/views/browser'),
+		landingView = require('usercontrols/landing/views/landing');
         debug = utils.debug;
    		App = Backbone.Router.extend({
         routes: {
             '': 'defaultRoute',
             'home': 'showHome',
             'home/': 'showHome',
+	        '!home/': 'showHome',
             'home/:action': 'initApp',
             
             'profile': 'showProfile',
@@ -29,6 +36,7 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
             'profile/:userid': 'showProfile',
             'profile/:userid/:sport/:sports_id': 'showUserProfileSport',
             'profile/:userid/:sport/:sports_id/:player/:media_id': 'showUserProfileSportAndMedia',
+	        '!profile/:userid': 'showProfile',
 
  			 'usersettings': 'showProfileSetting',
              'usersettings/': 'showProfileSetting',
@@ -46,17 +54,20 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
             'game/': 'showGame',
             //'game/:action': 'showGame',
             'game/:id' : 'showGame',
+	        '!game/:id' : 'showGame',
             
             'team': 'showTeam',
             'team/': 'showTeam',
             //'team/:action': 'showTeam',
             'team/:id' : 'showTeam',
+	        '!team/:id' : 'showTeam',
             
-            'registration': 'showRegistration',
+            '!registration': 'showRegistration',
             'registration/': 'showRegistration',
-            'registration/:action': 'showRegistration' , 
+	        '!registration/:action': 'showRegistration' ,
+	        'registration/:action': 'showRegistration' ,
             
-            'tag': 'showTag',
+    //        'tag': 'showTag',
 			'user/login' : 'showLogin',
 			'addgame' : 'showAddGame',
             'fbconnect':'showFbreg',
@@ -70,6 +81,7 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
 	        Controller.prototype.appStates = new ApplicationStates();
 	        this.getPhrases();
 	       // this.intializeImageAndVideo();
+	        this.showLandingInfo();
         },
 
 		detectBrowser: function() {
@@ -107,6 +119,14 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
 		showBrowserWindow: function(){
 			var browserPop = new browserView();
 			
+		},
+
+		showLandingInfo: function(){
+			var self = this;
+		/*	setTimeout(function(){
+				if(!self.checkForUser())
+					var landing = new landingView();
+			},2000);*/
 		},
         
         // get user name by id
@@ -222,28 +242,96 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
         		'</div>';
         		
             	$("body").append(html);
+
+	            if(options.addClass != undefined && options.addClass.length){
+		            _.each(options.addClass,function(cssclass){
+			            console.log(cssclass);
+			            $('#'+id).addClass(cssclass);
+		            });
+	            }
+	            
+	            if(options.background_image){
+		            console.log(options.background_image);
+			        $('#'+id).css({
+				        'background': 'url(' + options.background_image + ') no-repeat center center fixed #FFF',
+				        '-webkit-background-size': 'cover',
+				        '-moz-background-size': 'cover',
+				        '-o-background-size': 'cover',
+				        'background-size': 'cover'
+			        });
+                }
+
+	            $('#'+id+ ' .close').attr("data-id",id);
+
             	if(options.title) {
             	  $("#"+id).find(".modal-header-h").html(options.title);
             	   $("#"+id).find(".modal-header").show();
             	} else {
             	  $("#"+id).find(".modal-header").hide();
             	}
-            	
-            	if(options.width) $("#"+id).css({"width": options.width});
-            	if(options.height) $("#"+id).css({"height": options.height});         	
+            	console.log(options);
+
+            	if(options.width){
+		            $("#"+id).css({"width": options.width});
+
+		            var added_width = parseInt($("#"+id).css('border-left'),10) +
+			            parseInt($("#"+id).css('border-right'),10) +
+			            parseInt($("#"+id).css('padding-left'),10) +
+			            parseInt($("#"+id).css('padding-right'),10);
+
+					var true_width;
+		            if(options.width.indexOf('%') > 0)
+		            {
+			            var percentage_number = parseInt(options.width,10);
+				        true_width = (window.innerWidth * (percentage_number/100)) + added_width;
+		            }
+		            else true_width = (parseInt(options.width,10) + added_width);
+
+
+		            $("#"+id).css({
+			            "left":'50%',
+			            "margin-left": true_width<window.innerWidth ? -true_width/2 : '-50%'
+		            });
+	            }
+
+            	if(options.height){
+		            $("#"+id).css({"height": options.height});
+
+		            var added_height = parseInt($("#"+id).css('border-top'),10) +
+			            parseInt($("#"+id).css('border-bottom'),10) +
+			            parseInt($("#"+id).css('padding-top'),10) +
+			            parseInt($("#"+id).css('padding-bottom'),10);
+
+		            var true_height;
+		            if(options.height.indexOf('%') > 0){
+			            var percentage_number = parseInt(options.height,10);
+			            true_height = (window.innerHeight * (percentage_number/100)) + added_height;
+		            }
+					else true_height = (parseInt(options.height,10) + added_height);
+
+		            $("#"+id).css({
+			            "top":window.innerHeight/2,
+			            "margin-top":true_height<window.innerHeight ? -true_height/2 : -window.innerHeight/2
+		            });
+		            console.log(true_height<window.innerHeight ? -true_height/2 : '-50%');
+	            }
+
             	// if we have HTML then place it in popup
             	if(options.html) $("#"+id).find("#modalBody").html(options.html);
             	// open modal popup
 				$("#"+id).modal('show');
-				
-				if(_.isUndefined(options.slimScroll) || !options.slimScroll) {
-					$("#"+id).find('#modalBody').slimScroll({
-						height:(options.height)?options.height:'400px',
-						railVisible:true,
-						allowPageScroll:true,
-						disableFadeOut:true
-					});
-				}
+
+	            if(_.isUndefined(options.slimScroll) || !options.slimScroll) {
+		            $("#"+id).find('#modalBody').slimScroll({
+			            height:(options.height)?options.height:'400px',
+			            railVisible:true,
+			            allowPageScroll:true,
+			            disableFadeOut:true
+		            });
+	            }
+
+	            Channel('popup-finished-launch-' + id).publish();
+
             });
             
             routing.off('common-popup-close');
@@ -291,6 +379,7 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
                 	callback: callback
                 });
             });
+
             this.detectBrowser();
         },
 
@@ -502,24 +591,13 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
 		triggerSignup:function(){
 			//ga('send', 'event', 'menu', 'Sign Up','Action-Triggered');
 			this.signup = new header();
+
 			routing.off('showSignup');
             routing.on('showSignup', function() {
-              try{
-	  				if($("#userlogin").length)
-		  				$("#userlogin").trigger('click');
-	  				else
-	  					if(this.signup.signupUser) this.signup.signupUser();
-		    		}
-		    		catch(e){
-		    			try{
-							console.log(e);
-						}
-						catch(e){
-							console={};
-							console.log=function(e){};
-						}
-		    		}	 
-
+  				if($("#userlogin").length)
+	  				$("#userlogin").trigger('click');
+  				else
+  					if(this.signup.signupUser) this.signup.signupUser();
             });
 		},
 	    videoPreview: function () {

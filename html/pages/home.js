@@ -83,8 +83,9 @@ define(
 					this.searchUrls = ['/api/video/search', 
 					                   '/api/image/search', 
 					                   '/api/user/search', 
-					                   '/api/game/search'];
-					this.baseUrl = this.searchUrls[2];
+					                   '/api/game/search',
+										'/api/team/search'];
+					this.baseUrl = this.searchUrls[1];
 					this.urlOptions = {
 						sports_id : '0',
 						cities_id : '0',
@@ -98,7 +99,7 @@ define(
 					this.menuValues = [
 						{src : '.view-options-h .browse.select', target: '.view-link-h .option-heading-h', input: false, defaultValue: 'ORDER'},
      					{src: '.sports-option-h .sport.select', target: '.sport-link-h .option-heading-h', input: false, defaultValue: 'ALL SPORTS'},
-     					{src: '#city', target: '.location-link-h .option-heading-h', input: true, defaultValue: 'ANYWHERE'},
+     					{src: '#city', target: '.location-link-h .option-heading-h', input: true, defaultValue: 'PLACE'},
 						{src: '#resulttype a.restype.select', target: '.restype-link-h .option-heading-h', input: false, defaultValue: 'ATHLETES'}
 					];
 					

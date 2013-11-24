@@ -127,8 +127,8 @@ define(["require",
 					setupLoginView : function() {
 						var id = "modal-popup-"+Math.floor(Math.random() * Math.random() * 50 * Math.random() * 50), dest = "#"+id+" #modalBody", options = {};
 			            options.height = "500px";
-			            options.width = "90%";    
-			            options.title = "Login";   
+			            options.width = "600px";
+			            options.title = " ";
 			            options.id = id;
 						routing.trigger('common-popup-open', options); 
 						
