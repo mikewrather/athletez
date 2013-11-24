@@ -3083,6 +3083,8 @@ Form.editors.Location = Form.editors.Text.extend({
     //Allow customising text type (email, phone etc.) for HTML5 browsers
     if (schema && schema.getData) this.getData = schema.getData;  
     
+	this.setFormOptions(options.schema.form_values);
+    
 	this.location = {
 		latitude: undefined,
 		longitude: undefined
@@ -3091,6 +3093,14 @@ Form.editors.Location = Form.editors.Text.extend({
 	if(options.callback) this.callback = options.callback;
 	this.location.latitude = (!_.isUndefined(schema.latitude))?schema.latitude:undefined;
 	this.location.longitude = (!_.isUndefined(schema.longitude))?schema.longitude:undefined;
+  },
+  
+  setFormOptions: function(fields) {
+  	if(fields) {
+  		for(var i in fields) {
+  			this[i] = fields[i];
+  		}
+  	}
   },
   
   

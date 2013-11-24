@@ -97,10 +97,15 @@ define(['require', 'facade', 'views', 'utils', 'vendor'], function(require) {
 					for(var i in form.fields) {
 						if(form.fields[i].editor.serverDbField) {
 							for(var k in jsonData) {
-								if(jsonData[k].key == form.fields[i].editor.serverDbField) {
-									var id = form.fields[i].editor.id;
-									$("#"+id).parents(".field-row").find("*[data-error='']").html(jsonData[k].message).show();
-									break;
+								if(jsonData[k].field == form.fields[i].editor.serverDbField) {
+									if(form.fields[i].editor.valueBindings && form.fields[i].editor.valueBindings.length) {
+										var id = form.fields[form.fields[i].editor.valueBindings[0]].editor.id;
+										$("#"+id).parents(".field-row").find("*[data-error='']").html(jsonData[k].error).show();
+									} else {
+										var id = form.fields[i].editor.id;
+										$("#"+id).parents(".field-row").find("*[data-error='']").html(jsonData[k].error).show();
+									}
+									break;									
 								}
 							}
 						}

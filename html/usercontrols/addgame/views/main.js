@@ -156,8 +156,8 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 					
 					showLable : false,
 					label: "Date",
-					validators : [{type : 'required',
-						message : 'Please select date.'}],
+					//validators : [{type : 'required',
+					//	message : 'Please select date.'}],
 					bindDatePicker : true,
 					chnageEvent : function() {
 						var date = new Date(this.getValue()), currentDate = new Date();
@@ -222,6 +222,7 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 				'game_datetime'	: {
 					type: "Hidden",
 					form_values : {
+						serverDbField: 'game_datetime',	
 						valueBindings : ['date','time','Day_light'],					
 						serverKey: "game_datetime",
 						post_to_server	: true
@@ -268,40 +269,6 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 					}
 				},
 
-				/*'Select_Team_1' : {
-					type : 'DropDown',
-					fieldClass: "large-dropdown-field",	
-					label: "Select Team 1",
-					form_values : {
-						serverKey : "teamOneId",
-						serverDbField: 'teams_id',
-						request_fields : [{
-							key : 'user_id',
-							value : function() { return _self.user_id; }
-						}, {
-							key : 'sports_id',
-							value : function() { return _self.sports_id; }
-						}],
-						source_collection : UserTeamsCollection,
-						request_finished : function() {
-						},
-						
-						data : {
-							records : undefined,
-							recordId : 'id',
-							recordValue : 'team_name',
-							selectedValue : undefined
-						},
-						
-						elementId : _self.controls.hdnTimePeriodData,
-						callback : function(options) {
-							if (options.length)
-								$(self.destination).find("input[name=team_1]").attr("teamId", options[0]);
-						}
-					}
-				},*/
-				
-				
 				'Select_Team_1' : {
 					type : 'AutoComplete',
 					label: "Select Team 1",
@@ -555,8 +522,10 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 							
 							//window.formValues1.showServersErrors([{ key: "gameDay", message: "error_message" }]);
 							
-							$.when(gameModel.request).fail(function() {
-							    alert("error");
+							$.when(gameModel.request).fail(function(res) {
+							    var response = JSON.parse(res.responseText);
+							    var errorArray = response.exec_data.error_array;
+							    _self.formValues.showServersErrors(errorArray);
 							 });
 							
 							$.when(gameModel.request).done(function(response) {
