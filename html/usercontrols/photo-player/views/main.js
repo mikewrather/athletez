@@ -66,8 +66,8 @@ define(['require', 'text!usercontrols/photo-player/templates/player.html', 'text
 		
 		// share media on facebook
 		shareOnFacebook: function() {
-			var record = this.json[this.index], fUrl = "http://www.facebook.com/sharer/sharer.php?m2w",
-			link = "http://localhost:8888/#profile/"+this.user_id+"/sport/"+record.payload.media_obj.sports_id+"/player/"+record.payload.media_id, caption = 'Image', image = record.payload.image_path, description = 'Test Description';
+			var record = this.json[this.index],
+			link = "#!profile/"+this.user_id+"/sport/"+record.payload.media_obj.sports_id+"/player/"+record.payload.media_id, caption = 'Image', image = record.payload.image_path, description = 'Test Description';
 			
 			var fb = new FbComponent();
 			fb.shareOnFacebook({

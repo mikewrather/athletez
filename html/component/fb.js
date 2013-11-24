@@ -53,7 +53,6 @@ define(['require', 'facade', 'views', 'utils', 'vendor'], function(require) {
 				else
 					var link = undefined;
 						 
-				alert(link);
 				  FB.ui({
 				    method: options.method || '',
 				    name: options.name || 'Facebook Dialogs',
