@@ -3229,6 +3229,11 @@ Form.editors.AutoComplete = Form.editors.Text.extend({
     //if (schema && schema.form_values && schema.form_values) this.getData = schema.getData;    
     this.$el.attr('type', 'text');
     this.setOptions(options.schema.form_values);
+    
+    if(this.automaticFetch) {
+    	_self.automaticFetchFn(_self);
+	    		
+    }
     // append error image
     //this.$el.after().append('<span class="indicator_h invalid"></span>');
   },
@@ -3241,12 +3246,13 @@ Form.editors.AutoComplete = Form.editors.Text.extend({
 			// set the payload
 			if(this.request_fields) {
 				for(var i in this.request_fields) {
-					this.collection[this.request_fields[i].key] = (this.request_fields[i].value && typeof this.request_fields[i].value == "function")?this.request_fields[i].value():this.request_fields[i].value;
+					this.collection[this.request_fields[i].key] = (this.request_fields[i].value && typeof this.request_fields[i].value == "function")?this.request_fields[i].value(this):this.request_fields[i].value;
 				}
 			}
-			if(!_self.$el.parent().find(".indicator-h").length)
-				_self.$el.after('<span class="indicator-h field-error-img"></span>');
 			
+			if(!_self.$el.parent().find(".indicator-h").length){
+				_self.$el.after('<span class="indicator-h field-error-img"></span>');
+			}
 			_self.$el.parent().find(".indicator-h").removeClass("valid").addClass("invalid");
 			this.collectionFetchOb = this.collection.fetch();
 			$.when(this.collection.request).done(function() {

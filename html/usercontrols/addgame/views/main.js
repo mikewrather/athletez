@@ -127,6 +127,7 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 		initialize : function(options) {
 			SectionView.prototype.initialize.call(this, options);
 			self = this;
+			this.teams_id = options.teams_id;
 			self.setOptions(options);
 			this.init();
 		},
@@ -250,7 +251,8 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 						
 						elementId : _self.controls.hdnTimePeriodData,
 						callback : function(result) {
-							result = result[0];
+							var result = result[0];
+							_self.sports_id = result;
 							if (form && form.fields.Select_Team_1.editor.checkForData)
 								form.fields.Select_Team_1.editor.checkForData(true);
 							if (result && result != 0) {
@@ -266,7 +268,7 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 					}
 				},
 
-				'Select_Team_1' : {
+				/*'Select_Team_1' : {
 					type : 'DropDown',
 					fieldClass: "large-dropdown-field",	
 					label: "Select Team 1",
@@ -297,7 +299,63 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 								$(self.destination).find("input[name=team_1]").attr("teamId", options[0]);
 						}
 					}
+				},*/
+				
+				
+				'Select_Team_1' : {
+					type : 'AutoComplete',
+					label: "Select Team 1",
+					form_values: {
+						keyNameInPayload: 'team_name',
+						serverKey: 'teamOneId',
+						serverDbField: 'teams_id',
+						defaultValue: '',
+						request_fields : [{
+								key : 'states_id',
+								value : _self.states_id
+							}, {
+								key : 'sports_id',
+								value : function () { return _self.sports_id; }
+							},
+							{
+								key : 'team_name',
+								value: function(_that) { 
+									return _that.$el.val(); 
+								}
+							}
+						],
+						source_collection : TeamsCollection,
+						request_finished : function() {
+						},
+						
+						// fetch automatic and show first team
+						automaticFetch: true,
+						automaticFetchFn: function(_that) {
+							var teamModel = new TeamModel();
+							teamModel.id = _self.team_id;
+							teamModel.fetchSuccess = function(model, response) {
+								var data = teamModel.parseAsRequired(response);
+								_that.$el.val(data.team_name);
+								_that.setValue(data.team_id);
+								$(self.destination).find("input[name=team_1]").attr("teamId", data.team_id);
+								if(!_that.$el.parent().find(".indicator-h").length) _that.$el.after('<span class="indicator-h field-error-img"></span>');
+								_that.$el.parent().find(".indicator-h").removeClass("invalid").addClass("valid");
+							};
+							teamModel.fetch();
+						},
+						
+						callback : function(id) {
+							$("input[name=team_1]").attr("teamId", id);
+							$(self.destination).find("input[name=team_1]").attr("teamId", id);
+						}
+					},
+
+					validators : [{type : 'required',
+						message : 'Please select Team 2.'}],
 				},
+				
+				
+				
 				'score_1' : {
 					form_values: {
 						serverKey : "score-1"
@@ -324,7 +382,7 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 					label: "Team 1",
 					onClickFn : function(e) {
 						var value = e ? $(e.target).val() : "away", teamId = 0;
-						if (value == "home") {
+						if (value == "Home") {
 							teamId = $(e.target).attr(self.attributes.teamId);
 						} else {
 							var $selectedItems = $(self.destination).find("input[name=team_1]:checked, input[name=team_2]:checked");
@@ -335,7 +393,6 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 								}
 							});
 						}
-
 						if (teamId) {
 							var teamModel = new TeamModel();
 							teamModel.id = teamId;
@@ -365,11 +422,13 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 								value : _self.states_id
 							}, {
 								key : 'sports_id',
-								value : $(".selected-sport-h").data("id")
+								value : function () { return _self.sports_id; }
 							},
 							{
 								key : 'team_name',
-								value: ''
+								value: function(_that) { 
+									return _that.$el.val(); 
+								}
 							}
 						],
 						source_collection : TeamsCollection,
@@ -478,7 +537,6 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 								break;
 							}
 						} else {
-							
 							if(_self.formValues) {
 								var formData = _self.formValues.getFormValues();
 							} else {
@@ -562,7 +620,7 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 			}, this.$el.find('.add-game-container-h'));
 			
 			var form = formData.form;
-			window.formValues1 = this.formValues = formData.formValues;
+			this.formValues = formData.formValues;
 		},
 		
 
