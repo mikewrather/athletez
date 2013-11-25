@@ -238,7 +238,9 @@ define(
 					imageList.url = this.url(options);
 					imageList.targetElement = "#search-result";
 					imageList.fetch();
-					
+
+					var media_id = media_id || null;
+
 					$.when(imageList.request).done(function() {
 						if(imageList.length < 12)
 							$(".right-arrow-page-h").addClass("disable-arrow-link");
