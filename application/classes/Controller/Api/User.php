@@ -890,7 +890,7 @@
 		//	print_r($facebook);
 			$retArr =  $facebook->get_user();
 
-			print_r($retArr);
+	//		print_r($retArr);
 
 			if(isset($retArr['message']))
 			{
