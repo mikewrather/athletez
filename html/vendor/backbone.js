@@ -3172,12 +3172,33 @@ Form.editors.AutoComplete = Form.editors.Text.extend({
     'focus':    function(event) {
       this.trigger('focus', this);
     }
-  },	
-  
-  determineChange: function(event) {
+  },
+
+	/**METHOD** Provide if a pressed key is valid for autocomplete hit or not
+	 Parameters:
+	 key-code : key code of the key just pressed
+	 Returns:
+	 boolean true will continues auto complete and stops in false
+	 **/
+	isValidAutoCompleteKey: function (event) {
+		if (event) {
+			var code = (event.keyCode ? event.keyCode : event.which);
+			if (( code >= 59 && code <= 90)// alphabets
+				|| (code >= 96 && code <= 105)// numeric
+				|| (code == 8)// backspace
+				|| (code == 32 )// spacebar
+				|| (code == 46) //delete
+				) {
+				return true;
+			}
+		}
+		return false;
+	},
+
+	determineChange: function(event) {
     var _self = this, currentValue = this.$el.val();
     _self.$el.addClass('ui-autocomplete-loading');
-	if(this.getData) this.getData(currentValue, function(data) {
+	if(_self.isValidAutoCompleteKey(event) && this.getData) this.getData(currentValue, function(data) {
 		_self.records = [];
 		if(!_self.keyNameInPayload) _self.keyNameInPayload = 'name';
 		var attr = _self.keyNameInPayload;
@@ -3216,6 +3237,7 @@ Form.editors.AutoComplete = Form.editors.Text.extend({
   	$(e.target).autocomplete({
 		source : arr,
 		select: function( event, ui ) {
+			console.log("select called");
 			_self.$el.attr("data-id",  (ui.item.id)?ui.item.id:ui.item.value);
 		}
 	});
