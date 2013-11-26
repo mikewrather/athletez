@@ -75,7 +75,11 @@ define([
 			Channel('load:css').publish(cssArr);
 			_.bindAll(this);
 			 this.scheme = [];
+			 
+			// setParams Array in current class
+			if(options.params) this.setParamsArray(options.params); 
 			this.handleOptions(options);
+			
 			this.init();
 			return this;
 		},
@@ -328,13 +332,15 @@ define([
 				target_id : this.id,
 				target_url : "/api/game/addimage/",
 				sport_id: $(".sport-h").data("id"),   
-				destination: "#image-wrap"
+				destination: "#image-wrap",
+				media_id: this.media_id
 			});
 			this.imageListView = imageListView;
 			//Channel('image-upload-success').subscribe(this.updateImages);
 			routing.on('image-upload-success', function(data) { 
         			self.updateImages(data);
         	});
+        	
 			this.scheme.push(imageListView);
 			this.layout.render();
 		},

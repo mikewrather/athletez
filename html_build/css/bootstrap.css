@@ -4324,7 +4324,7 @@ input[type="submit"].btn.btn-mini {
 .modal-backdrop,
 .modal-backdrop.fade.in {
   opacity: 0.6;
-  filter: alpha(opacity=60);
+  filter: alpha(opacity=70);
 }
 .modal {
     min-height: 500px;
@@ -4349,6 +4349,10 @@ input[type="submit"].btn.btn-mini {
     padding:10px;
     margin-left: -25px;
 }
+.modal.noBorder{
+    border:none;
+    margin-left: -10px;
+}
 .modal.fade {
   top: -25%;
   -webkit-transition: opacity 0.3s linear, top 0.3s ease-out;
@@ -4363,7 +4367,7 @@ input[type="submit"].btn.btn-mini {
   padding: 9px 15px;
 }
 .modal-header .close {
-  margin-top: 2px;
+    font-size: 4em;
 }
 .modal-header h3 {
   margin: 0;

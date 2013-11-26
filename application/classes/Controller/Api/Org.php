@@ -259,7 +259,7 @@
 					return false;
 				}
 			}
-			else // THIS WAS A REQUIRED PARAMETER
+/*			else // THIS WAS A REQUIRED PARAMETER
 			{
 				// Create Array for Error Data
 				$error_array = array(
@@ -276,7 +276,7 @@
 				return false;
 
 			}
-
+*/
 			// sports_id
 			// Only return orgs which are linked to this sport.
 
@@ -298,8 +298,15 @@
 				$arguments["name"] = trim($this->request->query('org_name'));
 			}
 
+			if(trim($this->request->query('searchtext')) != "")
+			{
+				$arguments["name"] = trim($this->request->query('searchtext'));
+			}
+
 			//get results here.
-			return $this->mainModel->get_search($arguments);
+			$result = $this->mainModel->get_search($arguments);
+
+			return $result;
 		}
 		
 		/**

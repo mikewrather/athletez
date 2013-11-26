@@ -351,15 +351,32 @@ div.image-item-container > img{
 .detail-view.game span.team:last-child:after{
     content : '';
 }
-div.game-tile{
+div.back-cover{
+    width: 100%;
     height: 100%;
+    background-color: rgb(121, 121, 121);
+}
+div.back-cover img.sports-icon{
+    opacity: .1;
+}
+div.game-tile{
     text-align: center;
-    vertical-align: middle;
-    padding-top: 80px;
-    font-size: 4.5em;
-    font-weight: bolder;
-    color: white;
-    background-color:#d36011;
+    vertical-align: top;
+    font-size: 1em;
+    line-height: 29px;
+    font-weight: bold;
+    color: #5E5E5E;
+    top: 80px;
+    position: absolute;
+    left: 0px;
+    
+    -webkit-transform: rotate(-45deg);
+    
+    -moz-transform: rotate(-45deg);
+    
+    -ms-transform: rotate(-45deg);
+    
+    -o-transform: rotate(-45deg);
 }
 .detail-view h6{
     margin: 15px 8px 8px 8px;
@@ -393,12 +410,22 @@ input {
 	position: relative;
 }
 .dropdown-container {
-	background: #CCCCCC;
+	background: #6b6e71;
 	display: inline-block;
 	width: 80%;
 	position: absolute;
 	z-index: 1000;
-	
+}
+form fieldset .dropdown-container {
+	position: relative;
+}
+form fieldset .common-container {
+	position: absolute;
+	width: 100%;
+	top: 30px;
+	padding: 0;
+	margin: 0;
+	background: #CCCCCC;
 }
 .increase-dropown-zindex {
 	z-index: 2000 !important;
@@ -413,6 +440,8 @@ ul.common-dropdown {
 	clear: both;
 	margin-bottom: 10px;
 	margin-top: 10px;
+	overflow-y: auto;
+	overflow-x: hidden;
 }
 ul.common-dropdown li a {
 	background: none;
@@ -427,6 +456,7 @@ ul.common-dropdown li {
 	text-align: center;
 	padding: 3px 0px;
 	margin: 3px 5px;
+	width: 100%;
 }
 ul.common-dropdown li.selected a {
 	color: #FFF;
@@ -442,6 +472,9 @@ ul.common-dropdown li.selected a {
 		white-space: nowrap;
 	overflow: hidden;
     text-overflow: ellipsis;
+    position: absolute;
+	left: 0;
+	right: 0;
 }
 .down-arrow-outer {
 	background: rgb(65, 67, 70);
@@ -451,6 +484,9 @@ ul.common-dropdown li.selected a {
 	height: 100%;
 	text-align: center;
 	color: #FFF;
+	position: absolute;
+	right: 0;
+	max-width: 50px;
 }
 .down-arrow-outer a {
 	display: block;
@@ -1075,6 +1111,12 @@ margin-top:10px;
 .valid{
 	background : url(images/validS.png) no-repeat;
 }
+.field-error-img {
+	display: inline-block;
+	width: 30px;
+	height: 18px;
+	margin-left: 10px;
+}
 .invalid{
 	background : url(images/invalidS.png) no-repeat;
 }
@@ -1264,4 +1306,49 @@ margin-top:10px;
 }
 .add-to-event {
 	margin-right: 25px;
+}
+form fieldset ul li { height: 25px; }
+form fieldset ul li { float: left; margin: 0 20px 0 0; }
+form fieldset ul li input, form fieldset ul li label { float: left; margin: 0 0 0 20px; }
+form fieldset > div { float: left; width: 100%; }
+div[data-error] {
+	color: #FF0000;
+}
+.focus-error-animation {
+	border: 5px solid #FF0000 !important;
+	border-radius: 5px !important;
+	color: #000 !important;
+}
+.hidden {
+	display: none !important;
+}
+#map-canvas-h img {
+  max-width: none;
+}
+.date-picker-field {
+	width: 100px;
+}
+.time-picker-field {
+	width: 50px;
+}
+.ampm-field {
+	width: 80px;
+}
+.input-field {
+	margin-right: 10px;
+}
+.input-field input {
+	width: 90%;
+}
+.button-field {
+	width: 100px;
+}
+.input-field .dropdown-wrapper {
+	width: 100%
+}
+.large-dropdown-field.dropdown-wrapper {
+	width: 100%
+}
+a.add-to-event {
+	display: none;
 }

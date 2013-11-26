@@ -75,6 +75,15 @@ function(facade, collections, models, utils) {
             return this;
         },
         
+        // set the params to class
+        setParamsArray: function(arr) {
+        	if(arr) {
+        		for(var i in arr) {
+        			this[arr[i].key] = arr[i].value;
+        		}
+        	}
+        },
+        
         generateRandomNumber: function() {
         	var time = new Date().getTime();
         	time = time + Math.floor((Math.random()*200)+1);

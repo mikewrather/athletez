@@ -40,6 +40,7 @@
 
 			// Scaffolding Code For Array:
 			$objs = $this->obj->find_all();
+//			print_r($objs);
 			foreach($objs as $obj)
 			{
 				$retArr[] = $obj->getBasics();

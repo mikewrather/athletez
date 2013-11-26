@@ -14,7 +14,7 @@
 			margin-left: 18%;
 			text-align: center;
 			color: white;
-			font-size: 16px;
+			font-size: 14px;
 			font-weight: bold;
 			cursor: pointer;
 			border-style: none;
@@ -50,10 +50,11 @@
 			margin: 0 auto;
 		}
 .regor{
-			color: #E7E7E7;
+			color: #292929;
 			margin: auto;
 			position: relative;
 			text-align: center;
+    font-weight: bolder;
 }
 .regsubmit{
 			background-color: #9DCA3C;
@@ -280,7 +281,7 @@
 	margin-left: 107px !important;
 }
 #firstregbase input {
-border: 1px solid #CCC;
+    background-color: #f4f4f4;
 }
 .loguser{
 

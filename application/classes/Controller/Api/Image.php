@@ -55,6 +55,11 @@
 			// sports_id
 			// Narrow list based on tagged user's sport affiliations
 
+			if((int)trim($this->request->query('media_id')) > 0)
+			{
+				$arguments["media_id"] = (int)trim($this->request->query('media_id'));
+			}
+
 			if((int)trim($this->request->query('sports_id')) > 0)
 			{
 				$arguments["sports_id"] = (int)trim($this->request->query('sports_id'));

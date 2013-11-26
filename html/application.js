@@ -2,62 +2,115 @@
 // --------------  
 // Requires define
 // Return {Object} App
-define( ["facade", "utils", "collections", "chrome", "controller", "profile", "imageup",'home','videopreview',"game", "team", "registration","profilesetting","userresume","packages/site/collections/phrases","usercontrols/tag/tag","usercontrols/addgame/addgame","signup","login", "usercontrols/photo-player/photo-player", "usercontrols/add-club/add-club", "utils/storage", 'usercontrols/location/views/view-location','signup/views/facebooksignup',"usercontrols/addevent/addevent",'chrome/views/header','browserpop/views/browser'],
+define( ["facade", "utils", "collections", "chrome", "controller", "profile", "imageup",'home','videopreview',
+	"game", "team", "registration","profilesetting","userresume","packages/site/collections/phrases","usercontrols/tag/tag",
+	"usercontrols/addgame/addgame","signup","login", "usercontrols/photo-player/photo-player", "usercontrols/add-club/add-club",
+	"utils/storage", 'usercontrols/location/views/view-location','signup/views/facebooksignup',"usercontrols/addevent/addevent",'chrome/views/header',
+	'browserpop/views/browser','usercontrols/landing/views/landing'],
 function (facade, utils, collections, chromeBootstrap, Controller, ProfileController, ImageController, HomeController, VideoPreviewController,
-	GameController, TeamController, RegistrationController,ProfileSetting,UserResume, SitePhraseList , TagController,AddGameController, SignupController,LoginController,PhotoPlayerController, AddClubController, Store, googleMapLocationview,fbreg, AddEventController,header) {
+	GameController, TeamController, RegistrationController,ProfileSetting,UserResume, SitePhraseList , TagController,
+	AddGameController, SignupController,LoginController,PhotoPlayerController, AddClubController,
+	Store, googleMapLocationview,fbreg, AddEventController,header) {
 
     //App;
-    	
         var App, ApplicationStates = collections.ApplicationStates,
         $ = facade.$,
         _ = facade._,
         Backbone = facade.Backbone,
         Channel = utils.lib.Channel,
-	    browserView = require('browserpop/views/browser');
+	    browserView = require('browserpop/views/browser'),
+		landingView = require('usercontrols/landing/views/landing');
         debug = utils.debug;
    		App = Backbone.Router.extend({
         routes: {
             '': 'defaultRoute',
             'home': 'showHome',
             'home/': 'showHome',
+	        '!home/': 'showHome',
             'home/:action': 'initApp',
-            
             'profile': 'showProfile',
             'profile/': 'showProfile',
-            'profile/:userid': 'showProfile',
-
- 			 'usersettings': 'showProfileSetting',
-             'usersettings/': 'showProfileSetting',
-         /*    'usersettings/:userid': 'showProfileSetting', This is not necessary because we will only be seeing settings for currently logged in user*/
-
- 			 'resume': 'ShowUserResume',
-             'resume/': 'ShowUserResume',
-
-			//'imageup': 'imageUp',
-
-	        //'videoprev': 'videoPreview',
-	        //'videoprev/': 'videoPreview',
-
+            'team': 'showTeam',
+            'team/': 'showTeam',
+            
+            //'team/:action': 'showTeam',
+            'team/:id' : 'showTeam',
+	        '!team/:id' : 'showTeam',
+            
             'game': 'showGame',
             'game/': 'showGame',
             //'game/:action': 'showGame',
             'game/:id' : 'showGame',
+	        '!game/:id' : 'showGame',
             
-            'team': 'showTeam',
-            'team/': 'showTeam',
-            //'team/:action': 'showTeam',
-            'team/:id' : 'showTeam',
+            ':page/:id/:param/:id': 'showPage',
+            ':page/:id/:param/:id/:param/:id': 'showPage',            
             
-            'registration': 'showRegistration',
+            ':page/:param/:id': 'showOwnPage',
+            ':page/:param/:id/:param/:id': 'showOwnPage',  
+           
+            ':!page/:id/:param/:id': 'showPage',
+            ':!page/:id/:param/:id/:param/:id': 'showPage',            
+            
+            ':!page/:param/:id': 'showOwnPage',
+            ':!page/:param/:id/:param/:id': 'showOwnPage',  
+                                  
+            //':page/:sport/:sports_id/:player/:media_id': 'getPage',
+            'profile/:userid': 'showProfile',
+	        '!profile/:userid': 'showProfile',
+	        '!profile/': 'showProfile',
+	        '!profile': 'showProfile',
+            //'profile/:userid/:sport/:sports_id': 'showUserProfileSport',
+            //'profile/:userid/:sport/:sports_id/:player/:media_id': 'showUserProfileSportAndMedia',
+            //'!profile/:userid/:sport/:sports_id': 'showUserProfileSport',
+            //'!profile/:userid/:sport/:sports_id/:player/:media_id': 'showUserProfileSportAndMedia',            
+	        //'!profile/:userid': 'showProfile',
+
+ 			 'usersettings': 'showProfileSetting',
+             'usersettings/': 'showProfileSetting',
+         /* 'usersettings/:userid': 'showProfileSetting', This is not necessary because we will only be seeing settings for currently logged in user*/
+ 			 'resume': 'ShowUserResume',
+             'resume/': 'ShowUserResume',
+
+			//'imageup': 'imageUp',
+	        //'videoprev': 'videoPreview',
+	        //'videoprev/': 'videoPreview',
+ 
+            '!registration': 'showRegistration',
             'registration/': 'showRegistration',
-            'registration/:action': 'showRegistration' , 
+	        '!registration/:action': 'showRegistration',
+	        'registration/:action': 'showRegistration',
             
-            'tag': 'showTag',
+    		// 'tag': 'showTag',
 			'user/login' : 'showLogin',
 			'addgame' : 'showAddGame',
             'fbconnect':'showFbreg',
             'logout':'callLogout'
            // 'user/create':'showUsercreate'
+        },
+        
+        showPage: function(pageName, id, page1, Page1_id, page2, Page2_id) {
+			// create the function name        	
+        	var functionName = "show"+pageName.charAt(0).toUpperCase() + pageName.slice(1);
+        	// generating params
+        	var arr = [];
+        	if(page1) arr.push({key: page1 +"_id", value: Page1_id});
+        	if(page2) arr.push({key: page2 +"_id", value: Page2_id});
+        	if(this[functionName] && _.isFunction(this[functionName])) this[functionName](id, arr);
+        },
+        
+        showOwnPage: function(pageName, page1, Page1_id, page2, Page2_id) {
+			// create the function name        	
+        	var functionName = "show"+pageName.charAt(0).toUpperCase() + pageName.slice(1);
+        	// generating params
+        	var arr = [];
+        	if(page1) arr.push({key: page1 +"_id", value: Page1_id});
+        	if(page2) arr.push({key: page2 +"_id", value: Page2_id});
+        	
+        	console.error(arr);
+        	
+        	if(this[functionName] && _.isFunction(this[functionName])) this[functionName](undefined, arr);
+        	//console.error(a, b, c, d, e, f);
         },
 
         initialize: function (options) {
@@ -66,6 +119,7 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
 	        Controller.prototype.appStates = new ApplicationStates();
 	        this.getPhrases();
 	       // this.intializeImageAndVideo();
+	        this.showLandingInfo();
         },
 
 		detectBrowser: function() {
@@ -104,6 +158,14 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
 			var browserPop = new browserView();
 			
 		},
+
+		showLandingInfo: function() {
+			var self = this;
+		/*	setTimeout(function(){
+				if(!self.checkForUser())
+					var landing = new landingView();
+			},2000);*/
+		},
         
         // get user name by id
         getUserName: function(id) {
@@ -114,7 +176,7 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
  	  	     		if(userId == id) {
  	  	     			name =  appStates.data[userId].user_name;
  	  	     			break;	
- 	  	     		}	
+ 	  	     		}
  	  	     	}
         	}
         	if(name)	
@@ -218,25 +280,96 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
         		'</div>';
         		
             	$("body").append(html);
+
+	            if(options.addClass != undefined && options.addClass.length){
+		            _.each(options.addClass,function(cssclass){
+			            console.log(cssclass);
+			            $('#'+id).addClass(cssclass);
+		            });
+	            }
+	            
+	            if(options.background_image){
+		            console.log(options.background_image);
+			        $('#'+id).css({
+				        'background': 'url(' + options.background_image + ') no-repeat center center fixed #FFF',
+				        '-webkit-background-size': 'cover',
+				        '-moz-background-size': 'cover',
+				        '-o-background-size': 'cover',
+				        'background-size': 'cover'
+			        });
+                }
+
+	            $('#'+id+ ' .close').attr("data-id",id);
+
             	if(options.title) {
             	  $("#"+id).find(".modal-header-h").html(options.title);
             	   $("#"+id).find(".modal-header").show();
             	} else {
             	  $("#"+id).find(".modal-header").hide();
             	}
-            	
-            	if(options.width) $("#"+id).css({"width": options.width});
-            	if(options.height) $("#"+id).css({"height": options.height});         	
+            	console.log(options);
+
+            	if(options.width){
+		            $("#"+id).css({"width": options.width});
+
+		            var added_width = parseInt($("#"+id).css('border-left'),10) +
+			            parseInt($("#"+id).css('border-right'),10) +
+			            parseInt($("#"+id).css('padding-left'),10) +
+			            parseInt($("#"+id).css('padding-right'),10);
+
+					var true_width;
+		            if(options.width.indexOf('%') > 0)
+		            {
+			            var percentage_number = parseInt(options.width,10);
+				        true_width = (window.innerWidth * (percentage_number/100)) + added_width;
+		            }
+		            else true_width = (parseInt(options.width,10) + added_width);
+
+
+		            $("#"+id).css({
+			            "left":'50%',
+			            "margin-left": true_width<window.innerWidth ? -true_width/2 : '-50%'
+		            });
+	            }
+
+            	if(options.height){
+		            $("#"+id).css({"height": options.height});
+
+		            var added_height = parseInt($("#"+id).css('border-top'),10) +
+			            parseInt($("#"+id).css('border-bottom'),10) +
+			            parseInt($("#"+id).css('padding-top'),10) +
+			            parseInt($("#"+id).css('padding-bottom'),10);
+
+		            var true_height;
+		            if(options.height.indexOf('%') > 0){
+			            var percentage_number = parseInt(options.height,10);
+			            true_height = (window.innerHeight * (percentage_number/100)) + added_height;
+		            }
+					else true_height = (parseInt(options.height,10) + added_height);
+
+		            $("#"+id).css({
+			            "top":window.innerHeight/2,
+			            "margin-top":true_height<window.innerHeight ? -true_height/2 : -window.innerHeight/2
+		            });
+		            console.log(true_height<window.innerHeight ? -true_height/2 : '-50%');
+	            }
+
             	// if we have HTML then place it in popup
             	if(options.html) $("#"+id).find("#modalBody").html(options.html);
             	// open modal popup
 				$("#"+id).modal('show');
-				$("#"+id).find('#modalBody').slimScroll({
-					height:(options.height)?options.height:'400px',
-					railVisible:true,
-					allowPageScroll:true,
-					disableFadeOut:true
-				});
+
+	            if(_.isUndefined(options.slimScroll) || !options.slimScroll) {
+		            $("#"+id).find('#modalBody').slimScroll({
+			            height:(options.height)?options.height:'400px',
+			            railVisible:true,
+			            allowPageScroll:true,
+			            disableFadeOut:true
+		            });
+	            }
+
+	            Channel('popup-finished-launch-' + id).publish();
+
             });
             
             routing.off('common-popup-close');
@@ -266,7 +399,7 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
             	 var addGameview = new AddGameController({
 		            "teams_id":teams_id,
 		             "sports_id":sports_id,
-		            "users_id" : users_id,
+		            "user_id" : users_id,
                 	"id": id,
                 	popup: true,
                 	callback: callback
@@ -284,14 +417,12 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
                 	callback: callback
                 });
             });
+
             this.detectBrowser();
         },
 
 	    checkForUser: function() {
-		    if(!_.isUndefined(routing.userLoggedIn) && routing.userLoggedIn)
-			    return true;
-		    else
-			    return false;
+		    return (!_.isUndefined(routing.userLoggedIn) && routing.userLoggedIn)?true:false;
 	    },
 
         defaultRoute: function () {
@@ -311,7 +442,8 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
 		    var phrases = new SitePhraseList();
 		    phrases.fetch();
 	    },
-	    showFbreg:function(){
+	    
+	    showFbreg:function() {
 		    ga('send', 'event', 'popup', 'open', 'FB Reg');
             fbregistration = new fbreg();
             fbregistration.signupFacebook();
@@ -323,7 +455,8 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
 				"title":title
 			});
 		},
-	    showHome: function (action) {
+		
+	    showHome: function (action, paramsArr) {
 	    	var self = this;
 	    	this.cancelAjaxRequests();
 	    	this.loadStyles();
@@ -336,7 +469,8 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
 	    		self.currentController = new HomeController({
 	    			route: "",
 	    			title: title,
-	    			userId : id
+	    			userId : id,
+	    			params: paramsArr
 	    		});
 			    if(!id && $('div.register-wrapper').length == 0){
 				    $('body header').after('<div class="register-wrapper"></div><div class="register-wrapper-h"></div>');
@@ -353,26 +487,45 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
 	    	}
 	    },
 	    
-        showProfile: function (userid) {
+	    // show current user profile ith sport
+	    showProfileOurSport: function(sport, sport_id) {
+	    	this.showProfile(undefined, sport, sport_id);
+	    },
+	    
+	    // show current user profile ith sport
+	    showProfileOurSportAndPlayer: function(sport, sport_id, player, media_id) {
+	    	this.showProfile(undefined, sport, sport_id, player, media_id);	    	
+	    },
+
+	    // show current user profile ith sport
+	    showUserProfileSport: function(user_id, sport, sport_id) {
+	    	this.showProfile(user_id, sport, sport_id);	    	
+	    },
+
+	    // show current user profile ith sport
+	    showUserProfileSportAndMedia: function(user_id, sport, sport_id, player, media_id) {
+	    	this.showProfile(user_id, sport, sport_id, player, media_id);	    	
+	    },
+
+        showProfile: function (userid, paramsArr) {
         	var self = this;
         	this.cancelAjaxRequests();
 	        self.loadStyles();
-           // $('#main-header').empty();
-            //$('#main-content').empty();
-           chromeBootstrap();
-	        //if(this.currentController) this.currentController.remove();
+            chromeBootstrap();
 			function initProfile(headerModelId) {
 				Channel('refresh-profilepage').empty();
 				var title =  self.getUserName(headerModelId);
                 self.currentController = new ProfileController({
 	                "userId": (typeof userid != "undefined")?userid:headerModelId,
-	                title:title
+	                title: title,
+	                params: paramsArr
 	            });
 				self.gaPageView("Profile Page",title);
             }
             this.initialiRoutesInit(initProfile);
         },
-		hideSignup : function(){
+        
+		hideSignup : function() {
 		    $('div.register-wrapper').remove();
 		    $('div.register-wrapper-h').remove();
 	    },
@@ -381,7 +534,7 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
         	alert("Page not found");
         },
         
-         showTeam: function(id) {
+         showTeam: function(id, paramsArr) {
          	var self = this;
             this.cancelAjaxRequests();
 			this.loadStyles();
@@ -397,7 +550,8 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
                 self.currentController = new TeamController({
                     "teamId": id,
                      title: "Team Page",
-                    "userId": headerModelId
+                    "userId": headerModelId,
+                      params: paramsArr
                 });
 	            self.gaPageView("Team Page","NA");
             }
@@ -474,21 +628,13 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
 		triggerSignup:function(){
 			//ga('send', 'event', 'menu', 'Sign Up','Action-Triggered');
 			this.signup = new header();
+
 			routing.off('showSignup');
             routing.on('showSignup', function() {
-              try{
-		  				this.signup.signupUser();
-		    		}
-		    		catch(e){
-		    			try{
-							console.log(e);
-						}
-						catch(e){
-							console={};
-							console.log=function(e){};
-						}
-		    		}	 
-
+  				if($("#userlogin").length)
+	  				$("#userlogin").trigger('click');
+  				else
+  					if(this.signup.signupUser) this.signup.signupUser();
             });
 		},
 	    videoPreview: function () {
@@ -517,7 +663,7 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
 			Channel('add-video').subscribe(initVideoPreview);
 	    },
         
-        showGame: function (id) {
+        showGame: function (id, paramsArr) {
         	this.cancelAjaxRequests();
             this.loadStyles();
             chromeBootstrap();
@@ -527,8 +673,7 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
             //this callback function is called from /pages/chrom/views/header.js
             //it getting headerModelId
           // $('#main-content').empty();
-            
-            if(!id) { 
+            if(!id) {
             	this.notFound('team');
             	return; 
             }
@@ -539,9 +684,9 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
                     "route": "",
                     "gameId" : id,
                     title: "Game Page",
-                    "userId": headerModelId
+                    "userId": headerModelId,
+                     params: paramsArr
                 });
-
 	            _self.gaPageView("Game Page","NA");
             }
              this.initialiRoutesInit(initGame);

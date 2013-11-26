@@ -55,12 +55,11 @@ define(['vendor', 'views', 'utils', 'text!media/templates/image-item.html', 'vot
 		
 		render : function() {
 
-			var _self = this;
-
+			var _self = this, payload = this.model.get('payload');
 			//the extra object is created here using the entity parsing model
-			var parser = new entParser({mpay:this.model.get('payload')});
+			var parser = new entParser({mpay:payload});
 			var extra = parser.parsedData;
-
+			extra._media_id = payload.media_id;
 			//console.log("Called Image Render", extra);
 			var markup = Mustache.to_html(this.template, extra);
 			this.$el.html(markup);
@@ -78,6 +77,45 @@ define(['vendor', 'views', 'utils', 'text!media/templates/image-item.html', 'vot
 					'bottom' : '-' + game_detail_view_height
 				});
 			});
+
+			$nopic_words_div = this.$el.find('.game-tile');
+			console.log($nopic_words_div.length);
+			if($nopic_words_div.length){
+				$num_words = $nopic_words_div.text().length;
+				console.log($num_words);
+				if($num_words < 3){
+					$nopic_words_div.css({
+						'font-size':'5em',
+						'top':'90px',
+						'left':'60px'
+					});
+				}
+				else if($num_words < 5){
+					$nopic_words_div.css({
+						'font-size':'4em',
+						'top':'90px',
+						'left':'40px'
+					});
+				}
+				else if($num_words < 25){
+					$nopic_words_div.css('font-size','2em');
+				}
+				else if($num_words < 30){
+					$nopic_words_div.css({
+						'font-size':'1.7em',
+						'top':'65px'
+					});
+				}
+				else if($num_words < 40){
+					$nopic_words_div.css({
+						'font-size':'1.5em',
+						'top':'50px'
+					});
+				}
+				else{
+					$nopic_words_div.css('font-size','1em');
+				}
+			}
 
 			//set image positon
 			if(extra.imgData.maxwidth)

@@ -55,6 +55,13 @@ li.sport:hover, li.sport a:hover {
 	margin : 0 15px 0 0;
 }
 
+#search-result{
+    padding-left:0px;
+}
+
+#search-result ul#image-list{
+    padding-left:15px;
+}
 #image-list, #menu {
 	margin: 5px 0;
 }

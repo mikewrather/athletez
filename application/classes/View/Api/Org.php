@@ -179,9 +179,9 @@
 
 			// Scaffolding Code For Array:
 			$objs = $this->obj->find_all();
-			foreach($objs as $obj)
+			foreach($objs as $org)
 			{
-				$retArr[] = $obj->getBasics();
+				$retArr[] = $org->getBasics();
 			}
 
 			return $retArr;

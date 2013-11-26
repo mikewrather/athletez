@@ -180,7 +180,7 @@ define(["require",
 						this.layout.render();
 						var options = {};
 						options.height = "500px";
-			             options.width = "90%";    
+			             options.width = "500px";
 			            options.title = "Register";         
 						routing.trigger('common-popup-open', options); 
 					},
@@ -196,7 +196,7 @@ define(["require",
 						this.layout.render();
 						var options = {};
 			            options.height = "500px";
-			            options.width = "90%";    
+			            options.width = "500px";
 			            options.title = "Register";         
 						routing.trigger('common-popup-open', options); 
 					}

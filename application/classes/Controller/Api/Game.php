@@ -356,6 +356,9 @@
 			{
 				$locations_id = (int)trim($this->request->post('locations_id'));
 			}
+			elseif((int)trim($this->request->post('game_location')) > 0){
+				$locations_id = (int)trim($this->request->post('game_location'));
+			}
 
 			if( trim($this->request->post('event_name')) != "")
 			{
