@@ -108,7 +108,7 @@ define([ 'models', 'facade' ], function(models, facade) {
 			return_data._label = mpay.complevels_obj.abbr + " " + mpay.org_sport_link_obj.sport.sport_name + " " + mpay.year;
 	//		return_data._sublabel = mpay.complevels_obj.abbr + " " + mpay.org_sport_link_obj.sport.sport_name + " " + mpay.year;
 			return_data._sublabel = "Votes: " + mpay.num_votes + ", Followers: " + mpay.num_followers;
-			return_data._link = "/#team/" + mpay.id;
+			return_data._link = "/#!team/" + mpay.id;
 			return_data._has_link = true;
 			if(mpay.hasOwnProperty('is_owner')) return_data.show_edit = mpay.is_owner;
 
@@ -120,7 +120,7 @@ define([ 'models', 'facade' ], function(models, facade) {
 			return_data._noicon_text = "org";
 			return_data._label = mpay.name;
 			return_data._sublabel = "Votes: " + mpay.num_votes + ", Followers: " + mpay.num_followers;
-			return_data._link = "/#team/" + mpay.id;
+			return_data._link = "/#!team/" + mpay.id;
 			return_data._has_link = true;
 			if(mpay.hasOwnProperty('is_owner')) return_data.show_edit = mpay.is_owner;
 
@@ -139,7 +139,7 @@ define([ 'models', 'facade' ], function(models, facade) {
 			return_data._noicon_text = "hi";
 			return_data._label = mpay.label;
 			return_data._sublabel = "Votes: " + mpay.num_votes + ", Followers: " + mpay.num_followers;
-			return_data._link = "/#profile/" + mpay.id;
+			return_data._link = "/#!profile/" + mpay.id;
 			return_data._has_link = true;
 			if(mpay.hasOwnProperty('is_owner')) return_data.show_edit = mpay.is_owner;
 
@@ -217,7 +217,7 @@ define([ 'models', 'facade' ], function(models, facade) {
 			if(mpay.sports_obj) return_data._sports_icon = this.get_selected_icon(mpay.sports_obj);
 
 			return_data._label = mpay.game_day;
-			return_data._link = "/#game/" + mpay.id;
+			return_data._link = "/#!game/" + mpay.id;
 			return_data._has_link = true;
 			var team_str = "", teams = mpay.teams;
 			if(teams != null) var teamLength = teams.length;
