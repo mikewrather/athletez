@@ -3197,7 +3197,6 @@ Form.editors.AutoComplete = Form.editors.Text.extend({
 
 	determineChange: function(event) {
     var _self = this, currentValue = this.$el.val();
-    _self.$el.addClass('ui-autocomplete-loading');
 	if(_self.isValidAutoCompleteKey(event) && this.getData) this.getData(currentValue, function(data) {
 		_self.records = [];
 		if(!_self.keyNameInPayload) _self.keyNameInPayload = 'name';
@@ -3213,20 +3212,21 @@ Form.editors.AutoComplete = Form.editors.Text.extend({
 		
 		// Destroy existing autocomplete from text box before attaching it again
 		// try catch as for the first time it gives error
-		try { _self.$el.autocomplete("destroy"); } catch(ex) {  }
-		_self.$el.removeClass('ui-autocomplete-loading');
+		try { _self.$el.autocomplete("destroy"); } catch(ex) {   }
+		
 		
 		_self.$el.autocomplete({
 			source : arr,
 			select: function( event, ui ) {
 				_self.$el.parent().find(".indicator-h").removeClass("invalid").addClass("valid");	
-				var id = (ui.item.id)?ui.item.id:ui.item.value;		
+				var id = (ui.item.id)?ui.item.id:ui.item.value;
 				_self.$el.attr("data-id", id);
 				_self.trigger("blur", _self);
 				if(_self.callback) _self.callback(id);
+				
+				_self.$el.removeClass('ui-autocomplete-loading');
 			}
 		});
-		
 		//Trigger keydown to display the autocomplete dropdown just created
 		_self.$el.trigger('keydown');
 	});
@@ -3285,10 +3285,12 @@ Form.editors.AutoComplete = Form.editors.Text.extend({
 			if(!_self.$el.parent().find(".indicator-h").length){
 				_self.$el.after('<span class="indicator-h field-error-img"></span>');
 			}
+			
+			_self.$el.removeClass('ui-autocomplete-loading');
 			_self.$el.parent().find(".indicator-h").removeClass("valid").addClass("invalid");
 			this.collectionFetchOb = this.collection.fetch();
 			$.when(this.collection.request).done(function() {
-
+				_self.$el.removeClass('ui-autocomplete-loading');
 				if(_self.request_finished) _self.request_finished();				
 				if (callback) callback(_self.collection.toJSON());
 			});
