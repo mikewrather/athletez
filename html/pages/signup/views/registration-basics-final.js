@@ -140,7 +140,7 @@ define([
                     });
                         console.log(payload,"new payload");
                     //
-                    this.payload.gender=$("input:radio[name=gender]").val();
+                    this.payload.gender=$("input:radio[name=gender]:checked").val();
                     this.payload.password=$("#password").val();
                     this.payload.re_password=$("#re_password").val();
                     this.payload.dob= $(".borndate").val()+'-'+$(".born").val()+'-'+ $(".borndyear").val();
@@ -177,6 +177,7 @@ define([
                     
                     var fieldPosition=$("#"+errors.field);
                     var elementwidth = fieldPosition.width();
+                   
                     if(elementwidth){
                             console.log(fieldPosition.position(),"fieldName",elementwidth,"elemet width");
                             var messageDiv = this.displayMesage(fieldPosition.position(),errors.error,elementwidth)
@@ -196,7 +197,7 @@ define([
                                      "class":"errormsg"
                                      }).
                                     css({
-                                     "width":'100%',
+                                    "width":'90%',
 		                            "margin-top":"10px",
 
                                      "color":"#CE0009"
