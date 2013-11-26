@@ -94,6 +94,9 @@ function(facade,  views,   utils,   ImageItemView,            ImageBoardView,   
         	else
         		this.name = "image list";
         	
+	       this.pageName = (options.pageName)?options.pageName:"profile";
+        	
+        	//alert(this.page);
         	
         	if(options.collecton)
         		this.collection = options.collection;
@@ -134,7 +137,6 @@ function(facade,  views,   utils,   ImageItemView,            ImageBoardView,   
 							}
 						}
 					}
-						
 				}, 500);
 			}
         	
@@ -143,7 +145,7 @@ function(facade,  views,   utils,   ImageItemView,            ImageBoardView,   
         initPhotoPlayer: function(e) {
 			var index = ($(e.target).parents('li').index());  
 			if(index< 0) index = 0;
-       		routing.trigger('photo-player-init', index, this.allData, this.user_id, true);
+       		routing.trigger('photo-player-init', index, this.allData, this.user_id, true,  this.pageName);
        	},
 
         

@@ -35,6 +35,7 @@ define(['require', 'text!usercontrols/photo-player/templates/player.html', 'text
 			this.collection = options.collection;
 			this.setOptions(options);
 			this.id = options.id;
+			this.pageName = options.pageName;
 			this.user_id = options.user_id;
 			this.index = options.index;
 			SectionView.prototype.initialize.call(this, options);
@@ -67,7 +68,7 @@ define(['require', 'text!usercontrols/photo-player/templates/player.html', 'text
 		// share media on facebook
 		shareOnFacebook: function() {
 			var record = this.json[this.index],
-			link = "#!profile/"+this.user_id+"/sport/"+record.payload.media_obj.sports_id+"/player/"+record.payload.media_id, caption = 'Image', image = record.payload.image_path, description = 'Test Description';
+			link = "#!"+this.pageName+"/"+this.user_id+"/sport/"+record.payload.media_obj.sports_id+"/media/"+record.payload.media_id, caption = 'Image', image = record.payload.image_path, description = 'Test Description';
 			
 			var fb = new FbComponent();
 			fb.shareOnFacebook({
