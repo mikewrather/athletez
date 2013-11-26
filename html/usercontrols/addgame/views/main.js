@@ -322,7 +322,7 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 
 					'score_1' : {
 						form_values: {
-							serverKey : "score-1"
+							serverKey : ""
 						},
 
 						type : 'Text',
@@ -541,6 +541,8 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 											users_id : self.user_id
 										};
 
+										console.log(payloadOne);
+
 										var addTeamModelOne = new TeamAddModel(payloadOne);
 										addTeamModelOne.teams_id = formData.teamOneId;
 										addTeamModelOne.save();
@@ -552,6 +554,8 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 											score : formData.score_2,
 											users_id : self.user_id
 										};
+
+										console.log(payloadTwo);
 
 										isHome = $(self.destination).find(self.controls.rdoTeamTwo).is(':checked');
 										var addTeamModelTwo = new TeamAddModel(payloadTwo);
