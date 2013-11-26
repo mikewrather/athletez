@@ -1,9 +1,14 @@
 {{#records}}
-	<div class="teamlist-header">{{payload.name}}</div>
-	{{#payload.sports}}
-	{{#teams}}
-	    <span class="team-item"><a href="/#team/{{id}}">{{complevel}} {{season}} {{year}}</a></span>
-    {{/teams}}
-    {{/payload.sports}}
+	{{#payload}}
+	<div class="teamlist-header">{{name}}</div>
+	{{#sports}}
+		{{#.}}
+
+			{{#teams}}
+			    <span class="team-item"><a href="/#team/{{id}}">{{complevel}} {{season}} {{year}}</a></span>
+		    {{/teams}}
+		{{/.}}
+    {{/sports}}
+{{/payload}}
     <br/>
 {{/records}}
