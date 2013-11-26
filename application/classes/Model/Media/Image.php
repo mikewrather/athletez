@@ -375,7 +375,7 @@ class Model_Media_Image extends ORM
 		$enttypes_id = Ent::getMyEntTypeID($class_name);
 		extract($condition);
 
-		$image = DB::select('images.id', 'media.sports_id')
+		$image = DB::select('images.media_id', 'media.sports_id')
 			->from('tags')
 			->join('media')->on('media.id', '=', 'tags.media_id')
 			->where('media.media_type', '=', 'image')
@@ -496,34 +496,36 @@ class Model_Media_Image extends ORM
 		//game section
 		$game_image = $this->assemblingSql('Sportorg_Games_Base', $args);
 
-		$results = DB::select('images.id', array(DB::expr('NULL'),'sports_id'))->from('images')
+		$results = DB::select('images.media_id', array(DB::expr('NULL'),'sports_id'))->from('images')
 			->where('images.id', '=', '-1')  // 0 rows returned plus below results
 			->union($user_image, false)
 			->union($team_image, false)
 			->union($org_image, false)
 			->union($game_image, false)->execute()->as_array();
 
-		if (empty($results)){
+		if(!isset($limit)) $limit=12;
+		if(!isset($offset)) $offset=0;
+
+		if (empty($results))
 			$image_ids[] = -1; //avoid sql error
+
+		if(isset($media_id)){
+			$image_ids[] = "".$media_id;
 		}
 
 		foreach($results as $arr){
-			$image_ids[] = $arr['id'];
+			$image_ids[] = $arr['media_id'];
+		//	if(sizeof($image_ids) >= $limit+$offset) break;
 		}
 
 		$imageModel = ORM::factory("Media_Image");
 
-		if (isset($limit))
-		{
-			$imageModel->limit($limit);
-		}
-		else $imageModel->limit(12);
+		$imageModel->limit($limit);
+		$imageModel->offset($offset);
 
-		if(isset($offset))
-		{
-			$imageModel->offset($offset);
+		if(isset($media_id)){
+			$imageModel->order_by(DB::expr("field(id,'".$media_id."')"),'DESC');
 		}
-
 
 		if (!isset($orderby) || $orderby == 'votes'){
 			$enttype_id = Model_Site_Enttype::getMyEntTypeID($imageModel);
@@ -551,7 +553,7 @@ class Model_Media_Image extends ORM
 			$imageModel->order_by(DB::expr('RAND()'));
 		}
 
-		$imageModel->where('media_image.id', 'in', $image_ids);
+		$imageModel->where('media_image.media_id', 'in', $image_ids);
 
 		return $imageModel;
 	}

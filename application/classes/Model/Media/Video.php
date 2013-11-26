@@ -522,7 +522,7 @@ class Model_Media_Video extends ORM
 
 		$video_types = DB::select(DB::expr('COUNT(id)'))->from('video_type_link')->where('videos_id','=',DB::expr("`videos`.`id`"));
 
-		$video = DB::select('videos.id', 'media.sports_id')
+		$video = DB::select('media.id', 'media.sports_id')
 			->from('tags')
 			->join('media')->on('media.id', '=', 'tags.media_id')
 			->where('media.media_type', '=', 'video')
@@ -643,23 +643,35 @@ class Model_Media_Video extends ORM
 		//game section
 		$game_video = $this->assemblingSql('Sportorg_Games_Base', $args);
 
-		$results = DB::select('videos.id', array(DB::expr('NULL'),'sports_id'))->from('videos')
+		$results = DB::select('videos.media_id', array(DB::expr('NULL'),'sports_id'))->from('videos')
 			->where('videos.id', '=', '-1')  // 0 rows returned plus below results
 			->union($user_video, false)
 			->union($team_video, false)
 			->union($org_video, false)
-			->union($game_video, false)->execute()->as_array();
+			->union($game_video, false)
+			->execute()->as_array();
 
 		if (empty($results)){
 			$video_ids[] = -1; //avoid sql error
 		}
 
+		if(!isset($limit)) $limit=12;
+		if(!isset($offset)) $offset=12;
+
+		if(isset($media_id)){
+			$video_ids[] = "".$media_id;
+		}
+
 		foreach($results as $arr){
-			$video_ids[] = $arr['id'];
+			$video_ids[] = $arr['media_id'];
+		//	if(sizeof($video_ids) >= $limit+$offset) break;
 		}
 
 		$videoModel = ORM::factory("Media_Video");
 
+		if(isset($media_id)){
+			$videoModel->order_by(DB::expr("field(id,'".$media_id."')"),'DESC');
+		}
 
 		if (!isset($orderby) || $orderby == 'votes'){
 			$enttype_id = Model_Site_Enttype::getMyEntTypeID($videoModel);
@@ -687,20 +699,12 @@ class Model_Media_Video extends ORM
 			$videoModel->order_by(DB::expr('RAND()'));
 		}
 
-
-		if (isset($limit))
-		{
-			$videoModel->limit($limit);
-		}
-		else $videoModel->limit(12);
-
-		if(isset($offset))
-		{
-			$videoModel->offset($offset);
-		}
+		$videoModel->limit($limit);
+		$videoModel->offset($offset);
 
 
-		$videoModel->where('media_video.id', 'in', $video_ids);
+
+		$videoModel->where('media_video.media_id', 'in', $video_ids);
 		return $videoModel;
 	}
 
