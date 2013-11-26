@@ -201,10 +201,11 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
         
         initTriggers: function() {
         	routing.off('photo-player-init');
-            routing.on('photo-player-init', function(index, collection, userId, array) {
+            routing.on('photo-player-init', function(index, collection, userId, array, page) {
             	 var photoPlayer = new PhotoPlayerController({
                 	index: index,
                 	userId: userId,
+                	pageName: page,
                 	_collection: collection,
                 	array: array
                 });
@@ -414,7 +415,6 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
                 	callback: callback
                 });
             });
-
             this.detectBrowser();
         },
 

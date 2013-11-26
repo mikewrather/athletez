@@ -333,12 +333,13 @@ define([
 				target_url : "/api/game/addimage/",
 				sport_id: $(".sport-h").data("id"),   
 				destination: "#image-wrap",
-				media_id: this.media_id
+				media_id: this.media_id,
+				pageName: "game"
 			});
 			this.imageListView = imageListView;
 			//Channel('image-upload-success').subscribe(this.updateImages);
 			routing.on('image-upload-success', function(data) { 
-        			self.updateImages(data);
+        		self.updateImages(data);
         	});
         	
 			this.scheme.push(imageListView);

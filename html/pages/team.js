@@ -473,7 +473,8 @@ define([
 				sport_id: $("#sports-h").val(),                
                 name: "image_wrap ",
                 user_id : this.userId,
-                media_id: this.media_id
+                media_id: this.media_id,
+                pageName: "team"
             });
             
             this.scheme.push(this.imageListView);
