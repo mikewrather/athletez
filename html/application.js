@@ -57,6 +57,9 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
                                   
             //':page/:sport/:sports_id/:player/:media_id': 'getPage',
             'profile/:userid': 'showProfile',
+	        '!profile/:userid': 'showProfile',
+	        '!profile/': 'showProfile',
+	        '!profile': 'showProfile',
             //'profile/:userid/:sport/:sports_id': 'showUserProfileSport',
             //'profile/:userid/:sport/:sports_id/:player/:media_id': 'showUserProfileSportAndMedia',
             //'!profile/:userid/:sport/:sports_id': 'showUserProfileSport',
