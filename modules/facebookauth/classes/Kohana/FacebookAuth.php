@@ -151,7 +151,7 @@ class Kohana_FacebookAuth {
 	
 	public function get_user()
 	{
-		print_r($this->fb->getUser());
+		print_r($this->fb);
 		$user = $this->fb->getUser();
 		if($user)
 		{
