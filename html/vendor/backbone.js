@@ -1832,12 +1832,68 @@ var Form = Backbone.View.extend({
 
     //Set the main element
     this.setElement($form);
-    
     //Set class
     $form.addClass(this.className);
-
     return this;
   },
+  
+  
+  /**
+   *  Show error message
+   * */
+	
+
+	ShowValidateMessage: function(options) {
+   		if(!options) return;
+   		
+   		var self = this,
+        field = options.field,
+        errorsMessage = options.message;
+console.error(field, errorsMessage);
+return;
+    //Collect errors from schema validation
+    //_.each(fields, function(field) {
+     // var error = field.validate();
+      //if (error) {
+       // errors[field.key] = error;
+      //}
+    //});
+
+    //Get errors from default Backbone model validator
+    if (!options.skipModelValidate && model && model.validate) {
+      var modelErrors = model.validate(this.getValue());
+
+      if (modelErrors) {
+        var isDictionary = _.isObject(modelErrors) && !_.isArray(modelErrors);
+
+        //If errors are not in object form then just store on the error object
+        if (!isDictionary) {
+          errors._others = errors._others || [];
+          errors._others.push(modelErrors);
+        }
+
+        //Merge programmatic errors (requires model.validate() to return an object e.g. { fieldKey: 'error' })
+        if (isDictionary) {
+          _.each(modelErrors, function(val, key) {
+            //Set error on field if there isn't one already
+            if (fields[key] && !errors[key]) {
+              fields[key].setError(val);
+              errors[key] = val;
+            } else {
+              //Otherwise add to '_others' key
+              errors._others = errors._others || [];
+              var tmpErr = {};
+              tmpErr[key] = val;
+              errors._others.push(tmpErr);
+            }
+          });
+        }
+      }
+    }
+	
+    return _.isEmpty(errors) ? null : errors;
+  },
+
 
   /**
    * Validate the data
@@ -2796,6 +2852,20 @@ Form.editors.Text = Form.Editor.extend({
   	if(this.validate) this.validate();
   },
   
+  // validate field from sever
+  validateField: function(editor, error_message) {
+  	this.serverValidate({field: editor, message: error_message});
+  	//alert("validate field");
+  	// var error = this.editor.validate();
+
+   // if (error) {
+     // this.setError(error_message);
+    //} else {
+      //this.clearError();
+    //}
+    //return error;
+  },
+  
   initialize: function(options) {
     _.bindAll(this);
     Form.editors.Base.prototype.initialize.call(this, options);
@@ -3013,6 +3083,8 @@ Form.editors.Location = Form.editors.Text.extend({
     //Allow customising text type (email, phone etc.) for HTML5 browsers
     if (schema && schema.getData) this.getData = schema.getData;  
     
+	this.setFormOptions(options.schema.form_values);
+    
 	this.location = {
 		latitude: undefined,
 		longitude: undefined
@@ -3021,6 +3093,14 @@ Form.editors.Location = Form.editors.Text.extend({
 	if(options.callback) this.callback = options.callback;
 	this.location.latitude = (!_.isUndefined(schema.latitude))?schema.latitude:undefined;
 	this.location.longitude = (!_.isUndefined(schema.longitude))?schema.longitude:undefined;
+  },
+  
+  setFormOptions: function(fields) {
+  	if(fields) {
+  		for(var i in fields) {
+  			this[i] = fields[i];
+  		}
+  	}
   },
   
   
@@ -3092,12 +3172,33 @@ Form.editors.AutoComplete = Form.editors.Text.extend({
     'focus':    function(event) {
       this.trigger('focus', this);
     }
-  },	
-  
-  determineChange: function(event) {
+  },
+
+	/**METHOD** Provide if a pressed key is valid for autocomplete hit or not
+	 Parameters:
+	 key-code : key code of the key just pressed
+	 Returns:
+	 boolean true will continues auto complete and stops in false
+	 **/
+	isValidAutoCompleteKey: function (event) {
+		if (event) {
+			var code = (event.keyCode ? event.keyCode : event.which);
+			if (( code >= 59 && code <= 90)// alphabets
+				|| (code >= 96 && code <= 105)// numeric
+				|| (code == 8)// backspace
+				|| (code == 32 )// spacebar
+				|| (code == 46) //delete
+				) {
+				return true;
+			}
+		}
+		return false;
+	},
+
+	determineChange: function(event) {
     var _self = this, currentValue = this.$el.val();
     _self.$el.addClass('ui-autocomplete-loading');
-	if(this.getData) this.getData(currentValue, function(data) {
+	if(_self.isValidAutoCompleteKey(event) && this.getData) this.getData(currentValue, function(data) {
 		_self.records = [];
 		if(!_self.keyNameInPayload) _self.keyNameInPayload = 'name';
 		var attr = _self.keyNameInPayload;
@@ -3118,9 +3219,11 @@ Form.editors.AutoComplete = Form.editors.Text.extend({
 		_self.$el.autocomplete({
 			source : arr,
 			select: function( event, ui ) {
-				_self.$el.parent().find(".indicator-h").removeClass("invalid").addClass("valid");			
-				_self.$el.attr("data-id", (ui.item.id)?ui.item.id:ui.item.value);
+				_self.$el.parent().find(".indicator-h").removeClass("invalid").addClass("valid");	
+				var id = (ui.item.id)?ui.item.id:ui.item.value;		
+				_self.$el.attr("data-id", id);
 				_self.trigger("blur", _self);
+				if(_self.callback) _self.callback(id);
 			}
 		});
 		
@@ -3134,6 +3237,7 @@ Form.editors.AutoComplete = Form.editors.Text.extend({
   	$(e.target).autocomplete({
 		source : arr,
 		select: function( event, ui ) {
+			console.log("select called");
 			_self.$el.attr("data-id",  (ui.item.id)?ui.item.id:ui.item.value);
 		}
 	});
@@ -3157,6 +3261,11 @@ Form.editors.AutoComplete = Form.editors.Text.extend({
     //if (schema && schema.form_values && schema.form_values) this.getData = schema.getData;    
     this.$el.attr('type', 'text');
     this.setOptions(options.schema.form_values);
+    
+    if(this.automaticFetch) {
+    	_self.automaticFetchFn(_self);
+	    		
+    }
     // append error image
     //this.$el.after().append('<span class="indicator_h invalid"></span>');
   },
@@ -3169,12 +3278,13 @@ Form.editors.AutoComplete = Form.editors.Text.extend({
 			// set the payload
 			if(this.request_fields) {
 				for(var i in this.request_fields) {
-					this.collection[this.request_fields[i].key] = (this.request_fields[i].value && typeof this.request_fields[i].value == "function")?this.request_fields[i].value():this.request_fields[i].value;
+					this.collection[this.request_fields[i].key] = (this.request_fields[i].value && typeof this.request_fields[i].value == "function")?this.request_fields[i].value(this):this.request_fields[i].value;
 				}
 			}
-			if(!_self.$el.parent().find(".indicator-h").length)
-				_self.$el.after('<span class="indicator-h field-error-img"></span>');
 			
+			if(!_self.$el.parent().find(".indicator-h").length){
+				_self.$el.after('<span class="indicator-h field-error-img"></span>');
+			}
 			_self.$el.parent().find(".indicator-h").removeClass("valid").addClass("invalid");
 			this.collectionFetchOb = this.collection.fetch();
 			$.when(this.collection.request).done(function() {
@@ -3219,8 +3329,17 @@ Form.editors.AutoComplete = Form.editors.Text.extend({
    * Sets the value of the form element
    * @param {String}
    */
-  setValue: function(value) {
+  setValue: function(value, text) {
+  	
+  if(!this.$el.parent().find(".indicator-h").length) this.$el.after('<span class="indicator-h field-error-img"></span>');
+  	
+  	if(!value && value == "")
+  		this.$el.parent().find(".indicator-h").removeClass("valid").addClass("invalid");
+	else
+  		this.$el.parent().find(".indicator-h").removeClass("invalid").addClass("valid");
+  				
     this.$el.attr("data-id", value);
+    this.$el.val(text);    
   },
 
   focus: function() {
@@ -4274,43 +4393,40 @@ Form.editors.Object = Form.editors.Base.extend({
     });
 
     this._observeFormEvents();
-
     this.$el.html(this.nestedForm.render().el);
-
     if (this.hasFocus) this.trigger('blur', this);
-
     return this;
   },
 
   getValue: function() {
     if (this.nestedForm) return this.nestedForm.getValue();
-
     return this.value;
   },
 
   setValue: function(value) {
     this.value = value;
-
     this.render();
   },
 
   focus: function() {
     if (this.hasFocus) return;
-
     this.nestedForm.focus();
   },
 
   blur: function() {
     if (!this.hasFocus) return;
-
     this.nestedForm.blur();
   },
 
   remove: function() {
     this.nestedForm.remove();
-
     Backbone.View.prototype.remove.call(this);
   },
+
+  serverValidate: function(options) {
+    return this.nestedForm.ShowValidateMessage(options);
+  },
+	
 
   validate: function() {
     return this.nestedForm.validate();

@@ -38,8 +38,6 @@
 		public function action_get_basics()
 		{
 			$this->payloadDesc = "Basic information about a video";
-
-		
 		}
 		
 		/**
@@ -130,6 +128,12 @@
 		{
 			$this->payloadDesc = "Search for videos";
 			$arguments = array();
+
+			if((int)trim($this->request->query('media_id')) > 0)
+			{
+				$arguments["media_id"] = (int)trim($this->request->query('media_id'));
+			}
+
 			// CHECK FOR PARAMETERS:
 			// sports_id
 			// Narrow list based on tagged user's sport affiliations

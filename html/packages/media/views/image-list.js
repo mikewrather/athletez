@@ -78,7 +78,6 @@ function(facade,  views,   utils,   ImageItemView,            ImageBoardView,   
 		},
 		
 		openImageUploader: function(file) {
-			console.error(this.collection);
 			 var id = this.sport_id, url = this.target_url+ this.target_id,
 			    attr = {
 				    "sports_id" : id
@@ -95,6 +94,7 @@ function(facade,  views,   utils,   ImageItemView,            ImageBoardView,   
         	else
         		this.name = "image list";
         	
+        	
         	if(options.collecton)
         		this.collection = options.collection;
         		
@@ -102,6 +102,7 @@ function(facade,  views,   utils,   ImageItemView,            ImageBoardView,   
         	this.target_url = options.target_url;
         	this.sport_id = options.sport_id;
         	this.user_id = options.user_id;
+        	this.media_id = options.media_id;
 			// render template
 			this.renderTemplate();
 	        //console.log(options);
@@ -122,6 +123,20 @@ function(facade,  views,   utils,   ImageItemView,            ImageBoardView,   
         	//$(document).on('click','.image-outer-h', function() {
 			//	_self.initPhotoPlayer();
 			//});
+			
+			if(_self.media_id) {
+				setTimeout(function() {
+					if(_self.allData) {
+						for(var i in _self.allData) {
+							if(_self.media_id == _self.allData[i].get("payload").media_id) {
+								routing.trigger('photo-player-init', i, _self.allData, _self.user_id, true);
+								break;
+							}
+						}
+					}
+						
+				}, 500);
+			}
         	
         },
         
@@ -198,7 +213,6 @@ function(facade,  views,   utils,   ImageItemView,            ImageBoardView,   
                 addView.render();
                 $(this.listView).prepend(addView.el);
             });
-           
             
             function changeBoard(data) {
                 addView.model = data;

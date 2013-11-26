@@ -4,14 +4,12 @@
  // Requires `define`, `require`
  */
 define(['require',
-
 	'text!usercontrols/landing/templates/landing.html',
 	'text!usercontrols/landing/landing.css',
 	'facade',
 	'views',
 	'utils',
-	'vendor',
-	'landing'], function(require) {
+	'vendor'], function(require) {
 
 	var self, facade = require('facade'), views = require('views'), 
 	SectionView = views.SectionView, utils = require('utils'), 

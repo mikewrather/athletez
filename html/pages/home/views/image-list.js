@@ -32,6 +32,7 @@ define(
 					//console.log(options);
 					//console.log(this);
 					this.name = options.name || this.name;
+					this.media_id = options.media_id;
 					CollectionView.prototype.initialize.call(this, options);
 					if (!this.collection) {
 						throw new Error(
@@ -44,12 +45,24 @@ define(
 					//$(document).on('click','.image-outer-h', function(e) {
 					//	_self.initPhotoPlayer(e);
 					//});
-        	
+					
+					if(_self.media_id) {
+						setTimeout(function() {
+							var allData = _self.collection.toArray();	
+							if(allData) {
+								for(var i in allData) {
+									if(_self.media_id == allData[i].get("payload").media_id) {
+										routing.trigger('photo-player-init', i, _self.collection, _self.collection.id);
+										break;
+									}
+								}
+							}
+						}, 500);
+					}
 				},
 				
 				initPhotoPlayer: function(e) {
 					e.preventDefault();
-					
 					console.log(this.collection);
        				var index = ($(e.target).parents('li').index());     
        				routing.trigger('photo-player-init', index, this.collection, this.collection.id);

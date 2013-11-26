@@ -65,6 +65,9 @@ define(
 				initialize : function(options) {
 					Channel('load:css').publish(cssArr);
 					_.bindAll(this);
+					
+					 // setParams Array in current class
+					if(options.params) this.setParamsArray(options.params);
 					this.handleOptions(options);
 					if(options.userId) this.userId = options.userId;
 					this.scheme = [];
@@ -110,13 +113,13 @@ define(
 				
 				addSubscribers : function() {
 					var _self = this;
-					_.each(this.genderTypes, function(viewName){
+					_.each(this.genderTypes, function(viewName) {
 						Channel('sportChanged:'+this.collections[viewName].cid).subscribe(this.changeSportFilter);						
 					}, this);
 					Channel('cityChanged:'+ this.sections['city'].id).subscribe(this.changeCityFilter);
 					///alert("add");
 					//routing.off("stateChanged");
-					routing.on("stateChanged", function(id) {
+					routing.on("stateChanged", function( id ) {
 						_self.changeStateFilter(id);
 					});
 					
@@ -235,7 +238,9 @@ define(
 					imageList.url = this.url(options);
 					imageList.targetElement = "#search-result";
 					imageList.fetch();
-					
+
+					var media_id = media_id || null;
+
 					$.when(imageList.request).done(function() {
 						if(imageList.length < 12)
 							$(".right-arrow-page-h").addClass("disable-arrow-link");
@@ -251,7 +256,8 @@ define(
 							collection : imageList,
 							name : viewName,
 							destination : '#'+viewName,
-							user_id : this.userId
+							user_id : this.userId,
+							media_id: media_id
 							
 						});
 						controller.layout.transition(viewName, view);
@@ -339,7 +345,8 @@ define(
 						collection : this.collections[viewName],
 						name : viewName,
 						destination : '#'+viewName,
-						user_id : this.userId
+						user_id : this.userId,
+						media_id: this.media_id
 					});
 					
 					imageListView.render();
