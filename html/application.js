@@ -632,9 +632,11 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
 
 			routing.off('showSignup');
             routing.on('showSignup', function() {
-  				if($("#userlogin").length)
-	  				$("#userlogin").trigger('click');
-  				else
+            	
+            	
+  				//if($("#userlogin").length)
+	  			//	$("#userlogin").trigger('click');
+  				//else
   					if(this.signup.signupUser) this.signup.signupUser();
             });
 		},
