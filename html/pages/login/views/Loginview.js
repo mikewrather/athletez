@@ -59,12 +59,14 @@ define([
                 	model.save({email: model.email});
                 	$.when(model.request).done(function() {
                 		_self.$el.find(".success-message").removeClass('hide');
+                        _self.$el.find(".error-message").addClass('hide');
                 		setTimeout(function() {
                            _self.loginPageView(); 			
                 		}, 3000);
                 	});
                 	$.when(model.request).fail(function() {
                 		_self.$el.find(".error-message").removeClass('hide');
+                        _self.$el.find(".success-message").addClass('hide');
                 	});
 
                 },

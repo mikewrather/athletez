@@ -27,6 +27,7 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
             'home': 'showHome',
             'home/': 'showHome',
 	        '!home/': 'showHome',
+	        '!home': 'showHome',
             'home/:action': 'initApp',
             'profile': 'showProfile',
             'profile/': 'showProfile',
@@ -57,6 +58,9 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
                                   
             //':page/:sport/:sports_id/:player/:media_id': 'getPage',
             'profile/:userid': 'showProfile',
+	        '!profile/:userid': 'showProfile',
+	        '!profile/': 'showProfile',
+	        '!profile': 'showProfile',
             //'profile/:userid/:sport/:sports_id': 'showUserProfileSport',
             //'profile/:userid/:sport/:sports_id/:player/:media_id': 'showUserProfileSportAndMedia',
             //'!profile/:userid/:sport/:sports_id': 'showUserProfileSport',
