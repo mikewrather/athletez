@@ -27,6 +27,7 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
             'home': 'showHome',
             'home/': 'showHome',
 	        '!home/': 'showHome',
+	        '!home': 'showHome',
             'home/:action': 'initApp',
             'profile': 'showProfile',
             'profile/': 'showProfile',

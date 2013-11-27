@@ -23,4 +23,4 @@ RewriteCond %{REQUEST_URI} !.php$
 RewriteRule .* index.php/$0 [L]
 
 RewriteCond %{QUERY_STRING} ^_escaped_fragment_=/?(.*)$
-RewriteRule .* http://athletez.brombonesnapshots.com/%{HTTP_HOST}/#!/%1 [P]
+RewriteRule .* http://athletez.brombonesnapshots.com/%{HTTP_HOST}/#!%1 [R=301]
