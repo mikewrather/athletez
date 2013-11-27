@@ -45,8 +45,12 @@ function(facade,  views,   utils,   ItemView,  templateList, Participate, addMod
        		participants.set({games_id: this.game_id, sports_id: this.sports_id});
        		participants.save();
        		$.when(participants.request).done(function() {
-       			var newAddModel = new addModel();
-				newAddModel.processItemFromPayload(participants.toJSON());
+       			
+       			var payload = participants.toJSON(), newAddModel = new addModel();
+       			
+       			console.error(payload.payload.usl.user);
+       			
+				newAddModel.processItemFromResponse(payload.payload.usl.user);
 				$(".add-to-event").hide();
        			_self.collection.add(newAddModel);
        		});
@@ -84,7 +88,6 @@ function(facade,  views,   utils,   ItemView,  templateList, Participate, addMod
         	}
         	
         	if(!found)	$(".add-to-event").show();
-
         	
         	this.collection.reset(b);   
         	this.target_id = options.target_id;	
