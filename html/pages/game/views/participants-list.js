@@ -61,6 +61,11 @@ function(facade,  views,   utils,   ItemView,  templateList, Participate, addMod
         	var _self = this;
         	$(document).off("click", ".add-to-event");
         	$(document).on("click", ".add-to-event", function() {
+        		if(!_self.checkForUser()) {
+		  		
+		  	   	routing.trigger('showSignup');	
+		    	return;
+	    	}
         		_self.addParticipant();
         	});
         	$(".participants-heading-h").removeClass("hide");
@@ -131,6 +136,13 @@ function(facade,  views,   utils,   ItemView,  templateList, Participate, addMod
 	            if(this.setupAddView) this.setupAddView();   
         	}
         },
+        
+        checkForUser: function() {
+			if(!_.isUndefined(routing.userLoggedIn) && routing.userLoggedIn)
+				return true;
+			else	
+        		return false;
+		},
             
         // Child views...
         childViews: {},
