@@ -72,7 +72,8 @@ define(['require', 'text!usercontrols/photo-player/templates/player.html', 'text
 			sportId = (record.payload.media_obj.sports_id)?"/sport/"+record.payload.media_obj.sports_id:'',
 			mediaId = (record.payload.media_id)?"/media/"+record.payload.media_id:"",
 
-			link = "#!"+this.pageName+userId+sportId+mediaId, caption = 'Image', image = record.payload.image_path, description = 'Test Description';
+			link = "#"+this.pageName+userId+sportId+mediaId, caption = 'Image', image = record.payload.image_path, description = 'Test Description';
+			console.log(link);
 			var fb = new FbComponent();
 			fb.shareOnFacebook({
 				method: 'feed',
