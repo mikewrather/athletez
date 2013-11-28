@@ -68,8 +68,11 @@ define(['require', 'text!usercontrols/photo-player/templates/player.html', 'text
 		// share media on facebook
 		shareOnFacebook: function() {
 			var record = this.json[this.index],
-			link = "#!"+this.pageName+"/"+this.user_id+"/sport/"+record.payload.media_obj.sports_id+"/media/"+record.payload.media_id, caption = 'Image', image = record.payload.image_path, description = 'Test Description';
-			
+			userId = (this.user_id)?"/"+this.user_id:'',
+			sportId = (record.payload.media_obj.sports_id)?"/sport/"+record.payload.media_obj.sports_id:'',
+			mediaId = (record.payload.media_id)?"/media/"+record.payload.media_id:"",
+
+			link = "#!"+this.pageName+userId+sportId+mediaId, caption = 'Image', image = record.payload.image_path, description = 'Test Description';
 			var fb = new FbComponent();
 			fb.shareOnFacebook({
 				method: 'feed',

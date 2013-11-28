@@ -33,6 +33,8 @@ define(
 					//console.log(this);
 					this.name = options.name || this.name;
 					this.media_id = options.media_id;
+					this.pageName = options.pageName;
+					this.userId = options.user_id;
 					CollectionView.prototype.initialize.call(this, options);
 					if (!this.collection) {
 						throw new Error(
@@ -52,7 +54,7 @@ define(
 							if(allData) {
 								for(var i in allData) {
 									if(_self.media_id == allData[i].get("payload").media_id) {
-										routing.trigger('photo-player-init', i, _self.collection, _self.collection.id, "home");
+										routing.trigger('photo-player-init', i, _self.collection, _self.collection.id, undefined, _self.pageName);
 										break;
 									}
 								}
@@ -63,9 +65,8 @@ define(
 				
 				initPhotoPlayer: function(e) {
 					e.preventDefault();
-					console.log(this.collection);
        				var index = ($(e.target).parents('li').index());     
-       				routing.trigger('photo-player-init', index, this.collection, this.collection.id);
+       				routing.trigger('photo-player-init', index, this.collection, this.collection.id, undefined ,  this.pageName);
        			},
 
 				// Child views...
