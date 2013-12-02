@@ -236,13 +236,15 @@ div.right-arrow-container > img{
     width:100%;
 }
 
+.tag-image-container{
+    width: 10%;
+    overflow: hidden;
+}
 .tag-thumb{
-    min-height:40px;
-    max-width: 10%;
+    position: absolute;
+    max-width: 44px;
     width:10%;
     display: block;
-    border: 1px solid #CCC;
-    float: left;
 }
 
 .tags-name span a{
@@ -304,7 +306,6 @@ ul#tags-list li {
 }
 
 ul#tags-list .tags-name img {
-	width: 10%;
 	float:left
 }
 
@@ -315,6 +316,7 @@ a.deleteTag{
 
 ul#tags-list .tags-name a{
     width:85%;
+    margin-left:10%;
 }
 ul#tags-list .tags-name a span {
 	font-size: .8em;
@@ -432,13 +434,13 @@ margin-top: 0px;
 }
 
 .content-prof-sub{
-    width: 299px;
+    float: right;
     padding-top: 10px;
     margin-left: 22px;
 }
 .prof-name-area{
     display: block;
-    width: 227px;
+    width: 85%;
     height: 70px;
     margin: 0 0 15px 5px;
 }

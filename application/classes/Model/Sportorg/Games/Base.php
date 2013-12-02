@@ -341,6 +341,7 @@ class Model_Sportorg_Games_Base extends ORM
 		DB::update('games_teams_link')
 			->set(array("isWinner"=>1))
 			->where('games_id','=',$this->id)
+			->and_where('points_scored','>','0')
 			->order_by('points_scored','DESC')
 			->limit(1)
 			->execute();

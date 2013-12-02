@@ -1,7 +1,10 @@
 <div class="row-fluid">
     <div class="tags-name">
-	    {{#_thumbnail}}<img src="{{_thumbnail}}" class="tag-thumb" />{{/_thumbnail}}
-	    {{^_thumbnail}}<div style="display: inline-block;border: 1px solid #CCC;background-color: #D45F10;color: black;font-size: .7em;text-align: center;overflow: hidden;" class="tag-thumb">No Picture</div>{{/_thumbnail}}
+	    <div class="tag-image-container">
+		    {{#_thumbnail}}<img src="{{_thumbnail}}" class="tag-thumb" />{{/_thumbnail}}
+		    {{^_thumbnail}}---{{/_thumbnail}}
+	    </div>
+
     	<span>
 			<a href="{{_link}}" style="display: inline-block;"><span class="labelSpan">{{{_label}}}</span></a>
 		</span>
