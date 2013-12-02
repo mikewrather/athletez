@@ -1,16 +1,15 @@
 <div class="row-fluid">
     <div class="tags-name">
-	    <div class="tag-image-container">
-		    {{#_thumbnail}}<img src="{{_thumbnail}}" class="tag-thumb" />{{/_thumbnail}}
-		    {{^_thumbnail}}---{{/_thumbnail}}
-	    </div>
+		    <div class="tag-image-container" {{#_color}}style="background-color:{{_color}}"{{/_color}}>
+			    {{#_thumbnail}}<img src="{{_thumbnail}}" class="tag-thumb" />{{/_thumbnail}}
+			    {{^_thumbnail}}<div class="tile-text">{{_noicon_text}}</div>{{/_thumbnail}}
+			</div>
 
-    	<span>
-			<a href="{{_link}}" style="display: inline-block;"><span class="labelSpan">{{{_label}}}</span></a>
-		</span>
+
+		<a href="{{_link}}" style="display: inline-block;"><span class="labelSpan">{{{_label}}}</span></a>
+
 	    {{#show_edit}}
-	    <a href="javascript:void(0);" class="deleteTag" title="Delete Tag" data-enttypes-id="{{_enttypes_id}}" data-subject-id="{{_id}}">&times;</a>
+	    <div class="deleteTag" title="Delete Tag" data-enttypes-id="{{_enttypes_id}}" data-subject-id="{{_id}}">&times;</div>
 	    {{/show_edit}}
-		<span class="tags-number">{{count}}</span>
     </div>
 </div>

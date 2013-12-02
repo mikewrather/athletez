@@ -58,16 +58,6 @@ function (
 			console.log(extra,"for testing");
 			switch(mpay.subject_enttypes_id)
 			{
-				case '23':
-					//videos
-					break;
-				case '21':
-					//images
-					break;
-				case '1':
-					//users
-
-					break;
 				case '8':
 					//games
 					var team_str = "",
@@ -100,7 +90,7 @@ function (
 						
 						team_str += '<div class="'+scoreClass+'">';
 						team_str += '<span class="scoreAlign">';
-						team_str += mpay.subject.teams[i].points_scored != null ? mpay.subject.teams[i].points_scored : "--";
+						team_str += mpay.subject.teams[i].points_scored != null ? mpay.subject.teams[i].points_scored : "&Oslash;";
 						team_str += '</span>';
 						team_str += '</div>';
 						
@@ -124,26 +114,36 @@ function (
 					}
 
 					break;
-					
+
 				case '5':
-					//team
-					break;	
+					extra._label = mpay.subject.team_name;
+					break;
 			}
 
+	        extra._enttypes_id=mpay.enttypes_id;
+	        extra._id = mpay.id;
 	        console.log(extra);
 			return extra;
         },
         
 
         render: function () {
-
-	        var extra = this.filterData();
-	        var markup = Mustache.to_html(this.template, extra);
+			var self = this,
+	        extra = this.filterData(),
+	        markup = Mustache.to_html(this.template, extra);
 	        this.$el.html(markup);
 
-	        this.$el.find('img.tag-thumb').css({
-		        'height':this.$el.find('img.tag-thumb').width
-	        });
+	        console.log(this.$el);
+
+	        var timer = setInterval(function(){
+		        if (self.$el.find('.tag-image-container').width()>0) {
+			        self.$el.find('.tag-image-container').css({
+				        'height':self.$el.find('.tag-image-container').width()
+			        });
+			        console.log(self.$el.find('.tag-image-container').width());
+			        clearInterval(timer);
+		        }
+	        }, 200);
 
 	        if(extra.imgData.maxwidth)
 		        this.$el.find('img.tag-thumb').css({
