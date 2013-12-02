@@ -24,10 +24,10 @@ function(facade, collections, SportsOrgCollection, utils) {
 				if(this.teams_id)
 					params += 'teams_id='+ this.teams_id +'&';
 				
-				if(this.states_id)
-					params += 'states_id='+ this.states_id +'&';
-				if(this.cities_id)
-					params += 'cities_id='+ this.cities_id +'&';
+	//			if(this.states_id)
+	//				params += 'states_id='+ this.states_id +'&';
+	//			if(this.cities_id)
+	//				params += 'cities_id='+ this.cities_id +'&';
 				
 
                     return '/api/game/search/0?'+ params;

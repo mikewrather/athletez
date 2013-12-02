@@ -46,7 +46,6 @@ function (
         render: function () {
         	// var string_to_use = this.createOpponentString();
             //var markup = Mustache.to_html(this.template, {data: this.model.toJSON(), id:this.mpay.id,summary:string_to_use});
-            
             if(this.teamView) {
             	 this.mpay = this.model.get('payload');
 			     this.template = ScheduleSingleItemTemplate;
@@ -63,7 +62,6 @@ function (
 	         }
 
             this.$el.html(markup);
-
             this.select_team = this.$('#select-team');
 	        console.log(this.select_team);
             this.selectTeam();
@@ -76,13 +74,11 @@ function (
 		      var team_id = this.teams_id != undefined ? this.teams_id : $(this.el).find('div.org-name a.add-game-h').attr('data-team-id'),
 			      self = this;
 
-		      console.log(team_id);
 		      var $loopEls = $(this.el).attr("data-team-id") ? $(this.el) : $(this.el).find('ul li');
-		      console.log("Loop",$loopEls);
-		      $loopEls.each(function () {
-			      console.log(this);
-			 //     console.log($(this).find('span.team-name[data-team-id="' + team_id + '"][data-winner="true"]').length);
-			      if($(this).find('span.team-name[data-team-id="' + team_id + '"][data-winner="true"]').length){
+		      $loopEls.each(function (i) {
+			      team_id = $(this).find("a.team-info-h").attr("data-team-id");		      	
+			      var teamEl = $(this).find('span.team-name[data-team-id="'+team_id+'"]');
+			      if($(this).find('span.team-name[data-team-id="'+team_id+'"][data-winner="true"]').length){
 				     $(this).find('a.team-info-h').addClass('win').removeClass('background-blue');
 			      }
 			      if(!$(this).find('span.team-name[data-winner="true"]').length){

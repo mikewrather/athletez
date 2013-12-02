@@ -105,7 +105,7 @@ define(
      					{src: '#city', target: '.location-link-h .option-heading-h', input: true, defaultValue: 'PLACE'},
 						{src: '#resulttype a.restype.select', target: '.restype-link-h .option-heading-h', input: false, defaultValue: 'ATHLETES'}
 					];
-					
+
 					this.viewOptions = ['orderby', 'time'];
 					this.sportsOptions = ['sports_id'];
 					this.locationOptions = ['cities_id', 'states_id', 'country_id'];
@@ -257,8 +257,8 @@ define(
 							name : viewName,
 							destination : '#'+viewName,
 							user_id : this.userId,
-							media_id: media_id
-							
+							media_id: media_id,
+							pageName: "home"
 						});
 						controller.layout.transition(viewName, view);
 					});
@@ -346,7 +346,8 @@ define(
 						name : viewName,
 						destination : '#'+viewName,
 						user_id : this.userId,
-						media_id: this.media_id
+						media_id: this.media_id,
+						pageName: "home"
 					});
 					
 					imageListView.render();

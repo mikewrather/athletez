@@ -68,8 +68,12 @@ define(['require', 'text!usercontrols/photo-player/templates/player.html', 'text
 		// share media on facebook
 		shareOnFacebook: function() {
 			var record = this.json[this.index],
-			link = "#!"+this.pageName+"/"+this.user_id+"/sport/"+record.payload.media_obj.sports_id+"/media/"+record.payload.media_id, caption = 'Image', image = record.payload.image_path, description = 'Test Description';
-			
+			userId = (this.user_id)?"/"+this.user_id:'',
+			sportId = (record.payload.media_obj.sports_id)?"/sport/"+record.payload.media_obj.sports_id:'',
+			mediaId = (record.payload.media_id)?"/media/"+record.payload.media_id:"",
+
+			link = "#"+this.pageName+userId+sportId+mediaId, caption = 'Image', image = record.payload.image_path, description = 'Test Description';
+			console.log(link);
 			var fb = new FbComponent();
 			fb.shareOnFacebook({
 				method: 'feed',
@@ -208,7 +212,7 @@ define(['require', 'text!usercontrols/photo-player/templates/player.html', 'text
 
 						extra._label = mpay.label;
 						extra._sublabel = "Coming Soon";
-						extra._link = "/#profile/" + mpay.id;
+						extra._link = "/#!profile/" + mpay.id;
 						if (mpay.hasOwnProperty('is_owner'))
 							show_edit = mpay.is_owner;
 						break;
@@ -222,7 +226,7 @@ define(['require', 'text!usercontrols/photo-player/templates/player.html', 'text
 							url : "http://cdn.athletez.com/resources/icons/game/square_game.png"
 						};
 						extra._label = mpay.game_day;
-						extra._link = "/#game/" + mpay.id;
+						extra._link = "/#!game/" + mpay.id;
 						var team_str = "", teamLength = mpay.teams.length, ucwords = function(str) {
 							str = str.toLowerCase();
 							return str.replace(/(^([a-zA-Z\p{M}]))|([ -][a-zA-Z\p{M}])/g, function($1) {
@@ -385,7 +389,7 @@ define(['require', 'text!usercontrols/photo-player/templates/player.html', 'text
 						extra._thumbnail = mpay.user_picture_obj.types.large_thumb.url;
 					extra._label = mpay.label;
 					extra._sublabel = "Coming Soon";
-					extra._link = "/#profile/" + mpay.id;
+					extra._link = "/#!profile/" + mpay.id;
 					if (mpay.hasOwnProperty('is_owner'))
 						show_edit = mpay.is_owner;
 					break;
@@ -394,7 +398,7 @@ define(['require', 'text!usercontrols/photo-player/templates/player.html', 'text
 					extra._detailclass = "game";
 					extra._thumbnail = mpay.game_picture !== null ? mpay.game_picture.types.large_thumb.url : "http://lorempixel.com/output/sports-q-c-440-440-4.jpg";
 					extra._label = mpay.game_day;
-					extra._link = "/#game/" + mpay.id;
+					extra._link = "/#!game/" + mpay.id;
 					var team_str = "", teamLength = mpay.teams.length, ucwords = function(str) {
 						str = str.toLowerCase();
 						return str.replace(/(^([a-zA-Z\p{M}]))|([ -][a-zA-Z\p{M}])/g, function($1) {

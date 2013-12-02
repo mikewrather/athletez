@@ -104,11 +104,13 @@ define([ 'models', 'facade' ], function(models, facade) {
 		parse_team: function(mpay,return_data){
 	//		return_data._detailclass = "game";
 			return_data._noicon_text = mpay.org_name;
+			return_data._color = '#928add';
 			return_data._sports_icon = this.get_selected_icon(mpay.org_sport_link_obj.sport);
+
 			return_data._label = mpay.complevels_obj.abbr + " " + mpay.org_sport_link_obj.sport.sport_name + " " + mpay.year;
 	//		return_data._sublabel = mpay.complevels_obj.abbr + " " + mpay.org_sport_link_obj.sport.sport_name + " " + mpay.year;
 			return_data._sublabel = "Votes: " + mpay.num_votes + ", Followers: " + mpay.num_followers;
-			return_data._link = "/#team/" + mpay.id;
+			return_data._link = "/#!team/" + mpay.id;
 			return_data._has_link = true;
 			if(mpay.hasOwnProperty('is_owner')) return_data.show_edit = mpay.is_owner;
 
@@ -118,9 +120,10 @@ define([ 'models', 'facade' ], function(models, facade) {
 		parse_org: function(mpay,return_data){
 
 			return_data._noicon_text = "org";
+			return_data._color = '#928add';
 			return_data._label = mpay.name;
 			return_data._sublabel = "Votes: " + mpay.num_votes + ", Followers: " + mpay.num_followers;
-			return_data._link = "/#team/" + mpay.id;
+			return_data._link = "/#!team/" + mpay.id;
 			return_data._has_link = true;
 			if(mpay.hasOwnProperty('is_owner')) return_data.show_edit = mpay.is_owner;
 
@@ -137,9 +140,10 @@ define([ 'models', 'facade' ], function(models, facade) {
 				}
 			}
 			return_data._noicon_text = "hi";
+			return_data._color = '#c4df89';
 			return_data._label = mpay.label;
 			return_data._sublabel = "Votes: " + mpay.num_votes + ", Followers: " + mpay.num_followers;
-			return_data._link = "/#profile/" + mpay.id;
+			return_data._link = "/#!profile/" + mpay.id;
 			return_data._has_link = true;
 			if(mpay.hasOwnProperty('is_owner')) return_data.show_edit = mpay.is_owner;
 
@@ -167,6 +171,7 @@ define([ 'models', 'facade' ], function(models, facade) {
 
 			if(mpay.media.hasOwnProperty('is_owner')) show_edit = mpay.media.is_owner;
 			return_data._noicon_text = "play";
+			return_data._color = '#e27171';
 			return return_data;
 		},
 
@@ -199,6 +204,8 @@ define([ 'models', 'facade' ], function(models, facade) {
 			return_data._has_link = false;
 			if(mpay.media_obj.hasOwnProperty('is_owner')) return_data.show_edit = mpay.media_obj.is_owner;
 			return_data._noicon_text = "look";
+			return_data._color = '#dfe271';
+
 			return return_data;
 		},
 
@@ -217,7 +224,7 @@ define([ 'models', 'facade' ], function(models, facade) {
 			if(mpay.sports_obj) return_data._sports_icon = this.get_selected_icon(mpay.sports_obj);
 
 			return_data._label = mpay.game_day;
-			return_data._link = "/#game/" + mpay.id;
+			return_data._link = "/#!game/" + mpay.id;
 			return_data._has_link = true;
 			var team_str = "", teams = mpay.teams;
 			if(teams != null) var teamLength = teams.length;
@@ -232,6 +239,7 @@ define([ 'models', 'facade' ], function(models, facade) {
 				return_data._sublabel = mpay.event_name;
 			}
 			return_data._noicon_text = "vs";
+			return_data._color = "#e49f6f";
 			console.log(return_data);
 			return return_data;
 		},
@@ -241,15 +249,15 @@ define([ 'models', 'facade' ], function(models, facade) {
 			return_data._thumbnail = this.closest_image_format.url;
 			var imgData = _self.closest_image_format;
 
-			var ratio_x = imgData.width / 220,
-				ratio_y = imgData.height / 220;
+			var ratio_x = imgData.width / this.display_width,
+				ratio_y = imgData.height / this.display_height;
 
 			imgData.width = parseInt(imgData.width);
 			imgData.height = parseInt(imgData.height);
 
 			var overflow = (imgData.width > imgData.height) ?
-				-((imgData.width / ratio_y) -220) / 2:
-				-((imgData.height / ratio_x)-220) / 2;
+				-((imgData.width / ratio_y) -this.display_width) / 2:
+				-((imgData.height / ratio_x)-this.display_height) / 2;
 			if(overflow > 0) overflow = 0;
 
 			if(imgData.width > imgData.height){
