@@ -162,10 +162,10 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
 
 		showLandingInfo: function() {
 			var self = this;
-		/*	setTimeout(function(){
+			setTimeout(function(){
 				if(!self.checkForUser())
 					var landing = new landingView();
-			},2000);*/
+			},2000);
 		},
         
         // get user name by id
@@ -632,10 +632,7 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
 
 			routing.off('showSignup');
             routing.on('showSignup', function() {
-  				if($("#userlogin").length)
-	  				$("#userlogin").trigger('click');
-  				else
-  					if(this.signup.signupUser) this.signup.signupUser();
+            	if(this.signup.signupUser) this.signup.signupUser();
             });
 		},
 	    videoPreview: function () {

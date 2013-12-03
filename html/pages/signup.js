@@ -54,7 +54,7 @@ define(["require",
 					init : function() {
 						ga('send', 'event', 'Signup', 'Open', 'User opened registration box');
 						this.refreshPage();
-						this.setupLayout()
+						this.setupLayout();
 						this.createData();
 						//this.refreshPage();
 						this.handleDeferreds();
@@ -186,19 +186,23 @@ define(["require",
 					},
 					setupSelectTypeView : function() {
 						//$("#LoginPopup").remove();
+						var id = "modal-popup-"+Math.floor(Math.random() * Math.random() * 50 * Math.random() * 50), 
+						dest = "#"+id+" #modalBody", options = {};
+			            options.height = "500px";
+			            options.width = "600px";
+			            options.title = " ";
+			            options.id = id;
+						routing.trigger('common-popup-open', options); 
+						
+						
+						
 						this.selectTypeView = new signupBaseView({
 							model : this.select_type,
 							name : "Select Registration Type",
-							destination : "#modalBody"
+							destination : dest
 						});
-						console.log(this.selectTypeView);
 						this.scheme.push(this.selectTypeView);
 						this.layout.render();
-						var options = {};
-			            options.height = "500px";
-			            options.width = "500px";
-			            options.title = "Register";         
-						routing.trigger('common-popup-open', options); 
 					}
 				});
 				return SignupController;

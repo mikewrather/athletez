@@ -6,26 +6,34 @@
 define(['require',
 	'text!usercontrols/landing/templates/landing.html',
 	'text!usercontrols/landing/landing.css',
+	"signup/models/registerbasic",
+	"signup/views/registerbasic",
 	'facade',
 	'views',
 	'utils',
 	'vendor'], function(require) {
 
-	var self, facade = require('facade'), views = require('views'), 
-	SectionView = views.SectionView, utils = require('utils'), 
-	Channel = utils.lib.Channel, vendor = require('vendor'), 
-	Mustache = vendor.Mustache, $ = facade.$;
+	var facade = require('facade'), views = require('views'),
+		SectionView = views.SectionView, utils = require('utils'),
+
+		signupBaseModel = require("signup/models/registerbasic"),
+		signupBaseView=require("signup/views/registerbasic"),
+
+		Channel = utils.lib.Channel, vendor = require('vendor'),
+		Mustache = vendor.Mustache, $ = facade.$;
+
 	var BaseView = views.BaseView, Backbone = facade.Backbone, _self,
 		layoutTemplate = require('text!usercontrols/landing/templates/landing.html');
 	//Models
 
-	return Backbone.View.extend({
+	return BaseView.extend({
 		// template for dropdown
 		template : layoutTemplate,
 		// set to true if requires multiple selection
 		/*Bind Events on controls present in current view template*/
 		events : {
-			"click .close":"closePopup"
+			"click #browse":"closePopup",
+			"click #sign-in":"signIn"
 		},
 		cssArr : ["usercontrols/landing/landing.css"],
 		/*initialize gets called by default when constructor is initialized*/
@@ -47,22 +55,23 @@ define(['require',
 			var options = {};
 			options.width = "100%";
 			options.height = "100%";
-			options.title = "Welcome to Athletez!";
+			options.title = "&nbsp;";
 			options.html = markup;
 			options.id = "landing";
 			options.addClass = ['noBorder'];
 
 			var rand = Math.ceil(Math.random()*100);
-			console.log(rand,rand%3);
-			var bgs = ['4.jpg','5.jpg','6.jpg'];
+			var bgs = ['1.jpg','2.jpg','3.jpg'];
+			console.log(rand,rand % bgs.length);
 
-			options.background_image = "http://cdn.athletez.com/resources/img/landing/" + bgs[rand%3];
+			options.background_image = "http://cdn.athletez.com/resources/img/landing/" + bgs[rand % bgs.length];
 			console.error(options);
 			routing.trigger('common-popup-open', options);
+			this.$el = $('#landing .modal-body');
 
 			function onPop(){
-
 				Channel('popup-finished-launch-'+options.id).unsubscribe();
+				_self.showReg();
 			}
 
 			Channel('popup-finished-launch-'+options.id).subscribe(onPop);
@@ -77,8 +86,27 @@ define(['require',
 			}
 		},
 
-		closePopup:function(){
+		showReg: function()
+		{
+			this.regModel = new signupBaseModel();
 
+
+			this.regView = new signupBaseView({
+				model : this.regModel,
+				name : "Select Registration Type",
+				destination : "#reg-landing",
+				openAsaPage: true,
+				showOnLanding:true
+			});
+
+		},
+
+		signIn: function(e){
+			this.regView.showLogin(e);
+		},
+		closePopup:function(){
+			console.log("close popup");
+			routing.trigger('common-popup-close');
 		}
 	});
 });
