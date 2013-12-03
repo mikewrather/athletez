@@ -104,6 +104,29 @@
 		'application': 'application'
 
 	},
+	onBuildWrite   : function( name, path, contents ) {
+		// output the original source contents
+//		console.log( contents );
+		var pathReg = new RegExp("/vendor/");
+		if(pathReg.test(path)) return contents;
+
+		var pattern =new RegExp("console.(log|debug|info|warn|error|assert|dir|dirxml|trace|group|groupEnd|time|timeEnd|profile|profileEnd|count)( ?| +)(?!\=)\([^;]*\)(;)?","gm");
+		// perform transformations on the original source
+	//	contents = contents.replace(new RegExp("console.(log|debug|info|warn|error|assert|dir|dirxml|trace|group|groupEnd|time|timeEnd|profile|profileEnd|count)\((.*)\);?","gm"),"foo");
+
+		if(pattern.test(contents)){
+			console.log("Match: ",contents.match(pattern));
+			try{
+				var contents2 = contents.replace(pattern,"");
+				contents = contents2;
+			}
+			catch(ex){
+				console.log(ex);
+			}
+
+		}
+		return contents;
+	},
 	shim: {
 		'jqueryui': {
 			deps: ['jquery']
