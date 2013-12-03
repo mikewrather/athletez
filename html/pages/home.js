@@ -305,7 +305,11 @@ define(
 					 $.each(this.urlOptions, function(key, value) {
 						    tail.push(key + "=" + encodeURIComponent(value));
 						  });
-					return base + tail.join('&');
+					base += tail.join('&');
+					if(this.media_id) {
+						base += "&media_id="+this.media_id;
+					}
+					return base;
 				},
 				
 				createData : function() {
@@ -314,6 +318,7 @@ define(
 					_self.collections['search-result'] = new ImageList([], {
 						url : _self.url(),
 						num : '12',
+						media_id: _self.media_id,
 						targetElement: "#search-result"
 					});
 					
