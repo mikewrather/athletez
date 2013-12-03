@@ -158,6 +158,22 @@ function(require, profileHeaderTemplate, selectSportTemplate) {
         	} else {
         	//	Channel('refresh-profilepage').publish();
         	}
+        	
+        	//if(this.loadFirstTime) {
+				// creating URL for sport
+				var currentHashUrl = window.location.hash;
+				if(currentHashUrl.match(/\/sport\/(.*)[0-9]\//i)) {
+					currentHashUrl = currentHashUrl.replace(/\/media\/(.*)[0-9]\//i,'/sport/'+sport_id+"/");					
+				} else if(currentHashUrl.match(/\/sport\/(.*)[0-9]/i)) {
+					currentHashUrl = currentHashUrl.replace(/\/sport\/(.*)[0-9]/i,'/sport/'+sport_id);					
+				} else {
+					currentHashUrl = currentHashUrl+"/sport/"+sport_id;
+				}
+				routing.navigate(currentHashUrl, {trigger: false});
+			//} else
+			//	this.loadFirstTime = true;
+        	
+        	
         	document.title = title;
         }
         
