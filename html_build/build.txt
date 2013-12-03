@@ -419,6 +419,7 @@ text!sport/templates/sport-item.html
 packages/sport/views/sport-item.js
 packages/sport/views/sport-list.js
 text!signup/templates/registration.html
+text!signup/templates/registration_landing.html
 pages/signup/models/registration-basics-final.js
 text!signup/templates/basciFinal.html
 pages/signup/views/registration-basics-final.js
@@ -816,6 +817,7 @@ text!login/templates/logintemplate.html
 pages/signup/models/registerbasic.js
 pages/signup/models/registration-basics-final.js
 text!signup/templates/registration.html
+text!signup/templates/registration_landing.html
 pages/signup/views/facebooksignup.js
 text!signup/templates/basciFinal.html
 pages/signup/views/registration-basics-final.js
@@ -1445,6 +1447,7 @@ text!sport/templates/sport-item.html
 packages/sport/views/sport-item.js
 packages/sport/views/sport-list.js
 text!signup/templates/registration.html
+text!signup/templates/registration_landing.html
 pages/signup/models/registration-basics-final.js
 text!signup/templates/basciFinal.html
 pages/signup/views/registration-basics-final.js
@@ -1938,6 +1941,7 @@ text!sport/templates/sport-item.html
 packages/sport/views/sport-item.js
 packages/sport/views/sport-list.js
 text!signup/templates/registration.html
+text!signup/templates/registration_landing.html
 pages/signup/models/registration-basics-final.js
 text!signup/templates/basciFinal.html
 pages/signup/views/registration-basics-final.js
@@ -2116,6 +2120,7 @@ usercontrols//photo-player/models/tags.js
 usercontrols/photo-player/collections/tags.js
 text!usercontrol/photo-player/templates/tags.html
 text!usercontrol/photo-player/templates/tag-item.html
+packages/common/models/entparse.js
 usercontrols//photo-player/views/tags-item.js
 usercontrols/photo-player/models/tags.js
 usercontrols/photo-player/views/tags.js
@@ -2147,7 +2152,6 @@ pages/login/views/Loginview.js
 pages/login/models/Logoutmodel.js
 pages/login.js
 pages/chrome/views/header.js
-packages/common/models/entparse.js
 packages/media/views/image-item.js
 text!media/templates/image-board.html
 packages/media/views/image-board.js
@@ -2223,6 +2227,7 @@ controller.js
 pages/signup/models/registerbasic.js
 pages/signup/models/registration-basics-final.js
 text!signup/templates/registration.html
+text!signup/templates/registration_landing.html
 text!registration/templates/layout.html
 packages/user/models/basics.js
 pages/registration/models/select_type.js
@@ -3083,6 +3088,7 @@ usercontrols/addgame/views/main.js
 usercontrols/addgame/addgame.js
 pages/signup/models/registration-basics-final.js
 text!signup/templates/registration.html
+text!signup/templates/registration_landing.html
 pages/signup/views/facebooksignup.js
 text!signup/templates/basciFinal.html
 pages/signup/views/registration-basics-final.js
@@ -3108,6 +3114,7 @@ usercontrols//photo-player/models/tags.js
 usercontrols/photo-player/collections/tags.js
 text!usercontrol/photo-player/templates/tags.html
 text!usercontrol/photo-player/templates/tag-item.html
+packages/common/models/entparse.js
 usercontrols//photo-player/views/tags-item.js
 usercontrols/photo-player/models/tags.js
 usercontrols/photo-player/views/tags.js
@@ -3139,7 +3146,6 @@ pages/login/views/Loginview.js
 pages/login/models/Logoutmodel.js
 pages/login.js
 pages/chrome/views/header.js
-packages/common/models/entparse.js
 packages/media/views/image-item.js
 pages/home/views/image-list.js
 text!packages/location/templates/state-item.html
@@ -3321,6 +3327,7 @@ pages/registration.js
 pages/signup/models/registerbasic.js
 pages/signup/models/registration-basics-final.js
 text!signup/templates/registration.html
+text!signup/templates/registration_landing.html
 pages/signup/views/facebooksignup.js
 text!signup/templates/basciFinal.html
 pages/signup/views/registration-basics-final.js
