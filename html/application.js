@@ -40,32 +40,23 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
             
             'game': 'showGame',
             'game/': 'showGame',
-            //'game/:action': 'showGame',
             'game/:id' : 'showGame',
 	        '!game/:id' : 'showGame',
             
-            ':page/:id/:param/:id': 'showPage',
-            ':page/:id/:param/:id/:param/:id': 'showPage',            
+            ':page/:id/:param/:id/': 'showPage',
+            ':page/:id/:param/:id/:param/:id/': 'showPage', 
+			':page/:id/:param/:id': 'showPage',
+            ':page/:id/:param/:id/:param/:id': 'showPage',                        
             
+            ':page/:param/:id/': 'showOwnPage',
+            ':page/:param/:id/:param/:id/': 'showOwnPage',  
             ':page/:param/:id': 'showOwnPage',
             ':page/:param/:id/:param/:id': 'showOwnPage',  
-           
-            ':!page/:id/:param/:id': 'showPage',
-            ':!page/:id/:param/:id/:param/:id': 'showPage',            
             
-            ':!page/:param/:id': 'showOwnPage',
-            ':!page/:param/:id/:param/:id': 'showOwnPage',  
-                                  
-            //':page/:sport/:sports_id/:player/:media_id': 'getPage',
             'profile/:userid': 'showProfile',
 	        '!profile/:userid': 'showProfile',
 	        '!profile/': 'showProfile',
 	        '!profile': 'showProfile',
-            //'profile/:userid/:sport/:sports_id': 'showUserProfileSport',
-            //'profile/:userid/:sport/:sports_id/:player/:media_id': 'showUserProfileSportAndMedia',
-            //'!profile/:userid/:sport/:sports_id': 'showUserProfileSport',
-            //'!profile/:userid/:sport/:sports_id/:player/:media_id': 'showUserProfileSportAndMedia',            
-	        //'!profile/:userid': 'showProfile',
 
  			 'usersettings': 'showProfileSetting',
              'usersettings/': 'showProfileSetting',
@@ -73,10 +64,6 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
  			 'resume': 'ShowUserResume',
              'resume/': 'ShowUserResume',
 
-			//'imageup': 'imageUp',
-	        //'videoprev': 'videoPreview',
-	        //'videoprev/': 'videoPreview',
- 
             '!registration': 'showRegistration',
             'registration/': 'showRegistration',
 	        '!registration/:action': 'showRegistration',
@@ -91,6 +78,7 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
         },
         
         showPage: function(pageName, id, page1, Page1_id, page2, Page2_id) {
+        	if(pageName.indexOf("!") != "-1") pageName = pageName.replace("!", "");
 			// create the function name        	
         	var functionName = "show"+pageName.charAt(0).toUpperCase() + pageName.slice(1);
         	// generating params
@@ -101,6 +89,9 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
         },
         
         showOwnPage: function(pageName, page1, Page1_id, page2, Page2_id) {
+        	
+        	if(pageName.indexOf("!") != "-1") pageName = pageName.replace("!", "");
+        	
 			// create the function name        	
         	var functionName = "show"+pageName.charAt(0).toUpperCase() + pageName.slice(1);
         	// generating params
