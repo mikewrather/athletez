@@ -40,8 +40,6 @@ define(["require", 'text!usercontrols/photo-player/templates/comments.html',
 		
 		// controller intialize function
 		initialize : function(options) {
-			console.log("LLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL",options);
-			console.log("init");
 			var _self = this;
 			// load css file
 			Channel('load:css').publish(this.cssArr);
@@ -54,6 +52,7 @@ define(["require", 'text!usercontrols/photo-player/templates/comments.html',
 			if (options.id) this.id = options.id;
 			this.index = options.index;
 			if(options.userId) this.userId = options.userId;
+			if(options.pageName) this.pageName = options.pageName;
 			if(options.array) this.collectionArray = true;
 			if (options._collection) this._collection = options._collection;
 				/*this.modelHTML = '<div id="photoPlayerModal" class="modal photo-frame-model hide fade model-popup-h">'+
@@ -134,6 +133,7 @@ define(["require", 'text!usercontrols/photo-player/templates/comments.html',
 				name : "photo player",
 				destination : ".photo-player-area-h",
 				index : self.index,
+				pageName: this.pageName,
 				user_id : self.userId || null,
 				sports_id : self.sports_id || null,
 				scheme : this.scheme,
@@ -211,7 +211,6 @@ define(["require", 'text!usercontrols/photo-player/templates/comments.html',
 		setUpTagPhotoView : function(entity_id, id){
       	//TagView      	
   //    	var _self = this,
-      	console.log("tagtemplate",tagTemplate)
 			var self = this;
 			this.tagViewPhoto = new TagView({
 				model : new UserModel(),

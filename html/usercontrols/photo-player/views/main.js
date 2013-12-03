@@ -457,6 +457,21 @@ define(['require', 'text!usercontrols/photo-player/templates/player.html', 'text
 			this.$el.find('.thumb-image-list-h li').removeClass('selected-photo-thumb');
 			this.$el.find('.thumb-link-h[data-index=' + this.index + ']').parents('li').addClass('selected-photo-thumb');
 			routing.trigger('photo-player-section-reload', extra._enttypes_id, extra._media_id);
+			// change Hash URL
+			if(this.loadFirstTime) {
+				// creating URL
+				var currentHashUrl = window.location.hash;
+				if(currentHashUrl.match(/\/media\/(.*)[0-9]\//i)) {
+					currentHashUrl = currentHashUrl.replace(/\/media\/(.*)[0-9]\//i,'/media/'+extra._media_id+"/");					
+				} else if(currentHashUrl.match(/\/media\/(.*)[0-9]/i)) {
+					currentHashUrl = currentHashUrl.replace(/\/media\/(.*)[0-9]/i,'/media/'+extra._media_id);					
+				} else {
+					currentHashUrl = currentHashUrl+"/media/"+extra._media_id;
+				}
+				routing.navigate(currentHashUrl, {trigger: false});
+			} else
+				this.loadFirstTime = true;
+		
 		},
 		setupVideo : function(mpay) {
 
