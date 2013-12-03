@@ -1,7 +1,7 @@
 define([
 	'require',
 	'text!signup/templates/registration.html',
-    
+	'text!signup/templates/registration_landing.html',
     'backbone',
     'underscore',
     'registration',
@@ -13,7 +13,7 @@ define([
     "signup/views/registration-basics-final",
     "signup/models/registration-basics-final",
     
-	],function(require, signupBasicTemplate,backbone,_,RegistrationController,loginController) {
+	],function(require, signupBasicTemplate,signupBasicLandingTemplate,backbone,_,RegistrationController,loginController) {
 			
 		var SignupBasicView,
         	facade = require('facade'),
@@ -33,8 +33,12 @@ define([
                     this.registrationController = new RegistrationController({
                     	"route": ""
                      });
-                     
-            		this.template =  _.template(signupBasicTemplate, {onlyRegister: (this.openAsaPage)?true:false});
+
+					if(options.showOnLanding == true)
+						this.template =  _.template(signupBasicLandingTemplate, {onlyRegister: (this.openAsaPage)?true:false});
+	                else
+						this.template =  _.template(signupBasicTemplate, {onlyRegister: (this.openAsaPage)?true:false});
+
             		this.$el = $(options.destination);
 					console.log("REG BLOCK:",this.$el);
 
