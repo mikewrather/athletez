@@ -151,7 +151,7 @@
 
 		}
 		#fblogo{
-			background-image: url(new-facebook-logo.png);
+		/*	background-image: url(new-facebook-logo.png);*/
 			background-size: 25px;
 			width: 50px;
 			background-color: wheat;
@@ -165,7 +165,6 @@
 			font-weight: bold;
 			color: #68686A;
 		}
-		
 		
 		.label{
 			width: 100px;

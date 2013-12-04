@@ -106,7 +106,7 @@
 	},
 	onBuildWrite   : function( name, path, contents ) {
 		// output the original source contents
-//		console.log( contents );
+		/*
 		var pathReg = new RegExp("/vendor/");
 		if(pathReg.test(path)) return contents;
 
@@ -125,6 +125,7 @@
 			}
 
 		}
+		*/
 		return contents;
 	},
 	shim: {
