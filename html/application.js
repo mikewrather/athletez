@@ -62,8 +62,6 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
             '!home/search/:key/:value/:key/:value/:key/:value/:key/:value/:key/:value/:key/:value/:key/:value': 'showHomePage',
             '!home/search/:key/:value/:key/:value/:key/:value/:key/:value/:key/:value/:key/:value/:key/:value/:key/:value': 'showHomePage',
             
-            
-            
             'home/search/:key/:value/': 'showHomePage',
             'home/search/:key/:value/:key/:value/': 'showHomePage',
             'home/search/:key/:value/:key/:value/:key/:value/': 'showHomePage', 
@@ -73,7 +71,6 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
             'home/search/:key/:value/:key/:value/:key/:value/:key/:value/:key/:value/:key/:value/:key/:value/': 'showHomePage',
             'home/search/:key/:value/:key/:value/:key/:value/:key/:value/:key/:value/:key/:value/:key/:value/:key/:value/': 'showHomePage',
             
-            
             'home/search/:key/:value/:key/:value/:key/:value': 'showHomePage',
             'home/search/:key/:value': 'showHomePage',
             'home/search/:key/:value/:key/:value': 'showHomePage',
@@ -82,8 +79,6 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
             '!home/search/:key/:value/:key/:value/:key/:value/:key/:value/:key/:value/:key/:value': 'showHomePage',
             '!home/search/:key/:value/:key/:value/:key/:value/:key/:value/:key/:value/:key/:value/:key/:value': 'showHomePage',
             '!home/search/:key/:value/:key/:value/:key/:value/:key/:value/:key/:value/:key/:value/:key/:value/:key/:value': 'showHomePage',
-            
-            
             
             ':page/:id/:param/:id/': 'showPage',
             ':page/:id/:param/:id/:param/:id/': 'showPage', 
@@ -134,8 +129,10 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
         	if(this.showHome && _.isFunction(this.showHome)) this.showHome(undefined, arr);
         },
         
-        
         showPage: function(pageName, id, page1, Page1_id, page2, Page2_id) {
+        	//alert("show page");
+        	if(page1 == "media" || page2 == "media") this.mediaPopup = true;
+        	
         	if(pageName.indexOf("!") != "-1") pageName = pageName.replace("!", "");
 			// create the function name        	
         	var functionName = "show"+pageName.charAt(0).toUpperCase() + pageName.slice(1);
@@ -148,6 +145,7 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
         
         showOwnPage: function(pageName, page1, Page1_id, page2, Page2_id) {
         	
+        	if(page1 == "media" || page2 == "media") this.mediaPopup = true;
         	if(pageName.indexOf("!") != "-1") pageName = pageName.replace("!", "");
         	
 			// create the function name        	
@@ -169,7 +167,7 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
 	        Controller.prototype.appStates = new ApplicationStates();
 	        this.getPhrases();
 	       // this.intializeImageAndVideo();
-	        this.showLandingInfo();
+	       // this.showLandingInfo();
         },
 
 		detectBrowser: function() {
@@ -198,15 +196,12 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
 					if(showBrowserWindow || showMobileWindow){
 						self.showBrowserWindow();
 					}
-				} catch(ex){
-					//alert(ex);
-				}
+				} catch(ex){ }
 			},1000);
 		},
 
-		showBrowserWindow: function(){
+		showBrowserWindow: function() {
 			var browserPop = new browserView();
-			
 		},
 
 		showLandingInfo: function() {
@@ -279,7 +274,7 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
             	var location = {latitude: lat, longitude: longitude};
             	var viewOb = new googleMapLocationview(location);
             	$(destination).html(viewOb.$el);
-            });            
+            });
             
             routing.off('popup-close');
             routing.on('popup-close', function() {
@@ -301,6 +296,7 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
             routing.on('app-inited', function(id) {
             	closeModelBox();
             	fn(id);
+            	if(!self.mediaPopup) { self.showLandingInfo(); self.mediaPopup = false; }
             });
             
             routing.off('popup-close');

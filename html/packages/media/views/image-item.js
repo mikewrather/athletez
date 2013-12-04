@@ -79,7 +79,6 @@ define(['vendor', 'views', 'utils', 'text!media/templates/image-item.html', 'vot
 			});
 
 			$nopic_words_div = this.$el.find('.game-tile');
-			console.log($nopic_words_div.length);
 			if($nopic_words_div.length){
 				$num_words = $nopic_words_div.text().length;
 				console.log($num_words);
