@@ -34,7 +34,6 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
             'team': 'showTeam',
             'team/': 'showTeam',
             
-            //'team/:action': 'showTeam',
             'team/:id' : 'showTeam',
 	        '!team/:id' : 'showTeam',
             
@@ -42,6 +41,49 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
             'game/': 'showGame',
             'game/:id' : 'showGame',
 	        '!game/:id' : 'showGame',
+            
+            
+            '!home/search/:key/:value/': 'showHomePage',
+            '!home/search/:key/:value/:key/:value/': 'showHomePage',
+            '!home/search/:key/:value/:key/:value/:key/:value/': 'showHomePage',            
+            '!home/search/:key/:value/:key/:value/:key/:value/:key/:value/': 'showHomePage', 
+            '!home/search/:key/:value/:key/:value/:key/:value/:key/:value/:key/:value/': 'showHomePage',
+            '!home/search/:key/:value/:key/:value/:key/:value/:key/:value/:key/:value/:key/:value/': 'showHomePage',
+            '!home/search/:key/:value/:key/:value/:key/:value/:key/:value/:key/:value/:key/:value/:key/:value/': 'showHomePage',
+            '!home/search/:key/:value/:key/:value/:key/:value/:key/:value/:key/:value/:key/:value/:key/:value/:key/:value/': 'showHomePage',
+
+
+            '!home/search/:key/:value/:key/:value/:key/:value': 'showHomePage',
+            '!home/search/:key/:value': 'showHomePage',
+            '!home/search/:key/:value/:key/:value': 'showHomePage',
+            '!home/search/:key/:value/:key/:value/:key/:value/:key/:value': 'showHomePage', 
+            '!home/search/:key/:value/:key/:value/:key/:value/:key/:value/:key/:value': 'showHomePage',
+            '!home/search/:key/:value/:key/:value/:key/:value/:key/:value/:key/:value/:key/:value': 'showHomePage',
+            '!home/search/:key/:value/:key/:value/:key/:value/:key/:value/:key/:value/:key/:value/:key/:value': 'showHomePage',
+            '!home/search/:key/:value/:key/:value/:key/:value/:key/:value/:key/:value/:key/:value/:key/:value/:key/:value': 'showHomePage',
+            
+            
+            
+            'home/search/:key/:value/': 'showHomePage',
+            'home/search/:key/:value/:key/:value/': 'showHomePage',
+            'home/search/:key/:value/:key/:value/:key/:value/': 'showHomePage', 
+            'home/search/:key/:value/:key/:value/:key/:value/:key/:value/': 'showHomePage', 
+            'home/search/:key/:value/:key/:value/:key/:value/:key/:value/:key/:value/': 'showHomePage',
+            'home/search/:key/:value/:key/:value/:key/:value/:key/:value/:key/:value/:key/:value/': 'showHomePage',
+            'home/search/:key/:value/:key/:value/:key/:value/:key/:value/:key/:value/:key/:value/:key/:value/': 'showHomePage',
+            'home/search/:key/:value/:key/:value/:key/:value/:key/:value/:key/:value/:key/:value/:key/:value/:key/:value/': 'showHomePage',
+            
+            
+            'home/search/:key/:value/:key/:value/:key/:value': 'showHomePage',
+            'home/search/:key/:value': 'showHomePage',
+            'home/search/:key/:value/:key/:value': 'showHomePage',
+            'home/search/:key/:value/:key/:value/:key/:value/:key/:value': 'showHomePage', 
+            'home/search/:key/:value/:key/:value/:key/:value/:key/:value/:key/:value': 'showHomePage',
+            '!home/search/:key/:value/:key/:value/:key/:value/:key/:value/:key/:value/:key/:value': 'showHomePage',
+            '!home/search/:key/:value/:key/:value/:key/:value/:key/:value/:key/:value/:key/:value/:key/:value': 'showHomePage',
+            '!home/search/:key/:value/:key/:value/:key/:value/:key/:value/:key/:value/:key/:value/:key/:value/:key/:value': 'showHomePage',
+            
+            
             
             ':page/:id/:param/:id/': 'showPage',
             ':page/:id/:param/:id/:param/:id/': 'showPage', 
@@ -52,6 +94,9 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
             ':page/:param/:id/:param/:id/': 'showOwnPage',  
             ':page/:param/:id': 'showOwnPage',
             ':page/:param/:id/:param/:id': 'showOwnPage',  
+
+
+            
             
             'profile/:userid': 'showProfile',
 	        '!profile/:userid': 'showProfile',
@@ -76,6 +121,19 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
             'logout':'callLogout'
            // 'user/create':'showUsercreate'
         },
+        
+        showHomePage: function() {
+			var arr = [], len = arguments.length;        	
+        	if(arguments && len) {
+        		for(var i = 0; i < len; i++) {
+        			if(i % 2 == 0)
+	        			arr.push({key: arguments[i], value: arguments[i+1]});
+        		}
+        	}
+        	// generating params
+        	if(this.showHome && _.isFunction(this.showHome)) this.showHome(undefined, arr);
+        },
+        
         
         showPage: function(pageName, id, page1, Page1_id, page2, Page2_id) {
         	if(pageName.indexOf("!") != "-1") pageName = pageName.replace("!", "");

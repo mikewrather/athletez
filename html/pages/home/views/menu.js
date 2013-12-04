@@ -16,18 +16,15 @@ define(
 					"click .restype" : "changeBaseUrl",
 					"click .dropdown-menu-alias > li > a" : "select",
 					"click .dd" : "doNothing",
-					//"click .menu" : "toggle",
 					"click .menu-link-h" : "showMenuDropdown",
 					'click .views-reset-btn-h' : 'resetView',
 					'click .sport-reset-btn-h' : 'resetSport',
 					'click .location-reset-btn-h' : 'resetLocation',
 					'click .reset-all-btn-h' : 'resetAll'
-					//'change #state-list' : 'stateListChange'
 				},
 				
 				
 				demoSelect: function() {
-					
 				},
 
 				resetAll: function(){
@@ -50,7 +47,6 @@ define(
 					this.$el.find('.reset-sport-area-h ul li a.select, .reset-sport-area-h ul li.select').removeClass('select');
 				},
 				
-				
 				resetLocation: function() {
 					var page = "location";
 					Channel('resetFilter').publish(page);
@@ -63,12 +59,9 @@ define(
 				},
 
 				template : menuTemplate,
-				intialize : function(options) {
+				initialize : function(options) {
 					SectionView.prototype.initialize.call(this, options);
-					console.log("intializwe menu view ----------->>>");
-					
-					
-					//this.$el.find('.demo-select').html(DropDown.$el);
+					this.options = (options.options)?options.options:{};
 				},
 				
 				updateSearch : function(e) {
@@ -103,16 +96,6 @@ define(
 				hideAllDropdowns: function() {
 					var _self = this;
 					$("html, #search").click(function(e) {
-						
-						try{
-                     		 console.log($(e.target).parents("#views").length);
-                		}
-                		catch(e){
-                   			console={},
-                    		console.log=function(e){}
-        
-                		}
-						
 						if(!$(e.target).parents(".menu").length)
 							_self.hideDropdown();
 					});
@@ -140,11 +123,10 @@ define(
 					targetClass = target.attr('class').split(' ')[0];
 					$(target).addClass('select');
 					var ret = {
-							'submenu' : targetClass,
-							'value' :  $(target).data('id') || $(target).text()
-							};
+						'submenu' : targetClass,
+						'value' :  $(target).data('id') || $(target).text()
+					};
 					Channel('viewFilterChanged').publish(ret);
-					debug.log(ret);
 				},
 				
 				toggle : function(e) {
@@ -174,17 +156,30 @@ define(
 							clearInterval(trySlimscroll);
 						}catch(ex){}
 					},1000);
-
 					var data = this.model.toJSON();
-					try{
-						console.error(data.views);
-					}
-					catch(e){
-						console={},
-						console.log=function(e){}
+					// show option seleted
+					//alert(this.options.sports_id);
+					
+					if(this.options.searchtext) {
+						this.$el.find("#search").val(this.options.searchtext);
 					}
 					
-
+					if(this.options.base) {
+						this.$el.find(".restype[data-number="+this.options.base+"]").trigger("click");
+					}
+					
+					if(this.options.orderby) {
+						var $this = this.$el.find("a.browse[data-id="+this.options.orderby+"]");
+						$this.parents("ul").find("a").removeClass("select");					
+						$this.addClass("select");
+						var interval = setInterval(function() {
+							if($("#views .view-link-h .option-heading-h").length) {
+								clearInterval(interval);
+								if($this.text())
+									$("#views .view-link-h .option-heading-h").html($this.text());
+							}
+						} , 2000); 
+					}
 				}
 
 			});

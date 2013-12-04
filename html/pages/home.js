@@ -83,6 +83,7 @@ define(
 				},
 				
 				initUrlOptions : function() {
+					
 					this.searchUrls = ['/api/video/search', 
 					                   '/api/image/search', 
 					                   '/api/user/search', 
@@ -90,13 +91,13 @@ define(
 										'/api/team/search'];
 					this.baseUrl = this.searchUrls[1];
 					this.urlOptions = {
-						sports_id : '0',
-						cities_id : '0',
-						orderby : 'random',
-						time : 'DAY',
-						states_id : '0',
-						searchtext : '',
-						country_id : '0'
+						sports_id : this.sports_id || '0',
+						cities_id : this.cities_id || '0',
+						orderby : this.orderby || 'random',
+						time : this.time || 'DAY',
+						states_id : this.states_id || '0',
+						searchtext : this.searchtext || '',
+						country_id : this.country_id || '0'
 					};
 					
 					this.menuValues = [
@@ -141,7 +142,6 @@ define(
 		        	this.setupMenuView();
 		        	_.each(this.genderTypes, this.setupSportListView);
 		        	_.each(['top-rated', 'search-result'], this.setupImageListView);
-		        	
 		        	this.setupLocationDDView();
 		        	this.setupScheme();
 		        	this.setupLayout().render();
@@ -152,12 +152,14 @@ define(
 		        
 		        updateBaseUrl : function(urlNumber) {
 		        	this.baseUrl = this.searchUrls[urlNumber];
-		        	this.transitionView();
+		        	var options = {'base': urlNumber};
+		        	this.transitionView(options);
 		        },
 		        
 		        updateText : function(text) {
 		        	this.urlOptions.searchtext = text;
-		        	this.transitionView();
+		        	var options = {'searchtext': text};
+		        	this.transitionView(options);
 		        },
 		        
 		        changeViewFilter : function(str) {
@@ -172,7 +174,6 @@ define(
 		        },
 		        
 		        changeSportFilter : function(model) {
-		        	console.log(model);
 		        	var options = {'sports_id': model.attributes.payload.sport_id};
 		        	this.transitionView(options);
 		        },
@@ -191,7 +192,6 @@ define(
 				},
 				
 				resetFilter: function(page) {
-					
 					for(var i in this.menuValues) {
 						if(this.menuValues[i].input) {
 							$(this.menuValues[i].src).val("");
@@ -221,6 +221,7 @@ define(
 							}
 						break;
 					}
+					this.removeParamsFromUrl();
 					this.transitionView();
 				},
 
@@ -229,18 +230,43 @@ define(
 					this.searchView(options);
 				},
 				
+				// to manage the params on url
+				manageHomePageUrl: function(options) {
+					var currentHashUrl = (window.location.hash.match("search"))?window.location.hash: window.location.hash+ "/search";
+					if(options) {
+						for(var i in options) {
+							if(!_.isUndefined(options[i]) && options[i]) {
+								var p = new RegExp(i+"\/(.*)[0-9a-zA-Z]", "i"),
+								p1 = new RegExp(i+"\/(.*)[0-9a-zA-Z]", "i");
+								if(p.test(currentHashUrl)) {
+									currentHashUrl = currentHashUrl.replace(p,i+'/'+options[i]);					
+								} else if(p1.test(currentHashUrl)) {
+									currentHashUrl = currentHashUrl.replace(p1,i+'/'+options[i]);					
+								} else {
+									currentHashUrl += '/'+i+'/'+options[i];
+								}
+							}
+						}
+					}
+					routing.navigate(currentHashUrl, {trigger: false});
+				},
+				
+				removeParamsFromUrl: function() {
+					routing.navigate("!home", {trigger: false});	
+				},
 				
 				searchView: function(options) {
 					var _self = this, viewName = 'search-result',
 					    imageList = this.collections[viewName];
 					    controller = this;
 
+					this.manageHomePageUrl(options);
+
 					imageList.url = this.url(options);
+					//console.error(options);
 					imageList.targetElement = "#search-result";
 					imageList.fetch();
-
 					var media_id = media_id || null;
-
 					$.when(imageList.request).done(function() {
 						if(imageList.length < 12)
 							$(".right-arrow-page-h").addClass("disable-arrow-link");
@@ -251,7 +277,7 @@ define(
 							$(".left-arrow-page-h").addClass("disable-arrow-link");
 						else
 							$(".left-arrow-page-h").removeClass("disable-arrow-link");														
-							
+							 
 						var view = new ImageListView({
 							collection : imageList,
 							name : viewName,
@@ -260,6 +286,7 @@ define(
 							media_id: media_id,
 							pageName: "home"
 						});
+						
 						controller.layout.transition(viewName, view);
 					});
 					for(var i in this.menuValues) {
@@ -294,8 +321,6 @@ define(
 						$(".left-arrow-page-h").addClass("disable-arrow-link");
 					else
 						$(".left-arrow-page-h").removeClass("disable-arrow-link");	
-					
-					
 				},
 				
 				url : function(options) {
@@ -345,7 +370,6 @@ define(
 
 				setupImageListView : function(viewName) {
 					var imageListView;
-					
 					imageListView = new ImageListView({
 						collection : this.collections[viewName],
 						name : viewName,
@@ -362,11 +386,11 @@ define(
 				
 				setupSportListView : function(viewName) {
 					var sportListView;
-					 
 					sportListView = new SportListView({
 						collection : this.collections[viewName],
 						name : viewName,
 						id : viewName,
+						sports_id: this.sports_id,
 						destination : '#sport #'+ viewName
 					});
 
@@ -400,12 +424,15 @@ define(
 				setupMenuView : function() {
 					var menuModel = new MenuModel(),
 						menuView,
-						viewName = 'menu';
+						viewName = 'menu', options = this.urlOptions;
+						
+					options.base = this.base;	
 
 					menuView = new MenuView({
 						model : menuModel,
 						name : viewName,
-						destination : '#'+viewName
+						destination : '#'+viewName,
+						options: options
 					});
 					
 					menuView.render();
@@ -426,7 +453,6 @@ define(
 					});
 					
 					this.cityView.render();
-					
 					this.sections[cityViewName] = this.cityView;
 					this.meta.activeViews.push(cityViewName);
 				},
