@@ -4,7 +4,28 @@
  // Requires `define`, `require`
  // Returns {Photo Player View} constructor
  */
-define(['require', 'text!usercontrols/photo-player/templates/player.html', 'text!usercontrols/photo-player/templates/image-thumbs.html', 'text!usercontrols/tag/templates/layout.html', 'facade', 'views', 'utils', 'vendor', 'votes/models/vote', 'jwplayer', 'jqueryui', 'jquery.slimscroll.hor', 'usercontrols/tag/models/basic_info', 'usercontrols/tag/views/main', 'media/models/tag','usercontrols/photo-player/models/tag-myself', 'component/fb'], function(require, layoutTemplate, imageThumbsTemplate, tagTemplate) {
+define(['require',
+	'text!usercontrols/photo-player/templates/player.html',
+	'text!usercontrols/photo-player/templates/image-thumbs.html',
+	'text!usercontrols/tag/templates/layout.html',
+	'facade',
+	'views',
+	'utils',
+	'vendor',
+	'votes/models/vote',
+	'jwplayer',
+	'jqueryui',
+	'jquery.slimscroll.hor',
+	'usercontrols/tag/models/basic_info',
+	'usercontrols/tag/views/main',
+	'media/models/tag',
+	'usercontrols/photo-player/models/tag-myself',
+	'component/fb'
+], function(
+	require,
+	layoutTemplate,
+	imageThumbsTemplate,
+	tagTemplate) {
 
 	var self, facade = require('facade'), views = require('views'), SectionView = views.SectionView, utils = require('utils'),
 	 Channel = utils.lib.Channel, vendor = require('vendor'), 
@@ -68,16 +89,25 @@ define(['require', 'text!usercontrols/photo-player/templates/player.html', 'text
 		// share media on facebook
 		shareOnFacebook: function() {
 			var record = this.json[this.index],
-			userId = (this.user_id)?"/"+this.user_id:'',
-			sportId = (record.payload.media_obj.sports_id)?"/sport/"+record.payload.media_obj.sports_id:'',
-			mediaId = (record.payload.media_id)?"/media/"+record.payload.media_id:"",
+				userId = (this.user_id)?"/"+this.user_id:'',
+				User = this.getUserForMedia(),
+				Sport = this.getSportForMedia(),
+				sportId = (record.payload.media_obj.sports_id)?"/sport/"+record.payload.media_obj.sports_id:'',
+				mediaId = (record.payload.media_id)?"/media/"+record.payload.media_id:"";
 
-			link = "#"+this.pageName+userId+sportId+mediaId, caption = 'Image', image = record.payload.image_path, description = 'Test Description';
+
+			var link = "#"+this.pageName+userId+sportId+mediaId,
+				name = User.name + " - " + Sport.sport_name,
+				caption = "Athletez.com",
+				image = record.payload.image_path,
+				description = '';
+
 			console.log(link);
+
 			var fb = new FbComponent();
 			fb.shareOnFacebook({
 				method: 'feed',
-			    name: 'Facebook Dialogs',
+			    name: name,
 			    link: link,
 			    picture: image,
 			    caption: caption,
@@ -89,6 +119,14 @@ define(['require', 'text!usercontrols/photo-player/templates/player.html', 'text
 			    	alert("Not Shared successfully.");
 			    }
 			});
+		},
+
+		getUserForMedia: function(){
+			return this.json[this.index].payload.media_obj.users_obj;
+		},
+
+		getSportForMedia: function(){
+			return this.json[this.index].payload.media_obj.sports_obj;
 		},
 
 		changeImage : function(e) {
@@ -456,7 +494,7 @@ define(['require', 'text!usercontrols/photo-player/templates/player.html', 'text
 			}
 			this.$el.find('.thumb-image-list-h li').removeClass('selected-photo-thumb');
 			this.$el.find('.thumb-link-h[data-index=' + this.index + ']').parents('li').addClass('selected-photo-thumb');
-			routing.trigger('photo-player-section-reload', extra._enttypes_id, extra._media_id);
+			routing.trigger('photo-player-section-reload', extra._enttypes_id, extra._media_id,mpay.media_obj.users_id);
 			// change Hash URL
 			if(this.loadFirstTime) {
 				// creating URL
@@ -613,9 +651,10 @@ define(['require', 'text!usercontrols/photo-player/templates/player.html', 'text
 				_enttypes_id : mpay.enttypes_id,
 				_id : mpay.id,
 				_media_id : mpay.media_id,
-				_currentIndex : _self.index
+				_currentIndex : _self.index,
+				_uploader : mpay.media_obj.user_obj
 			};
-			routing.trigger('tags-fetch-new-form-data', extra._enttypes_id, extra._media_id);
+			routing.trigger('tags-fetch-new-form-data', extra._enttypes_id, extra._media_id,mpay);
 		},
 		TagMyself : function(){
 			var self = this;

@@ -39,9 +39,11 @@ function(facade, vendor,  utils, views) {
 		
         initialize: function(options) {
         	this.renderTemplate();
+	        console.log(options);
 	         var _self = this;
 	         this.name = options.name;
 	         this.collection = options.collection;
+	        this.uploader_id = options.uploader;
 	         console.log(this.collection.toJSON());
 			 _self.allData = this.collection.toArray();
 			_self.cleardata();
@@ -90,19 +92,15 @@ function(facade, vendor,  utils, views) {
         	}
         },
         getprofile:function(){
-        	var mainurl = window.location.href;
-			var userid = mainurl.split('/');
-			var currId = userid[userid.length-1];
-			this.id=currId;
-			var urlmain ='/api/user/basics/' + this.id;
+
+			var urlmain ='/api/user/basics/' + this.uploader_id;
 			this.model.set('url',urlmain);
-			//alert("check point");
-			var mymodel = new TagsSectionmodel({id:currId});
+			var mymodel = new TagsSectionmodel({id:this.uploader_id});
 			mymodel.fetch({
 				success: (function (msg) {
-                	        //alert(' Service request success: '); 
-                	        var element = '<div class="user-photo-profile"><img src='+msg.attributes.payload.user_picture_obj.image_path+' alt=""></div><div class="content-prof-sub"><span class="user-comment">Uploaded By&nbsp;</span><span class="user-comment">'+msg.attributes.payload.label+'</span><p class="comment-text">'+msg.attributes.payload.user_picture_obj.media_obj.timePosted+'</p></div>';
-                	        $(".prof-name-area").html(element);                        
+                //	        alert(' Service request success: ');
+                	        var element = '<div class="user-photo-profile"><img src='+msg.attributes.payload.user_picture_obj.image_path+' alt=""></div><div class="content-prof-sub"><span class="user-comment">Uploaded By&nbsp;</span><span class="user-comment">'+msg.attributes.payload.label+'</span></div>';
+                	        $(".prof-name-area").html(element);
                     	})
 			});
         },

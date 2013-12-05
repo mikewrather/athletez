@@ -12,11 +12,12 @@ define(['require', 'facade', 'views', 'utils', 'vendor'], function(require) {
 		// initialize function
 		init = function() {
 			window.fbAsyncInit = function() {
-                FB.init({
-                    appId      : '219148511595084',//'396541317103569', // App ID                     status     : true, // check login status
-                    cookie     : true, // enable cookies to allow the server to access the session
-                    xfbml      : true,  // parse XFBML
-                    oauth      : true
+				FB.init({
+				//	appId   : '239430712864961',
+				    appId   : '219148511595084',//'396541317103569', // App ID                     status     : true, // check login status
+					cookie  : true, // enable cookies to allow the server to access the session
+					xfbml   : true,  // parse XFBML
+					oauth   : true
                 });
             };
 			loadFacebook();
@@ -65,13 +66,13 @@ define(['require', 'facade', 'views', 'utils', 'vendor'], function(require) {
 				    if (response && response.post_id) {
 				      if(options.success && _.isFunction(options.success))
 				      	 options.success();
-				      else
-				      	alert('Item Shared successfully.');
+				   //   else
+				     // 	alert('Item Shared successfully.');
 				    } else {
 				      if(options.error && _.isFunction(options.error))
 				      	 options.error();
-				      else
-				      	alert('Item Not Shared successfully.');
+				    // else
+				      	//alert('Item Not Shared successfully.');
 				    }
 				  }
 				);

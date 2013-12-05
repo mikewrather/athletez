@@ -70,25 +70,27 @@ define(["require", 'text!usercontrols/photo-player/templates/comments.html',
 					'</div></div></div>';
 			
 			routing.off('photo-player-section-reload');
-			routing.on('photo-player-section-reload', function(entity_id, id) {
+			routing.on('photo-player-section-reload', function(entity_id, id,uploader_id) {
 				_self.id = id;
 				//alert("en reload");
 				$("#image-tagging-photo").html('');
+				console.log("called",uploader_id);
 				_self.setUpCommentView(entity_id, id);
-				_self.setUpTagView(entity_id, id);
+				_self.setUpTagView(entity_id, id,uploader_id);
 				//_self.setUpTagPhotoView(entity_id, id);
 			});
 			
 			routing.off('comments-fetch-new-form-data');
-	       	routing.on('comments-fetch-new-form-data', function(entity_id, id) {
+	       	routing.on('comments-fetch-new-form-data', function(entity_id, id,uploader_id) {
 	       	//	alert("en data");
-	       		_self.setUpCommentView(entity_id, id);
+	       		_self.setUpCommentView(entity_id, id,uploader_id);
 	       	});
 	       	
 	       	routing.off('tags-fetch-new-form-data');
-	       	routing.on('tags-fetch-new-form-data', function(entity_id, id) {
+	       	routing.on('tags-fetch-new-form-data', function(entity_id, id,uploader_id) {
 	       	//	alert("en data");
-	       		_self.setUpTagView(entity_id, id);
+		        console.log("mpay",uploader_id);
+	       		_self.setUpTagView(entity_id, id,uploader_id);
 	       	});
 
   			// set up main layout view					
@@ -144,7 +146,7 @@ define(["require", 'text!usercontrols/photo-player/templates/comments.html',
 			this.layout.render();
 		},
 		
-		setUpTagView: function(entity_id, id) {
+		setUpTagView: function(entity_id, id,uploader_id) {
 			var l = this.scheme.length;
 			for(var i = 0; i < l; i++) {
 				if(this.scheme[i].name == this.oldTagView) {
@@ -157,6 +159,7 @@ define(["require", 'text!usercontrols/photo-player/templates/comments.html',
 			_self.tags = new TagsCollection();
 			_self.tags.id = id;
 			_self.tags.fetch();
+			console.log("Looking for media obj",uploader_id);
 			//$(".coment-area-h").html();
 			$.when(_self.tags.request).done(function () {
 				var modeltag = new TagsSectionmodel();
@@ -165,6 +168,7 @@ define(["require", 'text!usercontrols/photo-player/templates/comments.html',
 					userId: _self.userId,
 					name : _self.oldTagView,
 					model:modeltag,
+					uploader:uploader_id,
 					entity_type_id: entity_id,
 					destination : ".tags-area-h"
 				});
