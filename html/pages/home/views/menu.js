@@ -154,19 +154,20 @@ define(
 						try{
 							$(self.el).find('.sport-list').slimScroll();
 							clearInterval(trySlimscroll);
-						}catch(ex){}
+						} catch(ex) {}
 					},1000);
+					
 					var data = this.model.toJSON();
 					// show option seleted
-					//alert(this.options.sports_id);
 					
 					if(this.options.searchtext) {
 						this.$el.find("#search").val(this.options.searchtext);
 					}
 					
 					if(this.options.base) {
-						var text = this.$el.find(".restype[data-number="+this.options.base+"]").text();
-						this.$el.find("#resulttype .restype-link-h .option-heading-h").text(text);
+						var $ob = this.$el.find(".restype[data-number="+this.options.base+"]");
+						$ob.addClass("select");
+						this.$el.find("#resulttype .restype-link-h .option-heading-h").text($ob.text());
 					}
 					
 					if(this.options.orderby) {
@@ -179,10 +180,9 @@ define(
 								if($this.text())
 									$("#views .view-link-h .option-heading-h").html($this.text());
 							}
-						} , 2000); 
+						} , 500);
 					}
 				}
-
 			});
 
 			return MenuView;

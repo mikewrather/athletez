@@ -1678,3 +1678,93 @@ a.add-to-event {
 	display: none;
 }
 
+
+.icons {
+	background: url(images/icons/sprites.png) no-repeat;
+	float: left;
+	margin: 10px 0 0 0;
+	
+	-webkit-box-shadow: 10px 10px 41px 0px rgba(0,0,0,0.75);
+	-moz-box-shadow: 10px 10px 41px 0px rgba(0,0,0,0.75);
+	-ms-box-shadow: 10px 10px 41px 0px rgba(0,0,0,0.75);
+	-o-box-shadow: 10px 10px 41px 0px rgba(0,0,0,0.75);		
+	box-shadow: 10px 10px 41px 0px rgba(0,0,0,0.75);
+	
+	
+}
+
+.athlete_selected, .athlete:hover {
+	background-position: -63px -240px ;
+	width: 50px;
+	height: 50px;
+}
+
+.athlete {
+	background-position: -6px -240px ;
+	width: 50px;
+	height: 50px;
+}
+
+.events-games_selected, .events-games:hover {
+	background-position: -63px -62px ;
+	width: 50px;
+	height: 50px;
+}
+
+.events-games{
+	background-position: -6px -61px ;
+	width: 50px;
+	height: 50px;
+}
+
+.leagues_selected, .leagues:hover{
+	background-position: -63px -305px ;
+	width: 50px;
+	height: 50px;
+}
+
+.leagues{
+	background-position: -4px -306px ;
+	width: 50px;
+	height: 50px;
+}
+
+.photos_selected, .photos:hover{
+	background-position: -63px -181px ;
+	width: 50px;
+	height: 50px;
+}
+
+.photos{
+	background-position: -6px -182px ;
+	width: 50px;
+	height: 50px;
+}
+
+.team {
+	background-position: -7px -121px ;
+	width: 50px;
+	height: 50px;
+}
+
+.team_selected, .team:hover{
+	background-position: -63px -120px ;
+	width: 50px;
+	height: 50px;
+}
+
+.videos_selected, .videos:hover{
+	background-position: -63px -4px ;
+	width: 50px;
+	height: 50px;
+}
+
+.videos{
+	background-position: -6px -4px ;
+	width: 50px;
+	height: 50px;
+}
+
+
+
+
