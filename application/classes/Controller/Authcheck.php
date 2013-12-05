@@ -16,32 +16,42 @@ class Controller_Authcheck extends AuthController
 	public function action_index()
 	{
 		$this->populateAuthVars();
-
-		$facebook = FacebookAuth::factory();
-
-		//	print_r($facebook);
-//		$retArr["facebook"] =  $facebook->get_user();
-
 		$retArr['authorized'] = $this->user ? true : false;
 
-		if(!$this->user)
+		if($this->user)
 		{
-		//	if (isset($retArr['facebook']['id']))
-		//	{
-		//		$user_identity = ORM::factory('User_Identity');
+			//Check if FB identity exists
+			$identity = ORM::factory('User_Identity')
+				->where('users_id','=',$this->user->id)
+				->where('provider','=','facebook')
+				->find();
 
-		//		if(!$user = $user_identity->find_by_identity($retArr['facebook']['id']))
-		//		{
-		//			echo json_encode($retArr);
-		//			return;
-		//		}
-		//	}
-		//	else
-		//	{
+			if($identity->loaded()) $retArr['facebook']['id'] = $identity->identity;
+		}
+		else
+		{
+			echo microtime();
+			$facebook = FacebookAuth::factory();
+			$retArr["facebook"] =  $facebook->get_user();
+			echo microtime();
+
+			if (isset($retArr['facebook']['id']))
+			{
+				$user_identity = ORM::factory('User_Identity');
+
+				if(!$user = $user_identity->find_by_identity($retArr['facebook']['id']))
+				{
+					echo json_encode($retArr);
+					return;
+				}
+			}
+			else
+			{
 				echo json_encode($retArr);
 				return;
-		//	}
+			}
 		}
+
 
 		$retArr['id'] = $this->user->id;
 	//	$retArr['user_photo'] = $this->user->getAvatar();
@@ -63,10 +73,10 @@ class Controller_Authcheck extends AuthController
 			"link"=>"/#resume"
 		);
 
-//		$retArr['nav'][] = array(
-//			"page" => $retArr['authorized'] ? "Facebook Linked" : "Link to Facebook",
-//			"link" => $retArr['authorized'] ? "javascript:void(0);" : "/#fbconnect"
-//		);
+		$retArr['nav'][] = array(
+			"page" => $retArr['facebook']['id']>0 ? "FB Account Linked" : "Link to Facebook",
+			"link" => $retArr['facebook']['id']>0 ? "javascript:void(0);" : "/#fbconnect"
+		);
 
 		$retArr['nav'][] = array(
 			"page" => "Log Out",
