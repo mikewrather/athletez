@@ -165,7 +165,8 @@ define(
 					}
 					
 					if(this.options.base) {
-						this.$el.find(".restype[data-number="+this.options.base+"]").trigger("click");
+						var text = this.$el.find(".restype[data-number="+this.options.base+"]").text();
+						this.$el.find("#resulttype .restype-link-h .option-heading-h").text(text);
 					}
 					
 					if(this.options.orderby) {
