@@ -20,11 +20,34 @@ define(
 					'click .views-reset-btn-h' : 'resetView',
 					'click .sport-reset-btn-h' : 'resetSport',
 					'click .location-reset-btn-h' : 'resetLocation',
-					'click .reset-all-btn-h' : 'resetAll'
+					'click .reset-all-btn-h' : 'resetAll',
+					"click .reset-option-btn-h": "resetIndividual"
 				},
 				
 				
 				demoSelect: function() {
+					
+				},
+				
+				resetIndividual: function(e) {
+					var fn = $(e.currentTarget).data("type");
+					if(fn && _.isFunction(this[fn])) this[fn]();
+				},
+				
+				restype: function() {
+					Channel('resetIndividual').publish("restype");
+				},
+				
+				sport: function() {
+					Channel('resetIndividual').publish("sports");
+				},
+				
+				city: function() {
+					Channel('resetIndividual').publish("location");
+				},
+				
+				views: function() {
+					Channel('resetIndividual').publish("view");
 				},
 
 				resetAll: function(){

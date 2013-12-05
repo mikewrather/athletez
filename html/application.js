@@ -42,7 +42,8 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
             'game/:id' : 'showGame',
 	        '!game/:id' : 'showGame',
             
-            
+            '!home/search': 'showHomePage',
+            '!home/search/': 'showHomePage',
             '!home/search/:key/:value/': 'showHomePage',
             '!home/search/:key/:value/:key/:value/': 'showHomePage',
             '!home/search/:key/:value/:key/:value/:key/:value/': 'showHomePage',            
@@ -62,6 +63,8 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
             '!home/search/:key/:value/:key/:value/:key/:value/:key/:value/:key/:value/:key/:value/:key/:value': 'showHomePage',
             '!home/search/:key/:value/:key/:value/:key/:value/:key/:value/:key/:value/:key/:value/:key/:value/:key/:value': 'showHomePage',
             
+            'home/search': 'showHomePage',
+            'home/search/': 'showHomePage',            
             'home/search/:key/:value/': 'showHomePage',
             'home/search/:key/:value/:key/:value/': 'showHomePage',
             'home/search/:key/:value/:key/:value/:key/:value/': 'showHomePage', 

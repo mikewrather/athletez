@@ -214,10 +214,15 @@ li.sport a:hover {
 	color: #FFF;
 }
 .row-fluid .span2 {
-	width: 11%;
+	width: 12%;
 }
+
+#location.span3 {
+	width: 12%;
+}
+
 .row-fluid .span3 {
-	width: 22.077%;
+	width: 17%;
 }
 .underline-text {
 	text-decoration: underline;

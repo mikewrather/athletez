@@ -1765,6 +1765,14 @@ a.add-to-event {
 	height: 50px;
 }
 
+.individual-reset-btn {
+	float: left;
+}
+
+.individual-reset-btn span {
+	font-size: .7em;
+}
+
 
 
 

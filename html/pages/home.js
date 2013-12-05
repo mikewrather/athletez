@@ -100,11 +100,20 @@ define(
 						country_id : this.country_id || '0'
 					};
 					
+					
+					this.urlOptionByPageView = {
+						restype : ["base"],
+						location : ["cities_id", "states_id", "country_id"],
+						view : ["orderby"],
+						sports : ["sports_id"],
+					};
+					
+					
 					this.menuValues = [
-						{src : '.view-options-h .browse.select', target: '.view-link-h .option-heading-h', input: false, defaultValue: 'ORDER'},
-     					{src: '.sports-option-h .sport.select', target: '.sport-link-h .option-heading-h', input: false, defaultValue: 'ALL SPORTS'},
-     					{src: '#city', target: '.location-link-h .option-heading-h', input: true, defaultValue: 'PLACE'},
-						{src: '#resulttype a.restype.select', target: '.restype-link-h .option-heading-h', input: false, defaultValue: 'ATHLETES'}
+						{page: 'view', src : '.view-options-h .browse.select', target: '.view-link-h .option-heading-h', input: false, defaultValue: 'ORDER'},
+     					{page: 'sports', src: '.sports-option-h .sport.select', target: '.sport-link-h .option-heading-h', input: false, defaultValue: 'ALL SPORTS'},
+     					{page: 'location', src: '#city', target: '.location-link-h .option-heading-h', input: true, defaultValue: 'PLACE'},
+						{page: 'restype', src: '#resulttype a.restype.select', target: '.restype-link-h .option-heading-h', input: false, defaultValue: 'ATHLETES'}
 					];
 
 					this.viewOptions = ['orderby', 'time'];
@@ -124,6 +133,8 @@ define(
 						_self.changeStateFilter(id);
 					});
 					
+					
+					Channel('resetIndividual').subscribe(this.updateIndividual);
 					//Channel('stateChanged:'+ this.collections['state'].cid).subscribe(this.changeStateFilter);
 					Channel('textChanged').subscribe(this.updateText);
 					Channel('viewFilterChanged').subscribe(this.changeViewFilter);
@@ -136,7 +147,66 @@ define(
 		            for (i = 0; i < this.meta.activeViews.length; i++) {
 		                this.scheme.push(this.sections[this.meta.activeViews[i]]);
 		            };
+				},
+		        
+		        updateIndividual: function(page) {
+		        	for(var i in this.menuValues) {
+		        		if(this.menuValues[i].page == page) {
+							if(this.menuValues[i].input) {
+								$(this.menuValues[i].src).val("");
+							} else {
+								$(this.menuValues[i].src).removeClass("select");
+							}
+						}
+					}
+					
+					switch(page) {
+						case 'view':
+							for(var i in this.viewOptions) {
+								if(this.viewOptions[i] == "orderby") {
+									$(".dropdown-menu .browse").removeClass('select');
+									this.urlOptions[this.viewOptions[i]] = "random";
+								} else if(i == "time")
+									this.urlOptions[this.viewOptions[i]] = "today";
+							}
+						break;
+						case 'sports':
+							for(var i in this.sportsOptions) {
+								this.urlOptions[this.sportsOptions[i]] = "0";
+							}
+						break;
+						
+						case 'restype':
+							this.baseUrl = this.searchUrls[0];
+						break;
+						case 'location':
+							for(var i in this.locationOptions) {
+								this.urlOptions[this.locationOptions[i]] = "0";
+							}
+						break;
+					}
+					
+					this.updateUrlAfterReset(this.urlOptionByPageView[page]);
+		        	this.transitionView();
 		        },
+		        
+				updateUrlAfterReset: function(arr) {
+					// to manage the params on url
+					var currentHashUrl = window.location.hash;
+					if(arr && arr.length) {
+						for(var i in arr) {					
+							var p = new RegExp(arr[i]+"\/[0-9a-zA-Z]+\/", "i"),
+							p1 = new RegExp(arr[i]+"\/[0-9a-zA-Z]+", "i");
+							if(p.test(currentHashUrl)) {
+								currentHashUrl = currentHashUrl.replace(p,"");					
+							} else if(p1.test(currentHashUrl)) {
+								currentHashUrl = currentHashUrl.replace(p1,"");					
+							}
+						}
+					}
+					routing.navigate(currentHashUrl, {trigger: false});
+				},		        
+		        
 		        
 		        initSections : function () {
 		        	this.setupMenuView();
@@ -146,6 +216,7 @@ define(
 		        	this.setupScheme();
 		        	this.setupLayout().render();
 		        	this.setUpRegistrationView();
+		        	
 		        	if(this.cityView) this.cityView.initPlugin();
 		        	if(this.userId) $(".register-wrapper, .register-wrapper-h").hide().html("");
 		        },
@@ -427,7 +498,6 @@ define(
 						viewName = 'menu', options = this.urlOptions;
 						
 					options.base = this.base;	
-
 					menuView = new MenuView({
 						model : menuModel,
 						name : viewName,
@@ -451,7 +521,6 @@ define(
 						name : cityViewName,
 						destination : "#location .city"
 					});
-					
 					this.cityView.render();
 					this.sections[cityViewName] = this.cityView;
 					this.meta.activeViews.push(cityViewName);
@@ -459,14 +528,12 @@ define(
 
 				setupLayout : function() {
 					var pageLayout;
-
 					pageLayout = new LayoutView({
 						scheme : this.scheme,
 						destination : "#main",
 						template : pageLayoutTemplate,
 						displayWhen : "ready"
 					});
-
 					this.layout = pageLayout;
 					this.bindCickEvents();
 					return this.layout;
