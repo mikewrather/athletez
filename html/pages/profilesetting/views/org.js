@@ -362,11 +362,11 @@ define(['require', 'text!profilesetting/templates/highschool.html', 'text!profil
 				_self.states_id = "";
 				_self.orgs_id = "";
 				_self.states_id = res.locationState.id;
-				_self.$(self.controls.txtSchools).removeAttr('disabled');
+				_self.$(_self.controls.txtSchools).removeAttr('disabled');
 				
 				_self.orgs_id = res.org_id;
 				if (_self.$el.find(_self.controls.divMainSportsSection).find(_self.controls.ddlSports).length < 1) {
-						self.fillSports(_self.orgs_id, _self.controls.divMainSportsSection);
+						_self.fillSports(_self.orgs_id, _self.controls.divMainSportsSection);
 				}
 				_self.$el.find(".add-club-h").hide();
 				
