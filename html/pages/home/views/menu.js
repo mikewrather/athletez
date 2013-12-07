@@ -93,8 +93,12 @@ define(
 				
 				changeBaseUrl : function(e) {
 					var target = $(e.currentTarget);
-					target.parents('ul').find('.restype').removeClass('select');
-					target.addClass('select');
+					
+					this.$el.find(".icons").each(function() {
+						$(this).removeClass($(this).data("selected-class"));
+					});
+					
+					target.addClass(target.data("selected-class"));
 					var num = target.data("number");
 					Channel('baseUrlChanged').publish(num);
 				},
