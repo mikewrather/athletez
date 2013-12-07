@@ -1,10 +1,10 @@
 //Menu View
 
 define(
-		[ 'require', 'text!pages/home/templates/menu.html', 'facade', 'views', 'jquery.slimscroll' ],
+		[ 'require', 'text!pages/home/templates/menu.html', 'facade', 'views', 'jquery.slimscroll', 'common/models/get-city' ],
 		function(require, menuTemplate) {
 
-			var MenuView, facade = require('facade'), views = require('views'), SectionView = views.SectionView;
+			var MenuView, facade = require('facade'), views = require('views'), SectionView = views.SectionView, getCity = require('common/models/get-city');
 
 			MenuView = SectionView.extend({
 
@@ -189,6 +189,24 @@ define(
 					
 					if(this.options.searchtext) {
 						this.$el.find("#search").val(this.options.searchtext);
+					}
+					
+					if(this.options.cities_id || this.options.states_id || this.options.country_id) {
+						// get location name
+						var cityModel = new getCity();
+						cityModel.cityId = this.options.cities_id || this.options.states_id || this.options.country_id;
+						cityModel.fetch();
+						
+						$.when(cityModel.request).done(function() {
+							var name = cityModel.get("payload").name;
+							if(cityModel.get("payload").states_obj)
+								name +=", "+cityModel.get("payload").states_obj.name;
+
+							if(cityModel.get("payload").county)
+								name +=", "+cityModel.get("payload").county.name;
+									
+							self.$el.find(".location-link-h .option-heading-h").html(name);
+						});
 					}
 
 					if(this.options.base) {
