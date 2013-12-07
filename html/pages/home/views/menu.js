@@ -178,7 +178,7 @@ define(
 					this.hideAllDropdowns();
 					var self=this;
 					var trySlimscroll = setInterval(function(){
-						try{
+						try {
 							$(self.el).find('.sport-list').slimScroll();
 							clearInterval(trySlimscroll);
 						} catch(ex) {}
@@ -190,11 +190,10 @@ define(
 					if(this.options.searchtext) {
 						this.$el.find("#search").val(this.options.searchtext);
 					}
-					
+
 					if(this.options.base) {
 						var $ob = this.$el.find(".restype[data-number="+this.options.base+"]");
-						$ob.addClass("select");
-						this.$el.find("#resulttype .restype-link-h .option-heading-h").text($ob.text());
+						$ob.addClass($ob.data("selected-class"));
 					}
 					
 					if(this.options.orderby) {
