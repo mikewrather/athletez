@@ -1683,7 +1683,6 @@ a.add-to-event {
 	background: url(images/icons/sprites.png) no-repeat;
 	float: left;
 	margin: 10px 0 0 0;
-	
 	-webkit-box-shadow: 10px 10px 41px 0px rgba(0,0,0,0.75);
 	-moz-box-shadow: 10px 10px 41px 0px rgba(0,0,0,0.75);
 	-ms-box-shadow: 10px 10px 41px 0px rgba(0,0,0,0.75);
@@ -1770,7 +1769,16 @@ a.add-to-event {
 }
 
 .individual-reset-btn span {
-	font-size: .7em;
+	font-size: 1em;
+}
+
+.individual-reset-btn a {
+	text-decoration: none;
+	text-shadow: 0px 0px 19px rgba(150, 150, 150, 1);
+}
+
+.individual-reset-btn a span {
+	text-shadow: 0px 0px 19px rgba(150, 150, 150, 1);
 }
 
 
