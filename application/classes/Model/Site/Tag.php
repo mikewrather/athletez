@@ -20,6 +20,10 @@ class Model_Site_Tag extends Model_Site_Entdir
 		'enttype' => array(
 			'model' => 'Site_Enttype',
 			'foreign_key' => 'subject_enttypes_id'
+		),
+		'media' => array(
+			'model' => 'Media_Base',
+			'foreign_key' => 'media_id'
 		)
 	);
 

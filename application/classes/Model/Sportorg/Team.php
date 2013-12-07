@@ -155,6 +155,8 @@ class Model_Sportorg_Team extends ORM
 		}
 	}
 
+	public function getSubject(){ return $this; }
+
 	public function addGame($args = array()){
 		extract($args);
 
@@ -186,6 +188,8 @@ class Model_Sportorg_Team extends ORM
 					$games_teams_link->points_scored = $points_scored;
 					$games_teams_link->save();
 
+					Model_Site_Feed::addToFeed($this,"add");
+
 			}
 			else
 			{
@@ -195,6 +199,9 @@ class Model_Sportorg_Team extends ORM
 				$games_teams_link->games_id = $games_id;
 				$games_teams_link->points_scored = $points_scored;
 				$games_teams_link->save();
+
+				Model_Site_Feed::addToFeed($this,"add");
+
 /*
 				$external_validate = Validation::factory($args);
 				$external_validate->rule('teams_id', 'gamesteams_combine_primary_key_exist', array($teams_id, $games_id));

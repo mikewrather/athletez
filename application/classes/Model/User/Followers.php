@@ -46,7 +46,7 @@ class Model_User_Followers extends ORM
 	 * @param $obj is an ORM implementation of a specific instantiated enttype
 	 * @return bool|stdClass returns false if object is not loaded and returns an object of
 	 **/
-	public static function get_followers($obj,$ret_type='users')
+	public static function get_followers($obj,$ret_type='users',$visible_only=true)
 	{
 		if(!$obj->loaded()) return false;
 
@@ -57,6 +57,8 @@ class Model_User_Followers extends ORM
 			->from('followers')
 			->where('subject_enttypes_id','=',$subject_enttypes_id)
 			->and_where('subject_id','=',$subject_id);
+
+		if($visible_only) $qry->and_where('visible_fan','=',1);
 
 		$qry = ORM::_sql_exclude_deleted_abstract(array(
 			str_replace('Model_','',get_class($obj)) => 'followers.subject_id'
@@ -101,8 +103,8 @@ class Model_User_Followers extends ORM
 	}
 
 	public static function loopThroughFollowers($subject,$author,$obj,$feed,$type){
-		$direct_followers = self::get_followers($subject,'follows');
-		print_r($direct_followers);
+		$direct_followers = self::get_followers($subject,'follows',false);
+	//	print_r($direct_followers);
 		foreach($direct_followers as $follow)
 		{
 			// do nothing if the author is also the follower
@@ -120,18 +122,23 @@ class Model_User_Followers extends ORM
 			if(is_object($queued))
 			{
 				$pingBack = $_SERVER['SERVER_NAME'] . '/api/emailsent/pingback/' . $queued->uniqueString;
-				$subjectline = self::genSubjectLine($type,$subject,$feed);
+				$subjectline = self::genSubjectLine($type,$subject,$feed,$obj);
 				$queued->setSubjectLine($subjectline);
 
 				$subheader = View::factory('email/notification/content/subjectheader')
 					->bind('subject',$subject_as_array = $subject->getBasics());
 
 				$action = View::factory("email/notification/content/$type")
-					->bind('obj',$obj_as_array = $obj->getBasics());
+					->bind('obj',$obj_as_array = $obj->getBasics())
+					->bind('obj_full',$obj)
+					->bind('subject',$subject);
+
+				$backlink = self::genBackLink($type,$subject,$obj);
 
 				$baseview = View::factory('email/notification/base')
 					->bind('pingBack',$pingBack)
 					->bind('doc_title',$subjectline)
+					->bind('backlink',$backlink)
 					->bind('subject_header',$subheader->render())
 					->bind('action_notification',$action->render());
 
@@ -143,26 +150,26 @@ class Model_User_Followers extends ORM
 
 	public static function processFeedItem($obj,$feed)
 	{
-		/*
 		$enttype = ORM::factory('Site_Enttype',Ent::getMyEntTypeID($obj));
 		$type = $enttype->api_name;
 
 		$subject = $obj->getSubject();
 		$author = $feed->getAuthor();
 
-		if(is_array($subject)){
-			foreach($subject as $this_subject){
-				echo get_class($this_subject);
+		if(is_array($subject))
+		{
+			foreach($subject as $this_subject)
+			{
+			//	echo get_class($this_subject);
 				self::loopThroughFollowers($this_subject,$author,$obj,$feed,$type);
 			}
 		}
 		else{
 			self::loopThroughFollowers($subject,$author,$obj,$feed,$type);
 		}
-		*/
 	}
 
-	public function addFollower(Model_User_Base $user, ORM $object)
+	public function addFollower(Model_User_Base $user, ORM $object,$visible=false)
 	{
 		if(!$object->loaded()) return false;
 
@@ -178,12 +185,13 @@ class Model_User_Followers extends ORM
 		$this->subject_enttypes_id = $subject_enttypes_id;
 		$this->subject_id = $object->id;
 		$this->follower_users_id = $user->id;
+		$this->visible_fan = $visible;
 
 		$this->save();
 		return $this->id;
 	}
 
-	public static function genSubjectLine($type,$subject,$feed)
+	public static function genSubjectLine($type,$subject,$feed,$obj)
 	{
 		$sub_line = "Something Happened";
 		switch($type)
@@ -192,19 +200,54 @@ class Model_User_Followers extends ORM
 				$sub_line = "New Comment on " . self::getPageName($subject);
 				break;
 			case 'tag':
-				$sub_line = "New Tag";
+				$sub_line = $subject->name() . " Tagged in an ". $obj->media->media_type;
 				break;
 			case 'game':
 				$sub_line = "New Game";
 				break;
 			case 'userteamslink':
-				$sub_line = "New Team Member!";
+				$sub_line = $subject->name()." Joined a new team!";
 				break;
 			default:
 				break;
 		}
 
 		return $sub_line;
+	}
+
+	public static function genBackLink($type,$subject,$obj)
+	{
+		$enttype = ORM::factory('Site_Enttype',Ent::getMyEntTypeID($subject));
+		$subjecttype = $enttype->api_name;
+		$backlink = "http://".$_SERVER['SERVER_NAME'];
+
+		switch($subjecttype)
+		{
+			case 'user':
+				if($type=='userteamslink'){
+					$backlink .= "/#!team/".$obj->team->id;
+				}
+				elseif($type=='tag'){
+					$backlink .= "/#!home/media/".$obj->media->id;
+				}
+				else{
+					$backlink .= "/#!profile/".$subject->id;
+				}
+				break;
+			case 'tag':
+				$backlink .= "/#!home/".$subject->id;
+				break;
+			case 'game':
+				$backlink .= "/#!game/".$subject->id;
+				break;
+			case 'userteamslink':
+				$backlink .= "/#!team/".$subject->id;
+				break;
+			default:
+				break;
+		}
+
+		return $backlink;
 	}
 
 	public static function getPageName($entity)

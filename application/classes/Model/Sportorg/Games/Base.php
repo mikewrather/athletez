@@ -86,6 +86,8 @@ class Model_Sportorg_Games_Base extends ORM
 		return $return_obj;
 	}
 
+	public function getSubject(){ return $this; }
+
 	public function addGame($args = array()){
 		extract($args);
 

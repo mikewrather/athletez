@@ -931,7 +931,7 @@ class Controller_Api_Base extends AuthController
 //		echo $this->myID;
 
 		$follow = ORM::factory('User_Followers');
-		$follow->addFollower($this->user,$this->mainModel);
+		$follow->addFollower($this->user,$this->mainModel,true);
 		return $follow;
 
 	}

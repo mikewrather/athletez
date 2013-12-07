@@ -594,6 +594,7 @@ ul.common-dropdown li.selected a {
 	position: absolute;
 	right: 0;
 	max-width: 50px;
+    max-height: 30px;
 }
 
 .down-arrow-outer a {
