@@ -303,10 +303,10 @@ define(
 				
 				// to manage the params on url
 				manageHomePageUrl: function(options) {
-					var currentHashUrl = (window.location.hash.match("search"))?window.location.hash: window.location.hash+ "/search";
+					var sl, currentHashUrl = (window.location.hash.match("search"))?window.location.hash: window.location.hash+ "/search";
 					if(options) {
 						for(var i in options) {
-							if(!_.isUndefined(options[i]) && options[i]) {
+							if(!_.isUndefined(options[i])) {
 								var p = new RegExp(i+"\/(.*)[0-9a-zA-Z]", "i"),
 								p1 = new RegExp(i+"\/(.*)[0-9a-zA-Z]", "i");
 								if(p.test(currentHashUrl)) {
@@ -314,7 +314,8 @@ define(
 								} else if(p1.test(currentHashUrl)) {
 									currentHashUrl = currentHashUrl.replace(p1,i+'/'+options[i]);					
 								} else {
-									currentHashUrl += '/'+i+'/'+options[i];
+									sl = (currentHashUrl[currentHashUrl.length-1] != "/")?"/":"";
+									currentHashUrl += sl+i+'/'+options[i];
 								}
 							}
 						}
@@ -332,7 +333,6 @@ define(
 					    controller = this;
 
 					this.manageHomePageUrl(options);
-
 					imageList.url = this.url(options);
 					//console.error(options);
 					imageList.targetElement = "#search-result";
@@ -357,8 +357,8 @@ define(
 							media_id: media_id,
 							pageName: "home"
 						});
-						
 						controller.layout.transition(viewName, view);
+						
 					});
 					for(var i in this.menuValues) {
 						if(this.menuValues[i].input) {
