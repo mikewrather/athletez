@@ -289,7 +289,7 @@ define(
 						case 'location':
 							for(var i in this.locationOptions) {
 								this.urlOptions[this.locationOptions[i]] = "0";
-							}
+						}
 						break;
 					}
 					this.removeParamsFromUrl();
@@ -303,10 +303,11 @@ define(
 				
 				// to manage the params on url
 				manageHomePageUrl: function(options) {
-					var sl, currentHashUrl = (window.location.hash.match("search"))?window.location.hash: window.location.hash+ "/search";
+					var sl, currentHashUrl = (window.location.hash.match("home"))?window.location.hash: window.location.hash+ "/!home";
+					currentHashUrl = (currentHashUrl.match("search"))?currentHashUrl:currentHashUrl+"/search";
 					if(options) {
 						for(var i in options) {
-							if(!_.isUndefined(options[i])) {
+							if(!_.isUndefined(options[i]) && (options[i] != "" || options[i] == "0")) {
 								var p = new RegExp(i+"\/(.*)[0-9a-zA-Z]", "i"),
 								p1 = new RegExp(i+"\/(.*)[0-9a-zA-Z]", "i");
 								if(p.test(currentHashUrl)) {

@@ -116,7 +116,8 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
 			'user/login' : 'showLogin',
 			'addgame' : 'showAddGame',
             'fbconnect':'showFbreg',
-            'logout':'callLogout'
+            'logout':'callLogout',
+            "*splat": "routeNotFound"
            // 'user/create':'showUsercreate'
         },
         
@@ -132,6 +133,10 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
         	if(this.showHome && _.isFunction(this.showHome)) this.showHome(undefined, arr);
         },
         
+        routeNotFound : function () {
+             routing.navigate("home", {trigger: true});
+	    },
+
         showPage: function(pageName, id, page1, Page1_id, page2, Page2_id) {
         	//alert("show page");
         	if(page1 == "media" || page2 == "media") this.mediaPopup = true;
