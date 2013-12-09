@@ -409,6 +409,7 @@ pages/home/models/image.js
 pages/home/collections/image.js
 text!pages/home/templates/menu.html
 vendor/plugins/jquery.slimscroll.min.js
+packages/common/models/get-city.js
 pages/home/views/menu.js
 pages/home/views/image-list.js
 text!packages/location/templates/state-item.html
@@ -884,6 +885,7 @@ pages/home/models/image.js
 pages/home/collections/image.js
 text!pages/home/templates/menu.html
 vendor/plugins/jquery.slimscroll.min.js
+packages/common/models/get-city.js
 pages/home/views/menu.js
 text!media/templates/image-item.html
 packages/vote/models/vote.js
@@ -1437,6 +1439,7 @@ pages/home/models/image.js
 pages/home/collections/image.js
 text!pages/home/templates/menu.html
 vendor/plugins/jquery.slimscroll.min.js
+packages/common/models/get-city.js
 pages/home/views/menu.js
 pages/home/views/image-list.js
 text!packages/location/templates/state-item.html
@@ -1931,6 +1934,7 @@ pages/home/models/image.js
 pages/home/collections/image.js
 text!pages/home/templates/menu.html
 vendor/plugins/jquery.slimscroll.min.js
+packages/common/models/get-city.js
 pages/home/views/menu.js
 pages/home/views/image-list.js
 text!packages/location/templates/state-item.html
@@ -2414,6 +2418,7 @@ pages/home/models/image.js
 pages/home/collections/image.js
 text!pages/home/templates/menu.html
 vendor/plugins/jquery.slimscroll.min.js
+packages/common/models/get-city.js
 pages/home/views/menu.js
 pages/home/views/image-list.js
 text!packages/location/templates/state-item.html
@@ -2705,6 +2710,7 @@ packages/location/models/state.js
 packages/location/collections/states.js
 text!pages/home/templates/menu.html
 vendor/plugins/jquery.slimscroll.min.js
+packages/common/models/get-city.js
 pages/home/views/menu.js
 text!media/templates/image-item.html
 packages/vote/models/vote.js
@@ -3474,6 +3480,7 @@ pages/home/models/image.js
 pages/home/collections/image.js
 text!pages/home/templates/menu.html
 vendor/plugins/jquery.slimscroll.min.js
+packages/common/models/get-city.js
 pages/home/views/menu.js
 pages/home/views/image-list.js
 text!packages/location/templates/state-item.html
