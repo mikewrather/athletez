@@ -1,10 +1,10 @@
 //Menu View
 
 define(
-		[ 'require', 'text!pages/home/templates/menu.html', 'facade', 'views', 'jquery.slimscroll' ],
+		[ 'require', 'text!pages/home/templates/menu.html', 'facade', 'views', 'jquery.slimscroll', 'common/models/get-city' ],
 		function(require, menuTemplate) {
 
-			var MenuView, facade = require('facade'), views = require('views'), SectionView = views.SectionView;
+			var MenuView, facade = require('facade'), views = require('views'), SectionView = views.SectionView, getCity = require('common/models/get-city');
 
 			MenuView = SectionView.extend({
 
@@ -16,18 +16,38 @@ define(
 					"click .restype" : "changeBaseUrl",
 					"click .dropdown-menu-alias > li > a" : "select",
 					"click .dd" : "doNothing",
-					//"click .menu" : "toggle",
 					"click .menu-link-h" : "showMenuDropdown",
 					'click .views-reset-btn-h' : 'resetView',
 					'click .sport-reset-btn-h' : 'resetSport',
 					'click .location-reset-btn-h' : 'resetLocation',
-					'click .reset-all-btn-h' : 'resetAll'
-					//'change #state-list' : 'stateListChange'
+					'click .reset-all-btn-h' : 'resetAll',
+					"click .reset-option-btn-h": "resetIndividual"
 				},
 				
 				
 				demoSelect: function() {
 					
+				},
+				
+				resetIndividual: function(e) {
+					var fn = $(e.currentTarget).data("type");
+					if(fn && _.isFunction(this[fn])) this[fn]();
+				},
+				
+				restype: function() {
+					Channel('resetIndividual').publish("restype");
+				},
+				
+				sport: function() {
+					Channel('resetIndividual').publish("sports");
+				},
+				
+				city: function() {
+					Channel('resetIndividual').publish("location");
+				},
+				
+				views: function() {
+					Channel('resetIndividual').publish("view");
 				},
 
 				resetAll: function(){
@@ -50,7 +70,6 @@ define(
 					this.$el.find('.reset-sport-area-h ul li a.select, .reset-sport-area-h ul li.select').removeClass('select');
 				},
 				
-				
 				resetLocation: function() {
 					var page = "location";
 					Channel('resetFilter').publish(page);
@@ -63,12 +82,9 @@ define(
 				},
 
 				template : menuTemplate,
-				intialize : function(options) {
+				initialize : function(options) {
 					SectionView.prototype.initialize.call(this, options);
-					console.log("intializwe menu view ----------->>>");
-					
-					
-					//this.$el.find('.demo-select').html(DropDown.$el);
+					this.options = (options.options)?options.options:{};
 				},
 				
 				updateSearch : function(e) {
@@ -77,8 +93,12 @@ define(
 				
 				changeBaseUrl : function(e) {
 					var target = $(e.currentTarget);
-					target.parents('ul').find('.restype').removeClass('select');
-					target.addClass('select');
+					
+					this.$el.find(".icons").each(function() {
+						$(this).removeClass($(this).data("selected-class"));
+					});
+					
+					target.addClass(target.data("selected-class"));
 					var num = target.data("number");
 					Channel('baseUrlChanged').publish(num);
 				},
@@ -103,16 +123,6 @@ define(
 				hideAllDropdowns: function() {
 					var _self = this;
 					$("html, #search").click(function(e) {
-						
-						try{
-                     		 console.log($(e.target).parents("#views").length);
-                		}
-                		catch(e){
-                   			console={},
-                    		console.log=function(e){}
-        
-                		}
-						
 						if(!$(e.target).parents(".menu").length)
 							_self.hideDropdown();
 					});
@@ -140,11 +150,10 @@ define(
 					targetClass = target.attr('class').split(' ')[0];
 					$(target).addClass('select');
 					var ret = {
-							'submenu' : targetClass,
-							'value' :  $(target).data('id') || $(target).text()
-							};
+						'submenu' : targetClass,
+						'value' :  $(target).data('id') || $(target).text()
+					};
 					Channel('viewFilterChanged').publish(ret);
-					debug.log(ret);
 				},
 				
 				toggle : function(e) {
@@ -169,24 +178,55 @@ define(
 					this.hideAllDropdowns();
 					var self=this;
 					var trySlimscroll = setInterval(function(){
-						try{
+						try {
 							$(self.el).find('.sport-list').slimScroll();
 							clearInterval(trySlimscroll);
-						}catch(ex){}
+						} catch(ex) {}
 					},1000);
-
+					
 					var data = this.model.toJSON();
-					try{
-						console.error(data.views);
-					}
-					catch(e){
-						console={},
-						console.log=function(e){}
+					// show option seleted
+					
+					if(this.options.searchtext) {
+						this.$el.find("#search").val(this.options.searchtext);
 					}
 					
+					if(this.options.cities_id || this.options.states_id || this.options.country_id) {
+						// get location name
+						var cityModel = new getCity();
+						cityModel.cityId = this.options.cities_id || this.options.states_id || this.options.country_id;
+						cityModel.fetch();
+						
+						$.when(cityModel.request).done(function() {
+							var name = cityModel.get("payload").name;
+							if(cityModel.get("payload").states_obj)
+								name +=", "+cityModel.get("payload").states_obj.name;
 
+							if(cityModel.get("payload").county)
+								name +=", "+cityModel.get("payload").county.name;
+									
+							self.$el.find(".location-link-h .option-heading-h").html(name);
+						});
+					}
+
+					if(this.options.base) {
+						var $ob = this.$el.find(".restype[data-number="+this.options.base+"]");
+						$ob.addClass($ob.data("selected-class"));
+					}
+					
+					if(this.options.orderby) {
+						var $this = this.$el.find("a.browse[data-id="+this.options.orderby+"]");
+						$this.parents("ul").find("a").removeClass("select");					
+						$this.addClass("select");
+						var interval = setInterval(function() {
+							if($("#views .view-link-h .option-heading-h").length) {
+								clearInterval(interval);
+								if($this.text())
+									$("#views .view-link-h .option-heading-h").html($this.text());
+							}
+						} , 500);
+					}
 				}
-
 			});
 
 			return MenuView;

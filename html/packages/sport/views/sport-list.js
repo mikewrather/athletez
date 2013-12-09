@@ -36,6 +36,7 @@ function(facade,  views,   utils,   SportItemView) {
                 throw new Error("SportListView expected options.collection.");
             }
             _.bindAll(this);
+            this.sports_id = options.sports_id || undefined;
             this.name = options.name || this.name;
             this._tagName = options._tagName || this._tagName;
             this.tagName = options.tagName || this.tagName;
@@ -53,6 +54,22 @@ function(facade,  views,   utils,   SportItemView) {
         addSubscribers : function() {
         	var view = this;
         	Channel('layout:ready').subscribe(view.initScroll);
+        },
+        
+        afterRender: function() {
+        	//alert(this.sports_id);
+        	if(this.sports_id) {
+        		var $this = this.$el.find("a.sport-item-h[data-id="+this.sports_id+"]");
+        		$('li.sport').removeClass('select');
+        		$this.addClass('select');
+				var interval = setInterval(function() {
+					if($("#sport .sport-link-h .option-heading-h").length) {
+						clearInterval(interval);
+						if($this.text())
+							$("#sport .sport-link-h .option-heading-h").html($this.text());
+					}
+				} , 2000);        			
+        	}
         },
         
         // Child views...
