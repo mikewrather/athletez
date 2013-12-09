@@ -67,7 +67,7 @@
 			$this->payloadDesc = "This gets events for a user's individual sport links";
 			$arguments = array();
 
-			if(!$this->mainModel->id)
+			if(!$this->mainModel->loaded())
 			{
 				$this->modelNotSetError();
 				return false;

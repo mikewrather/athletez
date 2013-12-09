@@ -39,6 +39,8 @@
 		{
 			$this->payloadDesc = "Basic info on a given team";
 
+//			print_r($this->mainModel->loaded());
+
 			if(!$this->mainModel->id)
 			{
 				$this->modelNotSetError();

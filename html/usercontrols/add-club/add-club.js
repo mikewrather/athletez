@@ -68,7 +68,7 @@ define(["require", 'text!usercontrols/photo-player/templates/comments.html',
           var options = {};
             options.height = "500px";
             options.width = "90%";    
-            options.title = (this.type == "school")?"Add School":"Add Club";         
+            options.title = (this.type == "school")?"Add School":"Add Club";
 			routing.trigger('common-popup-open', options); 
             return this.layout;
 		},
