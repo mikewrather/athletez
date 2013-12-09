@@ -28,7 +28,7 @@
 								echo $obj['tagger']['gender'] == 'M' ? "himself " : "herself ";
 							else
 								echo $obj['subject']['name'];
-							echo " on " . date('M jS, h:i a',strtotime($obj['timePosted']));
+							echo " on " . date('M jS, g:i a',strtotime($obj['timePosted']));
 						 ?></span><br>
 						<span style="font-size: 12px;"></span>
 					</td>

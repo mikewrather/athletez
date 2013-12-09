@@ -332,10 +332,10 @@ class Controller_Api_Base extends AuthController
 	{
 		if($this->myID)
 		{
-			$enttypes_id = Ent::getMyEntTypeID($this->mainModel);
-			$is_deleted = ORM::enttypes_is_deleted($enttypes_id, $this->myID);
+		//	$enttypes_id = Ent::getMyEntTypeID($this->mainModel);
+		//	$is_deleted = ORM::enttypes_is_deleted($enttypes_id, $this->myID);
 			$this->mainModel->where('id','=',$this->myID)
-				->where(DB::expr('0'), '=', $is_deleted)
+		//		->where(DB::expr('0'), '=', $is_deleted)
 				->find();
 			if(!$this->mainModel->loaded())	unset($this->mainModel);
 		}
@@ -414,6 +414,7 @@ class Controller_Api_Base extends AuthController
 
 	protected function modelNotSetError($error_array = array())
 	{
+		print_r(debug_backtrace());
 		// Create Array for Error Data
 		if (empty($error_array)){
 			$error_array = array(
@@ -931,7 +932,7 @@ class Controller_Api_Base extends AuthController
 //		echo $this->myID;
 
 		$follow = ORM::factory('User_Followers');
-		$follow->addFollower($this->user,$this->mainModel);
+		$follow->addFollower($this->user,$this->mainModel,true);
 		return $follow;
 
 	}

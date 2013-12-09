@@ -127,25 +127,38 @@ define([
             
             var controller = this;
             
-            function callback(sport_id, team_id, season_id) {
+            
+            controller.ajaxCalls = [];
+
+			function callback(sport_id, team_id, season_id) {
+				
+				if(controller.ajaxCalls && controller.ajaxCalls.length) {
+					for(var i in controller.ajaxCalls) {
+						console.error("here");
+						controller.ajaxCalls[i].abort();	
+					}
+					controller.ajaxCalls = [];
+				}
+            
+           // function callback(sport_id, team_id, season_id) {
                 controller.refreshPage();
                 controller.games = new TeamOrgList();
 				controller.games.id = team_id;
 				controller.games.sport_id = sport_id;
 				controller.games.targetElement = "#games_div";
-				controller.games.fetch();
+				controller.ajaxCalls.push(controller.games.fetch());
                 
                 controller.images = new TeamImageList();
                 controller.images.team_id = team_id;
                 controller.images.sport_id = sport_id;
  				controller.images.targetElement = "#image-wrap";               
-                controller.images.fetch();
+                controller.ajaxCalls.push(controller.images.fetch());
                
                 controller.fans = new FansImageList();
 				controller.fans.id = team_id;
 				controller.fans.sport_id = sport_id;
 				controller.fans.targetElement = "#fans-div";				
-				controller.fans.fetch();
+				controller.ajaxCalls.push(controller.fans.fetch());
                
                 var subject_type_id = controller.basics.get("payload").enttypes_id;
 	        	controller.commentson = new TeamCommentOnList();
@@ -153,14 +166,13 @@ define([
 	        	controller.commentson.savePath = "/team/addcomment/"+team_id;
 				controller.commentson.id = team_id;
 				controller.commentson.targetElement = "#comment_div";				
-				controller.commentson.fetch();
+				controller.ajaxCalls.push(controller.commentson.fetch());
                 controller.handleDeferredsDynamic();
             }
             
             routing.on('refresh-teampage', function(sport_id, team_id,season_id) {
             	callback(sport_id, team_id, season_id);
             });
-            
         },
         
         handleDeferreds: function() {

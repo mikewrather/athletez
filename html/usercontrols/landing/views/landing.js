@@ -90,7 +90,6 @@ define(['require',
 		{
 			this.regModel = new signupBaseModel();
 
-
 			this.regView = new signupBaseView({
 				model : this.regModel,
 				name : "Select Registration Type",
@@ -98,12 +97,12 @@ define(['require',
 				openAsaPage: true,
 				showOnLanding:true
 			});
-
 		},
 
 		signIn: function(e){
 			this.regView.showLogin(e);
 		},
+
 		closePopup:function(){
 			console.log("close popup");
 			routing.trigger('common-popup-close');

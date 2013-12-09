@@ -34,7 +34,6 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
             'team': 'showTeam',
             'team/': 'showTeam',
             
-            //'team/:action': 'showTeam',
             'team/:id' : 'showTeam',
 	        '!team/:id' : 'showTeam',
             
@@ -42,6 +41,47 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
             'game/': 'showGame',
             'game/:id' : 'showGame',
 	        '!game/:id' : 'showGame',
+            
+            '!home/search': 'showHomePage',
+            '!home/search/': 'showHomePage',
+            '!home/search/:key/:value/': 'showHomePage',
+            '!home/search/:key/:value/:key/:value/': 'showHomePage',
+            '!home/search/:key/:value/:key/:value/:key/:value/': 'showHomePage',            
+            '!home/search/:key/:value/:key/:value/:key/:value/:key/:value/': 'showHomePage', 
+            '!home/search/:key/:value/:key/:value/:key/:value/:key/:value/:key/:value/': 'showHomePage',
+            '!home/search/:key/:value/:key/:value/:key/:value/:key/:value/:key/:value/:key/:value/': 'showHomePage',
+            '!home/search/:key/:value/:key/:value/:key/:value/:key/:value/:key/:value/:key/:value/:key/:value/': 'showHomePage',
+            '!home/search/:key/:value/:key/:value/:key/:value/:key/:value/:key/:value/:key/:value/:key/:value/:key/:value/': 'showHomePage',
+
+
+            '!home/search/:key/:value/:key/:value/:key/:value': 'showHomePage',
+            '!home/search/:key/:value': 'showHomePage',
+            '!home/search/:key/:value/:key/:value': 'showHomePage',
+            '!home/search/:key/:value/:key/:value/:key/:value/:key/:value': 'showHomePage', 
+            '!home/search/:key/:value/:key/:value/:key/:value/:key/:value/:key/:value': 'showHomePage',
+            '!home/search/:key/:value/:key/:value/:key/:value/:key/:value/:key/:value/:key/:value': 'showHomePage',
+            '!home/search/:key/:value/:key/:value/:key/:value/:key/:value/:key/:value/:key/:value/:key/:value': 'showHomePage',
+            '!home/search/:key/:value/:key/:value/:key/:value/:key/:value/:key/:value/:key/:value/:key/:value/:key/:value': 'showHomePage',
+            
+            'home/search': 'showHomePage',
+            'home/search/': 'showHomePage',            
+            'home/search/:key/:value/': 'showHomePage',
+            'home/search/:key/:value/:key/:value/': 'showHomePage',
+            'home/search/:key/:value/:key/:value/:key/:value/': 'showHomePage', 
+            'home/search/:key/:value/:key/:value/:key/:value/:key/:value/': 'showHomePage', 
+            'home/search/:key/:value/:key/:value/:key/:value/:key/:value/:key/:value/': 'showHomePage',
+            'home/search/:key/:value/:key/:value/:key/:value/:key/:value/:key/:value/:key/:value/': 'showHomePage',
+            'home/search/:key/:value/:key/:value/:key/:value/:key/:value/:key/:value/:key/:value/:key/:value/': 'showHomePage',
+            'home/search/:key/:value/:key/:value/:key/:value/:key/:value/:key/:value/:key/:value/:key/:value/:key/:value/': 'showHomePage',
+            
+            'home/search/:key/:value/:key/:value/:key/:value': 'showHomePage',
+            'home/search/:key/:value': 'showHomePage',
+            'home/search/:key/:value/:key/:value': 'showHomePage',
+            'home/search/:key/:value/:key/:value/:key/:value/:key/:value': 'showHomePage', 
+            'home/search/:key/:value/:key/:value/:key/:value/:key/:value/:key/:value': 'showHomePage',
+            '!home/search/:key/:value/:key/:value/:key/:value/:key/:value/:key/:value/:key/:value': 'showHomePage',
+            '!home/search/:key/:value/:key/:value/:key/:value/:key/:value/:key/:value/:key/:value/:key/:value': 'showHomePage',
+            '!home/search/:key/:value/:key/:value/:key/:value/:key/:value/:key/:value/:key/:value/:key/:value/:key/:value': 'showHomePage',
             
             ':page/:id/:param/:id/': 'showPage',
             ':page/:id/:param/:id/:param/:id/': 'showPage', 
@@ -52,6 +92,9 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
             ':page/:param/:id/:param/:id/': 'showOwnPage',  
             ':page/:param/:id': 'showOwnPage',
             ':page/:param/:id/:param/:id': 'showOwnPage',  
+
+
+            
             
             'profile/:userid': 'showProfile',
 	        '!profile/:userid': 'showProfile',
@@ -73,11 +116,31 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
 			'user/login' : 'showLogin',
 			'addgame' : 'showAddGame',
             'fbconnect':'showFbreg',
-            'logout':'callLogout'
+            'logout':'callLogout',
+            "*splat": "routeNotFound"
            // 'user/create':'showUsercreate'
         },
         
+        showHomePage: function() {
+			var arr = [], len = arguments.length;        	
+        	if(arguments && len) {
+        		for(var i = 0; i < len; i++) {
+        			if(i % 2 == 0)
+	        			arr.push({key: arguments[i], value: arguments[i+1]});
+        		}
+        	}
+        	// generating params
+        	if(this.showHome && _.isFunction(this.showHome)) this.showHome(undefined, arr);
+        },
+        
+        routeNotFound : function () {
+             routing.navigate("home", {trigger: true});
+	    },
+
         showPage: function(pageName, id, page1, Page1_id, page2, Page2_id) {
+        	//alert("show page");
+        	if(page1 == "media" || page2 == "media") this.mediaPopup = true;
+        	
         	if(pageName.indexOf("!") != "-1") pageName = pageName.replace("!", "");
 			// create the function name        	
         	var functionName = "show"+pageName.charAt(0).toUpperCase() + pageName.slice(1);
@@ -90,6 +153,7 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
         
         showOwnPage: function(pageName, page1, Page1_id, page2, Page2_id) {
         	
+        	if(page1 == "media" || page2 == "media") this.mediaPopup = true;
         	if(pageName.indexOf("!") != "-1") pageName = pageName.replace("!", "");
         	
 			// create the function name        	
@@ -111,7 +175,7 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
 	        Controller.prototype.appStates = new ApplicationStates();
 	        this.getPhrases();
 	       // this.intializeImageAndVideo();
-	        this.showLandingInfo();
+	       // this.showLandingInfo();
         },
 
 		detectBrowser: function() {
@@ -140,15 +204,12 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
 					if(showBrowserWindow || showMobileWindow){
 						self.showBrowserWindow();
 					}
-				} catch(ex){
-					//alert(ex);
-				}
+				} catch(ex){ }
 			},1000);
 		},
 
-		showBrowserWindow: function(){
+		showBrowserWindow: function() {
 			var browserPop = new browserView();
-			
 		},
 
 		showLandingInfo: function() {
@@ -221,7 +282,7 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
             	var location = {latitude: lat, longitude: longitude};
             	var viewOb = new googleMapLocationview(location);
             	$(destination).html(viewOb.$el);
-            });            
+            });
             
             routing.off('popup-close');
             routing.on('popup-close', function() {
@@ -243,6 +304,7 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
             routing.on('app-inited', function(id) {
             	closeModelBox();
             	fn(id);
+            	if(!self.mediaPopup) { self.showLandingInfo(); self.mediaPopup = false; }
             });
             
             routing.off('popup-close');

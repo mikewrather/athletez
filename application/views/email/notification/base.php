@@ -76,17 +76,16 @@
 							</tr>
 						</table>
 
-						<? echo $subject_header; ?>
-						<? echo $action_notification; ?>
+						<?php echo $subject_header; ?>
+						<?php echo $action_notification; ?>
 
 						<table cellpadding="0" cellspacing="0" border="0" align="center" width="100%" id="footerTable" style="border-collapse: collapse;mso-table-lspace: 0pt;mso-table-rspace: 0pt;border-left: 1px solid #c9c9c9;border-right: 1px solid #c9c9c9;border-bottom: 1px solid #c9c9c9;background-color: #e8e8e8;">
 							<tr>
 								<td cellpadding="0" cellspacing="0" border="0" valign="middle" align="center" style="border-collapse: collapse;">
-									<a href="http://www.athletez.com/" style="display: block;border: 1px solid #9d9d9d;height: 25px;width: 150px;margin: 10px;font-weight: bold;font-size: 12px; padding-top:10px; color:#333333; text-decoration: none;">Get in on the Action!</a>
+									<a href="<?php echo $backlink; ?>" style="display: block;border: 1px solid #9d9d9d;height: 25px;width: 150px;margin: 10px;font-weight: bold;font-size: 12px; padding-top:10px; color:#333333; text-decoration: none;">Get in on the Action!</a>
 								</td>
 							</tr>
 						</table>
-
 					</td>
 				</tr>
 			</table>

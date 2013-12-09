@@ -15,6 +15,7 @@ define([ 'models', 'facade' ], function(models, facade) {
 			this.id = this.id || _.uniqueId('m');
 			this.addSubscribers();
 			_.bindAll(this);
+			//alert("here");
 		},
 
 		search : function(term) {
@@ -25,14 +26,13 @@ define([ 'models', 'facade' ], function(models, facade) {
 			}).done(function(data, textStatus, jqXHR) {
 				 var collection = [];
 				 var payload = data.payload;
-				 //console.log(payload);
 		         if(payload != null){
 		         	 for (i = 0; i < (payload.length > 10 ? 10 : payload.length) ; i++) {
 		         		 var item = {};
 		         		 item.label = payload[i].str;
-		         		 item.id = payload[i].id;
+		         		 item.id = (payload[i].type == "states_id")?'':payload[i].id;
 		         		 var state_ob = (!_.isUndefined(payload[i].obj.states_obj))?payload[i].obj.states_obj:(!_.isUndefined(payload[i].obj.city) && !_.isUndefined(payload[i].obj.city.states_obj))?payload[i].obj.city.states_obj:{};
-		         		 item.state_id = state_ob.id;
+		         		  item.state_id = (payload[i].type == "states_id")?payload[i].id:state_ob.id;
 		         		 item.country_id = (!_.isUndefined(state_ob.country))?state_ob.country.id:'';
 		         		 collection.push(item);
 		         	 }

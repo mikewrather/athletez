@@ -36,15 +36,13 @@ function (
         render: function () {
             var _self = this, markup = Mustache.to_html(this.template, this.model.toJSON());
             this.$el.html(markup);
-            
             this.$el.find('a').click(function() {
             	_self.selectSport();
             });
-            
             return this;
         },
         
-        selectSport: function() {
+        selectSport: function(trigger) {
         	debug.log(this.model);
         	$('li.sport').removeClass('select');
         	this.$el.addClass('select');

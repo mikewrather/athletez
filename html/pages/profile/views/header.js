@@ -163,7 +163,7 @@ function(require, profileHeaderTemplate, selectSportTemplate) {
 				// creating URL for sport
 				var currentHashUrl = window.location.hash;
 				if(currentHashUrl.match(/\/sport\/(.*)[0-9]\//i)) {
-					currentHashUrl = currentHashUrl.replace(/\/media\/(.*)[0-9]\//i,'/sport/'+sport_id+"/");					
+					currentHashUrl = currentHashUrl.replace(/\/sport\/(.*)[0-9]\//i,'/sport/'+sport_id+"/");					
 				} else if(currentHashUrl.match(/\/sport\/(.*)[0-9]/i)) {
 					currentHashUrl = currentHashUrl.replace(/\/sport\/(.*)[0-9]/i,'/sport/'+sport_id);					
 				} else {

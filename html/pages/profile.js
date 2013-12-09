@@ -135,9 +135,19 @@ define([
 				// If I take it out it won't render images if no sport is selected
 
 				var controller = this;
-				console.log(controller);
+				
+				controller.ajaxCalls = [];
 
 				function callback(sport_id) {
+					
+					if(controller.ajaxCalls && controller.ajaxCalls.length) {
+						for(var i in controller.ajaxCalls) {
+							console.error("here");
+							controller.ajaxCalls[i].abort();	
+						}
+						controller.ajaxCalls = [];
+					}
+					
 					delete controller.orgViewname;
 					controller.refreshPage();
 					controller.sports_id = sport_id;
@@ -146,24 +156,25 @@ define([
 					controller.orgs.id = controller.id;
 					controller.orgs.sport_id = sport_id;
 					controller.orgs.targetElement = "#games_div";
-					controller.orgs.fetch();
+					controller.ajaxCalls.push(controller.orgs.fetch());
 					
 					controller.relateds = new ProfileRelatedList();
 					controller.relateds.id = controller.id;
 					controller.relateds.sport_id = sport_id;
-					controller.relateds.fetch();
+					controller.ajaxCalls.push(controller.relateds.fetch());
 
 					controller.fitnessbasics = new ProfileFitnessBasicList();
 					controller.fitnessbasics.id = controller.id;
 					controller.fitnessbasics.sport_id = sport_id;
-					controller.fitnessbasics.fetch();
+					controller.ajaxCalls.push(controller.fitnessbasics.fetch());					
 
 					controller.images = new ProfileImageList();
 					controller.images.id = controller.id;
 					controller.images.sport_id = sport_id;
 					controller.images.targetElement = "#image-wrap";
-					controller.images.fetch();
+					controller.ajaxCalls.push(controller.images.fetch());					
 					controller.handleDeferredsDynamic();
+									
 				}
 
 				function refreshFans() {

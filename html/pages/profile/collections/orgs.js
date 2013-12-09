@@ -15,7 +15,7 @@ function(facade, SportorgOrgList, utils) {
         url: function() {
             if (testpath)
                 return testpath + '/user/orgs/' + this.id + '/' + this.sport_id;
-            return '/api/user/orgs/' + this.id + '?sport_id=' + this.sport_id;
+            return '/api/user/orgs/' + this.id + '?sport_id=' + this.sport_id + "&_="+ new Date().getTime();
         }
         
         
