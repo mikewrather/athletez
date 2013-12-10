@@ -90,7 +90,10 @@ define(
 					                   '/api/game/search',
 										'/api/team/search'];
 										
-					this.baseUrl = this.searchUrls[(this.base != "" || this.base == 0)?this.base:1];
+					var base = (!_.isUndefined(this.base) && (this.base != "" || this.base == 0))?this.base:1;					
+					this.baseUrl = this.searchUrls[base];
+					//else
+					//this.baseUrl = 1;
 					this.urlOptions = {
 						sports_id : this.sports_id || '0',
 						cities_id : this.cities_id || '0',
