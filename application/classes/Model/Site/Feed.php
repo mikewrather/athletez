@@ -78,7 +78,7 @@ class Model_Site_Feed extends ORM
 	{
 	//	echo "Called";
 		// if it's not a valid action set it to default (add)
-		if($action != 'add' && $action != 'delete' && $action != 'update') $action = "add";
+		//		if($action != 'add' && $action != 'delete' && $action != 'update') $action = "add";
 
 		$me = ORM::factory('Site_Feed');
 

@@ -188,7 +188,7 @@ class Model_Sportorg_Team extends ORM
 					$games_teams_link->points_scored = $points_scored;
 					$games_teams_link->save();
 
-					Model_Site_Feed::addToFeed($this,"add");
+					Model_Site_Feed::addToFeed($games_teams_link,"newgame");
 
 			}
 			else
@@ -200,7 +200,7 @@ class Model_Sportorg_Team extends ORM
 				$games_teams_link->points_scored = $points_scored;
 				$games_teams_link->save();
 
-				Model_Site_Feed::addToFeed($this,"add");
+				Model_Site_Feed::addToFeed($games_teams_link,"newgame");
 
 /*
 				$external_validate = Validation::factory($args);

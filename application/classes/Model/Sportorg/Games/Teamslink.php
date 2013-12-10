@@ -55,5 +55,6 @@ class Model_Sportorg_Games_Teamslink extends ORM
 		return "GTL ".$this->id;
 	}
 
+	public function getSubject(){ return $this->team; }
 
 }

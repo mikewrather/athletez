@@ -28,7 +28,11 @@
 
 		</td>
 		<td align="left" valign="top" id="entInfo">
-			<span style="font-size: 20px;font-weight: bolder;display: block;line-height: 25px;"><?php echo (isset($subject['title']) && $subject['title']!="") ? $subject['title'] : $subject['name']; ?></span>
+			<span style="font-size: 20px;font-weight: bolder;display: block;line-height: 25px;"><?php
+
+				echo (isset($subject['title']) && $subject['title']!="") ? $subject['title'] : $sub_obj->name();
+
+			?></span>
 			<span style="display: block;line-height: 25px;font-size: 14px;">Total Votes: <?php echo (int)$subject['num_votes']; ?></span>
 			<span style="display: block;line-height: 25px;font-size: 14px;">Total Followers: <?php echo (int)$subject['num_followers']; ?></span>
 		</td>

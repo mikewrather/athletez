@@ -108,7 +108,7 @@ class Model_User_Followers extends ORM
 		foreach($direct_followers as $follow)
 		{
 			// do nothing if the author is also the follower
-			if($follow->follower_users_id == $author->id) continue;
+		//	if($follow->follower_users_id == $author->id) continue;
 
 			Model_Site_Feedfollow::addFeedFollow($feed->id,$follow->id);
 
@@ -126,7 +126,8 @@ class Model_User_Followers extends ORM
 				$queued->setSubjectLine($subjectline);
 
 				$subheader = View::factory('email/notification/content/subjectheader')
-					->bind('subject',$subject_as_array = $subject->getBasics());
+					->bind('subject',$subject_as_array = $subject->getBasics())
+					->bind('sub_obj',$subject);
 
 				$action = View::factory("email/notification/content/$type")
 					->bind('obj',$obj_as_array = $obj->getBasics())
@@ -160,7 +161,6 @@ class Model_User_Followers extends ORM
 		{
 			foreach($subject as $this_subject)
 			{
-			//	echo get_class($this_subject);
 				self::loopThroughFollowers($this_subject,$author,$obj,$feed,$type);
 			}
 		}
@@ -205,8 +205,15 @@ class Model_User_Followers extends ORM
 			case 'game':
 				$sub_line = "New Game";
 				break;
-			case 'userteamslink':
-				$sub_line = $subject->name()." Joined a new team!";
+			case 'team':
+				if($feed->action == 'newgame'){
+					$sub_line = $subject->name()." Added a Game to its schedule";
+				}
+				break;
+			case 'gameteamlink':
+				if($feed->action == 'newgame'){
+					$sub_line = $subject->name()." Added a Game to its schedule";
+				}
 				break;
 			default:
 				break;
