@@ -85,8 +85,14 @@ function(facade,  views,   utils,   ImageItemView,            ImageBoardView,   
 			
 			routing.trigger('add-image', url, attr, image);
 		},
-       
-      
+
+	    checkForUser: function() {
+
+		    if(!_.isUndefined(routing.userLoggedIn) && routing.userLoggedIn)
+			    return true;
+		    else
+			    return false;
+	    },
 
         initialize: function(options) {
         	if(options.name)
@@ -143,6 +149,11 @@ function(facade,  views,   utils,   ImageItemView,            ImageBoardView,   
         },
         
         initPhotoPlayer: function(e) {
+
+	        if(!this.checkForUser()) {
+		        routing.trigger('showSignup');
+		        return;
+	        }
 			var index = ($(e.target).parents('li').index());  
 			if(index< 0) index = 0;
        		routing.trigger('photo-player-init', index, this.allData, this.user_id, true,  this.pageName);

@@ -41,6 +41,12 @@ define(["require", 'text!usercontrols/photo-player/templates/comments.html',
 		// controller intialize function
 		initialize : function(options) {
 			var _self = this;
+
+			if(!_self.checkForUser()){
+				routing.trigger('showSignup');
+				return;
+			}
+
 			// load css file
 			Channel('load:css').publish(this.cssArr);
 			// Channel('tag-image-success-photo').empty();
@@ -98,7 +104,15 @@ define(["require", 'text!usercontrols/photo-player/templates/comments.html',
 			this.setUpMainView();
 			this.handleDeferreds();
 		},
-		
+
+		checkForUser: function() {
+
+			if(!_.isUndefined(routing.userLoggedIn) && routing.userLoggedIn)
+				return true;
+			else
+				return false;
+		},
+
 		// fetch collection here
 		handleDeferreds: function() {
 		},
