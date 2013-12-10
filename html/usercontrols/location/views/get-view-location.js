@@ -84,6 +84,7 @@ define(['require', 'text!usercontrols/location/templates/get-view-location.html'
 			    center: pos,
 			    scaleControl: true,
 			    zoomControl: true,
+				scrollwheel: false,
 			    mapTypeId: google.maps.MapTypeId.ROADMAP
 			  };
 			  this.$el.find('#map-canvas-h').show();

@@ -90,6 +90,7 @@ define(['require', 'text!usercontrols/location/templates/layout.html', 'facade',
 			    center: pos,
 			    scaleControl: true,
 			    zoomControl: true,
+				scrollwheel: false,
 			    mapTypeId: google.maps.MapTypeId.ROADMAP
 			  };
 			  
