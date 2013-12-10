@@ -731,12 +731,10 @@ define(['require', 'text!profilesetting/templates/highschool.html', 'text!profil
 					$.when(teamsModel.request).done(function() {
 						if (teamsModel.isError())
 							return;
-
+							
 						var model = teamsModel.toJSON();
-						//console.log("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
-						//console.log("Model",model);
 						if (model != null && model.payload != null || model.payload.id != null) {
-							$(event.target).attr('teamid', model.payload.team_id);
+							$(event.target).attr('teamid', model.payload.id);
 							$(event.target).parent().find(_self.controls.btnOpenPositions).attr('teamid', model.payload.id).removeAttr('disabled');
 							//	_self.displayPositionPopup(event, model.payload.id);
 						}
@@ -795,8 +793,6 @@ define(['require', 'text!profilesetting/templates/highschool.html', 'text!profil
 			_self.orgs_id = undefined;
 			_self.$el.find(".add-school-h").show();
 			_self.$el.find(_self.controls.divAddSportSection).fadeOut();
-
-			console.log(this);
 		},
 		// EDIT VIEW FOR A TEAM IF USER CLICKS EDIT LINK FOR TEAMS
 		EditTeam : function(event) {

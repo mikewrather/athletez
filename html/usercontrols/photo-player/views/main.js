@@ -494,7 +494,8 @@ define(['require',
 			}
 			this.$el.find('.thumb-image-list-h li').removeClass('selected-photo-thumb');
 			this.$el.find('.thumb-link-h[data-index=' + this.index + ']').parents('li').addClass('selected-photo-thumb');
-			routing.trigger('photo-player-section-reload', extra._enttypes_id, extra._media_id,mpay.media_obj.users_id);
+			var userId = (mpay.media_obj && mpay.media_obj.users_id)?mpay.media_obj.users_id:undefined;
+			routing.trigger('photo-player-section-reload', extra._enttypes_id, extra._media_id, userId);
 			// change Hash URL
 			if(this.loadFirstTime) {
 				// creating URL

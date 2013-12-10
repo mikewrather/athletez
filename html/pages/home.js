@@ -89,7 +89,11 @@ define(
 					                   '/api/user/search', 
 					                   '/api/game/search',
 										'/api/team/search'];
-					this.baseUrl = this.searchUrls[this.base || 1];
+										
+					var base = (!_.isUndefined(this.base) && (this.base != "" || this.base == 0))?this.base:1;					
+					this.baseUrl = this.searchUrls[base];
+					//else
+					//this.baseUrl = 1;
 					this.urlOptions = {
 						sports_id : this.sports_id || '0',
 						cities_id : this.cities_id || '0',
@@ -100,12 +104,11 @@ define(
 						country_id : this.country_id || '0'
 					};
 					
-					
 					this.urlOptionByPageView = {
 						restype : ["base"],
 						location : ["cities_id", "states_id", "country_id"],
 						view : ["orderby"],
-						sports : ["sports_id"],
+						sports : ["sports_id"]
 					};
 					
 					
@@ -124,22 +127,19 @@ define(
 				addSubscribers : function() {
 					var _self = this;
 					_.each(this.genderTypes, function(viewName) {
-						Channel('sportChanged:'+this.collections[viewName].cid).subscribe(this.changeSportFilter);						
+						Channel('sportChanged:'+this.collections[viewName].cid, 'unique').subscribe(this.changeSportFilter);						
 					}, this);
-					Channel('cityChanged:'+ this.sections['city'].id).subscribe(this.changeCityFilter);
-					///alert("add");
-					//routing.off("stateChanged");
+					Channel('cityChanged:'+ this.sections['city'].id, 'unique').subscribe(this.changeCityFilter);
+
+					routing.off("stateChanged");
 					routing.on("stateChanged", function( id ) {
 						_self.changeStateFilter(id);
 					});
-					
-					
-					Channel('resetIndividual').subscribe(this.updateIndividual);
-					//Channel('stateChanged:'+ this.collections['state'].cid).subscribe(this.changeStateFilter);
-					Channel('textChanged').subscribe(this.updateText);
-					Channel('viewFilterChanged').subscribe(this.changeViewFilter);
-					Channel('baseUrlChanged').subscribe(this.updateBaseUrl);
-					Channel('resetFilter').subscribe(this.resetFilter);
+					Channel('resetIndividual', 'unique').subscribe(this.updateIndividual);
+					Channel('textChanged', 'unique').subscribe(this.updateText);
+					Channel('viewFilterChanged', 'unique').subscribe(this.changeViewFilter);
+					Channel('baseUrlChanged', 'unique').subscribe(this.updateBaseUrl);
+					Channel('resetFilter', 'unique').subscribe(this.resetFilter);
 				},
 				
 				setupScheme: function () {
