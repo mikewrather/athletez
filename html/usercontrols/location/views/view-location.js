@@ -38,7 +38,7 @@ define(['require', 'text!usercontrols/location/templates/view-location.html', 'f
 			    zoom: 13,
 			    center: pos,
 			    scaleControl: true,
-			    zoomControl: false,
+			    zoomControl: true,
 			    mapTypeId: google.maps.MapTypeId.ROADMAP
 			  };
 			  

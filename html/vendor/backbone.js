@@ -3030,7 +3030,7 @@ Form.editors.Location = Form.editors.Text.extend({
 		    zoom: 13,
 		    center: pos,
 		    scaleControl: true,
-		    zoomControl: false,
+		    zoomControl: true,
 		    mapTypeId: google.maps.MapTypeId.ROADMAP
 		  };
 		  this.$el.find('#map-canvas-h').show();

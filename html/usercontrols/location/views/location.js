@@ -89,7 +89,7 @@ define(['require', 'text!usercontrols/location/templates/layout.html', 'facade',
 			    zoom: 13,
 			    center: pos,
 			    scaleControl: true,
-			    zoomControl: false,
+			    zoomControl: true,
 			    mapTypeId: google.maps.MapTypeId.ROADMAP
 			  };
 			  
