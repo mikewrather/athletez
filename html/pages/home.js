@@ -83,7 +83,6 @@ define(
 				},
 				
 				initUrlOptions : function() {
-					
 					this.searchUrls = ['/api/video/search', 
 					                   '/api/image/search', 
 					                   '/api/user/search', 
@@ -129,6 +128,7 @@ define(
 					_.each(this.genderTypes, function(viewName) {
 						Channel('sportChanged:'+this.collections[viewName].cid, 'unique').subscribe(this.changeSportFilter);						
 					}, this);
+					
 					Channel('cityChanged:'+ this.sections['city'].id, 'unique').subscribe(this.changeCityFilter);
 
 					routing.off("stateChanged");
@@ -255,6 +255,7 @@ define(
 		        },
 		        
 				changeCityFilter : function(item) {
+					$(".reset-option-btn-h[data-type=city]").removeClass("hide");
 					if(item.label)
 						$("#city").val(item.label);
 						
