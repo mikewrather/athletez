@@ -45,7 +45,7 @@ define([ 'require', 'text!votes/templates/vote.html','views', 'vendor', 'facade'
 		  	   	routing.trigger('showSignup');	
 		    	return;
 	    	}
-			this.followModelOb.save();fitness-overview-data-piece
+			this.followModelOb.save();
 
 		//	$(e.target).removeClass('follow-action-h').addClass('follow-noaction-h');
 
