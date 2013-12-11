@@ -477,11 +477,11 @@ ul.common-dropdown li.selected a {
 	right: 0;
 }
 .down-arrow-outer {
+	height: 30px;
 	background: rgb(65, 67, 70);
 	display: inline-block;
 	width: 26%;
 	float: right;
-	height: 100%;
 	text-align: center;
 	color: #FFF;
 	position: absolute;
