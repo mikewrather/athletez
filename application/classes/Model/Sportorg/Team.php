@@ -419,6 +419,11 @@ class Model_Sportorg_Team extends ORM
 		if (isset($complevels_id)){
 			$this->where('sportorg_team.complevels_id', '=', $complevels_id);
 		}
+
+		if (isset($year)){
+			$this->where('sportorg_team.year', '=', $year);
+		}
+
 		$enttype_id = Model_Site_Enttype::getMyEntTypeID($this);
 
 		$counts = DB::select(array(DB::expr('COUNT(id)'),'num_votes'))
@@ -465,7 +470,7 @@ class Model_Sportorg_Team extends ORM
 		{
 			$this->limit($limit);
 		}
-		else $this->limit(12);
+		else $this->limit(5);
 
 		if(isset($offset))
 		{

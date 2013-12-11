@@ -158,6 +158,11 @@
 				$arguments["orderby"] = trim($this->request->query('orderby'));
 			}
 
+			if(trim($this->request->query('year')) != "")
+			{
+				$arguments["year"] = trim($this->request->query('year'));
+			}
+
 			// searchtext
 			// A string to search name of a team
 

@@ -42,6 +42,9 @@ define(["facade", "sportorg/models/team"], function(facade, SportsOrgModel) {
 					location_name : location.full_address,
 					sports_name : sport.sport_name,
 					sports_id : sport.id,
+					complevels_id : payload.complevels_id,
+					seasons_id : payload.seasons_id,
+					year : payload.year
 				};
 			}
 			return temp;

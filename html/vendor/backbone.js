@@ -2672,6 +2672,9 @@ Form.Editor = Form.editors.Base = Backbone.View.extend({
     if (schema.editorAttrs) this.$el.attr(schema.editorAttrs);
   },
 
+	setFieldWidth: function(){
+		if(this.field_width) this.$el.css({'width':this.field_width});
+	},
   /**
    * Get the value for the form input 'name' attribute
    *
@@ -2848,7 +2851,7 @@ Form.editors.Text = Form.Editor.extend({
   },
   
   change: function(e) {
-  	if(this.chnageEvent) this.chnageEvent(e);
+  	if(this.changeEvent) this.changeEvent(e);
   	if(this.validate) this.validate();
   },
   
@@ -2874,10 +2877,11 @@ Form.editors.Text = Form.Editor.extend({
     var type = 'text';
     if (schema && schema.editorAttrs && schema.editorAttrs.type) type = schema.type;
     if (schema && schema.dataType) type = schema.dataType;
-    if (schema && schema.chnageEvent) this.chnageEvent = schema.chnageEvent;
+    if (schema && schema.changeEvent) this.changeEvent = schema.changeEvent;
 
 	this.setAllAttr(this.schema.attr);
     this.$el.attr('type', type);
+
     this.setOptions(options.schema.form_values);
     
     if(this.defaultValue) this.value = this.defaultValue;
@@ -2895,12 +2899,12 @@ Form.editors.Text = Form.Editor.extend({
   
   bindDatePickerFn: function() {
 	this.$el.datepicker({
-		dateFormat: 'yy-mm-dd',
+		dateFormat: 'M d, yy',
 		changeMonth : true,
 		changeYear : true
 	});
 	
-	//chnageEvent
+	//changeEvent
   },
   
   setAllAttr: function(options) {
@@ -2914,6 +2918,7 @@ Form.editors.Text = Form.Editor.extend({
    */
   render: function() {
     this.setValue(this.value);
+	this.setFieldWidth();
     return this;
   },
 
@@ -3163,6 +3168,7 @@ Form.editors.AutoComplete = Form.editors.Text.extend({
     'keyup':    'determineChange',
     'keypress': function(event) {
       var self = this;
+	  $(event.target).addClass('ui-autocomplete-loading');
       setTimeout(function() {
         self.determineChange();
       }, 0);
@@ -3200,6 +3206,7 @@ Form.editors.AutoComplete = Form.editors.Text.extend({
     var _self = this, currentValue = this.$el.val();
 	if(_self.isValidAutoCompleteKey(event) && this.getData) this.getData(currentValue, function(data) {
 		_self.records = [];
+		_self.$el.addClass('ui-autocomplete-loading');
 		if(!_self.keyNameInPayload) _self.keyNameInPayload = 'name';
 		var attr = _self.keyNameInPayload;
 		for (var key in data) {
@@ -3208,13 +3215,12 @@ Form.editors.AutoComplete = Form.editors.Text.extend({
 		var arr = [];
 		_self.records.forEach(function(value, index) {
 			var v = (value.payload)?value.payload[attr]:value[attr], id = (value.payload)?value.payload['id']:value['id'];
-			arr.push({value: v, label: v, id: id});
+			arr.push({value: v, label: v, id: id, full_return:value.payload});
 		});
 		
 		// Destroy existing autocomplete from text box before attaching it again
 		// try catch as for the first time it gives error
 		try { _self.$el.autocomplete("destroy"); } catch(ex) {   }
-		
 		
 		_self.$el.autocomplete({
 			source : arr,
@@ -3223,8 +3229,7 @@ Form.editors.AutoComplete = Form.editors.Text.extend({
 				var id = (ui.item.id)?ui.item.id:ui.item.value;
 				_self.$el.attr("data-id", id);
 				_self.trigger("blur", _self);
-				if(_self.callback) _self.callback(id);
-				
+				if(_self.callback) _self.callback(id,ui.item);
 				_self.$el.removeClass('ui-autocomplete-loading');
 			}
 		});
@@ -3262,11 +3267,11 @@ Form.editors.AutoComplete = Form.editors.Text.extend({
     //if (schema && schema.form_values && schema.form_values) this.getData = schema.getData;    
     this.$el.attr('type', 'text');
     this.setOptions(options.schema.form_values);
-    
+    this.setFieldWidth();
     if(this.automaticFetch) {
     	_self.automaticFetchFn(_self);
-	    		
     }
+
     // append error image
     //this.$el.after().append('<span class="indicator_h invalid"></span>');
   },

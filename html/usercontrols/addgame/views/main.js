@@ -159,7 +159,7 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 						//validators : [{type : 'required',
 						//	message : 'Please select date.'}],
 						bindDatePicker : true,
-						chnageEvent : function() {
+						changeEvent : function() {
 							var date = new Date(this.getValue()), currentDate = new Date();
 							if (date != null && currentDate >= date) {
 								$(".txt-score-team-h").removeClass('hidden');
@@ -277,13 +277,23 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 							serverKey: 'teamOneId',
 							serverDbField: 'teams_id',
 							defaultValue: '',
+							field_width:'400px',
 							request_fields : [{
-								key : 'states_id',
-								value : _self.states_id
-							}, {
-								key : 'sports_id',
-								value : function () { return _self.sports_id; }
-							},
+									key : 'states_id',
+									value : _self.states_id
+								}, {
+									key : 'sports_id',
+									value : function () { return _self.sports_id; }
+								},/*{
+									key : 'complevels_id',
+									value : function () { return _self.complevels_id > 0 ? _self.complevels_id : false; }
+								},{
+									key : 'seasons_id',
+									value : function () { return _self.seasons_id > 0 ? _self.seasons_id : false; }
+								},{
+									key : 'year',
+									value : function () { return _self.year > 0 ? _self.year : false; }
+								},*/
 								{
 									key : 'team_name',
 									value: function(_that) {
@@ -302,14 +312,26 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 								teamModel.id = _self.team_id;
 								teamModel.fetchSuccess = function(model, response) {
 									var data = teamModel.parseAsRequired(response);
+
+									self.complevels_id = data.complevels_id;
+									self.seasons_id = data.seasons_id;
+									self.year = data.year;
+
 									_that.setValue(data.team_id, data.team_name);
 									$(self.destination).find("input[name=team_1]").attr("teamId", data.team_id);
 								};
 								teamModel.fetch();
 							},
 
-							callback : function(id) {
+							callback : function(id,item) {
 								$("input[name=team_1]").attr("teamId", id);
+								console.log(item);
+								self.complevels_id = item.full_return.complevels_id;
+								self.seasons_id = item.full_return.seasons_id;
+								self.year = item.full_return.year;
+
+								console.log(self);
+
 								$(self.destination).find("input[name=team_1]").attr("teamId", id);
 							}
 						},
@@ -322,9 +344,9 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 
 					'score_1' : {
 						form_values: {
-							serverKey : ""
+							serverKey : "",
+							field_width:'70px'
 						},
-
 						type : 'Text',
 						attr : {
 							'placeholder' : 'Score',
@@ -381,13 +403,23 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 							keyNameInPayload: 'team_name',
 							serverKey: 'teamTwoId',
 							serverDbField: 'teams_id',
+							field_width:'400px',
 							request_fields : [{
-								key : 'states_id',
-								value : _self.states_id
-							}, {
-								key : 'sports_id',
-								value : function () { return _self.sports_id; }
-							},
+									key : 'states_id',
+									value : _self.states_id
+								}, {
+									key : 'sports_id',
+									value : function () { return _self.sports_id; }
+								},{
+									key : 'complevels_id',
+									value : function () { return _self.complevels_id > 0 ? _self.complevels_id : false; }
+								},{
+									key : 'seasons_id',
+									value : function () { return _self.seasons_id > 0 ? _self.seasons_id : false; }
+								},{
+									key : 'year',
+									value : function () { return _self.year > 0 ? _self.year : false; }
+								},
 								{
 									key : 'team_name',
 									value: function(_that) {
@@ -410,7 +442,8 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 
 					'score_2' : {
 						form_values: {
-							serverKey : ""
+							serverKey : "",
+							field_width:'70px'
 						},
 						type : 'Text',
 						attr : {
@@ -423,7 +456,7 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 
 					'team_2' : {
 						form_values: {
-							serverKey : "",
+							serverKey : ""
 						},
 						type : 'Radio',
 						options : ['Home', 'Away'],
