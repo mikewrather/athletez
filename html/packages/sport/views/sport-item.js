@@ -44,7 +44,7 @@ function (
         
         selectSport: function(e) {
         	$(".reset-option-btn-h[data-type=sport]").removeClass("hide");
-        	
+        	$(".menu-detail-h").hide();
         	$('li.sport').removeClass('select');
         	this.$el.addClass('select');
             Channel('sportChanged:'+this.model.collection.cid).publish(this.model);

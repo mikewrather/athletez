@@ -255,6 +255,7 @@ define(
 		        },
 		        
 				changeCityFilter : function(item) {
+					$(".menu-detail-h").hide();
 					$(".reset-option-btn-h[data-type=city]").removeClass("hide");
 					if(item.label)
 						$("#city").val(item.label);
