@@ -48,6 +48,7 @@ function(require, headerTemplate, selectSportTemplate) {
         selectSportTemplate: selectSportTemplate,
         
         events: {
+        	
         },
 
         initialize: function (options) {
@@ -75,6 +76,9 @@ function(require, headerTemplate, selectSportTemplate) {
 	        		var payload = _self.model.get("payload"), id = payload.id,
 		 			name = payload.org_sport_link_obj.org.name;
 	        		_self.controllerObject.setupRosterView(id, name);
+	        		// show votes button
+	        		_self.controllerObject.showVote();
+	        		
 	        	});
         	}
         },
@@ -94,18 +98,16 @@ function(require, headerTemplate, selectSportTemplate) {
         
         setupSportListView: function() {
             var self = this,
-
                 sportListView = new TeamSportListView({
                     collection: this.sports
                 }),
                 renderSportListView = this.addChildView(sportListView);
-
-	    //    console.log("SPORTS LIST",this.sports);
+			    // console.log("SPORTS LIST",this.sports);
 
             this.childViews.sportListView = sportListView;
             this.callbacks.add(function () {
-                renderSportListView();                
-            });            
+                renderSportListView();
+            });
             
             function callback () {
                 sportListView.render();
@@ -120,7 +122,7 @@ function(require, headerTemplate, selectSportTemplate) {
                     self.$el.find('#sports-info').prepend(markup);
                 } else {
                     self.$el.find('#sports-info').html('');
-                }                
+                }
             }
             Channel('teamsports:fetch').subscribe(callback);      
         },
