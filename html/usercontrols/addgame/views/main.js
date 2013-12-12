@@ -561,6 +561,7 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 									_self.formValues.showServersErrors(errorArray);
 								});
 
+
 								$.when(gameModel.request).done(function(response) {
 									if (response != null && response.payload != null) {
 										self.game_id = response.payload.id;
@@ -574,11 +575,23 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 											users_id : self.user_id
 										};
 
-										console.log(payloadOne);
-
-										var addTeamModelOne = new TeamAddModel(payloadOne);
+										var addTeamModelOne = new TeamAddModel(payloadOne), firstModel = false, secondModel = false;
 										addTeamModelOne.teams_id = formData.teamOneId;
 										addTeamModelOne.save();
+										
+										
+										var triggerFunction = function() {
+											if(firstModel && secondModel) {
+												routing.trigger(self.channel, response);
+											}
+
+										};
+										
+										$.when(addTeamModelOne.request).done(function() {
+											firstModel = true;
+											triggerFunction();
+										});
+										
 										var payloadTwo = {
 											game_datetime : formData.game_datetime,
 											games_id : self.game_id,
@@ -587,8 +600,6 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 											score : formData.score_2,
 											users_id : self.user_id
 										};
-
-										console.log(payloadTwo);
 
 										isHome = $(self.destination).find(self.controls.rdoTeamTwo).is(':checked');
 										var addTeamModelTwo = new TeamAddModel(payloadTwo);
@@ -603,7 +614,11 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 											games_id : self.game_id,
 											users_id : self.user_id
 										};
-										routing.trigger(self.channel, response);
+										
+										$.when(addTeamModelTwo.request).done(function() {
+											secondModel = true;
+											triggerFunction();
+										});										
 									}
 								});
 							}
