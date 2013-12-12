@@ -325,6 +325,7 @@ define(['require', 'text!usercontrols/tag/templates/layout.html', 'facade', 'vie
 			$(self.destination).find(self.controls.secPlayer).fadeOut();
 			$(self.destination).find(self.controls.secGame).fadeOut();
 			$(self.destination).find(self.controls.secTagTeam).fadeIn();
+			$(self.destination).find(self.controls.secTagTeam + " input").val('');
 			$(self.destination).find(self.controls.secFooterLinks).fadeOut();
 			$(self.destination).find(self.controls.btnTeamFinish).fadeOut();
 			$(e.target).hide();
@@ -795,6 +796,7 @@ define(['require', 'text!usercontrols/tag/templates/layout.html', 'facade', 'vie
 				$(self.destination).find(self.controls.secTeam).fadeIn();
 
 				$(self.destination).find(self.controls.lnkPlayer).fadeIn();
+				$(self.destination).find(self.controls.lnkTeam).fadeIn();
 				$(self.destination).find(self.controls.lnkGame).fadeIn();
 				$(self.destination).find(self.controls.secFooterLinks).fadeIn();
 				
