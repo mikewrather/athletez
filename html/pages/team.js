@@ -165,9 +165,27 @@ define([
                 controller.handleDeferredsDynamic();
             }
             
+            Channel('new-fan','unique').subscribe(this.refreshFansPage);
             routing.on('refresh-teampage', function(sport_id, team_id,season_id) {
             	callback(sport_id, team_id, season_id);
             });
+        },
+        
+        refreshFansPage: function() {
+        	var position, _self = this;
+        	 if (this.fansListView) {
+                $(this.fansListView.destination).html('');
+                position = $.inArray(this.fansListView, this.scheme);
+                if ( ~position ) this.scheme.splice(position, 1);
+                this.fans = new FansImageList();
+				this.fans.id = this.id;
+				this.fans.sport_id = $("#sports-h").val();
+				this.fans.targetElement = "#fans-div";				
+                this.ajaxCalls.push(this.fans.fetch());
+                $.when(this.fans.request).done(function (x) {
+					_self.setupFansListView();
+				});
+            }
         },
         
         handleDeferreds: function() {
