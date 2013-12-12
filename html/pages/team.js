@@ -124,14 +124,9 @@ define([
             this.basics.fetch();
             this.addmedia = new TeamAddMediaModel();
             this.addmedia.id = this.id;
-            
             var controller = this;
-            
-            
             controller.ajaxCalls = [];
-
 			function callback(sport_id, team_id, season_id) {
-				
 				if(controller.ajaxCalls && controller.ajaxCalls.length) {
 					for(var i in controller.ajaxCalls) {
 						console.error("here");
@@ -203,7 +198,6 @@ define([
 		},
 		
 		 setupRosterView: function(id, name) {
-		 	
 		 	if(!id && !name) {
 		 		var payload = this.basics.get("payload"), id = payload.id,
 		 		name = payload.org_sport_link_obj.org.name;
@@ -236,29 +230,26 @@ define([
 			this.scheme.push(this.commentOnListView);
 			this.layout.render();
 		},
+		
+		
+		showVote: function() {
+			 var position;
+			if (this.votesView) {
+                $(this.votesView.destination).unbind().html('');
+                position = $.inArray(this.votesView, this.scheme);
+                if ( ~position ) this.scheme.splice(position, 1);
+                this.setUpVoteView();
+            }
+		},
         
         refreshPage: function() {
             var position;
-            
             if (this.commentOnListView) {
             	this.commentOnListView.unbind().remove();
                 $(this.commentOnListView.destination).unbind().html('');
                 position = $.inArray(this.commentOnListView, this.scheme);
-                
                 if ( ~position ) this.scheme.splice(position, 1);
             }
-            
-           
-             if (this.votesView) {
-            	//alert("dest");
-            	//this.votesView.unbind().remove();
-                $(this.votesView.destination).unbind().html('');
-                position = $.inArray(this.votesView, this.scheme);
-                if ( ~position ) this.scheme.splice(position, 1);
-                
-                this.setUpVoteView();
-                
-            } 
             
             if (this.gamesView) {
                 $(this.gamesView.destination).html('');
@@ -328,7 +319,6 @@ define([
             });
             
             this.scheme.push(menuView);            
-
             this.scheme.push(headerView);            
             this.layout.render();
         },
