@@ -103,6 +103,13 @@ define([ 'models', 'facade' ], function(models, facade) {
 
 		parse_team: function(mpay,return_data){
 	//		return_data._detailclass = "game";
+			if ( typeof (mpay.picture_obj) == 'object' && mpay.picture_obj != null)
+			{
+				if(typeof(mpay.picture_obj.types) == 'object')
+				{
+					this.findCorrectType(mpay.picture_obj.types);
+				}
+			}
 			return_data._noicon_text = mpay.org_name;
 			return_data._color = '#928add';
 			return_data._sports_icon = this.get_selected_icon(mpay.org_sport_link_obj.sport);

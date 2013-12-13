@@ -240,6 +240,7 @@ class Model_Sportorg_Team extends ORM
 			'org_name' => 'get_org_name',
 			"team_location" => 'getTeamLocation',
 			"picture" => 'getImage',
+			'picture_obj' => 'getImageObj',
 			"num_votes" => 'get_num_votes',
 			"num_followers" => 'get_num_followers',
 			"season_label" => "get_season_label",
@@ -698,6 +699,18 @@ class Model_Sportorg_Team extends ORM
 		if($primary = Model_Media_Base::find_most_voted_tag($this,'image',1))
 		{
 			return $primary->original_url;
+		}
+		return null;
+	}
+
+	/**
+	 * Team image is the max voted images
+	 * @return null
+	 */
+	public function getImageObj(){
+		if($primary = Model_Media_Base::find_most_voted_tag($this,'image',1))
+		{
+			return $primary->getBasics();
 		}
 		return null;
 	}
