@@ -136,28 +136,50 @@ class Model_User_Resume_Data_Vals extends ORM
 	public function addResumeDataVal($args = array())
 	{
 		extract($args);
-		
+		$match = ORM::factory('User_Resume_Data_Vals');
+
 		if(isset($users_id))
 		{
 			$this->users_id = $users_id;
+			$match->where('users_id','=',$users_id);
 		}
-		
-		if(isset($user_value))
-		{
-			$this->user_value = $user_value;
-		} 
-		
+
 		if(isset($resume_data_id))
 		{
 			$this->resume_data_id = $resume_data_id;
+			$match->where('resume_data_id','=',$resume_data_id);
 		}
-		
+
+		$match = $match->find();
+		if($match->loaded() && isset($user_value))
+		{
+			$match->user_value = $user_value;
+			try {
+				$match->save();
+				return $match;
+			} catch(ORM_Validation_Exception $e){
+				return $e;
+			}
+		}
+		elseif($match->loaded()){
+			$match->user_value = "";
+			try {
+				$match->save();
+				return $match;
+			} catch(ORM_Validation_Exception $e){
+				return $e;
+			}
+		}
+
+		$this->user_value = isset($user_value) ? $user_value : "";
 		try {
-            $this->save();  
-            return $this;
-        } catch(ORM_Validation_Exception $e){
-            return $e;
-        }   
+			$this->save();
+			return $this;
+		} catch(ORM_Validation_Exception $e){
+			return $e;
+		}
+
+
 	}
 
 	public function owner(){
