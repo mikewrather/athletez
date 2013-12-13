@@ -59,7 +59,7 @@ class Model_Sportorg_Org extends ORM
 	);
 
 	public function getLocationName(){
-		return $this->location->address;
+		return $this->location->full_address;
 	}
 
 	public function getStateName(){
