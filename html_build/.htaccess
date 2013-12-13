@@ -6,9 +6,12 @@ RewriteBase /
 
 # Protect hidden files from being viewed
 <Files .*>
-	#Order Deny,Allow
-	#Deny From All
+        #Order Deny,Allow
+        #Deny From All
 </Files>
+
+RewriteCond %{QUERY_STRING} ^_escaped_fragment_=/?(.*)$
+RewriteRule .* http://athletez.brombonesnapshots.com/%{HTTP_HOST}/#!%1 [P,L]
 
 # Protect application and system files from being viewed
 #RewriteCond %{REQUEST_URI} !^/(collections|css|images|models|packages|pages|syncs|test|utils|vendor|views)/
@@ -21,6 +24,3 @@ RewriteCond %{REQUEST_URI} !.php$
 
 # Rewrite all other URLs to index.php/URL
 RewriteRule .* index.php/$0 [L]
-
-RewriteCond %{QUERY_STRING} ^_escaped_fragment_=/?(.*)$
-RewriteRule .* http://athletez.brombonesnapshots.com/%{HTTP_HOST}/#!%1 [P]

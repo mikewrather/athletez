@@ -3,8 +3,9 @@
 
 	<div class="game-heading">
 		<!--div class="sports-h"></div-->
+		<a href="javascript: void(0);" class="game-edit-btn-h pull-right">Edit Game</a>
 		<div class="game-general">
-			<div class="stretch"></div>
+			<!--<div class="stretch"></div>-->
 			{{#shared}}
 				{{#shared.sport}}<span class="sport-h" data-id="{{sports_id}}">{{shared.sport}}</span>{{/shared.sport}}
 				{{#shared.complevel}}<span>{{shared.complevel}}</span>{{/shared.complevel}}
@@ -14,13 +15,11 @@
 				{{#event_name}}<span class="sport-h" data-id="{{sports_id}}">{{event_name}}</span>{{/event_name}}
 			{{/shared}}
 		</div>
-
-		<h3>{{game_day}} {{game_time}}</h3>
 		<p>
-			{{game_location}}
+			{{game_day}} {{game_time}} - {{game_location}}
 		</p>
 		{{^shared}}<a href="javascript: void(0);" class="add-to-event common-btn common-default-sky-dark pull-right" title="Add me to this Event">Add me to this Event</a>{{/shared}}
-		<a href="javascript: void(0);" class="common-btn game-edit-btn-h common-default-sky-dark pull-right">Edit Game</a>
+
 	</div>
 
 	<ul class="span3 image-outer-h">

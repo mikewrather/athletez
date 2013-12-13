@@ -4,10 +4,17 @@
 	float: left;
 	width: 100%;
 	padding: 0;
-    font-family: 'Nunito',"HelveticaNeue","Helvetica";
 }
 .game-heading > * {
 margin:10px;
+}
+#main-header .span3.image-outer-h{
+    min-width: 255px;
+}
+.game-edit-btn-h{
+    background-color: #d7d7d7;
+    color: black;
+    padding:5px 10px;
 }
 .game-heading h3 {
 	font-weight: bold;
@@ -23,14 +30,11 @@ margin:10px;
 }
 .game-heading .game-general{
     display: block;
-    width: 100%;
-    text-align: justify;
-    -ms-text-justify: distribute-all-lines;
-    text-justify: distribute-all-lines;
+    width: 80%;
 }
 .game-heading .game-general span{
-    font-size: 2.5em;
-    font-weight: bolder;
+    font-size: 1.7em;
+    font-weight: bold;
     font-family: inherit;
     margin-right:30px;
     text-align: center;
@@ -68,7 +72,7 @@ div.stretch{
 ul.teams-list{
     display:inline-block;
     padding:10px;
-    width: 65%;
+    width: 60%;
     float: left;
 }
 ul.teams-list li.team-item{
@@ -132,11 +136,12 @@ li.team-item div.org-info{
     font-family: inherit;
 }
 .org-info span.org-name{
-    font-size: 1.5em;
-    font-weight: bolder;
+    font-size: 1.3em;
+    font-weight: 400;
 }
 .org-info span.org-location{
-    font-size: 1.2em; font-weight: bolder;
+    font-size: 1.1em;
+    font-weight: 300;
 }
 .header-image-container{
     display: inline-block;

@@ -8,18 +8,20 @@
 
 		{{/_thumbnail}}
 		<div class="action-section">
-			{{#show_edit}}
-				<!--<div class="action-block left-block edit edit-h" subject-type-id="{{_enttypes_id}}" subject-id="{{_id}}"><span>edit</span></div>-->
-				<div class="action-block right-block delete delete-h" subject-type-id="{{_enttypes_id}}" subject-id="{{_id}}"><span>delete</span></div>
-			{{/show_edit}}
-			{{^show_edit}}
+
+
 				<div class="action-block left-block vote vote-h {{#_has_voted}} link-disabled {{/_has_voted}}" subject-type-id="{{_enttypes_id}}" subject-id="{{_id}}">
 					<span>vote</span>
 				</div>
 				{{#_can_follow}}
 				<div class="action-block right-block follow follow-h {{#_is_following}} link-disabled {{/_is_following}}" subject-type-id="{{_enttypes_id}}" subject-id="{{_id}}"><span>follow</span></div>
 				{{/_can_follow}}
+
+			{{#show_edit}}
+			<!--<div class="action-block left-block edit edit-h" subject-type-id="{{_enttypes_id}}" subject-id="{{_id}}"><span>edit</span></div>-->
+			<div class="action-block right-block delete delete-h" subject-type-id="{{_enttypes_id}}" subject-id="{{_id}}"><span>delete</span></div>
 			{{/show_edit}}
+
 		</div>
 		<div class="detail-view {{#_detailclass}}{{_detailclass}}{{/_detailclass}}">
 			{{#_label}}<h6>{{_label}}</h6>{{/_label}}
