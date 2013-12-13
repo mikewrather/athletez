@@ -104,7 +104,7 @@
 		'application': 'application'
 
 	},
-	onBuildWrite   : function( name, path, contents ) {
+/*	onBuildWrite   : function( name, path, contents ) {
 		// output the original source contents
 
 		var pathReg = new RegExp("/vendor/");
@@ -128,6 +128,7 @@
 
 		return contents;
 	},
+	*/
 	shim: {
 		'jqueryui': {
 			deps: ['jquery']
