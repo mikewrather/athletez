@@ -533,6 +533,10 @@
 			{
 				$users_id = (int)trim($this->request->post('users_id'));
 			}
+			else
+			{
+				$users_id = Auth::instance()->get_user()->id;
+			}
 
 			$args = array(
 				'users_id' => $users_id,
@@ -552,8 +556,6 @@
 				return false;
 
 			}
-
-
 		}
 		
 		############################################################################
