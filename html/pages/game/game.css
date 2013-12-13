@@ -157,13 +157,14 @@ li.team-item div.org-info{
 }
 
 .org-info span.org-name{
-    font-size: 1.5em;
-    font-weight: 300;
+    font-size: 1.3em;
+    font-weight: 400;
 
 }
 
 .org-info span.org-location{
-    font-size: 1.2em; font-weight: bolder;
+    font-size: 1.1em;
+    font-weight: 300;
 }
 
 .header-image-container{
