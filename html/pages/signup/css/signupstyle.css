@@ -281,6 +281,7 @@
 }
 #firstregbase input {
     background-color: #f4f4f4;
+    transition: background-color 0.5s ease;
 }
 .loguser{
 
@@ -323,4 +324,8 @@
     font-size: 12px!important;
     font-weight: bold!important;
     padding-left: 17px!important;
+}
+
+input.field-failed{
+    background-color: #E27171 !important;
 }
