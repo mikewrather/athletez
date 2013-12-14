@@ -197,8 +197,8 @@ define(['require',
 					sports_id : sportsId
 				});
 				
-				
 				$.when(sportsModel.request).done(function() {
+					alert("Sports Added Successfully.");
 					self.setUpUsersSportsCheck();
 					//self.setUpUsersSports();
 				});
@@ -220,6 +220,7 @@ define(['require',
 				sportsModel.type = "delete";
 				sportsModel.destroy({data: payload, processData: true,
 					success : function(){
+						alert("Sports Removed Sussessfully.");
 						self.setUpUsersSportsCheck();
 						//self.setUpUsersSports();
 					}});

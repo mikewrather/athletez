@@ -20,6 +20,7 @@ define([ 'require', 'text!roster/templates/roster.html','views', 'vendor', 'faca
 	RosterView = SectionView.extend({
 		template: rosterTemplate,
 		events: {
+			"click .add-to-roster-h": "addToRoster"
 		},
 		
 		initialize : function(options) {
@@ -29,6 +30,11 @@ define([ 'require', 'text!roster/templates/roster.html','views', 'vendor', 'faca
 			_self.team_name = options.team_name;
 			_self.viewName = options.viewName || ("Image List" + Math.random());
 			_.bindAll(this);
+			_self.getTeams();
+		},
+		
+		getTeams: function() {
+			var _self = this;
 			if(_self.team_id) {
 				_self.collection1 = new collection();
 				_self.collection1.id = _self.team_id;
@@ -40,18 +46,58 @@ define([ 'require', 'text!roster/templates/roster.html','views', 'vendor', 'faca
 		},
 		
 		setupTeamRosterListView: function() {
-			var teamRosterListView;
+			var teamRosterListView, found = "";
 			teamRosterListView = new ImageList({
 				collection: this.collection1,
 				name: this.viewName,
 				model: new model()
 			});
+			
+			if(this.checkForUser()) {
+				try {
+					var arr = this.collection1.toArray();
+					console.error(arr);
+					for(var i in arr) {
+						if(arr[i].attributes.payload.id == routing.loggedInUserId) {
+							found = true;
+							break;
+						}
+					}
+				} catch(e) {}
+			}
+			// sow roster add button
+            if(found == "") this.$el.find(".add-to-roster-h").removeClass("hide");
+			
 			this.$el.find(".roster-images-h").html(teamRosterListView.$el);
+		},
+		
+		checkForUser: function() {
+			if(!_.isUndefined(routing.userLoggedIn) && routing.userLoggedIn)
+				return true;
+			else	
+        		return false;
+		},
+		
+		addToRoster: function(e) {
+			if(!this.checkForUser()) {
+		  	   	routing.trigger('showSignup');	
+		    	return;
+	    	}
+			
+			var _self = this, modal = new model();
+			modal.url = "/api/team/player/"+this.team_id;
+			modal.save();
+			$.when(modal.request).done(function() {
+				$(e.currentTarget).hide();
+				_self.getTeams();
+			});
 		},
 		
 		render: function (domInsertion, dataDecorator, partials) {
             SectionView.prototype.render.call(this, domInsertion, dataDecorator, partials); 
             this.$el.find(".heading-h").html(this.team_name);
+            
+       
         }
 		
 	});

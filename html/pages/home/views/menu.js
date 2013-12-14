@@ -9,7 +9,6 @@ define(
 			MenuView = SectionView.extend({
 
 				id : 'menu',
-
 				events : {
 					"blur #search" : "updateSearch",
 					"focus #search": "hideDropdown",
@@ -24,13 +23,11 @@ define(
 					"click .reset-option-btn-h": "resetIndividual"
 				},
 				
-				
-				demoSelect: function() {
-					
-				},
+				demoSelect: function() { },
 				
 				resetIndividual: function(e) {
 					var fn = $(e.currentTarget).data("type");
+					$(e.currentTarget).addClass("hide");
 					if(fn && _.isFunction(this[fn])) this[fn]();
 				},
 				
@@ -50,7 +47,7 @@ define(
 					Channel('resetIndividual').publish("view");
 				},
 
-				resetAll: function(){
+				resetAll: function() {
 					this.resetView();
 					this.resetLocation();
 					this.resetSport();
@@ -76,7 +73,6 @@ define(
 					this.$el.find('#city').val('');
 					//var s = document.getElementById('state-list');
 					//s.selectedIndex = 0;
-					
 					this.$el.find(".menu-detail-h").hide();
 					this.$el.find('.reset-location-area-h ul li a.select, .reset-location-area-h ul li.select').removeClass('select');
 				},
@@ -93,11 +89,9 @@ define(
 				
 				changeBaseUrl : function(e) {
 					var target = $(e.currentTarget);
-					
 					this.$el.find(".icons").each(function() {
 						$(this).removeClass($(this).data("selected-class"));
 					});
-					
 					target.addClass(target.data("selected-class"));
 					var num = target.data("number");
 					Channel('baseUrlChanged').publish(num);
@@ -139,16 +133,17 @@ define(
 					}
 				},
 				
-				
 				select : function(e) {
 					e.preventDefault();
 					e.stopPropagation();
-					
 					var target = $(e.currentTarget);
 					var targetClass = target.attr('class');
 					$('.dropdown-menu > li > a'+'.'+targetClass).removeClass('select');
 					targetClass = target.attr('class').split(' ')[0];
 					$(target).addClass('select');
+					$(".menu-detail-h").hide();
+					this.$el.find(".reset-option-btn-h[data-type="+$(target).parents(".menu").attr("id")+"]").removeClass("hide");
+					
 					var ret = {
 						'submenu' : targetClass,
 						'value' :  $(target).data('id') || $(target).text()
@@ -192,12 +187,14 @@ define(
 					}
 					
 					if(this.options.cities_id || this.options.states_id || this.options.country_id) {
+						
 						// get location name
 						var cityModel = new getCity();
 						cityModel.cityId = this.options.cities_id || this.options.states_id || this.options.country_id;
 						cityModel.fetch();
 						
 						$.when(cityModel.request).done(function() {
+							self.$el.find(".reset-option-btn-h[data-type=city]").removeClass("hide");
 							var name = cityModel.get("payload").name;
 							if(cityModel.get("payload").states_obj)
 								name +=", "+cityModel.get("payload").states_obj.name;
@@ -212,6 +209,14 @@ define(
 					if(this.options.base) {
 						var $ob = this.$el.find(".restype[data-number="+this.options.base+"]");
 						$ob.addClass($ob.data("selected-class"));
+					}
+					
+					if(this.options.sports_id && this.options.sports_id != "0") {
+						self.$el.find(".reset-option-btn-h[data-type=sport]").removeClass("hide");
+					}
+					
+					if(this.options.orderby != "random") {
+						self.$el.find(".reset-option-btn-h[data-type=views]").removeClass("hide");						
 					}
 					
 					if(this.options.orderby) {
