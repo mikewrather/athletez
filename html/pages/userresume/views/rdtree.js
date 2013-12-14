@@ -114,7 +114,7 @@ define(['require', 'text!userresume/templates/rdtree.html', 'facade', 'views', '
 				user_id : self.user_id,
 				resume_data_id : rdId,
 				user_value : value
-			}
+			};
 
 			var rdModel = new RDTreeModel(payload);
 			rdModel.treeId = id;
@@ -131,6 +131,8 @@ define(['require', 'text!userresume/templates/rdtree.html', 'facade', 'views', '
 			}
 
 			$.when(rdModel.request).done(function(response) {
+				var $success = $(e.currentTarget).parents(".rd-entry").find(".success_h");
+				$success.removeClass("displayNone").html("Updated Successfully.");
 				console.log("response",response);
 				if(response.payload != null){
 					if(response.payload.id > 0){
@@ -138,9 +140,11 @@ define(['require', 'text!userresume/templates/rdtree.html', 'facade', 'views', '
 						$(e.target).attr('treeId',response.payload.id);
 					}
 				}
-				$('.txtRdTrees_h[resumedataid="'+ response.payload.resume_data_id +'"]').val(response.payload.user_value)
+				$('.txtRdTrees_h[resumedataid="'+ response.payload.resume_data_id +'"]').val(response.payload.user_value);
 				$(e.target).parent().find(".error_h").html('').fadeOut();
-				$(e.target).parent().find(".success_h").html('').fadeOut();
+				setTimeout(function() {
+					$success.addClass("displayNone").html("");
+				}, 3000);
 			});
 		}
 	});
