@@ -2300,7 +2300,7 @@ Form.Fieldset = Backbone.View.extend({
 
     //Render fieldset
     var $fieldset = $($.trim(this.template(_.result(this, 'templateData'))));
-
+	
     //Render fields
     $fieldset.find('[data-fields]').add($fieldset).each(function(i, el) {
       var $container = $(el),
@@ -2491,7 +2491,15 @@ Form.Field = Backbone.View.extend({
       $container.append(editor.render().el);
     });
     this.setElement($field);
+    
+    if(this.schema.hideElement)
+    	this.$el.addClass("hide");
+    
     return this;
+  },
+  
+  showField: function() {
+  	this.$el.removeClass("hide");
   },
 
   /**
@@ -3347,7 +3355,10 @@ Form.editors.AutoComplete = Form.editors.Text.extend({
   		this.$el.parent().find(".indicator-h").removeClass("invalid").addClass("valid");
   				
     this.$el.attr("data-id", value);
-    this.$el.val(text);    
+    this.$el.val(text);
+    
+    if(this.afterSetValue && _.isFunction(this.afterSetValue)) this.afterSetValue();
+        
   },
 
   focus: function() {

@@ -168,6 +168,7 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 							}
 						}
 					},
+					
 					'time' : {
 						form_values: {
 							post_to_server	: false,
@@ -175,12 +176,14 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 							serverKey: "game_time",
 							objectValuesToUpdate: ["game_datetime"]
 						},
+						
 						type : 'Text',
 						fieldClass: "time-picker-field",
 						attr : {
 							'placeholder' : 'Time',
 							'class' : "txt-game-time_h hasDatepicker txtTime"
 						},
+						
 						showLable : false,
 						label: "Time",
 						validators : [{
@@ -188,6 +191,7 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 							message : 'Please enter time.'
 						}, /^(0?[1-9]|1[012])(:[0-5]\d)$/]
 					},
+					
 					'Day_light' : {
 						type : 'DropDown',
 						fieldClass: "ampm-field",
@@ -228,7 +232,6 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 							post_to_server	: true
 						}
 					},
-
 
 					'Sports' : {
 						type : 'DropDown',
@@ -274,6 +277,7 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 						label: "Select Team 1",
 						form_values: {
 							keyNameInPayload: 'team_name',
+							showElements: ["team_1"],
 							serverKey: 'teamOneId',
 							serverDbField: 'teams_id',
 							defaultValue: '',
@@ -284,16 +288,7 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 								}, {
 									key : 'sports_id',
 									value : function () { return _self.sports_id; }
-								},/*{
-									key : 'complevels_id',
-									value : function () { return _self.complevels_id > 0 ? _self.complevels_id : false; }
-								},{
-									key : 'seasons_id',
-									value : function () { return _self.seasons_id > 0 ? _self.seasons_id : false; }
-								},{
-									key : 'year',
-									value : function () { return _self.year > 0 ? _self.year : false; }
-								},*/
+								},
 								{
 									key : 'team_name',
 									value: function(_that) {
@@ -325,14 +320,15 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 
 							callback : function(id,item) {
 								$("input[name=team_1]").attr("teamId", id);
-								console.log(item);
 								self.complevels_id = item.full_return.complevels_id;
 								self.seasons_id = item.full_return.seasons_id;
 								self.year = item.full_return.year;
 
-								console.log(self);
-
 								$(self.destination).find("input[name=team_1]").attr("teamId", id);
+							},
+							
+							afterSetValue: function() {
+								$("input[name=team_1]").parents(".field-row").removeClass("hide");
 							}
 						},
 
@@ -364,6 +360,7 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 						attr : {
 							'team' : 'one'
 						},
+						hideElement: true,
 						showLable : false,
 						label: "Team 1",
 						onClickFn : function(e) {
@@ -402,6 +399,7 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 						form_values: {
 							keyNameInPayload: 'team_name',
 							serverKey: 'teamTwoId',
+							showElements: ["team_2"],
 							serverDbField: 'teams_id',
 							field_width:'400px',
 							request_fields : [{
@@ -431,6 +429,7 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 							request_finished : function() {
 							},
 							callback : function(id) {
+								$("input[name=team_2]").parents(".field-row").removeClass("hide");
 								$("input[name=team_2]").attr("teamId", id);
 							}
 						},
@@ -461,6 +460,7 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 						type : 'Radio',
 						options : ['Home', 'Away'],
 						showLable : false,
+						hideElement: true,
 						label: "Team 2",
 						onClickFn : function(e) {
 							var value = e ? $(e.target).val() : "away", teamId = 0;
