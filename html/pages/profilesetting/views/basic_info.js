@@ -8,6 +8,7 @@ define([
         'require',
         'text!profilesetting/templates/basic_info_header.html',
 		'text!profilesetting/templates/basic_info_header_edit.html',
+		'text!profilesetting/templates/basic_info_header_completed.html',
         'profilesetting/models/basic_info',
         'facade',
         'views',
@@ -15,7 +16,7 @@ define([
         'vendor',
 		'usercontrols/imagecropper/imagecropper'
         ],
-function(require, profileHeaderTemplate,profileHeaderEditTemplate) {
+function(require, profileHeaderTemplate,profileHeaderEditTemplate,profileHeaderCompletedTemplate) {
 
     var ProfileHeaderView,
         facade = require('facade'),
@@ -39,7 +40,8 @@ function(require, profileHeaderTemplate,profileHeaderEditTemplate) {
 	    events: {
 		    "click .btn-prof-setting-h": "initialize",
 		    "click #edit_profile_info": "editProfile",
-		    "click #change_user_pic": "changeUserpic"
+		    "click #change_user_pic": "changeUserpic",
+		    "click #save_user_data": "saveProfileBasics"
 	    },
 
         initialize: function (options) {
@@ -69,6 +71,7 @@ function(require, profileHeaderTemplate,profileHeaderEditTemplate) {
             $('#section-basics-prof-setting').html(markup);
 	        $('#change_user_pic').bind('click',function(){ self.changeUserpic();});
 	        $('#edit_profile_info').bind('click',function(){ self.editProfile();});
+	        $('#save_user_data').bind('click',function(){ self.saveProfileBasics();});
         },
 
         // **Method** `setOptions` - called by BaseView's initialize method
@@ -91,7 +94,12 @@ function(require, profileHeaderTemplate,profileHeaderEditTemplate) {
 		    $('div#user_profile_data').find('input').each(function(){
 			    newAttr[$(this).attr('model-property')] = $(this).val();
 		    });
-		    this.basicInfoModel.save(newAttr,{success:function(){ self.initBasicView();}});
+		    console.log(newAttr);
+		    this.basicInfoModel.save(newAttr,{success:function(){
+			    var markup = Mustache.to_html(profileHeaderCompletedTemplate, self.basicInfoModel.toJSON());
+			    $('div#user_profile_data').html(markup);
+			    $('#edit_profile_info').bind('click',function(){ self.editProfile();});
+		    }});
 	    },
 
 	    changeUserpic: function () {
