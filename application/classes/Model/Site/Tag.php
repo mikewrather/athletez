@@ -82,7 +82,10 @@ class Model_Site_Tag extends Model_Site_Entdir
 	);
 
 	public function get_subject(){
-		return $this->getSubject()->getBasics();
+		if($subject = $this->getSubject()){
+			return $subject->getBasics();
+		}
+		return false;
 	}
 
 	public static function getNumTags($obj){
