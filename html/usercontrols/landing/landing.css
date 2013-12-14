@@ -136,14 +136,12 @@ a#browse{
 #reg-landing #fbpane #label{
     margin: 0;
     position: absolute;
-    height: 100%;
     background-color: #6b74b7;
-    font-size: 1.2em;
+    font-size: 1em;
     padding: 12px;
     width: 75%;
     float: left;
     height: 20px;
-    position: absolute;
 }
 
 #reg-landing #regpanemain {
