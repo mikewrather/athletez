@@ -80,11 +80,14 @@ define([
                     var flag= true;
 			        $.each(this.$(":input"),function( key, value ) {
                        if(!value.value){
-		                    console.log(key,value);
-	                        $(value).addClass('field-failed');
+
 	                       setTimeout(function(){
-		                       $(value).removeClass('field-failed');
-	                       },2000);
+		                       $(value).addClass('field-failed');
+		                       setTimeout(function(){
+			                       $(value).removeClass('field-failed');
+		                       },2000);
+	                       },parseInt(key + "00"));
+
 	                       flag = false;
                        }
                     });
