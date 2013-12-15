@@ -68,19 +68,27 @@ define([
         		events:{
         			"click .regsubmit":"next",
                 	"click #fbpane":"signupFacebook",
-                	"click #reglogin a":"showLogin"
+                	"click #reglogin a":"showLogin",
+			        "click .login": "showLogin"
         		},
         		
         		next: function(event){
         			event.preventDefault();
         			//backbone.validation.bind(this);
         			var fields = this.$(":input").serializeArray();
+			        console.log(fields);
                     var flag= true;
-                	$.each(fields, function( index, value ) {
+			        $.each(this.$(":input"),function( key, value ) {
                        if(!value.value){
-                        alert(value.name +" is blank");
-                        flag = false;
-                        return false;
+
+	                       setTimeout(function(){
+		                       $(value).addClass('field-failed');
+		                       setTimeout(function(){
+			                       $(value).removeClass('field-failed');
+		                       },2000);
+	                       },parseInt(key + "00"));
+
+	                       flag = false;
                        }
                     });
                     try {
@@ -116,7 +124,7 @@ define([
                },
                showLogin:function(event){
 	                event.preventDefault();
-	                $('#RegModal').modal('hide') ;
+	                routing.trigger('popup-close');
 	                this.logincontroller = new LoginController();
 	                routing.trigger("Login");
                }

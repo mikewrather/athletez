@@ -137,12 +137,6 @@ li.sport a:hover {
 .homePage #main {
 	padding-top: 0px;
 }
-#mainreg #fbpane {
-	background: url(/images/social/facebook.png) no-repeat;
-	width: 300px;
-	background-color: transparent;
-	background-size: cover;
-}
 #regcontainer #firstreg {
 	float: left;
 	width: 350px;

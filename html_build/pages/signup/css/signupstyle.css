@@ -7,18 +7,30 @@
 			padding-bottom: 20px;
 			font:  bold 12px/20px;
 		}
-#fbpane{
-			background-color: #3b5998;
-			width: 242px;
-			padding: 10px;
-			margin-left: 18%;
-			text-align: center;
-			color: white;
-			font-size: 14px;
-			font-weight: bold;
-			cursor: pointer;
-			border-style: none;
-		}	
+ #fbpane {
+    color: white;
+     width: 64%;
+    margin: 0 auto;
+    padding: 0;
+    cursor: pointer;
+    border-style: none;
+    height: 45px;
+    position: relative;
+    background: #68659c url(http://cdn.athletez.com/resources/img/facebook-f.png) 94% no-repeat;
+}
+#fbpane #label{
+    text-align: center;
+    color: white;
+    font-weight: bold;
+    margin: 0;
+    position: absolute;
+    background-color: #6b74b7;
+    font-size: 1em;
+    padding: 12px;
+    width: 75%;
+    float: left;
+    height: 20px;
+}
 #regpanemain{
 		position: absolute;
 		width: 547PX;
@@ -268,6 +280,7 @@
 }
 #firstregbase input {
     background-color: #f4f4f4;
+    transition: background-color 0.5s ease;
 }
 .loguser{
 }
@@ -305,4 +318,7 @@
     font-size: 12px!important;
     font-weight: bold!important;
     padding-left: 17px!important;
+}
+input.field-failed{
+    background-color: #E27171 !important;
 }

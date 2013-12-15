@@ -76,18 +76,43 @@ class Model_User_Teamslink extends ORM
 
 	public function addPlayer($args = array()){
 		extract($args);
-		if (isset($teams_id))
+		$match = ORM::factory('User_Teamslink');
+		if (isset($teams_id)){
 			$this->teams_id = $teams_id;
-		if (isset($users_id))
-			$this->users_id = $users_id;
-		try {
-			$this->save();
-			Model_Site_Feed::addToFeed($this);
-			return $this;
-		} catch(ORM_Validation_Exception $e){
-			return $e;
+			$match->where('teams_id','=',$teams_id);
 		}
-		return $this;
+
+		if (isset($users_id)){
+			$this->users_id = $users_id;
+			$match->where('users_id','=',$users_id);
+		}
+
+		$match = $match->find();
+		if($match->loaded())
+		{
+			try
+			{
+				if(ORM::is_deleted($match)) $match->undo_delete_with_deps();
+				Model_Site_Feed::addToFeed($match);
+			}
+			catch(ORM_Validation_Exception $e)
+			{
+				return $e;
+			}
+			return $match;
+		}
+		else{
+			try {
+				$this->save();
+				Model_Site_Feed::addToFeed($this);
+				return $this;
+			} catch(ORM_Validation_Exception $e){
+				return $e;
+			}
+			return $this;
+		}
+
+
 	}
 
 	public function getSubject(){

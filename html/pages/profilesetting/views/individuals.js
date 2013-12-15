@@ -198,7 +198,11 @@ define(['require',
 				});
 				
 				$.when(sportsModel.request).done(function() {
-					alert("Sports Added Successfully.");
+					var $success = $(event.currentTarget).parent().find(".success_h");
+					$success.removeClass("displayNone").html("Sport Added Successfully.");
+					setTimeout(function() {
+						$success.addClass("displayNone").html("");
+					}, 3000);
 					self.setUpUsersSportsCheck();
 					//self.setUpUsersSports();
 				});
@@ -220,7 +224,11 @@ define(['require',
 				sportsModel.type = "delete";
 				sportsModel.destroy({data: payload, processData: true,
 					success : function(){
-						alert("Sports Removed Sussessfully.");
+						var $success = $(event.currentTarget).parent().find(".success_h");
+						$success.removeClass("displayNone").html("Sport Removed Successfully.");
+						setTimeout(function() {
+							$success.addClass("displayNone").html("");
+						}, 3000);
 						self.setUpUsersSportsCheck();
 						//self.setUpUsersSports();
 					}});

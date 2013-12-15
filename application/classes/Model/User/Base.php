@@ -873,7 +873,7 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 			$org_sport_link_obj->where('org_sport_link.sports_id', '=', $sports_id);
 		}
 
-		if($org_type=='club')
+		if(strstr($org_type,'club'))
 		{
 			$org_sport_link_obj->where('orgs.sports_club','=',1);
 		}
@@ -890,7 +890,6 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 		$org_sport_link_obj = ORM::_sql_exclude_deleted($classes_arr, $org_sport_link_obj);
 		$res = $org_sport_link_obj->execute();
 
-	//	print_r($res);
 
 		$orgs = array(
 			"groupby" => $groupby

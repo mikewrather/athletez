@@ -32,13 +32,11 @@
 }
 #landing-info{
     margin-top:50px;
-    width: 700px;
-    height: 400px;
+    width: 90%;
+    max-width: 800px;
     margin: auto;
-    border-radius: 10px;
     padding:10px 40px;
-    background-color: rgba(0,0,0,0.5);
-    -webkit-box-shadow: inset 0 0 5px #444444;
+    text-align: center;
 }
 #alternative-actions{
     text-align: center;
@@ -46,36 +44,22 @@
     margin-top: 40px;
     width: 700px;
 }
-#alternative-actions a{
-    display: inline-block;
-    text-align: center;
-    height: 20px;
-    width: 120px;
-    font-size: 2em;
-    font-weight: normal;
-    background-color: #9DCA3C;
-    color: white;
-    padding: 12px;
-    margin: 8px;
-    text-shadow: 0px 1px 1px rgba(247, 247, 247, 0.10);
-}
-#alternative-actions a:hover{
-    text-decoration: underline;
-}
 a#browse{
     width: 350px;
 }
 #landing-info li, #landing-info div{
     color: #EFEFEF;
-    text-shadow: 0px 1px 1px rgba(247, 247, 247, 0.90);
+    text-shadow: 4px 1px 1px rgba(0, 0, 0, 0.70);
 }
 #landing-info #landing-header{
+    line-height: 60px;
     width: 100%;
-    font-size: 2em;
+    font-size: 5em;
     font-weight: bold;
-    padding:25px 10px;
     float: left;
     text-align: center;
+    text-shadow: 4px 3px 3px rgba(0, 0, 0, 0.70);
+    padding: 20px 0px 0px 0px;
 }
 #landing-info #site-summary{
     list-style-type: circle;
@@ -86,14 +70,25 @@ a#browse{
     margin-top:10px;
 }
 #site-info{
-    width: 420px;
-    margin-right:20px;
-    float: left;
-    border-right:3px dotted #333;
+    font-size: 2.0em;
+    font-weight: bold;
+    line-height: 38px;
+    position: relative;
+    width: 90%;
+    margin: auto;
+    text-shadow: 2px 2px 2px rgba(255, 255, 255, 0.80);
+}
+#landing-info hr{
+    border:0;
+    height: 1px;
+    margin: 20px auto;
+    background-color: white;
+    width: 75%;
+    opacity: .5;
 }
 #reg-landing{
-    width: 250px;
-    float: right;
+    width: 280px;
+    margin:15px auto;
 }
 #reg-landing #mainreg{
     background: none;
@@ -104,17 +99,31 @@ a#browse{
 #reg-landing #mainreg{
     width:100%;
 }
-#reg-landing #fbpane {
-    margin: 0;
-    background: #3b5998;
-    width: 100%;
-    padding: 10px;
-    text-align: center;
+#reg-landing .regor {
     color: white;
-    font-size: 14px;
-    font-weight: bold;
+    margin: 15px 0 0 0;
+    font-size: 1.2em;
+    font-weight: bolder;
+}
+#reg-landing #fbpane {
+    width: 100%;
+    margin: 0;
+    padding: 0;
     cursor: pointer;
     border-style: none;
+    height: 45px;
+    position: relative;
+    background: #68659c url(http://cdn.athletez.com/resources/img/facebook-f.png) 94% no-repeat;
+}
+#reg-landing #fbpane #label{
+    margin: 0;
+    position: absolute;
+    background-color: #6b74b7;
+    font-size: 1em;
+    padding: 12px;
+    width: 75%;
+    float: left;
+    height: 20px;
 }
 #reg-landing #regpanemain {
     width: 100%;
@@ -125,19 +134,27 @@ a#browse{
     width: 100%;
 }
 #reg-landing #firstregbase input{
-    width: 100%;
-    margin: 0;
-    margin-top:10px;
+    width: 90%;
+    margin: 20px 0 0 0;
+    padding: 8px 5%;
+    position: relative;
 }
 #reg-landing .signupsubmit{
     margin-top:0;
     padding-top: 10px;
 }
 #reg-landing .signupsubmit input{
-    background-color: #9DCA3C;
-    width: 50% !important;
+    width: 48% !important;
     color: white;
     font-size: 20px;
     border-style: none;
     height: 40px;
+}
+#reg-landing .signupsubmit input:first-child{
+    float: left;
+    background-color: #9DCA3C;
+}
+#reg-landing .signupsubmit input:last-child{
+    float: right;
+    background-color: #1AA0AE;
 }
