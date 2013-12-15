@@ -12,7 +12,7 @@ define( ["models/base"], function (BaseModel) {
         defaults: {
             
             "links": [{
-                "label": "",
+                "label": "Add Photo",
 
 
                 "link" : "javascript:void(0);",
@@ -30,7 +30,7 @@ define( ["models/base"], function (BaseModel) {
     //            "link" : "javascript:void(0);",
 				"id"   :"addPhoto"
             },*/ {
-                "label": "",
+                "label": "Add Video",
 	            //"link": "#videoprev",
                 "link" : "javascript:void(0);",
 	            "id": "addVideo"
