@@ -328,7 +328,10 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
             	else
             		var id = options.id;
             		
-            	var html = '<div id="'+id+'" class="modal common-modal hide fade model-popup-h in">'+
+            	var cl = (options.fullPage)?"full-page-modal":"normal-popup";
+            		
+            		
+            	var html = '<div id="'+id+'" class="modal '+cl+' common-modal hide fade model-popup-h in">'+
         		'<div class="modal-header"><a href="javascript: void(0);" title="close" data-id="'+id+'" class="close"'+ 
         		'>&times;</a><h3 class="modal-header-h">Header</h3></div>'+
         		'<div class="modal-body page-content-h" id="modalBody"></div>'+

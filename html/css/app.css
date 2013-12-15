@@ -1798,6 +1798,18 @@ a.add-to-event {
 	text-shadow: 0px 0px 19px rgba(150, 150, 150, 1);
 }
 
+html body .common-modal.normal-popup {
+    width: 845px !important;
+    margin: -250px 0 0 -430px !important;
+    position: fixed !important;
+    top: 40% !important;
+    left: 50% !important;
+}
+
+.modal-header .close {
+	color: #000;
+}
+
 
 
 

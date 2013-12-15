@@ -327,8 +327,11 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 								$(self.destination).find("input[name=team_1]").attr("teamId", id);
 							},
 							
-							afterSetValue: function() {
-								$("input[name=team_1]").parents(".field-row").removeClass("hide");
+							afterSetValue: function(show) {
+								if(show == "show")
+									$("input[name=team_1]").parents(".field-row").removeClass("hide");
+								else	
+									$("input[name=team_1]").parents(".field-row").addClass("hide");								 	
 							}
 						},
 
@@ -429,8 +432,15 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 							request_finished : function() {
 							},
 							callback : function(id) {
-								$("input[name=team_2]").parents(".field-row").removeClass("hide");
+								//$("input[name=team_2]").parents(".field-row").removeClass("hide");
 								$("input[name=team_2]").attr("teamId", id);
+							},
+							afterSetValue: function(show) {
+								console.error(show);
+								if(show == "show")
+									$("input[name=team_2]").parents(".field-row").removeClass("hide");
+								else	
+									$("input[name=team_2]").parents(".field-row").addClass("hide");								 	
 							}
 						},
 

@@ -58,6 +58,7 @@ define(['require',
 			options.title = "&nbsp;";
 			options.html = markup;
 			options.id = "landing";
+			options.fullPage = true;
 			options.addClass = ['noBorder'];
 
 			var rand = Math.ceil(Math.random()*100);
