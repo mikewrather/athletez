@@ -3175,17 +3175,20 @@ Form.editors.AutoComplete = Form.editors.Text.extend({
   events: {
     'keyup':    'determineChange',
     'keypress': function(event) {
-      var self = this;
-	  $(event.target).addClass('ui-autocomplete-loading');
-      setTimeout(function() {
-        self.determineChange();
-      }, 0);
+      // var self = this;
+	  // $(event.target).addClass('ui-autocomplete-loading');
+      // setTimeout(function() {
+        // self.determineChange();
+      // }, 0);
     },
     'select':   function(event) {
       this.trigger('select', this);
     },
     'focus':    function(event) {
       this.trigger('focus', this);
+    },
+    'blur':    function(event) {
+      this.trigger('checkForEmpty', this);
     }
   },
 
@@ -3209,17 +3212,34 @@ Form.editors.AutoComplete = Form.editors.Text.extend({
 		}
 		return false;
 	},
+	
+	checkForEmpty: function() {
+		alert("sdasd");
+		var _self = this, currentValue = this.$el.val();
+    	console.error(currentValue);
+		if(currentValue == "") {
+			if(_self.afterSetValue && _.isFunction(_self.afterSetValue)) _self.afterSetValue("hide");
+			_self.$el.removeClass('ui-autocomplete-loading');
+		}
+	},
 
 	determineChange: function(event) {
+		
+		if(event.keyCode == "37" || event.keyCode == "38" || event.keyCode == "39" || event.keyCode == "40") return;	
+		
     var _self = this, currentValue = this.$el.val();
-	if(_self.isValidAutoCompleteKey(event) && this.getData) this.getData(currentValue, function(data) {
-		_self.records = [];
+	if(this.getData && currentValue != "") {
 		_self.$el.addClass('ui-autocomplete-loading');
+		 this.getData(currentValue, function(data) {
+		 	console.error("callback");
+		 	
+		_self.records = [];
 		if(!_self.keyNameInPayload) _self.keyNameInPayload = 'name';
 		var attr = _self.keyNameInPayload;
 		for (var key in data) {
 			_self.records.push(data[key]);
 		}
+		
 		var arr = [];
 		_self.records.forEach(function(value, index) {
 			var v = (value.payload)?value.payload[attr]:value[attr], id = (value.payload)?value.payload['id']:value['id'];
@@ -3233,29 +3253,43 @@ Form.editors.AutoComplete = Form.editors.Text.extend({
 		_self.$el.autocomplete({
 			source : arr,
 			select: function( event, ui ) {
+				if(_self.afterSetValue && _.isFunction(_self.afterSetValue)) _self.afterSetValue("show");
 				_self.$el.parent().find(".indicator-h").removeClass("invalid").addClass("valid");	
 				var id = (ui.item.id)?ui.item.id:ui.item.value;
 				_self.$el.attr("data-id", id);
 				_self.trigger("blur", _self);
 				if(_self.callback) _self.callback(id,ui.item);
-				_self.$el.removeClass('ui-autocomplete-loading');
+				//_self.$el.removeClass('ui-autocomplete-loading');
+			},
+			
+			change: function( event, ui ) {
+				if(_self.afterSetValue && _.isFunction(_self.afterSetValue)) _self.afterSetValue("show");
+				_self.$el.parent().find(".indicator-h").removeClass("invalid").addClass("valid");	
+				var id = (ui.item.id)?ui.item.id:ui.item.value;
+				_self.$el.attr("data-id", id);
+				_self.trigger("blur", _self);
+				if(_self.callback) _self.callback(id,ui.item);
 			}
 		});
 		//Trigger keydown to display the autocomplete dropdown just created
 		_self.$el.trigger('keydown');
 	});
+	} else {
+		if(_self.afterSetValue && _.isFunction(_self.afterSetValue)) _self.afterSetValue("hide");
+		_self.$el.removeClass('ui-autocomplete-loading');
+	}
   },
   
   /* Autocomplete  */ 
-  autoComplete: function(e) {
-  	$(e.target).autocomplete({
-		source : arr,
-		select: function( event, ui ) {
-			console.log("select called");
-			_self.$el.attr("data-id",  (ui.item.id)?ui.item.id:ui.item.value);
-		}
-	});
-  },
+  // autoComplete: function(e) {
+  	// $(e.target).autocomplete({
+		// source : arr,
+		// select: function( event, ui ) {
+			// console.log("select called");
+			// _self.$el.attr("data-id",  (ui.item.id)?ui.item.id:ui.item.value);
+		// }
+	// });
+  // },
   
   setOptions : function(options) {
 	for (var i in options) {
@@ -3287,8 +3321,13 @@ Form.editors.AutoComplete = Form.editors.Text.extend({
   	getData: function(value, callback) {
 		var _self = this;
 		if(this.source_collection) {
-			if(this.collectionFetchOb) this.collectionFetchOb.abort();
+			if(this.collectionFetchOb) {
+				try { _self.$el.autocomplete("destroy"); } catch(ex) {   }
+				 this.collectionFetchOb.abort();
+			}
 			this.collection = new this.source_collection();
+			_self.$el.addClass('ui-autocomplete-loading');
+			
 			// set the payload
 			if(this.request_fields) {
 				for(var i in this.request_fields) {
@@ -3296,17 +3335,18 @@ Form.editors.AutoComplete = Form.editors.Text.extend({
 				}
 			}
 			
-			if(!_self.$el.parent().find(".indicator-h").length){
+			if(!_self.$el.parent().find(".indicator-h").length) {
 				_self.$el.after('<span class="indicator-h field-error-img"></span>');
 			}
 			
-			_self.$el.removeClass('ui-autocomplete-loading');
 			_self.$el.parent().find(".indicator-h").removeClass("valid").addClass("invalid");
+			if(_self.afterSetValue && _.isFunction(_self.afterSetValue)) _self.afterSetValue("hide");
 			this.collectionFetchOb = this.collection.fetch();
-			$.when(this.collection.request).done(function() {
-				_self.$el.removeClass('ui-autocomplete-loading');
+			
+			$.when(_self.collection.request).done(function() {
 				if(_self.request_finished) _self.request_finished();				
 				if (callback) callback(_self.collection.toJSON());
+				_self.$el.removeClass('ui-autocomplete-loading');
 			});
 		}
 	},
@@ -3357,7 +3397,7 @@ Form.editors.AutoComplete = Form.editors.Text.extend({
     this.$el.attr("data-id", value);
     this.$el.val(text);
     
-    if(this.afterSetValue && _.isFunction(this.afterSetValue)) this.afterSetValue();
+    if(this.afterSetValue && _.isFunction(this.afterSetValue)) this.afterSetValue("show");
         
   },
 
