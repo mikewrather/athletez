@@ -12,20 +12,17 @@ define( ["models/base"], function (BaseModel) {
         defaults: {
             
             "links": [{
-                "label": "Photo",
+                "label": "Add Photo",
                 "link": "javascript: void(0);",
                 "id"   :"addPhoto"
             }, {
-                "label": "Video",
+                "label": "Add Video",
                 "link": "javascript: void(0);",
                 "id"   :"addVideo"
             }
             ]
-            
         }
-
     });
-
     return TeamAddMediaModel;
 });
 

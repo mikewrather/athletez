@@ -22,10 +22,8 @@ function(require, teamAddMediaTemplate) {
     TeamAddMediaView = SectionView.extend({
 
         //id: 'add-media',
-
         template: teamAddMediaTemplate,
-        
-        
+        tagName: "ul",
         events: {
 		   "click #addPhoto" : "openAddImagePopup",
            "click #addVideo" : "openAddvideoPopup",

@@ -139,7 +139,6 @@ define([
 				controller.ajaxCalls = [];
 
 				function callback(sport_id) {
-					
 					if(controller.ajaxCalls && controller.ajaxCalls.length) {
 						for(var i in controller.ajaxCalls) {
 							console.error("here");
@@ -200,7 +199,7 @@ define([
 				$.when(this.basics.request).done(function () {
 					controller.setupHeaderView();
 					controller.initVoteView();
-					controller.setupAddMediaView();
+					//controller.setupAddMediaView();
 
 					var subject_type_id = controller.basics.get("payload").enttypes_id;
 					controller.commentson = new ProfileCommentOnList();
@@ -308,12 +307,12 @@ define([
 				this.layout.render();
 			},
 
-			setupAddMediaView: function () {
+			setupAddMediaView: function (target) {
 				var addMediaView;
 				addMediaView = new ProfileAddMediaView({
 					model: this.addmedia,
 					name: "Add Media",
-					destination: "#add-media",
+					destination: target,
 					"userid": this.id
 				});
 				for (var x in this.scheme) {
@@ -424,8 +423,11 @@ define([
 				routing.on('image-upload-success', function(data) { 
         			self.updateImages(data);
         		});
-
-				console.log("CURRENT IMAGE LIST VIEW:",this.imageListView);
+        		
+        		routing.off('setup-add-icons');
+        			routing.on('setup-add-icons', function(target) { 
+        			self.setupAddMediaView(target);
+        		});
 
 				this.imageListView = new ProfileImageListView({
 					collection: this.images,
@@ -436,7 +438,8 @@ define([
 					media_id: this.media_id,
 					user_id: this.id,
 					name: "images View 2",
-					pageName: "profile"
+					pageName: "profile",
+					 triggerItem: 'setup-add-icons'
 				});
 
 				this.scheme.push(this.imageListView);

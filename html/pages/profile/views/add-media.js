@@ -24,7 +24,7 @@ function(require, profileAddMediaTemplate,application) {
     ProfileAddMediaView = SectionView.extend({
 
         id: 'add-media',
-
+		tagName: "ul",
         template: profileAddMediaTemplate,
 		
 	    events: {

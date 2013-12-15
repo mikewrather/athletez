@@ -193,7 +193,7 @@ define([
             $.when(this.basics.request).done(function () {
                 controller.setupHeaderView();  
 				controller.setupRosterView();
-                controller.setupAddMediaView();
+               // controller.setupAddMediaView();
                 if(controller.userId) controller.setUpVoteView();
             });
         },
@@ -341,15 +341,14 @@ define([
             this.layout.render();
         },
         
-        setupAddMediaView: function() {
+        setupAddMediaView: function(target) {
             var addMediaView;
-            console.error("add media model");
-            console.error(this.addmedia.toJSON());
+
             addMediaView = new TeamAddMediaView({
                 model: this.addmedia,
                 team_id: this.basics.id,
                 name: "Add_Media",
-                destination: "#add-media"
+                destination: target
             });
             
             this.scheme.push(addMediaView);
@@ -485,6 +484,11 @@ define([
         		self.updateImages(data);
         	});
         	
+        	routing.off('setup-add-icons');
+        	routing.on('setup-add-icons', function(target) { 
+        		self.setupAddMediaView(target);
+        	});
+        	
             this.imageListView = new TeamImageListView({
                 collection: this.images,
                 destination: "#image-wrap",
@@ -494,11 +498,16 @@ define([
                 name: "image_wrap ",
                 user_id : this.userId,
                 media_id: this.media_id,
-                pageName: "team"
+                pageName: "team",
+                triggerItem: 'setup-add-icons'
             });
             
             this.scheme.push(this.imageListView);
             this.layout.render();
+            
+             
+            
+            
         },
         
         

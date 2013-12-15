@@ -52,6 +52,7 @@ function(facade,  views,   utils,   ImageItemView,            ImageBoardView,   
 		    event.preventDefault();
 		    event.originalEvent.dataTransfer.dropEffect = 'copy';
 		},
+		
 		drop: function(event) {
 			var _self = this;
 			event.stopPropagation();
@@ -87,7 +88,6 @@ function(facade,  views,   utils,   ImageItemView,            ImageBoardView,   
 		},
 
 	    checkForUser: function() {
-
 		    if(!_.isUndefined(routing.userLoggedIn) && routing.userLoggedIn)
 			    return true;
 		    else
@@ -100,20 +100,19 @@ function(facade,  views,   utils,   ImageItemView,            ImageBoardView,   
         	else
         		this.name = "image list";
         	
+        	console.error(options);
+        	
 	       this.pageName = (options.pageName)?options.pageName:"profile";
-        	
         	//alert(this.page);
-        	
-        	if(options.collecton)
-        		this.collection = options.collection;
-        		
+        	if(options.collecton) this.collection = options.collection;
         	this.target_id = options.target_id;	
         	this.target_url = options.target_url;
         	this.sport_id = options.sport_id;
         	this.user_id = options.user_id;
         	this.media_id = options.media_id;
+        	this.triggerItem = options.triggerItem;
 			// render template
-			this.renderTemplate();
+			if(!options.dontrenderTemplate) this.renderTemplate();
 	        //console.log(options);
 	       
 	        var _self = this;
@@ -145,7 +144,6 @@ function(facade,  views,   utils,   ImageItemView,            ImageBoardView,   
 					}
 				}, 500);
 			}
-        	
         },
         
         initPhotoPlayer: function(e) {
@@ -196,8 +194,10 @@ function(facade,  views,   utils,   ImageItemView,            ImageBoardView,   
                 addView.render();
                 $(this.listView).append(addView.el);
             }
-            
             Channel('addimage:fetch').subscribe(callback);
+            
+            
+            
         },
 
 	    filterWithImageType: function(type) {
@@ -209,8 +209,17 @@ function(facade,  views,   utils,   ImageItemView,            ImageBoardView,   
 		},
 
         setupBoardView: function() {
+        	var _self = this;
+            
+            setTimeout(function() {
+	            if(_self.triggerItem) {
+	            	$(_self.listView).prepend('<li id="add-icons"></li>');
+	            	 routing.trigger(_self.triggerItem, "#add-icons");            	
+            	}
+            }, 4000);
             if (this.collection.size() == 0)
                 return;
+                
             var filtered_images = this.filterWithImageType( this.imagetype );
             var listView,
                 addView = new ImageBoardView({collection: filtered_images, model: filtered_images.at(0)}),
@@ -222,12 +231,15 @@ function(facade,  views,   utils,   ImageItemView,            ImageBoardView,   
                 $(this.listView).prepend(addView.el);
             });
             
+
+            
             function changeBoard(data) {
                 addView.model = data;
                 addView.render();
             }
            // this.$el.append("this is for test");
             Channel('changeimage' + this.collection.id).subscribe(changeBoard);
+            
         }
     });
 

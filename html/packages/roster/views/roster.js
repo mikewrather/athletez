@@ -50,8 +50,10 @@ define([ 'require', 'text!roster/templates/roster.html','views', 'vendor', 'faca
 			teamRosterListView = new ImageList({
 				collection: this.collection1,
 				name: this.viewName,
+				dontrenderTemplate: true,
 				model: new model()
 			});
+			
 			
 			if(this.checkForUser()) {
 				try {
@@ -65,10 +67,11 @@ define([ 'require', 'text!roster/templates/roster.html','views', 'vendor', 'faca
 					}
 				} catch(e) {}
 			}
-			// sow roster add button
-            if(found == "") this.$el.find(".add-to-roster-h").removeClass("hide");
-			
 			this.$el.find(".roster-images-h").html(teamRosterListView.$el);
+			this.$el.find(".roster-images-h ul").prepend('<li class="teams hide image"><a href="javascript: void(0);" class="add-to-roster-h" title="Add to roster">Add to Roster</a></li>');			
+			// sow roster add button
+            if(found == "") this.$el.find(".add-to-roster-h").parent().removeClass("hide");
+
 		},
 		
 		checkForUser: function() {
@@ -88,7 +91,7 @@ define([ 'require', 'text!roster/templates/roster.html','views', 'vendor', 'faca
 			modal.url = "/api/team/player/"+this.team_id;
 			modal.save();
 			$.when(modal.request).done(function() {
-				$(e.currentTarget).hide();
+				$(e.currentTarget).parent().hide();
 				_self.getTeams();
 			});
 		},

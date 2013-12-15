@@ -128,7 +128,7 @@ define([
 				console.error(controller.basics);
 				controller.setupHeaderView();
 				//controller.initVoteView();
-				controller.setupAddMediaView();
+				//controller.setupAddMediaView();
 				
 				var data = controller.basics.get("payload"), subject_type_id = data.enttypes_id;
 				controller.images = new GameImageList();
@@ -236,13 +236,13 @@ define([
 			this.layout.render();
 		},
 
-		setupAddMediaView: function () {
+		setupAddMediaView: function (target) {
 			var addMediaView;
 
 			addMediaView = new GameAddMediaView({
 				model: this.addmedia,
 				name: "Add Media",
-				destination: "#add-media"
+				destination: target
 			});
 			addMediaView.game_model = this.basics;
 
@@ -326,6 +326,13 @@ define([
 
 		setupImageListView: function () {
 			var self = this, imageListView;
+			
+			//controller.setupAddMediaView();
+			routing.off('setup-add-icons');
+        	routing.on('setup-add-icons', function(target) { 
+        		self.setupAddMediaView(target);
+        	});
+			
 			imageListView = new ProfileImageListView({
 				collection: this.images,
 				name: "image list",
@@ -334,10 +341,12 @@ define([
 				sport_id: $(".sport-h").data("id"),   
 				destination: "#image-wrap",
 				media_id: this.media_id,
-				pageName: "game"
+				pageName: "game",
+				triggerItem: 'setup-add-icons'
 			});
+			
 			this.imageListView = imageListView;
-			//Channel('image-upload-success').subscribe(this.updateImages);
+			routing.off('image-upload-success');
 			routing.on('image-upload-success', function(data) { 
         		self.updateImages(data);
         	});

@@ -24,7 +24,7 @@ define([
 		GameAddMediaView = SectionView.extend({
 
 			id: 'add-media',
-
+			tagName: "ul",
 			template: gameAddMediaTemplate,
 
 			events: {
