@@ -4,10 +4,29 @@
 // Requires `define`, `require`
 // Returns {RegistrationFacebookView} constructor
 
-define(['require', 'text!registration/templates/register_facebook.html','backbone', 'facade', 'views', 'utils', 'jquery.pstrength', 'registration/collections/fbimages', 'registration/views/fbimage-list'], function(require, registrationFacebookTemplate,backbone) {
+define(['require',
+	'text!registration/templates/register_facebook.html','backbone',
+	'facade',
+	'views',
+	'utils',
+	'vendor',
+	'jquery.pstrength',
+	'registration/collections/fbimages',
+	'registration/views/fbimage-list'],
+	function(require, registrationFacebookTemplate) {
 
 	
-	var RegistrationFacebookView, facade = require('facade'), views = require('views'), utils = require('utils'), Channel = utils.lib.Channel, SectionView = views.SectionView, RegistrationFBImageList = require('registration/collections/fbimages'), RegistrationFBImageView = require('registration/views/fbimage-list');
+	var RegistrationFacebookView,
+		facade = require('facade'),
+		views = require('views'),
+		vendor = require('vendor'),
+		Mustache = vendor.Mustache,
+		utils = require('utils'),
+		Channel = utils.lib.Channel,
+		SectionView = views.SectionView,
+		RegistrationFBImageList = require('registration/collections/fbimages'),
+		RegistrationFBImageView = require('registration/views/fbimage-list');
+
 	RegistrationFacebookView = SectionView.extend({
 
 		id : 'main-content',
@@ -24,7 +43,8 @@ define(['require', 'text!registration/templates/register_facebook.html','backbon
 
 		initialize : function(options) {
 			
-			var response = jQuery.parseJSON(this.model.request.responseText);
+			var response = $.parseJSON(this.model.request.responseText);
+			console.log(response);
 			//if error in api/fbreg
 			if(response.exec_data.exec_error){
 
@@ -69,8 +89,17 @@ define(['require', 'text!registration/templates/register_facebook.html','backbon
 		childViews : {},
 
 		render : function(domInsertion, dataDecorator, partials) {
-			SectionView.prototype.render.call(this, domInsertion, dataDecorator, partials);
-			this.$('.password').pstrength();
+			console.log("called",domInsertion,dataDecorator,partials);
+
+			var options = {};
+			options.height = "500px";
+			options.width = "500px";
+			options.title = "The Basics";
+			options.id = "fb-reg-pop"
+			options.html = Mustache.to_html(this.template,this.model.toJSON());
+			routing.trigger('common-popup-open', options);
+
+			$('#fb-reg-pop .next').bind('click',this.nextStep);
 		},
 
 		stopSubmit : function(event) {
@@ -167,11 +196,13 @@ define(['require', 'text!registration/templates/register_facebook.html','backbon
 		nextStep : function(event) {
 			
 			event.preventDefault();
-			var fields = this.$(":input").serializeArray();
+			var fields = $("#fb-reg-pop :input").serializeArray();
 			var payload = this.model.get('payload');
+
 			$.each(fields, function(i, field) {
 				payload[field.name] = field.value;
 			});
+
 			if (payload['password'] == '' || payload['password-again'] == '') {
 				alert('Please input a password');
 				return;
