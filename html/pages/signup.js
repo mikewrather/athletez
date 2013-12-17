@@ -190,7 +190,7 @@ define(["require",
 						dest = "#"+id+" #modalBody", options = {};
 			            options.height = "500px";
 			            options.width = "600px";
-			            options.title = "&nbsp;";
+			            options.title = "Get Started on Athletez";
 			            options.id = id;
 						routing.trigger('common-popup-open', options); 
 
