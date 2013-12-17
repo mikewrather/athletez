@@ -12,8 +12,7 @@ define(['require',
 	'vendor',
 	'jquery.pstrength',
 	'registration/collections/fbimages',
-	'registration/views/fbimage-list',
-	'imgcenter'],
+	'registration/views/fbimage-list'],
 	function(require, registrationFacebookTemplate) {
 
 	

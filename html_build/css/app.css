@@ -36,6 +36,12 @@ html, body {
 	height: 100%;
 }
 body {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 	margin: 0 auto;
 	background: #e0e0e0;
 }
@@ -1447,4 +1453,11 @@ a.add-to-event {
 }
 .individual-reset-btn a span {
 	text-shadow: 0px 0px 19px rgba(150, 150, 150, 1);
+}
+div.edit{
+    background:url(http://cdn.athletez.com/resources/img/pencil-25.png) no-repeat;
+    background-size: cover;
+    height: 25px;
+    width: 25px;
+    cursor: pointer;
 }
