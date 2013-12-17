@@ -35,6 +35,7 @@ require.config({
 		'plupload'              : [cdn + 'plupload/js/plupload.full', s3 + 'plupload/js/plupload.full' , '/plupload/js/plupload.full'],
 //	    'jq.plupload'           : "/plupload/js/jquery.ui.plupload/jquery.ui.plupload",
 		'jwplayer'              : [cdn + 'vendor/plugins/jwplayer',s3 + 'vendor/plugins/jwplayer','/vendor/plugins/jwplayer'],
+		'imgcenter'              : [cdn + 'vendor/plugins/jq-center-image',s3 + 'vendor/plugins/jq-center-image','/vendor/plugins/jq-center-image'],
 
 		'custom'                : [cdn + 'vendor/custom', s3 + 'vendor/custom' , '/vendor/custom'],
 

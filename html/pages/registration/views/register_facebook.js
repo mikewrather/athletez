@@ -12,7 +12,8 @@ define(['require',
 	'vendor',
 	'jquery.pstrength',
 	'registration/collections/fbimages',
-	'registration/views/fbimage-list'],
+	'registration/views/fbimage-list',
+	'imgcenter'],
 	function(require, registrationFacebookTemplate) {
 
 	
@@ -33,10 +34,6 @@ define(['require',
 
 		events : {
 			"keypress" : "stopSubmit",
-			"click .change-field" : "changeField",
-			"click .diff_fb_pic" : "diffFBPicture",
-			"click .upload_new_image" : "uploadNewImage",
-			"click .next" : "nextStep"
 		},
 
 		template : registrationFacebookTemplate,
@@ -93,13 +90,18 @@ define(['require',
 
 			var options = {};
 			options.height = "500px";
-			options.width = "500px";
-			options.title = "The Basics";
+			options.width = "650px";
+			options.title = "Register With Facebook - " + this.model.get('payload')['name'];
 			options.id = "fb-reg-pop"
 			options.html = Mustache.to_html(this.template,this.model.toJSON());
 			routing.trigger('common-popup-open', options);
 
 			$('#fb-reg-pop .next').bind('click',this.nextStep);
+			$('#fb-reg-pop div.edit').bind('click',this.changeField);
+			$('#fb-reg-pop .diff_fb_pic').bind('click',this.diffFBPicture);
+			$('#fb-reg-pop .upload_new_image').bind('click',this.uploadNewImage);
+
+	//		$('#fb-reg-pop #fb-userpic-pre').centerImage();
 		},
 
 		stopSubmit : function(event) {
@@ -187,10 +189,10 @@ define(['require',
 
 		changeField : function(event) {
 			event.preventDefault();
-			$parent = this.$(event.target).parent();
-			id = $parent.attr('data-name');
-			value = $parent.attr('data-value');
-			$parent.html('<input type="text" id="' + id + '" name="' + id + '" value="' + value + '"/>');
+			$(event.target).fadeOut();
+			var $parent = $(event.target).parent().find('input');
+			$parent.removeAttr('disabled').focus();
+
 		},
 
 		nextStep : function(event) {

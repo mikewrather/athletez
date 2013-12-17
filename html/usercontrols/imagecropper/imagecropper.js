@@ -61,26 +61,24 @@ define([
 			setupLayout: function () {
 				var self = this;
 				this.scheme = [];
-				$(".model-popup-h").remove();
-				$('body').append(this.modelHTML);
-				var pageLayout = new LayoutView({
-					scheme: this.scheme,
-					destination: ".modal-body",
-					template: cropperLayoutTemplate,
-					displayWhen: "ready"
-				});
-
-				this.layout = pageLayout;
-				$('#modalPopup button.close').bind('click',function(){
-					self.notifyUpdate();
-				});
 
 				var url='/vendor/plugins/iedit2/index.html?vh=500&vw=500&sx=0&sy=0&sz=100&t=Profile%20Picture&edit=';
 				if(this.image_e != "") url += '&edit='+this.image_e;
 				if(this.image_o != "") url += '&o='+this.image_o;
-				$('#modalPopup iframe#cropper_iframe').attr('src',url);
 
-				$('#modalPopup').modal();
+				var options = {};
+				options.width = "100%";
+				options.height = "100%";
+				options.title = "Change your Athletez Photo";
+				options.html = '<iframe src="'+url+'" id="cropper_iframe" style="width:100%;height:100%;margin:0;"></iframe>';
+				options.id = "change-userpic-modal";
+				options.addClass = ['noBorder'];
+				routing.trigger('common-popup-open', options);
+
+				$('#' + options.id + ' .close').bind('click',function(){
+					self.notifyUpdate();
+				});
+
 				return this.layout;
 			},
 
