@@ -45,7 +45,7 @@
 
 #modal-popup-signup #regcontainer{
     width: 70%;
-    margin-top:15px;
+    margin-top:20px;
 }
 #modal-popup-signup #mainreg{
     width:100%;
@@ -74,7 +74,7 @@
     background-color: #6b74b7;
     font-size: 1em;
     padding: 12px;
-    width: 75%;
+    width: 79%;
     float: left;
     height: 20px;
 }
@@ -213,20 +213,16 @@
 			position: relative;
 			padding: 10px;
 			height: auto;
-			//background-color: burlywood;
 			margin-left: 10%;
 			margin-bottom: 0%;
 
 		}
 		#regpanefinal{
-			width: 382px;
-			//overflow: hidden;
+			width: 90%;
 			position: relative;
 			padding: 10px;
 			height: auto;
-			//background-color: burlywood;
-			margin-left: 10%;
-			margin-bottom: 0%;
+			margin:0 auto;
 
 		}
 		
