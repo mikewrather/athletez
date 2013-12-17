@@ -32,6 +32,99 @@
     float: left;
     height: 20px;
 }
+
+#fbpane #label.loading{
+    background: url('http://cdn.athletez.com/resources/img/blue_loading.gif') repeat;
+}
+
+/*******************************************************************************/
+
+#modal-popup-signup #mainreg{
+    background: none;
+}
+
+#modal-popup-signup #regcontainer{
+    width: 70%;
+    margin-top:20px;
+}
+#modal-popup-signup #mainreg{
+    width:100%;
+}
+
+#modal-popup-signup .regor {
+    color: grey;
+    margin: 15px 0 0 0;
+    font-size: 1.2em;
+    font-weight: bolder;
+}
+#modal-popup-signup #fbpane {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    cursor: pointer;
+    border-style: none;
+    height: 45px;
+    position: relative;
+    background: #68659c url(http://cdn.athletez.com/resources/img/facebook-f.png) 94% no-repeat;
+}
+
+#modal-popup-signup #fbpane #label{
+    margin: 0;
+    position: absolute;
+    background-color: #6b74b7;
+    font-size: 1em;
+    padding: 12px;
+    width: 79%;
+    float: left;
+    height: 20px;
+}
+
+#modal-popup-signup #regpanemain {
+    width: 100%;
+}
+
+#modal-popup-signup #firstregbase {
+    padding:0;
+    float: none;
+    width: 100%;
+}
+#modal-popup-signup #firstregbase input{
+    width: 90%;
+    margin: 20px 0 0 0;
+    padding: 8px 5%;
+    position: relative;
+
+}
+
+#modal-popup-signup #firstregbase input[type="text"]{
+    background-color: #E4E4E4;
+}
+
+#modal-popup-signup .signupsubmit{
+    margin-top:0;
+    padding-top: 10px;
+}
+
+#modal-popup-signup .signupsubmit input{
+    width: 48% !important;
+    color: white;
+    font-size: 20px;
+    border-style: none;
+    height: 40px;
+}
+
+#modal-popup-signup .signupsubmit input:first-child{
+    float: left;
+    background-color: #9DCA3C;
+}
+#modal-popup-signup .signupsubmit input:last-child{
+    float: right;
+    background-color: #1AA0AE;
+}
+
+/*******************************************************************************/
+
+
 #regpanemain{
 		position: absolute;
 		width: 547PX;
@@ -120,20 +213,16 @@
 			position: relative;
 			padding: 10px;
 			height: auto;
-			//background-color: burlywood;
 			margin-left: 10%;
 			margin-bottom: 0%;
 
 		}
 		#regpanefinal{
-			width: 382px;
-			//overflow: hidden;
+			width: 90%;
 			position: relative;
 			padding: 10px;
 			height: auto;
-			//background-color: burlywood;
-			margin-left: 10%;
-			margin-bottom: 0%;
+			margin:0 auto;
 
 		}
 		
@@ -185,16 +274,8 @@
 			color:black;
 			background-color: white;
 		}
-		.firstdiv,.seconddiv,.thirddiv,.fourthdiv,.fifthdiv,.sixthdiv,.seventhdiv{
 
-		}
-		#finalreg input[type="text"]{
-			width: 235px;
-			height: 20px;
-			background-color: #E4E3E9;
-			border: 0;
-			border-radius: 0;
-		}
+
 		#radioinput input{
 			width: 21px;
 			height: 30px;
@@ -203,26 +284,46 @@
 			border-radius: 4px;
 		}
 
+        #gender, #Role{
+            display: block;
+            width: 95%;
+        }
+
+        #gender > div, #Role > div{
+            text-align: center;
+            padding:15px;
+            height: 25px;
+        }
+
 		#gender input, #Role input{
 			width: 20px;
 		}
+
+        #gender label,#Role label{
+            font-size: 1.3em;
+        }
+
+        #dob select{
+            margin:10px 2%;
+        }
 		.born{
 			color: white;
 			background-color: #6B6F72;
 			height:30px;
-			width:100px;
+			width:36%;
+
 		}
 		.borndate{
 			color: white;
 			background-color: #6B6F72;
 			height:30px;
-			width:70px;
+			width:26%;
 		}
 		.borndyear{
 			color: white;
 			background-color: #6B6F72;
 			height:30px;
-			width:80px;
+			width:26%;
 		}
 		.radioinput{
 			width: 20px;
@@ -340,4 +441,53 @@
 
 input.field-failed{
     background-color: #E27171 !important;
+}
+
+.fbreg-fields input{
+    margin:10px 3%;
+}
+
+.fbreg-fields input[type="text"], .fbreg-fields input[type="password"],#finalreg input[type="text"],#finalreg input[type="password"]{
+    padding:12px 5%;
+    width:84%;
+}
+
+.fbreg-fields input[type="checkbox"],#regpanefinal input[type="checkbox"]{
+    height: 27px;
+    width: 27px;
+    margin-right:10px;
+}
+
+#fb-reg-pop #fb-userpic-prev{
+    width: 100%;
+    height: 350px;
+    padding: 0;
+    margin: 0;
+}
+
+#fb-reg-pop #fb-userpic-prev li{
+    width: 100%;
+    height: 100%;
+}
+
+#fb-reg-pop .next, #regpanefinal .next{
+    width: 100%;
+    height: 20px;
+    text-align: center;
+    padding: 15px 0;
+    font-size: 1.7em;
+    color: white;
+}
+
+#regpanefinal input.next{
+    height: 50px;
+}
+#fb-reg-pop .field span.value{
+    position: relative;
+}
+
+#fb-reg-pop .field span.value .edit{
+    position: absolute;
+    top: 0;
+    right: 20px;
 }
