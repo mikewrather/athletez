@@ -12,7 +12,7 @@
 class Kohana_FacebookAuth {
     
     private $login_url, $logout_url;
-    private  $config, $data, $fb, $me, $uid;
+    protected  $config, $data, $fb, $me, $uid;
 
     /**
      * Creates a new FacebookAuth object.
@@ -99,8 +99,6 @@ class Kohana_FacebookAuth {
             throw new FacebookApiException('User is not logged in.');
         }
 
-	    print_r($this->data);
-
         if(empty($this->data))
         {
             $fql_query = array(
@@ -148,7 +146,7 @@ class Kohana_FacebookAuth {
 			'next'  =>  $this->config->next,
 		)));
     }
-	
+
 	public function get_user()
 	{
 		$user = $this->fb->getUser();
