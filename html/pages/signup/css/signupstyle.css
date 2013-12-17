@@ -36,6 +36,95 @@
 #fbpane #label.loading{
     background: url('http://cdn.athletez.com/resources/img/blue_loading.gif') repeat;
 }
+
+/*******************************************************************************/
+
+#modal-popup-signup #mainreg{
+    background: none;
+}
+
+#modal-popup-signup #regcontainer{
+    width: 70%;
+    margin-top:15px;
+}
+#modal-popup-signup #mainreg{
+    width:100%;
+}
+
+#modal-popup-signup .regor {
+    color: grey;
+    margin: 15px 0 0 0;
+    font-size: 1.2em;
+    font-weight: bolder;
+}
+#modal-popup-signup #fbpane {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    cursor: pointer;
+    border-style: none;
+    height: 45px;
+    position: relative;
+    background: #68659c url(http://cdn.athletez.com/resources/img/facebook-f.png) 94% no-repeat;
+}
+
+#modal-popup-signup #fbpane #label{
+    margin: 0;
+    position: absolute;
+    background-color: #6b74b7;
+    font-size: 1em;
+    padding: 12px;
+    width: 75%;
+    float: left;
+    height: 20px;
+}
+
+#modal-popup-signup #regpanemain {
+    width: 100%;
+}
+
+#modal-popup-signup #firstregbase {
+    padding:0;
+    float: none;
+    width: 100%;
+}
+#modal-popup-signup #firstregbase input{
+    width: 90%;
+    margin: 20px 0 0 0;
+    padding: 8px 5%;
+    position: relative;
+
+}
+
+#modal-popup-signup #firstregbase input[type="text"]{
+    background-color: #E4E4E4;
+}
+
+#modal-popup-signup .signupsubmit{
+    margin-top:0;
+    padding-top: 10px;
+}
+
+#modal-popup-signup .signupsubmit input{
+    width: 48% !important;
+    color: white;
+    font-size: 20px;
+    border-style: none;
+    height: 40px;
+}
+
+#modal-popup-signup .signupsubmit input:first-child{
+    float: left;
+    background-color: #9DCA3C;
+}
+#modal-popup-signup .signupsubmit input:last-child{
+    float: right;
+    background-color: #1AA0AE;
+}
+
+/*******************************************************************************/
+
+
 #regpanemain{
 		position: absolute;
 		width: 547PX;
