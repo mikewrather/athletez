@@ -212,11 +212,11 @@ function(facade,  views,   utils,   ImageItemView,            ImageBoardView,   
         	var _self = this;
             
             setTimeout(function() {
-	            if(_self.triggerItem) {
+	            if(_self.triggerItem && !$("#add-icons").length) {
 	            	$(_self.listView).prepend('<li id="add-icons"></li>');
 	            	 routing.trigger(_self.triggerItem, "#add-icons");            	
             	}
-            }, 4000);
+            }, 0);
             if (this.collection.size() == 0)
                 return;
                 
