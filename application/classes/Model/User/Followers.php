@@ -111,7 +111,7 @@ class Model_User_Followers extends ORM
 		//	if($follow->follower_users_id == $author->id) continue;
 
 			Model_Site_Feedfollow::addFeedFollow($feed->id,$follow->id);
-
+/*
 			$args = array(
 				'users_id' => $follow->follower_users_id,
 				'to_address' => 'mike.wrather@gmail.com'
@@ -146,6 +146,7 @@ class Model_User_Followers extends ORM
 				$queued->setMessageBody($baseview->render());
 
 			}
+*/
 		}
 	}
 
