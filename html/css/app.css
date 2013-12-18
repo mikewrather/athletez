@@ -1527,13 +1527,21 @@ div.game-info .game-score .team-score.win {
 	background-color: #CCC;
 }
 
+#add-media li a#addPhoto, #add-icons li a#addPhoto{
+    background-color: #DDD43A;
+}
+
+#add-media li a #addVideo, #add-icons li a#addVideo{
+    background-color: #C43737;
+}
+
 .add-to-roster-h {
 	background-image: url('images/icons/add-team.png');
 	background-size: cover;
 	min-height: 220px;
 	width: 220px;
 	float: left;
-	background-color: #CCC;
+	background-color: #928add;
 }
 
 #add-icons {
