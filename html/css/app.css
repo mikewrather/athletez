@@ -1520,7 +1520,7 @@ div.game-info .game-score .team-score.win {
 	/*margin-left: 15px;*/
 }
 
-#add-media li a {
+#add-media li a, #add-icons li a {
 	background-size: cover;
 	min-height: 220px;
 	width: 180px;
