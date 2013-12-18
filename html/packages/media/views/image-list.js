@@ -147,7 +147,8 @@ function(facade,  views,   utils,   ImageItemView,            ImageBoardView,   
         },
         
         initPhotoPlayer: function(e) {
-			var index = ($(e.target).parents('li').index());  
+			var index = ($(e.target).parents('li').index()), addLiCount = ($("#add-media").length)?1:0; 
+			index -= addLiCount;
 			if(index< 0) index = 0;
        		routing.trigger('photo-player-init', index, this.allData, this.user_id, true,  this.pageName);
        	},
