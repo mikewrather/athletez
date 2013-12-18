@@ -328,7 +328,8 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
             	else
             		var id = options.id;
             		
-            	var cl = (options.fullPage)?"full-page-modal":"normal-popup";
+            	var cl = (options.fullPage)?"full-page-modal":"";
+            		
             		
             		
             	var html = '<div id="'+id+'" class="modal '+cl+' common-modal hide fade model-popup-h in">'+
@@ -365,7 +366,6 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
             	} else {
             	  $("#"+id).find(".modal-header").hide();
             	}
-            	console.log(options);
 
             	if(options.width){
 		            $("#"+id).css({"width": options.width});
@@ -383,14 +383,15 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
 		            }
 		            else true_width = (parseInt(options.width,10) + added_width);
 
-
-		            $("#"+id).css({
-			            "left":'50%',
-			            "margin-left": true_width<window.innerWidth ? -true_width/2 : '-50%'
-		            });
+					  if(options.width != "100%") {
+							var l = (($(window).width() - options.width.replace("px", ""))/2)+"px";
+			          } else {
+							var l = "0%";	
+			          }
+			          $("#"+id).css({"left":l});
 	            }
 
-            	if(options.height){
+            	if(options.height) {
 		            $("#"+id).css({"height": options.height});
 
 		            var added_height = parseInt($("#"+id).css('border-top'),10) +
@@ -399,17 +400,22 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
 			            parseInt($("#"+id).css('padding-bottom'),10);
 
 		            var true_height;
-		            if(options.height.indexOf('%') > 0){
+		            if(options.height.indexOf('%') > 0) {
 			            var percentage_number = parseInt(options.height,10);
 			            true_height = (window.innerHeight * (percentage_number/100)) + added_height;
 		            }
 					else true_height = (parseInt(options.height,10) + added_height);
 
+					if(options.height != "100%") {
+						var t = (($(window).height() - options.height.replace("px", ""))/2) - 30+"px";					
+					} else {
+						var t = "0%";
+					}
+					var windowHeight = $(window).height();
 		            $("#"+id).css({
-			            "top":window.innerHeight/2,
-			            "margin-top":true_height<window.innerHeight ? -true_height/2 : -window.innerHeight/2
+			            "top":t,
+			            "margin-top":"0%"//true_height<$(window).height() ? -true_height/2 : -$(window).height()/2
 		            });
-		            console.log(true_height<window.innerHeight ? -true_height/2 : '-50%');
 	            }
 
             	// if we have HTML then place it in popup
