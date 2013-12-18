@@ -1328,6 +1328,8 @@
 		public function action_post_logout()
 		{
 			Auth::instance()->logout();
+			$facebook = FacebookAuth::factory();
+			$facebook->logout();
 			return false;
 		}
 

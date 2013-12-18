@@ -63,6 +63,7 @@ function(require, profileHeaderTemplate,profileHeaderEditTemplate,profileHeaderC
         },
 
         setupBasicView: function() {
+	        console.log("called");
             var self = this;
            // self.render();
 
@@ -104,14 +105,16 @@ function(require, profileHeaderTemplate,profileHeaderEditTemplate,profileHeaderC
 
 	    changeUserpic: function () {
 		    var mpay = this.basicInfoModel.get('payload');
-		    console.log(mpay);
+
+		    Channel('userpic-changed').subscribe(function () {
+			    self.initBasicView();
+		    });
+
 		    var self = this, imageCropperController = new ImageCropperController({
 			    'image_o': mpay.user_picture_obj.pre_crop_url,
 			    'image_e': mpay.user_picture_obj.image_path
 		    });
-		    Channel('userpic-changed').subscribe(function () {
-			    self.initBasicView();
-		    });
+
 	    }
 
     });

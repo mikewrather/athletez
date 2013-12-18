@@ -38,7 +38,12 @@ html, body {
 	height: 100%;
 }
 body {
-
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 	margin: 0 auto;
 	background: #e0e0e0;
 }
@@ -1818,3 +1823,10 @@ li#add-icons ul {
 	text-align: center;
 }
 
+div.edit{
+    background:url(http://cdn.athletez.com/resources/img/pencil-25.png) no-repeat;
+    background-size: cover;
+    height: 25px;
+    width: 25px;
+    cursor: pointer;
+}

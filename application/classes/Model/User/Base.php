@@ -1821,7 +1821,13 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 				if($ai->logged_in()) $ai->logout();
 
 				// Log in the user that was just created
-				Auth::instance()->login($this->email,$password,TRUE);
+				try{
+					Auth::instance()->login($this->email,$password,TRUE);
+				}
+				catch(ORM_Validation_Exception $e)
+				{
+					return $e;
+				}
 				Email::registration_email($this);
 
 				return $this;

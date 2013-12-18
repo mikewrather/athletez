@@ -118,6 +118,7 @@ define([
         		
                signupFacebook: function(event) {
                     event.preventDefault();
+	               $(event.target).parent().find('#label').addClass('loading').html('Connecting to Facebook...');
                     $('#RegModal').modal('hide') ;
                      headView = new FbHeader();
                      headView.signupFacebook();
