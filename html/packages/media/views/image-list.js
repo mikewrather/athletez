@@ -28,7 +28,7 @@ function(facade,  views,   utils,   ImageItemView,            ImageBoardView,   
         _tagName: "li",
         _className: "image",
 		page: 0,
-		page_limit: 8,
+		page_limit: 6,
 		listView : ".image-list",
         // Store constructor for the child views
         _view: ImageItemView,
@@ -117,6 +117,13 @@ function(facade,  views,   utils,   ImageItemView,            ImageBoardView,   
 	       
 	        var _self = this;
 			 _self.allData = this.collection.toArray();
+			 var len = _self.allData.length;
+			
+			// setting the pagination start and end and reset the pagination to 8 
+			 _self.start = 0;
+			 _self.end = _self.page_limit;
+			 _self.page_limit = 8;
+			
 			_self.seeMore();
             CollectionView.prototype.initialize.call(this, options);
             if (!this.collection) {
@@ -155,15 +162,20 @@ function(facade,  views,   utils,   ImageItemView,            ImageBoardView,   
 
         
         seeMore: function(e) {
-			var len = this.allData.length, start = this.page * this.page_limit, end = start + this.page_limit;
-			if(len <= end) {
+        	var len = this.allData.length;
+        	if(e) {
+				this.start = this.end;
+				this.end = this.end + this.page_limit;
+			}
+			
+			if(len <= this.end) {
 				 this.$el.find('.see-more-h').hide();
 			}
 			
             if(e)
-            	this.collection.add(this.allData.slice(start,end));
+            	this.collection.add(this.allData.slice(this.start,this.end));
             else
-	            this.collection.reset(this.allData.slice(start,end));
+	            this.collection.reset(this.allData.slice(this.start,this.end));
 	           
 	         this.page++;  
 	           
@@ -171,6 +183,7 @@ function(facade,  views,   utils,   ImageItemView,            ImageBoardView,   
 				if(this.addSubscribers) this.addSubscribers();
 	            if(this.setupBoardView) this.setupBoardView();
 	            if(this.setupAddView) this.setupAddView();   
+        	   
         	}
         },
             
