@@ -1524,14 +1524,16 @@ div.game-info .game-score .team-score.win {
 	background-size: cover;
 	min-height: 220px;
 	width: 180px;
+	background-color: #CCC;
 }
 
 .add-to-roster-h {
-	background-image: url('images/icons/add-team.jpg');
+	background-image: url('images/icons/add-team.png');
 	background-size: cover;
 	min-height: 220px;
 	width: 220px;
 	float: left;
+	background-color: #CCC;
 }
 
 #add-icons {
@@ -1539,11 +1541,11 @@ div.game-info .game-score .team-score.win {
 }
 
 #addPhoto {
-	background-image: url('images/icons/add-image.jpg');
+	background-image: url('images/icons/add-photo.png');
 }
 
 #addVideo {
-	background-image: url('images/icons/add-video.jpg');
+	background-image: url('images/icons/add-video.png');
 }
 
 .add-comment-h {
