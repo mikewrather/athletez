@@ -1516,16 +1516,34 @@ div.game-info .game-score .team-score.win {
 	padding: 0 0 0 35px;
 	color: #333;
 	display: inline-block;
-	min-height: 25px;
-	margin-left: 15px;
+	/*min-height: 25px;*/
+	/*margin-left: 15px;*/
+}
+
+#add-media li a {
+	background-size: cover;
+	min-height: 220px;
+	width: 180px;
+}
+
+.add-to-roster-h {
+	background-image: url('images/icons/add-team.jpg');
+	background-size: cover;
+	min-height: 220px;
+	width: 220px;
+	float: left;
+}
+
+#add-icons {
+	margin-top: 11px;
 }
 
 #addPhoto {
-	/*background-image: url('http://cdn.athletez.com/resources/img/photo.png');*/
+	background-image: url('images/icons/add-image.jpg');
 }
 
 #addVideo {
-	/*background-image: url('http://cdn.athletez.com/resources/img/video.png');*/
+	background-image: url('images/icons/add-video.jpg');
 }
 
 .add-comment-h {
@@ -1808,7 +1826,6 @@ li#add-icons ul {
 	float: left;
 	min-height: 220px;
 	width: 240px;
-	line-height: 200px;
 	text-align: center;
 }
 
@@ -1819,7 +1836,7 @@ li#add-icons ul {
 
 #roster-wrap ul li.teams {
 	width: 220px;
-	line-height: 200px;
+	/*line-height: 200px;*/
 	text-align: center;
 }
 

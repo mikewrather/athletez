@@ -13,12 +13,12 @@ define(["models/base"], function (BaseModel) {
 
 			"links": [
 				{
-					"label": "Add Photo",
+					"label": "",
 					"link" : "javascript:void(0);",
 					"id": "addPhoto"
 				},
 				{
-					"label": "Add Video",
+					"label": "",
 					"link" : "javascript:void(0);",
 					"id": "addVideo"
 				}

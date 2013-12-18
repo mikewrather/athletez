@@ -10,14 +10,10 @@ define( ["models/base"], function (BaseModel) {
     ProfileAddMediaModel = BaseModel.extend({
 
         defaults: {
-            
             "links": [{
-                "label": "Add Photo",
-
-
+                "label": "",
                 "link" : "javascript:void(0);",
                 //"link" : "#imageup",
-
 				"id"   :"addPhoto"
             }, /*{
                 "label": "Video",
@@ -30,7 +26,7 @@ define( ["models/base"], function (BaseModel) {
     //            "link" : "javascript:void(0);",
 				"id"   :"addPhoto"
             },*/ {
-                "label": "Add Video",
+                "label": "",
 	            //"link": "#videoprev",
                 "link" : "javascript:void(0);",
 	            "id": "addVideo"

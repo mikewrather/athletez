@@ -69,7 +69,7 @@ define([ 'require', 'text!roster/templates/roster.html','views', 'vendor', 'faca
 			}
 			this.$el.find(".roster-images-h").html(teamRosterListView.$el);
 			if(!this.$el.find(".add-to-roster-h").length)
-				this.$el.find(".roster-images-h ul").prepend('<li class="teams hide image"><a href="javascript: void(0);" class="add-to-roster-h" title="Add to roster">Add to Roster</a></li>');			
+				this.$el.find(".roster-images-h ul").prepend('<li class="teams hide image"><a href="javascript: void(0);" class="add-to-roster-h" title="Add to roster"></a></li>');			
 			// sow roster add button
             if(found == "") this.$el.find(".add-to-roster-h").parent().removeClass("hide");
 		},
