@@ -39,7 +39,7 @@ define(['require', 'facade', 'views', 'utils', 'vendor'], function(require) {
 			var u = (url && options.type && url[options.type]) ? url[options.type] : undefined;
 			switch(options.type) {
 				case "twitter":
-					 u = u + "?status=Check out this "+encodeURIComponent(options.image)+" Check here "+getLink();
+					 u = u + "?status="+getLink();
 				break;
 				case "gplus":
 					u = u + "?url="+getLink();

@@ -98,8 +98,8 @@ define(['require',
 		twitter: function() {
 			var data = this.getShareData();
 			var options = {
-				//'link': "#"+this.pageName+data.userId+data.sportId+data.mediaId,
-				'link': "?enttypes_id="+data.record.payload.enttypes_id+"&id="+data.record.payload.id,
+				'link': "#"+this.pageName+data.userId+data.sportId+data.mediaId,
+				//'link': "?enttypes_id="+data.record.payload.enttypes_id+"&id="+data.record.payload.id,
 				'name': data.User.name + " - " + data.Sport.sport_name,
 				'caption': "Athletez.com",
 				'image': data.record.payload.image_path,

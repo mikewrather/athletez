@@ -144,7 +144,7 @@ function(facade,  views,   utils,   ImageItemView,            ImageBoardView,   
 					if(_self.allData) {
 						for(var i in _self.allData) {
 							if(_self.media_id == _self.allData[i].get("payload").media_id) {
-								routing.trigger('photo-player-init', i, _self.allData, _self.user_id, true);
+								routing.trigger('photo-player-init', i, _self.allData, _self.user_id, true,  _self.pageName);
 								break;
 							}
 						}
