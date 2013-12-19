@@ -20,7 +20,8 @@ define(['require',
 	'usercontrols/tag/views/main',
 	'media/models/tag',
 	'usercontrols/photo-player/models/tag-myself',
-	'component/fb'
+	'component/fb',
+	'component/share'
 ], function(
 	require,
 	layoutTemplate,
@@ -35,6 +36,7 @@ define(['require',
 	 TagMediaModel = require('media/models/tag'),
 	 TagMyselfModel = require('usercontrols/photo-player/models/tag-myself');
 	 FbComponent = require('component/fb'),
+	 ShareComponent = require('component/share'),
 	jwplayer.key = "yXOw2TpDcCoCnbWyVSCoEYA4tepkpjiVEtLEfSBIfZQ=";
 
 	//Models
@@ -46,7 +48,7 @@ define(['require',
 			'click .next-arrow-h' : 'nextButton',
 			'click .thumb-link-h' : 'changeImage',
 			'click .photo-player-vote-h' : 'vote',
-			'click .share-on-facebook-h' : 'shareOnFacebook',
+			'click .share-on-h' : 'shareOn',
 			'click .photo-player-tag-photo-h' : 'setUpTagPhotoView',
 			'click .photo-player-tag-myself-h' : 'TagMyself',
 		},
@@ -86,23 +88,82 @@ define(['require',
 			});
 		},
 		
+		
+		// share event binding
+		shareOn: function(e) {
+			var type = $(e.currentTarget).data("share");
+			if(type && _.isFunction(this[type])) this[type]();
+		},
+		
+		twitter: function() {
+			var data = this.getShareData();
+			var options = {
+				'link': "#"+this.pageName+data.userId+data.sportId+data.mediaId,
+				//'link': "?enttypes_id="+data.record.payload.enttypes_id+"&id="+data.record.payload.id,
+				'name': data.User.name + " - " + data.Sport.sport_name,
+				'caption': "Athletez.com",
+				'image': data.record.payload.image_path,
+				'description': '',
+				'title' :'',
+				'type': "twitter"
+			};
+			new ShareComponent(options);
+			//var url = "http://twitter.com/home";
+			//window.open(url+ "?status="+description+"&url="+url,  'Twitter_share', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');
+		},
+		
+		gplus: function() {
+			var data = this.getShareData();
+			var options = {
+				//'link': "#"+this.pageName+data.userId+data.sportId+data.mediaId,
+				'link': "?enttypes_id="+data.record.payload.enttypes_id+"&id="+data.record.payload.id,				
+				'name': data.User.name + " - " + data.Sport.sport_name,
+				'caption': "Athletez.com",
+				'image': data.record.payload.image_path,
+				'description': '',
+				'title' :'',
+				'type': "gplus"
+			};
+			new ShareComponent(options);	
+		},
+		
+		tumbler: function() {
+			var data = this.getShareData();
+			var options = {
+				//'link': "#"+this.pageName+data.userId+data.sportId+data.mediaId,
+				'link': "?enttypes_id="+data.record.payload.enttypes_id+"&id="+data.record.payload.id,
+				'name': data.User.name + " - " + data.Sport.sport_name,
+				'caption': "Athletez.com",
+				'image': data.record.payload.image_path,
+				'description': '',
+				'title' :'',
+				'type': "tumbler"
+			};
+			new ShareComponent(options);	
+		},
+		
+		
+		getShareData: function() {
+			var record = this.json[this.index];
+			console.error(record);
+			return { 
+				'record': record,
+				'userId': (this.user_id)?"/"+this.user_id:'',
+				'User': this.getUserForMedia(),
+				'Sport': this.getSportForMedia(),
+				'sportId': (record.payload.media_obj.sports_id)?"/sport/"+record.payload.media_obj.sports_id:'',
+				'mediaId': (record.payload.media_id)?"/media/"+record.payload.media_id:""
+			};
+		},
+		
 		// share media on facebook
-		shareOnFacebook: function() {
-			var record = this.json[this.index],
-				userId = (this.user_id)?"/"+this.user_id:'',
-				User = this.getUserForMedia(),
-				Sport = this.getSportForMedia(),
-				sportId = (record.payload.media_obj.sports_id)?"/sport/"+record.payload.media_obj.sports_id:'',
-				mediaId = (record.payload.media_id)?"/media/"+record.payload.media_id:"";
-
-
-			var link = "#"+this.pageName+userId+sportId+mediaId,
-				name = User.name + " - " + Sport.sport_name,
+		facebook: function() {
+			var data = this.getShareData();
+			var link = "#"+this.pageName+data.userId+data.sportId+data.mediaId,
+				name = data.User.name + " - " + data.Sport.sport_name,
 				caption = "Athletez.com",
-				image = record.payload.image_path,
+				image = data.record.payload.image_path,
 				description = '';
-
-			console.log(link);
 
 			var fb = new FbComponent();
 			fb.shareOnFacebook({

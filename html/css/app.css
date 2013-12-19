@@ -1857,3 +1857,34 @@ div.edit{
     width: 25px;
     cursor: pointer;
 }
+
+.player-share {
+	background:url(images/icons/social-sprite.png) no-repeat;
+	width: 36px;
+	height: 40px;
+	display: inline-block;
+}
+
+.player-share[data-share=facebook] {
+	background-position: -134px 0;	
+}
+
+.player-share[data-share=twitter] {
+	background-position: 0 0;	
+}
+
+.player-share[data-share=gplus] {
+	background-position: -45px 0;	
+}
+
+.player-share[data-share=tumbler] {
+	background-position: -90px 0;	
+}
+
+.image-actions li.icon-parent {
+	background-color: transparent;
+	padding: 0;
+	width: 40px;
+}
+
+
