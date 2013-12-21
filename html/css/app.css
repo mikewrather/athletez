@@ -1836,17 +1836,13 @@ li#add-icons ul {
 	float: left;
 }
 
-#roster-wrap ul li.teams, #add-participants-icons {
+#roster-wrap ul li.teams, #add-participants-icons, #add-fans-icons {
 	width: 220px;
 	/*line-height: 200px;*/
 	text-align: center;
 }
 
-#add-participants-icons {
-	
-}
-
-#add-participants-icons a {
+#add-participants-icons a, #add-fans-icons a {
 	background-image: url('images/icons/add-team.png');
 	background-size: cover;
 	min-height: 220px;
