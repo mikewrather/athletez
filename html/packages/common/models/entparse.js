@@ -120,12 +120,17 @@ define([ 'models', 'facade' ], function(models, facade) {
 			return_data._link = "/#!team/" + mpay.id;
 			return_data._has_link = true;
 			if(mpay.hasOwnProperty('is_owner')) return_data.show_edit = mpay.is_owner;
-
+			return_data.itemtype = "http://schema.org/Organization";
+			return_data.meta = [
+				{itemprop:"name",content:mpay.team_name},
+				{itemprop:"address",content:mpay.team_location},
+				{itemprop:"url",content:return_data._link}
+			];
 			return return_data;
 		},
 
-		parse_org: function(mpay,return_data){
-
+		parse_org: function(mpay,return_data)
+		{
 			return_data._noicon_text = "org";
 			return_data._color = '#928add';
 			return_data._label = mpay.name;
@@ -133,7 +138,12 @@ define([ 'models', 'facade' ], function(models, facade) {
 			return_data._link = "/#!team/" + mpay.id;
 			return_data._has_link = true;
 			if(mpay.hasOwnProperty('is_owner')) return_data.show_edit = mpay.is_owner;
-
+			return_data.itemtype = "http://schema.org/Organization";
+			return_data.meta = [
+				{itemprop:"name",content:mpay.org_name},
+				{itemprop:"address",content:mpay.org_location},
+				{itemprop:"url",content:return_data._link}
+			];
 			return return_data;
 		},
 
@@ -153,7 +163,11 @@ define([ 'models', 'facade' ], function(models, facade) {
 			return_data._link = "/#!profile/" + mpay.id;
 			return_data._has_link = true;
 			if(mpay.hasOwnProperty('is_owner')) return_data.show_edit = mpay.is_owner;
-
+			return_data.itemtype = "http://schema.org/Person";
+			return_data.meta = [
+				{itemprop:"name",content:mpay.name},
+				{itemprop:"url",content:return_data._link}
+			];
 			return return_data;
 		},
 
@@ -167,7 +181,6 @@ define([ 'models', 'facade' ], function(models, facade) {
 			{
 				return_data._thumbnail = mpay.thumbs;
 			}
-
 			//non-thumb related data
 			return_data.show_play = true;
 			return_data._enttypes_id = typeof(mpay.media == "object") ? mpay.media.enttypes_id : 0;
@@ -184,6 +197,7 @@ define([ 'models', 'facade' ], function(models, facade) {
 
 		parse_image: function(mpay,return_data){
 			//images
+
 			return_data._enttypes_id = typeof(mpay.media_obj == "object") ? mpay.media_obj.enttypes_id : 0;
 			return_data._id = typeof(mpay.media_obj == "object") ? mpay.media_obj.id : 0;
 			if ( typeof (mpay.types) == 'object')
@@ -191,7 +205,7 @@ define([ 'models', 'facade' ], function(models, facade) {
 				this.findCorrectType(mpay.types);
 			}
 			//else
-	
+
 			var uploader = (!_.isUndefined(mpay.media_obj.users_obj.label))?mpay.media_obj.users_obj.label:false;
 			if(typeof(mpay.media_obj.sports_obj) == 'object')
 			{
@@ -206,6 +220,11 @@ define([ 'models', 'facade' ], function(models, facade) {
 			if(uploader) return_data._sublabel.push({label:"Uploaded by " + uploader});
 			if(sport) return_data._sublabel.push({label:"Sport: " + sport});
 
+			return_data.itemtype = "http://schema.org/Person";
+			return_data.meta = [
+				{itemprop:"name",content:uploader || ""}
+			];
+
 
 			return_data._link = "javascript: void(0);";
 			return_data._has_link = false;
@@ -217,6 +236,7 @@ define([ 'models', 'facade' ], function(models, facade) {
 		},
 
 		parse_game: function(mpay,return_data){
+
 			return_data._detailclass = "game";
 
 			if ( typeof (mpay.game_picture) == 'object' && mpay.game_picture !=null)
@@ -245,6 +265,16 @@ define([ 'models', 'facade' ], function(models, facade) {
 			else{
 				return_data._sublabel = mpay.event_name;
 			}
+			var gameDate = new Date(mpay.gameDay + " " + mpay.gameTime);
+
+			return_data.itemtype = "http://schema.org/Event";
+			return_data.meta = [
+				{itemprop:"name",content:return_data._sublabel},
+				{itemprop:"location",content:mpay.game_location},
+				{itemprop:"startDate",content:gameDate.toISOString()},
+				{itemprop:"url",content:return_data._link}
+			];
+
 			return_data._noicon_text = "vs";
 			return_data._color = "#e49f6f";
 			console.log(return_data);
