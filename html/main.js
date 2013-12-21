@@ -117,6 +117,9 @@ require.config({
 		'jquery':{
 			exports: '$'
 		},
+		'facade': {
+			deps: ['jquery']
+		},
 		'jqueryui': {
 			deps: ['jquery']
 		},

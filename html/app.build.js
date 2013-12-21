@@ -6,14 +6,16 @@
 	dir: '../html_build',
 	optimize: 'uglify',
 	paths: {
+
+		jquery: 'vendor/jquery.1.10.2.min',
 		'json2': 'vendor/json2',
 		'modernizr': 'vendor/modernizr-2.6.2.min',
-		'html5': 'vendor/html5',
-		'zepto': 'vendor/zepto',
 		'mustache': 'vendor/mustache',
 		'backbone': 'vendor/backbone',
 		'underscore': 'vendor/underscore',
-		'jquery': 'vendor/jquery.1.10.2.min',
+		'html5' :'vendor/html5',
+		'zepto'  : 'vendor/zepto',
+
 		// Plugins
 		'bootstrap': 'vendor/plugins/bootstrap',
 		'jquery.pstrength': 'vendor/plugins/jquery.pstrength-min.1.2',
@@ -130,6 +132,9 @@
 	},
 	*/
 	shim: {
+		'facade' : {
+			deps: ['jquery']
+		},
 		'jqueryui': {
 			deps: ['jquery']
 		},
@@ -163,7 +168,7 @@
 			deps: ['jquery', 'jqueryui']
 		}
 	},
-	priority: ['text', 'modernizr', 'json2', 'vendor', 'utils', 'facade', 'syncs', 'models', 'views', 'collections', 'controller'],
+	priority: ['jquery','text', 'modernizr', 'json2', 'vendor', 'utils', 'facade', 'syncs', 'models', 'views', 'collections', 'controller'],
 	jquery: '1.10.2',
 	modules: [
 		// Common libraries, Utilities, Syncs, Models, Views, Collections
