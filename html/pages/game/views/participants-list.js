@@ -107,7 +107,7 @@ function(facade,  views,   utils,   ItemView,  templateList, Participate, addMod
         	
         	setTimeout(function() {
 	            if(!$("#add-participants-icons").length) {
-	            	_self.$el.find(_self.listView).prepend('<li id="add-participants-icons"><a href="javascript: void(0);" class="add-to-event pull-right hide" title="Add me to this Event"></a></li>');
+	            	_self.$el.find(_self.listView).prepend('<li id="add-participants-icons"><a href="javascript: void(0);" class="add-to-event pull-right hide" title="Add me to this Event">Add me to this Event</a></li>');
 	            	// routing.trigger(_self.triggerItem, "#add-participants-icons");            	
             	}
             }, 0);
