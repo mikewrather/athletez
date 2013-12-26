@@ -78,10 +78,10 @@ if (isset($_SERVER['KOHANA_ENV']))
 	Kohana::$environment = constant('Kohana::' . strtoupper($_SERVER['KOHANA_ENV']));
 }
 
-if (strpos($_SERVER['HTTP_HOST'], 'newsite') !== FALSE || strpos($_SERVER['HTTP_HOST'], 'aup.') !== FALSE || strpos($_SERVER['HTTP_HOST'], 'localhost') !== FALSE)
+if (strpos($_SERVER['HTTP_HOST'], 'newsite') !== FALSE || strpos($_SERVER['HTTP_HOST'], 'aup.') !== FALSE)
 {
 	// Localhost
-	Kohana::$environment = Kohana::LOCALHOST;
+	Kohana::$environment = Kohana::DEVELOPMENT;
 
 	$base_url = "/";
 	$use_cdn = false;
@@ -97,6 +97,15 @@ elseif (
 	Kohana::$environment = Kohana::PRODUCTION;
 	$base_url = "/";
 	$use_cdn = true;
+
+	// Turn off notices and strict errors
+	error_reporting(E_ALL & ~E_NOTICE);
+}
+elseif(strpos($_SERVER['HTTP_HOST'], 'localhost') !== FALSE){
+	$base_url = "/";
+	$use_cdn = false;
+	// Localhost
+	Kohana::$environment = Kohana::LOCALHOST;
 
 	// Turn off notices and strict errors
 	error_reporting(E_ALL ^ E_NOTICE ^ E_STRICT);
