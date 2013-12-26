@@ -78,6 +78,11 @@ class Controller_Authcheck extends AuthController
 			"link" => $retArr['facebook']['id']>0 ? "javascript:void(0);" : "/#fbconnect"
 		);
 
+		if($retArr['facebook']['id']>0) $retArr['nav'][] = array(
+			"page" => "Invite From Facebook",
+			"link" => "/#fbinvite"
+		);
+
 		$retArr['nav'][] = array(
 			"page" => "Log Out",
 			"link" => "/#logout",
