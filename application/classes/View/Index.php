@@ -16,4 +16,7 @@ class View_Index
 	public function s3(){
 		return ($GLOBALS['env_globals']['use_cdn'] || $this->force_cdn) ? $GLOBALS['env_globals']['s3_url'] : URL::base(true);
 	}
+	public function date_indexed(){
+		return date('M jS, Y g:i a');
+	}
 }
