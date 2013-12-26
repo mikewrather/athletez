@@ -1,7 +1,7 @@
 // The Image List
 // --------------
 
-define(['facade','views', 'utils', 'media/views/image-item', 'media/views/image-board', 'media/views/add-image','text!media/templates/image-list.html'], 
+define(['facade','views', 'utils', 'media/views/image-item', 'media/views/image-board', 'media/views/add-image','text!media/templates/image-list.html', 'votes/models/follow'], 
 function(facade,  views,   utils,   ImageItemView,            ImageBoardView,            AddImageView, templateList) {
 
     var ImageListView, 
@@ -9,6 +9,7 @@ function(facade,  views,   utils,   ImageItemView,            ImageBoardView,   
         $ = facade.$,
         _ = facade._,
 	    vendor = require("vendor"),
+	    followModel = require('votes/models/follow'),
         Channel = utils.lib.Channel,
         CollectionView = views.CollectionView,
         SectionView = views.SectionView,
@@ -19,7 +20,6 @@ function(facade,  views,   utils,   ImageItemView,            ImageBoardView,   
     ImageListView = ImageListAbstract.extend({
 
         __super__: CollectionView.prototype,
-
         //id: "image-list",
         //name: "Image List",
         //tagName: "ul",
@@ -37,7 +37,8 @@ function(facade,  views,   utils,   ImageItemView,            ImageBoardView,   
 			'click .see-more-h': 'seeMore',
 			"click .open-photo-player-h": "initPhotoPlayer",
 			"dragover #image-place-holder" : "drag",
-			"drop #image-place-holder":"drop"
+			"drop #image-place-holder":"drop",
+			 "click .add-to-fans-h": "follow",
 		},
 		
 		renderTemplate: function () {
@@ -46,12 +47,47 @@ function(facade,  views,   utils,   ImageItemView,            ImageBoardView,   
             return this;
        },
        
-       
        drag: function(event) {
 			event.stopPropagation();
 		    event.preventDefault();
 		    event.originalEvent.dataTransfer.dropEffect = 'copy';
 		},
+		
+		checkForUser: function() {
+			if(!_.isUndefined(routing.userLoggedIn) && routing.userLoggedIn)
+				return true;
+			else	
+        		return false;
+		},
+		
+		follow: function(e) {
+		   e.preventDefault();
+		    console.log(e.target);
+		    e.stopPropagation();
+		    
+		    console.error(this.data);
+		    
+		     if(!this.checkForUser()) {
+			     routing.trigger('showSignup');
+			     return;
+	    	}
+		    var _self = this, followModelOb = new followModel();
+			followModelOb.subject_id = this.data.payload.id;
+			followModelOb.entity_id = this.data.payload.enttypes_id;
+		    console.log(followModelOb);
+			followModelOb.save();
+			$.when(followModelOb.request).done(function() {
+				if(typeof(followModelOb.get('payload').follower) =='object' && typeof(followModelOb.get('payload').subject) =='object' && followModelOb.get('payload').id > 0) {
+					_self.controllerObject.reloadFans();
+					$(e.currentTarget).parents("li").addClass('hide');
+					
+				} else {
+					console.log("FAIL");
+				}
+			});
+	    },
+		
+		
 		
 		drop: function(event) {
 			var _self = this;
@@ -100,16 +136,15 @@ function(facade,  views,   utils,   ImageItemView,            ImageBoardView,   
         	else
         		this.name = "image list";
         	
-        	console.error(options);
-        	
 	       this.pageName = (options.pageName)?options.pageName:"profile";
-        	//alert(this.page);
         	if(options.collecton) this.collection = options.collection;
         	this.target_id = options.target_id;	
         	this.target_url = options.target_url;
         	this.sport_id = options.sport_id;
         	this.user_id = options.user_id;
         	this.media_id = options.media_id;
+        	this.data = options.data;
+        	this.controllerObject = options.controllerObject;
         	this.triggerItem = options.triggerItem;
 			// render template
 			if(!options.dontrenderTemplate) this.renderTemplate();
@@ -189,7 +224,6 @@ function(facade,  views,   utils,   ImageItemView,            ImageBoardView,   
             
         // Child views...
         childViews: {},
-
         // Event handlers...
 
         // Add Views
@@ -209,9 +243,6 @@ function(facade,  views,   utils,   ImageItemView,            ImageBoardView,   
                 $(this.listView).append(addView.el);
             }
             Channel('addimage:fetch').subscribe(callback);
-            
-            
-            
         },
 
 	    filterWithImageType: function(type) {
@@ -221,16 +252,19 @@ function(facade,  views,   utils,   ImageItemView,            ImageBoardView,   
 		    });
 		    return c;
 		},
-
-        setupBoardView: function() {
-        	var _self = this;
-            
+		
+		addButtons: function() {
+			var _self = this;
             setTimeout(function() {
 	            if(_self.triggerItem && !$("#add-icons").length) {
-	            	$(_self.listView).prepend('<li id="add-icons"></li>');
+	            	_self.$el.find(_self.listView).prepend('<li id="add-icons"></li>');
 	            	 routing.trigger(_self.triggerItem, "#add-icons");            	
             	}
             }, 0);
+		},
+
+        setupBoardView: function() {
+			this.addButtons();
             if (this.collection.size() == 0)
                 return;
                 

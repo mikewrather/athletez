@@ -17,7 +17,6 @@ function(facade,  views,   utils,   ItemView,  templateList, Participate, addMod
 	ParticipantsView = CollectionView.extend(SectionView.prototype);
 
     return ParticipantsView.extend({
-
         __super__: CollectionView.prototype,
 		template : templateList,
         // Tag for the child views
@@ -45,13 +44,9 @@ function(facade,  views,   utils,   ItemView,  templateList, Participate, addMod
        		participants.set({games_id: this.game_id, sports_id: this.sports_id});
        		participants.save();
        		$.when(participants.request).done(function() {
-       			
        			var payload = participants.toJSON(), newAddModel = new addModel();
-       			
-       			console.error(payload.payload.usl.user);
-       			
 				newAddModel.processItemFromResponse(payload.payload.usl.user);
-				$(".add-to-event").hide();
+				$("#add-participants-icons").addClass("hide");
        			_self.collection.add(newAddModel);
        		});
         },
@@ -62,7 +57,6 @@ function(facade,  views,   utils,   ItemView,  templateList, Participate, addMod
         	$(document).off("click", ".add-to-event");
         	$(document).on("click", ".add-to-event", function() {
         		if(!_self.checkForUser()) {
-		  		
 		  	   	routing.trigger('showSignup');	
 		    	return;
 	    	}
@@ -84,15 +78,12 @@ function(facade,  views,   utils,   ItemView,  templateList, Participate, addMod
         	
         	var json = this.collection.toArray(), a = json[0].get("payload"), b = [], found = false;
         	for(var i in a) {
-        		console.error(routing.loggedInUserId == a[i].id);
         		if(routing.loggedInUserId == a[i].id) {
         			found = true;
-        			$(".add-to-event").hide();
+        			//$("#add-participants-icons").addClass("hide");
         		}
         		b.push({payload: a[i]});
         	}
-        	
-        	if(!found)	$(".add-to-event").show();
         	
         	this.collection.reset(b);   
         	this.target_id = options.target_id;	
@@ -113,6 +104,15 @@ function(facade,  views,   utils,   ItemView,  templateList, Participate, addMod
             _.bindAll(this);
             this.addSubscribers();
         	this.setupAddView();
+        	
+        	setTimeout(function() {
+	            if(!$("#add-participants-icons").length) {
+	            	_self.$el.find(_self.listView).prepend('<li id="add-participants-icons"><a href="javascript: void(0);" class="add-to-event pull-right hide" title="Add me to this Event">Add me to this Event</a></li>');
+	            	// routing.trigger(_self.triggerItem, "#add-participants-icons");            	
+            	}
+            }, 0);
+        	if(!found) $("#add-participants-icons").removeClass("hide");
+        	
         	//$(document).off('click','.image-outer-h');
         	//$(document).on('click','.image-outer-h', function() {
 			//	_self.initPhotoPlayer();
@@ -151,9 +151,10 @@ function(facade,  views,   utils,   ItemView,  templateList, Participate, addMod
 
         // Add Views
         setupAddView: function() {
-            var listView,
+            var listView, _self = this,
                 addView = new AddImageView({collection: this.collection}),
                 renderAddView = this.addChildView(addView);
+			
 
             this.childViews.form = addView;
             this.callbacks.add(function() {

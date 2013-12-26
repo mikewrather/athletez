@@ -1844,13 +1844,21 @@ li#add-icons ul {
 	float: left;
 }
 
-#roster-wrap ul li.teams {
+#roster-wrap ul li.teams, #add-participants-icons, #add-fans-icons {
 	width: 220px;
-	/*line-height: 200px;*/
 	text-align: center;
 }
 
-div.edit{
+#add-participants-icons a, #add-fans-icons a {
+	height: 220px;
+	line-height: 220px;
+	width: 220px;
+	float: left;
+	display: inline-block;
+	background-color: #CCC;
+}
+
+div.edit {
     background:url(http://cdn.athletez.com/resources/img/pencil-25.png) no-repeat;
     background-size: cover;
     height: 25px;

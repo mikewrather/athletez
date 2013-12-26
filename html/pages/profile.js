@@ -446,10 +446,25 @@ define([
 				this.layout.render();
 			},
 			
+			reloadFans: function() {
+				var _self = this, position;
+				if (this.fansListView) {
+					$(this.fansListView.destination).html('');
+					position = $.inArray(this.fansListView, this.scheme);
+					if (~position) this.scheme.splice(position, 1);
+				}
+				_self.fans.fetch();
+				$.when(_self.fans.request).done(function() {
+					_self.setupFansListView();					
+				});
+			},
+			
 			setupFansListView: function () {
 				this.fansListView = new FansImageListView({
 					collection: this.fans,
 					destination: "#fans-div",
+					controllerObject: this,
+					data: this.basics.toJSON(),
 					//model: Backbone.Model.extend(),
 					name: "fansView"
 				});

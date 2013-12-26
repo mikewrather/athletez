@@ -187,6 +187,10 @@ define([
 				});
             }
         },
+
+        reloadFans: function() {
+        	this.refreshFansPage();
+        },
         
         handleDeferreds: function() {
             var controller = this;
@@ -311,7 +315,8 @@ define([
 				this.fansListView = new FansImageListView({
 					collection: this.fans,
 					destination: "#fans-div",
-					//model: Backbone.Model.extend(),
+					controllerObject: this,
+					data: this.basics.toJSON(),
 					name: "fansView"
 				});
 
