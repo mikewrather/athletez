@@ -1,9 +1,9 @@
 {{#payload}}
 <div class="row-fluid">
 	
-	<div class="profile-heading">
+	<div class="profile-heading" itemscope itemtype="http://schema.org/Person">
 		<div class="sports-h"></div>
-            <h3 class="username">{{name}} {{#grad_year}}'{{grad_year}}{{/grad_year}}</h3>
+            <h3 class="username" itemprop="name">{{name}}</h3><h3> {{#grad_year}}'{{grad_year}}{{/grad_year}}</h3>
 			<h3>&nbsp;</h3>
     </div>
 	
