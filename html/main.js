@@ -182,6 +182,28 @@ define([
 			routing.initTriggers();
 			// bind common triggers
 			Backbone.history.start({});
+			
+			
+			
+			App.Settings = new function() {
+				var _self = this, domain = function() {
+					var host = window.location.host;
+					if(host.match("localhost")) { // localhost environment
+						_self.appId = "675982322446833";
+					} else if(host.match("newsite") || host.match("aup.")) { // development environment
+						_self.appId = "239430712864961";
+					} else if(host.match("athletesup") || host.match("amazonaws") || host.match("50.19.123.141") || host.match("athletez")) { // production environment
+						_self.appId = "219148511595084";
+					}
+				}();
+				
+				this.fbId = function() {
+					
+				};
+				
+				return this;
+			};
+			
 		});
 	}
 );

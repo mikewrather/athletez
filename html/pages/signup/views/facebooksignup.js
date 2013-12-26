@@ -50,8 +50,7 @@ function (
             window.fbAsyncInit = function() {
 	            console.log("facebook");
                 FB.init({
-                //    appId      : '219148511595084', // App ID
-	                appId   : '239430712864961',
+	                appId      : App.Settings.appId,
                     status     : true, // check login status
                     cookie     : true, // enable cookies to allow the server to access the session
                     xfbml      : true,  // parse XFBML
@@ -60,7 +59,6 @@ function (
 
                 // Additional init code here
                 callLogin();
-               
             };
             
         },
@@ -70,7 +68,7 @@ function (
                 if (document.getElementById(id)) {
                    
                     this.loginInfo = this.loginfb();
-                    this.return;
+                    return;
                 }
                 js = document.createElement('script'); js.id = id; js.async = true;
                 js.src = "//connect.facebook.net/en_US/all.js";

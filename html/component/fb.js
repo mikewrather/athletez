@@ -13,8 +13,8 @@ define(['require', 'facade', 'views', 'utils', 'vendor'], function(require) {
 		init = function() {
 			window.fbAsyncInit = function() {
 				FB.init({
-				//	appId   : '239430712864961',
-				    appId   : '219148511595084',//'396541317103569', // App ID                     status     : true, // check login status
+				    appId   : App.Settings.appId,// App ID
+				    status     : true, // check login status
 					cookie  : true, // enable cookies to allow the server to access the session
 					xfbml   : true,  // parse XFBML
 					oauth   : true
@@ -78,6 +78,22 @@ define(['require', 'facade', 'views', 'utils', 'vendor'], function(require) {
 				);
 			} else {
 				new loadScriptTimeOut('shareOnFacebook', options);
+			}
+		};
+		
+		// get friends from facebook
+		this.getFriends = function() {
+			if(checkIfScriptExists() && "undefined" != typeof FB) {
+			FB.api('/me/friends?fields=id,first_name', function(response) {
+			    
+			    console.error(response);
+			    
+			    //var randomFriend = Math.floor(getRandom(0, response.data.length));
+			    //gFriendID = response.data[randomFriend].id;
+			    //gSmashUIText.innerHTML = "Smash " + response.data[randomFriend].first_name + " !";
+			});
+			} else {
+				new loadScriptTimeOut('getFriends', {});
 			}
 		};
 		
