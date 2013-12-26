@@ -783,6 +783,10 @@
 			return $this->post_fbreg();
 		}
 
+		public function get_fbfriends(){
+			return $this->obj;
+		}
+
 		/**
 		 * post_login() Log in a user
 		 *

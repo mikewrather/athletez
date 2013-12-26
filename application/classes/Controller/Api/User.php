@@ -345,6 +345,38 @@
 			return $this->action_post_fbreg();
 		}
 
+		public function action_get_fbfriends()
+		{
+
+			$facebook = FacebookAuth::factory();
+
+			//	print_r($facebook);
+			$retArr =  $facebook->get_user();
+
+			//		print_r($retArr);
+
+			if(isset($retArr['message']))
+			{
+
+				//Error message array
+				$error_array = array(
+					"error" => $retArr['message']
+				);
+
+				// Set whether it is a fatal error
+				$is_fatal = true;
+
+				// Call method to throw an error
+				$this->addError($error_array,$is_fatal);
+
+				return false;
+			}
+			else
+			{
+				return $facebook->getFriends();
+			}
+		}
+
 		/**
 		 * action_get_search() Search for users based on various criteria
 		 * via /api/user/search/{users_id}
