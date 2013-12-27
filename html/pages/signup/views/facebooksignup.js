@@ -31,8 +31,9 @@ function (
        
                
              
-        signupFacebook: function() {
+        signupFacebook: function(linkedToFB) {
             var current = this;
+            this.linkWithFB = (linkedToFB && linkedToFB == "linkWithFB")?true:false;
             //event.preventDefault();
           if (!this.registrationController) {
                 this.registrationController = new RegistrationController();
@@ -70,7 +71,7 @@ function (
                     this.loginInfo = this.loginfb();
                     return;
                 }
-                js = document.createElement('script'); js.id = id; js.async = true;
+     			js = document.createElement('script'); js.id = id; js.async = true;
                 js.src = "//connect.facebook.net/en_US/all.js";
                 ref.parentNode.insertBefore(js, ref);
             },
@@ -79,7 +80,9 @@ function (
             FB.getLoginStatus(function(response) {
                         if (response.status === 'connected') {
                             FB.api('/me', function(response) {
-                                console.log(response);
+                            	if(temp.linkWithFB) {
+                            		alert("Facebook Account linked Successfully.");
+                            	}
                                // this.signupc = new scontroller({"route":""});
                                  routing.trigger('registration-with-facebook');
                                 //Channel('registration-with-facebook').publish();
@@ -87,6 +90,9 @@ function (
 
                             });
                         } else if (response.status === 'not_authorized') {
+                        	if(temp.linkWithFB) {
+                            	alert("Some error occured. Please try again.");
+                            }
                             console.log('not_authorized');
                              if(!temp.loginInfo)
                              temp.loginInfo=temp.loginfb();

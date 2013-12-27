@@ -517,7 +517,7 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
 	    showFbreg:function() {
 		    ga('send', 'event', 'popup', 'open', 'FB Reg');
             fbregistration = new fbreg();
-            fbregistration.signupFacebook();
+            fbregistration.signupFacebook("linkWithFB");
         },
 
 		gaPageView: function(page,title){
