@@ -92,6 +92,7 @@ require.config({
 		'videopreview'      : [cdn + 'pages/videopreview', s3 + 'pages/videopreview', '/pages/videopreview'],
 		'profile'           : [cdn + 'pages/profile', s3 + 'pages/profile', '/pages/profile'],
 		'game'              : [cdn + 'pages/game', s3 + 'pages/game', '/pages/game'],
+		'fbinvite'          : [cdn + 'pages/fbinvite', s3 + 'pages/fbinvite', '/pages/fbinvite'],
 		'team'              : [cdn + 'pages/team', s3 + 'pages/team', '/pages/team'],
 		'registration'      : [cdn + 'pages/registration', s3 + 'pages/registration', '/pages/registration'],
 		'signup'            : [cdn + 'pages/signup', s3 + 'pages/signup' , '/pages/signup'],
