@@ -1895,4 +1895,10 @@ div.edit {
 	width: 40px;
 }
 
+#search-area input {
+	margin: 15px;
+	width: 300px;
+	padding: 5px;
+}
+
 
