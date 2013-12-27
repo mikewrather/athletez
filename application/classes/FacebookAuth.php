@@ -26,8 +26,8 @@ class FacebookAuth extends Kohana_FacebookAuth {
 						"name" => $friend["name"],
 						"id" => $friend["id"],
 						"gender" => isset($friend["gender"]) ? $friend["gender"] : "",
-						"picture" => $friend["picture"],
-						"large" => str_replace("_q.jpg","_n.jpg",$friend["picture"])
+						"picture" => $friend["picture"]["data"]["url"],
+						"large" => str_replace("_q.jpg","_n.jpg",$friend["picture"]["data"]["url"])
 					//	"invited" => $invited
 					);
 				}
