@@ -29,6 +29,7 @@ function(facade,  views,   utils,   ImageItemView, templateList) {
         // Store constructor for the child views
         _view: ImageItemView,
 		events: {
+			'click .see-more-h': 'seeMore'
 		},
 		
 		renderTemplate: function () {
