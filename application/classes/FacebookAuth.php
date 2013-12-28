@@ -42,4 +42,19 @@ class FacebookAuth extends Kohana_FacebookAuth {
 		return $processed;
 
 	}
+
+	public function getInfoById($fb_id){
+		$user = $this->fb->getUser();
+		if ($user)
+		{
+			try
+			{
+				$user_data = $this->fb->api('/'.$fb_id);
+				return $user_data;
+			} catch(FacebookApiException $e){
+				error_log($e);
+				return false;
+			}
+		}
+	}
 }

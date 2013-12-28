@@ -792,15 +792,16 @@ return array(
 		'id1' => 'user_contact_id',
 		'id2' => '',
 	),
-	'Media_Imagetypelink' => array(
+	'Site_Invite_Facebook' => array(
 		'id' => '88',
-		'name' => 'Image Type Link',
-		'api_name' => 'imagetypelink',
-		'class_name' => 'Media_Imagetypelink',
-		'db_table' => 'image_type_link',
-		'description' => 'Links images to the type.  Stores all the different formats an image is kept in',
-		'id1' => 'image_type_link_id',
+		'name' => 'Facebook Invitation',
+		'api_name' => 'fbinvite',
+		'class_name' => 'Site_Invite_Facebook',
+		'db_table' => 'invites',
+		'description' => 'This is an invitation that refers specifically to the facebook class and will store fb ID and user information.',
+		'id1' => 'invites_id',
 		'id2' => '',
 	)
+
 
 );

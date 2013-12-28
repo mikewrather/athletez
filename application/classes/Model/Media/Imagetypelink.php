@@ -64,5 +64,7 @@ class Model_Media_Imagetypelink extends ORM
 		}
 
 	}
-
+	public function name(){
+		return false;
+	}
 }
