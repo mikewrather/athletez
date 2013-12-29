@@ -95,7 +95,7 @@ define(['require', 'facade', 'views', 'utils', 'vendor'], function(require) {
 				    description: options.description || ''
 				  },
 				  function(response) {
-				    if (response && response.post_id) {
+				    if (response && response.success) {
 				      if(options.success && _.isFunction(options.success))
 				      	 options.success();
 				    } else {
