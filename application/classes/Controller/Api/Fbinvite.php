@@ -44,13 +44,14 @@ class Controller_Api_Fbinvite extends Controller_Api_Base
 
 		// fbid
 		// Retrieve invite by fbid
-		if((int)trim($this->request->query('fbid')) > 0)
+		if(trim($this->request->query('fbid')))
 		{
-			$fbid = (int)trim($this->request->query('fbid'));
+			$fbid = $this->request->query('fbid');
 		}
 
 		if(isset($sechash)) $res = $this->mainModel->where('sechash','=',$sechash);
-		if(isset($fbid)) $res = $this->mainModel->where('invite_fb','=',$fbid);
+		elseif(isset($fbid)) $res = $this->mainModel->where('invite_fb','=',$fbid);
+		else return false;
 
 		$res->find();
 		return $res;
@@ -71,9 +72,9 @@ class Controller_Api_Fbinvite extends Controller_Api_Base
 		// fbid
 		// This is the FB user ID of the person being invited.
 
-		if((int)trim($this->request->post('fbid')) > 0)
+		if($this->request->post('fbid'))
 		{
-			$fbid = (int)trim($this->request->post('fbid'));
+			$fbid = $this->request->post('fbid');
 		}
 
 		$result = $this->mainModel->invite($fbid);
