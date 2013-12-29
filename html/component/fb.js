@@ -82,10 +82,10 @@ define(['require', 'facade', 'views', 'utils', 'vendor'], function(require) {
 		this.sendInvite = function(options) {
 			if(checkIfScriptExists() && "undefined" != typeof FB) {
 				if(options.link)
-					 var link = window.location.protocol+"//"+window.location.host+"/"+options.link+"/";
+					 var link = window.location.protocol+"//athletez.com/"+options.link+"/";
 				else
 					var link = undefined;
-						 
+				
 				  FB.ui({
 				    method: options.method || 'send',
 				    to: options.to || '',
