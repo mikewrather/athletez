@@ -21,7 +21,7 @@ define( ["facade", "site/models/comment", "utils"], function (facade, SiteCommen
             SiteCommentModel.prototype.initialize.call(attributes, options);            
         },
         
-        fetchSuccess: function (model, response) {
+        afterFetch: function (model, response) {
             SiteCommentModel.prototype.fetchSuccess.call(this, model, response);
             routing.trigger('profilecommentonform:fetch', model);
         }
