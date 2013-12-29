@@ -5,7 +5,7 @@
 
 define(["require", "text!fbAccept/templates/main.html", "facade", "controller", "models", "views", "utils", "fbAccept/views/fb-accept", 'fbAccept/models/fb-user'], function(require, pageLayoutTemplate) {
 
-	var RegistrationController, facade = require("facade"), Controller = require("controller"), models = require("models"), views = require("views"), utils = require("utils"), LayoutView = views.LayoutView, $ = facade.$, _ = facade._, debug = utils.debug, Channel = utils.lib.Channel, cssArr = ["/pages/registration/registration.css", "/pages/fbaccept/fb-accept.css", "/pages/signup/css/signupstyle.css", "/css/style.jrac.css"];
+	var RegistrationController, facade = require("facade"), Controller = require("controller"), models = require("models"), views = require("views"), utils = require("utils"), LayoutView = views.LayoutView, $ = facade.$, _ = facade._, debug = utils.debug, Channel = utils.lib.Channel, cssArr = ["/pages/registration/registration.css", "fbAccept/fb-accept.css", "/pages/signup/css/signupstyle.css", "/css/style.jrac.css"];
 	FBAccept = require("fbAccept/views/fb-accept"),
 	FBModel = require('fbAccept/models/fb-user');
 	return Controller.extend({

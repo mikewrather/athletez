@@ -36,7 +36,7 @@ define(['require',
 			"click #sign-in":"signIn"
 		},
 		
-		cssArr : ["usercontrols/fbaccept/fb-accept.css"],
+		cssArr : [],
 		/*initialize gets called by default when constructor is initialized*/
 		initialize : function(options) {
 			Channel('load:css').publish(this.cssArr);

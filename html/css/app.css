@@ -1901,4 +1901,21 @@ div.edit {
 	padding: 5px;
 }
 
+#inviteView #regcontainer {
+	max-width: 400px;
+}
+
+.fbaccept #main {
+	padding-bottom: 0;
+	margin-bottom: 0;
+}
+
+#inviteView {
+	padding-bottom: 60px;
+	position:absolute; left:0;
+	width:100%;
+	background-size:cover; 
+}
+
+
 
