@@ -6,7 +6,7 @@ define( ["facade", "utils", "collections", "chrome", "controller", "profile", "i
 	"game", "team", "registration","profilesetting","userresume","packages/site/collections/phrases","usercontrols/tag/tag",
 	"usercontrols/addgame/addgame","signup","login", "usercontrols/photo-player/photo-player", "usercontrols/add-club/add-club",
 	"utils/storage", 'usercontrols/location/views/view-location','signup/views/facebooksignup',"usercontrols/addevent/addevent",'chrome/views/header',
-	'browserpop/views/browser','usercontrols/landing/views/landing', 'pages/fbinvite', 'pages/fbaccept'],
+	'browserpop/views/browser','usercontrols/landing/views/landing', 'pages/fbinvite'],
 function (facade, utils, collections, chromeBootstrap, Controller, ProfileController, ImageController, HomeController, VideoPreviewController,
 	GameController, TeamController, RegistrationController,ProfileSetting,UserResume, SitePhraseList , TagController,
 	AddGameController, SignupController,LoginController,PhotoPlayerController, AddClubController,
@@ -19,7 +19,6 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
         Backbone = facade.Backbone,
         Channel = utils.lib.Channel,
         FbInviteController = require('pages/fbinvite'),
-        FBAccept = require('pages/fbaccept'),
 	    browserView = require('browserpop/views/browser'),
 	    fbInviteView = require('browserpop/views/browser'),
 	    
@@ -228,6 +227,9 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
 		},
 		
 		aceptInvite: function(fbId) {
+			//setTimeout(function(){
+			//var landing = new landingView({userId: fbId});
+			//},2000);
 			var self = this;
 	    	this.cancelAjaxRequests();
 	    	this.loadStyles();
@@ -235,18 +237,14 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
 	    	function initFBAccept() {
 	    		$("body").addClass("fbaccept");
 				var title = "Athletez - We Are Athletez";
-	    		self.currentController = new FBAccept({
-	    			route: "",
-	    			title: title,
-	    			userId : fbId
-	    		});
+	    		self.currentController = new landingView({userId: fbId});
 	    		
 			    if(!fbId && $('div.register-wrapper').length == 0) {
 				    $('body header').after('<div class="register-wrapper"></div><div class="register-wrapper-h"></div>');
 			    }
 			    self.gaPageView("FB Accept - "+ fbId,title);
 	    	}
-	    	this.initialiRoutesInit(initFBAccept);     	
+	    	this.initialiRoutesInit(initFBAccept);   	
 		},
         
         // get user name by id

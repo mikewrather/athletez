@@ -11,6 +11,7 @@ define(['require',
 	'facade',
 	'views',
 	'utils',
+	'usercontrols/landing/models/fb-user',
 	'vendor'], function(require) {
 
 	var facade = require('facade'), views = require('views'),
@@ -18,6 +19,7 @@ define(['require',
 
 		signupBaseModel = require("signup/models/registerbasic"),
 		signupBaseView=require("signup/views/registerbasic"),
+		UserModel = require('usercontrols/landing/models/fb-user');
 
 		Channel = utils.lib.Channel, vendor = require('vendor'),
 		Mustache = vendor.Mustache, $ = facade.$;
@@ -35,6 +37,7 @@ define(['require',
 			"click #browse":"closePopup",
 			"click #sign-in":"signIn"
 		},
+		
 		cssArr : ["usercontrols/landing/landing.css"],
 		/*initialize gets called by default when constructor is initialized*/
 		initialize : function(options) {
@@ -43,15 +46,33 @@ define(['require',
 			_self.data = {};
 			_self.selectedOptions = [];
 			_self.setOptions(options);
-			_self.render();
+			// get the user detail if fbid is defined
+			try {
+			if(options.userId) {
+				_self.userId = options.userId;
+				_self.getUserData();
+			} else {
+				_self.render();
+			}
+			} catch(e) {
+				
+			}
 		},
+		
+		getUserData: function() {
+			var _self = this, model = new UserModel();
+			model.fbUserId = this.userId;
+			model.fetch();
+			$.when(model.request).done(function() {
+				_self.data = {firstname: model.get("payload").fb_user_data.first_name, lastname: model.get("payload").fb_user_data.last_name};
+				_self.render();
+			});
+		},
+		
 
 		//render displays the view in landing
 		render : function() {
 			var _self = this, markup = Mustache.to_html(_self.template,_self.data);
-			//console.error(markup);
-			//this.el = markup;
-			//console.error(this.el);
 			var options = {};
 			options.width = "100%";
 			options.height = "100%";
@@ -96,6 +117,7 @@ define(['require',
 				name : "Select Registration Type",
 				destination : "#reg-landing",
 				openAsaPage: true,
+				data: this.data,
 				showOnLanding:true
 			});
 		},
