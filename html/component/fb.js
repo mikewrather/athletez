@@ -14,7 +14,7 @@ define(['require', 'facade', 'views', 'utils', 'vendor'], function(require) {
 			window.fbAsyncInit = function() {
 				FB.init({
 				    appId   : App.Settings.appId,// App ID
-				    status     : true, // check login status
+				    status  : true, // check login status
 					cookie  : true, // enable cookies to allow the server to access the session
 					xfbml   : true,  // parse XFBML
 					oauth   : true
@@ -66,18 +66,45 @@ define(['require', 'facade', 'views', 'utils', 'vendor'], function(require) {
 				    if (response && response.post_id) {
 				      if(options.success && _.isFunction(options.success))
 				      	 options.success();
-				   //   else
-				     // 	alert('Item Shared successfully.');
 				    } else {
 				      if(options.error && _.isFunction(options.error))
 				      	 options.error();
-				    // else
-				      	//alert('Item Not Shared successfully.');
 				    }
 				  }
 				);
 			} else {
 				new loadScriptTimeOut('shareOnFacebook', options);
+			}
+		};
+		
+		
+		// send invite on facebook
+		this.sendInvite = function(options) {
+			if(checkIfScriptExists() && "undefined" != typeof FB) {
+				if(options.link)
+					 var link = window.location.protocol+"//"+window.location.host+"/"+options.link+"/";
+				else
+					var link = undefined;
+						 
+				  FB.ui({
+				    method: options.method || 'send',
+				    to: options.to || '',
+				    name: options.name || 'Come join Me on Atheletez',
+				    link: link || 'http://localhost/',
+				    picture: options.picture || '',
+				    description: options.description || ''
+				  },
+				  function(response) {
+				    if (response && response.post_id) {
+				      if(options.success && _.isFunction(options.success))
+				      	 options.success();
+				    } else {
+				      if(options.error && _.isFunction(options.error))
+				      	 options.error();
+				    }
+				  });
+			} else {
+				new loadScriptTimeOut('sendInvite', options);
 			}
 		};
 		

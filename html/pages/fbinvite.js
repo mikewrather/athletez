@@ -35,12 +35,11 @@ define(["require", "text!fbinvite/templates/layout.html", "facade", "controller"
 		},
 
 		handleDeferreds : function() {
-			
-			
 			var _self = this;
 			$.when(this.images.request).done(function() {
 				_self.images.allRecords = _self.images.toJSON();
 				_self.setupFriendsList();
+				
 				$(".search-friends-h").keyup(function() {
 					var v = $(this).val(), i, re = new RegExp(v, "i"),len = _self.images.allRecords.length, arr = [];
 					for(var i = 0; i < len; i++) {
@@ -50,24 +49,12 @@ define(["require", "text!fbinvite/templates/layout.html", "facade", "controller"
 						if(_self.images.models[i]) _self.images.models[i].destroy();							
 					}
 					
-					
-					
 					if(arr.length) {
 						_self.images.reset(arr);
 						_self.setupFriendsList();
-						//_self.imageListView.renderTemplate();
-						///for(var i in arr) {
-						//	var newImageModel = new MediaImageModel();
-						//	newImageModel.processItemFromPayload(arr[i]);
-						//	_self.images.add(newImageModel);
-						//	console.log(_self.images.toJSON());
-						//}
 					}
 				});
 			});
-			
-			
-			
 		},
 
 		refreshPage : function() {

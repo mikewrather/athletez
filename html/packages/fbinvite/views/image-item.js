@@ -3,14 +3,14 @@
 // Requires `define`
 // Return {ImageItemView} object as constructor
 
-define(['vendor', 'views', 'utils', 'text!packages/fbinvite/templates/image-item.html', 'packages/fbinvite/models/invite', 'utils/storage','chrome/views/header'], function(vendor, views, utils, imageItemTemplate) {
+define(['vendor', 'views', 'utils', 'text!packages/fbinvite/templates/image-item.html', 'packages/fbinvite/models/invite', 'utils/storage','chrome/views/header', 'component/fb'], function(vendor, views, utils, imageItemTemplate) {
 
 	var ImageItemView, $ = vendor.$, BaseView = views.BaseView, Mustache = vendor.Mustache,
 	voteModel = require('votes/models/vote'),
 	Store = require('utils/storage'),
-    followModel = require('votes/models/follow'),
-    DeleteModel = require('common/models/delete'),
+    inviteModel = require('packages/fbinvite/models/invite'),
     header = require('chrome/views/header'),
+    FBComponent = require('component/fb'),
 	entParser = require('common/models/entparse');
 
 	ImageItemView = BaseView.extend({
@@ -18,7 +18,7 @@ define(['vendor', 'views', 'utils', 'text!packages/fbinvite/templates/image-item
 		className : "image",
 		// Event handlers...
 		 events: {
-        },
+         },
 
 		initialize : function(options) {
 			this.template = imageItemTemplate;
@@ -26,6 +26,7 @@ define(['vendor', 'views', 'utils', 'text!packages/fbinvite/templates/image-item
 			for(var i in options) {
 				this[i] = options[i];
 			}
+			this.FBComponent = new FBComponent();
 		},
 		
 		checkForUser: function() {
@@ -115,6 +116,32 @@ define(['vendor', 'views', 'utils', 'text!packages/fbinvite/templates/image-item
 	        });
 			return this;
 		},
+		
+		
+		postMessage: function() {
+			var _self = this, options = {};
+			options.to = this.model.get("payload").id;
+			options.link = "#acceptfbinvite/"+this.model.get("payload").id;
+			options.name = "Come join Me on Atheletez";
+			options.picture = "http://cdn.athletez.com/resources/img/athletez_logo_small.png";
+			options.description = "You have been invited to sign up for http://athletez.com";
+			options.success = function() {
+				_self.callModel();
+			};
+			options.error = function() {
+				alert("Some Error Occured. Please try again.");
+			};
+			this.FBComponent.sendInvite(options);
+		},
+		
+		callModel: function() {
+			var model = new inviteModel();
+			model.set({'fbid': this.model.get("payload").id});
+			model.save();
+			$.when(model.request).done(function() {
+				$(e.currentTarget).addClass('link-disabled');
+			});
+		},
 
 		/**
 		 * This entire block of functions here should call methods from the model so that it can be centralized
@@ -128,14 +155,7 @@ define(['vendor', 'views', 'utils', 'text!packages/fbinvite/templates/image-item
 		  	   	routing.trigger('showSignup');	
 		    	return;
 	    	}
-	    	
-		    var model = new inviteModel();
-			model.id = this.model.get("payload").id;
-			model.setData();
-			model.save();
-			$.when(model.request).done(function() {
-				$(e.currentTarget).addClass('link-disabled');
-			});
+	    	this.postMessage();
 	    }
 
 	});

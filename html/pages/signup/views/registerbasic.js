@@ -34,6 +34,8 @@ define([
                     	"route": ""
                      });
 
+					this.AcceptData = (options.data)?options.data:undefined;
+
 					if(options.showOnLanding == true)
 						this.template =  _.template(signupBasicLandingTemplate, {onlyRegister: (this.openAsaPage)?true:false});
 	                else
@@ -64,6 +66,11 @@ define([
         		},
         		render: function(){
         			this.$el.html(this.template);
+        			
+        			if(this.AcceptData) {
+        				this.$el.find("input[name=firstname]").val(this.AcceptData.firstname);
+        				this.$el.find("input[name=lastname]").val(this.AcceptData.lastname);
+        			}
         		},
         		events:{
         			"click .regsubmit":"next",

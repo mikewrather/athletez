@@ -91,6 +91,7 @@ require.config({
 		'imageup'           : [cdn + 'pages/imageup', s3 + 'pages/imageup', '/pages/imageup'],
 		'videopreview'      : [cdn + 'pages/videopreview', s3 + 'pages/videopreview', '/pages/videopreview'],
 		'profile'           : [cdn + 'pages/profile', s3 + 'pages/profile', '/pages/profile'],
+		'fbAccept'          : [cdn + 'pages/fbaccept', s3 + 'pages/fbaccept', '/pages/fbaccept'],		
 		'game'              : [cdn + 'pages/game', s3 + 'pages/game', '/pages/game'],
 		'fbinvite'          : [cdn + 'pages/fbinvite', s3 + 'pages/fbinvite', '/pages/fbinvite'],
 		'team'              : [cdn + 'pages/team', s3 + 'pages/team', '/pages/team'],
@@ -108,7 +109,7 @@ require.config({
 		'photo-player'      : [cdn + 'usercontrols/photo-player/photo-player', s3 + 'usercontrols/photo-player/photo-player', '/usercontrols/photo-player/photo-player'],
 		'tag'               : [cdn + 'usercontrols/tag/tag', s3 + 'usercontrols/tag/tag', '/usercontrols/tag/tag'],
 		'browserpop'        : [cdn + 'usercontrols/detection', s3 + 'usercontrols/detection', '/usercontrols/detection'],
-		'landingpage'        : [cdn + 'usercontrols/landing', s3 + 'usercontrols/landing', '/usercontrols/landing'],
+		'landingpage'       : [cdn + 'usercontrols/landing', s3 + 'usercontrols/landing', '/usercontrols/landing'],
 
 		// Application - bootstrap for frontend app
 		'application'       : [cdn + 'application' , s3 + 'application', '/application']

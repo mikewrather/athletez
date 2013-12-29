@@ -6,7 +6,7 @@ define( ["facade", "utils", "collections", "chrome", "controller", "profile", "i
 	"game", "team", "registration","profilesetting","userresume","packages/site/collections/phrases","usercontrols/tag/tag",
 	"usercontrols/addgame/addgame","signup","login", "usercontrols/photo-player/photo-player", "usercontrols/add-club/add-club",
 	"utils/storage", 'usercontrols/location/views/view-location','signup/views/facebooksignup',"usercontrols/addevent/addevent",'chrome/views/header',
-	'browserpop/views/browser','usercontrols/landing/views/landing', 'pages/fbinvite'],
+	'browserpop/views/browser','usercontrols/landing/views/landing', 'pages/fbinvite', 'pages/fbaccept'],
 function (facade, utils, collections, chromeBootstrap, Controller, ProfileController, ImageController, HomeController, VideoPreviewController,
 	GameController, TeamController, RegistrationController,ProfileSetting,UserResume, SitePhraseList , TagController,
 	AddGameController, SignupController,LoginController,PhotoPlayerController, AddClubController,
@@ -19,7 +19,10 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
         Backbone = facade.Backbone,
         Channel = utils.lib.Channel,
         FbInviteController = require('pages/fbinvite'),
+        FBAccept = require('pages/fbaccept'),
 	    browserView = require('browserpop/views/browser'),
+	    fbInviteView = require('browserpop/views/browser'),
+	    
 		landingView = require('usercontrols/landing/views/landing');
         debug = utils.debug;
    		App = Backbone.Router.extend({
@@ -35,7 +38,11 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
 	        'fbinvite/': 'fbinvite',	
 	        '!fbinvite/': 'fbinvite',	                
 
-	        
+	        'acceptfbinvite/:id': 'aceptInvite',
+	        '!acceptfbinvite/:id': 'aceptInvite',
+	        'acceptfbinvite/:id/': 'aceptInvite',	
+	        '!acceptfbinvite/:id': 'aceptInvite',	                
+
             'home/:action': 'initApp',
             'profile': 'showProfile',
             'profile/': 'showProfile',
@@ -146,9 +153,7 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
 	    },
 
         showPage: function(pageName, id, page1, Page1_id, page2, Page2_id) {
-        	//alert("show page");
         	if(page1 == "media" || page2 == "media") this.mediaPopup = true;
-        	
         	if(pageName.indexOf("!") != "-1") pageName = pageName.replace("!", "");
 			// create the function name        	
         	var functionName = "show"+pageName.charAt(0).toUpperCase() + pageName.slice(1);
@@ -160,21 +165,15 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
         },
         
         showOwnPage: function(pageName, page1, Page1_id, page2, Page2_id) {
-        	
         	if(page1 == "media" || page2 == "media") this.mediaPopup = true;
         	if(pageName.indexOf("!") != "-1") pageName = pageName.replace("!", "");
-        	
 			// create the function name        	
         	var functionName = "show"+pageName.charAt(0).toUpperCase() + pageName.slice(1);
         	// generating params
         	var arr = [];
         	if(page1) arr.push({key: page1 +"_id", value: Page1_id});
         	if(page2) arr.push({key: page2 +"_id", value: Page2_id});
-        	
-        	console.error(arr);
-        	
         	if(this[functionName] && _.isFunction(this[functionName])) this[functionName](undefined, arr);
-        	//console.error(a, b, c, d, e, f);
         },
 
         initialize: function (options) {
@@ -226,6 +225,28 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
 				if(!self.checkForUser())
 					var landing = new landingView();
 			},2000);
+		},
+		
+		aceptInvite: function(fbId) {
+			var self = this;
+	    	this.cancelAjaxRequests();
+	    	this.loadStyles();
+            chromeBootstrap();
+	    	function initFBAccept() {
+	    		$("body").addClass("fbaccept");
+				var title = "Athletez - We Are Athletez";
+	    		self.currentController = new FBAccept({
+	    			route: "",
+	    			title: title,
+	    			userId : fbId
+	    		});
+	    		
+			    if(!fbId && $('div.register-wrapper').length == 0) {
+				    $('body header').after('<div class="register-wrapper"></div><div class="register-wrapper-h"></div>');
+			    }
+			    self.gaPageView("FB Accept - "+ fbId,title);
+	    	}
+	    	this.initialiRoutesInit(initFBAccept);     	
 		},
         
         // get user name by id

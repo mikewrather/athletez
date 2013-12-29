@@ -4,9 +4,9 @@ define([ 'models', 'facade' ], function(models, facade) {
 	
 	var BaseModel = models.BaseModel, $ = facade.$, _ = facade._;
 	return BaseModel.extend({
-		idAttribute: 'id',
+		fbUserId: undefined,
 		url : function() {
-			return base_url + 'api/fbinvite/invite/';
+			return base_url + 'api/fbinvite/basics?fbid='+this.fbUserId;
 		}
 	});
 });
