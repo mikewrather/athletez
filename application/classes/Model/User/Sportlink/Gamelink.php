@@ -70,6 +70,9 @@ class Model_User_Sportlink_Gamelink extends ORM
 				//	->rule('user_sport_link_id', 'uslgamelink_link_not_exist', array($user_sport_link_id, $games_id));
 				if ($this->check($external_validate_games))
 				{
+					$follow = ORM::factory('User_Followers');
+					$follow->addFollower(ORM::factory('User_Base',$users_id),ORM::factory('Sportorg_Games_Base',$games_id));
+
 					if(Valid::uslgamelink_link_not_exist($user_sport_link_id, $games_id)) $this->save();
 					else
 					{
@@ -78,6 +81,7 @@ class Model_User_Sportlink_Gamelink extends ORM
 							->where('games_id','=',$games_id)
 							->find();
 					}
+
 					return $this;
 				}
 

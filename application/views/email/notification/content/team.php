@@ -7,8 +7,8 @@
 				<tr>
 					<td>
 						<span style="font-weight: bold; font-size: 12px;"><?php
-							echo $obj_full->user->name()." Has joined ";
-							echo $obj_full->team->name();
+					//		echo $obj_full->user->name()." Has joined ";
+					//		echo $obj_full->team->name();
 						 ?></span><br>
 						<span style="font-size: 12px;"></span>
 					</td>
