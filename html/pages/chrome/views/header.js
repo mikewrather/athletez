@@ -86,6 +86,12 @@ function (
                     routing.trigger('app-inited');
                 }
                 $('#main').removeClass("region-loader");
+                $(document).off("click", "a[href*='#fbinvite']");
+                $(document).on("click", "a[href*='#fbinvite']", function(e) {
+                	e.preventDefault();
+                	 routing.trigger('fbInvite');
+                });
+                
             };
            // $.ajaxSetup({ cache: false });
             this.model.fetch();
