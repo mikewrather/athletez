@@ -40,6 +40,7 @@ define(["require", 'text!usercontrols/photo-player/templates/comments.html',
 		
 		// controller intialize function
 		initialize : function(options) {
+			console.error(options);
 			var _self = this;
 
 			if(!_self.checkForUser()){
@@ -58,16 +59,11 @@ define(["require", 'text!usercontrols/photo-player/templates/comments.html',
 			if (options.id) this.id = options.id;
 			this.index = options.index;
 			if(options.userId) this.userId = options.userId;
+			this.pageId = options.pageId;
 			if(options.pageName) this.pageName = options.pageName;
 			if(options.array) this.collectionArray = true;
 			if (options._collection) this._collection = options._collection;
-				/*this.modelHTML = '<div id="photoPlayerModal" class="modal photo-frame-model hide fade model-popup-h">'+
-					'<div class="modal-body page-content-h">'+
-					'<div class="photo-player-area-h photo-player"></div>'+
-					'<div class="photo-player-right-area"><div class="right-area-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button></div><div class="tags-area-h"></div>' +
-					'<div class="comment-area coment-area-h"></div><div class="comment-input-outer-h comment-input-outer" class="clearfix"></div>'+
-					'<div id="image-tagging-photo"></div>'+
-					'</div></div></div>';*/
+
 					this.modelHTML = '<div id="photoPlayerModal" class="modal photo-frame-model hide fade model-popup-h">'+
 					'<div class="modal-body page-content-h">'+
 					'<div class="photo-player-area-h photo-player"></div>'+'<div class="photo-player-right-area"><div class="right-area-header"><div class="headerinfo"></div><div class="closer"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">	&times;</button></div></div><div class="teamName-area"></div><div class="tags-area-h"></div>' +
@@ -83,7 +79,6 @@ define(["require", 'text!usercontrols/photo-player/templates/comments.html',
 				console.log("called",uploader_id);
 				_self.setUpCommentView(entity_id, id);
 				_self.setUpTagView(entity_id, id,uploader_id);
-				//_self.setUpTagPhotoView(entity_id, id);
 			});
 			
 			routing.off('comments-fetch-new-form-data');
@@ -106,7 +101,6 @@ define(["require", 'text!usercontrols/photo-player/templates/comments.html',
 		},
 
 		checkForUser: function() {
-
 			if(!_.isUndefined(routing.userLoggedIn) && routing.userLoggedIn)
 				return true;
 			else
@@ -136,7 +130,6 @@ define(["require", 'text!usercontrols/photo-player/templates/comments.html',
 		// set up photo player main view
 		setUpMainView : function() {
 			var self = this; 
-			
 			if(self.collectionArray) {
 				var collectionInstance = Backbone.Collection.extend(), collection = new collectionInstance(); 
 				collection.reset(self._collection);
@@ -150,6 +143,7 @@ define(["require", 'text!usercontrols/photo-player/templates/comments.html',
 				destination : ".photo-player-area-h",
 				index : self.index,
 				pageName: this.pageName,
+				pageId: this.pageId,
 				user_id : self.userId || null,
 				sports_id : self.sports_id || null,
 				scheme : this.scheme,
@@ -207,6 +201,7 @@ define(["require", 'text!usercontrols/photo-player/templates/comments.html',
 			_self.commentson.subject_entity_type = entity_id;
 			_self.commentson.id = id;
 			_self.commentson.fetch();
+			
 			//$(".coment-area-h").html();
 			$.when(_self.commentson.request).done(function () {
 				photoPlayer = new CommentSectionView({

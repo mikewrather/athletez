@@ -169,17 +169,13 @@ function(facade,  views,   utils,   ImageItemView,            ImageBoardView,   
             this.addSubscribers();
             this.setupBoardView();
         	this.setupAddView();
-        	//$(document).off('click','.image-outer-h');
-        	//$(document).on('click','.image-outer-h', function() {
-			//	_self.initPhotoPlayer();
-			//});
 			
 			if(_self.media_id) {
 				setTimeout(function() {
 					if(_self.allData) {
 						for(var i in _self.allData) {
 							if(_self.media_id == _self.allData[i].get("payload").media_id) {
-								routing.trigger('photo-player-init', i, _self.allData, _self.user_id, true,  _self.pageName);
+								routing.trigger('photo-player-init', i, _self.allData, _self.user_id, true,  _self.pageName, _self.target_id);
 								break;
 							}
 						}
@@ -192,10 +188,9 @@ function(facade,  views,   utils,   ImageItemView,            ImageBoardView,   
 			var index = ($(e.target).parents('li').index()), addLiCount = ($("#add-media").length)?1:0; 
 			index -= addLiCount;
 			if(index< 0) index = 0;
-       		routing.trigger('photo-player-init', index, this.allData, this.user_id, true,  this.pageName);
+       		routing.trigger('photo-player-init', index, this.allData, this.user_id, true,  this.pageName, this.target_id);
        	},
 
-        
         seeMore: function(e) {
         	var len = this.allData.length;
         	if(e) {
@@ -218,7 +213,6 @@ function(facade,  views,   utils,   ImageItemView,            ImageBoardView,   
 				if(this.addSubscribers) this.addSubscribers();
 	            if(this.setupBoardView) this.setupBoardView();
 	            if(this.setupAddView) this.setupAddView();   
-        	   
         	}
         },
             
@@ -278,8 +272,6 @@ function(facade,  views,   utils,   ImageItemView,            ImageBoardView,   
                 addView.render();
                 $(this.listView).prepend(addView.el);
             });
-            
-
             
             function changeBoard(data) {
                 addView.model = data;

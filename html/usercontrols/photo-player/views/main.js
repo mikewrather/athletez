@@ -55,9 +55,11 @@ define(['require',
 
 		/*initialize gets called by default when constructor is initialized*/
 		initialize : function(options) {
+			console.error(options);
 			this.collection = options.collection;
 			this.setOptions(options);
 			this.id = options.id;
+			this.pageId = options.pageId;
 			this.pageName = options.pageName;
 			this.user_id = options.user_id;
 			this.index = options.index;
@@ -95,11 +97,22 @@ define(['require',
 			if(type && _.isFunction(this[type])) this[type]();
 		},
 		
+		getLink: function(data) {
+			var link;
+			if(this.pageName == "profile") {
+				link = "#!"+this.pageName+data.userId+data.sportId+data.mediaId;
+			} else {
+				link = "#!"+this.pageName+data.pageId+data.mediaId;				
+			}
+			return link;
+		},
+		
 		twitter: function() {
 			var data = this.getShareData();
+			
+			
 			var options = {
-				'link': "#"+this.pageName+data.userId+data.sportId+data.mediaId,
-				//'link': "?enttypes_id="+data.record.payload.enttypes_id+"&id="+data.record.payload.id,
+				'link': this.getLink(data),
 				'name': data.User.name + " - " + data.Sport.sport_name,
 				'caption': "Athletez.com",
 				'image': data.record.payload.image_path,
@@ -108,8 +121,6 @@ define(['require',
 				'type': "twitter"
 			};
 			new ShareComponent(options);
-			//var url = "http://twitter.com/home";
-			//window.open(url+ "?status="+description+"&url="+url,  'Twitter_share', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');
 		},
 		
 		gplus: function() {
@@ -130,7 +141,6 @@ define(['require',
 		tumbler: function() {
 			var data = this.getShareData();
 			var options = {
-				//'link': "#"+this.pageName+data.userId+data.sportId+data.mediaId,
 				'link': "?enttypes_id="+data.record.payload.enttypes_id+"&id="+data.record.payload.id,
 				'name': data.User.name + " - " + data.Sport.sport_name,
 				'caption': "Athletez.com",
@@ -149,6 +159,7 @@ define(['require',
 			return { 
 				'record': record,
 				'userId': (this.user_id)?"/"+this.user_id:'',
+				'pageId': (this.pageId)?"/"+this.pageId:'',
 				'User': this.getUserForMedia(),
 				'Sport': this.getSportForMedia(),
 				'sportId': (record.payload.media_obj.sports_id)?"/sport/"+record.payload.media_obj.sports_id:'',
@@ -159,7 +170,7 @@ define(['require',
 		// share media on facebook
 		facebook: function() {
 			var data = this.getShareData();
-			var link = "#"+this.pageName+data.userId+data.sportId+data.mediaId,
+			var link = this.getLink(data),
 				name = data.User.name + " - " + data.Sport.sport_name,
 				caption = "Athletez.com",
 				image = data.record.payload.image_path,
