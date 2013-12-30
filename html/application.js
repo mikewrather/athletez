@@ -234,15 +234,16 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
 	    	this.cancelAjaxRequests();
 	    	this.loadStyles();
             chromeBootstrap();
-	    	function initFBAccept() {
+	    	function initFBAccept(userId) {
 	    		$("body").addClass("fbaccept");
 				var title = "Athletez - We Are Athletez";
-	    		self.currentController = new landingView({userId: fbId});
+	    		var landing = new landingView({userId: fbId});
 	    		
 			    if(!fbId && $('div.register-wrapper').length == 0) {
 				    $('body header').after('<div class="register-wrapper"></div><div class="register-wrapper-h"></div>');
 			    }
 			    self.gaPageView("FB Accept - "+ fbId,title);
+	    		self.showHomePage(userId);
 	    	}
 	    	this.initialiRoutesInit(initFBAccept);   	
 		},
@@ -386,7 +387,6 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
                 }
 
 	            $('#'+id+ ' .close').attr("data-id",id);
-
             	if(options.title) {
             	  $("#"+id).find(".modal-header-h").html(options.title);
             	   $("#"+id).find(".modal-header").show();
@@ -544,6 +544,16 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
 				"page":page,
 				"title":title
 			});
+		},
+		
+		showHomePage: function(id) {
+			var self = this, title = "Athletez - We Are Athletez";
+    		self.currentController = new HomeController({
+    			route: "",
+    			title: title,
+    			userId : id
+    		});
+
 		},
 		
 	    showHome: function (action, paramsArr) {
