@@ -18,6 +18,7 @@ class Controller_Authcheck extends AuthController
 		$this->populateAuthVars();
 		$retArr['authorized'] = $this->user ? true : false;
 
+	//	print_r($this->user);
 		if($this->user)
 		{
 			//Check if FB identity exists
@@ -44,6 +45,7 @@ class Controller_Authcheck extends AuthController
 					echo json_encode($retArr);
 					return;
 				}
+				$this->user = $user;
 			}
 			else
 			{

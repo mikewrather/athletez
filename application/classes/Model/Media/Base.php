@@ -100,6 +100,12 @@ class Model_Media_Base extends ORM
 		return $result;
 	}
 	*/
+
+	public function name(){
+		return ucfirst($this->media_type);
+	}
+
+	public function getSubject(){ return $this; }
 	/**
 	 * getTaggedObjects should get all tagged objects and return them each with their getBasics data
 	 * this method should select from the tags table where media_id = $this->id
@@ -143,6 +149,9 @@ class Model_Media_Base extends ORM
 			$this->name = "";
 		}
 		$this->save();
+
+		$follow = ORM::factory('User_Followers');
+		$follow->addFollower(ORM::factory('User_Base',$this->users_id),$this);
 
 		return $this->id;
 	}

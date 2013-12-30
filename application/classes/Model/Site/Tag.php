@@ -194,6 +194,16 @@ class Model_Site_Tag extends Model_Site_Entdir
 			$match->where('media_id','=',$media_id);
 		}
 
+		// if it's a user then we add them to follow the image or video
+		if($this->subject_enttypes_id == 1){
+			$follow = ORM::factory('User_Followers');
+			$media = ORM::factory('Media_Base',$this->media_id);
+			$follow->addFollower(ORM::factory('User_Base',$this->subject_id),$media);
+		}
+
+		// add this to the feed
+		Model_Site_Feed::addToFeed($media,'tagged');
+
 		$match->find();
 		if($match->loaded()){
 
@@ -201,6 +211,7 @@ class Model_Site_Tag extends Model_Site_Entdir
 				->where('subject_enttypes_id','=',Ent::getMyEntTypeID($match))
 				->and_where('subject_id','=',$match->id)
 				->execute();
+
 			Model_Site_Feed::addToFeed($match);
 			return $match;
 		}
@@ -244,9 +255,9 @@ class Model_Site_Tag extends Model_Site_Entdir
 
 	public static function addFromArray($array,$media_id)
 	{
-	//	print_r($array);
 		foreach($array as $subject_type_id => $subject_arr){
-			foreach($subject_arr as $subject_id){
+			foreach($subject_arr as $subject_id)
+			{
 				$tag = ORM::factory('Site_Tag');
 				$tag->addTag(array(
 					"media_id" => $media_id,

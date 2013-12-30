@@ -88,9 +88,20 @@ class Model_Site_Feed extends ORM
 		$me->users_id = Auth::instance()->get_user()->id;
 		$me->save();
 
+
+
 		if($me->loaded())
 		{
 			Model_User_Followers::processFeedItem($obj,$me);
+
+			//if it's a game we want to loop through both teams as well.
+			if($me->enttypes_id == 8) //means its a game
+			{
+				foreach($obj->teams->find_all() as $team){
+					self::addToFeed($team,'gameupdate');
+				}
+			}
+
 			return $me;
 		}
 		return false;

@@ -48,7 +48,7 @@ class Model_User_Followers extends ORM
 	 **/
 	public static function get_followers($obj,$ret_type='users',$visible_only=true)
 	{
-		if(!$obj->loaded()) return false;
+		if(!is_object($obj) || !$obj->loaded()) return false;
 
 		$subject_enttypes_id = Model_Site_Enttype::getMyEntTypeID($obj);
 		$subject_id = $obj->id;
@@ -105,13 +105,14 @@ class Model_User_Followers extends ORM
 	public static function loopThroughFollowers($subject,$author,$obj,$feed,$type){
 		$direct_followers = self::get_followers($subject,'follows',false);
 	//	print_r($direct_followers);
+		if(!$direct_followers) return false;
 		foreach($direct_followers as $follow)
 		{
 			// do nothing if the author is also the follower
-		//	if($follow->follower_users_id == $author->id) continue;
+			//if($follow->follower_users_id == $author->id) continue;
 
 			Model_Site_Feedfollow::addFeedFollow($feed->id,$follow->id);
-/*
+
 			$args = array(
 				'users_id' => $follow->follower_users_id,
 				'to_address' => 'mike.wrather@gmail.com'
@@ -125,12 +126,14 @@ class Model_User_Followers extends ORM
 				$subjectline = self::genSubjectLine($type,$subject,$feed,$obj);
 				$queued->setSubjectLine($subjectline);
 
+				$subject_as_array = $subject->getBasics();
 				$subheader = View::factory('email/notification/content/subjectheader')
-					->bind('subject',$subject_as_array = $subject->getBasics())
+					->bind('subject',$subject_as_array)
 					->bind('sub_obj',$subject);
 
+				$obj_as_array = $obj->getBasics();
 				$action = View::factory("email/notification/content/$type")
-					->bind('obj',$obj_as_array = $obj->getBasics())
+					->bind('obj',$obj_as_array)
 					->bind('obj_full',$obj)
 					->bind('subject',$subject);
 
@@ -146,8 +149,11 @@ class Model_User_Followers extends ORM
 				$queued->setMessageBody($baseview->render());
 
 			}
-*/
+
 		}
+
+		//here we need to do indirect followers
+
 	}
 
 	public static function processFeedItem($obj,$feed)
@@ -194,26 +200,35 @@ class Model_User_Followers extends ORM
 
 	public static function genSubjectLine($type,$subject,$feed,$obj)
 	{
-		$sub_line = "Something Happened";
+		$sub_line = "Something Happened " . $type;
 		switch($type)
 		{
 			case 'comment':
 				$sub_line = "New Comment on " . self::getPageName($subject);
 				break;
 			case 'tag':
-				$sub_line = $subject->name() . " Tagged in an ". $obj->media->media_type;
+				$sub_line = $subject->name() . " Tagged in a(n) ". $obj->media->media_type;
 				break;
 			case 'game':
-				$sub_line = "New Game";
+				if($feed->action == 'newgame'){
+					$sub_line = "There's a new game you should know about";
+				}
+				elseif($feed->action == 'update'){
+					$sub_line = $subject->name() . " Event info has changed";
+				}
 				break;
 			case 'team':
 				if($feed->action == 'newgame'){
 					$sub_line = $subject->name()." Added a Game to its schedule";
 				}
+				else if($feed->action == 'gameupdate'){
+					$sub_line = $subject->name()." has a scheduling update";
+				}
+
 				break;
 			case 'gameteamlink':
 				if($feed->action == 'newgame'){
-					$sub_line = $subject->name()." Added a Game to its schedule";
+					$sub_line = $subject->name()." has a new game on its schedule";
 				}
 				break;
 			default:
@@ -268,7 +283,11 @@ class Model_User_Followers extends ORM
 		}
 
 		if($type=='game'){
-			return "The " . $entity->name() . "Page";
+			return "The " . $entity->name() . " Event Page";
+		}
+
+		if($type=='team'){
+			return "The " . $entity->name() . " Team Page";
 		}
 
 		if($type=='media'){

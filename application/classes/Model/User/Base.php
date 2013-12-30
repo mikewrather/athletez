@@ -451,6 +451,10 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 				$user_model->password = Auth::instance()->hash($password);
 				$user_model->create();
 			}
+
+			$follower = ORM::factory('User_Followers');
+			$follower->addFollower($user_model,$user_model);
+
 			return $user_model;
 		} catch(ORM_Validation_Exception $e){
 			return $e;
@@ -1829,6 +1833,8 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 					return $e;
 				}
 				Email::registration_email($this);
+				$follower = ORM::factory('User_Followers');
+				$follower->addFollower($this,$this);
 
 				return $this;
 			}
