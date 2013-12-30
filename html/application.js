@@ -336,6 +336,11 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
             	if(!self.mediaPopup) { self.showLandingInfo(); self.mediaPopup = false; }
             });
             
+            routing.off('fbInvite');
+            routing.on('fbInvite', function(id) {
+            	self.showFBInviteOnPopup(id);
+            });
+            
             routing.off('popup-close');
             routing.on('popup-close', function(e) {
             	if(e) {
@@ -578,6 +583,16 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
 			    self.gaPageView("Home Page",title);
 	    	}
 	    	this.initialiRoutesInit(initHome);
+	    },
+	    
+	    
+	    showFBInviteOnPopup: function(id) {
+	    	var title = "Athletez - We Are Athletez";
+	    	self.currentController = new FbInviteController({
+	    		route: "",
+	    		title: title,
+	    		userId : id
+	    	});
 	    },
 	    
 	    // fb invite page
