@@ -72,12 +72,21 @@ class Controller_Api_Fbinvite extends Controller_Api_Base
 		// fbid
 		// This is the FB user ID of the person being invited.
 
+		if($this->request->post('invite_to')){
+			try{
+				$obj = json_decode($this->request->post('invite_to'));
+				if(is_object($obj)) $invite_to = (array)$obj;
+			} catch(Exception $e){
+				$invite_to = array();
+			}
+		}
+
 		if($this->request->post('fbid'))
 		{
 			$fbid = $this->request->post('fbid');
 		}
 
-		$result = $this->mainModel->invite($fbid);
+		$result = $this->mainModel->invite($fbid,$invite_to);
 		if(get_class($result) == get_class($this->mainModel)){
 			return $result;
 		}
