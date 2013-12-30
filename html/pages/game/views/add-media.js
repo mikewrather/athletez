@@ -29,7 +29,9 @@ define([
 
 			events: {
 				"click #addPhoto": "openAddImagePopup",
-				"click #addVideo" : "openAddvideoPopup"
+				"click #addVideo" : "openAddvideoPopup",
+				"mouseover a": "showText",
+           		"mouseout a": "showicon"
 			},
 
 			game_model: {},
@@ -37,6 +39,17 @@ define([
 			initialize: function (options) {
 				SectionView.prototype.initialize.call(this, options);
 			},
+			
+	        // show text
+	        showText: function(e) {
+	        	$(e.target).parent().find("span").removeClass("hide");
+	        },
+	        
+	        // shoe icon
+	        showicon: function(e) {
+	        	$(e.target).parent().find("span").addClass("hide");        	
+	        },
+			
 			
 			openAddvideoPopup: function(event){
 				//** firing the call back list

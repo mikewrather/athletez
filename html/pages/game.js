@@ -72,6 +72,7 @@ define([
 	GameController = Controller.extend({
 		rosterViewsCount: 0,
 		initialize: function (options) {
+			console.error(options);
 			Channel('load:css').publish(cssArr);
 			_.bindAll(this);
 			 this.scheme = [];
@@ -341,6 +342,7 @@ define([
 				sport_id: $(".sport-h").data("id"),   
 				destination: "#image-wrap",
 				media_id: this.media_id,
+				//user_id: this.userId,
 				pageName: "game",
 				triggerItem: 'setup-add-icons'
 			});
@@ -387,6 +389,7 @@ define([
 			var commentListView;
 			commentListView = new GameCommentOnListView({
 				collection: this.commentson,
+				userId: this.userId,
 				destination: ".commentson-outer-box-h",
 				name: "games comment on view"
 			});

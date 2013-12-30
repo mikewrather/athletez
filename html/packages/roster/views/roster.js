@@ -1,7 +1,7 @@
 //Vote View
 //Vote and follow up button functionality
 
-define([ 'require', 'text!roster/templates/roster.html','views', 'vendor', 'facade', 'utils', 'jqueryui', 'controller', 'roster/models/roster', 'roster/collections/roster' , 'roster/views/image-list'], function(require, rosterTemplate) {
+define([ 'require', 'text!roster/templates/roster.html','views', 'vendor', 'facade', 'utils', 'jqueryui', 'controller', 'roster/models/roster', 'roster/collections/roster' , 'roster/views/image-list', 'component/fb'], function(require, rosterTemplate) {
 	var RosterView,
 		views = require('views'),
 		facade = require('facade'),
@@ -13,6 +13,7 @@ define([ 'require', 'text!roster/templates/roster.html','views', 'vendor', 'faca
 		vendor = require('vendor'),
         Mustache = vendor.Mustache,
         Channel = utils.lib.Channel,
+         FBComponent = require('component/fb'),
         model = require('roster/models/roster'),
         ImageList = require('roster/views/image-list'),
         collection = require('roster/collections/roster');
@@ -20,8 +21,38 @@ define([ 'require', 'text!roster/templates/roster.html','views', 'vendor', 'faca
 	RosterView = SectionView.extend({
 		template: rosterTemplate,
 		events: {
-			"click .add-to-roster-h": "addToRoster"
+		   "click .add-to-roster-h": "addToRoster",
+		   "mouseover a.tiles": "showText",
+           "mouseout a.tiles": "showicon",
+           "click .invite-team-player-h": "inviteFBFriend"
 		},
+		
+       showText: function(e) {
+        	$(e.target).parent().find("span").removeClass("hide");
+        },
+        
+        // shoe icon
+        showicon: function(e) {
+        	$(e.target).parent().find("span").addClass("hide");        	
+        },
+        
+         inviteFBFriend: function() {
+        	var fb = new FBComponent();
+        	var _self = this, options = {};
+			//options.to = this.model.get("payload").id;
+			options.link = "#team/"+this.team_id;
+			options.name = "We were playing for "+ this.team_name;
+			options.picture = "http://cdn.athletez.com/resources/img/athletez_logo_small.png";
+			options.description = "",//this.team_name,
+			options.success = function() {
+				alert("Invitation send successfully.");
+			};
+			options.error = function() {
+				alert("Some Error Occured. Please try again.");
+			};
+        	fb.sendInvite(options);
+        },
+		
 		
 		initialize : function(options) {
 			var _self = this;
@@ -68,10 +99,19 @@ define([ 'require', 'text!roster/templates/roster.html','views', 'vendor', 'faca
 				} catch(e) {}
 			}
 			this.$el.find(".roster-images-h").html(teamRosterListView.$el);
-			if(!this.$el.find(".add-to-roster-h").length)
-				this.$el.find(".roster-images-h ul").prepend('<li class="teams hide image"><a href="javascript: void(0);" class="add-to-roster-h" title="Add to roster"></a></li>');			
+			if(!this.$el.find(".add-to-roster-h").length) {
+				var html = '<li class="teams image add-tile-outer">\
+				<div>\
+				<a href="javascript: void(0);" class="add-to-roster-h link-disabled pull-left tiles" title="Add to roster"></a>\
+				<span class="hide">I play for '+this.team_name+'</span></div>\
+				<div>\
+				<span class="hide">Know somebody who plays for '+this.team_name+'</span>\
+				<a href="javascript: void(0);" class="fb-invite-tile-btn invite-team-player-h tiles pull-right" title="Add to fb"></a></div>\
+				</li>';
+				this.$el.find(".roster-images-h ul").prepend(html);	
+			}		
 			// sow roster add button
-            if(found == "") this.$el.find(".add-to-roster-h").parent().removeClass("hide");
+            if(found == "") this.$el.find(".add-to-roster-h").removeClass("link-disabled");
 		},
 		
 		checkForUser: function() {
@@ -99,10 +139,7 @@ define([ 'require', 'text!roster/templates/roster.html','views', 'vendor', 'faca
 		render: function (domInsertion, dataDecorator, partials) {
             SectionView.prototype.render.call(this, domInsertion, dataDecorator, partials); 
             this.$el.find(".heading-h").html(this.team_name);
-            
-       
-        }
-		
+        }		
 	});
 	
 	return RosterView;

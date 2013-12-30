@@ -1,7 +1,7 @@
 // The Participants List
 // --------------
 
-define(['facade','views', 'utils', 'media/views/image-item','text!game/templates/participats-list.html', 'game/models/addparticipate', 'common/models/add'], 
+define(['facade','views', 'utils', 'media/views/image-item','text!game/templates/participats-list.html', 'game/models/addparticipate', 'common/models/add', 'component/fb'], 
 function(facade,  views,   utils,   ItemView,  templateList, Participate, addModel) {
 
     var ImageListView, 
@@ -10,6 +10,7 @@ function(facade,  views,   utils,   ItemView,  templateList, Participate, addMod
         _ = facade._,
 	    vendor = require("vendor"),
         Channel = utils.lib.Channel,
+        FBComponent = require('component/fb'),
         CollectionView = views.CollectionView,
         SectionView = views.SectionView,
 	    Mustache = vendor.Mustache;
@@ -28,10 +29,37 @@ function(facade,  views,   utils,   ItemView,  templateList, Participate, addMod
         // Store constructor for the child views
         _view: ItemView,
 		events: {
-			'click .see-more-h': 'seeMore'
-			//'click .add-comment': 'addParticipant'
-			//'click .add-media': 'addParticipant'
+			'click .see-more-h': 'seeMore',
+			"mouseover a.tiles": "showText",
+           "mouseout a.tiles": "showicon",
+           "click .invite-to-fb-h": "inviteFBFriend"
 		},
+		
+		// show text
+        showText: function(e) {
+        	$(e.target).parent().find("span").removeClass("hide");
+        },
+        
+        // shoe icon
+        showicon: function(e) {
+        	$(e.target).parent().find("span").addClass("hide");        	
+        },
+        
+        inviteFBFriend: function() {
+        	var fb = new FBComponent();
+        	var _self = this, options = {};
+			options.link = "#game/"+this.game_id;
+			options.name = $(".sport-h").text();
+			options.picture = "http://cdn.athletez.com/resources/img/athletez_logo_small.png";
+			options.description = $(".game-general p").text();
+			options.success = function() {
+				alert("Invitation send successfully.");
+			};
+			options.error = function() {
+				alert("Some Error Occured. Please try again.");
+			};
+        	fb.sendInvite(options);
+        },
 		
 		renderTemplate: function () {
             var markup = Mustache.to_html(this.template, {target: this.target_id});
@@ -46,7 +74,7 @@ function(facade,  views,   utils,   ItemView,  templateList, Participate, addMod
        		$.when(participants.request).done(function() {
        			var payload = participants.toJSON(), newAddModel = new addModel();
 				newAddModel.processItemFromResponse(payload.payload.usl.user);
-				$("#add-participants-icons").addClass("hide");
+				_self.$el.find(".add-to-event").addClass("link-disabled");
        			_self.collection.add(newAddModel);
        		});
         },
@@ -80,7 +108,6 @@ function(facade,  views,   utils,   ItemView,  templateList, Participate, addMod
         	for(var i in a) {
         		if(routing.loggedInUserId == a[i].id) {
         			found = true;
-        			//$("#add-participants-icons").addClass("hide");
         		}
         		b.push({payload: a[i]});
         	}
@@ -104,20 +131,20 @@ function(facade,  views,   utils,   ItemView,  templateList, Participate, addMod
             _.bindAll(this);
             this.addSubscribers();
         	this.setupAddView();
-        	
         	setTimeout(function() {
 	            if(!$("#add-participants-icons").length) {
-	            	_self.$el.find(_self.listView).prepend('<li id="add-participants-icons"><a href="javascript: void(0);" class="add-to-event pull-right hide" title="Add me to this Event">Add me to this Event</a></li>');
-	            	// routing.trigger(_self.triggerItem, "#add-participants-icons");            	
+		            var html = '<li id="add-participants-icons" class="add-tile-outer">\
+					<div>\
+					<a href="javascript: void(0);" class="add-to-event link-disabled pull-left tiles" title="Add to event"></a>\
+					<span class="hide">I\'m Attending this event</span></div>\
+					<div>\
+					<span class="hide">Know somebody who\'s gonna be here?</span>\
+					<a href="javascript: void(0);" class="fb-invite-tile-btn invite-to-fb-h tiles pull-right" title="Add to fb"></a></div>\
+					</li>';
+	            	_self.$el.find(_self.listView).prepend(html);
             	}
             }, 0);
-        	if(!found) $("#add-participants-icons").removeClass("hide");
-        	
-        	//$(document).off('click','.image-outer-h');
-        	//$(document).on('click','.image-outer-h', function() {
-			//	_self.initPhotoPlayer();
-			//});
-        	
+        	if(!found) _self.$el.find(".add-to-event").removeClass("link-disabled");
         },
                 
         seeMore: function(e) {

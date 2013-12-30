@@ -118,26 +118,16 @@ define([
 				this.addmedia = new ProfileAddMediaModel();
 				this.addmedia.id = this.id;
 
-				//this.commentsof = new ProfileCommentOfList();
-				//this.commentsof.id = this.id;
-				//this.commentsof.fetch();
-
 				this.fans = new FansImageList();
 				this.fans.id = this.id;
 				this.fans.targetElement = "#fans-div";
 				this.fans.fetch();
 				
-				//this.images = new ProfileImageList();
-				//this.images.id = this.id;
-				//this.images.fetch();
-
 				// I added this in here even though it might not be the best place for it.
 				// If I take it out it won't render images if no sport is selected
 
 				var controller = this;
-				
 				controller.ajaxCalls = [];
-
 				function callback(sport_id) {
 					if(controller.ajaxCalls && controller.ajaxCalls.length) {
 						for(var i in controller.ajaxCalls) {
@@ -274,12 +264,6 @@ define([
 					position = $.inArray(this.fitnessBasicListView, this.scheme);
 					if (~position) this.scheme.splice(position, 1);
 				}
-
-				//if (this.videoListView) {
-				//	$(this.videoListView.destination).html('');
-				//	position = $.inArray(this.videoListView, this.scheme);
-				//	if (~position) this.scheme.splice(position, 1);
-				//}
 
 				if (this.imageListView) {
 					$(this.imageListView.destination).html('');

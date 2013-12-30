@@ -21,9 +21,11 @@
 .textleft {
 	text-align: left;
 }
+
 .textright {
 	text-align: right;
 }
+
 .textcenter {
 	text-align: center;
 }
@@ -31,12 +33,15 @@
 .m-r-10 {
 	margin-right: 10px;
 }
+
 .p-l-20 {
 	padding-left: 20px;
 }
+
 html, body {
 	height: 100%;
 }
+
 body {
     -webkit-touch-callout: none;
     -webkit-user-select: none;
@@ -1535,12 +1540,12 @@ div.game-info .game-score .team-score.win {
     background-color: #C43737;
 }
 
-.add-to-roster-h {
-	background-image: url('images/icons/add-team.png');
+.add-to-roster-h, .add-to-event {
+	background-image: url('http://athletez.s3.amazonaws.com/resources/img/actions/addtoteam.png');
 	background-size: cover;
-	min-height: 220px;
-	width: 220px;
-	float: left;
+	min-height: 110px;
+	width: 110px;
+	background-size: contain;
 	background-color: #928add;
 }
 
@@ -1549,16 +1554,24 @@ div.game-info .game-score .team-score.win {
 }
 
 #addPhoto {
-	background-image: url('images/icons/add-photo.png');
+	background-color: #ddd43a;
+	background-image: url('http://athletez.s3.amazonaws.com/resources/img/actions/addphoto.png');
 }
 
 #addVideo {
-	background-image: url('images/icons/add-video.png');
+	background-color: #c43737;
+	background-image: url('http://athletez.s3.amazonaws.com/resources/img/actions/addvideo.png');
 }
 
 .add-comment-h {
 	background-image: url('http://cdn.athletez.com/resources/img/comment.png');
 }
+
+.fb-invite-tile-btn {
+	background-color: #6b74b7;
+	background-image: url('http://athletez.s3.amazonaws.com/resources/img/actions/fbinvite.png');
+}
+
 .display_none_important {
 	display: none !important;
 }
@@ -1623,9 +1636,6 @@ div.game-info .game-score .team-score.win {
 	width: 100%;
 }
 
-.add-to-event {
-	margin-right: 25px;
-}
 
 form fieldset ul li:first-child {
 	margin-left: -20px;
@@ -1850,10 +1860,9 @@ li#add-icons ul {
 }
 
 #add-participants-icons a, #add-fans-icons a {
-	height: 220px;
-	line-height: 220px;
-	width: 220px;
-	float: left;
+	height: 110px;
+	line-height: 110px;
+	width: 110px;
 	display: inline-block;
 	background-color: #CCC;
 }
@@ -1917,5 +1926,79 @@ div.edit {
 	background-size:cover; 
 }
 
+#add-icons {
+	width: 220px;
+	background: #CCC;
+	height: 220px;
+}
+
+#add-media {
+	width: 100%;
+	height: 100%;
+}
+
+#add-media > div {
+	height: 50%;
+	display: table-row;
+	float: left;
+	width: 100%;
+}
+
+#add-media a {
+	width: 110px;
+height: 110px;
+padding: 0;
+float: left;
+	background-size: contain;
+}
+
+#add-media span {
+		width: 100px;
+	display: table-cell;
+	vertical-align: middle;
+	text-align: center;
+	height: 110px;
+	padding: 0 5px;
+	margin: 0;
+}
+
+#add-media .hide {
+	visibility: hidden !important;
+}
+
+#add-media a#addVideo {
+	float: right;
+	background-position: 100%;
+}
+
+li.add-tile-outer {
+	padding: 0 !important;
+	margin: 10px;
+	float: left;
+}
+
+.add-tile-outer > div {
+	height: 50%;
+	width: 100%;
+	display: table-row;
+}
+
+.add-tile-outer .hide {
+	visibility: hidden !important;
+}
+
+.add-tile-outer a {
+	width: 50%;
+	height: 100%;
+	min-height: 100px !important;
+	background-size: contain;
+}
+
+.add-tile-outer span {
+	width: 110px;
+	display: table-cell;
+	vertical-align: middle;
+	height: 110px;
+}
 
 

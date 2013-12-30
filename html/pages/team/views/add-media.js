@@ -23,13 +23,26 @@ function(require, teamAddMediaTemplate) {
 
         //id: 'add-media',
         template: teamAddMediaTemplate,
-        tagName: "ul",
+        tagName: "div",
+        id: "add-media",
+ 
         events: {
 		   "click #addPhoto" : "openAddImagePopup",
            "click #addVideo" : "openAddvideoPopup",
-           "click #addGame" : "openAddGamePopup"
+           "click #addGame" : "openAddGamePopup",
+		   "mouseover a": "showText",
+           "mouseout a": "showicon"
 	    },
-	
+
+        // show text
+        showText: function(e) {
+        	$(e.target).parent().find("span").removeClass("hide");
+        },
+        
+        // shoe icon
+        showicon: function(e) {
+        	$(e.target).parent().find("span").addClass("hide");        	
+        },
 		
         // **Method** `setOptions` - called by BaseView's initialize method
         setOptions: function (options) {
@@ -39,21 +52,17 @@ function(require, teamAddMediaTemplate) {
 			this.model.userid = options.userid;
         },
         
-          openAddGamePopup: function() {
+        openAddGamePopup: function() {
         	routing.trigger('add-game', this.model.userid);
         },
 
-	    openAddImagePopup: function(event)
-	    {
-			 
+	    openAddImagePopup: function(event) {
              var sport_id = $('#sports-h').val(), id = $("#team-h").val(), url = "/api/team/addimage/" + id,
                 url = "/api/team/addimage/" + id,
 			    attr = {
 				    "sports_id" : sport_id
 			    };
-			
 			routing.trigger('add-image', url, attr);
-		    //Channel("add-image").publish(url,attr);
 	    },
 		openAddvideoPopup: function(event){
 			

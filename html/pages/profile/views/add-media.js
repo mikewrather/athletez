@@ -24,13 +24,15 @@ function(require, profileAddMediaTemplate,application) {
     ProfileAddMediaView = SectionView.extend({
 
         id: 'add-media',
-		tagName: "ul",
+		tagName: "div",
         template: profileAddMediaTemplate,
 		
 	    events: {
 		   "click #addPhoto" : "openAddImagePopup",
            "click #addVideo" : "openAddvideoPopup",
-           "click #addGame" : "openAddGamePopup"
+           "click #addGame" : "openAddGamePopup",
+           "mouseover a": "showText",
+           "mouseout a": "showicon"
 	    },
 	
 		
@@ -40,6 +42,16 @@ function(require, profileAddMediaTemplate,application) {
                 throw new Error("ProfileAddMediaView expects option with model property.");
             }
 			this.model.userid = options.userid;
+        },
+        
+        // show text
+        showText: function(e) {
+        	$(e.target).parent().find("span").removeClass("hide");
+        },
+        
+        // shoe icon
+        showicon: function(e) {
+        	$(e.target).parent().find("span").addClass("hide");        	
         },
         
         openAddGamePopup: function() {
@@ -55,9 +67,7 @@ function(require, profileAddMediaTemplate,application) {
 			    attr = {
 				    "sports_id" : id
 			    };
-			
 			routing.trigger('add-image', url, attr);
-		    //Channel("add-image").publish(url,attr);
 	    },
 		openAddvideoPopup: function(event){
 			

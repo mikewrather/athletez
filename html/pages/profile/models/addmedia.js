@@ -11,30 +11,14 @@ define( ["models/base"], function (BaseModel) {
 
         defaults: {
             "links": [{
-                "label": "",
+                "label": "Add image",
                 "link" : "javascript:void(0);",
-                //"link" : "#imageup",
 				"id"   :"addPhoto"
-            }, /*{
-                "label": "Video",
-                "link": "#videoprev",
-				"id"   :""
             }, {
-                "label": "Game",
-                "link": "#game",
-				"id"   :""
-    //            "link" : "javascript:void(0);",
-				"id"   :"addPhoto"
-            },*/ {
-                "label": "",
-	            //"link": "#videoprev",
+                "label": "Add Video",
                 "link" : "javascript:void(0);",
 	            "id": "addVideo"
-            }/*, {
-                "label": "Game",
-	            "link" : "javascript: void(0);",
-	            "id": "addGame"
-                            }*/
+            }
             ],
 	        "userid" : null
             
