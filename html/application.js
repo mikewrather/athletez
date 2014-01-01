@@ -117,6 +117,8 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
 
  			 'usersettings': 'showProfileSetting',
              'usersettings/': 'showProfileSetting',
+ 			 '!usersettings': 'showProfileSetting',
+             '!usersettings/': 'showProfileSetting',             
          /* 'usersettings/:userid': 'showProfileSetting', This is not necessary because we will only be seeing settings for currently logged in user*/
  			 'resume': 'ShowUserResume',
              'resume/': 'ShowUserResume',

@@ -37,11 +37,8 @@ function(require, profileHeaderTemplate, selectSportTemplate) {
         
 
     ProfileHeaderView = SectionView.extend({
-
         id: 'main-header',
-
         template: profileHeaderTemplate,
-        
         selectSportTemplate: selectSportTemplate,
         
         events: {
@@ -96,7 +93,12 @@ function(require, profileHeaderTemplate, selectSportTemplate) {
                 //self.$el.find('#sports-info').prepend(markup);
                 self.$el.find('.sports-h').html(markup);
             } else {
-                self.$el.find('#sports-info').html('');
+            	
+            	if(this.model.get("payload").id != routing.loggedInUserId)
+                	self.$el.find('.sports-h').html(this.model.get("payload").first_name+' has not entered any sports or teams.');
+ 				else 	 		             
+               	 self.$el.find('.sports-h').html('<a href="#!usersettings" title="edit sports" class="btn pull-right">Edit Sports</a>');
+                
             }                
             sportListView.render();
         },
