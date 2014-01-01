@@ -393,6 +393,9 @@ class ORM extends Kohana_ORM
 		//check to see if the logged user is the owner of this object
 		if($logged_user) $retArr['is_owner'] = (method_exists($this,'is_owner')) ? $this->is_owner($logged_user) : false;
 
+		// Set the microtime of this call for tracking, but only in dev mode
+		if(Kohana::$environment == Kohana::DEVELOPMENT)	$retArr['microtime'] = microtime();
+
 		// Loop through all columns
 		foreach($this->table_columns() as $column=>$column_meta)
 		{

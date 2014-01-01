@@ -10,4 +10,25 @@
  *
  */
 
-class Controller_Tag extends Standardpage{}
+class Controller_Tag extends Standardpage{
+
+	public function action_updatefeed()
+	{
+		db::delete('feed')->where('enttypes_id','=',0)->or_where('ent_id','=',0)->execute();
+		$feed = ORM::factory('Site_Feed')->find_all();
+
+		foreach($feed as $item)
+		{
+			$test = @unserialize($item->action);
+			if ($item->action !== 'b:0;' && $test === false) {
+				$arr = array($item->action);
+				$item->action = serialize($arr);
+				$item->save();
+			}
+			else
+			{
+				echo "already serialized\n";
+			}
+		}
+	}
+}

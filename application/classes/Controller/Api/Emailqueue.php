@@ -30,22 +30,5 @@ class Controller_Api_Emailqueue extends Controller_Api_Base
 		$this->payloadDesc = "Process unsent email queue";
 		$this->mainModel->processQueue();
 	}
-	
-	//POST methods
-	public function action_post_basics()
-	{
-		
-	}
-	
-	//PUT Methods
-	public function action_put_basics()
-	{
-		
-	}
-	
-	//DELETE Methods
-	public function action_delete()
-	{
-		
-	}
+
 }

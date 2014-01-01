@@ -71,7 +71,7 @@ class Model_User_Sportlink_Gamelink extends ORM
 				if ($this->check($external_validate_games))
 				{
 					$follow = ORM::factory('User_Followers');
-					$follow->addFollower(ORM::factory('User_Base',$users_id),ORM::factory('Sportorg_Games_Base',$games_id));
+					$follow->addFollower(ORM::factory('User_Base',$users_id),ORM::factory('Sportorg_Games_Base',$games_id),false,"you're participating in this event.");
 
 					if(Valid::uslgamelink_link_not_exist($user_sport_link_id, $games_id)) $this->save();
 					else

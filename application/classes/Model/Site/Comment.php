@@ -81,7 +81,7 @@ class Model_Site_Comment extends Model_Site_Entdir
 
 		try {
 			$this->save();
-			Model_Site_Feed::addToFeed($this);
+			Model_Site_Feed::addToFeed($this,"New Comment");
 			return $this;
 		} catch(ORM_Validation_Exception $e){
 			return $e;

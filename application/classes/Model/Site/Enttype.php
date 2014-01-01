@@ -63,6 +63,12 @@ class Model_Site_Enttype extends ORM
 		return is_array($config_array) ? $config_array['db_table'] : false;
 	}
 
+	static function getMyTypeName($enttypeID)
+	{
+		$config_array = self::getConfigByID($enttypeID);
+		return is_array($config_array) ? $config_array['name'] : false;
+	}
+
 	public static function ent_can_follow($class)
 	{
 		$classname = is_object($class) ? get_class($class) : (string)$class;

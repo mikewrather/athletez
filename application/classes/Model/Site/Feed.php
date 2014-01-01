@@ -17,6 +17,8 @@ class Model_Site_Feed extends ORM
 	protected $_feed_object;
 
 	protected $_following_user;
+
+	protected $action_array;
 	
 
 	public function __construct($id=NULL)
@@ -74,9 +76,122 @@ class Model_Site_Feed extends ORM
 
 	}
 
+	public function getActionsAsArray(){
+		// set action array using check action array
+		return $this->checkActionArray();
+	}
+
+	public function checkActionArray(){
+		// set action array if not yet set
+		if(!is_array($this->action_array)) $this->action_array = @unserialize($this->action);
+
+		// if the unserialization failed then set it to an empty array
+		if($this->action_array === false) $this->action_array = array();
+
+		return $this->action_array;
+	}
+
+	public function addAction($action,$dosave = true){
+
+		// set action array using check action array
+		$this->action_array = $this->checkActionArray();
+
+		//if new action is an array do array merge
+		if(is_array($action) || is_object($action))	$action = (array)$action;
+
+		//if string add to array
+		else if(is_string($action) && $action!="") $action = array($action);
+
+		// at this point the other option is an empty string
+		else $action = array();
+
+		// merge new action array into existing action array
+		$this->action_array = array_merge($action,$this->action_array);
+
+		// set action and pass dosave through
+		$this->setAction(false,$dosave);
+
+		return $this;
+
+	}
+
+
+	public function setAction($action=false,$dosave=true){
+
+		if($action===false && is_array($this->action_array)) $action = $this->action_array;
+		else if($action===false)
+		{
+			$this->action_array = $this->checkActionArray();
+			$action = $this->action_array;
+		}
+
+		if(is_array($action) || is_object($action))
+		{
+			$this->action_array = (array)$action;
+			$s_action = serialize($this->action_array);
+		}
+		elseif(is_string($action))
+		{
+			$this->action_array = array($action);
+			$s_action = serialize($this->action_array);
+		}
+		else return false;
+
+		$this->action = $s_action;
+		if($dosave) try{ $this->save();	} catch(Exception $e){ return false; };
+
+		return $this;
+	}
+
+	public function hasAction($needle,$find_any_matching_words=true)
+	{
+		echo "--------\n";
+		$this->action_array = $this->checkActionArray();
+
+		// if an array is passed for needle, we call this method recursively
+		if(is_array($needle))
+		{
+			foreach($needle as $this_needle) { if(!($pass_check = $this->hasAction($this_needle,$find_any_matching_words))) continue; }
+		}
+		else{
+			echo "    ".$needle."\n";
+			// this will see if the needle matches any part of the action string
+			if($find_any_matching_words)
+			{
+				foreach($this->action_array as $action)
+				{
+					if(!($pass_check = stristr($action,$needle))) continue;
+				}
+			}
+
+			// this will check if it matches the whole string (not case sensitive)
+			else $pass_check = in_array(strtolower($needle),array_map('strtolower',$this->action_array));
+		}
+
+		if($pass_check) echo "        MATCH\n";
+		else echo "        FAIL\n";
+		// passcheck will either be true or false at this point;
+		return $pass_check;
+	}
+
+	public function processFeed(){
+		$feed = $this->where('processed','=',0)->find_all();
+		foreach($feed as $item)
+		{
+			$obj = Ent::eFact($item->enttypes_id,$item->ent_id);
+			if(is_object($obj) && is_subclass_of($obj,'ORM') && $obj->loaded()) Model_User_Followers::processFeedItem($obj,$item);
+			else
+			{
+				$item->processed = 1;
+				@$item->save();
+			}
+		}
+	//	$queue = ORM::factory('Email_Queue');
+	//	$queue->processQueue();
+	}
 	public static function addToFeed($obj,$action='add')
 	{
-	//	echo "Called";
+
 		// if it's not a valid action set it to default (add)
 		//		if($action != 'add' && $action != 'delete' && $action != 'update') $action = "add";
 
@@ -84,7 +199,7 @@ class Model_Site_Feed extends ORM
 
 		$me->enttypes_id = Ent::getMyEntTypeID($obj);
 		$me->ent_id = $obj->id;
-		$me->action = $action;
+		$me->addAction($action);
 		$me->users_id = Auth::instance()->get_user()->id;
 		$me->save();
 
@@ -92,13 +207,28 @@ class Model_Site_Feed extends ORM
 
 		if($me->loaded())
 		{
-			Model_User_Followers::processFeedItem($obj,$me);
+			// this is being moved to a separate call so that it doesn't cause lag times.
+			//	Model_User_Followers::processFeedItem($obj,$me);
 
 			//if it's a game we want to loop through both teams as well.
 			if($me->enttypes_id == 8) //means its a game
 			{
-				foreach($obj->teams->find_all() as $team){
-					self::addToFeed($team,'gameupdate');
+				foreach($obj->teams->find_all() as $team)
+				{
+					self::addToFeed($team,$me->action_array);
+				}
+			}
+			elseif($me->enttypes_id==14)
+			{
+				$subject = Ent::eFact($obj->subject_enttypes_id,$obj->subject_id);
+				if(is_object($subject) && is_subclass_of($subject,'ORM') && $subject->loaded()){
+					if(Ent::getMyEntTypeID($subject) == 8)
+					{
+						foreach($subject->teams->find_all() as $team)
+						{
+							self::addToFeed($team,$me->action_array);
+						}
+					}
 				}
 			}
 

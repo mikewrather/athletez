@@ -22,7 +22,7 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 			'num_votes' =>'get_num_votes',
 			'height_ft' => 'get_height_ft',
 			'label' => 'getLabel',
-			'sub_label' => 'getSubLabel',
+	//		'sub_label' => 'getSubLabel',
 			'can_follow' => 'can_follow'
 		),
 		'exclude_columns' => array(
@@ -453,7 +453,7 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 			}
 
 			$follower = ORM::factory('User_Followers');
-			$follower->addFollower($user_model,$user_model);
+			$follower->addFollower($user_model,$user_model,false,"This involves you.");
 
 			return $user_model;
 		} catch(ORM_Validation_Exception $e){
@@ -1644,7 +1644,7 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 
 				$user_teams_link->save();
 
-				ORM::factory('User_Followers')->addFollower($this,$user_teams_link->team);
+				ORM::factory('User_Followers')->addFollower($this,$user_teams_link->team,false,"You're on this team.");
 
 				Model_Site_Feed::addToFeed($user_teams_link);
 				return $this;
@@ -1724,7 +1724,7 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 						$user_teams_link->teams_id = $new_team->id;
 						$user_teams_link->save();
 						Model_Site_Feed::addToFeed($user_teams_link);
-						ORM::factory('User_Followers')->addFollower($this,$user_teams_link->team);
+						ORM::factory('User_Followers')->addFollower($this,$user_teams_link->team,false,"You're on this team.");
 					}
 					else
 					{
@@ -1734,7 +1734,7 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 							->find();
 						//print_r($user_teams_link);
 						if(ORM::is_deleted($user_teams_link)) $user_teams_link->undo_delete_with_deps();
-						ORM::factory('User_Followers')->addFollower($this,$user_teams_link->team);
+						ORM::factory('User_Followers')->addFollower($this,$user_teams_link->team,false,"You're on this team.");
 						Model_Site_Feed::addToFeed($user_teams_link);
 					}
 
@@ -1834,7 +1834,7 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 				}
 				Email::registration_email($this);
 				$follower = ORM::factory('User_Followers');
-				$follower->addFollower($this,$this);
+				$follower->addFollower($this,$this,false,"This involves you.");
 
 				return $this;
 			}

@@ -194,11 +194,13 @@ class Model_Site_Tag extends Model_Site_Entdir
 			$match->where('media_id','=',$media_id);
 		}
 
+		//instantiate media object
+		$media = ORM::factory('Media_Base',$this->media_id);
+
 		// if it's a user then we add them to follow the image or video
 		if($this->subject_enttypes_id == 1){
 			$follow = ORM::factory('User_Followers');
-			$media = ORM::factory('Media_Base',$this->media_id);
-			$follow->addFollower(ORM::factory('User_Base',$this->subject_id),$media);
+			$follow->addFollower(ORM::factory('User_Base',$this->subject_id),$media,false,"You're tagged in this ".$media->media_type);
 		}
 
 		// add this to the feed

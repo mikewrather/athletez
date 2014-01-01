@@ -92,16 +92,19 @@ class Model_Sportorg_Games_Base extends ORM
 		extract($args);
 
 		if (isset($id) && $id != ""){
+			$feed_actions[] = "Game Updated";
 			$this->id = $id;
-			$feed_action = "update";
 		}
 		else
 		{
-			$feed_action = "add";
+			$feed_actions[] = "Added New Game";
 		}
 
-		if (isset($locations_id))
+		if (isset($locations_id)){
+			if($id && $this->locations_id != $locations_id) $feed_actions[] = "Updated Location";
 			$this->locations_id = $locations_id;
+
+		}
 
 		if(isset($game_datetime))
 		{
@@ -115,6 +118,10 @@ class Model_Sportorg_Games_Base extends ORM
 					$arr = explode(' ', $game_datetime);
 					$gameDay = $arr[0];
 					$gameTime = $arr[1];
+
+					if      ($id && $this->gameDay != $gameDay) $feed_actions[] = "Game Day Changed";
+					elseif  ($id && $this->gameTime != $gameTime) $feed_actions[] = "Game Time Changed";
+
 					$this->gameDay = $gameDay;
 					//$args['gameDay'] = $gameDay;
 					$this->gameTime = $gameTime;
@@ -131,6 +138,7 @@ class Model_Sportorg_Games_Base extends ORM
 
 		try {
 			if(isset($event_name)){
+				if ($id && $this->event_name != $event_name) $feed_actions[] = "Event Name Changed";
 				$this->event_name = $event_name;
 			}
 			if(isset($sports_id)) $this->sports_id = $sports_id;
@@ -142,6 +150,8 @@ class Model_Sportorg_Games_Base extends ORM
 						$user = Auth::instance()->get_user();
 						$users_id = $user->id;
 					}
+
+					// if a user created this add them to the event automatically
 					$usl = ORM::factory('User_Sportlink')->where('users_id','=',$users_id)->where('sports_id','=',$sports_id)->find();
 					if($usl->loaded()){
 						$gamelink = ORM::factory('User_Sportlink_Gamelink');
@@ -151,7 +161,7 @@ class Model_Sportorg_Games_Base extends ORM
 					}
 				}
 			}
-			Model_Site_Feed::addToFeed($this,$feed_action);
+			Model_Site_Feed::addToFeed($this,$feed_actions);
 
 			return $this;
 		} catch(ORM_Validation_Exception $e){
@@ -359,8 +369,6 @@ class Model_Sportorg_Games_Base extends ORM
 				->set(array('score'=>$score,'points_scored'=>$score))
 				->where('id','=',$games_teams_link_id)
 				->execute();
-			$this->setIsWinner();
-			return array("score"=>$score);
 		}
 		else if (isset($teams_id) && isset($score))
 		{
@@ -369,14 +377,15 @@ class Model_Sportorg_Games_Base extends ORM
 				->where('games_id','=',$this->id)
 				->and_where('teams_id','=',$teams_id)
 				->execute();
-			$this->setIsWinner();
-			return array("score"=>$score);
 		}
 		else
 		{
 			return false;
 		}
 
+		$this->setIsWinner();
+		Model_Site_Feed::addToFeed($this,"Game Score Changed");
+		return array("score"=>$score);
 	}
 
 	public function getSearch($args = array()){

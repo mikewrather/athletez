@@ -123,7 +123,7 @@ class Model_User_Followers extends ORM
 			if(is_object($queued))
 			{
 				$pingBack = $_SERVER['SERVER_NAME'] . '/api/emailsent/pingback/' . $queued->uniqueString;
-				$subjectline = self::genSubjectLine($type,$subject,$feed,$obj);
+				$subjectline = self::genSubjectLine($type,$subject,$feed,$obj,$author);
 				$queued->setSubjectLine($subjectline);
 
 				$subject_as_array = $subject->getBasics();
@@ -140,6 +140,7 @@ class Model_User_Followers extends ORM
 				$backlink = self::genBackLink($type,$subject,$obj);
 
 				$baseview = View::factory('email/notification/base')
+					->bind('email_reason',$follow->reason)
 					->bind('pingBack',$pingBack)
 					->bind('doc_title',$subjectline)
 					->bind('backlink',$backlink)
@@ -174,13 +175,17 @@ class Model_User_Followers extends ORM
 		else{
 			self::loopThroughFollowers($subject,$author,$obj,$feed,$type);
 		}
+
+		$feed->processed = 1;
+		@$feed->save();
 	}
 
-	public function addFollower(Model_User_Base $user, ORM $object,$visible=false)
+	public function addFollower(Model_User_Base $user, ORM $object,$visible=false,$reason=false)
 	{
 		if(!$object->loaded()) return false;
 
 		$subject_enttypes_id = Ent::getMyEntTypeID($object);
+		if(!$reason) $reason = "you're following this ".Ent::getMyTypeName($subject_enttypes_id);
 
 		//Delete matching rows
 		DB::delete('followers')
@@ -193,13 +198,17 @@ class Model_User_Followers extends ORM
 		$this->subject_id = $object->id;
 		$this->follower_users_id = $user->id;
 		$this->visible_fan = $visible;
+		$this->reason = $reason;
 
 		$this->save();
 		return $this->id;
 	}
 
-	public static function genSubjectLine($type,$subject,$feed,$obj)
+	public static function genSubjectLine($type,$subject,$feed,$obj,$author)
 	{
+		echo $type."\n";
+
+
 		$sub_line = "Something Happened " . $type;
 		switch($type)
 		{
@@ -209,32 +218,34 @@ class Model_User_Followers extends ORM
 			case 'tag':
 				$sub_line = $subject->name() . " Tagged in a(n) ". $obj->media->media_type;
 				break;
+			case 'media':
+				$sub_line = $author->name() . " tagged an image you're in.";
+				break;
 			case 'game':
-				if($feed->action == 'newgame'){
-					$sub_line = "There's a new game you should know about";
-				}
-				elseif($feed->action == 'update'){
-					$sub_line = $subject->name() . " Event info has changed";
-				}
+				if($feed->hasAction(array('comment'))) $sub_line = $subject->name()." has a new comment on the game page!";
+				elseif($feed->hasAction(array('added'))) $sub_line = "New Event: ".$subject->name();
+				else if($feed->hasAction(array('update','score'))) $sub_line = "Score updated for " . $subject->name();
+				else if($feed->hasAction(array('update','day')) || $feed->hasAction(array('update','time'))) $sub_line = "Scheduling change for " . $subject->name();
+				else if($feed->hasAction(array('update','location'))) $sub_line = "Change of venue for " . $subject->name();
 				break;
 			case 'team':
-				if($feed->action == 'newgame'){
-					$sub_line = $subject->name()." Added a Game to its schedule";
-				}
-				else if($feed->action == 'gameupdate'){
-					$sub_line = $subject->name()." has a scheduling update";
-				}
+				if($feed->hasAction(array('comment'))) $sub_line = $subject->name()." has a new comment on the game page!";
+				else if($feed->hasAction(array('added'))) $sub_line = $subject->name()." added a new game to its schedule";
+				else if($feed->hasAction(array('updated','score'))) $sub_line = "Score updated for " . $subject->name(). " game";
+				else if($feed->hasAction(array('update','day')) || $feed->hasAction(array('update','time'))) $sub_line = "Scheduling change for " . $subject->name(). " game";
+				else if($feed->hasAction(array('updated','location'))) $sub_line = "Change of venue for " . $subject->name(). " game";
 
 				break;
 			case 'gameteamlink':
-				if($feed->action == 'newgame'){
+				if($feed->hasAction('added')){
 					$sub_line = $subject->name()." has a new game on its schedule";
 				}
 				break;
 			default:
 				break;
 		}
-
+		print_r($feed->getActionsAsArray());
+		echo $sub_line."\n\n";
 		return $sub_line;
 	}
 
@@ -265,6 +276,9 @@ class Model_User_Followers extends ORM
 				break;
 			case 'userteamslink':
 				$backlink .= "/#!team/".$subject->id;
+				break;
+			case 'media':
+				$backlink .= "/#!home/media/".$subject->id;
 				break;
 			default:
 				break;

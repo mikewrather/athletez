@@ -151,7 +151,7 @@ class Model_Media_Base extends ORM
 		$this->save();
 
 		$follow = ORM::factory('User_Followers');
-		$follow->addFollower(ORM::factory('User_Base',$this->users_id),$this);
+		$follow->addFollower(ORM::factory('User_Base',$this->users_id),$this,false,"You uploaded this ".$this->media_type);
 
 		return $this->id;
 	}

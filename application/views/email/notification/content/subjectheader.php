@@ -9,6 +9,12 @@
 					<td align="left" style="width:160px;">
 						<img src="<?php
 
+			if($subject['enttypes_id']==19)
+			{
+				$sub_obj = Model_Media_Base::get_media_as_correct_type($subject['id']);
+				$subject = $sub_obj->getBasics();
+			}
+
 			if($subject['enttypes_id']==1){
 				echo $subject['user_picture_obj']['types']['standard_thumb']['url'];
 			}
