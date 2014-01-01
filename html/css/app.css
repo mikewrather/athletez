@@ -900,6 +900,7 @@ li.fitnessbasic {
 	background-color: #e0e0e0;
 	padding: 0;
 	width: 35%
+	min-height: 210px;
 }
 
 .stats-header {
@@ -2018,6 +2019,14 @@ li.add-tile-outer {
 	margin: 0 auto;
 width: 970px;
 float: none;
+}
+
+.hide-force {
+	display: none !important;
+}
+
+.stats-input {
+	width: 30px;
 }
 
 

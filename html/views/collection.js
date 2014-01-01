@@ -58,18 +58,21 @@ define(['facade','views/base','utils'], function (facade, BaseView, utils) {
         // bindings for adding and removing of models within the collection
         setupCollection: function () {
         	
-            var collection = this.options.collection || this.collection;
+            var _self = this, collection = this.options.collection || this.collection;
             collection.on('reset', this.reset);
 	        collection.on('add', this.add);
             collection.on('remove', this.remove);
             if (!collection.length && !collection.request) {
                 collection.request = collection.fetch();
                 collection.request.done(function () {
+            		_self.pageId = collection.id;
                     collection.each(collection.add);
                 });
             } else {
+            	_self.pageId = collection.id;
                 collection.each(this.add);
             }
+
         },
         
         reset: function() {
@@ -95,12 +98,14 @@ define(['facade','views/base','utils'], function (facade, BaseView, utils) {
         // Creates a new view for models added to the collection
         add : function(model) {
             var view;
+            
             view = new this._view({
                 "tagName": this._tagName,
                 "model": model,
                 "teamView": this.singleView,
                 "eventView": this.eventView,
                 "template": this._temp,
+                "recordId": this.pageId,
                 "className": this._className,
                 "decorator": this._decorator,
                 "FBoptions": this.FBoptions
