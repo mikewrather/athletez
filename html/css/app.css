@@ -2036,4 +2036,9 @@ float: none;
 	text-align: center;
 }
 
+.team-list-icon {
+	float: left;
+	margin-right: 10px;
+}
+
 

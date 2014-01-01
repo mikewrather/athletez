@@ -27,6 +27,19 @@ function(facade,  views,   utils,   ProfileSportItemView) {
         // Store constructor for the child views
         _view: ProfileSportItemView,
 
+		showList: function(e) {
+			var $span = $(e.target).next("span");
+			console.error($span.css("display"));
+			if($span.css("display") === "none") {
+				$(e.target).prev(".team-list-icon").removeClass("icon-circle-arrow-right").addClass("icon-circle-arrow-down");
+				$span.slideDown();
+			} else {
+				$(e.target).prev(".team-list-icon").removeClass("icon-circle-arrow-down").addClass("icon-circle-arrow-right");
+				$span.slideUp();
+			}
+			
+        },
+
         initialize: function(options) {
             CollectionView.prototype.initialize.call(this, options);
 
@@ -35,6 +48,12 @@ function(facade,  views,   utils,   ProfileSportItemView) {
             }
             _.bindAll(this);
             this.addSubscribers();
+            var _self = this;
+            
+            $(document).off("click", ".teamlist-header, .team-list-icon");
+        	$(document).on("click", ".teamlist-header, .team-list-icon", function(e) {
+            	_self.showList(e);
+            });
         }
     });
 
