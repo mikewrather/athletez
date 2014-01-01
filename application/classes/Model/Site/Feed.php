@@ -143,36 +143,49 @@ class Model_Site_Feed extends ORM
 		return $this;
 	}
 
-	public function hasAction($needle,$find_any_matching_words=true)
+	/**
+	 * @param $needle
+	 * @param bool $match_all - means all needles have to match, not all haystack elements
+	 * @param bool $find_any_matching_words
+	 * @return bool
+	 */
+	public function hasAction($needle,$match_all=true,$find_any_matching_words=true)
 	{
-		echo "--------\n";
 		$this->action_array = $this->checkActionArray();
+
+		// if array is only one element long then extract that element
+		if(is_array($needle) && sizeof($needle)==1) $needle = reset($needle);
 
 		// if an array is passed for needle, we call this method recursively
 		if(is_array($needle))
 		{
-			foreach($needle as $this_needle) { if(!($pass_check = $this->hasAction($this_needle,$find_any_matching_words))) continue; }
+			foreach($needle as $this_needle)
+			{
+				$pass_check = $this->hasAction($this_needle,$find_any_matching_words);
+				if      ($match_all && !$pass_check) break;
+				elseif  (!$match_all && $pass_check) break;
+			}
 		}
-		else{
-			echo "    ".$needle."\n";
+		else
+		{
 			// this will see if the needle matches any part of the action string
 			if($find_any_matching_words)
 			{
 				foreach($this->action_array as $action)
 				{
-					if(!($pass_check = stristr($action,$needle))) continue;
+					$pass_check = stristr($action,$needle) === FALSE ? false : true;
+					if($pass_check) break;
 				}
 			}
-
 			// this will check if it matches the whole string (not case sensitive)
 			else $pass_check = in_array(strtolower($needle),array_map('strtolower',$this->action_array));
 		}
 
-		if($pass_check) echo "        MATCH\n";
-		else echo "        FAIL\n";
 		// passcheck will either be true or false at this point;
 		return $pass_check;
 	}
+
+
 
 	public function processFeed(){
 		$feed = $this->where('processed','=',0)->find_all();

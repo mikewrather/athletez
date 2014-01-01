@@ -206,8 +206,6 @@ class Model_User_Followers extends ORM
 
 	public static function genSubjectLine($type,$subject,$feed,$obj,$author)
 	{
-		echo $type."\n";
-
 
 		$sub_line = "Something Happened " . $type;
 		switch($type)
@@ -231,9 +229,9 @@ class Model_User_Followers extends ORM
 			case 'team':
 				if($feed->hasAction(array('comment'))) $sub_line = $subject->name()." has a new comment on the game page!";
 				else if($feed->hasAction(array('added'))) $sub_line = $subject->name()." added a new game to its schedule";
-				else if($feed->hasAction(array('updated','score'))) $sub_line = "Score updated for " . $subject->name(). " game";
+				else if($feed->hasAction(array('update','score'))) $sub_line = "Score updated for " . $subject->name(). " game";
 				else if($feed->hasAction(array('update','day')) || $feed->hasAction(array('update','time'))) $sub_line = "Scheduling change for " . $subject->name(). " game";
-				else if($feed->hasAction(array('updated','location'))) $sub_line = "Change of venue for " . $subject->name(). " game";
+				else if($feed->hasAction(array('update','location'))) $sub_line = "Change of venue for " . $subject->name(). " game";
 
 				break;
 			case 'gameteamlink':
@@ -244,8 +242,7 @@ class Model_User_Followers extends ORM
 			default:
 				break;
 		}
-		print_r($feed->getActionsAsArray());
-		echo $sub_line."\n\n";
+
 		return $sub_line;
 	}
 
