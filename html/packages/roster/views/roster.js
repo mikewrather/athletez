@@ -36,8 +36,8 @@ define([ 'require', 'text!roster/templates/roster.html','views', 'vendor', 'faca
         	$(e.target).parent().find("span").addClass("hide");        	
         },
         
-         inviteFBFriend: function() {
-        	var fb = new FBComponent();
+         inviteFBFriend: function(e) {
+        	var fb = new FBComponent({currentTarget: e.target});
         	var _self = this, options = {};
 			//options.to = this.model.get("payload").id;
 			options.link = "#team/"+this.team_id;

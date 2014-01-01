@@ -45,8 +45,8 @@ function(facade,  views,   utils,   ItemView,  templateList, Participate, addMod
         	$(e.target).parent().find("span").addClass("hide");        	
         },
         
-        inviteFBFriend: function() {
-        	var fb = new FBComponent();
+        inviteFBFriend: function(e) {
+        	var fb = new FBComponent({currentTarget: e.target});
         	var _self = this, options = {};
 			options.link = "#game/"+this.game_id;
 			options.name = $(".sport-h").text();
