@@ -136,6 +136,12 @@ function(require, profileHeaderTemplate, selectSportTemplate) {
         selectSport: function(e) {
             var sport_id = (!e)?((this.sports_id)?this.sports_id:$(".sports-h img:first-child").data("id")):$(e.target).data("id");
             var sport_name = (!e)?$(".sports-h img:first-child").data("name"):$(e.target).data("name");
+	       
+	       if(sport_name)
+		       this.$el.find(".sports-name-h").html(sport_name);
+	    	else 
+		       this.$el.find(".sports-name-h").html("No Sport Selected.");	    		
+	    	   
 	        ga('send', 'event', 'Profile-Action', 'Sport-Change', sport_name, sport_id);
             //this.select_sport.val();
             $(".sports-icon-h.selected-sport-h").each(function(){
@@ -161,7 +167,7 @@ function(require, profileHeaderTemplate, selectSportTemplate) {
         	//	Channel('refresh-profilepage').publish();
         	}
         	
-        	//if(this.loadFirstTime) {
+        	if(sport_id) {
 				// creating URL for sport
 				var currentHashUrl = window.location.hash;
 				if(currentHashUrl.match(/\/sport\/(.*)[0-9]\//i)) {
@@ -172,7 +178,7 @@ function(require, profileHeaderTemplate, selectSportTemplate) {
 					currentHashUrl = currentHashUrl+"/sport/"+sport_id;
 				}
 				routing.navigate(currentHashUrl, {trigger: false});
-			//} else
+			} //else
 			//	this.loadFirstTime = true;
         	
         	
