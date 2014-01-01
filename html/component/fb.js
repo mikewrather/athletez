@@ -7,8 +7,18 @@
  * */
 
 define(['require', 'facade', 'views', 'utils', 'vendor'], function(require) {
-	return function() {
+	return function(options) {
 		var _self = this, scriptId = 'facebook-jssdk-api',
+		
+		// set options
+		setOptions = function() {
+			if(options) {
+				for(var i in options) {
+					this.currentTarget = options[i];				
+				}
+			}
+		}(),
+		
 		// initialize function
 		init = function() {
 			window.fbAsyncInit = function() {
@@ -32,7 +42,20 @@ define(['require', 'facade', 'views', 'utils', 'vendor'], function(require) {
 		
 		// check if script is already injected or not
 		checkIfScriptExists = function() {
-			return (document.getElementById(scriptId))?true:false;
+			var exists = (document.getElementById(scriptId))?true:false;
+			manageLoader(exists);
+			return exists;
+		},
+		
+		// show hide loading image on button 
+		manageLoader = function(exists) {
+			if(this.currentTarget) {
+				if(exists) {
+					$(this.currentTarget).removeClass("blue-loading");
+				} else {
+					$(this.currentTarget).addClass("blue-loading");					
+				}
+			}
 		},
 		
 		// load facebook API file
@@ -40,9 +63,12 @@ define(['require', 'facade', 'views', 'utils', 'vendor'], function(require) {
 		     // if already added return true
 			if(!checkIfScriptExists()) {
 				 var js, ref = document.getElementsByTagName('script')[0];
-		         js = document.createElement('script'); js.id = scriptId; js.async = true;
+		         js = document.createElement('script'); js.async = true;
 		         js.src = "//connect.facebook.net/en_US/all.js";
 		         ref.parentNode.insertBefore(js, ref);
+		         js.onload = function () {
+			        js.id = scriptId; 
+			    };
 	        }
 		};
 		

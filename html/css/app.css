@@ -1577,6 +1577,10 @@ div.game-info .game-score .team-score.win {
 	background-image: url('http://athletez.s3.amazonaws.com/resources/img/actions/fbinvite.png');
 }
 
+.blue-loading {
+	background-image: url('http://cdn.athletez.com/resources/img/blue_loading.gif');	
+}
+
 .display_none_important {
 	display: none !important;
 }

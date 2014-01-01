@@ -1,13 +1,35 @@
 // The Image List
 // --------------
 
-define(['facade', 'utils', 'media/views/image-list'],
+define(['facade', 'utils', 'media/views/image-list', 'component/fb'],
 function(facade,  utils,   BaseImageListView) {
 
-    var FansImageListView;
+    var FansImageListView,
+     FBComponent = require('component/fb');
     FansImageListView = BaseImageListView.extend({
 	    imagetype: 'large_thumb',
         setupAddView: function() {},
+        
+        events: {
+        	'click .invite-to-fb-h': 'inviteFBFriend'
+        },
+        
+         inviteFBFriend: function(e) {
+        	var fb = new FBComponent({currentTarget: e.target});
+        	var _self = this, options = {};
+			options.link = "#game/"+this.game_id;
+			options.name = $(".sport-h").text();
+			options.picture = "http://cdn.athletez.com/resources/img/athletez_logo_small.png";
+			options.description = $(".game-general p").text();
+			options.success = function() {
+				alert("Invitation send successfully.");
+			};
+			options.error = function() {
+				alert("Some Error Occured. Please try again.");
+			};
+        	fb.sendInvite(options);
+        },
+        
         addButtons: function() {
 			var _self = this;
             setTimeout(function() {
