@@ -43,6 +43,7 @@ define(['facade','views/base','utils'], function (facade, BaseView, utils) {
             }
             this._className = this.options.className || this._className;
             this._decorator = this.options.decorator || this._decorator;
+            this.FBoptions = this.FBoptions;
             this._id = this.options.id || this._id;
             this._temp = this.options._template || this._template;
             this.singleView = this.options.singleView || this.singleView;
@@ -53,8 +54,6 @@ define(['facade','views/base','utils'], function (facade, BaseView, utils) {
             this.setupCollection();
         },
         
-         
-
         // **Method:** `setupCollection`  
         // bindings for adding and removing of models within the collection
         setupCollection: function () {
@@ -103,7 +102,8 @@ define(['facade','views/base','utils'], function (facade, BaseView, utils) {
                 "eventView": this.eventView,
                 "template": this._temp,
                 "className": this._className,
-                "decorator": this._decorator
+                "decorator": this._decorator,
+                "FBoptions": this.FBoptions
             });
             this._views.push(view);
             if (this._rendered) {

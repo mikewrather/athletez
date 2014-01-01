@@ -37,20 +37,21 @@ define([ 'require', 'text!roster/templates/roster.html','views', 'vendor', 'faca
         },
         
          inviteFBFriend: function(e) {
-        	var fb = new FBComponent({currentTarget: e.target});
+        	//var fb = new FBComponent({currentTarget: e.target});
         	var _self = this, options = {};
-			//options.to = this.model.get("payload").id;
-			options.link = "#team/"+this.team_id;
-			options.name = "We were playing for "+ this.team_name;
-			options.picture = "http://cdn.athletez.com/resources/img/athletez_logo_small.png";
-			options.description = "",//this.team_name,
-			options.success = function() {
-				alert("Invitation send successfully.");
-			};
-			options.error = function() {
-				alert("Some Error Occured. Please try again.");
-			};
-        	fb.sendInvite(options);
+			options.subject_id = this.team_id;
+			options.enttype_id = this.controllerObject.basics.get("payload").enttypes_id;
+			//options.name = "We were playing for "+ this.team_name;
+			//options.picture = "http://cdn.athletez.com/resources/img/athletez_logo_small.png";
+			//options.description = "",//this.team_name,
+			//options.success = function() {
+			//	alert("Invitation send successfully.");
+			//};
+			//options.error = function() {
+			//	alert("Some Error Occured. Please try again.");
+			//};
+        	routing.trigger('fbInvite', undefined, options);
+        	//fb.sendInvite(options);
         },
 		
 		
@@ -59,6 +60,7 @@ define([ 'require', 'text!roster/templates/roster.html','views', 'vendor', 'faca
 			SectionView.prototype.initialize.call(this, options);
 			_self.team_id = options.team_id;
 			_self.team_name = options.team_name;
+			_self.controllerObject = options.controllerObject;
 			_self.viewName = options.viewName || ("Image List" + Math.random());
 			_.bindAll(this);
 			_self.getTeams();

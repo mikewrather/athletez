@@ -12,6 +12,7 @@ define(["require", "text!fbinvite/templates/layout.html", "facade", "controller"
 	return Controller.extend({
 		initialize : function(options) {
 			this.popup = (options.popup)?true:false;
+			this.options = options.options;
 			Channel('load:css').publish(cssArr);
 			_.bindAll(this);
 			this.ajaxCalls = [];
@@ -34,7 +35,7 @@ define(["require", "text!fbinvite/templates/layout.html", "facade", "controller"
 
 		createData : function() {
 			this.images = new FBInviteList();
-			this.images.targetElement = "#image-wrap";
+			this.images.targetElement = "#image-wrap-h";
 			this.ajaxCalls.push(this.images.fetch());					
 		},
 
@@ -43,7 +44,6 @@ define(["require", "text!fbinvite/templates/layout.html", "facade", "controller"
 			$.when(this.images.request).done(function() {
 				_self.images.allRecords = _self.images.toJSON();
 				_self.setupFriendsList();
-				
 				$(".search-friends-h").keyup(function() {
 					var v = $(this).val(), i, re = new RegExp(v, "i"),len = _self.images.allRecords.length, arr = [];
 					for(var i = 0; i < len; i++) {
@@ -52,7 +52,6 @@ define(["require", "text!fbinvite/templates/layout.html", "facade", "controller"
 						}
 						if(_self.images.models[i]) _self.images.models[i].destroy();							
 					}
-					
 					if(arr.length) {
 						_self.images.reset(arr);
 						_self.setupFriendsList();
@@ -82,9 +81,10 @@ define(["require", "text!fbinvite/templates/layout.html", "facade", "controller"
 			
 			this.imageListView = new ProfileImageListView({
 					collection: this.images,
-					destination: "#image-wrap",
+					destination: "#image-wrap-h",
 					target_id : this.id,
 					user_id: this.id,
+					FBOptions: this.options,
 					name: "images View 2"
 			});
 			this.scheme.push(this.imageListView);

@@ -80,7 +80,6 @@ define([
 			// setParams Array in current class
 			if(options.params) this.setParamsArray(options.params); 
 			this.handleOptions(options);
-			
 			this.init();
 			return this;
 		},
@@ -100,26 +99,8 @@ define([
 			this.basics = new GameBasicsModel({id: this.id});
 			this.basics.targetElement = "#main";
 			this.basics.fetch();
-			//this.id = this.basics.id;
-
 			this.addmedia = new GameAddMediaModel();
 			this.addmedia.id = this.id;
-
-			//this.teamrosters = new GameTeamRosterList();
-			//this.teamrosters.id = this.id;
-			//this.teamrosters.fetch();
-
-			//this.videos = new GameVideoList();
-			//this.videos.id = this.id;
-			//this.videos.fetch();
-
-			//this.comments = new GameCommentList();
-			//this.comments.id = this.id;
-			//this.comments.fetch();
-			
-			//this.commentson = new GameCommentOnList();
-			//this.commentson.id = this.id;
-			//this.commentson.fetch();
 		},
 
 		handleDeferreds: function () {
@@ -128,8 +109,6 @@ define([
 			$.when(this.basics.request).done(function () {
 				console.error(controller.basics);
 				controller.setupHeaderView();
-				//controller.initVoteView();
-				//controller.setupAddMediaView();
 				
 				var data = controller.basics.get("payload"), subject_type_id = data.enttypes_id;
 				controller.images = new GameImageList();
@@ -173,26 +152,6 @@ define([
 					controller.setupImageListView();
 				});
 			});
-
-			//$.when(this.teamrosters.request).done(function () {
-			//	controller.setupTeamRosterListView();
-			//});
-
-			//$.when(this.videos.request).done(function () {
-			//	controller.setupVideoListView();
-			//});
-
-			//$.when(this.images.request).done(function () {
-			//	controller.setupImageListView();
-			//});
-
-			//$.when(this.comments.request).done(function () {
-			//	controller.setupCommentListView();
-			//})
-			
-			//$.when(this.commentson.request).done(function () {
-			//	controller.setupCommentsOnListView();
-			//});
 		},
 		
 		// intialize vote view
@@ -239,30 +198,25 @@ define([
 
 		setupAddMediaView: function (target) {
 			var addMediaView;
-
 			addMediaView = new GameAddMediaView({
 				model: this.addmedia,
 				name: "Add Media",
 				destination: target
 			});
+			
 			addMediaView.game_model = this.basics;
-
 			this.scheme.push(addMediaView);
 			this.layout.render();
 		},
 		
-		
 		reloadParticipateView: function() {
 			// get the participants
 			var controller = this, position;
-			
-			
 			if (this.participantsView) {
 				$(this.participantsView.destination).html('');
 				position = $.inArray(this.participantsView, this.scheme);
 				if (~position) this.scheme.splice(position, 1);
 			}
-			
 			
 			controller.participants.fetch();
 			$.when(controller.participants.request).done(function () {
@@ -276,9 +230,9 @@ define([
 				collection: this.participants,
 				name: "participants view",
 				controller: this,
+				controllerObject: this, 
 				sport_id: this.basics.get("payload").sports_id,
 				destination: "#participants_div",
-				
 			});
 			this.scheme.push(this.participantsView);
 			this.layout.render();
@@ -315,7 +269,6 @@ define([
 
 		setupVideoListView: function () {
 			var videoListView;
-
 			videoListView = new GameVideoListView({
 				collection: this.videos,
 				destination: "#video-wrap"
@@ -338,6 +291,7 @@ define([
 				collection: this.images,
 				name: "image list",
 				target_id : this.id,
+				controllerObject:this, 
 				target_url : "/api/game/addimage/",
 				sport_id: $(".sport-h").data("id"),   
 				destination: "#image-wrap",

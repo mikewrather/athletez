@@ -24,6 +24,7 @@ function(facade,  views,   utils,   ImageItemView, templateList) {
         _tagName: "li",
         _className: "image",
 		page: 0,
+		FBoptions: {},
 		page_limit: 20,
 		listView : ".image-list",
         // Store constructor for the child views
@@ -52,6 +53,8 @@ function(facade,  views,   utils,   ImageItemView, templateList) {
         		this.name = "image list";
         	
         	this.renderTemplate();
+        	console.error(options);
+        	this.FBoptions = options.FBOptions;
 	       this.pageName = (options.pageName)?options.pageName:"profile";
         	if(options.collecton) this.collection = options.collection;
         	this.data = options.data;

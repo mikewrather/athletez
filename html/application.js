@@ -337,8 +337,8 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
             });
             
             routing.off('fbInvite');
-            routing.on('fbInvite', function(id) {
-            	self.showFBInviteOnPopup(id);
+            routing.on('fbInvite', function(id, options) {
+            	self.showFBInviteOnPopup(id, options);
             });
             
             routing.off('popup-close');
@@ -586,12 +586,13 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
 	    },
 	    
 	    
-	    showFBInviteOnPopup: function(id) {
+	    showFBInviteOnPopup: function(id, options) {
 	    	var title = "Athletez - We Are Athletez";
 	    	self.currentController = new FbInviteController({
 	    		route: "",
 	    		title: title,
-	    		userId : id
+	    		userId : id,
+	    		options: options
 	    	});
 	    },
 	    

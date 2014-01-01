@@ -26,21 +26,27 @@ define(['facade', 'utils', 'media/views/image-list', 'component/fb'], function(f
         },
 
 		inviteFBFriend : function(e) {
-			var fb = new FBComponent({
-				currentTarget : e.target
-			});
 			var _self = this, options = {};
-			options.link = "#!"+this.pageName+"/"+this.target_id;
-			options.name = $(".sport-h").text();
-			options.picture = "http://cdn.athletez.com/resources/img/athletez_logo_small.png";
-			options.description = $(".game-general p").text();
-			options.success = function() {
-				alert("Invitation send successfully.");
-			};
-			options.error = function() {
-				alert("Some Error Occured. Please try again.");
-			};
-			fb.sendInvite(options);
+			options.subject_id = this.target_id;
+			options.enttype_id = this.controllerObject.basics.get("payload").enttypes_id;
+			//options.link = "#!"+this.pageName+"/"+this.target_id;
+			//options.name = $(".sport-h").text();
+			//options.picture = "http://cdn.athletez.com/resources/img/athletez_logo_small.png";
+			//options.description = $(".game-general p").text();
+			//options.success = function() {
+			//	alert("Invitation send successfully.");
+			//};
+			//options.error = function() {
+			//	alert("Some Error Occured. Please try again.");
+			//};
+			
+			routing.trigger('fbInvite', undefined, options);
+			
+			//var fb = new FBComponent({
+			//	currentTarget : e.target
+			//});
+
+			//fb.sendInvite(options);
 		},
 
 		addButtons : function() {

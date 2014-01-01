@@ -22,6 +22,7 @@ define(['vendor', 'views', 'utils', 'text!packages/fbinvite/templates/image-item
 
 		initialize : function(options) {
 			this.template = imageItemTemplate;
+			this.FBoptions = options.FBoptions;
 			if(options.length)
 			for(var i in options) {
 				this[i] = options[i];
@@ -38,7 +39,6 @@ define(['vendor', 'views', 'utils', 'text!packages/fbinvite/templates/image-item
 		
 		render : function() {
 			var _self = this, payload = this.model.get('payload');
-			console.error(payload);
 			var markup = Mustache.to_html(this.template, payload);
 			this.$el.html(markup);
 
@@ -117,29 +117,29 @@ define(['vendor', 'views', 'utils', 'text!packages/fbinvite/templates/image-item
 			return this;
 		},
 		
-		
-		postMessage: function() {
+		postMessage: function(e) {
 			var _self = this, options = {};
-			options.to = this.model.get("payload").id;
 			options.link = "#acceptfbinvite/"+this.model.get("payload").id;
 			options.name = "Come join Me on Atheletez";
 			options.picture = "http://cdn.athletez.com/resources/img/athletez_logo_small.png";
 			options.description = "You have been invited to sign up for http://athletez.com";
 			options.success = function() {
-				_self.callModel();
+				_self.callModel(e);
 			};
 			options.error = function() {
 				alert("Some Error Occured. Please try again.");
-			};
+			};				
+ 			options.to = this.model.get("payload").id;
 			this.FBComponent.sendInvite(options);
 		},
 		
-		callModel: function() {
+		callModel: function(e) {
 			var model = new inviteModel();
 			model.set({'fbid': this.model.get("payload").id});
+			if(this.FBoptions) model.set({'invite_to': {subject_id: this.FBoptions.subject_id, enttype_id: this.FBoptions.enttype_id}});
 			model.save();
 			$.when(model.request).done(function() {
-				$(e.currentTarget).addClass('link-disabled');
+				$(e.target).addClass('link-disabled');
 			});
 		},
 
@@ -155,7 +155,7 @@ define(['vendor', 'views', 'utils', 'text!packages/fbinvite/templates/image-item
 		  	   	routing.trigger('showSignup');	
 		    	return;
 	    	}
-	    	this.postMessage();
+	    	this.postMessage(e);
 	    }
 
 	});

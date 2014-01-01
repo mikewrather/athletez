@@ -235,6 +235,7 @@ define([
 				model: new model(),
 				team_id: id,
 				team_name: name,
+				controllerObject: this,
 				name: this.oldRosterViewName,
 				destination: "#roster-wrap"
 			});
