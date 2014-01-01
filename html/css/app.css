@@ -1567,6 +1567,11 @@ div.game-info .game-score .team-score.win {
 	background-image: url('http://cdn.athletez.com/resources/img/comment.png');
 }
 
+.add-to-fans {
+	background-image: url('https://athletez.s3.amazonaws.com/resources/img/actions/follow.png');
+	background-color: #1aa0ae;
+}
+
 .fb-invite-tile-btn {
 	background-color: #6b74b7;
 	background-image: url('http://athletez.s3.amazonaws.com/resources/img/actions/fbinvite.png');
