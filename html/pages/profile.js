@@ -447,7 +447,9 @@ define([
 				this.fansListView = new FansImageListView({
 					collection: this.fans,
 					destination: "#fans-div",
+					target_id: this.id,
 					controllerObject: this,
+					pageName: "profile",
 					data: this.basics.toJSON(),
 					//model: Backbone.Model.extend(),
 					name: "fansView"

@@ -30,7 +30,7 @@ define(['facade', 'utils', 'media/views/image-list', 'component/fb'], function(f
 				currentTarget : e.target
 			});
 			var _self = this, options = {};
-			options.link = "#game/" + this.game_id;
+			options.link = "#!"+this.pageName+"/"+this.target_id;
 			options.name = $(".sport-h").text();
 			options.picture = "http://cdn.athletez.com/resources/img/athletez_logo_small.png";
 			options.description = $(".game-general p").text();
@@ -50,9 +50,9 @@ define(['facade', 'utils', 'media/views/image-list', 'component/fb'], function(f
 					var html = '<li id="add-fans-icons" class="add-tile-outer">\
 					<div>\
 					<a href="javascript: void(0);" class="add-to-fans-h add-to-fans pull-left tiles"></a>\
-					<span class="hide">Add to fans list</span></div>\
+					<span class="hide">Add me to list</span></div>\
 					<div>\
-					<span class="hide">Add to fans list</span>\
+					<span class="hide">Invite friends to join</span>\
 					<a href="javascript: void(0);" class="fb-invite-tile-btn invite-to-fb-h tiles pull-right" title="Add to fb"></a></div>\
 					</li>';
 					_self.$el.find(_self.listView).prepend(html);

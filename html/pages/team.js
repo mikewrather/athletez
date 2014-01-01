@@ -312,16 +312,17 @@ define([
         },
         
         setupFansListView: function () {
-				this.fansListView = new FansImageListView({
-					collection: this.fans,
-					destination: "#fans-div",
-					controllerObject: this,
-					data: this.basics.toJSON(),
-					name: "fansView"
-				});
-
-				this.scheme.push(this.fansListView);
-				this.layout.render();
+			this.fansListView = new FansImageListView({
+				collection: this.fans,
+				destination: "#fans-div",
+				controllerObject: this,
+				pageName: "team",
+				target_id: this.id,
+				data: this.basics.toJSON(),
+				name: "fansView"
+			});
+			this.scheme.push(this.fansListView);
+			this.layout.render();
 		},
         
         setupHeaderView: function() {
@@ -493,7 +494,6 @@ define([
         	routing.on('setup-add-icons', function(target) { 
         		self.setupAddMediaView(target);
         	});
-        	
             this.imageListView = new TeamImageListView({
                 collection: this.images,
                 destination: "#image-wrap",
@@ -509,9 +509,6 @@ define([
             
             this.scheme.push(this.imageListView);
             this.layout.render();
-            
-             
-            
             
         },
         

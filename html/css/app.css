@@ -1997,8 +1997,8 @@ li.add-tile-outer {
 }
 
 .add-tile-outer a {
-	width: 50%;
-	height: 100%;
+	width: 110px;
+	height: 110px;
 	min-height: 100px !important;
 	background-size: contain;
 }

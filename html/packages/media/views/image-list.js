@@ -143,6 +143,7 @@ function(facade,  views,   utils,   ImageItemView,            ImageBoardView,   
         	this.sport_id = options.sport_id;
         	this.user_id = options.user_id;
         	this.media_id = options.media_id;
+        	this.pageName = options.pageName;
         	this.data = options.data;
         	this.controllerObject = options.controllerObject;
         	this.triggerItem = options.triggerItem;
