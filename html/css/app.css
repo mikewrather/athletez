@@ -2029,4 +2029,11 @@ float: none;
 	width: 30px;
 }
 
+.stats-empty-area {
+	display: table-cell;
+	vertical-align: middle;
+	height: 210px;
+	text-align: center;
+}
+
 
