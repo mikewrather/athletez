@@ -2001,4 +2001,14 @@ li.add-tile-outer {
 	height: 110px;
 }
 
+#fbInvite ul li.image {
+	float: left;
+}
+
+#fbInvite .image-list {
+	margin: 0 auto;
+width: 970px;
+float: none;
+}
+
 
