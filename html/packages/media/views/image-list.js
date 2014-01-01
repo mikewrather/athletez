@@ -28,7 +28,7 @@ function(facade,  views,   utils,   ImageItemView,            ImageBoardView,   
         _tagName: "li",
         _className: "image",
 		page: 0,
-		page_limit: 6,
+		page_limit: 7,
 		listView : ".image-list",
         // Store constructor for the child views
         _view: ImageItemView,
