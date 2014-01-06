@@ -1874,7 +1874,7 @@ li#add-icons ul {
 	line-height: 110px;
 	width: 110px;
 	display: inline-block;
-	background-color: #CCC;
+/*	background-color: #CCC; */
 }
 
 div.edit {
@@ -1938,7 +1938,7 @@ div.edit {
 
 #add-icons {
 	width: 220px;
-	background: #CCC;
+/*	background: #CCC; */
 	height: 220px;
 }
 
