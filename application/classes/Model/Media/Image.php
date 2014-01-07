@@ -560,7 +560,7 @@ class Model_Media_Image extends ORM
 
 	public function name()
 	{
-		return "Image ".$this->id;
+		return $this->media->name();
 	}
 
 	/**

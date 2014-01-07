@@ -185,13 +185,32 @@ class Model_Site_Feed extends ORM
 		return $pass_check;
 	}
 
+	public function getFeedParent(){
+		$this->action_array = $this->checkActionArray();
+		foreach($this->action_array as $action_text)
+		{
+			if(stristr($action_text,'FeedParent')){
+				$fp_arr = explode(':',$action_text);
+				$fp = ORM::factory('Site_Feed',$fp_arr[1]);
+				if(is_object($fp) && is_subclass_of($fp,'ORM')) return $fp;
+			}
+		}
+		return false;
+	}
 
+	public function getFeedObject($item=false){
+		if(!$item) $item = $this;
+		if(!$item->loaded()) return false;
+		$obj = Ent::eFact($item->enttypes_id,$item->ent_id);
+		if(is_object($obj) && is_subclass_of($obj,'ORM')) return $obj;
+		return false;
+	}
 
 	public function processFeed(){
 		$feed = $this->where('processed','=',0)->find_all();
 		foreach($feed as $item)
 		{
-			$obj = Ent::eFact($item->enttypes_id,$item->ent_id);
+			$obj = $this->getFeedObject($item);
 			if(is_object($obj) && is_subclass_of($obj,'ORM') && $obj->loaded()) Model_User_Followers::processFeedItem($obj,$item);
 			else
 			{
@@ -199,9 +218,10 @@ class Model_Site_Feed extends ORM
 				@$item->save();
 			}
 		}
-	//	$queue = ORM::factory('Email_Queue');
-	//	$queue->processQueue();
+		$queue = ORM::factory('Email_Queue');
+		$queue->processQueue();
 	}
+
 	public static function addToFeed($obj,$action='add')
 	{
 
@@ -228,7 +248,9 @@ class Model_Site_Feed extends ORM
 			{
 				foreach($obj->teams->find_all() as $team)
 				{
-					self::addToFeed($team,$me->action_array);
+					$action_array = $me->action_array;
+					array_push($action_array,"FeedParent:".$me->id);
+					self::addToFeed($team,$action_array);
 				}
 			}
 			elseif($me->enttypes_id==14)
@@ -239,7 +261,9 @@ class Model_Site_Feed extends ORM
 					{
 						foreach($subject->teams->find_all() as $team)
 						{
-							self::addToFeed($team,$me->action_array);
+							$action_array = $me->action_array;
+							array_push($action_array,"FeedParent:".$me->id);
+							self::addToFeed($team,$action_array);
 						}
 					}
 				}

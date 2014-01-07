@@ -126,18 +126,31 @@ class Model_User_Followers extends ORM
 				$subjectline = self::genSubjectLine($type,$subject,$feed,$obj,$author);
 				$queued->setSubjectLine($subjectline);
 
-				$subject_as_array = $subject->getBasics();
-				$subheader = View::factory('email/notification/content/subjectheader')
-					->bind('subject',$subject_as_array)
-					->bind('sub_obj',$subject);
+				if($feed->hasAction(array('feedparent')) && $feedparent = $feed->getFeedParent()){
+					$obj = $feedparent->getFeedObject();
+					$subject_parent = $obj->getSubject();
+					$enttype = ORM::factory('Site_Enttype',Ent::getMyEntTypeID($obj));
+					$type = $enttype->api_name;
+				}
 
 				$obj_as_array = $obj->getBasics();
+				$use_feed = $feedparent ? $feedparent : $feed;
+				$use_subject = $subject_parent ? $subject_parent : $subject;
+
+				$subject_as_array = $use_subject->getBasics();
+
+				$subheader = View::factory('email/notification/content/subjectheader')
+					->bind('subject',$subject_as_array)
+					->bind('sub_obj',$use_subject);
+
+				$backlink = self::genBackLink($type,$subject,$obj);
+
 				$action = View::factory("email/notification/content/$type")
 					->bind('obj',$obj_as_array)
 					->bind('obj_full',$obj)
-					->bind('subject',$subject);
-
-				$backlink = self::genBackLink($type,$subject,$obj);
+					->bind('subject',$use_subject)
+					->bind('feed',$use_feed)
+					->bind('queued',$queued);
 
 				$baseview = View::factory('email/notification/base')
 					->bind('email_reason',$follow->reason)
@@ -222,6 +235,7 @@ class Model_User_Followers extends ORM
 			case 'game':
 				if($feed->hasAction(array('comment'))) $sub_line = $subject->name()." has a new comment on the game page!";
 				elseif($feed->hasAction(array('added'))) $sub_line = "New Event: ".$subject->name();
+				else if($feed->hasAction(array('update','name'))) $sub_line = "Event Name has been changed";
 				else if($feed->hasAction(array('update','score'))) $sub_line = "Score updated for " . $subject->name();
 				else if($feed->hasAction(array('update','day')) || $feed->hasAction(array('update','time'))) $sub_line = "Scheduling change for " . $subject->name();
 				else if($feed->hasAction(array('update','location'))) $sub_line = "Change of venue for " . $subject->name();
@@ -229,6 +243,7 @@ class Model_User_Followers extends ORM
 			case 'team':
 				if($feed->hasAction(array('comment'))) $sub_line = $subject->name()." has a new comment on the game page!";
 				else if($feed->hasAction(array('added'))) $sub_line = $subject->name()." added a new game to its schedule";
+				else if($feed->hasAction(array('update','name'))) $sub_line = "Event Name has been changed";
 				else if($feed->hasAction(array('update','score'))) $sub_line = "Score updated for " . $subject->name(). " game";
 				else if($feed->hasAction(array('update','day')) || $feed->hasAction(array('update','time'))) $sub_line = "Scheduling change for " . $subject->name(). " game";
 				else if($feed->hasAction(array('update','location'))) $sub_line = "Change of venue for " . $subject->name(). " game";

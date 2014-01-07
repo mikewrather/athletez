@@ -16,7 +16,7 @@ class Email {
 		self::send_mail($to,$subject,$body);
 
 	}
-	public static function send_mail($to, $subject, $body, $users_id=0,$cc = "", $bcc = ""){
+	public static function send_mail($to, $subject, $body, $users_id=0,$attachment=false,$cc = "", $bcc = ""){
 		$pm = new Postmark();
 		$from = "weare@athletez.com";
 		$from_name_alias = 'Mike From Athletez';
@@ -30,7 +30,10 @@ class Email {
 		}else{
 			$pm->addTo($to, $to_name_alias);
 		}
-	//	print_r($pm);
+
+		if($attachment){
+
+		}
 
 		try{
 			$result = $pm->send();
@@ -58,6 +61,10 @@ class Email {
 		$from = "weare@athletez.com";
 		$from_name_alias = 'Athletez Mail Room';
 		$to_name_alias = null;
+
+		if($queue->attachment != "" && $queue->attachment != null){
+			$pm->addCustomAttachment('game.ics',$queue->attachment,'text/calendar');
+		}
 
 		$pm->from($from, $from_name_alias)
 			->subject($queue->subject_line)
