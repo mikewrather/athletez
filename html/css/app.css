@@ -1956,14 +1956,14 @@ div.edit {
 
 #add-media a {
 	width: 110px;
-height: 110px;
-padding: 0;
-float: left;
+	height: 110px;
+	padding: 0;
+	float: left;
 	background-size: contain;
 }
 
 #add-media span {
-		width: 100px;
+	width: 100px;
 	display: table-cell;
 	vertical-align: middle;
 	text-align: center;
@@ -2017,8 +2017,8 @@ li.add-tile-outer {
 
 #fbInvite .image-list {
 	margin: 0 auto;
-width: 970px;
-float: none;
+	width: 970px;
+	float: none;
 }
 
 .hide-force {
