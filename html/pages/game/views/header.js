@@ -277,7 +277,8 @@ function(require, gameHeaderTemplate) {
         
         
         afterRender: function() {
-        	
+        	   	        this.$el.find(".edit-score-input-h").trigger("keyup"); 
+        	   	        
         	this.$el.find('.image-outer-h').mouseover(function() {
 				$(this).find('.action-block').css({
 					opacity : 90
