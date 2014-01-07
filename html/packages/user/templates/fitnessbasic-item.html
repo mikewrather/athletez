@@ -3,15 +3,11 @@
 		<div class="fitness-overview-data-piece" style="">
 			<img title="{{name}}" src="{{icon}}" style=""/>
 			<span class="stat-val-outer">
-				{{#val}}
-					<span class="stats-val-h">{{val}}</span>
-					<input type="text" data-id="{{id}}" class="stats-input stats-input-h hide-force" value="{{val}}"/>
-				{{/val}}
-				{{^val}}--{{/val}}
-				</span>
+				<span class="stats-val-h">{{#val}}{{val}}{{/val}}{{^val}}--{{/val}}</span>
+				<input type="text" data-id="{{id}}" class="stats-input stats-input-h hide-force" value="{{#val}}{{val}}{{/val}}{{^val}}{{/val}}"/>
+			</span>
 		</div>
 	{{/data}}
-	
 	{{^data}}
 		<div class="stats-empty-area">
 			Either no sport is selected,

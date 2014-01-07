@@ -57,11 +57,15 @@ function(require, profileHeaderTemplate, selectSportTemplate) {
             this.sports = new SportList();
             this.sports.id = this.model.id;
             this.sports.fetch();
+            this.model.get("payload").loggedInUser = this.checkForCurrentUser();
             $.when(this.sports.request).done(function() {
                 self.setupSportListView();
-	            console.log(self.sports);
 	            self.selectSport(); //this will signify it's the first viewing of the profile page.
             });
+        },
+        
+        checkForCurrentUser: function() {
+        	return (routing.loggedInUserId == this.model.id)?true:false;
         },
         
         setupSportListView: function() {
@@ -71,10 +75,6 @@ function(require, profileHeaderTemplate, selectSportTemplate) {
                     collection: this.sports
                 }),
                 renderSportListView = this.addChildView(sportListView);
-
-	        console.log("SPORTS LIST VIEW",sportListView.el);
-
-
 
 	        this.childViews.sportListView = sportListView;
             this.callbacks.add(function () {
@@ -98,7 +98,6 @@ function(require, profileHeaderTemplate, selectSportTemplate) {
                 	self.$el.find('.sports-h').html(this.model.get("payload").first_name+' has not entered any sports or teams.');
  				else 	 		             
                	 self.$el.find('.sports-h').html('<a href="#!usersettings" title="edit sports" class="btn pull-right">Edit Sports</a>');
-                
             }                
             sportListView.render();
         },

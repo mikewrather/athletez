@@ -54,9 +54,8 @@
 		{{#teams}}
 		<li class="team-item">
 			<div class='score-box score-box-h {{#isWinner}}win{{/isWinner}}'>
-				<a href="javascript: void(0);" title="edit score" class="edit-score-h"> <span style="width:100%; height: 100%">{{points_scored}}</span> </a>
-
-				<input type="hidden" value="{{points_scored}}" data-id="{{games_teams_link_id}}" class="edit-score-input-h input-mini" />
+				<a href="javascript: void(0);" title="edit score" class="edit-score-h"> <span class="game-score-el" style="width:100%; height: 100%">{{points_scored}}</span> </a>
+				<input type="hidden" value="{{points_scored}}" data-id="{{games_teams_link_id}}" class="edit-score-input-h input-mini game-score-el" />
 			</div>
 			<div class="org-info">
 				<span class="org-name"><a href="/#!team/{{id}}">{{org_sport_link_obj.org.org_name}}, {{complevels_obj.complevel_name}}, {{seasons_obj.season_name}} {{year}}</a></span>

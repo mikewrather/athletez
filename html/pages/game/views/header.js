@@ -42,6 +42,7 @@ function(require, gameHeaderTemplate) {
         events: {
         	'click .edit-score-h' : 'editScore',
         	'blur .edit-score-input-h': 'resumeEditScore',
+        	'keyup .edit-score-input-h': 'adjustFont',        	
         	"click .vote": "vote",
 	        "click .follow": "follow",
 	        "click .object-edit-h": "editObject",
@@ -66,7 +67,6 @@ function(require, gameHeaderTemplate) {
         location: {lat: undefined, lon: undefined},
         
         initialize: function (options) {
-        	
           SectionView.prototype.initialize.call(this, options); 
         	var payload = this.model.get("payload"), title;
 	        if(payload.teams){
@@ -83,7 +83,6 @@ function(require, gameHeaderTemplate) {
         	}
         	title += " | "+ payload.shared.sport +" | "+ payload.game_day;
         	document.title = title;
-
 	        this.setDateFields();
         },
 
@@ -91,8 +90,7 @@ function(require, gameHeaderTemplate) {
 			var payload = this.model.get('payload');
 			var game_time = payload.game_time;
 			console.log(game_time);
-			if(game_time != undefined)
-			{
+			if(game_time != undefined) {
 				try{
 					var timeArr = game_time.split(' ');
 					console.log(timeArr);
@@ -102,8 +100,15 @@ function(require, gameHeaderTemplate) {
 						console.log("full payload now",payload);
 						this.model.set('payload',payload);
 					}
-				}catch(ex){}
+				} catch(ex) { }
 			}
+		},
+		
+		// adjust font dynamically
+		adjustFont: function(e) {
+			var defaultFont = 2.2, l = $(e.target).val().length - 2, font = (l > 0)? (defaultFont - (.4 * l)):defaultFont -0;
+			if(font > 0)			
+				$(e.target).parents(".team-item").find(".game-score-el").css({"font-size": font+"em"});
 		},
 
 		checkForUser: function() {
@@ -272,7 +277,8 @@ function(require, gameHeaderTemplate) {
         
         
         afterRender: function() {
-        	
+        	   	        this.$el.find(".edit-score-input-h").trigger("keyup"); 
+        	   	        
         	this.$el.find('.image-outer-h').mouseover(function() {
 				$(this).find('.action-block').css({
 					opacity : 90
