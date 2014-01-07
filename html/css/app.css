@@ -2041,8 +2041,13 @@ float: none;
 	margin-right: 10px;
 }
 
-li.sport .teamlist-header {
+li.sport .teamlist-header, .stat-val-outer {
 	cursor: pointer;
+}
+
+.edit-message {
+	font-size: .7em;
+	padding-left: 10px;
 }
 
 
