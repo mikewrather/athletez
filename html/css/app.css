@@ -889,7 +889,7 @@ li.fitnessbasic {
 }
 .fitness-overview-data-piece span {
 	font-weight: bolder;
-	font-size: 1.6em;
+	font-size: 1em;
 }
 .fitness-overview-data-piece img {
 	width: 55px;
@@ -2039,6 +2039,10 @@ float: none;
 .team-list-icon {
 	float: left;
 	margin-right: 10px;
+}
+
+li.sport .teamlist-header {
+	cursor: pointer;
 }
 
 
