@@ -1633,7 +1633,7 @@ div.game-info .game-score .team-score.win {
 	margin: 0 auto;
 }
 
-.button.close {
+#fbInvite .close, .button.close {
 	color: #000;
 }
 
@@ -1841,6 +1841,7 @@ html body .common-modal.normal-popup {
 
 .modal-header .close {
 	color: #000;
+	font-size: 1.8em;
 }
 
 li#add-icons {
