@@ -17,7 +17,7 @@
 											echo $lonlat[0].",".$lonlat[1];
 										?>&markers=<?php
 											echo urlencode("color:blue|".$lonlat[1].",".$lonlat[0]);
-										?>&zoom=14&size=150x150&sensor=false" /></a>
+										?>&zoom=12&size=150x150&sensor=false" /></a>
 								</td>
 								<td valign="top" style="font-size: 18px; line-height: 22px; padding-left: 15px;">
 									<span style=" color: #333; text-decoration: none;"><?php
@@ -41,22 +41,33 @@
 
 if(strtotime($obj_full->gameDay." ".$obj_full->gameTime) > time())
 {
-	//$tz = date_default_timezone_get();
+	$timestring = strtotime($obj_full->gameDay." ".$obj_full->gameTime);
 
-	//date_default_timezone_set('UTC');
-	$dtt_start = date('Ymd\THis\z',strtotime($obj_full->gameDay." ".$obj_full->gameTime));
-	$dtt_end = date('Ymd\THis\z',strtotime($obj_full->gameDay." ".$obj_full->gameTime) + 7200);
-	//date_default_timezone_set($tz);
+	$url = "https://maps.googleapis.com/maps/api/timezone/json?location=".$lonlat[1].",".$lonlat[0]."&timestamp=".$timestring."&sensor=false";
+	$tzjson = file_get_contents($url);
+	$tzjson = get_object_vars(json_decode($tzjson));
+	//print_r($tzjson);
+
+	$timestring = $timestring - $tzjson['rawOffset'] - $tzjson['dstOffset'];
+
+	$dtt_start = date('Ymd\THis\Z',$timestring);
+	$dtt_end = date('Ymd\THis\Z',$timestring + 3600);
+
 	$attachment = "BEGIN:VCALENDAR
 VERSION:2.0
 PRODID:-//Athletez//EN
 BEGIN:VEVENT
-UID:$dtt_start@athletez.com
+UID:event".$obj_full->id."@".$_SERVER['SERVER_NAME']."
 DTSTAMP:".$dtt_start."
 DTSTART:".$dtt_start."
 DTEND:".$dtt_end."
 SUMMARY:".$obj_full->name()."
-DESCRIPTION:
+DESCRIPTION:";
+
+	if($feed->hasAction('updated')) $attachment.= "
+STATUS:UPDATED";
+
+	$attachment .= "
 LOCATION:".$obj_full->get_game_location()."
 END:VEVENT
 END:VCALENDAR";
