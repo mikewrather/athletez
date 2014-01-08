@@ -32,8 +32,7 @@ define([
 	"roster/views/roster",
 	"game/views/participants-list-main"
 
-], function (require, pageLayoutTemplate, voteView)
-{
+], function (require, pageLayoutTemplate, voteView) {
 	var GameController,
 		facade = require("facade"),
 		Controller = require("controller"),
@@ -175,6 +174,7 @@ define([
 				model: new model(),
 				team_id: id,
 				team_name: name,
+				controllerObject: this,
 				name: "roster images" + Math.random() * Math.random(),
 				destination: "#roster_wrap_"+this.rosterViewsCount
 			});
