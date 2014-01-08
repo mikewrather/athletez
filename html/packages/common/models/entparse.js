@@ -189,7 +189,7 @@ define([ 'models', 'facade' ], function(models, facade) {
 			return_data._link = "javascript: void(0);";
 			return_data._has_link = false;
 
-			if(mpay.media.hasOwnProperty('is_owner')) show_edit = mpay.media.is_owner;
+			if(mpay.media.hasOwnProperty('is_owner')) return_data.show_edit = mpay.media.is_owner;
 			return_data._noicon_text = "play";
 			return_data._color = '#e27171';
 			return return_data;

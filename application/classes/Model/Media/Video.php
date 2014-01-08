@@ -242,6 +242,15 @@ class Model_Media_Video extends ORM
 		return $results;
 	}
 
+	public function owner()
+	{
+		return $this->media->owner();
+	}
+
+	public function is_owner($user)
+	{
+		return $this->media->is_owner($user);
+	}
 
 	public static function getVideos($obj, $sports_id = null)
 	{
