@@ -3,11 +3,12 @@
 // module as controller for 'registration' package
 // Returns {RegistrationController} constructor
 
-define(["require", "text!fbinvite/templates/layout.html", "facade", "controller", "models", "views", "utils", "fbinvite/views/image-list", 'fbinvite/collections/fbinvite', 'media/models/image'], function(require, pageLayoutTemplate) {
+define(["require", "text!fbinvite/templates/layout.html", "facade", "controller", "models", "views", "utils", "fbinvite/views/image-list", 'fbinvite/collections/fbinvite', 'media/models/image', 'signup/views/facebooksignup'], function(require, pageLayoutTemplate) {
 
 	var RegistrationController, facade = require("facade"), Controller = require("controller"), models = require("models"), views = require("views"), utils = require("utils"), LayoutView = views.LayoutView, $ = facade.$, _ = facade._, debug = utils.debug, Channel = utils.lib.Channel, cssArr = ["/pages/registration/registration.css", "/pages/signup/css/signupstyle.css", "/css/style.jrac.css"];
 	ProfileImageListView = require("fbinvite/views/image-list"),
 	MediaImageModel = require("media/models/image"),
+	fbreg = require('signup/views/facebooksignup'),
 	FBInviteList = require('fbinvite/collections/fbinvite');
 	return Controller.extend({
 		initialize : function(options) {
@@ -23,7 +24,7 @@ define(["require", "text!fbinvite/templates/layout.html", "facade", "controller"
 
 		init : function() {
 			ga('send', 'event', 'FB Invite', 'Header', 'Loading reg header');
-						this.modelHTML = '<div id="fbInvite" class="modal hide fade model-popup-h">'+
+			this.modelHTML = '<div id="fbInvite" class="modal hide fade model-popup-h">'+
 			'<div class="closer"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">	&times;</button></div>'+			
 			'<div id="modalBody" class="modal-body page-content-h">'+
 			'</div></div>';
@@ -36,10 +37,10 @@ define(["require", "text!fbinvite/templates/layout.html", "facade", "controller"
 		createData : function() {
 			this.images = new FBInviteList();
 			this.images.targetElement = "#image-wrap-h";
-			this.ajaxCalls.push(this.images.fetch());					
+			this.ajaxCalls.push(this.images.fetch());
 		},
-
-		handleDeferreds : function() {
+		
+		handleRequestSuccess: function() {
 			var _self = this;
 			$.when(this.images.request).done(function() {
 				_self.images.allRecords = _self.images.toJSON();
@@ -52,12 +53,25 @@ define(["require", "text!fbinvite/templates/layout.html", "facade", "controller"
 						}
 						if(_self.images.models[i]) _self.images.models[i].destroy();							
 					}
+					
 					if(arr.length) {
 						_self.images.reset(arr);
 						_self.setupFriendsList();
 					}
 				});
 			});
+		},
+
+		handleDeferreds : function() {
+			var _self = this;
+			$.when(this.images.request).fail(function() {
+				fbregistration = new fbreg();
+           		fbregistration.signupFacebook(undefined, function() {
+					_self.ajaxCalls.push(_self.images.fetch());
+					_self.handleRequestSuccess();
+           		});
+			});
+			_self.handleRequestSuccess();
 		},
 
 		refreshPage : function() {
