@@ -12,7 +12,7 @@ class Model_User_Followers extends ORM
 	protected $_belongs_to = array(
 		"user" => array(
 			"model" => "User_Base",
-			"foreign_key" => "users_id"
+			"foreign_key" => "follower_users_id"
 		)
 	);
 
