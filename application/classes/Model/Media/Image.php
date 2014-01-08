@@ -245,6 +245,8 @@ class Model_Media_Image extends ORM
 		$user->user_picture = $result->id;
 		$user->save();
 
+		Model_Site_Feed::addToFeed($result,"Change Userpic");
+
 		unlink($local_path);
 
 		return $result;

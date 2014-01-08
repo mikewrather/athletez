@@ -167,11 +167,13 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 	public function is_owner($user){
 		$curr_user = Auth::instance()->get_user();
 		if($curr_user->has('roles', ORM::factory('Role', array('id' =>10)))) return true;
-		if (is_object($user)){
+	/*	if (is_object($user)){
 			return intval($user->id) == $this->owner();
 		}else{
 			return intval($user) == $this->owner();
 		}
+	*/
+		return false;
 	}
 
     public function deleteTeam($args)

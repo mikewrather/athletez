@@ -72,6 +72,7 @@ class Email {
 
 		$pm->addTo($queue->to_address, $user->name());
 
+		try{
 			$result = $pm->send();
 			if ($result)
 			{
@@ -81,6 +82,10 @@ class Email {
 					'queue' => $queue
 				));
 			}
+		} catch(Exception $e){
+
+		}
+
 	}
 
 	public static function generateUniqueString(){

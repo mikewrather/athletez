@@ -133,6 +133,8 @@ class Model_User_Followers extends ORM
 					$type = $enttype->api_name;
 				}
 
+
+
 				$obj_as_array = $obj->getBasics();
 				$use_feed = $feedparent ? $feedparent : $feed;
 				$use_subject = $subject_parent ? $subject_parent : $subject;
@@ -145,13 +147,19 @@ class Model_User_Followers extends ORM
 
 				$backlink = self::genBackLink($type,$subject,$obj);
 
-				$action = View::factory("email/notification/content/$type")
-					->bind('obj',$obj_as_array)
-					->bind('obj_full',$obj)
-					->bind('subject',$use_subject)
-					->bind('feed',$use_feed)
-					->bind('queued',$queued);
-
+				try{
+					$action = View::factory("email/notification/content/$type")
+						->bind('obj',$obj_as_array)
+						->bind('obj_full',$obj)
+						->bind('subject',$use_subject)
+						->bind('feed',$use_feed)
+						->bind('queued',$queued);
+				}
+				catch (Exception $e)
+				{
+					$queued->delete();
+					continue;
+				}
 				$baseview = View::factory('email/notification/base')
 					->bind('email_reason',$follow->reason)
 					->bind('pingBack',$pingBack)
@@ -172,8 +180,15 @@ class Model_User_Followers extends ORM
 
 	public static function processFeedItem($obj,$feed)
 	{
+
+
 		$enttype = ORM::factory('Site_Enttype',Ent::getMyEntTypeID($obj));
 		$type = $enttype->api_name;
+
+		if($type == 'image' && $feed->hasAction('userpic')){
+			$obj = $obj->media;
+			$type='media';
+		}
 
 		$subject = $obj->getSubject();
 		$author = $feed->getAuthor();
@@ -231,6 +246,11 @@ class Model_User_Followers extends ORM
 				break;
 			case 'media':
 				$sub_line = $author->name() . " tagged an image you're in.";
+				if($feed->hasAction(array('userpic')))
+				{
+					$hisorher = $subject->user->gender=='M' ? 'his' : 'her';
+					$sub_line = $subject->name()." updated $hisorher Profile Image";
+				}
 				break;
 			case 'game':
 				if($feed->hasAction(array('comment'))) $sub_line = $subject->name()." has a new comment on the game page!";
