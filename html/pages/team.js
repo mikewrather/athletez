@@ -349,23 +349,26 @@ define([
         },
         
         setupAddMediaView: function(target) {
-            var addMediaView;
+            var position;
+			if (this.addMediaView) {
+                $(this.addMediaView.destination).html('');
+                position = $.inArray(this.addMediaView, this.scheme);
+                if ( ~position ) this.scheme.splice(position, 1);
+	        }
 
-            addMediaView = new TeamAddMediaView({
+            this.addMediaView = new TeamAddMediaView({
                 model: this.addmedia,
                 team_id: this.basics.id,
                 name: "Add_Media",
                 destination: target
             });
             
-            this.scheme.push(addMediaView);
+            this.scheme.push(this.addMediaView);
             this.layout.render();
         },
         
         
         setUpVoteView: function() {
-        	// votes view
-        	//alert("sdsd"+ $("#vote-view").length);
         	 this.votesView = new VotesView({
                 model: this.basics,
                 id: this.id,
