@@ -57,6 +57,11 @@ class Model_Site_Enttype extends ORM
 		return is_array($config_array) ? $config_array['class_name'] : false;
 	}
 
+	static function getClassByID($id){
+		$config_array = self::getConfigByID($id);
+		return is_array($config_array) ? $config_array['class_name'] : false;
+	}
+
 	static function getMyTable($enttypeID)
 	{
 		$config_array = self::getConfigByID($enttypeID);
@@ -152,6 +157,15 @@ class Model_Site_Enttype extends ORM
 	{
 		$user = Auth::instance()->get_user();
 		if(!$user) return false;
+
+		if(Ent::getClassByID($enttypes_id) == 'Media_Image' || Ent::getClassByID($enttypes_id) == 'Media_Video'){
+			$subject_child = Ent::eFact($enttypes_id,$subject_id);
+			if(is_object($subject_child) && is_subclass_of($subject_child,'ORM') && $subject_child->loaded()){
+				$subject = $subject_child->media;
+				$enttypes_id = Ent::getMyEntTypeID('Media_Base');
+				$subject_id = $subject->id;
+			}
+		}
 
 		$vote = ORM::factory('Site_Vote')
 			->where('voter_users_id','=',$user->id)

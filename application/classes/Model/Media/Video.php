@@ -73,13 +73,17 @@ class Model_Media_Video extends ORM
 		'added_function_calls' => array(
 			'video_type' => 'get_types_and_meta_as_array',
 			'standard_thumb' => 'get_standard_thumb',
-			'can_follow' => 'can_follow'
+			'can_follow' => 'can_follow',
+			'num_votes' => 'get_num_votes'
 		),
 
 		// array of values only.  Each value is the name of a column to exclude
 		'exclude_columns' => array(),
 	);
-
+	public function get_num_votes()
+	{
+		return Model_Site_Vote::getNumVotes($this->media);
+	}
 
 	public function get_standard_thumb()
 	{

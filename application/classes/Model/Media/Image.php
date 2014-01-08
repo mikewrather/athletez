@@ -65,7 +65,7 @@ class Model_Media_Image extends ORM
 	}
 	public function get_num_votes()
 	{
-		return Model_Site_Vote::getNumVotes($this);
+		return Model_Site_Vote::getNumVotes($this->media);
 	}
 
 	public function getTypes()
