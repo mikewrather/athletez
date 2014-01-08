@@ -9,6 +9,13 @@ class Model_User_Followers extends ORM
 {
 	protected $_table_name = 'followers';
 
+	protected $_belongs_to = array(
+		"user" => array(
+			"model" => "User_Base",
+			"foreign_key" => "users_id"
+		)
+	);
+
 	public static function num_followers($obj){
 		$subject_enttypes_id = Model_Site_Enttype::getMyEntTypeID($obj);
 		$subject_id = $obj->id;
@@ -109,13 +116,14 @@ class Model_User_Followers extends ORM
 		foreach($direct_followers as $follow)
 		{
 			// do nothing if the author is also the follower
-			//if($follow->follower_users_id == $author->id) continue;
+			if($follow->follower_users_id == $author->id) continue;
 
 			Model_Site_Feedfollow::addFeedFollow($feed->id,$follow->id);
 
 			$args = array(
 				'users_id' => $follow->follower_users_id,
-				'to_address' => 'mike.wrather@gmail.com'
+			//	'to_address' => $follow->user->email
+				'to_address' => 'mike@athletez.com'
 			);
 
 			$queue = ORM::factory('Email_Queue');
@@ -132,8 +140,6 @@ class Model_User_Followers extends ORM
 					$enttype = ORM::factory('Site_Enttype',Ent::getMyEntTypeID($obj));
 					$type = $enttype->api_name;
 				}
-
-
 
 				$obj_as_array = $obj->getBasics();
 				$use_feed = $feedparent ? $feedparent : $feed;
