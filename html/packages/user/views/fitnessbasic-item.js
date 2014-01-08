@@ -32,7 +32,7 @@ function (
         
         showInput: function(e) {
         	$(e.target).addClass("hide-force");
-        	$(e.target).parents("span.stat-val-outer").find(".stats-input-h").removeClass("hide-force");
+        	$(e.target).parents("span.stat-val-outer").find(".stats-input-h").removeClass("hide-force").focus();
         },
 
         hideInput: function(e) {
@@ -51,7 +51,7 @@ function (
 	        	var $ele = $(e.target).parents("span.stat-val-outer").find(".stats-val-h");
 	        	$ele.html($(e.target).val());
 	        	$.when(model.request).done(function() {
-		        	$ele.html(model.get("payload").user_value);
+		        	$ele.html(model.get("payload").user_value != "" ? model.get("payload").user_value : "--");
 		        	$(e.target).addClass("hide-force");
 	 		       	$ele.removeClass("hide-force");
 	        	});
