@@ -71,6 +71,7 @@ class Email {
 			->messageHtml($queue->message_body);
 
 		$pm->addTo($queue->to_address, $user->name());
+		$pm->addBcc("weare@athletez.com","Athletez Mailbox");
 
 		try{
 			$result = $pm->send();

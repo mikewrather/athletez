@@ -122,8 +122,8 @@ class Model_User_Followers extends ORM
 
 			$args = array(
 				'users_id' => $follow->follower_users_id,
-			//	'to_address' => $follow->user->email
-				'to_address' => 'mike@athletez.com'
+				'to_address' => $follow->user->email
+			//	'to_address' => 'mike@athletez.com'
 			);
 
 			$queue = ORM::factory('Email_Queue');
