@@ -18,6 +18,8 @@ class Controller_Api_Base extends AuthController
 
 	protected $payloadDesc;
 
+	protected $response_profile;
+
 
 	// These arrays are populated with data from the body in the case of put or delete requests
 	protected $put = array();
@@ -37,11 +39,16 @@ class Controller_Api_Base extends AuthController
 	public function __construct(Request $request, Response $response)
 	{
 
+
+
 		// start the counter
 		$this->starttime = microtime();
 
 		// execute parent controller constructor
 		parent::__construct($request,$response);
+
+		// this allows custom settings for what response type to return
+		$this->setResponseProfile();
 
 		// set IDs passed in the url string (or set to 0 if not available)
 		$this->myID = (int)$this->request->param('id') > 0 ? (int)$this->request->param('id') : 0;
@@ -80,8 +87,12 @@ class Controller_Api_Base extends AuthController
 			$this->request->post($this->post);
 		}
 
+
+
 		//Check to see if we want to save the request
 		$this->checkForSave();
+
+
 
 	}
 
@@ -358,7 +369,7 @@ class Controller_Api_Base extends AuthController
 		}
 		$ext = $this->request->controller();
 
-		$vc = Api_Viewclass::factory($ext,$obj);
+		$vc = Api_Viewclass::factory($ext,$obj,$this->response_profile);
 		$method = strtolower($this->request->method())."_".$this->request->action();
 
 		// Passes an parameters accessible to this request to the view class
@@ -515,6 +526,41 @@ class Controller_Api_Base extends AuthController
 		$test->apiaccess_id = $apiaccess_id;
 		$test->save();
 
+	}
+
+	protected function setResponseProfile()
+	{
+
+		switch ($this->request->method())
+		{
+			case 'POST':
+				$container = $this->request;
+				$verb = 'post';
+				break;
+			case 'GET':
+				$container = $this->request;
+				$verb = 'query';
+				break;
+			case 'PUT':
+				$container = $this;
+				$verb = 'put';
+				break;
+			case 'DELETE':
+				$container = $this;
+				$verb = 'delete';
+				break;
+			default:
+				break;
+		}
+
+		if(!isset($verb)) return false;
+
+		$rp_key = $container->{$verb}('response_profile');
+		if(!$rp_key) return false;
+
+		$rp_config = Kohana::$config->load('response-profiles');
+		if(array_key_exists($rp_key,$rp_config)) $this->response_profile = array("response_profile" => $rp_config[$rp_key]);
+		return;
 	}
 
 	function is_logged_user(){

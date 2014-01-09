@@ -360,7 +360,13 @@ class ORM extends Kohana_ORM
 
 		// Get whether to return vote / follow information for this item
 		$settings['get_vote_and_follow'] = is_bool($settings['get_vote_and_follow']) ? $settings['single_item'] : TRUE;
-		
+
+		// Get whether to return ownership
+		$settings['get_ownership'] = is_bool($settings['get_ownership']) ? $settings['get_ownership'] : TRUE;
+
+		// Get whether to return ownership
+		$settings['response_profile'] = sizeof($settings['response_profile']) > 0 ? $settings['response_profile'] : FALSE;
+
 		// exclude list can hold a list of columns to exclude from the results
 		$class_settings_arr['exclude_columns'] = (is_array($class_settings_arr['exclude_columns']) && !empty($class_settings_arr['exclude_columns'])) ?
 			$class_settings_arr['exclude_columns'] : array();
@@ -391,7 +397,8 @@ class ORM extends Kohana_ORM
 		if(isset($is_following)) $retArr['is_following'] = $is_following;
 
 		//check to see if the logged user is the owner of this object
-		if($logged_user) $retArr['is_owner'] = (method_exists($this,'is_owner')) ? $this->is_owner($logged_user) : false;
+		if($logged_user && $settings['get_ownership'])
+			$retArr['is_owner'] = (method_exists($this,'is_owner')) ? $this->is_owner($logged_user) : false;
 
 		// Set the microtime of this call for tracking, but only in dev mode
 		if(Kohana::$environment == Kohana::DEVELOPMENT)	$retArr['microtime'] = microtime();
@@ -410,12 +417,10 @@ class ORM extends Kohana_ORM
 			//Check if we just want a single item and if we do, only continue if this is the correct item *USES COLUMN KEY FROM ABOVE
 			if($settings['single_item'] !== FALSE && $settings['single_item'] != $column_key && $settings['recursion_count'] == 0) continue;
 
-			//Check if this key is manually excluded in the settings  *USES COLUMN KEY FROM ABOVE
-			if(in_array($column_key,$class_settings_arr['exclude_columns'])) continue;
-
-			// add this column's value to the return array
-			$retArr[$column_key] = utf8_encode($this->$column);
-		//	$retArr[$column_key] = $this->$column;
+			if((int)$settings['recursion_limit'] > 0 && $settings['recursion_count'] > $settings['recursion_limit']){
+				$retArr[$column_key] = $settings['recursion_limit'] . ":" . $settings['recursion_count'];
+				continue;
+			}
 
 			// Allows us to turn off sub-objects when set to false
 			if($settings['get_sub_objects'] === TRUE)
@@ -423,35 +428,64 @@ class ORM extends Kohana_ORM
 				// Check that this is an integer and not a primary key (id) so we don't try to create an object out of a string or something
 				if($column_meta['type'] == 'int' && $column_meta['key'] != 'PRI')
 				{
-					// Check for an alternative fk name and if one exists for this column use it
-					$real_fk_name = (
-							is_array($class_settings_arr['alternate_fk_names'])
-						&&  !empty($class_settings_arr['alternate_fk_names'])
-						&&  array_key_exists($column,$class_settings_arr['alternate_fk_names'])
-					) ?	$class_settings_arr['alternate_fk_names'][$column] : $column;
+					//Set up the string we will use as the key for any sub-objects.  We set it up here so we can include it in the profile check
+					// we can use an isset check on this variable below to test whether we want to include sub-objects
+					$sub_obj_key = str_replace('_id','',$column).'_obj';
 
-					// Check if it exists as an id1 and if it does try to create an object from it.  If that fails then ignore the next section.
-					if(is_object($sub_object = Ent::get_obj_for_fk_name($real_fk_name,(int)$this->$column))) //passes the column name and id of fk
-					{
-						//Set up the string we will use as the key
-						$sub_obj_key = str_replace('_id','',$column).'_obj';
+					// This will use the '$get_basics_exceptions' property to alter the column's name if necessary
+					// check if array key exists and if it does than use the alternate naming
+					$sub_obj_key = (
+						!empty($class_settings_arr['column_name_changes'])
+						&&  array_key_exists($sub_obj_key,$class_settings_arr['column_name_changes'])
+					) ? $class_settings_arr['column_name_changes'][$sub_obj_key] : $sub_obj_key;
+				}
+			}
 
-						// This will use the '$get_basics_exceptions' property to alter the column's name if necessary
-						// check if array key exists and if it does than use the alternate naming
-						$sub_obj_key = (
-								!empty($class_settings_arr['column_name_changes'])
-							&&  array_key_exists($sub_obj_key,$class_settings_arr['column_name_changes'])
-						) ? $class_settings_arr['column_name_changes'][$sub_obj_key] : $sub_obj_key;
+			//process response profile if it's set
+			if($settings['response_profile'])
+			{
+				if(array_key_exists($column_key,$settings['response_profile']) || array_key_exists($sub_obj_key,$settings['response_profile']))
+				{
+					// if the key is set to an integer it can either be used to exclude the column (0) or set a recursion limit
+					if(is_integer($settings['response_profile'][$column_key]) && $settings['response_profile'][$column_key] == 0)
+						continue;
+					elseif(is_integer($settings['response_profile'][$column_key]))
+						$settings['recursion_limit'] = $settings['response_profile'][$column_key];
 
+					// now we do the exact same check for the sub obj key in case that's the one that's been set
+					if(is_integer($settings['response_profile'][$sub_obj_key]) && $settings['response_profile'][$sub_obj_key] == 0)
+						continue;
+					elseif(is_integer($settings['response_profile'][$sub_obj_key]))
+						$settings['recursion_limit'] = $settings['response_profile'][$sub_obj_key];
+				}
+			}
 
-						//Check if current object type exists in the list of previously called entities
-						$recursion_is_safe = !(in_array(Ent::getMyEntTypeID($sub_object),$settings['called_entities'])) ? TRUE : FALSE;
+			//Check if this key is manually excluded in the settings  *USES COLUMN KEY FROM ABOVE
+			if(in_array($column_key,$class_settings_arr['exclude_columns'])) continue;
 
-						// If there is no infinite recursion protection in place, call getBasics function
-						// for this sub object, passing settings array down
-						if($recursion_is_safe) $retArr[$sub_obj_key] = $sub_object->getBasics($settings);
-						else $retArr[$sub_obj_key] = "recursion protection";
-					}
+			// add this column's value to the return array
+			$retArr[$column_key] = utf8_encode($this->$column);
+
+			// Allows us to turn off sub-objects when set to false
+			if(isset($sub_obj_key))
+			{
+				// Check for an alternative fk name and if one exists for this column use it
+				$real_fk_name = (
+						is_array($class_settings_arr['alternate_fk_names'])
+					&&  !empty($class_settings_arr['alternate_fk_names'])
+					&&  array_key_exists($column,$class_settings_arr['alternate_fk_names'])
+				) ?	$class_settings_arr['alternate_fk_names'][$column] : $column;
+
+				// Check if it exists as an id1 and if it does try to create an object from it.  If that fails then ignore the next section.
+				if(is_object($sub_object = Ent::get_obj_for_fk_name($real_fk_name,(int)$this->$column))) //passes the column name and id of fk
+				{
+					//Check if current object type exists in the list of previously called entities
+					$recursion_is_safe = !(in_array(Ent::getMyEntTypeID($sub_object),$settings['called_entities'])) ? TRUE : FALSE;
+
+					// If there is no infinite recursion protection in place, call getBasics function
+					// for this sub object, passing settings array down
+					if($recursion_is_safe) $retArr[$sub_obj_key] = $sub_object->getBasics($settings);
+					else $retArr[$sub_obj_key] = "recursion protection";
 				}
 			}
 		}
