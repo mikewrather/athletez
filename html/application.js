@@ -238,7 +238,7 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
             chromeBootstrap();
 	    	function initFBAccept(userId) {
 	    		$("body").addClass("fbaccept");
-				var title = "Athletez - We Are Athletez";
+				var title = "Athletez - We Are Athletes";
 	    		var landing = new landingView({userId: fbId});
 	    		
 			    if(!fbId && $('div.register-wrapper').length == 0) {

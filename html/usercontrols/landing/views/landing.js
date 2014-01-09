@@ -42,20 +42,20 @@ define(['require',
 		/*initialize gets called by default when constructor is initialized*/
 		initialize : function(options) {
 			Channel('load:css').publish(this.cssArr);
-			_self = this;
+			var _self = this;
 			_self.data = {};
 			_self.selectedOptions = [];
 			_self.setOptions(options);
 			// get the user detail if fbid is defined
 			try {
-			if(options.userId) {
+			if(typeof(options)=='object' && options.userId) {
 				_self.userId = options.userId;
 				_self.getUserData();
 			} else {
 				_self.render();
 			}
 			} catch(e) {
-				
+
 			}
 		},
 		
