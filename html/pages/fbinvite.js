@@ -5,10 +5,21 @@
 
 define(["require", "text!fbinvite/templates/layout.html", "facade", "controller", "models", "views", "utils", "fbinvite/views/image-list", 'fbinvite/collections/fbinvite', 'media/models/image'], function(require, pageLayoutTemplate) {
 
-	var RegistrationController, facade = require("facade"), Controller = require("controller"), models = require("models"), views = require("views"), utils = require("utils"), LayoutView = views.LayoutView, $ = facade.$, _ = facade._, debug = utils.debug, Channel = utils.lib.Channel, cssArr = ["/pages/registration/registration.css", "/pages/signup/css/signupstyle.css", "/css/style.jrac.css"];
-	ProfileImageListView = require("fbinvite/views/image-list"),
-	MediaImageModel = require("media/models/image"),
-	FBInviteList = require('fbinvite/collections/fbinvite');
+	var RegistrationController,
+		facade = require("facade"),
+		Controller = require("controller"),
+		models = require("models"),
+		views = require("views"),
+		utils = require("utils"),
+		LayoutView = views.LayoutView,
+		$ = facade.$,
+		_ = facade._,
+		debug = utils.debug,
+		Channel = utils.lib.Channel,
+		cssArr = ["/pages/registration/registration.css", "/pages/signup/css/signupstyle.css", "/css/style.jrac.css","pages/fbinvite/fbinvite.css"],
+		ProfileImageListView = require("fbinvite/views/image-list"),
+		MediaImageModel = require("media/models/image"),
+		FBInviteList = require('fbinvite/collections/fbinvite');
 	return Controller.extend({
 		initialize : function(options) {
 			this.popup = (options.popup)?true:false;
