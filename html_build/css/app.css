@@ -583,15 +583,15 @@ span.ui-helper-hidden-accessible {
 	display: block;
 }
 .bubble .content p.comment-text {
-	font-family: inherit;
-	font-weight: normal;
-	font-size: .9em;
-	padding: 4px;
+    font-family: inherit;
+    font-weight: normal;
+    font-size: .8em;
+    padding: 5px 10px 5px 15px;
 }
 .pointer {
 	content: "";
 	position: absolute;
-	bottom: 16px;
+	top: 35px;
 	left: -40px;
 	display: block;
 	width: 0;
@@ -599,9 +599,9 @@ span.ui-helper-hidden-accessible {
 	border-color: transparent rgb(229, 229, 229);
 	border-style: solid;
 	border-width: 18px 77px 18px 0;
-	-webkit-transform: rotate(-25deg);
-	-ms-transform: rotate(-25deg);
-	transform: rotate(-25deg);
+	-webkit-transform: rotate(15deg);
+	-ms-transform: rotate(15deg);
+	transform: rotate(15deg);
 }
 .see-more-h {
 	float: right;
@@ -739,7 +739,7 @@ li.fitnessbasic {
 }
 .fitness-overview-data-piece span {
 	font-weight: bolder;
-	font-size: 1.6em;
+	font-size: 1em;
 }
 .fitness-overview-data-piece img {
 	width: 55px;
@@ -748,11 +748,12 @@ li.fitnessbasic {
 .stats-panel {
 	background-color: #e0e0e0;
 	padding: 0;
-	width: 35%
+	width: 35%;
+	min-height: 210px;
 }
 .stats-header {
 	background-color: #b9b9ba;
-	font-family: 'Nunito', 'HelveticaNeue';
+	font-family: 'Raleway';
 	font-weight: bold;
 	font-size: 1.7em;
 	padding: 10px;
@@ -772,7 +773,7 @@ li.fitnessbasic {
 span.team-label, span.event-sport-label {
 	display: inline-block;
 	margin-left: 100px;
-	font-family: 'Nunito', 'HelveticaNeue';
+	font-family: 'Helvetica Neue';
 	font-weight: bolder;
 	font-size: 1.1em;
 }
@@ -850,11 +851,6 @@ a.add-game-h {
 @-moz-keyframes blink {
 0% { background: #000; }
 100% { background: #FF0; }
-}
-.newly-added-comment {
-	-webkit-animation: blink 1s ease-in-out 1;
-	-moz-animation: blink 1s ease-in-out 1;
-	animation: blink 1s ease-in-out 1;
 }
 #new-comment {
 	width: 65%;
@@ -1293,25 +1289,38 @@ div.game-info .game-score .team-score.win {
 #add-media li a #addVideo, #add-icons li a#addVideo{
     background-color: #C43737;
 }
-.add-to-roster-h {
-	background-image: url('images/icons/add-team.png');
+.add-to-roster-h, .add-to-event {
+	background-image: url('http://athletez.s3.amazonaws.com/resources/img/actions/addtoteam.png');
 	background-size: cover;
-	min-height: 220px;
-	width: 220px;
-	float: left;
+	min-height: 110px;
+	width: 110px;
+	background-size: contain;
 	background-color: #928add;
 }
 #add-icons {
-	margin-top: 11px;
+	padding:10px;
 }
 #addPhoto {
-	background-image: url('images/icons/add-photo.png');
+	background-color: #ddd43a;
+	background-image: url('http://athletez.s3.amazonaws.com/resources/img/actions/addphoto.png');
 }
 #addVideo {
-	background-image: url('images/icons/add-video.png');
+	background-color: #c43737;
+	background-image: url('http://athletez.s3.amazonaws.com/resources/img/actions/addvideo.png');
 }
 .add-comment-h {
 	background-image: url('http://cdn.athletez.com/resources/img/comment.png');
+}
+.add-to-fans {
+	background-image: url('https://athletez.s3.amazonaws.com/resources/img/actions/follow.png');
+	background-color: #1aa0ae;
+}
+.fb-invite-tile-btn {
+	background-color: #6b74b7;
+	background-image: url('http://athletez.s3.amazonaws.com/resources/img/actions/fbinvite.png');
+}
+.blue-loading {
+	background-image: url('http://cdn.athletez.com/resources/img/blue_loading.gif');	
 }
 .display_none_important {
 	display: none !important;
@@ -1356,7 +1365,7 @@ div.game-info .game-score .team-score.win {
 	min-height: 100px;
 	margin: 0 auto;
 }
-.button.close {
+#fbInvite .close, .button.close {
 	color: #000;
 }
 #search-result {
@@ -1365,9 +1374,6 @@ div.game-info .game-score .team-score.win {
 .image-list {
 	float: left;
 	width: 100%;
-}
-.add-to-event {
-	margin-right: 25px;
 }
 form fieldset ul li:first-child {
 	margin-left: -20px;
@@ -1527,6 +1533,7 @@ html body .common-modal.normal-popup {
 }
 .modal-header .close {
 	color: #000;
+	font-size: 1.8em;
 }
 li#add-icons {
 	float: left;
@@ -1545,12 +1552,17 @@ li#add-icons ul {
 	width: 100%;
 	float: left;
 }
-#roster-wrap ul li.teams {
+#roster-wrap ul li.teams, #add-participants-icons, #add-fans-icons {
 	width: 220px;
-	
 	text-align: center;
 }
-div.edit{
+#add-participants-icons a, #add-fans-icons a {
+	height: 110px;
+	line-height: 110px;
+	width: 110px;
+	display: inline-block;
+}
+div.edit {
     background:url(http://cdn.athletez.com/resources/img/pencil-25.png) no-repeat;
     background-size: cover;
     height: 25px;
@@ -1579,4 +1591,118 @@ div.edit{
 	background-color: transparent;
 	padding: 0;
 	width: 40px;
+}
+#search-area input {
+	margin: 15px;
+	width: 300px;
+	padding: 5px;
+}
+#inviteView #regcontainer {
+	max-width: 400px;
+}
+.fbaccept #main {
+	padding-bottom: 0;
+	margin-bottom: 0;
+}
+#inviteView {
+	padding-bottom: 60px;
+	position:absolute; left:0;
+	width:100%;
+	background-size:cover; 
+}
+#add-icons {
+	width: 220px;
+	height: 220px;
+}
+#add-media {
+	width: 100%;
+	height: 100%;
+}
+#add-media > div {
+	height: 50%;
+	display: table-row;
+	float: left;
+	width: 100%;
+}
+#add-media a {
+	width: 110px;
+	height: 110px;
+	padding: 0;
+	float: left;
+	background-size: contain;
+}
+#add-media span {
+	width: 100px;
+	display: table-cell;
+	vertical-align: middle;
+	text-align: center;
+	height: 110px;
+	padding: 0 5px;
+	margin: 0;
+}
+#add-media .hide {
+	visibility: hidden !important;
+}
+#add-media a#addVideo {
+	float: right;
+	background-position: 100%;
+}
+li.add-tile-outer {
+	padding: 0 !important;
+	margin: 10px;
+	float: left;
+}
+.add-tile-outer > div {
+	height: 50%;
+	width: 100%;
+	display: table-row;
+}
+.add-tile-outer .hide {
+	visibility: hidden !important;
+}
+.add-tile-outer a {
+	width: 110px;
+	height: 110px;
+	min-height: 100px !important;
+	background-size: contain;
+}
+.add-tile-outer span {
+	width: 110px;
+	display: table-cell;
+	vertical-align: middle;
+	height: 110px;
+}
+#fbInvite ul li.image {
+	float: left;
+}
+#fbInvite .image-list {
+	margin: 0 auto;
+	width: 970px;
+	float: none;
+}
+.hide-force {
+	display: none !important;
+}
+.stats-input {
+	width: 30px;
+}
+.stats-empty-area {
+	display: table-cell;
+	vertical-align: middle;
+	height: 210px;
+	text-align: center;
+}
+.team-list-icon {
+	float: left;
+	margin-right: 10px;
+}
+li.sport .teamlist-header, .stat-val-outer {
+	cursor: pointer;
+}
+.edit-message {
+    font-weight: lighter;
+    color: #e3e3e3;
+	font-size: .7em;
+	padding-left: 10px;
+    float: right;
 }

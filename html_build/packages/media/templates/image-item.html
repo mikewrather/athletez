@@ -1,6 +1,6 @@
 <a href="{{_link}}" data-index="{{index}}" data-id="{{_media_id}}" class="image-outer-h {{^_has_link}}open-photo-player-h{{/_has_link}}">
 	<div class="image-item-container">
-		{{#_thumbnail}}<img class="list-thumbnail" src="{{_thumbnail}}" alt=""/>{{/_thumbnail}}
+		{{#_thumbnail}}<img itemprop="image" class="list-thumbnail" src="{{_thumbnail}}" alt=""/>{{/_thumbnail}}
 		{{^_thumbnail}}
 
 			<div class="game-tile">{{_noicon_text}}</div>
@@ -30,9 +30,13 @@
 					<span>{{label}}</span>
 				{{/label}}
 				{{^label}}
-					<span>{{_sublabel}}</span>
+					<span itemprop="description">{{_sublabel}}</span>
 				{{/label}}
 			{{/_sublabel}}
+			<div style="display: block; min-height: 150px;">&nbsp;</div>
+			{{#meta}}
+				<div itemprop="{{itemprop}}">{{content}}</div>
+			{{/meta}}
 		</div>
 	</div>
 </a>

@@ -1,9 +1,22 @@
 
 <div class="row-fluid">
-    <div class="logo">
+    <div class="logo" itemscope itemtype="http://schema.org/Organization">
     {{#branding}}
-    <a class="brand" title="home" href="#!home">
-        <img src="{{base_url}}{{src}}" id="header_logo" alt="{{alt}}" />
+    <a class="brand" itemprop="url" title="Athletez Home Page"  href="http://www.athletez.com/#!home">
+	    <meta itemprop="name" content="Athletez.com - We're Athletez" />
+	    <meta itemprop="description" content="Athletez.com is an online community for athletes of all skill levels.  When you link up with your teams and sports organizations, upload and share photos and highlights, and follow the athletes you want to track, your athletic profile will automatically be created so others can see what's going on with you!" />
+		<meta itemprop="image" content="{{base_url}}{{src}}"/>
+	    <div style="display:none;" itemprop="founder" itemscope itemtype="http://schema.org/Person">
+			<meta itemprop="name" content="Mike Wrather" />
+		    <meta itemprop="email" content="mike@athletez.com" />
+		    <meta itemprop="jobTitle" content="Co-Founder" />
+	    </div>
+	    <div style="display:none;" itemprop="founder" itemscope itemtype="http://schema.org/Person">
+		    <meta itemprop="name" content="Maxwell Doyle" />
+		    <meta itemprop="email" content="max@athletez.com" />
+		    <meta itemprop="jobTitle" content="Co-Founder" />
+	    </div>
+        <img itemprop="logo" src="{{base_url}}{{src}}" id="header_logo" alt="{{alt}}" />
     </a>
     {{/branding}}
     </div>
