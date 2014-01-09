@@ -23,7 +23,7 @@ if(Kohana::$environment == Kohana::PRODUCTION)
 
 		/* (optional) The permissions to request from the user. If this property is not specified, basic
 		permissions will be requested from the user. */
-		'scope'         => 'email, offline_access, publish_stream',
+		'scope'         => 'email, publish_stream',
 
 		/* (optional) The display mode in which to render the dialog. The default is page, but can be set to other values
 		such as popup. */
@@ -58,11 +58,11 @@ elseif(Kohana::$environment == Kohana::DEVELOPMENT){
 
 		/* (optional) The permissions to request from the user. If this property is not specified, basic
 		permissions will be requested from the user. */
-		'scope'         => 'email, offline_access, publish_stream',
+		'scope'         => 'email, publish_stream',
 
 		/* (optional) The display mode in which to render the dialog. The default is page, but can be set to other values
 		such as popup. */
-		'display'   =>  'page',
+		'display'   =>  'popup',
 
 		/* Fields from users table.
 		user: http://developers.facebook.com/docs/reference/fql/user/ */
@@ -94,7 +94,7 @@ elseif(Kohana::$environment == Kohana::LOCALHOST){
 
 		/* (optional) The permissions to request from the user. If this property is not specified, basic
 		permissions will be requested from the user. */
-		'scope'         => 'email, offline_access, publish_stream',
+		'scope'         => 'email, publish_stream',
 
 		/* (optional) The display mode in which to render the dialog. The default is page, but can be set to other values
 		such as popup. */
