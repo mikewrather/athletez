@@ -182,11 +182,13 @@ define([
 			routing.ajaxRequests = [];
 			routing.intializeImageAndVideo();
 			routing.initTriggers();
+
+			// set to true on initial app render but set to false once the page shows
+			routing.showLandingPage = true;
+
 			// bind common triggers
 			Backbone.history.start({});
-			
-			
-			
+
 			App.Settings = new function() {
 				var _self = this, domain = function() {
 					var host = window.location.host;
@@ -209,4 +211,3 @@ define([
 		});
 	}
 );
-

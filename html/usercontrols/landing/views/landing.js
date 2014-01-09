@@ -41,6 +41,7 @@ define(['require',
 		cssArr : ["usercontrols/landing/landing.css"],
 		/*initialize gets called by default when constructor is initialized*/
 		initialize : function(options) {
+
 			Channel('load:css').publish(this.cssArr);
 			var _self = this;
 			_self.data = {};
@@ -48,14 +49,14 @@ define(['require',
 			_self.setOptions(options);
 			// get the user detail if fbid is defined
 			try {
-			if(typeof(options)=='object' && options.userId) {
-				_self.userId = options.userId;
-				_self.getUserData();
-			} else {
-				_self.render();
-			}
+				if(typeof(options)=='object' && options.userId) {
+					_self.userId = options.userId;
+					_self.getUserData();
+				} else {
+					_self.render();
+				}
 			} catch(e) {
-
+				console.log(e);
 			}
 		},
 		
@@ -93,6 +94,7 @@ define(['require',
 
 			function onPop(){
 				Channel('popup-finished-launch-'+options.id).unsubscribe();
+				routing.showLandingPage = false;
 				_self.showReg();
 			}
 
