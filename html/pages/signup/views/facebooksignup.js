@@ -46,6 +46,7 @@ function (
             
             this.loadFBLogin();
         },
+
         Fbinit : function(callLogin){
             var current =this;
             window.fbAsyncInit = function() {
@@ -91,7 +92,7 @@ function (
                             });
                         } else if (response.status === 'not_authorized') {
                         	if(temp.linkWithFB) {
-                            	alert("Some error occured. Please try again.");
+                            	alert("There was a problem trying to establish a connection to Facebook.");
                             }
                             console.log('not_authorized');
                              if(!temp.loginInfo)
