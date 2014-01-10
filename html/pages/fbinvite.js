@@ -36,6 +36,9 @@ define(["require", "text!fbinvite/templates/layout.html", "facade", "controller"
 			ga('send', 'event', 'FB Invite', 'Header', 'Loading reg header');
 						this.modelHTML = '<div id="fbInvite" class="modal hide fade model-popup-h">'+
 			'<div class="closer"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">	&times;</button></div>'+			
+			'<div id="search-area" class="">' +
+			'<input type="search" class="search-friends-h" placeholder="Search your friends" />' +
+			'</div>' +
 			'<div id="modalBody" class="modal-body page-content-h">'+
 			'</div></div>';
 			this.setupLayout().render();
