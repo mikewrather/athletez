@@ -13,6 +13,8 @@ function(facade,   utils,   BaseCommentListView,       CommentFormView, SiteComm
 	    initialize: function (options) {
 		    _.bindAll(this);
 		    //this.limitResults();
+		    console.error(options);
+		    this.userId = (options.userId)?options.userId:undefined;
 		    this.options.collection = this.collection;
 		    this.name = options.name;
 		    this._template = options.template;
@@ -32,6 +34,7 @@ function(facade,   utils,   BaseCommentListView,       CommentFormView, SiteComm
 		},
 
         setupFormView: function () {
+        	this.collection.id = this.userId;
             var listView = this, _self = this,
 	            formView = new CommentFormView({collection: this.collection}),
                 renderAddView = this.addChildView(formView);

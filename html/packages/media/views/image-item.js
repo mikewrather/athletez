@@ -17,16 +17,11 @@ define(['vendor', 'views', 'utils', 'text!media/templates/image-item.html', 'vot
 	entParser = require('common/models/entparse');
 
 	ImageItemView = BaseView.extend({
-
 		tagName : "li",
-
 		className : "image",
-
 		// Event handlers...
 		 events: {
-            //"click": "changeImage",
 			"click .vote-h": "vote",
-			//'click .image-outer-h' : 'initPhotoPlayer',
 	        "click .follow-h": "follow",
 			"click .edit-h": "edit",
 			"click .delete-h": "delete"
@@ -34,27 +29,21 @@ define(['vendor', 'views', 'utils', 'text!media/templates/image-item.html', 'vot
 
 		initialize : function(options) {
 			this.template = imageItemTemplate;
-			
 			if(options.length)
 			for(var i in options) {
 				this[i] = options[i];
 			}
-			
-			//this.render();
+			if(options.mainView) this.mainView = options.mainView;
 		},
 		
-		
 		checkForUser: function() {
-			
 			if(!_.isUndefined(routing.userLoggedIn) && routing.userLoggedIn)
 				return true;
 			else	
         		return false;
 		},
 		
-		
 		render : function() {
-
 			var _self = this, payload = this.model.get('payload');
 			//the extra object is created here using the entity parsing model
 			var parser = new entParser({mpay:payload});
@@ -266,6 +255,8 @@ define(['vendor', 'views', 'utils', 'text!media/templates/image-item.html', 'vot
 			deleteModel.enttypes_id = $(e.currentTarget).attr("subject-type-id");
 			deleteModel.removeNode =$(e.currentTarget).parents("li.image");
 			deleteModel.destroyAndRemove();
+			console.error(this.mainView);
+			if(this.mainView && this.mainView.showAddButton && _.isFunction(this.mainView.showAddButton)) this.mainView.showAddButton();
 		}
 
 	});
