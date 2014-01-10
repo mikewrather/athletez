@@ -106,7 +106,7 @@ function(require, gameHeaderTemplate) {
 		
 		// adjust font dynamically
 		adjustFont: function(e) {
-			var defaultFont = 2.2, l = $(e.target).val().length - 2, font = (l > 0)? (defaultFont - (.4 * l)):defaultFont -0;
+			var defaultFont = 2.2, l = $(e.target).val().length - 2, font = (l > 0)? (defaultFont - (.5 * l)):defaultFont -0;
 			if(font > 0)			
 				$(e.target).parents(".team-item").find(".game-score-el").css({"font-size": font+"em"});
 		},
