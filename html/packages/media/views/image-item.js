@@ -176,48 +176,56 @@ define(['vendor', 'views', 'utils', 'text!media/templates/image-item.html', 'vot
 	    {
 		   e.preventDefault();
 		   e.stopPropagation();
-		   
-		   if(!this.checkForUser()) {
-		  		
-		  	   	routing.trigger('showSignup');	
-		    	return;
+			
+			var _self = this, voteFn = function(callback) {
+				var voteModelOb = new voteModel();
+				voteModelOb.subject_id = _self.model.get("payload").id;
+				voteModelOb.entity_id = _self.model.get("payload").enttypes_id;
+				voteModelOb.setData();
+				voteModelOb.save();
+				$.when(voteModelOb.request).done(function() {
+					$(e.currentTarget).addClass('link-disabled');
+					if(callback) callback();
+				});	
+			};	   
+
+		   if(!_self.checkForUser()) {
+		  	   	routing.trigger('showSignup', function(callback) {
+		  	   		voteFn(function() {
+			     		if(callback) callback();
+			     	});
+			     });	
+	    	} else {
+	    		voteFn();
 	    	}
-		    var voteModelOb = new voteModel();
-			voteModelOb.subject_id = this.model.get("payload").id;
-			voteModelOb.entity_id = this.model.get("payload").enttypes_id;
-			voteModelOb.setData();
-			voteModelOb.save();
-			$.when(voteModelOb.request).done(function()
-			{
-				//if()
-				$(e.currentTarget).addClass('link-disabled');
-			});
 	    },
 
 	    follow: function(e) {
 		   e.preventDefault();
 		    console.log(e.target);
 		    e.stopPropagation();
-		     if(!this.checkForUser()) {
-			     routing.trigger('showSignup');
-			     return;
+		    var _self = this, followFn = function(callback) {
+		    	var followModelOb = new followModel();
+				followModelOb.subject_id = _self.model.get("payload").id;
+				followModelOb.entity_id = _self.model.get("payload").enttypes_id;
+				followModelOb.save();
+				$.when(followModelOb.request).done(function() {
+					if(typeof(followModelOb.get('payload').follower) =='object' && typeof(followModelOb.get('payload').subject) =='object' && followModelOb.get('payload').id > 0) {
+						$(e.currentTarget).addClass('link-disabled');
+					}
+					if(callback) callback();
+				});
+		    };
+		    
+		    if(!_self.checkForUser()) {
+			     routing.trigger('showSignup', function(callback) {
+			     	followFn(function() {
+			     		if(callback) callback();
+			     	});
+			     });
+	    	} else {
+	    		followFn();
 	    	}
-		    var followModelOb = new followModel();
-			followModelOb.subject_id = this.model.get("payload").id;
-			followModelOb.entity_id = this.model.get("payload").enttypes_id;
-		    console.log(followModelOb);
-			followModelOb.save();
-			$.when(followModelOb.request).done(function() {
-
-				if(typeof(followModelOb.get('payload').follower) =='object' && typeof(followModelOb.get('payload').subject) =='object' && followModelOb.get('payload').id > 0)
-				{
-					$(e.currentTarget).addClass('link-disabled');
-				}
-				else
-				{
-					console.log("FAIL");
-				}
-			});
 	    },
 
 		edit: function(e) {
@@ -255,7 +263,6 @@ define(['vendor', 'views', 'utils', 'text!media/templates/image-item.html', 'vot
 			deleteModel.enttypes_id = $(e.currentTarget).attr("subject-type-id");
 			deleteModel.removeNode =$(e.currentTarget).parents("li.image");
 			deleteModel.destroyAndRemove();
-			console.error(this.mainView);
 			if(this.mainView && this.mainView.showAddButton && _.isFunction(this.mainView.showAddButton)) this.mainView.showAddButton();
 		}
 

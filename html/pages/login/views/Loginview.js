@@ -23,23 +23,21 @@ define([
 			SigninBasicView = SectionView.extend({
               
               initialize: function (options) {
-                   this.signcontroller = new signupController();
-                    this.template =  _.template(signInTemplate);
-                    this.$el = $(options.destination);
-                    this.render();
-                                    
+              	 this.callback = options.callback;
+                 this.signcontroller = new signupController();
+                 this.template =  _.template(signInTemplate);
+                 this.$el = $(options.destination);
+                 this.render();
                 },
+                
                 render: function(){
-
                     this.$el.html(this.template);
-                    
                     $("#errormsg, #preview").html("");
                     debug.log("Image upload basic view");   
                      $('#Loginview').modal('show') ;
                      $('#Loginview').on('hide', function () {
                         $('div#LoginPopup').empty();
-                        //routing.trigger('refresh-onImageUpload');
-                      });
+                     });
                 },
                   
                 events:{
@@ -48,9 +46,8 @@ define([
                   "click .forgot-password-h": "forgotPassword",
                   "submit .forgot-password-form-h": "forgotPasswordForm",
                   "click .log-in-link-h": "loginPageView",
-                  "click #fbpane":"signupFacebook",
+                  "click #fbpane":"signupFacebook"
                 },
-                
                 
                 forgotPasswordForm: function(e) {
                 	e.preventDefault();
@@ -61,7 +58,7 @@ define([
                 		_self.$el.find(".success-message").removeClass('hide');
                         _self.$el.find(".error-message").addClass('hide');
                 		setTimeout(function() {
-                           _self.loginPageView(); 			
+                           _self.loginPageView();
                 		}, 3000);
                 	});
                 	$.when(model.request).fail(function() {
@@ -77,35 +74,33 @@ define([
                      headView.signupFacebook();
             
                },
-                userLogin:function(event){
-                event.preventDefault();
-                var fields = this.$(":input").serializeArray();
-                var payload=[];
-                $.each(fields, function( index, value ) {
-                       payload[value.name] = value.value;
-                      
-                       });
-                var obj = $.extend({}, payload)
-               try{
-                      console.log(obj,"new");
-                }
-                catch(e){
-                    console={},
-                    console.log=function(e){}
-                }
-               
-                this.model.save(obj,{
-                    success: function(msg) {
-                        location.href='#profile';
-                        $('#Loginview').modal('hide');
-                    },
-                    error: function(msg) {
-                        $( ".errormsg" ).empty();
-                        var errors= jQuery.parseJSON( msg.request.responseText);
-                        $( ".errormsg" ).html(errors.exec_data.error_array[0].error);            
-                    }
-                });
-
+                userLogin:function(event) {
+	                event.preventDefault();
+	                var fields = this.$(":input").serializeArray(), payload=[], _self = this;
+	                
+	                $.each(fields, function( index, value ) {
+	                   payload[value.name] = value.value;
+	                });
+	                
+	                var obj = $.extend({}, payload);
+	                this.model.save(obj,{
+	                    success: function(msg) {
+	                        $('#Loginview').modal('hide');
+							if(_self.callback && _.isFunction(_self.callback)) {
+								routing.trigger('common-popup-close');
+								_self.callback(function() {
+									window.location.reload();
+								});
+							} else {
+		                        window.location.href = "#profile";
+	                    	}
+	                    },
+	                    error: function(msg) {
+	                        $( ".errormsg" ).empty();
+	                        var errors= jQuery.parseJSON( msg.request.responseText);
+	                        $( ".errormsg" ).html(errors.exec_data.error_array[0].error);            
+	                    }
+	                });
                 },
                 
                 forgotPassword: function(event) {

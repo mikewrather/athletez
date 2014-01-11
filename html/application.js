@@ -715,7 +715,6 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
             	console.log(url, attr, data);
 	            if(!this.checkForUser()) {
 		            routing.trigger('showSignup');
-		            //$(".signup-email").trigger('click');
 		            return;
 	            }
             	fn(url , attr, data);
@@ -772,33 +771,22 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
 			this.signup = new header();
 
 			routing.off('showSignup');
-            routing.on('showSignup', function() {
-            	if(this.signup.signupUser) this.signup.signupUser();
+            routing.on('showSignup', function(callback) {
+            	if(this.signup.signupUser) this.signup.signupUser(callback);
             });
 		},
 	    videoPreview: function () {
-		   
-             this.cancelAjaxRequests();
+            this.cancelAjaxRequests();
             this.loadStyles();
-             // chromeBootstrap();
-		    //$('body').empty();
-           // chromeBootstrap();
-		    //console.log(VideoPreviewController);
 			var self = this;
 		    function initVideoPreview(url,attr) {
-
 				if(!self.checkForUser()) {
 					routing.trigger('showSignup');
-					//$(".signup-email").trigger('click');
 					return;
 				}
 			    var VidPrevCtrl = new VideoPreviewController({"url":url,"attr":attr});
-
-			    //console.log(VidPrevCtrl);
 		    }
 			//** creating a call back list and adding the method
-		    
-			//Channel('app-inited').subscribe(initVideoPreview);
 			Channel('add-video').subscribe(initVideoPreview);
 	    },
         
@@ -806,12 +794,6 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
         	this.cancelAjaxRequests();
             this.loadStyles();
             chromeBootstrap();
-             /*var gameController = new GameController({
-                    "route": ""
-                });*/
-            //this callback function is called from /pages/chrom/views/header.js
-            //it getting headerModelId
-          // $('#main-content').empty();
             if(!id) {
             	this.notFound('team');
             	return; 
