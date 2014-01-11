@@ -6,9 +6,9 @@ define(['require', 'text!signup/templates/registration.html', 'text!signup/templ
 			if (options.openAsaPage)
 				this.openAsaPage = options.openAsaPage;
 			this.callback = options.callback;
-			//alert(options.destination);
 			this.registrationController = new RegistrationController({
-				"route" : ""
+				"route" : "",
+				callback: this.callback
 			});
 
 			this.AcceptData = (options.data) ? options.data : undefined;

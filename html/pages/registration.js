@@ -24,13 +24,10 @@ define(["require",
 
 		initialize : function(options) {
 			Channel('load:css').publish(cssArr);
-
+			this.callback = options.callback;
 			_.bindAll(this);
-
 			this.handleOptions(options);
-
 			this.init();
-
 			return this;
 		},
 
@@ -54,8 +51,8 @@ define(["require",
 			 //Remove a previously-bound callback function from routing
 			routing.off('registration-with-facebook');
           	//Bind a callback function to an object routing
-          	routing.on('registration-with-facebook', function() {
-            		controller.initRegisterFacebook();				
+          	routing.on('registration-with-facebook', function(callback) {
+            		controller.initRegisterFacebook(callback);				
             });	
 
 			function registerWithFacebook() {
@@ -129,7 +126,7 @@ define(["require",
 			this.layout.render();
 		},
 
-		initRegisterFacebook : function() {
+		initRegisterFacebook : function(callback) {
 			
 			//	debugger;
 			var controller = this;
@@ -145,10 +142,9 @@ define(["require",
 							}
 							else{
 								this.pop = new popupview();
-								controller.setupRegisterFacebookView();
+								controller.setupRegisterFacebookView(callback);
 							}
 						}).fail(function(msg){
-
 							this.pop = new popupview();
 							controller.setupRegisterFacebookView();
 						});
@@ -160,13 +156,12 @@ define(["require",
         	
 
 		},
-		setupRegisterFacebookView : function() {
-			 	
+		setupRegisterFacebookView : function(callback) {
 			this.registerFacebookView = new RegistrationFacebookView({
 				model : this.register_facebook,
 				name : "Registration with Facebook",
-				destination : "#main-contentreg"
-				//destination:"#main-content-reg"
+				destination : "#main-contentreg",
+				callback: callback
 			});
 			this.scheme.push(this.registerFacebookView);
 			this.layout.render();

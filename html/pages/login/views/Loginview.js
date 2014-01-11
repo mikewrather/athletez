@@ -70,7 +70,7 @@ define([
                 signupFacebook: function(event) {
                     event.preventDefault();
                     $('#RegModal').modal('hide') ;
-                     headView = new FbHeader();
+                     headView = new FbHeader({callback: this.callback});
                      headView.signupFacebook();
             
                },
@@ -123,7 +123,7 @@ define([
                 
                 signupUser: function(event){
                 	event.preventDefault();
-                    routing.trigger("register-basic");
+                    routing.trigger("register-basic", this.callback);
                 },
             });
             

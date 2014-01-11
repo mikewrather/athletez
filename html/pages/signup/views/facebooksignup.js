@@ -38,15 +38,14 @@ function (
             this.linkWithFB = (linkedToFB && linkedToFB == "linkWithFB")?true:false;
             //event.preventDefault();
           if (!this.registrationController) {
-                this.registrationController = new RegistrationController();
+                this.registrationController = new RegistrationController({callback: current.calback});
                // this.signupc = new scontroller();
-            }
+           }
             // Additional JS functions here
-            var func = _.bind(current.getFBlogin, this);
-            this.Fbinit(func);
-                   // Load the SDK Asynchronously
-            
-            this.loadFBLogin();
+           var func = _.bind(current.getFBlogin, this);
+           this.Fbinit(func);
+           // Load the SDK Asynchronously
+           this.loadFBLogin();
         },
 
         Fbinit : function(callLogin){
@@ -124,12 +123,7 @@ function (
             FB.getLoginStatus(function(response) {
                         if (response.status === 'connected') {
                             FB.api('/me', function(response) {
-                                console.log(response);
-                               // this.signupc = new scontroller({"route":""});
                                routing.trigger('registration-with-facebook', _self.callback);
-                                //Channel('registration-with-facebook').publish();
-                                //this.pop = new popupview();
-
                             });
                         } 
             },{scope: 'email, user_birthday, user_photos'});

@@ -40,31 +40,24 @@ define(["require",
 				SignupController = Controller.extend({
 
 					initialize : function(options) {
-					
 						Channel('load:css').publish(cssArr);
-
 						_.bindAll(this);
-
 						this.handleOptions(options);
-
 						this.init();
-
 						return this;
 					},
+					
 					init : function() {
 						ga('send', 'event', 'Signup', 'Open', 'User opened registration box');
 						this.refreshPage();
 						this.setupLayout();
 						this.createData();
-						//this.refreshPage();
 						this.handleDeferreds();
 					},
+					
 					//popup layput
-					setupLayout: function ()
-					{
+					setupLayout: function () {
 						this.scheme=[];
-						//$('div#modalPopup').remove();
-						//$('body').append('<div id="modalPopup"></div>');
 						pageLayout = new LayoutView({
 						scheme: this.scheme,
 						destination: "#modalBody",
@@ -72,27 +65,9 @@ define(["require",
 						displayWhen : "ready"
 						});
 						this.layout=pageLayout;
-						
 						return this.layout;
-
-					},	
-					//normal layout
-					/*setupLayout : function() {
-						var pageLayout;
-
-						if (this.layout)
-							return this.layout;
-
-						pageLayout = new LayoutView({
-							scheme : this.scheme,
-							destination : "#main",
-							template : pageLayoutTemplate,
-							displayWhen : "ready"
-						});
-						this.layout = pageLayout;
-
-						return this.layout;
-					},*/
+					},
+					
 					createData : function() {
 						this.select_type = new signupBaseModel();
 					},
