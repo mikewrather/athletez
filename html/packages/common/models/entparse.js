@@ -268,13 +268,13 @@ define([ 'models', 'facade' ], function(models, facade) {
 			var gameDate = new Date(mpay.gameDay + " " + mpay.gameTime);
 
 			return_data.itemtype = "http://schema.org/Event";
-			return_data.meta = [
+/*			return_data.meta = [
 				{itemprop:"name",content:return_data._sublabel},
 				{itemprop:"location",content:mpay.game_location},
 				{itemprop:"startDate",content:gameDate.toISOString()},
 				{itemprop:"url",content:return_data._link}
 			];
-
+*/
 			return_data._noicon_text = "vs";
 			return_data._color = "#e49f6f";
 			console.log(return_data);
