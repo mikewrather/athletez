@@ -130,14 +130,14 @@ define(["require",
 						
 						
 						
-						function registerBasicFinal(attrs) {
-							controller.initRegisterFinal({"attr":attrs});
+						function registerBasicFinal(attrs, callback) {
+							controller.initRegisterFinal({"attr":attrs}, callback);
 						}
 						//Remove a previously-bound callback function from routing
 						routing.off('register-basic-final');
           				//Bind a callback function to an object routing
-          				routing.on('register-basic-final', function(param) {
-            							registerBasicFinal(param);
+          				routing.on('register-basic-final', function(param, callback) {
+            							registerBasicFinal(param, callback);
             			});
 												
 						function uploadImage(attrs) {
@@ -152,7 +152,7 @@ define(["require",
             			});
 
 					},
-					initRegisterFinal:function(attr){
+					initRegisterFinal:function(attr, callback){
 						
 						this.basic_type	= new signupBaseFinalModel();
 						//alert("initRegisterBasicFinal2");
@@ -161,7 +161,8 @@ define(["require",
 							model : this.basic_type,
 							name : "Final registration",
 							destination : "#modalBody",
-							attr: attr
+							attr: attr,
+							callback: callback
 						});
 						//this.scheme.push(this.selectTypeView);*/
 						this.layout.render();
@@ -185,6 +186,7 @@ define(["require",
 						routing.trigger('common-popup-open', options); 
 					},
 					setupSelectTypeView : function(callback) {
+						alert(callback);
 						var id = "modal-popup-signup",
 						dest = "#"+id+" #modalBody", options = {};
 			            options.height = "500px";

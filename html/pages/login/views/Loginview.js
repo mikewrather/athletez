@@ -74,7 +74,8 @@ define([
                      headView.signupFacebook();
             
                },
-                userLogin:function(event) {
+               
+               userLogin:function(event) {
 	                event.preventDefault();
 	                var fields = this.$(":input").serializeArray(), payload=[], _self = this;
 	                
@@ -105,12 +106,10 @@ define([
                 
                 forgotPassword: function(event) {
                     event.preventDefault();
-					//alert("forgot password"); 
 					this.$el.find(".success-message").addClass('hide');
 					this.$el.find(".error-message").addClass('hide');
 					$("#Loginview h3#label").html("Forgot Password");
-					//$("#logincontainer").addClass("hide");
-                    $("#loginmain").addClass("hide");               	
+                    $("#loginmain").addClass("hide");
                 	$(".forgot-password-container").removeClass("hide");
                 },
                 
@@ -124,7 +123,6 @@ define([
                 
                 signupUser: function(event){
                 	event.preventDefault();
-                   // $('#Loginview').modal('hide');
                     routing.trigger("register-basic");
                 },
             });
