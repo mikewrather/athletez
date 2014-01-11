@@ -62,6 +62,11 @@ class Model_Email_Queue extends ORM
 		//	return false;
 		}
 
+		if(isset($args['attachment']))
+		{
+			$this->attachment = $args['attachment'];
+		}
+
 		if(isset($args['to_address']))
 		{
 			$this->to_address = $args['to_address'];
@@ -92,6 +97,16 @@ class Model_Email_Queue extends ORM
 		}
 	}
 
+	public function addAttachment($attachment){
+		if($this->loaded() && strlen($attachment) > 0) {
+			$this->attachment = $attachment;
+
+			$this->save();
+			return $this;
+		}
+		return false;
+	}
+
 	public function processQueue(){
 		$unsent = $this
 			->where('email_sent_id','IS',null)
@@ -119,6 +134,7 @@ class Model_Email_Queue extends ORM
 	{
 		if($this->loaded() && strlen($message_body) > 0) {
 			$this->message_body = $message_body;
+
 			$this->save();
 			return $this;
 		}

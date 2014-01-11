@@ -18,13 +18,16 @@ class Api_Viewclass
 	protected $queryParams;
 	protected $postParams;
 	protected $putParams;
+	protected $response_profile;
 
-	static function factory($extention,$obj)
+	static function factory($extention,$obj,$response_profile = false)
 	{
+
+
 		$prefix = 'View_Api_'.$extention;
 		try
 		{
-			$newClass = new $prefix($obj);
+			$newClass = new $prefix($obj,$response_profile);
 		}
 		catch(Exception $e)
 		{
@@ -33,9 +36,10 @@ class Api_Viewclass
 		return $newClass;
 	}
 
-	public function __construct($obj)
+	public function __construct($obj,$response_profile)
 	{
 		$this->obj = $obj;
+		if($response_profile) $this->response_profile = $response_profile;
 	}
 
 	public function setQueryParams($paramsArr)

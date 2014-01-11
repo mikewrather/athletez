@@ -65,7 +65,7 @@ class Model_Media_Image extends ORM
 	}
 	public function get_num_votes()
 	{
-		return Model_Site_Vote::getNumVotes($this);
+		return Model_Site_Vote::getNumVotes($this->media);
 	}
 
 	public function getTypes()
@@ -202,6 +202,16 @@ class Model_Media_Image extends ORM
 		return $this;
 	}
 
+	public function owner()
+	{
+		return $this->media->owner();
+	}
+
+	public function is_owner($user)
+	{
+		return $this->media->is_owner($user);
+	}
+
 	public function saveCrop($args,$user,$docrop=true)
 	{
 		
@@ -244,6 +254,8 @@ class Model_Media_Image extends ORM
 
 		$user->user_picture = $result->id;
 		$user->save();
+
+		Model_Site_Feed::addToFeed($result,"Change Userpic");
 
 		unlink($local_path);
 
@@ -560,7 +572,7 @@ class Model_Media_Image extends ORM
 
 	public function name()
 	{
-		return "Image ".$this->id;
+		return $this->media->name();
 	}
 
 	/**

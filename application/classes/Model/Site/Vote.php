@@ -95,6 +95,16 @@ class Model_Site_Vote extends Model_Site_Entdir
 	public function addVote($args = array()){
 		extract($args);
 		$check = ORM::factory('Site_Vote');
+
+		if(stristr(Ent::getClassByID($subject_type_id),'image') || stristr(Ent::getClassByID($subject_type_id),'video')){
+			$subject_child = Ent::eFact($subject_type_id,$subject_id);
+			if(is_object($subject_child) && is_subclass_of($subject_child,'ORM') && $subject_child->loaded()){
+				$subject = $subject_child->media;
+				$subject_type_id = Ent::getMyEntTypeID('Media_Base');
+				$subject_id = $subject->id;
+			}
+		}
+
 		if(isset($subject_type_id))
 		{
 			$this->subject_enttypes_id = $subject_type_id;

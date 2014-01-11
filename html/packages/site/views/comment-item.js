@@ -38,10 +38,13 @@ function (
         },		
 
         render: function () {
+	        var payload = this.model.get('payload');
+	        payload['comment'] = payload['comment'].replace(/\n/g,"<br />");
+	        this.model.set('payload',payload);
             var markup = Mustache.to_html(this.template, this.model.toJSON());
             this.$el.html(markup);
-            var payload = this.model.get('payload');
-	        console.log("profile payload = ", payload);
+
+	       // console.log("profile payload = ", payload);
             var self = this;
             if (payload) {
             	try {

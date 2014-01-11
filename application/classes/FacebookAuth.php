@@ -2,7 +2,7 @@
 
 class FacebookAuth extends Kohana_FacebookAuth {
 	public function logout(){
-		// $this->fb->destroySession();
+		$this->fb->destroySession();
 	}
 
 	function getFriends()

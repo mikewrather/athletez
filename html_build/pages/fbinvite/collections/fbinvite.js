@@ -1,0 +1,1 @@
+define(["facade","media/collections/images","utils","signup/views/facebooksignup"],function(e,t,n,r){return t.extend({url:function(){return testpath?testpath+"user/fbfriends":"/api/user/fbfriends"},fetchError:function(e,t){ga("send","event","popup","open","FB Auth Token Renew");var n=new r;n.signupFacebook("linkWithFB")}})});

@@ -90,6 +90,17 @@ class Model_User_Resume_Data_Vals extends ORM
 
 		return parent::getBasics($settings);
 	}
+
+	public function getSubject(){
+		if(!$this->loaded()) return false;
+
+		$user = ORM::factory('User_Base',$this->users_id);
+		return $user;
+	}
+
+	public function getAuthor(){
+		return $this->getSubject();
+	}
 	
 	public function updateResumeDataVal($user_value)
 	{
@@ -99,6 +110,7 @@ class Model_User_Resume_Data_Vals extends ORM
 		}
 		try{
 			$this->update();
+			Model_Site_Feed::addToFeed($this,'Change Resume Data');
 			return $this;
 		} catch(ORM_Validation_Exception $e)
 		{
@@ -156,6 +168,7 @@ class Model_User_Resume_Data_Vals extends ORM
 			$match->user_value = $user_value;
 			try {
 				$match->save();
+				Model_Site_Feed::addToFeed($match,'Change Resume Data');
 				return $match;
 			} catch(ORM_Validation_Exception $e){
 				return $e;
@@ -174,6 +187,7 @@ class Model_User_Resume_Data_Vals extends ORM
 		$this->user_value = isset($user_value) ? $user_value : "";
 		try {
 			$this->save();
+			Model_Site_Feed::addToFeed($this,'Add Resume Data');
 			return $this;
 		} catch(ORM_Validation_Exception $e){
 			return $e;

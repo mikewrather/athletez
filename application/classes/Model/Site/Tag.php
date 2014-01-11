@@ -203,8 +203,8 @@ class Model_Site_Tag extends Model_Site_Entdir
 			$follow->addFollower(ORM::factory('User_Base',$this->subject_id),$media,false,"You're tagged in this ".$media->media_type);
 		}
 
-		// add this to the feed
-		Model_Site_Feed::addToFeed($media,'tagged');
+		// add media to the feed
+		Model_Site_Feed::addToFeed($media,'Tag Media');
 
 		$match->find();
 		if($match->loaded()){
@@ -214,7 +214,7 @@ class Model_Site_Tag extends Model_Site_Entdir
 				->and_where('subject_id','=',$match->id)
 				->execute();
 
-			Model_Site_Feed::addToFeed($match);
+			Model_Site_Feed::addToFeed($match,'Add Tag');
 			return $match;
 		}
 		$this->setLocation($subject_type_id,$subject_id);
@@ -222,8 +222,8 @@ class Model_Site_Tag extends Model_Site_Entdir
 		try {
 			$this->save();
 			$this->autoTag($args);
-			Model_Site_Feed::addToFeed($this);
-
+			// add tag to the feed
+			Model_Site_Feed::addToFeed($this,'Add Tag');
 			return $this;
 		} catch(ORM_Validation_Exception $e){
 			return $e;

@@ -922,7 +922,6 @@
 		//	print_r($facebook);
 			$retArr =  $facebook->get_user();
 
-	//		print_r($retArr);
 
 			if(isset($retArr['message']))
 			{
@@ -959,7 +958,6 @@
 								//Error message array
 								$error_array = array(
 									"error" => "This Facebook account is already linked up with a different Athletez account than the one you're logged in to now.  Try logging out and logging back in using facebook."
-
 								);
 
 								// Set whether it is a fatal error

@@ -150,19 +150,36 @@ class Kohana_FacebookAuth {
 	public function get_user()
 	{
 		$user = $this->fb->getUser();
+
 		if($user)
 		{
 			try{
 				$me = $this->fb->api('/me','GET');
 				$me['profile_picture'] = 'https://graph.facebook.com/'. $me['id'] .'/picture?type=large';
+
+				$this->fb->setExtendedAccessToken();
+
+				$signedRequest = $this->fb->getSignedRequest();
+
+				$ident = ORM::factory('User_Identity')
+					->where('provider','=','facebook')
+					->where('identity','=',$signedRequest['user_id'])
+					->find();
+
+				if($ident->loaded()){
+					$ident->last_auth_token = $this->fb->getAccessToken();
+					$ident->code = $signedRequest['code'];
+					$ident->issued = $signedRequest['issued_at'];
+					$ident->save();
+				}
 			}
 			catch( FacebookApiException $e ){
-				$me['message'] = 'User not authenticate.';
+				$me['message'] = $e->getMessage();
 			}
 		}
 		else
 		{
-			$me['message'] = 'User not login.';
+			$me['message'] = 'User could not be created.';
 		}
 		return $me;
 	}
@@ -202,6 +219,6 @@ class Kohana_FacebookAuth {
 
 	public function extend_auth_token()
 	{
-		print_r($this->fb->setExtendedAccessToken());
+		$this->fb->setExtendedAccessToken();
 	}
 }

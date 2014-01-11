@@ -697,16 +697,16 @@ span.ui-helper-hidden-accessible {
 }
 
 .bubble .content p.comment-text {
-	font-family: inherit;
-	font-weight: normal;
-	font-size: .9em;
-	padding: 4px;
+    font-family: inherit;
+    font-weight: normal;
+    font-size: .8em;
+    padding: 5px 10px 5px 15px;
 }
 
 .pointer {
 	content: "";
 	position: absolute;
-	bottom: 16px;
+	top: 35px;
 	left: -40px;
 	display: block;
 	width: 0;
@@ -714,9 +714,9 @@ span.ui-helper-hidden-accessible {
 	border-color: transparent rgb(229, 229, 229);
 	border-style: solid;
 	border-width: 18px 77px 18px 0;
-	-webkit-transform: rotate(-25deg);
-	-ms-transform: rotate(-25deg);
-	transform: rotate(-25deg);
+	-webkit-transform: rotate(15deg);
+	-ms-transform: rotate(15deg);
+	transform: rotate(15deg);
 }
 
 .see-more-h {
@@ -899,13 +899,13 @@ li.fitnessbasic {
 .stats-panel {
 	background-color: #e0e0e0;
 	padding: 0;
-	width: 35%
+	width: 35%;
 	min-height: 210px;
 }
 
 .stats-header {
 	background-color: #b9b9ba;
-	font-family: 'Nunito', 'HelveticaNeue';
+	font-family: 'Raleway';
 	font-weight: bold;
 	font-size: 1.7em;
 	padding: 10px;
@@ -928,7 +928,7 @@ li.fitnessbasic {
 span.team-label, span.event-sport-label {
 	display: inline-block;
 	margin-left: 100px;
-	font-family: 'Nunito', 'HelveticaNeue';
+	font-family: 'Helvetica Neue';
 	font-weight: bolder;
 	font-size: 1.1em;
 }
@@ -1552,7 +1552,7 @@ div.game-info .game-score .team-score.win {
 }
 
 #add-icons {
-	margin-top: 11px;
+	padding:10px;
 }
 
 #addPhoto {
@@ -2066,8 +2066,11 @@ li.sport .teamlist-header, .stat-val-outer {
 }
 
 .edit-message {
+    font-weight: lighter;
+    color: #e3e3e3;
 	font-size: .7em;
 	padding-left: 10px;
+    float: right;
 }
 
 .teams {

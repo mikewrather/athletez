@@ -58,7 +58,7 @@
 		 */
 		public function action_post_add()
 		{
-			$this->payloadDesc = "Add a new Resume Data Value for a User\'s Resume";
+			$this->payloadDesc = "Add a new Resume Data Value for a User's Resume";
 			$args = array();
 		     // CHECK FOR PARAMETERS:
 			// resume_data_id (REQUIRED)

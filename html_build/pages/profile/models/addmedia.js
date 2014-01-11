@@ -1,1 +1,1 @@
-define(["models/base"],function(e){var t;return t=e.extend({defaults:{links:[{label:"",link:"javascript:void(0);",id:"addPhoto"},{label:"",link:"javascript:void(0);",id:"addVideo"}],userid:null}}),t});
+define(["models/base"],function(e){var t;return t=e.extend({defaults:{links:[{label:"Add image",link:"javascript:void(0);",id:"addPhoto"},{label:"Add Video",link:"javascript:void(0);",id:"addVideo"}],userid:null}}),t});

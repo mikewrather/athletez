@@ -221,6 +221,7 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
 		},
 
 		showLandingInfo: function() {
+			if (!routing.showLandingPage) return;
 			var self = this;
 			setTimeout(function(){
 				if(!self.checkForUser())
@@ -238,7 +239,7 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
             chromeBootstrap();
 	    	function initFBAccept(userId) {
 	    		$("body").addClass("fbaccept");
-				var title = "Athletez - We Are Athletez";
+				var title = "Athletez - We Are Athletes";
 	    		var landing = new landingView({userId: fbId});
 	    		
 			    if(!fbId && $('div.register-wrapper').length == 0) {
@@ -555,7 +556,7 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
 		},
 		
 		showHomePage: function(id) {
-			var self = this, title = "Athletez - We Are Athletez";
+			var self = this, title = "Athletez - We Are Athletes";
     		self.currentController = new HomeController({
     			route: "",
     			title: title,
@@ -572,7 +573,7 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
 	    	//self.removeCurrent();
 	    	function initHome(id) {
 	    		$("body").addClass("homePage");
-				var title = "Athletez - We Are Athletez";
+				var title = "Athletez - We Are Athletes";
 	    		self.currentController = new HomeController({
 	    			route: "",
 	    			title: title,
@@ -589,7 +590,7 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
 	    
 	    
 	    showFBInviteOnPopup: function(id, options) {
-	    	var title = "Athletez - We Are Athletez";
+	    	var title = "Athletez - We Are Athletes";
 	    	self.currentController = new FbInviteController({
 	    		route: "",
 	    		title: title,
@@ -607,7 +608,7 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
             
 	    	function initFBinvite(id) {
 	    		$("body").addClass("fbinvite");
-				var title = "Athletez - We Are Athletez";
+				var title = "Athletez - We Are Athletes";
 	    		self.currentController = new FbInviteController({
 	    			route: "",
 	    			title: title,

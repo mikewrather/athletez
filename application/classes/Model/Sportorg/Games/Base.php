@@ -150,6 +150,7 @@ class Model_Sportorg_Games_Base extends ORM
 						$user = Auth::instance()->get_user();
 						$users_id = $user->id;
 					}
+					else $user = ORM::factory('User_Base',$users_id);
 
 					// if a user created this add them to the event automatically
 					$usl = ORM::factory('User_Sportlink')->where('users_id','=',$users_id)->where('sports_id','=',$sports_id)->find();
@@ -158,6 +159,9 @@ class Model_Sportorg_Games_Base extends ORM
 						$gamelink->user_sport_link_id = $usl->id;
 						$gamelink->games_id = $this->id;
 						$gamelink->save();
+
+						$follow = ORM::factory('User_Followers');
+						$follow->addFollower($user,$this,false,"you're participating in this game");
 					}
 				}
 			}
@@ -274,6 +278,12 @@ class Model_Sportorg_Games_Base extends ORM
 		return $this->location->full_address;
 	}
 
+	public function get_game_lonlat(){
+		return array(
+			$this->location->lon,$this->location->lat
+		);
+	}
+
 	public function get_game_name(){
 		return $this->name();
 	}
@@ -319,14 +329,13 @@ class Model_Sportorg_Games_Base extends ORM
 
 	public function name()
 	{
-
-		return $name = $this->event_name != "" ? $this->event_name : false;
+		$name = trim($this->event_name) != "" ? $this->event_name : false;
 		if(!$name){
 			$teams = $this->teams->find_all();
 			foreach($teams as $team)
 			{
-				$team = $team->getBasics();
-				$name .= $team['org_name']." vs ";
+				$org = $team->getOrg();
+				$name .= $org->name." vs ";
 			}
 			return rtrim($name,' vs ');
 		}

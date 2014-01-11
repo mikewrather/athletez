@@ -134,10 +134,10 @@ class Model_Site_Comment extends Model_Site_Entdir
 
 		// key = the key that will appear in the returned results, val = the name of the function / property to invoke for the value
 		'added_function_calls' => array(
-			'comment_date' => 'get_comment_date',
-			'user_picture' => 'get_user_picture',
-			'name' => 'get_name',
-			'email' => 'get_email',
+	//		'comment_date' => 'get_comment_date',
+	//		'user_picture' => 'get_user_picture',
+	//		'name' => 'get_name',
+	//		'email' => 'get_email',
 		),
 
 		// array of values only.  Each value is the name of a column to exclude

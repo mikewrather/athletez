@@ -137,9 +137,9 @@ function(require, profileHeaderTemplate, selectSportTemplate) {
             var sport_name = (!e)?$(".sports-h img:first-child").data("name"):$(e.target).data("name");
 	       
 	       if(sport_name)
-		       this.$el.find(".sports-name-h").html(sport_name);
+		       this.$el.find(".sports-name-h").html(sport_name + " Profile");
 	    	else 
-		       this.$el.find(".sports-name-h").html("No Sport Selected.");	    		
+		       this.$el.find(".sports-name-h").html("No Sport Selected");
 	    	   
 	        ga('send', 'event', 'Profile-Action', 'Sport-Change', sport_name, sport_id);
             //this.select_sport.val();

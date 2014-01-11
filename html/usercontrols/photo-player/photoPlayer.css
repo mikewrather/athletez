@@ -1,8 +1,8 @@
 .photo-frame-model {
-    width: 90% !important;
-    height:80%;
-    top: 10% !important;
-    left:5% !important;
+    width: 100% !important;
+    height:100%;
+    top: 0 !important;
+    left:0 !important;
     margin: 0 !important;
     border-radius: 0; -webkit-border-radius: 0; -moz-border-radius: 0;
     padding: 0;
@@ -144,11 +144,11 @@ div.right-arrow-container > img{
     z-index: 1056;
     max-width: 100%;
     margin-top: 5px;
-    height: 150px;
+    height: 130px;
     overflow-x: scroll;
     overflow-y: hidden;
     position: absolute;
-    bottom:13px;
+    bottom:0px;
 }
 
 .thumbs-inner {

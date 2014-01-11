@@ -102,7 +102,7 @@ class Model_Media_Base extends ORM
 	*/
 
 	public function name(){
-		return ucfirst($this->media_type);
+		return $this->name != "" ? ucwords($this->name) : ucfirst($this->media_type)." uploaded by ".$this->user->name();
 	}
 
 	public function getSubject(){ return $this; }
