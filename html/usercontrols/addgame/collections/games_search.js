@@ -22,7 +22,7 @@ function(facade, collections, SportsOrgCollection, utils) {
 					params += '&sports_id='+ this.sports_id;
 
                     return '/api/game/search?'+ params;
-      },
+      }
     });
 
     return List;
