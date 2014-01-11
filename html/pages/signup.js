@@ -186,7 +186,6 @@ define(["require",
 						routing.trigger('common-popup-open', options); 
 					},
 					setupSelectTypeView : function(callback) {
-						alert(callback);
 						var id = "modal-popup-signup",
 						dest = "#"+id+" #modalBody", options = {};
 			            options.height = "500px";

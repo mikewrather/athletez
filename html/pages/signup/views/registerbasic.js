@@ -90,7 +90,7 @@ define(['require', 'text!signup/templates/registration.html', 'text!signup/templ
 			event.preventDefault();
 			$(event.target).parent().find('#label').addClass('loading').html('Connecting to Facebook...');
 			$('#RegModal').modal('hide');
-			headView = new FbHeader();
+			headView = new FbHeader({callback: this.callback});
 			headView.signupFacebook();
 		},
 

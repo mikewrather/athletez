@@ -28,7 +28,9 @@ function (
 
       HeaderView = BaseView.extend({
 
-       
+       initialize: function(options) {
+       		this.callback = options.callback;
+       },
                
              
         signupFacebook: function(linkedToFB) {
@@ -85,7 +87,7 @@ function (
                             		alert("Facebook Account linked Successfully.");
                             	}
                                // this.signupc = new scontroller({"route":""});
-                                 routing.trigger('registration-with-facebook');
+                                 routing.trigger('registration-with-facebook', temp.callback);
                                 //Channel('registration-with-facebook').publish();
                                 //this.pop = new popupview();
 
@@ -106,10 +108,10 @@ function (
             
         },
         loginfb:function() {
-               
+               var _self = this;
                 FB.login(function(response) {
                     if (response.authResponse) {
-                         routing.trigger('registration-with-facebook');
+                         routing.trigger('registration-with-facebook', _self.callback);
                        // Channel('registration-with-facebook').publish();
                         //this.pop = new popupview();
                     } else {
@@ -118,12 +120,13 @@ function (
                 },{scope: 'email, user_birthday, user_photos'});
             },
         checkFBlogin:function(){
+        	var _self = this;
             FB.getLoginStatus(function(response) {
                         if (response.status === 'connected') {
                             FB.api('/me', function(response) {
                                 console.log(response);
                                // this.signupc = new scontroller({"route":""});
-                               routing.trigger('registration-with-facebook');
+                               routing.trigger('registration-with-facebook', _self.callback);
                                 //Channel('registration-with-facebook').publish();
                                 //this.pop = new popupview();
 
