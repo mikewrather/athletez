@@ -124,8 +124,8 @@ define(["require",
 						 //Remove a previously-bound callback function from routing
 						routing.off('register-basic');
           				//Bind a callback function to an object routing
-          				routing.on('register-basic', function() {
-            				controller.setupSelectTypeView();				
+          				routing.on('register-basic', function(callback) {
+            				controller.setupSelectTypeView(callback);				
             			});
 						
 						
@@ -184,8 +184,7 @@ define(["require",
 			            options.title = "Register";         
 						routing.trigger('common-popup-open', options); 
 					},
-					setupSelectTypeView : function() {
-						//$("#LoginPopup").remove();
+					setupSelectTypeView : function(callback) {
 						var id = "modal-popup-signup",
 						dest = "#"+id+" #modalBody", options = {};
 			            options.height = "500px";
@@ -198,8 +197,10 @@ define(["require",
 							model : this.select_type,
 							name : "Select Registration Type",
 							destination : dest,
-							showOnLanding:true
+							showOnLanding:true,
+							callback: callback
 						});
+
 						this.scheme.push(this.selectTypeView);
 						this.layout.render();
 					}

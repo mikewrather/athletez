@@ -112,10 +112,9 @@ function (
              headView = new FbHeader();
              headView.signupFacebook();
          },
-         signupUser: function(){
-           // event.preventDefault();
+         signupUser: function(callback){
             this.signupc = new scontroller({"route":""});
-            routing.trigger("register-basic");
+            routing.trigger("register-basic", callback);
             this.pop = new popupview();
         },
         LogoutUser:function(event){

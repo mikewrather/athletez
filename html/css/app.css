@@ -1548,7 +1548,7 @@ div.game-info .game-score .team-score.win {
 	min-height: 110px;
 	width: 110px;
 	background-size: contain;
-	background-color: #928add;
+	background-color: #4b3dc6;
 }
 
 #add-icons {
@@ -1939,7 +1939,7 @@ div.edit {
 }
 
 #add-icons {
-	width: 220px;
+	width: 230px;
 /*	background: #CCC; */
 	height: 220px;
 }
@@ -1957,7 +1957,7 @@ div.edit {
 }
 
 #add-media a {
-	width: 110px;
+	width: 115px;
 	height: 110px;
 	padding: 0;
 	float: left;
@@ -1975,8 +1975,23 @@ div.edit {
 }
 
 #add-media .hide {
-	visibility: hidden !important;
+	/*visibility: hidden !important;*/
 }
+
+#add-media span, .add-tile-outer span {
+	/*white-space:nowrap; 
+	overflow:hidden; */
+	/*text-overflow: ellipsis;
+	display: -webkit-box;
+   -webkit-box-orient: vertical;
+   -webkit-line-clamp: N;*/
+	/*word-wrap: break-word;*/
+	max-height: 100px;
+	height: 100px;
+	/*display: inherit;*/
+	max-width: 100px;
+	overflow: hidden;
+	}
 
 #add-media a#addVideo {
 	float: right;
@@ -1997,6 +2012,9 @@ li.add-tile-outer {
 
 .add-tile-outer .hide {
 	visibility: hidden !important;
+	
+	
+	
 }
 
 .add-tile-outer a {
@@ -2055,4 +2073,7 @@ li.sport .teamlist-header, .stat-val-outer {
     float: right;
 }
 
+.teams {
+	padding-bottom: 20px;
+}
 

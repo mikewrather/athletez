@@ -37,26 +37,16 @@ define([ 'require', 'text!roster/templates/roster.html','views', 'vendor', 'faca
         },
         
          inviteFBFriend: function(e) {
-        	//var fb = new FBComponent({currentTarget: e.target});
         	var _self = this, options = {};
 			options.subject_id = this.team_id;
 			options.enttype_id = this.controllerObject.basics.get("payload").enttypes_id;
-			//options.name = "We were playing for "+ this.team_name;
-			//options.picture = "http://cdn.athletez.com/resources/img/athletez_logo_small.png";
-			//options.description = "",//this.team_name,
-			//options.success = function() {
-			//	alert("Invitation send successfully.");
-			//};
-			//options.error = function() {
-			//	alert("Some Error Occured. Please try again.");
-			//};
         	routing.trigger('fbInvite', undefined, options);
-        	//fb.sendInvite(options);
         },
-		
 		
 		initialize : function(options) {
 			var _self = this;
+			options.mainView = this;
+			this.mainView = this;
 			SectionView.prototype.initialize.call(this, options);
 			_self.team_id = options.team_id;
 			_self.team_name = options.team_name;
@@ -83,6 +73,7 @@ define([ 'require', 'text!roster/templates/roster.html','views', 'vendor', 'faca
 			teamRosterListView = new ImageList({
 				collection: this.collection1,
 				name: this.viewName,
+				mainView: this,
 				dontrenderTemplate: true,
 				model: new model()
 			});

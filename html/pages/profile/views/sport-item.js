@@ -17,7 +17,6 @@ function (
         utils,
         sportItemTemplate
         ) {
-
     var ProfileSportItemView
       , $ = vendor.$
       , SectionView = views.SectionView
@@ -27,13 +26,10 @@ function (
       TeamList = require('profile/collections/teams');
 
       ProfileSportItemView = SectionView.extend({
-
         tagName: "li",
-
         className: "sport",
         
         initialize: function (options) {
-	        console.log("CALLED SPORT ITEM VIEW",options);
             this.template = sportItemTemplate;
             var self = this;
             this.id = options.model.collection.id;            
@@ -49,13 +45,10 @@ function (
             routing.on("showTwmList", function(sport_id) {
             	callback(sport_id);
             });
-            
-			//Channel('gamesports:select' + sport_id).subscribe(callback);
         },
         
         initTeamList: function() {
             var self = this, sports_id = $(".sports-h img.selected-sport-h").data("id");
-
             this.teams = new TeamList();
             this.teams.id = this.id;
             this.teams.sports_id = sports_id;
@@ -67,22 +60,34 @@ function (
         },
         
         setupTeamListView: function() {
-        	console.error(this.teams.toJSON());
-        	var data = {};
+        	var _self = this;
+        	// if records are more then 2 then implement pagination
+			if(this.teams.length > 2) {
+				$(".see-more-teams-h").html("Show All "+this.teams.length);
+				$(".see-more-teams-h").removeClass("hide");
+				this.allSportsRecords = this.teams.toArray();	
+				var record = this.allSportsRecords.slice(0, 2);
+				this.teams.reset(record);
+				$(".see-more-teams-h").click(function() {
+					$(this).addClass("hide");
+					_self.teams.reset(_self.allSportsRecords);
+					_self.showTeamView();
+				});
+			} else {
+				$(".see-more-teams-h").addClass("hide");
+			}
+			this.showTeamView();
+        },
+        
+        showTeamView : function() {
+        	var data = {};        	
         	data.records = this.teams.toJSON();
-        	 var markup = Mustache.to_html(this.template, data);
+        	var markup = Mustache.to_html(this.template, data);
             this.$el.html(markup);
-           // var self = this,
-            //    teamListView = new TeamListView({
-             //       collection: this.teams
-              //  });
-            
-            //self.$el.find('.teams-info').html(teamListView.el);
-            //teamListView.render();                        
         },
 
         render: function () {
-            var markup = Mustache.to_html(this.template, this.model.toJSON());
+            var _self = this, markup = Mustache.to_html(this.template, this.model.toJSON());
             this.$el.html(markup);
             return this;
         }        

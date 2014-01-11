@@ -11,8 +11,7 @@ define([
     'facade', 
     'utils', 
     "signup/views/registration-basics-final",
-    "signup/models/registration-basics-final",
-    
+    "signup/models/registration-basics-final"
 	],function(require, signupBasicTemplate,signupBasicLandingTemplate,backbone,_,RegistrationController,loginController) {
 			
 		var SignupBasicView,
@@ -25,10 +24,9 @@ define([
         	signupBaseFinalModel=require("signup/models/registration-basics-final"),
         	SectionView = backbone.View;
 			SignupBasicView = SectionView.extend({
-				
 				initialize: function (options) {
 					if(options.openAsaPage) this.openAsaPage = options.openAsaPage;
-						
+					this.callback = options.callback;	
 					//alert(options.destination);
                     this.registrationController = new RegistrationController({
                     	"route": ""
@@ -41,60 +39,38 @@ define([
 	                else
 						this.template =  _.template(signupBasicTemplate, {onlyRegister: (this.openAsaPage)?true:false});
 
-            		this.$el = $(options.destination);
-					console.log("REG BLOCK:",this.$el);
-
-                    $("#errormsg, #preview").html("");
-            
+              		 this.$el = $(options.destination);
+                     $("#errormsg, #preview").html("");
                      SectionView.prototype.initialize.call(this, options);   
-                     debug.log("Image upload basic view");   
-                     
-                     if(!this.openAsaPage) {
-	                    // $('#RegModal').modal('show') ;
-	                     
-	                     //$('#RegModal').on('hidden', function () {
-	               
-	                        //routing.trigger('refresh-onImageUpload');
-	                    //});
-	                    //$('#RegModal').on('hide', function () {
-	                     //   $('div#modalPopup').remove();
-	                        //routing.trigger('refresh-onImageUpload');
-	                     // });
-                     }
-            		this.render();
-            		        		
+              		 this.render();
         		},
-        		render: function(){
+        		
+        		render: function() {
         			this.$el.html(this.template);
-        			
         			if(this.AcceptData) {
         				this.$el.find("input[name=firstname]").val(this.AcceptData.firstname);
         				this.$el.find("input[name=lastname]").val(this.AcceptData.lastname);
         			}
         		},
-        		events:{
+        		
+        		events: {
         			"click .regsubmit":"next",
                 	"click #fbpane":"signupFacebook",
                 	"click #reglogin a":"showLogin",
 			        "click .login": "showLogin"
         		},
         		
-        		next: function(event){
+        		next: function(event) {
         			event.preventDefault();
-        			//backbone.validation.bind(this);
-        			var fields = this.$(":input").serializeArray();
-			        console.log(fields);
-                    var flag= true;
+        			var fields = this.$(":input").serializeArray(), flag= true;
 			        $.each(this.$(":input"),function( key, value ) {
-                       if(!value.value){
-
+                       if(!value.value) {
 	                       setTimeout(function(){
 		                       $(value).addClass('field-failed');
 		                       setTimeout(function(){
 			                       $(value).removeClass('field-failed');
 		                       },2000);
 	                       },parseInt(key + "00"));
-
 	                       flag = false;
                        }
                     });
@@ -126,19 +102,17 @@ define([
                signupFacebook: function(event) {
                     event.preventDefault();
 	               $(event.target).parent().find('#label').addClass('loading').html('Connecting to Facebook...');
-                    $('#RegModal').modal('hide') ;
-                     headView = new FbHeader();
-                     headView.signupFacebook();
+                   $('#RegModal').modal('hide');
+                   headView = new FbHeader();
+                   headView.signupFacebook();
                },
+               
                showLogin:function(event){
 	                event.preventDefault();
 	                routing.trigger('popup-close');
-	                this.logincontroller = new LoginController();
+	                this.logincontroller = new LoginController({callback: this.callback});
 	                routing.trigger("Login");
                }
-
 			});
-
 		return SignupBasicView;
-
 	});	

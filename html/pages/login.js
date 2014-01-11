@@ -8,10 +8,7 @@ define(["require",
 		"utils", 
 		"login/models/Loginmodel",
 		"login/views/Loginview",
-		"login/models/Logoutmodel",
-		
-		
-	
+		"login/models/Logoutmodel"
 		], 
 		 function(require, pageLayoutTemplate,apps) {
 
@@ -26,7 +23,6 @@ define(["require",
 		 		loginBaseView=require("login/views/Loginview"),
 		 		logoutBaseModel= require("login/models/Logoutmodel"),
 		 		
- 		
 		 		LayoutView = views.LayoutView, 
 		 		$ = facade.$,
 		 		_ = facade._,
@@ -37,15 +33,11 @@ define(["require",
 				LoginController = Controller.extend({
 
 					initialize : function(options) {
-					
 						Channel('load:css').publish(cssArr);
-
+						this.callback = options.callback;
 						_.bindAll(this);
-
 						this.handleOptions(options);
-
 						this.init();
-
 						return this;
 					},
 					init : function() {
@@ -59,8 +51,6 @@ define(["require",
 					//popup layput
 					setupLayout: function () {
 						this.scheme=[];
-						//$('div#LoginPopup').remove();
-						//$('body').append('<div id="LoginPopup"></div>');
 						pageLayout = new LayoutView({
 							scheme: this.scheme,
 							destination: "#LoginPopup",
@@ -77,19 +67,16 @@ define(["require",
 					refreshPage : function() {
 						if (this.loginView) {
 							$(this.loginView.destination).html('');
-								position = $.inArray(this.loginView, this.scheme);
-								if (~position)
-									this.scheme.splice(position, 1);
+							position = $.inArray(this.loginView, this.scheme);
+							if (~position) this.scheme.splice(position, 1);
 						}
 					},
 					
 					showPopup:function(){
 						$('#imgUploadModal').modal('show') ;
                  		$('#imgUploadModal').on('hidden', function () {
-                    		//routing.trigger('refresh-onImageUpload');
           			      });
                			 $('#imgUploadModal').on('hide', function () {
-                    	//routing.trigger('refresh-onImageUpload');
                   		});
 					},
 					handleDeferreds : function() {
@@ -107,20 +94,16 @@ define(["require",
             				controller.setupLogout(attr);				
             			});
 					},
+					
 					setupLogout:function(attr) {
 						var current = this;
 						this.logoutcheck = new logoutBaseModel();
 						this.logoutcheck.fetch();
-						$.when(this.logoutcheck.request).done(function(){
+						$.when(this.logoutcheck.request).done(function() {
 							// clearing header model to delete local storage
 							if(attr != undefined) attr.clear();
 							window.localStorage.clear() ;
-							//console.log(localStorage);
-							//console.log(window.localStorage.getItem("user"),"localStorage aftr user remove");
 							location.href="/";
-							// to avoid page reload please uncomment below
-							//attr.attributes.authorized = false;
-							//routing.trigger('reload-home');
 						});
 					},
 					
@@ -130,14 +113,13 @@ define(["require",
 			            options.width = "600px";
 			            options.title = " ";
 			            options.id = id;
-						routing.trigger('common-popup-open', options); 
-						
+						routing.trigger('common-popup-open', options);
 						this.loginView = new loginBaseView({
 							model : this.login_type,
 							name : "Login View",
-							destination : dest
-						});
-						
+							destination : dest,
+							callback: this.callback
+						});						
 						this.scheme.push(this.selectTypeView);
 						this.layout.render();
 					}

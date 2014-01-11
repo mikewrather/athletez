@@ -17,16 +17,11 @@ define(['vendor', 'views', 'utils', 'text!media/templates/image-item.html', 'vot
 	entParser = require('common/models/entparse');
 
 	ImageItemView = BaseView.extend({
-
 		tagName : "li",
-
 		className : "image",
-
 		// Event handlers...
 		 events: {
-            //"click": "changeImage",
 			"click .vote-h": "vote",
-			//'click .image-outer-h' : 'initPhotoPlayer',
 	        "click .follow-h": "follow",
 			"click .edit-h": "edit",
 			"click .delete-h": "delete"
@@ -34,27 +29,21 @@ define(['vendor', 'views', 'utils', 'text!media/templates/image-item.html', 'vot
 
 		initialize : function(options) {
 			this.template = imageItemTemplate;
-			
 			if(options.length)
 			for(var i in options) {
 				this[i] = options[i];
 			}
-			
-			//this.render();
+			if(options.mainView) this.mainView = options.mainView;
 		},
 		
-		
 		checkForUser: function() {
-			
 			if(!_.isUndefined(routing.userLoggedIn) && routing.userLoggedIn)
 				return true;
 			else	
         		return false;
 		},
 		
-		
 		render : function() {
-
 			var _self = this, payload = this.model.get('payload');
 			//the extra object is created here using the entity parsing model
 			var parser = new entParser({mpay:payload});
@@ -187,48 +176,56 @@ define(['vendor', 'views', 'utils', 'text!media/templates/image-item.html', 'vot
 	    {
 		   e.preventDefault();
 		   e.stopPropagation();
-		   
-		   if(!this.checkForUser()) {
-		  		
-		  	   	routing.trigger('showSignup');	
-		    	return;
+			
+			var _self = this, voteFn = function(callback) {
+				var voteModelOb = new voteModel();
+				voteModelOb.subject_id = _self.model.get("payload").id;
+				voteModelOb.entity_id = _self.model.get("payload").enttypes_id;
+				voteModelOb.setData();
+				voteModelOb.save();
+				$.when(voteModelOb.request).done(function() {
+					$(e.currentTarget).addClass('link-disabled');
+					if(callback) callback();
+				});	
+			};	   
+
+		   if(!_self.checkForUser()) {
+		  	   	routing.trigger('showSignup', function(callback) {
+		  	   		voteFn(function() {
+			     		if(callback) callback();
+			     	});
+			     });	
+	    	} else {
+	    		voteFn();
 	    	}
-		    var voteModelOb = new voteModel();
-			voteModelOb.subject_id = this.model.get("payload").id;
-			voteModelOb.entity_id = this.model.get("payload").enttypes_id;
-			voteModelOb.setData();
-			voteModelOb.save();
-			$.when(voteModelOb.request).done(function()
-			{
-				//if()
-				$(e.currentTarget).addClass('link-disabled');
-			});
 	    },
 
 	    follow: function(e) {
 		   e.preventDefault();
 		    console.log(e.target);
 		    e.stopPropagation();
-		     if(!this.checkForUser()) {
-			     routing.trigger('showSignup');
-			     return;
+		    var _self = this, followFn = function(callback) {
+		    	var followModelOb = new followModel();
+				followModelOb.subject_id = _self.model.get("payload").id;
+				followModelOb.entity_id = _self.model.get("payload").enttypes_id;
+				followModelOb.save();
+				$.when(followModelOb.request).done(function() {
+					if(typeof(followModelOb.get('payload').follower) =='object' && typeof(followModelOb.get('payload').subject) =='object' && followModelOb.get('payload').id > 0) {
+						$(e.currentTarget).addClass('link-disabled');
+					}
+					if(callback) callback();
+				});
+		    };
+		    
+		    if(!_self.checkForUser()) {
+			     routing.trigger('showSignup', function(callback) {
+			     	followFn(function() {
+			     		if(callback) callback();
+			     	});
+			     });
+	    	} else {
+	    		followFn();
 	    	}
-		    var followModelOb = new followModel();
-			followModelOb.subject_id = this.model.get("payload").id;
-			followModelOb.entity_id = this.model.get("payload").enttypes_id;
-		    console.log(followModelOb);
-			followModelOb.save();
-			$.when(followModelOb.request).done(function() {
-
-				if(typeof(followModelOb.get('payload').follower) =='object' && typeof(followModelOb.get('payload').subject) =='object' && followModelOb.get('payload').id > 0)
-				{
-					$(e.currentTarget).addClass('link-disabled');
-				}
-				else
-				{
-					console.log("FAIL");
-				}
-			});
 	    },
 
 		edit: function(e) {
@@ -266,6 +263,7 @@ define(['vendor', 'views', 'utils', 'text!media/templates/image-item.html', 'vot
 			deleteModel.enttypes_id = $(e.currentTarget).attr("subject-type-id");
 			deleteModel.removeNode =$(e.currentTarget).parents("li.image");
 			deleteModel.destroyAndRemove();
+			if(this.mainView && this.mainView.showAddButton && _.isFunction(this.mainView.showAddButton)) this.mainView.showAddButton();
 		}
 
 	});

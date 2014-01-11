@@ -25,11 +25,12 @@ define(["require", "text!imageup/templates/basic.html", "text!imageup/templates/
 			this.attr = option.attr;
 			this.data = option.data;
 			this.count = 0;
-			
+
 			this.setupLayout();
 			this.handleDeferreds();
 			this.showuploader();
-			if(this.data) this.showPreviewDropImage();
+			if (this.data)
+				this.showPreviewDropImage();
 		},
 		handleDeferreds : function() {
 			var controller = this;
@@ -48,6 +49,7 @@ define(["require", "text!imageup/templates/basic.html", "text!imageup/templates/
 			function rerenderShow() {
 				controller.rerender();
 			}
+
 
 			routing.off('imageup-add-image');
 			routing.on('imageup-add-image', function(param) {
@@ -70,27 +72,23 @@ define(["require", "text!imageup/templates/basic.html", "text!imageup/templates/
 				rerenderShow(param);
 			});
 		},
-		
+
 		showuploader : function() {
-			//this.basics = new ImageBasicModel();
 
 			var addBasicView = new ImageBasicView({
 				scheme : this.scheme,
 				layout : this.layout,
 				name : "Add Media",
-				dropedImage: this.data,
+				dropedImage : this.data,
 				model : new ImageBasicModel(),
 				destination : "#left_upload"
 			}, this.attr);
-			debug.log("Imagecontroller Show");
-			console.log(this.scheme);
 			this.scheme.push(addBasicView);
 			this.layout.render();
 		},
-		
+
 		setupLayout : function() {
 			var pageLayout;
-			debug.log("Imagecontroller Layout");
 			this.scheme = [];
 			$(".model-popup-h").remove();
 			$('body').append('<div id="modalPopup" class="model-popup-h"></div>');
@@ -101,14 +99,13 @@ define(["require", "text!imageup/templates/basic.html", "text!imageup/templates/
 				displayWhen : "ready"
 			});
 			this.layout = pageLayout;
-
 			return this.layout;
 		},
-		
+
 		previewShowup : function(dataum) {
-	//		console.log(dataum);
+			console.error("show preview", dataum);
 			var previewShowList = new PreviewShowList(dataum);
-			
+
 			for (var x in this.scheme) {
 				if (this.scheme[x].id == "imgpreview")
 					delete this.scheme[x];
@@ -129,21 +126,14 @@ define(["require", "text!imageup/templates/basic.html", "text!imageup/templates/
 		rerender : function() {
 			this.showuploader();
 		},
-		
-		showPreviewDropImage: function() {
-			var _self = this;
-			if(_self.data) routing.trigger('imageup-preview', _self.data);				
+
+		showPreviewDropImage : function() {
+			if (this.data)
+				routing.trigger('imageup-preview', this.data);
 		},
-		
+
 		imageUpload : function(data) {
-			console.log(data);
-			debug.log("image uploading starts");
 			var id = data.id, length = data.len, dataum = [], msg = "", thiss = this, dataum = data.dataum;
-
-			//url gets set
-			//this.url="/api/"+$("#url_tag").val()+"/addimage/"+$("#id_tag").val();
-
-			//$("#preview_" + id).html('<div class="loader image-loading-div"></div>');
 			$("#preview_" + id).addClass("image_upload_loader_new");
 			$(".previewimgsrc").addClass('fade-out');
 			$.ajax({
@@ -154,11 +144,10 @@ define(["require", "text!imageup/templates/basic.html", "text!imageup/templates/
 				contentType : false,
 				type : 'POST',
 				success : function(data) {
+					console.error(data, id);
 					$("#preview_" + id).fadeOut("slow");
 					$("#preview_" + id + "rot").fadeOut("slow");
-
 					routing.trigger("image-upload-success", data);
-
 					$("imageup").attr("disabled", "disabled");
 					thiss.count++;
 					if (thiss.count == length) {
@@ -170,10 +159,8 @@ define(["require", "text!imageup/templates/basic.html", "text!imageup/templates/
 						$("#imageup").removeAttr("disabled");
 						$("#image_file").removeAttr("disabled");
 						$(".closepreview").removeAttr("disabled");
-						//$(".previewimgsrc").fadeOut('slow').removeClass('fade-out');
-						
 					}
-					$("#preview_" + id).unbind().removeClass("image_upload_loader_new").html("").attr("disabled","disabled");
+					$("#preview_" + id).unbind().removeClass("image_upload_loader_new").html("").attr("disabled", "disabled");
 				},
 				error : function(data) {
 					$("#preview_" + id).fadeOut("slow");
@@ -197,6 +184,7 @@ define(["require", "text!imageup/templates/basic.html", "text!imageup/templates/
 				if (this.scheme[x].destination == "#errormsg")
 					delete this.scheme[x];
 			}
+
 			errorShowModel = new ErrorShowModel(dataum);
 			addErrorView = new ErrorShowView({
 				name : "File Upload Msg",
@@ -204,7 +192,7 @@ define(["require", "text!imageup/templates/basic.html", "text!imageup/templates/
 				destination : "#errormsg",
 				displayWhen : "ready"
 			});
-			debug.log("Error View Show");
+
 			this.scheme.push(addErrorView);
 			$("#errormsg").show();
 			routing.trigger("imageup-rerender");

@@ -4,7 +4,7 @@
 define(['facade','views', 'utils', 'media/views/image-item','text!game/templates/participats-list.html', 'game/models/addparticipate', 'common/models/add', 'component/fb'], 
 function(facade,  views,   utils,   ItemView,  templateList, Participate, addModel) {
 
-    var ImageListView, 
+	var ImageListView, 
         ImageListAbstract,
         $ = facade.$,
         _ = facade._,
@@ -46,24 +46,10 @@ function(facade,  views,   utils,   ItemView,  templateList, Participate, addMod
         },
         
         inviteFBFriend: function(e) {
-        	//var fb = new FBComponent({currentTarget: e.target});
         	var _self = this, options = {};
-        	
         	options.subject_id = this.game_id;
 			options.enttype_id = this.controllerObject.basics.get("payload").enttypes_id;
-
-			//options.link = "#game/"+this.game_id;
-			//options.name = $(".sport-h").text();
-			//options.picture = "http://cdn.athletez.com/resources/img/athletez_logo_small.png";
-			//options.description = $(".game-general p").text();
-			//options.success = function() {
-			//	alert("Invitation send successfully.");
-			//};
-			//options.error = function() {
-			//	alert("Some Error Occured. Please try again.");
-			//};
 			routing.trigger('fbInvite', undefined, options);
-        	//fb.sendInvite(options);
         },
 		
 		renderTemplate: function () {
@@ -84,15 +70,15 @@ function(facade,  views,   utils,   ItemView,  templateList, Participate, addMod
        		});
         },
              
-             
         initialize: function(options) {
+        	
         	var _self = this;
         	$(document).off("click", ".add-to-event");
         	$(document).on("click", ".add-to-event", function() {
         		if(!_self.checkForUser()) {
-		  	   	routing.trigger('showSignup');	
-		    	return;
-	    	}
+		  	   		routing.trigger('showSignup');	
+		    		return;
+	    		}
         		_self.addParticipant();
         	});
         	$(".participants-heading-h").removeClass("hide");
@@ -106,6 +92,8 @@ function(facade,  views,   utils,   ItemView,  templateList, Participate, addMod
         	this.controller = options.controller;
         	this.sports_id = options.sports_id;
         	this.game_id = this.collection.id;
+        	this.mainView = this;
+        	options.mainView = this;
         	this.renderTemplate();
         	
         	var json = this.collection.toArray(), a = json[0].get("payload"), b = [], found = false;
@@ -121,12 +109,11 @@ function(facade,  views,   utils,   ItemView,  templateList, Participate, addMod
         	this.target_url = options.target_url;
         	this.sport_id = options.sport_id;
 			// render template
-			
-	        //console.log(options);
-	       
+	       console.error(options);
 	        var _self = this;
 			 _self.allData = this.collection.toArray();
 			_self.seeMore();
+			
             CollectionView.prototype.initialize.call(this, options);
             if (!this.collection) {
                 throw new Error("ImageListView expected options.collection.");
@@ -149,6 +136,10 @@ function(facade,  views,   utils,   ItemView,  templateList, Participate, addMod
             	}
             }, 0);
         	if(!found) _self.$el.find(".add-to-event").removeClass("link-disabled");
+        },
+        
+        showAddButton: function() {
+        	this.$el.find(".add-to-event").removeClass("link-disabled");
         },
                 
         seeMore: function(e) {

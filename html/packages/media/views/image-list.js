@@ -131,6 +131,9 @@ function(facade,  views,   utils,   ImageItemView,            ImageBoardView,   
 	    },
 
         initialize: function(options) {
+        	
+        	
+        	
         	if(options.name)
         		this.name = options.name;
         	else
@@ -147,9 +150,9 @@ function(facade,  views,   utils,   ImageItemView,            ImageBoardView,   
         	this.data = options.data;
         	this.controllerObject = options.controllerObject;
         	this.triggerItem = options.triggerItem;
+        	this.mainView = options.mainView;
 			// render template
 			if(!options.dontrenderTemplate) this.renderTemplate();
-	        //console.log(options);
 	       
 	        var _self = this;
 			 _self.allData = this.collection.toArray();
@@ -159,7 +162,6 @@ function(facade,  views,   utils,   ImageItemView,            ImageBoardView,   
 			 _self.start = 0;
 			 _self.end = _self.page_limit;
 			 _self.page_limit = 8;
-			
 			_self.seeMore();
             CollectionView.prototype.initialize.call(this, options);
             if (!this.collection) {
@@ -242,7 +244,7 @@ function(facade,  views,   utils,   ImageItemView,            ImageBoardView,   
 
 	    filterWithImageType: function(type) {
 		    var c = this.collection;
-			$.each(c.models, function(i, field){
+			$.each(c.models, function(i, field) {
 				if(field.selectImageType) field.selectImageType(type);
 		    });
 		    return c;
@@ -251,9 +253,10 @@ function(facade,  views,   utils,   ImageItemView,            ImageBoardView,   
 		addButtons: function() {
 			var _self = this;
             setTimeout(function() {
+            	console.error($("#add-icons").length);
 	            if(_self.triggerItem && !$("#add-icons").length) {
 	            	_self.$el.find(_self.listView).prepend('<li id="add-icons"></li>');
-	            	 routing.trigger(_self.triggerItem, "#add-icons");            	
+	            	routing.trigger(_self.triggerItem, "#add-icons");
             	}
             }, 0);
 		},

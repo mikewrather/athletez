@@ -21,7 +21,6 @@ define(['facade','views/base','utils'], function (facade, BaseView, utils) {
     // Constructor `{CollectionView}` extends the BaseView.prototype
     // object literal argument to extend is the prototype for the CollectionView Constructor
     CollectionView = BaseView.extend({
-
         // **Method:** `initialize`  
         // Param {Object} `options` must have a child view and tagname  
         // - options should have properties: `view`, `tagName` 
@@ -41,14 +40,18 @@ define(['facade','views/base','utils'], function (facade, BaseView, utils) {
             if (!this._tagName) {
                 throw new Error("CollectionView initialize: no tag name provided.");
             }
+            
             this._className = this.options.className || this._className;
             this._decorator = this.options.decorator || this._decorator;
+            this.mainView = options.mainView || this._mainView;
+            
+            console.error(this.mainView);
+            
             this.FBoptions = this.FBoptions;
             this._id = this.options.id || this._id;
             this._temp = this.options._template || this._template;
             this.singleView = this.options.singleView || this.singleView;
             this.eventView = this.options.eventView || this.eventView;
-            //this.listView = this.options.listView || undefined;
             this._views = [];
             _(this).bindAll('add', 'remove', 'reset');
             this.setupCollection();
@@ -72,17 +75,13 @@ define(['facade','views/base','utils'], function (facade, BaseView, utils) {
             	_self.pageId = collection.id;
                 collection.each(this.add);
             }
-
         },
         
         reset: function() {
         	this._views = [];
-        	
         },
         
         addRecords: function() {
-        	alert("add records");
-        	console.log(this._views);
         	 var collection =  this.collection;
         	 delete this._views;
         	 this._views = [];
@@ -108,7 +107,8 @@ define(['facade','views/base','utils'], function (facade, BaseView, utils) {
                 "recordId": this.pageId,
                 "className": this._className,
                 "decorator": this._decorator,
-                "FBoptions": this.FBoptions
+                "FBoptions": this.FBoptions,
+                "mainView": this.mainView
             });
             this._views.push(view);
             if (this._rendered) {
