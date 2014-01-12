@@ -131,7 +131,7 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
     		// 'tag': 'showTag',
 			'user/login' : 'showLogin',
 			'addgame' : 'showAddGame',
-            'fbconnect':'showFbreg',
+            //'fbconnect':'showFbreg',
             'logout':'callLogout',
             "*splat": "routeNotFound"
            // 'user/create':'showUsercreate'
@@ -517,6 +517,14 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
                 	callback: callback
                 });
             });
+            
+            // trigger for fb link
+            routing.off("link-to-facebook");
+            routing.on("link-to-facebook", function() {
+              ga('send', 'event', 'popup', 'open', 'FB Reg');
+          	  fbregistration = new fbreg();
+           	  fbregistration.signupFacebook("linkWithFB");
+            });            
             this.detectBrowser();
         },
 
@@ -548,7 +556,7 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
             fbregistration.signupFacebook("linkWithFB");
         },
 
-		gaPageView: function(page,title){
+		gaPageView: function(page,title) {
 			ga('send','pageview',{
 				"page":page,
 				"title":title

@@ -29,7 +29,8 @@ function (
       HeaderView = BaseView.extend({
 
        initialize: function(options) {
-       		this.callback = options.callback;
+       		if(options && options.callback)
+	       		this.callback = options.callback;
        },
                
              

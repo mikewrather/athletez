@@ -54,7 +54,12 @@ function (
             "click .signup-email": "signupUser",
             "click .account clearfix a": "login",
             "click #userlogin":"userLogin",
-            "click #logoutId" :"LogoutUser"
+            "click #logoutId" :"LogoutUser",
+            "click .link-to-fb-h": "linkToFacebook"
+        },
+        
+        linkToFacebook: function() {
+        	routing.trigger("link-to-facebook");
         },
 
         render: function () {
