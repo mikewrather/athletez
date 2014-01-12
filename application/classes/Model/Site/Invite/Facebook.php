@@ -13,6 +13,7 @@ class Model_Site_Invite_Facebook extends Model_Site_Invite
 {
 	
 	protected $_table_name = 'invites';
+	public $invite_to_obj;
 
 	public function __construct($id=NULL)
 	{
@@ -25,6 +26,7 @@ class Model_Site_Invite_Facebook extends Model_Site_Invite
 		),
 		'added_function_calls' => array(
 			'fb_user_data' => 'deserializeUserData',
+			'invite_to_obj' => 'getInviteToObj'
 		),
 		'exclude_columns' => array(
 			'invite_email'
@@ -54,5 +56,28 @@ class Model_Site_Invite_Facebook extends Model_Site_Invite
 		$this->setBasics();
 		$this->beenSent();
 		return $this;
+	}
+
+	public function getInviteToObj()
+	{
+		if($this->loaded()){
+			$invite_to = unserialize($this->invite_to);
+			if(is_array($invite_to)){
+				$obj = Ent::eFact($invite_to['enttype_id'],$invite_to['subject_id']);
+				if(is_object($obj) && is_subclass_of($obj,'ORM') && $obj->loaded()) return $obj->getBasics();
+				else return false;
+			}
+		}
+	}
+
+	public function getInviteData($args){
+		extract($args);
+		if(isset($sechash)) $res = $this->where('sechash','=',$sechash);
+		elseif(isset($fbid)) $res = $this->where('invite_fb','=',$fbid);
+		else return false;
+
+		$res->find();
+		if($res->loaded()) return $res;
+		else return false;
 	}
 }

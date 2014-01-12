@@ -39,21 +39,18 @@ class Controller_Api_Fbinvite extends Controller_Api_Base
 		// The invitations can be retrieved by secret hash or by fb id.  This is for the secret hash.
 		if(trim($this->request->query('sechash')) != "")
 		{
-			$sechash = trim($this->request->query('sechash'));
+			$args['sechash'] = trim($this->request->query('sechash'));
 		}
 
 		// fbid
 		// Retrieve invite by fbid
 		if(trim($this->request->query('fbid')))
 		{
-			$fbid = $this->request->query('fbid');
+			$args['fbid'] = $this->request->query('fbid');
 		}
 
-		if(isset($sechash)) $res = $this->mainModel->where('sechash','=',$sechash);
-		elseif(isset($fbid)) $res = $this->mainModel->where('invite_fb','=',$fbid);
-		else return false;
+		$res = $this->mainModel->getInviteData($args);
 
-		$res->find();
 		return $res;
 
 	}

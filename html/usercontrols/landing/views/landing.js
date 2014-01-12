@@ -12,6 +12,7 @@ define(['require',
 	'views',
 	'utils',
 	'usercontrols/landing/models/fb-user',
+	'common/models/entparse',
 	'vendor'], function(require) {
 
 	var facade = require('facade'), views = require('views'),
@@ -19,7 +20,8 @@ define(['require',
 
 		signupBaseModel = require("signup/models/registerbasic"),
 		signupBaseView=require("signup/views/registerbasic"),
-		UserModel = require('usercontrols/landing/models/fb-user');
+		UserModel = require('usercontrols/landing/models/fb-user'),
+		entParser = require('common/models/entparse');
 
 		Channel = utils.lib.Channel, vendor = require('vendor'),
 		Mustache = vendor.Mustache, $ = facade.$;
@@ -65,16 +67,33 @@ define(['require',
 			model.fbUserId = this.userId;
 			model.fetch();
 			$.when(model.request).done(function() {
-				_self.data = {firstname: model.get("payload").fb_user_data.first_name, lastname: model.get("payload").fb_user_data.last_name};
-				_self.render();
+				var mpay = model.get('payload');
+				var parser = new entParser({
+					'mpay':mpay.invite_to_obj,
+					display_width:1920,
+					display_height:1024
+				});
+				var extra = parser.parsedData;
+
+				_self.data = {
+					firstname: mpay.fb_user_data.first_name,
+					lastname:mpay.fb_user_data.last_name,
+					label: extra._noicon_text + " " + extra._label
+				}
+				var options = {};
+				if(typeof(extra.imgData == 'object')){
+					options.background_image = extra.imgData.url
+				}
+				console.log(extra);
+				_self.render(options);
 			});
 		},
 		
 
 		//render displays the view in landing
-		render : function() {
+		render : function(options) {
 			var _self = this, markup = Mustache.to_html(_self.template,_self.data);
-			var options = {};
+			var options = options || {};
 			options.width = "100%";
 			options.height = "100%";
 			options.title = "&nbsp;";
@@ -83,11 +102,12 @@ define(['require',
 			options.fullPage = true;
 			options.addClass = ['noBorder'];
 
-			var rand = Math.ceil(Math.random()*100);
-			var bgs = ['1.jpg','2.jpg','3.jpg','4.jpg','5.jpg','6.jpg','7.jpg','8.jpg'];
-			console.log(rand,rand % bgs.length);
+			if(!options.background_image == null){
+				var rand = Math.ceil(Math.random()*100);
+				var bgs = ['1.jpg','2.jpg','3.jpg','4.jpg','5.jpg','6.jpg','7.jpg','8.jpg'];
+				options.background_image = "http://athletez.s3.amazonaws.com/resources/img/landing/" + bgs[rand % bgs.length];
+			}
 
-			options.background_image = "http://athletez.s3.amazonaws.com/resources/img/landing/" + bgs[rand % bgs.length];
 			console.error(options);
 			routing.trigger('common-popup-open', options);
 			this.$el = $('#landing .modal-body');

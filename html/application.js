@@ -241,7 +241,7 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
 	    		$("body").addClass("fbaccept");
 				var title = "Athletez - We Are Athletes";
 	    		var landing = new landingView({userId: fbId});
-	    		
+	    		routing.showLandingPage = false;
 			    if(!fbId && $('div.register-wrapper').length == 0) {
 				    $('body header').after('<div class="register-wrapper"></div><div class="register-wrapper-h"></div>');
 			    }
