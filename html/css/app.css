@@ -1975,7 +1975,7 @@ div.edit {
 }
 
 #add-media .hide {
-	/*visibility: hidden !important;*/
+	visibility: hidden !important;
 }
 
 #add-media span, .add-tile-outer span {
@@ -2075,5 +2075,17 @@ li.sport .teamlist-header, .stat-val-outer {
 
 .teams {
 	padding-bottom: 20px;
+}
+
+.two-column-form .field-row div, .two-column-form .field-row label {
+	display: inline-block;
+}
+
+.two-column-form .field-row label {
+	width: 100px;
+}
+
+.mt20 {
+	margin-top: 20px;
 }
 

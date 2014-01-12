@@ -132,7 +132,9 @@ function(facade,  views,   utils,   ImageItemView,            ImageBoardView,   
 
         initialize: function(options) {
         	
-        	
+        	for(var i in options) {
+        		this[i] = options[i]; 
+        	}
         	
         	if(options.name)
         		this.name = options.name;
@@ -141,19 +143,10 @@ function(facade,  views,   utils,   ImageItemView,            ImageBoardView,   
         	
 	       this.pageName = (options.pageName)?options.pageName:"profile";
         	if(options.collecton) this.collection = options.collection;
-        	this.target_id = options.target_id;	
-        	this.target_url = options.target_url;
-        	this.sport_id = options.sport_id;
-        	this.user_id = options.user_id;
-        	this.media_id = options.media_id;
-        	this.pageName = options.pageName;
-        	this.data = options.data;
-        	this.controllerObject = options.controllerObject;
-        	this.triggerItem = options.triggerItem;
-        	this.mainView = options.mainView;
+        	
+        	
 			// render template
 			if(!options.dontrenderTemplate) this.renderTemplate();
-	       
 	        var _self = this;
 			 _self.allData = this.collection.toArray();
 			 var len = _self.allData.length;

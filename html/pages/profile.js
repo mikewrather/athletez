@@ -425,7 +425,6 @@ define([
 					pageName: "profile",
 					 triggerItem: 'setup-add-icons'
 				});
-
 				this.scheme.push(this.imageListView);
 				this.layout.render();
 			},
@@ -437,9 +436,10 @@ define([
 					position = $.inArray(this.fansListView, this.scheme);
 					if (~position) this.scheme.splice(position, 1);
 				}
+				
 				_self.fans.fetch();
 				$.when(_self.fans.request).done(function() {
-					_self.setupFansListView();					
+					_self.setupFansListView();
 				});
 			},
 			
@@ -451,7 +451,6 @@ define([
 					controllerObject: this,
 					pageName: "profile",
 					data: this.basics.toJSON(),
-					//model: Backbone.Model.extend(),
 					name: "fansView"
 				});
 				this.scheme.push(this.fansListView);
