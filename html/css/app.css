@@ -1975,7 +1975,7 @@ div.edit {
 }
 
 #add-media .hide {
-	/*visibility: hidden !important;*/
+	visibility: hidden !important;
 }
 
 #add-media span, .add-tile-outer span {

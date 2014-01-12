@@ -451,7 +451,6 @@ define([
 					controllerObject: this,
 					pageName: "profile",
 					data: this.basics.toJSON(),
-					//model: Backbone.Model.extend(),
 					name: "fansView"
 				});
 				this.scheme.push(this.fansListView);

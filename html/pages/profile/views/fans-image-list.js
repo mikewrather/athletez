@@ -1,9 +1,10 @@
 // The Image List
 // --------------
 
-define(['facade', 'utils', 'media/views/image-list', 'component/fb'], function(facade, utils, BaseImageListView) {
+define(['facade', 'utils', 'media/views/image-list', 'component/fb', 'votes/models/follow'], function(facade, utils, BaseImageListView) {
 
-	var FansImageListView, FBComponent = require('component/fb');
+	var FansImageListView, FBComponent = require('component/fb'),
+	 followModel = require('votes/models/follow');
 	FansImageListView = BaseImageListView.extend({
 		imagetype : 'large_thumb',
 		setupAddView : function() {
@@ -12,7 +13,8 @@ define(['facade', 'utils', 'media/views/image-list', 'component/fb'], function(f
 		events : {
 			'click .invite-to-fb-h' : 'inviteFBFriend',
 			"mouseover a.tiles" : "showText",
-			"mouseout a.tiles" : "showicon"
+			"mouseout a.tiles" : "showicon",
+			"click .add-to-fans-h" : "addToFanList"
 		},
 		
 		// show text
@@ -29,24 +31,35 @@ define(['facade', 'utils', 'media/views/image-list', 'component/fb'], function(f
 			var _self = this, options = {};
 			options.subject_id = this.target_id;
 			options.enttype_id = this.controllerObject.basics.get("payload").enttypes_id;
-			//options.link = "#!"+this.pageName+"/"+this.target_id;
-			//options.name = $(".sport-h").text();
-			//options.picture = "http://cdn.athletez.com/resources/img/athletez_logo_small.png";
-			//options.description = $(".game-general p").text();
-			//options.success = function() {
-			//	alert("Invitation send successfully.");
-			//};
-			//options.error = function() {
-			//	alert("Some Error Occured. Please try again.");
-			//};
-			
 			routing.trigger('fbInvite', undefined, options);
-			
-			//var fb = new FBComponent({
-			//	currentTarget : e.target
-			//});
-
-			//fb.sendInvite(options);
+		},
+		
+		addToFanList: function(e) {
+			 e.preventDefault();
+		    console.error(this.mainModel);
+		    var _self = this, followFn = function(callback) {
+		    	var followModelOb = new followModel();
+				followModelOb.subject_id = _self.collection.id;
+				followModelOb.entity_id = _self.controllerObject.basics.get("payload").enttypes_id;
+				followModelOb.save();
+				$.when(followModelOb.request).done(function() {
+					if(typeof(followModelOb.get('payload').follower) =='object' && typeof(followModelOb.get('payload').subject) =='object' && followModelOb.get('payload').id > 0) {
+						$(e.target).addClass('link-disabled');
+						if(_self.controllerObject && _self.controllerObject.reloadFans) _self.controllerObject.reloadFans();
+					}
+					if(callback) callback();
+				});
+		    };
+		    
+		    if(!_self.checkForUser()) {
+			     routing.trigger('showSignup', function(callback) {
+			     	followFn(function() {
+			     		if(callback) callback();
+			     	});
+			     });
+	    	} else {
+	    		followFn();
+	    	}
 		},
 
 		addButtons : function() {
