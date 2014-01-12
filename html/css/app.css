@@ -2077,3 +2077,15 @@ li.sport .teamlist-header, .stat-val-outer {
 	padding-bottom: 20px;
 }
 
+.two-column-form .field-row div, .two-column-form .field-row label {
+	display: inline-block;
+}
+
+.two-column-form .field-row label {
+	width: 100px;
+}
+
+.mt20 {
+	margin-top: 20px;
+}
+

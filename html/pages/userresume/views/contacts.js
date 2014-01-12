@@ -53,7 +53,6 @@ define(['require', 'text!userresume/templates/contact.html', 'facade', 'views', 
 		// **Method** `setOptions` - called by BaseView's initialize method
 		setOptions : function(options) {
 			this.user_id = options.user_id;
-			//	this.el = options.destination;
 		},
 
 		/*initialize must be a wrapper so any function definitions and calles must be called in init*/
@@ -69,9 +68,8 @@ define(['require', 'text!userresume/templates/contact.html', 'facade', 'views', 
 			
 		},
 
-
 		setUpListView : function() {
-			var payload = {
+			var self = this, payload = {
 				user_id : self.user_id
 			};
 			var Collection = new ContactsCollection(payload);
@@ -90,10 +88,8 @@ define(['require', 'text!userresume/templates/contact.html', 'facade', 'views', 
 					});
 					$(self.el).find(self.el).html(markup);
 				} else {
-					self.$el(self.controls.ContainerGpa).html(self.messages.dataNotExistContacts);
-
+					$(self.el).find(self.controls.ContainerGpa).html(self.messages.dataNotExistContacts);
 				}
-
 			});
 			
 		}

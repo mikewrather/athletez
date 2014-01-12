@@ -749,6 +749,7 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
         },
         
         ShowUserResume: function (userid) {
+           var self = this;
             this.cancelAjaxRequests();
             this.loadStyles();
             chromeBootstrap();

@@ -25,9 +25,6 @@ define(["require", "text!profilesetting/templates/layout.html", "facade", "contr
 	ProfileSettingController = Controller.extend({
 		/*CSS SECTION*/
 		cssArr : ["/pages/profilesetting/profilesettings.css"],
-		events : {
-			//"click #btn-Add-School" : "addHighSchool",
-		},
 		/*Actions to be performed on the first time the object is created*/
 		initialize : function(options) {
 			/*Load CSS File*/
@@ -46,7 +43,6 @@ define(["require", "text!profilesetting/templates/layout.html", "facade", "contr
 			this.setupLayout().render();
 			this.setupView();
 			this.handleDeferreds();
-
 		},
 		/*Method renders the page layout for user setting page*/
 		/*pageLayoutTemplate is just the skeleton for user setting page modules like High School,Clubs,Individual Sports,
@@ -73,15 +69,11 @@ define(["require", "text!profilesetting/templates/layout.html", "facade", "contr
 			this.basicInfoModel = new BasicInfoModel();
 			this.basicInfoModel.id = self.id;
 			this.basicInfoModel.fetch();
-
 			//Set Up different views when you have all userinfo about user
 			$.when(this.basicInfoModel.request).done(function() {
-
-				var data = self.basicInfoModel.toJSON()
-
+				var data = self.basicInfoModel.toJSON();
 				// Assign Properties From Data
 				self.gender = data.payload.gender;
-
 				// Call All The Views
 				self.setUpBasicView();
 				//TODO: For Testing Purpose Remove following Lines as soon as AddSchool divs event gets bind
@@ -89,7 +81,6 @@ define(["require", "text!profilesetting/templates/layout.html", "facade", "contr
 				self.SetUpClubView();
 				self.setUpIndividualView();
 			});
-
 		},
 
 		/*Set up Basic Info View*/

@@ -63,19 +63,16 @@ define(["require", "text!userresume/templates/layout.html",
 		},
 		/*Actions to be performed on the first time the object is created*/
 		initialize : function(options) {
-
 			/*Load CSS File*/
 			Channel('load:css').publish(this.cssArr);
 			/*Bind Class with all events*/
 			_.bindAll(this);
-
+			 this.scheme = [];
 			if (options.id) {
 				this.id = options.id;
 				this.init();
 			}
-
 			return this;
-
 		},
 		/*To reduce initialize methods length and all the view related functions */
 		init : function() {
@@ -113,7 +110,7 @@ define(["require", "text!userresume/templates/layout.html",
 			//Set Up different views when you have all userinfo about user
 			$.when(this.basicInfoModel.request).done(function() {
 
-				var data = self.basicInfoModel.toJSON()
+				var data = self.basicInfoModel.toJSON();
 
 				// Assign Properties From Data
 				self.gender = data.payload.gender;
@@ -135,22 +132,22 @@ define(["require", "text!userresume/templates/layout.html",
 			this.basicView = new BasicInfoView({
 				model : new BasicInfoModel(),
 				template : basicInfoHtml,
-				//scheme : this.scheme,
 				name : "basic-info",
 				destination : "#section-basics-prof-setting",
 				user_id : self.id,
 				id : self.id
 			});
 
-			//this.scheme.push(this.basicView);
+			this.scheme.push(this.basicView);
+			//this.layout.render();
 		},
+		
 		/*Set up Basic Info View*/
 		setUpSentResumeView : function() {
 			var self = this;
 			this.sentResumeView = new SentResumeView({
 				model : new ResumeModel(),
 				template : sentResumeHtml,
-				//scheme : this.scheme,
 				name : "sent-resume",
 				destination : "#section-sent-resume",
 				user_id : self.id,
@@ -160,6 +157,7 @@ define(["require", "text!userresume/templates/layout.html",
 			this.scheme.push(this.sentResumeView);
 			this.layout.render();
 		},
+		
 		/*Set up Basic Info View*/
 		setUpRdTreeView : function() {
 			var self = this;
@@ -171,10 +169,10 @@ define(["require", "text!userresume/templates/layout.html",
 				destination : "#section-RD-Tree",
 				user_id : self.id,
 			});
-
 			this.scheme.push(this.rdTreeView);
 			this.layout.render();
 		},
+		
 		/*Set up Basic Info View*/
 		setUpAcademicView : function() {
 			var self = this;
@@ -231,12 +229,9 @@ define(["require", "text!userresume/templates/layout.html",
 				destination : "#section-references",
 				user_id : self.id,
 			});
-
 			this.scheme.push(this.referenceView);
 			this.layout.render();
 		}
-
-
 	});
 	return UserResumeController;
 
