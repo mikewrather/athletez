@@ -74,7 +74,7 @@ class Controller_Api_Fbinvite extends Controller_Api_Base
 
 		if($this->request->post('invite_to')){
 			try{
-				$obj = json_decode($this->request->post('invite_to'));
+				$obj = $this->request->post('invite_to');
 				if(is_object($obj)) $invite_to = (array)$obj;
 			} catch(Exception $e){
 				$invite_to = array();
