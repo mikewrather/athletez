@@ -102,7 +102,7 @@ define(['require',
 			options.fullPage = true;
 			options.addClass = ['noBorder'];
 
-			if(!options.background_image == null){
+			if(options.background_image == undefined){
 				var rand = Math.ceil(Math.random()*100);
 				var bgs = ['1.jpg','2.jpg','3.jpg','4.jpg','5.jpg','6.jpg','7.jpg','8.jpg'];
 				options.background_image = "http://athletez.s3.amazonaws.com/resources/img/landing/" + bgs[rand % bgs.length];
