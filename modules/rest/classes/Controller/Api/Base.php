@@ -1033,8 +1033,14 @@ class Controller_Api_Base extends AuthController
 			$sports_id = null;
 		}
 
+		$limit = null;
+		if((int)trim($this->request->query('limit')) > 0) $limit = trim($this->request->query('limit'));
+
+		$offset = 0;
+		if((int)trim($this->request->query('offset')) > 0) $offset = trim($this->request->query('offset'));
+
 		$media = ORM::factory('Media_Base');
-		return $media->getTaggedMedia($this->mainModel, $sports_id);
+		return $media->getTaggedMedia($this->mainModel, $sports_id,$limit,$offset);
 	}
 
 }
