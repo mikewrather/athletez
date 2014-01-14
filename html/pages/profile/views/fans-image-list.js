@@ -29,9 +29,21 @@ define(['facade', 'utils', 'media/views/image-list', 'component/fb', 'votes/mode
 
 		inviteFBFriend : function(e) {
 			var _self = this, options = {};
-			options.subject_id = this.target_id;
-			options.enttype_id = this.controllerObject.basics.get("payload").enttypes_id;
-			routing.trigger('fbInvite', undefined, options);
+			var inviteFb = function() {
+				options.subject_id = _self.target_id;
+				options.enttype_id = _self.controllerObject.basics.get("payload").enttypes_id;
+				routing.trigger('fbInvite', undefined, options);
+			};
+			
+			if(!_self.checkForUser()) {
+			     routing.trigger('showSignup', function(callback) {
+			     	inviteFb(function() {
+			     		if(callback) callback();
+			     	});
+			     });
+	    	} else {
+	    		inviteFb();
+	    	}
 		},
 		
 		addToFanList: function(e) {

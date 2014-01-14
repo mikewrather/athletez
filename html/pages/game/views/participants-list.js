@@ -37,9 +37,21 @@ define(['facade', 'views', 'utils', 'media/views/image-item', 'text!game/templat
 
 		inviteFBFriend : function(e) {
 			var _self = this, options = {};
-			options.subject_id = this.game_id;
-			options.enttype_id = this.controllerObject.basics.get("payload").enttypes_id;
-			routing.trigger('fbInvite', undefined, options);
+			var addToList= function() {
+				options.subject_id = this.game_id;
+				options.enttype_id = this.controllerObject.basics.get("payload").enttypes_id;
+				routing.trigger('fbInvite', undefined, options);
+			};
+			
+			if(!_self.checkForUser()) {
+			     routing.trigger('showSignup', function(callback) {
+			     	addToList(function() {
+			     		if(callback) callback();
+			     	});
+			     });
+	    	} else {
+	    		addToList();
+	    	}
 		},
 
 		renderTemplate : function() {
@@ -52,17 +64,32 @@ define(['facade', 'views', 'utils', 'media/views/image-item', 'text!game/templat
 
 		addParticipant : function() {
 			var participants = new Participate(), _self = this;
-			participants.set({
-				games_id : this.game_id,
-				sports_id : this.sports_id
-			});
-			participants.save();
-			$.when(participants.request).done(function() {
-				var payload = participants.toJSON(), newAddModel = new addModel();
-				newAddModel.processItemFromResponse(payload.payload.usl.user);
-				_self.$el.find(".add-to-event").addClass("link-disabled");
-				_self.collection.add(newAddModel);
-			});
+			
+			var addToList = function() {
+				participants.set({
+					games_id : _self.game_id,
+					sports_id : _self.sports_id
+				});
+				participants.save();
+				$.when(participants.request).done(function() {
+					var payload = participants.toJSON(), newAddModel = new addModel();
+					newAddModel.processItemFromResponse(payload.payload.usl.user);
+					_self.$el.find(".add-to-event").addClass("link-disabled");
+					_self.collection.add(newAddModel);
+				});
+			};
+			
+			if(!_self.checkForUser()) {
+			     routing.trigger('showSignup', function(callback) {
+			     	addToList(function() {
+			     		if(callback) callback();
+			     	});
+			     });
+	    	} else {
+	    		addToList();
+	    	}
+			
+			
 		},
 
 		initialize : function(options) {

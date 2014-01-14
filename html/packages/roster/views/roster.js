@@ -116,18 +116,29 @@ define([ 'require', 'text!roster/templates/roster.html','views', 'vendor', 'faca
 		},
 		
 		addToRoster: function(e) {
-			if(!this.checkForUser()) {
-		  	   	routing.trigger('showSignup');	
-		    	return;
-	    	}
 			
 			var _self = this, modal = new model();
-			modal.url = "/api/team/player/"+this.team_id;
-			modal.save();
-			$.when(modal.request).done(function() {
-				$(e.currentTarget).parent().hide();
-				_self.getTeams();
-			});
+
+			var addToList = function(callback) {
+				modal.url = "/api/team/player/"+_self.team_id;
+				modal.save();
+				$.when(modal.request).done(function() {
+					$(e.currentTarget).parent().hide();
+					_self.getTeams();
+					if(callback) callback();
+				});
+			};
+			
+			if(!_self.checkForUser()) {
+			     routing.trigger('showSignup', function(callback) {
+			     	addToList(function() {
+			     		if(callback) callback();
+			     	});
+			     });
+	    	} else {
+	    		addToList();
+	    	}
+			
 		},
 		
 		render: function (domInsertion, dataDecorator, partials) {

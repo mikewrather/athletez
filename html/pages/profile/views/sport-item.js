@@ -62,7 +62,6 @@ function (
         setupTeamListView: function() {
         	var _self = this;
         	// if records are more then 2 then implement pagination
-        	
         	try {
 	        	var firstRecord = this.teams.at(0);
 	        	if(firstRecord.get("payload").sports[0])
@@ -70,7 +69,7 @@ function (
 	        	else
 	        	    $(".teams h4").addClass("hide");
         	} catch(e) {
-        	    $(".teams h4").addClass("hide");        		
+        	    $(".teams h4").addClass("hide");
         	}
         	
 			if(this.teams.length > 2) {
