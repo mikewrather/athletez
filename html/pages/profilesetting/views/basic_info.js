@@ -118,16 +118,7 @@ define(['require', 'text!profilesetting/templates/basic_info_header.html', 'text
 						if (errors) {
 							// auto scroll to focus element which has error
 							for (var i in errors) {
-								var $ob = $("*[name=" + i + "]"), $pos = $ob.position();
-								$ob.parents(".common-modal #modalBody").animate({
-									scrollTop : $pos.top
-								}, '500', function() {
-									$ob.addClass('focus-error-animation');
-									setTimeout(function() {
-										$ob.removeClass('focus-error-animation');
-									}, 2000);
-								});
-								break;
+								
 							}
 						} else {
 							if (_self.formValues) {
@@ -211,8 +202,8 @@ define(['require', 'text!profilesetting/templates/basic_info_header.html', 'text
 						self.editProfile();
 					});
 				},
-				error: function(res) {
-					var response = JSON.parse(res.responseText);
+				error: function(res, a) {
+					var response = JSON.parse(a.responseText);
 					var errorArray = response.exec_data.error_array;
 					self.formValues.showServersErrors(errorArray);
 				}
