@@ -24,9 +24,7 @@ define([
     CommentFormView = BaseView.extend({
 
         tagName: "li",
-
         template: commentFormTemplate,
-
         // Delegated events for creating new items, and clearing completed ones.
         events: {
             "click #comment-submit": "submitHandler"
@@ -40,7 +38,7 @@ define([
             if (!this.model) {
                 //this.model = new CommentModel({id: this.collection.id});
                 //this.model.fetch();
-            }            
+            }
         },
         
         render: function () {
@@ -59,10 +57,30 @@ define([
             }
 	        return this;
         },
+        
+        checkForUser : function() {
+			if (!_.isUndefined(routing.userLoggedIn) && routing.userLoggedIn)
+				return true;
+			else
+				return false;
+		},
 
         submitHandler: function (e) {
-            e.preventDefault();
-            this.createOnEnter(e);
+        	e.preventDefault();
+        	var _self = this, addToList = function(callback) {
+            	this.createOnEnter(e);
+            	//if(callback) callback();
+          	};
+            
+            if(!_self.checkForUser()) {
+			     routing.trigger('showSignup', function(callback) {
+			     	addToList(function() {
+			     		//if(callback) callback();
+			     	});
+			     });
+	    	} else {
+	    		addToList();
+	    	}
 	    },
 
         // If you hit return in the main input field, create new **CommentForm** model,
