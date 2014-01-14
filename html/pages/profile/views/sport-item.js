@@ -62,6 +62,17 @@ function (
         setupTeamListView: function() {
         	var _self = this;
         	// if records are more then 2 then implement pagination
+        	
+        	try {
+	        	var firstRecord = this.teams.at(0);
+	        	if(firstRecord.get("payload").sports[0])
+	        		$(".teams h4").removeClass("hide");
+	        	else
+	        	    $(".teams h4").addClass("hide");
+        	} catch(e) {
+        	    $(".teams h4").addClass("hide");        		
+        	}
+        	
 			if(this.teams.length > 2) {
 				$(".see-more-teams-h").html("Show All "+this.teams.length);
 				$(".see-more-teams-h").removeClass("hide");
