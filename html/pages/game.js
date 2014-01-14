@@ -71,7 +71,6 @@ define([
 	GameController = Controller.extend({
 		rosterViewsCount: 0,
 		initialize: function (options) {
-			console.error(options);
 			Channel('load:css').publish(cssArr);
 			_.bindAll(this);
 			 this.scheme = [];
@@ -106,7 +105,6 @@ define([
 			var controller = this;
 
 			$.when(this.basics.request).done(function () {
-				console.error(controller.basics);
 				controller.setupHeaderView();
 				
 				var data = controller.basics.get("payload"), subject_type_id = data.enttypes_id;
@@ -117,7 +115,7 @@ define([
 				
 				var teams = data.teams, teamLength = (teams)?teams.length:0;
 				for(var i = 0; i < teamLength; i++) {
-					controller.setupRosterView(teams[i].id, teams[i].org_sport_link_obj.org.name);
+					controller.setupRosterView(teams[i].id, teams[i].org_sport_link_obj.org.name, teams[i].enttypes_id);
 				}
 				
 				controller.commentson = new GameCommentOnList();
@@ -165,7 +163,7 @@ define([
            this.layout.render();
         },
         
-        setupRosterView: function(id, name) {
+        setupRosterView: function(id, name, entityId) {
 			if(!$("#roster_wrap_"+this.rosterViewsCount).length) {
 				$("#roster-wrap").append('<div id="roster_wrap_'+this.rosterViewsCount+'" class="clear"></div>');
 			}
@@ -173,6 +171,7 @@ define([
 			rosterView = new RosterView({
 				model: new model(),
 				team_id: id,
+				entityId: entityId,
 				team_name: name,
 				controllerObject: this,
 				name: "roster images" + Math.random() * Math.random(),
@@ -220,7 +219,6 @@ define([
 			
 			controller.participants.fetch();
 			$.when(controller.participants.request).done(function () {
-				console.error(controller.participants);
 				controller.setupParticipantsListView();
 			});
 		},

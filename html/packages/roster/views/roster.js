@@ -29,17 +29,18 @@ define([ 'require', 'text!roster/templates/roster.html','views', 'vendor', 'faca
 		
        showText: function(e) {
         	$(e.target).parent().find("span").removeClass("hide");
-        },
+       },
         
         // shoe icon
-        showicon: function(e) {
+       showicon: function(e) {
         	$(e.target).parent().find("span").addClass("hide");        	
-        },
+       },
         
-         inviteFBFriend: function(e) {
+       inviteFBFriend: function(e) {
         	var _self = this, options = {};
+        	
 			options.subject_id = this.team_id;
-			options.enttype_id = this.controllerObject.basics.get("payload").enttypes_id;
+			options.enttype_id = this.entityId;
         	routing.trigger('fbInvite', undefined, options);
         },
 		
@@ -49,6 +50,7 @@ define([ 'require', 'text!roster/templates/roster.html','views', 'vendor', 'faca
 			this.mainView = this;
 			SectionView.prototype.initialize.call(this, options);
 			_self.team_id = options.team_id;
+			_self.entityId = options.entityId;
 			_self.team_name = options.team_name;
 			_self.controllerObject = options.controllerObject;
 			_self.viewName = options.viewName || ("Image List" + Math.random());
@@ -82,7 +84,6 @@ define([ 'require', 'text!roster/templates/roster.html','views', 'vendor', 'faca
 			if(this.checkForUser()) {
 				try {
 					var arr = this.collection1.toArray();
-					console.error(arr);
 					for(var i in arr) {
 						if(arr[i].attributes.payload.id == routing.loggedInUserId) {
 							found = true;
