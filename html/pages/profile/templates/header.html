@@ -11,16 +11,20 @@
 			<ul class="span6 textcenter image-outer-h"></ul>
 			<div class="span6">
 				<div class="teams">
-					<h4>Teams</h4>
+					<h4 class="hide">Teams</h4>
 					<div id="sports-info"></div>
 					<a href="javascript: void(0);" class="see-more-teams-h hide">Show All</a>
 				</div>
+				{{#height_ft}}
 				<div class="height">
-					{{#height_ft}}{{height_ft}}{{/height_ft}}
+					{{height_ft}}
 				</div>
+				{{/height_ft}}
+				{{#weight_lb}}
 				<div class="weight">
-					{{#weight_lb}}{{weight_lb}} lbs{{/weight_lb}}
+					{{weight_lb}} lbs
 				</div>
+				{{/weight_lb}}
 			</div>
 		</div>
 

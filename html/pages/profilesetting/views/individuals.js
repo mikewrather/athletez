@@ -52,7 +52,7 @@ define(['require',
 		initialize : function(options) {
 			SectionView.prototype.initialize.call(this, options);
 			self = this;
-			self.setOptions(options)
+			self.setOptions(options);
 			this.init();
 		},
 
@@ -69,9 +69,9 @@ define(['require',
 
 		// **Method** `setOptions` - called by BaseView's initialize method
 		setOptions : function(options) {
-			this.user_id = options.user_id,
-			this.gender = options.gender,
-			this.destination = options.destination
+			this.user_id = options.user_id;
+			this.gender = options.gender;
+			this.destination = options.destination;
 		},
 		
 		/*Set User Sports View*/
@@ -106,8 +106,7 @@ define(['require',
             	self.$(self.controls.userSportsList).html(markup);
 			});
 		},
-	setUpUsersSportsCheck : function(){
-	console.log("setUpSportsView Individual View Check");
+	setUpUsersSportsCheck : function() {
 		var List = new IndividualSportsCollection();
 		List.user_id = self.user_id;
 		//TODO:  Gender is missing in API so need to update code
@@ -115,7 +114,6 @@ define(['require',
 		List.female = 0;
 		List.type = "get";
 		List.fetch();
-
 			$.when(List.request).done(function() {
 				if (List.isError())
 					return;
