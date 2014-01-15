@@ -119,10 +119,10 @@ define(["require", "text!userresume/templates/layout.html",
 				self.setUpBasicView();
 				self.setUpSentResumeView();
 				self.setUpRdTreeView();
-				self.setUpAcademicView();
-				self.setUpAwardsView();
-				self.setUpContactsView();
-				self.setUpReferenceView();
+			//	self.setUpAcademicView();
+			//	self.setUpAwardsView();
+			//	self.setUpContactsView();
+			//	self.setUpReferenceView();
 			});
 
 		},
