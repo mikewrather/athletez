@@ -1611,7 +1611,7 @@ div.edit {
 	background-size:cover; 
 }
 #add-icons {
-	width: 220px;
+	width: 230px;
 	height: 220px;
 }
 #add-media {
@@ -1625,7 +1625,7 @@ div.edit {
 	width: 100%;
 }
 #add-media a {
-	width: 110px;
+	width: 115px;
 	height: 110px;
 	padding: 0;
 	float: left;
@@ -1643,6 +1643,16 @@ div.edit {
 #add-media .hide {
 	visibility: hidden !important;
 }
+#add-media span, .add-tile-outer span {
+	
+	
+	
+	max-height: 100px;
+	height: 100px;
+	
+	max-width: 100px;
+	overflow: hidden;
+	}
 #add-media a#addVideo {
 	float: right;
 	background-position: 100%;
@@ -1659,6 +1669,9 @@ li.add-tile-outer {
 }
 .add-tile-outer .hide {
 	visibility: hidden !important;
+	
+	
+	
 }
 .add-tile-outer a {
 	width: 110px;
@@ -1705,4 +1718,16 @@ li.sport .teamlist-header, .stat-val-outer {
 	font-size: .7em;
 	padding-left: 10px;
     float: right;
+}
+.teams {
+	padding-bottom: 20px;
+}
+.two-column-form .field-row div, .two-column-form .field-row label {
+	display: inline-block;
+}
+.two-column-form .field-row label {
+	width: 100px;
+}
+.mt20 {
+	margin-top: 20px;
 }
