@@ -166,6 +166,7 @@ define(["require", 'text!usercontrols/photo-player/templates/comments.html',
 			$(".tags-area-h").unbind().html("");
 			_self.tags = new TagsCollection();
 			_self.tags.id = id;
+			_self.tags.targetElement = ".tags-area-h";
 			_self.tags.fetch();
 			console.log("Looking for media obj",uploader_id);
 			//$(".coment-area-h").html();
