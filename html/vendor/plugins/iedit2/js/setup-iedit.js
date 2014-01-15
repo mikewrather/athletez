@@ -223,7 +223,10 @@ var iEdit = {
 };
 
 var closeWindow = function(){
-	$(window.parent.document).find('div#modalPopup.imagecropper').hide();
+//	console.log($(window.parent.document).find('.modal-backdrop'));
+	$(window.parent.document).find('.modal-backdrop').remove();
+	$(window.parent.document).find('#change-userpic-modal').unbind().remove();
+
 };
 
 //Size of JavaScript Object
