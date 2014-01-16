@@ -37,21 +37,22 @@ define(['facade', 'views', 'utils', 'media/views/image-item', 'text!game/templat
 
 		inviteFBFriend : function(e) {
 			var _self = this, options = {};
-			var addToList= function() {
+			var addToList = function() {
 				options.subject_id = this.game_id;
 				options.enttype_id = this.controllerObject.basics.get("payload").enttypes_id;
 				routing.trigger('fbInvite', undefined, options);
 			};
-			
-			if(!_self.checkForUser()) {
-			     routing.trigger('showSignup', function(callback) {
-			     	addToList(function() {
-			     		if(callback) callback();
-			     	});
-			     });
-	    	} else {
-	    		addToList();
-	    	}
+
+			if (!_self.checkForUser()) {
+				routing.trigger('showSignup', function(callback) {
+					addToList(function() {
+						if (callback)
+							callback();
+					});
+				});
+			} else {
+				addToList();
+			}
 		},
 
 		renderTemplate : function() {
@@ -62,9 +63,17 @@ define(['facade', 'views', 'utils', 'media/views/image-item', 'text!game/templat
 			return this;
 		},
 
+		afterRender : function() {
+			var _self = this;
+			$ele = this.$el.find(".character-limit-h");
+			$ele.each(function() {
+				_self.adJustFontDynamically($(this));
+			});
+		},
+
 		addParticipant : function() {
 			var participants = new Participate(), _self = this;
-			
+
 			var addToList = function() {
 				participants.set({
 					games_id : _self.game_id,
@@ -78,18 +87,18 @@ define(['facade', 'views', 'utils', 'media/views/image-item', 'text!game/templat
 					_self.collection.add(newAddModel);
 				});
 			};
-			
-			if(!_self.checkForUser()) {
-			     routing.trigger('showSignup', function(callback) {
-			     	addToList(function() {
-			     		if(callback) callback();
-			     	});
-			     });
-	    	} else {
-	    		addToList();
-	    	}
-			
-			
+
+			if (!_self.checkForUser()) {
+				routing.trigger('showSignup', function(callback) {
+					addToList(function() {
+						if (callback)
+							callback();
+					});
+				});
+			} else {
+				addToList();
+			}
+
 		},
 
 		initialize : function(options) {
@@ -151,9 +160,9 @@ define(['facade', 'views', 'utils', 'media/views/image-item', 'text!game/templat
 					var html = '<li id="add-participants-icons" class="add-tile-outer">\
 					<div>\
 					<a href="javascript: void(0);" class="add-to-event link-disabled pull-left tiles" title="Add to event"></a>\
-					<span class="hide">I\'m Attending this event</span></div>\
+					<span class="hide character-limit-h">I\'m Attending this event</span></div>\
 					<div>\
-					<span class="hide">Know somebody who\'s gonna be here?</span>\
+					<span class="hide character-limit-h">Know somebody who\'s gonna be here?</span>\
 					<a href="javascript: void(0);" class="fb-invite-tile-btn invite-to-fb-h tiles pull-right" title="Add to fb"></a></div>\
 					</li>';
 					_self.$el.find(_self.listView).prepend(html);

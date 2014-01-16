@@ -246,7 +246,6 @@ function(facade,  views,   utils,   ImageItemView,            ImageBoardView,   
 		addButtons: function() {
 			var _self = this;
             setTimeout(function() {
-            	console.error($("#add-icons").length);
 	            if(_self.triggerItem && !$("#add-icons").length) {
 	            	_self.$el.find(_self.listView).prepend('<li id="add-icons"></li>');
 	            	routing.trigger(_self.triggerItem, "#add-icons");
