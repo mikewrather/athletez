@@ -158,13 +158,13 @@ define(['facade', 'views', 'utils', 'media/views/image-item', 'text!game/templat
 			setTimeout(function() {
 				if (!$("#add-participants-icons").length) {
 					var html = '<li id="add-participants-icons" class="add-tile-outer">\
-					<div>\
+					<div class="add-icons-outer"><div>\
 					<a href="javascript: void(0);" class="add-to-event link-disabled pull-left tiles" title="Add to event"></a>\
 					<span class="hide character-limit-h">I\'m Attending this event</span></div>\
 					<div>\
-					<span class="hide character-limit-h">Know somebody who\'s gonna be here?</span>\
-					<a href="javascript: void(0);" class="fb-invite-tile-btn invite-to-fb-h tiles pull-right" title="Add to fb"></a></div>\
-					</li>';
+					<a href="javascript: void(0);" class="fb-invite-tile-btn invite-to-fb-h tiles pull-right" title="Add to fb"></a>\
+					<span class="hide character-limit-h">Know somebody who\'s gonna be here?</span></div>\
+					</div></li>';
 					_self.$el.find(_self.listView).prepend(html);
 
 					if (!found)
