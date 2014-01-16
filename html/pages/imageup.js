@@ -11,12 +11,10 @@ define(["require", "text!imageup/templates/basic.html", "text!imageup/templates/
 
 		initialize : function(options) {
 			Channel('load:css').publish(cssArr);
-
 			_.bindAll(this);
 			this.scheme = [];
 			this.handleOptions(options);
 			this.init(options);
-
 			return this;
 		},
 
@@ -25,7 +23,6 @@ define(["require", "text!imageup/templates/basic.html", "text!imageup/templates/
 			this.attr = option.attr;
 			this.data = option.data;
 			this.count = 0;
-
 			this.setupLayout();
 			this.handleDeferreds();
 			this.showuploader();
@@ -103,22 +100,22 @@ define(["require", "text!imageup/templates/basic.html", "text!imageup/templates/
 		},
 
 		previewShowup : function(dataum) {
-			console.error("show preview", dataum);
 			var previewShowList = new PreviewShowList(dataum);
-
 			for (var x in this.scheme) {
 				if (this.scheme[x].id == "imgpreview")
 					delete this.scheme[x];
 			}
+			console.error(dataum);
 			previewShowView = new PreviewShowView({
 				scheme : this.scheme,
 				layout : this.layout,
 				name : "Preview Show View",
 				model : previewShowList,
+				ImageIndex: dataum.ImageIndex,
+				filesUploader: dataum.filesUploader,
 				destination : "#preview",
 				displayWhen : "ready"
 			});
-			debug.log("Preview View Show");
 			this.scheme.push(previewShowView);
 			$("#preview").show();
 			routing.trigger("imageup-rerender");
@@ -144,7 +141,6 @@ define(["require", "text!imageup/templates/basic.html", "text!imageup/templates/
 				contentType : false,
 				type : 'POST',
 				success : function(data) {
-					console.error(data, id);
 					$("#preview_" + id).fadeOut("slow");
 					$("#preview_" + id + "rot").fadeOut("slow");
 					routing.trigger("image-upload-success", data);

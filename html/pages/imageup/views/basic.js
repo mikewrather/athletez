@@ -145,7 +145,7 @@ define(['require', 'text!imageup/templates/uploader.html', 'text!imageup/templat
 						});
 						
 						if(k == files.length) {
-							data = {"data" : _self.dataum};
+							data = {"data" : _self.dataum, "ImageIndex": _self.files_byUploader.length - 1, "filesUploader": _self.files_byUploader};
 							routing.trigger("imageup-preview", data);
 							_self.hideLoader();
 						}
