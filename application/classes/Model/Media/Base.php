@@ -188,10 +188,11 @@ class Model_Media_Base extends ORM
 		return $res;
 	}
 
-	public function getTaggedMedia($obj, $sports_id = null){
+	public function getTaggedMedia($obj, $sports_id = null,$limit=null,$offset=null){
 		$result_arr = null;
-		$limit = Model_Media_Image::getImageCounts($obj);
-		if($primary = Model_Media_Base::find_most_voted_tag($obj,array('image','video'), $limit))
+		$limit = isset($limit) ? $limit : Model_Media_Image::getImageCounts($obj);
+		$offset = isset($offset) ? $offset :0;
+		if($primary = Model_Media_Base::find_most_voted_tag($obj,array('image','video'), $limit,$offset))
 		{
 			//if the third parameter is more than one and it finds more than one result then it will return them in an array
 			if(is_array($primary))
@@ -235,7 +236,7 @@ class Model_Media_Base extends ORM
 		return $results;
 	}
 
-	public static function find_most_voted_tag($obj,$mediaType="image",$limit=1)
+	public static function find_most_voted_tag($obj,$mediaType="image",$limit=1,$offset=0)
 	{
 
 		//TODO: Make it so that teams pull users under them
@@ -287,7 +288,8 @@ class Model_Media_Base extends ORM
 		$qry = DB::select(array($count,'num_votes'),DB::expr('tagged.media_id'))
 			->from(array($tags,'tagged'))
 			->order_by('num_votes','DESC')
-			->limit($limit);
+			->limit($limit)
+			->offset($offset);
 
 		$res = $qry->execute();
 
