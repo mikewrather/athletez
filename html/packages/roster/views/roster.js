@@ -35,6 +35,15 @@ define([ 'require', 'text!roster/templates/roster.html','views', 'vendor', 'faca
        showicon: function(e) {
         	$(e.target).parent().find("span").addClass("hide");        	
        },
+       
+       afterRender: function() {
+       		var _self = this;
+			$ele = this.$el.find(".character-limit-h");
+			$ele.each(function() {
+				_self.adJustFontDynamically($(this));
+			});
+
+       },
         
        inviteFBFriend: function(e) {
         	var _self = this, options = {};
@@ -95,13 +104,13 @@ define([ 'require', 'text!roster/templates/roster.html','views', 'vendor', 'faca
 			this.$el.find(".roster-images-h").html(teamRosterListView.$el);
 			if(!this.$el.find(".add-to-roster-h").length) {
 				var html = '<li class="teams image add-tile-outer">\
-				<div>\
+				<div class="add-icons-outer"><div>\
 				<a href="javascript: void(0);" class="add-to-roster-h link-disabled pull-left tiles" title="Add to roster"></a>\
-				<span class="hide">I play for '+this.team_name+'</span></div>\
+				<span class="hide character-limit-h">I play for '+this.team_name+'</span></div>\
 				<div>\
-				<span class="hide">Know somebody who plays for '+this.team_name+'</span>\
-				<a href="javascript: void(0);" class="fb-invite-tile-btn invite-team-player-h tiles pull-right" title="Add to fb"></a></div>\
-				</li>';
+				<a href="javascript: void(0);" class="fb-invite-tile-btn invite-team-player-h tiles pull-right" title="Add to fb"></a>\
+				<span class="hide character-limit-h">Know somebody who plays for '+this.team_name+'</span>\
+				</div></div></li>';
 				this.$el.find(".roster-images-h ul").prepend(html);	
 			}		
 			// sow roster add button

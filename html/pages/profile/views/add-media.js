@@ -22,7 +22,6 @@ function(require, profileAddMediaTemplate,application) {
         _ = facade._;
 
     ProfileAddMediaView = SectionView.extend({
-
         id: 'add-media',
 		tagName: "div",
         template: profileAddMediaTemplate,
@@ -34,7 +33,6 @@ function(require, profileAddMediaTemplate,application) {
            "mouseover a": "showText",
            "mouseout a": "showicon"
 	    },
-	
 		
         // **Method** `setOptions` - called by BaseView's initialize method
         setOptions: function (options) {
@@ -49,6 +47,13 @@ function(require, profileAddMediaTemplate,application) {
         	$(e.target).parent().find("span").removeClass("hide");
         },
         
+        afterRender: function() {
+        	var _self = this; $ele = this.$el.find(".character-limit-h");
+        	$ele.each(function() {
+        		_self.adJustFontDynamically($(this));
+        	});
+        },
+        
         // shoe icon
         showicon: function(e) {
         	$(e.target).parent().find("span").addClass("hide");        	
@@ -59,8 +64,7 @@ function(require, profileAddMediaTemplate,application) {
         	routing.trigger('add-game', this.model.userid);
         },
 
-	    openAddImagePopup: function(event)
-	    {
+	    openAddImagePopup: function(event) {
 		    ga('send', 'event', 'Open-Add-Popup', 'Image', 'User opened image uploader', this.model.userid);
              var id = $('.selected-sport-h').data('id'), url = "/api/user/addimage/" + this.model.userid,
                 url = "/api/user/addimage/" + this.model.userid,
@@ -69,18 +73,13 @@ function(require, profileAddMediaTemplate,application) {
 			    };
 			routing.trigger('add-image', url, attr);
 	    },
-		openAddvideoPopup: function(event){
-			
+	    
+		openAddvideoPopup: function(event) {
 			//** firing the call back list
-
 			ga('send', 'event', 'Open-Add-Popup', 'Video', 'User opened video uploader', this.model.userid);
 			var url = "/api/user/addvideo/" + this.model.userid;
-			
 			Channel('add-video').publish(url);
-			
 		}
-        
-                
     });
 
     return ProfileAddMediaView;

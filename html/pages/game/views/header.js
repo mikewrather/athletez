@@ -91,7 +91,7 @@ function(require, gameHeaderTemplate) {
 			var game_time = payload.game_time;
 			console.log(game_time);
 			if(game_time != undefined) {
-				try{
+				try {
 					var timeArr = game_time.split(' ');
 					console.log(timeArr);
 					if(timeArr.length){
@@ -117,12 +117,13 @@ function(require, gameHeaderTemplate) {
 			else
 				return false;
 		},
+		
         openEditPopup: function() {
 	        if(!this.checkForUser()) {
 		        routing.trigger('showSignup');
-				//$(".signup-email").trigger('click');
 		        return;
 	        }
+	        
 			$('#modalPopupGameEdit').modal();
 			this.location.lon = this.model.get("payload").location.lon;
 			this.location.lat = this.model.get("payload").location.lat;
@@ -132,7 +133,6 @@ function(require, gameHeaderTemplate) {
         
         showLocation: function() {
         	routing.trigger('show_location', this.location.lat, this.location.lon, '.view-map-h', function() {
-        		//_self.updateHeaderData(_self.model.id);
         	});
         },
         

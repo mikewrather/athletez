@@ -1974,7 +1974,7 @@ div.edit {
 }
 
 #add-media span {
-	width: 100px;
+	width: 110px;
 	display: table-cell;
 	vertical-align: middle;
 	text-align: center;
@@ -1988,17 +1988,9 @@ div.edit {
 }
 
 #add-media span, .add-tile-outer span {
-	/*white-space:nowrap; 
-	overflow:hidden; */
-	/*text-overflow: ellipsis;
-	display: -webkit-box;
-   -webkit-box-orient: vertical;
-   -webkit-line-clamp: N;*/
-	/*word-wrap: break-word;*/
-	max-height: 100px;
-	height: 100px;
-	/*display: inherit;*/
-	max-width: 100px;
+	max-height: 110px;
+	height: 110px;
+	max-width: 110px;
 	overflow: hidden;
 	}
 
@@ -2011,19 +2003,24 @@ li.add-tile-outer {
 	padding: 0 !important;
 	margin: 10px;
 	float: left;
+	max-heigh: 220px;
 }
 
-.add-tile-outer > div {
+.add-icons-outer {
+	width: 100%;
+	height: 100%;
+}
+
+.add-tile-outer .add-icons-outer > div {
 	height: 50%;
 	width: 100%;
 	display: table-row;
+	float: left;
+	max-height: 110px;
 }
 
 .add-tile-outer .hide {
 	visibility: hidden !important;
-	
-	
-	
 }
 
 .add-tile-outer a {
@@ -2038,6 +2035,7 @@ li.add-tile-outer {
 	display: table-cell;
 	vertical-align: middle;
 	height: 110px;
+	max-height: 110px;
 }
 
 #fbInvite ul li.image {

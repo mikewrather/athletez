@@ -101,6 +101,17 @@ define(['facade', 'utils'], function(facade, utils) {
 			return this;
 		},
 
+		// adjust font and line height dynamically
+		adJustFontDynamically : function(that, fontSize, lineHeight) {
+			if (that) {
+				var $that = $(that), defaultLineHeight = lineHeight || 20, defaultFont = fontSize || 1, l = parseInt($that.text().length) - 2, font = (l > 69) ? (defaultFont - (.1 * parseInt((l - 69) / 10))) : defaultFont, lineHeight = (l > 69) ? (defaultLineHeight - parseInt((l - 69) / 10)) : defaultLineHeight;
+				$that.css({
+					"font-size" : font + "em",
+					"line-height" : lineHeight + "px"
+				});
+			}
+		},
+
 		// **Method:** `resolve`
 		// Resolve the view's deferred object after all callbacks are fired once.
 		resolve : function() {
@@ -254,62 +265,61 @@ define(['facade', 'utils'], function(facade, utils) {
 		 * It will cancel request only for the ready state 1 to 3
 		 * All the nested requests that is dependent requests passed will also be cancelled
 		 * FOR EG: Any change is state should stop all requests for cities and futher cities should stop teams
-		 * The required data for this would be in following format : 
-						 * [
-				
-				    {
-				        "object":"{//Request 1 State}"
-				    },
-				    {
-				        "object":"{//Request 2 State}"
-				    },
-				    {
-				        "object":[
-				            {
-				                "object":"{//Request 1 City}"
-				            },
-				            {
-				                "object":"{//Request 2 City}"
-				            },
-				            {
-				                "object":[
-				                    {
-				                        "object":"{//Request 1 Team}"
-				                    },
-				                    {
-				                        "object":"{//Request 2 Team}"
-				                    }
-				                ]
-				            }
-				        ]
-				    }
-				
-				]
-		 *  
+		 * The required data for this would be in following format :
+		 * [
+
+		 {
+		 "object":"{//Request 1 State}"
+		 },
+		 {
+		 "object":"{//Request 2 State}"
+		 },
+		 {
+		 "object":[
+		 {
+		 "object":"{//Request 1 City}"
+		 },
+		 {
+		 "object":"{//Request 2 City}"
+		 },
+		 {
+		 "object":[
+		 {
+		 "object":"{//Request 1 Team}"
+		 },
+		 {
+		 "object":"{//Request 2 Team}"
+		 }
+		 ]
+		 }
+		 ]
+		 }
+
+		 ]
+		 *
 		 */
 		abortRequest : function(requests) {
 			var self = this;
 			try {
-				// Check if the parameter coming is an array of requests 
+				// Check if the parameter coming is an array of requests
 				if ($.isArray(requests)) {
 
 					for (var key in requests) {
-					
-					// Recursion to remove all dependent requests upto nested levels
-					self.abortRequest(requests[key]);
-					
+
+						// Recursion to remove all dependent requests upto nested levels
+						self.abortRequest(requests[key]);
+
 						// if (requests[key].readyState > 0 && requests[key].readyState < 4) {
-					// //		console.log("Abort Started");
-							// requests[key].abort();
-					// //		console.log("Abort Ended");
+						// //		console.log("Abort Started");
+						// requests[key].abort();
+						// //		console.log("Abort Ended");
 						// }
 					}
 					requests = [];
-					
 
 				}
-				// Check if the parameter coming exists 
-				 else if (requests != undefined && requests != null) {
+				// Check if the parameter coming exists
+				else if (requests != undefined && requests != null) {
 					if (requests.readyState && requests.readyState > 0 && requests.readyState < 4) {
 						requests.abort();
 					}
@@ -319,10 +329,9 @@ define(['facade', 'utils'], function(facade, utils) {
 			} catch(ex) {
 				//console.error("An exception occured while aborting request as follows:")
 				console.error(ex)
-			}
-			finally{
+			} finally {
 				return requests || [];
-				
+
 			}
 
 		}
