@@ -29,7 +29,7 @@ function(facade, collections, SportsOrgCollection, utils) {
 
 
                     return '/api/team/search?'+ params;
-      },
+      }
     });
 
     return List;
