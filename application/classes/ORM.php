@@ -495,6 +495,18 @@ class ORM extends Kohana_ORM
 		{
 			foreach($class_settings_arr['added_function_calls'] as $key_name => $callback)
 			{
+
+				//process response profile if it's set
+				if($settings['response_profile'])
+				{
+					if(array_key_exists($key_name,$settings['response_profile']))
+					{
+						// if the key is set to an integer it can either be used to exclude the column (0) or set a recursion limit
+						if(is_integer($settings['response_profile'][$key_name]) && $settings['response_profile'][$key_name] == 0)
+							continue;
+					}
+				}
+
 				if(is_array($settings['exclude_columns'])) if(in_array($key_name,$settings['exclude_columns'])) continue;
 
 				// if the callback is an array then there are additional instructions to be parsed

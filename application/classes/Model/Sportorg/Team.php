@@ -480,9 +480,10 @@ class Model_Sportorg_Team extends ORM
 
 		$search = ORM::_sql_exclude_deleted($classes_arr, $this);
 
+//		print_r($search->find_all());
+//		die;
 
-
-	//	print_r($search->find_all());
+	//	return false;
 		return $search;
 	}
 	

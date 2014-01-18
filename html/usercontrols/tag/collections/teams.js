@@ -27,6 +27,7 @@ function(facade, collections, SportsOrgCollection, utils) {
 				 if(this.sports_id)
 					 params += '&sports_id=' + this.sports_id;
 
+		        params += '&response_profile=team_min';
 
                     return '/api/team/search?'+ params;
       }
