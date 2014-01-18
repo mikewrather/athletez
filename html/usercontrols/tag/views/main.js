@@ -284,11 +284,13 @@ define(['require', 'text!usercontrols/tag/templates/layout.html', 'facade', 'vie
 				{
 					//team sport
 					$(self.destination).find(self.controls.lnkTeam).fadeIn();
+					$(self.destination).find(self.controls.lnkGame).fadeIn();
 					$(self.destination).find(self.controls.lnkEvent).fadeOut();
 				}
 				else if(payload.sport_type_id==2)
 				{
 					$(self.destination).find(self.controls.lnkEvent).fadeIn();
+					$(self.destination).find(self.controls.lnkGame).fadeOut();
 					$(self.destination).find(self.controls.lnkPlayer).fadeIn();
 					$(self.destination).find(self.controls.lnkTeam).fadeOut();
 				}
@@ -322,20 +324,20 @@ define(['require', 'text!usercontrols/tag/templates/layout.html', 'facade', 'vie
 			$(self.destination).find(self.controls.additionalPlayer).remove();
 		},
 		showTeamSection : function(e) {
-			$(self.destination).find(self.controls.secPlayer).fadeOut();
-			$(self.destination).find(self.controls.secGame).fadeOut();
+		//	$(self.destination).find(self.controls.secPlayer).fadeOut();
+		//	$(self.destination).find(self.controls.secGame).fadeOut();
 			$(self.destination).find(self.controls.secTagTeam).fadeIn();
 			$(self.destination).find(self.controls.secTagTeam + " input").val('');
-			$(self.destination).find(self.controls.secFooterLinks).fadeOut();
+		//	$(self.destination).find(self.controls.secFooterLinks).fadeOut();
 			$(self.destination).find(self.controls.btnTeamFinish).fadeOut();
 			$(e.target).hide();
 		},
 
 		showEventSection : function(e) {
-			$(self.destination).find(self.controls.secPlayer).fadeOut();
+		//	$(self.destination).find(self.controls.secPlayer).fadeOut();
 			$(self.destination).find(self.controls.secGame).fadeOut();
 			$(self.destination).find(self.controls.secTagEvent).fadeIn();
-			$(self.destination).find(self.controls.secFooterLinks).fadeOut();
+		//	$(self.destination).find(self.controls.secFooterLinks).fadeOut();
 			$(self.destination).find(self.controls.btnEventDone).fadeOut();
 			$(e.target).hide();
 		},
