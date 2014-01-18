@@ -518,6 +518,13 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
                 });
             });
             
+            
+             routing.off("check-fb-login");
+             routing.on("check-fb-login", function() {
+             	fbregistration = new fbreg();
+           	  fbregistration.checkFbLogin("linkWithFB");
+             });
+                         
             // trigger for fb link
             routing.off("link-to-facebook");
             routing.on("link-to-facebook", function() {
@@ -543,6 +550,7 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
            // alert("this profile");
 	        ga('send', 'event', 'app', 'initialized','Browser Reload');
 			this.showHome(null);
+			 routing.trigger("check-fb-login");
         },
 
 	    getPhrases: function(){
