@@ -330,7 +330,7 @@ define(['require', 'text!usercontrols/tag/templates/layout.html', 'facade', 'vie
 			$(self.destination).find(self.controls.secTagTeam + " input").val('');
 		//	$(self.destination).find(self.controls.secFooterLinks).fadeOut();
 			$(self.destination).find(self.controls.btnTeamFinish).fadeOut();
-			$(e.target).hide();
+		//	$(e.target).hide();
 		},
 
 		showEventSection : function(e) {
@@ -339,7 +339,7 @@ define(['require', 'text!usercontrols/tag/templates/layout.html', 'facade', 'vie
 			$(self.destination).find(self.controls.secTagEvent).fadeIn();
 		//	$(self.destination).find(self.controls.secFooterLinks).fadeOut();
 			$(self.destination).find(self.controls.btnEventDone).fadeOut();
-			$(e.target).hide();
+		//	$(e.target).hide();
 		},
 
 		/**/

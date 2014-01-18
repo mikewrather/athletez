@@ -149,6 +149,11 @@ define(["require", 'text!usercontrols/photo-player/templates/comments.html',
 				scheme : this.scheme,
 				layout : this.layout
 			});
+
+			var ppwidth = $(document).width(),
+			photosec = ppwidth-350;
+			$('#photoPlayerModal .photo-player-area-h').css({width:photosec+'px'});
+	//		console.log($('#photoPlayerModal .photo-player-area-h'));
 			
 			this.scheme.push(photoPlayerMain);
 			this.layout.render();

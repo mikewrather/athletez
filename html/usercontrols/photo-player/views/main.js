@@ -50,7 +50,7 @@ define(['require',
 			'click .photo-player-vote-h' : 'vote',
 			'click .share-on-h' : 'shareOn',
 			'click .photo-player-tag-photo-h' : 'setUpTagPhotoView',
-			'click .photo-player-tag-myself-h' : 'TagMyself',
+			'click .photo-player-tag-myself-h' : 'TagMyself'
 		},
 
 		/*initialize gets called by default when constructor is initialized*/
