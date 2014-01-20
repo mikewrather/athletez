@@ -17,20 +17,21 @@ class FacebookAuth extends Kohana_FacebookAuth {
 
 				foreach($friends["data"] as $friend)
 				{
-					$invited = false;
-				/*	$invite = ORM::factory('invite')->where('invite_fb','=',$friend['id'])->find_all();
-					if($invite->count() > 0)
-					{
-						$invited = true;
-					}
-				*/
+					$invite = DB::select(array(DB::expr('COUNT(id)'),'num'))
+						->from('invites')
+						->where('invite_fb','=',$friend['id'])
+						->execute()
+						->get('num');
+
+					$invited = $invite>0 ? true : false;
+
 					$processed[] = array(
 						"name" => $friend["name"],
 						"id" => $friend["id"],
 						"gender" => isset($friend["gender"]) ? $friend["gender"] : "",
 						"picture" => $friend["picture"]["data"]["url"],
-						"large" => str_replace("_q.jpg","_n.jpg",$friend["picture"]["data"]["url"])
-					//	"invited" => $invited
+						"large" => str_replace("_q.jpg","_n.jpg",$friend["picture"]["data"]["url"]),
+						"invited" => $invited
 					);
 				}
 			}
