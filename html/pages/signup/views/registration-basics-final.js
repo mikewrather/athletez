@@ -5,7 +5,8 @@ define(['require', 'text!signup/templates/basciFinal.html', 'backbone', 'undersc
 		initialize : function(options) {
 			this.callback = options.callback;
 			this.template = _.template(signupBasicTemplate, {
-				page : (options.openAsPopUp) ? true : false
+				page : (options.openAsPopUp) ? true : false,
+				fb_invite : options.fb_invite ? options.fb_invite : false
 			});
 			if (options.destination)
 				this.$el = $(options.destination);
@@ -236,6 +237,7 @@ define(['require', 'text!signup/templates/basciFinal.html', 'backbone', 'undersc
 			this.payload.password = $("#password").val();
 			this.payload.re_password = $("#re_password").val();
 			this.payload.dob = $(".borndate").val() + '-' + $(".born").val() + '-' + $(".borndyear").val();
+			this.payload.fb_invite = $('#fb_invite').length() ? $('#fb_invite').val() : 0;
 			this.payload.accept_terms = termsAndCondition;
 
 			this.model.save(this.payload, {

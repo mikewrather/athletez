@@ -2,9 +2,17 @@
 	<div class="image-item-container">
 		<img itemprop="image" class="list-thumbnail" src="{{large}}" alt="{{name}}"/>
 
+		{{#invited}}
 		<div class="action-section">
-				<div class="action-block left-block follow invite-h" data-id="{{id}}" ><span>Invite</span></div>
+			<div class="action-block left-block vote link-disabled"><span>Already Invited</span></div>
 		</div>
+		{{/invited}}
+		{{^invited}}
+		<div class="action-section">
+			<div class="action-block left-block follow invite-h" data-id="{{id}}" ><span>Invite</span></div>
+		</div>
+		{{/invited}}
+
 		<div class="detail-view {{#_detailclass}}{{_detailclass}}{{/_detailclass}}">
 			<h6>{{name}}</h6>
 		</div>

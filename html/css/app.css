@@ -825,7 +825,7 @@ a.comment-delete {
 }
 
 .profile-pic-outer {
-	margin: 40px 15px;
+	margin: 40px 15px 0px 15px;
 }
 
 .profile-comment-list-box #comment-list {
@@ -835,6 +835,8 @@ a.comment-delete {
 .profile-comment-list-box #comment-list li {
 	padding-bottom: 10px;
 }
+
+.profile-info { padding: 0 25px; }
 
 /* comment template css  */
 .user-photo {
