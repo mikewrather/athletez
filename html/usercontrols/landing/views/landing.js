@@ -140,7 +140,8 @@ define(['require',
 				destination : "#reg-landing",
 				openAsaPage: true,
 				data: this.data,
-				showOnLanding:true
+				showOnLanding:true,
+				fb_invite: this.userId !== undefined ? this.userId : false
 			});
 		},
 
