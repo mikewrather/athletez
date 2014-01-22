@@ -52,9 +52,7 @@ function(require, commentFormTemplate,    ProfileCommentFormModel,        BaseCo
 	    submitHandler: function (e) {
 		    e.preventDefault();
 		    if(!this.checkForUser()) {
-			    
-					routing.trigger('showSignup');
-			    //$(".signup-email").trigger('click');
+				routing.trigger('showSignup');
 			    return;
 		    }
 		    this.createOnEnter(e);

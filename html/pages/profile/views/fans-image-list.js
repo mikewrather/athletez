@@ -48,7 +48,6 @@ define(['facade', 'utils', 'media/views/image-list', 'component/fb', 'votes/mode
 		
 		addToFanList: function(e) {
 			 e.preventDefault();
-		    console.error(this.mainModel);
 		    var _self = this, followFn = function(callback) {
 		    	var followModelOb = new followModel();
 				followModelOb.subject_id = _self.collection.id;
