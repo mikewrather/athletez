@@ -204,12 +204,12 @@
 			}
 			elseif((int)trim($this->post('subject_type_id')) > 0)
 			{
-				echo $subject_enttypes_id = (int)trim($this->post('subject_type_id'));
+				$subject_enttypes_id = (int)trim($this->post('subject_type_id'));
 			}
 
 			if((int)trim($this->post('subject_id')) > 0)
 			{
-				echo $subject_id = (int)trim($this->post('subject_id'));
+				$subject_id = (int)trim($this->post('subject_id'));
 			}
 
 			$this->mainModel = Ent::eFact($subject_enttypes_id,$subject_id);

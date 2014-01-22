@@ -239,6 +239,7 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
 	    	this.loadStyles();
             chromeBootstrap();
 	    	function initFBAccept(userId) {
+			    self.showHomePage(userId);
 	    		$("body").addClass("fbaccept");
 				var title = "Athletez - We Are Athletes";
 	    		var landing = new landingView({userId: fbId});
@@ -247,7 +248,7 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
 				    $('body header').after('<div class="register-wrapper"></div><div class="register-wrapper-h"></div>');
 			    }
 			    self.gaPageView("FB Accept - "+ fbId,title);
-	    		self.showHomePage(userId);
+	    	//
 	    	}
 	    	this.initialiRoutesInit(initFBAccept);   	
 		},

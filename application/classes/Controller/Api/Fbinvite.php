@@ -78,12 +78,17 @@ class Controller_Api_Fbinvite extends Controller_Api_Base
 			}
 		}
 
+		if($this->request->post('invite_type'))
+		{
+			$invite_type = $this->request->post('invite_type');
+		}
+
 		if($this->request->post('fbid'))
 		{
 			$fbid = $this->request->post('fbid');
 		}
 
-		$result = $this->mainModel->invite($fbid,$invite_to);
+		$result = $this->mainModel->invite($fbid,$invite_to,$invite_type);
 		if(get_class($result) == get_class($this->mainModel)){
 			return $result;
 		}

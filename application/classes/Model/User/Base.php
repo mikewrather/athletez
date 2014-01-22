@@ -1853,8 +1853,9 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 	public function registerFbInvite($fb_invite)
 	{
 		$invite = ORM::factory('Site_Invite_Facebook')->where('invite_fb','=',$fb_invite)->find();
-		if($invite->loaded())
+		if($invite->loaded() && $this->loaded())
 		{
+			$invite->new_user_id = $this->id;
 			$invite_to = $invite->getInviteToObj(true);
 		//	print_r($invite_to);
 			$type = Ent::getMyTypeName(Ent::getMyEntTypeID($invite_to));
@@ -1881,6 +1882,13 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 						$args["users_id"] = $this->id;
 						$args["games_id"] = $invite_to->id;
 						$game->addUslGamesLink($args);
+					}
+					break;
+				case 'user':
+					if ($invite->invite_type == 'follow')
+					{
+						$follower = ORM::factory('User_Followers');
+						$follower->addFollower($invite_to,$this,false,"You're following this Athlete");
 					}
 					break;
 			}

@@ -30,6 +30,7 @@ define(['facade', 'utils', 'media/views/image-list', 'component/fb', 'votes/mode
 		inviteFBFriend : function(e) {
 			var _self = this, options = {};
 			var inviteFb = function() {
+				options.invite_type = 'follow';
 				options.subject_id = _self.target_id;
 				options.enttype_id = _self.controllerObject.basics.get("payload").enttypes_id;
 				routing.trigger('fbInvite', undefined, options);

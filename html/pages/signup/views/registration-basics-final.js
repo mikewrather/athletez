@@ -232,12 +232,12 @@ define(['require', 'text!signup/templates/basciFinal.html', 'backbone', 'undersc
 
 			});
 			console.log(payload, "new payload");
-			console.log($("#finalreg #password"));
-			console.log($("#finalreg #re_password"));
+			console.log($("#finalreg input#password"));
+			console.log($("#finalreg input#re_password"));
 			//
 			this.payload.gender = $("input:radio[name=gender]:checked").val();
-			this.payload.password = $("#password").val();
-			this.payload.re_password = $("#re_password").val();
+			this.payload.password = $("#finalreg input#password").val();
+			this.payload.re_password = $("#finalreg input#re_password").val();
 			this.payload.dob = $(".borndate").val() + '-' + $(".born").val() + '-' + $(".borndyear").val();
 			this.payload.accept_terms = termsAndCondition;
 

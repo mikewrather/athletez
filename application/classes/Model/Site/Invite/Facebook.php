@@ -37,7 +37,7 @@ class Model_Site_Invite_Facebook extends Model_Site_Invite
 		return unserialize($this->fb_user_data);
 	}
 
-	public function invite($fb_id,$invite_to)
+	public function invite($fb_id,$invite_to,$invite_type)
 	{
 		$invite = ORM::factory('Site_Invite_Facebook');
 		$invite->where('invite_fb','=',$fb_id);
@@ -52,6 +52,7 @@ class Model_Site_Invite_Facebook extends Model_Site_Invite
 
 		$this->fb_user_data = serialize($user_data);
 		$this->invite_to = empty($invite_to) ? null : serialize($invite_to);
+		$this->invite_type = empty($invite_type) ? null : $invite_type;
 		$this->invite_fb = $fb_id;
 		$this->setBasics();
 		$this->beenSent();
