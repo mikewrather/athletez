@@ -9,18 +9,35 @@ define( ["models/base"], function (BaseModel) {
 
     TeamAddMediaModel = BaseModel.extend({
 		id: undefined,
+		sportName: undefined,
+		firstName: undefined,
         defaults: {
-            
             "links": [{
-                "label": "Add image",
-                "link": "javascript: void(0);",
-                "id"   :"addPhoto"
+                "label": "Got pics of "+this.teamName,
+                "link" : "javascript:void(0);",
+				"id"   :"addPhoto"
             }, {
-                "label": "Add video",
-                "link": "javascript: void(0);",
-                "id"   :"addVideo"
+                "label": "Got videos of "+this.teamName,
+                "link" : "javascript:void(0);",
+	            "id": "addVideo"
             }
-            ]
+            ],
+	        "userid" : null
+            
+        },
+        
+        setData: function() {
+        	this.set({"links": [{
+                "label": "Got pics of "+this.teamName,
+                "link" : "javascript:void(0);",
+				"id"   :"addPhoto"
+            }, {
+                "label": "Got videos of "+this.teamName,
+                "link" : "javascript:void(0);",
+	            "id": "addVideo"
+            }
+            ],
+	        "userid" : null});
         }
     });
     return TeamAddMediaModel;

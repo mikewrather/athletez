@@ -27,10 +27,6 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
    		App = Backbone.Router.extend({
         routes: {
             '': 'defaultRoute',
-            'home': 'showHome',
-            'home/': 'showHome',
-	        '!home/': 'showHome',
-	        '!home': 'showHome',
 	        
 	        'fbinvite': 'fbinvite',
 	        '!fbinvite': 'fbinvite',
@@ -42,7 +38,7 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
 	        'acceptfbinvite/:id/': 'aceptInvite',	
 	        '!acceptfbinvite/:id': 'aceptInvite',	                
 
-            'home/:action': 'initApp',
+           // 'home/:action': 'initApp',
             'profile': 'showProfile',
             'profile/': 'showProfile',
             'team': 'showTeam',
@@ -55,6 +51,11 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
             'game/': 'showGame',
             'game/:id' : 'showGame',
 	        '!game/:id' : 'showGame',
+            
+            'home': 'showHome',
+            'home/': 'showHome',
+	        '!home/': 'showHome',
+	        '!home': 'showHome',
             
             '!home/search': 'showHomePage',
             '!home/search/': 'showHomePage',
@@ -366,9 +367,6 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
             		var id = options.id;
             		
             	var cl = (options.fullPage)?"full-page-modal":"";
-            		
-            		
-            		
             	var html = '<div id="'+id+'" class="modal '+cl+' common-modal hide fade model-popup-h in">'+
         		'<div class="modal-header"><a href="javascript: void(0);" title="close" data-id="'+id+'" class="close"'+ 
         		'>&times;</a><h3 class="modal-header-h">Header</h3></div>'+
@@ -563,14 +561,15 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
 			});
 		},
 		
-		showHomePage: function(id) {
+		/*showHomePage: function(id) {
+			console.log("vvvvvvvvvvvvvv");
 			var self = this, title = "Athletez - We Are Athletes";
     		self.currentController = new HomeController({
     			route: "",
     			title: title,
     			userId : id
     		});
-		},
+		},*/
 		
 	    showHome: function (action, paramsArr) {
 	    	var self = this;

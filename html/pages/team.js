@@ -93,7 +93,6 @@ define([
         ];
 
     TeamController = Controller.extend({
-    	
         initialize: function (options) {
         	var self = this;
             Channel('load:css').publish(cssArr);
@@ -234,6 +233,7 @@ define([
 			rosterView = new RosterView({
 				model: new model(),
 				team_id: id,
+				entityId: this.basics.get("payload").enttypes_id,
 				team_name: name,
 				controllerObject: this,
 				name: this.oldRosterViewName,
@@ -355,6 +355,11 @@ define([
                 position = $.inArray(this.addMediaView, this.scheme);
                 if ( ~position ) this.scheme.splice(position, 1);
 	        }
+	        
+	        console.error(this.basics);
+
+			this.addmedia.teamName = this.basics.get("payload").team_name;
+			this.addmedia.setData();
 
             this.addMediaView = new TeamAddMediaView({
                 model: this.addmedia,

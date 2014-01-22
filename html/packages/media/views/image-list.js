@@ -62,11 +62,7 @@ function(facade,  views,   utils,   ImageItemView,            ImageBoardView,   
 		
 		follow: function(e) {
 		   e.preventDefault();
-		    console.log(e.target);
 		    e.stopPropagation();
-		    
-		    console.error(this.data);
-		    
 		     if(!this.checkForUser()) {
 			     routing.trigger('showSignup');
 			     return;

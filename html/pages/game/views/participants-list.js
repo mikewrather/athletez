@@ -38,8 +38,8 @@ define(['facade', 'views', 'utils', 'media/views/image-item', 'text!game/templat
 		inviteFBFriend : function(e) {
 			var _self = this, options = {};
 			var addToList = function() {
-				options.subject_id = this.game_id;
-				options.enttype_id = this.controllerObject.basics.get("payload").enttypes_id;
+				options.subject_id = _self.game_id;
+				options.enttype_id = _self.controllerObject.basics.get("payload").enttypes_id;
 				routing.trigger('fbInvite', undefined, options);
 			};
 
@@ -102,7 +102,7 @@ define(['facade', 'views', 'utils', 'media/views/image-item', 'text!game/templat
 		},
 
 		initialize : function(options) {
-
+			console.error(options);
 			var _self = this;
 			$(document).off("click", ".add-to-event");
 			$(document).on("click", ".add-to-event", function() {

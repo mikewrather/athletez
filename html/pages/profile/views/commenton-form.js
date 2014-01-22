@@ -44,7 +44,6 @@ function(require, commentFormTemplate,    ProfileCommentFormModel,        BaseCo
 		    e.preventDefault();
 		    if(!this.checkForUser()) {
 			   routing.trigger('showSignup');
-				//$(".signup-email").trigger('click');
 			    return;
 		    }
 		    this.createOnEnter(e);
@@ -86,11 +85,8 @@ function(require, commentFormTemplate,    ProfileCommentFormModel,        BaseCo
                 payload['comment_date'] = date.toDateString();
                 payload['subject_type_id'] = this.collection.subject_entity_type;
                 payload['subject_id'] = this.model.get("id");
-                 
                 var saveInfo = new BaseModel(payload);
                 saveInfo.url = function() {
-	                debug.log(self);
-	                
 	                if(!_.isUndefined(self.collection.savePath))
 	                	return 'api'+self.collection.savePath;
 	                

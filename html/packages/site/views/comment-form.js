@@ -68,7 +68,7 @@ define([
         submitHandler: function (e) {
         	e.preventDefault();
         	var _self = this, addToList = function(callback) {
-            	this.createOnEnter(e);
+            	_self.createOnEnter(e);
             	//if(callback) callback();
           	};
             
