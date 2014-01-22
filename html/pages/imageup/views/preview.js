@@ -61,9 +61,13 @@ define(['require', 'text!imageup/templates/preview_template.html', 'text!usercon
 		selectImage : function(e) {
 			var isTarget = $(e.target).hasClass("previewimg");
 			var target = isTarget ? $(e.target) : $(e.target).parents(".previewimg");
+
+			target.find(".click-to-tag").hide();
 			target.toggleClass("selected");
 
 			var selectedItems = $(this.destination).find(".previewimg.selected");
+
+
 			if (selectedItems.length < 1) {
 				this.setUpSelectAllView();
 			} else
@@ -82,10 +86,12 @@ define(['require', 'text!imageup/templates/preview_template.html', 'text!usercon
 		
 		showFooter : function(e) {
 			$(e.target).parents(".previewimg").find(".lnkFooter").show();
+			$(e.target).parents(".previewimg:not(.selected)").find(".click-to-tag").show();
 		},
 
 		hideFooter : function(e) {
 			$(e.target).parents(".previewimg").find(".lnkFooter").hide();
+			$(e.target).parents(".previewimg").find(".click-to-tag").hide();
 		}
 	});
 

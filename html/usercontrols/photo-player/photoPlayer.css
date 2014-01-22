@@ -35,7 +35,7 @@
 
 .photo-player {
     float: left;
-    width: 70%;
+ /*   width: 70%; */
     height: 100%;
 }
 .photo-player > div{
@@ -43,11 +43,12 @@
 }
 
 .photo-player-right-area {
-    /*float: right;*/
+    float: left;
     height: 100%;
     overflow-y: auto;
     /*padding-left: 2%;*/
-    width: 30%;
+    width: 350px;
+    min-width: 350px;
 }
 
 .photo-player-right-area .right-area-header{
@@ -433,8 +434,8 @@ ul#tags-list .tags-number {
     }
     .labelSpan{
         font-size: small;
-        font-weight: bolder;
-    }
+/*        font-weight: bolder;
+  */  }
 
 
     .user-photo {

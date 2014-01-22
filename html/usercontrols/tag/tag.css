@@ -32,7 +32,7 @@ input[type='text'], select {
 label{   display: inline;}
 
 .pointer {cursor: pointer;}
-.ui-autocomplete{max-height: 250px;overflow-y:auto;overflow-x: :hidden;}
+.ui-autocomplete{max-height: 250px;overflow-y:auto;overflow-x:hidden;}
 select.displayNone, textarea.displayNone, input[type="text"].displayNone{display:none}
 
 .container_batch_tag .field-message{
@@ -51,3 +51,7 @@ select.displayNone, textarea.displayNone, input[type="text"].displayNone{display
 .container_batch_tag input[type="text"]{margin:4px 0;border: 1px solid #777777;}
 .container_batch_tag .section_inner{margin:5px 0;}
 .container_batch_tag .section_outer{margin:5px 0;}
+
+.container_batch_tag{
+    display: none;
+}

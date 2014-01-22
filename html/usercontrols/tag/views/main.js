@@ -284,11 +284,13 @@ define(['require', 'text!usercontrols/tag/templates/layout.html', 'facade', 'vie
 				{
 					//team sport
 					$(self.destination).find(self.controls.lnkTeam).fadeIn();
+					$(self.destination).find(self.controls.lnkGame).fadeIn();
 					$(self.destination).find(self.controls.lnkEvent).fadeOut();
 				}
 				else if(payload.sport_type_id==2)
 				{
 					$(self.destination).find(self.controls.lnkEvent).fadeIn();
+					$(self.destination).find(self.controls.lnkGame).fadeOut();
 					$(self.destination).find(self.controls.lnkPlayer).fadeIn();
 					$(self.destination).find(self.controls.lnkTeam).fadeOut();
 				}
@@ -322,22 +324,22 @@ define(['require', 'text!usercontrols/tag/templates/layout.html', 'facade', 'vie
 			$(self.destination).find(self.controls.additionalPlayer).remove();
 		},
 		showTeamSection : function(e) {
-			$(self.destination).find(self.controls.secPlayer).fadeOut();
-			$(self.destination).find(self.controls.secGame).fadeOut();
+		//	$(self.destination).find(self.controls.secPlayer).fadeOut();
+		//	$(self.destination).find(self.controls.secGame).fadeOut();
 			$(self.destination).find(self.controls.secTagTeam).fadeIn();
 			$(self.destination).find(self.controls.secTagTeam + " input").val('');
-			$(self.destination).find(self.controls.secFooterLinks).fadeOut();
+		//	$(self.destination).find(self.controls.secFooterLinks).fadeOut();
 			$(self.destination).find(self.controls.btnTeamFinish).fadeOut();
-			$(e.target).hide();
+		//	$(e.target).hide();
 		},
 
 		showEventSection : function(e) {
-			$(self.destination).find(self.controls.secPlayer).fadeOut();
+		//	$(self.destination).find(self.controls.secPlayer).fadeOut();
 			$(self.destination).find(self.controls.secGame).fadeOut();
 			$(self.destination).find(self.controls.secTagEvent).fadeIn();
-			$(self.destination).find(self.controls.secFooterLinks).fadeOut();
+		//	$(self.destination).find(self.controls.secFooterLinks).fadeOut();
 			$(self.destination).find(self.controls.btnEventDone).fadeOut();
-			$(e.target).hide();
+		//	$(e.target).hide();
 		},
 
 		/**/
@@ -552,7 +554,7 @@ define(['require', 'text!usercontrols/tag/templates/layout.html', 'facade', 'vie
 				List.sports_id = $(self.destination).find(self.controls.hdnSportsId).val();
 				List.team_name = name;
 				$(e.target).addClass('ui-autocomplete-loading');
-				console.log("Team Request Abort Request Function");
+			//	console.log("Team Request Abort Request Function");
 				self.TeamFetchRequest = self.abortRequest(self.TeamFetchRequest);
 				var tempCollection = List.fetch();
 				self.TeamFetchRequest.push(tempCollection);
@@ -581,7 +583,8 @@ define(['require', 'text!usercontrols/tag/templates/layout.html', 'facade', 'vie
 					}
 
 					$(e.target).autocomplete({
-						source : arr
+						source : arr,
+						select:function(ev,ui){ console.log(ui); self.changeSchool(ev,ui);}
 					});
 
 					//Trigger keydown to display the autocomplete dropdown just created
@@ -597,11 +600,14 @@ define(['require', 'text!usercontrols/tag/templates/layout.html', 'facade', 'vie
 			}
 		},
 		/*Change school_id as per the selected record from auto complete for state created in keyupSchool*/
-		changeSchool : function(e) {
-			var name = $(e.target).val();
+		changeSchool : function(e,ui) {
+			var name = (e.type == 'autocompleteselect' && ui != undefined) ? ui.item.value : $(e.target).val();
+			console.log("Event",e);
+			console.log("Name",name);
 			var isSchoolValid = false;
 			self.team_id = 0;
 			if (self.teams) {
+				console.log("teams",self.teams);
 				self.teams.forEach(function(value, index) {
 					var teamname = value['team_name'];
 					if (teamname == name) {
@@ -764,12 +770,12 @@ define(['require', 'text!usercontrols/tag/templates/layout.html', 'facade', 'vie
 			// }
 // 
 			// value = $(self.destination).find(self.controls.txtTeamCity).attr(self.attributes.cityId);
-			if (value && value != "" && value != 0) {
+	/*		if (value && value != "" && value != 0) {
 				$(self.destination).find(self.controls.txtTeamSchool).show();
 			} else {
 				$(self.destination).find(self.controls.txtTeamSchool).val('').removeAttr(self.attributes.teamId).hide();
 			}
-
+*/
 			value = $(self.destination).find(self.controls.txtTeamSchool).attr(self.attributes.teamId);
 			if (value && value != "" && value != 0) {
 				$(self.destination).find(self.controls.btnTeamDone).show();

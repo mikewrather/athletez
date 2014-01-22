@@ -1735,6 +1735,12 @@ a.add-to-event {
 	display: none;
 }
 
+.container_batch_tag .section-link_h{
+    width: 100%;
+}
+.container_batch_tag a.icons{
+    margin-right:10px;
+}
 .icons {
 	background: url(images/icons/sprites.png) no-repeat;
 	float: left;
@@ -1744,6 +1750,9 @@ a.add-to-event {
 	-ms-box-shadow: 1px 1px 20px 0px rgba(0,0,0,0.45);
 	-o-box-shadow: 1px 1px 21px 0px rgba(0,0,0,0.45);
 	box-shadow: 1px 1px 21px 0px rgba(0,0,0,0.45);
+    text-align: center;
+    font-size: .7em;
+    color: #444444;
 }
 
 .icon_selected {

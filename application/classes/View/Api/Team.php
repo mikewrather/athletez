@@ -94,10 +94,8 @@
 //			print_r($objs);
 			foreach($objs as $obj)
 			{
-				$retArr[] = $obj->getBasics();
+				$retArr[] = $obj->getBasics($this->response_profile);
 			}
-
-
 			return $retArr;
 		}
 
