@@ -47,7 +47,7 @@ define(['facade', 'utils', 'media/views/image-list', 'component/fb', 'votes/mode
 		},
 		
 		addToFanList: function(e) {
-			 e.preventDefault();
+			e.preventDefault();
 		    var _self = this, followFn = function(callback) {
 		    	var followModelOb = new followModel();
 				followModelOb.subject_id = _self.collection.id;
@@ -87,10 +87,10 @@ define(['facade', 'utils', 'media/views/image-list', 'component/fb', 'votes/mode
 					var html = '<li id="add-fans-icons" class="add-tile-outer"><div class="add-icons-outer">\
 					<div>\
 					<a href="javascript: void(0);" class="add-to-fans-h add-to-fans pull-left tiles"></a>\
-					<span class="hide character-limit-h">Add me to list</span></div>\
+					<span class="hide character-limit-h">Keep me notified of '+_self.controllerObject.basics.get("payload").first_name+'\'s activity</span></div>\
 					<div>\
 					<a href="javascript: void(0);" class="fb-invite-tile-btn invite-to-fb-h tiles pull-right" title="Add to fb"></a>\
-					<span class="hide character-limit-h">Invite friends to join</span></div>\
+					<span class="hide character-limit-h">Invite a friend to receive notifications</span></div>\
 					</div></li>';
 					_self.$el.find(_self.listView).prepend(html);
 				}

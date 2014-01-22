@@ -131,7 +131,6 @@ define([
 				function callback(sport_id) {
 					if(controller.ajaxCalls && controller.ajaxCalls.length) {
 						for(var i in controller.ajaxCalls) {
-							console.error("here");
 							controller.ajaxCalls[i].abort();	
 						}
 						controller.ajaxCalls = [];
@@ -293,6 +292,9 @@ define([
 
 			setupAddMediaView: function (target) {
 				var addMediaView;
+				this.addmedia.sportName = $(".selected-sport-h").data("name");
+				this.addmedia.firstName = this.basics.get("payload").first_name;
+				this.addmedia.setData();
 				addMediaView = new ProfileAddMediaView({
 					model: this.addmedia,
 					name: "Add Media",
@@ -322,7 +324,6 @@ define([
 			
 
 			setupOrgListView: function () {
-				console.log("Called setup org list view which is where the game list type is decided upon",this.orgs,this.orgViewname);
 				var orgListView;
 				if(this.orgs.length && (!this.orgViewname || (this.orgViewname && this.orgViewname == "org")))
 					this.setUpOrgView();
@@ -331,13 +332,11 @@ define([
 			},
 			
 			setUpUserSportView: function() {
-				console.log("Called event-based user-sport list view");
 				var _self = this;
 				this.orgViewname = "sport";
 				this.orgs = new UserGames();
             	this.orgs.userId = _self.id;
             	this.orgs.sports_id = $(".selected-sport-h").data("id");
-            	
             	this.orgs.fetch();
             	$.when(this.orgs.request).done(function() {
          	    	_self.orgListView = new ProfileOrgListView({
@@ -353,14 +352,12 @@ define([
 			},
 			
 			setUpOrgView: function() {
-				console.log("Called normal org list view");
 				this.orgViewname = "org";
 				this.orgListView = new ProfileOrgListView({
 					collection: this.orgs,
 					controller: this,
 					destination: "#games_div"
 				});
-
 				this.scheme.push(this.orgListView);
 				this.layout.render();
 			},
