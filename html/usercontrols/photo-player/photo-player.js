@@ -64,12 +64,25 @@ define(["require", 'text!usercontrols/photo-player/templates/comments.html',
 			if(options.array) this.collectionArray = true;
 			if (options._collection) this._collection = options._collection;
 
-					this.modelHTML = '<div id="photoPlayerModal" class="modal photo-frame-model hide fade model-popup-h">'+
-					'<div class="modal-body page-content-h">'+
-					'<div class="photo-player-area-h photo-player"></div>'+'<div class="photo-player-right-area"><div class="right-area-header"><div class="headerinfo"></div><div class="closer"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">	&times;</button></div></div><div class="teamName-area"></div><div class="tags-area-h"></div>' +
-					'<div class="comment-area coment-area-h"></div><div class="comment-input-outer-h comment-input-outer" class="clearfix"></div>'+
-					'<div id="image-tagging-photo"></div>'+
-					'</div></div></div>';
+				$(document).off("click", "#photoPlayerModal .close");	
+				$(document).on("click", "#photoPlayerModal .close", function() {
+					// remove meadia for url
+					var currentHashUrl = window.location.hash;
+					if(currentHashUrl.match(/\/media\/(.*)/g)) {
+						currentHashUrl = currentHashUrl.replace(/\/media\/(.*)/g,'');
+					 }
+					routing.navigate(currentHashUrl, {trigger: false});
+				});
+
+				this.modelHTML = '<div id="photoPlayerModal" class="modal photo-frame-model hide fade model-popup-h">'+
+				'<div class="modal-body page-content-h">'+
+				'<div class="photo-player-area-h photo-player"></div>'+
+				'<div class="photo-player-right-area"><div class="right-area-header"><div class="headerinfo"></div><div class="closer">'+
+				'<button type="button" class="close" data-dismiss="modal" aria-hidden="true">	&times;</button></div></div><div class="teamName-area">'+
+				'</div><div class="tags-area-h"></div>' +
+				'<div class="comment-area coment-area-h"></div><div class="comment-input-outer-h comment-input-outer" class="clearfix"></div>'+
+				'<div id="image-tagging-photo"></div>'+
+				'</div></div></div>';
 			
 			routing.off('photo-player-section-reload');
 			routing.on('photo-player-section-reload', function(entity_id, id,uploader_id) {
