@@ -1615,6 +1615,11 @@
 				$arguments["firstname"] = trim($this->request->post('firstname'));
 			}
 
+			if(trim($this->request->post('fb_invite_id')) != "")
+			{
+				$arguments["fb_invite_id"] = trim($this->request->post('fb_invite_id'));
+			}
+
 			// lastname
 			// Last Name of Registrant
 

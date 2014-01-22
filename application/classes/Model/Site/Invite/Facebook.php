@@ -58,13 +58,16 @@ class Model_Site_Invite_Facebook extends Model_Site_Invite
 		return $this;
 	}
 
-	public function getInviteToObj()
+	public function getInviteToObj($retObj=false)
 	{
 		if($this->loaded()){
 			$invite_to = unserialize($this->invite_to);
 			if(is_array($invite_to)){
 				$obj = Ent::eFact($invite_to['enttype_id'],$invite_to['subject_id']);
-				if(is_object($obj) && is_subclass_of($obj,'ORM') && $obj->loaded()) return $obj->getBasics();
+				if(is_object($obj) && is_subclass_of($obj,'ORM') && $obj->loaded()) {
+					if($retObj) return $obj;
+					return $obj->getBasics();
+				}
 				else return false;
 			}
 		}

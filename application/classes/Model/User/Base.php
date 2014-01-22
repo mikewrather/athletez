@@ -1565,6 +1565,7 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 		$args['gender'] = $facebook['gender']=="female" ? "F" : "M";
 		$args['dob'] = date('Y-m-d',strtotime($facebook['birthday']));
 		$args['password'] = $args['re_password'] = Util::random_password();
+		$args['fb_invite_id'] = $facebook['id'];
 		$result = $this->addRegister($args);
 
 		/* this is a check that we can use to do something later
@@ -1834,7 +1835,10 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 				{
 					return $e;
 				}
-				Email::registration_email($this);
+
+				if(isset($fb_invite_id)) $this->registerFbInvite($fb_invite_id);
+
+//				Email::registration_email($this);
 				$follower = ORM::factory('User_Followers');
 				$follower->addFollower($this,$this,false,"This involves you.");
 
@@ -1844,6 +1848,44 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 		} catch(ORM_Validation_Exception $e){
 			return $e;
 		}
+	}
+
+	public function registerFbInvite($fb_invite)
+	{
+		$invite = ORM::factory('Site_Invite_Facebook')->where('invite_fb','=',$fb_invite)->find();
+		if($invite->loaded())
+		{
+			$invite_to = $invite->getInviteToObj(true);
+		//	print_r($invite_to);
+			$type = Ent::getMyTypeName(Ent::getMyEntTypeID($invite_to));
+			switch(strtolower($type)){
+
+				case 'team':
+					if($invite->invite_type == 'join')
+					{
+						$args["users_id"] = $this->id;
+						$args["teams_id"] = $invite_to->id;
+						$this->addTeam($args);
+					}
+					elseif ($invite->invite_type == 'follow')
+					{
+						$follower = ORM::factory('User_Followers');
+						$follower->addFollower($invite_to,$this,false,"You're following this team");
+					}
+					break;
+				case 'game':
+					if($invite->invite_type == 'join')
+					{
+				//		echo "called";
+						$game = ORM::factory('User_Sportlink_Gamelink');
+						$args["users_id"] = $this->id;
+						$args["games_id"] = $invite_to->id;
+						$game->addUslGamesLink($args);
+					}
+					break;
+			}
+		}
+		return;
 	}
 
 	public function addComment($comment,$poster_id)

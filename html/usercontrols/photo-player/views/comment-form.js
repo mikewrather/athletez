@@ -86,7 +86,9 @@ function(require, commentFormTemplate,    commentFormModel,        BaseCommentFo
                 payload['comment_date'] = date.toDateString();
                 payload['subject_type_id'] = this.collection.subject_entity_type;
                 payload['subject_id'] = this.model.get("id");
-                 
+
+	            console.log(this.collection);
+
                 var saveInfo = new BaseModel(payload);
                 saveInfo.url = function() {
 	                debug.log(self);
@@ -96,7 +98,7 @@ function(require, commentFormTemplate,    commentFormModel,        BaseCommentFo
 	                
                     if (testpath)
                         return testpath + '/user/comment/add';
-                    return '/api/media/addcomment/'+payload['subject_id']+"?comment="+payload['comment'];
+                    return '/api/comment/add/';
                 };
 
             saveInfo.saveSuccess = function(model, response) {
