@@ -233,6 +233,7 @@ define([
 			rosterView = new RosterView({
 				model: new model(),
 				team_id: id,
+				entityId: this.basics.get("payload").enttypes_id,
 				team_name: name,
 				controllerObject: this,
 				name: this.oldRosterViewName,
