@@ -77,7 +77,6 @@ function(require, commentFormTemplate,    commentFormModel,        BaseCommentFo
         createOnEnter: function(e) {
 	        var comment = this.$el.find("#new-comment").val();
             var self = this;
-
             self.$('.submit-result').stop().fadeOut();
             if (comment != '') {                
                 date = new Date();
@@ -85,7 +84,7 @@ function(require, commentFormTemplate,    commentFormModel,        BaseCommentFo
                 payload['comment'] = comment;
                 payload['comment_date'] = date.toDateString();
                 payload['subject_type_id'] = this.collection.subject_entity_type;
-                payload['subject_id'] = this.model.get("id");
+                payload['subject_id'] = $(".large-image-h").attr("data-id");
                  
                 var saveInfo = new BaseModel(payload);
                 saveInfo.url = function() {
