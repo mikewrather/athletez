@@ -55,7 +55,6 @@ define(['require',
 
 		/*initialize gets called by default when constructor is initialized*/
 		initialize : function(options) {
-			console.error(options);
 			this.collection = options.collection;
 			this.setOptions(options);
 			this.id = options.id;
@@ -89,7 +88,6 @@ define(['require',
 				_self.$el.find('.photo-player-vote-h').addClass('voted');
 			});
 		},
-		
 		
 		// share event binding
 		shareOn: function(e) {
@@ -155,7 +153,6 @@ define(['require',
 		
 		getShareData: function() {
 			var record = this.json[this.index];
-			console.error(record);
 			return { 
 				'record': record,
 				'userId': (this.user_id)?"/"+this.user_id:'',
@@ -262,7 +259,6 @@ define(['require',
 				switch(mpay.enttypes_id) {
 					case '23':
 						//videos
-
 						if ( typeof (mpay.standard_thumb) == 'object') {
 							standard_thumb = mpay.standard_thumb;
 							extra._thumbnail = standard_thumb.url;
@@ -389,6 +385,7 @@ define(['require',
 				data.data.push(extra);
 			}
 			this.id = extra._id;
+			
 			var markup = Mustache.to_html(this.thumbTemplate, data);
 			this.$el.find('.thumb-image-list-h').html(markup);
 			setTimeout(function() {
@@ -465,6 +462,7 @@ define(['require',
 				_currentIndex : _self.index
 			};
 			
+
 			if (_self.index >= this.json.length - 1) {
 				this.$el.find('.next-arrow-h').addClass('disable-arrow-link');
 			} else {
@@ -558,6 +556,8 @@ define(['require',
 				}
 
 
+				loading_div.find('.large-image-h').attr("data-id", extra._media_id);
+
 				loading_div.find('.large-image-h').attr('src', image_object.url).on('load', {
 					'el' : loading_div,
 					'self' : this,
@@ -618,7 +618,6 @@ define(['require',
 				jps.skin = "http://s3.amazonaws.com/mikewbucket/jw/skins/glow.xml";
 				jps.height = (c_el.height()) * .8;
 				jps.width = c_el.width();
-				console.error(jps);
 				jw.setup(jps);
 			}
 
