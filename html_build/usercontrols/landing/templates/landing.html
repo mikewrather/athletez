@@ -10,7 +10,7 @@
 	</div>
 	<div id="site-info">
 		{{#firstname}}
-			{{#label}}You've been invited to join {{label}}.{{/label}}
+			{{#label}}You've been invited to {{#invite_type}}{{invite_type}}{{/invite_type}}{{^invite_type}}join{{/invite_type}} {{label}}.{{/label}}
 			{{^label}}Thanks for accepting your invitation!{{/label}}
 			Since you're already on facebook, we recommend using the "Connect With Facebook" option below.
 		{{/firstname}}

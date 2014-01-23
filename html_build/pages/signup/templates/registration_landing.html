@@ -21,7 +21,9 @@
 					</div>
 					<input type="text" name="lastname" placeholder="Last name" />
 					<input type="text" name="email" placeholder="Email" />
+					<% if(fb_invite != undefined){ %><input type="hidden" name="fb_invite_id" value="<%= fb_invite %>" /><% } %>
 					<div class = "signupsubmit">
+
 						<input type="submit" name="create" value="Sign Up" class="regsubmit" />
 						<input type="button" name="login" value="Log In" class="login" />
 					</div>
