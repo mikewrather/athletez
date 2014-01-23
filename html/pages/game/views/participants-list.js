@@ -64,11 +64,15 @@ define(['facade', 'views', 'utils', 'media/views/image-item', 'text!game/templat
 		},
 
 		afterRender : function() {
-			var _self = this;
-			$ele = this.$el.find(".character-limit-h");
-			$ele.each(function() {
-				_self.adJustFontDynamically($(this));
-			});
+			var _self = this, t = setInterval(function() {
+				$ele = _self.$el.find(".character-limit-h");
+				if ($ele.length) {
+					clearInterval(t);
+					$ele.each(function() {
+						_self.adJustFontDynamically($(this));
+					});
+				}
+			}, 100);
 		},
 
 		addParticipant : function() {

@@ -104,7 +104,7 @@ define(['facade', 'utils'], function(facade, utils) {
 		// adjust font and line height dynamically
 		adJustFontDynamically : function(that, fontSize, lineHeight) {
 			if (that) {
-				var $that = $(that), defaultLineHeight = lineHeight || 20, defaultFont = fontSize || 1, l = parseInt($that.text().length) - 2, font = (l > 69) ? (defaultFont - (.1 * parseInt((l - 69) / 10))) : defaultFont, lineHeight = (l > 69) ? (defaultLineHeight - parseInt((l - 69) / 10)) : defaultLineHeight;
+				var $that = $(that), defaultLineHeight = lineHeight || 17, defaultFont = fontSize || .9, l = parseInt($that.text().length) - 2, font = (l > 60) ? (defaultFont - (.1 * parseInt((l - 60) / 10))) : defaultFont, lineHeight = (l > 60) ? (defaultLineHeight - parseInt((l - 60) / 10)) : defaultLineHeight;
 				$that.css({
 					"font-size" : font + "em",
 					"line-height" : lineHeight + "px"

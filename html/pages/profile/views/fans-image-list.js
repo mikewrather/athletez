@@ -74,15 +74,19 @@ define(['facade', 'utils', 'media/views/image-list', 'component/fb', 'votes/mode
 		},
 		
 		 afterRender: function() {
-        	var _self = this; $ele = this.$el.find(".character-limit-h");
-        	$ele.each(function() {
-        		_self.adJustFontDynamically($(this));
-        	});
+        	var _self = this, t = setInterval(function() {
+	        	$ele = _self.$el.find(".character-limit-h");        		
+	        	if($ele.length) {
+	        		clearInterval(t);
+		        	$ele.each(function() {
+	        			_self.adJustFontDynamically($(this));
+	        		});
+        		}
+        	}, 100);
         },
 
 		addButtons : function() {
 			var _self = this, name = (_self.controllerObject.basics.get("payload").first_name)?_self.controllerObject.basics.get("payload").first_name:_self.controllerObject.basics.get("payload").team_name;
-			
 			setTimeout(function() {
 				if (!$("#add-fans-icons").length) {
 					var html = '<li id="add-fans-icons" class="add-tile-outer"><div class="add-icons-outer">\
