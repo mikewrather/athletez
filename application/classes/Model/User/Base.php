@@ -1559,6 +1559,14 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 	{
 		if($this->loaded()) return false;
 
+		$match = $this->where('email','=',$facebook['email'])->find();
+		if($match->loaded()){
+			Auth::instance()->force_login($match,false);
+			$match->addIdentity($facebook['id'],'facebook');
+			$match->registerFbInvite($facebook['id']);
+			return array("merge_existing"=>true);
+		}
+
 		$args['firstname'] = $facebook['first_name'];
 		$args['lastname'] = $facebook['last_name'];
 		$args['email'] = $facebook['email'];
@@ -1566,7 +1574,7 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 		$args['dob'] = date('Y-m-d',strtotime($facebook['birthday']));
 		$args['password'] = $args['re_password'] = Util::random_password();
 		$args['fb_invite_id'] = $facebook['id'];
-		$result = $this->addRegister($args);
+		$result = $this->addRegister($args,true);
 
 		/* this is a check that we can use to do something later
 		if(get_class($result) == get_class($this))

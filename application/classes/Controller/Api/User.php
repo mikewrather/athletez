@@ -993,12 +993,16 @@
 							$result = $user->add_from_facebook($retArr);
 
 							//Check for success / error
-							if(get_class($result) == get_class($this->mainModel))
+							if(is_object($result) && get_class($result) == get_class($this->mainModel))
 							{
 								//	this indicates success
 								//  facebook data will be returned at the end of this method
 								$retArr["users_id"] = $user->id;
-
+							}
+							elseif(is_array($result) && $result["merge_existing"])
+							{
+								//this means that the user's email was in the system and we just add the identity for them.
+								$retArr['identity_exists'] = true;
 							}
 							elseif(get_class($result) == 'ORM_Validation_Exception')
 							{
@@ -1008,6 +1012,7 @@
 							}
 						}
 						else{
+							$user->registerFbInvite($retArr['id']);
 							$retArr['identity_exists'] = true;
 						}
 					}
