@@ -120,7 +120,7 @@ define(["require", "text!usercontrols/addgame/templates/layout.html",
           this.modelBoxId = "modal-popup-"+Math.floor(Math.random() * Math.random() * 50 * Math.random() * 50);  
           var options = {};
             options.height = "500px";
-            options.width = "90%";      
+            options.width = "500px";
             options.title = "Add Game";
             options.id = this.modelBoxId;         
 			routing.trigger('common-popup-open', options);

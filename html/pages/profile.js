@@ -325,7 +325,8 @@ define([
 
 			setupOrgListView: function () {
 				var orgListView;
-				if(this.orgs.length && (!this.orgViewname || (this.orgViewname && this.orgViewname == "org")))
+				console.log("PROF CONTROLLER OBJ",this);
+				if($(".selected-sport-h").data("sporttype")==1)
 					this.setUpOrgView();
 				else
 					this.setUpUserSportView();					

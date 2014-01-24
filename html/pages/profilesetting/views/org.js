@@ -387,8 +387,9 @@ define(['require', 'text!profilesetting/templates/highschool.html', 'text!profil
 				_self.SetupSportsView(orgs_id, destination);
 			} else {
 				var List = new SportsCollection();
-				List.sport_type = 1;
-				List.sport_type_id = 1;
+				//this shows all sports if it is a club.
+				List.sport_type = this.type == 'club' ? 0 : 1;
+				List.sport_type_id = List.sport_type;
 				// For Sports Not associated With Individuals
 				//TODO:  Gender is missing in API so need to update code
 				List.male = 1;

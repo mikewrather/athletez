@@ -504,6 +504,11 @@ class Model_Sportorg_Org extends ORM
 			$this->sports_club = $sports_club;
 		}
 
+		if ( isset($single_sport_id))
+		{
+			$this->single_sport_id = $single_sport_id;
+		}
+
 		// leagues_id 
 		// Change the league this organization belongs to
 		if ( isset($leagues_id))
@@ -599,6 +604,10 @@ class Model_Sportorg_Org extends ORM
 
 		if (isset($sports_club)){
 			$this->sports_club = $sports_club;
+		}
+
+		if(isset($single_sport_id)){
+			$this->single_sport_id = $single_sport_id;
 		}
 
 		if (isset($season_profiles_id)){

@@ -365,6 +365,12 @@
 				$arguments["sports_club"] =$this->request->post('sports_club');
 			}
 
+			if($this->request->post('single_sport_id') > 0)
+			{
+				//convert sports_club to a boolean
+				$arguments["single_sport_id"] =$this->request->post('single_sport_id');
+			}
+
 			// season_profiles_id
 			// ID of the Season Profile this organization uses
 
@@ -526,6 +532,12 @@
 				$args['sports_club'] = Util::convert_to_boolean($this->put('sports_club'));
 
 			}
+
+			if($this->put('single_sport_id') > 0)
+			{
+				$arguments["single_sport_id"] =$this->request->post('single_sport_id');
+			}
+
 			// leagues_id
 			// Change the league this organization belongs to
 
