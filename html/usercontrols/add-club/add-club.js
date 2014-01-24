@@ -67,7 +67,7 @@ define(["require", 'text!usercontrols/photo-player/templates/comments.html',
           // $('#modalPopup').modal();
           var options = {};
             options.height = "500px";
-            options.width = "90%";    
+            options.width = "500px";
             options.title = (this.type == "school")?"Add School":"Add Club";
 			routing.trigger('common-popup-open', options); 
             return this.layout;

@@ -457,6 +457,7 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
             	// open modal popup
 				$("#"+id).modal('show');
 
+
 	            if(_.isUndefined(options.slimScroll) || !options.slimScroll) {
 		            $("#"+id).find('#modalBody').slimScroll({
 			            height:(options.height)?options.height:'400px',
@@ -465,6 +466,7 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
 			            disableFadeOut:true
 		            });
 	            }
+
 
 	            Channel('popup-finished-launch-' + id).publish();
 

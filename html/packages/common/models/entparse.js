@@ -250,25 +250,25 @@ define([ 'models', 'facade' ], function(models, facade) {
 
 			if(mpay.sports_obj) return_data._sports_icon = this.get_selected_icon(mpay.sports_obj);
 
-			return_data._label = mpay.game_day;
+			return_data._label = mpay.game_name;
 			return_data._link = "/#!game/" + mpay.id;
 			return_data._has_link = true;
-			var team_str = "", teams = mpay.teams;
+		/*	var team_str = "", teams = mpay.teams;
 			if(teams != null) var teamLength = teams.length;
 			console.log(mpay);
 			for (var i = 0; i < teamLength; i++) {
 				team_str += this.ucwords(mpay.teams[i].team_name);
 				team_str += i<teamLength - 1 ? ' vs ' : '';
-			}
+			} */
 			if(mpay.hasOwnProperty('is_owner')) return_data.show_edit = mpay.is_owner;
-			if(team_str != "") return_data._sublabel = team_str;
+		//	if(team_str != "") return_data._sublabel = team_str;
 			else{
 				return_data._sublabel = mpay.event_name;
 			}
 			var gameDate = new Date(mpay.gameDay + " " + mpay.gameTime);
 
-			return_data.itemtype = "http://schema.org/Event";
-/*			return_data.meta = [
+			/*			return_data.itemtype = "http://schema.org/Event";
+			return_data.meta = [
 				{itemprop:"name",content:return_data._sublabel},
 				{itemprop:"location",content:mpay.game_location},
 				{itemprop:"startDate",content:gameDate.toISOString()},
