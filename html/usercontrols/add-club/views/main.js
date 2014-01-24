@@ -7,13 +7,14 @@
 define(['require', 'text!usercontrols/add-club/templates/layout.html', 'facade', 'views', 'utils', 'vendor', 
  'usercontrol/add-club/collections/complevel', 'usercontrol/add-club/models/adress',
  'usercontrol/add-club/models/add',
- 'usercontrol/dropdown/view/dropdown' ], function(require, layoutTemplate) {
-
+ 'usercontrol/dropdown/view/dropdown', 'profilesetting/collections/sports' ], function(require, layoutTemplate) {
+ 	
 	var self, facade = require('facade'), views = require('views'), SectionView = views.SectionView, 
 	utils = require('utils'), Channel = utils.lib.Channel, vendor = require('vendor'), 
 	Mustache = vendor.Mustache, $ = facade.$, CompLevel = require('usercontrol/add-club/collections/complevel'),
 	AdressModel = require('usercontrol/add-club/models/adress'),
 	AddModel = require('usercontrol/add-club/models/add'),
+	SportsCollection = require('profilesetting/collections/sports'),
 	DropDownList = require('usercontrol/dropdown/view/dropdown');
 	//Models
 	PhotoPlayerView = SectionView.extend({
@@ -32,11 +33,16 @@ define(['require', 'text!usercontrols/add-club/templates/layout.html', 'facade',
 			this.id = options.id;
 			this.addType = options.addType;
 			this.callback = options.callback;
+			this.viewObj = options.viewObj;
 			this.addressValid = false;
 			SectionView.prototype.initialize.call(this, options);
 			this.setUpMainView();
 			this.render();
 			this.setProfiles();
+			if(this.addType != "school") {
+				this.$el.find(".sports-select-h").removeClass("hide");
+				this.showSportsList();
+			}
 		},
 		
 		openLocationPopup: function(latitude, longitude) {
@@ -72,6 +78,9 @@ define(['require', 'text!usercontrols/add-club/templates/layout.html', 'facade',
 			data.location_id = _self.locationId;
 			data.season_profiles_id = this.$el.find("#profile-h").val();
 			data.sports_club = (_self.addType == "school")?'0':'1';
+			if(this.addType != "school") {
+				data.single_sport_id = this.$el.find("#sports-h").val();
+			}
 			addModel.set(data);
 
 			addModel.save();
@@ -133,8 +142,6 @@ define(['require', 'text!usercontrols/add-club/templates/layout.html', 'facade',
    					           		
                }
                
-               console.error(record);
-               
                data.recordId = 'id';
 			   data.recordValue = 'name';
                var DropDown = new DropDownList({
@@ -148,6 +155,44 @@ define(['require', 'text!usercontrols/add-club/templates/layout.html', 'facade',
 					}
 				});
         },
+        
+        showSportsList: function() {
+        	//sports-h
+			var _self = this, data = {}, List = new SportsCollection();
+			 data.records = [];
+			 data.records.push({payload:{id: "0", name: "Multiple sports"}});
+			//this shows all sports if it is a club.
+			List.sport_type =  0;
+			List.sport_type_id = List.sport_type;
+			List.male = 1;
+			List.female = 0;
+			if (_self.viewObj.gender == "male") {
+				List.male = 1;
+			} else if (_self.viewObj.gender == "famale") {
+				List.female = 0;
+			}
+			List.fetch();
+			$.when(List.request).done(function() {
+				if (List.isError()) return;
+				var models = List.toJSON();
+				_self.sports = [];
+				for (var key in models) {
+					data.records.push({payload:{id: models[key].payload.id, name: models[key].payload.sports_name}});
+				}
+			   data.recordId = 'id';
+			   data.recordValue = 'name';
+               var DropDown = new DropDownList({
+					data: data,
+					title: "Select Sports",
+					elementId: "sports-h",
+					destination: '.sports-h',
+					targetView: _self,
+					callback: function(result) {
+						//self.getCompLevels();
+					}
+				});
+			});               
+        },
 		
 		// get comp levels
 		getCompLevels: function() {
@@ -156,8 +201,6 @@ define(['require', 'text!usercontrols/add-club/templates/layout.html', 'facade',
             _self.compLevel.fetch();
             
             $.when(_self.compLevel.request).done(function() {
-            	console.error(_self.compLevel);
-            	
             	var json = _self.compLevel.toJSON(), data = {};
                data.records = [];
                for(var i in json[0].payload) {

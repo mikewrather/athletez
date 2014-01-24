@@ -32,7 +32,6 @@ define(["require", 'text!usercontrols/photo-player/templates/comments.html',
 		
 		// controller intialize function
 		initialize : function(options) {
-			console.log("init");
 			var _self = this;
 			// load css file
 			Channel('load:css').publish(this.cssArr);
@@ -42,6 +41,7 @@ define(["require", 'text!usercontrols/photo-player/templates/comments.html',
 			if (options.index) this.index = options.index;
 			if(options.userId) this.userId = options.userId;
 			if(options.type) this.type = options.type;
+			this.viewObj = options.viewObj;
 			this.callback = options.callback;
 			
 			if (options._collection) this._collection = options._collection;
@@ -55,8 +55,6 @@ define(["require", 'text!usercontrols/photo-player/templates/comments.html',
 		// setup main layout
 		setupLayout : function() {
 			this.scheme=[];
-			//$(".model-popup-h").remove();
-			//$('body').append(this.modelHTML);
             var pageLayout = new LayoutView({
 				scheme : this.scheme,
 				destination : "#modalBody",
@@ -84,7 +82,8 @@ define(["require", 'text!usercontrols/photo-player/templates/comments.html',
 					name : "add club",
 					destination : "#modalBody",
 					addType: self.type,
-					callback: self.callback
+					callback: self.callback,
+					viewObj: self.viewObj
 				});
 				self.scheme.push(photoPlayerMain);
 				self.layout.render();				

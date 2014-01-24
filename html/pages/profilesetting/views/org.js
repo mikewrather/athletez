@@ -145,7 +145,7 @@ define(['require', 'text!profilesetting/templates/highschool.html', 'text!profil
 		/* Add club popup  */
 		openAddHighSchoolPopup: function() {
 			var _self = this;
-			routing.trigger('add-school-init', '', '', 'school', function(res) {
+			routing.trigger('add-school-init', '', '', 'school', _self, function(res) {
 				console.log(res);
 				_self.$el.find(_self.controls.txtSchools).val(res.name);
 				_self.$el.find(_self.controls.txtStates).val(res.locationState.name);
@@ -174,7 +174,6 @@ define(['require', 'text!profilesetting/templates/highschool.html', 'text!profil
 		/*render displays the view in browser*/
 		render : function() {
 			var self = this;
-
 			SectionView.prototype.render.call(this);
 		},
 
@@ -263,7 +262,6 @@ define(['require', 'text!profilesetting/templates/highschool.html', 'text!profil
 			_self.states_id = '';
 
 			_self.states.forEach(function(value, index) {
-
 				if (value['name'] == state_name) {
 					isStateValid = true;
 					_self.states_id = value['id'];
@@ -315,6 +313,7 @@ define(['require', 'text!profilesetting/templates/highschool.html', 'text!profil
 					for (var key in models) {
 						_self.schools.push(models[key].payload);
 					}
+					
 					_self.schools.forEach(function(value, index) {
 						arr.push(value['org_name']);
 					});
@@ -339,23 +338,25 @@ define(['require', 'text!profilesetting/templates/highschool.html', 'text!profil
 
 		/*Change school_id as per the selected record from auto complete for state created in keyupSchool*/
 		changeSchool : function(event) {
-			var _self = this;
+			var _self = this, i, len = _self.schools.length;
 			var name = _self.$(event.target).val();
 			_self.orgs_id = 0;
-			_self.schools.forEach(function(value, index) {
-				if (value['org_name'] == name) {
-					_self.orgs_id = value['org_id'];
+			
+			for(i = 0; i < len; i++) {
+				if (_self.schools[i]['org_name'] == name) {
+					_self.orgs_id = _self.schools[i]['org_id'];
+					var sportId = _self.schools[i]["single_sport_id"];
 					if (_self.$el.find(_self.controls.divMainSportsSection).find(_self.controls.ddlSports).length < 1)
-						_self.fillSports(_self.orgs_id, _self.controls.divMainSportsSection);
-				}
-			});
+						_self.fillSports(_self.orgs_id, _self.controls.divMainSportsSection, sportId);
+					break;
+				}				
+			}
 		},
 		
 		/* Add club popup  */
 		openAddClubPopup: function() {
 			var _self = this;
-			routing.trigger('add-school-init', '', '', 'club', function(res) {
-				console.log(res);
+			routing.trigger('add-school-init', '', '', 'club', _self, function(res) {
 				_self.$el.find(_self.controls.txtSchools).val(res.name);
 				_self.$el.find(_self.controls.txtStates).val(res.locationState.name);
 				
@@ -366,7 +367,7 @@ define(['require', 'text!profilesetting/templates/highschool.html', 'text!profil
 				
 				_self.orgs_id = res.org_id;
 				if (_self.$el.find(_self.controls.divMainSportsSection).find(_self.controls.ddlSports).length < 1) {
-						_self.fillSports(_self.orgs_id, _self.controls.divMainSportsSection);
+						_self.fillSports(_self.orgs_id, _self.controls.divMainSportsSection, res.single_sport_id);
 				}
 				_self.$el.find(".add-club-h").hide();
 				
@@ -380,7 +381,7 @@ define(['require', 'text!profilesetting/templates/highschool.html', 'text!profil
 		},
 
 		/*Fill Sports dropdown with sports on basis of gender and sports_club type*/
-		fillSports : function(orgs_id, destination) {
+		fillSports : function(orgs_id, destination, sportId) {
 			var _self = this;
 			console.log("Fill Sports", orgs_id);
 			if (_self.sports && _self.sports.length > 0) {
@@ -417,7 +418,7 @@ define(['require', 'text!profilesetting/templates/highschool.html', 'text!profil
 					// Sort Sports Before Filling Up Into Drop-Down
 					_self.sort(_self.sports, 'sport_name', false);
 
-					_self.SetupSportsView(orgs_id, destination);
+					_self.SetupSportsView(orgs_id, destination, sportId);
 				});
 			}
 		},
@@ -440,15 +441,15 @@ define(['require', 'text!profilesetting/templates/highschool.html', 'text!profil
 				_self.sport_id = 0;
 		},
 		/*Set up sports section as per the destination wehether default or updation case*/
-		SetupSportsView : function(orgs_id, destination) {
+		SetupSportsView : function(orgs_id, destination, sportId) {
 			var _self = this;
-			console.log("Setup Sports View",_self.sports);
 			var markup = Mustache.to_html(sportsLevelTemplate, {
 				sports : _self.sports,
 				orgsId : orgs_id
 			});
 			_self.$(destination).append(markup);
 			$(destination).parents(_self.controls.divSportsWrapper).find(_self.controls.btnAddSports).attr('orgsid', orgs_id);
+			if(sportId) _self.$(destination).find(".ddl-sports").val(sportId).trigger("change");
 			$(destination).parents(_self.controls.divSportsWrapper).fadeIn();
 		},
 
@@ -678,12 +679,10 @@ define(['require', 'text!profilesetting/templates/highschool.html', 'text!profil
 			var _self = this;
 			var orgsId = _self.$(event.target).attr('orgsid');
 			var destination = $(_self.controls.divSportsWrapper + '[orgsId="'+orgsId+'"] ' + _self.controls.divSchoolSportsSection);
-
 			if (orgsId && orgsId != 0 && orgsId != null && orgsId != '') {
 				_self.fillSports(orgsId, destination);
 				$(destination).parents(_self.controls.divSportsWrapper).fadeIn();
 			}
-
 		},
 		/*Removes Sports From HTML As Well As From Json*/
 		RemoveSports : function(event) {
@@ -813,10 +812,8 @@ define(['require', 'text!profilesetting/templates/highschool.html', 'text!profil
 			var sportDestination = $(destination).find(_self.controls.divLevels);
 			
 			$.each(_self.teamsView.Teams, function(index, team) {
-				console.log("team", team);
 				if (orgId == team.payload.org_id) {
 					$.each(team.payload.sports, function(index, sport) {
-						console.log("sport", sport);
 						if (sport.sports_id == sportId) {
 							_self.SetUpEditTeamView(orgId, sportDestination, sportId, sport);
 							return;

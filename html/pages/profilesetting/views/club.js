@@ -122,7 +122,7 @@ define(['require', 'text!profilesetting/templates/club.html', 'text!profilesetti
 		/* Add club popup  */
 		openAddClubPopup: function() {
 			var _self = this;
-			routing.trigger('add-school-init', '', '', 'club', function(res) {
+			routing.trigger('add-school-init', '', '', 'club', _self, function(res) {
 				console.log(res);
 				_self.$el.find(_self.controls.txtSchools).val(res.name);
 				_self.$el.find(_self.controls.txtStates).val(res.locationState.name);
