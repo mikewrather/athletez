@@ -297,6 +297,7 @@ define(['require', 'text!profilesetting/templates/highschool.html', 'text!profil
 				console.log("School Request Abort Request Function");
 				_self.schoolFetchRequest = _self.abortRequest(_self.schoolFetchRequest);
 				$(event.target).addClass('ui-autocomplete-loading');
+				$(event.target).removeAttr("data-id");
 				var tempCollection = List.fetch();
 				_self.schoolFetchRequest.push(tempCollection);
 
@@ -315,17 +316,30 @@ define(['require', 'text!profilesetting/templates/highschool.html', 'text!profil
 					}
 					
 					_self.schools.forEach(function(value, index) {
-						arr.push(value['org_name']);
+						arr.push({id: value['id'], value: value['org_name']});
 					});
 					// Destroy existing autocomplete from text box before attaching it again
 					// try catch as for the first time it gives error
 					try {
 						_self.$el.find(_self.controls.txtSchools).autocomplete("destroy");
 					} catch(ex) {
+						
 					}
 
 					$(event.target).autocomplete({
-						source : arr
+						source : arr,
+						select :  function (e, ui) {
+							//console.error($(event.target));
+							console.error(e);
+							setTimeout(function() {
+								$(event.target).val(ui.item.value);
+								$(event.target).attr("data-id", ui.item.id);								
+							}, 100);
+
+							//self.changeIndividualGame(event,ui);
+							// display the selected text
+							// $("#txtAllowSearchID").val(ui.item.value); // save selected id to hidden input
+							}
 					});
 					//Trigger keydown to display the autocomplete dropdown just created
 					$(event.target).trigger('keydown');
@@ -339,11 +353,11 @@ define(['require', 'text!profilesetting/templates/highschool.html', 'text!profil
 		/*Change school_id as per the selected record from auto complete for state created in keyupSchool*/
 		changeSchool : function(event) {
 			var _self = this, i, len = _self.schools.length;
-			var name = _self.$(event.target).val();
+			var name = _self.$(event.target).attr("data-id");
 			_self.orgs_id = 0;
 			
 			for(i = 0; i < len; i++) {
-				if (_self.schools[i]['org_name'] == name) {
+				if (_self.schools[i]['id'] == name) {
 					_self.orgs_id = _self.schools[i]['org_id'];
 					var sportId = _self.schools[i]["single_sport_id"];
 					if (_self.$el.find(_self.controls.divMainSportsSection).find(_self.controls.ddlSports).length < 1)
