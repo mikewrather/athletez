@@ -28,7 +28,7 @@ function(facade,  views,   utils,   ProfileSportItemView) {
         _view: ProfileSportItemView,
 
 		showList: function(e) {
-			var $span = $(e.target).next("span");
+			var $span = $(e.target).next("span.list-container");
 			console.error($span.css("display"));
 			if($span.css("display") === "none") {
 				$(e.target).prev(".team-list-icon").removeClass("icon-circle-arrow-right").addClass("icon-circle-arrow-down");

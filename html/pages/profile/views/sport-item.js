@@ -54,13 +54,12 @@ function (
             this.teams.sports_id = sports_id;
             this.teams.fetch();
             $.when(this.teams.request).done(function() {
-	            console.log("TEAMS:",self.teams);
                 self.setupTeamListView();
             });
         },
         
         setupTeamListView: function() {
-        	var _self = this;
+        	var _self = this, firstRecord = undefined;
         	// if records are more then 2 then implement pagination
         	try {
 	        	var firstRecord = this.teams.at(0);
@@ -71,9 +70,10 @@ function (
         	} catch(e) {
         	    $(".teams h4").addClass("hide");
         	}
-        	
-			if(this.teams.length > 2) {
-				$(".see-more-teams-h").html("Show All "+this.teams.length);
+
+			var l = (firstRecord && firstRecord.get("payload").sports)?firstRecord.get("payload").sports.length:0;        	
+			if(l > 2) {
+				$(".see-more-teams-h").html("Show All "+(l - 2));
 				$(".see-more-teams-h").removeClass("hide");
 				this.allSportsRecords = this.teams.toArray();	
 				var record = this.allSportsRecords.slice(0, 2);
@@ -90,8 +90,8 @@ function (
         },
         
         showTeamView : function() {
-        	var data = {};        	
-        	data.records = this.teams.toJSON();
+        	var data = {}, r = this.teams.toJSON();
+        	data = (r && r[0] && r[0].payload)?r[0].payload:{};
         	var markup = Mustache.to_html(this.template, data);
             this.$el.html(markup);
         },

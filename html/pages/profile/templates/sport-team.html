@@ -1,16 +1,12 @@
-{{#records}}
-	{{#payload}}
 	{{#name}}
 	<div>
 		<span class="icon-circle-arrow-right team-list-icon"></span><div class="teamlist-header">{{name}}</div>
 		{{#sports}}
-			{{#.}}
+		 <span class="team-item list-container" style="display: none;">
 				{{#teams}}
-				    <span class="team-item" style="display:none;"><a href="/#!team/{{id}}">{{complevel}} {{season}} {{year}}</a></span>
+				   <a  title="{{complevel}} {{season}} {{year}}" href="/#!team/{{id}}">{{complevel}} {{season}} {{year}}</a>
 			    {{/teams}}
-			{{/.}}
+			    </span>
 	    {{/sports}}
     </div>
     {{/name}}
-{{/payload}}
-{{/records}}
