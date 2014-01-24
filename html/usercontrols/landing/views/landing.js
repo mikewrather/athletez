@@ -78,7 +78,8 @@ define(['require',
 				_self.data = {
 					firstname: mpay.fb_user_data.first_name,
 					lastname:mpay.fb_user_data.last_name,
-					label: extra._noicon_text + " " + extra._label
+					invite_type:mpay.invite_type,
+					label: extra._label
 				}
 				var options = {};
 				if(typeof(extra.imgData == 'object')){
@@ -140,7 +141,8 @@ define(['require',
 				destination : "#reg-landing",
 				openAsaPage: true,
 				data: this.data,
-				showOnLanding:true
+				showOnLanding:true,
+				fb_invite: this.userId !== undefined ? this.userId : false
 			});
 		},
 

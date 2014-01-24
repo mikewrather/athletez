@@ -5,7 +5,8 @@ define(['require', 'text!signup/templates/basciFinal.html', 'backbone', 'undersc
 		initialize : function(options) {
 			this.callback = options.callback;
 			this.template = _.template(signupBasicTemplate, {
-				page : (options.openAsPopUp) ? true : false
+				page : (options.openAsPopUp) ? true : false,
+				fb_invite : options.fb_invite ? options.fb_invite : false
 			});
 			if (options.destination)
 				this.$el = $(options.destination);
@@ -231,17 +232,19 @@ define(['require', 'text!signup/templates/basciFinal.html', 'backbone', 'undersc
 
 			});
 			console.log(payload, "new payload");
+			console.log($("#finalreg input#password"));
+			console.log($("#finalreg input#re_password"));
 			//
 			this.payload.gender = $("input:radio[name=gender]:checked").val();
-			this.payload.password = $("#password").val();
-			this.payload.re_password = $("#re_password").val();
+			this.payload.password = $("#finalreg input#password").val();
+			this.payload.re_password = $("#finalreg input#re_password").val();
 			this.payload.dob = $(".borndate").val() + '-' + $(".born").val() + '-' + $(".borndyear").val();
 			this.payload.accept_terms = termsAndCondition;
 
 			this.model.save(this.payload, {
 				success : function(msg) {
 					$('#RegModal').modal('hide');
-					alert(_self.callback);
+				//	alert(_self.callback);
 					if (_self.callback && _.isFunction(_self.callback)) {
 						routing.trigger('common-popup-close');
 						_self.callback(function() {

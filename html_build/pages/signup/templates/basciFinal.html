@@ -23,31 +23,6 @@
 						<span>Birthday</span>
 						<div style="width:94%;" id="dob"></div>
 					</div>
-					<!--
-										<div class="field">
-
-											<div class="gender" id="gender">
-												<div class="left-option" style="
-												width:20%; float:left;">Gender</div>
-												<div class="left-option" style="
-												width:25%; float:left;">
-													<div class="" id="radioinput1"><input type="radio" id="male" name="gender" value="M"><label style="display:inline-block;" for="male">Male</label></div>
-												</div>
-												<div class="right-option" style="
-												width:30%; float:right;">
-													<div class="" id="radioinput2"><input type="radio" id="Female" name="gender" value="F"><label style="display:inline-block;" for="Female">Female</labediv>
-												</div>
-											</div>
-
-										</div>
-										<!--<div class="field">
-											<div class="Role" id="Role">
-												<div class="radioinput"><input type="radio" id="athlete" name="role" value="A" /></div>
-												<div class="radio"><label for="athlete">An Athlete</label></div>
-												<div class="radioinput"><input type="radio" id="Fan" name="role" value="F"></div>
-												<div class="radio"><label for="Fan">A Fan</label></div>
-											</div>
-										</div>-->
 
 					<div class="field">
 						<span>Password</span>
@@ -63,10 +38,12 @@
 							</label>
 						</div>
 					</div>
-
+					<% if(fb_invite != undefined){ %>
+						<input type="hidden" name="fb_invite_id" value="<%= fb_invite %>" />
+					<% } %>
 					<input type="submit" name="create" value="Sign Up" class="next btn-common btn-green regsubmitfinal" />
-
-				</form>
+				</div>
+			</form>
 				
 			<%  if(!page) { %>	<br /><br/>
 				<div id="reglogin">

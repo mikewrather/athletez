@@ -10,16 +10,19 @@ define(['require', 'text!signup/templates/registration.html', 'text!signup/templ
 				"route" : "",
 				callback: this.callback
 			});
-
+			this.fb_invite = options.fb_invite ? options.fb_invite : false;
+			console.log("Options passed to registerbasics",options);
 			this.AcceptData = (options.data) ? options.data : undefined;
 
 			if (options.showOnLanding == true)
 				this.template = _.template(signupBasicLandingTemplate, {
-					onlyRegister : (this.openAsaPage) ? true : false
+					onlyRegister : (this.openAsaPage) ? true : false,
+					fb_invite : this.fb_invite
 				});
 			else
 				this.template = _.template(signupBasicTemplate, {
-					onlyRegister : (this.openAsaPage) ? true : false
+					onlyRegister : (this.openAsaPage) ? true : false,
+					fb_invite : this.fb_invite
 				});
 
 			this.$el = $(options.destination);
@@ -58,6 +61,7 @@ define(['require', 'text!signup/templates/registration.html', 'text!signup/templ
 				}
 			});
 			try {
+
 				if (this.openAsaPage && flag) {
 					this.basic_type = new signupBaseFinalModel();
 					var options = {
@@ -67,10 +71,12 @@ define(['require', 'text!signup/templates/registration.html', 'text!signup/templ
 							"attr" : fields
 						},
 						openAsPopUp : true,
-						callback : this.callback
+						callback : this.callback,
+						fb_invite:this.fb_invite
 					};
-
+					console.log("called");
 					this.selectRegisterBasicFinalView = new signupBaseFinalView(options);
+					console.log("called");
 					var options = {};
 					options.height = "500px";
 					options.width = "500px";
@@ -82,7 +88,7 @@ define(['require', 'text!signup/templates/registration.html', 'text!signup/templ
 						routing.trigger("register-basic-final", fields, this.callback);
 				}
 			} catch(e) {
-
+				console.log(e.stack);
 			}
 		},
 

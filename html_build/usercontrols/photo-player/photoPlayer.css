@@ -28,18 +28,19 @@
 }
 .photo-player {
     float: left;
-    width: 70%;
+ 
     height: 100%;
 }
 .photo-player > div{
     height: 100%;
 }
 .photo-player-right-area {
-    
+    float: left;
     height: 100%;
     overflow-y: auto;
     
-    width: 30%;
+    width: 350px;
+    min-width: 350px;
 }
 .photo-player-right-area .right-area-header{
     height:40px;
@@ -351,8 +352,7 @@ ul#tags-list .tags-number {
     }
     .labelSpan{
         font-size: small;
-        font-weight: bolder;
-    }
+  }
     .user-photo {
     float: left;
     height: 45px;

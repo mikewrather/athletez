@@ -27,6 +27,7 @@ define(['vendor', 'views', 'utils', 'text!packages/fbinvite/templates/image-item
 			for(var i in options) {
 				this[i] = options[i];
 			}
+			if(this.FBoptions.invite_type === undefined || this.FBoptions.invite_type === null) this.FBoptions.invite_type = "join";
 			this.FBComponent = new FBComponent();
 		},
 		
@@ -136,7 +137,8 @@ define(['vendor', 'views', 'utils', 'text!packages/fbinvite/templates/image-item
 		callModel: function(e) {
 			var model = new inviteModel();
 			model.set({'fbid': this.model.get("payload").id});
-			if(this.FBoptions) model.set({'invite_to': {subject_id: this.FBoptions.subject_id, enttype_id: this.FBoptions.enttype_id}});
+			console.log(this.FBoptions);
+			if(this.FBoptions) model.set({invite_type:this.FBoptions.invite_type,'invite_to': {subject_id: this.FBoptions.subject_id, enttype_id: this.FBoptions.enttype_id}});
 			model.save();
 			$.when(model.request).done(function() {
 				$(e.target).addClass('link-disabled');

@@ -217,7 +217,7 @@
             else
             {
 	            //throw error
-	            $this->modelNotSetError();
+	        //    $this->modelNotSetError();
 	            return false;
             }
 		}
