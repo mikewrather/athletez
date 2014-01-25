@@ -69,7 +69,6 @@ define(['require', 'text!profilesetting/templates/highschool.html', 'text!profil
 
 		/*initialize gets called by default when constructor is initialized*/
 		initialize : function(options) {
-		//	debugger;
 			if(options.type && options.type == "school") {
 				this.type = "school";
 				this.controls  = {
@@ -333,7 +332,8 @@ define(['require', 'text!profilesetting/templates/highschool.html', 'text!profil
 							console.error(e);
 							setTimeout(function() {
 								$(event.target).val(ui.item.value);
-								$(event.target).attr("data-id", ui.item.id);								
+								$(event.target).attr("data-id", ui.item.id);
+								$(event.target).trigger("blur");								
 							}, 100);
 
 							//self.changeIndividualGame(event,ui);
@@ -363,7 +363,7 @@ define(['require', 'text!profilesetting/templates/highschool.html', 'text!profil
 					if (_self.$el.find(_self.controls.divMainSportsSection).find(_self.controls.ddlSports).length < 1)
 						_self.fillSports(_self.orgs_id, _self.controls.divMainSportsSection, sportId);
 					break;
-				}				
+				}
 			}
 		},
 		
@@ -397,7 +397,6 @@ define(['require', 'text!profilesetting/templates/highschool.html', 'text!profil
 		/*Fill Sports dropdown with sports on basis of gender and sports_club type*/
 		fillSports : function(orgs_id, destination, sportId) {
 			var _self = this;
-			console.log("Fill Sports", orgs_id);
 			if (_self.sports && _self.sports.length > 0) {
 				_self.SetupSportsView(orgs_id, destination);
 			} else {
@@ -414,11 +413,10 @@ define(['require', 'text!profilesetting/templates/highschool.html', 'text!profil
 				} else if (_self.gender == "famale") {
 					List.female = 0;
 				}
+				
 				List.fetch();
-
 				$.when(List.request).done(function() {
-					if (List.isError())
-						return;
+					if (List.isError()) return;
 
 					var models = List.toJSON();
 					if (models == null || models.length < 1)
@@ -431,7 +429,6 @@ define(['require', 'text!profilesetting/templates/highschool.html', 'text!profil
 					
 					// Sort Sports Before Filling Up Into Drop-Down
 					_self.sort(_self.sports, 'sport_name', false);
-
 					_self.SetupSportsView(orgs_id, destination, sportId);
 				});
 			}
@@ -445,7 +442,6 @@ define(['require', 'text!profilesetting/templates/highschool.html', 'text!profil
 			console.log("Event Target Sports List",$(event.target), sportId, orgsId);
 			if ((sportId != 0 && sportId != null && sportId != '') && (orgsId && orgsId != 0 && orgsId != null && orgsId != '')) {
 				_self.sport_id = sportId;
-
 				var controlToAppend = _self.$(event.target).parents(_self.controls.divsportsLevel).find(_self.controls.divLevels);
 				console.log("CALLED",controlToAppend);
 				controlToAppend.html('');
@@ -461,7 +457,9 @@ define(['require', 'text!profilesetting/templates/highschool.html', 'text!profil
 				sports : _self.sports,
 				orgsId : orgs_id
 			});
+			
 			_self.$(destination).append(markup);
+			if(sportId) _self.$(destination).find(".section-sportslevel .select-sports-outer-h").hide();
 			$(destination).parents(_self.controls.divSportsWrapper).find(_self.controls.btnAddSports).attr('orgsid', orgs_id);
 			if(sportId) _self.$(destination).find(".ddl-sports").val(sportId).trigger("change");
 			$(destination).parents(_self.controls.divSportsWrapper).fadeIn();
