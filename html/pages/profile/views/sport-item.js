@@ -61,6 +61,7 @@ function (
         setupTeamListView: function() {
         	var _self = this, firstRecord = undefined;
         	// if records are more then 2 then implement pagination
+	        console.log("TEAMS===================================",this.teams);
         	try {
 	        	var firstRecord = this.teams.at(0);
 	        	if(firstRecord.get("payload").sports[0])
@@ -71,7 +72,8 @@ function (
         	    $(".teams h4").addClass("hide");
         	}
 
-			var l = (firstRecord && firstRecord.get("payload").sports)?firstRecord.get("payload").sports.length:0;        	
+			var l = (firstRecord && firstRecord.get("payload").sports)?firstRecord.get("payload").sports.length:0;
+	        //console.log(firstRecord);
 			if(l > 2) {
 				$(".see-more-teams-h").html("Show All "+(l - 2));
 				$(".see-more-teams-h").removeClass("hide");
@@ -90,9 +92,9 @@ function (
         },
         
         showTeamView : function() {
-        	var data = {}, r = this.teams.toJSON();
-        	data = (r && r[0] && r[0].payload)?r[0].payload:{};
-        	var markup = Mustache.to_html(this.template, data);
+	        var data = {};
+	        data.records = this.teams.toJSON();
+	        var markup = Mustache.to_html(this.template, data);
             this.$el.html(markup);
         },
 
