@@ -189,7 +189,6 @@ define([
 					controller.setupHeaderView();
 					controller.initVoteView();
 					//controller.setupAddMediaView();
-
 					var subject_type_id = controller.basics.get("payload").enttypes_id;
 					controller.commentson = new ProfileCommentOnList();
 					controller.commentson.subject_entity_type = subject_type_id;
@@ -353,6 +352,13 @@ define([
 			},
 			
 			setUpOrgView: function() {
+				var position;
+				if (this.orgListView) {
+					$(this.orgListView.destination).html('');
+					position = $.inArray(this.orgListView, this.scheme);
+					if (~position) this.scheme.splice(position, 1);
+				}
+
 				this.orgViewname = "org";
 				this.orgListView = new ProfileOrgListView({
 					collection: this.orgs,
