@@ -12,8 +12,7 @@
 float: right;
 }
 .add-club-school-outer {
-	max-height: 500px;
-	height: 500px;
+	height: 95%;
 	overflow-y: auto;
 	overflow-x: hidden; 
 }
