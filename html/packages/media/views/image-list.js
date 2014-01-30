@@ -144,13 +144,9 @@ function(facade,  views,   utils,   ImageItemView,            ImageBoardView,   
 			// render template
 			if(!options.dontrenderTemplate) this.renderTemplate();
 	        var _self = this;
-			 _self.allData = this.collection.toArray();
-			 var len = _self.allData.length;
+			// _self.allData = this.collection.toArray();
+			// var len = _self.allData.length;
 			
-			// setting the pagination start and end and reset the pagination to 8 
-			 _self.start = 0;
-			 _self.end = _self.page_limit;
-			 _self.page_limit = 8;
 			_self.seeMore();
             CollectionView.prototype.initialize.call(this, options);
             if (!this.collection) {
@@ -184,7 +180,23 @@ function(facade,  views,   utils,   ImageItemView,            ImageBoardView,   
        	},
 
         seeMore: function(e) {
-        	var len = this.allData.length;
+        	var _self = this;
+        	if(e) {
+	        	this.collection.offset += 1;
+	        	this.collection.fetch({remove: false});
+	        	//$.when(_self.collection.request).done(function() {
+	        		// add records
+	        		//console.error(_self.collection.toArray());
+	        		  // _self.collection.add(this.allData.slice(this.start,this.end));
+	        		//if(e) {
+						//if(_self.addSubscribers) _self.addSubscribers();
+			            //if(_self.setupBoardView) _self.setupBoardView();
+			            //if(_self.setupAddView) _self.setupAddView();   
+			        //}
+	        	//});
+        	}
+        	
+        	/*var len = this.allData.length;
         	if(e) {
 				this.start = this.end;
 				this.end = this.end + this.page_limit;
@@ -205,7 +217,7 @@ function(facade,  views,   utils,   ImageItemView,            ImageBoardView,   
 				if(this.addSubscribers) this.addSubscribers();
 	            if(this.setupBoardView) this.setupBoardView();
 	            if(this.setupAddView) this.setupAddView();   
-        	}
+        	}*/
         },
             
         // Child views...
