@@ -192,7 +192,7 @@ class Model_Media_Base extends ORM
 		$result_arr = null;
 		$limit = isset($limit) ? $limit : Model_Media_Image::getImageCounts($obj);
 		$offset = isset($offset) ? $offset :0;
-		if($primary = Model_Media_Base::find_most_voted_tag($obj,array('image','video'), $limit,$offset))
+		if($primary = Model_Media_Base::find_most_voted_tag($obj,array('image','video'), $limit,$offset,$sports_id))
 		{
 			//if the third parameter is more than one and it finds more than one result then it will return them in an array
 			if(is_array($primary))
@@ -200,7 +200,8 @@ class Model_Media_Base extends ORM
 				//Loop through results
 				foreach($primary as $media_id => $single_image)
 				{
-					$media_obj = ORM::factory("Media_Base", $media_id);
+					$result_arr[] = $single_image->getBasics();
+				/*	$media_obj = ORM::factory("Media_Base", $media_id);
 					if (is_integer($sports_id)){ //only get videos related to one sports_id
 						if ($media_obj->sports_id == $sports_id)
 						{
@@ -211,7 +212,7 @@ class Model_Media_Base extends ORM
 					{
 						$result_arr[] = $single_image->getBasics();
 					}
-				}
+*/				}
 			}
 			else
 			{
@@ -236,7 +237,7 @@ class Model_Media_Base extends ORM
 		return $results;
 	}
 
-	public static function find_most_voted_tag($obj,$mediaType="image",$limit=1,$offset=0)
+	public static function find_most_voted_tag($obj,$mediaType="image",$limit=1,$offset=0,$sports_id=null)
 	{
 
 		//TODO: Make it so that teams pull users under them
@@ -248,13 +249,15 @@ class Model_Media_Base extends ORM
 
 		// This is a sub query that pulls all the media with the passed object tagged
 		// It is joined with the media table so that we can pull media_type (image/vid)
-		$tags = DB::select('media_id')
+		$tags = DB::select('media_id','sports_id')
 			->from('tags')
 			->join('media','left')
 				->on('media.id','=','tags.media_id')
 			->where('tags.subject_enttypes_id','=',$entTypeID)
 			->where('tags.subject_id','=',$subjectID)
 			->group_by('media_id');
+
+		if(is_integer($sports_id)) $tags->where('media.sports_id','=',$sports_id);
 
 		if(is_array($mediaType))
 		{
