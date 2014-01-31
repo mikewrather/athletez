@@ -140,12 +140,17 @@ function(facade,  views,   utils,   ImageItemView,            ImageBoardView,   
 	       this.pageName = (options.pageName)?options.pageName:"profile";
         	if(options.collecton) this.collection = options.collection;
         	
-        	
 			// render template
 			if(!options.dontrenderTemplate) this.renderTemplate();
 	        var _self = this;
-			// _self.allData = this.collection.toArray();
-			// var len = _self.allData.length;
+			
+			if(!this.collection.limit) {
+				_self.allData = this.collection.toArray();
+				 var len = _self.allData.length;
+				 _self.start = 0;
+				 _self.end = _self.page_limit;
+				 _self.page_limit = 8;
+			}
 			
 			_self.seeMore();
             CollectionView.prototype.initialize.call(this, options);
@@ -181,43 +186,40 @@ function(facade,  views,   utils,   ImageItemView,            ImageBoardView,   
 
         seeMore: function(e) {
         	var _self = this;
-        	if(e) {
-	        	this.collection.offset += 1;
+        	if(e && this.collection.limit) {
+	        	this.collection.offset += this.collection.limit;
 	        	this.collection.fetch({remove: false});
-	        	//$.when(_self.collection.request).done(function() {
+	        	$.when(_self.collection.request).done(function() {
 	        		// add records
-	        		//console.error(_self.collection.toArray());
-	        		  // _self.collection.add(this.allData.slice(this.start,this.end));
-	        		//if(e) {
-						//if(_self.addSubscribers) _self.addSubscribers();
-			            //if(_self.setupBoardView) _self.setupBoardView();
-			            //if(_self.setupAddView) _self.setupAddView();   
-			        //}
-	        	//});
+	        		var len = _self.collection.toJSON().length;
+	        		if(len < _self.collection.limit) {
+	        			_self.$el.find('.see-more-h').hide();
+	        		}
+	        	});
+        	} else if(!this.collection.limit) {
+	        	var len = this.allData.length;
+	        	if(e) {
+					this.start = this.end;
+					this.end = this.end + this.page_limit;
+				}
+				
+				if(len <= this.end) {
+					 this.$el.find('.see-more-h').hide();
+				}
+				
+	            if(e)
+	            	this.collection.add(this.allData.slice(this.start,this.end));
+	            else
+		            this.collection.reset(this.allData.slice(this.start,this.end));
+		           
+		         this.page++;  
+		           
+		        if(e) {    
+					if(this.addSubscribers) this.addSubscribers();
+		            if(this.setupBoardView) this.setupBoardView();
+		            if(this.setupAddView) this.setupAddView();   
+	        	}
         	}
-        	
-        	/*var len = this.allData.length;
-        	if(e) {
-				this.start = this.end;
-				this.end = this.end + this.page_limit;
-			}
-			
-			if(len <= this.end) {
-				 this.$el.find('.see-more-h').hide();
-			}
-			
-            if(e)
-            	this.collection.add(this.allData.slice(this.start,this.end));
-            else
-	            this.collection.reset(this.allData.slice(this.start,this.end));
-	           
-	         this.page++;  
-	           
-	        if(e) {    
-				if(this.addSubscribers) this.addSubscribers();
-	            if(this.setupBoardView) this.setupBoardView();
-	            if(this.setupAddView) this.setupAddView();   
-        	}*/
         },
             
         // Child views...
