@@ -259,7 +259,8 @@ define(['require', 'text!profilesetting/templates/highschool.html', 'text!profil
 			var state_name = $(e.target).val();
 			var isStateValid = false;
 			_self.states_id = '';
-
+			
+			
 			_self.states.forEach(function(value, index) {
 				if (value['name'] == state_name) {
 					isStateValid = true;
@@ -398,7 +399,7 @@ define(['require', 'text!profilesetting/templates/highschool.html', 'text!profil
 		fillSports : function(orgs_id, destination, sportId) {
 			var _self = this;
 			if (_self.sports && _self.sports.length > 0) {
-				_self.SetupSportsView(orgs_id, destination);
+				_self.SetupSportsView(orgs_id, destination, sportId);
 			} else {
 				var List = new SportsCollection();
 				//this shows all sports if it is a club.
