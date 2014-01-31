@@ -373,6 +373,7 @@ define(['require', 'text!profilesetting/templates/highschool.html', 'text!profil
 			var _self = this;
 			routing.trigger('add-school-init', '', '', 'club', _self, function(res) {
 				_self.$el.find(_self.controls.txtSchools).val(res.name);
+				_self.$el.find(_self.controls.txtSchools).attr("data-id", res.org_id);
 				_self.$el.find(_self.controls.txtStates).val(res.locationState.name);
 				
 				_self.states_id = "";
@@ -804,7 +805,11 @@ define(['require', 'text!profilesetting/templates/highschool.html', 'text!profil
 			_self.states_id = undefined;
 			_self.$(_self.controls.txtSchools).attr('disabled', 'disabled').val('');
 			_self.orgs_id = undefined;
-			_self.$el.find(".add-school-h").show();
+			if(_self.type == 'club')
+				_self.$el.find(".add-club-h").show();
+			else
+				_self.$el.find(".add-school-h").show();
+
 			_self.$el.find(_self.controls.divAddSportSection).fadeOut();
 		},
 		// EDIT VIEW FOR A TEAM IF USER CLICKS EDIT LINK FOR TEAMS
