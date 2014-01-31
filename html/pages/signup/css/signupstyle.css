@@ -345,7 +345,7 @@
    		#imgpreview{
       		background-color: white;
       		height: 330px;
-      		overflow: hidden;
+      		/*overflow: hidden;*/
       		width: 330px;
       		margin-left: 56px;
    		}

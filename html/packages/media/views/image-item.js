@@ -45,6 +45,8 @@ define(['vendor', 'views', 'utils', 'text!media/templates/image-item.html', 'vot
 		
 		render : function() {
 			var _self = this, payload = this.model.get('payload');
+			if(_.isArray(payload) || payload.image_id == 0) { return false; }
+			
 			//the extra object is created here using the entity parsing model
 			var parser = new entParser({mpay:payload});
 			var extra = parser.parsedData;
@@ -59,9 +61,11 @@ define(['vendor', 'views', 'utils', 'text!media/templates/image-item.html', 'vot
 				$(this).find('.action-block').css({
 					opacity : 0
 				});
+				
 				$(this).find('.detail-view').css({
 					'bottom' : '-' + detail_view_height
 				});
+				
 				$(this).find('.detail-view.game').css({
 					'bottom' : '-' + game_detail_view_height
 				});
@@ -85,10 +89,10 @@ define(['vendor', 'views', 'utils', 'text!media/templates/image-item.html', 'vot
 						'left':'40px'
 					});
 				}
-				else if($num_words < 25){
+				else if($num_words < 25) {
 					$nopic_words_div.css('font-size','2em');
 				}
-				else if($num_words < 30){
+				else if($num_words < 30) {
 					$nopic_words_div.css({
 						'font-size':'1.7em',
 						'top':'65px'

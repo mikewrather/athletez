@@ -182,10 +182,14 @@ function(facade,  views,   utils,   ImageItemView,            ImageBoardView,   
         seeMore: function(e) {
         	var _self = this;
         	if(e) {
-	        	this.collection.offset += 1;
+	        	this.collection.offset += this.collection.limit;
 	        	this.collection.fetch({remove: false});
-	        	//$.when(_self.collection.request).done(function() {
+	        	$.when(_self.collection.request).done(function() {
 	        		// add records
+	        		var len = _self.collection.toJSON().length;
+	        		if(len < _self.collection.limit) {
+	        			_self.$el.find('.see-more-h').hide();
+	        		}
 	        		//console.error(_self.collection.toArray());
 	        		  // _self.collection.add(this.allData.slice(this.start,this.end));
 	        		//if(e) {
@@ -193,7 +197,7 @@ function(facade,  views,   utils,   ImageItemView,            ImageBoardView,   
 			            //if(_self.setupBoardView) _self.setupBoardView();
 			            //if(_self.setupAddView) _self.setupAddView();   
 			        //}
-	        	//});
+	        	});
         	}
         	
         	/*var len = this.allData.length;
