@@ -166,13 +166,16 @@ class Model_User_Followers extends ORM
 					$queued->delete();
 					continue;
 				}
+
+				$sub_header = $subheader->render();
+				$action_not = $action->render();
 				$baseview = View::factory('email/notification/base')
 					->bind('email_reason',$follow->reason)
 					->bind('pingBack',$pingBack)
 					->bind('doc_title',$subjectline)
 					->bind('backlink',$backlink)
-					->bind('subject_header',$subheader->render())
-					->bind('action_notification',$action->render());
+					->bind('subject_header',$sub_header)
+					->bind('action_notification',$action_not);
 
 				$queued->setMessageBody($baseview->render());
 
@@ -280,6 +283,9 @@ class Model_User_Followers extends ORM
 					$sub_line = $subject->name()." has a new game on its schedule";
 				}
 				break;
+			case 'userteamslink':
+				$sub_line = $subject->name() . " joined " . $obj->team->name();
+				break;
 			default:
 				break;
 		}
@@ -291,7 +297,7 @@ class Model_User_Followers extends ORM
 	{
 		$enttype = ORM::factory('Site_Enttype',Ent::getMyEntTypeID($subject));
 		$subjecttype = $enttype->api_name;
-		$backlink = "http://".$_SERVER['SERVER_NAME'];
+		$backlink = "http://athletez.com";
 
 		switch($subjecttype)
 		{
