@@ -843,6 +843,7 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 				array('users.id', 'user_id'),
 				array('orgs.id', 'org_id'),
 				array('orgs.name', 'org_name'),
+				array('orgs.single_sport_id', 'single_sport_id'),
 				array('states.abbr', 'state_name'),
 				'teams.*',
 				array('sports.name','sport'),
@@ -852,6 +853,7 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 				array('complevels.name', 'complevel_name'),
 				array('seasons.name', 'season'), 'statvals.statval',
 				array('seasons.id', 'seasons_id')
+
 			)
 			->from('users')
 
@@ -910,6 +912,7 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 				$orgs[$team['org_id']] = array(
 					'org_id' => $team['org_id'],
 					'org_name' => $team['org_name'],
+					'single_sport_id' => $team['single_sport_id'],
 					'state' => $team['state_name']
 				);
 			}
