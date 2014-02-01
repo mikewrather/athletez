@@ -297,14 +297,15 @@ define([
             var controller = this;
             
              $.when(controller.commentson.request).done(function () {
-					controller.setupCommentOnListView();
+				controller.setupCommentOnListView();
 			});
 			
-			 $.when(controller.games.request).done(function () {
-					controller.setupGameView();
+			$.when(controller.games.request).done(function () {
+				controller.setupGameView();
 			});
+			
 			$.when(controller.fans.request).done(function (x) {
-					controller.setupFansListView();
+				controller.setupFansListView();
 			});
 			
             $.when(this.images.request).done(function () {
@@ -430,21 +431,22 @@ define([
 			},
         
         setupGameView: function () {
-        	
-			var teamView = TeamOrgListView.extend({
-				tagName: 'div'
-			});	        
-			this.gamesView = new teamView({
-				teams_id: this.id,
-				controller: this,
-				collection: this.games,
-				destination: "#games_div",
-				teamRecords: true
-				//name: "games view"
-			});
-
-			this.scheme.push(this.gamesView);
-			this.layout.render();
+        	var payload = this.basics.get("payload");
+        	if(payload.org_sport_link_obj.sport.sport_type_id != "2") {
+        		$(".game-green-heading").removeClass("hide");
+				var teamView = TeamOrgListView.extend({
+					tagName: 'div'
+				});	        
+				this.gamesView = new teamView({
+					teams_id: this.id,
+					controller: this,
+					collection: this.games,
+					destination: "#games_div",
+					teamRecords: true
+				});
+				this.scheme.push(this.gamesView);
+				this.layout.render();
+			}
 		},
         
         setupCompetitorTeams: function() {
