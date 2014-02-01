@@ -5,7 +5,9 @@
 	<div class="org-sport-list">
 		<div class="org-sport-list-header">
 			<div class="org-name">{{org_name}}, {{city}}, {{state}}</div>
+			{{^single_sport_id}}
 			<div class="add-sport"><a class="btn-add-sports" href="javascript:void(0)" orgsId="{{org_id}}">Add Sport</a></div>
+			{{/single_sport_id}}
 		</div>
 		{{#sports}}
 
@@ -15,7 +17,6 @@
 
 			<div>
 				{{#complevels}}
-
 					{{#seasons}}
 				<div class="season-list">
 						<span>{{complevel}}</span>
