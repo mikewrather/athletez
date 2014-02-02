@@ -526,11 +526,9 @@ ul.common-dropdown {
 	max-height: 200px;
 	overflow-y: auto;
 	background: #FFF;
-	margin: 0 10px;
+	margin: 0 10px 10px 10px;
 	display: none;
 	clear: both;
-	margin-bottom: 10px;
-	margin-top: 10px;
 	overflow-y: auto;
 	overflow-x: hidden;
 }
@@ -548,9 +546,9 @@ ul.common-dropdown li a:hover {
 
 ul.common-dropdown li {
 	text-align: center;
-	padding: 3px 0px;
-	margin: 3px 5px;
-	width: 100%;
+	padding: 1%;
+	margin: 5px 2%;
+	width: 94%;
 }
 
 ul.common-dropdown li.selected a {
