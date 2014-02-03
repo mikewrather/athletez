@@ -176,7 +176,11 @@ function(require, profileHeaderTemplate, selectSportTemplate) {
 				} else {
 					currentHashUrl = currentHashUrl+"/sport/"+sport_id;
 				}
-				routing.navigate(currentHashUrl, {trigger: false});
+				if(e) {
+					routing.navigate(currentHashUrl, {trigger: false});
+				} else {
+					routing.navigate(currentHashUrl, {trigger: false, replace: true});
+				}
 			} //else
 			//	this.loadFirstTime = true;
         	
