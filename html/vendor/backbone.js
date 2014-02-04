@@ -2984,11 +2984,12 @@ Form.editors.Location = Form.editors.Text.extend({
 
   tagName: 'div',
   locationId: null,
+  map_id: "map-canvas-" + Math.floor((Math.random() * 10000) + 1),
 
-  template: '<textarea placeholder="Address" class="location-h address-h" rows="3" cols="25"></textarea>\
+  template: '<textarea placeholder="Address" class="location-h address-h" rows="3" cols="25"><%= address %></textarea>\
 			 <span class="address-error hide address-error-status-h"></span>\
 			 <a href="javascript: void(0);" class="verify-address-h">Verify Address</a>\
-			 <div id="map-canvas-h" style="width: 90%; height: 300px; margin-top: 40px; display: none;"></div>',
+			 <div id="<%= map_id %>" style="width: 90%; height: 300px; margin-top: 40px; display: none;"></div>',
 
   events: {
 	'click .verify-address-h': 'verifyAddress',
@@ -3038,7 +3039,7 @@ Form.editors.Location = Form.editors.Text.extend({
   
 	createMap: function() {
 		var _self = this;
-		var pos = new google.maps.LatLng(_self.location.latitude, _self.location.latitude),
+		var pos = new google.maps.LatLng(_self.location.latitude, _self.location.longitude),
 		mapOptions = {
 		    zoom: 13,
 		    center: pos,
@@ -3047,8 +3048,8 @@ Form.editors.Location = Form.editors.Text.extend({
 			scrollwheel: false,
 		    mapTypeId: google.maps.MapTypeId.ROADMAP
 		  };
-		  this.$el.find('#map-canvas-h').show();
-		  this.map = new google.maps.Map(document.getElementById('map-canvas-h'), mapOptions);
+		  this.$el.find('#' + this.map_id).show();
+		  this.map = new google.maps.Map(document.getElementById(this.map_id), mapOptions);
 		  this.marker = new google.maps.Marker({position: pos, map: this.map});
 		  this.marker.setMap(this.map);
 
@@ -3098,15 +3099,18 @@ Form.editors.Location = Form.editors.Text.extend({
     if (schema && schema.getData) this.getData = schema.getData;  
     
 	this.setFormOptions(options.schema.form_values);
-    
+
+		  this.value = this.defaultValue || '';
+
 	this.location = {
 		latitude: undefined,
 		longitude: undefined
 	};
-	
+
 	if(options.callback) this.callback = options.callback;
 	this.location.latitude = (!_.isUndefined(schema.latitude))?schema.latitude:undefined;
 	this.location.longitude = (!_.isUndefined(schema.longitude))?schema.longitude:undefined;
+	this.locationId = (!_.isUndefined(schema.locationId))?schema.locationId:undefined;
   },
   
   setFormOptions: function(fields) {
@@ -3120,8 +3124,21 @@ Form.editors.Location = Form.editors.Text.extend({
   
   render: function() {
   	// compile temoplate
-	var self = this, markup = _.template(this.template, {});//Mustache.to_html(self.template, this.data);
+	var self = this, markup = _.template(this.template, {address:this.value,map_id:this.map_id});//Mustache.to_html(self.template, this.data);
 	this.$el.html(markup);
+	if(this.location.latitude !== undefined && this.location.longitude !== undefined){
+		var count = 0;
+		var timer = setInterval(function(){
+			count++;
+			if($('#' + self.map_id).length){
+				self.createMap();
+				clearInterval(timer);
+			} else if(count > 20){
+				clearInterval(timer);
+			}
+		},300);
+
+	}
 	return this;
   },
   
