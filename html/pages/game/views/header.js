@@ -169,8 +169,8 @@ function(require, gameHeaderTemplate) {
 							'class' : "txt-game-date_h txtDate"
 						},
 
-						showLable : false,
-						label: "Date",
+						showLable : true,
+						label: "Date and Time",
 						//validators : [{type : 'required',
 						//	message : 'Please select date.'}],
 						bindDatePicker : true
@@ -191,8 +191,8 @@ function(require, gameHeaderTemplate) {
 							'class' : "txt-game-time_h hasDatepicker txtTime"
 						},
 
-						showLable : false,
-						label: "Time",
+						showLable : true,
+						label: "&nbsp;",
 						validators : [{
 							type : 'required',
 							message : 'Please enter a time'
@@ -226,8 +226,8 @@ function(require, gameHeaderTemplate) {
 							callback : function(result) {
 							}
 						},
-						showLable : false,
-						label: ""
+						showLable : true,
+						label: "&nbsp;"
 					},
 
 					'game_datetime'	: {
@@ -326,6 +326,7 @@ function(require, gameHeaderTemplate) {
 								//window.formValues1.showServersErrors([{ key: "gameDay", message: "error_message" }]);
 								$.when(self.model.request).done(function(res){
 									_self.updateHeaderData(self.model.id);
+									routing.trigger('common-popup-close');
 								});
 
 								$.when(self.model.request).fail(function(res) {

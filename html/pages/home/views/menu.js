@@ -210,7 +210,9 @@ define(
 					if(this.options.cities_id || this.options.states_id || this.options.country_id) {
 						
 						// get location name
+						/*
 						var cityModel = new getCity();
+
 						cityModel.cityId = this.options.cities_id || this.options.states_id || this.options.country_id;
 						cityModel.fetch();
 						
@@ -225,6 +227,7 @@ define(
 									
 							self.$el.find(".location-link-h .option-heading-h").html(name);
 						});
+						*/
 					}
 
 					if(this.options.base) {
