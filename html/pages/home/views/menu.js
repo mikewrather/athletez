@@ -1,7 +1,9 @@
 //Menu View
 
 define(
-		[ 'require', 'text!pages/home/templates/menu.html', 'facade', 'views', 'jquery.slimscroll', 'common/models/get-city' ],
+		[ 'require', 'text!pages/home/templates/menu.html', 'facade', 'views', 'jquery.slimscroll', 'common/models/get-city',
+		//plugins
+		"qtip/qtip","text!qtip/qtip.css"],
 		function(require, menuTemplate) {
 
 			var MenuView, facade = require('facade'), views = require('views'), SectionView = views.SectionView, getCity = require('common/models/get-city');
@@ -81,6 +83,23 @@ define(
 				initialize : function(options) {
 					SectionView.prototype.initialize.call(this, options);
 					this.options = (options.options)?options.options:{};
+				},
+
+				bindToolTips: function(){
+
+					this.$el.find("a.restype").each(function(){
+						var $self = $(this);
+						$(this).qtip({
+						//	content: 'test of qtip',
+							position: {
+								my: "left center",
+								at: "right center"
+							},
+							style: {
+								classes: $self.data('tip-style')
+							}
+						});
+					});
 				},
 				
 				updateSearch : function(e) {
@@ -178,6 +197,8 @@ define(
 							clearInterval(trySlimscroll);
 						} catch(ex) {}
 					},1000);
+
+					this.bindToolTips();
 					
 					var data = this.model.toJSON();
 					// show option seleted
