@@ -126,16 +126,17 @@ define([
 		},
 
 		processStyle : function(){
+			var _self = this;
 			if(this.options.addClass != undefined && this.options.addClass.length){
 				_.each(this.options.addClass,function(cssclass){
 					console.log(cssclass);
-					$('#'+id).addClass(cssclass);
+					$('#'+_self.options.id).addClass(cssclass);
 				});
 			}
 
 			if(this.options.background_image){
 				console.log(this.options.background_image);
-				$('#'+id).css({
+				$('#'+this.options.id).css({
 					'background': 'url(' + this.options.background_image + ') no-repeat center center fixed #FFF',
 					'-webkit-background-size': 'cover',
 					'-moz-background-size': 'cover',
