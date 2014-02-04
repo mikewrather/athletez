@@ -70,11 +70,12 @@ define([
 			if(options.width){
 				$("#"+options.id).css({"width": options.width});
 
-				var added_width = parseInt($("#"+options.id).css('border-left'),10) +
-					parseInt($("#"+options.id).css('border-right'),10) +
+				var added_width = parseInt($("#"+options.id).css('borderLeftWidth'),10) +
+					parseInt($("#"+options.id).css('borderRightWidth'),10) +
 					parseInt($("#"+options.id).css('padding-left'),10) +
 					parseInt($("#"+options.id).css('padding-right'),10);
 
+				console.log(added_width);
 				var true_width;
 				if(options.width.indexOf('%') > 0)
 				{
@@ -84,6 +85,7 @@ define([
 				else true_width = (parseInt(options.width,10) + added_width);
 
 				if(options.width != "100%") {
+					console.log($(window).width(),true_width);
 					var l = ($(window).width()/2 - true_width/2)+"px";
 				} else {
 					var l = "0%";
@@ -94,8 +96,8 @@ define([
 			if(options.height) {
 				$("#"+options.id).css({"height": options.height});
 
-				var added_height = parseInt($("#"+options.id).css('border-top'),10) +
-					parseInt($("#"+options.id).css('border-bottom'),10) +
+				var added_height = parseInt($("#"+options.id).css('borderTopWidth'),10) +
+					parseInt($("#"+options.id).css('borderBottomWidth'),10) +
 					parseInt($("#"+options.id).css('padding-top'),10) +
 					parseInt($("#"+options.id).css('padding-bottom'),10);
 
@@ -144,6 +146,8 @@ define([
 					'background-size': 'cover'
 				});
 			}
+
+			$('#'+this.options.id).css({"margin":"0px"});
 
 			$('#'+this.options.id+ ' .close').attr("data-id",this.options.id);
 			$("#"+this.options.id).find(".modal-header-h").html(this.options.title);
