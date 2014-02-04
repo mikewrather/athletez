@@ -3023,10 +3023,10 @@ Form.editors.Location = Form.editors.Text.extend({
 					_self.$el.find('.address-error-status-h').addClass('hide');
 					_self.$el.find('.address-h').removeClass('address-field-error').addClass('address-verified');
 					_self.location.latitude = _self.adressModel.get("payload").lat;
-					_self.location.latitude = _self.adressModel.get("payload").lon;
+					_self.location.longitude = _self.adressModel.get("payload").lon;
 					_self.$el.find('.set-address-h').removeClass('link-disabled');
 					if(_self.map) {
-						var pos = new google.maps.LatLng(_self.adressModel.get("payload").lat, _self.adressModel.get("payload").lon);
+						var pos = new google.maps.LatLng(_self.location.latitude,_self.location.longitude);
 						_self.marker.setPosition(pos);
 						_self.map.panTo(pos);
 					} else {
