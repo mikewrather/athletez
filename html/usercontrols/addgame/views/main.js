@@ -188,8 +188,8 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 						label: "Time",
 						validators : [{
 							type : 'required',
-							message : 'Please enter time.'
-						}, /^(0?[1-9]|1[012])(:[0-5]\d)$/]
+							message : 'Please enter a time'
+						}, /^(0?[1-9]|1[012])(:[0-5]\d)?$/]
 					},
 					
 					'Day_light' : {
@@ -232,7 +232,7 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 							post_to_server	: true
 						}
 					},
-
+/*
 					'Sports' : {
 						type : 'DropDown',
 						showLable : false,
@@ -271,7 +271,7 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 							}
 						}
 					},
-
+*/
 					'Select_Team_1' : {
 						type : 'AutoComplete',
 						label: "Select Team 1",
@@ -281,7 +281,7 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 							serverKey: 'teamOneId',
 							serverDbField: 'teams_id',
 							defaultValue: '',
-							field_width:'400px',
+							field_width:'80%',
 							request_fields : [{
 									key : 'states_id',
 									value : _self.states_id
@@ -356,7 +356,7 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 					},
 					'team_1' : {
 						form_values: {
-							serverKey : "teanOne"
+							serverKey : "teamOne"
 						},
 						type : 'Radio',
 						options : ['Home', 'Away'],
