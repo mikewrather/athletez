@@ -77,8 +77,7 @@ define(["require", 'text!usercontrols/photo-player/templates/comments.html',
 				this.modelHTML = '<div id="photoPlayerModal" class="modal photo-frame-model hide fade model-popup-h">'+
 				'<div class="modal-body page-content-h">'+
 				'<div class="photo-player-area-h photo-player"></div>'+
-				'<div class="photo-player-right-area"><div class="right-area-header"><div class="headerinfo"></div><div class="closer">'+
-				'<button type="button" class="close" data-dismiss="modal" aria-hidden="true">	&times;</button></div></div><div class="teamName-area">'+
+				'<div class="photo-player-right-area"><div class="teamName-area">'+
 				'</div><div class="tags-area-h"></div>' +
 				'<div class="comment-area coment-area-h"></div><div class="comment-input-outer-h comment-input-outer" class="clearfix"></div>'+
 				'<div id="image-tagging-photo"></div>'+
@@ -143,33 +142,37 @@ define(["require", 'text!usercontrols/photo-player/templates/comments.html',
 		// set up photo player main view
 		setUpMainView : function() {
 			var self = this; 
-			if(self.collectionArray) {
-				var collectionInstance = Backbone.Collection.extend(), collection = new collectionInstance(); 
-				collection.reset(self._collection);
-			} else {
-				collection = self._collection;
-			}
-			
-			var photoPlayerMain = new PhotoPlayerView({
-				model : collection,
-				name : "photo player",
-				destination : ".photo-player-area-h",
-				index : self.index,
-				pageName: this.pageName,
-				pageId: this.pageId,
-				user_id : self.userId || null,
-				sports_id : self.sports_id || null,
-				scheme : this.scheme,
-				layout : this.layout
-			});
+		//	if(self.collectionArray) {
+		//		var collectionInstance = Backbone.Collection.extend(), collection = new collectionInstance(); 
+		//		collection.reset(self._collection);
+		//	} else {
+			//	self._collection.limit = undefined;
+			//	self._collection.offset = self._collection.length;				
+			///	self._collection.fetch({remove: false});
+			//	alert(self._collection.length);
+				//$.when(self._collection.request).done(function() {
+				//alert(self._collection.length);
+					var photoPlayerMain = new PhotoPlayerView({
+						model : self._collection,
+						name : "photo player",
+						destination : ".photo-player-area-h",
+						index : self.index,
+						pageName: self.pageName,
+						pageId: self.pageId,
+						user_id : self.userId || null,
+						sports_id : self.sports_id || null,
+						scheme : self.scheme,
+						layout : self.layout
+					});
 
-			var ppwidth = $(document).width(),
-			photosec = ppwidth-350;
-			$('#photoPlayerModal .photo-player-area-h').css({width:photosec+'px'});
-	//		console.log($('#photoPlayerModal .photo-player-area-h'));
-			
-			this.scheme.push(photoPlayerMain);
-			this.layout.render();
+					var ppwidth = $(document).width(),
+					photosec = ppwidth-350;
+					$('#photoPlayerModal .photo-player-area-h').css({width:photosec+'px'});
+			//		console.log($('#photoPlayerModal .photo-player-area-h'));
+					self.scheme.push(photoPlayerMain);
+					self.layout.render();
+			 // });
+		//	}
 		},
 		
 		setUpTagView: function(entity_id, id,uploader_id) {
@@ -221,8 +224,8 @@ define(["require", 'text!usercontrols/photo-player/templates/comments.html',
 			_self.commentson.id = id;
 			_self.commentson.fetch();
 			
-			//$(".coment-area-h").html();
 			$.when(_self.commentson.request).done(function () {
+				console.error(_self.commentson);
 				photoPlayer = new CommentSectionView({
 					collection : _self.commentson,
 					userId: _self.userId,
@@ -235,14 +238,11 @@ define(["require", 'text!usercontrols/photo-player/templates/comments.html',
 			});
 		},
 		
-		
 		setUpOthersView: function() {
 			
 		},
 		
-		setUpTagPhotoView : function(entity_id, id){
-      	//TagView      	
-  //    	var _self = this,
+		setUpTagPhotoView : function(entity_id, id) {
 			var self = this;
 			this.tagViewPhoto = new TagView({
 				model : new UserModel(),
@@ -255,36 +255,12 @@ define(["require", 'text!usercontrols/photo-player/templates/comments.html',
 			});
 				self.scheme.push(this.tagViewPhoto);
 				self.layout.render();
-			//this.scheme.push(this.tagViewPhoto);
-			//this.layout.render();
       },
-      tagFunction : function(data){
-      	// alert("this is tag finish function from basic.js");
-      	var self = this;
-      	alert(JSON.stringify(data));
-      	// this.tagCollection.push(data);
-      	// var index = 0;
-      	// var selectedImages = $(".previewimg.selected");
-      	// console.log("selected",selectedImages);
-      	// for(var key in data){
-      		// self.tagData[key] = self.tagData[key] || [];
-//       		
-      		// //for(var k in data[key]){
-      			// self.tagData[key].push(data[key]);
-      		// //}
-      		// //debugger;
-      		// index = self.tagData[key].length - 1;
-      		// if(key == self.const.Game){
-      			// selectedImages.attr('gameIndex' , index);
-      		// }
-      		// else if(key == self.const.Team){
-      			// selectedImages.attr('teamIndex' , index);
-      		// } 
-      		// else if(key == self.const.User){
-      			// selectedImages.attr('userIndex' , index);
-      		// }
-// 
-      	}
+      
+      tagFunction : function(data) {
+	      	var self = this;
+	      	alert(JSON.stringify(data));
+      }
 	});
 	return PhotoPlayerController;
 

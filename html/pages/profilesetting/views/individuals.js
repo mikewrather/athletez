@@ -153,17 +153,12 @@ define(['require',
 			}
 		List.type = "get";
 		List.fetch();
-
 			$.when(List.request).done(function() {
-				
-				if (List.isError())
-					return;
-
+				if (List.isError()) return;
 				var models = List.toJSON();
 				if (models == null || models.length < 1){
 					return;
 				}
-				
 				self.sports = [];
 				for (var key in models) {
 					self.sports.push(models[key].payload);
@@ -171,8 +166,7 @@ define(['require',
 				// Sort Sports According To The Names, false because the result required in asc form
 				self.sort(self.sports,'sport_name',false);
 				var markup = Mustache.to_html(sportsCheckboxes, {sports: self.sports});
-            	self.$(self.controls.sportslist).html(markup);
-            	
+            	self.$(self.controls.sportslist).html(markup);            	
             	self.setUpUsersSportsCheck();
 			});
 		},

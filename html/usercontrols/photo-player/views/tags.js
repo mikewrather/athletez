@@ -28,8 +28,22 @@ function(facade, vendor,  utils, views) {
         _view: TagItemView,
 		template: tagListTemlate,
 		events: {
-			'click .see-more-h': 'seeMore'
+			'click .see-more-h': 'seeMore',
+			"click .photo-player-detail-arrow": "toggleDetail"
 		},
+		
+		toggleDetail: function(e) {
+			if($(e.currentTarget).hasClass("down-arrow-photoplayer")) {
+				$(e.currentTarget).removeClass("down-arrow-photoplayer");
+				$(e.currentTarget).addClass("up-arrow-photoplayer");
+				this.$el.find("#tags-list").slideDown();
+			} else {
+				$(e.currentTarget).removeClass("up-arrow-photoplayer");
+				$(e.currentTarget).addClass("down-arrow-photoplayer");
+				this.$el.find("#tags-list").slideUp();
+			}
+		},
+		
 		// render list template
 		renderTemplate: function () {
             var markup = Mustache.to_html(this.template);
