@@ -345,46 +345,33 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
             routing.on('fbInvite', function(id, options) {
             	self.showFBInviteOnPopup(id, options);
             });
-            
+
             routing.off('popup-close');
             routing.on('popup-close', function(e) {
+	            console.log(e);
             	if(e) {
 	            	$(e.currentTarget).modal('hide');
-   		         	$(e.currentTarget).unbind().remove();            		
+   		         	$(e.currentTarget).unbind().remove();
+		            $('.modal-backdrop').unbind().fadeOut();
             	} else {
 	            	$("#modalPopup").modal('hide');
-   		         	$("#modalPopup").unbind().remove();				            		
+   		         	$("#modalPopup").unbind().remove();
+		            $('.modal-backdrop').unbind().fadeOut();
             	}
-            	routing.trigger('common-popup-close');
             });
-            
+
+
             routing.off('common-popup-open');
             routing.on('common-popup-open', function(options) {
 	            var popupView = require('packages/common/views/popup'),
 		            popup = new popupView(options);
             });
-            
-            routing.off('common-popup-close');
-            routing.on('common-popup-close', function(e) {
-				$(".common-modal:not(#Browser-detect)").remove();
-  				if(!$(".common-modal").length) $(".modal-backdrop").remove();
-            });
-            
+
             $(document).off('hidden.bs.modal', '#modalPopup, #photoPlayerModal');
             $(document).on('hidden.bs.modal', '#modalPopup, #photoPlayerModal', function (e) {
   				routing.trigger('popup-close', e);
 			});
-            
-            $(document).off('.common-modal .close');
-            $(document).on('click', '.common-modal .close', function (e) {
-  				var id = $(e.currentTarget).data("id");
-  				$("#"+id).remove();
-  				if(!$(".common-modal").length) {
-  					$(".modal-backdrop").remove();
-  				}
-  				//routing.trigger('popup-close', e);
-			});
-            
+
             // initialize add game popup common trigger 
             routing.off('add-game');
             routing.on('add-game', function(id,teams_id,sports_id,users_id, callback) {
@@ -842,7 +829,8 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
             base_url + "css/bootstrap-responsive.css",
             base_url + "css/app.css",
             base_url + "css/common.css",
-            base_url + 'css/jquery-ui-1.10.2.custom.css']);
+            base_url + 'css/jquery-ui-1.10.2.custom.css',
+            base_url + 'css/form-fields.css']);
         },
 
         // Pub / Sub

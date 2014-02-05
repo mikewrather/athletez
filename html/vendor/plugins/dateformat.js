@@ -37,7 +37,7 @@ define(function(){
 
 			// Passing date through Date applies Date.parse, if necessary
 			date = date ? new Date(date) : new Date;
-			if (isNaN(date)) throw SyntaxError("invalid date");
+			if (isNaN(date)) console.error(this);
 
 			mask = String(dF.masks[mask] || mask || dF.masks["default"]);
 

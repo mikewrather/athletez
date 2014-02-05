@@ -129,10 +129,9 @@ function(require, gameHeaderTemplate) {
 		        routing.trigger('showSignup');
 		        return;
 	        }
-
 	        var options = {
 		        height : "500px",
-		        width : "50%",
+		        width : "500px",
 		        html : '<div id="editGameForm"></div>',
 		        title : "Edit Game Info"
 	        };
@@ -146,9 +145,11 @@ function(require, gameHeaderTemplate) {
 
 		drawEditGameForm: function(){
 
-			var _self = this;
-			var gDate = new Date(_self.model.get("payload").gameDay + " " + _self.model.get("payload").gameTime);
+			var _self = this,
+				dateStr = _self.model.get("payload").time_as_int,
+				gDate = new Date(dateStr);
 
+			console.log(dateStr,gDate);
 
 			var formData = new FormComponent({
 					'date' : {
@@ -341,7 +342,8 @@ function(require, gameHeaderTemplate) {
 						type : 'Button',
 						fieldClass: "button-field",
 						attr : {
-							'value' : 'Cancel'
+							'value' : 'Cancel',
+							'class' : 'cancel-btn'
 						},
 						onClick : function() {
 							routing.trigger('common-popup-close');
@@ -354,56 +356,7 @@ function(require, gameHeaderTemplate) {
 			this.formValues = formData.formValues;
 
 		},
-        
-        showLocation: function() {
-        	routing.trigger('show_location', this.location.lat, this.location.lon, '.view-map-h', function() {
-        	});
-        },
-/*
-        setLocation: function(e) {
-			var r = confirm("Are you sure want to set new address?");
-			if(r) {
-				if(this.locationId) {
-					var model = new saveLocation();
-					model.id = this.game_id;
-					model.set({locations_id: this.locationId, id: this.game_id});
-					model.save();
-					$.when(model.request).done(function(){		
-						routing.trigger("popup-close");
-					});
-				}
-			}
-		},
 
-        verifyAddress: function() {
-			var _self = this, address = _self.$el.find('.address-h').val();
-			_self.adressModel = new verifyAddress();
-			_self.adressModel.address = address;
-			_self.adressModel.url();
-			_self.adressModel.set({address: address});
-			_self.adressModel.showError = function(model, error) {
-				try {
-					_self.$el.find('.set-address-h').addClass('link-disabled');
-					_self.$el.find('.address-error-status-h').removeClass('hide').html(error.responseJSON.exec_data.error_array[0].error);
-				} catch(e) {}
-				_self.$el.find('.address-h').addClass('address-field-error').removeClass('address-verified');
-			};
-			_self.adressModel.save({dataType:"json"});
-			_self.$el.find('.address-h').removeClass('address-verified');
-			$.when(_self.adressModel.request).done(function() {
-				console.log(_self.adressModel.toJSON());
-				_self.locationId = _self.adressModel.get("payload").id;
-				if(_self.locationId) {
-					_self.$el.find('.address-error-status-h').addClass('hide');
-					_self.$el.find('.address-h').removeClass('address-field-error').addClass('address-verified');
-					_self.location.lon = _self.adressModel.get("payload").lon;
-					_self.location.lat = _self.adressModel.get("payload").lat;
-					_self.showLocation();
-					_self.$el.find('.set-address-h').removeClass('link-disabled');
-				}
-			});
-		},
-        */
         editObject: function() {
         	alert("Coming soon");
         },
@@ -415,73 +368,7 @@ function(require, gameHeaderTemplate) {
         gameEditBtn: function() {
         	this.$el.find('.update-date-time-h').removeClass('hide');
         },
-/*
-		tags : {
-			rgxTime : /^(0?[1-9]|1[012])(:[0-5]\d)$/,
-			rgxTimeWhole : /^(0?[1-9]|1[012])$/
-		},
 
-		formatDate: function(date,time,ampm)
-		{
-			var newDate = $.datepicker.formatDate('yy-mm-dd',date);
-			try{
-				var array = time.split(':');
-
-				console.log(array);
-				if(array.length==1) time += ":00";
-				time += " " + ampm;
-
-				newDate += " " + time;
-				return newDate;
-
-			}catch(ex){
-				return false;
-			}
-		},
-
-        updateDateTime: function(e) {
-        	e.preventDefault();
-
-	        var isDataValid = true,
-		        self=this,
-	            date = $(this.el).find('.txt-game-date_h').datepicker('getDate'),
-		        timeText = $(this.el).find('.txtTime').val(),
-	            ampm = $(this.el).find('#hdn_time-period_h').val();
-
-	        var isDataValid=true;
-	        if (!date || !timeText) {
-		        $(self.destination).find(".section-game-date_h").find('.field-message_h').html("Please Se").fadeIn();
-		        isDataValid = false;
-	        }else{
-		        var validTime = timeText.match(self.tags.rgxTime) || timeText.match(self.tags.rgxTimeWhole);
-		        console.log("orginal date",date);
-		        console.log("orginal time",timeText);
-		        console.log("ampm",ampm);
-		        if(!validTime){
-			        console.log("NOT VALID");
-			        $(self.el).find(".section-game-date_h").find('.field-message_h').html(self.messages.selectValidTime).fadeIn();
-			        isDataValid = false;
-		        }else{
-			        $(self.el).find(".section-game-date_h").find('.field-message_h').html('').fadeOut();
-			        date = this.formatDate(date,timeText,ampm);
-			        if(!date) isDataValid = false;
-		        }
-	        }
-	        console.log("new date",date);
-
-	        var event_name = $(self.el).find('#event_name').val();
-        	var _self = this, model = new saveLocation();
-			model.id = this.model.id;
-	        console.log(model,event_name);
-			model.set({'game_datetime': date, 'locations_id': this.locationId, id: this.model.id, event_name:event_name});
-			model.save();
-
-        	$.when(model.request).done(function() {
-
-        		_self.updateHeaderData(model.id);
-        	});
-        },
-        */
         // update header data
         updateHeaderData: function(id) {
         	var _self = this;

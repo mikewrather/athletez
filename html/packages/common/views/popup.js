@@ -28,6 +28,7 @@ define([
 	return BaseView.extend({
 
 		options: {},
+		forceFullScreen : false,
 
 		initialize : function(options){
 
@@ -40,35 +41,79 @@ define([
 			else
 				this.options.id = options.id;
 
-			if(options.fullPage) options.addClass.push("full-page-modal");
+			this.options.addClass = options.addClass || [];
+
+			if(options.fullPage) this.options.addClass.push("full-page-modal");
 
 			this.options.title = options.title || "";
 			this.options.width = options.width || "50%";
 			this.options.height = options.height || "50%";
 			this.options.popup_content = options.html || "<div></div>";
 
-			this.render();
-			this.processDimensions();
+			this.forceFullScreen = document.documentElement.clientWidth < parseInt(this.options.width) ? true : false;
 
-
-	/*		if(_.isUndefined(options.slimScroll) || !options.slimScroll) {
-				$("#"+id).find('#modalBody').slimScroll({
-					height:(options.height)?options.height:'400px',
-					railVisible:true,
-					allowPageScroll:true,
-					disableFadeOut:true
-				});
+			// if we are forcing a full screen popup then we delete borders
+			if(this.forceFullScreen) {
+				this.options.addClass.push("noBorder");
+				this.options.width = "100%";
+				this.options.height = "100%";
 			}
-			*/
 
-			this.processStyle();
+			this.render();
+
+			var self = this, count=0;
+			var timer = setTimeout(function(){
+				count++;
+				if($('#'+ self.options.id).length){
+
+					clearInterval(timer);
+
+					if(routing.popups === undefined) routing.popups = [];
+					// add this to the array
+					routing.popups.push($('#'+ self.options.id));
+
+					self.processDimensions();
+					self.processStyle();
+					self.bindClose();
+
+				} else if(count>=20){
+					clearInterval(timer);
+				}
+			},200);
+
 			Channel('popup-finished-launch-' + this.options.id).publish();
+		},
+
+		bindClose: function(){
+			var self = this;
+
+			routing.off('common-popup-close');
+			routing.on('common-popup-close',function(e){
+
+				if(routing.popups.length){
+					var $thisPopup = routing.popups.shift();
+					$thisPopup.modal("hide").remove();
+				}
+				if(!$(".common-modal").length) $(".modal-backdrop").fadeOut().remove();
+			});
+
+			$('#'+this.options.id).find('.close').on('click',function(e){
+				routing.trigger('common-popup-close');
+			});
+
+			$('.modal-backdrop').off('click');
+			$('.modal-backdrop').on('click', function (e) {
+				routing.trigger('common-popup-close');
+			});
 		},
 
 		processDimensions: function(){
 			var options = this.options;
 			if(options.width){
-				$("#"+options.id).css({"width": options.width});
+
+				$("#"+options.id).css({
+					"width": this.forceFullScreen ? "100%" : options.width
+				});
 
 				var added_width = parseInt($("#"+options.id).css('borderLeftWidth'),10) +
 					parseInt($("#"+options.id).css('borderRightWidth'),10) +
@@ -94,7 +139,7 @@ define([
 			}
 
 			if(options.height) {
-				$("#"+options.id).css({"height": options.height});
+				$("#"+options.id).css({"height": this.forceFullScreen ? "100%" : options.height});
 
 				var added_height = parseInt($("#"+options.id).css('borderTopWidth'),10) +
 					parseInt($("#"+options.id).css('borderBottomWidth'),10) +
@@ -124,11 +169,11 @@ define([
 		render: function(){
 			var html = _.template(popupTemplate,{popup:this.options});
 			$("body").append(html);
-
 		},
 
 		processStyle : function(){
 			var _self = this;
+
 			if(this.options.addClass != undefined && this.options.addClass.length){
 				_.each(this.options.addClass,function(cssclass){
 					console.log(cssclass);

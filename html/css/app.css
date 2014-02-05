@@ -1697,29 +1697,28 @@ div[data-error]:empty{
 	max-width: none;
 }
 
-/*  Add Game Css  */
-.date-picker-field {
-	width: 100px;
-}
-
-.time-picker-field {
-	width: 50px;
-}
-
-.ampm-field {
-	width: 80px;
-}
 
 .input-field {
 	margin-right: 10px;
+
 }
 
 .input-field input {
 	width: 90%;
+
 }
 
+.input-field input[type="submit"],.input-field input[type="button"]{
+    width: 100%;
+    color: white;
+    font-size: 1.2em;
+    padding:5px;
+}
+
+
+
 .button-field {
-	width: 100px;
+	width: auto;
 }
 
 .input-field .dropdown-wrapper {

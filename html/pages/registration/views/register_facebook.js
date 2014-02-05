@@ -203,7 +203,7 @@ define(['require', 'text!registration/templates/register_facebook.html', 'backbo
 				success : function(msg) {
 					$('#RegModal').modal('hide');
 					if (_self.callback && _.isFunction(_self.callback)) {
-						routing.trigger('common-popup-close');
+						routing.trigger('popup-close');
 						_self.callback(function() {
 							window.location.reload();
 						});

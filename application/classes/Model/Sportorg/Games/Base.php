@@ -234,13 +234,17 @@ class Model_Sportorg_Games_Base extends ORM
 			"teams" => 'get_game_teams',
 			"game_location" => 'get_game_location',
 			"shared" => 'get_shared_info',
-			'can_follow' => 'can_follow'
+			'can_follow' => 'can_follow',
+			'time_as_int' => 'getTimeAsInt'
 		),
 
 		// array of values only.  Each value is the name of a column to exclude
 		'exclude_columns' => array(),
 	);
 
+	public function getTimeAsInt(){
+		return date("M d, Y H:i:s",strtotime($this->gameDay." ".$this->gameTime));
+	}
 	public function get_game_sports_id()
 	{
 		$teams = $this->teams->find_all();

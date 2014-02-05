@@ -2107,7 +2107,7 @@ return;
 
   //STATICS
   template: _.template('\
-    <form data-fieldsets></form>\
+    <form data-fieldsets class="autoform"></form>\
   ', null, this.templateSettings),
 
   templateSettings: {
@@ -2989,7 +2989,7 @@ Form.editors.Location = Form.editors.Text.extend({
   template: '<textarea placeholder="Address" class="location-h address-h" rows="3" cols="25"><%= address %></textarea>\
 			 <span class="address-error hide address-error-status-h"></span>\
 			 <a href="javascript: void(0);" class="verify-address-h">Verify Address</a>\
-			 <div id="<%= map_id %>" style="width: 90%; height: 300px; margin-top: 40px; display: none;"></div>',
+			 <div id="<%= map_id %>" style="width: 97%; height: 250px; margin-top: 20px; display: none;"></div>',
 
   events: {
 	'click .verify-address-h': 'verifyAddress',
