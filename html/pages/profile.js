@@ -85,7 +85,6 @@ define([
 			initialize: function (options) {
 				this.callbackcount = 1;
 				var self = this;
-				debug.log("start initialize");
 				Channel('load:css').publish(cssArr);
 				_.bindAll(self);
 				self.handleOptions(options);
@@ -162,15 +161,19 @@ define([
 					controller.images.targetElement = "#image-wrap";
 					controller.ajaxCalls.push(controller.images.fetch());					
 					controller.handleDeferredsDynamic();
-									
+					
+					refreshFans(sport_id);
 				}
 
-				function refreshFans() {
+				function refreshFans(sport_id) {
 					controller.fans = new FansImageList();
 					controller.fans.id = controller.id;
+					controller.fans.sport_id = sport_id;
+					controller.fans.targetElement = "#fans-div";
 					controller.fans.fetch();
 					$.when(controller.fans.request).done(function (x) {
 						if (controller.fansListView) {
+							var position;
 							$(controller.fansListView.destination).html('');
 							position = $.inArray(controller.fansListView, controller.scheme);
 							if (~position) controller.scheme.splice(position, 1);
@@ -228,16 +231,11 @@ define([
 					controller.setupFitnessBasicListView();
 				});
 
-				//$.when(this.videos.request).done(function () {
-				//	controller.setupVideoListView();
-				//});
-				
 				$.when(this.fans.request).done(function (x) {
 					controller.setupFansListView();
 				});
 
 				$.when(this.images.request).done(function (x) {
-					console.log("Images Ready (called in profile.js handleDeferredDynamic)",x);
 					controller.setupImageListView();
 				});
 			},

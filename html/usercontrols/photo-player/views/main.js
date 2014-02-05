@@ -50,11 +50,13 @@ define(['require',
 			'click .photo-player-vote-h' : 'vote',
 			'click .share-on-h' : 'shareOn',
 			'click .photo-player-tag-photo-h' : 'setUpTagPhotoView',
-			'click .photo-player-tag-myself-h' : 'TagMyself'
+			'click .photo-player-tag-myself-h' : 'TagMyself',
+			'click .toggle-thumbs-h': 'toggleThumbsSection'
 		},
 
 		/*initialize gets called by default when constructor is initialized*/
 		initialize : function(options) {
+			var _self = this;
 			this.collection = options.collection;
 			this.setOptions(options);
 			this.id = options.id;
@@ -66,16 +68,43 @@ define(['require',
 			this.setUpMainView();
 			this.json = this.model.toJSON();
 			this.render();
+			
 			this.initThumbsSection();
 			this.loadImage(true);
+			this.updateAllImagesCount();
+			this.model.on("change", function() {
+				alert("change");
+				_self.json = _self.model.toJSON();
+				_self.updateAllImagesCount();
+			});
+			
+			this.model.limit = undefined;
+			this.model.offset = this.model.length;				
+			this.model.fetch({remove: false});
+
 			Channel('tag-image-success-photo').empty();
 			Channel('tag-image-success-photo').subscribe(this.tagFunction);
+		},
+		
+		toggleThumbsSection: function(e) {
+			if(this.$el.find(".thumbs-outer").css("display") == "none") {
+				$(".loading_image, .photo-player-right-area").addClass("minimizeOpacity");
+				this.$el.find(".thumbs-outer").slideDown();				
+			} else {
+				this.$el.find(".thumbs-outer").slideUp();				
+				$(".loading_image, .photo-player-right-area").removeClass("minimizeOpacity");
+			}
+
+		},
+		
+		updateAllImagesCount: function() {
+			//alert("here");
+			this.$el.find(".total-image-count-h").text(this.json.length);
 		},
 
 		vote : function(e) {
 			console.log("vote", this.json);
 			if ($(e.currentTarget).hasClass('voted')) return;
-			
 			var _self = this, vote = new voteModel();
 			vote.userId = this.json[this.index].payload.id;
 			vote.entity_id = this.json[this.index].payload.enttypes_id;
@@ -107,8 +136,6 @@ define(['require',
 		
 		twitter: function() {
 			var data = this.getShareData();
-			
-			
 			var options = {
 				'link': this.getLink(data),
 				'name': data.User.name + " - " + data.Sport.sport_name,
@@ -384,7 +411,7 @@ define(['require',
 				}
 				data.data.push(extra);
 			}
-			this.id = extra._id;
+			this.id = (extra)?extra._id:undefined;
 			
 			var markup = Mustache.to_html(this.thumbTemplate, data);
 			this.$el.find('.thumb-image-list-h').html(markup);
@@ -448,7 +475,6 @@ define(['require',
 		},
 
 		loadImage : function(trigger) {
-			
 			var $videoContainer = $('div#video_container'),
 			$loadingImage = $('div.loading_image');
 			if (!$videoContainer.hasClass('hidden')) $videoContainer.addClass('hidden');
@@ -462,7 +488,7 @@ define(['require',
 				_currentIndex : _self.index
 			};
 			
-
+			_self.$el.find(".current-image-number-count-h").text(parseInt(_self.index) + 1);
 			if (_self.index >= this.json.length - 1) {
 				this.$el.find('.next-arrow-h').addClass('disable-arrow-link');
 			} else {
@@ -515,7 +541,6 @@ define(['require',
 					};
 					for (var i = 0; i < teamLength; i++) {
 						team_str += '<span>';
-
 						team_str += ucwords(mpay.teams[i].team_name);
 						team_str += '</span>';
 						if (i + 1 < mpay.teams.length)
@@ -526,15 +551,16 @@ define(['require',
 					extra._sublabel = team_str;
 					break;
 			}
+			
+			if(extra && extra._label) _self.$el.find(".image-message-h").text(extra._label);
 
 			if (image_object != "undefined" && image_object != null) {
 				var self = this, loading_div = this.$el.find('div.loading_image');
 				loading_div.css('opacity', '0');
 				function showImage(event) {
 					var self = event.data.self, image_object = event.data.image_object, totalheight = parseInt(self.$el.height()) * .8, image_height = parseInt(image_object.height) >= 380 ? parseInt(image_object.height) : 380;
-
 					if (image_object.width > image_object.height || image_object.width == image_object.height) {
-						var top = totalheight < image_height ? 10 : (totalheight - image_height) / 2;
+						var top = totalheight < image_height ? 60 : (totalheight - image_height) / 2;
 						event.data.el.css({
 							'max-width' : '100%',
 							'top' : top + 'px'
@@ -557,7 +583,6 @@ define(['require',
 
 
 				loading_div.find('.large-image-h').attr("data-id", extra._media_id);
-
 				loading_div.find('.large-image-h').attr('src', image_object.url).on('load', {
 					'el' : loading_div,
 					'self' : this,

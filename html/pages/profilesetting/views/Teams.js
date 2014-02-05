@@ -52,8 +52,6 @@ define(['require', 'text!profilesetting/templates/teamlist.html', 'facade', 'vie
 
 		/*Returns the consolidated data to bind with template */
 		GetData : function() {
-			//			console.log("sports_club",self.sports_club);
-			//		console.log("Teams View Self El",self.el)
 			var self = this;
 			var payload = {
 				user_id : self.user_id,
@@ -64,15 +62,12 @@ define(['require', 'text!profilesetting/templates/teamlist.html', 'facade', 'vie
 			teamsCollection.sports_club = this.sports_club;
 			teamsCollection.org_type = this.org_type;
 			
-			console.log("Team Request Abort Request Function");
 			self.teamFetchRequest = self.abortRequest(self.teamFetchRequest);
 			var tempCollection = teamsCollection.fetch();
 			self.teamFetchRequest.push(tempCollection);
 
-
 			$.when(teamsCollection.request).done(function() {
-				if (teamsCollection.isError())
-					return;
+				if (teamsCollection.isError()) return;
 
 				var models = teamsCollection.toJSON();
 				if (models.length) {
@@ -80,7 +75,7 @@ define(['require', 'text!profilesetting/templates/teamlist.html', 'facade', 'vie
 					for (var i = 0; i < models.length; i++) {
 						d.push(models[i].payload);
 					}
-
+					console.error(d);
 					self.Teams = models;
 					var markup = Mustache.to_html(self.template, {
 						orgs : d

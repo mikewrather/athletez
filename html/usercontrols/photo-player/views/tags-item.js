@@ -138,7 +138,7 @@ function (
 	        var timer = setInterval(function(){
 		        if (self.$el.find('.tag-image-container').width()>0) {
 			        self.$el.find('.tag-image-container').css({
-				        'height':self.$el.find('.tag-image-container').width()
+				        'height':'33px'//self.$el.find('.tag-image-container').width()
 			        });
 			        console.log(self.$el.find('.tag-image-container').width());
 			        clearInterval(timer);

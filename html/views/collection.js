@@ -97,7 +97,6 @@ define(['facade','views/base','utils'], function (facade, BaseView, utils) {
         // Creates a new view for models added to the collection
         add : function(model) {
             var view;
-            
             view = new this._view({
                 "tagName": this._tagName,
                 "model": model,

@@ -16,7 +16,8 @@ function(facade, MediaImageList, utils) {
         url: function() {
             if (testpath)
                 return testpath + '/user/media/' + this.id + '/' + this.sport_id;
-            return '/api/user/media/' + this.id + '?limit='+this.limit+'&offset='+this.offset+'&sport_id=' + this.sport_id;
+                var limit = (this.limit)?'&limit='+this.limit:"";
+            return '/api/user/media/' + this.id + '?offset='+this.offset+limit+'&sport_id=' + this.sport_id;
           //return '/api/user/media/' + this.id +'?sport_id=' + this.sport_id;
         }
     });

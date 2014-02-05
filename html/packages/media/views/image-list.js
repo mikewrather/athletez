@@ -83,8 +83,6 @@ function(facade,  views,   utils,   ImageItemView,            ImageBoardView,   
 			});
 	    },
 		
-		
-		
 		drop: function(event) {
 			var _self = this;
 			event.stopPropagation();
@@ -127,7 +125,6 @@ function(facade,  views,   utils,   ImageItemView,            ImageBoardView,   
 	    },
 
         initialize: function(options) {
-        	
         	for(var i in options) {
         		this[i] = options[i]; 
         	}
@@ -162,7 +159,6 @@ function(facade,  views,   utils,   ImageItemView,            ImageBoardView,   
             this.addSubscribers();
             this.setupBoardView();
         	this.setupAddView();
-			
 			if(_self.media_id) {
 				setTimeout(function() {
 					if(_self.allData) {
@@ -178,10 +174,17 @@ function(facade,  views,   utils,   ImageItemView,            ImageBoardView,   
         },
         
         initPhotoPlayer: function(e) {
-			var index = ($(e.target).parents('li').index()), addLiCount = ($("#add-media").length)?1:0; 
+			var _self = this, limit = _self.collection.limit, index = ($(e.target).parents('li').index()), addLiCount = ($("#add-media").length)?1:0; 
 			index -= addLiCount;
 			if(index< 0) index = 0;
-       		routing.trigger('photo-player-init', index, this.allData, this.user_id, true,  this.pageName, this.target_id);
+			
+			_self.collection.offset = 0;//+= _self.collection.limit;
+			_self.collection.limit = undefined;
+	        _self.collection.fetch({remove: false});
+	        $.when(_self.collection.request).done(function() {
+ 	      		routing.trigger('photo-player-init', index, _self.collection, _self.user_id, true,  _self.pageName, _self.target_id);
+				_self.collection.limit = limit;
+	        });
        	},
 
         seeMore: function(e) {

@@ -1,285 +1,311 @@
 .photo-frame-model {
-    width: 100% !important;
-    height:100%;
-    top: 0 !important;
-    left:0 !important;
-    margin: 0 !important;
-    border-radius: 0; -webkit-border-radius: 0; -moz-border-radius: 0;
-    padding: 0;
-    border:none !important;
+	width: 100% !important;
+	height: 100%;
+	top: 0 !important;
+	left: 0 !important;
+	margin: 0 !important;
+	border-radius: 0;
+	-webkit-border-radius: 0;
+	-moz-border-radius: 0;
+	padding: 0;
+	border: none !important;
 }
 
 .photo-frame-model .modal-body {
-    height: 100%;
-    width: 100%;
-    max-height: 100% !important;
-    padding: 0 !important;
+	height: 100%;
+	width: 100%;
+	max-height: 100% !important;
+	padding: 0 !important;
 }
 
-
 .photo-frame-model .comment .user-photo img {
-    margin-top: 0px !important;
+	margin-top: 0px !important;
 }
 
 .comment-input-outer #new-comment {
-    height: 30px;
+	height: 30px;
 }
 
 .comment-input-outer form {
-    display: block !important;
+	display: block !important;
 }
 
 .comment-input-outer .add-comment-h {
-    display: none;
+	display: none;
 }
 
 .photo-player {
-    float: left;
- /*   width: 70%; */
-    height: 100%;
+	float: left;
+	/*   width: 70%; */
+	height: 100%;
 }
-.photo-player > div{
-    height: 100%;
+.photo-player > div {
+	height: 100%;
 }
 
 .photo-player-right-area {
-    float: left;
-    height: 100%;
-    overflow-y: auto;
-    /*padding-left: 2%;*/
-    width: 350px;
-    min-width: 350px;
+	float: left;
+	height: 100%;
+	overflow-y: auto;
+	/*padding-left: 2%;*/
+	width: 350px;
+	min-width: 350px;
 }
 
-.photo-player-right-area .right-area-header{
-    height:40px;
-    background-color: #989899;
-    width:100%;
-    margin-bottom:20px;
+.photo-player-right-area .right-area-header {
+	height: 40px;
+	/*background-color: #989899;*/
+	width: 100%;
+	margin-bottom: 20px;
 }
 
 .comment-area, .photo-frame-model #comment_div {
-    /*width: 90%;
-    float: right;*/
+	/*width: 90%;
+	 float: right;*/
 }
 
 .photo-player-coment {
-    float: left;
-    width: 100%;
+	float: left;
+	width: 100%;
 }
 
 .photo-player-coment .user-photo {
-    width: 24px;
-    height: 24px;
-    float: left;
+	width: 24px;
+	height: 24px;
+	float: left;
 }
 
 .photo-player-coment .content {
-    float: left;
-    padding-left: 10px;
+	float: left;
+	padding-left: 10px;
 }
 
 .photo-frame-model li.comment {
-    background: #CCCCCC;
-    display: block;
+	background: #CCCCCC;
+	display: block;
 }
-
-
 
 .image-bg {
-    text-align: center;
-    background: #333;
-    height:100%;
-    position: relative;
+	text-align: center;
+	background: #000;
+	height: 100%;
+	position: relative;
 }
 
-div.image-controls{
-    position: absolute;
-    width: 100%;
-    height: 100%;
+div.image-controls {
+	position: absolute;
+	width: 100%;
+	height: 100%;
 }
 
-div.right-arrow-container, div.left-arrow-container{
-/*    height:100%;
-    position: relative;
-    vertical-align: middle;
-    text-align: center;
-  */
-    width:20%;
-    z-index: 10000;
+div.right-arrow-container, div.left-arrow-container {
+	/*    height:100%;
+	 position: relative;
+	 vertical-align: middle;
+	 text-align: center;
+	 */
+	width: 20%;
+	z-index: 10000;
 }
 
-div.right-arrow-container{
-    right:0px;
-
+div.right-arrow-container {
+	right: 0px;
 }
 
-div.left-arrow-container{
-    left:0px;
+div.left-arrow-container {
+	left: 0px;
 }
 
 div.right-arrow-container > img, div.left-arrow-container > img {
-    display: block;
-    position: relative;
-    top:40%;
-    margin-top:-25px;
+	display: block;
+	position: relative;
+	top: 40%;
+	margin-top: -25px;
 }
 
-div.left-arrow-container > img{
-    margin-left:50px;
-    float: left;
+div.left-arrow-container > img {
+	margin-left: 50px;
+	float: left;
 }
 
-div.right-arrow-container > img{
-    margin-right:50px;
-    float: right;
+div.right-arrow-container > img {
+	margin-right: 50px;
+	float: right;
 }
 
 .images-list {
 	padding: 0px 10px;
 	margin: 0;
-    float: left;
+	float: left;
 }
 
 .thumbs-outer {
-    z-index: 1056;
-    max-width: 100%;
-    margin-top: 5px;
-    height: 130px;
-    overflow-x: scroll;
-    overflow-y: hidden;
-    position: absolute;
-    bottom:0px;
+	z-index: 1056;
+	max-width: 100%;
+	margin-top: 5px;
+	height: 300px;
+	background: rgba(0, 0, 0, 0.5);
+	overflow: hidden;
+	position: absolute;
+	bottom: 70px;
+	display: none;
+	color: #FFF;
+}
+
+.thumbs-outer a {
+	color: #FFF;
+	text-decoration: none;
+}
+
+.thumbs-outer a:hover {
+	text-decoration: underline;
+}
+
+.thumbs-header {
+	padding: 2%;
+	float: left;
+	width: 96%;
 }
 
 .thumbs-inner {
-    width: 10000px;
+	width: 100%;
+	overflow-x: hidden;
+	overflow-y: auto;
+	height: 250px;
 }
 
-.thumbs-inner .images-list ul{
-    height: 150px;
+.thumbs-inner .images-list ul {
+	height: 150px;
 }
+
 .thumbs-inner .images-list li {
-    position: relative;
-    margin: 1px;;
-    float: left;
-    display: block;
-    margin-right: 5px;
-    opacity: 0.5;
-    width: 110px;
-    height: 110px;
-    overflow:hidden;
+	position: relative;
+	margin: 1px;;
+	float: left;
+	display: block;
+	margin-right: 5px;
+	width: 107px;
+	height: 110px;
+	overflow: hidden;
+}
+
+.minimizeOpacity {
+	opacity: 0.5 !important;
 }
 
 .thumbs-inner .images-list li:hover {
-    opacity: .9;
+	opacity: .9;
 }
 
 .thumbs-inner .images-list li img {
-    min-width: 100%;
-    min-height: 100%;
-    position: relative;
+	min-width: 100%;
+	min-height: 100%;
+	position: relative;
 }
 
-
 .thumbs-inner .images-list li.selected-photo-thumb {
-    opacity: 1;
-    border:1px solid #FFF;
-    margin: 0;
+	opacity: 1;
+	border: 1px solid #FFF;
+	margin: 0;
 }
 
 .image-actions {
-    position: absolute;
-    top: 30px;
-    left: 50px;
-    z-index: 10000;
+	position: absolute;
+	top: 10px;
+	left: 150px;
+	z-index: 10000;
 }
 
 .image-actions li {
-    padding: 5px;
-    background: #CCC;
-    float: left;
-    margin-left: 5px;
+	padding: 5px;
+	/*background: #CCC;*/
+	float: left;
+	line-height: 30px;
+	margin-left: 5px;
 }
 
 .image-actions li:first-child {
-   /* margin-right: 5px;*/
+	/* margin-right: 5px;*/
 }
 
 .image-actions li a {
-    color: #FFF;
+	color: #CCC;
 }
 
 .photo-player-main-image {
-    min-height: 380px;
-    max-height: 100%;
+	min-height: 380px;
+	max-height: 100%;
 }
-.loading_image{
-    -webkit-transition : all .2s ease-out;
-    -moz-transition : all .2s ease-out;
-    -o-transition : all .2s ease-out;
-    transition : all .2s ease-out;
-    position: relative;
+.loading_image {
+	-webkit-transition: all .2s ease-out;
+	-moz-transition: all .2s ease-out;
+	-o-transition: all .2s ease-out;
+	transition: all .2s ease-out;
+	position: relative;
+	top: 60px !important;
+}
 
+.loading_image img {
+	height: 100%;
 }
 
 .tags-name {
 	float: left;
 	width: 96%;
-    padding:4px;
+	padding: 4px;
 }
 
-.tags-name:hover{
-    background-color: #e6e6e6;
-    -moz-box-shadow:    inset 1px 1px 1px 1px #c7c7c7;
-    -webkit-box-shadow: inset 1px 1px 1px 1px #c7c7c7;
-    box-shadow:         inset 1px 1px 1px 1px #c7c7c7;
+.tags-name:hover {
+	background-color: #e6e6e6;
+	-moz-box-shadow: inset 1px 1px 1px 1px #c7c7c7;
+	-webkit-box-shadow: inset 1px 1px 1px 1px #c7c7c7;
+	box-shadow: inset 1px 1px 1px 1px #c7c7c7;
 }
 
 .tags-name > span {
-    width:100%;
+	width: 100%;
 }
 
-.tag-image-container{
-    width: 10%;
-    overflow: hidden;
-    position: relative;
-    display: inline-block;
-    float:left;
-    -moz-box-shadow:    1px 1px 7px 1px #8D8D8D;
-    -webkit-box-shadow: 1px 1px 7px 1px #8D8D8D;
-    box-shadow:         1px 1px 7px 1px #8D8D8D;
-    font-size: .7em;
-    line-height:10px;
+.tag-image-container {
+	width: 10%;
+	overflow: hidden;
+	position: relative;
+	display: inline-block;
+	float: left;
+	-moz-box-shadow: 1px 1px 7px 1px #8D8D8D;
+	-webkit-box-shadow: 1px 1px 7px 1px #8D8D8D;
+	box-shadow: 1px 1px 7px 1px #8D8D8D;
+	font-size: .7em;
+	line-height: 10px;
 }
 
-.tag-image-container .tile-text{
-    text-align: center;
-    vertical-align: top;
-    font-size: .5em;
-    line-height: 9px;
-    color: #5E5E5E;
-    position: absolute;
-    left: 0px;
-    height: 100%;
-    width: 100%;
-    -webkit-transform: rotate(-45deg);
-    -moz-transform: rotate(-45deg);
-    -ms-transform: rotate(-45deg);
-    -o-transform: rotate(-45deg);
+.tag-image-container .tile-text {
+	text-align: center;
+	vertical-align: top;
+	font-size: .5em;
+	line-height: 9px;
+	color: #5E5E5E;
+	position: absolute;
+	left: 0px;
+	height: 100%;
+	width: 100%;
+	-webkit-transform: rotate(-45deg);
+	-moz-transform: rotate(-45deg);
+	-ms-transform: rotate(-45deg);
+	-o-transform: rotate(-45deg);
 }
-.tag-thumb{
-    position: absolute;
-    display: block;
+.tag-thumb {
+	position: absolute;
+	display: block;
 }
 
-.tags-name span a{
-    display: inline-block;
+.tags-name span a {
+	display: inline-block;
 }
 
 .tags-name > span > a img {
-    height: 60px;
-    width: 60px;
+	height: 60px;
+	width: 60px;
 }
 
 .tags-number {
@@ -297,30 +323,30 @@ div.right-arrow-container > img{
 	width: 30%;
 }
 
-.photo-player-arrow {
-	position: absolute;
-	top: 40%;
-    z-index: 10000;
-}
+/*.photo-player-arrow {
+ position: absolute;
+ bottom: 10%;
+ z-index: 10000;
+ }*/
 
-#video_container{
-    width: 100%;
-    height: 100%;
-    text-align: left;
-    z-index: 9999;
+#video_container {
+	width: 100%;
+	height: 100%;
+	text-align: left;
+	z-index: 9999;
 }/*
-#video_container span{
-    position: absolute;
-    font-size: 2.5em;
-    width:100%;
-    padding-top: 200px;
-    text-align: center;
-}*/
-.hidden{
-    display: none;
+ #video_container span{
+ position: absolute;
+ font-size: 2.5em;
+ width:100%;
+ padding-top: 200px;
+ text-align: center;
+ }*/
+.hidden {
+	display: none;
 }
-#jw_container{
-    z-index: 9999;
+#jw_container {
+	z-index: 9999;
 }
 
 ul#tags-list {
@@ -332,40 +358,40 @@ ul#tags-list li {
 }
 
 ul#tags-list .tags-name img {
-/*	float:left */
+	/*	float:left */
 }
 
-div.deleteTag{
-    display: inline-block;
-    position: absolute;
-    right: 10px;
-    color: #a0a0a0;
-    font-size: 2em;
-    font-weight: bolder;
-    width: 20px;
-    height: 20px;
-    text-align: center;
-    line-height: 17px;
-    text-shadow: 1px 1px 1px #000000, 3px 3px 9px black;
-    cursor: pointer;
+div.deleteTag {
+	display: inline-block;
+	position: absolute;
+	right: 10px;
+	color: #a0a0a0;
+	font-size: 2em;
+	font-weight: bolder;
+	width: 20px;
+	height: 20px;
+	text-align: center;
+	line-height: 17px;
+	text-shadow: 1px 1px 1px #000000, 3px 3px 9px black;
+	cursor: pointer;
 }
-div.deleteTag:hover{
-    text-shadow: 2px 2px 1px #000000, 3px 3px 3px black;
+div.deleteTag:hover {
+	text-shadow: 2px 2px 1px #000000, 3px 3px 3px black;
 }
 
-ul#tags-list .tags-name a{
-    width: 85%;
+ul#tags-list .tags-name a {
+	width: 85%;
 }
 ul#tags-list .tags-name a span {
 	font-size: .8em;
 	width: 100%;
 	display: inline-block;
 	margin-left: 5px;
-/*	white-space:nowrap; */
-	text-overflow:ellipsis;
-	overflow:hidden; 
+	/*	white-space:nowrap; */
+	text-overflow: ellipsis;
+	overflow: hidden;
 	margin-left: 20px;
-	float:left;
+	float: left;
 }
 
 ul#tags-list .tags-number {
@@ -374,193 +400,275 @@ ul#tags-list .tags-number {
 	width: 4px;
 }
 
+#photoPlayerModal .game-match-name, #photoPlayerModal .game-match-name1 {
 
-#photoPlayerModal .game-match-name, #photoPlayerModal .game-match-name1{
-
-    color: white;
-    height: 30px;
-    font-size: small;
-    max-width: 85%;
-    width: 80%;
-    display:inline-block;
-    text-wrap:normal;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    word-wrap: normal;
-    float: left;
-    padding: 5px 0px 10px 10px;
+	color: white;
+	height: 30px;
+	font-size: small;
+	max-width: 85%;
+	width: 80%;
+	display: inline-block;
+	text-wrap: normal;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	word-wrap: normal;
+	float: left;
+	padding: 5px 0px 10px 10px;
 }
 
-#photoPlayerModal .game-match-name{
-    background-color: #948BDE;
+#photoPlayerModal .game-match-name {
+	background-color: #948BDE;
 }
-#photoPlayerModal .game-match-name1{
-    background-color: #E69F71;
-}
-
-#photoPlayerModal .game-score, #photoPlayerModal .game-score1{
-    color: white;
-    height: 45px;
-    text-align: center;
-    width: 15%;
-    min-width: 25px;
-    float: left!important;
-    font-size: 2.2em;
-    font-weight: bolder;
-    display: inline-block;
+#photoPlayerModal .game-match-name1 {
+	background-color: #E69F71;
 }
 
-#photoPlayerModal .game-score{
-    background-color: #4C3DC7;
+#photoPlayerModal .game-score, #photoPlayerModal .game-score1 {
+	color: white;
+	height: 45px;
+	text-align: center;
+	width: 15%;
+	min-width: 25px;
+	float: left !important;
+	font-size: 2.2em;
+	font-weight: bolder;
+	display: inline-block;
 }
 
-#photoPlayerModal .game-score1{
-    background-color: #D45F10;
+#photoPlayerModal .game-score {
+	background-color: #4C3DC7;
 }
 
-#photoPlayerModal .game-score span.scoreAlign,#photoPlayerModal .game-score1 span.scoreAlign{
-    margin:0;
-    padding: 0;
+#photoPlayerModal .game-score1 {
+	background-color: #D45F10;
 }
 
-    .teamName-area{
-    /*    padding-top: 9%;
-        padding-bottom: 35%;*/
-        font-size: small;
-    }
-    .scoreAlign{
-        top: 20%;
-        position: relative;
-    }
-    .labelSpan{
-        font-size: small;
-/*        font-weight: bolder;
-  */  }
+#photoPlayerModal .game-score span.scoreAlign, #photoPlayerModal .game-score1 span.scoreAlign {
+	margin: 0;
+	padding: 0;
+}
 
+.teamName-area {
+	/*    padding-top: 9%;
+	 padding-bottom: 35%;*/
+	font-size: small;
+}
+.scoreAlign {
+	top: 20%;
+	position: relative;
+}
+.labelSpan {
+	font-size: small;
+	/*        font-weight: bolder;
+	 */
+}
 
-    .user-photo {
-    float: left;
-    height: 45px;
-    width: 45px;
-
+.user-photo {
+	float: left;
+	height: 45px;
+	width: 45px;
 }
 .comment .user-photo img, .comment .user-photo a img {
-    height: 100%;
-    margin-top: 5px !important;
-    position: relative;
-    top:0px;
-    width: 100% !important;
+	height: 100%;
+	margin-top: 5px !important;
+	position: relative;
+	top: 0px;
+	width: 100% !important;
 }
 .photo-player-coment .user-photo {
-    float: left;
-    height: 40px;
-    width: 40px;
+	float: left;
+	height: 40px;
+	width: 40px;
 }
-#comment-list{
-margin-left: 7px;
-margin-top: 0px;
+#comment-list {
+	margin-left: 7px;
+	margin-top: 0px;
 }
-.user-comment, .comment-text{
-    font-size: small!important;
+.user-comment, .comment-text {
+	font-size: small !important;
 }
-.user-comment{
-    font-weight: bold;
+.user-comment {
+	font-weight: bold;
 }
-.user-photo-profile{
-   width: 76px;
-    float: left;
+.user-photo-profile {
+	width: 36px;
+	float: left;
 }
 
-.content-prof-sub{
-    float: left;
-    padding-top: 10px;
-    margin-left: 22px;
+.content-prof-sub {
+	float: left;
+	padding-top: 10px;
+	margin-left: 22px;
 }
-.prof-name-area{
-    display: block;
-    width: 85%;
-    height: 70px;
-    margin: 0 0 15px 5px;
+.prof-name-area {
+	display: block;
+	height: 50px;
+	padding: 10px 12px 15px 10px;
 }
-.prof-name-area:empty{
-    display: none;
+.prof-name-area:empty {
+	display: none;
 }
-.firstheader{
-    color: #FFFFFF;
-    float: left;
-    margin-right: 1%;
-    position: relative;
-    top: 10px;
-    width: 109px;
+.firstheader {
+	color: #FFFFFF;
+	float: left;
+	margin-right: 1%;
+	position: relative;
+	top: 10px;
+	width: 109px;
 }
-.secheader{
-    color: #FFFFFF;
-    float: left;
-     position: relative;
-    top: 10px;
+.secheader {
+	color: #FFFFFF;
+	float: left;
+	position: relative;
+	top: 10px;
 }
-.thirdheader{
-   color: #FFFFFF;
-    float: right;
-    margin-left: 6%;
-    position: relative;
-    top: 10px;
-    width: 31px;
+.thirdheader {
+	color: #FFFFFF;
+	float: right;
+	margin-left: 6%;
+	position: relative;
+	top: 10px;
+	width: 31px;
 }
-.headerinfo{
-    color: #FFFFFF;
-    float: left;
-
-   
-    font-size: 16px;
-    font-weight: bolder;
-
-    height: inherit;
-   
-    width: 90%;
+.headerinfo {
+	color: #FFFFFF;
+	float: left;
+	font-size: 16px;
+	font-weight: bolder;
+	height: inherit;
+	width: 90%;
 }
-.closer{
-    float: right;
-    height: inherit;
-    margin-top: 2.5%;
-    width: 10%;
+.closer {
+	float: right;
+	margin-top: 15px;
+	width: 10%;
 }
 .modal-body {
-    overflow-y: hidden!important;
-     width: 100%!important;
+	overflow-y: hidden !important;
+	width: 100% !important;
 }
-.name{
-    float: left;
-    height: inherit;
-    padding-left: 3%;
-    width: 30%;
+.name {
+	float: left;
+	height: inherit;
+	padding-left: 3%;
+	width: 30%;
+}
+.game {
+	float: left;
+	height: inherit;
+	padding-left: 8%;
+	position: inherit;
+	text-align: right;
+	width: 30%
+}
+.season {
+	float: left;
+	height: inherit;
+	position: inherit;
+	text-align: right;
+	width: 29%;
+}
+.topalign {
+	position: relative;
+	top: 19%;
+}
+.close {
+	padding-right: 9px !important;
+	color: #FFFFFF;
+	font-size: 26px;
+	opacity: 1;
+	padding-right: 9px;
+}
 
-    }
-    .game{
-    float: left;
-    height: inherit;
-    padding-left: 8%;
-    position: inherit;
-    text-align: right;
-    width: 30%
+.bottom-line-container {
+	position: absolute;
+	width: 100%;
+	bottom: 10px;
+	color: #CCC;
+}
 
-    }
-    .season{
-    float: left;
-    height: inherit;
-    position: inherit;
-    text-align: right;
-    width: 29%;
-    }
-    .topalign{
-        position: relative;
-        top: 19%;
-    }
-    .close{
-        padding-right: 9px!important;
-        color: #FFFFFF;
-        font-size: 26px;
-        opacity: 1;
-        padding-right: 9px;
-    }
- 
+.photo-player-icons {
+	background: url(/css/images/icons/photoplayer-sprite.png) no-repeat;
+}
+
+.photo-player-detail-icons {
+	background: url(/css/images/icons/photoplayer-detail-sprite.png) no-repeat;
+}
+
+.photo-player-detail-arrow {
+	width: 20px;
+	float: right;
+	height: 20px;
+	display: inline-block;
+}
+
+.up-arrow-photoplayer {
+	background-position: 0px 4px;
+}
+
+.down-arrow-photoplayer {
+	background-position: 0px -12px;
+}
+
+
+.photo-player-arrow {
+	width: 20px;
+	height: 22px;
+	display: inline-block;
+}
+
+.left-arrow-photoplayer {
+	background-position: 10px 8px;
+}
+
+.right-arrow-photoplayer {
+	background-position: -20px 8px;
+}
+
+.show-thumbs {
+	background-position: -7px -18px;
+	width: 23px;
+	height: 30px;
+	display: inline-block;
+	position: relative;
+	top: 6px;
+	left: 4px;
+}
+
+.user-photo-profile img {
+	width: 36px;
+height: 36px;
+border-radius: 50%;
+}
+
+.prof-name-area {
+	background: #FFF;	
+}
+
+.photo-player-right-area {
+	background: #f5f5f5;		
+}
+
+.photo-detail {
+	padding: 10px;
+	border-bottom: 5px solid #FFF;
+}
+
+.comment-input-outer #new-comment.photoplayer-comment-box {
+	height: 20px;
+	line-height: 20px;
+	margin-left: 25px;
+	background: #FFF;
+}
+
+button.close:hover {
+	color: #FFF;
+}
+
+.count-of-images {
+	padding: 10px;
+}
+
+#tags-list {
+	display:none;
+}
