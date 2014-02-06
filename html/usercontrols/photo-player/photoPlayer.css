@@ -144,10 +144,11 @@ div.right-arrow-container > img {
 	max-width: 100%;
 	margin-top: 5px;
 	height: 300px;
+	width: 100%;
 	background: rgba(0, 0, 0, 0.5);
 	overflow: hidden;
 	position: absolute;
-	bottom: 70px;
+	bottom: 0px;
 	display: none;
 	color: #FFF;
 }
