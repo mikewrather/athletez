@@ -146,11 +146,18 @@ define(["require", 'text!usercontrols/photo-player/templates/comments.html',
 		//		var collectionInstance = Backbone.Collection.extend(), collection = new collectionInstance(); 
 		//		collection.reset(self._collection);
 		//	} else {
-			//	self._collection.limit = undefined;
-			//	self._collection.offset = self._collection.length;				
-			///	self._collection.fetch({remove: false});
+
+				var targetElement = self._collection.targetElement,
+				limit = self._collection.limit;
+
+				self._collection.limit = undefined;				
+				self._collection.targetElement = undefined;
+				self._collection.offset = 0;				
+				self._collection.fetch({remove: false});
 			//	alert(self._collection.length);
-				//$.when(self._collection.request).done(function() {
+				$.when(self._collection.request).done(function() {
+				self._collection.targetElement = targetElement;
+				self._collection.limit = limit;
 				//alert(self._collection.length);
 					var photoPlayerMain = new PhotoPlayerView({
 						model : self._collection,
@@ -171,7 +178,7 @@ define(["require", 'text!usercontrols/photo-player/templates/comments.html',
 			//		console.log($('#photoPlayerModal .photo-player-area-h'));
 					self.scheme.push(photoPlayerMain);
 					self.layout.render();
-			 // });
+			  });
 		//	}
 		},
 		

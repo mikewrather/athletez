@@ -668,7 +668,7 @@ button.close:hover {
 .count-of-images {
 	padding: 10px;
 }
-
-#tags-list {
-	display:none;
+.photo-player .jwplayer {
+	top: 60px;
 }
+

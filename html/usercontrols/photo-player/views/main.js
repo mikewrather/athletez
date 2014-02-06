@@ -488,6 +488,18 @@ define(['require',
 				_currentIndex : _self.index
 			};
 			
+			if(mpay.has_voted)
+				this.$el.find(".photo-player-vote-h").parent().addClass("link-disabled");
+			else
+				this.$el.find(".photo-player-vote-h").parent().removeClass("link-disabled");			
+
+			if(mpay.num_votes)
+				this.$el.find(".votes-num-h").html("("+mpay.num_votes+")").show();
+			else
+				this.$el.find(".votes-num-h").hide();
+
+			console.error(mpay);
+			
 			_self.$el.find(".current-image-number-count-h").text(parseInt(_self.index) + 1);
 			if (_self.index >= this.json.length - 1) {
 				this.$el.find('.next-arrow-h').addClass('disable-arrow-link');

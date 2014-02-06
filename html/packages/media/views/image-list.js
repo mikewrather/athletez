@@ -178,13 +178,13 @@ function(facade,  views,   utils,   ImageItemView,            ImageBoardView,   
 			index -= addLiCount;
 			if(index< 0) index = 0;
 			
-			_self.collection.offset = 0;//+= _self.collection.limit;
-			_self.collection.limit = undefined;
-	        _self.collection.fetch({remove: false});
-	        $.when(_self.collection.request).done(function() {
+			//_self.collection.offset = 0;//+= _self.collection.limit;
+			//_self.collection.limit = undefined;
+	        //_self.collection.fetch({remove: false});
+	        //$.when(_self.collection.request).done(function() {
  	      		routing.trigger('photo-player-init', index, _self.collection, _self.user_id, true,  _self.pageName, _self.target_id);
-				_self.collection.limit = limit;
-	        });
+			//	_self.collection.limit = limit;
+	        //});
        	},
 
         seeMore: function(e) {
