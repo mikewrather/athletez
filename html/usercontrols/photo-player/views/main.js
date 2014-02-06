@@ -79,11 +79,11 @@ define(['require',
 		
 		toggleThumbsSection: function(e) {
 			if(this.$el.find(".thumbs-outer").css("display") == "none") {
-				$(".loading_image, .photo-player-right-area").addClass("minimizeOpacity");
+				$(".loading_image, .photo-player-right-area, .bottom-line-container").addClass("minimizeOpacity");
 				this.$el.find(".thumbs-outer").slideDown();				
 			} else {
 				this.$el.find(".thumbs-outer").slideUp();				
-				$(".loading_image, .photo-player-right-area").removeClass("minimizeOpacity");
+				$(".loading_image, .photo-player-right-area, .bottom-line-container").removeClass("minimizeOpacity");
 			}
 
 		},
@@ -235,7 +235,7 @@ define(['require',
 
 		nextButton : function(e) {
 			console.log("next");
-			if (this.index < this.json.length) {
+			if (this.index < this.json.payload.length) {
 				this.index++;
 				this.loadImage();
 				//this.changeThumbPosition();

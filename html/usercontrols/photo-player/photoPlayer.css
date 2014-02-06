@@ -135,7 +135,7 @@ div.right-arrow-container > img {
 
 .images-list {
 	padding: 0px 10px;
-	margin: 0;
+	margin: 0 0 50px 0;
 	float: left;
 }
 
@@ -184,8 +184,8 @@ div.right-arrow-container > img {
 	margin: 1px;;
 	float: left;
 	display: block;
-	margin-right: 5px;
-	width: 107px;
+	margin: 5px;
+	width: 120px;
 	height: 110px;
 	overflow: hidden;
 }
@@ -205,9 +205,8 @@ div.right-arrow-container > img {
 }
 
 .thumbs-inner .images-list li.selected-photo-thumb {
-	opacity: 1;
-	border: 1px solid #FFF;
-	margin: 0;
+	border: 2px solid #F5F5F5;
+	margin: 3px;
 }
 
 .image-actions {
@@ -663,7 +662,8 @@ border-radius: 50%;
 }
 
 button.close:hover {
-	color: #FFF;
+	color: #FFF !important;
+	opacity: 0.8 !important;
 }
 
 .count-of-images {
