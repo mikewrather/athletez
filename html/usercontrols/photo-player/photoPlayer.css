@@ -543,7 +543,7 @@ ul#tags-list .tags-number {
 	margin-top: 15px;
 	width: 10%;
 }
-.modal-body {
+#photoPlayerModal .modal-body {
 	overflow-y: hidden !important;
 	width: 100% !important;
 }

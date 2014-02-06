@@ -1649,7 +1649,7 @@ div.game-info .game-score .team-score.win {
 
 
 form fieldset ul li:first-child {
-	margin-left: -20px;
+/*	margin-left: -20px; */
 }
 
 form fieldset ul li {

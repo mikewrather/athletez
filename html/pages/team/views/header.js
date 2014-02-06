@@ -8,7 +8,6 @@ define([
         'require', 
         'text!team/templates/header.html', 
         'text!team/templates/sport-select.html',
-        
         'team/models/basics',
         'facade', 
         'views',
@@ -17,7 +16,9 @@ define([
         'team/collections/sports',
         'team/views/sport-list',
         'usercontrol/dropdown/view/dropdown',
+		'sportorg/models/org',
         'team/collections/seasonteams',
+		"component/form",
         'team/collections/complevels'
         ],
 function(require, headerTemplate, selectSportTemplate) {
@@ -26,12 +27,14 @@ function(require, headerTemplate, selectSportTemplate) {
         facade = require('facade'),
         views = require('views'),
         TeamBasicsModel = require('team/models/basics'),
+	    OrgBasicsModel = require('sportorg/models/org'),
         SectionView = views.SectionView,
         TeamSportListView = require('team/views/sport-list'),
         TeamSportList = require('team/collections/sports'),
         DropDownList = require('usercontrol/dropdown/view/dropdown'), 
 		SeasonTeams = require('team/collections/seasonteams'),
         CompLevels = require('team/collections/complevels'),
+	    FormComponent = require('component/forms'),
         
         utils = require('utils'),
         Channel = utils.lib.Channel,
@@ -48,7 +51,7 @@ function(require, headerTemplate, selectSportTemplate) {
         selectSportTemplate: selectSportTemplate,
         
         events: {
-        	
+        	"click #editTeamLink" : "openEditPopup"
         },
 
         initialize: function (options) {
@@ -152,6 +155,156 @@ function(require, headerTemplate, selectSportTemplate) {
 	        	
 	       return title; 	
         },
+
+	    openEditPopup: function() {
+		    if(!this.checkForUser()) {
+			    routing.trigger('showSignup');
+			    return;
+		    }
+		    var options = {
+			    height : "500px",
+			    width : "500px",
+			    html : '<div id="editTeamForm"></div>',
+			    title : "Edit Organization Info"
+		    };
+		    routing.trigger('common-popup-open', options);
+		    this.drawEditTeamForm();
+
+	    },
+
+	    drawEditTeamForm: function(){
+
+		    var _self = this,
+			    orgObj = _self.model.get("payload").org_sport_link_obj.org,
+			    orgLocation = orgObj.locations;
+
+		    var formData = new FormComponent({
+
+			    'orgname' : {
+				    form_values: {
+					    defaultValue : orgObj.name,
+					    post_to_server	: true,
+					    serverDbField: 'name',
+					    serverKey: "name"
+				    },
+
+				    type : 'Text',
+				    fieldClass: "",
+				    attr : {
+					    'placeholder' : 'Event Name',
+					    'class' : "txt-org-name"
+				    },
+
+				    showLable : true,
+				    label: "Organization Name"
+
+			    },
+			    'Location' : {
+				    form_values: {
+					    defaultValue : orgLocation.full_address,
+					    serverKey : "locations_id",
+					    post_to_server	: true,
+					    serverDbField: 'locations_id'
+				    },
+				    longitude: orgLocation.lon,
+				    latitude : orgLocation.lat,
+				    locationId : orgLocation.id,
+				    type : 'Location',
+				    label: "Location",
+				    validators : [{type : 'required',
+					    message : 'Please select location and click the "Verify Address" button'}]
+			    },
+			    'users_id'	: {
+				    form_values: {
+					    serverKey: _self.users_id,
+					    post_to_server	: true,
+					    value: _self.user_id
+				    },
+				    type: "Hidden"
+			    },
+			    'submit' : {
+				    type : 'Submit',
+				    fieldClass: "button-field",
+				    attr : {
+					    'value' : 'Save Changes'
+				    },
+				    showLable : false,
+				    onSubmit : function(e) {
+					    var errors = form.commit();
+					    if (errors) {
+						    // auto scroll to focus element which has error
+						    for (var i in errors) {
+							    var $ob = $("*[name=" + i + "]"), $pos = $ob.position();
+							    $ob.parents(".common-modal #modalBody").animate({
+								    scrollTop : $pos.top
+							    }, '500', function() {
+								    $ob.addClass('focus-error-animation');
+								    setTimeout(function() {
+									    $ob.removeClass('focus-error-animation');
+								    }, 2000);
+							    });
+							    break;
+						    }
+					    } else {
+						    if(_self.formValues) {
+							    var formData = _self.formValues.getFormValues();
+						    } else {
+							    var formData = form.getValue();
+						    }
+
+						    var formData = _self.formValues.getFormValues(), self = _self;
+
+						    var orgBasic = new OrgBasicsModel({id:orgObj.id});
+						    console.log(orgBasic);
+
+						    orgBasic.set({
+							    locations_id : formData['locations_id'],
+							    name : formData.name
+						    });
+						    orgBasic.save({});
+
+						    //window.formValues1.showServersErrors([{ key: "gameDay", message: "error_message" }]);
+						    $.when(orgBasic.request).done(function(res){
+							    _self.updateHeaderData(self.model.id);
+							    routing.trigger('common-popup-close');
+						    });
+
+						    $.when(orgBasic.request).fail(function(res) {
+							    var response = JSON.parse(res.responseText);
+							    var errorArray = response.exec_data.error_array;
+							    _self.formValues.showServersErrors(errorArray);
+						    });
+
+					    }
+				    }
+			    },
+			    'button' : {
+				    type : 'Button',
+				    fieldClass: "button-field",
+				    attr : {
+					    'value' : 'Cancel',
+					    'class' : 'cancel-btn'
+				    },
+				    onClick : function() {
+					    routing.trigger('common-popup-close');
+				    },
+				    showLable : false
+			    }
+		    }, $('#editTeamForm'));
+
+		    var form = formData.form;
+		    this.formValues = formData.formValues;
+
+	    },
+
+	    updateHeaderData: function(id) {
+		    var _self = this;
+		    _self.model.id = id;
+		    _self.model.fetch();
+		    $.when(_self.model.request).done(function() {
+			    _self.render();
+		    });
+	    },
         
         // Child views...
         childViews: {},
@@ -159,7 +312,7 @@ function(require, headerTemplate, selectSportTemplate) {
         render: function (domInsertion, dataDecorator, partials) {
         	document.title = this.getName();
             SectionView.prototype.render.call(this, domInsertion, dataDecorator, partials); 
-        },
+        }
         
        
         

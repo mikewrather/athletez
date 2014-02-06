@@ -413,6 +413,7 @@ class Model_Sportorg_Org extends ORM
 			'org_id' => 'org_id',
 			'org_name' => 'org_name',
 			'org_with_city' => 'org_with_city',
+			'city' => 'org_city',
 			'season_profile' =>'season_profile',
 			'seasons' => 'seasons',
 			'complevel_profile' => 'complevel_profile',
@@ -445,6 +446,11 @@ class Model_Sportorg_Org extends ORM
 	public function org_with_city()
 	{
 		return ucwords(strtolower($this->name . " - ".$this->city->name));
+	}
+
+	public function org_city()
+	{
+		return ucwords($this->city->name);
 	}
 
 	public function  season_profile(){

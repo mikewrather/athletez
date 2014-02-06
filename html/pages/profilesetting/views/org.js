@@ -316,7 +316,7 @@ define(['require', 'text!profilesetting/templates/highschool.html', 'text!profil
 					}
 					
 					_self.schools.forEach(function(value, index) {
-						arr.push({id: value['id'], value: value['org_name']});
+						arr.push({id: value['id'], value: value['org_name'], city: value['city']});
 					});
 					// Destroy existing autocomplete from text box before attaching it again
 					// try catch as for the first time it gives error
@@ -341,7 +341,12 @@ define(['require', 'text!profilesetting/templates/highschool.html', 'text!profil
 							// display the selected text
 							// $("#txtAllowSearchID").val(ui.item.value); // save selected id to hidden input
 							}
-					});
+					}).data( "ui-autocomplete" )._renderItem = function( ul, item ) {
+						return $( "<li>" )
+							.append( "<a>" + item.value + "<br><span class='sub-label'>" + item.city + "</span></a>" )
+							.appendTo( ul );
+					};
+
 					//Trigger keydown to display the autocomplete dropdown just created
 					$(event.target).trigger('keydown');
 				});
@@ -602,7 +607,7 @@ define(['require', 'text!profilesetting/templates/highschool.html', 'text!profil
 				this.positionView = new PositionsView({
 					name : "settings-high-school-positions",
 					destination : destination,
-					sport_id : sport_id,
+					sport_id : sport_id
 				});
 				_self.$el.find(_self.controls.ddlSports).parent().find(_self.controls.fieldError).html('').fadeOut();
 			} else {
@@ -649,7 +654,7 @@ define(['require', 'text!profilesetting/templates/highschool.html', 'text!profil
 				id1 : _self.user_id,
 				user_id : _self.user_id,
 				positions_id : positionId,
-				teams_id : teamId,
+				teams_id : teamId
 			};
 
 			if (control.hasClass('active')) {//If the positions is already added then remove it
