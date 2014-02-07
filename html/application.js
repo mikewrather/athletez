@@ -731,12 +731,13 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
         addImageTrigger: function(fn) {
         	routing.off('add-image');
             routing.on('add-image', function(url, attr, data) {
-            	console.log(url, attr, data);
 	            if(!this.checkForUser()) {
-		            routing.trigger('showSignup');
-		            return;
-	            }
-            	fn(url , attr, data);
+		            routing.trigger('showSignup', function() {
+		            	fn(url , attr, data);
+		            });
+	            } else {
+            		fn(url , attr, data);
+            	}
             });
         },
 		
@@ -801,10 +802,12 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
 			var self = this;
 		    function initVideoPreview(url,attr) {
 				if(!self.checkForUser()) {
-					routing.trigger('showSignup');
-					return;
-				}
-			    var VidPrevCtrl = new VideoPreviewController({"url":url,"attr":attr});
+					routing.trigger('showSignup', function() {
+						new VideoPreviewController({"url":url,"attr":attr});
+					});
+				} else {
+			    	new VideoPreviewController({"url":url,"attr":attr});
+		    	}
 		    }
 			//** creating a call back list and adding the method
 			Channel('add-video').subscribe(initVideoPreview);

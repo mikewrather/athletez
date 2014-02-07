@@ -54,10 +54,6 @@ define(["require", 'text!usercontrols/photo-player/templates/comments.html',
 			var _self = this;
 			// load css file
 			Channel('load:css').publish(this.cssArr);
-			// Channel('tag-image-success-photo').empty();
-			// Channel('tag-image-success-photo').subscribe(this.tagFunction);
-			
-			
 			_.bindAll(this);
 			// model box html 
 			if (options.id) this.id = options.id;
@@ -93,7 +89,6 @@ define(["require", 'text!usercontrols/photo-player/templates/comments.html',
 				_self.id = id;
 				//alert("en reload");
 				$("#image-tagging-photo").html('');
-				console.log("called",uploader_id);
 				_self.setUpCommentView(entity_id, id);
 				_self.setUpTagView(entity_id, id,uploader_id);
 			});
@@ -107,7 +102,6 @@ define(["require", 'text!usercontrols/photo-player/templates/comments.html',
 	       	routing.off('tags-fetch-new-form-data');
 	       	routing.on('tags-fetch-new-form-data', function(entity_id, id,uploader_id) {
 	       	//	alert("en data");
-		        console.log("mpay",uploader_id);
 	       		_self.setUpTagView(entity_id, id,uploader_id);
 	       	});
 
