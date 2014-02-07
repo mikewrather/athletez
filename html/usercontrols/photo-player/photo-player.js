@@ -40,20 +40,20 @@ define(["require", 'text!usercontrols/photo-player/templates/comments.html',
 		
 		// controller intialize function
 		initialize : function(options) {
-			console.error(options);
 			var _self = this;
-
 			if(!_self.checkForUser()){
-				routing.trigger('showSignup');
-				return;
+				routing.trigger('showSignup', function(callback) {
+		  	   		_self.startPlayer(options);
+			     });
+			} else {
+				_self.startPlayer(options);
 			}
-
+		},
+		
+		startPlayer: function(options) {
+			var _self = this;
 			// load css file
 			Channel('load:css').publish(this.cssArr);
-			// Channel('tag-image-success-photo').empty();
-			// Channel('tag-image-success-photo').subscribe(this.tagFunction);
-			
-			
 			_.bindAll(this);
 			// model box html 
 			if (options.id) this.id = options.id;
@@ -74,7 +74,8 @@ define(["require", 'text!usercontrols/photo-player/templates/comments.html',
 					routing.navigate(currentHashUrl, {trigger: false});
 				});
 
-				this.modelHTML = '<div id="photoPlayerModal" class="modal photo-frame-model hide fade model-popup-h">'+
+				this.modelHTML = '<div id="photoPlayerModal" class="modal region-loader photo-frame-model hide fade model-popup-h">'+
+				'<div class="photo-player-mask hide photo-player-mask-h"></div>'+
 				'<div class="modal-body page-content-h">'+
 				'<div class="photo-player-area-h photo-player"></div>'+
 				'<div class="photo-player-right-area"><div class="teamName-area">'+
@@ -88,7 +89,6 @@ define(["require", 'text!usercontrols/photo-player/templates/comments.html',
 				_self.id = id;
 				//alert("en reload");
 				$("#image-tagging-photo").html('');
-				console.log("called",uploader_id);
 				_self.setUpCommentView(entity_id, id);
 				_self.setUpTagView(entity_id, id,uploader_id);
 			});
@@ -102,7 +102,6 @@ define(["require", 'text!usercontrols/photo-player/templates/comments.html',
 	       	routing.off('tags-fetch-new-form-data');
 	       	routing.on('tags-fetch-new-form-data', function(entity_id, id,uploader_id) {
 	       	//	alert("en data");
-		        console.log("mpay",uploader_id);
 	       		_self.setUpTagView(entity_id, id,uploader_id);
 	       	});
 
@@ -143,36 +142,47 @@ define(["require", 'text!usercontrols/photo-player/templates/comments.html',
 		setUpMainView : function() {
 			var self = this; 
 		//	if(self.collectionArray) {
-		//		var collectionInstance = Backbone.Collection.extend(), collection = new collectionInstance(); 
-		//		collection.reset(self._collection);
-		//	} else {
-			//	self._collection.limit = undefined;
-			//	self._collection.offset = self._collection.length;				
-			///	self._collection.fetch({remove: false});
-			//	alert(self._collection.length);
-				//$.when(self._collection.request).done(function() {
-				//alert(self._collection.length);
-					var photoPlayerMain = new PhotoPlayerView({
-						model : self._collection,
-						name : "photo player",
-						destination : ".photo-player-area-h",
-						index : self.index,
-						pageName: self.pageName,
-						pageId: self.pageId,
-						user_id : self.userId || null,
-						sports_id : self.sports_id || null,
-						scheme : self.scheme,
-						layout : self.layout
-					});
+				var limit = self._collection.limit, offset = self._collection.offset, collectionInstance1 = Backbone.Collection.extend();
+				var collectionInstance = new collectionInstance1();
+				self._collection.limit = undefined;
+				self._collection.offset = 0;
+				collectionInstance.url = self._collection.url;
+				
 
-					var ppwidth = $(document).width(),
-					photosec = ppwidth-350;
-					$('#photoPlayerModal .photo-player-area-h').css({width:photosec+'px'});
-			//		console.log($('#photoPlayerModal .photo-player-area-h'));
-					self.scheme.push(photoPlayerMain);
-					self.layout.render();
-			 // });
-		//	}
+				//collectionInstance.url();
+				collectionInstance.fetch({
+					success: function(r) {
+						$("#photoPlayerModal").removeClass("region-loader");
+										self._collection.limit = limit;
+				self._collection.offset = offset;
+
+							//self._collection.targetElement = targetElement;
+							//self._collection.limit = limit;
+						//alert(self._collection.length);
+							var photoPlayerMain = new PhotoPlayerView({
+								model : r.models[0],
+								name : "photo player",
+								destination : ".photo-player-area-h",
+								index : self.index,
+								pageName: self.pageName,
+								pageId: self.pageId,
+								user_id : self.userId || null,
+								sports_id : self.sports_id || null,
+								scheme : self.scheme,
+								layout : self.layout
+							});
+		
+							var ppwidth = $(document).width(),
+							photosec = ppwidth-350;
+							$('#photoPlayerModal .photo-player-area-h').css({width:photosec+'px'});
+					//		console.log($('#photoPlayerModal .photo-player-area-h'));
+							self.scheme.push(photoPlayerMain);
+							self.layout.render();
+					},
+					error: function(r, a) {
+						console.error(r, a);
+					}
+				});
 		},
 		
 		setUpTagView: function(entity_id, id,uploader_id) {

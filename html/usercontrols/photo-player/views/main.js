@@ -72,15 +72,6 @@ define(['require',
 			this.initThumbsSection();
 			this.loadImage(true);
 			this.updateAllImagesCount();
-			this.model.on("change", function() {
-				alert("change");
-				_self.json = _self.model.toJSON();
-				_self.updateAllImagesCount();
-			});
-			
-			this.model.limit = undefined;
-			this.model.offset = this.model.length;				
-			this.model.fetch({remove: false});
 
 			Channel('tag-image-success-photo').empty();
 			Channel('tag-image-success-photo').subscribe(this.tagFunction);
@@ -88,18 +79,19 @@ define(['require',
 		
 		toggleThumbsSection: function(e) {
 			if(this.$el.find(".thumbs-outer").css("display") == "none") {
-				$(".loading_image, .photo-player-right-area").addClass("minimizeOpacity");
+				$(".loading_image, .photo-player-right-area, .bottom-line-container").addClass("minimizeOpacity");
+				$(".photo-player-mask-h").removeClass("hide");
 				this.$el.find(".thumbs-outer").slideDown();				
 			} else {
-				this.$el.find(".thumbs-outer").slideUp();				
-				$(".loading_image, .photo-player-right-area").removeClass("minimizeOpacity");
+				this.$el.find(".thumbs-outer").slideUp();
+				$(".photo-player-mask-h").addClass("hide");
+				$(".loading_image, .photo-player-right-area, .bottom-line-container").removeClass("minimizeOpacity");
 			}
-
 		},
 		
 		updateAllImagesCount: function() {
 			//alert("here");
-			this.$el.find(".total-image-count-h").text(this.json.length);
+			this.$el.find(".total-image-count-h").text(this.json.payload.length);
 		},
 
 		vote : function(e) {
@@ -231,23 +223,23 @@ define(['require',
 			//$current.parents('li').addClass('selected-photo-thumb');
 			this.index = $current.attr("data-index");
 			this.loadImage();
-			this.changeThumbPosition();
+			//this.changeThumbPosition();
 		},
 
 		backButton : function(e) {
 			if (this.index > 0) {
 				this.index--;
 				this.loadImage();
-				this.changeThumbPosition();
+				//this.changeThumbPosition();
 			}
 		},
 
 		nextButton : function(e) {
 			console.log("next");
-			if (this.index < this.json.length) {
+			if (this.index < this.json.payload.length) {
 				this.index++;
 				this.loadImage();
-				this.changeThumbPosition();
+				//this.changeThumbPosition();
 			}
 		},
 
@@ -275,10 +267,10 @@ define(['require',
 		},
 
 		initThumbsSection : function() {
-			var _self = this, dataLength = this.json.length, data = {}, standard_thumb = null;
+			var _self = this, dataLength = this.json.payload.length, data = {}, standard_thumb = null;
 			data.data = [];
 			for (var i = 0; i < dataLength; i++) {
-				var mpay = this.json[i].payload, extra = {
+				var mpay = this.json.payload[i], extra = {
 					_enttypes_id : mpay.enttypes_id,
 					_id : mpay.id,
 					_index : i
@@ -415,11 +407,11 @@ define(['require',
 			
 			var markup = Mustache.to_html(this.thumbTemplate, data);
 			this.$el.find('.thumb-image-list-h').html(markup);
-			setTimeout(function() {
-				_self.changeThumbPosition();
-			}, 1000);
+			//setTimeout(function() {
+			//	_self.changeThumbPosition();
+			//}, 1000);
 
-			this.thumbScroll();
+			//this.thumbScroll();
 		},
 
 		thumbScroll : function() {
@@ -481,12 +473,24 @@ define(['require',
 			if ($loadingImage.hasClass('hidden'))
 				$loadingImage.removeClass('hidden');
 
-			var _self = this, mpay = this.json[_self.index].payload, extra = {
+			var _self = this, mpay = this.json.payload[_self.index], extra = {
 				_enttypes_id : mpay.enttypes_id,
 				_id : mpay.id,
 				_media_id : mpay.media_id,
 				_currentIndex : _self.index
 			};
+			
+			if(mpay.has_voted)
+				this.$el.find(".photo-player-vote-h").parent().addClass("link-disabled");
+			else
+				this.$el.find(".photo-player-vote-h").parent().removeClass("link-disabled");			
+
+			if(mpay.num_votes)
+				this.$el.find(".votes-num-h").html("("+mpay.num_votes+")").show();
+			else
+				this.$el.find(".votes-num-h").hide();
+
+			console.error(mpay);
 			
 			_self.$el.find(".current-image-number-count-h").text(parseInt(_self.index) + 1);
 			if (_self.index >= this.json.length - 1) {

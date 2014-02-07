@@ -89,9 +89,9 @@ define([
 	                        $('#Loginview').modal('hide');
 							if(_self.callback && _.isFunction(_self.callback)) {
 								routing.trigger('common-popup-close');
-								_self.callback(function() {
-									window.location.reload();
-								});
+								// reload header
+								if(App.header) App.header.render(true);
+								_self.callback(function() {});
 							} else {
 		                        window.location.href = "#profile";
 	                    	}

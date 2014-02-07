@@ -62,12 +62,11 @@ function (
         	routing.trigger("link-to-facebook");
         },
 
-        render: function () {
+        render: function (appReload) {
             var self = this;
             this.model.fetchSuccess = this.model.fetchError = function(model, res) {
                 var markup = Mustache.to_html(self.template, model.toJSON());
                 self.$el.html(markup);
-               // console.log(model.toJSON());
                 if(typeof(model.get('user_photo'))=='object')
                     if(typeof(model.get('user_photo').types)=='object')
                         if(typeof(model.get('user_photo').types.small_thumb)=='object')
@@ -85,10 +84,10 @@ function (
                     self.model.saveCookie();
                     routing.userLoggedIn = true;
                      routing.loggedInUserId = id;
-                    routing.trigger('app-inited', id);
+                    if(!appReload) routing.trigger('app-inited', id);
                 } else {
                     routing.userLoggedIn = false;
-                    routing.trigger('app-inited');
+                    if(!appReload) routing.trigger('app-inited');
                 }
                 $('#main').removeClass("region-loader");
                 $(document).off("click", "a[href*='#fbinvite']");

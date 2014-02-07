@@ -135,19 +135,20 @@ div.right-arrow-container > img {
 
 .images-list {
 	padding: 0px 10px;
-	margin: 0;
+	margin: 0 0 50px 0;
 	float: left;
 }
 
 .thumbs-outer {
-	z-index: 1056;
+	z-index: 1156;
 	max-width: 100%;
 	margin-top: 5px;
 	height: 300px;
+	width: 100%;
 	background: rgba(0, 0, 0, 0.5);
 	overflow: hidden;
 	position: absolute;
-	bottom: 70px;
+	bottom: 0px;
 	display: none;
 	color: #FFF;
 }
@@ -162,13 +163,14 @@ div.right-arrow-container > img {
 }
 
 .thumbs-header {
-	padding: 2%;
-	float: left;
-	width: 96%;
+	padding: 5px 16px;
+	background: rgba(0, 0, 0, .2);
+	height: 18px;
 }
 
 .thumbs-inner {
 	width: 100%;
+	background: #000;
 	overflow-x: hidden;
 	overflow-y: auto;
 	height: 250px;
@@ -183,8 +185,8 @@ div.right-arrow-container > img {
 	margin: 1px;;
 	float: left;
 	display: block;
-	margin-right: 5px;
-	width: 107px;
+	margin: 5px;
+	width: 120px;
 	height: 110px;
 	overflow: hidden;
 }
@@ -204,9 +206,8 @@ div.right-arrow-container > img {
 }
 
 .thumbs-inner .images-list li.selected-photo-thumb {
-	opacity: 1;
-	border: 1px solid #FFF;
-	margin: 0;
+	border: 2px solid #F5F5F5;
+	margin: 3px;
 }
 
 .image-actions {
@@ -363,8 +364,8 @@ ul#tags-list .tags-name img {
 
 div.deleteTag {
 	display: inline-block;
-	position: absolute;
-	right: 10px;
+	/*position: absolute;*/
+	/*right: 10px;*/
 	color: #a0a0a0;
 	font-size: 2em;
 	font-weight: bolder;
@@ -374,13 +375,14 @@ div.deleteTag {
 	line-height: 17px;
 	text-shadow: 1px 1px 1px #000000, 3px 3px 9px black;
 	cursor: pointer;
+	float: right;
 }
 div.deleteTag:hover {
 	text-shadow: 2px 2px 1px #000000, 3px 3px 3px black;
 }
 
 ul#tags-list .tags-name a {
-	width: 85%;
+	width: 80%;
 }
 ul#tags-list .tags-name a span {
 	font-size: .8em;
@@ -584,7 +586,11 @@ ul#tags-list .tags-number {
 	position: absolute;
 	width: 100%;
 	bottom: 10px;
-	color: #CCC;
+	color: #FFF;
+}
+
+.bottom-line-container > span {
+	opacity: 0.4;
 }
 
 .photo-player-icons {
@@ -598,12 +604,12 @@ ul#tags-list .tags-number {
 .photo-player-detail-arrow {
 	width: 20px;
 	float: right;
-	height: 20px;
+	height: 17px;
 	display: inline-block;
 }
 
 .up-arrow-photoplayer {
-	background-position: 0px 4px;
+	background-position: 0px 2px;
 }
 
 .down-arrow-photoplayer {
@@ -618,11 +624,11 @@ ul#tags-list .tags-number {
 }
 
 .left-arrow-photoplayer {
-	background-position: 10px 8px;
+	background-position: 4px 7px;
 }
 
 .right-arrow-photoplayer {
-	background-position: -20px 8px;
+	background-position: -16px 7px;
 }
 
 .show-thumbs {
@@ -662,13 +668,28 @@ border-radius: 50%;
 }
 
 button.close:hover {
-	color: #FFF;
+	color: #FFF !important;
+	opacity: 0.8 !important;
 }
 
 .count-of-images {
-	padding: 10px;
+	padding-left: 15px;
 }
 
-#tags-list {
-	display:none;
+.image-message {
+	padding-right: 15px;
+}
+
+.photo-player .jwplayer {
+	top: 60px;
+}
+
+.photo-player-mask {
+	position: absolute;
+	top: 0;
+	left: 0;
+	background: rgba(0, 0,0, 0.5);
+	z-index: 1090;
+	min-height: 100%;
+	min-width: 100%;
 }

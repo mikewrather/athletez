@@ -56,7 +56,7 @@ function(vendor, facade,  views,   utils,   ScheduleItemView, Store, ScheduleLis
 			else	
         		return false;
 		},
-		
+			
 		getUserId: function() {
 			if(!_.isUndefined(routing.userLoggedIn) && routing.userLoggedIn) return routing.loggedInUserId;
 		},
@@ -68,14 +68,20 @@ function(vendor, facade,  views,   utils,   ScheduleItemView, Store, ScheduleLis
    			_self.collection.add(newAddModel);
 		},
         
-         addGame: function(e) {
+        addGame: function(e) {
          	var _self = this;
-         	 if(!this.checkForUser()) {
-		  		 routing.trigger('showSignup');
-		    	return;
+         	 if(!_self.checkForUser()) {
+		  		routing.trigger('showSignup', function() {
+		    		_self.openAddGamePopup(e);		  			
+		  		});
+	    	} else {
+	    		_self.openAddGamePopup(e);
 	    	}
-	    	
-	    	if(!_.isUndefined(this.teamRecords) && this.teamRecords) {
+        },
+        
+        openAddGamePopup: function(e) {
+         	var _self = this;
+        	if(!_.isUndefined(this.teamRecords) && this.teamRecords) {
 	    		routing.trigger('add-game',0,$("#team-h").val(),$("#sports-h").val(), _self.controller.id, function(data) {
 	    			if(_self.controller) _self.controller.getOrgData();
 	    			//_self.addRecordToCollection(data);

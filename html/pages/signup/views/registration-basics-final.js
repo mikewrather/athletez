@@ -247,9 +247,9 @@ define(['require', 'text!signup/templates/basciFinal.html', 'backbone', 'undersc
 				//	alert(_self.callback);
 					if (_self.callback && _.isFunction(_self.callback)) {
 						routing.trigger('common-popup-close');
-						_self.callback(function() {
-							window.location.reload();
-						});
+						// reload header
+						if(App.header) App.header.render(true);
+						_self.callback(function() {});
 					} else {
 						location.href = '#usersettings';
 					}
