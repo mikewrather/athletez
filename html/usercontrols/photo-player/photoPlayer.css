@@ -363,8 +363,8 @@ ul#tags-list .tags-name img {
 
 div.deleteTag {
 	display: inline-block;
-	position: absolute;
-	right: 10px;
+	/*position: absolute;*/
+	/*right: 10px;*/
 	color: #a0a0a0;
 	font-size: 2em;
 	font-weight: bolder;
@@ -374,13 +374,14 @@ div.deleteTag {
 	line-height: 17px;
 	text-shadow: 1px 1px 1px #000000, 3px 3px 9px black;
 	cursor: pointer;
+	float: right;
 }
 div.deleteTag:hover {
 	text-shadow: 2px 2px 1px #000000, 3px 3px 3px black;
 }
 
 ul#tags-list .tags-name a {
-	width: 85%;
+	width: 80%;
 }
 ul#tags-list .tags-name a span {
 	font-size: .8em;
@@ -584,7 +585,11 @@ ul#tags-list .tags-number {
 	position: absolute;
 	width: 100%;
 	bottom: 10px;
-	color: #CCC;
+	color: #FFF;
+}
+
+.bottom-line-container > span {
+	opacity: 0.4;
 }
 
 .photo-player-icons {
@@ -618,11 +623,11 @@ ul#tags-list .tags-number {
 }
 
 .left-arrow-photoplayer {
-	background-position: 10px 8px;
+	background-position: 4px 7px;
 }
 
 .right-arrow-photoplayer {
-	background-position: -20px 8px;
+	background-position: -16px 7px;
 }
 
 .show-thumbs {
@@ -667,8 +672,13 @@ button.close:hover {
 }
 
 .count-of-images {
-	padding: 10px;
+	padding-left: 15px;
 }
+
+.image-message {
+	padding-right: 15px;
+}
+
 .photo-player .jwplayer {
 	top: 60px;
 }
