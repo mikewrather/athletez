@@ -163,13 +163,14 @@ div.right-arrow-container > img {
 }
 
 .thumbs-header {
-	padding: 2%;
-	float: left;
-	width: 96%;
+	padding: 5px 16px;
+	background: rgba(0, 0, 0, .2);
+	height: 18px;
 }
 
 .thumbs-inner {
 	width: 100%;
+	background: #000;
 	overflow-x: hidden;
 	overflow-y: auto;
 	height: 250px;
