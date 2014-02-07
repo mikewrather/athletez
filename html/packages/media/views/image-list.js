@@ -38,7 +38,7 @@ function(facade,  views,   utils,   ImageItemView,            ImageBoardView,   
 			"click .open-photo-player-h": "initPhotoPlayer",
 			"dragover #image-place-holder" : "drag",
 			"drop #image-place-holder":"drop",
-			 "click .add-to-fans-h": "follow",
+			"click .add-to-fans-h": "follow"
 		},
 		
 		renderTemplate: function () {
@@ -135,7 +135,7 @@ function(facade,  views,   utils,   ImageItemView,            ImageBoardView,   
         		this.name = "image list";
         	
 	       this.pageName = (options.pageName)?options.pageName:"profile";
-        	if(options.collecton) this.collection = options.collection;
+           if(options.collecton) this.collection = options.collection;
         	
 			// render template
 			if(!options.dontrenderTemplate) this.renderTemplate();
@@ -176,15 +176,10 @@ function(facade,  views,   utils,   ImageItemView,            ImageBoardView,   
         initPhotoPlayer: function(e) {
 			var _self = this, limit = _self.collection.limit, index = ($(e.target).parents('li').index()), addLiCount = ($("#add-media").length)?1:0; 
 			index -= addLiCount;
+			// array index start from 0. So substracting by 1
+			index -= 1;
 			if(index< 0) index = 0;
-			
-			//_self.collection.offset = 0;//+= _self.collection.limit;
-			//_self.collection.limit = undefined;
-	        //_self.collection.fetch({remove: false});
-	        //$.when(_self.collection.request).done(function() {
- 	      		routing.trigger('photo-player-init', index, _self.collection, _self.user_id, true,  _self.pageName, _self.target_id);
-			//	_self.collection.limit = limit;
-	        //});
+ 	      	routing.trigger('photo-player-init', index, _self.collection, _self.user_id, true,  _self.pageName, _self.target_id);
        	},
 
         seeMore: function(e) {

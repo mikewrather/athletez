@@ -140,7 +140,7 @@ div.right-arrow-container > img {
 }
 
 .thumbs-outer {
-	z-index: 1056;
+	z-index: 1156;
 	max-width: 100%;
 	margin-top: 5px;
 	height: 300px;
@@ -604,12 +604,12 @@ ul#tags-list .tags-number {
 .photo-player-detail-arrow {
 	width: 20px;
 	float: right;
-	height: 20px;
+	height: 17px;
 	display: inline-block;
 }
 
 .up-arrow-photoplayer {
-	background-position: 0px 4px;
+	background-position: 0px 2px;
 }
 
 .down-arrow-photoplayer {
@@ -684,3 +684,12 @@ button.close:hover {
 	top: 60px;
 }
 
+.photo-player-mask {
+	position: absolute;
+	top: 0;
+	left: 0;
+	background: rgba(0, 0,0, 0.5);
+	z-index: 1090;
+	min-height: 100%;
+	min-width: 100%;
+}
