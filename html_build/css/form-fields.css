@@ -1,0 +1,34 @@
+.autoform{
+}
+form.autoform input[type="text"], form.autoform textarea{
+    background-color: #EFEFEF;
+    border: 3px solid #747474;
+    width:90%;
+    padding:5px;
+    margin: 10 10px 0 0;
+    display: inline-block;
+}
+form.autoform input[type="text"]{
+    height : 25px;
+}
+form.autoform a.verify-address-h{
+    color: #529830;
+    text-decoration: underline;
+    font-weight: bold;
+    font-size:.9em;
+}
+form.autoform .input-field input.submit-btn{
+    background-color: #9cca3c;
+}
+form.autoform .input-field input.cancel-btn{
+    background-color: #c43737;
+}
+form.autoform .date-picker-field {
+    width: 100px;
+}
+form.autoform .time-picker-field {
+    width: 100px;
+}
+form.autoform .ampm-field {
+    width: 80px;
+}

@@ -19,7 +19,7 @@ define([
 		'chrome/views/header',
 		'usercontrol/dropdown/view/dropdown',
 		"media/views/image-item",
-		"component/form",
+		"component/forms",
 		"vendor/plugins/dateformat"
         ], 
 function(require, gameHeaderTemplate) {

@@ -30,7 +30,7 @@
 		'jquery.slimscroll.hor' : 'vendor/plugins/jquery.slimscroll.hor',
 		'plupload': 'plupload/js/plupload.full',
 		'jwplayer': "vendor/plugins/jwplayer",
-		'qtip': "vendor/plugiuns/qtip",
+//		'qtip': "vendor/plugiuns/qtip/qtip",
 
 		'custom': 'vendor/custom',
 

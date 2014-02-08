@@ -3,7 +3,7 @@
 define(
 		[ 'require', 'text!pages/home/templates/menu.html', 'facade', 'views', 'jquery.slimscroll', 'common/models/get-city',
 		//plugins
-		"qtip/qtip","text!qtip/qtip.css"],
+		"vendor/plugins/qtip/qtip","text!vendor/plugins/qtip/qtip.css"],
 		function(require, menuTemplate) {
 
 			var MenuView, facade = require('facade'), views = require('views'), SectionView = views.SectionView, getCity = require('common/models/get-city');

@@ -18,7 +18,7 @@ define([
         'usercontrol/dropdown/view/dropdown',
 		'sportorg/models/org',
         'team/collections/seasonteams',
-		"component/form",
+		"component/forms",
         'team/collections/complevels'
         ],
 function(require, headerTemplate, selectSportTemplate) {
