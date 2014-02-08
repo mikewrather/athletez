@@ -98,8 +98,8 @@ define(['require',
 			console.log("vote", this.json);
 			if ($(e.currentTarget).hasClass('voted')) return;
 			var _self = this, vote = new voteModel();
-			vote.userId = this.json[this.index].payload.id;
-			vote.entity_id = this.json[this.index].payload.enttypes_id;
+			vote.userId = this.json.payload[this.index].id;
+			vote.entity_id = this.json.payload[this.index].enttypes_id;
 			vote.set({
 				subject_type_id : vote.entity_id,
 				subject_id : vote.userId
@@ -107,6 +107,13 @@ define(['require',
 			vote.save();
 			$.when(vote.request).done(function() {
 				_self.$el.find('.photo-player-vote-h').addClass('voted');
+				var $votesCount = _self.$el.find(".votes-num-h"), text = $votesCount.text();
+				if(text == "")
+					$votesCount.html("(1)").show();
+				else
+					$votesCount.html("("+(text + 1)+")").show();
+
+				$votesCount.parents("li").addClass("link-disabled");
 			});
 		},
 		
