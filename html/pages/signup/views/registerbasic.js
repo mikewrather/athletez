@@ -29,6 +29,9 @@ define(['require', 'text!signup/templates/registration.html', 'text!signup/templ
 			$("#errormsg, #preview").html("");
 			SectionView.prototype.initialize.call(this, options);
 			this.render();
+
+			// I'm assigning this to a global variable because we are going to be calling it from an el's onclick event
+			routing.signupFacebook = this.signupFacebook;
 		},
 
 		render : function() {
@@ -41,7 +44,7 @@ define(['require', 'text!signup/templates/registration.html', 'text!signup/templ
 
 		events : {
 			"click .regsubmit" : "next",
-			"click #fbpane" : "signupFacebook",
+	//		"click #fbpane" : "signupFacebook",
 			"click #reglogin a" : "showLogin",
 			"click .login" : "showLogin"
 		},
