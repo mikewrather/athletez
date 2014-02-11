@@ -222,7 +222,7 @@ li.sport a:hover {
 	text-decoration: underline;
 }
 
-.fixed-icons {
+#menu .fixed-icons {
 	position: absolute;
 	top: 68px;
 	left: -110px;
