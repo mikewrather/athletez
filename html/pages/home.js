@@ -58,7 +58,7 @@ define(
 				$ = facade.$, 
 				_ = facade._, 
 				Channel = utils.lib.Channel, 
-				cssArr = [ base_url + 'pages/home/home.css' ];
+				cssArr = [ base_url + 'pages/home/home.css', base_url + 'vendor/plugins/qtip/qtip.css' ];
 
 			HomeController = Controller.extend({
 				searchPage: 0,

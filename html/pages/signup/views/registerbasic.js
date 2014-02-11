@@ -1,6 +1,15 @@
 define(['require', 'text!signup/templates/registration.html', 'text!signup/templates/registration_landing.html', 'backbone', 'underscore', 'registration', 'login', 'views', 'signup/views/facebooksignup', 'facade', 'utils', "signup/views/registration-basics-final", "signup/models/registration-basics-final"], function(require, signupBasicTemplate, signupBasicLandingTemplate, backbone, _, RegistrationController, loginController) {
 
-	var SignupBasicView, facade = require('facade'), views = require('views'), FbHeader = require('signup/views/facebooksignup'), utils = require('utils'), Channel = utils.lib.Channel, signupBaseFinalView = require("signup/views/registration-basics-final"), signupBaseFinalModel = require("signup/models/registration-basics-final"), SectionView = backbone.View;
+	var SignupBasicView,
+		facade = require('facade'),
+		views = require('views'),
+		FbHeader = require('signup/views/facebooksignup'),
+		utils = require('utils'),
+		Channel = utils.lib.Channel,
+		signupBaseFinalView = require("signup/views/registration-basics-final"),
+		signupBaseFinalModel = require("signup/models/registration-basics-final"),
+		SectionView = backbone.View;
+
 	SignupBasicView = SectionView.extend({
 		initialize : function(options) {
 			if (options.openAsaPage)
@@ -29,6 +38,9 @@ define(['require', 'text!signup/templates/registration.html', 'text!signup/templ
 			$("#errormsg, #preview").html("");
 			SectionView.prototype.initialize.call(this, options);
 			this.render();
+
+			// I'm assigning this to a global variable because we are going to be calling it from an el's onclick event
+			this.facebookView = new FbHeader({callback: this.callback});
 		},
 
 		render : function() {
@@ -96,8 +108,8 @@ define(['require', 'text!signup/templates/registration.html', 'text!signup/templ
 			event.preventDefault();
 			$(event.target).parent().find('#label').addClass('loading').html('Connecting to Facebook...');
 			$('#RegModal').modal('hide');
-			headView = new FbHeader({callback: this.callback});
-			headView.signupFacebook();
+
+			this.facebookView.loginfb();
 		},
 
 		showLogin : function(event) {

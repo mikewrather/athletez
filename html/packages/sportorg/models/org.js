@@ -8,9 +8,11 @@ define(["facade", "models/base"], function (facade, BaseModel) {
     var SportorgOrgModel,
         _ = facade._;
 
-    SportorgOrgModel = BaseModel.extend({  
+    SportorgOrgModel = BaseModel.extend({
 
-        
+	    url: function() {
+		    return '/api/org/basics/' + this.id;
+	    }
     });
    
     return SportorgOrgModel;

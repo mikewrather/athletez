@@ -18,7 +18,9 @@ define([
         'usercontrols/location/models/save',
 		'chrome/views/header',
 		'usercontrol/dropdown/view/dropdown',
-		"media/views/image-item"
+		"media/views/image-item",
+		"component/forms",
+		"vendor/plugins/dateformat"
         ], 
 function(require, gameHeaderTemplate) {
 
@@ -34,7 +36,11 @@ function(require, gameHeaderTemplate) {
 	    DropDownList = require('usercontrol/dropdown/view/dropdown'),
         verifyAddress = require('usercontrols/location/models/verify-adress'),
 		saveLocation = require('usercontrols/location/models/save'),
+	    FormComponent = require('component/forms'),
+	    dateFormat = require('vendor/plugins/dateformat'),
 		SectionView = views.SectionView;
+
+
 
 	GameHeaderView = SectionView.extend({
         id: 'main-header',
@@ -123,63 +129,234 @@ function(require, gameHeaderTemplate) {
 		        routing.trigger('showSignup');
 		        return;
 	        }
-	        
-			$('#modalPopupGameEdit').modal();
-			this.location.lon = this.model.get("payload").location.lon;
-			this.location.lat = this.model.get("payload").location.lat;
-        	this.showLocation();
+	        var options = {
+		        height : "500px",
+		        width : "500px",
+		        html : '<div id="editGameForm"></div>',
+		        title : "Edit Game Info"
+	        };
+	        routing.trigger('common-popup-open', options);
+	        this.drawEditGameForm();
+		//	$('#modalPopupGameEdit').modal();
+		//	this.location.lon = this.model.get("payload").location.lon;
+		//	this.location.lat = this.model.get("payload").location.lat;
+        //	this.showLocation();
         },
-        
-        
-        showLocation: function() {
-        	routing.trigger('show_location', this.location.lat, this.location.lon, '.view-map-h', function() {
-        	});
-        },
-        
-        setLocation: function(e) {
-			var r = confirm("Are you sure want to set new address?");
-			if(r) {
-				if(this.locationId) {
-					var model = new saveLocation();
-					model.id = this.game_id;
-					model.set({locations_id: this.locationId, id: this.game_id});
-					model.save();
-					$.when(model.request).done(function(){		
-						routing.trigger("popup-close");
-					});
-				}
-			}
+
+		drawEditGameForm: function(){
+
+			var _self = this,
+				dateStr = _self.model.get("payload").time_as_int,
+				gDate = new Date(dateStr);
+
+			console.log(dateStr,gDate);
+
+			var formData = new FormComponent({
+					'date' : {
+						form_values: {
+							defaultValue : dateFormat(gDate,"mmm d, yy"),
+							post_to_server	: false,
+							serverKey : "game_date",
+							serverDbField: 'gameDay',
+							objectValuesToUpdate: ["game_datetime"],
+							getValue: function() {
+								return this.$el.val();
+							}
+						},
+						fieldClass: "date-picker-field",
+						type : 'Text',
+						attr : {
+							'placeholder' : 'Enter Date',
+							'class' : "txt-game-date_h txtDate"
+						},
+
+						showLable : true,
+						label: "Date and Time",
+						//validators : [{type : 'required',
+						//	message : 'Please select date.'}],
+						bindDatePicker : true
+					},
+					'time' : {
+						form_values: {
+							defaultValue : dateFormat(gDate,"h:MM"),
+							post_to_server	: false,
+							serverDbField: 'gameTime',
+							serverKey: "game_time",
+							objectValuesToUpdate: ["game_datetime"]
+						},
+
+						type : 'Text',
+						fieldClass: "time-picker-field",
+						attr : {
+							'placeholder' : 'Time',
+							'class' : "txt-game-time_h hasDatepicker txtTime"
+						},
+
+						showLable : true,
+						label: "&nbsp;",
+						validators : [{
+							type : 'required',
+							message : 'Please enter a time'
+						}, /^(0?[1-9]|1[012])(:[0-5]\d)?$/]
+					},
+
+					'Day_light' : {
+						type : 'DropDown',
+						fieldClass: "ampm-field",
+						form_values : {
+							post_to_server	: false,
+							serverKey : "game_ampm",
+							objectValuesToUpdate: ["game_datetime"],
+							data : {
+								records : [{
+									payload : {
+										name : "AM",
+										value : "AM"
+									}
+								}, {
+									payload : {
+										name : "PM",
+										value : "PM"
+									}
+								}],
+								recordId : 'name',
+								recordValue : 'value',
+								selectedValue : dateFormat(gDate,"TT")
+							},
+							elementId : "hidden_time_value",
+							callback : function(result) {
+							}
+						},
+						showLable : true,
+						label: "&nbsp;"
+					},
+
+					'game_datetime'	: {
+						type: "Hidden",
+						form_values : {
+							serverDbField: 'game_datetime',
+							valueBindings : ['date','time','Day_light'],
+							serverKey: "game_datetime",
+							post_to_server	: true
+						}
+					},
+
+					'eventname' : {
+						form_values: {
+							defaultValue : _self.model.get("payload").event_name,
+							post_to_server	: true,
+							serverDbField: 'event_name',
+							serverKey: "event_name"
+						},
+
+						type : 'Text',
+						fieldClass: "",
+						attr : {
+							'placeholder' : 'Event Name',
+							'class' : "txt-event-name"
+						},
+
+						showLable : true,
+						label: "Event Name"
+
+					},
+					'Location' : {
+						form_values: {
+							defaultValue : _self.model.get("payload").location.full_address,
+							serverKey : "locations_id",
+							post_to_server	: true,
+							serverDbField: 'locations_id'
+						},
+						longitude: _self.model.get("payload").location.lon,
+						latitude : _self.model.get("payload").location.lat,
+						locationId : _self.model.get("payload").location.id,
+						type : 'Location',
+						label: "Location",
+						validators : [{type : 'required',
+							message : 'Please select location and click the "Verify Address" button'}]
+					},
+					'users_id'	: {
+						form_values: {
+							serverKey: _self.users_id,
+							post_to_server	: true,
+							value: _self.user_id
+						},
+						type: "Hidden",
+					},
+					'submit' : {
+						type : 'Submit',
+						fieldClass: "button-field",
+						attr : {
+							'value' : 'Save Changes'
+						},
+						showLable : false,
+						onSubmit : function(e) {
+							var errors = form.commit();
+							if (errors) {
+								// auto scroll to focus element which has error
+								for (var i in errors) {
+									var $ob = $("*[name=" + i + "]"), $pos = $ob.position();
+									$ob.parents(".common-modal #modalBody").animate({
+										scrollTop : $pos.top
+									}, '500', function() {
+										$ob.addClass('focus-error-animation');
+										setTimeout(function() {
+											$ob.removeClass('focus-error-animation');
+										}, 2000);
+									});
+									break;
+								}
+							} else {
+								if(_self.formValues) {
+									var formData = _self.formValues.getFormValues();
+								} else {
+									var formData = form.getValue();
+								}
+
+								var formData = _self.formValues.getFormValues(), self = _self;
+
+								_self.model.set({
+									game_datetime : formData.game_datetime,
+									locations_id : formData['locations_id'],
+									event_name : formData.event_name
+								});
+
+								console.log(self.model);
+								self.model.save({});
+
+								//window.formValues1.showServersErrors([{ key: "gameDay", message: "error_message" }]);
+								$.when(self.model.request).done(function(res){
+									_self.updateHeaderData(self.model.id);
+									routing.trigger('common-popup-close');
+								});
+
+								$.when(self.model.request).fail(function(res) {
+									var response = JSON.parse(res.responseText);
+									var errorArray = response.exec_data.error_array;
+									_self.formValues.showServersErrors(errorArray);
+								});
+							}
+						}
+					},
+					'button' : {
+						type : 'Button',
+						fieldClass: "button-field",
+						attr : {
+							'value' : 'Cancel',
+							'class' : 'cancel-btn'
+						},
+						onClick : function() {
+							routing.trigger('common-popup-close');
+						},
+						showLable : false
+					},
+			}, $('#editGameForm'));
+
+			var form = formData.form;
+			this.formValues = formData.formValues;
+
 		},
-        
-        verifyAddress: function() {
-			var _self = this, address = _self.$el.find('.address-h').val();
-			_self.adressModel = new verifyAddress();
-			_self.adressModel.address = address;
-			_self.adressModel.url();
-			_self.adressModel.set({address: address});
-			_self.adressModel.showError = function(model, error) {
-				try {
-					_self.$el.find('.set-address-h').addClass('link-disabled');
-					_self.$el.find('.address-error-status-h').removeClass('hide').html(error.responseJSON.exec_data.error_array[0].error);
-				} catch(e) {}
-				_self.$el.find('.address-h').addClass('address-field-error').removeClass('address-verified');
-			};
-			_self.adressModel.save({dataType:"json"});
-			_self.$el.find('.address-h').removeClass('address-verified');
-			$.when(_self.adressModel.request).done(function() {
-				console.log(_self.adressModel.toJSON());
-				_self.locationId = _self.adressModel.get("payload").id;
-				if(_self.locationId) {
-					_self.$el.find('.address-error-status-h').addClass('hide');
-					_self.$el.find('.address-h').removeClass('address-field-error').addClass('address-verified');
-					_self.location.lon = _self.adressModel.get("payload").lon;
-					_self.location.lat = _self.adressModel.get("payload").lat;
-					_self.showLocation();
-					_self.$el.find('.set-address-h').removeClass('link-disabled');
-				}
-			});
-		},
-        
+
         editObject: function() {
         	alert("Coming soon");
         },
@@ -192,72 +369,6 @@ function(require, gameHeaderTemplate) {
         	this.$el.find('.update-date-time-h').removeClass('hide');
         },
 
-		tags : {
-			rgxTime : /^(0?[1-9]|1[012])(:[0-5]\d)$/,
-			rgxTimeWhole : /^(0?[1-9]|1[012])$/
-		},
-
-		formatDate: function(date,time,ampm)
-		{
-			var newDate = $.datepicker.formatDate('yy-mm-dd',date);
-			try{
-				var array = time.split(':');
-
-				console.log(array);
-				if(array.length==1) time += ":00";
-				time += " " + ampm;
-
-				newDate += " " + time;
-				return newDate;
-
-			}catch(ex){
-				return false;
-			}
-		},
-
-        updateDateTime: function(e) {
-        	e.preventDefault();
-
-	        var isDataValid = true,
-		        self=this,
-	            date = $(this.el).find('.txt-game-date_h').datepicker('getDate'),
-		        timeText = $(this.el).find('.txtTime').val(),
-	            ampm = $(this.el).find('#hdn_time-period_h').val();
-
-	        var isDataValid=true;
-	        if (!date || !timeText) {
-		        $(self.destination).find(".section-game-date_h").find('.field-message_h').html("Please Se").fadeIn();
-		        isDataValid = false;
-	        }else{
-		        var validTime = timeText.match(self.tags.rgxTime) || timeText.match(self.tags.rgxTimeWhole);
-		        console.log("orginal date",date);
-		        console.log("orginal time",timeText);
-		        console.log("ampm",ampm);
-		        if(!validTime){
-			        console.log("NOT VALID");
-			        $(self.el).find(".section-game-date_h").find('.field-message_h').html(self.messages.selectValidTime).fadeIn();
-			        isDataValid = false;
-		        }else{
-			        $(self.el).find(".section-game-date_h").find('.field-message_h').html('').fadeOut();
-			        date = this.formatDate(date,timeText,ampm);
-			        if(!date) isDataValid = false;
-		        }
-	        }
-	        console.log("new date",date);
-
-	        var event_name = $(self.el).find('#event_name').val();
-        	var _self = this, model = new saveLocation();
-			model.id = this.model.id;
-	        console.log(model,event_name);
-			model.set({'game_datetime': date, 'locations_id': this.locationId, id: this.model.id, event_name:event_name});
-			model.save();
-    	
-        	$.when(model.request).done(function() {
-
-        		_self.updateHeaderData(model.id);
-        	});
-        },
-        
         // update header data
         updateHeaderData: function(id) {
         	var _self = this;

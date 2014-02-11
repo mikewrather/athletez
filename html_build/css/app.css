@@ -443,11 +443,9 @@ ul.common-dropdown {
 	max-height: 200px;
 	overflow-y: auto;
 	background: #FFF;
-	margin: 0 10px;
+	margin: 0 10px 10px 10px;
 	display: none;
 	clear: both;
-	margin-bottom: 10px;
-	margin-top: 10px;
 	overflow-y: auto;
 	overflow-x: hidden;
 }
@@ -462,9 +460,9 @@ ul.common-dropdown li a:hover {
 }
 ul.common-dropdown li {
 	text-align: center;
-	padding: 3px 0px;
-	margin: 3px 5px;
-	width: 100%;
+	padding: 1%;
+	margin: 5px 2%;
+	width: 94%;
 }
 ul.common-dropdown li.selected a {
 	color: #FFF;
@@ -1377,7 +1375,6 @@ div.game-info .game-score .team-score.win {
 	width: 100%;
 }
 form fieldset ul li:first-child {
-	margin-left: -20px;
 }
 form fieldset ul li {
 	height: 25px;
@@ -1417,23 +1414,20 @@ div[data-error]:empty{
 #map-canvas-h img {
 	max-width: none;
 }
-.date-picker-field {
-	width: 100px;
-}
-.time-picker-field {
-	width: 50px;
-}
-.ampm-field {
-	width: 80px;
-}
 .input-field {
 	margin-right: 10px;
 }
 .input-field input {
 	width: 90%;
 }
+.input-field input[type="submit"],.input-field input[type="button"]{
+    width: 100%;
+    color: white;
+    font-size: 1.2em;
+    padding:5px;
+}
 .button-field {
-	width: 100px;
+	width: auto;
 }
 .input-field .dropdown-wrapper {
 	width: 100%

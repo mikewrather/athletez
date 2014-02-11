@@ -106,6 +106,13 @@ define(['facade', 'views/base', 'utils'], function(facade, BaseView, utils) {
 			}
 		},
 
+		checkForUser: function() {
+			if(!_.isUndefined(routing.userLoggedIn) && routing.userLoggedIn)
+				return true;
+			else
+				return false;
+		},
+
 		// **Method:** `render`
 		// Wraps the `__super__` render method adding a callback to set the section's
 		// state as 'rendered'

@@ -3,31 +3,37 @@
 		<ul class="image-actions">
 			<li><a href="javascript: void(0);" class="photo-player-tag-photo-h" title="tag photo">Tag Photo</a></li>
 			<li><a href="javascript: void(0);" class="photo-player-tag-myself-h" title="tag my self">Tag Myself</a></li>
-			<li><a href="javascript: void(0);" class="photo-player-vote-h" title="vote">Vote</a></li>
+			<li><a href="javascript: void(0);" class="photo-player-vote-h" title="vote">Vote <span class="votes-num-h"></span></a></li>
 			<li class="icon-parent"><a href="javascript: void(0);" class="player-share share-on-h" data-share="facebook" title="share on facebook"></a></li>
 			<li class="icon-parent"><a href="javascript: void(0);" class="player-share share-on-h" data-share="twitter" title="share on twitter"></a></li>
 			<li class="icon-parent"><a href="javascript: void(0);" class="player-share share-on-h" data-share="gplus" title="share on google plus"></a></li>
 			<li class="icon-parent"><a href="javascript: void(0);" class="player-share share-on-h" data-share="tumbler" title="share on tumbler"></a></li>
-			<!--li><div class="fb-share-button" data-href="http://developers.facebook.com/docs/plugins/" data-type="box_count"></div></li-->
 		</ul>
+		
+		<div class="closer">
+			<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+		</div>
 
-		<div class="left-arrow-container left-arrow photo-player-back pull-left">
-			<a href="javascript: void(0)" class="photo-player-arrow back-arrow-h">
-				<img src="http://cdn.athletez.com/resources/img/left_arrow.png" />
-			</a>
-		</div>
-		<div class="right-arrow-container right-arrow photo-player-next pull-right">
-			<a href="javascript: void(0)" class="photo-player-arrow next-arrow-h">
-				<img src="http://cdn.athletez.com/resources/img/right_arrow.png" />
-			</a>	
-		</div>
 	</div>
 	<div id="video_container" class="hidden"><span>Loading Video...</span></div>
 	<div class="loading_image"><img src="" class="photo-player-main-image large-image-h" /></div>
 
 	<div class="thumbs-outer">
+		<div class="thumbs-header">
+			<span class="pull-left">All photos (<span class="total-image-count-h">102</span>)</span>
+			<a href="javascript:void(0)" class="toggle-thumbs-h pull-right" title="close">X</a>
+		</div>
 		<div class="thumbs-inner">
 			<ul class="images-list thumb-image-list-h"></ul>
 		</div>
 	</div>
+	
+	<div class="bottom-line-container">
+		<span class="image-message-h image-message"></span>
+		<a href="javascript: void(0)" class="photo-player-arrow photo-player-icons left-arrow-photoplayer back-arrow-h"></a>
+		<a href="javascript: void(0);" class="show-thumbs photo-player-icons toggle-thumbs-h"></a>
+		<a href="javascript: void(0)" class="photo-player-icons photo-player-arrow right-arrow-photoplayer next-arrow-h"></a>
+		<span class="count-of-images"><span class="current-image-number-count-h">17</span> of <span class="total-image-count-h">102</span></span>
+	</div>
+	
 </div>

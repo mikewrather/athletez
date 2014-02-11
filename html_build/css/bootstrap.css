@@ -4378,6 +4378,7 @@ input[type="submit"].btn.btn-mini {
   max-height: 90%;
   min-height: 90%;
   overflow-y: scroll;
+    overflow-x: hidden;
 }
 .modal-form {
   margin-bottom: 0;

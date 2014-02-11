@@ -31,6 +31,10 @@ css/fonts.css
 ----------------
 css/fonts.css
 
+css/form-fields.css
+----------------
+css/form-fields.css
+
 css/jquery-ui-1.10.2.custom.css
 ----------------
 css/jquery-ui-1.10.2.custom.css
@@ -190,6 +194,10 @@ vendor/plugins/iedit2/css/iedit-style.css
 vendor/plugins/iedit2/css/uploader.css
 ----------------
 vendor/plugins/iedit2/css/uploader.css
+
+vendor/plugins/qtip/qtip.css
+----------------
+vendor/plugins/qtip/qtip.css
 
 utils.js
 ----------------
@@ -417,6 +425,8 @@ pages/home/collections/image.js
 text!pages/home/templates/menu.html
 vendor/plugins/jquery.slimscroll.min.js
 packages/common/models/get-city.js
+vendor/plugins/qtip/qtip.js
+text!vendor/plugins/qtip/qtip.css
 pages/home/views/menu.js
 pages/home/views/image-list.js
 text!packages/location/templates/state-item.html
@@ -467,6 +477,8 @@ text!usercontrols/location/templates/layout.html
 usercontrols/location/models/verify-adress.js
 usercontrols/location/models/save.js
 usercontrols/location/views/location.js
+component/forms.js
+vendor/plugins/dateformat.js
 pages/game/views/header.js
 pages/game/views/add-media.js
 pages/game/views/commenton-list.js
@@ -554,7 +566,6 @@ text!profilesetting/templates/basic_info_header_edit.html
 text!profilesetting/templates/basic_info_header_completed.html
 text!usercontrols/imagecropper/templates/layout.html
 usercontrols/imagecropper/imagecropper.js
-component/forms.js
 pages/profilesetting/views/basic_info.js
 text!profilesetting/templates/highschool.html
 text!profilesetting/templates/club.html
@@ -658,6 +669,7 @@ packages/media/models/tag.js
 usercontrols/photo-player/models/tag-myself.js
 component/share.js
 usercontrols/photo-player/views/main.js
+text!usercontrols/photo-player/templates/comment-form.html
 usercontrols/photo-player/models/commentonform.js
 usercontrols/photo-player/views/comment-form.js
 usercontrols/photo-player/views/comments.js
@@ -698,6 +710,8 @@ packages/fbinvite/views/image-list.js
 pages/fbinvite/views/image-list.js
 pages/fbinvite/collections/fbinvite.js
 pages/fbinvite.js
+text!packages/common/templates/popup.html
+packages/common/views/popup.js
 application.js
 pages/login/models/Loginmodel.js
 text!login/templates/logintemplate.html
@@ -903,6 +917,8 @@ pages/home/collections/image.js
 text!pages/home/templates/menu.html
 vendor/plugins/jquery.slimscroll.min.js
 packages/common/models/get-city.js
+vendor/plugins/qtip/qtip.js
+text!vendor/plugins/qtip/qtip.css
 pages/home/views/menu.js
 text!media/templates/image-item.html
 packages/vote/models/vote.js
@@ -953,6 +969,8 @@ text!usercontrols/location/templates/layout.html
 usercontrols/location/models/verify-adress.js
 usercontrols/location/models/save.js
 usercontrols/location/views/location.js
+component/forms.js
+vendor/plugins/dateformat.js
 pages/game/views/header.js
 text!media/templates/add-media.html
 pages/game/views/add-media.js
@@ -1074,7 +1092,6 @@ text!profilesetting/templates/basic_info_header_edit.html
 text!profilesetting/templates/basic_info_header_completed.html
 text!usercontrols/imagecropper/templates/layout.html
 usercontrols/imagecropper/imagecropper.js
-component/forms.js
 pages/profilesetting/views/basic_info.js
 text!profilesetting/templates/highschool.html
 text!profilesetting/templates/club.html
@@ -1179,6 +1196,7 @@ packages/media/models/tag.js
 usercontrols/photo-player/models/tag-myself.js
 component/share.js
 usercontrols/photo-player/views/main.js
+text!usercontrols/photo-player/templates/comment-form.html
 usercontrols/photo-player/models/commentonform.js
 usercontrols/photo-player/views/comment-form.js
 usercontrols/photo-player/views/comments.js
@@ -1219,6 +1237,8 @@ packages/fbinvite/views/image-list.js
 pages/fbinvite/views/image-list.js
 pages/fbinvite/collections/fbinvite.js
 pages/fbinvite.js
+text!packages/common/templates/popup.html
+packages/common/views/popup.js
 application.js
 packages/vote/views/vote-section.js
 pages/profile/models/basics.js
@@ -1473,6 +1493,8 @@ pages/home/collections/image.js
 text!pages/home/templates/menu.html
 vendor/plugins/jquery.slimscroll.min.js
 packages/common/models/get-city.js
+vendor/plugins/qtip/qtip.js
+text!vendor/plugins/qtip/qtip.css
 pages/home/views/menu.js
 pages/home/views/image-list.js
 text!packages/location/templates/state-item.html
@@ -1540,6 +1562,7 @@ pages/team/views/complevel-item.js
 pages/team/views/complevel-list.js
 pages/team/views/sport-item.js
 pages/team/views/sport-list.js
+component/forms.js
 pages/team/views/header.js
 pages/team/views/add-media.js
 text!sportorg/templates/competitorteam-item.html
@@ -1575,7 +1598,6 @@ text!profilesetting/templates/basic_info_header_edit.html
 text!profilesetting/templates/basic_info_header_completed.html
 text!usercontrols/imagecropper/templates/layout.html
 usercontrols/imagecropper/imagecropper.js
-component/forms.js
 pages/profilesetting/views/basic_info.js
 text!profilesetting/templates/highschool.html
 text!profilesetting/templates/club.html
@@ -1679,6 +1701,7 @@ packages/media/models/tag.js
 usercontrols/photo-player/models/tag-myself.js
 component/share.js
 usercontrols/photo-player/views/main.js
+text!usercontrols/photo-player/templates/comment-form.html
 usercontrols/photo-player/models/commentonform.js
 usercontrols/photo-player/views/comment-form.js
 usercontrols/photo-player/views/comments.js
@@ -1719,6 +1742,8 @@ packages/fbinvite/views/image-list.js
 pages/fbinvite/views/image-list.js
 pages/fbinvite/collections/fbinvite.js
 pages/fbinvite.js
+text!packages/common/templates/popup.html
+packages/common/views/popup.js
 application.js
 pages/login/models/Loginmodel.js
 text!login/templates/logintemplate.html
@@ -1727,6 +1752,7 @@ pages/login/views/Loginview.js
 pages/login/models/Logoutmodel.js
 pages/login.js
 pages/chrome/views/header.js
+vendor/plugins/dateformat.js
 pages/game/views/header.js
 pages/game/views/add-media.js
 pages/game/views/commenton-list.js
@@ -1806,6 +1832,7 @@ pages/team/views/sport-item.js
 pages/team/views/sport-list.js
 text!usercontrol/dropdown/template/layout.html
 usercontrols//dropdown/view/dropdown.js
+component/forms.js
 pages/team/views/header.js
 text!media/templates/add-media.html
 pages/profile/models/addmedia.js
@@ -1981,6 +2008,8 @@ pages/home/collections/image.js
 text!pages/home/templates/menu.html
 vendor/plugins/jquery.slimscroll.min.js
 packages/common/models/get-city.js
+vendor/plugins/qtip/qtip.js
+text!vendor/plugins/qtip/qtip.css
 pages/home/views/menu.js
 pages/home/views/image-list.js
 text!packages/location/templates/state-item.html
@@ -2030,6 +2059,7 @@ text!usercontrols/location/templates/layout.html
 usercontrols/location/models/verify-adress.js
 usercontrols/location/models/save.js
 usercontrols/location/views/location.js
+vendor/plugins/dateformat.js
 pages/game/views/header.js
 pages/game/views/add-media.js
 pages/game/views/commenton-list.js
@@ -2059,7 +2089,6 @@ text!profilesetting/templates/basic_info_header_edit.html
 text!profilesetting/templates/basic_info_header_completed.html
 text!usercontrols/imagecropper/templates/layout.html
 usercontrols/imagecropper/imagecropper.js
-component/forms.js
 pages/profilesetting/views/basic_info.js
 text!profilesetting/templates/highschool.html
 text!profilesetting/templates/club.html
@@ -2163,6 +2192,7 @@ packages/media/models/tag.js
 usercontrols/photo-player/models/tag-myself.js
 component/share.js
 usercontrols/photo-player/views/main.js
+text!usercontrols/photo-player/templates/comment-form.html
 usercontrols/photo-player/models/commentonform.js
 usercontrols/photo-player/views/comment-form.js
 usercontrols/photo-player/views/comments.js
@@ -2204,6 +2234,8 @@ packages/fbinvite/views/image-list.js
 pages/fbinvite/views/image-list.js
 pages/fbinvite/collections/fbinvite.js
 pages/fbinvite.js
+text!packages/common/templates/popup.html
+packages/common/views/popup.js
 application.js
 pages/login/models/Loginmodel.js
 text!login/templates/logintemplate.html
@@ -2478,6 +2510,8 @@ pages/home/collections/image.js
 text!pages/home/templates/menu.html
 vendor/plugins/jquery.slimscroll.min.js
 packages/common/models/get-city.js
+vendor/plugins/qtip/qtip.js
+text!vendor/plugins/qtip/qtip.css
 pages/home/views/menu.js
 pages/home/views/image-list.js
 text!packages/location/templates/state-item.html
@@ -2517,6 +2551,8 @@ text!usercontrols/location/templates/layout.html
 usercontrols/location/models/verify-adress.js
 usercontrols/location/models/save.js
 usercontrols/location/views/location.js
+component/forms.js
+vendor/plugins/dateformat.js
 pages/game/views/header.js
 pages/game/views/add-media.js
 pages/game/views/commenton-list.js
@@ -2604,7 +2640,6 @@ text!profilesetting/templates/basic_info_header_edit.html
 text!profilesetting/templates/basic_info_header_completed.html
 text!usercontrols/imagecropper/templates/layout.html
 usercontrols/imagecropper/imagecropper.js
-component/forms.js
 pages/profilesetting/views/basic_info.js
 text!profilesetting/templates/highschool.html
 text!profilesetting/templates/club.html
@@ -2708,6 +2743,7 @@ packages/media/models/tag.js
 usercontrols/photo-player/models/tag-myself.js
 component/share.js
 usercontrols/photo-player/views/main.js
+text!usercontrols/photo-player/templates/comment-form.html
 usercontrols/photo-player/models/commentonform.js
 usercontrols/photo-player/views/comment-form.js
 usercontrols/photo-player/views/comments.js
@@ -2748,6 +2784,8 @@ packages/fbinvite/views/image-list.js
 pages/fbinvite/views/image-list.js
 pages/fbinvite/collections/fbinvite.js
 pages/fbinvite.js
+text!packages/common/templates/popup.html
+packages/common/views/popup.js
 application.js
 pages/login/models/Loginmodel.js
 text!login/templates/logintemplate.html
@@ -2780,6 +2818,8 @@ packages/location/collections/states.js
 text!pages/home/templates/menu.html
 vendor/plugins/jquery.slimscroll.min.js
 packages/common/models/get-city.js
+vendor/plugins/qtip/qtip.js
+text!vendor/plugins/qtip/qtip.css
 pages/home/views/menu.js
 text!media/templates/image-item.html
 packages/vote/models/vote.js
@@ -2983,6 +3023,8 @@ text!usercontrols/location/templates/layout.html
 usercontrols/location/models/verify-adress.js
 usercontrols/location/models/save.js
 usercontrols/location/views/location.js
+component/forms.js
+vendor/plugins/dateformat.js
 pages/game/views/header.js
 pages/game/views/add-media.js
 pages/game/views/commenton-list.js
@@ -3070,7 +3112,6 @@ text!profilesetting/templates/basic_info_header_edit.html
 text!profilesetting/templates/basic_info_header_completed.html
 text!usercontrols/imagecropper/templates/layout.html
 usercontrols/imagecropper/imagecropper.js
-component/forms.js
 pages/profilesetting/views/basic_info.js
 text!profilesetting/templates/highschool.html
 text!profilesetting/templates/club.html
@@ -3185,6 +3226,7 @@ packages/media/models/tag.js
 usercontrols/photo-player/models/tag-myself.js
 component/share.js
 usercontrols/photo-player/views/main.js
+text!usercontrols/photo-player/templates/comment-form.html
 usercontrols/photo-player/models/commentonform.js
 usercontrols/photo-player/views/comment-form.js
 usercontrols/photo-player/views/comments.js
@@ -3226,6 +3268,8 @@ packages/fbinvite/views/image-list.js
 pages/fbinvite/views/image-list.js
 pages/fbinvite/collections/fbinvite.js
 pages/fbinvite.js
+text!packages/common/templates/popup.html
+packages/common/views/popup.js
 application.js
 pages/login/models/Loginmodel.js
 text!login/templates/logintemplate.html
@@ -3570,6 +3614,8 @@ pages/home/collections/image.js
 text!pages/home/templates/menu.html
 vendor/plugins/jquery.slimscroll.min.js
 packages/common/models/get-city.js
+vendor/plugins/qtip/qtip.js
+text!vendor/plugins/qtip/qtip.css
 pages/home/views/menu.js
 pages/home/views/image-list.js
 text!packages/location/templates/state-item.html
@@ -3609,6 +3655,8 @@ text!usercontrols/location/templates/layout.html
 usercontrols/location/models/verify-adress.js
 usercontrols/location/models/save.js
 usercontrols/location/views/location.js
+component/forms.js
+vendor/plugins/dateformat.js
 pages/game/views/header.js
 pages/game/views/add-media.js
 pages/game/views/commenton-list.js
@@ -3696,7 +3744,6 @@ text!profilesetting/templates/basic_info_header_edit.html
 text!profilesetting/templates/basic_info_header_completed.html
 text!usercontrols/imagecropper/templates/layout.html
 usercontrols/imagecropper/imagecropper.js
-component/forms.js
 pages/profilesetting/views/basic_info.js
 text!profilesetting/templates/highschool.html
 text!profilesetting/templates/club.html
@@ -3800,6 +3847,7 @@ packages/media/models/tag.js
 usercontrols/photo-player/models/tag-myself.js
 component/share.js
 usercontrols/photo-player/views/main.js
+text!usercontrols/photo-player/templates/comment-form.html
 usercontrols/photo-player/models/commentonform.js
 usercontrols/photo-player/views/comment-form.js
 usercontrols/photo-player/views/comments.js
@@ -3840,6 +3888,8 @@ packages/fbinvite/views/image-list.js
 pages/fbinvite/views/image-list.js
 pages/fbinvite/collections/fbinvite.js
 pages/fbinvite.js
+text!packages/common/templates/popup.html
+packages/common/views/popup.js
 application.js
 pages/login/models/Loginmodel.js
 text!login/templates/logintemplate.html

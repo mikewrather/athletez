@@ -6,7 +6,7 @@ define( ["facade", "utils", "collections", "chrome", "controller", "profile", "i
 	"game", "team", "registration","profilesetting","userresume","packages/site/collections/phrases","usercontrols/tag/tag",
 	"usercontrols/addgame/addgame","signup","login", "usercontrols/photo-player/photo-player", "usercontrols/add-club/add-club",
 	"utils/storage", 'usercontrols/location/views/view-location','signup/views/facebooksignup',"usercontrols/addevent/addevent",'chrome/views/header',
-	'browserpop/views/browser','usercontrols/landing/views/landing', 'pages/fbinvite'],
+	'browserpop/views/browser','usercontrols/landing/views/landing', 'pages/fbinvite','packages/common/views/popup'],
 function (facade, utils, collections, chromeBootstrap, Controller, ProfileController, ImageController, HomeController, VideoPreviewController,
 	GameController, TeamController, RegistrationController,ProfileSetting,UserResume, SitePhraseList , TagController,
 	AddGameController, SignupController,LoginController,PhotoPlayerController, AddClubController,
@@ -345,155 +345,33 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
             routing.on('fbInvite', function(id, options) {
             	self.showFBInviteOnPopup(id, options);
             });
-            
+
             routing.off('popup-close');
             routing.on('popup-close', function(e) {
+	            console.log(e);
             	if(e) {
 	            	$(e.currentTarget).modal('hide');
-   		         	$(e.currentTarget).unbind().remove();            		
+   		         	$(e.currentTarget).unbind().remove();
+		            $('.modal-backdrop').unbind().fadeOut();
             	} else {
 	            	$("#modalPopup").modal('hide');
-   		         	$("#modalPopup").unbind().remove();				            		
+   		         	$("#modalPopup").unbind().remove();
+		            $('.modal-backdrop').unbind().fadeOut();
             	}
-            	routing.trigger('common-popup-close');
             });
-            
+
+
             routing.off('common-popup-open');
             routing.on('common-popup-open', function(options) {
-            	// set the popup title
-            	// append HTML
-            	if(!options.id)
-            		var id = "modal-popup-"+Math.floor(Math.random() * Math.random() * 50 * Math.random() * 50);
-            	else
-            		var id = options.id;
-            		
-            	var cl = (options.fullPage)?"full-page-modal":"";
-            	var html = '<div id="'+id+'" class="modal '+cl+' common-modal hide fade model-popup-h in">'+
-        		'<div class="modal-header"><a href="javascript: void(0);" title="close" data-id="'+id+'" class="close"'+ 
-        		'>&times;</a><h3 class="modal-header-h">Header</h3></div>'+
-        		'<div class="modal-body page-content-h" id="modalBody"></div>'+
-        		'</div>';
-        		
-            	$("body").append(html);
-
-	            if(options.addClass != undefined && options.addClass.length){
-		            _.each(options.addClass,function(cssclass){
-			            console.log(cssclass);
-			            $('#'+id).addClass(cssclass);
-		            });
-	            }
-	            
-	            if(options.background_image){
-		            console.log(options.background_image);
-			        $('#'+id).css({
-				        'background': 'url(' + options.background_image + ') no-repeat center center fixed #FFF',
-				        '-webkit-background-size': 'cover',
-				        '-moz-background-size': 'cover',
-				        '-o-background-size': 'cover',
-				        'background-size': 'cover'
-			        });
-                }
-
-	            $('#'+id+ ' .close').attr("data-id",id);
-            	if(options.title) {
-            	  $("#"+id).find(".modal-header-h").html(options.title);
-            	   $("#"+id).find(".modal-header").show();
-            	} else {
-            	  $("#"+id).find(".modal-header").hide();
-            	}
-
-            	if(options.width){
-		            $("#"+id).css({"width": options.width});
-
-		            var added_width = parseInt($("#"+id).css('border-left'),10) +
-			            parseInt($("#"+id).css('border-right'),10) +
-			            parseInt($("#"+id).css('padding-left'),10) +
-			            parseInt($("#"+id).css('padding-right'),10);
-
-					var true_width;
-		            if(options.width.indexOf('%') > 0)
-		            {
-			            var percentage_number = parseInt(options.width,10);
-				        true_width = (window.innerWidth * (percentage_number/100)) + added_width;
-		            }
-		            else true_width = (parseInt(options.width,10) + added_width);
-
-					  if(options.width != "100%") {
-							var l = (($(window).width() - options.width.replace("px", ""))/2)+"px";
-			          } else {
-							var l = "0%";	
-			          }
-			          $("#"+id).css({"left":l});
-	            }
-
-            	if(options.height) {
-		            $("#"+id).css({"height": options.height});
-
-		            var added_height = parseInt($("#"+id).css('border-top'),10) +
-			            parseInt($("#"+id).css('border-bottom'),10) +
-			            parseInt($("#"+id).css('padding-top'),10) +
-			            parseInt($("#"+id).css('padding-bottom'),10);
-
-		            var true_height;
-		            if(options.height.indexOf('%') > 0) {
-			            var percentage_number = parseInt(options.height,10);
-			            true_height = (window.innerHeight * (percentage_number/100)) + added_height;
-		            }
-					else true_height = (parseInt(options.height,10) + added_height);
-
-					if(options.height != "100%") {
-						var t = (($(window).height() - options.height.replace("px", ""))/2) - 30+"px";					
-					} else {
-						var t = "0%";
-					}
-					var windowHeight = $(window).height();
-		            $("#"+id).css({
-			            "top":t,
-			            "margin-top":"0%"//true_height<$(window).height() ? -true_height/2 : -$(window).height()/2
-		            });
-	            }
-
-            	// if we have HTML then place it in popup
-            	if(options.html) $("#"+id).find("#modalBody").html(options.html);
-            	// open modal popup
-				$("#"+id).modal('show');
-
-
-	            if(_.isUndefined(options.slimScroll) || !options.slimScroll) {
-		            $("#"+id).find('#modalBody').slimScroll({
-			            height:(options.height)?options.height:'400px',
-			            railVisible:true,
-			            allowPageScroll:true,
-			            disableFadeOut:true
-		            });
-	            }
-
-
-	            Channel('popup-finished-launch-' + id).publish();
-
+	            var popupView = require('packages/common/views/popup'),
+		            popup = new popupView(options);
             });
-            
-            routing.off('common-popup-close');
-            routing.on('common-popup-close', function(e) {
-				$(".common-modal:not(#Browser-detect)").remove();
-  				if(!$(".common-modal").length) $(".modal-backdrop").remove();
-            });
-            
+
             $(document).off('hidden.bs.modal', '#modalPopup, #photoPlayerModal');
             $(document).on('hidden.bs.modal', '#modalPopup, #photoPlayerModal', function (e) {
   				routing.trigger('popup-close', e);
 			});
-            
-            $(document).off('.common-modal .close');
-            $(document).on('click', '.common-modal .close', function (e) {
-  				var id = $(e.currentTarget).data("id");
-  				$("#"+id).remove();
-  				if(!$(".common-modal").length) {
-  					$(".modal-backdrop").remove();
-  				}
-  				//routing.trigger('popup-close', e);
-			});
-            
+
             // initialize add game popup common trigger 
             routing.off('add-game');
             routing.on('add-game', function(id,teams_id,sports_id,users_id, callback) {
@@ -954,7 +832,8 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
             base_url + "css/bootstrap-responsive.css",
             base_url + "css/app.css",
             base_url + "css/common.css",
-            base_url + 'css/jquery-ui-1.10.2.custom.css']);
+            base_url + 'css/jquery-ui-1.10.2.custom.css',
+            base_url + 'css/form-fields.css']);
         },
 
         // Pub / Sub

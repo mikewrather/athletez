@@ -58,7 +58,7 @@ define(['require',
 					_self.render();
 				}
 			} catch(e) {
-				console.log(e);
+				console.error(e);
 			}
 		},
 		
