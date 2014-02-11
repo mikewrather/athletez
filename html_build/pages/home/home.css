@@ -181,7 +181,7 @@ li.sport a:hover {
 .underline-text {
 	text-decoration: underline;
 }
-.fixed-icons {
+#menu .fixed-icons {
 	position: absolute;
 	top: 68px;
 	left: -110px;
