@@ -95,11 +95,10 @@ define(['require',
 		},
 
 		vote : function(e) {
-			console.log("vote", this.json);
 			if ($(e.currentTarget).hasClass('voted')) return;
 			var _self = this, vote = new voteModel();
-			vote.userId = this.json[this.index].payload.id;
-			vote.entity_id = this.json[this.index].payload.enttypes_id;
+			vote.userId = this.json.payload[this.index].id;
+			vote.entity_id = this.json.payload[this.index].enttypes_id;
 			vote.set({
 				subject_type_id : vote.entity_id,
 				subject_id : vote.userId
@@ -107,6 +106,13 @@ define(['require',
 			vote.save();
 			$.when(vote.request).done(function() {
 				_self.$el.find('.photo-player-vote-h').addClass('voted');
+				var $votesCount = _self.$el.find(".votes-num-h"), text = $votesCount.text();
+				if(text == "")
+					$votesCount.html("(1)").show();
+				else
+					$votesCount.html("("+(text + 1)+")").show();
+
+				$votesCount.parents("li").addClass("link-disabled");
 			});
 		},
 		
@@ -171,15 +177,15 @@ define(['require',
 		
 		
 		getShareData: function() {
-			var record = this.json[this.index];
+			var record = this.json.payload[this.index];
 			return { 
 				'record': record,
 				'userId': (this.user_id)?"/"+this.user_id:'',
 				'pageId': (this.pageId)?"/"+this.pageId:'',
 				'User': this.getUserForMedia(),
 				'Sport': this.getSportForMedia(),
-				'sportId': (record.payload.media_obj.sports_id)?"/sport/"+record.payload.media_obj.sports_id:'',
-				'mediaId': (record.payload.media_id)?"/media/"+record.payload.media_id:""
+				'sportId': (record.media_obj.sports_id)?"/sport/"+record.media_obj.sports_id:'',
+				'mediaId': (record.media_id)?"/media/"+record.media_id:""
 			};
 		},
 		
@@ -189,7 +195,7 @@ define(['require',
 			var link = this.getLink(data),
 				name = data.User.name + " - " + data.Sport.sport_name,
 				caption = "Athletez.com",
-				image = data.record.payload.image_path,
+				image = data.record.image_path,
 				description = '';
 
 			var fb = new FbComponent();
@@ -210,11 +216,11 @@ define(['require',
 		},
 
 		getUserForMedia: function(){
-			return this.json[this.index].payload.media_obj.users_obj;
+			return this.json.payload[this.index].media_obj.users_obj;
 		},
 
-		getSportForMedia: function(){
-			return this.json[this.index].payload.media_obj.sports_obj;
+		getSportForMedia: function() {
+			return this.json.payload[this.index].media_obj.sports_obj;
 		},
 
 		changeImage : function(e) {
@@ -275,6 +281,7 @@ define(['require',
 					_id : mpay.id,
 					_index : i
 				};
+
 				switch(mpay.enttypes_id) {
 					case '23':
 						//videos
@@ -493,7 +500,7 @@ define(['require',
 			console.error(mpay);
 			
 			_self.$el.find(".current-image-number-count-h").text(parseInt(_self.index) + 1);
-			if (_self.index >= this.json.length - 1) {
+			if (_self.index >= this.json.payload.length - 1) {
 				this.$el.find('.next-arrow-h').addClass('disable-arrow-link');
 			} else {
 				this.$el.find('.next-arrow-h').removeClass('disable-arrow-link');
@@ -704,7 +711,7 @@ define(['require',
 		setUpTagPhotoView : function() {
 			//TagView
 			var self = this;
-			var data = this.json[this.index].payload;
+			var data = this.json.payload[this.index];
 			var isOwner = null;
 			var sportsId = null;
 			var userId = null;
@@ -734,7 +741,7 @@ define(['require',
 
 			var fData = data || {};
 			var payload = {
-				media_id : this.json[this.index].payload.media_id,
+				media_id : this.json.payload[this.index].media_id,
 				tag_array : JSON.stringify(fData)
 			};
 
@@ -743,12 +750,9 @@ define(['require',
 			$.when(tagModel.request).done(function() {
 				self.setUpTagViewSection();
 			});
-
-			
-
 		},
 		setUpTagViewSection : function() {
-			var _self = this, mpay = this.json[_self.index].payload, extra = {
+			var _self = this, mpay = this.json.payload[_self.index], extra = {
 				_enttypes_id : mpay.enttypes_id,
 				_id : mpay.id,
 				_media_id : mpay.media_id,
@@ -757,11 +761,11 @@ define(['require',
 			};
 			routing.trigger('tags-fetch-new-form-data', extra._enttypes_id, extra._media_id,mpay);
 		},
-		TagMyself : function(){
+		TagMyself : function(e){
 			var self = this;
 			var newData ={1 : [this.getUserId()]};
 			var payload = {
-				media_id : this.json[this.index].payload.media_id,
+				media_id : this.json.payload[this.index].media_id,
 				tag_array : JSON.stringify(newData)
 			};
 			
@@ -770,6 +774,7 @@ define(['require',
 			tagMyselfModel.save();
 			$.when(tagMyselfModel.request).done(function() {
 				self.setUpTagViewSection();
+				$(e.target).parents("li").addClass("link-disabled");
 			});
 		},
 		getUserId: function() {

@@ -42,9 +42,16 @@ function (
 			_enttypes_id : mpay.enttypes_id,
 			_id : mpay.id
 			},
+			
 			show_edit = false,
 			standard_thumb = null;
 			extra.Sportsteam = null;
+
+			if(routing && routing.loggedInUserId && routing.loggedInUserId == mpay.subject_id) {
+				$(".photo-player-tag-myself-h").parents("li").addClass("link-disabled");
+			}
+
+			console.error(mpay);
 
 	        var parser = new entParser({
 		        mpay:mpay.subject,
