@@ -9,7 +9,8 @@ define([
         'registration',
         'signup',
         'signup/views/shopopup',
-        'utils/storage'
+        'utils/storage',
+		'facebook'
         ], 
 function (
         vendor,
@@ -24,13 +25,25 @@ function (
         BaseView = views.BaseView,
         $ = vendor.$,
         _ = vendor._,
-        Mustache = vendor.Mustache;
+        Mustache = vendor.Mustache,
+	    actionFunction;
+
+
 
       HeaderView = BaseView.extend({
 
        initialize: function(options) {
        		if(options && options.callback)
 	       		this.callback = options.callback;
+
+	  //     this.loadFBLogin();
+	       FB.init({
+		       appId      : App.Settings.appId,
+		       status     : true, // check login status
+		       cookie     : true, // enable cookies to allow the server to access the session
+		       xfbml      : true,  // parse XFBML
+		       oauth      : true
+	       });
        },
                
              
@@ -44,30 +57,11 @@ function (
            }
             // Additional JS functions here
            var func = _.bind(current.getFBlogin, this);
-           this.Fbinit(func);
-           // Load the SDK Asynchronously
-           this.loadFBLogin();
+           this.getFBlogin();
         },
 
-        Fbinit : function(callLogin){
-            var current =this;
-            window.fbAsyncInit = function() {
-	            console.log("facebook");
-                FB.init({
-	                appId      : App.Settings.appId,
-                    status     : true, // check login status
-                    cookie     : true, // enable cookies to allow the server to access the session
-                    xfbml      : true,  // parse XFBML
-                    oauth      : true
-                });
-
-                // Additional init code here
-                callLogin();
-            };
-            
-        },
         loadFBLogin:function() {
-            this.registrationController.refreshPage();
+        //    this.registrationController.refreshPage();
                 var js, id = 'facebook-jssdk', ref = document.getElementsByTagName('script')[0];
                 if (document.getElementById(id)) {
                    
@@ -79,30 +73,33 @@ function (
                 ref.parentNode.insertBefore(js, ref);
             },
         getFBlogin:function(){
-            var temp = this;
+            var _self = this;
             FB.getLoginStatus(function(response) {
+	            console.log("FB Response",response)
                         if (response.status === 'connected') {
+	                        this.actionFunction = function(){
                             FB.api('/me', function(response) {
-                            	if(temp.linkWithFB) {
+                            	if(_self.linkWithFB) {
                             		alert("Facebook Account linked Successfully.");
                             	}
                                // this.signupc = new scontroller({"route":""});
-                                 routing.trigger('registration-with-facebook', temp.callback);
+                                 routing.trigger('registration-with-facebook', _self.callback);
                                 //Channel('registration-with-facebook').publish();
                                 //this.pop = new popupview();
 
                             });
+	                        }
                         } else if (response.status === 'not_authorized') {
-                        	if(temp.linkWithFB) {
+                        	if(_self.linkWithFB) {
                             	alert("There was a problem trying to establish a connection to Facebook.");
                             }
                             console.log('not_authorized');
-                             if(!temp.loginInfo)
-                             temp.loginInfo=temp.loginfb();
+                             if(!_self.loginInfo)
+                             _self.loginInfo=_self.loginfb();
                         } else {
                             //this.loginfb();
-                             if(!temp.loginInfo)
-                             temp.loginInfo=temp.loginfb();
+                             if(!_self.loginInfo)
+                             _self.loginInfo=_self.loginfb();
                         }
             },{scope: 'email, user_birthday, user_photos'});
             
@@ -115,7 +112,7 @@ function (
                        // Channel('registration-with-facebook').publish();
                         //this.pop = new popupview();
                     } else {
-                        alert('Cancelled ');
+                        alert('Facebook Login has been Cancelled');
                     }
                 },{scope: 'email, user_birthday, user_photos'});
             },

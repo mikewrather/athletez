@@ -18,6 +18,7 @@ require.config({
 		'backbone'      : [cdn + 'vendor/backbone', s3 + 'vendor/backbone', '/vendor/backbone'],
 		'underscore'    : [cdn + 'vendor/underscore', s3 + 'vendor/underscore', '/vendor/underscore'],
 		jquery        : '/vendor/jquery.1.10.2.min',
+		'facebook'      : "//connect.facebook.net/en_US/all",
 
 		// Plugins
 		'bootstrap'             : [cdn + 'vendor/plugins/bootstrap', s3 + 'vendor/plugins/bootstrap', '/vendor/plugins/bootstrap'],
@@ -154,6 +155,9 @@ require.config({
 		},
 		'jquerytimepicker': {
 			deps: ['jquery', 'jqueryui']
+		},
+		'facebook':{
+			exports: 'FB'
 		}
 	},
 	priority: ['text', 'modernizr', 'json2', 'vendor', 'utils', 'facade', 'syncs', 'models', 'views', 'collections', 'controller'],
