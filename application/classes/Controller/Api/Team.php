@@ -191,6 +191,11 @@
 				$arguments["cities_id"] = trim($this->request->query('cities_id'));
 			}
 
+			if(trim($this->request->query('states_id')) != "")
+			{
+				$arguments["states_id"] = trim($this->request->query('states_id'));
+			}
+
 			$legal_orderby = array('votes', 'followers', 'newest','random');
 			if(trim($this->request->query('orderby')) != "")
 			{

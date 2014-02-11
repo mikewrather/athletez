@@ -404,6 +404,18 @@ class Model_Sportorg_Team extends ORM
 		$this->join('orgs')->on('orgs.id', '=', 'org_sport_link.orgs_id');
 	//	$this->join('locations')->on('locations.id', '=', 'orgs.locations_id');
 
+		$enttype_id = Model_Site_Enttype::getMyEntTypeID($this);
+		$team_votes = DB::select(array(DB::expr('COUNT(id)'),'num_votes'))
+			->from('votes')
+			->where('subject_enttypes_id','=',$enttype_id)
+			->where('subject_id','=',DB::expr('`sportorg_team`.`id`'));
+
+		$followers = DB::select(array(DB::expr('COUNT(id)'),'num_followers'))
+			->from('followers')
+			->where('subject_enttypes_id','=',$enttype_id)
+			->where('subject_id','=',DB::expr('`sportorg_team`.`id`'));
+		$this->select(array($team_votes,'num_votes'),array($followers,'num_followers'));
+
 		$classes_arr = array(
 			'Sportorg_Team' => 'sportorg_team',
 			'Sportorg_Orgsportlink' => 'org_sport_link',
@@ -425,20 +437,25 @@ class Model_Sportorg_Team extends ORM
 			$this->where('sportorg_team.year', '=', $year);
 		}
 
-		$enttype_id = Model_Site_Enttype::getMyEntTypeID($this);
-
-		$counts = DB::select(array(DB::expr('COUNT(id)'),'num_votes'))
-				->select(array('subject_id', 'teams_id'))
-				->from('votes')
-			->where('subject_enttypes_id','=',$enttype_id);
-
 		if (!isset($orderby)){
 			$this->order_by('orgs.name','ASC');
-			//$this->join(array($counts,'filtered'), 'left')->on('filtered.teams_id', '=', 'sportorg_team.id');
-			//$this->order_by('num_votes', 'asc');
 		}else{
-			//TODO, add by jeffrey
-			//$this->order_by($orderby, 'asc');
+			if (!isset($orderby) || $orderby == 'postTime')
+			{
+				$this->order_by('id', 'desc');
+			}
+			else if ($orderby == 'votes')
+			{
+				$this->order_by('num_votes', 'desc');
+			}
+			else if ($orderby == 'followers')
+			{
+				$this->order_by('num_followers', 'desc');
+			}
+			elseif($orderby=='random')
+			{
+				$this->order_by(DB::expr('RAND()'));
+			}
 		}
 
 		if (isset($searchtext))
@@ -466,6 +483,9 @@ class Model_Sportorg_Team extends ORM
 		if (isset($cities_id) && $cities_id > 0){
 			$this->where('orgs.cities_id', '=', $cities_id);
 		}
+		if (isset($states_id) && $states_id > 0){
+			$this->where('orgs.states_id', '=', $states_id);
+		}
 
 		if (isset($limit))
 		{
@@ -480,8 +500,8 @@ class Model_Sportorg_Team extends ORM
 
 		$search = ORM::_sql_exclude_deleted($classes_arr, $this);
 
-//		print_r($search->find_all());
-//		die;
+	//	print_r($search->find_all());
+	//	die;
 
 	//	return false;
 		return $search;
