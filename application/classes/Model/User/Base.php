@@ -1170,8 +1170,10 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 
 		$qry = DB::select()->from('user_sport_link')
 			->join('usl_game_link')->on('user_sport_link.id','=','usl_game_link.user_sport_link_id')
-			->where('user_sport_link.users_id','=',$this->id);
-
+			->join('games')->on('usl_game_link.games_id','=','games.id')
+			->where('user_sport_link.users_id','=',$this->id)
+			->order_by('games.gameDay')
+			->order_by('games.gameTime');
 
 		if($sports_id)
 		{
