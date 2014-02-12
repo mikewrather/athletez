@@ -34,7 +34,7 @@ define([ 'require', 'text!votes/templates/vote.html','views', 'vendor', 'facade'
 		//	$(e.target).removeClass('team-action-h').addClass('team-noaction-h');
 
 			$.when(this.voteModelOb.request).done(function() {
-				$(e.currentTarget).addClass('link-disabled');
+				$(e.currentTarget).addClass('link-disabled').html('voted');
 			});
 
 		},
@@ -50,7 +50,7 @@ define([ 'require', 'text!votes/templates/vote.html','views', 'vendor', 'facade'
 		//	$(e.target).removeClass('follow-action-h').addClass('follow-noaction-h');
 
 			$.when(this.followModelOb.request).done(function() {
-				$(e.currentTarget).addClass('link-disabled');
+				$(e.currentTarget).addClass('link-disabled').html('following');
 			});
 
 			Channel('new-fan').publish();

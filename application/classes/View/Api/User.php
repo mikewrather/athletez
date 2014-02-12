@@ -43,7 +43,7 @@
 			foreach($rs as $row)
 			{
 				$event = ORM::factory('Sportorg_Games_Base',$row['games_id']);
-				$retArr[$event->id] = $event->getBasics();
+				$retArr[] = $event->getBasics();
 			}
 
 			return $retArr;
