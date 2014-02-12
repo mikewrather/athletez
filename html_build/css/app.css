@@ -316,6 +316,9 @@ div.image-item-container > img {
 .action-block.delete {
 	background-color: #4b3ec6;
 }
+.action-block.delete-from-game {
+    background-color: #d36011;
+}
 .action-block span {
 	vertical-align: middle;
 }
