@@ -129,7 +129,7 @@ class Model_Site_Comment extends Model_Site_Entdir
 
 		// key = current name of column, val = name getBasics will return
 		'column_name_changes' => array(
-			'users_obj' => 'user'
+		//	'users_obj' => 'user'
 		),
 
 		// key = the key that will appear in the returned results, val = the name of the function / property to invoke for the value
@@ -138,10 +138,13 @@ class Model_Site_Comment extends Model_Site_Entdir
 	//		'user_picture' => 'get_user_picture',
 	//		'name' => 'get_name',
 	//		'email' => 'get_email',
+			'user' => 'get_user'
 		),
 
 		// array of values only.  Each value is the name of a column to exclude
-		'exclude_columns' => array(),
+		'exclude_columns' => array(
+			'users_id'
+		),
 	);
 
 	public function get_user_picture(){
@@ -152,6 +155,10 @@ class Model_Site_Comment extends Model_Site_Entdir
 
 	public function get_name(){
 		return $this->get_user_subject('name');
+	}
+
+	public function get_user(){
+		return $this->user->getBasics();
 	}
 
 	public function get_email(){
@@ -178,7 +185,7 @@ class Model_Site_Comment extends Model_Site_Entdir
 		}
 		return ${$param};
 	}
-
+/*
 	public function getBasics($settings = array())
 	{
 		//This gets the subject of the vote.  It will be used to pull basic information
@@ -209,7 +216,7 @@ class Model_Site_Comment extends Model_Site_Entdir
 
 		return parent::getBasics($settings);
 	}
-
+*/
 	public function name()
 	{
 		$subject = $this->getSubject();

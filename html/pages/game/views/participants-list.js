@@ -1,9 +1,35 @@
 // The Participants List
 // --------------
 
-define(['facade', 'views', 'utils', 'media/views/image-item', 'text!game/templates/participats-list.html', 'game/models/addparticipate', 'common/models/add', 'component/fb'], function(facade, views, utils, ItemView, templateList, Participate, addModel) {
+define(['facade',
+	'views',
+	'utils',
+	'media/views/image-item',
+	'text!game/templates/participats-list.html',
+	'game/models/addparticipate',
+	'common/models/add',
+	'component/fb',
+	"component/forms"],
+	function(
+		facade,
+		views,
+		utils,
+		ItemView,
+		templateList,
+		Participate,
+		addModel) {
 
-	var ImageListView, ImageListAbstract, $ = facade.$, _ = facade._, vendor = require("vendor"), Channel = utils.lib.Channel, FBComponent = require('component/fb'), CollectionView = views.CollectionView, SectionView = views.SectionView, Mustache = vendor.Mustache;
+	var ImageListView,
+		ImageListAbstract,
+		$ = facade.$,
+		_ = facade._,
+		vendor = require("vendor"),
+		Channel = utils.lib.Channel,
+		FBComponent = require('component/fb'),
+		CollectionView = views.CollectionView,
+		SectionView = views.SectionView,
+		FormComponent = require('component/forms'),
+		Mustache = vendor.Mustache;
 
 	ParticipantsView = CollectionView.extend(SectionView.prototype);
 
@@ -22,7 +48,8 @@ define(['facade', 'views', 'utils', 'media/views/image-item', 'text!game/templat
 			'click .see-more-h' : 'seeMore',
 			"mouseover a.tiles" : "showText",
 			"mouseout a.tiles" : "showicon",
-			"click .invite-to-fb-h" : "inviteFBFriend"
+			"click .invite-to-fb-h" : "inviteFBFriend",
+			"click .delete-from-game" : "removeParticipant"
 		},
 
 		// show text
@@ -76,23 +103,9 @@ define(['facade', 'views', 'utils', 'media/views/image-item', 'text!game/templat
 		},
 
 		addParticipant : function() {
-			var participants = new Participate(), _self = this;
 
-			var addToList = function() {
-				participants.set({
-					games_id : _self.game_id,
-					sports_id : _self.sports_id
-				});
-				participants.save();
-				$.when(participants.request).done(function() {
-					var payload = participants.toJSON(), newAddModel = new addModel();
-					newAddModel.processItemFromResponse(payload.payload.usl.user);
-					_self.$el.find(".add-to-event").addClass("link-disabled");
-					_self.collection.add(newAddModel);
-				});
-			};
 
-			if (!_self.checkForUser()) {
+			if (!this.checkForUser()) {
 				routing.trigger('showSignup', function(callback) {
 					addToList(function() {
 						if (callback)
@@ -100,11 +113,155 @@ define(['facade', 'views', 'utils', 'media/views/image-item', 'text!game/templat
 					});
 				});
 			} else {
-				addToList();
+				var options = {
+					height : "500px",
+					width : "500px",
+					html : '<div id="addParticipantForm"></div>',
+					title : "Add Me to This Event"
+				};
+				routing.trigger('common-popup-open', options);
+				this.drawAddParticipantForm();
 			}
 
 		},
+		drawAddParticipantForm: function(){
 
+			var _self = this;
+
+			var formData = new FormComponent({
+
+				'result_time' : {
+					form_values: {
+						defaultValue : "",
+						post_to_server	: true,
+						serverDbField: 'result_time',
+						serverKey: "result_time"
+					},
+
+					type : 'Text',
+					fieldClass: "",
+					attr : {
+						'placeholder' : '00:00:00',
+						'class' : "txt-result-time"
+					},
+
+					showLable : true,
+					label: "Result Time"
+
+				},
+				'bibnumber' : {
+					form_values: {
+						defaultValue : "",
+						post_to_server	: true,
+						serverDbField: 'bib_number',
+						serverKey: "bib_number"
+					},
+
+					type : 'Text',
+					fieldClass: "",
+					attr : {
+						'placeholder' : '0',
+						'class' : "txt-bib-number"
+					},
+
+					showLable : true,
+					label: "Bib Number"
+
+				},
+				'games_id'	: {
+					form_values: {
+						serverKey:'games_id',
+						serverDbField: 'games_id',
+						post_to_server	: true,
+						value: _self.game_id
+					},
+					type: "Hidden"
+				},
+				'sports_id'	: {
+					form_values: {
+						serverKey:'sports_id',
+						serverDbField: 'sports_id',
+						post_to_server	: true,
+						value: _self.sport_id
+					},
+					type: "Hidden"
+				},
+				'submit' : {
+					type : 'Submit',
+					fieldClass: "button-field",
+					attr : {
+						'value' : 'Save Changes'
+					},
+					showLable : false,
+					onSubmit : function(e) {
+						var errors = form.commit();
+						if (errors) {
+							// auto scroll to focus element which has error
+							for (var i in errors) {
+								var $ob = $("*[name=" + i + "]"), $pos = $ob.position();
+								$ob.parents(".common-modal #modalBody").animate({
+									scrollTop : $pos.top
+								}, '500', function() {
+									$ob.addClass('focus-error-animation');
+									setTimeout(function() {
+										$ob.removeClass('focus-error-animation');
+									}, 2000);
+								});
+								break;
+							}
+						} else {
+							if(_self.formValues) {
+								var formData = _self.formValues.getFormValues();
+							} else {
+								var formData = form.getValue();
+							}
+
+							var formData = _self.formValues.getFormValues(),
+								participants = new Participate();
+
+							participants.set({
+								games_id : formData.games_id,
+								sports_id : formData.sports_id,
+								result_time : formData.result_time,
+								bib_number : formData.bib_number
+
+							});
+							participants.save();
+
+							$.when(participants.request).done(function() {
+								var payload = participants.toJSON(), newAddModel = new addModel();
+								newAddModel.processItemFromResponse(payload.payload.usl.user);
+								routing.trigger('common-popup-close');
+								_self.$el.find(".add-to-event").addClass("link-disabled");
+								_self.collection.add(newAddModel);
+							});
+
+							$.when(participants.request).fail(function(res) {
+								var response = JSON.parse(res.responseText);
+								var errorArray = response.exec_data.error_array;
+								_self.formValues.showServersErrors(errorArray);
+							});
+						}
+					}
+				},
+				'button' : {
+					type : 'Button',
+					fieldClass: "button-field",
+					attr : {
+						'value' : 'Cancel',
+						'class' : 'cancel-btn'
+					},
+					onClick : function() {
+						routing.trigger('common-popup-close');
+					},
+					showLable : false
+				}
+			}, $('#addParticipantForm'));
+
+			var form = formData.form;
+			this.formValues = formData.formValues;
+
+		},
 		initialize : function(options) {
 			console.error(options);
 			var _self = this;

@@ -156,10 +156,25 @@ define([ 'models', 'facade' ], function(models, facade) {
 					this.findCorrectType(mpay.user_picture_obj.types);
 				}
 			}
+
+			// this means it is a participant list and this will be the user's info
+			if(parseInt(mpay.usl_game_link_id) > 0){
+				return_data.usl_game_link_id = mpay.usl_game_link_id;
+				return_data.usl_enttype_id = mpay.usl_enttype_id
+
+			}
+
+			if(mpay.result_time && mpay.result_time != "00:00:00:00"){
+				return_data._sublabel = "Result Time: " + mpay.result_time;
+			}
+			else
+			{
+				return_data._sublabel = "Votes: " + mpay.num_votes + ", Followers: " + mpay.num_followers;
+			}
+
 			return_data._noicon_text = "hi";
 			return_data._color = '#c4df89';
 			return_data._label = mpay.label;
-			return_data._sublabel = "Votes: " + mpay.num_votes + ", Followers: " + mpay.num_followers;
 			return_data._link = "/#!profile/" + mpay.id;
 			return_data._has_link = true;
 			if(mpay.hasOwnProperty('is_owner')) return_data.show_edit = mpay.is_owner;
