@@ -18,7 +18,7 @@ require.config({
 		'backbone'      : [cdn + 'vendor/backbone', s3 + 'vendor/backbone', '/vendor/backbone'],
 		'underscore'    : [cdn + 'vendor/underscore', s3 + 'vendor/underscore', '/vendor/underscore'],
 		jquery        : '/vendor/jquery.1.10.2.min',
-		'facebook'      : "http://connect.facebook.net/en_US/all",
+		'facebook'      : [cdn + 'vendor/all', s3 + 'vendor/all', '/vendor/all'],
 
 		// Plugins
 		'bootstrap'             : [cdn + 'vendor/plugins/bootstrap', s3 + 'vendor/plugins/bootstrap', '/vendor/plugins/bootstrap'],

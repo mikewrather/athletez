@@ -31,7 +31,7 @@
 		'plupload': 'plupload/js/plupload.full',
 		'jwplayer': "vendor/plugins/jwplayer",
 //		'qtip': "vendor/plugiuns/qtip/qtip",
-		'facebook': 'empty:',
+		'facebook': 'vendor/all',
 
 		'custom': 'vendor/custom',
 
