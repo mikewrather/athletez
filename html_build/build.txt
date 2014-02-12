@@ -445,6 +445,7 @@ pages/signup/models/image-upload.js
 text!signup/templates/imageupload.html
 pages/signup/views/image-upload.js
 pages/signup.js
+vendor/all.js
 pages/signup/views/facebooksignup.js
 pages/signup/views/registerbasic.js
 text!location/templates/city.html
@@ -850,6 +851,7 @@ pages/signup/models/registerbasic.js
 pages/signup/models/registration-basics-final.js
 text!signup/templates/registration.html
 text!signup/templates/registration_landing.html
+vendor/all.js
 pages/signup/views/facebooksignup.js
 text!signup/templates/basciFinal.html
 pages/signup/views/registration-basics-final.js
@@ -1513,6 +1515,7 @@ pages/signup/models/image-upload.js
 text!signup/templates/imageupload.html
 pages/signup/views/image-upload.js
 pages/signup.js
+vendor/all.js
 pages/signup/views/facebooksignup.js
 pages/signup/views/registerbasic.js
 text!location/templates/city.html
@@ -2028,6 +2031,7 @@ pages/signup/models/image-upload.js
 text!signup/templates/imageupload.html
 pages/signup/views/image-upload.js
 pages/signup.js
+vendor/all.js
 pages/signup/views/facebooksignup.js
 pages/signup/views/registerbasic.js
 text!location/templates/city.html
@@ -2367,6 +2371,7 @@ pages/registration.js
 text!login/templates/layout.html
 text!chrome/templates/header.html
 pages/chrome/models/header.js
+vendor/all.js
 pages/signup/views/facebooksignup.js
 pages/chrome/views/header.js
 text!chrome/templates/main.html
@@ -3208,6 +3213,7 @@ usercontrols/addgame/addgame.js
 pages/signup/models/registration-basics-final.js
 text!signup/templates/registration.html
 text!signup/templates/registration_landing.html
+vendor/all.js
 pages/signup/views/facebooksignup.js
 text!signup/templates/basciFinal.html
 pages/signup/views/registration-basics-final.js
@@ -3464,6 +3470,7 @@ pages/signup/models/registerbasic.js
 pages/signup/models/registration-basics-final.js
 text!signup/templates/registration.html
 text!signup/templates/registration_landing.html
+vendor/all.js
 pages/signup/views/facebooksignup.js
 text!signup/templates/basciFinal.html
 pages/signup/views/registration-basics-final.js
