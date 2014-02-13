@@ -29,10 +29,9 @@ define(['vendor', 'views', 'registration', 'signup', 'signup/views/shopopup', 'u
 					callback : current.calback
 				});
 			}
-			alert("here");
 			// Additional JS functions here
 			//var func = _.bind(current.getFBlogin, this);
-			this.getFBlogin();
+			//this.getFBlogin();
 			this.loginfb();
 		},
 
