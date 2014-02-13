@@ -37,7 +37,7 @@ define([
         
         addImage: function(e) {
         	 ga('send', 'event', 'Open-Add-Popup', 'Image', 'User opened image uploader', this.model.userid);
-             var id = $('.selected-sport-h').data('id'), url = "/api/user/addimage/" + this.model.userid,
+             var id = $('.selected-sport-h').data('id') || $(".sports-h").val() || $(".sports-h").attr("data-id"), url = "/api/user/addimage/" + this.model.userid,
                 url = "/api/user/addimage/" + this.model.userid,
 			    attr = {
 				    "sports_id" : id
