@@ -6,7 +6,7 @@
  *
  * */
 
-define(['require', 'facade', 'views', 'utils', 'vendor'], function(require) {
+define(['require', 'facade', 'views', 'utils', 'vendor','facebook'], function(require) {
 	return function(options) {
 		var _self = this, scriptId = 'facebook-jssdk-api',
 		
@@ -21,16 +21,13 @@ define(['require', 'facade', 'views', 'utils', 'vendor'], function(require) {
 		
 		// initialize function
 		init = function() {
-			window.fbAsyncInit = function() {
-				FB.init({
-				    appId   : App.Settings.appId,// App ID
-				    status  : true, // check login status
-					cookie  : true, // enable cookies to allow the server to access the session
-					xfbml   : true,  // parse XFBML
-					oauth   : true
-                });
-            };
-			loadFacebook();
+			FB.init({
+			    appId   : App.Settings.appId,// App ID
+			    status  : true, // check login status
+				cookie  : true, // enable cookies to allow the server to access the session
+				xfbml   : true,  // parse XFBML
+				oauth   : true
+            });
 		},
 		
 		// register timeout
@@ -57,24 +54,10 @@ define(['require', 'facade', 'views', 'utils', 'vendor'], function(require) {
 				}
 			}
 		},
-		
-		// load facebook API file
-		loadFacebook = function() {
-		     // if already added return true
-			if(!checkIfScriptExists()) {
-				 var js, ref = document.getElementsByTagName('script')[0];
-		         js = document.createElement('script'); js.async = true;
-		         js.src = "//connect.facebook.net/en_US/all.js";
-		         ref.parentNode.insertBefore(js, ref);
-		         js.onload = function () {
-			        js.id = scriptId; 
-			    };
-	        }
-		};
-		
+
 		// share on facebook
 		this.shareOnFacebook = function(options) {
-			if(checkIfScriptExists() && "undefined" != typeof FB) {
+			if(FB && typeof(FB) != "undefined") {
 				if(options.link)
 					 var link = window.location.protocol+"//"+window.location.host+"/"+options.link+"/";
 				else
@@ -106,7 +89,9 @@ define(['require', 'facade', 'views', 'utils', 'vendor'], function(require) {
 		
 		// send invite on facebook
 		this.sendInvite = function(options) {
-			if(checkIfScriptExists() && "undefined" != typeof FB) {
+
+			if(FB && typeof(FB) != "undefined") {
+
 				if(options.link)
 					 var link = window.location.protocol+"//athletez.com/"+options.link+"/";
 				else
@@ -130,21 +115,22 @@ define(['require', 'facade', 'views', 'utils', 'vendor'], function(require) {
 				    }
 				  });
 			} else {
+				init();
 				new loadScriptTimeOut('sendInvite', options);
 			}
 		};
 		
 		// get friends from facebook
 		this.getFriends = function() {
-			if(checkIfScriptExists() && "undefined" != typeof FB) {
-			FB.api('/me/friends?fields=id,first_name', function(response) {
-			    
-			    console.error(response);
-			    
-			    //var randomFriend = Math.floor(getRandom(0, response.data.length));
-			    //gFriendID = response.data[randomFriend].id;
-			    //gSmashUIText.innerHTML = "Smash " + response.data[randomFriend].first_name + " !";
-			});
+			if(FB && typeof(FB) != "undefined") {
+				FB.api('/me/friends?fields=id,first_name', function(response) {
+
+				    console.error(response);
+
+				    //var randomFriend = Math.floor(getRandom(0, response.data.length));
+				    //gFriendID = response.data[randomFriend].id;
+				    //gSmashUIText.innerHTML = "Smash " + response.data[randomFriend].first_name + " !";
+				});
 			} else {
 				new loadScriptTimeOut('getFriends', {});
 			}
