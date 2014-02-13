@@ -36,6 +36,9 @@ define([
 	"profile/views/commentof-list",
 	"profile/views/commenton-list",
 	"profile/views/fans-image-list",
+	"common/views/add-media-buttons",
+	"text!common/templates/add-media-buttons.html",
+	"text!common/templates/add-fans-buttons.html",
 	"application"
 ],
 	function (require, pageLayoutTemplate, app, voteView) {
@@ -68,6 +71,10 @@ define([
 			ProfileCommentOfListView = require("profile/views/commentof-list"),
 			ProfileCommentOnListView = require("profile/views/commenton-list"),
 			FansImageListView = require("profile/views/fans-image-list"),
+			
+			AddMediaView = require("common/views/add-media-buttons"),
+			AddMediaViewTemplate = require("text!common/templates/add-media-buttons.html"),
+			AddFansViewTemplate = require("text!common/templates/add-fans-buttons.html"),
 			
 			MediaImageModel = require("media/models/image");
 
@@ -288,7 +295,7 @@ define([
 			},
 
 			setupAddMediaView: function (target) {
-				var addMediaView;
+				/*var addMediaView;
 				this.addmedia.sportName = $(".selected-sport-h").data("name");
 				this.addmedia.firstName = this.basics.get("payload").first_name;
 				this.addmedia.setData();
@@ -302,7 +309,7 @@ define([
 					if (this.scheme[x].id == "add-media") delete this.scheme[x];
 				}
 				this.scheme.push(addMediaView);
-				this.layout.render();
+				this.layout.render();*/
 			},
 			
 			getOrgData: function () {
@@ -322,7 +329,6 @@ define([
 
 			setupOrgListView: function () {
 				var orgListView;
-				console.log("PROF CONTROLLER OBJ",this);
 				if($(".selected-sport-h").data("sporttype")==1)
 					this.setUpOrgView();
 				else
@@ -343,7 +349,6 @@ define([
 						destination: "#games_div",
 						eventPage: $(".selected-sport-h").data("name")
 					});
-					
 					_self.scheme.push(_self.orgListView);
 					_self.layout.render();
             	});
@@ -404,6 +409,22 @@ define([
 
 			setupImageListView: function () {
 				var self = this;
+				
+				this.addmedia.sportName = $(".selected-sport-h").data("name");
+				this.addmedia.firstName = this.basics.get("payload").first_name;
+				this.addmedia.setData();
+
+				
+				// set up add media and heading 
+				var addMedia = new AddMediaView({
+					target: ".media-add-icons-h",
+					heading: "PHOTO/VIDEO",
+					template: AddMediaViewTemplate,
+					controllerObject: self,
+					model: self.addmedia
+				});
+				
+				
 				//Channel('image-upload-success').subscribe(this.updateImages);
 				routing.off('image-upload-success');
 				routing.on('image-upload-success', function(data) { 
@@ -446,6 +467,17 @@ define([
 			},
 			
 			setupFansListView: function () {
+				
+				// set up add media and heading 
+				var addFans = new AddMediaView({
+					target: ".fans-add-icons-h",
+					heading: "FANS",
+					template: AddFansViewTemplate,
+					controllerObject: this,
+					collection: this.fans
+				});
+				
+				
 				this.fansListView = new FansImageListView({
 					collection: this.fans,
 					destination: "#fans-div",

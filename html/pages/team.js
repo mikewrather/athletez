@@ -44,6 +44,9 @@ define([
     "schedules/views/schedule-list",
     "roster/views/roster",
     "profile/views/fans-image-list",
+    "common/views/add-media-buttons",
+    "text!common/templates/add-media-buttons.html",
+	"text!common/templates/add-fans-buttons.html",
      'votes/views/vote'
     
     ], function (require, pageLayoutTemplate, voteView) {
@@ -83,6 +86,11 @@ define([
 		RosterView = require("roster/views/roster"),
         MediaImageModel = require("media/models/image"),
         VotesView = require('votes/views/vote'),
+        
+        AddMediaView = require("common/views/add-media-buttons"),
+		AddMediaViewTemplate = require("text!common/templates/add-media-buttons.html"),
+		AddFansViewTemplate = require("text!common/templates/add-fans-buttons.html"),
+        
         LayoutView = views.LayoutView,
         $ = facade.$,
         _ = facade._,
@@ -314,6 +322,15 @@ define([
         },
         
         setupFansListView: function () {
+        	// set up add media and heading 
+			var addFans = new AddMediaView({
+				target: ".fans-add-icons-h",
+				heading: "FANS",
+				template: AddFansViewTemplate,
+				controllerObject: this,
+				collection: this.fans
+			});
+        	
 			this.fansListView = new FansImageListView({
 				collection: this.fans,
 				destination: "#fans-div",
@@ -356,8 +373,6 @@ define([
                 position = $.inArray(this.addMediaView, this.scheme);
                 if ( ~position ) this.scheme.splice(position, 1);
 	        }
-	        
-	        console.error(this.basics);
 
 			this.addmedia.teamName = this.basics.get("payload").team_name;
 			this.addmedia.setData();
@@ -496,6 +511,17 @@ define([
         
         setupImages: function(data) {
         	var self = this;
+        	this.addmedia.teamName = this.basics.get("payload").team_name;
+			this.addmedia.setData();
+        		// set up add media and heading 
+				var addMedia = new AddMediaView({
+					target: ".media-add-icons-h",
+					heading: "PHOTO/VIDEO",
+					template: AddMediaViewTemplate,
+					controllerObject: self,
+					model: self.addmedia
+				});
+        	
         	routing.off('image-upload-success');
         	routing.on('image-upload-success', function(data) { 
         		self.updateImages(data);

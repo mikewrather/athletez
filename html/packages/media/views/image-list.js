@@ -45,9 +45,9 @@ function(facade,  views,   utils,   ImageItemView,            ImageBoardView,   
             var markup = Mustache.to_html(this.template, {target: this.target_id});
             this.$el.html(markup);
             return this;
-       },
+        },
        
-       drag: function(event) {
+        drag: function(event) {
 			event.stopPropagation();
 		    event.preventDefault();
 		    event.originalEvent.dataTransfer.dropEffect = 'copy';
@@ -174,8 +174,7 @@ function(facade,  views,   utils,   ImageItemView,            ImageBoardView,   
         },
         
         initPhotoPlayer: function(e) {
-			var _self = this, limit = _self.collection.limit, index = ($(e.target).parents('li').index()), addLiCount = ($("#add-media").length)?1:0; 
-			index -= addLiCount;
+			var _self = this, limit = _self.collection.limit, index = ($(e.target).parents('li').index()); 
 			// array index start from 0. So substracting by 1
 			index -= 1;
 			if(index< 0) index = 0;
@@ -252,13 +251,13 @@ function(facade,  views,   utils,   ImageItemView,            ImageBoardView,   
 		},
 		
 		addButtons: function() {
-			var _self = this;
+			/*var _self = this;
             setTimeout(function() {
 	            if(_self.triggerItem && !$("#add-icons").length) {
 	            	_self.$el.find(_self.listView).prepend('<li id="add-icons"></li>');
 	            	routing.trigger(_self.triggerItem, "#add-icons");
             	}
-            }, 0);
+            }, 0);*/
 		},
 
         setupBoardView: function() {

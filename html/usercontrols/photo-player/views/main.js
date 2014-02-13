@@ -138,7 +138,7 @@ define(['require',
 				'link': this.getLink(data),
 				'name': data.User.name + " - " + data.Sport.sport_name,
 				'caption': "Athletez.com",
-				'image': data.record.payload.image_path,
+				'image': data.record.image_path,
 				'description': '',
 				'title' :'',
 				'type': "twitter"
@@ -150,10 +150,10 @@ define(['require',
 			var data = this.getShareData();
 			var options = {
 				//'link': "#"+this.pageName+data.userId+data.sportId+data.mediaId,
-				'link': "?enttypes_id="+data.record.payload.enttypes_id+"&id="+data.record.payload.id,				
+				'link': "?enttypes_id="+data.record.enttypes_id+"&id="+data.record.id,				
 				'name': data.User.name + " - " + data.Sport.sport_name,
 				'caption': "Athletez.com",
-				'image': data.record.payload.image_path,
+				'image': data.record.image_path,
 				'description': '',
 				'title' :'',
 				'type': "gplus"
@@ -164,10 +164,10 @@ define(['require',
 		tumbler: function() {
 			var data = this.getShareData();
 			var options = {
-				'link': "?enttypes_id="+data.record.payload.enttypes_id+"&id="+data.record.payload.id,
+				'link': "?enttypes_id="+data.record.enttypes_id+"&id="+data.record.id,
 				'name': data.User.name + " - " + data.Sport.sport_name,
 				'caption': "Athletez.com",
-				'image': data.record.payload.image_path,
+				'image': data.record.image_path,
 				'description': '',
 				'title' :'',
 				'type': "tumbler"

@@ -1,8 +1,11 @@
 //Vote View
 //Vote and follow up button functionality
 
-define(['require', 'text!roster/templates/roster.html', 'views', 'vendor', 'facade', 'utils', 'jqueryui', 'controller', 'roster/models/roster', 'roster/collections/roster', 'roster/views/image-list', 'component/fb'], function(require, rosterTemplate) {
-	var RosterView, views = require('views'), facade = require('facade'), utils = require('utils'), SectionView = views.SectionView, $ = facade.$, _ = facade._, debug = utils.debug, vendor = require('vendor'), Mustache = vendor.Mustache, Channel = utils.lib.Channel, FBComponent = require('component/fb'), model = require('roster/models/roster'), ImageList = require('roster/views/image-list'), collection = require('roster/collections/roster');
+define(['require', 'text!roster/templates/roster.html', 'views', 'vendor', 'facade', 'utils', 'jqueryui', 'controller', 'roster/models/roster', 'roster/collections/roster', 'roster/views/image-list', 'component/fb',  "common/views/add-media-buttons",
+    "text!common/templates/add-roster-buttons.html",], function(require, rosterTemplate) {
+	var RosterView, views = require('views'), facade = require('facade'), utils = require('utils'), SectionView = views.SectionView, $ = facade.$, _ = facade._, debug = utils.debug, vendor = require('vendor'), Mustache = vendor.Mustache, Channel = utils.lib.Channel, FBComponent = require('component/fb'), model = require('roster/models/roster'), ImageList = require('roster/views/image-list'), collection = require('roster/collections/roster'),
+	 AddMediaView = require("common/views/add-media-buttons"),
+		AddRosterViewTemplate = require("text!common/templates/add-roster-buttons.html");
 
 	RosterView = SectionView.extend({
 		template : rosterTemplate,
@@ -91,10 +94,10 @@ define(['require', 'text!roster/templates/roster.html', 'views', 'vendor', 'faca
 				}
 			}
 			this.$el.find(".roster-images-h").html(teamRosterListView.$el);
-			if (!this.$el.find(".add-to-roster-h").length) {
-				var html = '<li class="teams image add-tile-outer">' + '<div class="add-icons-outer"><div>' + '<a href="javascript: void(0);" class="add-to-roster-h link-disabled pull-left tiles" title="Add to roster"></a>' + '<span class="hide character-limit-h">I play for ' + this.team_name + '</span></div>' + '<div>' + '<a href="javascript: void(0);" class="fb-invite-tile-btn invite-team-player-h tiles pull-right" title="Add to fb"></a>' + '<span class="hide character-limit-h">Know somebody who plays for ' + this.team_name + '</span>' + '</div></div></li>';
-				this.$el.find(".roster-images-h ul").prepend(html);
-			}
+			//if (!this.$el.find(".add-to-roster-h").length) {
+			//	var html = '<li class="teams image add-tile-outer">' + '<div class="add-icons-outer"><div>' + '<a href="javascript: void(0);" class="add-to-roster-h link-disabled pull-left tiles" title="Add to roster"></a>' + '<span class="hide character-limit-h">I play for ' + this.team_name + '</span></div>' + '<div>' + '<a href="javascript: void(0);" class="fb-invite-tile-btn invite-team-player-h tiles pull-right" title="Add to fb"></a>' + '<span class="hide character-limit-h">Know somebody who plays for ' + this.team_name + '</span>' + '</div></div></li>';
+			//	this.$el.find(".roster-images-h ul").prepend(html);
+			//}
 			// sow roster add button
 			if (found == "")
 				this.$el.find(".add-to-roster-h").removeClass("link-disabled");
@@ -115,7 +118,7 @@ define(['require', 'text!roster/templates/roster.html', 'views', 'vendor', 'faca
 				modal.url = "/api/team/player/" + _self.team_id;
 				modal.save();
 				$.when(modal.request).done(function() {
-					$(e.currentTarget).parent().hide();
+					$(e.currentTarget).hide();
 					_self.getTeams();
 					if (callback)
 						callback();
@@ -137,7 +140,17 @@ define(['require', 'text!roster/templates/roster.html', 'views', 'vendor', 'faca
 
 		render : function(domInsertion, dataDecorator, partials) {
 			SectionView.prototype.render.call(this, domInsertion, dataDecorator, partials);
-			this.$el.find(".heading-h").html(this.team_name);
+			//this.$el.find(".heading-h").html(this.team_name);
+			
+			// set up add media and heading 
+				var addRoster = new AddMediaView({
+					target: this.$el.find(".roster-heading-h"),
+					heading: this.team_name,
+					team_id: this.team_id,
+					entityId: this.entityId,
+					addToRoster: this.addToRoster,
+					template: AddRosterViewTemplate
+				});
 		}
 	});
 

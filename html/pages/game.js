@@ -30,6 +30,8 @@ define([
 	"game/views/comment-list",
 	"game/views/commenton-list",
 	"roster/views/roster",
+	"common/views/add-media-buttons",
+    "text!common/templates/add-media-buttons.html",
 	"game/views/participants-list-main"
 
 ], function (require, pageLayoutTemplate, voteView) {
@@ -57,6 +59,11 @@ define([
 		GameCommentOnListView = require("game/views/commenton-list"),
 		MediaImageModel = require("media/models/image"),
 		RosterView = require("roster/views/roster"),
+		
+		AddMediaView = require("common/views/add-media-buttons"),
+		AddMediaViewTemplate = require("text!common/templates/add-media-buttons.html"),
+ 
+		
 		ParticipantsListView = require("game/views/participants-list-main"),
 
 		LayoutView = views.LayoutView,
@@ -200,7 +207,8 @@ define([
 			addMediaView = new GameAddMediaView({
 				model: this.addmedia,
 				name: "Add Media",
-				destination: target
+				destination: target,
+				controllerObject: this
 			});
 			
 			addMediaView.game_model = this.basics;
@@ -237,7 +245,6 @@ define([
 		},
 
 		setupTeamRosterListView: function () {
-			alert($("#roster_wrap_"+this.rosterViewsCount).length);
 			if(!$("#roster_wrap_"+this.rosterViewsCount).length) {
 				$("#roster-wrap").append('<div id="#roster_wrap_'+this.rosterViewsCount+'" class="clear"></div>');
 			}
@@ -278,6 +285,14 @@ define([
 
 		setupImageListView: function () {
 			var self = this, imageListView;
+			// set up add media and heading 
+				var addMedia = new AddMediaView({
+					target: ".media-add-icons-h",
+					heading: "PHOTO/VIDEO",
+					template: AddMediaViewTemplate,
+					controllerObject: self,
+					model: self.addmedia
+				});
 			
 			//controller.setupAddMediaView();
 			routing.off('setup-add-icons');

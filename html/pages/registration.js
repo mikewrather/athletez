@@ -53,34 +53,23 @@ define(["require",
           	//Bind a callback function to an object routing
           	routing.on('registration-with-facebook', function(callback) {
             		controller.initRegisterFacebook(callback);				
-            });	
+            });
 
 			function registerWithFacebook() {
 				controller.initRegisterFacebook();
 			}
 
-
-			//Channel('registration-with-facebook').subscribe(registerWithFacebook);
-
 			function registerWithEmail() {
 				controller.initRegisterEmail();
 			}
-
-
-			//Channel('registration-with-email').subscribe(registerWithEmail);
 
 			function uploadImage() {
 				controller.uploadImage();
 			}
 
-
-			//Channel('registration-uploadimage-email').subscribe(uploadImage);
-
 			function selectOrg(data) {
 				controller.selectOrg(data);
 			}
-
-
 			Channel('registration-select-org').subscribe(selectOrg);
 		},
 
@@ -127,8 +116,6 @@ define(["require",
 		},
 
 		initRegisterFacebook : function(callback) {
-			
-			//	debugger;
 			var controller = this;
 			this.refreshPage();
 			this.register_facebook = new RegistrationFacebookModel();
