@@ -1168,9 +1168,18 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 	{
 		extract($args);
 
-		$qry = DB::select()->from('user_sport_link')
+		$qry = DB::select(
+			array('games.id','id'),
+			array('games.gameDay','game_day'),
+			array('games.gameTime','gameTime'),
+			array('games.event_name','event_name'),
+			array('locations.full_address','game_location'),
+			array('usl_game_link.result_time','result_time')
+
+		)->from('user_sport_link')
 			->join('usl_game_link')->on('user_sport_link.id','=','usl_game_link.user_sport_link_id')
 			->join('games')->on('usl_game_link.games_id','=','games.id')
+			->join('locations')->on('games.locations_id','=','locations.id')
 			->where('user_sport_link.users_id','=',$this->id)
 			->order_by('games.gameDay')
 			->order_by('games.gameTime');
