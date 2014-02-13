@@ -247,7 +247,7 @@ input[disabled].hasDatepicker, input[readonly].hasDatepicker {
 	color: #FFF;
 	padding: 5px 25px;
 	text-align: center;
-	margin: 10px 0;
+	margin: 6px 0;
 	font-family: 'Nunito', "HelveticaNeue", "Helvetica";
 	font-size: 1em;
 	font-weight: 700;
@@ -2108,3 +2108,38 @@ li.sport .teamlist-header, .stat-val-outer {
 	margin-top: 20px;
 }
 
+
+/* Add icons css start */
+.add-icon {
+	background: url(images/icons/add-icons.png) no-repeat;
+	display: inline-block;
+	width: 70px;
+	height: 36px;
+}
+
+.add-image {
+	background-position: 0 0;
+}
+
+.add-video {
+	background-position: -2px -54px;
+}
+
+.add-to-list {
+	background-position: -81px -53px;
+}
+
+.invite-from-fb {
+	background-position: 0 -100px;
+}
+
+.question {
+	background-position: -91px 0;
+	width: 30px;
+}
+
+.add-to-roster-list {
+		background-position: -83px -100px;
+}
+
+/* Add icons css end */

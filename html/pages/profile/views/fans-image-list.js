@@ -87,7 +87,7 @@ define(['facade', 'utils', 'media/views/image-list', 'component/fb', 'votes/mode
         },
 
 		addButtons : function() {
-			var _self = this, name = (_self.controllerObject.basics.get("payload") && _self.controllerObject.basics.get("payload").first_name)?_self.controllerObject.basics.get("payload").first_name:_self.controllerObject.basics.get("payload").team_name;
+			/*var _self = this, name = (_self.controllerObject.basics.get("payload") && _self.controllerObject.basics.get("payload").first_name)?_self.controllerObject.basics.get("payload").first_name:_self.controllerObject.basics.get("payload").team_name;
 			setTimeout(function() {
 				if (!$("#add-fans-icons").length) {
 					var html = '<li id="add-fans-icons" class="add-tile-outer"><div class="add-icons-outer">\
@@ -106,7 +106,7 @@ define(['facade', 'utils', 'media/views/image-list', 'component/fb', 'votes/mode
 						_self.$el.find(".add-to-fans-h").addClass("link-disabled");
 					}
 				}
-			}, 0);
+			}, 0);*/
 		}
 	});
 	return FansImageListView;
