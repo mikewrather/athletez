@@ -1,7 +1,9 @@
 // Games Schedule List
 // --------------
 
-define(['vendor','facade','views', 'utils', 'schedules/views/schedule-item','utils/storage',  'text!schedules/templates/schedule-list.html','chrome/views/header', 'common/models/add'], 
+define(['vendor','facade','views', 'utils', 'schedules/views/schedule-item','utils/storage',
+	'text!schedules/templates/schedule-list.html','chrome/views/header', 'common/models/add',
+	"vendor/plugins/qtip/qtip"],
 function(vendor, facade,  views,   utils,   ScheduleItemView, Store, ScheduleListTemplate,header, UserGames) {
 
     var OrgListView, 
@@ -29,14 +31,15 @@ function(vendor, facade,  views,   utils,   ScheduleItemView, Store, ScheduleLis
         _className: "org",
         // Store constructor for the child views
         _view: ScheduleItemView,
-        
+
+
        // listView : ".schedule-list-h",
         
         events: {
         	"click .add-game-h": "addGame",
         	"click .add-event-h": "addEvent",
-        	'mouseover .team-info-h': 'showinfo',
-	        'mouseout .team-info-h': 'showinfo'
+    //    	'mouseover .team-info-h': 'showinfo',
+	//        'mouseout .team-info-h': 'showinfo'
         },
         
          showinfo: function(e) {
@@ -120,6 +123,9 @@ function(vendor, facade,  views,   utils,   ScheduleItemView, Store, ScheduleLis
 
         initialize: function(options) {
         	var _self = this;
+
+	        Channel('load:css').publish(["vendor/plugins/qtip/qtip.css"]);
+
 	        console.log("OPTIONS",options);
         	_self.eventPage = options.eventPage || false;
         	_self.teamRecords = options.teamRecords;
@@ -152,7 +158,21 @@ function(vendor, facade,  views,   utils,   ScheduleItemView, Store, ScheduleLis
         },
 
 	    afterRender: function() {
-		 //   $(this.el).attr('data-team-id',this.teams_id);
+		    this.$el.find("a.team-info-h").each(function(){
+			    var $self = $(this);
+			    $(this).qtip({
+				    content: $self.find('div.game-info').html(),
+				    position: {
+					    my: "bottom center",
+					    at: "top center",
+					    viewport : $(window)
+				    },
+				    style: {
+					    classes: "tipsy game-info",
+					    width: '360px'
+				    }
+			    });
+		    });
 	    },
         
         renderTemplate: function (eventPage) {

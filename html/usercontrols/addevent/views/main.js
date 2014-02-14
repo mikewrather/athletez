@@ -213,7 +213,7 @@ define(['require', 'text!usercontrols/addevent/templates/layout.html', 'facade',
 					label: "Event Name",
 					form_values: {
 						keyNameInPayload: 'event_name',
-						subLabelInPayload: 'game_day',
+						subLabelInPayload: 'full_date',
 						serverKey: 'event_name',
 						serverDbField: 'event_name',
 						defaultValue: '',
@@ -266,6 +266,7 @@ define(['require', 'text!usercontrols/addevent/templates/layout.html', 'facade',
 										gDate = new Date(dateStr);
 
 
+									$form.find('input[type="submit"]').val("Add Me to This Event");
 									$form.find('input[name="games_id"]').val(gameModel.get('payload').id);
  									$form.find('input[name="date_chooser"]').val(dateFormat(gDate,"mmm d, yyyy")).attr('disabled','disabled');
 									$form.find('input[name="time_chooser"]').val(dateFormat(gDate,"h:MM")).attr('disabled','disabled');
@@ -278,6 +279,7 @@ define(['require', 'text!usercontrols/addevent/templates/layout.html', 'facade',
 							}
 							else
 							{
+								$form.find('input[type="submit"]').val("Create Event");
 								$form.find('input[name="games_id"]').val("0");
 								$form.find('input[name="game_name"]').val($('input[name="game_search"]').val());
 								$form.find('input[name="date_chooser"]').removeAttr('disabled').val("");
@@ -430,9 +432,9 @@ define(['require', 'text!usercontrols/addevent/templates/layout.html', 'facade',
 				},
 				'submit' : {
 					type : 'Submit',
-					fieldClass: "submit-btn",
+					fieldClass: "button-field",
 					attr : {
-						'value' : 'Add Event'
+						'value' : 'Create Event'
 					},
 					showLable : false,
 					onSubmit : function(e) {
@@ -512,9 +514,10 @@ define(['require', 'text!usercontrols/addevent/templates/layout.html', 'facade',
 				},
 				'button' : {
 					type : 'Button',
-					fieldClass: "cancel-btn",
+					fieldClass: "button-field",
 					attr : {
-						'value' : 'Cancel'
+						'value' : 'Cancel',
+						'class' : 'cancel-btn'
 					},
 					onClick : function() {
 						routing.trigger('common-popup-close');

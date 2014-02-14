@@ -248,7 +248,8 @@ class Model_Sportorg_Games_Base extends ORM
 			"game_location" => 'get_game_location',
 			"shared" => 'get_shared_info',
 			'can_follow' => 'can_follow',
-			'time_as_int' => 'getTimeAsInt'
+			'time_as_int' => 'getTimeAsInt',
+			'full_date' => 'get_full_date'
 		),
 
 		// array of values only.  Each value is the name of a column to exclude
@@ -307,6 +308,10 @@ class Model_Sportorg_Games_Base extends ORM
 
 	public function format_game_day(){
 		return date('n.d.y',strtotime($this->gameDay));
+	}
+
+	public function get_full_date(){
+		return date('M jS Y, g:i a',strtotime($this->gameDay . " " . $this->gameTime));
 	}
 
 	public function format_game_time(){
