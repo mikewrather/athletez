@@ -342,6 +342,7 @@ text!schedules/templates/schedule-event-item.html
 packages/game-schedules/views/schedule-item.js
 text!schedules/templates/schedule-list.html
 packages/common/models/add.js
+vendor/plugins/qtip/qtip.js
 packages/game-schedules/views/schedule-list.js
 text!user/templates/related-item.html
 packages/user/views/related-item.js
@@ -431,7 +432,6 @@ pages/home/collections/image.js
 text!pages/home/templates/menu.html
 vendor/plugins/jquery.slimscroll.min.js
 packages/common/models/get-city.js
-vendor/plugins/qtip/qtip.js
 text!vendor/plugins/qtip/qtip.css
 pages/home/views/menu.js
 pages/home/views/image-list.js
@@ -1423,6 +1423,7 @@ text!schedules/templates/schedule-event-item.html
 packages/game-schedules/views/schedule-item.js
 text!schedules/templates/schedule-list.html
 packages/common/models/add.js
+vendor/plugins/qtip/qtip.js
 packages/game-schedules/views/schedule-list.js
 text!user/templates/related-item.html
 packages/user/views/related-item.js
@@ -1511,7 +1512,6 @@ pages/home/collections/image.js
 text!pages/home/templates/menu.html
 vendor/plugins/jquery.slimscroll.min.js
 packages/common/models/get-city.js
-vendor/plugins/qtip/qtip.js
 text!vendor/plugins/qtip/qtip.css
 pages/home/views/menu.js
 pages/home/views/image-list.js
@@ -1742,6 +1742,7 @@ usercontrols/add-club/add-club.js
 text!usercontrols/location/templates/view-location.html
 usercontrols/location/views/view-location.js
 text!usercontrols/addevent/templates/layout.html
+vendor/plugins/dateformat.js
 usercontrols/addevent/views/main.js
 usercontrols/addevent/addevent.js
 text!usercontrols/detection/templates/browser.html
@@ -1770,7 +1771,6 @@ pages/login/views/Loginview.js
 pages/login/models/Logoutmodel.js
 pages/login.js
 pages/chrome/views/header.js
-vendor/plugins/dateformat.js
 pages/game/views/header.js
 pages/game/views/add-media.js
 pages/game/views/commenton-list.js
@@ -1968,6 +1968,7 @@ text!schedules/templates/schedule-event-item.html
 packages/game-schedules/views/schedule-item.js
 text!schedules/templates/schedule-list.html
 packages/common/models/add.js
+vendor/plugins/qtip/qtip.js
 packages/game-schedules/views/schedule-list.js
 text!user/templates/related-item.html
 packages/user/views/related-item.js
@@ -2032,7 +2033,6 @@ pages/home/collections/image.js
 text!pages/home/templates/menu.html
 vendor/plugins/jquery.slimscroll.min.js
 packages/common/models/get-city.js
-vendor/plugins/qtip/qtip.js
 text!vendor/plugins/qtip/qtip.css
 pages/home/views/menu.js
 pages/home/views/image-list.js
@@ -2453,6 +2453,7 @@ text!schedules/templates/schedule-event-item.html
 packages/game-schedules/views/schedule-item.js
 text!schedules/templates/schedule-list.html
 packages/common/models/add.js
+vendor/plugins/qtip/qtip.js
 packages/game-schedules/views/schedule-list.js
 text!user/templates/related-item.html
 packages/user/views/related-item.js
@@ -2540,7 +2541,6 @@ pages/home/collections/image.js
 text!pages/home/templates/menu.html
 vendor/plugins/jquery.slimscroll.min.js
 packages/common/models/get-city.js
-vendor/plugins/qtip/qtip.js
 text!vendor/plugins/qtip/qtip.css
 pages/home/views/menu.js
 pages/home/views/image-list.js
@@ -3569,6 +3569,7 @@ text!schedules/templates/schedule-event-item.html
 packages/game-schedules/views/schedule-item.js
 text!schedules/templates/schedule-list.html
 packages/common/models/add.js
+vendor/plugins/qtip/qtip.js
 packages/game-schedules/views/schedule-list.js
 text!user/templates/related-item.html
 packages/user/views/related-item.js
@@ -3656,7 +3657,6 @@ pages/home/collections/image.js
 text!pages/home/templates/menu.html
 vendor/plugins/jquery.slimscroll.min.js
 packages/common/models/get-city.js
-vendor/plugins/qtip/qtip.js
 text!vendor/plugins/qtip/qtip.css
 pages/home/views/menu.js
 pages/home/views/image-list.js

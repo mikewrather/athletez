@@ -244,10 +244,3 @@ a.remove{ background-image: url(http://athletez.s3.amazonaws.com/resources/img/x
 .reference-labels{
     display:inline-block;
 }
-.ui-menu-item a{
-    margin:-1px;
-}
-.ui-menu-item a span.sub-label{
-    font-size:.8em;
-    color: #575757;
-}
