@@ -13,9 +13,6 @@ RewriteBase /
 RewriteCond %{QUERY_STRING} ^_escaped_fragment_=/?(.*)$
 RewriteRule .* http://athletez.brombonesnapshots.com/%{HTTP_HOST}/#!%1 [P,L]
 
-RewriteCond %{HTTP_HOST} !^www\.
-RewriteRule ^(.*)$ http://www.%{HTTP_HOST}/$1 [R=301,L]
-
 # Protect application and system files from being viewed
 #RewriteCond %{REQUEST_URI} !^/(collections|css|images|models|packages|pages|syncs|test|utils|vendor|views)/
 
