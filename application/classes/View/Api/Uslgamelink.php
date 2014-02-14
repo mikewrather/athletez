@@ -12,7 +12,11 @@
 	class View_Api_Uslgamelink extends Api_Viewclass
 	{
 
-
+	public function get_basics(){
+		$retArr = $this->obj->getBasics();
+		$retArr['result_time'] = Util::secondsToHHMMSS($retArr['result_time'],false);
+		return $retArr;
+	}
 	
 		/**
 		 * post_add() link a user's user_sport_link entry and a game via usl_game_link
@@ -22,6 +26,14 @@
 		public function post_add()
 		{
 			$retArr = $this->obj->getBasics();
+			$retArr['result_time'] = Util::secondsToHHMMSS($retArr['result_time'],false);
+			return $retArr;
+		}
+
+		public function put_add()
+		{
+			$retArr = $this->obj->getBasics();
+			$retArr['result_time'] = Util::secondsToHHMMSS($retArr['result_time'],true);
 			return $retArr;
 		}
 		

@@ -235,27 +235,6 @@ define(['vendor', 'views', 'utils', 'text!media/templates/image-item.html', 'vot
 		edit: function(e) {
 			e.stopPropagation();
 			e.preventDefault();
-			
-			var _self = this, mpay = this.model.get("payload");
-			switch(mpay.enttypes_id) {
-				case '23':
-					//videos
-					//extra._link = "javascript: void(0);";
-					break;
-				case '21':
-					//images
-					//extra._link = "javascript: void(0);";
-					break;
-				case '1':
-					//users
-					window.location.hash = "profile/" + mpay.id;
-					break;
-				case '8':
-					//games
-					window.location.hash = "game/" + mpay.id;
-				break;
-			}
-			console.log(this.model);
 		},
 
 		'delete': function(e) {

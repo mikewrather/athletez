@@ -86,14 +86,14 @@ define(['require', 'text!signup/templates/registration.html', 'text!signup/templ
 						callback : this.callback,
 						fb_invite:this.fb_invite
 					};
-					console.log("called");
+				//	console.log("called");
 					this.selectRegisterBasicFinalView = new signupBaseFinalView(options);
-					console.log("called");
+				//	console.log("called",this.selectRegisterBasicFinalView.$el.html());
 					var options = {};
 					options.height = "500px";
 					options.width = "500px";
 					options.title = "The Basics";
-					options.html = this.selectRegisterBasicFinalView.$el;
+					options.html = this.selectRegisterBasicFinalView.$el.html();
 					routing.trigger('common-popup-open', options);
 				} else {
 					if (flag)

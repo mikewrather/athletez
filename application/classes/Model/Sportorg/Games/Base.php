@@ -186,6 +186,8 @@ class Model_Sportorg_Games_Base extends ORM
 		//extract($args);
 		$users = array();
 
+		$thisUser = Auth::instance()->get_user();
+
 		$uslgamelink = DB::select(array('usl_game_link.id','gamelink_id'),'usl_game_link.*','user_sport_link.*')->from('usl_game_link')
 			->where('usl_game_link.games_id','=',$this->id)
 			->join('user_sport_link')->on('usl_game_link.user_sport_link_id','=','user_sport_link.id');
@@ -217,6 +219,7 @@ class Model_Sportorg_Games_Base extends ORM
 			$users[$user->id]["result_time"] = $new_result;
 			$users[$user->id]["result_place"] = $row['result_place'];
 			$users[$user->id]["bib_number"] = $row['bib_number'];
+			$users[$user->id]["can_edit"] = $thisUser && $thisUser->id == $user->id ? true : false;
 			$users[$user->id]["usl_game_link_id"] = $row['gamelink_id'];
 			$users[$user->id]["usl_enttype_id"] = 81;
 		}

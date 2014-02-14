@@ -53,6 +53,9 @@ class Model_User_Sportlink_Gamelink extends ORM
 
 	public function addUslGamesLink($args = array()){
 		extract($args);
+
+		echo "called";
+
 		//$this->users_id = $users_id;
 		$this->games_id = $games_id;
 
@@ -119,6 +122,17 @@ class Model_User_Sportlink_Gamelink extends ORM
 		}
 	}
 
+	public function updateGameLink($args){
+		extract($args);
+		if(!$this->loaded()) return false;
+		$this->result_time = $this->convertTimeToSecs($result_time);
+		try{
+			$this->save();
+		}catch (ORM_Validation_Exception $e)
+		{
+			return $e;
+		}
+	}
 
 	public function getBasics($settings = array())
 	{

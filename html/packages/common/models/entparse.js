@@ -59,7 +59,8 @@ define([ 'models', 'facade' ], function(models, facade) {
 					_is_following: mpay.is_following,
 					_can_follow: mpay.can_follow,
 					show_play:false,
-					show_edit:false
+					show_delete:false,
+					show_edit : false
 				};
 			switch(mpay.enttypes_id)
 			{
@@ -119,7 +120,7 @@ define([ 'models', 'facade' ], function(models, facade) {
 			return_data._sublabel = "Votes: " + mpay.num_votes + ", Followers: " + mpay.num_followers;
 			return_data._link = "/#!team/" + mpay.id;
 			return_data._has_link = true;
-			if(mpay.hasOwnProperty('is_owner')) return_data.show_edit = mpay.is_owner;
+			if(mpay.hasOwnProperty('is_owner')) return_data.show_delete = mpay.is_owner;
 			return_data.itemtype = "http://schema.org/Organization";
 			return_data.meta = [
 				{itemprop:"name",content:mpay.team_name},
@@ -137,7 +138,7 @@ define([ 'models', 'facade' ], function(models, facade) {
 			return_data._sublabel = "Votes: " + mpay.num_votes + ", Followers: " + mpay.num_followers;
 			return_data._link = "/#!team/" + mpay.id;
 			return_data._has_link = true;
-			if(mpay.hasOwnProperty('is_owner')) return_data.show_edit = mpay.is_owner;
+			if(mpay.hasOwnProperty('is_owner')) return_data.show_delete = mpay.is_owner;
 			return_data.itemtype = "http://schema.org/Organization";
 			return_data.meta = [
 				{itemprop:"name",content:mpay.org_name},
@@ -164,6 +165,8 @@ define([ 'models', 'facade' ], function(models, facade) {
 
 			}
 
+			if(mpay.can_edit == true) return_data.show_edit = true;
+
 			if(mpay.result_time && mpay.result_time != "00:00:00:00"){
 				return_data._sublabel = "Result Time: " + mpay.result_time;
 			}
@@ -177,7 +180,7 @@ define([ 'models', 'facade' ], function(models, facade) {
 			return_data._label = mpay.label;
 			return_data._link = "/#!profile/" + mpay.id;
 			return_data._has_link = true;
-			if(mpay.hasOwnProperty('is_owner')) return_data.show_edit = mpay.is_owner;
+			if(mpay.hasOwnProperty('is_owner')) return_data.show_delete = mpay.is_owner;
 			return_data.itemtype = "http://schema.org/Person";
 			return_data.meta = [
 				{itemprop:"name",content:mpay.name},
@@ -204,7 +207,7 @@ define([ 'models', 'facade' ], function(models, facade) {
 			return_data._link = "javascript: void(0);";
 			return_data._has_link = false;
 
-			if(mpay.media.hasOwnProperty('is_owner')) return_data.show_edit = mpay.media.is_owner;
+			if(mpay.media.hasOwnProperty('is_owner')) return_data.show_delete = mpay.media.is_owner;
 			return_data._noicon_text = "play";
 			return_data._color = '#e27171';
 			return return_data;
@@ -243,7 +246,7 @@ define([ 'models', 'facade' ], function(models, facade) {
 
 			return_data._link = "javascript: void(0);";
 			return_data._has_link = false;
-			if(mpay.media_obj.hasOwnProperty('is_owner')) return_data.show_edit = mpay.media_obj.is_owner;
+			if(mpay.media_obj.hasOwnProperty('is_owner')) return_data.show_delete = mpay.media_obj.is_owner;
 			return_data._noicon_text = "look";
 			return_data._color = '#dfe271';
 
@@ -275,7 +278,7 @@ define([ 'models', 'facade' ], function(models, facade) {
 				team_str += this.ucwords(mpay.teams[i].team_name);
 				team_str += i<teamLength - 1 ? ' vs ' : '';
 			} */
-			if(mpay.hasOwnProperty('is_owner')) return_data.show_edit = mpay.is_owner;
+			if(mpay.hasOwnProperty('is_owner')) return_data.show_delete = mpay.is_owner;
 		//	if(team_str != "") return_data._sublabel = team_str;
 			else{
 				return_data._sublabel = mpay.event_name;

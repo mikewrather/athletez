@@ -15,6 +15,7 @@ define(['require', 'text!signup/templates/basciFinal.html', 'backbone', 'undersc
 			this.render();
 		},
 		render : function() {
+			console.log(this.template);
 			this.$el.html(this.template);
 			this.registrationElements();
 			this.payload = this.finalRegistrationPayload(this.options.attr);
@@ -207,7 +208,6 @@ define(['require', 'text!signup/templates/basciFinal.html', 'backbone', 'undersc
 			return element;
 		},
 		fetchpayload : function(payload) {
-
 			this.$el.find("#first_name").val(payload.firstname + ' ' + payload.lastname);
 			this.$el.find("#emailInput").val(payload.email);
 		},

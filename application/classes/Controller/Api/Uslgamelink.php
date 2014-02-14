@@ -29,7 +29,14 @@
 		###########################    GET METHODS    ##############################
 		############################################################################
 
-		
+		public function action_get_basics(){
+			if(!$this->mainModel->id)
+			{
+				$this->modelNotSetError();
+				return false;
+			}
+			return $this->mainModel;
+		}
 		############################################################################
 		###########################    POST METHODS    #############################
 		############################################################################
@@ -105,6 +112,31 @@
 		############################    PUT METHODS    #############################
 		############################################################################
 
+		public function action_put_add(){
+			if(!$this->mainModel->id)
+			{
+				$this->modelNotSetError();
+				return false;
+			}
+			if(trim($this->put('result_time')) != "")
+			{
+				$arguments["result_time"] = trim($this->put('result_time'));
+			}
+
+			$result = $this->mainModel->updateGameLink($arguments);
+
+			if(get_class($result) == get_class($this->mainModel))
+			{
+				return $result;
+			}
+			elseif(get_class($result) == 'ORM_Validation_Exception')
+			{
+				//parse error and add to error array
+				$this->processValidationError($result,$this->mainModel->error_message_path);
+				return false;
+
+			}
+		}
 		
 		############################################################################
 		###########################    DELETE METHODS    ###########################
