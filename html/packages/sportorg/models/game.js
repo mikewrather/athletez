@@ -32,7 +32,10 @@ define(["facade", "models/base"], function (facade, BaseModel) {
                 "exec_time": 0,
                 "exec_error": false
             }
-        })
+        }),
+
+
+	    url: function(){ return "/api/game/basics/" + this.id; }
         
     });
 

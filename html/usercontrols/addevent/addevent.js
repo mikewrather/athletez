@@ -130,15 +130,13 @@ define(["require", "text!usercontrols/addevent/templates/layout.html",
 
 			this.scheme.push(this.addGameView);
 			this.layout.render();
-			$('#modalPopup .modal-body').slimScroll({
-				height:'430px',
-				railVisible:true,
-				allowPageScroll:true,
-				disableFadeOut:true
-			});
+
 		},
 		addTeamFunction : function(data){
-			if(this.callback) this.callback(data);
+			if(this.callback) {
+				routing.trigger('common-popup-close');
+				this.callback(data);
+			}
 		}
 	});
 	return AddGameController;
