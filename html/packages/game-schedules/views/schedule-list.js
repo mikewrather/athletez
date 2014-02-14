@@ -170,6 +170,9 @@ function(vendor, facade,  views,   utils,   ScheduleItemView, Store, ScheduleLis
 				    style: {
 					    classes: "tipsy game-info",
 					    width: '360px'
+				    },
+				    hide : {
+						fixed:true
 				    }
 			    });
 		    });
