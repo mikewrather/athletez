@@ -342,6 +342,7 @@ text!schedules/templates/schedule-event-item.html
 packages/game-schedules/views/schedule-item.js
 text!schedules/templates/schedule-list.html
 packages/common/models/add.js
+packages/sportorg/models/uslgamelink.js
 vendor/plugins/qtip/qtip.js
 packages/game-schedules/views/schedule-list.js
 text!user/templates/related-item.html
@@ -503,7 +504,6 @@ packages/roster/views/image-list.js
 text!common/templates/add-roster-buttons.html
 packages/roster/views/roster.js
 text!game/templates/participats-list.html
-pages/game/models/addparticipate.js
 pages/game/views/participants-list.js
 pages/game/views/participants-list-main.js
 pages/game.js
@@ -1024,7 +1024,7 @@ text!common/templates/add-roster-buttons.html
 packages/roster/views/roster.js
 text!common/templates/add-media-buttons.html
 text!game/templates/participats-list.html
-pages/game/models/addparticipate.js
+packages/sportorg/models/uslgamelink.js
 packages/common/models/add.js
 pages/game/views/participants-list.js
 pages/game/views/participants-list-main.js
@@ -1423,6 +1423,7 @@ text!schedules/templates/schedule-event-item.html
 packages/game-schedules/views/schedule-item.js
 text!schedules/templates/schedule-list.html
 packages/common/models/add.js
+packages/sportorg/models/uslgamelink.js
 vendor/plugins/qtip/qtip.js
 packages/game-schedules/views/schedule-list.js
 text!user/templates/related-item.html
@@ -1784,7 +1785,6 @@ pages/game/models/commentform.js
 pages/game/views/comment-form.js
 pages/game/views/comment-list.js
 text!game/templates/participats-list.html
-pages/game/models/addparticipate.js
 pages/game/views/participants-list.js
 pages/game/views/participants-list-main.js
 pages/game.js
@@ -1968,6 +1968,7 @@ text!schedules/templates/schedule-event-item.html
 packages/game-schedules/views/schedule-item.js
 text!schedules/templates/schedule-list.html
 packages/common/models/add.js
+packages/sportorg/models/uslgamelink.js
 vendor/plugins/qtip/qtip.js
 packages/game-schedules/views/schedule-list.js
 text!user/templates/related-item.html
@@ -2102,7 +2103,6 @@ packages/roster/views/image-list.js
 text!common/templates/add-roster-buttons.html
 packages/roster/views/roster.js
 text!game/templates/participats-list.html
-pages/game/models/addparticipate.js
 pages/game/views/participants-list.js
 pages/game/views/participants-list-main.js
 pages/game.js
@@ -2453,6 +2453,7 @@ text!schedules/templates/schedule-event-item.html
 packages/game-schedules/views/schedule-item.js
 text!schedules/templates/schedule-list.html
 packages/common/models/add.js
+packages/sportorg/models/uslgamelink.js
 vendor/plugins/qtip/qtip.js
 packages/game-schedules/views/schedule-list.js
 text!user/templates/related-item.html
@@ -2601,7 +2602,6 @@ packages/roster/views/image-list.js
 text!common/templates/add-roster-buttons.html
 packages/roster/views/roster.js
 text!game/templates/participats-list.html
-pages/game/models/addparticipate.js
 pages/game/views/participants-list.js
 pages/game/views/participants-list-main.js
 pages/game.js
@@ -2953,6 +2953,7 @@ text!schedules/templates/schedule-event-item.html
 packages/game-schedules/views/schedule-item.js
 text!schedules/templates/schedule-list.html
 packages/common/models/add.js
+packages/sportorg/models/uslgamelink.js
 packages/game-schedules/views/schedule-list.js
 text!user/templates/related-item.html
 packages/user/views/related-item.js
@@ -3079,7 +3080,6 @@ packages/roster/views/image-list.js
 text!common/templates/add-roster-buttons.html
 packages/roster/views/roster.js
 text!game/templates/participats-list.html
-pages/game/models/addparticipate.js
 pages/game/views/participants-list.js
 pages/game/views/participants-list-main.js
 pages/game.js
@@ -3569,6 +3569,7 @@ text!schedules/templates/schedule-event-item.html
 packages/game-schedules/views/schedule-item.js
 text!schedules/templates/schedule-list.html
 packages/common/models/add.js
+packages/sportorg/models/uslgamelink.js
 vendor/plugins/qtip/qtip.js
 packages/game-schedules/views/schedule-list.js
 text!user/templates/related-item.html
@@ -3717,7 +3718,6 @@ packages/roster/views/image-list.js
 text!common/templates/add-roster-buttons.html
 packages/roster/views/roster.js
 text!game/templates/participats-list.html
-pages/game/models/addparticipate.js
 pages/game/views/participants-list.js
 pages/game/views/participants-list-main.js
 pages/game.js
