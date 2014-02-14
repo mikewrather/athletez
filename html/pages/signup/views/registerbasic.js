@@ -75,6 +75,15 @@ define(['require', 'text!signup/templates/registration.html', 'text!signup/templ
 			try {
 
 				if (this.openAsaPage && flag) {
+
+				//	console.log("called",this.selectRegisterBasicFinalView.$el.html());
+					var options = {};
+					options.height = "500px";
+					options.width = "500px";
+					options.title = "The Basics";
+					options.html = '<div id="reg-cont"></div>';
+					routing.trigger('common-popup-open', options);
+
 					this.basic_type = new signupBaseFinalModel();
 					var options = {
 						model : this.basic_type,
@@ -84,17 +93,13 @@ define(['require', 'text!signup/templates/registration.html', 'text!signup/templ
 						},
 						openAsPopUp : true,
 						callback : this.callback,
-						fb_invite:this.fb_invite
+						fb_invite:this.fb_invite,
+						destination:$('#reg-cont')
+
 					};
-				//	console.log("called");
+					//	console.log("called");
 					this.selectRegisterBasicFinalView = new signupBaseFinalView(options);
-				//	console.log("called",this.selectRegisterBasicFinalView.$el.html());
-					var options = {};
-					options.height = "500px";
-					options.width = "500px";
-					options.title = "The Basics";
-					options.html = this.selectRegisterBasicFinalView.$el.html();
-					routing.trigger('common-popup-open', options);
+
 				} else {
 					if (flag)
 						routing.trigger("register-basic-final", fields, this.callback);

@@ -1825,6 +1825,7 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 		try {
 			$extra_validate = Validation::factory($args);
 			$extra_validate->rule('email','unique_email');
+			$extra_validate->rule('email','email');
 			$extra_validate->rule('password','not_empty');
 			$extra_validate->rule('password','min_length', array(':value', 6));
 			$extra_validate->rule('password','max_length', array(':value', 16));

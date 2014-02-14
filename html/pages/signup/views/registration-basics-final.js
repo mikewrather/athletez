@@ -15,8 +15,15 @@ define(['require', 'text!signup/templates/basciFinal.html', 'backbone', 'undersc
 			this.render();
 		},
 		render : function() {
-			console.log(this.template);
+		//	console.log(this.template);
 			this.$el.html(this.template);
+
+			var self = this;
+			//listen for elements
+			var check = setTimeout(function(){
+				if(self.$el.find('.regsubmitfinal').length) clearInterval(check);
+				else console.log("not found");
+			},100);
 			this.registrationElements();
 			this.payload = this.finalRegistrationPayload(this.options.attr);
 			this.fetchpayload(this.payload);
