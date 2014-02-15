@@ -359,10 +359,10 @@ div.image-item-container > img {
 	background-color: #9dca3c;
 }
 
-.action-block.edit {
-	background-color: #d36011;
-}
 .action-block.delete {
+	background-color: #C43737;
+}
+.action-block.edit {
 	background-color: #4b3ec6;
 }
 
@@ -1157,6 +1157,13 @@ div.game-info .game-score .team-score.win {
 	background-color: #d36011;
 }
 
+div.game-info span.game-header{
+    display: block;
+    background-color: #d36011;
+    margin: -15px -15px 0 -15px;
+    padding: 15px 15px 5px 15px;
+}
+
 /*********BootStrap Inherited********/
 .btn-green {
 	color: #FFF;
@@ -1909,7 +1916,7 @@ li#add-icons ul {
 	display: inline-block;
 /*	background-color: #CCC; */
 }
-
+/*
 div.edit {
     background:url(http://cdn.athletez.com/resources/img/pencil-25.png) no-repeat;
     background-size: cover;
@@ -1917,7 +1924,7 @@ div.edit {
     width: 25px;
     cursor: pointer;
 }
-
+*/
 .player-share {
 	background:url(images/icons/social-sprite.png) no-repeat;
 	width: 36px;

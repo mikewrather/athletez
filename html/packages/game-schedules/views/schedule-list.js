@@ -3,8 +3,9 @@
 
 define(['vendor','facade','views', 'utils', 'schedules/views/schedule-item','utils/storage',
 	'text!schedules/templates/schedule-list.html','chrome/views/header', 'common/models/add',
+	'sportorg/models/uslgamelink',
 	"vendor/plugins/qtip/qtip"],
-function(vendor, facade,  views,   utils,   ScheduleItemView, Store, ScheduleListTemplate,header, UserGames) {
+function(vendor, facade,  views,   utils,   ScheduleItemView, Store, ScheduleListTemplate,header, UserGames,UslGameLink) {
 
     var OrgListView, 
         OrgListAbstract,
@@ -37,7 +38,7 @@ function(vendor, facade,  views,   utils,   ScheduleItemView, Store, ScheduleLis
         
         events: {
         	"click .add-game-h": "addGame",
-        	"click .add-event-h": "addEvent",
+        	"click .add-event-h": "addEvent"
     //    	'mouseover .team-info-h': 'showinfo',
 	//        'mouseout .team-info-h': 'showinfo'
         },
@@ -158,6 +159,7 @@ function(vendor, facade,  views,   utils,   ScheduleItemView, Store, ScheduleLis
         },
 
 	    afterRender: function() {
+		    var _self = this;
 		    this.$el.find("a.team-info-h").each(function(){
 			    var $self = $(this);
 			    $(this).qtip({
@@ -172,11 +174,41 @@ function(vendor, facade,  views,   utils,   ScheduleItemView, Store, ScheduleLis
 					    width: '360px'
 				    },
 				    hide : {
-						fixed:true
+						fixed:true,
+					    delay:1000
+				    },
+				    events : {
+					    render: function(event,api) {
+						    $(api.elements.tooltip).find('.add-score').on('click',_self.addScore);
+					    }
 				    }
 			    });
 		    });
 	    },
+	    addScore: function(e){
+		    e.stopPropagation();
+		    var uslgamelink_id = $(e.target).data('uslgamelink');
+		    $(e.target)
+			    .off('click',this.addScore)
+			    .html(
+				    '<input type="text" placeholder="00:00:00" data-uslgamelink="'+ uslgamelink_id +'" style="width:100px; margin:0px;" id="usl_result_time_' + uslgamelink_id + '" />' +
+				    '<span id="save_result_time' + uslgamelink_id + '" style="margin-left:8px;">save</span>')
+			    .find('#save_result_time' + uslgamelink_id).on('click',this.updateGameLink);
+	    },
+
+	    updateGameLink: function(e)
+		{
+			var $inputel = $(e.target).prev(),
+				uslGameLink = new UslGameLink({
+					id:$inputel.data('uslgamelink'),
+					result_time:$inputel.val()
+				});
+			uslGameLink.save();
+			$.when(uslGameLink.request).done(function(res){
+				console.log(res);
+				$inputel.parent().html(res.payload.result_time);
+			});
+		},
         
         renderTemplate: function (eventPage) {
             var markup = Mustache.to_html(ScheduleListTemplate, {data: this.collection.length, eventPage: eventPage});
@@ -184,6 +216,7 @@ function(vendor, facade,  views,   utils,   ScheduleItemView, Store, ScheduleLis
             this.$el.html(markup);
             return this;
         }   
+
 
     });
 

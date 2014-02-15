@@ -1,7 +1,9 @@
 {{#payload}}
 	<a href="#game/{{id}}" class="{{#result_time}}background-blue{{/result_time}}{{^result_time}}noscore{{/result_time}} team-info-h"><div class="game-info hide">
-		<span class="game-day">{{event_name}} <br/> {{game_day}}</span><br/>
+		<span class="game-header"><span class="game-day">{{event_name}}</span></span>
+		<span class="game-day">{{game_day}}</span><br/>
 		<span class="team-name">{{game_location}}</span><br/>
 		{{#result_time}}<span class="game-score"><span class="team-score">{{result_time}}</span></span>{{/result_time}}
+		{{^result_time}}<span class="game-score"><span class="team-score add-score" data-uslgamelink="{{usl_game_link_id}}">Add My Time</span></span>{{/result_time}}
 	</div></a>
 {{/payload}}

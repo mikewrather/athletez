@@ -6,7 +6,7 @@ define(['facade',
 	'utils',
 	'media/views/image-item',
 	'text!game/templates/participats-list.html',
-	'game/models/addparticipate',
+	'sportorg/models/uslgamelink',
 	'common/models/add',
 	'component/fb',
 	"component/forms"],
@@ -29,9 +29,8 @@ define(['facade',
 		CollectionView = views.CollectionView,
 		SectionView = views.SectionView,
 		FormComponent = require('component/forms'),
-		Mustache = vendor.Mustache;
-
-	ParticipantsView = CollectionView.extend(SectionView.prototype);
+		Mustache = vendor.Mustache,
+		ParticipantsView = CollectionView.extend(SectionView.prototype);
 
 	return ParticipantsView.extend({
 		__super__ : CollectionView.prototype,
@@ -49,7 +48,8 @@ define(['facade',
 			"mouseover a.tiles" : "showText",
 			"mouseout a.tiles" : "showicon",
 			"click .invite-to-fb-h" : "inviteFBFriend",
-			"click .delete-from-game" : "removeParticipant"
+	//		"click .delete-from-game" : "removeParticipant",
+	//		"click .edit-h" : "editResults"
 		},
 
 		// show text
@@ -100,8 +100,41 @@ define(['facade',
 					});
 				}
 			}, 100);
+
+			this.$el.find('.edit-h').on('click',this.editResults);
+
 		},
 
+		editResults: function(e){
+			e.preventDefault();
+			e.stopPropagation();
+			if($(e.target)[0].tagName == 'SPAN')
+			{
+				var usl_id = $(e.target).parent().attr('subject-id');
+			}
+			else{
+				var usl_id = $(e.target).attr('subject-id');
+			}
+
+			if (!this.checkForUser()) {
+				routing.trigger('showSignup', function(callback) {
+					addToList(function() {
+						if (callback)
+							callback();
+					});
+				});
+			} else {
+				var options = {
+					height : "500px",
+					width : "500px",
+					html : '<div id="addParticipantForm"></div>',
+					title : "Edit My Times"
+				};
+				routing.trigger('common-popup-open', options);
+				this.drawAddParticipantForm(usl_id);
+			}
+
+		},
 		addParticipant : function() {
 
 
@@ -124,142 +157,160 @@ define(['facade',
 			}
 
 		},
-		drawAddParticipantForm: function(){
+		drawAddParticipantForm: function(usl_id){
 
-			var _self = this;
+			var _self = this,
+				is_update = false;
 
-			var formData = new FormComponent({
+			var participants = new Participate();
 
-				'result_time' : {
-					form_values: {
-						defaultValue : "",
-						post_to_server	: true,
-						serverDbField: 'result_time',
-						serverKey: "result_time"
+			var drawForm = function(){
+
+				var formData = new FormComponent({
+
+					'result_time' : {
+						form_values: {
+							defaultValue : is_update ? participants.get('payload').result_time : "",
+							post_to_server	: true,
+							serverDbField: 'result_time',
+							serverKey: "result_time"
+						},
+
+						type : 'Text',
+						fieldClass: "",
+						attr : {
+							'placeholder' : '00:00:00',
+							'class' : "txt-result-time"
+						},
+
+						showLable : true,
+						label: "Result Time"
+
 					},
+					'bibnumber' : {
+						form_values: {
+							defaultValue : is_update ? participants.get('payload').bib_number : "",
+							post_to_server	: true,
+							serverDbField: 'bib_number',
+							serverKey: "bib_number"
+						},
 
-					type : 'Text',
-					fieldClass: "",
-					attr : {
-						'placeholder' : '00:00:00',
-						'class' : "txt-result-time"
-					},
+						type : 'Text',
+						fieldClass: "",
+						attr : {
+							'placeholder' : '0',
+							'class' : "txt-bib-number"
+						},
 
-					showLable : true,
-					label: "Result Time"
+						showLable : true,
+						label: "Bib Number"
 
-				},
-				'bibnumber' : {
-					form_values: {
-						defaultValue : "",
-						post_to_server	: true,
-						serverDbField: 'bib_number',
-						serverKey: "bib_number"
 					},
-
-					type : 'Text',
-					fieldClass: "",
-					attr : {
-						'placeholder' : '0',
-						'class' : "txt-bib-number"
+					'games_id'	: {
+						form_values: {
+							serverKey:'games_id',
+							serverDbField: 'games_id',
+							post_to_server	: true,
+							value: _self.game_id
+						},
+						type: "Hidden"
 					},
-
-					showLable : true,
-					label: "Bib Number"
-
-				},
-				'games_id'	: {
-					form_values: {
-						serverKey:'games_id',
-						serverDbField: 'games_id',
-						post_to_server	: true,
-						value: _self.game_id
+					'sports_id'	: {
+						form_values: {
+							serverKey:'sports_id',
+							serverDbField: 'sports_id',
+							post_to_server	: true,
+							value: _self.sport_id
+						},
+						type: "Hidden"
 					},
-					type: "Hidden"
-				},
-				'sports_id'	: {
-					form_values: {
-						serverKey:'sports_id',
-						serverDbField: 'sports_id',
-						post_to_server	: true,
-						value: _self.sport_id
-					},
-					type: "Hidden"
-				},
-				'submit' : {
-					type : 'Submit',
-					fieldClass: "button-field",
-					attr : {
-						'value' : 'Save Changes'
-					},
-					showLable : false,
-					onSubmit : function(e) {
-						var errors = form.commit();
-						if (errors) {
-							// auto scroll to focus element which has error
-							for (var i in errors) {
-								var $ob = $("*[name=" + i + "]"), $pos = $ob.position();
-								$ob.parents(".common-modal #modalBody").animate({
-									scrollTop : $pos.top
-								}, '500', function() {
-									$ob.addClass('focus-error-animation');
-									setTimeout(function() {
-										$ob.removeClass('focus-error-animation');
-									}, 2000);
-								});
-								break;
-							}
-						} else {
-							if(_self.formValues) {
-								var formData = _self.formValues.getFormValues();
+					'submit' : {
+						type : 'Submit',
+						fieldClass: "button-field",
+						attr : {
+							'value' : 'Save Changes'
+						},
+						showLable : false,
+						onSubmit : function(e) {
+							var errors = form.commit();
+							if (errors) {
+								// auto scroll to focus element which has error
+								for (var i in errors) {
+									var $ob = $("*[name=" + i + "]"), $pos = $ob.position();
+									$ob.parents(".common-modal #modalBody").animate({
+										scrollTop : $pos.top
+									}, '500', function() {
+										$ob.addClass('focus-error-animation');
+										setTimeout(function() {
+											$ob.removeClass('focus-error-animation');
+										}, 2000);
+									});
+									break;
+								}
 							} else {
-								var formData = form.getValue();
+								if(_self.formValues) {
+									var formData = _self.formValues.getFormValues();
+								} else {
+									var formData = form.getValue();
+								}
+
+								var formData = _self.formValues.getFormValues();
+
+								participants.set({
+									games_id : formData.games_id,
+									sports_id : formData.sports_id,
+									result_time : formData.result_time,
+									bib_number : formData.bib_number
+
+								});
+								participants.save();
+
+								$.when(participants.request).done(function() {
+									var payload = participants.toJSON(), newAddModel = new addModel();
+									newAddModel.processItemFromResponse(payload.payload.usl.user);
+									routing.trigger('common-popup-close');
+									_self.$el.find(".add-to-event").addClass("link-disabled");
+									if (!is_update) _self.collection.add(newAddModel);
+								});
+
+								$.when(participants.request).fail(function(res) {
+									var response = JSON.parse(res.responseText);
+									var errorArray = response.exec_data.error_array;
+									_self.formValues.showServersErrors(errorArray);
+								});
 							}
-
-							var formData = _self.formValues.getFormValues(),
-								participants = new Participate();
-
-							participants.set({
-								games_id : formData.games_id,
-								sports_id : formData.sports_id,
-								result_time : formData.result_time,
-								bib_number : formData.bib_number
-
-							});
-							participants.save();
-
-							$.when(participants.request).done(function() {
-								var payload = participants.toJSON(), newAddModel = new addModel();
-								newAddModel.processItemFromResponse(payload.payload.usl.user);
-								routing.trigger('common-popup-close');
-								_self.$el.find(".add-to-event").addClass("link-disabled");
-								_self.collection.add(newAddModel);
-							});
-
-							$.when(participants.request).fail(function(res) {
-								var response = JSON.parse(res.responseText);
-								var errorArray = response.exec_data.error_array;
-								_self.formValues.showServersErrors(errorArray);
-							});
 						}
+					},
+					'button' : {
+						type : 'Button',
+						fieldClass: "button-field",
+						attr : {
+							'value' : 'Cancel',
+							'class' : 'cancel-btn'
+						},
+						onClick : function() {
+							routing.trigger('common-popup-close');
+						},
+						showLable : false
 					}
-				},
-				'button' : {
-					type : 'Button',
-					fieldClass: "button-field",
-					attr : {
-						'value' : 'Cancel',
-						'class' : 'cancel-btn'
-					},
-					onClick : function() {
-						routing.trigger('common-popup-close');
-					},
-					showLable : false
-				}
-			}, $('#addParticipantForm'));
+				}, $('#addParticipantForm'));
 
-			var form = formData.form;
-			this.formValues = formData.formValues;
+				var form = formData.form;
+				_self.formValues = formData.formValues;
+			}
+
+			if(usl_id) {
+				participants.set('id',usl_id);
+				participants.fetch();
+				$.when(participants.request).done(function(){
+					is_update = true;
+					drawForm();
+				});
+			}
+			else drawForm();
+
+
+
 
 		},
 		initialize : function(options) {

@@ -1174,7 +1174,8 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 			array('games.gameTime','gameTime'),
 			array('games.event_name','event_name'),
 			array('locations.full_address','game_location'),
-			array('usl_game_link.result_time','result_time')
+			array('usl_game_link.result_time','result_time'),
+			array('usl_game_link.id','usl_game_link_id')
 
 		)->from('user_sport_link')
 			->join('usl_game_link')->on('user_sport_link.id','=','usl_game_link.user_sport_link_id')
@@ -1824,6 +1825,7 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 		try {
 			$extra_validate = Validation::factory($args);
 			$extra_validate->rule('email','unique_email');
+			$extra_validate->rule('email','email');
 			$extra_validate->rule('password','not_empty');
 			$extra_validate->rule('password','min_length', array(':value', 6));
 			$extra_validate->rule('password','max_length', array(':value', 16));

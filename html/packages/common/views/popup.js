@@ -48,7 +48,12 @@ define([
 			this.options.title = options.title || "";
 			this.options.width = options.width || "50%";
 			this.options.height = options.height || "50%";
-			this.options.popup_content = options.html || "<div></div>";
+
+			console.log("Options HTML:",options.html);
+
+			if(options.html && (options.html instanceof $)) this.options.popup_content = options.html.html();
+			else if(options.html) this.options.popup_content = options.html;
+			else this.options.popup_content = "<div></div>";
 
 			this.forceFullScreen = document.documentElement.clientWidth < parseInt(this.options.width) ? true : false;
 
