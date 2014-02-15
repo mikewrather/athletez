@@ -343,6 +343,12 @@ define([
             	this.orgs.sports_id = $(".selected-sport-h").data("id");
             	this.orgs.fetch();
             	$.when(this.orgs.request).done(function() {
+            		if (_self.orgListView) {
+						$(_self.orgListView.destination).html('');
+						position = $.inArray(_self.orgListView, _self.scheme);
+						if (~position) _self.scheme.splice(position, 1);
+					}
+					
          	    	_self.orgListView = new ProfileOrgListView({
 						collection: _self.orgs,
 						controller: _self,
