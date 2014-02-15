@@ -15,7 +15,8 @@ define( ["facade", "media/models/image", "utils"], function (facade, MediaImageM
             if (testpath)
                 return testpath + '/uslgamelink/add/';
             return '/api/uslgamelink/add/';
-        }
+        },
+
         
     });
 

@@ -110,5 +110,15 @@
 		###########################    DELETE METHODS    ###########################
 		############################################################################
 
+		public function action_delete_remove(){
+			if(!$this->mainModel->id)
+			{
+				$this->modelNotSetError();
+				return false;
+			}
+
+			$this->mainModel->delete();
+
+		}
 		
 	}

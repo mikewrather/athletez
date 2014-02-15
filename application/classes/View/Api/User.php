@@ -42,8 +42,8 @@
 			$rs = $this->obj->execute();
 			foreach($rs as $row)
 			{
-				$event = ORM::factory('Sportorg_Games_Base',$row['games_id']);
-				$retArr[$event->id] = $event->getBasics();
+				$row['result_time'] = Util::secondsToHHMMSS($row['result_time'],true);
+				$retArr[] = $row;
 			}
 
 			return $retArr;

@@ -11,16 +11,20 @@
 
 
 				<div class="action-block left-block vote vote-h {{#_has_voted}} link-disabled {{/_has_voted}}" subject-type-id="{{_enttypes_id}}" subject-id="{{_id}}">
-					<span>vote</span>
+					<span>vote{{#_has_voted}}d{{/_has_voted}}</span>
 				</div>
 				{{#_can_follow}}
-				<div class="action-block right-block follow follow-h {{#_is_following}} link-disabled {{/_is_following}}" subject-type-id="{{_enttypes_id}}" subject-id="{{_id}}"><span>follow</span></div>
+				<div class="action-block right-block follow follow-h {{#_is_following}} link-disabled {{/_is_following}}" subject-type-id="{{_enttypes_id}}" subject-id="{{_id}}"><span>follow{{#_is_following}}ing{{/_is_following}}</span></div>
 				{{/_can_follow}}
 
 			{{#show_edit}}
 			<!--<div class="action-block left-block edit edit-h" subject-type-id="{{_enttypes_id}}" subject-id="{{_id}}"><span>edit</span></div>-->
 			<div class="action-block right-block delete delete-h" subject-type-id="{{_enttypes_id}}" subject-id="{{_id}}"><span>delete</span></div>
 			{{/show_edit}}
+			{{#usl_game_link_id}}
+			<!--<div class="action-block left-block edit edit-h" subject-type-id="{{_enttypes_id}}" subject-id="{{_id}}"><span>edit</span></div>-->
+			<div class="action-block left-block delete-from-game delete-h" subject-type-id="{{usl_enttype_id}}" subject-id="{{usl_game_link_id}}"><span>remove</span></div>
+			{{/usl_game_link_id}}
 
 		</div>
 		<div class="detail-view {{#_detailclass}}{{_detailclass}}{{/_detailclass}}">

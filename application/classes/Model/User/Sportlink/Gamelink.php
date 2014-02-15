@@ -30,12 +30,25 @@ class Model_User_Sportlink_Gamelink extends ORM
 	public function rules(){
 		return array(
 			'result_time' => array(
-				array('valid_time')
+				array('numeric')
 			),
 			'result_place' => array(
 				array('numeric')
 			)
 		);
+	}
+
+	public function convertTimeToSecs($hour){
+		if($hour == "") return 0;
+
+		$parse = array();
+		if (!preg_match ('#^(?<hours>[\d]{1,2}):(?<mins>[\d]{2}):(?<secs>[\d]{2})$#',$hour,$parse)) {
+			// Throw error, exception, etc
+			throw new RuntimeException ("Hour Format not valid");
+		}
+
+		return (int) $parse['hours'] * 3600 + (int) $parse['mins'] * 60 + (int) $parse['secs'];
+
 	}
 
 	public function addUslGamesLink($args = array()){
@@ -48,7 +61,7 @@ class Model_User_Sportlink_Gamelink extends ORM
 
 		$this->result_place = $result_place;
 		$this->bib_number = $bib_number;
-		$this->result_time = $result_time;
+		$this->result_time = $this->convertTimeToSecs($result_time);
 
 		$usl_model = ORM::factory("User_Sportlink");
 		$user_sport_link_id = $usl_model->getId($users_id, $sports_id,true);
@@ -73,7 +86,20 @@ class Model_User_Sportlink_Gamelink extends ORM
 					$follow = ORM::factory('User_Followers');
 					$follow->addFollower(ORM::factory('User_Base',$users_id),ORM::factory('Sportorg_Games_Base',$games_id),false,"you're participating in this event.");
 
-					if(Valid::uslgamelink_link_not_exist($user_sport_link_id, $games_id)) $this->save();
+					//check for existing deleted
+
+					if(Valid::uslgamelink_link_not_exist($user_sport_link_id, $games_id)){
+
+						try{
+							$this->save();
+						} catch (Exception $e){
+							DB::delete('usl_game_link')
+								->where('games_id','=',$games_id)
+								->where('user_sport_link_id','=',$user_sport_link_id)
+								->execute();
+							$this->save();
+						}
+					}
 					else
 					{
 						return ORM::factory('User_Sportlink_Gamelink')
@@ -92,6 +118,7 @@ class Model_User_Sportlink_Gamelink extends ORM
 			return $e;
 		}
 	}
+
 
 	public function getBasics($settings = array())
 	{

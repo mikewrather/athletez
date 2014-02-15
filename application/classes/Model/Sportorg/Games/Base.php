@@ -186,14 +186,25 @@ class Model_Sportorg_Games_Base extends ORM
 		//extract($args);
 		$users = array();
 
-		$uslgamelink = $this->uslgamelink->find_all();
-		foreach($uslgamelink as $gamelink)
-		{
+		$uslgamelink = DB::select(array('usl_game_link.id','gamelink_id'),'usl_game_link.*','user_sport_link.*')->from('usl_game_link')
+			->where('usl_game_link.games_id','=',$this->id)
+			->join('user_sport_link')->on('usl_game_link.user_sport_link_id','=','user_sport_link.id');
 
-			$user = $gamelink->usl->user;
+		$classes_arr = array(
+			'User_Sportlink_Gamelink'=>'usl_game_link'
+		);
+		$uslgamelink = ORM::_sql_exclude_deleted($classes_arr, $uslgamelink);
+		$result = $uslgamelink->execute();
+
+//		print_r($result);
+		foreach ($result as $row)
+		{
+	//		print_r($row);
+			$user = ORM::factory('User_Base',$row['users_id']);
+		//	print_r($user);
 
 			//create result time
-			$total_seconds = $gamelink->result_time;
+			$total_seconds = $row['result_time'];
 			$hours = floor($total_seconds / 3600);
 			$remaining_minutes = $total_seconds % 3600;
 			$minutes = floor($remaining_minutes / 60);
@@ -204,8 +215,10 @@ class Model_Sportorg_Games_Base extends ORM
 
 			$users[$user->id] = $user->getBasics();
 			$users[$user->id]["result_time"] = $new_result;
-			$users[$user->id]["result_place"] = $gamelink->result_place;
-			$users[$user->id]["bib_number"] = $gamelink->bib_number;
+			$users[$user->id]["result_place"] = $row['result_place'];
+			$users[$user->id]["bib_number"] = $row['bib_number'];
+			$users[$user->id]["usl_game_link_id"] = $row['gamelink_id'];
+			$users[$user->id]["usl_enttype_id"] = 81;
 		}
 		$newArr = array();
 		foreach($users as $key=>$val){
@@ -235,7 +248,8 @@ class Model_Sportorg_Games_Base extends ORM
 			"game_location" => 'get_game_location',
 			"shared" => 'get_shared_info',
 			'can_follow' => 'can_follow',
-			'time_as_int' => 'getTimeAsInt'
+			'time_as_int' => 'getTimeAsInt',
+			'full_date' => 'get_full_date'
 		),
 
 		// array of values only.  Each value is the name of a column to exclude
@@ -294,6 +308,10 @@ class Model_Sportorg_Games_Base extends ORM
 
 	public function format_game_day(){
 		return date('n.d.y',strtotime($this->gameDay));
+	}
+
+	public function get_full_date(){
+		return date('M jS Y, g:i a',strtotime($this->gameDay . " " . $this->gameTime));
 	}
 
 	public function format_game_time(){

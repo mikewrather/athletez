@@ -225,7 +225,7 @@ input[disabled].hasDatepicker, input[readonly].hasDatepicker {
 	color: #FFF;
 	padding: 5px 25px;
 	text-align: center;
-	margin: 10px 0;
+	margin: 6px 0;
 	font-family: 'Nunito', "HelveticaNeue", "Helvetica";
 	font-size: 1em;
 	font-weight: 700;
@@ -315,6 +315,9 @@ div.image-item-container > img {
 }
 .action-block.delete {
 	background-color: #4b3ec6;
+}
+.action-block.delete-from-game {
+    background-color: #d36011;
 }
 .action-block span {
 	vertical-align: middle;
@@ -554,6 +557,13 @@ span.ui-helper-hidden-accessible {
 	color: #FFF !important;
 	background: #33aeab !important;
 	border: none !important;
+}
+.ui-menu-item a{
+    margin:-1px;
+}
+.ui-menu-item a span.sub-label{
+    font-size:.8em;
+    color: #575757;
 }
 .bubble {
 	position: relative;
@@ -908,17 +918,15 @@ a.add-game-h {
 }
 div.game-info {
 	line-height: 25px;
-	bottom: 40px;
-	margin-left: -190px;
 	padding: 9px;
-	width: 460px;
+	width: 360px;
+    max-width: 360px !important;
 	height: auto;
 	background-color: white;
-	position: absolute;
-	float: left;
 	color: #333;
 	box-shadow: 4px 4px 5px #333;
 	border: 1px solid #ccc;
+    font-size: 1em;
 }
 div.game-info .game-day {
 	font-weight: bold;
@@ -1744,4 +1752,29 @@ li.sport .teamlist-header, .stat-val-outer {
 }
 .mt20 {
 	margin-top: 20px;
+}
+.add-icon {
+	background: url(images/icons/add-icons.png) no-repeat;
+	display: inline-block;
+	width: 70px;
+	height: 36px;
+}
+.add-image {
+	background-position: 0 0;
+}
+.add-video {
+	background-position: -2px -54px;
+}
+.add-to-list {
+	background-position: -81px -53px;
+}
+.invite-from-fb {
+	background-position: 0 -100px;
+}
+.question {
+	background-position: -91px 0;
+	width: 30px;
+}
+.add-to-roster-list {
+		background-position: -83px -100px;
 }

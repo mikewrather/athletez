@@ -53,6 +53,12 @@ function (
 	             $(this.el).attr('data-team-id',this.teams_id);
         	 } else if (this.eventView && this.eventView != '') {
 	            delete this.teams_id;
+	            if(this.model.get("payload").result_time === "0h 0m 0s") {
+		            var newpay =  this.model.get("payload");
+		            newpay.result_time = null;
+		            this.model.set("payload",newpay);
+	            }
+	            console.log("schedule item event",this.model.toJSON());
 	            this.template = EventItemTemplate;
 	            var markup = Mustache.to_html(this.template, this.model.toJSON());        	 	
         	 } else {

@@ -366,6 +366,10 @@ div.image-item-container > img {
 	background-color: #4b3ec6;
 }
 
+.action-block.delete-from-game {
+    background-color: #d36011;
+}
+
 .action-block span {
 	vertical-align: middle;
 }
@@ -660,6 +664,18 @@ span.ui-helper-hidden-accessible {
 	color: #FFF !important;
 	background: #33aeab !important;
 	border: none !important;
+}
+
+/* UI MENU */
+
+.ui-menu-item a{
+    margin:-1px;
+
+}
+
+.ui-menu-item a span.sub-label{
+    font-size:.8em;
+    color: #575757;
 }
 
 /**
@@ -1101,17 +1117,15 @@ a.add-game-h {
 
 div.game-info {
 	line-height: 25px;
-	bottom: 40px;
-	margin-left: -190px;
 	padding: 9px;
-	width: 460px;
+	width: 360px;
+    max-width: 360px !important;
 	height: auto;
 	background-color: white;
-	position: absolute;
-	float: left;
 	color: #333;
 	box-shadow: 4px 4px 5px #333;
 	border: 1px solid #ccc;
+    font-size: 1em;
 }
 div.game-info .game-day {
 	font-weight: bold;

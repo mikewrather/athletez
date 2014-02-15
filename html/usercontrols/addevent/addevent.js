@@ -54,13 +54,7 @@ define(["require", "text!usercontrols/addevent/templates/layout.html",
 			this.callback = options.callback;
 			if(options.popup) {
 				this.popup = true;
-				this.modelHTML = '<div id="modalPopup" class="modal hide fade model-popup-h add-game-modal">'+
-								'<div class="modal-header">'+
-   			 					'<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>'+
-    							'<h3>Add Event</h3>'+
-  								'</div>'+
-								'<div class="modal-body page-content-h"></div>'+
-    							'</div>';
+
 				}
 			
 			this.init();
@@ -107,7 +101,7 @@ define(["require", "text!usercontrols/addevent/templates/layout.html",
             this.modelBoxId = "modal-popup-"+Math.floor(Math.random() * Math.random() * 50 * Math.random() * 50);              
             var options = {};
             options.height = "500px";
-            options.width = "90%";
+            options.width = "500px";
             options.title = "Add Event";
             options.id = this.modelBoxId;
 			routing.trigger('common-popup-open', options);
@@ -136,15 +130,13 @@ define(["require", "text!usercontrols/addevent/templates/layout.html",
 
 			this.scheme.push(this.addGameView);
 			this.layout.render();
-			$('#modalPopup .modal-body').slimScroll({
-				height:'430px',
-				railVisible:true,
-				allowPageScroll:true,
-				disableFadeOut:true
-			});
+
 		},
 		addTeamFunction : function(data){
-			if(this.callback) this.callback(data);
+			if(this.callback) {
+				routing.trigger('common-popup-close');
+				this.callback(data);
+			}
 		}
 	});
 	return AddGameController;

@@ -166,4 +166,10 @@ class Util {
 		}
 		return false;
 	}
+
+	public static function secondsToHHMMSS($time,$asText = false){
+		$t = round($time);
+		if($asText) return sprintf('%dh %dm %ds', ($t/3600),($t/60%60), $t%60);
+		return sprintf('%02d:%02d:%02d', ($t/3600),($t/60%60), $t%60);
+	}
 }

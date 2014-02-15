@@ -188,7 +188,7 @@ define(['vendor', 'views', 'utils', 'text!media/templates/image-item.html', 'vot
 				voteModelOb.setData();
 				voteModelOb.save();
 				$.when(voteModelOb.request).done(function() {
-					$(e.currentTarget).addClass('link-disabled');
+					$(e.currentTarget).addClass('link-disabled').html('voted');
 					if(callback) callback();
 				});	
 			};	   
@@ -215,7 +215,7 @@ define(['vendor', 'views', 'utils', 'text!media/templates/image-item.html', 'vot
 				followModelOb.save();
 				$.when(followModelOb.request).done(function() {
 					if(typeof(followModelOb.get('payload').follower) =='object' && typeof(followModelOb.get('payload').subject) =='object' && followModelOb.get('payload').id > 0) {
-						$(e.currentTarget).addClass('link-disabled');
+						$(e.currentTarget).addClass('link-disabled').html('following');
 					}
 					if(callback) callback();
 				});
