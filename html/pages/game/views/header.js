@@ -133,7 +133,7 @@ function(require, gameHeaderTemplate) {
 		        height : "500px",
 		        width : "500px",
 		        html : '<div id="editGameForm"></div>',
-		        title : "Edit Game Info"
+		        title : "Edit Event Info"
 	        };
 	        routing.trigger('common-popup-open', options);
 	        this.drawEditGameForm();

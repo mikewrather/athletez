@@ -549,13 +549,13 @@ ul#tags-list .tags-number {
 	overflow-y: hidden !important;
 	width: 100% !important;
 }
-.name {
+#photoPlayerModal .name {
 	float: left;
 	height: inherit;
 	padding-left: 3%;
 	width: 30%;
 }
-.game {
+#photoPlayerModal .game {
 	float: left;
 	height: inherit;
 	padding-left: 8%;
@@ -563,7 +563,7 @@ ul#tags-list .tags-number {
 	text-align: right;
 	width: 30%
 }
-.season {
+#photoPlayerModal .season {
 	float: left;
 	height: inherit;
 	position: inherit;
