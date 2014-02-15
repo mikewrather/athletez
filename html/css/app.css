@@ -94,6 +94,7 @@ header a {
 }
 header .account {
 	float: right;
+    cursor: pointer;
 }
 header .account #userlogin {
 	position: relative;

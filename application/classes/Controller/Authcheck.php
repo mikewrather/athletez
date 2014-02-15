@@ -67,12 +67,15 @@ class Controller_Authcheck extends AuthController
 		);
 
 		$retArr['nav'][] = array(
-			"page"=>"Teams & Sports",
-			"link"=>"/#usersettings"
-		);
-		$retArr['nav'][] = array(
-			"page"=>"Athletic Resume",
-			"link"=>"/#resume"
+			array(
+				"page"=>"Teams & Sports",
+				"link"=>"/#usersettings"
+			),
+			array(
+				"page"=>"Athletic Resume",
+				"link"=>"/#resume"
+
+			)
 		);
 
 		$retArr['nav'][] = array(

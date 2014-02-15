@@ -65,8 +65,11 @@ function (
         render: function (appReload) {
             var self = this;
             this.model.fetchSuccess = this.model.fetchError = function(model, res) {
-                var markup = Mustache.to_html(self.template, model.toJSON());
-                self.$el.html(markup);
+
+	            console.log("MODEL:",model.toJSON());
+	            var markup = _.template(self.template, model.toJSON());
+
+	            self.$el.html(markup);
                 if(typeof(model.get('user_photo'))=='object')
                     if(typeof(model.get('user_photo').types)=='object')
                         if(typeof(model.get('user_photo').types.small_thumb)=='object')
