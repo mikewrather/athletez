@@ -10,6 +10,8 @@ define( ["models/base",'utils/storage'], function (BaseModel,Store) {
     HeaderModel = BaseModel.extend({
 
         defaults: {
+
+	        authorized: false,
             
             branding: {
                 alt: "Athletez Logo",

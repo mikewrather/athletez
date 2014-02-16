@@ -61,12 +61,11 @@ class Controller_Authcheck extends AuthController
         $retArr['user_email'] = $this->user->email;
 		$retArr['user_photo'] = $this->user->userpic->getBasics();
 
-		$retArr['nav'][] = array(
-			"page"=>"My Profile",
-			"link"=>"/#profile"
-		);
-
-		$retArr['nav'][] = array(
+		$retArr['nav'][$retArr['user_name']] = array(
+			array(
+				"page"=>"View My Profile",
+				"link"=>"/#profile"
+			),
 			array(
 				"page"=>"Teams & Sports",
 				"link"=>"/#usersettings"
@@ -78,13 +77,16 @@ class Controller_Authcheck extends AuthController
 			)
 		);
 
-		$retArr['nav'][] = array(
-			"page" => $retArr['facebook']['id']>0 ? "FB Account Linked" : "Link to Facebook",
-			"link" => $retArr['facebook']['id']>0 ? "javascript:void(0);" : "javascript: void(0);",
-			"className" => $retArr['facebook']['id']>0 ? "" : "link-to-fb-h"
+		$retArr['nav']["Social"] = array(
+			array(
+				"page" => $retArr['facebook']['id']>0 ? "FB Account Linked" : "Link to Facebook",
+				"link" => $retArr['facebook']['id']>0 ? "javascript:void(0);" : "javascript: void(0);",
+				"className" => $retArr['facebook']['id']>0 ? "" : "link-to-fb-h"
+			)
+
 		);
 
-		if($retArr['facebook']['id']>0) $retArr['nav'][] = array(
+		if($retArr['facebook']['id']>0) $retArr['nav']["Social"][] = array(
 			"page" => "Invite From Facebook",
 			"link" => "/#fbinvite"
 		);

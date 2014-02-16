@@ -30,7 +30,7 @@
             <div class="photo"><img src="" alt="<%= user_name %>"/></div>
 
 
-            <div class="userlinks dropdown">
+
 
 
 
@@ -41,25 +41,27 @@
 	                console.log(element instanceof Array);
 
 	                if(element instanceof Array){
-	                    %><ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+	                  %>
+	                   <a class="nav nav_dropdown"><%= index %></a>
+	                    <ul class="header_menu hide" role="menu">
 	                         <% _.each(element,function(e2,index){ %>
-	                            <li><%= e2.page %></li>
+	                            <li><a href="<%= e2.link %>" ><%= e2.page %></a></li>
 	                        <% }); %>
 	                    </ul><%
 	                } else {
-	                    %><a href="<%= element.link %>" ><%= element.page %></a><%
+	                    %><a class="nav"  href="<%= element.link %>" ><%= element.page %></a><%
 	                }
 	                %>
 
                     <% }); %>
-	            <a class="dropdown-toggle" data-toggle="dropdown"><%= user_name %><b class="caret"></b></a>
 
-    </div>
+
+
 
 
 
 	    <% }  else { %>
-            <a href="<%=login_url %>" id="userlogin"><%=login_label %></a>
+            <a class="nav" href="<%=login_url %>" id="userlogin"><%=login_label %></a>
 	    <% } %>
     </div>
 </div>
