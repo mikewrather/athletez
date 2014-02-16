@@ -16,6 +16,7 @@ define([
        
         'utils/storage',
         'signup/views/facebooksignup',
+		"vendor/plugins/qtip/qtip"
         ], 
 function (
         vendor,
@@ -45,6 +46,7 @@ function (
 
         initialize: function (options) {
             this.template = headerTemplate;
+	        Channel('load:css').publish(["vendor/plugins/qtip/qtip.css"]);
         },
 
         model: new HeaderModel(),
@@ -65,8 +67,12 @@ function (
         render: function (appReload) {
             var self = this;
             this.model.fetchSuccess = this.model.fetchError = function(model, res) {
-                var markup = Mustache.to_html(self.template, model.toJSON());
-                self.$el.html(markup);
+
+	            console.log("MODEL:",model.toJSON());
+	            var markup = _.template(self.template, model.toJSON());
+
+	            self.$el.html(markup);
+
                 if(typeof(model.get('user_photo'))=='object')
                     if(typeof(model.get('user_photo').types)=='object')
                         if(typeof(model.get('user_photo').types.small_thumb)=='object')
@@ -90,17 +96,44 @@ function (
                     if(!appReload) routing.trigger('app-inited');
                 }
                 $('#main').removeClass("region-loader");
+
                 $(document).off("click", "a[href*='#fbinvite']");
                 $(document).on("click", "a[href*='#fbinvite']", function(e) {
                 	e.preventDefault();
                 	 routing.trigger('fbInvite');
                 });
+
+	            self.bindDropdowns();
                 
             };
            // $.ajaxSetup({ cache: false });
             this.model.fetch();
             return this;
         },
+
+	    bindDropdowns: function (){
+		    this.$el.find('a.nav_dropdown').each(function(){
+			    console.log(this);
+			    $(this).qtip({
+				    content:$(this).next('ul.header_menu'),
+
+				    position: {
+					    my: "top center",
+					    at: "bottom center",
+					    viewport : $(window)
+				    },
+				    style: {
+					    classes: "tipsy header-dropdown",
+					    width: '360px'
+				    },
+				    hide : {
+					    fixed:true,
+					    delay:500
+				    },
+			    });
+		     });
+
+	    },
         userLogin:function(event){
             event.preventDefault();
            // if(!this.logincontroller)
