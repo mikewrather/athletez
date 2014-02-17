@@ -492,7 +492,7 @@ define([
 					template: AddFansViewTemplate,
 					controllerObject: this,
 					collection: this.fans,
-					message: {addMe: "Keep me notified of "+this.basics.get("payload").first_name+"\'s activity", fb: "Invite a friend to receive notifications"}
+					message: {addMe: "Keep me notified of "+this.basics.get("payload").first_name+"\'s activity", fb: "Invite a friend to receive notifications about  "+this.basics.get("payload").first_name+"\'s activity"}
 				});
 				
 				
