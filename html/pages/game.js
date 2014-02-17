@@ -291,7 +291,8 @@ define([
 					heading: "PHOTO/VIDEO",
 					template: AddMediaViewTemplate,
 					controllerObject: self,
-					model: self.addmedia
+					model: self.addmedia,
+					message: {"photo": "Got Pics From this Game?", "video": "Got Videos From this Game?"}
 				});
 			
 			//controller.setupAddMediaView();

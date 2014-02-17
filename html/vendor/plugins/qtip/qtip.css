@@ -11,11 +11,43 @@
     background-color: #ddd43a;
     border-color: #ddd43a;
 }
-.qtip-video{
+.qtip-video, .qtip-red-c{
     background-color: #c43737;
     border-color: #c43737;
 }
+
+.qtip-yellow-c {
+	 background-color: #ddd439;
+    border-color: #ddd439;
+}
+
+.qtip-question {
+	 background-color: #014a7f;
+    border-color: #014a7f;
+}
+
+.qtip-green-c {
+	 background-color: #1ba0af;
+    border-color: #1ba0af;
+}
+
+.qtip-fb-c {
+	 background-color: #6b74b7;
+    border-color: #6b74b7;
+}
+
+.qtip-game {
+	 background-color: #d65d28;
+    border-color: #d65d28;
+	
+}
+
 .qtip-team{
+	 background-color: #948ce1;
+    border-color: #948ce1;
+}
+
+.qtip-team {
     background-color: #4b3dc6;
     border-color: #4b3dc6;
 }

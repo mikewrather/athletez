@@ -39,6 +39,7 @@ define([
 	"common/views/add-media-buttons",
 	"text!common/templates/add-media-buttons.html",
 	"text!common/templates/add-fans-buttons.html",
+	"text!common/templates/add-games-buttons.html",
 	"application"
 ],
 	function (require, pageLayoutTemplate, app, voteView) {
@@ -75,6 +76,7 @@ define([
 			AddMediaView = require("common/views/add-media-buttons"),
 			AddMediaViewTemplate = require("text!common/templates/add-media-buttons.html"),
 			AddFansViewTemplate = require("text!common/templates/add-fans-buttons.html"),
+			AddGamesViewTemplate = require("text!common/templates/add-games-buttons.html"),
 			
 			MediaImageModel = require("media/models/image");
 
@@ -194,7 +196,6 @@ define([
 
 			handleDeferreds: function () {
 				var controller = this;
-
 				$.when(this.basics.request).done(function () {
 					controller.setupHeaderView();
 					controller.initVoteView();
@@ -337,6 +338,9 @@ define([
 			
 			setUpUserSportView: function() {
 				var _self = this;
+				// set up add media and heading 
+
+				
 				this.orgViewname = "sport";
 				this.orgs = new UserGames();
             	this.orgs.userId = _self.id;
@@ -367,6 +371,12 @@ define([
 					position = $.inArray(this.orgListView, this.scheme);
 					if (~position) this.scheme.splice(position, 1);
 				}
+				
+								var addGames = new AddMediaView({
+					target: ".games-add-icons-h",
+					heading: "GAMES",
+					template: AddGamesViewTemplate
+				});
 
 				this.orgViewname = "org";
 				this.orgListView = new ProfileOrgListView({
@@ -427,7 +437,8 @@ define([
 					heading: "PHOTO/VIDEO",
 					template: AddMediaViewTemplate,
 					controllerObject: self,
-					model: self.addmedia
+					model: self.addmedia,
+					message: {"photo": "Add "+this.addmedia.sportName+" pics of "+this.addmedia.firstName, "video": "Add "+this.addmedia.sportName+" videos of "+this.addmedia.firstName}
 				});
 				
 				
@@ -480,7 +491,8 @@ define([
 					heading: "FANS",
 					template: AddFansViewTemplate,
 					controllerObject: this,
-					collection: this.fans
+					collection: this.fans,
+					message: {addMe: "Keep me notified of "+this.basics.get("payload").first_name+"\'s activity", fb: "Invite a friend to receive notifications"}
 				});
 				
 				
