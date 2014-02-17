@@ -484,6 +484,12 @@ define([
 				});
 				
 				
+				if (this.fansListView) {
+					$(this.fansListView.destination).html('');
+					position = $.inArray(this.fansListView, this.scheme);
+					if (~position) this.scheme.splice(position, 1);
+				}
+				
 				this.fansListView = new FansImageListView({
 					collection: this.fans,
 					destination: "#fans-div",
