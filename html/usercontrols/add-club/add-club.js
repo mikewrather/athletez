@@ -5,8 +5,7 @@
 define(["require", 'text!usercontrols/photo-player/templates/comments.html',
 	   "facade", "controller", "models", "views",
 	   "user/models/basic_info",
-	   "usercontrols/add-club/collections/complevel",
-	   "usercontrols/add-club/collections/profile",
+
 	   "usercontrols/add-club/views/main"
 	    ], function(require, modelBoxCommentTemplate) {
 
@@ -19,8 +18,7 @@ define(["require", 'text!usercontrols/photo-player/templates/comments.html',
 	BasicModel = require("user/models/basic_info"),
 	
 	//collections
-	CompLevelCollection = require("usercontrols/add-club/collections/complevel"),
-	ProfileCollection = require("usercontrols/add-club/collections/profile"),
+
 	// views
 	MainView = require("usercontrols/add-club/views/main");
 	
@@ -74,20 +72,18 @@ define(["require", 'text!usercontrols/photo-player/templates/comments.html',
 		// set up photo player main view
 		setUpMainView : function() {
 			var self = this;
-			self.seasonProfile = new ProfileCollection();
-			self.seasonProfile.fetch();
-			$.when(self.seasonProfile.request).done(function() {
-				var photoPlayerMain = new MainView({
-					model : self.seasonProfile,
-					name : "add club",
-					destination : "#modalBody",
-					addType: self.type,
-					callback: self.callback,
-					viewObj: self.viewObj
-				});
-				self.scheme.push(photoPlayerMain);
-				self.layout.render();				
+
+			var addClubForm = new MainView({
+				model : new BasicModel(),
+				name : "add club",
+				destination : "#modalBody",
+				addType: self.type,
+				callback: self.callback,
+				viewObj: self.viewObj
 			});
+			self.scheme.push(addClubForm);
+			self.layout.render();
+
 		}
 	});
 

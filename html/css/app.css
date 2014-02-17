@@ -529,14 +529,14 @@ input {
 /**** Custom Drop Down  ******/
 
 .dropdown-wrapper {
-	width: 300px;
+	width: 94%;
 	position: relative;
 }
 
 .dropdown-container {
 	background: #6b6e71;
 	display: inline-block;
-	width: 80%;
+	width: 100%;
 	position: absolute;
 	z-index: 1000;
 }
@@ -646,7 +646,7 @@ ul.common-dropdown li.selected {
 }
 
 .drop-down-main-outer {
-	width: 250px;
+	width: 33%;
 	display: inline-block;
 }
 

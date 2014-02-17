@@ -3608,7 +3608,9 @@ Form.editors.DropDown = Form.editors.Text.extend({
 			}
 			
 			this.collection.fetch();
+
 			this.collection.processResult = function() {
+				console.log("COLLECTION: ",_self.collection);
 				var data = _self.collection.ParseForDropdown();
 				if(_self.request_finished) _self.request_finished();				
 				if(callback) callback(data);

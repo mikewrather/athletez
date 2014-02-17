@@ -31,7 +31,10 @@ function(facade, collections, SportorgSeasonModel, utils) {
                 collection.push(item);
             }
             collection.deferred.resolve(response);            
-        }
+        },
+	    ParseForDropdown : function(){
+		    return this.toJSON();
+	    }
 
     });
 

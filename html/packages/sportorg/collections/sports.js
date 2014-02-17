@@ -17,9 +17,6 @@ define(['facade', 'collections', 'sportorg/models/sport', 'utils'], function(fac
 		/*Url to fetch sports for aut complete*/
 		/*If complete list required add a if condition and return the complete url list in case its different*/
 		url : function() {
-			if (testpath)
-				return testpath + '/sport_search';
-
 			if (this.state_name == undefined) {
 				//Incase to Hit Api without any parameter, Add Url here
 			}
@@ -51,6 +48,7 @@ define(['facade', 'collections', 'sportorg/models/sport', 'utils'], function(fac
 		returnProcessedData : function(collection){
 			
 		},
+
 	});
 
 	return SportorgSportList;

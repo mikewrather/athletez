@@ -3,17 +3,9 @@
 // Requires define
 // Return {AddressModel} model constructor object
 
-define( ["facade", "models/base"], function (facade, BaseModel) {
+define( ["facade", "sportorg/models/org"], function (facade, OrgModel) {
 
-    var _ = facade._;
-
-    return BaseModel.extend({
-        
-      url: function() {
-            if (testpath)
-                return testpath + '/org/add';
-            return '/api/org/add';
-       }
+    return OrgModel.extend({
     });
 });
 

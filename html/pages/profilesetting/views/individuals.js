@@ -10,14 +10,23 @@ define(['require',
 'text!profilesetting/templates/sportitem.html',
 'facade', 'views', 'utils', 'vendor', 
 'profilesetting/collections/individualsports',
-'profilesetting/collections/sports',
+'sportorg/collections/sports_listall',
 'profilesetting/models/sport',
    ], function(require, individualSportsTemplate,sportsCheckboxes,sportsItem) {
 
-	var self, HighSchoolView, facade = require('facade'), views = require('views'), SectionView = views.SectionView, utils = require('utils'), Channel = utils.lib.Channel, vendor = require('vendor'), Mustache = vendor.Mustache, $ = facade.$,
-	   IndividualSportsCollection = require('profilesetting/collections/individualsports'),SportsModel = require('profilesetting/models/sport'),
+	var self, HighSchoolView,
+		facade = require('facade'),
+		views = require('views'),
+		SectionView = views.SectionView,
+		utils = require('utils'),
+		Channel = utils.lib.Channel,
+		vendor = require('vendor'),
+		Mustache = vendor.Mustache,
+		$ = facade.$,
+	   IndividualSportsCollection = require('profilesetting/collections/individualsports'),
+		SportsModel = require('profilesetting/models/sport'),
 
-  	SportsCollection = require('profilesetting/collections/sports'),
+  	SportsCollection = require('sportorg/collections/sports_listall'),
 	HighSchoolView = SectionView.extend({
 
 		template : individualSportsTemplate,
@@ -140,11 +149,12 @@ define(['require',
 		setupSportsView : function() {
 		console.log("setUpSportsView Individual View");
 		var List = new SportsCollection();
+
+			console.log(List);
+
 		List.user_id = self.user_id;
 		List.sport_type_id = 2; // For Sports Only associated With Individuals
-		//TODO:  Gender is missing in API so need to update code
-			List.male = 1;
-			List.female = 0;
+
 			if(self.gender == "male"){
 				List.male = 1;
 			}else if (self.gender == "famale")
