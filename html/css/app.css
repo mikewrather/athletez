@@ -2179,6 +2179,10 @@ li.sport .teamlist-header, .stat-val-outer {
 	background-position: -81px -53px;
 }
 
+.game-adder {
+	background-position: -141px 1px;
+}
+
 .invite-from-fb {
 	background-position: 0 -100px;
 }

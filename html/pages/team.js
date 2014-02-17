@@ -47,6 +47,7 @@ define([
     "common/views/add-media-buttons",
     "text!common/templates/add-media-buttons.html",
 	"text!common/templates/add-fans-buttons.html",
+	"text!common/templates/add-games-buttons.html",
      'votes/views/vote'
     
     ], function (require, pageLayoutTemplate, voteView) {
@@ -90,6 +91,7 @@ define([
         AddMediaView = require("common/views/add-media-buttons"),
 		AddMediaViewTemplate = require("text!common/templates/add-media-buttons.html"),
 		AddFansViewTemplate = require("text!common/templates/add-fans-buttons.html"),
+		AddGamesViewTemplate = require("text!common/templates/add-games-buttons.html"),
         
         LayoutView = views.LayoutView,
         $ = facade.$,
@@ -322,13 +324,17 @@ define([
         },
         
         setupFansListView: function () {
+        	this.addmedia.teamName = this.basics.get("payload").team_name;
+			this.addmedia.setData();
         	// set up add media and heading 
 			var addFans = new AddMediaView({
 				target: ".fans-add-icons-h",
 				heading: "FANS",
 				template: AddFansViewTemplate,
 				controllerObject: this,
-				collection: this.fans
+				collection: this.fans,
+				model: this.addmedia,
+				teamName: this.addmedia.teamName
 			});
         	
 			this.fansListView = new FansImageListView({
@@ -447,6 +453,16 @@ define([
         
         setupGameView: function () {
         	var payload = this.basics.get("payload");
+        	this.addmedia.teamName = this.basics.get("payload").team_name;
+			this.addmedia.setData();
+        	var addGames = new AddMediaView({
+				target: ".games-add-icons-h",
+				heading: "GAMES",
+				template: AddGamesViewTemplate,
+				model: this.addmedia,
+				teamName: this.addmedia.teamName
+			});
+        	
         	if(payload.org_sport_link_obj.sport.sport_type_id != "2") {
         		$(".game-green-heading").removeClass("hide");
 				var teamView = TeamOrgListView.extend({
@@ -513,14 +529,15 @@ define([
         	var self = this;
         	this.addmedia.teamName = this.basics.get("payload").team_name;
 			this.addmedia.setData();
-        		// set up add media and heading 
-				var addMedia = new AddMediaView({
-					target: ".media-add-icons-h",
-					heading: "PHOTO/VIDEO",
-					template: AddMediaViewTemplate,
-					controllerObject: self,
-					model: self.addmedia
-				});
+    		// set up add media and heading 
+			var addMedia = new AddMediaView({
+				target: ".media-add-icons-h",
+				heading: "PHOTO/VIDEO",
+				template: AddMediaViewTemplate,
+				controllerObject: self,
+				model: self.addmedia,
+				teamName: this.addmedia.teamName
+			});
         	
         	routing.off('image-upload-success');
         	routing.on('image-upload-success', function(data) { 

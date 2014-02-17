@@ -155,6 +155,12 @@ function(facade,  views,   utils,   ImageItemView,            ImageBoardView,   
                 throw new Error("ImageListView expected options.collection.");
             }
             
+            
+            var len = _self.collection.toJSON().length;
+	        	if(!len || len < _self.collection.limit) {
+	        		_self.$el.find('.see-more-h').hide();
+	        }
+            
             _.bindAll(this);
             this.addSubscribers();
             this.setupBoardView();
@@ -199,6 +205,7 @@ function(facade,  views,   utils,   ImageItemView,            ImageBoardView,   
 					this.start = this.end;
 					this.end = this.end + this.page_limit;
 				}
+				
 				
 				if(len <= this.end) {
 					 this.$el.find('.see-more-h').hide();

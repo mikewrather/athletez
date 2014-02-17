@@ -12,7 +12,9 @@ define([
         'facade', 
         'views',
         'votes/models/follow',
-        'roster/models/roster'
+        'roster/models/roster',
+        "vendor/plugins/qtip/qtip",
+        "text!vendor/plugins/qtip/qtip.css"
         ], function(require, headingTemplate) {
 
     var AddImageView,
@@ -127,15 +129,39 @@ define([
         	for(var i in options) {
         		this[i] = options[i];
         	}
+        	
+			this.data = options;        	
+        	
         	this.render();
         },
 
         render: function () {
-        	var markup = Mustache.to_html(headingTemplate, {heading: this.heading});
+        	var _self = this, markup = Mustache.to_html(headingTemplate, {heading: this.heading});
             this.$el.html(markup);
-            $(this.target).html(this.$el);      
-            var markupButtons = Mustache.to_html(this.template, {heading: this.heading});
+            $(this.target).html(this.$el);
+            
+            
+            console.error(this.data);
+            
+            
+            var markupButtons = Mustache.to_html(this.template, {data: this.data});
         	this.$el.find(".buttons-h").html(markupButtons);
+
+        	this.$el.find("a").each(function() {
+// alert(_self.data.heading);
+        	$(this).qtip({
+				content: $(this).data("content"),
+				position: {
+				  my: "bottom center",
+				  at: "top center"
+				},
+				//tip: 'leftMiddle',
+				style: {
+					classes: $(this).data('tip-style')
+				}
+			});
+        	
+        	});        	
         }
     });
 
