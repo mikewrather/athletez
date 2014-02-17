@@ -2984,12 +2984,12 @@ Form.editors.Location = Form.editors.Text.extend({
 
   tagName: 'div',
   locationId: null,
-  map_id: "map-canvas-" + Math.floor((Math.random() * 10000) + 1),
+  map_id: "",
 
   template: '<textarea placeholder="Address" class="location-h address-h" rows="3" cols="25"><%= address %></textarea>\
 			 <span class="address-error hide address-error-status-h"></span>\
 			 <a href="javascript: void(0);" class="verify-address-h">Verify Address</a>\
-			 <div id="<%= map_id %>" style="width: 97%; height: 250px; margin-top: 20px; display: none;"></div>',
+			 <div id="<%= map_id %>" style="width: 97%; height: 250px; margin-top: 20px; display:none;"></div>',
 
   events: {
 	'click .verify-address-h': 'verifyAddress',
@@ -3027,8 +3027,7 @@ Form.editors.Location = Form.editors.Text.extend({
 					_self.$el.find('.set-address-h').removeClass('link-disabled');
 					if(_self.map) {
 						var pos = new google.maps.LatLng(_self.location.latitude,_self.location.longitude);
-						_self.marker.setPosition(pos);
-						_self.map.panTo(pos);
+						_self.refreshAndPosition(pos);
 					} else {
 						_self.createMap();
 					}
@@ -3038,21 +3037,32 @@ Form.editors.Location = Form.editors.Text.extend({
   },
   
 	createMap: function() {
+		this.$el.find('#' + this.map_id).show();
+
 		var _self = this;
 		var pos = new google.maps.LatLng(_self.location.latitude, _self.location.longitude),
-		mapOptions = {
-		    zoom: 13,
-		    center: pos,
-		    scaleControl: true,
-		    zoomControl: true,
-			scrollwheel: false,
-		    mapTypeId: google.maps.MapTypeId.ROADMAP
-		  };
-		  this.$el.find('#' + this.map_id).show();
-		  this.map = new google.maps.Map(document.getElementById(this.map_id), mapOptions);
-		  this.marker = new google.maps.Marker({position: pos, map: this.map});
-		  this.marker.setMap(this.map);
+			mapOptions = {
+				zoom: 13,
+				scaleControl: true,
+				zoomControl: true,
+				scrollwheel: false,
+				mapTypeId: google.maps.MapTypeId.ROADMAP
+			};
 
+		this.map = new google.maps.Map(document.getElementById(this.map_id), mapOptions);
+		this.marker = new google.maps.Marker({position: pos, map: this.map});
+		this.marker.setMap(this.map);
+
+		_self.refreshAndPosition(pos);
+	},
+
+	refreshAndPosition: function(pos){
+		var self = this;
+		setTimeout(function(){
+			google.maps.event.trigger(self.map,"resize");
+			self.marker.setPosition(pos);
+			self.map.panTo(pos);
+		},50);
 	},
   
   
@@ -3094,6 +3104,9 @@ Form.editors.Location = Form.editors.Text.extend({
   initialize: function(options) {
   	_.bindAll(this);
     Form.editors.Base.prototype.initialize.call(this, options);
+
+	this.map_id = "map-canvas-" + Math.floor((Math.random() * 10000) + 1);
+
      var schema = options.schema;
     //Allow customising text type (email, phone etc.) for HTML5 browsers
     if (schema && schema.getData) this.getData = schema.getData;  
