@@ -50,15 +50,15 @@ define(
 					
 					if(_self.media_id) {
 						setTimeout(function() {
-							var allData = _self.collection.toArray();	
-							if(allData) {
-								for(var i in allData) {
-									if(_self.media_id == allData[i].get("payload").media_id) {
-										routing.trigger('photo-player-init', i, _self.collection, _self.collection.id, undefined, _self.pageName);
-										break;
-									}
-								}
-							}
+						//	var allData = _self.collection.toArray();	
+						//	if(allData) {
+						//		for(var i in allData) {
+						//			if(_self.media_id == allData[i].get("payload").media_id) {
+						routing.trigger('photo-player-init', undefined, _self.collection, _self.collection.id, undefined, _self.pageName, undefined, _self.media_id);
+						//				break;
+						//			}
+						//		}
+						//	}
 						}, 500);
 					}
 				},

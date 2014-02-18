@@ -64,15 +64,32 @@ define(['require',
 			this.pageName = options.pageName;
 			this.user_id = options.user_id;
 			this.index = options.index;
-			SectionView.prototype.initialize.call(this, options);
-			this.setUpMainView();
+			this.mediaId = options.mediaId;
 			this.json = this.model.toJSON();
-			this.render();
+			var data = this.json.payload;
+			console.error(data);
+			for(var i in data) {
+				if(data[i].media_id == this.mediaId) {
+					this.index = i;
+					break;
+				}
+			}
 			
-			this.initThumbsSection();
-			this.loadImage(true);
-			this.updateAllImagesCount();
+			
+			SectionView.prototype.initialize.call(this, options);
 
+			if(!this.index) {
+				alert("No Media Found.");
+				setTimeout(function() {
+					$(".closer button").trigger("click");					
+				}, 500);
+			} else {
+				this.setUpMainView();
+				this.render();
+				this.initThumbsSection();
+				this.loadImage(true);
+				this.updateAllImagesCount();
+			}
 			Channel('tag-image-success-photo').empty();
 			Channel('tag-image-success-photo').subscribe(this.tagFunction);
 		},

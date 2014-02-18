@@ -100,7 +100,7 @@ define(['require', 'text!roster/templates/roster.html', 'views', 'vendor', 'faca
 			//}
 			// sow roster add button
 			if (found == "")
-				this.$el.find(".add-to-roster-h").removeClass("link-disabled");
+				this.$el.find(".roster-heading-h").find(".add-to-roster-h").removeClass("link-disabled");
 		},
 
 		checkForUser : function() {
@@ -118,7 +118,7 @@ define(['require', 'text!roster/templates/roster.html', 'views', 'vendor', 'faca
 				modal.url = "/api/team/player/" + _self.team_id;
 				modal.save();
 				$.when(modal.request).done(function() {
-					$(e.currentTarget).hide();
+					$(e.currentTarget).addClass("link-disabled");
 					_self.getTeams();
 					if (callback)
 						callback();

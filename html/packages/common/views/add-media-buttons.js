@@ -140,15 +140,10 @@ define([
             this.$el.html(markup);
             $(this.target).html(this.$el);
             
-            
-            console.error(this.data);
-            
-            
             var markupButtons = Mustache.to_html(this.template, {data: this.data});
         	this.$el.find(".buttons-h").html(markupButtons);
 
         	this.$el.find("a").each(function() {
-// alert(_self.data.heading);
         	$(this).qtip({
 				content: $(this).data("content"),
 				position: {

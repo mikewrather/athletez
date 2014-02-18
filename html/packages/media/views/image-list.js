@@ -155,7 +155,6 @@ function(facade,  views,   utils,   ImageItemView,            ImageBoardView,   
                 throw new Error("ImageListView expected options.collection.");
             }
             
-            
             var len = _self.collection.toJSON().length;
 	        	if(!len || len < _self.collection.limit) {
 	        		_self.$el.find('.see-more-h').hide();
@@ -167,14 +166,14 @@ function(facade,  views,   utils,   ImageItemView,            ImageBoardView,   
         	this.setupAddView();
 			if(_self.media_id) {
 				setTimeout(function() {
-					if(_self.allData) {
-						for(var i in _self.allData) {
-							if(_self.media_id == _self.allData[i].get("payload").media_id) {
-								routing.trigger('photo-player-init', i, _self.allData, _self.user_id, true,  _self.pageName, _self.target_id);
-								break;
-							}
-						}
-					}
+					//if(_self.allData) {
+					//	for(var i in _self.allData) {
+					//		if(_self.media_id == _self.allData[i].get("payload").media_id) {
+					routing.trigger('photo-player-init', undefined, _self.collection, _self.user_id, true,  _self.pageName, _self.target_id, _self.media_id);
+					//			break;
+					//		}
+					//	}
+					//}
 				}, 500);
 			}
         },

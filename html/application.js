@@ -289,14 +289,15 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
         
         initTriggers: function() {
         	routing.off('photo-player-init');
-            routing.on('photo-player-init', function(index, collection, userId, array, page, pageId) {
+            routing.on('photo-player-init', function(index, collection, userId, array, page, pageId, mediaId) {
             	 var photoPlayer = new PhotoPlayerController({
                 	index: index,
                 	userId: userId,
                 	pageName: page,
                 	_collection: collection,
                 	array: array,
-                	pageId: pageId
+                	pageId: pageId,
+                	mediaId: mediaId
                 });
             });
             

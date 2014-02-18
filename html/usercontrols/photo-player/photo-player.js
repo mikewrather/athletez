@@ -62,6 +62,7 @@ define(["require", 'text!usercontrols/photo-player/templates/comments.html',
 			this.pageId = options.pageId;
 			if(options.pageName) this.pageName = options.pageName;
 			if(options.array) this.collectionArray = true;
+			this.mediaId = options.mediaId;
 			if (options._collection) this._collection = options._collection;
 
 				$(document).off("click", "#photoPlayerModal .close");	
@@ -182,7 +183,8 @@ define(["require", 'text!usercontrols/photo-player/templates/comments.html',
 				user_id : self.userId || null,
 				sports_id : self.sports_id || null,
 				scheme : self.scheme,
-				layout : self.layout
+				layout : self.layout,
+				mediaId: self.mediaId
 			});
 
 			var ppwidth = $(document).width(),
