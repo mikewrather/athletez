@@ -100,6 +100,20 @@ define(
 							}
 						});
 					});
+
+					this.$el.find("a.menu-link-h").each(function(){
+						var $self = $(this);
+						$(this).qtip({
+							//	content: 'test of qtip',
+							position: {
+								my: "bottom center",
+								at: "top center"
+							},
+							style: {
+								classes: 'header-dropdown'
+							}
+						});
+					});
 				},
 				
 				updateSearch : function(e) {
