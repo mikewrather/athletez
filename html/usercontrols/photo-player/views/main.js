@@ -40,7 +40,7 @@ define(['require',
 	jwplayer.key = "yXOw2TpDcCoCnbWyVSCoEYA4tepkpjiVEtLEfSBIfZQ=";
 
 	//Models
-	PhotoPlayerView = SectionView.extend({
+	var PhotoPlayerView = SectionView.extend({
 		template : layoutTemplate,
 		thumbTemplate : imageThumbsTemplate,
 		events : {
@@ -57,6 +57,9 @@ define(['require',
 		/*initialize gets called by default when constructor is initialized*/
 		initialize : function(options) {
 			var _self = this;
+
+	//		console.log(options);
+
 			this.collection = options.collection;
 			this.setOptions(options);
 			this.id = options.id;
@@ -67,7 +70,7 @@ define(['require',
 			this.mediaId = options.mediaId;
 			this.json = this.model.toJSON();
 			var data = this.json.payload;
-			console.error(data);
+//			console.error(data);
 			for(var i in data) {
 				if(data[i].media_id == this.mediaId) {
 					this.index = i;
@@ -75,10 +78,9 @@ define(['require',
 				}
 			}
 			
-			
 			SectionView.prototype.initialize.call(this, options);
 
-			if(!this.index) {
+			if(this.index === undefined) {
 				alert("No Media Found.");
 				setTimeout(function() {
 					$(".closer button").trigger("click");					
