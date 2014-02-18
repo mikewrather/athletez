@@ -1,1 +1,1 @@
-define(["facade","collections","utils","models"],function(e,t,n,r){var i,s=r.BaseModel,o=t.BaseCollection;return o.extend({model:e.Backbone.Model.extend(),url:function(){return testpath?testpath+"/seasonprofile/search/":"/api/seasonprofile/search/"}})});
+define(["facade","sportorg/collections/season_profiles","utils"],function(e,t,n,r){return t.extend({ParseForDropdown:function(){return this.toJSON()}})});

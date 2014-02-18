@@ -445,13 +445,13 @@ input {
 	text-align: center;
 }
 .dropdown-wrapper {
-	width: 300px;
+	width: 94%;
 	position: relative;
 }
 .dropdown-container {
 	background: #6b6e71;
 	display: inline-block;
-	width: 80%;
+	width: 100%;
 	position: absolute;
 	z-index: 1000;
 }
@@ -544,7 +544,7 @@ ul.common-dropdown li.selected {
 	background: #1aa0ae;
 }
 .drop-down-main-outer {
-	width: 250px;
+	width: 33%;
 	display: inline-block;
 }
 #sports-info {
@@ -1794,6 +1794,9 @@ li.sport .teamlist-header, .stat-val-outer {
 }
 .add-to-list {
 	background-position: -81px -53px;
+}
+.game-adder {
+	background-position: -141px 1px;
 }
 .invite-from-fb {
 	background-position: 0 -100px;
