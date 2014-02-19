@@ -80,7 +80,7 @@ define([
 			
 			MediaImageModel = require("media/models/image");
 
-		LayoutView = views.LayoutView,
+		var LayoutView = views.LayoutView,
 			$ = facade.$,
 			_ = facade._,
 			debug = utils.debug,
@@ -365,19 +365,20 @@ define([
 			},
 			
 			setUpOrgView: function() {
-				var position;
+					var position;
 				if (this.orgListView) {
 					$(this.orgListView.destination).html('');
 					position = $.inArray(this.orgListView, this.scheme);
 					if (~position) this.scheme.splice(position, 1);
 				}
-				
-								var addGames = new AddMediaView({
+
+
+		/*		var addGames = new AddMediaView({
 					target: ".games-add-icons-h",
 					heading: "GAMES",
 					template: AddGamesViewTemplate
 				});
-
+		*/
 				this.orgViewname = "org";
 				this.orgListView = new ProfileOrgListView({
 					collection: this.orgs,
