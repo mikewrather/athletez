@@ -41,6 +41,8 @@ define(["require", 'text!usercontrols/photo-player/templates/comments.html',
 		// controller intialize function
 		initialize : function(options) {
 			var _self = this;
+			_self.startPlayer(options);
+			/*
 			if(!_self.checkForUser()){
 				routing.trigger('showSignup', function(callback) {
 		  	   		_self.startPlayer(options);
@@ -48,6 +50,7 @@ define(["require", 'text!usercontrols/photo-player/templates/comments.html',
 			} else {
 				_self.startPlayer(options);
 			}
+			*/
 		},
 		
 		startPlayer: function(options) {
