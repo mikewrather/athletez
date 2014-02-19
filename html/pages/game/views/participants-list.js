@@ -297,7 +297,7 @@ define(['facade',
 
 				var form = formData.form;
 				_self.formValues = formData.formValues;
-			}
+			};
 
 			if(usl_id) {
 				participants.set('id',usl_id);
@@ -308,10 +308,6 @@ define(['facade',
 				});
 			}
 			else drawForm();
-
-
-
-
 		},
 		initialize : function(options) {
 			console.error(options);

@@ -4,7 +4,7 @@
 define(['vendor','facade','views', 'utils', 'schedules/views/schedule-item','utils/storage',
 	'text!schedules/templates/schedule-list.html','chrome/views/header', 'common/models/add',
 	'sportorg/models/uslgamelink',
-	"vendor/plugins/qtip/qtip"],
+	"vendor/plugins/qtip/qtip", 'common/views/add-description'],
 function(vendor, facade,  views,   utils,   ScheduleItemView, Store, ScheduleListTemplate,header, UserGames,UslGameLink) {
 
     var OrgListView, 
@@ -13,6 +13,7 @@ function(vendor, facade,  views,   utils,   ScheduleItemView, Store, ScheduleLis
         _ = facade._,
         Channel = utils.lib.Channel,
         CollectionView = views.CollectionView,
+        AddDescription = require('common/views/add-description'),
          Mustache = vendor.Mustache,
          
         SectionView = views.SectionView;
@@ -26,7 +27,7 @@ function(vendor, facade,  views,   utils,   ScheduleItemView, Store, ScheduleLis
         id: "schedule-list",
         name: "schedule List",
         tagName: "ul",
-
+		currentSection: "games",
         // Tag for the child views
         _tagName: "li",
         _className: "org",
@@ -127,20 +128,16 @@ function(vendor, facade,  views,   utils,   ScheduleItemView, Store, ScheduleLis
 
 	        Channel('load:css').publish(["vendor/plugins/qtip/qtip.css"]);
 
-	        console.log("OPTIONS",options);
         	_self.eventPage = options.eventPage || false;
         	_self.teamRecords = options.teamRecords;
         	_self.controller = options.controller || false;
         	if((!_.isUndefined(options.teamRecords) && options.teamRecords)) {
-        		//var json = options.collection.toJSON();
-		        console.log("Team Records",options.teamRecords,options);
         		_self.renderTemplate();
         		_self.listView = ".schedule-list-h";
         		_self.singleView = true;
         	}
 
         	if(!_.isUndefined(options.eventPage) && options.eventPage) {
-        		//var json = options.collection.toJSON();
         		_self.renderTemplate(_self.eventPage);
         		_self.listView = ".schedule-list-h";
         		_self.eventView = true;
@@ -150,10 +147,21 @@ function(vendor, facade,  views,   utils,   ScheduleItemView, Store, ScheduleLis
             if(!_self.collection) {
                 throw new Error("Schedule expected options.collection.");
             }
+            
+            
+            console.error(this.collection.toJSON());
+            
+            var len = this.collection.length;
+             // show empty box
+	        if(!len) {
+	        	new AddDescription({
+	        		page: this.currentSection,
+	        		target: this.$el
+	        	});
+	        }
 		            
             _.bindAll(_self);
             _self.addSubscribers();
-            console.error(_self.collection);
 			
 
         },
@@ -212,7 +220,6 @@ function(vendor, facade,  views,   utils,   ScheduleItemView, Store, ScheduleLis
         
         renderTemplate: function (eventPage) {
             var markup = Mustache.to_html(ScheduleListTemplate, {data: this.collection.length, eventPage: eventPage});
-            console.error(markup);
             this.$el.html(markup);
             return this;
         }   

@@ -45,7 +45,6 @@ define(['require', 'facade', 'views', 'utils', 'vendor'], function(require) {
 					u = u + "?url="+getLink();
 				break;
 				case "tumbler":
-				console.error(options.image);
 					u = u + "?caption="+options.caption+"&source="+encodeURIComponent(options.image);//+"&u="+getLink()+"&t="+options.description+"&s="+options.description;
 				break;
 			}

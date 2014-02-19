@@ -2197,3 +2197,88 @@ li.sport .teamlist-header, .stat-val-outer {
 }
 
 /* Add icons css end */
+
+/* Dotted area css starts  */
+
+.add-big-list-container {
+	border: 2px #717171 dotted;
+	background: #f8f8f8;
+	color: #b9b9b9;	
+	margin: 10px 25px;
+}
+
+.border-wrapper {
+	padding: 25px 20px;
+	
+	
+	min-height: 150px;
+}
+
+.left-text {
+	float: left;
+	width: 275px;
+}
+
+.right-secton {
+	float: right;
+	display: inline-block;
+	width: 400px;
+}
+
+.right-secton > div {
+	display: inline-block;
+	margin-bottom: 20px;
+}
+
+.right-secton span {
+	position: relative;
+top: 10px;
+left: 4px;
+}
+
+.right-secton a {
+	float: left;
+}
+
+.add-icon-large {
+	background: url(images/icons/add-icons-large.png) no-repeat;
+	display: inline-block;
+	width: 125px;
+height: 63px;
+}
+
+.fans .btn1 {
+	background-position: -6px -231px;
+}
+
+
+.fans .btn2 {
+	background-position: -137px 0;
+}
+
+
+.media .btn1 {
+	background-position: 0 0;
+}
+
+
+.media .btn2 {
+	background-position: 0px -80px;
+}
+
+.games .btn1 {
+	background-position: -6px -158px;
+}
+
+
+.roster .btn1 {
+	background-position: -137px -78px;
+}
+
+
+.roster .btn2 {
+	background-position: -137px 0;
+}
+
+
+/* Dotted area css ends  */

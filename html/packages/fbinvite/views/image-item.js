@@ -27,7 +27,6 @@ define(['vendor', 'views', 'utils', 'text!packages/fbinvite/templates/image-item
 			for(var i in options) {
 				this[i] = options[i];
 			}
-			console.error(this.FBoptions);
 			if(this.FBoptions.invite_type === undefined || this.FBoptions.invite_type === null) this.FBoptions.invite_type = "join";
 			this.FBComponent = new FBComponent();
 		},
