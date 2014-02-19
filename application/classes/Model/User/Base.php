@@ -1175,10 +1175,12 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 			array('games.event_name','event_name'),
 			array('locations.full_address','game_location'),
 			array('usl_game_link.result_time','result_time'),
-			array('usl_game_link.id','usl_game_link_id')
+			array('usl_game_link.id','usl_game_link_id'),
+			array('sports.is_race','is_race')
 
 		)->from('user_sport_link')
 			->join('usl_game_link')->on('user_sport_link.id','=','usl_game_link.user_sport_link_id')
+			->join('sports')->on('user_sport_link.sports_id','=','sports.id')
 			->join('games')->on('usl_game_link.games_id','=','games.id')
 			->join('locations')->on('games.locations_id','=','locations.id')
 			->where('user_sport_link.users_id','=',$this->id)

@@ -153,12 +153,13 @@ define([
 					controller.orgs.sport_id = sport_id;
 					controller.orgs.targetElement = "#games_div";
 					controller.ajaxCalls.push(controller.orgs.fetch());
-					
+
+					/*
 					controller.relateds = new ProfileRelatedList();
 					controller.relateds.id = controller.id;
 					controller.relateds.sport_id = sport_id;
 					controller.ajaxCalls.push(controller.relateds.fetch());
-
+					*/
 					controller.fitnessbasics = new ProfileFitnessBasicList();
 					controller.fitnessbasics.id = controller.id;
 					controller.fitnessbasics.sport_id = sport_id;
@@ -231,9 +232,9 @@ define([
 				 	controller.setupOrgListView();
 				});
 
-				$.when(this.relateds.request).done(function () {
-					controller.setupRelatedListView();
-				});
+		//		$.when(this.relateds.request).done(function () {
+		//			controller.setupRelatedListView();
+		//		});
 
 				$.when(this.fitnessbasics.request).done(function () {
 					controller.setupFitnessBasicListView();
