@@ -1,12 +1,17 @@
 .autoform{
 }
 form.autoform input[type="text"], form.autoform textarea{
-    background-color: #EFEFEF;
-    border: 3px solid #747474;
-    width:90%;
-    padding:5px;
+    background-color: #EAEAEA;
+    width: 90%;
+    padding: 6px;
     margin: 10 10px 0 0;
     display: inline-block;
+    -moz-box-shadow: inset 0 0 10px #000000;
+    -webkit-box-shadow: inset 0 0 1px #000000;
+    box-shadow: inset 0 0 10px #D8D8D8;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
 }
 form.autoform input[type="text"]{
     height : 25px;
