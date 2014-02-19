@@ -4,9 +4,52 @@
  // Requires `define`, `require`
  // Returns {basic_info} constructor
  */
-define(['require', 'text!profilesetting/templates/highschool.html', 'text!profilesetting/templates/club.html', 'text!profilesetting/templates/sportslevel.html', 'text!profilesetting/templates/level.html', 'facade', 'views', 'utils', 'vendor', 'profilesetting/collections/states', 'profilesetting/collections/schools', 'profilesetting/collections/sports', 'profilesetting/views/teams', 'profilesetting/models/complevel', 'profilesetting/views/seasons', 'profilesetting/views/positions', 'profilesetting/models/team', 'profilesetting/models/position'], function(require, highSchoolTemplate, clubTemplate, sportsLevelTemplate, levelTemplate) {
+define(['require',
+	'text!profilesetting/templates/highschool.html',
+	'text!profilesetting/templates/club.html',
+	'text!profilesetting/templates/sportslevel.html',
+	'text!profilesetting/templates/level.html',
+	'facade',
+	'views',
+	'utils',
+	'vendor',
+	'profilesetting/collections/states',
+	'profilesetting/collections/schools',
+	'profilesetting/collections/sports',
+	'profilesetting/views/teams',
+	'profilesetting/models/complevel',
+	'profilesetting/views/seasons',
+	'profilesetting/views/positions',
+	'profilesetting/models/team',
+	'profilesetting/models/position'],
+	function(
+		require,
+		highSchoolTemplate,
+		clubTemplate,
+		sportsLevelTemplate,
+		levelTemplate) {
 
-	var self, HighSchoolView, facade = require('facade'), views = require('views'), SectionView = views.SectionView, utils = require('utils'), Channel = utils.lib.Channel, vendor = require('vendor'), Mustache = vendor.Mustache, $ = facade.$, StatesCollection = require('profilesetting/collections/states'), SchoolCollection = require('profilesetting/collections/schools'), SportsCollection = require('profilesetting/collections/sports'), CompLevelModel = require('profilesetting/models/complevel'), SeasonsView = require('profilesetting/views/seasons'), PositionsView = require('profilesetting/views/positions'), TeamsView = require('profilesetting/views/teams'), TeamModel = require('profilesetting/models/team'), PositionModel = require('profilesetting/models/position'), HighSchoolView = SectionView.extend({
+	var self,
+		HighSchoolView,
+		facade = require('facade'),
+		views = require('views'),
+		SectionView = views.SectionView,
+		utils = require('utils'),
+		Channel = utils.lib.Channel,
+		vendor = require('vendor'),
+		Mustache = vendor.Mustache,
+		$ = facade.$,
+		StatesCollection = require('profilesetting/collections/states'),
+		SchoolCollection = require('profilesetting/collections/schools'),
+		SportsCollection = require('profilesetting/collections/sports'),
+		CompLevelModel = require('profilesetting/models/complevel'),
+		SeasonsView = require('profilesetting/views/seasons'),
+		PositionsView = require('profilesetting/views/positions'),
+		TeamsView = require('profilesetting/views/teams'),
+		TeamModel = require('profilesetting/models/team'),
+		PositionModel = require('profilesetting/models/position');
+
+	HighSchoolView = SectionView.extend({
 
 
 
@@ -377,6 +420,7 @@ define(['require', 'text!profilesetting/templates/highschool.html', 'text!profil
 		openAddClubPopup: function() {
 			var _self = this;
 			routing.trigger('add-school-init', '', '', 'club', _self, function(res) {
+				console.log("RESULT",res);
 				_self.$el.find(_self.controls.txtSchools).val(res.name);
 				_self.$el.find(_self.controls.txtSchools).attr("data-id", res.org_id);
 				_self.$el.find(_self.controls.txtStates).val(res.locationState.name);
@@ -390,6 +434,13 @@ define(['require', 'text!profilesetting/templates/highschool.html', 'text!profil
 				if (_self.$el.find(_self.controls.divMainSportsSection).find(_self.controls.ddlSports).length < 1) {
 						_self.fillSports(_self.orgs_id, _self.controls.divMainSportsSection, res.single_sport_id);
 				}
+
+				var $ob = _self.$el.parents().find($('#btn-Add-club')),
+					$pos = $ob.position();
+				$ob.parents(document).animate({
+					scrollTop : $pos.top
+				}, '1000');
+
 				_self.$el.find(".add-club-h").hide();
 				
 			});
@@ -410,19 +461,22 @@ define(['require', 'text!profilesetting/templates/highschool.html', 'text!profil
 				var List = new SportsCollection();
 				//this shows all sports if it is a club.
 				List.sport_type = this.type == 'club' ? 0 : 1;
-				List.sport_type_id = List.sport_type;
-				// For Sports Not associated With Individuals
-				//TODO:  Gender is missing in API so need to update code
-				List.male = 1;
-				List.female = 0;
-				if (_self.gender == "male") {
+					List.sport_type_id = List.sport_type;
+					// For Sports Not associated With Individuals
+					//TODO:  Gender is missing in API so need to update code
 					List.male = 1;
-				} else if (_self.gender == "famale") {
 					List.female = 0;
-				}
-				
-				List.fetch();
-				$.when(List.request).done(function() {
+					if (_self.gender == "male") {
+						List.male = 1;
+					} else if (_self.gender == "famale") {
+						List.female = 0;
+					}
+
+		//		alert("called");
+
+					List.fetch();
+					$.when(List.request).done(function() {
+		//				alert("called");
 					if (List.isError()) return;
 
 					var models = List.toJSON();
@@ -729,6 +783,9 @@ define(['require', 'text!profilesetting/templates/highschool.html', 'text!profil
 		/*Save Selected Sport To Database */
 		AddSportsItem : function(event) {
 			var _self = this;
+
+			_self.$el.find(_self.controls.btnFinishSports).html('Finish');
+
 			if ($(event.target).is(':checked') && $(event.target).attr('seasonid') && $(event.target).attr('year')) {
 				var orgsId = $(event.target).attr('orgsid');
 				var compLevelId = $(event.target).parents(_self.controls.divSubLevels).find(_self.controls.ddlComplevel).val();

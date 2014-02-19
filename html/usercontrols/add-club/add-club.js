@@ -2,12 +2,14 @@
 ***** module as controller for 'photoplayer' control
 */
 
-define(["require", 'text!usercontrols/photo-player/templates/comments.html',
-	   "facade", "controller", "models", "views",
-	   "user/models/basic_info",
-
-	   "usercontrols/add-club/views/main"
-	    ], function(require, modelBoxCommentTemplate) {
+define(["require",
+		"facade",
+		"controller",
+		"models",
+		"views",
+		"user/models/basic_info",
+		"usercontrols/add-club/views/main"],
+	function(require) {
 
 	var facade = require("facade"), Controller = require("controller"),
 	 models = require("models"), views = require("views"), utils = require("utils"), 
