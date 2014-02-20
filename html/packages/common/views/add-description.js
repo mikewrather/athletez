@@ -71,7 +71,7 @@ define([
 		},
 
         render: function () {
-        	var data = {};
+        	var _self = this, data = {};
         	data.message = this.messages[this.page];
         	data.className = this.btnClasses[this.page];
         	data.page = this.page;
@@ -80,10 +80,33 @@ define([
         	//if(this.target.parent("ul")) {
             //	this.target.parent("ul").remove();
             //}
+            
+            
+            
+            
+            if($(this.target).is("ul")) {
+            	//$(".roster-images-h").find("ul").remove();
+            	
+            	
+            	setTimeout(function(){
+            		var $parent = $(_self.target).parent();
+            		$(_self.target).replaceWith("<div></div>");
+            		_self.$el.html(markup);
+        			_self.el = _self.$el;
+            $parent.html(_self.$el);
+            
+
+            	}, 500);
+            	
+            	
+            	//alert("find");
+            } else {
+            
+            
         	this.$el.html(markup);
         	this.el = this.$el;
             this.target.html(this.$el);
-            
+            }
            // return this.el;
         }
     });
