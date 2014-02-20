@@ -227,7 +227,7 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
 			setTimeout(function(){
 				if(!self.checkForUser())
 					var landing = new landingView();
-			},2000);
+			},500);
 		},
 		
 		aceptInvite: function(fbId) {
@@ -717,7 +717,7 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
 
         showRegistration: function() {
 	        ga('send', 'event', 'popup', 'Registration');
-        	this.cancelAjaxRequests();
+     /*   	this.cancelAjaxRequests();
             this.loadStyles();
             chromeBootstrap();
              this.removeCurrent();
@@ -728,7 +728,9 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
                 });
 	            self.gaPageView("Registration Page","NA");
             }
-            this.initialiRoutesInit(initRegistration);
+
+      //      this.initialiRoutesInit(initRegistration);
+      */
         },
         
         showTag: function (userid) {
@@ -799,9 +801,9 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
             //    var registrationController = new RegistrationController({
             //        "route": ""
             //   });
-               var signupController = new SignupController({
-                    "route": ""
-                });
+     //          var signupController = new SignupController({
+       //             "route": ""
+         //       });
             }
             this.addUserTrigger(initSignup);
             //this.initialiRoutesInit(initSignup);
@@ -814,19 +816,6 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
             });
         },
 
-        showRegistration: function() {
-            this.cancelAjaxRequests();
-            this.loadStyles();
-            chromeBootstrap();
-            function initRegistration() {
-                var registrationController = new RegistrationController({
-                    "route": "",
-                    title: "Register"
-                });
-            }
-            this.initialiRoutesInit(initRegistration);
-            //Channel('app-inited').subscribe(initRegistration);
-        },
         // load style sheets
         loadStyles: function () {
             Channel('load:css').publish([base_url + "css/bootstrap.css", 

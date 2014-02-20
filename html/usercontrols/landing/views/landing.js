@@ -94,6 +94,8 @@ define(['require',
 		//render displays the view in landing
 		render : function(options) {
 			var _self = this, markup = Mustache.to_html(_self.template,_self.data);
+			this.$el = $('.register-wrapper-h');
+
 			var options = options || {};
 			options.width = "100%";
 			options.height = "100%";
@@ -107,11 +109,19 @@ define(['require',
 				var rand = Math.ceil(Math.random()*100);
 				var bgs = ['1.jpg','2.jpg','3.jpg','4.jpg','5.jpg','6.jpg','7.jpg','8.jpg'];
 				options.background_image = "http://athletez.s3.amazonaws.com/resources/img/landing/" + bgs[rand % bgs.length];
+				$('.register-wrapper').css({
+					'background':'url('+ options.background_image + ') no-repeat',
+					'background-size':'cover'
+				});
+
+				console.log($('.register-wrapper'));
 			}
 
-			console.error(options);
-			routing.trigger('common-popup-open', options);
-			this.$el = $('#landing .modal-body');
+		//	console.error(options);
+		//	routing.trigger('common-popup-open', options);
+
+			this.$el.html(markup);
+			_self.showReg();
 
 			function onPop(){
 				Channel('popup-finished-launch-'+options.id).unsubscribe();
@@ -119,7 +129,7 @@ define(['require',
 				_self.showReg();
 			}
 
-			Channel('popup-finished-launch-'+options.id).subscribe(onPop);
+	//		Channel('popup-finished-launch-'+options.id).subscribe(onPop);
 			return this;
 			//markup should open up in a popup
 		},

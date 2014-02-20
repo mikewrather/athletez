@@ -145,13 +145,11 @@ li.sport a:hover {
 }
 
 .register-wrapper {
-	background: url(/images/background/register_background.jpg) no-repeat;
-	background-size: cover;
-	opacity: 0.5;
 	position: absolute;
 	width: 100%;
-	height: 330px;
+	height: 800px;
 	top: 37px;
+    opacity: .8;
 }
 
 .register-wrapper-h #regcontainer {
