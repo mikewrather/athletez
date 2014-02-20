@@ -1,1 +1,1 @@
-define(["facade","collections","utils","usercontrol/photo-player/models/tags"],function(e,t,n,r){var i,s=t.BaseCollection;return i=s.extend({model:r,url:function(){return testpath?testpath+"/media/tags/":"/api/complevelprofile/search/"}}),i});
+define(["facade","sportorg/collections/complevel_profiles","utils"],function(e,t){return t.extend({})});

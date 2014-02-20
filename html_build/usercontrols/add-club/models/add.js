@@ -1,1 +1,1 @@
-define(["facade","models/base"],function(e,t){var n=e._;return t.extend({url:function(){return testpath?testpath+"/org/add":"/api/org/add"}})});
+define(["facade","sportorg/models/org"],function(e,t){return t.extend({})});

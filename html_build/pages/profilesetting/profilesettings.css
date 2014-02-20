@@ -60,7 +60,7 @@
 	background: #9A9A9A; 
 }
 .add-org-fields{
-    margin-left: 15%;
+    margin: 0 5% 0 10%;
 }
 .add-org-fields *{
     font-family: "HelveticaNeue", "Helvetica";

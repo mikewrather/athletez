@@ -28,7 +28,9 @@ function(facade, collections, SportorgTeamModel, utils) {
             for (var key in payload) {
                 var item = new SportorgTeamModel();
                 item.id = Math.ceil(Math.random() * 100000);
-                item.set('payload', payload[key]);
+	            var newPay = payload[key];
+	            newPay.is_race = parseInt(newPay.is_race) > 0 ? true : false;
+                item.set('payload',newPay);
                 item.set('desc', response.desc);
                 item.set('exec_data', response.exec_data);
                 collection.push(item);

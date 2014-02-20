@@ -61,14 +61,16 @@ class Controller_Authcheck extends AuthController
         $retArr['user_email'] = $this->user->email;
 		$retArr['user_photo'] = $this->user->userpic->getBasics();
 
+
+
 		$retArr['nav'][$retArr['user_name']] = array(
 			array(
 				"page"=>"View My Profile",
-				"link"=>"/#profile"
+				"link"=>"/#!profile"
 			),
 			array(
 				"page"=>"Teams & Sports",
-				"link"=>"/#usersettings"
+				"link"=>"/#!usersettings"
 			),
 			array(
 				"page"=>"Athletic Resume",
@@ -95,6 +97,11 @@ class Controller_Authcheck extends AuthController
 			"page" => "Log Out",
 			"link" => "/#logout",
 			"id" => "logoutId"
+		);
+
+		$retArr['nav'][] = array(
+			"page" => "Find Content",
+			"link" => "/#!home"
 		);
 
 		echo json_encode($retArr);
