@@ -279,11 +279,10 @@ define([ 'models', 'facade' ], function(models, facade) {
 				team_str += i<teamLength - 1 ? ' vs ' : '';
 			} */
 			if(mpay.hasOwnProperty('is_owner')) return_data.show_delete = mpay.is_owner;
-		//	if(team_str != "") return_data._sublabel = team_str;
-			else{
-				return_data._sublabel = mpay.event_name;
-			}
-			var gameDate = new Date(mpay.gameDay + " " + mpay.gameTime);
+
+
+		//	var gameDate = new Date(mpay.gameDay + " " + mpay.gameTime);
+			return_data._sublabel = mpay.full_date;
 
 			/*			return_data.itemtype = "http://schema.org/Event";
 			return_data.meta = [
