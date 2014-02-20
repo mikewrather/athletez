@@ -70,7 +70,7 @@ define(['require', 'text!profilesetting/templates/club.html', 'text!profilesetti
 		/*Messages Holds the messages, warning, alerts, errors, information variables*/
 		/*In Case of similar message create only one object and key*/
 		messages : {
-			dataNotExist : 'Couldn\'t find any matches',
+			dataNotExist : 'No teams set up yet.  Click "Add a Club" to link up with your club teams.',
 			optionsMissing : 'HeaderView expects option with model property.',
 
 			selectSport : 'Please select sport',
