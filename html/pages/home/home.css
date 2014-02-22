@@ -144,12 +144,10 @@ li.sport a:hover {
 	margin: 0 0 3px 0;
 }
 
-.register-wrapper {
-	position: absolute;
+.register-wrapper-h {
+
 	width: 100%;
-	height: 800px;
-	top: 37px;
-    opacity: .8;
+	height: 100%;
 }
 
 .register-wrapper-h #regcontainer {

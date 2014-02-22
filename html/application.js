@@ -243,8 +243,8 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
 				var title = "Athletez - We Are Athletes";
 	    		var landing = new landingView({userId: fbId});
 	    		routing.showLandingPage = false;
-			    if(!fbId && $('div.register-wrapper').length == 0) {
-				    $('body header').after('<div class="register-wrapper"></div><div class="register-wrapper-h"></div>');
+			    if(!fbId && $('div.register-wrapper-h').length == 0) {
+				    $('body header').after('<div class="register-wrapper-h"></div>');
 			    }
 			    self.gaPageView("FB Accept - "+ fbId,title);
 	    		self.showHomePage(userId);
@@ -477,8 +477,8 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
 	    			userId : id,
 	    			params: paramsArr
 	    		});
-			    if(!id && $('div.register-wrapper').length == 0){
-				    $('body header').after('<div class="register-wrapper"></div><div class="register-wrapper-h"></div>');
+			    if(!id && $('div.register-wrapper-h').length == 0){
+				    $('body header').after('</div><div class="register-wrapper-h"></div>');
 			    }
 			    self.gaPageView("Home Page",title);
 	    	}
@@ -511,8 +511,8 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
 	    			title: title,
 	    			userId : id
 	    		});
-			    if(!id && $('div.register-wrapper').length == 0){
-				    $('body header').after('<div class="register-wrapper"></div><div class="register-wrapper-h"></div>');
+			    if(!id && $('div.register-wrapper-h').length == 0){
+				    $('body header').after('<div class="register-wrapper-h"></div>');
 			    }
 			    self.gaPageView("FB Invite",title);
 	    	}
@@ -566,7 +566,6 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
         },
         
 		hideSignup : function() {
-		    $('div.register-wrapper').remove();
 		    $('div.register-wrapper-h').remove();
 	    },
         

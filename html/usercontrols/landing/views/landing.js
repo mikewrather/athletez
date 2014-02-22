@@ -37,7 +37,8 @@ define(['require',
 		/*Bind Events on controls present in current view template*/
 		events : {
 			"click #browse":"closePopup",
-			"click #sign-in":"signIn"
+			"click #sign-in":"signIn",
+			"click #browse":"scrollToContent"
 		},
 		
 		cssArr : ["usercontrols/landing/landing.css"],
@@ -109,12 +110,10 @@ define(['require',
 				var rand = Math.ceil(Math.random()*100);
 				var bgs = ['1.jpg','2.jpg','3.jpg','4.jpg','5.jpg','6.jpg','7.jpg','8.jpg'];
 				options.background_image = "http://athletez.s3.amazonaws.com/resources/img/landing/" + bgs[rand % bgs.length];
-				$('.register-wrapper').css({
+				this.$el.css({
 					'background':'url('+ options.background_image + ') no-repeat',
 					'background-size':'cover'
 				});
-
-				console.log($('.register-wrapper'));
 			}
 
 		//	console.error(options);
@@ -122,16 +121,13 @@ define(['require',
 
 			this.$el.html(markup);
 			_self.showReg();
-
-			function onPop(){
-				Channel('popup-finished-launch-'+options.id).unsubscribe();
-				routing.showLandingPage = false;
-				_self.showReg();
-			}
-
-	//		Channel('popup-finished-launch-'+options.id).subscribe(onPop);
 			return this;
-			//markup should open up in a popup
+		},
+
+		scrollToContent:function(e){
+			$('html, body').animate({
+				scrollTop: $("#main").offset().top
+			}, 700);
 		},
 
 		// **Method** `setOptions` - called by BaseView's initialize method
