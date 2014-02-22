@@ -45,7 +45,7 @@
 	                   <a class="nav nav_dropdown"><%= index %></a>
 	                    <ul class="header_menu hide" role="menu">
 	                         <% _.each(element,function(e2,index){ %>
-	                            <li><a href="<%= e2.link %>" ><%= e2.page %></a></li>
+	                            <li><a <% if(e2.id){ %>id="<%= e2.id %>"<% } if(e2.className){ %>class="<%= e2.className %>" <% } %>href="<%= e2.link %>" ><%= e2.page %></a></li>
 	                        <% }); %>
 	                    </ul><%
 	                } else {

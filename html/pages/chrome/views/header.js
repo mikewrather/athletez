@@ -56,11 +56,12 @@ function (
             "click .signup-email": "signupUser",
             "click .account clearfix a": "login",
             "click #userlogin":"userLogin",
-            "click #logoutId" :"LogoutUser",
-            "click .link-to-fb-h": "linkToFacebook"
+            "click #logoutId" :"LogoutUser"
+       //     "click .link-to-fb-h": "linkToFacebook" //this is now bound in the callback from the qtip render event
         },
         
         linkToFacebook: function() {
+	        console.log("link to fb called");
         	routing.trigger("link-to-facebook");
         },
 
@@ -112,6 +113,7 @@ function (
         },
 
 	    bindDropdowns: function (){
+		    var _self = this;
 		    this.$el.find('a.nav_dropdown').each(function(){
 			    console.log(this);
 			    $(this).qtip({
@@ -130,6 +132,11 @@ function (
 					    fixed:true,
 					    delay:500
 				    },
+				    events : {
+					    render: function(event,api) {
+						    $(api.elements.tooltip).find('.link-to-fb-h').on('click',_self.linkToFacebook);
+					    }
+				    }
 			    });
 		     });
 

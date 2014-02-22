@@ -92,7 +92,7 @@ define(['require',
 		/*Messages Holds the messages, warning, alerts, errors, information variables*/
 		/*In Case of similar message create only one object and key*/
 		messages : {
-			dataNotExist : 'Couldn\'t find any matches',
+			dataNotExist : 'You don\'t have any teams registered yet.  Why not do that now?',
 			optionsMissing : 'HeaderView expects option with model property.',
 			selectSport : 'Please select sport',
 			selectState : 'Please insert state',

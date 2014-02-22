@@ -91,7 +91,7 @@ define(['require', 'text!profilesetting/templates/basic_info_header.html', 'text
 
 				'Again' : {
 					form_values : {
-						post_to_server : false,
+						post_to_server : true,
 						serverKey : "re_password",
 						serverDbField : 're_password'
 					},
@@ -127,6 +127,7 @@ define(['require', 'text!profilesetting/templates/basic_info_header.html', 'text
 								var formData = form.getValue();
 							}
 							var formData = _self.formValues.getFormValues();
+					//		console.log(formData);
 							_self.saveProfileBasics(formData);
 						}
 					}

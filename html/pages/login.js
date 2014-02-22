@@ -111,7 +111,7 @@ define(["require",
 						var id = "modal-popup-"+Math.floor(Math.random() * Math.random() * 50 * Math.random() * 50), dest = "#"+id+" #modalBody", options = {};
 			            options.height = "500px";
 			            options.width = "600px";
-			            options.title = " ";
+			            options.title = "Log Into Athletez";
 			            options.id = id;
 						routing.trigger('common-popup-open', options);
 						this.loginView = new loginBaseView({
@@ -120,8 +120,8 @@ define(["require",
 							destination : dest,
 							callback: this.callback
 						});						
-						this.scheme.push(this.selectTypeView);
-						this.layout.render();
+					//	this.scheme.push(this.selectTypeView);
+					//	this.layout.render();
 					}
 				});
 				return LoginController;

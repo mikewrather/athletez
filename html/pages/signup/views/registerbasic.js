@@ -77,6 +77,7 @@ define(['require', 'text!signup/templates/registration.html', 'text!signup/templ
 				if (this.openAsaPage && flag) {
 
 				//	console.log("called",this.selectRegisterBasicFinalView.$el.html());
+					routing.trigger('common-popup-close');
 					var options = {};
 					options.height = "500px";
 					options.width = "500px";
@@ -119,7 +120,7 @@ define(['require', 'text!signup/templates/registration.html', 'text!signup/templ
 
 		showLogin : function(event) {
 			event.preventDefault();
-			routing.trigger('popup-close');
+			routing.trigger('common-popup-close');
 			this.logincontroller = new LoginController({
 				callback : this.callback
 			});
