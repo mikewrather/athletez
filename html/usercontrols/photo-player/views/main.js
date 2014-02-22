@@ -99,11 +99,11 @@ define(['require',
 		toggleThumbsSection: function(e) {
 			if(this.$el.find(".thumbs-outer").css("display") == "none") {
 				$(".loading_image, .photo-player-right-area, .bottom-line-container").addClass("minimizeOpacity");
-				$(".photo-player-mask-h").removeClass("hide");
+			//	$(".photo-player-mask-h").removeClass("hide");
 				this.$el.find(".thumbs-outer").slideDown();				
 			} else {
 				this.$el.find(".thumbs-outer").slideUp();
-				$(".photo-player-mask-h").addClass("hide");
+			//	$(".photo-player-mask-h").addClass("hide");
 				$(".loading_image, .photo-player-right-area, .bottom-line-container").removeClass("minimizeOpacity");
 			}
 		},

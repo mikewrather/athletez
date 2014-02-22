@@ -79,7 +79,7 @@ define(["require", 'text!usercontrols/photo-player/templates/comments.html',
 				});
 
 				this.modelHTML = '<div id="photoPlayerModal" class="modal region-loader photo-frame-model hide fade model-popup-h">'+
-				'<div class="photo-player-mask hide photo-player-mask-h"></div>'+
+		//		'<div class="photo-player-mask hide photo-player-mask-h"></div>'+
 				'<div class="modal-body page-content-h">'+
 				'<div class="photo-player-area-h photo-player"></div>'+
 				'<div class="photo-player-right-area"><div class="teamName-area">'+
