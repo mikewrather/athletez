@@ -174,7 +174,18 @@
 		}
 
 
-		
+		/**
+		 * put_addopponent() Using a team, you can add a new team which will automatically create an entire club if necessary
+		 *
+		 * @retun array
+		 */
+		public function put_addopponent()
+		{
+			return $this->obj->getBasics();
+		}
+
+
+
 		/**
 		 * post_player() Add a new player to the roster
 		 *
