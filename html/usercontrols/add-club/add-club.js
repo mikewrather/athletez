@@ -41,6 +41,7 @@ define(["require",
 			if (options.index) this.index = options.index;
 			if(options.userId) this.userId = options.userId;
 			if(options.type) this.type = options.type;
+			if(options.orgNameSoFar) this.orgNameSoFar = options.orgNameSoFar;
 			this.viewObj = options.viewObj;
 			this.callback = options.callback;
 			
@@ -81,7 +82,8 @@ define(["require",
 				destination : "#modalBody",
 				addType: self.type,
 				callback: self.callback,
-				viewObj: self.viewObj
+				viewObj: self.viewObj,
+				orgNameSoFar:self.orgNameSoFar
 			});
 			self.scheme.push(addClubForm);
 			self.layout.render();

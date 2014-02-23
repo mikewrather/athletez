@@ -488,12 +488,12 @@ define(
 					//this.sections['register View'] = registerView;
 					//this.meta.activeViews.push('register View');
 					
-					this.selectTypeView = new signupBaseView({
-							model : this.select_type,
-							name : "Select Registration Type",
-							destination : ".register-wrapper-h",
-							openAsaPage: true
-						});
+		//			this.selectTypeView = new signupBaseView({
+		//					model : this.select_type,
+		//					name : "Select Registration Type",
+		//					destination : ".register-wrapper-h",
+		//					openAsaPage: true
+		//				});
 				},
 
 				setupMenuView : function() {

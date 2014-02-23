@@ -400,6 +400,46 @@
 				return false;
 			}
 		}
+
+		/**
+		 * action_put_addopponent() Using a team, you can add a new team which will automatically create an entire club if necessary
+		 * via /api/team/addopponent/{teams_id}
+		 *
+		 */
+		public function action_put_addopponent()
+		{
+
+			//Must logged user can do action
+			if (!$this->is_logged_user()){
+				return $this->throw_authentication_error();
+			}
+			if(!$this->mainModel->id)
+			{
+				$this->modelNotSetError();
+				return false;
+			}
+
+			$this->payloadDesc = "Using a team, you can add a new team which will automatically create an entire club if necessary";
+			$arguments = array();
+			// CHECK FOR PARAMETERS:
+			// name
+			// The name of the club that we want to add
+
+			if(trim($this->put('name')) != "")
+			{
+				$arguments["name"] = trim($this->put('name'));
+			}
+
+			$result = $this->mainModel->addOpponent($arguments);
+
+			if(get_class($result) == get_class($this->mainModel)) return $result;
+			elseif(get_class($result) == 'ORM_Validation_Exception')
+			{
+				$this->processValidationError($result,$this->mainModel->error_message_path);
+				return false;
+			}
+
+		}
 		
 		/**
 		 * action_post_game() Add a new game to a team's schedule

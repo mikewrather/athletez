@@ -50,6 +50,7 @@ define(['require', 'text!roster/templates/roster.html', 'views', 'vendor', 'faca
 			options.mainView = this;
 			this.mainView = this;
 			SectionView.prototype.initialize.call(this, options);
+			console.log("roster view",options);
 			_self.team_id = options.team_id;
 
 			_self.teamName = options.teamName;
@@ -74,7 +75,9 @@ define(['require', 'text!roster/templates/roster.html', 'views', 'vendor', 'faca
 		},
 
 		setupTeamRosterListView : function() {
-			var teamRosterListView, found = "";
+			var teamRosterListView,
+				isInRoster = false;
+
 			teamRosterListView = new ImageList({
 				collection : this.collection1,
 				name : this.viewName,
@@ -88,8 +91,8 @@ define(['require', 'text!roster/templates/roster.html', 'views', 'vendor', 'faca
 				try {
 					var arr = this.collection1.toArray();
 					for (var i in arr) {
-						if (arr[i].attributes.payload.id == routing.loggedInUserId) {
-							found = true;
+						if (parseInt(arr[i].attributes.payload.id) === parseInt(routing.loggedInUserId)) {
+							isInRoster = true;
 							break;
 						}
 					}
@@ -102,8 +105,7 @@ define(['require', 'text!roster/templates/roster.html', 'views', 'vendor', 'faca
 			//	this.$el.find(".roster-images-h ul").prepend(html);
 			//}
 			// sow roster add button
-			if (found == "")
-				this.$el.find(".roster-heading-h").find(".add-to-roster-h").removeClass("link-disabled");
+			if (isInRoster)	this.$el.find(".roster-heading-h").find(".add-to-roster-list-h").addClass("link-disabled");
 		},
 
 		checkForUser : function() {
@@ -149,6 +151,7 @@ define(['require', 'text!roster/templates/roster.html', 'views', 'vendor', 'faca
 					target: this.$el.find(".roster-heading-h"),
 					heading: this.team_name,
 					team_id: this.team_id,
+					team_name: this.team_name,
 					entityId: this.entityId,
 					addToRoster: this.addToRoster,
 					template: AddRosterViewTemplate

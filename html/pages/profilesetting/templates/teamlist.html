@@ -18,14 +18,14 @@
 			<div>
 				{{#complevels}}
 					{{#seasons}}
-				<div class="season-list">
+				<a href="/#!team/{{team_id}}"><div class="season-list">
 						<span>{{complevel}}</span>
 						<span>{{season}} {{year}}</span>
 						<span>
 							{{#positions}}<span class="position-listing">{{name}}</span>{{/positions}}
 							{{^positions}}No Positions&nbsp;{{/positions}}
 						</span>
-				</div>
+				</div></a>
 					{{/seasons}}
 
 				{{/complevels}}

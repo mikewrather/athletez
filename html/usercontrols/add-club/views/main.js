@@ -40,6 +40,7 @@ define(['require',
 			this.callback = options.callback;
 			this.viewObj = options.viewObj;
 			this.addressValid = false;
+			if(options.orgNameSoFar) this.orgNameSoFar = options.orgNameSoFar;
 			SectionView.prototype.initialize.call(this, options);
 			this.setUpMainView();
 			this.render();
@@ -67,7 +68,8 @@ define(['require',
 						post_to_server	: true,
 						serverDbField: 'org_name',
 						serverKey: "org_name",
-						objectValuesToUpdate: []
+						objectValuesToUpdate: [],
+						defaultValue:_self.orgNameSoFar
 					},
 
 					type : 'Text',
@@ -86,7 +88,7 @@ define(['require',
 				'season_profile' : {
 					type : 'DropDown',
 					showLable : true,
-					label: "Which of these most closely matches the seasons that your organization competes?",
+					label: "We Compete:",
 					form_values : {
 						serverKey : "season_profiles_id",
 						serverDbField: "season_profiles_id",
@@ -139,7 +141,7 @@ define(['require',
 				'Sports' : {
 					type : (_self.addType == "school")?'Hidden':'DropDown',
 					showLable : true,
-					label: "If this is a single-sport organization, choose the sport",
+					label: "What Sport?",
 					form_values : {
 						serverKey : "single_sport_id",
 						post_to_server	: true,
@@ -170,7 +172,7 @@ define(['require',
 						serverDbField: 'locations_id'
 					},
 					type : 'Location',
-					label: "Organization Address",
+					label: 'Location (e.g. "UCLA" or "Santa Monica" or a full address)',
 					validators : [{type : 'required',
 						message : 'Please select location.'}],
 				},

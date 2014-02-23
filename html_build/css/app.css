@@ -45,6 +45,7 @@ body {
 	margin: 0 auto;
 	background: #e0e0e0;
 }
+a{ cursor: pointer; }
 #main {
 	max-width: 1000px;
 	margin: 10px auto;
@@ -68,7 +69,6 @@ ul {
 	list-style: none;
 }
 header {
-	border-bottom: 1px solid #ccc;
 	padding-top: 2px;
 	padding-bottom: 2px;
 	background-color: #000;

@@ -3255,7 +3255,7 @@ Form.editors.AutoComplete = Form.editors.Text.extend({
 
 	determineChange: function(event) {
 		
-		if(event.keyCode == "37" || event.keyCode == "38" || event.keyCode == "39" || event.keyCode == "40") return;	
+		if(!this.isValidAutoCompleteKey(event)) return;
 
 		    var _self = this, currentValue = this.$el.val();
 			if(this.getData && currentValue != "") {
@@ -3291,56 +3291,65 @@ Form.editors.AutoComplete = Form.editors.Text.extend({
 
 				if(_self.finalInsert && typeof(_self.finalInsert) === 'object') arr.push(_self.finalInsert);
 
-					 console.log(arr);
-					 var selectOrChange = function( event, ui ) {
-						 if(_self.afterSetValue && _.isFunction(_self.afterSetValue)) _self.afterSetValue("show");
+				 console.log(arr);
+				 var selectOrChange = function( event, ui ) {
+					 if(_self.afterSetValue && _.isFunction(_self.afterSetValue)) _self.afterSetValue("show");
 
-						 console.log("select or change");
-						 if(ui.item){
-							 _self.$el.parent().find(".indicator-h").removeClass("invalid").addClass("valid");
+					 console.log("select or change");
+					 if(ui.item){
+						 _self.$el.parent().find(".indicator-h").removeClass("invalid").addClass("valid");
 
-							 var id = (ui.item.id)?ui.item.id:ui.item.value;
-							 _self.$el.attr("data-id", id);
-							 _self.trigger("blur", _self);
+						 var id = (ui.item.id)?ui.item.id:ui.item.value;
+						 _self.$el.attr("data-id", id);
+						 _self.trigger("blur", _self);
 
-							 if(ui.item.customCallback && typeof(ui.item.customCallback)==='function') ui.item.customCallback(id,ui.item);
-							 else if(_self.callback) _self.callback(id,ui.item);
-						 }
-						 //_self.$el.removeClass('ui-autocomplete-loading');
-					 };
+						 if(ui.item.customCallback && typeof(ui.item.customCallback)==='function') ui.item.customCallback(id,ui.item);
+						 else if(_self.callback) _self.callback(id,ui.item);
+					 }
+					 //_self.$el.removeClass('ui-autocomplete-loading');
+				 };
 
-					 // Destroy existing autocomplete from text box before attaching it again
-					 // try catch as for the first time it gives error
+				 // Destroy existing autocomplete from text box before attaching it again
+				 // try catch as for the first time it gives error
 
-					 try { _self.$el.autocomplete("destroy"); } catch(ex) {   }
+				 try { _self.$el.autocomplete("destroy"); } catch(ex) {   }
 
-					 _self.$el.autocomplete({
-						 source : arr,
-						 select: selectOrChange,
-						 change: selectOrChange,
-						 response: function(event,ui){
-							 if(!ui.content.length){
-								 //reset id
-								 _self.$el.attr("data-id", "");
-								 if(_self.callback) _self.callback(0);
+
+					 if(!arr.length){
+						 console.log("No Results");
+						 if(_self.noResultsCallback &&_.isFunction(_self.noResultsCallback)) _self.noResultsCallback(currentValue);
+					 }
+					 else{
+						 _self.$el.autocomplete({
+							 source : arr,
+							 select: selectOrChange,
+							 change: selectOrChange,
+							 response: function(event,ui){
+								 if(!ui.content.length){
+									 //reset id
+									 _self.$el.attr("data-id", "");
+									 if(_self.callback) _self.callback(0);
+								 }
+								 console.log("hopefully this is every key stroke",ui)
 							 }
-							 console.log("hopefully this is every key stroke",ui)
-						 }
-					 }).data( "ui-autocomplete" )._renderItem = function( ul, item ) {
-						 var returnVal = $( "<li>" );
-						 var inner = '<a>';
+						 }).data( "ui-autocomplete" )._renderItem = function( ul, item ) {
+							 var returnVal = $( "<li>" );
+							 var inner = '<a>';
 
-						 console.log(typeof(item.value));
+							 console.log(typeof(item.value));
 
-						 if(typeof(item.value)==="string") inner += item.value;
-						 else if(typeof(item.value)==="function") inner += item.value(currentValue);
+							 if(typeof(item.value)==="string") inner += item.value;
+							 else if(typeof(item.value)==="function") inner += item.value(currentValue);
 
-						 if(item.l != "") inner += "<br><span class='sub-label'>" + item.l + "</span>";
+							 if(item.l != "") inner += "<br><span class='sub-label'>" + item.l + "</span>";
 
-						 inner += "</a>";
+							 inner += "</a>";
 
-						 return returnVal.append( inner ).appendTo( ul );
-					 };
+							 return returnVal.append( inner ).appendTo( ul );
+						 };
+					 }
+
+
 
 				//Trigger keydown to display the autocomplete dropdown just created
 				_self.$el.trigger('keydown');
@@ -3459,7 +3468,7 @@ Form.editors.AutoComplete = Form.editors.Text.extend({
   setValue: function(value, text) {
 
 	  if(!this.$el.parent().find(".indicator-h").length) this.$el.after('<span class="indicator-h field-error-img"></span>');
-		if(!this.$el.parent().find(".clearvalue-h").length) this.$el.after('<span class="clearvalue-h">clear</span>');
+		//if(!this.$el.parent().find(".clearvalue-h").length) this.$el.after('<span class="clearvalue-h">clear</span>');
 
 	    if(!value && value == "")
 	        this.$el.parent().find(".indicator-h").removeClass("valid").addClass("invalid");

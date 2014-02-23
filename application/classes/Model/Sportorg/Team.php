@@ -155,6 +155,21 @@ class Model_Sportorg_Team extends ORM
 		}
 	}
 
+	public function addOpponent($args){
+		extract($args);
+
+		if(!$this->loaded()) return false;
+
+		//find matching org by name
+
+		$org = $this->getOrg();
+		$newOrg = $org->addOpponentOrg($name);
+
+
+
+		return $this;
+	}
+
 	public function getSubject(){ return $this; }
 
 	public function addGame($args = array()){

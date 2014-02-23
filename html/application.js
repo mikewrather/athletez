@@ -227,7 +227,7 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
 			setTimeout(function(){
 				if(!self.checkForUser())
 					var landing = new landingView();
-			},2000);
+			},500);
 		},
 		
 		aceptInvite: function(fbId) {
@@ -243,8 +243,8 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
 				var title = "Athletez - We Are Athletes";
 	    		var landing = new landingView({userId: fbId});
 	    		routing.showLandingPage = false;
-			    if(!fbId && $('div.register-wrapper').length == 0) {
-				    $('body header').after('<div class="register-wrapper"></div><div class="register-wrapper-h"></div>');
+			    if(!fbId && $('div.register-wrapper-h').length == 0) {
+				    $('body header').after('<div class="register-wrapper-h"></div>');
 			    }
 			    self.gaPageView("FB Accept - "+ fbId,title);
 	    		self.showHomePage(userId);
@@ -302,11 +302,12 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
             });
             
             routing.off('add-school-init');
-            routing.on('add-school-init', function(collection, userId, addType, viewObj, callback) {
+            routing.on('add-school-init', function(collection, userId, addType, viewObj, callback,orgNameSoFar) {
             	 var addSchool = new AddClubController({
             	 	type: addType,
             	 	viewObj: viewObj,
-            	 	callback: callback
+            	 	callback: callback,
+		            orgNameSoFar:orgNameSoFar
                 });
             });
             
@@ -477,8 +478,8 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
 	    			userId : id,
 	    			params: paramsArr
 	    		});
-			    if(!id && $('div.register-wrapper').length == 0){
-				    $('body header').after('<div class="register-wrapper"></div><div class="register-wrapper-h"></div>');
+			    if(!id && $('div.register-wrapper-h').length == 0){
+				    $('body header').after('</div><div class="register-wrapper-h"></div>');
 			    }
 			    self.gaPageView("Home Page",title);
 	    	}
@@ -511,8 +512,8 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
 	    			title: title,
 	    			userId : id
 	    		});
-			    if(!id && $('div.register-wrapper').length == 0){
-				    $('body header').after('<div class="register-wrapper"></div><div class="register-wrapper-h"></div>');
+			    if(!id && $('div.register-wrapper-h').length == 0){
+				    $('body header').after('<div class="register-wrapper-h"></div>');
 			    }
 			    self.gaPageView("FB Invite",title);
 	    	}
@@ -566,7 +567,6 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
         },
         
 		hideSignup : function() {
-		    $('div.register-wrapper').remove();
 		    $('div.register-wrapper-h').remove();
 	    },
         
@@ -717,7 +717,7 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
 
         showRegistration: function() {
 	        ga('send', 'event', 'popup', 'Registration');
-        	this.cancelAjaxRequests();
+     /*   	this.cancelAjaxRequests();
             this.loadStyles();
             chromeBootstrap();
              this.removeCurrent();
@@ -728,7 +728,9 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
                 });
 	            self.gaPageView("Registration Page","NA");
             }
-            this.initialiRoutesInit(initRegistration);
+
+      //      this.initialiRoutesInit(initRegistration);
+      */
         },
         
         showTag: function (userid) {
@@ -799,9 +801,9 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
             //    var registrationController = new RegistrationController({
             //        "route": ""
             //   });
-               var signupController = new SignupController({
-                    "route": ""
-                });
+     //          var signupController = new SignupController({
+       //             "route": ""
+         //       });
             }
             this.addUserTrigger(initSignup);
             //this.initialiRoutesInit(initSignup);
@@ -814,19 +816,6 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
             });
         },
 
-        showRegistration: function() {
-            this.cancelAjaxRequests();
-            this.loadStyles();
-            chromeBootstrap();
-            function initRegistration() {
-                var registrationController = new RegistrationController({
-                    "route": "",
-                    title: "Register"
-                });
-            }
-            this.initialiRoutesInit(initRegistration);
-            //Channel('app-inited').subscribe(initRegistration);
-        },
         // load style sheets
         loadStyles: function () {
             Channel('load:css').publish([base_url + "css/bootstrap.css", 

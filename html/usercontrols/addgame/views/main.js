@@ -4,10 +4,52 @@
  // Requires `define`, `require`
  // Returns {Add Game VIEW} constructor
  */
-define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 'views', 'utils', 'vendor', 'sportorg/collections/sports_listall', 'location/collections/states', 'usercontrols/addgame/collections/teams', 'location/collections/cities', 'usercontrols/addgame/collections/teams_user', 'usercontrols/addgame/collections/teams', 'usercontrols/addgame/collections/games_search', 'usercontrols/addgame/models/team', 'usercontrols/addgame/models/team_add', 'usercontrols/addgame/models/game', 'usercontrols/addgame/models/uslgamelink', 'usercontrol/dropdown/view/dropdown', 'usercontrol/location/views/get-view-location', 'component/forms'], function(require, layoutTemplate) {
+define(['require',
+	'text!usercontrols/addgame/templates/layout.html',
+	'facade',
+	'views',
+	'utils',
+	'vendor',
+	'sportorg/collections/sports_listall',
+	'location/collections/states',
+	'usercontrols/addgame/collections/teams',
+	'location/collections/cities',
+	'usercontrols/addgame/collections/teams_user',
+	'usercontrols/addgame/collections/teams',
+	'usercontrols/addgame/collections/games_search',
+	'usercontrols/addgame/models/team',
+	'usercontrols/addgame/models/team_add',
+	'usercontrols/addgame/models/game',
+	'usercontrols/addgame/models/uslgamelink',
+	'usercontrol/dropdown/view/dropdown',
+	'usercontrol/location/views/get-view-location',
+	'usercontrol/addgame/models/opponent',
+	'component/forms'], function(require, layoutTemplate) {
 
-	var self, facade = require('facade'), views = require('views'), SectionView = views.SectionView, utils = require('utils'), Channel = utils.lib.Channel, vendor = require('vendor'), Mustache = vendor.Mustache, $ = facade.$, BasicModel = require('usercontrols/tag/models/basic_info'), SportsCollection = require('sportorg/collections/sports_listall'), StatesCollection = require('location/collections/states'), CityCollection = require('location/collections/cities'), UserTeamsCollection = require('usercontrols/addgame/collections/teams_user'), TeamsCollection = require('usercontrols/addgame/collections/teams'), TeamModel = require('usercontrols/addgame/models/team'), TeamAddModel = require('usercontrols/addgame/models/team_add'), GameModel = require('usercontrols/addgame/models/game'), GamesSearchCollection = require('usercontrols/addgame/collections/games_search'), DropDownList = require('usercontrol/dropdown/view/dropdown'), LocationView = require('usercontrol/location/views/get-view-location'), FormComponent = require('component/forms'),
-	//Models
+	var self,
+		facade = require('facade'),
+		views = require('views'),
+		SectionView = views.SectionView,
+		utils = require('utils'),
+		Channel = utils.lib.Channel,
+		vendor = require('vendor'),
+		Mustache = vendor.Mustache,
+		$ = facade.$,
+		BasicModel = require('usercontrols/tag/models/basic_info'),
+		SportsCollection = require('sportorg/collections/sports_listall'),
+		StatesCollection = require('location/collections/states'),
+		CityCollection = require('location/collections/cities'),
+		UserTeamsCollection = require('usercontrols/addgame/collections/teams_user'),
+		TeamsCollection = require('usercontrols/addgame/collections/teams'),
+		TeamModel = require('usercontrols/addgame/models/team'),
+		TeamAddModel = require('usercontrols/addgame/models/team_add'),
+		GameModel = require('usercontrols/addgame/models/game'),
+		GamesSearchCollection = require('usercontrols/addgame/collections/games_search'),
+		DropDownList = require('usercontrol/dropdown/view/dropdown'),
+		LocationView = require('usercontrol/location/views/get-view-location'),
+		FormComponent = require('component/forms'),
+		OpponentModel = require('usercontrol/addgame/models/opponent'),
+
 		UserGameLinkModel = require('usercontrols/addgame/models/uslgamelink'), AddGameView = SectionView.extend({
 			template : layoutTemplate,
 			/*Data to be sent as parameter in call back function*/
@@ -430,6 +472,26 @@ define(['require', 'text!usercontrols/addgame/templates/layout.html', 'facade', 
 							],
 							source_collection : TeamsCollection,
 							request_finished : function() {
+							},
+							noResultsCallback: function(search_text){
+/*
+								var message = 'The <b>"' + search_text+'"</b> team isn\'t in our database.  Want to <a id="add_team_2-h">add it?</a>';
+
+								if($('input[name="Select_Team_2"]').parent().find('div#dynamic_add_team_2').length){
+									$('input[name="Select_Team_2"]').parent().find('div#dynamic_add_team_2').html(message);
+								} else {
+									$('input[name="Select_Team_2"]').parent().append('<div id="dynamic_add_team_2">' + message + '</div>');
+								}
+
+								setTimeout(function(){
+									console.log("settimeout");
+									$('a#add_team_2-h').on("click",function(e){
+										var opponentModel = new OpponentModel({id:_self.team_id,name:search_text});
+										opponentModel.save();
+									});
+								},0);
+*/
+
 							},
 							callback : function(id) {
 								//$("input[name=team_2]").parents(".field-row").removeClass("hide");

@@ -109,6 +109,8 @@ function (
             };
            // $.ajaxSetup({ cache: false });
             this.model.fetch();
+
+	        // bind
             return this;
         },
 
