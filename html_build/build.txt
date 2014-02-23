@@ -167,6 +167,10 @@ usercontrols/add-club/add-club.css
 ----------------
 usercontrols/add-club/add-club.css
 
+usercontrols/addgame/addgame.css
+----------------
+usercontrols/addgame/addgame.css
+
 usercontrols/detection/browser.css
 ----------------
 usercontrols/detection/browser.css
@@ -664,6 +668,7 @@ usercontrols/addgame/models/game.js
 usercontrols/addgame/models/uslgamelink.js
 text!usercontrols/location/templates/get-view-location.html
 usercontrols//location/views/get-view-location.js
+usercontrols//addgame/models/opponent.js
 usercontrols/addgame/views/main.js
 usercontrols/addgame/addgame.js
 text!usercontrols/photo-player/templates/comments.html
@@ -1200,6 +1205,7 @@ usercontrols/addgame/models/game.js
 usercontrols/addgame/models/uslgamelink.js
 text!usercontrols/location/templates/get-view-location.html
 usercontrols//location/views/get-view-location.js
+usercontrols//addgame/models/opponent.js
 usercontrols/addgame/views/main.js
 usercontrols/addgame/addgame.js
 text!usercontrols/photo-player/templates/comments.html
@@ -1715,6 +1721,7 @@ usercontrols/addgame/models/game.js
 usercontrols/addgame/models/uslgamelink.js
 text!usercontrols/location/templates/get-view-location.html
 usercontrols//location/views/get-view-location.js
+usercontrols//addgame/models/opponent.js
 usercontrols/addgame/views/main.js
 usercontrols/addgame/addgame.js
 text!usercontrols/photo-player/templates/comments.html
@@ -2214,6 +2221,7 @@ usercontrols/addgame/models/game.js
 usercontrols/addgame/models/uslgamelink.js
 text!usercontrols/location/templates/get-view-location.html
 usercontrols//location/views/get-view-location.js
+usercontrols//addgame/models/opponent.js
 usercontrols/addgame/views/main.js
 usercontrols/addgame/addgame.js
 text!usercontrols/photo-player/templates/comments.html
@@ -2774,6 +2782,7 @@ usercontrols/addgame/models/game.js
 usercontrols/addgame/models/uslgamelink.js
 text!usercontrols/location/templates/get-view-location.html
 usercontrols//location/views/get-view-location.js
+usercontrols//addgame/models/opponent.js
 usercontrols/addgame/views/main.js
 usercontrols/addgame/addgame.js
 text!usercontrols/photo-player/templates/comments.html
@@ -3255,6 +3264,7 @@ usercontrols/addgame/models/game.js
 usercontrols/addgame/models/uslgamelink.js
 text!usercontrols/location/templates/get-view-location.html
 usercontrols//location/views/get-view-location.js
+usercontrols//addgame/models/opponent.js
 usercontrols/addgame/views/main.js
 usercontrols/addgame/addgame.js
 pages/signup/models/registration-basics-final.js
@@ -3897,6 +3907,7 @@ usercontrols/addgame/models/game.js
 usercontrols/addgame/models/uslgamelink.js
 text!usercontrols/location/templates/get-view-location.html
 usercontrols//location/views/get-view-location.js
+usercontrols//addgame/models/opponent.js
 usercontrols/addgame/views/main.js
 usercontrols/addgame/addgame.js
 text!usercontrols/photo-player/templates/comments.html
