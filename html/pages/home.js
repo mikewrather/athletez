@@ -450,7 +450,8 @@ define(
 						destination : '#'+viewName,
 						user_id : this.userId,
 						media_id: this.media_id,
-						pageName: "home"
+						pageName: "home",
+						viewName: viewName
 					});
 					
 					imageListView.render();
