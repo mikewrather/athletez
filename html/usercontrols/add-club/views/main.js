@@ -139,7 +139,7 @@ define(['require',
 				'Sports' : {
 					type : (_self.addType == "school")?'Hidden':'DropDown',
 					showLable : true,
-					label: "If this is a single-sport organization, choose the sport",
+					label: "What Sport?",
 					form_values : {
 						serverKey : "single_sport_id",
 						post_to_server	: true,

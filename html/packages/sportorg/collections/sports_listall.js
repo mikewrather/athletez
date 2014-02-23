@@ -11,8 +11,8 @@ function(facade, collections, SportsOrgCollection) {
     var SportsList;
 
     SportsList = SportsOrgCollection.extend({
-	    sport_type :1,
-	    sport_type_id :1,
+	    sport_type :null,
+	    sport_type_id :null,
 	    male : 1,
 	    female : 0,
 	    url: function(){
