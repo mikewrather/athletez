@@ -80,18 +80,18 @@ define(['require',
 			
 			SectionView.prototype.initialize.call(this, options);
 
-			if(this.index === undefined) {
-				alert("No Media Found.");
-				setTimeout(function() {
-					$(".closer button").trigger("click");					
-				}, 500);
-			} else {
+	//		if(this.index === undefined) {
+	//			alert("No Media Found.");
+	//			setTimeout(function() {
+	//				$(".closer button").trigger("click");
+	//			}, 500);
+	//		} else {
 				this.setUpMainView();
 				this.render();
 				this.initThumbsSection();
 				this.loadImage(true);
 				this.updateAllImagesCount();
-			}
+	//		}
 			Channel('tag-image-success-photo').empty();
 			Channel('tag-image-success-photo').subscribe(this.tagFunction);
 		},
@@ -148,6 +148,8 @@ define(['require',
 			} else {
 				link = "#!"+this.pageName+data.pageId+data.mediaId;				
 			}
+
+			console.log(link);
 			return link;
 		},
 		

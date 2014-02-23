@@ -123,6 +123,7 @@ define([
                 
                 signupUser: function(event){
                 	event.preventDefault();
+	                routing.trigger("common-popup-close");
                     routing.trigger("register-basic", this.callback);
                 },
             });

@@ -177,8 +177,8 @@ define(["require",
 							callback: callback
 						});
 
-						this.scheme.push(this.selectTypeView);
-						this.layout.render();
+					//	this.scheme.push(this.selectTypeView);
+					//	this.layout.render();
 					}
 				});
 				return SignupController;
