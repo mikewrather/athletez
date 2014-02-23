@@ -136,6 +136,8 @@ function(facade,  views,   utils,   ImageItemView,            ImageBoardView,   
         	else
         		this.name = "image list";
         	
+          this.teamName = options.teamName;	
+        	
 	       this.pageName = (options.pageName)?options.pageName:"profile";
            if(options.collecton) this.collection = options.collection;
         	
@@ -170,6 +172,7 @@ function(facade,  views,   utils,   ImageItemView,            ImageBoardView,   
 	        		page: this.currentSection,
 	        		target: this.$el,
 	        		model: new model,
+	        		teamName: this.teamName,
 	        		name: "view - " + Math.random()
 	        	});
 	        }

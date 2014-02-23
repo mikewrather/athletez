@@ -30,6 +30,8 @@ define([
         	for(var i in options) {
         		this[i] = options[i];
         	}
+        	//alert(this.teamName +"------"+this.page);
+        	this.initializeData();
         	this.render();
         },
         
@@ -58,10 +60,14 @@ define([
         },
         
         
-        messages: {fans: {left: "Become a fan and gt notified whenever there's any activity for Crossroads School Varsity Baseketball 2014. Get notifications for new games or game changes, photos, videos, new team members or new messages.", "btn1": "Click here to add yourself to the fan's list and receive notifications.", btn2: "Click here to invite friends from facebook to receive notifications."},
-        media: {left: "The Photo/Video section displays all media that Crossroads School Varsity Basketball Academic year'14 is tagged in. There are currently no photos to show in this section. Use the buttons above to upload new photos or videos.", "btn1": "Click here to upload photos of this team.", "btn2": "Click here to upload videos of team."},
+        initializeData: function() {
+        
+        this.messages =  {fans: {left: "Become a fan and gt notified whenever there's any activity for "+this.teamName+". Get notifications for new games or game changes, photos, videos, new team members or new messages.", "btn1": "Click here to add yourself to the fan's list and receive notifications.", btn2: "Click here to invite friends from facebook to receive notifications."},
+        media: {left: "The Photo/Video section displays all media that "+this.teamName+" is tagged in. There are currently no photos to show in this section. Use the buttons above to upload new photos or videos.", "btn1": "Click here to upload photos of this team.", "btn2": "Click here to upload videos of team."},
         games: {"left": "The game timeline shows all of the scheduled games for this team. Each dot is a game. You can hover over the dot to get a preview, or click on the dot to go to game page. Click the 'add game' Button to add a new game to the timeline.", btn1: "Click here to add a game to this team's calendar. All team members will be notified of this new game."},
-        rosters: {"left": "This section is a team roster and it lists all registered users for Crossroads school varsity Academin year'14. You can add yourself to this roster or invite friends from facebook who play for this team.'", btn1: "Click here to add yourself to this team's roster.'", btn2: "Click here to invite friends from facebook that play for this team."}},
+        rosters: {"left": "This section is a team roster and it lists all registered users for "+this.teamName+". You can add yourself to this roster or invite friends from facebook who play for this team.'", btn1: "Click here to add yourself to this team's roster.'", btn2: "Click here to invite friends from facebook that play for this team."}};
+		
+		},
 
 		btnClasses: {
 			fans: {btn1: "add-to-list-h", btn2: "invite-fans-from-fb-h"},
@@ -76,18 +82,8 @@ define([
         	data.className = this.btnClasses[this.page];
         	data.page = this.page;
         	var _self = this, markup = Mustache.to_html(addDescriptionTemplate, {data: data});
-        	
-        	//if(this.target.parent("ul")) {
-            //	this.target.parent("ul").remove();
-            //}
-            
-            
-            
             
             if($(this.target).is("ul")) {
-            	//$(".roster-images-h").find("ul").remove();
-            	
-            	
             	setTimeout(function(){
             		var $parent = $(_self.target).parent();
             		$(_self.target).replaceWith("<div></div>");
@@ -97,9 +93,6 @@ define([
             
 
             	}, 500);
-            	
-            	
-            	//alert("find");
             } else {
             
             
@@ -107,7 +100,6 @@ define([
         	this.el = this.$el;
             this.target.html(this.$el);
             }
-           // return this.el;
         }
     });
 

@@ -1596,7 +1596,7 @@ div.game-info span.game-header{
     background-color: #C43737;
 }
 
-.add-to-roster-h, .add-to-event {
+.add-to-roster-h {
 	background-image: url('http://athletez.s3.amazonaws.com/resources/img/actions/addtoteam.png');
 	background-size: cover;
 	min-height: 110px;
@@ -1782,9 +1782,6 @@ div[data-error]:empty{
 	width: 100%
 }
 
-a.add-to-event {
-	display: none;
-}
 
 .container_batch_tag .section-link_h{
     width: 100%;
@@ -2158,6 +2155,23 @@ li.sport .teamlist-header, .stat-val-outer {
 	margin-top: 20px;
 }
 
+/*  Participants icons  */
+
+.add-participants {
+		background: url(images/icons/add-icons.png) no-repeat;
+	display: inline-block;
+	width: 70px;
+	height: 36px;
+
+}
+
+.add-to-participants {
+	background-position: -162px -53px;
+}
+
+.invite-participants {
+	background-position: 2px 2px;	
+}
 
 /* Add icons css start */
 .add-icon {

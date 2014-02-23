@@ -310,7 +310,6 @@ define(['facade',
 			else drawForm();
 		},
 		initialize : function(options) {
-			console.error(options);
 			var _self = this;
 			$(document).off("click", ".add-to-event");
 			$(document).on("click", ".add-to-event", function() {
@@ -364,21 +363,21 @@ define(['facade',
 			this.addSubscribers();
 			this.setupAddView();
 			setTimeout(function() {
-				if (!$("#add-participants-icons").length) {
-					var html = '<li id="add-participants-icons" class="add-tile-outer">\
-					<div class="add-icons-outer"><div>\
-					<a href="javascript: void(0);" class="add-to-event link-disabled pull-left tiles" title="Add to event"></a>\
-					<span class="hide character-limit-h">I\'m Attending this event</span></div>\
-					<div>\
-					<a href="javascript: void(0);" class="fb-invite-tile-btn invite-to-fb-h tiles pull-right" title="Add to fb"></a>\
-					<span class="hide character-limit-h">Know somebody who\'s gonna be here?</span></div>\
-					</div></li>';
-					_self.$el.find(_self.listView).prepend(html);
+				//if (!$("#add-participants-icons").length) {
+				//	var html = '<li id="add-participants-icons" class="add-tile-outer">\
+				//	<div class="add-icons-outer"><div>\
+				//	<a href="javascript: void(0);" class="add-to-event link-disabled pull-left tiles" title="Add to event"></a>\
+				//	<span class="hide character-limit-h">I\'m Attending this event</span></div>\
+				//	<div>\
+				//	<a href="javascript: void(0);" class="fb-invite-tile-btn invite-to-fb-h tiles pull-right" title="Add to fb"></a>\
+				//	<span class="hide character-limit-h">Know somebody who\'s gonna be here?</span></div>\
+				//	</div></li>';
+					//_self.$el.find(_self.listView).prepend(html);
 
-					if (!found)
-						_self.$el.find(_self.listView).find(".add-to-event").removeClass("link-disabled");
+				//	if (!found)
+				//		_self.$el.find(_self.listView).find(".add-to-event").removeClass("link-disabled");
 
-				}
+				//}
 			}, 0);
 
 		},

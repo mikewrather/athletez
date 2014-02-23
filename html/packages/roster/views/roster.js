@@ -51,6 +51,8 @@ define(['require', 'text!roster/templates/roster.html', 'views', 'vendor', 'faca
 			this.mainView = this;
 			SectionView.prototype.initialize.call(this, options);
 			_self.team_id = options.team_id;
+
+			_self.teamName = options.teamName;
 			_self.entityId = options.entityId;
 			_self.team_name = options.team_name;
 			_self.controllerObject = options.controllerObject;
@@ -78,7 +80,8 @@ define(['require', 'text!roster/templates/roster.html', 'views', 'vendor', 'faca
 				name : this.viewName,
 				mainView : this,
 				dontrenderTemplate : true,
-				model : new model()
+				model : new model(),
+				teamName: this.teamName
 			});
 
 			if (this.checkForUser()) {
@@ -141,7 +144,6 @@ define(['require', 'text!roster/templates/roster.html', 'views', 'vendor', 'faca
 		render : function(domInsertion, dataDecorator, partials) {
 			SectionView.prototype.render.call(this, domInsertion, dataDecorator, partials);
 			//this.$el.find(".heading-h").html(this.team_name);
-			
 			// set up add media and heading 
 				var addRoster = new AddMediaView({
 					target: this.$el.find(".roster-heading-h"),

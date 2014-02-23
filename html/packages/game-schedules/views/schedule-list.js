@@ -154,6 +154,7 @@ function(vendor, facade,  views,   utils,   ScheduleItemView, Store, ScheduleLis
             var len = this.collection.length;
              // show empty box
 	        if(!len) {
+	        	
 	        	new AddDescription({
 	        		page: this.currentSection,
 	        		target: this.$el
