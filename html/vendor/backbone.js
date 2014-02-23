@@ -3255,7 +3255,7 @@ Form.editors.AutoComplete = Form.editors.Text.extend({
 
 	determineChange: function(event) {
 		
-		if(event.keyCode == "37" || event.keyCode == "38" || event.keyCode == "39" || event.keyCode == "40") return;	
+		if(!this.isValidAutoCompleteKey(event)) return;
 
 		    var _self = this, currentValue = this.$el.val();
 			if(this.getData && currentValue != "") {
@@ -3459,7 +3459,7 @@ Form.editors.AutoComplete = Form.editors.Text.extend({
   setValue: function(value, text) {
 
 	  if(!this.$el.parent().find(".indicator-h").length) this.$el.after('<span class="indicator-h field-error-img"></span>');
-		if(!this.$el.parent().find(".clearvalue-h").length) this.$el.after('<span class="clearvalue-h">clear</span>');
+		//if(!this.$el.parent().find(".clearvalue-h").length) this.$el.after('<span class="clearvalue-h">clear</span>');
 
 	    if(!value && value == "")
 	        this.$el.parent().find(".indicator-h").removeClass("valid").addClass("invalid");
