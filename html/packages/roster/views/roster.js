@@ -72,7 +72,9 @@ define(['require', 'text!roster/templates/roster.html', 'views', 'vendor', 'faca
 		},
 
 		setupTeamRosterListView : function() {
-			var teamRosterListView, found = "";
+			var teamRosterListView,
+				isInRoster = false;
+
 			teamRosterListView = new ImageList({
 				collection : this.collection1,
 				name : this.viewName,
@@ -84,9 +86,11 @@ define(['require', 'text!roster/templates/roster.html', 'views', 'vendor', 'faca
 			if (this.checkForUser()) {
 				try {
 					var arr = this.collection1.toArray();
+					console.log("roster",arr,routing.loggedInUserId);
 					for (var i in arr) {
-						if (arr[i].attributes.payload.id == routing.loggedInUserId) {
-							found = true;
+						console.log(arr[i].attributes.payload.id);
+						if (parseInt(arr[i].attributes.payload.id) === parseInt(routing.loggedInUserId)) {
+							isInRoster = true;
 							break;
 						}
 					}
@@ -99,8 +103,8 @@ define(['require', 'text!roster/templates/roster.html', 'views', 'vendor', 'faca
 			//	this.$el.find(".roster-images-h ul").prepend(html);
 			//}
 			// sow roster add button
-			if (found == "")
-				this.$el.find(".roster-heading-h").find(".add-to-roster-h").removeClass("link-disabled");
+			if (isInRoster)	this.$el.find(".roster-heading-h").find(".add-to-roster-list-h").addClass("link-disabled");
+			
 		},
 
 		checkForUser : function() {
