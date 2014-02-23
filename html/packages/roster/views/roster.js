@@ -50,6 +50,7 @@ define(['require', 'text!roster/templates/roster.html', 'views', 'vendor', 'faca
 			options.mainView = this;
 			this.mainView = this;
 			SectionView.prototype.initialize.call(this, options);
+			console.log("roster view",options);
 			_self.team_id = options.team_id;
 			_self.entityId = options.entityId;
 			_self.team_name = options.team_name;
@@ -86,9 +87,7 @@ define(['require', 'text!roster/templates/roster.html', 'views', 'vendor', 'faca
 			if (this.checkForUser()) {
 				try {
 					var arr = this.collection1.toArray();
-					console.log("roster",arr,routing.loggedInUserId);
 					for (var i in arr) {
-						console.log(arr[i].attributes.payload.id);
 						if (parseInt(arr[i].attributes.payload.id) === parseInt(routing.loggedInUserId)) {
 							isInRoster = true;
 							break;
@@ -104,7 +103,6 @@ define(['require', 'text!roster/templates/roster.html', 'views', 'vendor', 'faca
 			//}
 			// sow roster add button
 			if (isInRoster)	this.$el.find(".roster-heading-h").find(".add-to-roster-list-h").addClass("link-disabled");
-			
 		},
 
 		checkForUser : function() {
@@ -151,6 +149,7 @@ define(['require', 'text!roster/templates/roster.html', 'views', 'vendor', 'faca
 					target: this.$el.find(".roster-heading-h"),
 					heading: this.team_name,
 					team_id: this.team_id,
+					team_name: this.team_name,
 					entityId: this.entityId,
 					addToRoster: this.addToRoster,
 					template: AddRosterViewTemplate
