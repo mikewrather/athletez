@@ -112,12 +112,22 @@ define(['require',
 			//alert("here");
 			this.$el.find(".total-image-count-h").text(this.json.payload.length);
 		},
-
+		
+		checkForUser: function() {
+			if(!_.isUndefined(routing.userLoggedIn) && routing.userLoggedIn)
+				return true;
+			else	
+        		return false;
+		},
+		
+		
 		vote : function(e) {
+			
+			var _self = this, voteFn = function() {
+				 var vote = new voteModel();
 			if ($(e.currentTarget).hasClass('voted')) return;
-			var _self = this, vote = new voteModel();
-			vote.userId = this.json.payload[this.index].id;
-			vote.entity_id = this.json.payload[this.index].enttypes_id;
+			vote.userId = _self.json.payload[_self.index].id;
+			vote.entity_id = _self.json.payload[_self.index].enttypes_id;
 			vote.set({
 				subject_type_id : vote.entity_id,
 				subject_id : vote.userId
@@ -133,6 +143,16 @@ define(['require',
 
 				$votesCount.parents("li").addClass("link-disabled");
 			});
+			};
+			
+			if(!_self.checkForUser()) {
+			     routing.trigger('showSignup', function(callback) {
+			     	voteFn();
+			     });
+	    	} else {
+	    		voteFn();
+	    	}
+			
 		},
 		
 		// share event binding
@@ -154,46 +174,78 @@ define(['require',
 		},
 		
 		twitter: function() {
-			var data = this.getShareData();
-			var options = {
-				'link': this.getLink(data),
-				'name': data.User.name + " - " + data.Sport.sport_name,
-				'caption': "Athletez.com",
-				'image': data.record.image_path,
-				'description': '',
-				'title' :'',
-				'type': "twitter"
+			var _self = this, data = this.getShareData();
+			var twitter = function() {
+				var options = {
+					'link': _self.getLink(data),
+					'name': data.User.name + " - " + data.Sport.sport_name,
+					'caption': "Athletez.com",
+					'image': data.record.image_path,
+					'description': '',
+					'title' :'',
+					'type': "twitter"
+				};
+				new ShareComponent(options);
 			};
-			new ShareComponent(options);
+			
+			if(!_self.checkForUser()) {
+			     routing.trigger('showSignup', function(callback) {
+			     	twitter();
+			     });
+	    	} else {
+	    		twitter();
+	    	}
+			
 		},
 		
 		gplus: function() {
-			var data = this.getShareData();
-			var options = {
-				//'link': "#"+this.pageName+data.userId+data.sportId+data.mediaId,
-				'link': "?enttypes_id="+data.record.enttypes_id+"&id="+data.record.id,				
-				'name': data.User.name + " - " + data.Sport.sport_name,
-				'caption': "Athletez.com",
-				'image': data.record.image_path,
-				'description': '',
-				'title' :'',
-				'type': "gplus"
+			var _self = this, data = this.getShareData();
+			var gplusFn = function() { 
+				var options = {
+					//'link': "#"+this.pageName+data.userId+data.sportId+data.mediaId,
+					'link': "?enttypes_id="+data.record.enttypes_id+"&id="+data.record.id,				
+					'name': data.User.name + " - " + data.Sport.sport_name,
+					'caption': "Athletez.com",
+					'image': data.record.image_path,
+					'description': '',
+					'title' :'',
+					'type': "gplus"
+				};
+				new ShareComponent(options);
 			};
-			new ShareComponent(options);	
+			if(!_self.checkForUser()) {
+			     routing.trigger('showSignup', function(callback) {
+			     	gplusFn();
+			     });
+	    	} else {
+	    		gplusFn();
+	    	}
+				
 		},
 		
 		tumbler: function() {
-			var data = this.getShareData();
-			var options = {
-				'link': "?enttypes_id="+data.record.enttypes_id+"&id="+data.record.id,
-				'name': data.User.name + " - " + data.Sport.sport_name,
-				'caption': "Athletez.com",
-				'image': data.record.image_path,
-				'description': '',
-				'title' :'',
-				'type': "tumbler"
+			var _self = this, data = this.getShareData();
+			
+			var tumbler = function() {
+			
+				var options = {
+					'link': "?enttypes_id="+data.record.enttypes_id+"&id="+data.record.id,
+					'name': data.User.name + " - " + data.Sport.sport_name,
+					'caption': "Athletez.com",
+					'image': data.record.image_path,
+					'description': '',
+					'title' :'',
+					'type': "tumbler"
+				};
+				new ShareComponent(options);	
 			};
-			new ShareComponent(options);	
+			if(!_self.checkForUser()) {
+			     routing.trigger('showSignup', function(callback) {
+			     	tumbler();
+			     });
+	    	} else {
+	    		tumbler();
+	    	}
 		},
 		
 		
@@ -212,28 +264,37 @@ define(['require',
 		
 		// share media on facebook
 		facebook: function() {
-			var data = this.getShareData();
+			var _self = this, data = this.getShareData();
 			var link = this.getLink(data),
 				name = data.User.name + " - " + data.Sport.sport_name,
 				caption = "Athletez.com",
 				image = data.record.image_path,
 				description = '';
-
+			var facebookShare = function() {
 			var fb = new FbComponent();
-			fb.shareOnFacebook({
-				method: 'feed',
-			    name: name,
-			    link: link,
-			    picture: image,
-			    caption: caption,
-			    description: description,
-			    success: function() {
-			    	alert("Shared successfully.");
-			    },
-			    error: function() {
-			    	alert("Not Shared successfully.");
-			    }
-			});
+				fb.shareOnFacebook({
+					method: 'feed',
+				    name: name,
+				    link: link,
+				    picture: image,
+				    caption: caption,
+				    description: description,
+				    success: function() {
+				    	alert("Shared successfully.");
+				    },
+				    error: function() {
+				    	alert("Not Shared successfully.");
+				    }
+				});
+			};
+			if(!_self.checkForUser()) {
+			     routing.trigger('showSignup', function(callback) {
+			     	facebookShare();
+			     });
+	    	} else {
+	    		facebookShare();
+	    	}
+			
 		},
 
 		getUserForMedia: function(){
@@ -742,18 +803,30 @@ define(['require',
 				isOwner = data.media_obj.is_owner || null;
 			}
 
-			this.tagViewPhoto = new TagView({
-				model : new UserModel(),
-				template : tagTemplate,
-				name : "tag-image " + new Date().toString(),
-				destination : "#image-tagging-photo",
-				user_id : userId,
-				sports_id : sportsId,
-				is_owner : isOwner,
-				channel : 'tag-image-success-photo'
-			});
-			self.scheme.push(this.tagViewPhoto);
-			self.layout.render();
+			var setUpTagPhotoViewFn = function() {
+				self.tagViewPhoto = new TagView({
+					model : new UserModel(),
+					template : tagTemplate,
+					name : "tag-image " + new Date().toString(),
+					destination : "#image-tagging-photo",
+					user_id : userId,
+					sports_id : sportsId,
+					is_owner : isOwner,
+					channel : 'tag-image-success-photo'
+				});
+				self.scheme.push(this.tagViewPhoto);
+				self.layout.render();
+			};
+			
+			if(!self.checkForUser()) {
+			     routing.trigger('showSignup', function(callback) {
+			     	setUpTagPhotoViewFn();
+			     });
+	    	} else {
+	    		setUpTagPhotoViewFn();
+	    	}
+			
+			
 		},
 		tagFunction : function(data) {
 			// alert("this is tag finish function from basic.js");
@@ -790,13 +863,25 @@ define(['require',
 				tag_array : JSON.stringify(newData)
 			};
 			
-			var tagMyselfModel = new TagMyselfModel(payload);
-			tagMyselfModel.user_id = this.getUserId();
-			tagMyselfModel.save();
-			$.when(tagMyselfModel.request).done(function() {
-				self.setUpTagViewSection();
-				$(e.target).parents("li").addClass("link-disabled");
-			});
+			var tagMyselfFn = function() {
+			
+				var tagMyselfModel = new TagMyselfModel(payload);
+				tagMyselfModel.user_id = self.getUserId();
+				tagMyselfModel.save();
+				$.when(tagMyselfModel.request).done(function() {
+					self.setUpTagViewSection();
+					$(e.target).parents("li").addClass("link-disabled");
+				});
+			};
+			
+			if(!self.checkForUser()) {
+			     routing.trigger('showSignup', function(callback) {
+			     	tagMyselfFn();
+			     });
+	    	} else {
+	    		tagMyselfFn();
+	    	}
+			
 		},
 		getUserId: function() {
 			if(!_.isUndefined(routing.userLoggedIn) && routing.userLoggedIn) return routing.loggedInUserId;
