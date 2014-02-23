@@ -417,7 +417,10 @@ define(['require',
 		},
 		
 		/* Add club popup  */
-		openAddClubPopup: function() {
+		openAddClubPopup: function(e) {
+
+			var orgNameSoFar = $(e.target).parent().find('input#txt-club-club').val();
+
 			var _self = this;
 			routing.trigger('add-school-init', '', '', 'club', _self, function(res) {
 				console.log("RESULT",res);
@@ -443,7 +446,7 @@ define(['require',
 
 				_self.$el.find(".add-club-h").hide();
 				
-			});
+			},orgNameSoFar);
 		},
 
 		/*IN CASE USER CHANGES SCHOOL OR STATE THE SPORT SECTION MUST BE DESTROYED AND RECONSTRUCTED*/

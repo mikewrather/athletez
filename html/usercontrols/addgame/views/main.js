@@ -474,7 +474,7 @@ define(['require',
 							request_finished : function() {
 							},
 							noResultsCallback: function(search_text){
-
+/*
 								var message = 'The <b>"' + search_text+'"</b> team isn\'t in our database.  Want to <a id="add_team_2-h">add it?</a>';
 
 								if($('input[name="Select_Team_2"]').parent().find('div#dynamic_add_team_2').length){
@@ -490,7 +490,7 @@ define(['require',
 										opponentModel.save();
 									});
 								},0);
-
+*/
 
 							},
 							callback : function(id) {

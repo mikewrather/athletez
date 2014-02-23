@@ -302,11 +302,12 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
             });
             
             routing.off('add-school-init');
-            routing.on('add-school-init', function(collection, userId, addType, viewObj, callback) {
+            routing.on('add-school-init', function(collection, userId, addType, viewObj, callback,orgNameSoFar) {
             	 var addSchool = new AddClubController({
             	 	type: addType,
             	 	viewObj: viewObj,
-            	 	callback: callback
+            	 	callback: callback,
+		            orgNameSoFar:orgNameSoFar
                 });
             });
             
