@@ -845,6 +845,7 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 				array('orgs.name', 'org_name'),
 				array('orgs.single_sport_id', 'single_sport_id'),
 				array('states.abbr', 'state_name'),
+				array('cities.name', 'city_name'),
 				'teams.*',
 				array('sports.name','sport'),
 				array('sports.id','sports_id'),
@@ -863,6 +864,8 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 			->join('sports')->on('org_sport_link.sports_id','=','sports.id')
 			->join('orgs')->on('orgs.id','=','org_sport_link.orgs_id')
 			->join('states')->on('orgs.states_id','=','states.id')
+			->join('locations')->on('orgs.locations_id','=','locations.id')
+			->join('cities')->on('locations.cities_id','=','cities.id')
 			->join('complevels', 'LEFT')->on('complevels.id','=','teams.complevels_id')
 			->join('seasons', 'LEFT')->on('seasons.id','=','teams.seasons_id')
 			->join('statvals', 'LEFT')->on('statvals.teams_id','=','teams.id')
@@ -913,7 +916,8 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 					'org_id' => $team['org_id'],
 					'org_name' => $team['org_name'],
 					'single_sport_id' => $team['single_sport_id'],
-					'state' => $team['state_name']
+					'state' => $team['state_name'],
+					'city' => $team['city_name']
 				);
 			}
 
