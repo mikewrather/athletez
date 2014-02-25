@@ -12,17 +12,7 @@ function(facade, utils, SportorgOrgList, SportorgSportModel) {
 
     ProfileOrgList = SportorgOrgList.extend({
         
-        url: function() {
-        	var self = this;
-            if (testpath)
-                return testpath + '/api/org/search/' + this.sport_id;
-                
-                /*self.sports_club is boolean bit ( 0 or 1 )
-                 0 : Get Schools
-                 1 : Get Clubs
-                 */
-            return '/api/org/search?sports_club=' + self.sports_club + '&states_id=' + self.states_id + '&org_name=' + self.org_name;
-        },
+
         
         fetchSuccess : function(collection, response) {
 			collection.reset();

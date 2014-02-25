@@ -88,11 +88,7 @@
 		public function get_search()
 		{
 			$retArr = null;
-
-			// Scaffolding Code For Array:
-			$objs = $this->obj->find_all();
-//			print_r($objs);
-			foreach($objs as $obj)
+			foreach($this->obj as $obj)
 			{
 				$retArr[] = $obj->getBasics($this->response_profile);
 			}

@@ -159,15 +159,49 @@ class Model_Sportorg_Team extends ORM
 		extract($args);
 
 		if(!$this->loaded()) return false;
-
-		//find matching org by name
-
 		$org = $this->getOrg();
-		$newOrg = $org->addOpponentOrg($name);
+		//
+		//find matching org by name
+		$orgs = ORM::factory('Sportorg_Org')
+			->where('name','=',$name)
+			->find_all();
 
+		$num_results = $orgs->count();
 
+		//if there are multiple matches return the matches to choose from
+		if($num_results > 1){
+			return $orgs;
+		}
 
-		return $this;
+		//extract team information to an array
+		$team_array = $this->as_array();
+
+		//set sports ID from org sport link before that gets unset
+		$team_array['sports_id'] = $team_array['org_sport_link']['sports_id'];
+
+		//strip all information that won't transfer to new team
+		unset($team_array['unique_ident']);
+		unset($team_array['mascot']);
+		unset($team_array['id']);
+		unset($team_array['org_sport_link']);
+		unset($team_array['org_sport_link_id']);
+
+		//if there are no matches create a new one
+		if($num_results == 0){
+			$newOrg = $org->addOpponentOrg($name);
+			$team_array['orgs_id'] = $newOrg->id;
+			$new_team = ORM::factory('Sportorg_Team');
+			$new_team = $new_team->addTeam($team_array);
+		}
+		//if there is one match add the team to that org
+		else if($num_results == 1){
+			$newOrg = $orgs[0];
+			$team_array['orgs_id'] = $newOrg->id;
+			$new_team = ORM::factory('Sportorg_Team');
+			$new_team = $new_team->addTeam($team_array);
+		}
+
+		if($new_team) return $new_team;
 	}
 
 	public function getSubject(){ return $this; }
@@ -341,7 +375,7 @@ class Model_Sportorg_Team extends ORM
 		$title .= " ".$this->complevel->name;
 		$title .= " ".$this->getSport()->name;
 		$title .= " ".$this->season->name;
-		$title .= " ".str_replace("20","'",$this->year);
+		$title .= " ".$this->year;
 		$title .= $this->unique_ident=='' ? '' : ' '.$this->unique_ident;
 		return $title;
 	}
@@ -414,9 +448,9 @@ class Model_Sportorg_Team extends ORM
 
 		//$this->join('users_teams_link')->on('users_teams_link.users_id', '=', 'users.id');
 		//$this->join('teams')->on('users_teams_link.teams_id', '=', 'teams.id');
-
-		$this->join('org_sport_link')->on('org_sport_link.id', '=', 'sportorg_team.org_sport_link_id');
-		$this->join('orgs')->on('orgs.id', '=', 'org_sport_link.orgs_id');
+		$team = ORM::factory('Sportorg_Team');
+		$team->join('org_sport_link')->on('org_sport_link.id', '=', 'sportorg_team.org_sport_link_id');
+		$team->join('orgs')->on('orgs.id', '=', 'org_sport_link.orgs_id');
 	//	$this->join('locations')->on('locations.id', '=', 'orgs.locations_id');
 
 		$enttype_id = Model_Site_Enttype::getMyEntTypeID($this);
@@ -429,97 +463,123 @@ class Model_Sportorg_Team extends ORM
 			->from('followers')
 			->where('subject_enttypes_id','=',$enttype_id)
 			->where('subject_id','=',DB::expr('`sportorg_team`.`id`'));
-		$this->select(array($team_votes,'num_votes'),array($followers,'num_followers'));
+		$team->select(array($team_votes,'num_votes'),array($followers,'num_followers'));
 
 		$classes_arr = array(
 			'Sportorg_Team' => 'sportorg_team',
 			'Sportorg_Orgsportlink' => 'org_sport_link',
 			'Sportorg_Org' => 'orgs',
 		);
-		if (isset($sports_id)){
-			$this->where('org_sport_link.sports_id', '=', $sports_id);
-		}
-
-		if (isset($orgs_id)){
-			$this->where('org_sport_link.orgs_id', '=', $orgs_id);
-		}
-
-		if (isset($complevels_id)){
-			$this->where('sportorg_team.complevels_id', '=', $complevels_id);
-		}
-
-		if (isset($year)){
-			$this->where('sportorg_team.year', '=', $year);
-		}
-
-		if (!isset($orderby)){
-			$this->order_by('orgs.name','ASC');
-		}else{
-			if (!isset($orderby) || $orderby == 'postTime')
-			{
-				$this->order_by('id', 'desc');
-			}
-			else if ($orderby == 'votes')
-			{
-				$this->order_by('num_votes', 'desc');
-			}
-			else if ($orderby == 'followers')
-			{
-				$this->order_by('num_followers', 'desc');
-			}
-			elseif($orderby=='random')
-			{
-				$this->order_by(DB::expr('RAND()'));
-			}
-		}
 
 		if (isset($searchtext))
 		{
-			$this->join('complevels')->on('complevels.id', '=', 'sportorg_team.complevels_id');
-			$this->join('sports')->on('sports.id', '=', 'org_sport_link.sports_id');
-			$this->join('seasons')->on('seasons.id', '=', 'sportorg_team.seasons_id');
+			$team->join('complevels')->on('complevels.id', '=', 'sportorg_team.complevels_id');
+			$team->join('sports')->on('sports.id', '=', 'org_sport_link.sports_id');
+			$team->join('seasons')->on('seasons.id', '=', 'sportorg_team.seasons_id');
 
 			$words = explode(' ',$searchtext);
-			$this->and_where_open();
+			$team->or_where_open();
+			$team->and_where_open();
 			foreach($words as $word)
 			{
-				$this->and_where_open();
-				$this->where('orgs.name', 'like', "%".$word."%");
-				$this->or_where('complevels.name', '=', $word);
-				$this->or_where('sportorg_team.year', 'like', $word.'%');
-				$this->or_where('sportorg_team.unique_ident', 'like',$word."%");
-				$this->or_where('sports.name', 'like', $word.'%');
-				$this->or_where('seasons.name', 'like', $word.'%');
-				$this->and_where_close();
+			//	echo $word;
+				$team->and_where_open();
+				$team->where('orgs.name', 'like', "%".$word."%");
+				$team->or_where('complevels.name', '=', $word);
+				$team->or_where('sportorg_team.year', 'like', $word.'%');
+				$team->or_where('sportorg_team.unique_ident', 'like',$word."%");
+				$team->or_where('sports.name', 'like', $word.'%');
+				$team->or_where('seasons.name', 'like', $word.'%');
+	//
+				$team->and_where_close();
 			}
-			$this->and_where_close();
+			$team->and_where_close();
+			$team->or_where(
+				DB::expr("CONCAT(`orgs`.`name`,' ',`complevels`.`name`,' ',`sports`.`name`,' ',`seasons`.`name`,' ',`sportorg_team`.`year`)"),
+			'like',$searchtext.'%');
+			$team->or_where_close();
 		}
 
+		if($cast_wide_net) {
+			$wide_net = clone $team;
+		//	print_r($wide_net->find_all());
+		}
+
+		if (isset($sports_id)){
+			$team->where('org_sport_link.sports_id', '=', $sports_id);
+		}
+
+		if (isset($orgs_id)){
+			$team->where('org_sport_link.orgs_id', '=', $orgs_id);
+		}
+
+		if (isset($complevels_id)){
+			$team->where('sportorg_team.complevels_id', '=', $complevels_id);
+		}
+
+		if (isset($year)){
+			$team->where('sportorg_team.year', '=', $year);
+		}
+
+		if (!isset($orderby)){
+			$team->order_by('orgs.name','ASC');
+		}else{
+			if (!isset($orderby) || $orderby == 'postTime')
+			{
+				$team->order_by('id', 'desc');
+			}
+			else if ($orderby == 'votes')
+			{
+				$team->order_by('num_votes', 'desc');
+			}
+			else if ($orderby == 'followers')
+			{
+				$team->order_by('num_followers', 'desc');
+			}
+			elseif($orderby=='random')
+			{
+				$team->order_by(DB::expr('RAND()'));
+			}
+		}
+
+
+
 		if (isset($cities_id) && $cities_id > 0){
-			$this->where('orgs.cities_id', '=', $cities_id);
+			$team->where('orgs.cities_id', '=', $cities_id);
 		}
 		if (isset($states_id) && $states_id > 0){
-			$this->where('orgs.states_id', '=', $states_id);
+			$team->where('orgs.states_id', '=', $states_id);
 		}
 
 		if (isset($limit))
 		{
-			$this->limit($limit);
+			$team->limit($limit);
 		}
-		else $this->limit(5);
+		else $team->limit(5);
 
 		if(isset($offset))
 		{
-			$this->offset($offset);
+			$team->offset($offset);
 		}
 
-		$search = ORM::_sql_exclude_deleted($classes_arr, $this);
+		$search = ORM::_sql_exclude_deleted($classes_arr, $team);
 
+		$result = $search->find_all();
+
+		if($cast_wide_net && $result->count() == 0)
+		{
+			$result = $wide_net
+				->limit(5)
+				->find_all();
+
+	//
+		}
+	//	print_r($result);
 	//	print_r($search->find_all());
 	//	die;
 
 	//	return false;
-		return $search;
+		return $result;
 	}
 	
 	public function getRoster($args = array())

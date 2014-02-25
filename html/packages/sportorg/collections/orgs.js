@@ -17,6 +17,25 @@ function(facade, collections, SportorgOrgModel, utils) {
 
         // Reference to this collection's model.
         model: SportorgOrgModel,
+
+	    url: function() {
+		    var self = this;
+
+		    /*self.sports_club is boolean bit ( 0 or 1 )
+		     0 : Get Schools
+		     1 : Get Clubs
+		     */
+		    var url = '/api/org/search?' +
+			    'sports_club=' + encodeURIComponent(self.sports_club) +
+			    '&states_id=' + encodeURIComponent(self.states_id) +
+			    '&org_name=' + encodeURIComponent(self.org_name);
+
+		    if(self.single_sport_id)
+		        url += "&single_sport_id=" + self.single_sport_id;
+
+		    return url;
+
+	    },
         
         // **Method:** `fetchSuccess` - resolve the deferred here in success
         fetchSuccess: function (collection, response) {

@@ -244,6 +244,11 @@
 				}
 			}
 
+			if($this->request->query('single_sport_id') != "")
+			{
+				$arguments['single_sport_id'] = $this->request->query('single_sport_id');
+			}
+
 			// states_id (REQUIRED)
 			// This will be necessary to narrow the list because there are so many organizations.
 

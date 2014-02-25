@@ -5,7 +5,8 @@
 
 define(["facade", "sportorg/models/team"], function(facade, SportsOrgModel) {
 
-	var Model, _ = facade._;
+	var Model, _ = facade._,
+		Backbone = facade.Backbone;
 
 	Model = SportsOrgModel.extend({
 
@@ -35,6 +36,8 @@ define(["facade", "sportorg/models/team"], function(facade, SportsOrgModel) {
 					}
 				}
 
+				console.log(payload);
+
 				temp = {
 					team_id : payload.id,
 					team_name : payload.team_name,
@@ -44,11 +47,15 @@ define(["facade", "sportorg/models/team"], function(facade, SportsOrgModel) {
 					sports_id : sport.id,
 					complevels_id : payload.complevels_id,
 					seasons_id : payload.seasons_id,
-					year : payload.year
+					year : payload.year,
+					states_id : payload.org_sport_link_obj.org.states_id,
+					sports_club : payload.org_sport_link_obj.org.sports_club,
+					single_sport_id : payload.org_sport_link_obj.org.single_sport_id
 				};
 			}
 			return temp;
-		}
+		},
+
 	});
 
 	return Model;
