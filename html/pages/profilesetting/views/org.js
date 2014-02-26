@@ -427,7 +427,10 @@ define(['require',
 				_self.$el.find(_self.controls.txtSchools).val(res.name);
 				_self.$el.find(_self.controls.txtSchools).attr("data-id", res.org_id);
 				_self.$el.find(_self.controls.txtStates).val(res.locationState.name);
-				
+
+				_self.$el.find(_self.controls.divSportsWrapper).css({
+					'background-color':'rgb(255, 223, 223)'
+				})
 				_self.states_id = "";
 				_self.orgs_id = "";
 				_self.states_id = res.locationState.id;
@@ -600,6 +603,7 @@ define(['require',
 			if(!sports_id) sports_id = sport;
 			
 			var data = _self.GetSeasonsData(_self.seasons, orgs_id, sports_id);
+			console.log(data);
 			var markup = Mustache.to_html(levelTemplate, {
 				levels : _self.compLevel,
 				Data : data,
@@ -725,14 +729,18 @@ define(['require',
 
 				$.when(positionModel.request).done(function() {
 					control.removeClass('active');
+					_self.updatePositionButtonNumber(teamId,false);
 				});
 
 			} else {//If the positions inactive add it on server
 				var positionModel = new PositionModel(payload);
 				positionModel.user_id = _self.user_id;
-				control.addClass('active');
 				positionModel.type = "save";
 				positionModel.save();
+				$.when(positionModel.request).done(function() {
+					control.addClass('active');
+					_self.updatePositionButtonNumber(teamId,true);
+				});
 			}
 		},
 
@@ -814,8 +822,11 @@ define(['require',
 						var model = teamsModel.toJSON();
 						if (model != null && model.payload != null || model.payload.id != null) {
 							$(event.target).attr('teamid', model.payload.id);
-							$(event.target).parent().find(_self.controls.btnOpenPositions).attr('teamid', model.payload.id).removeAttr('disabled');
-							//	_self.displayPositionPopup(event, model.payload.id);
+
+							console.log(model.payload.seasons_obj);
+
+							_self.insertPositionsButton($(event.target),model.payload.seasons_obj,model.payload.year,model.payload.id);
+							_self.displayPositionPopup(event, model.payload.id);
 						}
 					});
 				} else {
@@ -849,7 +860,7 @@ define(['require',
 					processData : true,
 					success : function() {
 						$(event.target).removeAttr('teamid');
-						$(event.target).parent().find(_self.controls.btnOpenPositions).removeAttr('teamid').attr('disabled','disabled');;
+						$(event.target).parent().find(_self.controls.btnOpenPositions).attr('disabled','disabled');
 					}
 				});
 
@@ -950,18 +961,10 @@ define(['require',
 								$(currDestinations[index]).find(_self.controls.divSeasons).fadeIn();
 
 								$.each(complevel.seasons, function(i, season) {
-									$(currDestinations[index]).find(".chkSeasons-" + season.seasons_id + "-" + season.year).attr('checked', 'checked').attr('teamid', season.team_id);
-									$(currDestinations[index]).find(".chkSeasons-" + season.seasons_id + "-" + season.year).parent().find(_self.controls.btnOpenPositions).attr('teamid', season.team_id);
 
-									var positionIds = "";
-									if (season.positions) {
-										$.each(season.positions, function(j, position) {
-											if (position) {
-												positionIds += position.id + ",";
-											}
-										});
-									}
-									$(currDestinations[index]).find(".chkSeasons-" + season.seasons_id + "-" + season.year).parent().find(_self.controls.btnOpenPositions).attr('positions', positionIds);
+									$(currDestinations[index]).find(".chkSeasons-" + season.seasons_id + "-" + season.year).attr('checked', 'checked').attr('teamid', season.team_id);
+
+									_self.insertPositionsButton($(currDestinations[index]).find(".chkSeasons-" + season.seasons_id + "-" + season.year),season);
 
 								});
 
@@ -976,6 +979,49 @@ define(['require',
 			}
 
 		},
+
+		insertPositionsButton: function(seasonChk,season,year,team_id){
+
+			console.log(season);
+
+			if(!season.positions) season.positions = [];
+			if(!season.seasons_id) season.seasons_id = season.season_id;
+			if(season.year) year = season.year;
+			if(season.team_id) team_id = season.team_id;
+
+			console.log(_self.controls.btnOpenPositions + '[teamid="'+ team_id + '"]',$(_self.controls.btnOpenPositions + '[teamid="'+ team_id + '"]'));
+			if($(seasonChk).parent().find(_self.controls.btnOpenPositions + '[teamid="'+ team_id + '"]').length)
+			{
+				$(seasonChk).parent().find(_self.controls.btnOpenPositions + '[teamid="'+ team_id + '"]').attr('disabled','disabled');
+			}
+			else
+			{
+				$(seasonChk).parent().append('<a href="javascript:void(0)" id="season-positions-' + season.seasons_id + '-' + year + '" class="btnOpenPositions btn" >Positions (' + season.positions.length + ')</a>');
+			}
+
+			$(seasonChk).parent().find(_self.controls.btnOpenPositions).attr('teamid', team_id);
+			$(seasonChk).parent().find(_self.controls.btnOpenPositions).attr('data-number-positions', season.positions.length);
+
+			var positionIds = "";
+			if (season.positions) {
+				$.each(season.positions, function(j, position) {
+					if (position) {
+						positionIds += position.id + ",";
+					}
+				});
+			}
+			$(seasonChk).parent().find(_self.controls.btnOpenPositions).attr('positions', positionIds);
+
+		},
+
+		updatePositionButtonNumber: function(teamid,addTo){
+			var $posBtn = $(_self.controls.btnOpenPositions + '[teamid="'+ teamid + '"]'),
+				oldNumber = $posBtn.data('number-positions'),
+				newNumber = addTo ? oldNumber+1 : oldNumber-1;
+			$posBtn.data('number-positions', newNumber)
+				.html('Positions (' + newNumber + ')');
+		},
+
 		ClosePositions: function(event){
 			var _self = this;
 			if(_self.clickedPositionTarget){
