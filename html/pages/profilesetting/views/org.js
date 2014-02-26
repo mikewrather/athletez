@@ -826,7 +826,7 @@ define(['require',
 							console.log(model.payload.seasons_obj);
 
 							_self.insertPositionsButton($(event.target),model.payload.seasons_obj,model.payload.year,model.payload.id);
-							_self.displayPositionPopup(event, model.payload.id);
+						//	_self.displayPositionPopup(event, model.payload.id);
 						}
 					});
 				} else {
@@ -992,7 +992,7 @@ define(['require',
 			console.log(_self.controls.btnOpenPositions + '[teamid="'+ team_id + '"]',$(_self.controls.btnOpenPositions + '[teamid="'+ team_id + '"]'));
 			if($(seasonChk).parent().find(_self.controls.btnOpenPositions + '[teamid="'+ team_id + '"]').length)
 			{
-				$(seasonChk).parent().find(_self.controls.btnOpenPositions + '[teamid="'+ team_id + '"]').attr('disabled','disabled');
+				$(seasonChk).parent().find(_self.controls.btnOpenPositions + '[teamid="'+ team_id + '"]').removeAttr('disabled','disabled');
 			}
 			else
 			{
