@@ -1567,7 +1567,8 @@ div.game-info span.game-header{
 }
 .container_batch_tag .dropdown {
 	height: 30px;
-	margin: 5px 0
+	margin: 5px 0;
+    min-width:250px;
 }
 
 .image-drop-area .drop-text {
