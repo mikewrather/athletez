@@ -2160,9 +2160,16 @@
 				$arguments["cities_id"] = (int)trim($this->put('cities_id'));
 			}
 
-			if((int)trim($this->put('height_in')) > 0)
+			if(trim($this->put('height_in'))!="")
 			{
-				$arguments["height_in"] = (int)trim($this->put('height_in'));
+
+				$arguments["height_in"] = trim($this->put('height_in'));
+
+				if(strpos($arguments['height_in'],"'")){
+					$height_arr = explode("'",$arguments['height_in']);
+					$height = $height_arr[0] * 12 + (int)$height_arr[1];
+					$arguments['height_in'] = $height;
+				}
 			}
 
 			if((int)trim($this->put('weight_lb')) > 0)
