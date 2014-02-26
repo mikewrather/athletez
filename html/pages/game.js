@@ -290,6 +290,9 @@ define([
 					target: ".media-add-icons-h",
 					heading: "PHOTO/VIDEO",
 					template: AddMediaViewTemplate,
+					page_base:'game',
+					ent_id:self.id,
+					sports_id: $(".sport-h").data("id"),
 					controllerObject: self,
 					model: self.addmedia,
 					message: {"photo": "Got Pics From this Game?", "video": "Got Videos From this Game?"}
