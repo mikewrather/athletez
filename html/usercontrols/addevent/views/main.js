@@ -212,6 +212,7 @@ define(['require', 'text!usercontrols/addevent/templates/layout.html', 'facade',
 					type : 'AutoComplete',
 					label: "Event Name",
 					form_values: {
+						post_to_server:true,
 						keyNameInPayload: 'event_name',
 						subLabelInPayload: 'full_date',
 						serverKey: 'event_name',
@@ -458,7 +459,11 @@ define(['require', 'text!usercontrols/addevent/templates/layout.html', 'facade',
 
 							var formData = _self.formValues.getFormValues(),
 								self = _self;
-							console.log(formData);
+							console.log(formData,self.$el.find('input[name="game_search"]'));
+
+							if(formData.game_name === "" || formData.game_name === 0 || formData.game_name === "0"){
+								formData.game_name = self.$el.find('input[name="game_search"]').val();
+							}
 
 							if(formData.games_id > 0){
 								payload = {
@@ -481,6 +486,8 @@ define(['require', 'text!usercontrols/addevent/templates/layout.html', 'facade',
 								});
 
 							} else {
+
+								console.log
 								var payload = {
 									game_datetime : formData.game_datetime,
 									game_location : formData['locations_id'],
@@ -503,8 +510,28 @@ define(['require', 'text!usercontrols/addevent/templates/layout.html', 'facade',
 
 
 								$.when(gameSaveModel.request).done(function(response) {
-									routing.trigger(self.channel, response);
+
+									var usl = new UserGameLinkModel();
+
+									usl.save({
+										games_id : response.payload.id,
+										sports_id : self.sports_id,
+										users_id : self.user_id
+									},{
+										success:function(model,res){
+											console.log(self.channel);
+											routing.trigger(self.channel, response);
+										},
+										error:function(model,res){
+											alert("fail");
+											console.log(res);
+											//	var response = JSON.parse(res.responseText);
+											//	var errorArray = response.exec_data.error_array;
+											//	_self.formValues.showServersErrors(errorArray);
+										}
+									});
 								});
+
 							}
 
 

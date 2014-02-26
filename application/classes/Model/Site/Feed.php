@@ -207,7 +207,6 @@ class Model_Site_Feed extends ORM
 	}
 
 	public function processFeed(){
-		echo "called";
 
 		$feed = $this->where('processed','=',0)->find_all();
 		foreach($feed as $item)
