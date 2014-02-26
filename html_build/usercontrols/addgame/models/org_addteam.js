@@ -1,0 +1,1 @@
+define(["require","facade","usercontrols/addgame/models/team"],function(e){var t,n=e("facade"),r=n._,i=e("usercontrols/addgame/models/team");return t=i.extend({url:function(){return"/api/team/add"}}),t});
