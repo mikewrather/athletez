@@ -33,7 +33,7 @@ class Model_Site_Feed extends ORM
 
 		$this->_feed_object = Ent::eFact($this->enttypes_id,$this->ent_id);
 
-		if($this->_feed_object->loaded()) return $this->_feed_object;
+		if(is_object($this->_feed_object) && $this->_feed_object->loaded()) return $this->_feed_object;
 	}
 
 	public function setUser($users_id)
@@ -207,16 +207,23 @@ class Model_Site_Feed extends ORM
 	}
 
 	public function processFeed(){
+		echo "called";
+
 		$feed = $this->where('processed','=',0)->find_all();
 		foreach($feed as $item)
 		{
-			$obj = $this->getFeedObject($item);
-			if(is_object($obj) && is_subclass_of($obj,'ORM') && $obj->loaded()) Model_User_Followers::processFeedItem($obj,$item);
-			else
-			{
-				$item->processed = 1;
-				@$item->save();
+			try{
+				$obj = $this->getFeedObject($item);
+				if(is_object($obj) && is_subclass_of($obj,'ORM') && $obj->loaded()) Model_User_Followers::processFeedItem($obj,$item);
+				else
+				{
+					$item->processed = 1;
+					@$item->save();
+				}
+			} catch (Exception $e){
+				print_r(debug_backtrace());
 			}
+
 		}
 		$queue = ORM::factory('Email_Queue');
 		$queue->processQueue();

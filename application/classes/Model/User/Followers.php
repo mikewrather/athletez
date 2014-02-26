@@ -199,22 +199,26 @@ class Model_User_Followers extends ORM
 			$type='media';
 		}
 
-		$subject = $obj->getSubject();
-		$author = $feed->getAuthor();
+		try{
 
-		if(is_array($subject))
-		{
-			foreach($subject as $this_subject)
+			$subject = $obj->getSubject();
+			$author = $feed->getAuthor();
+
+			if(is_array($subject))
 			{
-				self::loopThroughFollowers($this_subject,$author,$obj,$feed,$type);
+				foreach($subject as $this_subject)
+				{
+					self::loopThroughFollowers($this_subject,$author,$obj,$feed,$type);
+				}
 			}
-		}
-		else{
-			self::loopThroughFollowers($subject,$author,$obj,$feed,$type);
-		}
+			else{
+				self::loopThroughFollowers($subject,$author,$obj,$feed,$type);
+			}
 
-		$feed->processed = 1;
-		@$feed->save();
+			$feed->processed = 1;
+			@$feed->save();
+		} catch (Exception $e){ print_r($e); }
+
 	}
 
 	public function addFollower(Model_User_Base $user, ORM $object,$visible=false,$reason=false)
