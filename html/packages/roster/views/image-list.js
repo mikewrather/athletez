@@ -10,6 +10,7 @@ function(facade,  utils,   BaseImageListView) {
 
 	    imagetype: 'large_thumb',
 	    tagName: 'ul',
+	    currentSection: "rosters",
         setupAddView: function() {
             
         }

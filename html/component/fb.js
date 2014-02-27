@@ -125,8 +125,6 @@ define(['require', 'facade', 'views', 'utils', 'vendor','facebook'], function(re
 			if(FB && typeof(FB) != "undefined") {
 				FB.api('/me/friends?fields=id,first_name', function(response) {
 
-				    console.error(response);
-
 				    //var randomFriend = Math.floor(getRandom(0, response.data.length));
 				    //gFriendID = response.data[randomFriend].id;
 				    //gSmashUIText.innerHTML = "Smash " + response.data[randomFriend].first_name + " !";

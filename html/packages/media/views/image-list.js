@@ -1,7 +1,7 @@
 // The Image List
 // --------------
 
-define(['facade','views', 'utils', 'media/views/image-item', 'media/views/image-board', 'media/views/add-image','text!media/templates/image-list.html', 'votes/models/follow'], 
+define(['facade','views', 'utils', 'media/views/image-item', 'media/views/image-board', 'media/views/add-image','text!media/templates/image-list.html', 'votes/models/follow', 'common/views/add-description'], 
 function(facade,  views,   utils,   ImageItemView,            ImageBoardView,            AddImageView, templateList) {
 
     var ImageListView, 
@@ -11,6 +11,7 @@ function(facade,  views,   utils,   ImageItemView,            ImageBoardView,   
 	    vendor = require("vendor"),
 	    followModel = require('votes/models/follow'),
         Channel = utils.lib.Channel,
+        AddDescription = require('common/views/add-description'),
         CollectionView = views.CollectionView,
         SectionView = views.SectionView,
 	    Mustache = vendor.Mustache;
@@ -29,6 +30,7 @@ function(facade,  views,   utils,   ImageItemView,            ImageBoardView,   
         _className: "image",
 		page: 0,
 		page_limit: 7,
+		currentSection: "media",
 		listView : ".image-list",
         // Store constructor for the child views
         _view: ImageItemView,
@@ -134,6 +136,8 @@ function(facade,  views,   utils,   ImageItemView,            ImageBoardView,   
         	else
         		this.name = "image list";
         	
+          this.teamName = options.teamName;	
+        	
 	       this.pageName = (options.pageName)?options.pageName:"profile";
            if(options.collecton) this.collection = options.collection;
         	
@@ -158,6 +162,19 @@ function(facade,  views,   utils,   ImageItemView,            ImageBoardView,   
             var len = _self.collection.toJSON().length;
 	        	if(!len || len < _self.collection.limit) {
 	        		_self.$el.find('.see-more-h').hide();
+	        }
+	        
+	        // show empty box
+	        if(!len) {
+	        	
+	        	var model = facade.Backbone.Model.extend({});
+	        	new AddDescription({
+	        		page: this.currentSection,
+	        		target: this.$el,
+	        		model: new model,
+	        		teamName: this.teamName,
+	        		name: "view - " + Math.random()
+	        	});
 	        }
             
             _.bindAll(this);
@@ -257,13 +274,6 @@ function(facade,  views,   utils,   ImageItemView,            ImageBoardView,   
 		},
 		
 		addButtons: function() {
-			/*var _self = this;
-            setTimeout(function() {
-	            if(_self.triggerItem && !$("#add-icons").length) {
-	            	_self.$el.find(_self.listView).prepend('<li id="add-icons"></li>');
-	            	routing.trigger(_self.triggerItem, "#add-icons");
-            	}
-            }, 0);*/
 		},
 
         setupBoardView: function() {

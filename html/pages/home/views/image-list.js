@@ -34,6 +34,7 @@ define(
 					this.name = options.name || this.name;
 					this.media_id = options.media_id;
 					this.pageName = options.pageName;
+					this.viewName = options.viewName;
 					this.userId = options.user_id;
 					CollectionView.prototype.initialize.call(this, options);
 					if (!this.collection) {
@@ -54,7 +55,9 @@ define(
 						//	if(allData) {
 						//		for(var i in allData) {
 						//			if(_self.media_id == allData[i].get("payload").media_id) {
-						routing.trigger('photo-player-init', undefined, _self.collection, _self.collection.id, undefined, _self.pageName, undefined, _self.media_id);
+						if(_self.viewName == "search-result") {	
+							routing.trigger('photo-player-init', undefined, _self.collection, _self.collection.id, undefined, _self.pageName, undefined, _self.media_id);
+						}
 						//				break;
 						//			}
 						//		}

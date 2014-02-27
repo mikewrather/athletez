@@ -16,7 +16,6 @@ function(require, commentFormTemplate,    ProfileCommentFormModel,        BaseCo
 
     CommentOnFormView = BaseView.extend({
 	    initialize: function (options) {
-	    	console.error(options);
 	    	this.$el.unbind();
              _.bindAll(this);
              this.setOptions();

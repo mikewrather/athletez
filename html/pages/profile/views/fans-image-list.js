@@ -7,6 +7,7 @@ define(['facade', 'utils', 'media/views/image-list', 'component/fb', 'votes/mode
 	 followModel = require('votes/models/follow');
 	FansImageListView = BaseImageListView.extend({
 		imagetype : 'large_thumb',
+		currentSection: "fans",
 		setupAddView : function() {
 		},
 
@@ -87,6 +88,9 @@ define(['facade', 'utils', 'media/views/image-list', 'component/fb', 'votes/mode
         },
 
 		addButtons : function() {
+			
+			
+			
 			/*var _self = this, name = (_self.controllerObject.basics.get("payload") && _self.controllerObject.basics.get("payload").first_name)?_self.controllerObject.basics.get("payload").first_name:_self.controllerObject.basics.get("payload").team_name;
 			setTimeout(function() {
 				if (!$("#add-fans-icons").length) {

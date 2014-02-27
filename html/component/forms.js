@@ -84,7 +84,6 @@ define(['require', 'facade', 'views', 'utils', 'vendor'], function(require) {
 				if(editor && editor.objectValuesToUpdate) {
 					for(var i in editor.objectValuesToUpdate) {
 						var ob = form.fields[editor.objectValuesToUpdate[i]].editor;
-						console.error(ob);
 						ob.setValue("", "");
 					}
 				}

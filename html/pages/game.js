@@ -32,6 +32,7 @@ define([
 	"roster/views/roster",
 	"common/views/add-media-buttons",
     "text!common/templates/add-media-buttons.html",
+    "text!common/templates/add-participants-buttons.html",
 	"game/views/participants-list-main"
 
 ], function (require, pageLayoutTemplate, voteView) {
@@ -62,7 +63,7 @@ define([
 		
 		AddMediaView = require("common/views/add-media-buttons"),
 		AddMediaViewTemplate = require("text!common/templates/add-media-buttons.html"),
- 
+ 		AddParticipateViewTemplate = require("text!common/templates/add-participants-buttons.html"),
 		
 		ParticipantsListView = require("game/views/participants-list-main"),
 
@@ -132,11 +133,11 @@ define([
 				controller.commentson.fetch();
 					
 				// check if there is no team then intialize the participants view
+				console.error(controller.basics.get("payload"));
 				var basicPayload = controller.basics.get("payload"),
 					teamsCount = (!_.isUndefined(basicPayload.teams) && basicPayload.teams)?basicPayload.teams.length:0;
 
 				controller.teamsCount = teamsCount;
-				
 				if(!teamsCount) {
 					// get the participants
 					controller.participants = new ParticipantsList();
@@ -182,7 +183,8 @@ define([
 				team_name: name,
 				controllerObject: this,
 				name: "roster images" + Math.random() * Math.random(),
-				destination: "#roster_wrap_"+this.rosterViewsCount
+				destination: "#roster_wrap_"+this.rosterViewsCount,
+				teamName: this.basics.get("payload").game_name
 			});
 
 			this.scheme.push(rosterView);
@@ -232,6 +234,16 @@ define([
 		},
 				
 		setupParticipantsListView: function() {
+			
+			var self = this, addMedia = new AddMediaView({
+					target: ".participants-add-icons-h",
+					heading: "PARTICIPANTS",
+					template: AddParticipateViewTemplate,
+					controllerObject: self,
+					message: {"photo": "Got Pics From this Game?", "video": "Got Videos From this Game?"}
+				});
+			
+			
 			this.participantsView = new ParticipantsListView({
 				collection: this.participants,
 				name: "participants view",
@@ -239,6 +251,7 @@ define([
 				controllerObject: this, 
 				sport_id: this.basics.get("payload").sports_id,
 				destination: "#participants_div",
+				teamName: this.basics.get("payload").game_name
 			});
 			this.scheme.push(this.participantsView);
 			this.layout.render();
@@ -253,7 +266,8 @@ define([
 			teamRosterListView = new ProfileImageListView({
 				collection: this.teamrosters,
 				name: "roster images",
-				destination: "#roster_wrap_"+this.rosterViewsCount
+				destination: "#roster_wrap_"+this.rosterViewsCount,
+				teamName: this.basics.get("payload").game_name
 			});
 			
 			this.scheme.push(teamRosterListView);
@@ -266,7 +280,8 @@ define([
 			teamRosterListView = new ProfileImageListView({
 				collection: this.teamrostersSecond,
 				name: "roster roster second images",
-				destination: "#roster-second-wrap"
+				destination: "#roster-second-wrap",
+				teamName: this.basics.get("payload").game_name
 			});
 			this.scheme.push(teamRosterListView);
 			this.layout.render();
@@ -315,7 +330,8 @@ define([
 				media_id: this.media_id,
 				//user_id: this.userId,
 				pageName: "game",
-				triggerItem: 'setup-add-icons'
+				triggerItem: 'setup-add-icons',
+				teamName: this.basics.get("payload").game_name
 			});
 			
 			this.imageListView = imageListView;

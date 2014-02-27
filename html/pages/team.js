@@ -238,7 +238,6 @@ define([
 		 		this.deleteOldView(this.oldRosterViewName);
 		 	
 		 	this.oldRosterViewName = "roster images" + Math.random();
-		 	
         	var rosterView, model = facade.Backbone.Collection.extend({});
 			rosterView = new RosterView({
 				model: new model(),
@@ -247,7 +246,8 @@ define([
 				team_name: name,
 				controllerObject: this,
 				name: this.oldRosterViewName,
-				destination: "#roster-wrap"
+				destination: "#roster-wrap",
+				teamName: this.basics.get("payload").team_name
 			});
 
 			this.scheme.push(rosterView);
@@ -344,7 +344,8 @@ define([
 				pageName: "team",
 				target_id: this.id,
 				data: this.basics.toJSON(),
-				name: "fansView"
+				name: "fansView",
+				teamName: this.addmedia.teamName
 			});
 			this.scheme.push(this.fansListView);
 			this.layout.render();
@@ -473,7 +474,8 @@ define([
 					controller: this,
 					collection: this.games,
 					destination: "#games_div",
-					teamRecords: true
+					teamRecords: true,
+					teamName: this.addmedia.teamName
 				});
 				this.scheme.push(this.gamesView);
 				this.layout.render();
@@ -561,7 +563,8 @@ define([
                 user_id : this.userId,
                 media_id: this.media_id,
                 pageName: "team",
-                triggerItem: 'setup-add-icons'
+                triggerItem: 'setup-add-icons',
+                teamName: self.addmedia.teamName
             });
             
             this.scheme.push(this.imageListView);

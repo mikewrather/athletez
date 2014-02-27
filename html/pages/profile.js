@@ -297,21 +297,7 @@ define([
 			},
 
 			setupAddMediaView: function (target) {
-				/*var addMediaView;
-				this.addmedia.sportName = $(".selected-sport-h").data("name");
-				this.addmedia.firstName = this.basics.get("payload").first_name;
-				this.addmedia.setData();
-				addMediaView = new ProfileAddMediaView({
-					model: this.addmedia,
-					name: "Add Media",
-					destination: target,
-					"userid": this.id
-				});
-				for (var x in this.scheme) {
-					if (this.scheme[x].id == "add-media") delete this.scheme[x];
-				}
-				this.scheme.push(addMediaView);
-				this.layout.render();*/
+				
 			},
 			
 			getOrgData: function () {
@@ -340,8 +326,6 @@ define([
 			setUpUserSportView: function() {
 				var _self = this;
 				// set up add media and heading 
-
-				
 				this.orgViewname = "sport";
 				this.orgs = new UserGames();
             	this.orgs.userId = _self.id;
@@ -358,7 +342,8 @@ define([
 						collection: _self.orgs,
 						controller: _self,
 						destination: "#games_div",
-						eventPage: $(".selected-sport-h").data("name")
+						eventPage: $(".selected-sport-h").data("name"),
+						teamName: this.basics.get("payload").first_name
 					});
 					_self.scheme.push(_self.orgListView);
 					_self.layout.render();
@@ -373,13 +358,6 @@ define([
 					if (~position) this.scheme.splice(position, 1);
 				}
 
-
-		/*		var addGames = new AddMediaView({
-					target: ".games-add-icons-h",
-					heading: "GAMES",
-					template: AddGamesViewTemplate
-				});
-		*/
 				this.orgViewname = "org";
 				this.orgListView = new ProfileOrgListView({
 					collection: this.orgs,
@@ -468,7 +446,8 @@ define([
 					user_id: this.id,
 					name: "images View 2",
 					pageName: "profile",
-					 triggerItem: 'setup-add-icons'
+					 triggerItem: 'setup-add-icons',
+					 teamName: this.basics.get("payload").first_name
 				});
 				this.scheme.push(this.imageListView);
 				this.layout.render();
@@ -514,7 +493,8 @@ define([
 					controllerObject: this,
 					pageName: "profile",
 					data: this.basics.toJSON(),
-					name: "fansView"
+					name: "fansView",
+					teamName: this.basics.get("payload").first_name
 				});
 				this.scheme.push(this.fansListView);
 				this.layout.render();

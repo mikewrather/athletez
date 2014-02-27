@@ -53,7 +53,6 @@ function(facade,  views,   utils,   ImageItemView, templateList) {
         		this.name = "image list";
         	
         	this.renderTemplate();
-        	console.error(options);
         	this.FBoptions = options.FBOptions;
 	       this.pageName = (options.pageName)?options.pageName:"profile";
         	if(options.collecton) this.collection = options.collection;

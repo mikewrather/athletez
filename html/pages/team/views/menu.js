@@ -127,7 +127,6 @@ function(require, headerTemplate, selectSportTemplate) {
 					selectedValue: self.model.get("payload").complevels_obj.complevel_id,
 					targetView: self,
 					callback: function(result) {
-						console.error("comp level call");
 						self.getTeam();
 					}
 				});
@@ -135,7 +134,6 @@ function(require, headerTemplate, selectSportTemplate) {
         },
         
         initSportList: function () {       	
-        	console.error(this.model.toJSON());        	        	
             var self = this;
             this.sports = new TeamSportList();
             this.sports.id = this.model.get("payload").org_sport_link_obj.orgs_id;

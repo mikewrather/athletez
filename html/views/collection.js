@@ -45,8 +45,6 @@ define(['facade','views/base','utils'], function (facade, BaseView, utils) {
             this._decorator = this.options.decorator || this._decorator;
             this.mainView = options.mainView || this._mainView;
             
-            console.error(this.mainView);
-            
             this.FBoptions = this.FBoptions;
             this._id = this.options.id || this._id;
             this._temp = this.options._template || this._template;
