@@ -77,7 +77,7 @@ define(['require',
 					break;
 				}
 			}
-			
+			if(!this.index) this.index = 0;
 			SectionView.prototype.initialize.call(this, options);
 
 	//		if(this.index === undefined) {
