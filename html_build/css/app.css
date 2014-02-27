@@ -1331,7 +1331,7 @@ div.game-info span.game-header{
 #add-media li a #addVideo, #add-icons li a#addVideo{
     background-color: #C43737;
 }
-.add-to-roster-h, .add-to-event {
+.add-to-roster-h {
 	background-image: url('http://athletez.s3.amazonaws.com/resources/img/actions/addtoteam.png');
 	background-size: cover;
 	min-height: 110px;
@@ -1477,9 +1477,6 @@ div[data-error]:empty{
 }
 .large-dropdown-field.dropdown-wrapper {
 	width: 100%
-}
-a.add-to-event {
-	display: none;
 }
 .container_batch_tag .section-link_h{
     width: 100%;
@@ -1781,6 +1778,18 @@ li.sport .teamlist-header, .stat-val-outer {
 .mt20 {
 	margin-top: 20px;
 }
+.add-participants {
+		background: url(images/icons/add-icons.png) no-repeat;
+	display: inline-block;
+	width: 70px;
+	height: 36px;
+}
+.add-to-participants {
+	background-position: -162px -53px;
+}
+.invite-participants {
+	background-position: 2px 2px;	
+}
 .add-icon {
 	background: url(images/icons/add-icons.png) no-repeat;
 	display: inline-block;
@@ -1808,4 +1817,70 @@ li.sport .teamlist-header, .stat-val-outer {
 }
 .add-to-roster-list {
 		background-position: -83px -100px;
+}
+.add-big-list-container {
+	border: 2px #717171 dotted;
+	background: #f8f8f8;
+	color: #b9b9b9;	
+	margin: 10px 25px;
+}
+.border-wrapper {
+	padding: 25px 20px;
+	
+	
+	min-height: 150px;
+}
+.left-text {
+	float: left;
+	width: 275px;
+}
+.right-secton {
+	float: right !important;
+	display: inline-block;
+	width: 400px;
+}
+.right-secton > div {
+	display: inline-block;
+	margin-bottom: 20px;
+}
+.right-secton span {
+	position: relative;
+top: 10px;
+left: 4px;
+}
+.right-secton a {
+	float: left;
+}
+.add-icon-large {
+	background: url(images/icons/add-icons-large.png) no-repeat;
+	display: inline-block;
+	width: 125px;
+height: 63px;
+}
+.fans .btn1 {
+	background-position: -6px -231px;
+}
+.fans .btn2 {
+	background-position: -137px 0;
+}
+.media .btn1 {
+	background-position: 0 0;
+}
+.media .btn2 {
+	background-position: 0px -80px;
+}
+.games .btn1 {
+	background-position: -6px -158px;
+}
+.roster .btn1 {
+	background-position: -137px -78px;
+}
+.roster .btn2 {
+	background-position: -137px 0;
+}
+.participants .btn1 {
+    background-position: -137px -158px;
+}
+.participants .btn2 {
+    background-position: -137px 0;
 }
