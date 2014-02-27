@@ -504,8 +504,21 @@ define([
 				this.scheme.push(this.fansListView);
 				this.layout.render();
 			},
-			
 
+			reloadImages: function() {
+				var _self = this, position;
+				if (this.imageListView) {
+					$(this.imageListView.destination).html('');
+					position = $.inArray(this.imageListView, this.scheme);
+					if (~position) this.scheme.splice(position, 1);
+				}
+
+				_self.images.fetch();
+				$.when(_self.images.request).done(function() {
+					_self.setupImageListView();
+				});
+			},
+			
 			updateImages: function (data) {
 				//create new image model to hold newly uploaded image
 				var newImageModel = new MediaImageModel();
@@ -517,6 +530,12 @@ define([
 				//add the model to the view's collection
 				this.imageListView.collection.add(newImageModel);
 				if(this.imageListView.allData) this.imageListView.allData.push(newImageModel.toJSON());
+
+				console.log(this.imageListView.collection);
+
+				if(this.imageListView.collection.length == 1){
+					this.reloadImages();
+				}
 			},
 
 			setupCommentOfListView: function () {

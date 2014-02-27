@@ -88,6 +88,7 @@ define(['facade',
 			var markup = Mustache.to_html(this.template, {
 				target : this.target_id
 			});
+			console.log(markup)
 			this.$el.html(markup);
 			return this;
 		},
@@ -272,13 +273,21 @@ define(['facade',
 									newAddModel.processItemFromResponse(payload.payload.usl.user);
 									routing.trigger('common-popup-close');
 									_self.$el.find(".add-to-event").addClass("link-disabled");
-									if (!is_update) _self.collection.add(newAddModel);
+									if (!is_update) {
+										_self.collection.add(newAddModel);
+										if(_self.collection.length==1){
+											if(_self.controllerObject && _self.controllerObject.reloadParticipants && _.isFunction(_self.controllerObject.reloadParticipants)){
+												_self.controllerObject.reloadParticipants();
+											}
+										}
+									}
 								});
 
 								$.when(participants.request).fail(function(res) {
 									var response = JSON.parse(res.responseText);
 									var errorArray = response.exec_data.error_array;
 									_self.formValues.showServersErrors(errorArray);
+
 								});
 							}
 						}

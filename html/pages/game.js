@@ -233,7 +233,22 @@ define([
 				controller.setupParticipantsListView();
 			});
 		},
-				
+
+
+		reloadParticipants: function() {
+			var _self = this, position;
+			if (this.participantsView) {
+				$(this.participantsView.destination).html('');
+				position = $.inArray(this.participantsView, this.scheme);
+				if (~position) this.scheme.splice(position, 1);
+			}
+
+			_self.participants.fetch();
+			$.when(_self.participants.request).done(function() {
+				_self.setupParticipantsListView();
+			});
+		},
+		
 		setupParticipantsListView: function() {
 
 			var self = this, addMedia = new AddMediaView({
@@ -350,6 +365,20 @@ define([
 			this.layout.render();
 		},
 
+		reloadImages: function() {
+			var _self = this, position;
+			if (this.imageListView) {
+				$(this.imageListView.destination).html('');
+				position = $.inArray(this.imageListView, this.scheme);
+				if (~position) this.scheme.splice(position, 1);
+			}
+
+			_self.images.fetch();
+			$.when(_self.images.request).done(function() {
+				_self.setupImageListView();
+			});
+		},
+
 		updateImages: function (data) {
 			//create new image model to hold newly uploaded image
 			var newImageModel = new MediaImageModel();
@@ -364,6 +393,10 @@ define([
 			//add the model to the view's collection
 			this.imageListView.collection.add(newImageModel);
 			if(this.imageListView.allData) this.imageListView.allData.push(newImageModel.toJSON());
+
+			if(this.imageListView.collection.length == 1){
+				this.reloadImages();
+			}
 		},
 
 		setupCommentListView: function () {

@@ -576,7 +576,20 @@ define([
             this.layout.render();
             
         },
-        
+
+	    reloadImages: function() {
+		    var _self = this, position;
+		    if (this.imageListView) {
+			    $(this.imageListView.destination).html('');
+			    position = $.inArray(this.imageListView, this.scheme);
+			    if (~position) this.scheme.splice(position, 1);
+		    }
+
+		    _self.images.fetch();
+		    $.when(_self.images.request).done(function() {
+			    _self.setupImages();
+		    });
+	    },
         
         updateImages: function (data) {
 				//create new image model to hold newly uploaded image
@@ -592,6 +605,10 @@ define([
 				//add the model to the view's collection
 				this.imageListView.collection.add(newImageModel);
 				if(this.imageListView.allData) this.imageListView.allData.push(newImageModel.toJSON());
+
+		        if(this.imageListView.collection.length == 1){
+			        this.reloadImages();
+		        }
 			},
         
         setupComments: function() {
