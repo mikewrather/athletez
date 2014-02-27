@@ -234,6 +234,7 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
 			//setTimeout(function(){
 			//var landing = new landingView({userId: fbId});
 			//},2000);
+
 			var self = this;
 	    	this.cancelAjaxRequests();
 	    	this.loadStyles();
@@ -241,7 +242,10 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
 	    	function initFBAccept(userId) {
 	    		$("body").addClass("fbaccept");
 				var title = "Athletez - We Are Athletes";
-	    		var landing = new landingView({userId: fbId});
+			    setTimeout(function(){
+				    var landing = new landingView({userId: fbId});
+			    },500);
+
 	    		routing.showLandingPage = false;
 			    if(!fbId && $('div.register-wrapper-h').length == 0) {
 				    $('body header').after('<div class="register-wrapper-h"></div>');

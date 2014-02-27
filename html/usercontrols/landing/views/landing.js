@@ -45,6 +45,8 @@ define(['require',
 		/*initialize gets called by default when constructor is initialized*/
 		initialize : function(options) {
 
+			console.log(options);
+
 			Channel('load:css').publish(this.cssArr);
 			var _self = this;
 			_self.data = {};
@@ -66,9 +68,11 @@ define(['require',
 		getUserData: function() {
 			var _self = this, model = new UserModel();
 			model.fbUserId = this.userId;
+			console.log(model);
 			model.fetch();
 			$.when(model.request).done(function() {
 				var mpay = model.get('payload');
+				console.log(mpay);
 				var parser = new entParser({
 					'mpay':mpay.invite_to_obj,
 					display_width:1920,
@@ -110,12 +114,12 @@ define(['require',
 		//		var rand = Math.ceil(Math.random()*100);
 		//		var bgs = ['1.jpg','2.jpg','3.jpg','4.jpg','5.jpg','6.jpg','7.jpg','8.jpg'];
 				options.background_image = "http://athletez.s3.amazonaws.com/resources/img/landing/7.jpg";// + bgs[rand % bgs.length];
-				this.$el.css({
-					'background':'url('+ options.background_image + ') no-repeat',
-					'background-size':'cover'
-				});
-			}
 
+			}
+			this.$el.css({
+				'background':'url('+ options.background_image + ') no-repeat',
+				'background-size':'cover'
+			});
 		//	console.error(options);
 		//	routing.trigger('common-popup-open', options);
 
