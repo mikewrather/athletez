@@ -127,6 +127,8 @@ function(facade,  views,   utils,   ImageItemView,            ImageBoardView,   
 	    },
 
         initialize: function(options) {
+
+	        console.log("IMAGE LIST",options);
         	for(var i in options) {
         		this[i] = options[i]; 
         	}

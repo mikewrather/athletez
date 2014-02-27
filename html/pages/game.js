@@ -141,9 +141,10 @@ define([
 				if(!teamsCount) {
 					// get the participants
 					controller.participants = new ParticipantsList();
-					controller.participants.id = controller.id;
+
+				 	controller.participants.id = controller.id;
 					controller.participants.targetElement = "#roster-wrap";
-					controller.participants.fetch();
+				 	controller.participants.fetch();
 					$.when(controller.participants.request).done(function () {
 						controller.setupParticipantsListView();
 					});
@@ -234,8 +235,6 @@ define([
 		},
 				
 		setupParticipantsListView: function() {
-
-			console.log("participant add buttons", AddParticipateViewTemplate);
 
 			var self = this, addMedia = new AddMediaView({
 					target: ".participants-add-icons-h",

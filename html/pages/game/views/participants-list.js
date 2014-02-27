@@ -9,7 +9,8 @@ define(['facade',
 	'sportorg/models/uslgamelink',
 	'common/models/add',
 	'component/fb',
-	"component/forms"],
+	"component/forms",
+	'common/views/add-description'],
 	function(
 		facade,
 		views,
@@ -30,6 +31,7 @@ define(['facade',
 		SectionView = views.SectionView,
 		FormComponent = require('component/forms'),
 		Mustache = vendor.Mustache,
+		AddDescription = require('common/views/add-description'),
 		ParticipantsView = CollectionView.extend(SectionView.prototype);
 
 	return ParticipantsView.extend({
@@ -311,6 +313,7 @@ define(['facade',
 		},
 		initialize : function(options) {
 			var _self = this;
+
 			routing.off("add-to-event");
 			routing.on("add-to-event", function() {
 				if (!_self.checkForUser()) {
@@ -333,18 +336,45 @@ define(['facade',
 			this.game_id = this.collection.id;
 			this.mainView = this;
 			options.mainView = this;
+
 			this.renderTemplate();
 
-			var json = this.collection.toArray(), a = json[0].get("payload"), b = [], found = false;
-			for (var i in a) {
-				if (routing.loggedInUserId == a[i].id) {
-					found = true;
-				}
-				b.push({
-					payload : a[i]
-				});
+			if(!this.collection.limit) {
+				_self.allData = this.collection.toArray();
+				var len = _self.allData.length;
+				_self.start = 0;
+				_self.end = _self.page_limit;
+				_self.page_limit = 8;
 			}
-			this.collection.reset(b);
+
+			var len = _self.collection.length;
+			if(!len || len < _self.collection.limit) {
+				_self.$el.find('.see-more-h').hide();
+			}
+
+			console.log("PL",len,_self.collection);
+
+			// show empty box
+			if(!len) {
+
+				var model = facade.Backbone.Model.extend({});
+				new AddDescription({
+					page: "participants",
+					target: this.$el,
+					model: new model,
+					teamName: this.teamName,
+					name: "view - " + Math.random()
+				});
+			} else {
+				var json = this.collection.toArray(), found = false;
+				for (var i in json) {
+					if (routing.loggedInUserId == json[i].id) {
+						found = true;
+					}
+				}
+			}
+
+
 			this.target_id = options.target_id;
 			this.target_url = options.target_url;
 			this.sport_id = options.sport_id;
@@ -362,6 +392,8 @@ define(['facade',
 			_.bindAll(this);
 			this.addSubscribers();
 			this.setupAddView();
+
+
 			setTimeout(function() {
 				//if (!$("#add-participants-icons").length) {
 				//	var html = '<li id="add-participants-icons" class="add-tile-outer">\

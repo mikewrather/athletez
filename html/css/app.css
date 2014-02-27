@@ -2237,7 +2237,7 @@ li.sport .teamlist-header, .stat-val-outer {
 }
 
 .right-secton {
-	float: right;
+	float: right !important;
 	display: inline-block;
 	width: 400px;
 }
@@ -2295,6 +2295,16 @@ height: 63px;
 
 .roster .btn2 {
 	background-position: -137px 0;
+}
+
+
+.participants .btn1 {
+    background-position: -137px -158px;
+}
+
+
+.participants .btn2 {
+    background-position: -137px 0;
 }
 
 
