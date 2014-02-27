@@ -242,6 +242,11 @@ define([
 					heading: "PARTICIPANTS",
 					template: AddParticipateViewTemplate,
 					controllerObject: self,
+					inviteData: {
+						invite_type:"join",
+						subject_id:self.basics.get("payload").id,
+						enttypes_id:self.basics.get("payload").enttypes_id
+					},
 					message: {event_name:self.basics.get("payload").game_name}
 				});
 			

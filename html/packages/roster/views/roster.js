@@ -154,7 +154,12 @@ define(['require', 'text!roster/templates/roster.html', 'views', 'vendor', 'faca
 					team_name: this.team_name,
 					entityId: this.entityId,
 					addToRoster: this.addToRoster,
-					template: AddRosterViewTemplate
+					template: AddRosterViewTemplate,
+					inviteData: {
+						invite_type:"join",
+						subject_id:this.team_id,
+						enttypes_id:this.entityId
+					}
 				});
 		}
 	});

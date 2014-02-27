@@ -476,6 +476,11 @@ define([
 					template: AddFansViewTemplate,
 					controllerObject: this,
 					collection: this.fans,
+					inviteData: {
+						invite_type:"follow",
+						subject_id:this.basics.get("payload").id,
+						enttypes_id:this.basics.get("payload").enttypes_id
+					},
 					message: {addMe: "Keep me notified of "+this.basics.get("payload").first_name+"\'s activity", fb: "Invite a friend to receive notifications about  "+this.basics.get("payload").first_name+"\'s activity"}
 				});
 				

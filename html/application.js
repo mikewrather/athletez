@@ -349,6 +349,7 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
             
             routing.off('fbInvite');
             routing.on('fbInvite', function(id, options) {
+	            console.log(options);
             	self.showFBInviteOnPopup(id, options);
             });
 

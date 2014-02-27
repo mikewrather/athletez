@@ -21,6 +21,7 @@ define(['vendor', 'views', 'utils', 'text!packages/fbinvite/templates/image-item
          },
 
 		initialize : function(options) {
+			console.log(options);
 			this.template = imageItemTemplate;
 			this.FBoptions = options.FBoptions || {};
 			if(options.length)

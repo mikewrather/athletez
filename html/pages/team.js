@@ -334,7 +334,12 @@ define([
 				controllerObject: this,
 				collection: this.fans,
 				model: this.addmedia,
-				teamName: this.addmedia.teamName
+				teamName: this.addmedia.teamName,
+				inviteData: {
+					invite_type:"follow",
+					subject_id:this.basics.get("payload").id,
+					enttypes_id:this.basics.get("payload").enttypes_id
+				},
 			});
         	
 			this.fansListView = new FansImageListView({
