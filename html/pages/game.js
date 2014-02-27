@@ -234,13 +234,15 @@ define([
 		},
 				
 		setupParticipantsListView: function() {
-			
+
+			console.log("participant add buttons", AddParticipateViewTemplate);
+
 			var self = this, addMedia = new AddMediaView({
 					target: ".participants-add-icons-h",
 					heading: "PARTICIPANTS",
 					template: AddParticipateViewTemplate,
 					controllerObject: self,
-					message: {"photo": "Got Pics From this Game?", "video": "Got Videos From this Game?"}
+					message: {event_name:self.basics.get("payload").game_name}
 				});
 			
 			

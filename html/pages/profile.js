@@ -343,7 +343,7 @@ define([
 						controller: _self,
 						destination: "#games_div",
 						eventPage: $(".selected-sport-h").data("name"),
-						teamName: this.basics.get("payload").first_name
+						teamName: _self.basics.get("payload").first_name
 					});
 					_self.scheme.push(_self.orgListView);
 					_self.layout.render();

@@ -34,6 +34,7 @@ define([
         	"click .add-to-list-h": "addToList",
         	"click .invite-fans-from-fb-h": "InviteFansFromFB",
         	"click .add-to-roster-list-h": "addToRoster",
+	        "click .add-to-participants-list-h": "addParticipant",
         	"click .invite-roster-from-fb-h": "inviteRosterFromFB"
         },
         
@@ -69,6 +70,9 @@ define([
 				return false;
 		},
 
+	    addParticipant: function(e){
+		    routing.trigger("add-to-event");
+	    },
         
         addToList: function(e) {
         	e.preventDefault();

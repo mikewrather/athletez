@@ -53,7 +53,7 @@ function (
 	             $(this.el).attr('data-team-id',this.teams_id);
         	 } else if (this.eventView && this.eventView != '') {
 	            delete this.teams_id;
-	            if(this.model.get("payload").result_time === "0h 0m 0s") {
+	            if(this.model.get("payload")!==null && this.model.get("payload").result_time === "0h 0m 0s") {
 		            var newpay =  this.model.get("payload");
 		            newpay.result_time = null;
 		            this.model.set("payload",newpay);
