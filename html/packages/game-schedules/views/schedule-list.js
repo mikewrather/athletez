@@ -149,17 +149,15 @@ function(vendor, facade,  views,   utils,   ScheduleItemView, Store, ScheduleLis
             }
             
             
-            console.error(this.collection.toJSON());
-            
-            var len = this.collection.length;
+//            var len = this.collection.length;
              // show empty box
-	        if(!len) {
+//	        if(!len) {
 	        	
-	        	new AddDescription({
-	        		page: this.currentSection,
-	        		target: this.$el
-	        	});
-	        }
+//	        	new AddDescription({
+//	        		page: this.currentSection,
+//	        		target: this.$el
+//	        	});
+//	        }
 		            
             _.bindAll(_self);
             _self.addSubscribers();
