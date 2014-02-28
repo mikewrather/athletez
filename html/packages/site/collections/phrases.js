@@ -14,8 +14,10 @@ function(facade, collections, SitePhraseModel, utils,controller) {
         _ = facade._,
         Channel = utils.lib.Channel;
 
-	SitePhraseList = BaseCollection.extend({
+	console.error(this);
 
+	SitePhraseList = BaseCollection.extend({
+/*
         // Reference to this collection's model.
         model: SitePhraseModel,
 
@@ -56,7 +58,7 @@ function(facade, collections, SitePhraseModel, utils,controller) {
 
 		//	console.log("SAVEDATA: ",collection.saveData);
         },
-
+*/
     });
 
     return SitePhraseList;

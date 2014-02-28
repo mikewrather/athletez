@@ -3,12 +3,12 @@
 // Requires define
 // Return {Object} App
 define( ["facade", "utils", "collections", "chrome", "controller", "profile", "imageup",'home','videopreview',
-	"game", "team", "registration","profilesetting","userresume","packages/site/collections/phrases","usercontrols/tag/tag",
+	"game", "team", "registration","profilesetting","userresume","usercontrols/tag/tag",
 	"usercontrols/addgame/addgame","signup","login", "usercontrols/photo-player/photo-player", "usercontrols/add-club/add-club",
 	"utils/storage", 'usercontrols/location/views/view-location','signup/views/facebooksignup',"usercontrols/addevent/addevent",'chrome/views/header',
 	'browserpop/views/browser','usercontrols/landing/views/landing', 'pages/fbinvite','packages/common/views/popup'],
 function (facade, utils, collections, chromeBootstrap, Controller, ProfileController, ImageController, HomeController, VideoPreviewController,
-	GameController, TeamController, RegistrationController,ProfileSetting,UserResume, SitePhraseList , TagController,
+	GameController, TeamController, RegistrationController,ProfileSetting,UserResume , TagController,
 	AddGameController, SignupController,LoginController,PhotoPlayerController, AddClubController,
 	Store, googleMapLocationview,fbreg, AddEventController,header) {
 
@@ -182,7 +182,7 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
             _.bindAll(this);
 	        this.addSubscribers();
 	        Controller.prototype.appStates = new ApplicationStates();
-	        this.getPhrases();
+	     //   this.getPhrases();
 	       // this.intializeImageAndVideo();
 	       // this.showLandingInfo();
         },
@@ -440,8 +440,8 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
         },
 
 	    getPhrases: function(){
-		    var phrases = new SitePhraseList();
-		    phrases.fetch();
+	//	    var phrases = new SitePhraseList();
+	//	    phrases.fetch();
 	    },
 	    
 	    showFbreg:function() {

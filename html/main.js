@@ -6,6 +6,15 @@
 require.config({
 	baseUrl: './',
 	locale: 'en-us',
+	config: {
+		text: {
+			useXhr: function (url, protocol, hostname, port) {
+				// allow cross-domain requests
+				// remote server allows CORS
+				return true;
+			}
+		}
+	},
 	paths: {
 
 		// Libraries
