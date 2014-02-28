@@ -21,7 +21,7 @@ define(['vendor', 'views', 'registration', 'signup', 'signup/views/shopopup', 'u
 			});
 		},
 
-		signupFacebook : function(linkedToFB) {
+		signupFacebook : function(linkedToFB,successCallback) {
 			var current = this;
 			this.linkWithFB = (linkedToFB && linkedToFB == "linkWithFB") ? true : false;
 			if (!this.registrationController) {
@@ -32,7 +32,7 @@ define(['vendor', 'views', 'registration', 'signup', 'signup/views/shopopup', 'u
 			// Additional JS functions here
 			//var func = _.bind(current.getFBlogin, this);
 			//this.getFBlogin();
-			this.loginfb();
+			this.loginfb(successCallback);
 		},
 
 		loadFBLogin : function() {
@@ -51,7 +51,9 @@ define(['vendor', 'views', 'registration', 'signup', 'signup/views/shopopup', 'u
 		},
 		getFBlogin : function() {
 			var _self = this;
+			alert("getFBlogin");
 			FB.getLoginStatus(function(response) {
+				console.log(response);
 				if (response.status === 'connected') {
 					this.actionFunction = function() {
 						FB.api('/me', function(response) {
@@ -69,6 +71,7 @@ define(['vendor', 'views', 'registration', 'signup', 'signup/views/shopopup', 'u
 					if (!_self.loginInfo)
 						_self.loginInfo = _self.loginfb();
 				} else {
+
 					if (!_self.loginInfo)
 						_self.loginInfo = _self.loginfb();
 				}
@@ -77,11 +80,15 @@ define(['vendor', 'views', 'registration', 'signup', 'signup/views/shopopup', 'u
 			});
 
 		},
-		loginfb : function() {
+		loginfb : function(successCallback) {
 			var _self = this;
 			FB.login(function(response) {
+				console.log(response);
 				if (response.authResponse) {
-					routing.trigger('registration-with-facebook', _self.callback);
+					if(successCallback && _.isFunction(successCallback)) successCallback();
+					else {
+						routing.trigger('registration-with-facebook', _self.callback);
+					}
 					// Channel('registration-with-facebook').publish();
 					//this.pop = new popupview();
 				} else {

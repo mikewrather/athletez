@@ -3,7 +3,7 @@
 // module as controller for 'registration' package
 // Returns {RegistrationController} constructor
 
-define(["require", "text!fbinvite/templates/layout.html", "facade", "controller", "models", "views", "utils", "fbinvite/views/image-list", 'fbinvite/collections/fbinvite', 'media/models/image'], function(require, pageLayoutTemplate) {
+define(["require", "text!fbinvite/templates/layout.html", "facade", "controller", "models", "views", "utils", "fbinvite/views/image-list", 'fbinvite/collections/fbinvite', 'media/models/image','signup/views/facebooksignup'], function(require, pageLayoutTemplate) {
 
 	var RegistrationController,
 		facade = require("facade"),
@@ -19,7 +19,9 @@ define(["require", "text!fbinvite/templates/layout.html", "facade", "controller"
 		cssArr = ["/pages/registration/registration.css", "/pages/signup/css/signupstyle.css", "/css/style.jrac.css","pages/fbinvite/fbinvite.css"],
 		ProfileImageListView = require("fbinvite/views/image-list"),
 		MediaImageModel = require("media/models/image"),
-		FBInviteList = require('fbinvite/collections/fbinvite');
+		FBInviteList = require('fbinvite/collections/fbinvite'),
+		fbreg = require('signup/views/facebooksignup');
+
 	return Controller.extend({
 		initialize : function(options) {
 			this.popup = (options.popup)?true:false;
@@ -41,6 +43,10 @@ define(["require", "text!fbinvite/templates/layout.html", "facade", "controller"
 			'</div>' +
 			'<div id="modalBody" class="modal-body page-content-h">'+
 			'</div></div>';
+			this.execRender();
+		},
+
+		execRender:function(){
 			this.setupLayout().render();
 			this.refreshPage();
 			this.createData();
@@ -48,10 +54,23 @@ define(["require", "text!fbinvite/templates/layout.html", "facade", "controller"
 		},
 
 		createData : function() {
+			var _self = this;
 			this.images = new FBInviteList();
 			this.images.targetElement = "#image-wrap-h";
-			this.ajaxCalls.push(this.images.fetch());					
+			this.ajaxCalls.push(this.images.fetch({
+				error:function(e,n){
+					ga('send', 'event', 'popup', 'open', 'FB Auth Token Renew');
+					if(confirm("Your Facebook Authentication has timed out.  Want to try and renew it?")){
+						var fbregistration = new fbreg();
+						fbregistration.signupFacebook("linkWithFB",_self.execRender);
+					} else {
+						$('#fbInvite .close').trigger("click");
+					}
+				}
+			}));
 		},
+
+
 
 		handleDeferreds : function() {
 			var _self = this;
@@ -106,6 +125,7 @@ define(["require", "text!fbinvite/templates/layout.html", "facade", "controller"
 		},
 		setupLayout : function() {
 			this.scheme = [];
+			$('#fbInvite').modal('hide');
 			$(".model-popup-h").remove();
 			$('body').append(this.modelHTML);
 			var pageLayout = new LayoutView({
