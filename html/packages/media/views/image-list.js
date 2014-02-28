@@ -175,7 +175,8 @@ function(facade,  views,   utils,   ImageItemView,            ImageBoardView,   
 	        		target: this.$el,
 	        		model: new model,
 	        		teamName: this.teamName,
-	        		name: "view - " + Math.random()
+	        		name: "view - " + Math.random(),
+			        extra_id: this.extra_id || ""
 	        	});
 	        }
             

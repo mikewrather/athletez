@@ -30,7 +30,8 @@ define([
         	for(var i in options) {
         		this[i] = options[i];
         	}
-        	//alert(this.teamName +"------"+this.page);
+
+	        if(!this.extra_id) this.extra_id = "";
         	this.initializeData();
         	this.render();
         },
@@ -55,7 +56,16 @@ define([
         		break;
         		
         		case 'rosters':
-        			$(e.target).parents("#roster-wrap").find("."+$(e.target).attr("data-target")).trigger("click");        		
+			        if(this.extra_id != ""){
+				        console.log( $(e.target).closest("#roster-wrap").find('.'+$(e.target).attr("data-target")+'[data-subject-id="' + this.extra_id+ '"]'));
+				        $(e.target).closest("#roster-wrap").find('.'+$(e.target).attr("data-target")+'[data-subject-id="' + this.extra_id+ '"]').trigger("click");
+			        }
+			        else
+			        {
+				        console.log($(e.target).closest("#roster-wrap").find("."+$(e.target).attr("data-target")));
+				        $(e.target).closest("#roster-wrap").find("."+$(e.target).attr("data-target")).trigger("click");
+			        }
+
         		break;
 
 		        case 'participants':

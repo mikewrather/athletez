@@ -3,8 +3,23 @@
 
 define(['require', 'text!roster/templates/roster.html', 'views', 'vendor', 'facade', 'utils', 'jqueryui', 'controller', 'roster/models/roster', 'roster/collections/roster', 'roster/views/image-list', 'component/fb',  "common/views/add-media-buttons",
     "text!common/templates/add-roster-buttons.html",], function(require, rosterTemplate) {
-	var RosterView, views = require('views'), facade = require('facade'), utils = require('utils'), SectionView = views.SectionView, $ = facade.$, _ = facade._, debug = utils.debug, vendor = require('vendor'), Mustache = vendor.Mustache, Channel = utils.lib.Channel, FBComponent = require('component/fb'), model = require('roster/models/roster'), ImageList = require('roster/views/image-list'), collection = require('roster/collections/roster'),
-	 AddMediaView = require("common/views/add-media-buttons"),
+	var RosterView,
+		views = require('views'),
+		facade = require('facade'),
+		utils = require('utils'),
+		SectionView = views.SectionView,
+		$ = facade.$,
+		_ = facade._,
+		debug = utils.debug,
+		vendor = require('vendor'),
+		Mustache = vendor.Mustache,
+		Channel = utils.lib.Channel,
+		FBComponent = require('component/fb'),
+		model = require('roster/models/roster'),
+		ImageList = require('roster/views/image-list'),
+		collection = require('roster/collections/roster'),
+
+	    AddMediaView = require("common/views/add-media-buttons"),
 		AddRosterViewTemplate = require("text!common/templates/add-roster-buttons.html");
 
 	RosterView = SectionView.extend({
@@ -84,7 +99,8 @@ define(['require', 'text!roster/templates/roster.html', 'views', 'vendor', 'faca
 				mainView : this,
 				dontrenderTemplate : true,
 				model : new model(),
-				teamName: this.teamName
+				teamName: this.teamName,
+				extra_id: this.team_id
 			});
 
 			if (this.checkForUser()) {
@@ -153,6 +169,7 @@ define(['require', 'text!roster/templates/roster.html', 'views', 'vendor', 'faca
 					team_id: this.team_id,
 					team_name: this.team_name,
 					entityId: this.entityId,
+					subject_id: this.team_id,
 					addToRoster: this.addToRoster,
 					template: AddRosterViewTemplate,
 					inviteData: {
