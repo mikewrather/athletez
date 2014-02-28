@@ -43,17 +43,19 @@ html, body {
 }
 
 body {
-    -webkit-touch-callout: none;
-    -webkit-user-select: none;
-    -khtml-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
 	margin: 0 auto;
 	background: #e0e0e0;
 }
 
-a{ cursor: pointer; }
+a {
+	cursor: pointer;
+}
 
 #main {
 	max-width: 1000px;
@@ -82,7 +84,7 @@ ul {
 }
 
 header {
-/*	border-bottom: 1px solid #ccc;*/
+	/*	border-bottom: 1px solid #ccc;*/
 	padding-top: 2px;
 	padding-bottom: 2px;
 	background-color: #000;
@@ -92,42 +94,41 @@ header .logo {
 	margin: 6px 0;
 }
 header .account a.nav {
-    float: right;
+	float: right;
 	color: white;
-    font-size: .9em;
-    display: inline-block;
-    margin:7px;
-    height: 90%;
+	font-size: .9em;
+	display: inline-block;
+	margin: 7px;
+	height: 90%;
 }
-header .account a.nav:hover{
-    text-decoration: underline;
+header .account a.nav:hover {
+	text-decoration: underline;
 }
 header .account {
-    min-width: 300px;
+	min-width: 300px;
 	float: right;
-    cursor: pointer;
-
+	cursor: pointer;
 }
 
 div.header-dropdown {
-    line-height: 25px;
-    padding: 2px;
-    width: 200px;
-    max-width: 200px !important;
-    height: auto;
-    background-color: white;
-    color: #333;
-    box-shadow: 4px 4px 5px #333;
-    border: 1px solid #ccc;
-    font-size: 1em;
+	line-height: 25px;
+	padding: 2px;
+	width: 200px;
+	max-width: 200px !important;
+	height: auto;
+	background-color: white;
+	color: #333;
+	box-shadow: 4px 4px 5px #333;
+	border: 1px solid #ccc;
+	font-size: 1em;
 }
 
-div.header-dropdown ul li{
-    padding:5px 0;
-    font-size: .8em;
+div.header-dropdown ul li {
+	padding: 5px 0;
+	font-size: .8em;
 }
-div.header-dropdown ul li:hover{
-    text-decoration: underline;
+div.header-dropdown ul li:hover {
+	text-decoration: underline;
 }
 header .account #userlogin {
 	position: relative;
@@ -142,9 +143,9 @@ header .photo {
 }
 header .photo img {
 	width: 32px;
-    -webkit-border-radius: 16px;
-    border-radius: 16px;
-    -moz-border-radius: 16px;
+	-webkit-border-radius: 16px;
+	border-radius: 16px;
+	-moz-border-radius: 16px;
 }
 header .userlinks {
 
@@ -402,7 +403,7 @@ div.image-item-container > img {
 }
 
 .action-block.delete-from-game {
-    background-color: #d36011;
+	background-color: #d36011;
 }
 
 .action-block span {
@@ -703,14 +704,13 @@ span.ui-helper-hidden-accessible {
 
 /* UI MENU */
 
-.ui-menu-item a{
-    margin:-1px;
-
+.ui-menu-item a {
+	margin: -1px;
 }
 
-.ui-menu-item a span.sub-label{
-    font-size:.8em;
-    color: #575757;
+.ui-menu-item a span.sub-label {
+	font-size: .8em;
+	color: #575757;
 }
 
 /**
@@ -746,10 +746,10 @@ span.ui-helper-hidden-accessible {
 }
 
 .bubble .content p.comment-text {
-    font-family: inherit;
-    font-weight: normal;
-    font-size: .8em;
-    padding: 5px 10px 5px 15px;
+	font-family: inherit;
+	font-weight: normal;
+	font-size: .8em;
+	padding: 5px 10px 5px 15px;
 }
 
 .pointer {
@@ -885,7 +885,9 @@ a.comment-delete {
 	padding-bottom: 10px;
 }
 
-.profile-info { padding: 0 25px; }
+.profile-info {
+	padding: 0 25px;
+}
 
 /* comment template css  */
 .user-photo {
@@ -1071,10 +1073,10 @@ a.add-game-h {
 }
 
 /*.newly-added-comment {
-	-webkit-animation: blink 1s ease-in-out 1;
-	-moz-animation: blink 1s ease-in-out 1;
-	animation: blink 1s ease-in-out 1;
-}*/
+ -webkit-animation: blink 1s ease-in-out 1;
+ -moz-animation: blink 1s ease-in-out 1;
+ animation: blink 1s ease-in-out 1;
+ }*/
 
 #new-comment {
 	width: 65%;
@@ -1154,13 +1156,13 @@ div.game-info {
 	line-height: 25px;
 	padding: 9px;
 	width: 360px;
-    max-width: 360px !important;
+	max-width: 360px !important;
 	height: auto;
 	background-color: white;
 	color: #333;
 	box-shadow: 4px 4px 5px #333;
 	border: 1px solid #ccc;
-    font-size: 1em;
+	font-size: 1em;
 }
 div.game-info .game-day {
 	font-weight: bold;
@@ -1192,11 +1194,11 @@ div.game-info .game-score .team-score.win {
 	background-color: #d36011;
 }
 
-div.game-info span.game-header{
-    display: block;
-    background-color: #d36011;
-    margin: -15px -15px 0 -15px;
-    padding: 15px 15px 5px 15px;
+div.game-info span.game-header {
+	display: block;
+	background-color: #d36011;
+	margin: -15px -15px 0 -15px;
+	padding: 15px 15px 5px 15px;
 }
 
 /*********BootStrap Inherited********/
@@ -1590,12 +1592,12 @@ div.game-info span.game-header{
 	background-color: #CCC;
 }
 
-#add-media li a#addPhoto, #add-icons li a#addPhoto{
-    background-color: #DDD43A;
+#add-media li a#addPhoto, #add-icons li a#addPhoto {
+	background-color: #DDD43A;
 }
 
-#add-media li a #addVideo, #add-icons li a#addVideo{
-    background-color: #C43737;
+#add-media li a #addVideo, #add-icons li a#addVideo {
+	background-color: #C43737;
 }
 
 .add-to-roster-h {
@@ -1608,7 +1610,7 @@ div.game-info span.game-header{
 }
 
 #add-icons {
-	padding:10px;
+	padding: 10px;
 }
 
 #addPhoto {
@@ -1636,7 +1638,7 @@ div.game-info span.game-header{
 }
 
 .blue-loading {
-	background-image: url('http://cdn.athletez.com/resources/img/blue_loading.gif');	
+	background-image: url('http://cdn.athletez.com/resources/img/blue_loading.gif');
 }
 
 .display_none_important {
@@ -1703,9 +1705,8 @@ div.game-info span.game-header{
 	width: 100%;
 }
 
-
 form fieldset ul li:first-child {
-/*	margin-left: -20px; */
+	/*	margin-left: -20px; */
 }
 
 form fieldset ul li {
@@ -1726,17 +1727,17 @@ form fieldset > div {
 /*form fieldset > div > div { float: left; }*/
 
 div[data-error] {
-    display: block;
+	display: block;
 	color: #a30000;
-    position: absolute;
-    border: 4px solid #787878;
-    padding: 5px;
-    background-color: #FFFFFF;
-    border-radius: 10px;
+	position: absolute;
+	border: 4px solid #787878;
+	padding: 5px;
+	background-color: #FFFFFF;
+	border-radius: 10px;
 }
 
-div[data-error]:empty{
-    display: none !important;
+div[data-error]:empty {
+	display: none !important;
 }
 .focus-error-animation {
 	border: 5px solid #FF0000 !important;
@@ -1753,25 +1754,20 @@ div[data-error]:empty{
 	max-width: none;
 }
 
-
 .input-field {
 	margin-right: 10px;
-
 }
 
 .input-field input {
 	width: 90%;
-
 }
 
-.input-field input[type="submit"],.input-field input[type="button"]{
-    width: 100%;
-    color: white;
-    font-size: 1.2em;
-    padding:5px;
+.input-field input[type="submit"], .input-field input[type="button"] {
+	width: 100%;
+	color: white;
+	font-size: 1.2em;
+	padding: 5px;
 }
-
-
 
 .button-field {
 	width: auto;
@@ -1784,12 +1780,11 @@ div[data-error]:empty{
 	width: 100%
 }
 
-
-.container_batch_tag .section-link_h{
-    width: 100%;
+.container_batch_tag .section-link_h {
+	width: 100%;
 }
-.container_batch_tag a.icons{
-    margin-right:10px;
+.container_batch_tag a.icons {
+	margin-right: 10px;
 }
 .icons {
 	background: url(images/icons/sprites.png) no-repeat;
@@ -1800,9 +1795,9 @@ div[data-error]:empty{
 	-ms-box-shadow: 1px 1px 20px 0px rgba(0,0,0,0.45);
 	-o-box-shadow: 1px 1px 21px 0px rgba(0,0,0,0.45);
 	box-shadow: 1px 1px 21px 0px rgba(0,0,0,0.45);
-    text-align: center;
-    font-size: .7em;
-    color: #444444;
+	text-align: center;
+	font-size: .7em;
+	color: #444444;
 }
 
 .icon_selected {
@@ -1946,38 +1941,38 @@ li#add-icons ul {
 	line-height: 110px;
 	width: 110px;
 	display: inline-block;
-/*	background-color: #CCC; */
+	/*	background-color: #CCC; */
 }
 /*
-div.edit {
-    background:url(http://cdn.athletez.com/resources/img/pencil-25.png) no-repeat;
-    background-size: cover;
-    height: 25px;
-    width: 25px;
-    cursor: pointer;
-}
-*/
+ div.edit {
+ background:url(http://cdn.athletez.com/resources/img/pencil-25.png) no-repeat;
+ background-size: cover;
+ height: 25px;
+ width: 25px;
+ cursor: pointer;
+ }
+ */
 .player-share {
-	background:url(images/icons/social-sprite.png) no-repeat;
+	background: url(images/icons/social-sprite.png) no-repeat;
 	width: 36px;
 	height: 40px;
 	display: inline-block;
 }
 
 .player-share[data-share=facebook] {
-	background-position: -134px 0;	
+	background-position: -134px 0;
 }
 
 .player-share[data-share=twitter] {
-	background-position: 0 0;	
+	background-position: 0 0;
 }
 
 .player-share[data-share=gplus] {
-	background-position: -45px 0;	
+	background-position: -45px 0;
 }
 
 .player-share[data-share=tumbler] {
-	background-position: -90px 0;	
+	background-position: -90px 0;
 }
 
 .image-actions li.icon-parent {
@@ -2003,14 +1998,15 @@ div.edit {
 
 #inviteView {
 	padding-bottom: 60px;
-	position:absolute; left:0;
-	width:100%;
-	background-size:cover; 
+	position: absolute;
+	left: 0;
+	width: 100%;
+	background-size: cover;
 }
 
 #add-icons {
 	width: 230px;
-/*	background: #CCC; */
+	/*	background: #CCC; */
 	height: 220px;
 }
 
@@ -2053,7 +2049,7 @@ div.edit {
 	height: 110px;
 	max-width: 110px;
 	overflow: hidden;
-	}
+}
 
 #add-media a#addVideo {
 	float: right;
@@ -2134,11 +2130,11 @@ li.sport .teamlist-header, .stat-val-outer {
 }
 
 .edit-message {
-    font-weight: lighter;
-    color: #e3e3e3;
+	font-weight: lighter;
+	color: #e3e3e3;
 	font-size: .7em;
 	padding-left: 10px;
-    float: right;
+	float: right;
 }
 
 .teams {
@@ -2160,11 +2156,10 @@ li.sport .teamlist-header, .stat-val-outer {
 /*  Participants icons  */
 
 .add-participants {
-		background: url(images/icons/add-icons.png) no-repeat;
+	background: url(images/icons/add-icons.png) no-repeat;
 	display: inline-block;
 	width: 70px;
 	height: 36px;
-
 }
 
 .add-to-participants {
@@ -2172,7 +2167,7 @@ li.sport .teamlist-header, .stat-val-outer {
 }
 
 .invite-participants {
-	background-position: 2px 2px;	
+	background-position: 2px 2px;
 }
 
 /* Add icons css start */
@@ -2209,7 +2204,7 @@ li.sport .teamlist-header, .stat-val-outer {
 }
 
 .add-to-roster-list {
-		background-position: -83px -100px;
+	background-position: -83px -100px;
 }
 
 /* Add icons css end */
@@ -2219,14 +2214,12 @@ li.sport .teamlist-header, .stat-val-outer {
 .add-big-list-container {
 	border: 2px #717171 dotted;
 	background: #f8f8f8;
-	color: #b9b9b9;	
+	color: #b9b9b9;
 	margin: 10px 25px;
 }
 
 .border-wrapper {
 	padding: 25px 20px;
-	
-	
 	min-height: 150px;
 }
 
@@ -2248,8 +2241,8 @@ li.sport .teamlist-header, .stat-val-outer {
 
 .right-secton span {
 	position: relative;
-top: 10px;
-left: 4px;
+	top: 10px;
+	left: 4px;
 }
 
 .right-secton a {
@@ -2260,23 +2253,20 @@ left: 4px;
 	background: url(images/icons/add-icons-large.png) no-repeat;
 	display: inline-block;
 	width: 125px;
-height: 63px;
+	height: 63px;
 }
 
 .fans .btn1 {
 	background-position: -6px -231px;
 }
 
-
 .fans .btn2 {
 	background-position: -137px 0;
 }
 
-
 .media .btn1 {
 	background-position: 0 0;
 }
-
 
 .media .btn2 {
 	background-position: 0px -80px;
@@ -2286,15 +2276,83 @@ height: 63px;
 	background-position: -6px -158px;
 }
 
-
 .roster .btn1 {
 	background-position: -137px -78px;
 }
-
 
 .roster .btn2 {
 	background-position: -137px 0;
 }
 
-
 /* Dotted area css ends  */
+
+/*  Mobile css    */
+
+@media only screen and (max-width: 480px) {
+}
+
+@media only screen and (max-width: 320px) {
+
+	body {
+		margin: 0 !important;
+		padding: 0 !important;
+		overflow-y: auto;
+		overflow-x: hidden;
+	}
+
+	.account a[href^='/#!home'], .account .photo {
+		display: none !important;
+	}
+
+	.game-heading .game-general, .game-heading p {
+		float: left;
+		width: 100%;
+	}
+
+	.game-heading a {
+		float: left !important;
+	}
+
+	.teams-list {
+		margin-left: 0;
+		width: 100% !important;
+		padding: 0 !important;
+	}
+
+	.teams-list li.team-item {
+		padding: 0 !important;
+		height: auto !important;
+	}
+
+	#main-header ul.image-outer-h li.image {
+		margin-left: 35px;
+	}
+
+	.add-big-list-container, .pointer, .poster-info {
+		display: none;
+	}
+
+	.bubble {
+		position: static;
+		background: #FFF;
+	}
+
+	.bubble .content .comment-date a {
+		margin: 10px 0px 0px 10px;
+		float: left;
+		width: 60%;
+	}
+
+	.bubble .content p {
+		float: left;
+		width: 60%;
+		padding: 0;
+		padding-left: 11px;
+	}
+	
+	.template-container > div {
+		margin-bottom: 15px;
+	}
+
+}
+
