@@ -139,7 +139,13 @@ define(['vendor', 'views', 'utils', 'text!packages/fbinvite/templates/image-item
 			var model = new inviteModel();
 			model.set({'fbid': this.model.get("payload").id});
 			console.log(this.FBoptions);
-			if(this.FBoptions) model.set({invite_type:this.FBoptions.invite_type,'invite_to': {subject_id: this.FBoptions.subject_id, enttype_id: this.FBoptions.enttype_id}});
+			if(this.FBoptions) model.set({
+				invite_type:this.FBoptions.invite_type,
+				'invite_to': {
+					subject_id: this.FBoptions.subject_id,
+					enttype_id: this.FBoptions.enttypes_id
+				}
+			});
 			model.save();
 			$.when(model.request).done(function() {
 				$(e.target).addClass('link-disabled');
