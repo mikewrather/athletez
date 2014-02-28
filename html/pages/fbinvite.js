@@ -43,11 +43,12 @@ define(["require", "text!fbinvite/templates/layout.html", "facade", "controller"
 			'</div>' +
 			'<div id="modalBody" class="modal-body page-content-h">'+
 			'</div></div>';
+			this.setupLayout().render();
 			this.execRender();
 		},
 
 		execRender:function(){
-			this.setupLayout().render();
+
 			this.refreshPage();
 			this.createData();
 			this.handleDeferreds();
