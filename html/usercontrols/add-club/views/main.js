@@ -113,23 +113,13 @@ define(['require',
 				},
 
 				'complevel_profile' : {
-					type : 'DropDown',
-					showLable : true,
-					label: "Which best describes the levels your organization has?",
-					width:400,
+					type : 'Hidden',
+
 					form_values : {
 						serverKey : "complevel_profiles_id",
 						post_to_server	: true,
-						objectValuesToUpdate: [],
-						source_collection : CompLevel,
+						defaultValue:(_self.addType == "school")?1:2,
 						request_finished : function() {
-						},
-
-						data : {
-							records : undefined,
-							recordId : 'id',
-							recordValue : 'name',
-							selectedValue : _self.sports_id
 						},
 
 //						elementId : _self.controls.hdnTimePeriodData,

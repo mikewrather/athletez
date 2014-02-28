@@ -6,14 +6,14 @@
 define(["facade", "models/base"], function (facade, BaseModel) {
 
 	var SportorgTeamModel,
-		_ = facade._;
+		_ = facade._,
+		Backbone = facade.Backbone;
 
 	SportorgTeamModel = BaseModel.extend({
 
 		defaults: _.extend({}, (new BaseModel).attributes, {
 
 			"payload": {
-				"id": 0,
 				"name": null,
 				"location": null,
 				"picture": null,

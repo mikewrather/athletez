@@ -10,6 +10,7 @@ define(["require", "text!imageup/templates/basic.html", "text!imageup/templates/
 	ImageController = Controller.extend({
 
 		initialize : function(options) {
+			console.error(options);
 			Channel('load:css').publish(cssArr);
 			_.bindAll(this);
 			this.scheme = [];

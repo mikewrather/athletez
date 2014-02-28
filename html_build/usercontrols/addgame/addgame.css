@@ -4,3 +4,23 @@ div#dynamic_add_team_2{
 div#dynamic_add_team_2 a{
     text-decoration: underline;
 }
+ul#choose-org li{
+    height: auto;
+    cursor: pointer;
+    width: 85%;
+    padding: 4px;
+}
+ul#choose-org li:hover{
+    -moz-box-shadow:    2px 2px 1px 3px #ccc;
+    -webkit-box-shadow: 2px 2px 1px 3px #ccc;
+    box-shadow:         2px 2px 1px 3px #ccc;
+}
+ul#choose-org li span.org-name{
+    font-size: .8em;
+    font-weight: bold;
+    display: block;
+}
+ul#choose-org li span.org-location{
+    font-size: .7em;
+    display: block;
+}

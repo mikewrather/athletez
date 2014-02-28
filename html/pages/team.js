@@ -536,6 +536,9 @@ define([
 				target: ".media-add-icons-h",
 				heading: "PHOTO/VIDEO",
 				template: AddMediaViewTemplate,
+				page_base:'team',
+				ent_id:self.id,
+				sports_id:$("#sports-h").val(),
 				controllerObject: self,
 				model: self.addmedia,
 				teamName: this.addmedia.teamName

@@ -38,11 +38,15 @@ define([
         },
         
         addImage: function(e) {
-        	 ga('send', 'event', 'Open-Add-Popup', 'Image', 'User opened image uploader', this.model.userid);
-             var id = $('.selected-sport-h').data('id') || $(".sports-h").val() || $(".sports-h").attr("data-id"), url = "/api/user/addimage/" + this.model.userid,
-                url = "/api/user/addimage/" + this.model.userid,
+	        var page = $(e.currentTarget).data('page-base') || "user",
+		        ent_id = $(e.currentTarget).data('ent-id'),
+		        sports_id = $(e.currentTarget).data('sports-id');
+
+        	 ga('send', 'event', 'Open-Add-Popup', 'Image', 'User opened ' + page + ' image uploader', ent_id);
+             var id = $('.selected-sport-h').data('id') || $(".sports-h").val() || $(".sports-h").attr("data-id"),
+                url = "/api/" + page  + "/addimage/" + ent_id,
 			    attr = {
-				    "sports_id" : id
+				    "sports_id" : sports_id
 			    };
 			routing.trigger('add-image', url, attr);
         },
@@ -126,6 +130,7 @@ define([
         
         className: "pull-left",        
         initialize: function(options) {
+	        console.error(options);
         	for(var i in options) {
         		this[i] = options[i];
         	}

@@ -433,6 +433,9 @@
 			$result = $this->mainModel->addOpponent($arguments);
 
 			if(get_class($result) == get_class($this->mainModel)) return $result;
+			elseif(get_class($result) == 'Model_Sportorg_Org'){
+				return $result;
+			}
 			elseif(get_class($result) == 'ORM_Validation_Exception')
 			{
 				$this->processValidationError($result,$this->mainModel->error_message_path);

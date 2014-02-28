@@ -17,10 +17,12 @@ define(['require',
 	'usercontrols/addgame/collections/teams_user',
 	'usercontrols/addgame/collections/teams',
 	'usercontrols/addgame/collections/games_search',
+	'usercontrols/addgame/collections/orgs',
 	'usercontrols/addgame/models/team',
 	'usercontrols/addgame/models/team_add',
 	'usercontrols/addgame/models/game',
 	'usercontrols/addgame/models/uslgamelink',
+	'usercontrols/addgame/views/orgchoose',
 	'usercontrol/dropdown/view/dropdown',
 	'usercontrol/location/views/get-view-location',
 	'usercontrol/addgame/models/opponent',
@@ -49,6 +51,8 @@ define(['require',
 		LocationView = require('usercontrol/location/views/get-view-location'),
 		FormComponent = require('component/forms'),
 		OpponentModel = require('usercontrol/addgame/models/opponent'),
+		OrgsCollection = require('usercontrols/addgame/collections/orgs'),
+		OrgChooser = require('usercontrols/addgame/views/orgchoose'),
 
 		UserGameLinkModel = require('usercontrols/addgame/models/uslgamelink'), AddGameView = SectionView.extend({
 			template : layoutTemplate,
@@ -351,8 +355,11 @@ define(['require',
 									var data = teamModel.parseAsRequired(response);
 
 									self.complevels_id = data.complevels_id;
+									self.states_id = data.states_id;
+									self.sports_club = data.sports_club;
 									self.seasons_id = data.seasons_id;
 									self.year = data.year;
+									self.teamOneModel = teamModel;
 
 									_that.setValue(data.team_id, data.team_name);
 									$(self.destination).find("input[name=team_1]").attr("teamId", data.team_id);
@@ -474,23 +481,105 @@ define(['require',
 							request_finished : function() {
 							},
 							noResultsCallback: function(search_text){
-/*
-								var message = 'The <b>"' + search_text+'"</b> team isn\'t in our database.  Want to <a id="add_team_2-h">add it?</a>';
 
-								if($('input[name="Select_Team_2"]').parent().find('div#dynamic_add_team_2').length){
-									$('input[name="Select_Team_2"]').parent().find('div#dynamic_add_team_2').html(message);
-								} else {
-									$('input[name="Select_Team_2"]').parent().append('<div id="dynamic_add_team_2">' + message + '</div>');
+								console.log("No Results Callback");
+
+								var formval_this = this;
+
+
+
+								var setTeamTwoToNewTeam = function(teamModel){
+									$('input[name="Select_Team_2"]').parent().find('div#dynamic_add_team_2').remove();
+									$('input[name="Select_Team_2"]').parent().find('div#dynamic_add_org').remove();
+									$('input[name="Select_Team_2"]').parent().find('span.indicator-h').removeClass('invalid').addClass('valid');
+
+									$('input[name="Select_Team_2"]').val(teamModel.get('payload').team_name);
+									$('input[name="Select_Team_2"]').attr('data-id',teamModel.get('payload').id);
+									formval_this.callback(teamModel.get('payload').id);
+									formval_this.afterSetValue("show");
 								}
 
-								setTimeout(function(){
-									console.log("settimeout");
-									$('a#add_team_2-h').on("click",function(e){
-										var opponentModel = new OpponentModel({id:_self.team_id,name:search_text});
+								var addTeamToNewOrg = function(){
+
+									if(confirm("This will add " + search_text + " " +
+										_self.teamOneModel.get("payload").complevels_obj.complevel_name + " " +
+										_self.teamOneModel.get("payload").org_sport_link_obj.sport.sport_name + " " +
+										_self.teamOneModel.get("payload").seasons_obj.season_name + " " +
+										_self.teamOneModel.get("payload").year + ".  Continue?")){
+
+										var opponentModel = new OpponentModel({
+											id:_self.team_id,
+											name:search_text
+										});
 										opponentModel.save();
-									});
-								},0);
-*/
+
+										$.when(opponentModel.request).done(function(res){
+											setTeamTwoToNewTeam(opponentModel);
+											return true;
+										});
+									} else { return false; }
+
+								}
+
+								var orgsCollection = new OrgsCollection();
+								orgsCollection.org_name = search_text;
+								orgsCollection.states_id = _self.states_id;
+								orgsCollection.sports_club = _self.sports_club;
+								orgsCollection.single_sport_id = _self.teamOneModel.get("payload").org_sport_link_obj.org.single_sport_id;
+
+								orgsCollection.fetch();
+								$.when(orgsCollection.request).done(function(res){
+
+									console.log(_self.teamOneModel);
+
+									if(res.payload && res.payload.length){
+
+										if(!$('input[name="Select_Team_2"]').parent().find('div#dynamic_add_org').length){
+											$('input[name="Select_Team_2"]').parent().append('<div id="dynamic_add_org"></div>');
+										}
+
+										$('input[name="Select_Team_2"]').parent().find('div#dynamic_add_team_2').remove();
+
+										var orgChoose = new OrgChooser({
+											el:$('div#dynamic_add_org'),
+											user_text:search_text,
+											data: res.payload,
+											seasoninfo: {
+												complevel:_self.teamOneModel.get("payload").complevels_obj.complevel_name,
+												complevels_id:_self.teamOneModel.get("payload").complevels_id,
+												seasons_id:_self.teamOneModel.get("payload").seasons_id,
+												season:_self.teamOneModel.get("payload").seasons_obj.season_name,
+												year:_self.teamOneModel.get("payload").year,
+												sports_id:_self.sports_id
+											},
+											createNewOrgCallback:addTeamToNewOrg,
+											newTeamAddedCallback:setTeamTwoToNewTeam
+										});
+
+									}
+									else
+									{
+
+										$('input[name="Select_Team_2"]').parent().find('div#dynamic_add_org').remove();
+
+										var message = 'The <b>"' + search_text+'"</b> team isn\'t in our database.  Want to <a id="add_team_2-h">add it?</a>';
+
+										if($('input[name="Select_Team_2"]').parent().find('div#dynamic_add_team_2').length){
+											$('input[name="Select_Team_2"]').parent().find('div#dynamic_add_team_2').html(message);
+										} else {
+											$('input[name="Select_Team_2"]').parent().append('<div id="dynamic_add_team_2">' + message + '</div>');
+										}
+
+										setTimeout(function(){
+											$('a#add_team_2-h').on("click",addTeamToNewOrg);
+										},0);
+									}
+
+								});
+
+
+
+
 
 							},
 							callback : function(id) {

@@ -417,6 +417,9 @@ define([
 					heading: "PHOTO/VIDEO",
 					template: AddMediaViewTemplate,
 					controllerObject: self,
+					page_base:'user',
+					ent_id:self.id,
+					sports_id: $(".selected-sport-h").data("id"),
 					model: self.addmedia,
 					message: {"photo": "Add "+this.addmedia.sportName+" pics of "+this.addmedia.firstName, "video": "Add "+this.addmedia.sportName+" videos of "+this.addmedia.firstName}
 				});
