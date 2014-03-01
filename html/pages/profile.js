@@ -86,7 +86,7 @@ define([
 			debug = utils.debug,
 			Channel = utils.lib.Channel,
 			cssArr = [
-				"/pages/profile/profile.css"
+				base_url + "pages/profile/profile.css"
 			];
 
 		ProfileController = Controller.extend({

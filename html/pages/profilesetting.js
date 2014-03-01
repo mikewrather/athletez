@@ -36,7 +36,7 @@ define(["require",
 	var IndividualSportsCollection = require("profilesetting/collections/individualsports");
 	ProfileSettingController = Controller.extend({
 		/*CSS SECTION*/
-		cssArr : ["/pages/profilesetting/profilesettings.css"],
+		cssArr : [base_url + "pages/profilesetting/profilesettings.css"],
 		/*Actions to be performed on the first time the object is created*/
 		initialize : function(options) {
 			/*Load CSS File*/

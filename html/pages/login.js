@@ -28,7 +28,7 @@ define(["require",
 		 		_ = facade._,
 		 		debug = utils.debug,
 		 		Channel = utils.lib.Channel,
-		 		cssArr = ["/pages/imageup/imageup.css"];
+		 		cssArr = [base_url + "pages/imageup/imageup.css"];
 
 				LoginController = Controller.extend({
 

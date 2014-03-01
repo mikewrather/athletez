@@ -4,7 +4,7 @@
 
 define([
 	"require",
-	'text!usercontrols/imagecropper/templates/layout.html',
+	'text!usercontrol/imagecropper/templates/layout.html',
 	"facade",
 	"controller",
 	"views"
@@ -22,7 +22,7 @@ define([
 
 		ImageCropperController = Controller.extend({
 			// define css files to load
-			cssArr: ["/usercontrols/imagecropper/imagecropper.css"],
+			cssArr: [base_url + "usercontrols/imagecropper/imagecropper.css"],
 			events: {
 					"click button.close":"alertsomething"
 			},

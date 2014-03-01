@@ -1,7 +1,7 @@
 // The CommentOn List
 // --------------
 
-define(['facade', 'vendor', 'utils', 'views', "text!usercontrols/photo-player/templates/tags.html", "usercontrol/photo-player/views/tags-item","usercontrol/photo-player/models/tags","jquery.slimscroll"],
+define(['facade', 'vendor', 'utils', 'views', "text!usercontrol/photo-player/templates/tags.html", "usercontrol/photo-player/views/tags-item","usercontrol/photo-player/models/tags","jquery.slimscroll"],
 function(facade, vendor,  utils, views) {
 
     var TagListView, _ = facade._,
@@ -9,7 +9,7 @@ function(facade, vendor,  utils, views) {
 		SectionView = views.SectionView,
 		Mustache = vendor.Mustache,
         Channel = utils.lib.Channel,
-	    tagListTemlate = require("text!usercontrols/photo-player/templates/tags.html"),
+	    tagListTemlate = require("text!usercontrol/photo-player/templates/tags.html"),
 	    TagItemView = require("usercontrol/photo-player/views/tags-item"),
 	    TagsSectionmodel = require("usercontrol/photo-player/models/tags");
 	CommentListAbstract = CollectionView.extend(SectionView.prototype);

@@ -99,7 +99,7 @@ define([
         debug = utils.debug,
         Channel = utils.lib.Channel,
         cssArr = [
-            "/pages/team/team.css"
+	        base_url + "pages/team/team.css"
         ];
 
     TeamController = Controller.extend({

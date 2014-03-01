@@ -4,7 +4,7 @@
  // Requires `define`, `require`
  // Returns {Photo Player View} constructor
  */
-define(['require', 'text!usercontrols/add-club/templates/layout.html', 'facade', 'views', 'utils', 'vendor', 
+define(['require', 'text!usercontrol/add-club/templates/layout.html', 'facade', 'views', 'utils', 'vendor',
  'usercontrol/add-club/collections/complevel', 'usercontrol/add-club/models/adress',
  'usercontrol/add-club/models/add',
  'usercontrol/dropdown/view/dropdown', 'profilesetting/collections/sports' ], function(require, layoutTemplate) {

@@ -2,17 +2,17 @@
 ***** module as controller for 'photoplayer' control
 */
 
-define(["require", 'text!usercontrols/photo-player/templates/comments.html',
-		'text!usercontrols/tag/templates/layout.html',
+define(["require", 'text!usercontrol/photo-player/templates/comments.html',
+		'text!usercontrol/tag/templates/layout.html',
 	   "facade", "controller", "models", "views",
-	   "usercontrols/photo-player/collections/comments",
-	   "usercontrols/photo-player/views/main",
-	   "usercontrols/photo-player/views/comments",
-	   "usercontrols/photo-player/collections/tags",
-	   "usercontrols/photo-player/views/tags",
-	   "usercontrols/photo-player/models/tags",
-	   'usercontrols/tag/views/main',
-	   'usercontrols/tag/models/basic_info',
+	   "usercontrol/photo-player/collections/comments",
+	   "usercontrol/photo-player/views/main",
+	   "usercontrol/photo-player/views/comments",
+	   "usercontrol/photo-player/collections/tags",
+	   "usercontrol/photo-player/views/tags",
+	   "usercontrol/photo-player/models/tags",
+	   'usercontrol/tag/views/main',
+	   'usercontrol/tag/models/basic_info',
 	    ], function(require, modelBoxCommentTemplate, tagTemplate) {
 
 	var PhotoPlayerController, facade = require("facade"), Controller = require("controller"),
@@ -23,18 +23,18 @@ define(["require", 'text!usercontrols/photo-player/templates/comments.html',
 	// models
 	
 	//collections
-	CommentsCollection = require("usercontrols/photo-player/collections/comments"),
-	TagsCollection = require("usercontrols/photo-player/collections/tags"),
+	CommentsCollection = require("usercontrol/photo-player/collections/comments"),
+	TagsCollection = require("usercontrol/photo-player/collections/tags"),
 	// views
-	PhotoPlayerView = require("usercontrols/photo-player/views/main"),
-	CommentSectionView = require("usercontrols/photo-player/views/comments"),
-	TagsSectionView = require("usercontrols/photo-player/views/tags"),
-	TagsSectionmodel = require("usercontrols/photo-player/models/tags"),
-	TagView = require('usercontrols/tag/views/main'),
-	UserModel = require('usercontrols/tag/models/basic_info'),
+	PhotoPlayerView = require("usercontrol/photo-player/views/main"),
+	CommentSectionView = require("usercontrol/photo-player/views/comments"),
+	TagsSectionView = require("usercontrol/photo-player/views/tags"),
+	TagsSectionmodel = require("usercontrol/photo-player/models/tags"),
+	TagView = require('usercontrol/tag/views/main'),
+	UserModel = require('usercontrol/tag/models/basic_info'),
 	PhotoPlayerController = Controller.extend({
 		// define css files to load
-		cssArr : ["/usercontrols/photo-player/photoPlayer.css"],
+		cssArr : [base_url + "usercontrols/photo-player/photoPlayer.css"],
 		events : {
 		},
 		

@@ -18,7 +18,9 @@ define(["require",
 		_ = facade._,
 		debug = utils.debug, 
 		Channel = utils.lib.Channel, 
-		cssArr = ["/pages/registration/registration.css","/pages/signup/css/signupstyle.css", "/css/style.jrac.css"];
+		cssArr = [base_url + "pages/registration/registration.css",
+			base_url + "pages/signup/css/signupstyle.css",
+			base_url + "css/style.jrac.css"];
 
 	RegistrationController = Controller.extend({
 
