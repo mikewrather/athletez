@@ -814,7 +814,7 @@ define(['require',
 					is_owner : isOwner,
 					channel : 'tag-image-success-photo'
 				});
-				self.scheme.push(this.tagViewPhoto);
+				self.scheme.push(self.tagViewPhoto);
 				self.layout.render();
 			};
 			
