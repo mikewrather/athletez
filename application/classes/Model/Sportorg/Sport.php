@@ -243,6 +243,8 @@ class Model_Sportorg_Sport extends ORM
 			'Sportorg_Sport' => 'sportorg_sport',
 		);
 		$sports = ORM::_sql_exclude_deleted($classes_arr, $sports);
+
+		$sports->order_by('name');
 		return $sports;
 	}
 
