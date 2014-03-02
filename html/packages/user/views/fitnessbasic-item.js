@@ -46,7 +46,11 @@ function (
         	
         	if(index != -1) {
         		var model = new fitnessModel();
-				model.set({user_id: routing.loggedInUserId, resume_data_id: data[i].resume_data_id, user_value: $(e.target).val()});
+				model.set({
+					user_id: routing.loggedInUserId,
+					resume_data_id: $(e.currentTarget).data('resume-data-id'),
+					user_value: $(e.target).val()
+				});
 	        	model.save();
 	        	var $ele = $(e.target).parents("span.stat-val-outer").find(".stats-val-h");
 	        	$ele.html($(e.target).val());
