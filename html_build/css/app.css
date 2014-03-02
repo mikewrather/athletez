@@ -1434,6 +1434,9 @@ form fieldset > div {
 	float: left;
 	width: 100%;
 }
+div.field-row.error input, div.field-row.error textarea{
+    background-color: #ffd5d8 !important;
+}
 div[data-error] {
     display: block;
 	color: #a30000;
@@ -1447,7 +1450,7 @@ div[data-error]:empty{
     display: none !important;
 }
 .focus-error-animation {
-	border: 5px solid #FF0000 !important;
+	border: 2px solid #ff5b5a !important;
 	border-radius: 5px !important;
 	color: #000 !important;
 }

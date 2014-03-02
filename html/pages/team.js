@@ -169,7 +169,10 @@ define([
 	        	controller.commentson.subject_entity_type = subject_type_id;
 	        	controller.commentson.savePath = "/team/addcomment/"+team_id;
 				controller.commentson.id = team_id;
-				controller.commentson.targetElement = "#comment_div";				
+				controller.commentson.targetElement = "#comment_div";
+
+				controller.setupRosterView();
+
 				controller.ajaxCalls.push(controller.commentson.fetch());
                 controller.handleDeferredsDynamic();
             }
