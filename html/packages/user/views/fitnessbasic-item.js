@@ -8,7 +8,9 @@ define([
         'views',
         'utils', 
         'text!user/templates/fitnessbasic-item.html',
-        'user/models/fitness'
+        'user/models/fitness',
+		"vendor/plugins/qtip/qtip",
+		"text!vendor/plugins/qtip/qtip.css"
         ], 
 function (
         vendor,
@@ -74,6 +76,24 @@ function (
         		var d = this.user_value;
         	return d;
         },
+
+	      bindToolTips:function(){
+
+		      var self = this;
+		      $.each(this.$el.find('img'),function(){
+			      var $curr = $(this);
+			      $curr.qtip({
+				      //	content: 'test of qtip',
+				      position: {
+					      my: "bottom center",
+					      at: "top center"
+				      },
+				      style: {
+					      classes: 'header-dropdown'
+				      }
+			      });
+		      })
+	      },
  
         render: function () {
         	var data = {}, _self = this;
@@ -93,6 +113,10 @@ function (
 	            	_self.hideInput(e);
 	            });
             }
+
+	        //bind tooltips
+	        this.bindToolTips();
+
             return this;
         }        
         
