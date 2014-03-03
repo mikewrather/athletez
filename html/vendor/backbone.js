@@ -2473,7 +2473,7 @@ Form.Field = Backbone.View.extend({
     var schema = this.schema,
         editor = this.editor;
 
-	  console.log(schema,editor);
+//	  console.log(schema,editor);
 
     //Only render the editor if Hidden
     if (schema.type == Form.editors.Hidden) {
@@ -2484,9 +2484,6 @@ Form.Field = Backbone.View.extend({
     var $field = $($.trim(this.template(_.result(this, 'templateData'))));
     if (schema.fieldClass) $field.addClass("input-field "+schema.fieldClass);
     if (schema.fieldAttrs) $field.attr(schema.fieldAttrs);
-	if(schema.tooltip){
-		console.log("TOOLTIP",schema.tooltip, $field);
-	}
 
     //Render editor
     $field.find('[data-editor]').add($field).each(function(i, el) {

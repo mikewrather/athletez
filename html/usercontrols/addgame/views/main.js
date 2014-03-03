@@ -183,8 +183,9 @@ define(['require',
 			/*render displays the view in browser*/
 			render : function() {
 				SectionView.prototype.render.call(this);
-				var _self = this;
-				var formData = new FormComponent({
+				var _self = this,
+					noTeamFoundView,
+					formData = new FormComponent({
 					'date' : {
 						tooltip: "Select the game's date.  If the game is in the past, you will be prompted to enter an optional score.",
 						form_values: {
@@ -497,12 +498,13 @@ define(['require',
 							request_finished : function() {
 							},
 							noResultsCallback: function(search_text){
-
-								console.log("No Results Callback");
-
 								var formval_this = this;
 
-								var noTeamFoundView = new NoTeamFoundView({
+								if(!_.isUndefined(noTeamFoundView)) {
+									noTeamFoundView.destroy_view();
+								}
+
+								noTeamFoundView = new NoTeamFoundView({
 									teamOneModel:_self.teamOneModel,
 									search_text:search_text,
 									states_id:_self.states_id,

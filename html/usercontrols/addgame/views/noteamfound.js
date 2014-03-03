@@ -63,8 +63,6 @@ define(['require',
 			orgsCollection.fetch();
 			$.when(orgsCollection.request).done(function(res){
 
-				console.log(_self.teamOneModel);
-
 				if(res.payload && res.payload.length){
 
 					if(!_self.destination.find('div#dynamic_add_org').length){
@@ -73,7 +71,7 @@ define(['require',
 
 					_self.destination.find('div#dynamic_add_team_2').remove();
 
-					var orgChoose = new OrgChooser({
+					_self.orgChoose = new OrgChooser({
 						el:$('div#dynamic_add_org'),
 						user_text:_self.search_text,
 						data: res.payload,
@@ -97,7 +95,7 @@ define(['require',
 						_self.destination.append('<div id="dynamic_add_team_2"></div>')
 					}
 
-					var newOrgView = new NewOrgView({
+					_self.newOrgView = new NewOrgView({
 						el:_self.destination.find('#dynamic_add_team_2'),
 						search_text:_self.search_text,
 						parentView:_self
@@ -129,6 +127,14 @@ define(['require',
 			this.undelegateEvents();
 
 			this.$el.removeData().unbind();
+
+			if(!_.isUndefined(this.newOrgView)) {
+				this.newOrgView.destroy_view();
+			}
+
+			if(!_.isUndefined(this.orgChoose)) {
+				this.orgChoose.destroy_view();
+			}
 
 			//Remove view from DOM
 			this.remove();
