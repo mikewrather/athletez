@@ -1404,7 +1404,7 @@ div.game-info span.game-header{
 	background: url(http://cdn.athletez.com/resources/img/white_loading.gif) repeat;
 	width: 100%;
 	height: 100%;
-	min-height: 100px;
+	min-height: 70px;
 	margin: 0 auto;
 }
 #fbInvite .close, .button.close {
@@ -1886,4 +1886,9 @@ height: 63px;
 }
 .participants .btn2 {
     background-position: -137px 0;
+}
+.spinner{
+    display: inline;
+    top:10px;
+    left:15px;
 }
