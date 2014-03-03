@@ -26,6 +26,7 @@ define(['require',
 	'usercontrol/dropdown/view/dropdown',
 	'usercontrol/location/views/get-view-location',
 	'usercontrol/addgame/models/opponent',
+	'usercontrol/addgame/views/noteamfound',
 	'component/forms'], function(require, layoutTemplate) {
 
 	var self,
@@ -53,6 +54,7 @@ define(['require',
 		OpponentModel = require('usercontrol/addgame/models/opponent'),
 		OrgsCollection = require('usercontrols/addgame/collections/orgs'),
 		OrgChooser = require('usercontrols/addgame/views/orgchoose'),
+		NoTeamFoundView = require('usercontrol/addgame/views/noteamfound'),
 
 		UserGameLinkModel = require('usercontrols/addgame/models/uslgamelink'), AddGameView = SectionView.extend({
 			template : layoutTemplate,
@@ -184,6 +186,7 @@ define(['require',
 				var _self = this;
 				var formData = new FormComponent({
 					'date' : {
+						tooltip: "Select the game's date.  If the game is in the past, you will be prompted to enter an optional score.",
 						form_values: {
 							post_to_server	: false,
 							serverKey : "game_date",
@@ -216,6 +219,7 @@ define(['require',
 					},
 					
 					'time' : {
+						tooltip: "e.g. \"4\" or \"4:15\"",
 						form_values: {
 							post_to_server	: false,
 							serverDbField: 'gameTime',
@@ -321,6 +325,7 @@ define(['require',
 					'Select_Team_1' : {
 						type : 'AutoComplete',
 						label: "Select Team 1",
+						tooltip: "Select the first team competing in this event.",
 						form_values: {
 							keyNameInPayload: 'team_name',
 							showElements: ["team_1"],
@@ -404,6 +409,7 @@ define(['require',
 						label: "Score 1"
 					},
 					'team_1' : {
+						tooltip: "Is this team the \"Home\" team or \"Away\" team?  Selecting this team as the Home team will automatically fill in the game's location.",
 						form_values: {
 							serverKey : "teamOne"
 						},
@@ -416,17 +422,26 @@ define(['require',
 						showLable : false,
 						label: "Team 1",
 						onClickFn : function(e) {
-							var value = e ? $(e.target).val() : "away", teamId = 0;
+							var value = e ? $(e.target).val() : "away",
+								teamId = 0;
+
 							if (value == "Home") {
 								teamId = $(e.target).attr(self.attributes.teamId);
+								console.log($(self.destination).find('input[name="team_2"][value="Away"]'));
+								$(self.destination).find('input[name="team_2"][value="Home"]').removeAttr('checked');
+								$(self.destination).find('input[name="team_2"][value="Away"]').attr('checked','checked').prop('checked',true);
 							} else {
-								var $selectedItems = $(self.destination).find("input[name=team_1]:checked, input[name=team_2]:checked");
+								teamId = false;
+
+								var $selectedItems = $(self.destination).find("input[name=team_2]:checked");
+								console.log($selectedItems);
 								$selectedItems.each(function() {
 									value = $(this).val();
-									if (value == "Home" && !teamId) {
+									if (value === "Home" && !teamId) {
 										teamId = $(this).attr(self.attributes.teamId);
 									}
 								});
+
 							}
 							if (teamId) {
 								var teamModel = new TeamModel();
@@ -440,12 +455,13 @@ define(['require',
 								};
 								teamModel.fetch();
 							} else {
-								$(e.target).parents('form').find('.address-h').val('').trigger('blur');
+								$(e.target).parents('form').find('.address-h').html('').val('').trigger('blur');
 							}
 						}
 					},
 
 					'Select_Team_2' : {
+						tooltip: "Just start typing to find the opponent team.  If the team doesn't exist, you will be able to create it.",
 						type : 'AutoComplete',
 						label: "Select Team 2",
 						form_values: {
@@ -486,99 +502,15 @@ define(['require',
 
 								var formval_this = this;
 
-
-
-								var setTeamTwoToNewTeam = function(teamModel){
-									$('input[name="Select_Team_2"]').parent().find('div#dynamic_add_team_2').remove();
-									$('input[name="Select_Team_2"]').parent().find('div#dynamic_add_org').remove();
-									$('input[name="Select_Team_2"]').parent().find('span.indicator-h').removeClass('invalid').addClass('valid');
-
-									$('input[name="Select_Team_2"]').val(teamModel.get('payload').team_name);
-									$('input[name="Select_Team_2"]').attr('data-id',teamModel.get('payload').id);
-									formval_this.callback(teamModel.get('payload').id);
-									formval_this.afterSetValue("show");
-								}
-
-								var addTeamToNewOrg = function(){
-
-									if(confirm("This will add " + search_text + " " +
-										_self.teamOneModel.get("payload").complevels_obj.complevel_name + " " +
-										_self.teamOneModel.get("payload").org_sport_link_obj.sport.sport_name + " " +
-										_self.teamOneModel.get("payload").seasons_obj.season_name + " " +
-										_self.teamOneModel.get("payload").year + ".  Continue?")){
-
-										var opponentModel = new OpponentModel({
-											id:_self.team_id,
-											name:search_text
-										});
-										opponentModel.save();
-
-										$.when(opponentModel.request).done(function(res){
-											setTeamTwoToNewTeam(opponentModel);
-											return true;
-										});
-									} else { return false; }
-
-								}
-
-								var orgsCollection = new OrgsCollection();
-								orgsCollection.org_name = search_text;
-								orgsCollection.states_id = _self.states_id;
-								orgsCollection.sports_club = _self.sports_club;
-								orgsCollection.single_sport_id = _self.teamOneModel.get("payload").org_sport_link_obj.org.single_sport_id;
-
-								orgsCollection.fetch();
-								$.when(orgsCollection.request).done(function(res){
-
-									console.log(_self.teamOneModel);
-
-									if(res.payload && res.payload.length){
-
-										if(!$('input[name="Select_Team_2"]').parent().find('div#dynamic_add_org').length){
-											$('input[name="Select_Team_2"]').parent().append('<div id="dynamic_add_org"></div>');
-										}
-
-										$('input[name="Select_Team_2"]').parent().find('div#dynamic_add_team_2').remove();
-
-										var orgChoose = new OrgChooser({
-											el:$('div#dynamic_add_org'),
-											user_text:search_text,
-											data: res.payload,
-											seasoninfo: {
-												complevel:_self.teamOneModel.get("payload").complevels_obj.complevel_name,
-												complevels_id:_self.teamOneModel.get("payload").complevels_id,
-												seasons_id:_self.teamOneModel.get("payload").seasons_id,
-												season:_self.teamOneModel.get("payload").seasons_obj.season_name,
-												year:_self.teamOneModel.get("payload").year,
-												sports_id:_self.sports_id
-											},
-											createNewOrgCallback:addTeamToNewOrg,
-											newTeamAddedCallback:setTeamTwoToNewTeam
-										});
-
-									}
-									else
-									{
-
-										$('input[name="Select_Team_2"]').parent().find('div#dynamic_add_org').remove();
-
-										var message = 'The <b>"' + search_text+'"</b> team isn\'t in our database.  Want to <a id="add_team_2-h">add it?</a>';
-
-										if($('input[name="Select_Team_2"]').parent().find('div#dynamic_add_team_2').length){
-											$('input[name="Select_Team_2"]').parent().find('div#dynamic_add_team_2').html(message);
-										} else {
-											$('input[name="Select_Team_2"]').parent().append('<div id="dynamic_add_team_2">' + message + '</div>');
-										}
-
-										setTimeout(function(){
-											$('a#add_team_2-h').on("click",addTeamToNewOrg);
-										},0);
-									}
-
+								var noTeamFoundView = new NoTeamFoundView({
+									teamOneModel:_self.teamOneModel,
+									search_text:search_text,
+									states_id:_self.states_id,
+									sports_club:_self.sports_club,
+									sports_id:_self.sports_id,
+									formval_this:formval_this,
+									destination: $('input[name="Select_Team_2"]').parent()
 								});
-
-
-
 
 
 							},
@@ -588,10 +520,13 @@ define(['require',
 							},
 							afterSetValue: function(show) {
 								console.error(show);
-								if(show == "show")
+								if(show == "show"){
 									$("input[name=team_2]").parents(".field-row").removeClass("hide");
-								else	
-									$("input[name=team_2]").parents(".field-row").addClass("hide");								 	
+									$("input[name=score_2]").parents(".field-row").removeClass("hide");
+								} else	{
+									$("input[name=team_2]").parents(".field-row").addClass("hide");
+									$("input[name=score_2]").parents(".field-row").addClass("hide");
+								}
 							}
 						},
 
@@ -611,10 +546,12 @@ define(['require',
 							'class' : "txt-score-team-h hidden"
 						},
 						showLable : false,
+						hideElement: true,
 						label: "Score 2"
 					},
 
 					'team_2' : {
+						tooltip: "Is this team the \"Home\" team or \"Away\" team?  Selecting this team as the Home team will automatically fill in the game's location.",
 						form_values: {
 							serverKey : ""
 						},
@@ -627,8 +564,10 @@ define(['require',
 							var value = e ? $(e.target).val() : "away", teamId = 0;
 							if (value == "Home") {
 								teamId = $(e.target).attr(self.attributes.teamId);
+								$(self.destination).find('input[name="team_1"][value="Home"]').removeAttr('checked');
+								$(self.destination).find('input[name="team_1"][value="Away"]').attr('checked','checked').prop('checked',true);
 							} else {
-								var $selectedItems = $(self.destination).find("input[name=team_1]:checked, input[name=team_2]:checked");
+								var $selectedItems = $(self.destination).find("input[name=team_1]:checked");
 								$selectedItems.each(function() {
 									value = $(this).val();
 									if (value == "Home") {
@@ -648,18 +587,19 @@ define(['require',
 								};
 								teamModel.fetch();
 							} else {
-								$(e.target).parents('form').find('.address-h').val('').trigger('blur');
+								$(e.target).parents('form').find('.address-h').html('').val('').trigger('blur');
 							}
 						}
 					},
 					'Location' : {
+						tooltip: "Enter the game location.  This can be an address, a city, or a state.",
 						form_values: {
 							serverKey : "locations_id",
 							post_to_server	: true,
 							serverDbField: 'locations_id'
 						},
 						type : 'Location',
-						label: "Location",
+						label: "Game Location",
 						validators : [{type : 'required',
 							message : 'Please select location.'}],
 					},

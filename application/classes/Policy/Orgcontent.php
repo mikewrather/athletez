@@ -8,6 +8,7 @@ class Policy_OrgContent extends Policy
 		$config = Kohana::$config->load('sysconfig');
 		$roles = $config->get('role_name');
 		$has_admin = $user->has('roles', ORM::factory('Role', array('name' => $roles['admin'])));
+		$has_login = $user->has('roles', ORM::factory('Role', array('name' => $roles['login'])));
 		$has_org_admin = $user->has('roles', ORM::factory('Role', array('name' => $roles['org_admin'])));
 		$has_moderator = $user->has('roles', ORM::factory('Role', array('name' => $roles['moderator'])));
 		$have_permission = false;
@@ -20,7 +21,7 @@ class Policy_OrgContent extends Policy
 				case 'create':
 					break;
 				case 'modify':
-					if($has_admin || $has_org_admin || $has_moderator){
+					if($has_admin || $has_org_admin || $has_moderator || $has_login){
 						$have_permission = true;
 					}
 					return $have_permission;

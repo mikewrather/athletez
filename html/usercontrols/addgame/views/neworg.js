@@ -6,14 +6,12 @@
  * To change this template use File | Settings | File Templates.
  */
 define(['require',
-	'text!usercontrols/addgame/templates/orgchoose.html',
-	'usercontrols/addgame/models/org_addteam',
+	'text!usercontrol/addgame/templates/neworg.html',
 	'facade',
 	'views',
 	'utils',
 	'vendor'],
-	function(require,
-	         layoutTemplate) {
+	function(require,newOrgTemplate) {
 
 	var self,
 		facade = require('facade'),
@@ -23,7 +21,6 @@ define(['require',
 		Channel = utils.lib.Channel,
 		vendor = require('vendor'),
 		Mustache = vendor.Mustache,
-		TeamModel = require('usercontrols/addgame/models/org_addteam'),
 		$ = facade.$;
 
 	var BaseView = views.BaseView,
@@ -33,70 +30,35 @@ define(['require',
 
 	return Backbone.View.extend({
 		// template for dropdown
-		template : layoutTemplate,
+		template : newOrgTemplate,
 		// set to true if requires multiple selection
 		/*Bind Events on controls present in current view template*/
 		events : {
-			"click li.add-team-to-org-h" : "addTeamToOrg",
-			"click li.add-team-to-new-org-h" : "addTeamToNewOrg"
+			"click #add_team_2-h":"createNewOrg"
 		},
 
 		/*initialize gets called by default when constructor is initialized*/
 		initialize : function(options) {
 			_self = this;
 
-			console.log("ORG CHOOSE VIEW",options)
+			console.log(this.$el);
+
 			_self.setOptions(options);
 			_self.render();
 		},
 
-		addTeamToNewOrg:function(e){
+		createNewOrg: function(e){
 			e.stopPropagation();
 			e.preventDefault();
-
-			if(this.parentView.addTeamToNewOrg && _.isFunction(this.parentView.addTeamToNewOrg)) {
-				if(this.parentView.addTeamToNewOrg(e)){
-					this.destroy_view();
-				}
-			}
-		},
-		addTeamToOrg:function(e){
-			e.stopPropagation();
-			e.preventDefault();
-			$(e.currentTarget).off('click').addClass('region-loader');
-
-			console.log(this.seasoninfo);
-
-			var orgs_id = $(e.currentTarget).data('id'),
-				self = this,
-			teamModel = new TeamModel({
-				orgs_id:orgs_id,
-				complevels_id: this.seasoninfo.complevels_id,
-				seasons_id: this.seasoninfo.seasons_id,
-				year:this.seasoninfo.year,
-				sports_id:this.seasoninfo.sports_id
-			});
-
-			teamModel.save();
-
-			$.when(teamModel.request).done(function(res){
-				if(self.parentView.setTeamTwoToNewTeam && _.isFunction(self.parentView.setTeamTwoToNewTeam)) {
-					if(self.parentView.setTeamTwoToNewTeam(teamModel)){
-						self.destroy_view();
-					}
-				}
-
-			});
+			this.parentView.addTeamToNewOrg(e);
 		},
 
 		//render displays the view in browser
 		render : function() {
 		//	Backbone.View.prototype.render.call(this);
-			var markup = _.template(this.template,{
-				data:this.data,
-				seasoninfo:this.seasoninfo,
-				user_text:this.user_text
-			});
+
+			var markup = _.template(this.template,{search_text:this.search_text});
+			console.log(markup);
 			this.$el.html(markup);
 		},
 

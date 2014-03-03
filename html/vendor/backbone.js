@@ -2473,6 +2473,8 @@ Form.Field = Backbone.View.extend({
     var schema = this.schema,
         editor = this.editor;
 
+	  console.log(schema,editor);
+
     //Only render the editor if Hidden
     if (schema.type == Form.editors.Hidden) {
       return this.setElement(editor.render().el);
@@ -2482,6 +2484,9 @@ Form.Field = Backbone.View.extend({
     var $field = $($.trim(this.template(_.result(this, 'templateData'))));
     if (schema.fieldClass) $field.addClass("input-field "+schema.fieldClass);
     if (schema.fieldAttrs) $field.attr(schema.fieldAttrs);
+	if(schema.tooltip){
+		console.log("TOOLTIP",schema.tooltip, $field);
+	}
 
     //Render editor
     $field.find('[data-editor]').add($field).each(function(i, el) {
@@ -2489,6 +2494,20 @@ Form.Field = Backbone.View.extend({
           selection = $container.attr('data-editor');
       if (_.isUndefined(selection)) return;
       $container.append(editor.render().el);
+
+	    if(schema.tooltip && schema.tooltip != ""){
+		    $container.find('input,label,textarea,.dropdown-wrapper').qtip({
+			    content: schema.tooltip,
+			    position: {
+				    my: "bottom center",
+				    at: "top center"
+			    },
+			    style: {
+		//		    classes: 'header-dropdown'
+			    }
+		    });
+	    }
+
     });
     this.setElement($field);
     

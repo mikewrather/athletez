@@ -430,6 +430,11 @@
 				$arguments["name"] = trim($this->put('name'));
 			}
 
+			if(trim($this->put('locations_id')) != "")
+			{
+				$arguments["locations_id"] = trim($this->put('locations_id'));
+			}
+
 			$result = $this->mainModel->addOpponent($arguments);
 
 			if(get_class($result) == get_class($this->mainModel)) return $result;
