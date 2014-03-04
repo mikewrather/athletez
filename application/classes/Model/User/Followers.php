@@ -116,7 +116,7 @@ class Model_User_Followers extends ORM
 		foreach($direct_followers as $follow)
 		{
 			// do nothing if the author is also the follower
-	//		if($follow->follower_users_id == $author->id) continue;
+			if($follow->follower_users_id == $author->id) continue;
 
 			Model_Site_Feedfollow::addFeedFollow($feed->id,$follow->id);
 
