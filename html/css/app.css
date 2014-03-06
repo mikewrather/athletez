@@ -2494,6 +2494,104 @@ li.sport .teamlist-header, .stat-val-outer {
 	.add-video {
 		background-position: -1px -55px;
 	}
+	
+	.team-label {
+		margin: 0 !important;
+		background: #e0e0e0;
+	}
+	
+	#schedule-list {
+		margin-left: 5px;
+	}
+	
+	.select-team {
+		position: relative;	
+		float: left;	
+	}
+	
+	.game-box-outer {
+		background: #FFF;
+		border-radius: 0;
+		padding: 0;
+		margin: 0;
+	}
+	
+	.game-box-outer ul, .game-box-outer a {
+		background: #FFF;
+		border-radius: 0;
+		pointer-events: none;
+		height: auto;
+
+	}
+	
+	.game-box-outer a {
+		top: 62px;
+		left: -10px;		
+	}
+	
+	.game-box-outer div.game-info {
+		display: block !important;
+		box-shadow: none;
+		border: none;
+		float: right;
+		width: 84%;
+	}
+	
+	.game-box-outer li {
+		float: left;
+		/*position: static;*/
+	}
+	
+	#schedule-list .right-with-icon {
+		position: absolute;
+		bottom: -24px;
+	}
+	
+	
+/* FANS CSS AREA  */
+	
+	#fans-div div.image-item-container {
+		width: 150px;
+		height: 140px;
+	}
+	
+	#fans-div ul li.image {
+		min-height: 142px;
+		padding: 0;
+		margin: 0;
+		padding-right: 5px;
+	}
+	
+	#fans-div ul.image-list {
+		margin-left: 5px;
+	}
+	
+	#fans-div div.image-item-container > img {
+		min-width: 146px;
+		min-height: 220px;
+	}
+	
+	#fans-div .circle {
+		width: 62px;
+		height: 74px;
+		margin: -132px 30px 30px 30px;
+	}
+	
+	.add-to-list {
+		background-position: 0 0;
+		margin-left: 5px;
+	}
+	
+	.add-to-list, .invite-from-fb {
+		background: url(images/icons/mobile/add-followers.png) no-repeat;
+		width: 150px;
+		height: 45px;
+	}
+	
+	.invite-from-fb {
+		background-position: -1px -55px;
+	}
+	
 
 }
 
