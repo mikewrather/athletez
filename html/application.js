@@ -195,7 +195,7 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
 					clearInterval(tryBrowser);
 
 					var showBrowserWindow = showMobileWindow = false;
-					if($.browser.ipad || $.browser.iphone || $.browser.android){
+					if($.browser.iphone || $.browser.android){
 						showMobileWindow = true;
 					}
 					if(!_.isUndefined($.browser.msie) && $.browser.msie){
