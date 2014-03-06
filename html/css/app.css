@@ -2328,7 +2328,7 @@ li.sport .teamlist-header, .stat-val-outer {
 		margin-left: 35px;
 	}
 
-	.add-big-list-container, .pointer, .poster-info {
+	.add-big-list-container, .pointer {
 		display: none;
 	}
 
@@ -2359,6 +2359,140 @@ li.sport .teamlist-header, .stat-val-outer {
 	
 	#main {
 		overflow: hidden;
+		padding-top: 0px;
+		margin: 0;
+	}
+	
+	.modal {
+		width: 96% !important;
+		padding: 2% !important;
+		top: 0 !important;
+		height: 100% !important;
+		max-height: 100% !important;
+		margin: 0 !important;
+		left: 0 !important;
+		right: 0 !important;
+		border: none !important;
+	}
+	
+	#search-area input {
+		width: 210px;
+	}
+	div[data-error] {
+		position: relative;
+		top: 42px;
+	}
+	
+	.profile-pic-outer {
+		margin: 0;
+	}
+	
+	.profile-heading {
+		position: relative;
+		min-height: 200px;
+	}
+	
+	.profile-heading .sports-h {
+		position: absolute;
+		bottom: 10px;
+	}
+	
+	
+	.profile-heading h3 {
+		position: absolute;
+		top: 0;
+		font-size: 35px;
+	}
+	
+	.profile-heading h4 {
+		position: absolute;
+		top: 35px;
+	}
+	
+	#main-header .profile-pic-outer ul.image-outer-h li.image {
+		margin: 0; padding: 0;
+	}
+	
+	#main-header .profile-pic-outer ul.image-outer-h {
+		margin-bottom: 0px;
+	}
+	
+	.profile-pic-outer .image-item-container {
+		width: 319px;
+		height: 270px;
+	}
+	
+	.profile-pic-outer div.image-item-container > img {
+		min-width: 319px;
+		min-height: 270px;
+	}
+	
+	.profile-pic-outer .teams, .profile-info, .profile-pic-outer .border-right div.span6, .question {
+		display: none;
+	}
+	
+	.stats-panel {
+		width: 100% !important;
+	}
+	
+	.green-left-heading {
+		width: 100%;
+		text-align: left;
+	}
+	
+	.profile-comment-list-box #comment-list {
+		margin: 0 0 0 10px;
+	}
+	
+	.bubble .content p.comment-text {
+		padding: 5px 10px 5px 54px;
+	}
+	
+	.poster-info {
+		float: left;
+		padding-left: 11px;
+	}
+	
+	#image-wrap div.image-item-container {
+		width: 150px;
+		height: 140px;
+	}
+	
+	#image-wrap ul li.image {
+		min-height: 142px;
+		padding: 0;
+		margin: 0;
+		padding-right: 5px;
+	}
+	
+	#image-wrap ul.image-list {
+		margin-left: 5px;
+	}
+	
+	#image-wrap div.image-item-container > img {
+		min-width: 146px;
+		min-height: 220px;
+	}
+	
+	#image-wrap .circle {
+		width: 62px;
+		height: 74px;
+		margin: -132px 30px 30px 30px;
+	}
+	
+	.add-image {
+		background-position: 0 0;
+		margin-left: 5px;
+	}
+	
+	.add-icon {
+		background: url(images/icons/mobile/add-icons.png) no-repeat;
+		width: 150px;
+		height: 45px;
+	}
+	
+	.add-video {
+		background-position: -1px -55px;
 	}
 
 }
