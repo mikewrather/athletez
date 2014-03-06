@@ -45,7 +45,7 @@ define(['require',
 		/*initialize gets called by default when constructor is initialized*/
 		initialize : function(options) {
 
-			console.log(options);
+			console.log("LANDING PAGE",options);
 
 			Channel('load:css').publish(this.cssArr);
 			var _self = this;
@@ -100,6 +100,12 @@ define(['require',
 		render : function(options) {
 			var _self = this, markup = Mustache.to_html(_self.template,_self.data);
 			this.$el = $('.register-wrapper-h');
+
+			if(!this.$el.length) {
+				$('body header').after('<div class="register-wrapper-h"></div>');
+				this.$el = $('.register-wrapper-h');
+			}
+
 
 			var options = options || {};
 			options.width = "100%";
