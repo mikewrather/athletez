@@ -2707,6 +2707,22 @@ li.sport .teamlist-header, .stat-val-outer {
 	}
 	
 	
+	#main-content .see-more-h {
+		background-image: url(images/icons/mobile/media-show-more.png);
+		background-repeat:  no-repeat;
+		display: inline-block;
+		width: 310px;
+		height: 45px;
+	}
+	
+	#main-content .see-more-h {
+		float: none;
+		background-position: 0 0;
+		margin: 0;
+		margin-left: 5px;
+		margin-top: 6px;
+		color: #1ba0af;
+	}
 	
 	
 	
