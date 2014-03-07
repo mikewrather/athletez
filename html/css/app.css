@@ -2682,7 +2682,7 @@ li.sport .teamlist-header, .stat-val-outer {
 		background-position: 0 0;
 		padding: 0;
 		color: #dc6425;
-		margin: 10px 5px 10px 0;
+		margin: 10px 8px 10px 0;
 	}
 	
 	#schedule-list a.add-game-h:hover, #schedule-list a.add-game-h:active {
@@ -2701,11 +2701,10 @@ li.sport .teamlist-header, .stat-val-outer {
 		float: none;
 		background-position: -1px -55px;
 		margin: 0;
-		margin-left: 5px;
+		margin-left: 0px;
 		margin-top: 6px;
 		color: #1ba0af;
 	}
-	
 	
 	#main-content .see-more-h {
 		background-image: url(images/icons/mobile/media-show-more.png);
@@ -2723,14 +2722,5 @@ li.sport .teamlist-header, .stat-val-outer {
 		margin-top: 6px;
 		color: #1ba0af;
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-
 }
 
