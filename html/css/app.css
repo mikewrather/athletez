@@ -2365,6 +2365,7 @@ li.sport .teamlist-header, .stat-val-outer {
 		overflow: hidden;
 		padding-top: 0px;
 		margin: 0;
+		background: #FFF;
 	}
 	
 	.modal {
@@ -2529,7 +2530,7 @@ li.sport .teamlist-header, .stat-val-outer {
 	}
 	
 	.game-box-outer a {
-		top: 80px;
+		top: 65px;
 		left: -10px;		
 	}
 	
@@ -2543,6 +2544,7 @@ li.sport .teamlist-header, .stat-val-outer {
 	
 	.game-box-outer li {
 		float: left;
+		border-bottom: 1px solid #ccc;
 		/*position: static;*/
 	}
 	
@@ -2631,6 +2633,86 @@ li.sport .teamlist-header, .stat-val-outer {
 	.detail-view {
 		width: 100%;
 	}
+	
+	
+	
+	
+	.add-comment-h {
+		background-position: 0 0;
+		margin-left: 5px;
+		padding: 0;
+		color: #c6373b;
+	}
+	
+	.add-comment-h:hover, .add-comment-h:active {
+		color: #c6373b;
+	}
+	
+	.add-comment-h, .see-more-h {
+		background-image: url(images/icons/mobile/add-comment-icon.png);
+		background-repeat:  no-repeat;
+		display: inline-block;
+		width: 150px;
+		height: 45px;
+	}
+	
+	.see-more-h {
+		float: none;
+		background-position: -1px -55px;
+		margin: 0;
+		margin-left: 5px;
+		color: #1ba0af;
+	}
+	
+	.see-more-h:hover, .see-more-h:active {
+		color: #1ba0af;		
+	}
+	
+	#commenton-wrap .clear {
+		float: left;
+	}
+	
+	#comment_div {
+		margin-right: 5px;
+		float: right;
+		margin-top: -44px;
+	}
+	
+	#schedule-list a.add-game-h {
+		background-position: 0 0;
+		padding: 0;
+		color: #dc6425;
+		margin: 10px 5px 10px 0;
+	}
+	
+	#schedule-list a.add-game-h:hover, #schedule-list a.add-game-h:active {
+		color: #dc6425;
+	}
+	
+	#schedule-list a.add-game-h, #schedule-list .show-older {
+		background-image: url(images/icons/mobile/add-game-icon.png);
+		background-repeat:  no-repeat;
+		display: inline-block;
+		width: 150px;
+		height: 45px;
+	}
+	
+	.show-older {
+		float: none;
+		background-position: -1px -55px;
+		margin: 0;
+		margin-left: 5px;
+		margin-top: 6px;
+		color: #1ba0af;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 
