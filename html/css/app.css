@@ -279,7 +279,7 @@ input[disabled].hasDatepicker, input[readonly].hasDatepicker {
 
 .green-left-heading {
 	float: left;
-	background: #9cca3c;
+	background-color: #9cca3c;
 	color: #FFF;
 	padding: 5px 25px;
 	text-align: center;
@@ -2284,6 +2284,10 @@ li.sport .teamlist-header, .stat-val-outer {
 	background-position: -137px 0;
 }
 
+.mobile-link {
+	display: none;
+}
+
 /* Dotted area css ends  */
 
 /*  Mobile css    */
@@ -2353,9 +2357,9 @@ li.sport .teamlist-header, .stat-val-outer {
 		overflow: hidden;
 	}
 	
-	.template-container > div {
+	/*.template-container > div {
 		margin-bottom: 15px;
-	}
+	}*/
 	
 	#main {
 		overflow: hidden;
@@ -2525,7 +2529,7 @@ li.sport .teamlist-header, .stat-val-outer {
 	}
 	
 	.game-box-outer a {
-		top: 62px;
+		top: 80px;
 		left: -10px;		
 	}
 	
@@ -2542,10 +2546,10 @@ li.sport .teamlist-header, .stat-val-outer {
 		/*position: static;*/
 	}
 	
-	#schedule-list .right-with-icon {
+	/*#schedule-list .right-with-icon {
 		position: absolute;
 		bottom: -24px;
-	}
+	}*/
 	
 	
 /* FANS CSS AREA  */
@@ -2591,6 +2595,43 @@ li.sport .teamlist-header, .stat-val-outer {
 	.invite-from-fb {
 		background-position: -1px -55px;
 	}
+	
+	
+	.mobile-link {
+		display: block !important;
+	}
+	
+	.desktop-link {
+		display: none !important;
+	}
+	
+	
+	.green-left-heading {
+		background-image: url(images/icons/mobile/right-arrow.png);
+		background-repeat:  no-repeat;
+		cursor: pointer;
+	}
+	
+	.green-left-heading {
+		background-position: 80% 50%;
+	}
+	
+	.down-arrow-heading {
+		background-image: url(images/icons/mobile/down-arrow.png);
+	}
+	
+	#games_div, #fans-div, #commenton-wrap, #main-content, .buttons-h, #comment_div{
+		display: none;
+	}
+	
+	.media-add-icons-h > div, .fans-add-icons-h > div {
+		width: 100%;
+	}
+	
+	.detail-view {
+		width: 100%;
+	}
+	
 	
 
 }
