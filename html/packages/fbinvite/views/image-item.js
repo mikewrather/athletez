@@ -132,7 +132,7 @@ define(['vendor',
 			this.invitehash = CryptoJS.SHA256(new Date().getTime() + "_" + this.model.get("payload").id);
 
 			var _self = this, options = {};
-			options.link = "?ih="+ this.invitehash + "#acceptfbinvite/"+this.model.get("payload").id;
+			options.link = "#acceptfbinvite/"+this.invitehash;
 			options.name = "Come join Me on Atheletez";
 			options.picture = "http://cdn.athletez.com/resources/img/athletez_logo_small.png";
 			options.description = "You have been invited to sign up for http://athletez.com";
