@@ -53,7 +53,7 @@ class Model_Site_Invite_Facebook extends Model_Site_Invite
 		$invite->find();
 
 		if($invite->loaded()){
-			return $invite;
+	//		return $invite;
 		}
 
 		$facebook = FacebookAuth::factory();
