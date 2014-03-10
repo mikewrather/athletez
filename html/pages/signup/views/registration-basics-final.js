@@ -72,7 +72,6 @@ define(['require', 'text!signup/templates/basciFinal.html', 'backbone', 'undersc
 			var fields = attrs.attr;
 
 			$.each(fields, function(i, field) {
-
 				payload[field.name] = field.value;
 
 			});
@@ -215,8 +214,9 @@ define(['require', 'text!signup/templates/basciFinal.html', 'backbone', 'undersc
 			return element;
 		},
 		fetchpayload : function(payload) {
-			this.$el.find("#first_name").val(payload.firstname + ' ' + payload.lastname);
+			this.$el.find("#first_name").val(payload.fullname);
 			this.$el.find("#emailInput").val(payload.email);
+			this.$el.find("#password").val(payload.password);
 		},
 		next : function(event) {
 			event.preventDefault();

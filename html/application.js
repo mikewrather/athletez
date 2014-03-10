@@ -23,8 +23,8 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
 		//  fbInviteView = require('browserpop/views/browser'),
 		    InviteModel = require('packages/invite/models/invite'),
 
-			landingView = require('usercontrols/landing/views/landing');
-	        debug = utils.debug;
+			landingView = require('usercontrols/landing/views/landing'),
+	        debug = utils.debug,
 	        App = Backbone.Router.extend({
         routes: {
             '': 'defaultRoute',

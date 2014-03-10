@@ -1,4 +1,4 @@
-define(['require', 'text!signup/templates/registration.html', 'text!signup/templates/registration_landing.html', 'backbone', 'underscore', 'registration', 'login', 'views', 'signup/views/facebooksignup', 'facade', 'utils', "signup/views/registration-basics-final", "signup/models/registration-basics-final"], function(require, signupBasicTemplate, signupBasicLandingTemplate, backbone, _, RegistrationController, loginController) {
+define(['require', 'text!signup/templates/registration.html', 'text!signup/templates/registration_landing.html', 'backbone', 'underscore', 'registration', 'login', 'views', 'signup/views/facebooksignup', 'facade', 'utils', "signup/views/registration-basics-final", "signup/models/registration-basics-final"], function(require, signupBasicTemplate, signupBasicLandingTemplate, backbone, _, RegistrationController, LoginController) {
 
 	var SignupBasicView,
 		facade = require('facade'),
@@ -41,7 +41,7 @@ define(['require', 'text!signup/templates/registration.html', 'text!signup/templ
 			this.render();
 
 			// I'm assigning this to a global variable because we are going to be calling it from an el's onclick event
-			this.facebookView = new FbHeader({callback: this.callback});
+			this.facebookView = new FbHeader({callback: this.callback,invite_hash:this.invite_hash});
 		},
 
 		render : function() {
@@ -123,9 +123,15 @@ define(['require', 'text!signup/templates/registration.html', 'text!signup/templ
 
 		showLogin : function(event) {
 			event.preventDefault();
+			var fields = this.$(":input").serializeArray();
+			var LoginController = require('login');
+
 			routing.trigger('common-popup-close');
 			this.logincontroller = new LoginController({
-				callback : this.callback
+				callback : this.callback,
+				attr : {
+					"attr" : fields
+				}
 			});
 			routing.trigger("Login");
 		}

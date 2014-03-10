@@ -24,7 +24,7 @@ function (
         headerTemplate,
         HeaderModel,
         RegistrationController,
-        loginController,
+        LoginController,
         scontroller,
         popupview,
        

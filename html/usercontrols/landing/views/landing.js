@@ -73,6 +73,7 @@ define(['require',
 			} catch(e) {
 				console.error(e);
 			}
+
 		},
 
 		checkForUser: function() {
@@ -145,6 +146,11 @@ define(['require',
 				this.$el = $('.register-wrapper-h');
 				console.log(this.$el);
 			}
+
+
+			//binding these events here because it requires that this.$el be set so we can't do it till now
+			routing.off('hide-landing');
+			routing.on('hide-landing',_self.hideLanding);
 
 
 			var options = options || {};
@@ -256,6 +262,12 @@ define(['require',
 
 
 
+		},
+
+
+
+		hideLanding:function(){
+			$('div.register-wrapper-h').slideUp('slow');
 		},
 
 		showInvite: function(){

@@ -1339,10 +1339,17 @@
 			}
 
 			$remember = array_key_exists('remember',$this->request->post()) ? (bool) $this->request->post('remember') : FALSE;
-			$user = Auth::instance()->login($username,$password,$remember);
+			Auth::instance()->login($username,$password,$remember);
+			$user = Auth::instance()->get_user();
 
 			if($user)
 			{
+				if(trim($this->request->post('sechash')) != "")
+				{
+					$sechash = trim($this->request->post('sechash'));
+					if(get_class($user) == 'Model_User') $user = ORM::factory('User_Base',$user->id);
+					$user->executeInvite(array("sechash"=>$sechash));
+				}
 				return $user;
 			}
 			else

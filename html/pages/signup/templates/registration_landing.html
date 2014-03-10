@@ -17,11 +17,11 @@
 		<div id="regpanemain">
 			<form action="#/user/create" method="post" class="signupform" accept-charset="utf-8">
 				<div id="firstregbase">
-					<input type="text" name="firstname" placeholder="First name" />
+					<input type="text" name="fullname" placeholder="Full Name" />
 					<div class="error">
 					</div>
-					<input type="text" name="lastname" placeholder="Last name" />
-					<input type="text" name="email" placeholder="Email" />
+					<input type="email" name="email" placeholder="Email" />
+					<input type="password" name="password" placeholder="Password" />
 					<% if(invite_hash != undefined){ %><input type="hidden" name="fb_invite_id" value="<%= invite_hash %>" /><% } %>
 					<div class = "signupsubmit">
 
@@ -36,4 +36,3 @@
 		</div>
 	</div>
 </div>
-
