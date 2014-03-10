@@ -36,16 +36,18 @@ html, body {
 	height: 100%;
 }
 body {
-    -webkit-touch-callout: none;
-    -webkit-user-select: none;
-    -khtml-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
 	margin: 0 auto;
 	background: #e0e0e0;
 }
-a{ cursor: pointer; }
+a {
+	cursor: pointer;
+}
 #main {
 	max-width: 1000px;
 	margin: 10px auto;
@@ -69,6 +71,7 @@ ul {
 	list-style: none;
 }
 header {
+	
 	padding-top: 2px;
 	padding-bottom: 2px;
 	background-color: #000;
@@ -78,39 +81,39 @@ header .logo {
 	margin: 6px 0;
 }
 header .account a.nav {
-    float: right;
+	float: right;
 	color: white;
-    font-size: .9em;
-    display: inline-block;
-    margin:7px;
-    height: 90%;
+	font-size: .9em;
+	display: inline-block;
+	margin: 7px;
+	height: 90%;
 }
-header .account a.nav:hover{
-    text-decoration: underline;
+header .account a.nav:hover {
+	text-decoration: underline;
 }
 header .account {
-    min-width: 300px;
+	min-width: 300px;
 	float: right;
-    cursor: pointer;
+	cursor: pointer;
 }
 div.header-dropdown {
-    line-height: 25px;
-    padding: 2px;
-    width: 200px;
-    max-width: 200px !important;
-    height: auto;
-    background-color: white;
-    color: #333;
-    box-shadow: 4px 4px 5px #333;
-    border: 1px solid #ccc;
-    font-size: 1em;
+	line-height: 25px;
+	padding: 2px;
+	width: 200px;
+	max-width: 200px !important;
+	height: auto;
+	background-color: white;
+	color: #333;
+	box-shadow: 4px 4px 5px #333;
+	border: 1px solid #ccc;
+	font-size: 1em;
 }
-div.header-dropdown ul li{
-    padding:5px 0;
-    font-size: .8em;
+div.header-dropdown ul li {
+	padding: 5px 0;
+	font-size: .8em;
 }
-div.header-dropdown ul li:hover{
-    text-decoration: underline;
+div.header-dropdown ul li:hover {
+	text-decoration: underline;
 }
 header .account #userlogin {
 	position: relative;
@@ -125,9 +128,9 @@ header .photo {
 }
 header .photo img {
 	width: 32px;
-    -webkit-border-radius: 16px;
-    border-radius: 16px;
-    -moz-border-radius: 16px;
+	-webkit-border-radius: 16px;
+	border-radius: 16px;
+	-moz-border-radius: 16px;
 }
 header .userlinks {
 }
@@ -345,7 +348,7 @@ div.image-item-container > img {
 	background-color: #4b3ec6;
 }
 .action-block.delete-from-game {
-    background-color: #d36011;
+	background-color: #d36011;
 }
 .action-block span {
 	vertical-align: middle;
@@ -586,12 +589,12 @@ span.ui-helper-hidden-accessible {
 	background: #33aeab !important;
 	border: none !important;
 }
-.ui-menu-item a{
-    margin:-1px;
+.ui-menu-item a {
+	margin: -1px;
 }
-.ui-menu-item a span.sub-label{
-    font-size:.8em;
-    color: #575757;
+.ui-menu-item a span.sub-label {
+	font-size: .8em;
+	color: #575757;
 }
 .bubble {
 	position: relative;
@@ -619,10 +622,10 @@ span.ui-helper-hidden-accessible {
 	display: block;
 }
 .bubble .content p.comment-text {
-    font-family: inherit;
-    font-weight: normal;
-    font-size: .8em;
-    padding: 5px 10px 5px 15px;
+	font-family: inherit;
+	font-weight: normal;
+	font-size: .8em;
+	padding: 5px 10px 5px 15px;
 }
 .pointer {
 	content: "";
@@ -728,7 +731,9 @@ a.comment-delete {
 .profile-comment-list-box #comment-list li {
 	padding-bottom: 10px;
 }
-.profile-info { padding: 0 25px; }
+.profile-info {
+	padding: 0 25px;
+}
 .user-photo {
 	float: left;
 }
@@ -948,13 +953,13 @@ div.game-info {
 	line-height: 25px;
 	padding: 9px;
 	width: 360px;
-    max-width: 360px !important;
+	max-width: 360px !important;
 	height: auto;
 	background-color: white;
 	color: #333;
 	box-shadow: 4px 4px 5px #333;
 	border: 1px solid #ccc;
-    font-size: 1em;
+	font-size: 1em;
 }
 div.game-info .game-day {
 	font-weight: bold;
@@ -982,11 +987,11 @@ div.game-info .game-score .team-score.loss {
 div.game-info .game-score .team-score.win {
 	background-color: #d36011;
 }
-div.game-info span.game-header{
-    display: block;
-    background-color: #d36011;
-    margin: -15px -15px 0 -15px;
-    padding: 15px 15px 5px 15px;
+div.game-info span.game-header {
+	display: block;
+	background-color: #d36011;
+	margin: -15px -15px 0 -15px;
+	padding: 15px 15px 5px 15px;
 }
 .btn-green {
 	color: #FFF;
@@ -1295,7 +1300,7 @@ div.game-info span.game-header{
 	width: 0px;
 	height: 0px;
 	border-style: solid;
-	border-width: 50px 0 50px 86.6px;
+	border-width: 50px 0 50px 87px;
 	border-color: transparent transparent transparent #fff;
 	position: relative;
 	left: 50%;
@@ -1325,11 +1330,11 @@ div.game-info span.game-header{
 	width: 180px;
 	background-color: #CCC;
 }
-#add-media li a#addPhoto, #add-icons li a#addPhoto{
-    background-color: #DDD43A;
+#add-media li a#addPhoto, #add-icons li a#addPhoto {
+	background-color: #DDD43A;
 }
-#add-media li a #addVideo, #add-icons li a#addVideo{
-    background-color: #C43737;
+#add-media li a #addVideo, #add-icons li a#addVideo {
+	background-color: #C43737;
 }
 .add-to-roster-h {
 	background-image: url('http://athletez.s3.amazonaws.com/resources/img/actions/addtoteam.png');
@@ -1340,7 +1345,7 @@ div.game-info span.game-header{
 	background-color: #928add;
 }
 #add-icons {
-	padding:10px;
+	padding: 10px;
 }
 #addPhoto {
 	background-color: #ddd43a;
@@ -1362,7 +1367,7 @@ div.game-info span.game-header{
 	background-image: url('http://athletez.s3.amazonaws.com/resources/img/actions/fbinvite.png');
 }
 .blue-loading {
-	background-image: url('http://cdn.athletez.com/resources/img/blue_loading.gif');	
+	background-image: url('http://cdn.athletez.com/resources/img/blue_loading.gif');
 }
 .display_none_important {
 	display: none !important;
@@ -1418,6 +1423,7 @@ div.game-info span.game-header{
 	width: 100%;
 }
 form fieldset ul li:first-child {
+	
 }
 form fieldset ul li {
 	height: 25px;
@@ -1438,16 +1444,16 @@ div.field-row.error input, div.field-row.error textarea{
     background-color: #ffd5d8 !important;
 }
 div[data-error] {
-    display: block;
+	display: block;
 	color: #a30000;
-    position: absolute;
-    border: 4px solid #787878;
-    padding: 5px;
-    background-color: #FFFFFF;
-    border-radius: 10px;
+	position: absolute;
+	border: 4px solid #787878;
+	padding: 5px;
+	background-color: #FFFFFF;
+	border-radius: 10px;
 }
-div[data-error]:empty{
-    display: none !important;
+div[data-error]:empty {
+	display: none !important;
 }
 .focus-error-animation {
 	border: 2px solid #ff5b5a !important;
@@ -1466,11 +1472,11 @@ div[data-error]:empty{
 .input-field input {
 	width: 90%;
 }
-.input-field input[type="submit"],.input-field input[type="button"]{
-    width: 100%;
-    color: white;
-    font-size: 1.2em;
-    padding:5px;
+.input-field input[type="submit"], .input-field input[type="button"] {
+	width: 100%;
+	color: white;
+	font-size: 1.2em;
+	padding: 5px;
 }
 .button-field {
 	width: auto;
@@ -1481,11 +1487,11 @@ div[data-error]:empty{
 .large-dropdown-field.dropdown-wrapper {
 	width: 100%
 }
-.container_batch_tag .section-link_h{
-    width: 100%;
+.container_batch_tag .section-link_h {
+	width: 100%;
 }
-.container_batch_tag a.icons{
-    margin-right:10px;
+.container_batch_tag a.icons {
+	margin-right: 10px;
 }
 .icons {
 	background: url(images/icons/sprites.png) no-repeat;
@@ -1496,9 +1502,9 @@ div[data-error]:empty{
 	-ms-box-shadow: 1px 1px 20px 0px rgba(0,0,0,0.45);
 	-o-box-shadow: 1px 1px 21px 0px rgba(0,0,0,0.45);
 	box-shadow: 1px 1px 21px 0px rgba(0,0,0,0.45);
-    text-align: center;
-    font-size: .7em;
-    color: #444444;
+	text-align: center;
+	font-size: .7em;
+	color: #444444;
 }
 .icon_selected {
 	-webkit-box-shadow: 5px 5px 10px 0px rgba(0,0,0,0.75);
@@ -1617,24 +1623,25 @@ li#add-icons ul {
 	line-height: 110px;
 	width: 110px;
 	display: inline-block;
+	
 }
 .player-share {
-	background:url(images/icons/social-sprite.png) no-repeat;
+	background: url(images/icons/social-sprite.png) no-repeat;
 	width: 36px;
 	height: 40px;
 	display: inline-block;
 }
 .player-share[data-share=facebook] {
-	background-position: -134px 0;	
+	background-position: -134px 0;
 }
 .player-share[data-share=twitter] {
-	background-position: 0 0;	
+	background-position: 0 0;
 }
 .player-share[data-share=gplus] {
-	background-position: -45px 0;	
+	background-position: -45px 0;
 }
 .player-share[data-share=tumbler] {
-	background-position: -90px 0;	
+	background-position: -90px 0;
 }
 .image-actions li.icon-parent {
 	background-color: transparent;
@@ -1655,12 +1662,14 @@ li#add-icons ul {
 }
 #inviteView {
 	padding-bottom: 60px;
-	position:absolute; left:0;
-	width:100%;
-	background-size:cover; 
+	position: absolute;
+	left: 0;
+	width: 100%;
+	background-size: cover;
 }
 #add-icons {
 	width: 230px;
+	
 	height: 220px;
 }
 #add-media {
@@ -1697,7 +1706,7 @@ li#add-icons ul {
 	height: 110px;
 	max-width: 110px;
 	overflow: hidden;
-	}
+}
 #add-media a#addVideo {
 	float: right;
 	background-position: 100%;
@@ -1763,11 +1772,11 @@ li.sport .teamlist-header, .stat-val-outer {
 	cursor: pointer;
 }
 .edit-message {
-    font-weight: lighter;
-    color: #e3e3e3;
+	font-weight: lighter;
+	color: #e3e3e3;
 	font-size: .7em;
 	padding-left: 10px;
-    float: right;
+	float: right;
 }
 .teams {
 	padding-bottom: 20px;
@@ -1782,7 +1791,7 @@ li.sport .teamlist-header, .stat-val-outer {
 	margin-top: 20px;
 }
 .add-participants {
-		background: url(images/icons/add-icons.png) no-repeat;
+	background: url(images/icons/add-icons.png) no-repeat;
 	display: inline-block;
 	width: 70px;
 	height: 36px;
@@ -1791,7 +1800,7 @@ li.sport .teamlist-header, .stat-val-outer {
 	background-position: -162px -53px;
 }
 .invite-participants {
-	background-position: 2px 2px;	
+	background-position: 2px 2px;
 }
 .add-icon {
 	background: url(images/icons/add-icons.png) no-repeat;
@@ -1819,18 +1828,16 @@ li.sport .teamlist-header, .stat-val-outer {
 	width: 30px;
 }
 .add-to-roster-list {
-		background-position: -83px -100px;
+	background-position: -83px -100px;
 }
 .add-big-list-container {
 	border: 2px #717171 dotted;
 	background: #f8f8f8;
-	color: #b9b9b9;	
+	color: #b9b9b9;
 	margin: 10px 25px;
 }
 .border-wrapper {
 	padding: 25px 20px;
-	
-	
 	min-height: 150px;
 }
 .left-text {
@@ -1848,8 +1855,8 @@ li.sport .teamlist-header, .stat-val-outer {
 }
 .right-secton span {
 	position: relative;
-top: 10px;
-left: 4px;
+	top: 10px;
+	left: 4px;
 }
 .right-secton a {
 	float: left;
@@ -1858,7 +1865,7 @@ left: 4px;
 	background: url(images/icons/add-icons-large.png) no-repeat;
 	display: inline-block;
 	width: 125px;
-height: 63px;
+	height: 63px;
 }
 .fans .btn1 {
 	background-position: -6px -231px;
@@ -1891,4 +1898,295 @@ height: 63px;
     display: inline;
     top:10px;
     left:15px;
+}
+@media only screen and (max-width: 480px) {
+}
+@media only screen and (max-width: 320px) {
+	body {
+		margin: 0 !important;
+		padding: 0 !important;
+		overflow-y: auto;
+		overflow-x: hidden;
+	}
+	.account a[href^='/#!home'], .account .photo {
+		display: none !important;
+	}
+	.game-heading .game-general, .game-heading p {
+		float: left;
+		width: 100%;
+	}
+	.game-heading a {
+		float: left !important;
+	}
+	.teams-list {
+		margin-left: 0;
+		width: 100% !important;
+		padding: 0 !important;
+	}
+	.teams-list li.team-item {
+		padding: 0 !important;
+		height: auto !important;
+	}
+	#main-header ul.image-outer-h li.image {
+		margin-left: 35px;
+	}
+	.add-big-list-container, .pointer {
+		display: none;
+	}
+	.bubble {
+		position: static;
+		background: #FFF;
+	}
+	.bubble .content .comment-date a {
+		margin: 10px 0px 0px 10px;
+		float: left;
+		width: 60%;
+	}
+	.bubble .content p {
+		float: left;
+		width: 60%;
+		padding: 0;
+		padding-left: 11px;
+		white-space:nowrap; 
+		text-overflow:ellipsis;
+		overflow: hidden;
+	}
+	
+	.template-container > div {
+		margin-bottom: 15px;
+	}
+	
+	#main {
+		overflow: hidden;
+		padding-top: 0px;
+		margin: 0;
+	}
+	
+	.modal {
+		width: 96% !important;
+		padding: 2% !important;
+		top: 0 !important;
+		height: 100% !important;
+		max-height: 100% !important;
+		margin: 0 !important;
+		left: 0 !important;
+		right: 0 !important;
+		border: none !important;
+	}
+	
+	#search-area input {
+		width: 210px;
+	}
+	div[data-error] {
+		position: relative;
+		top: 42px;
+	}
+	
+	.profile-pic-outer {
+		margin: 0;
+	}
+	
+	.profile-heading {
+		position: relative;
+		min-height: 200px;
+	}
+	
+	.profile-heading .sports-h {
+		position: absolute;
+		bottom: 10px;
+	}
+	
+	
+	.profile-heading h3 {
+		position: absolute;
+		top: 0;
+		font-size: 35px;
+	}
+	
+	.profile-heading h4 {
+		position: absolute;
+		top: 35px;
+	}
+	
+	#main-header .profile-pic-outer ul.image-outer-h li.image {
+		margin: 0; padding: 0;
+	}
+	
+	#main-header .profile-pic-outer ul.image-outer-h {
+		margin-bottom: 0px;
+	}
+	
+	.profile-pic-outer .image-item-container {
+		width: 319px;
+		height: 270px;
+	}
+	
+	.profile-pic-outer div.image-item-container > img {
+		min-width: 319px;
+		min-height: 270px;
+	}
+	
+	.profile-pic-outer .teams, .profile-info, .profile-pic-outer .border-right div.span6, .question {
+		display: none;
+	}
+	
+	.stats-panel {
+		width: 100% !important;
+	}
+	
+	.green-left-heading {
+		width: 100%;
+		text-align: left;
+	}
+	
+	.profile-comment-list-box #comment-list {
+		margin: 0 0 0 10px;
+	}
+	
+	.bubble .content p.comment-text {
+		padding: 5px 10px 5px 54px;
+	}
+	
+	.poster-info {
+		float: left;
+		padding-left: 11px;
+	}
+	
+	#image-wrap div.image-item-container {
+		width: 150px;
+		height: 140px;
+	}
+	
+	#image-wrap ul li.image {
+		min-height: 142px;
+		padding: 0;
+		margin: 0;
+		padding-right: 5px;
+	}
+	
+	#image-wrap ul.image-list {
+		margin-left: 5px;
+	}
+	
+	#image-wrap div.image-item-container > img {
+		min-width: 146px;
+		min-height: 220px;
+	}
+	
+	#image-wrap .circle {
+		width: 62px;
+		height: 74px;
+		margin: -132px 30px 30px 30px;
+	}
+	
+	.add-image {
+		background-position: 0 0;
+		margin-left: 5px;
+	}
+	
+	.add-icon {
+		background: url(images/icons/mobile/add-icons.png) no-repeat;
+		width: 150px;
+		height: 45px;
+	}
+	
+	.add-video {
+		background-position: -1px -55px;
+	}
+	
+	.team-label {
+		margin: 0 !important;
+		background: #e0e0e0;
+	}
+	
+	#schedule-list {
+		margin-left: 5px;
+	}
+	
+	.select-team {
+		position: relative;	
+		float: left;	
+	}
+	
+	.game-box-outer {
+		background: #FFF;
+		border-radius: 0;
+		padding: 0;
+		margin: 0;
+	}
+	
+	.game-box-outer ul, .game-box-outer a {
+		background: #FFF;
+		border-radius: 0;
+		pointer-events: none;
+		height: auto;
+	}
+	
+	.game-box-outer a {
+		top: 62px;
+		left: -10px;		
+	}
+	
+	.game-box-outer div.game-info {
+		display: block !important;
+		box-shadow: none;
+		border: none;
+		float: right;
+		width: 84%;
+	}
+	
+	.game-box-outer li {
+		float: left;
+		
+	}
+	
+	#schedule-list .right-with-icon {
+		position: absolute;
+		bottom: -24px;
+	}
+	
+	
+	
+	#fans-div div.image-item-container {
+		width: 150px;
+		height: 140px;
+	}
+	
+	#fans-div ul li.image {
+		min-height: 142px;
+		padding: 0;
+		margin: 0;
+		padding-right: 5px;
+	}
+	
+	#fans-div ul.image-list {
+		margin-left: 5px;
+	}
+	
+	#fans-div div.image-item-container > img {
+		min-width: 146px;
+		min-height: 220px;
+	}
+	
+	#fans-div .circle {
+		width: 62px;
+		height: 74px;
+		margin: -132px 30px 30px 30px;
+	}
+	
+	.add-to-list {
+		background-position: 0 0;
+		margin-left: 5px;
+	}
+	
+	.add-to-list, .invite-from-fb {
+		background: url(images/icons/mobile/add-followers.png) no-repeat;
+		width: 150px;
+		height: 45px;
+	}
+	
+	.invite-from-fb {
+		background-position: -1px -55px;
+	}
+	
 }

@@ -38,8 +38,8 @@
 							</label>
 						</div>
 					</div>
-					<% if(fb_invite != undefined){ %>
-						<input type="hidden" name="fb_invite_id" value="<%= fb_invite %>" />
+					<% if(invite_hash){ %>
+						<input type="hidden" name="invite_hash" value="<%= invite_hash %>" />
 					<% } %>
 					<input type="submit" name="create" value="Sign Up" class="next btn-common btn-green regsubmitfinal" />
 				</div>
