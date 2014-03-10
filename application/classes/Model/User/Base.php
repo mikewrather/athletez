@@ -1584,7 +1584,7 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 		if($match->loaded()){
 			Auth::instance()->force_login($match,false);
 			$match->addIdentity($facebook['id'],'facebook');
-			$match->registerFbInvite($facebook['id']);
+			$match->executeInvite(array("facebook_id"=>$facebook['id']));
 			return array("merge_existing"=>true);
 		}
 
@@ -1866,7 +1866,9 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 					return $e;
 				}
 
-				if(isset($fb_invite_id)) $this->registerFbInvite($fb_invite_id);
+				if(isset($invite_hash)) $this->executeInvite(array(
+					"sechash" => $invite_hash
+				));
 
 //				Email::registration_email($this);
 				$follower = ORM::factory('User_Followers');
@@ -1880,9 +1882,14 @@ class Model_User_Base extends Model_Auth_User implements Model_ACL_User
 		}
 	}
 
-	public function registerFbInvite($fb_invite)
+	public function executeInvite($args)
 	{
-		$invite = ORM::factory('Site_Invite_Facebook')->where('invite_fb','=',$fb_invite)->find();
+		if(isset($args['sechash']))
+			$invite = ORM::factory('Site_Invite')->where('sechash','=',$args['sechash'])->find();
+		else if(isset($args['facebook_id']))
+			$invite = ORM::factory('Site_Invite_Facebook')->where('invite_fb','=',$args['facebook_id'])->find();
+		else return false;
+
 		if($invite->loaded() && $this->loaded())
 		{
 			$invite->new_user_id = $this->id;

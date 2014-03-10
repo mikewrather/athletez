@@ -10,15 +10,14 @@
  *
  */
 
-class Controller_Api_Fbinvite extends Controller_Api_Base
+class Controller_Api_Invite extends Controller_Api_Base
 {
 
-	protected $_table_name = 'invites';
 
 	public function __construct($request,$response)
 	{
 		parent::__construct($request,$response);
-		$this->mainModel = ORM::factory('Site_Invite_Facebook');
+		$this->mainModel = ORM::factory('Site_Invite');
 		$this->popMainModel();
 	}
 	public function action_index()
@@ -44,16 +43,18 @@ class Controller_Api_Fbinvite extends Controller_Api_Base
 			$args['sechash'] = trim($this->request->query('sechash'));
 		}
 
-		// fbid
-		// Retrieve invite by fbid
-		if(trim($this->request->query('fbid')))
-		{
-			$args['fbid'] = $this->request->query('fbid');
+		$this->mainModel = Model_Site_Invite::invite_factory($args['sechash']);
+
+		$retArr = $this->mainModel->getBasics();
+
+		if($user = $this->mainModel->find_matching_user()) {
+		//	print_r($user);
+			Auth::instance()->force_login($user->email,false);
+			$retArr["force_login"]=true;
 		}
+		else $retArr["force_login"]=false;
 
-		$res = $this->mainModel->getInviteData($args);
-
-		return $res;
+		return $retArr;
 
 	}
 
@@ -85,11 +86,6 @@ class Controller_Api_Fbinvite extends Controller_Api_Base
 			$invite_type = $this->request->post('invite_type');
 		}
 
-		if($this->request->post('fbid'))
-		{
-			$fbid = $this->request->post('fbid');
-		}
-
 		if($this->request->post('sechash'))
 		{
 			$sechash = $this->request->post('sechash');
@@ -105,6 +101,41 @@ class Controller_Api_Fbinvite extends Controller_Api_Base
 			$this->processValidationError($result,$this->mainModel->error_message_path);
 			return false;
 		}
+	}
+
+	/**
+	 * action_post_accept()
+	 * via /api/invite/accept/{invites_id}
+	 *
+	 */
+	public function action_post_accept()
+	{
+
+		if(!($user = Auth::instance()->get_user()))
+			$this->throw_permission_error(Constant::NOT_OWNER);
+
+		$this->payloadDesc = "";
+		$arguments = array();
+		// CHECK FOR PARAMETERS:
+		// sechash
+		//
+
+		if(trim($this->request->post('sechash')) != "")
+		{
+			$sechash = trim($this->request->post('sechash'));
+		}
+
+		$result = $this->mainModel->accept($sechash,$user);
+		if(get_class($result) == get_class($this->mainModel) || is_subclass_of($result,get_class($this->mainModel))){
+			return $result;
+		}
+		elseif(get_class($result) == 'ORM_Validation_Exception')
+		{
+			//parse error and add to error array
+			$this->processValidationError($result,$this->mainModel->error_message_path);
+			return false;
+		}
+
 	}
 
 }

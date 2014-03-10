@@ -11,13 +11,17 @@ define([
         "text!common/templates/add-description.html",
         'facade', 
         'views',
+	'vendor'
         ], function(require, addDescriptionTemplate) {
 
     var AddImageView,
         facade = require('facade'),
         views = require('views'),
         addView = facade.Backbone.View.extend({}),
-        BaseView = views.BaseView;
+        BaseView = views.BaseView,
+
+	    vendor = require('vendor'),
+	    Mustache = vendor.Mustache;
 
     AddImageView = BaseView.extend({
         className: "", 

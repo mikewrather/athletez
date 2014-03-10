@@ -3,7 +3,16 @@
 // Requires `define`
 // Return {ImageItemView} object as constructor
 
-define(['vendor', 'views', 'utils', 'text!packages/fbinvite/templates/image-item.html', 'packages/fbinvite/models/invite', 'utils/storage','chrome/views/header', 'component/fb'], function(vendor, views, utils, imageItemTemplate) {
+define(['vendor',
+	'views',
+	'utils',
+	'text!packages/fbinvite/templates/image-item.html',
+	'packages/fbinvite/models/invite',
+	'utils/storage',
+	'chrome/views/header',
+	'component/fb',
+	'vendor/plugins/sha256'
+], function(vendor, views, utils, imageItemTemplate) {
 
 	var ImageItemView, $ = vendor.$, BaseView = views.BaseView, Mustache = vendor.Mustache,
 	voteModel = require('votes/models/vote'),
@@ -120,8 +129,10 @@ define(['vendor', 'views', 'utils', 'text!packages/fbinvite/templates/image-item
 		},
 		
 		postMessage: function(e) {
+			this.invitehash = CryptoJS.SHA256(new Date().getTime() + "_" + this.model.get("payload").id);
+
 			var _self = this, options = {};
-			options.link = "#acceptfbinvite/"+this.model.get("payload").id;
+			options.link = "?ih="+ this.invitehash + "#acceptfbinvite/"+this.model.get("payload").id;
 			options.name = "Come join Me on Atheletez";
 			options.picture = "http://cdn.athletez.com/resources/img/athletez_logo_small.png";
 			options.description = "You have been invited to sign up for http://athletez.com";
@@ -141,6 +152,7 @@ define(['vendor', 'views', 'utils', 'text!packages/fbinvite/templates/image-item
 			console.log(this.FBoptions);
 			if(this.FBoptions) model.set({
 				invite_type:this.FBoptions.invite_type,
+				'sechash':this.invitehash.toString(CryptoJS.enc.Base64),
 				'invite_to': {
 					subject_id: this.FBoptions.subject_id,
 					enttype_id: this.FBoptions.enttypes_id

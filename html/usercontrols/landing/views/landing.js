@@ -13,18 +13,25 @@ define(['require',
 	'utils',
 	'usercontrols/landing/models/fb-user',
 	'common/models/entparse',
-	'vendor'], function(require) {
+	'vendor',
+	'packages/invite/views/invite'], function(require) {
 
-	var facade = require('facade'), views = require('views'),
-		SectionView = views.SectionView, utils = require('utils'),
+	var facade = require('facade'),
+		views = require('views'),
+		SectionView = views.SectionView,
+		utils = require('utils'),
 
 		signupBaseModel = require("signup/models/registerbasic"),
 		signupBaseView=require("signup/views/registerbasic"),
 		UserModel = require('usercontrols/landing/models/fb-user'),
-		entParser = require('common/models/entparse');
+		entParser = require('common/models/entparse'),
+		InviteView = require('packages/invite/views/invite'),
 
-		Channel = utils.lib.Channel, vendor = require('vendor'),
-		Mustache = vendor.Mustache, $ = facade.$;
+		Channel = utils.lib.Channel,
+		vendor = require('vendor'),
+		Mustache = vendor.Mustache,
+		$ = facade.$,
+		_ = facade._;
 
 	var BaseView = views.BaseView, Backbone = facade.Backbone, _self,
 		layoutTemplate = require('text!usercontrols/landing/templates/landing.html');
@@ -52,11 +59,14 @@ define(['require',
 			_self.data = {};
 			_self.selectedOptions = [];
 			_self.setOptions(options);
+			_self.setDefaults();
 			// get the user detail if fbid is defined
 			try {
-				if(typeof(options)=='object' && options.userId) {
-					_self.userId = options.userId;
-					_self.getUserData();
+
+				if(typeof(options)==='object' && !_.isUndefined(options.invite_model)) {
+					this.invite_model = options.invite_model;
+					console.log(this.invite_model);
+					_self.getUserData(this.invite_model);
 				} else {
 					_self.render();
 				}
@@ -64,35 +74,62 @@ define(['require',
 				console.error(e);
 			}
 		},
-		
-		getUserData: function() {
-			var _self = this, model = new UserModel();
-			model.fbUserId = this.userId;
-			console.log(model);
-			model.fetch();
-			$.when(model.request).done(function() {
-				var mpay = model.get('payload');
-				console.log(mpay);
-				var parser = new entParser({
-					'mpay':mpay.invite_to_obj,
-					display_width:1920,
-					display_height:1024
-				});
-				var extra = parser.parsedData;
 
-				_self.data = {
-					firstname: mpay.fb_user_data.first_name,
-					lastname:mpay.fb_user_data.last_name,
-					invite_type:mpay.invite_type,
-					label: extra._label
-				}
-				var options = {};
-				if(typeof(extra.imgData == 'object')){
-					options.background_image = extra.imgData.url
-				}
-				console.log(extra);
-				_self.render(options);
+		checkForUser: function() {
+
+			if(!_.isUndefined(this.invite_model)){
+				console.log("INVITE MODEL",this.invite_model,this.invite_model.get('payload').force_login);
+				return ((!_.isUndefined(routing.userLoggedIn) && routing.userLoggedIn) ||
+					this.invite_model.get('payload').force_login==="true" ||
+					this.invite_model.get('payload').force_login===true) ? true:false;
+			}
+			else
+				return (!_.isUndefined(routing.userLoggedIn) && routing.userLoggedIn) ?true:false;
+
+		},
+
+		setDefaults: function(){
+
+			this.data = {
+				headline:"Athletes Live Here",
+				text:"And we mean all athletes.  It's simple: create a profile, connect with your team, share your games, post your highlights, get discovered."
+			};
+		},
+
+		getUserData: function(model) {
+			var _self = this;
+			console.log(model);
+
+			var mpay = model.get('payload');
+			console.log(mpay);
+			var parser = new entParser({
+				'mpay':mpay.invite_to_obj,
+				display_width:1920,
+				display_height:1024
 			});
+			var extra = parser.parsedData;
+
+			if(!_.isUndefined(mpay.fb_user_data) && !_.isUndefined(mpay.fb_user_data.first_name)){
+				this.data.headline = "Hey " + mpay.fb_user_data.first_name;
+				this.data.email = mpay.invite_email ? mpay.invite_email : null;
+			}
+
+			_self.data.text = mpay.users_obj.name + " invited you to " + mpay.invite_type + " " + extra._label + ".  ";
+
+			if(!this.checkForUser()){
+				_self.data.text += "Sign up now to get started!"
+			}
+			else {
+
+			}
+
+			var options = {};
+			if(typeof(extra.imgData == 'object')){
+				options.background_image = extra.imgData.url
+			}
+			console.log(extra);
+			_self.render(options);
+
 		},
 		
 
@@ -101,9 +138,12 @@ define(['require',
 			var _self = this, markup = Mustache.to_html(_self.template,_self.data);
 			this.$el = $('.register-wrapper-h');
 
+			console.log(markup);
+
 			if(!this.$el.length) {
 				$('body header').after('<div class="register-wrapper-h"></div>');
 				this.$el = $('.register-wrapper-h');
+				console.log(this.$el);
 			}
 
 
@@ -122,16 +162,65 @@ define(['require',
 				options.background_image = "http://athletez.s3.amazonaws.com/resources/img/landing/7.jpg";// + bgs[rand % bgs.length];
 
 			}
-			this.$el.css({
-				'background':'url('+ options.background_image + ') no-repeat',
-				'background-size':'cover'
-			});
+
+			_self.background_pic = new Image();
+			_self.background_pic.src = options.background_image;
+			_self.background_pic.onload = function(){
+				console.log("IMAGE DATA",this,_self.background_pic.height,_self.background_pic.width);
+
+
+				_self.$el.html(markup);
+
+
+				_self.$el.css({
+					'background':'url('+ options.background_image + ') no-repeat',
+					'background-size':'cover',
+					'background-position-y':'20%'
+				});
+
+
+				routing.off('center-landing-image');
+				routing.on('center-landing-image',function(){
+					_self.centerBackgroundVertically();
+				});
+
+				if(!_self.checkForUser()) _self.showReg();
+				else _self.showInvite();
+
+
+
+			}
+
+
 		//	console.error(options);
 		//	routing.trigger('common-popup-open', options);
 
-			this.$el.html(markup);
-			_self.showReg();
+
+
 			return this;
+		},
+
+		centerBackgroundVertically:function(){
+			var self = this;
+			setTimeout(function(){
+				var divheight = self.$el.height(),
+					divwidth = self.$el.width(),
+					picheight = self.background_pic.height,
+					picwidth = self.background_pic.width,
+					scale = divwidth/picwidth,
+					scaled_height = scale * picheight,
+					remainder_cut = scaled_height - divheight;
+
+				if(remainder_cut > 0){
+					var half = remainder_cut / 2;
+					self.$el.css({
+						'background-position-y':'-'+half+'px'
+					});
+				}
+
+				console.log(divheight,divwidth,picheight,picwidth,scale,scaled_height,remainder_cut);
+
+			},0);
 		},
 
 		scrollToContent:function(e){
@@ -149,7 +238,10 @@ define(['require',
 
 		showReg: function()
 		{
+			var _self = this;
 			this.regModel = new signupBaseModel();
+
+
 
 			this.regView = new signupBaseView({
 				model : this.regModel,
@@ -157,8 +249,19 @@ define(['require',
 				destination : "#reg-landing",
 				openAsaPage: true,
 				data: this.data,
+				invite_hash: this.invite_model && _.isObject(this.invite_model) ? this.invite_model.get('payload').sechash : false,
 				showOnLanding:true,
 				fb_invite: this.userId !== undefined ? this.userId : false
+			});
+
+
+
+		},
+
+		showInvite: function(){
+			var inviteView = new InviteView({
+				model:this.invite_model,
+				el:$("#reg-landing")
 			});
 		},
 

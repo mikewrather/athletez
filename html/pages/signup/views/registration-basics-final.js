@@ -6,7 +6,7 @@ define(['require', 'text!signup/templates/basciFinal.html', 'backbone', 'undersc
 			this.callback = options.callback;
 			this.template = _.template(signupBasicTemplate, {
 				page : (options.openAsPopUp) ? true : false,
-				fb_invite : options.fb_invite ? options.fb_invite : false
+				invite_hash : options.invite_hash ? options.invite_hash : false
 			});
 			if (options.destination)
 				this.$el = $(options.destination);
@@ -258,7 +258,10 @@ define(['require', 'text!signup/templates/basciFinal.html', 'backbone', 'undersc
 						if(App.header) App.header.render(true);
 						_self.callback(function() {});
 					} else {
-						location.href = '#usersettings';
+						if($('.register-wrapper-h').length) {
+							$('.register-wrapper-h').slideUp('slow');
+						}
+						routing.navigate("usersettings", {trigger: true, replace: true});
 					}
 				},
 				error : function(msg) {

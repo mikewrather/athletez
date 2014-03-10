@@ -46,6 +46,7 @@ function (
 
         initialize: function (options) {
             this.template = headerTemplate;
+	        console.error(this);
 	        Channel('load:css').publish(["vendor/plugins/qtip/qtip.css"]);
         },
 

@@ -1,22 +1,10 @@
 <div style="margin: auto; text-align: center; height: 30px;"> </div><div id="landing-info">
 	<div id="landing-header"><!--<img src="http://cdn.athletez.com/resources/img/a_logo_smaller.png" style="width:50px; float: left;" />-->
-		{{#firstname}}
-		Hey {{firstname}}
-		{{/firstname}}
-		{{^firstname}}		
-		Athletez Live Here.
-		{{/firstname}}
+		{{headline}}
 		<hr />
 	</div>
 	<div id="site-info">
-		{{#firstname}}
-			{{#label}}You've been invited to {{#invite_type}}{{invite_type}}{{/invite_type}}{{^invite_type}}join{{/invite_type}} {{label}}.{{/label}}
-			{{^label}}Thanks for accepting your invitation!{{/label}}
-			Since you're already on facebook, we recommend using the "Connect With Facebook" option below.
-		{{/firstname}}
-		{{^firstname}}		
-		And we mean all athletes.  It's simple: create a profile, connect with your team, share your games, post your highlights, get discovered.
-		{{/firstname}}
+		{{text}}
 	
 
 		<hr />

@@ -1012,7 +1012,7 @@
 							}
 						}
 						else{
-							$user->registerFbInvite($retArr['id']);
+							$user->executeInvite($retArr['id']);
 							$retArr['identity_exists'] = true;
 						}
 					}
@@ -1620,9 +1620,9 @@
 				$arguments["firstname"] = trim($this->request->post('firstname'));
 			}
 
-			if(trim($this->request->post('fb_invite_id')) != "")
+			if(trim($this->request->post('invite_hash')) != "")
 			{
-				$arguments["fb_invite_id"] = trim($this->request->post('fb_invite_id'));
+				$arguments["invite_hash"] = trim($this->request->post('invite_hash'));
 			}
 
 			// lastname

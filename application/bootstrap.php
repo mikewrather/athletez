@@ -183,11 +183,6 @@ Kohana::modules(array(
 	"zencoder"      => MODPATH . 'zencoder',
 ));
 
-if(isset($_REQUEST['ih'])){
-	//this is where we can call the method to get the invite hash info and force the login
-	//Auth::instance()->force_login('mike.wrather@gmail.com',false);
-}
-
 /**
  * Base Page
  */

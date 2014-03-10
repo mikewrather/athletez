@@ -11,9 +11,10 @@
 
 class Model_Site_Invite_Facebook extends Model_Site_Invite
 {
-	
+
 	protected $_table_name = 'invites';
-	public $invite_to_obj;
+
+
 
 	public function __construct($id=NULL)
 	{
@@ -33,11 +34,19 @@ class Model_Site_Invite_Facebook extends Model_Site_Invite
 		),
 	);
 
-	public function deserializeUserData(){
-		return unserialize($this->fb_user_data);
+
+
+	public function find_matching_user($auto_login=false){
+		if(!$this->loaded()) return false;
+
+		$idents = ORM::factory('User_Identity');
+		//print_r($this);
+		return $idents->find_by_identity($this->invite_fb,$auto_login);
 	}
 
-	public function invite($fb_id,$invite_to,$invite_type)
+
+
+	public function invite($fb_id,$invite_to,$invite_type,$sechash=false)
 	{
 		$invite = ORM::factory('Site_Invite_Facebook');
 		$invite->where('invite_fb','=',$fb_id);
@@ -54,34 +63,9 @@ class Model_Site_Invite_Facebook extends Model_Site_Invite
 		$this->invite_to = empty($invite_to) ? null : serialize($invite_to);
 		$this->invite_type = empty($invite_type) ? null : $invite_type;
 		$this->invite_fb = $fb_id;
-		$this->setBasics();
+		$this->setBasics($sechash);
 		$this->beenSent();
 		return $this;
 	}
 
-	public function getInviteToObj($retObj=false)
-	{
-		if($this->loaded()){
-			$invite_to = unserialize($this->invite_to);
-			if(is_array($invite_to)){
-				$obj = Ent::eFact($invite_to['enttype_id'],$invite_to['subject_id']);
-				if(is_object($obj) && is_subclass_of($obj,'ORM') && $obj->loaded()) {
-					if($retObj) return $obj;
-					return $obj->getBasics();
-				}
-				else return false;
-			}
-		}
-	}
-
-	public function getInviteData($args){
-		extract($args);
-		if(isset($sechash)) $res = $this->where('sechash','=',$sechash);
-		elseif(isset($fbid)) $res = $this->where('invite_fb','=',$fbid);
-		else return false;
-
-		$res->find();
-		if($res->loaded()) return $res;
-		else return false;
-	}
 }
