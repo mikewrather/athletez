@@ -2891,12 +2891,13 @@ li.sport .teamlist-header, .stat-val-outer {
 		width: 100%;
 	}
 	
-	#main-sidebar, .commentson-outer-box-h {
-		display: none;
+	#main-sidebar, .commentson-outer-box-h, .games-add-icons-h .buttons-h {
+		display: none !important;
 	}
 	
+	.show-older {
+		float: left;
+	}
 	
-
-
 }
 

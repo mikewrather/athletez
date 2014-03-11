@@ -18,10 +18,12 @@
 	</div>
 </div>
 {{#eventPage}}
+
 	<a href="javascript: void(0);" title="Add an Event / Meet" class="add-event-h mobile-link right-with-icon">Add Event / Meet</a>
 {{/eventPage}}
 
 {{^eventPage}}
+		<a href="javascript: void(0);" title="show older" class="show-older mobile-link show-older-h"></a>
 		<a href="javascript: void(0);" title="add game" class="add-game-h mobile-link right-with-icon">Add Game.</a>
 {{/eventPage}}
 
@@ -37,19 +39,9 @@
 	{{/eventPage}}
 	{{^eventPage}}
 	<div>
+		<a href="javascript: void(0);" title="show older" class="show-older mobile-link show-older-h"></a>
 		<a href="javascript: void(0);" title="add game" class="add-game-h desktop-link right-with-icon">Add Game.</a>
 	</div>
 	{{/eventPage}}
-	
-	
-	
-	{{#eventPage}}
-		<a href="javascript: void(0);" title="Add an Event" class="add-event-h mobile-link right-with-icon">Add Event / Meet</a>
-	{{/eventPage}}
-	{{^eventPage}}
-		<a href="javascript: void(0);" title="add game" class="add-game-h mobile-link right-with-icon">Add Game.</a>
-	{{/eventPage}}
-	
-
 </div>
 {{/data}}
