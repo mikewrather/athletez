@@ -2336,8 +2336,14 @@ li.sport .teamlist-header, .stat-val-outer {
 		width: 100%;
 	}
 
-	.game-heading a {
+	/*.game-heading a {
 		float: left !important;
+	}*/
+	
+	.game-heading a {
+		background-color: #d36011 !important;
+		color: #FFF;
+		text-decoration: underline;
 	}
 
 	.teams-list {
