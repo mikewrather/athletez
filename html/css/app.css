@@ -2837,6 +2837,65 @@ li.sport .teamlist-header, .stat-val-outer {
 	.roster-images-h ul {
 		margin-left: 5px;
 	}
+	
+	.team-template-outer #votes-area-h {
+		display: none;
+	}
+	
+	.team-template-outer .profile-heading h3 {
+		font-size: 25px;
+		position: static;
+	}
+	
+	.team-template-outer .profile-heading h4 {
+		font-size: 20px;
+		position: static;
+	}
+	
+	.team-template-outer .profile-heading #editTeamLink {
+		float: right;
+	}
+	
+	
+	#team-image-container, #menu-container {
+		width: 100% !important;
+		margin-top: -26px;
+	}
+	
+	#team-image-container ul {
+		margin: 0;
+	}
+	
+	#team-image-container ul li.image {
+		padding: 0;
+	}
+	
+	#team-image-container div.image-item-container {
+		width: 320px;
+		height: 264px;
+	}
+	
+	#team-image-container div.image-item-container > img {
+		min-width: 346px;
+	}
+	
+	#menu-container {
+		height: 200px !important;
+	}
+	
+	#menu-container #sports-info {
+		margin-left: 30px;
+	}
+	
+	.game-green-heading > div {
+		width: 100%;
+	}
+	
+	#main-sidebar, .commentson-outer-box-h {
+		display: none;
+	}
+	
+	
 
 
 }
