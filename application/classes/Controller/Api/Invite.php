@@ -64,7 +64,7 @@ class Controller_Api_Invite extends Controller_Api_Base
 	 * via /api/fbinvite/invite/{invites_id}
 	 *
 	 */
-	public function action_post_invite()
+	public function action_post_emailinvite()
 	{
 		$this->payloadDesc = "This invites a FB friend based on his/her FB ID.";
 		$arguments = array();
@@ -86,13 +86,61 @@ class Controller_Api_Invite extends Controller_Api_Base
 			$invite_type = $this->request->post('invite_type');
 		}
 
+		if($this->request->post('emailList'))
+		{
+			$emailList = $this->request->post('emailList');
+		}
+
 		if($this->request->post('sechash'))
 		{
 			$sechash = $this->request->post('sechash');
 		}
 
-		$result = $this->mainModel->invite($fbid,$invite_to,$invite_type,$sechash);
-		if(get_class($result) == get_class($this->mainModel)){
+		if(isset($emailList)){
+			$result = $this->mainModel->email_invite($emailList,$invite_to,$invite_type);
+			if(is_array($result) || (is_object($result) && get_class($result) == get_class($this->mainModel))){
+				return $result;
+			}
+			elseif(get_class($result) == 'ORM_Validation_Exception')
+			{
+				//parse error and add to error array
+				$this->processValidationError($result,$this->mainModel->error_message_path);
+				return false;
+			}
+		}
+	}
+
+
+	/**
+	 * action_post_openinvite() This invites a FB friend based on his/her FB ID.
+	 * via /api/fbinvite/invite/{invites_id}
+	 *
+	 */
+	public function action_post_openinvite()
+	{
+		$this->payloadDesc = "This invites a FB friend based on his/her FB ID.";
+		$arguments = array();
+		// CHECK FOR PARAMETERS:
+		// fbid
+		// This is the FB user ID of the person being invited.
+
+		if($this->request->post('invite_to')){
+			try{
+				$obj = $this->request->post('invite_to');
+				if(is_object($obj)) $invite_to = (array)$obj;
+			} catch(Exception $e){
+				$invite_to = array();
+			}
+		}
+
+		if($this->request->post('invite_type'))
+		{
+			$invite_type = $this->request->post('invite_type');
+		}
+
+
+		$result = $this->mainModel->open_invite($invite_to,$invite_type);
+		if(is_array($result) || (is_object($result) && get_class($result) == get_class($this->mainModel))){
 			return $result;
 		}
 		elseif(get_class($result) == 'ORM_Validation_Exception')
@@ -101,6 +149,7 @@ class Controller_Api_Invite extends Controller_Api_Base
 			$this->processValidationError($result,$this->mainModel->error_message_path);
 			return false;
 		}
+
 	}
 
 	/**

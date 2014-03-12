@@ -102,6 +102,28 @@ class Model_Site_Invite extends ORM
 		return $invite;
 	}
 
+	public static function email_invite($emailList,$invite_to,$invite_type){
+		$retArr = array();
+		foreach($emailList as $emailAddress){
+			$invite = ORM::factory('Site_Invite_Email');
+			$invite->invite($emailAddress,$invite_to,$invite_type);
+			$retArr[] = $invite->getBasics();
+			unset($invite);
+		}
+		return $retArr;
+
+	}
+
+	public function open_invite($invite_to,$invite_type){
+
+		$this->invite_to = empty($invite_to) ? null : serialize($invite_to);
+		$this->invite_type = empty($invite_type) ? null : $invite_type;
+
+		$this->setBasics(null);
+		$this->beenSent();
+		return $this;
+	}
+
 	public function getInviteToPage(){
 		if($this->loaded()){
 			$invite_to = unserialize($this->invite_to);
@@ -126,7 +148,7 @@ class Model_Site_Invite extends ORM
 		if($user->id > 0)
 		{
 			$this->users_id = $user->id;
-			$this->sechash = $sechash? $sechash : hash('sha256',time()."_".$user->id);
+			$this->sechash = $sechash? $sechash : hash('sha256',microtime()."_".$user->id."_".rand(0,999999));
 		}
 
 		try{

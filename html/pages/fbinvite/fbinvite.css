@@ -13,3 +13,88 @@
     padding: 0;
     overflow-y: scroll !important;
 }
+
+#fbInvite #search-area{
+    display: inline-block;
+}
+#fbInvite div.label{
+    display: block;
+    
+}
+
+#fbInvite div.label .main{
+    font-size:1.2em;
+    
+}
+
+#fbInvite div.label .sublabel{
+    font-size: .9em;
+}
+
+#fbInvite textarea.emaillist{
+    width:90%;
+    height: 50px;
+}
+
+#fbInvite ul.recipient_list{
+    border:5px solid #eaeaea;
+    padding:10px;
+    width: 90%;
+}
+#fbInvite ul.recipient_list li{
+
+}
+#fbInvite ul.recipient_list li.sent{
+    color: #cdcdcd;
+}
+#fbInvite ul.recipient_list li.sent:before{
+    content:"\2714 ";
+}
+#fbInvite .inviteTypes{
+    width:100%;
+}
+#fbInvite ul.large-menu{
+    width:80%;
+    margin: auto;
+}
+#fbInvite ul.large-menu li{
+    margin-top:15px;
+    padding:10px;
+    border:7px solid #dbdbdb;
+    height:80px;
+}
+
+#fbInvite ul.large-menu li div.icon{
+    max-width: 50px;
+    min-height: 50px;
+    width:10%;
+    float: left;
+    border: 1px solid #333;
+    margin-right:10px;
+}
+
+#fbInvite ul.large-menu li span
+{
+    padding:5px;
+}
+#fbInvite ul.large-menu li span.option-title{
+    float: left;
+    font-weight: bold;
+    font-size:1.2em;
+    width:85%;
+}
+
+#fbInvite ul.large-menu li span.option-desc{
+    float: left;
+    display:block;
+}
+
+
+#fbInvite #invite-types-menu{
+    display: inline-block;
+    margin: 15px;
+}
+#fbInvite #inviteTypesMenu{
+    display: inline-block;
+
+}

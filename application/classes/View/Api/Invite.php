@@ -27,16 +27,19 @@ class View_Api_Invite extends Api_Viewclass
 
 	}
 
-
 	/**
 	 * post_invite() This invites a FB friend based on his/her FB ID.
 	 *
 	 * @retun array
 	 */
-	public function post_invite()
+	public function post_emailinvite()
 	{
-		$retArr = $this->obj->getBasics();
-		return $retArr;
+		if(is_object($this->obj) && is_subclass_of($this->obj,"ORM")) return $this->obj->getBasics();
+		elseif(is_array($this->obj)) return $this->obj;
+	}
+
+	public function post_openinvite(){
+		return $this->obj->getBasics();
 	}
 	/**
 	 * post_accept()
