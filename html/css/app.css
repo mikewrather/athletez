@@ -2899,5 +2899,79 @@ li.sport .teamlist-header, .stat-val-outer {
 		float: left;
 	}
 	
+	#top-rated {
+		display: none;
+	}
+	
+	.home-template .fixed-icons {
+		position: static !important;
+		width: 100% !important;
+	}
+	
+	.home-template #main-content {
+		display: block;
+	}
+	
+	.home-template #menu {
+		border: 1px solid #000;
+		padding: 2%;
+		margin: 2%;
+		width: 92%;
+	}
+	
+	.fixed-icons ul {
+		margin: 0 0 0 10px;
+	}
+	
+	.fixed-icons li {
+		float: left;
+		width: 55px;
+	}
+	
+	.home-template #sport {
+		margin-top: 10px;
+	}
+	
+	.home-template #sport, .home-template .menu, .home-template #location, .home-template #views {
+		width: 60% !important;
+		padding-left: 10px;
+	}
+	
+	.home-template .search-box a {
+		margin-top: 10px;
+		float: right;
+	}
+	
+	#search-result .image-item-container {
+		width: 157px;
+		height: 180px;
+	}
+	
+	#search-result div.image-item-container > img {
+		min-width: 157px;
+		min-height: 181px;
+	}
+	
+	#search-result ul li.image {
+		padding: 0;
+		min-height: 184px;
+	}
+	
+	#search-result ul#image-list {
+		padding-left: 0px !important;
+	}
+	
+	#search-result ul li.image:nth-child(2n+1) {
+		margin-right: 5px;		
+	}
+	
+	.search-result-outer .left-arrow-page, .search-result-outer .right-arrow-page {
+		display: none;
+	}
+	
+	.search-box input {
+		margin: 0px 10px !important;
+	}
+	
 }
 

@@ -10,7 +10,7 @@ define(
 
 			MenuView = SectionView.extend({
 
-				id : 'menu',
+				id : 'menu1',
 				events : {
 					"blur #search" : "updateSearch",
 					"focus #search": "hideDropdown",
