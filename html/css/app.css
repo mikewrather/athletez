@@ -2318,7 +2318,7 @@ li.sport .teamlist-header, .stat-val-outer {
 @media only screen and (max-width: 480px) {
 }
 
-@media only screen and (max-width: 320px) {
+@media only screen and (min-width: 320px) and (max-width: 767px) {
 
 	body {
 		margin: 0 !important;
@@ -2445,6 +2445,7 @@ li.sport .teamlist-header, .stat-val-outer {
 	#main-header .profile-pic-outer ul.image-outer-h li.image {
 		margin: 0;
 		padding: 0;
+		width: 100%;
 	}
 
 	#main-header .profile-pic-outer ul.image-outer-h {
@@ -2452,13 +2453,14 @@ li.sport .teamlist-header, .stat-val-outer {
 	}
 
 	.profile-pic-outer .image-item-container {
-		width: 319px;
+		width: 100%; /*319px;*/
 		height: 270px;
 	}
 
 	.profile-pic-outer div.image-item-container > img {
-		min-width: 319px;
+		min-width: 100%; /*319px;*/
 		min-height: 270px;
+		width: 100%;
 	}
 
 	.profile-pic-outer .teams, .profile-info, .profile-pic-outer .border-right div.span6, .question {
@@ -2497,6 +2499,7 @@ li.sport .teamlist-header, .stat-val-outer {
 		padding: 0;
 		margin: 0;
 		padding-right: 5px;
+		width: 47%;
 	}
 
 	#image-wrap ul.image-list {
@@ -2558,7 +2561,7 @@ li.sport .teamlist-header, .stat-val-outer {
 	}
 
 	.game-box-outer a {
-		top: 65px;
+		top: 40px;
 		left: -10px;
 	}
 
@@ -2568,6 +2571,10 @@ li.sport .teamlist-header, .stat-val-outer {
 		border: none;
 		float: right;
 		width: 84%;
+	}
+	
+	#schedule-list .select-team {
+		width: 100%;
 	}
 
 	.game-box-outer li {
@@ -2593,6 +2600,7 @@ li.sport .teamlist-header, .stat-val-outer {
 		padding: 0;
 		margin: 0;
 		padding-right: 5px;
+		width: 47%;
 	}
 
 	#fans-div ul.image-list {
@@ -2808,6 +2816,7 @@ li.sport .teamlist-header, .stat-val-outer {
 		padding: 0;
 		margin: 0;
 		padding-right: 5px;
+		width: 47%;
 	}
 
 	#roster-wrap ul.image-list {
@@ -2868,15 +2877,18 @@ li.sport .teamlist-header, .stat-val-outer {
 	
 	#team-image-container ul li.image {
 		padding: 0;
+		width: 100%;
 	}
 	
 	#team-image-container div.image-item-container {
-		width: 320px;
+		width: 100%; /*320px;*/
 		height: 264px;
 	}
 	
 	#team-image-container div.image-item-container > img {
-		min-width: 346px;
+		/*min-width: 346px;*/
+		width: 100%;
+		min-width: 100%;
 	}
 	
 	#menu-container {
@@ -2892,6 +2904,10 @@ li.sport .teamlist-header, .stat-val-outer {
 	}
 	
 	#main-sidebar, .commentson-outer-box-h, .games-add-icons-h .buttons-h {
+		display: none;
+	}
+	
+	.buttons-h {
 		display: none !important;
 	}
 	
@@ -2955,6 +2971,7 @@ li.sport .teamlist-header, .stat-val-outer {
 	#search-result ul li.image {
 		padding: 0;
 		min-height: 184px;
+		width: 49%;
 	}
 	
 	#search-result ul#image-list {
@@ -2971,6 +2988,11 @@ li.sport .teamlist-header, .stat-val-outer {
 	
 	.search-box input {
 		margin: 0px 10px !important;
+	}
+	
+	.search-box {
+		float: left !important;
+		width: 100% !important;
 	}
 	
 }
