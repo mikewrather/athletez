@@ -1,4 +1,4 @@
-define(['require', 'text!signup/templates/registration.html', 'text!signup/templates/registration_landing.html', 'backbone', 'underscore', 'registration', 'login', 'views', 'signup/views/facebooksignup', 'facade', 'utils', "signup/views/registration-basics-final", "signup/models/registration-basics-final"], function(require, signupBasicTemplate, signupBasicLandingTemplate, backbone, _, RegistrationController, loginController) {
+define(['require', 'text!signup/templates/registration.html', 'text!signup/templates/registration_landing.html', 'backbone', 'underscore', 'registration', 'login', 'views', 'signup/views/facebooksignup', 'facade', 'utils', "signup/views/registration-basics-final", "signup/models/registration-basics-final"], function(require, signupBasicTemplate, signupBasicLandingTemplate, backbone, _, RegistrationController, LoginController) {
 
 	var SignupBasicView,
 		facade = require('facade'),
@@ -19,19 +19,20 @@ define(['require', 'text!signup/templates/registration.html', 'text!signup/templ
 				"route" : "",
 				callback: this.callback
 			});
-			this.fb_invite = options.fb_invite ? options.fb_invite : false;
+
+			this.invite_hash = options.invite_hash ? options.invite_hash : false;
 			console.log("Options passed to registerbasics",options);
 			this.AcceptData = (options.data) ? options.data : undefined;
 
 			if (options.showOnLanding == true)
 				this.template = _.template(signupBasicLandingTemplate, {
 					onlyRegister : (this.openAsaPage) ? true : false,
-					fb_invite : this.fb_invite
+					invite_hash : this.invite_hash
 				});
 			else
 				this.template = _.template(signupBasicTemplate, {
 					onlyRegister : (this.openAsaPage) ? true : false,
-					fb_invite : this.fb_invite
+					invite_hash : this.invite_hash
 				});
 
 			this.$el = $(options.destination);
@@ -40,7 +41,7 @@ define(['require', 'text!signup/templates/registration.html', 'text!signup/templ
 			this.render();
 
 			// I'm assigning this to a global variable because we are going to be calling it from an el's onclick event
-			this.facebookView = new FbHeader({callback: this.callback});
+			this.facebookView = new FbHeader({callback: this.callback,invite_hash:this.invite_hash});
 		},
 
 		render : function() {
@@ -48,7 +49,9 @@ define(['require', 'text!signup/templates/registration.html', 'text!signup/templ
 			if (this.AcceptData) {
 				this.$el.find("input[name=firstname]").val(this.AcceptData.firstname);
 				this.$el.find("input[name=lastname]").val(this.AcceptData.lastname);
+				this.$el.find("input[name=email]").val(this.AcceptData.email);
 			}
+			routing.trigger('center-landing-image',{});
 		},
 
 		events : {
@@ -94,7 +97,7 @@ define(['require', 'text!signup/templates/registration.html', 'text!signup/templ
 						},
 						openAsPopUp : true,
 						callback : this.callback,
-						fb_invite:this.fb_invite,
+						invite_hash:this.invite_hash,
 						destination:$('#reg-cont')
 
 					};
@@ -120,9 +123,15 @@ define(['require', 'text!signup/templates/registration.html', 'text!signup/templ
 
 		showLogin : function(event) {
 			event.preventDefault();
+			var fields = this.$(":input").serializeArray();
+			var LoginController = require('login');
+
 			routing.trigger('common-popup-close');
 			this.logincontroller = new LoginController({
-				callback : this.callback
+				callback : this.callback,
+				attr : {
+					"attr" : fields
+				}
 			});
 			routing.trigger("Login");
 		}

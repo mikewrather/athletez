@@ -71,6 +71,7 @@ class Email {
 			->messageHtml($queue->message_body);
 
 		$pm->addTo($queue->to_address, $user->name());
+	//	$pm->addTo("weare@athletez.com","Athletez Mailbox");
 		$pm->addBcc("weare@athletez.com","Athletez Mailbox");
 
 		try{
@@ -83,6 +84,7 @@ class Email {
 					'queue' => $queue
 				));
 			}
+
 		} catch(Exception $e){
 
 		}

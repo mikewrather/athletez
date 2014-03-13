@@ -99,7 +99,31 @@ define([
 			this.setupLayout().render();
 			this.createData();
 			this.handleDeferreds();
+			this.handleClickEvents();
 		},
+		
+		handleClickEvents: function() {
+				$(document).off('click', ".green-left-heading");
+				$(document).on('click', ".green-left-heading", function() {
+					
+					if($(this).hasClass("down-arrow-heading")) {
+						$(this).removeClass("down-arrow-heading");
+						$(this).next().slideUp();
+						if($(this).next().attr("id") == "commenton-wrap") {
+							$(this).next().next().slideUp();
+						}
+						$(this).parent().parent().next().slideUp();
+					} else {
+						$(this).addClass("down-arrow-heading");
+						$(this).next().slideDown();
+						
+						if($(this).next().attr("id") == "commenton-wrap") {
+							$(this).next().next().slideDown();
+						}
+						$(this).parent().parent().next().slideDown();
+					}
+				});
+			},
 
 		createData: function () {
 			this.basics = new GameBasicsModel({id: this.id});

@@ -13,7 +13,7 @@
 				or
 			</div>
 			<div id="regpanemain">	
-				<form action="/user/login" method="post" accept-charset="utf-8">
+				<form action="/user/login" method="post" accept-charset="utf-8" id="login">
 					<div id="firstregbase">
 						<!--<div class="loginbase">
 							<!--<label for="username">Email</label>-->
@@ -21,10 +21,8 @@
 							<!--<label for="password">Password</label>-->
 							<input type="password" name="password" placeholder="Password" />
 							<div class="loguser">
-								<input type="checkbox" name="remember" />
-								<label for="remember">Remember Me</label>
-								
-								<p>(Remember Me keeps you logged in for 2 weeks)</p>
+								<input type="checkbox" checked="checked" name="remember" />
+								<label for="remember">Remember me for 2 weeks</label>
 							</div>	
 						<!--</div>-->	
 						<div class="errormsg"></div>

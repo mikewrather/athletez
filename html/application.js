@@ -3,28 +3,35 @@
 // Requires define
 // Return {Object} App
 define( ["facade", "utils", "collections", "chrome", "controller", "profile", "imageup",'home','videopreview',
+
 	"game", "team", "registration","profilesetting","userresume","usercontrol/tag/tag",
 	"usercontrol/addgame/addgame","signup","login", "usercontrol/photo-player/photo-player", "usercontrol/add-club/add-club",
 	"utils/storage", 'usercontrol/location/views/view-location','signup/views/facebooksignup',"usercontrol/addevent/addevent",'chrome/views/header',
-	'browserpop/views/browser','usercontrol/landing/views/landing', 'pages/fbinvite','packages/common/views/popup'],
+	'browserpop/views/browser','usercontrol/landing/views/landing', 'pages/fbinvite','packages/common/views/popup','packages/invite/models/invite'],
+
+
 function (facade, utils, collections, chromeBootstrap, Controller, ProfileController, ImageController, HomeController, VideoPreviewController,
 	GameController, TeamController, RegistrationController,ProfileSetting,UserResume , TagController,
 	AddGameController, SignupController,LoginController,PhotoPlayerController, AddClubController,
 	Store, googleMapLocationview,fbreg, AddEventController,header) {
 
     //App;
-        var App, ApplicationStates = collections.ApplicationStates,
-        $ = facade.$,
-        _ = facade._,
-        Backbone = facade.Backbone,
-        Channel = utils.lib.Channel,
-        FbInviteController = require('pages/fbinvite'),
-	    browserView = require('browserpop/views/browser'),
-	    fbInviteView = require('browserpop/views/browser'),
-	    
-		landingView = require('usercontrol/landing/views/landing');
-        debug = utils.debug;
+        var App,
+	        ApplicationStates = collections.ApplicationStates,
+	        $ = facade.$,
+	        _ = facade._,
+	        Backbone = facade.Backbone,
+	        Channel = utils.lib.Channel,
+	        FbInviteController = require('pages/fbinvite'),
+		    browserView = require('browserpop/views/browser'),
+		//  fbInviteView = require('browserpop/views/browser'),
+		    InviteModel = require('packages/invite/models/invite'),
+
+			landingView = require('usercontrol/landing/views/landing'),
+	        debug = utils.debug;
+
    		App = Backbone.Router.extend({
+
         routes: {
             '': 'defaultRoute',
 	        
@@ -36,7 +43,7 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
 	        'acceptfbinvite/:id': 'aceptInvite',
 	        '!acceptfbinvite/:id': 'aceptInvite',
 	        'acceptfbinvite/:id/': 'aceptInvite',	
-	        '!acceptfbinvite/:id': 'aceptInvite',	                
+	        '!acceptfbinvite/:id': 'aceptInvite',
 
            // 'home/:action': 'initApp',
             'profile': 'showProfile',
@@ -195,7 +202,7 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
 					clearInterval(tryBrowser);
 
 					var showBrowserWindow = showMobileWindow = false;
-					if($.browser.ipad || $.browser.iphone || $.browser.android){
+					if($.browser.iphone || $.browser.android){
 						showMobileWindow = true;
 					}
 					if(!_.isUndefined($.browser.msie) && $.browser.msie){
@@ -230,10 +237,12 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
 			},500);
 		},
 		
-		aceptInvite: function(fbId) {
+		aceptInvite: function(invite_id) {
 			//setTimeout(function(){
 			//var landing = new landingView({userId: fbId});
 			//},2000);
+
+			routing.showLandingPage = false;
 
 			var self = this;
 	    	this.cancelAjaxRequests();
@@ -241,17 +250,27 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
             chromeBootstrap();
 	    	function initFBAccept(userId) {
 	    		$("body").addClass("fbaccept");
-				var title = "Athletez - We Are Athletes";
-			    setTimeout(function(){
-				    var landing = new landingView({userId: fbId});
-			    },500);
+				var title = "Athletez - We Are Athletes",
+					inviteModel = new InviteModel();
 
-	    		routing.showLandingPage = false;
-			    if(!fbId && $('div.register-wrapper-h').length == 0) {
-				    $('body header').after('<div class="register-wrapper-h"></div>');
-			    }
-			    self.gaPageView("FB Accept - "+ fbId,title);
-	    		self.showHomePage(userId);
+			    inviteModel.set('sechash',invite_id);
+
+			    inviteModel.fetch({
+				    success:function(model,data){
+					    var landing = new landingView({invite_model:model});
+						model.loadInvitePage();
+					    self.gaPageView("FB Accept - "+ invite_id,title);
+
+				    },
+				    error: function(){
+					    self.showHomePage(userId);
+				    }
+			    });
+
+
+
+
+
 	    	}
 	    	this.initialiRoutesInit(initFBAccept);   	
 		},
@@ -338,7 +357,7 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
 		        $(".modal:not(#Browser-detect)").remove();
 		        routing.trigger('common-popup-close');
 		    };
-	        this.hideSignup();
+	//      this.hideSignup();
         	$("body").removeClass("homePage");
         	routing.off('app-inited');
             routing.on('app-inited', function(id) {

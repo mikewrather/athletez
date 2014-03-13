@@ -57,6 +57,7 @@ define(['require',
 		},
 
 		afterRender: function(){
+			this.$el.css('height','95%');
 			this.showAddClubForm();
 		},
 		showAddClubForm:function(){

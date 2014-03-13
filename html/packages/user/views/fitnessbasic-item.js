@@ -8,7 +8,9 @@ define([
         'views',
         'utils', 
         'text!user/templates/fitnessbasic-item.html',
-        'user/models/fitness'
+        'user/models/fitness',
+		"vendor/plugins/qtip/qtip",
+		"text!vendor/plugins/qtip/qtip.css"
         ], 
 function (
         vendor,
@@ -46,7 +48,11 @@ function (
         	
         	if(index != -1) {
         		var model = new fitnessModel();
-				model.set({user_id: routing.loggedInUserId, resume_data_id: data[i].resume_data_id, user_value: $(e.target).val()});
+				model.set({
+					user_id: routing.loggedInUserId,
+					resume_data_id: $(e.currentTarget).data('resume-data-id'),
+					user_value: $(e.target).val()
+				});
 	        	model.save();
 	        	var $ele = $(e.target).parents("span.stat-val-outer").find(".stats-val-h");
 	        	$ele.html($(e.target).val());
@@ -70,6 +76,24 @@ function (
         		var d = this.user_value;
         	return d;
         },
+
+	      bindToolTips:function(){
+
+		      var self = this;
+		      $.each(this.$el.find('img'),function(){
+			      var $curr = $(this);
+			      $curr.qtip({
+				      //	content: 'test of qtip',
+				      position: {
+					      my: "bottom center",
+					      at: "top center"
+				      },
+				      style: {
+					      classes: 'header-dropdown'
+				      }
+			      });
+		      })
+	      },
  
         render: function () {
         	var data = {}, _self = this;
@@ -89,6 +113,10 @@ function (
 	            	_self.hideInput(e);
 	            });
             }
+
+	        //bind tooltips
+	        this.bindToolTips();
+
             return this;
         }        
         

@@ -13,6 +13,7 @@ define([
         'views',
         'votes/models/follow',
         'roster/models/roster',
+		'vendor',
         "vendor/plugins/qtip/qtip",
         "text!vendor/plugins/qtip/qtip.css"
         ], function(require, headingTemplate) {
@@ -22,7 +23,9 @@ define([
         views = require('views'),
         followModel = require( 'votes/models/follow'),
         model = require('roster/models/roster'),
-        BaseView = views.BaseView;
+        BaseView = views.BaseView,
+	    vendor = require('vendor'),
+	    Mustache = vendor.Mustache;
 
     AddImageView = BaseView.extend({
 

@@ -12,7 +12,6 @@ define(["require",
 		RegistrationEmailView = require("registration/views/register_email"), 
 		RegistrationUploadImageView = require("registration/views/upload_image"), 
 		RegistrationSelectOrgView = require("registration/views/select_org"),
-		popupview = require("signup/views/shopopup"),
 		LayoutView = views.LayoutView,
 		$ = facade.$,
 		_ = facade._,
@@ -53,8 +52,8 @@ define(["require",
 			 //Remove a previously-bound callback function from routing
 			routing.off('registration-with-facebook');
           	//Bind a callback function to an object routing
-          	routing.on('registration-with-facebook', function(callback) {
-            		controller.initRegisterFacebook(callback);				
+          	routing.on('registration-with-facebook', function(callback,inviteModel) {
+            		controller.initRegisterFacebook(callback,inviteModel);
             });
 
 			function registerWithFacebook() {
@@ -117,26 +116,28 @@ define(["require",
 			this.layout.render();
 		},
 
-		initRegisterFacebook : function(callback) {
+		initRegisterFacebook : function(callback,inviteModel) {
+
 			var controller = this;
 			this.refreshPage();
 			this.register_facebook = new RegistrationFacebookModel();
 			this.register_facebook.bind('request', controller.handleProgress, this);
 			this.register_facebook.fetch();
 			$.when(this.register_facebook.request).done(function(msg){
-							console.log(msg.payload.identity_exists,"payload");
-							if(msg.payload.identity_exists == true){
-								//if user already registered refresh the home page
-								routing.trigger('reload-home');
-							}
-							else{
-								this.pop = new popupview();
-								controller.setupRegisterFacebookView(callback);
-							}
-						}).fail(function(msg){
-							this.pop = new popupview();
-							controller.setupRegisterFacebookView();
-						});
+
+				if(!_.isUndefined(inviteModel) && _.isObject(inviteModel))inviteModel.save();
+
+				console.log(msg.payload.identity_exists,"payload");
+				if(msg.payload.identity_exists == true){
+					//if user already registered refresh the current page
+					location.reload();
+				}
+				else{
+					controller.setupRegisterFacebookView(callback);
+				}
+			}).fail(function(msg){
+				controller.setupRegisterFacebookView();
+			});
 
 
 		},
@@ -145,12 +146,13 @@ define(["require",
         	
 
 		},
-		setupRegisterFacebookView : function(callback) {
+		setupRegisterFacebookView : function(callback,inviteModel) {
 			this.registerFacebookView = new RegistrationFacebookView({
 				model : this.register_facebook,
 				name : "Registration with Facebook",
 				destination : "#main-contentreg",
-				callback: callback
+				callback: callback,
+				inviteModel:inviteModel
 			});
 			this.scheme.push(this.registerFacebookView);
 			this.layout.render();

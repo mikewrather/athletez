@@ -1,0 +1,18 @@
+.invite_buttons{
+    width: 45% !important;
+    display: block;
+    color: white;
+    font-size: 20px;
+    border-style: none;
+    height: 40px;
+}
+
+.invite_buttons.accept{
+    float: left;
+    background-color: #9DCA3C;
+}
+
+.invite_buttons.decline{
+    float: right;
+    background-color: #1AA0AE;
+}

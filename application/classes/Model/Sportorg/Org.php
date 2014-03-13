@@ -608,7 +608,7 @@ class Model_Sportorg_Org extends ORM
 	}
 
 	//this method creates a clone of this org and saves it with a new name so all the values transfer over
-	public function addOpponentOrg($name){
+	public function addOpponentOrg($name,$locations_id){
 
 		if(!$this->loaded()) return false;
 
@@ -618,6 +618,7 @@ class Model_Sportorg_Org extends ORM
 		$newOrg = ORM::factory('Sportorg_Org');
 		$newOrg->values($meAsArray);
 		$newOrg->name = $name;
+		if($locations_id) $newOrg->locations_id = $locations_id;
 
 		try{
 			$newOrg->save();

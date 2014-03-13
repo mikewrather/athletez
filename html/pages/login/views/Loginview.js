@@ -24,6 +24,7 @@ define([
               
               initialize: function (options) {
               	 this.callback = options.callback;
+	             if(!_.isUndefined(options.attr)) this.attr = options.attr;
                  this.signcontroller = new signupController();
                  this.template =  _.template(signInTemplate);
                  this.$el = $(options.destination);
@@ -38,7 +39,27 @@ define([
                      $('#Loginview').on('hide', function () {
                         $('div#LoginPopup').empty();
                      });
+
+	                if(!_.isUndefined(this.attr)){
+		                this.attr = this.setAttrPayload(this.attr);
+						this.$el.find('input[name="username"]').val(this.attr.email);
+		                this.$el.find('input[name="password"]').val(this.attr.password);
+						if(!_.isUndefined(this.attr.fb_invite_id))
+							this.$el.find('form#login').append('<input type="hidden" name="sechash" value="' + this.attr.fb_invite_id + '" />');
+
+	                }
                 },
+
+				setAttrPayload : function(attrs) {
+					var payload = {};
+					var fields = attrs.attr;
+
+					$.each(fields, function(i, field) {
+						payload[field.name] = field.value;
+					});
+
+					return payload;
+				},
                   
                 events:{
                   "click button#signup": "signupUser", 
@@ -95,6 +116,7 @@ define([
 							} else {
 		                        window.location.href = "#profile";
 	                    	}
+		                    routing.trigger('hide-landing');
 	                    },
 	                    error: function(msg) {
 	                        $( ".errormsg" ).empty();

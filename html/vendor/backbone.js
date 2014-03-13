@@ -2473,6 +2473,8 @@ Form.Field = Backbone.View.extend({
     var schema = this.schema,
         editor = this.editor;
 
+//	  console.log(schema,editor);
+
     //Only render the editor if Hidden
     if (schema.type == Form.editors.Hidden) {
       return this.setElement(editor.render().el);
@@ -2489,6 +2491,20 @@ Form.Field = Backbone.View.extend({
           selection = $container.attr('data-editor');
       if (_.isUndefined(selection)) return;
       $container.append(editor.render().el);
+
+	    if(schema.tooltip && schema.tooltip != ""){
+		    $container.find('input,label,textarea,.dropdown-wrapper').qtip({
+			    content: schema.tooltip,
+			    position: {
+				    my: "bottom center",
+				    at: "top center"
+			    },
+			    style: {
+		//		    classes: 'header-dropdown'
+			    }
+		    });
+	    }
+
     });
     this.setElement($field);
     
@@ -2527,11 +2543,19 @@ Form.Field = Backbone.View.extend({
     //Nested form editors (e.g. Object) set their errors internally
     if (this.editor.hasNestedForm) return;
 
+	  console.log(this.$el);
+
     //Add error CSS class
     this.$el.addClass(this.errorClassName);
+	  var self = this;
 
-    //Set error message
-    this.$('[data-error]').html(msg);
+	  //Set error message
+	  this.$('[data-error]').html(msg).fadeIn();
+	  setTimeout(function(){
+		  self.$('[data-error]').fadeOut(1000);
+	  },3000);
+
+
   },
 
   /**
@@ -2539,7 +2563,7 @@ Form.Field = Backbone.View.extend({
    */
   clearError: function() {
     //Remove error CSS class
-    this.$el.removeClass(this.errorClassName);
+   this.$el.removeClass(this.errorClassName);
 
     //Clear error message
     this.$('[data-error]').empty();

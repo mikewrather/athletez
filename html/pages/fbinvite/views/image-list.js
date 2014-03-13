@@ -12,7 +12,16 @@ function(facade,  utils,   BaseImageListView) {
 		name: "Image List",
 		
         setupAddView: function() {
-        }
+        },
+
+	//    initialize:function(options){
+	//	    console.log(options);
+	//	    BaseImageListView.prototype.initialize.call(this,options);
+	  //  },
+
+	    afterRender:function(){
+		//
+	    }
     });
 
     return ProfileImageVideoListView;

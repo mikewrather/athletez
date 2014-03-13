@@ -208,4 +208,3 @@ Route::set('default', '(<controller>(/<action>(/<id>(/<id2>))))')
 	'action' => 'index',
 ));
 
-

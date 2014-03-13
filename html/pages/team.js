@@ -124,8 +124,44 @@ define([
         init: function() {
             this.setupLayout().render();
             this.createData();
-            this.handleDeferreds();            
+            this.handleDeferreds();  
+            this.handleClickEvents();          
         },
+        
+        handleClickEvents: function() {
+				$(document).off('click', ".green-left-heading");
+				$(document).on('click', ".green-left-heading", function() {
+					
+					if($(this).hasClass("down-arrow-heading")) {
+						$(this).removeClass("down-arrow-heading");
+						$(this).next().slideUp();
+						if($(this).next().attr("id") == "commenton-wrap") {
+							$(this).next().next().slideUp();
+						}
+						
+						if($(this).next().hasClass("commentson-outer-box-h")) {
+							$(this).next().next().slideUp();
+						}
+						
+						
+						$(this).parent().parent().next().slideUp();
+					} else {
+						$(this).addClass("down-arrow-heading");
+						$(this).next().slideDown();
+						
+						if($(this).next().attr("id") == "commenton-wrap") {
+							$(this).next().next().slideDown();
+						}
+						
+						if($(this).next().hasClass("commentson-outer-box-h")) {
+							$(this).next().next().slideDown();
+						}
+						
+						$(this).parent().parent().next().slideDown();
+					}
+				});
+			},
+
         
         createData: function () {
             this.basics = new TeamBasicsModel({id:this.id});
@@ -169,7 +205,10 @@ define([
 	        	controller.commentson.subject_entity_type = subject_type_id;
 	        	controller.commentson.savePath = "/team/addcomment/"+team_id;
 				controller.commentson.id = team_id;
-				controller.commentson.targetElement = "#comment_div";				
+				controller.commentson.targetElement = "#comment_div";
+
+				controller.setupRosterView();
+
 				controller.ajaxCalls.push(controller.commentson.fetch());
                 controller.handleDeferredsDynamic();
             }
