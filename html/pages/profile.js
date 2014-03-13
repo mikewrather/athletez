@@ -195,10 +195,15 @@ define([
 				Channel('refresh-profilepage','unique').subscribe(callback);
 			},
 
+			setupOGTags:function(){
+
+			},
+
 			handleDeferreds: function () {
 				var controller = this;
 				$.when(this.basics.request).done(function () {
 					controller.setupHeaderView();
+					controller.setupOGTags();
 					controller.initVoteView();
 					//controller.setupAddMediaView();
 					var subject_type_id = controller.basics.get("payload").enttypes_id;
