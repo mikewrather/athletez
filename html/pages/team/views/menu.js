@@ -18,6 +18,7 @@ define([
         'team/views/sport-list',
         'usercontrol/dropdown/view/dropdown',
         'team/collections/seasonteams',
+        "media/views/image-item",
         'team/collections/complevels'
         ], 
 function(require, headerTemplate, selectSportTemplate) {
@@ -30,6 +31,7 @@ function(require, headerTemplate, selectSportTemplate) {
         TeamSportList = require('team/collections/sports'),
         DropDownList = require('usercontrol/dropdown/view/dropdown'), 
 		SeasonTeams = require('team/collections/seasonteams'),
+		 ImageItem = require("media/views/image-item"),
         CompLevels = require('team/collections/complevels'),
         utils = require('utils'),
         Channel = utils.lib.Channel,
@@ -50,6 +52,16 @@ function(require, headerTemplate, selectSportTemplate) {
         	this.headerView = options.headerView;
             SectionView.prototype.initialize.call(this, options);
             this.initSportList();
+            
+            
+             var  profileImageView = new ImageItem({
+        		model: this.model
+        	});
+        	
+        	profileImageView.render();
+        	$("#team-image-container-ul").html(profileImageView.$el);
+            
+            
         },
         
          selectSport: function(event) {
