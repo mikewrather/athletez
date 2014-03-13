@@ -77,7 +77,7 @@ class Model_Site_Invite_Email extends Model_Site_Invite
 			->bind('subject_header',$sub_header)
 			->bind('action_notification',$action_not);
 
-		Email::send_mail('weare@athletez.com',$subjectline,$baseview->render());
+		Email::send_mail($this->invite_email,$subjectline,$baseview->render());
 
 
 	}
