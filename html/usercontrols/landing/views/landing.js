@@ -185,7 +185,7 @@ define(['require',
 				});
 				
 				if(routing.mobile) {
-					this.$el.css({'background-position': '74% 0'});
+					_self.$el.css({'background-position': '74% 0'});
 				}
 
 

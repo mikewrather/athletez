@@ -2447,7 +2447,7 @@ li.sport .teamlist-header, .stat-val-outer {
 
 	.profile-heading {
 		position: relative;
-		min-height: 200px;
+		min-height: 130px;
 	}
 
 	.profile-heading .sports-h {
@@ -2464,6 +2464,10 @@ li.sport .teamlist-header, .stat-val-outer {
 	.profile-heading h4 {
 		position: absolute;
 		top: 35px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        width: 100%;
 	}
 
 	#main-header .profile-pic-outer ul.image-outer-h li.image {
@@ -2556,13 +2560,20 @@ li.sport .teamlist-header, .stat-val-outer {
 		background-position: -1px -55px;
 	}
 
-	.team-label {
+	.team-label, .event-sport-label {
+        display: inline-block;
+        font-weight: bolder;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        width: 100%;
+        padding: 10px 5px;
 		margin: 0 !important;
 		background: #e0e0e0;
 	}
 
 	#schedule-list {
-		margin-left: 5px;
+		margin-left:0;
 	}
 
 	.select-team {
@@ -2584,9 +2595,10 @@ li.sport .teamlist-header, .stat-val-outer {
 		height: auto;
 	}
 
-	.game-box-outer a {
+	.game-box-outer li a {
 		top: 40px;
-		left: -10px;
+        left:10px;
+		border:0;
 	}
 
 	.game-box-outer div.game-info {
@@ -2597,17 +2609,31 @@ li.sport .teamlist-header, .stat-val-outer {
 		width: 84%;
 		max-width: 100% !important;
 	}
+
+    .game-box-outer div.game-info .game-header{
+        padding:0;
+        margin:0;
+        background-color: #ffffff;
+    }
 	
 	#schedule-list .select-team {
 		width: 100%;
 	}
 
-	.game-box-outer li {
-		float: left;
-		border-bottom: 1px solid #ccc;
-		/*position: static;*/
-	}
+    .game-box-outer li {
+        float: left;
+        border-bottom: 1px solid #ccc;
+        position: static;
+        display: inline-block;
+        margin:0;
+        top:0;
+        width:100%;
+        min-height:100px;
+    }
 
+    .game-box-outer ul li:nth-child(n+13){
+        display: none;
+    }
 	/*#schedule-list .right-with-icon {
 	 position: absolute;
 	 bottom: -24px;
@@ -3020,7 +3046,7 @@ li.sport .teamlist-header, .stat-val-outer {
 		width: 100% !important;
 	}
 	
-	#landing-header {
+/*	#landing-header {
 		font-size: 4em !important;
 	}
 	
@@ -3033,7 +3059,7 @@ li.sport .teamlist-header, .stat-val-outer {
 		min-height: 1024px !important;
 		background-size: cover !important;
 	}
-	
+*/
 	.home-page-heading {
 		font-weight: normal;
 	}
