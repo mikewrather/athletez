@@ -199,22 +199,26 @@ class Model_User_Followers extends ORM
 			$type='media';
 		}
 
-		$subject = $obj->getSubject();
-		$author = $feed->getAuthor();
+		try{
 
-		if(is_array($subject))
-		{
-			foreach($subject as $this_subject)
+			$subject = $obj->getSubject();
+			$author = $feed->getAuthor();
+
+			if(is_array($subject))
 			{
-				self::loopThroughFollowers($this_subject,$author,$obj,$feed,$type);
+				foreach($subject as $this_subject)
+				{
+					self::loopThroughFollowers($this_subject,$author,$obj,$feed,$type);
+				}
 			}
-		}
-		else{
-			self::loopThroughFollowers($subject,$author,$obj,$feed,$type);
-		}
+			else{
+				self::loopThroughFollowers($subject,$author,$obj,$feed,$type);
+			}
 
-		$feed->processed = 1;
-		@$feed->save();
+			$feed->processed = 1;
+			@$feed->save();
+		} catch (Exception $e){ print_r($e); }
+
 	}
 
 	public function addFollower(Model_User_Base $user, ORM $object,$visible=false,$reason=false)
@@ -245,6 +249,10 @@ class Model_User_Followers extends ORM
 	{
 
 		$sub_line = "Something Happened " . $type;
+
+	//	print_r($subject);
+	//	print_r($obj);
+
 		switch($type)
 		{
 			case 'comment':
@@ -266,6 +274,7 @@ class Model_User_Followers extends ORM
 				elseif($feed->hasAction(array('added'))) $sub_line = "New Event: ".$subject->name();
 				else if($feed->hasAction(array('update','name'))) $sub_line = "Event Name has been changed";
 				else if($feed->hasAction(array('update','score'))) $sub_line = "Score updated for " . $subject->name();
+				else if($feed->hasAction(array('changed','score'))) $sub_line = "Score updated for " . $subject->name();
 				else if($feed->hasAction(array('update','day')) || $feed->hasAction(array('update','time'))) $sub_line = "Scheduling change for " . $subject->name();
 				else if($feed->hasAction(array('update','location'))) $sub_line = "Change of venue for " . $subject->name();
 				break;
@@ -274,17 +283,18 @@ class Model_User_Followers extends ORM
 				else if($feed->hasAction(array('added'))) $sub_line = $subject->name()." added a new game to its schedule";
 				else if($feed->hasAction(array('update','name'))) $sub_line = "Event Name has been changed";
 				else if($feed->hasAction(array('update','score'))) $sub_line = "Score updated for " . $subject->name(). " game";
+				else if($feed->hasAction(array('changed','score'))) $sub_line = "Score updated for " . $subject->name(). " game";
 				else if($feed->hasAction(array('update','day')) || $feed->hasAction(array('update','time'))) $sub_line = "Scheduling change for " . $subject->name(). " game";
 				else if($feed->hasAction(array('update','location'))) $sub_line = "Change of venue for " . $subject->name(). " game";
 
 				break;
 			case 'gameteamlink':
-				if($feed->hasAction('added')){
-					$sub_line = $subject->name()." has a new game on its schedule";
+				if($feed->hasAction('added') || $feed->hasAction('newgame')){
+					$sub_line = "New Game for " .$subject->name();
 				}
 				break;
 			case 'userteamslink':
-				$sub_line = $subject->name() . " joined " . $obj->team->name();
+				$sub_line = $obj->user->name() . " joined " . $obj->team->name();
 				break;
 			default:
 				break;

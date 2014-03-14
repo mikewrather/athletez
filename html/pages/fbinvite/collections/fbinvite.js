@@ -6,9 +6,14 @@ define(['facade', 'media/collections/images', 'utils','signup/views/facebooksign
 		},
 
 		fetchError: function(e,n){
+			console.log(e,n);
 			ga('send', 'event', 'popup', 'open', 'FB Auth Token Renew');
-			var fbregistration = new fbreg();
-			fbregistration.signupFacebook("linkWithFB");
+			if(confirm("Your Facebook Authentication has timed out.  Want to try and renew it?")){
+				var fbregistration = new fbreg();
+				fbregistration.signupFacebook("linkWithFB");
+			} else {
+				return;
+			}
 		}
 
 	});

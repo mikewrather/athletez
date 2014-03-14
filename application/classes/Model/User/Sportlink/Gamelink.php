@@ -54,8 +54,6 @@ class Model_User_Sportlink_Gamelink extends ORM
 	public function addUslGamesLink($args = array()){
 		extract($args);
 
-		echo "called";
-
 		//$this->users_id = $users_id;
 		$this->games_id = $games_id;
 

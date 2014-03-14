@@ -1559,7 +1559,7 @@ div.game-info span.game-header {
 	width: 0px;
 	height: 0px;
 	border-style: solid;
-	border-width: 50px 0 50px 86.6px;
+	border-width: 50px 0 50px 87px;
 	border-color: transparent transparent transparent #fff;
 	position: relative;
 	left: 50%;
@@ -1569,7 +1569,8 @@ div.game-info span.game-header {
 }
 .container_batch_tag .dropdown {
 	height: 30px;
-	margin: 5px 0
+	margin: 5px 0;
+    min-width:250px;
 }
 
 .image-drop-area .drop-text {
@@ -1688,7 +1689,7 @@ div.game-info span.game-header {
 	background: url(http://cdn.athletez.com/resources/img/white_loading.gif) repeat;
 	width: 100%;
 	height: 100%;
-	min-height: 100px;
+	min-height: 70px;
 	margin: 0 auto;
 }
 
@@ -1726,6 +1727,10 @@ form fieldset > div {
 }
 /*form fieldset > div > div { float: left; }*/
 
+div.field-row.error input, div.field-row.error textarea{
+    background-color: #ffd5d8 !important;
+}
+
 div[data-error] {
 	display: block;
 	color: #a30000;
@@ -1740,7 +1745,7 @@ div[data-error]:empty {
 	display: none !important;
 }
 .focus-error-animation {
-	border: 5px solid #FF0000 !important;
+	border: 2px solid #ff5b5a !important;
 	border-radius: 5px !important;
 	color: #000 !important;
 }
@@ -2229,7 +2234,7 @@ li.sport .teamlist-header, .stat-val-outer {
 }
 
 .right-secton {
-	float: right;
+	float: right !important;
 	display: inline-block;
 	width: 400px;
 }
@@ -2282,6 +2287,25 @@ li.sport .teamlist-header, .stat-val-outer {
 
 .roster .btn2 {
 	background-position: -137px 0;
+}
+
+.participants .btn1 {
+    background-position: -137px -158px;
+}
+
+
+.participants .btn2 {
+    background-position: -137px 0;
+}
+
+
+/* Dotted area css ends  */
+
+
+.spinner{
+    display: inline;
+    top:10px;
+    left:15px;
 }
 
 .mobile-link {
@@ -3010,4 +3034,3 @@ li.sport .teamlist-header, .stat-val-outer {
 	}
 	
 }
-

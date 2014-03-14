@@ -54,8 +54,8 @@ define(['require',
 			e.stopPropagation();
 			e.preventDefault();
 
-			if(this.createNewOrgCallback && _.isFunction(this.createNewOrgCallback)) {
-				if(this.createNewOrgCallback()){
+			if(this.parentView.addTeamToNewOrg && _.isFunction(this.parentView.addTeamToNewOrg)) {
+				if(this.parentView.addTeamToNewOrg(e)){
 					this.destroy_view();
 				}
 			}
@@ -63,6 +63,10 @@ define(['require',
 		addTeamToOrg:function(e){
 			e.stopPropagation();
 			e.preventDefault();
+			$(e.currentTarget).off('click').addClass('region-loader');
+
+			console.log(this.seasoninfo);
+
 			var orgs_id = $(e.currentTarget).data('id'),
 				self = this,
 			teamModel = new TeamModel({
@@ -76,11 +80,10 @@ define(['require',
 			teamModel.save();
 
 			$.when(teamModel.request).done(function(res){
-				if(self.newTeamAddedCallback && _.isFunction(self.newTeamAddedCallback)) {
-					if(self.newTeamAddedCallback(teamModel)){
+				if(self.parentView.setTeamTwoToNewTeam && _.isFunction(self.parentView.setTeamTwoToNewTeam)) {
+					if(self.parentView.setTeamTwoToNewTeam(teamModel)){
 						self.destroy_view();
 					}
-
 				}
 
 			});

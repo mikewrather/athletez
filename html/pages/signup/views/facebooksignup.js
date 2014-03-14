@@ -3,15 +3,22 @@
 // Requires `define`
 // Return {HeaderView} object as constructor
 
-define(['vendor', 'views', 'registration', 'signup', 'signup/views/shopopup', 'utils/storage', 'facebook'], function(vendor, views, RegistrationController, scontroller, popupview, Store) {
+define(['vendor', 'views', 'registration', 'signup', 'signup/views/shopopup', 'utils/storage', 'facebook','packages/invite/models/invite'], function(vendor, views, RegistrationController, scontroller, popupview, Store) {
 
-	var HeaderView, BaseView = views.BaseView, $ = vendor.$, _ = vendor._, Mustache = vendor.Mustache, actionFunction;
+	var HeaderView, BaseView = views.BaseView, $ = vendor.$, _ = vendor._, Mustache = vendor.Mustache, actionFunction,
+		InviteModel = require('packages/invite/models/invite');
 
 	HeaderView = BaseView.extend({
 
 		initialize : function(options) {
-			if (options && options.callback)
+			if (options && options.callback){
 				this.callback = options.callback;
+			}
+			if(options && options.invite_hash){
+
+				this.invite_hash = options.invite_hash;
+			}
+			console.log(options);
 			FB.init({
 				appId : App.Settings.appId,
 				status : true, // check login status
@@ -21,7 +28,7 @@ define(['vendor', 'views', 'registration', 'signup', 'signup/views/shopopup', 'u
 			});
 		},
 
-		signupFacebook : function(linkedToFB) {
+		signupFacebook : function(linkedToFB,successCallback) {
 			var current = this;
 			this.linkWithFB = (linkedToFB && linkedToFB == "linkWithFB") ? true : false;
 			if (!this.registrationController) {
@@ -32,26 +39,14 @@ define(['vendor', 'views', 'registration', 'signup', 'signup/views/shopopup', 'u
 			// Additional JS functions here
 			//var func = _.bind(current.getFBlogin, this);
 			//this.getFBlogin();
-			this.loginfb();
+			this.loginfb(successCallback);
 		},
 
-		loadFBLogin : function() {
-			//    this.registrationController.refreshPage();
-			var js, id = 'facebook-jssdk', ref = document.getElementsByTagName('script')[0];
-			if (document.getElementById(id)) {
-
-				this.loginInfo = this.loginfb();
-				return;
-			}
-			js = document.createElement('script');
-			js.id = id;
-			js.async = true;
-			js.src = "//connect.facebook.net/en_US/all.js";
-			ref.parentNode.insertBefore(js, ref);
-		},
 		getFBlogin : function() {
 			var _self = this;
+			alert("getFBlogin");
 			FB.getLoginStatus(function(response) {
+				console.log(response);
 				if (response.status === 'connected') {
 					this.actionFunction = function() {
 						FB.api('/me', function(response) {
@@ -69,6 +64,7 @@ define(['vendor', 'views', 'registration', 'signup', 'signup/views/shopopup', 'u
 					if (!_self.loginInfo)
 						_self.loginInfo = _self.loginfb();
 				} else {
+
 					if (!_self.loginInfo)
 						_self.loginInfo = _self.loginfb();
 				}
@@ -77,15 +73,31 @@ define(['vendor', 'views', 'registration', 'signup', 'signup/views/shopopup', 'u
 			});
 
 		},
-		loginfb : function() {
+		loginfb : function(successCallback) {
 			var _self = this;
 			FB.login(function(response) {
+				console.log(response);
+
 				if (response.authResponse) {
-					routing.trigger('registration-with-facebook', _self.callback);
+
+					// hides the landing section
+					routing.trigger('hide-landing');
+
+					if(_self.invite_hash){
+						var inviteModel = new InviteModel({sechash:_self.invite_hash});
+					}
+
+					if(successCallback && _.isFunction(successCallback)) {
+						successCallback();
+					}
+					else {
+						routing.trigger('registration-with-facebook', _self.callback,inviteModel);
+					}
+
 					// Channel('registration-with-facebook').publish();
 					//this.pop = new popupview();
 				} else {
-					alert('Facebook Login has been Cancelled');
+					alert('Facebook Login has been cancelled');
 				}
 			}, {
 				scope : 'email, user_birthday, user_photos'

@@ -87,7 +87,7 @@ define([ 'models', 'facade' ], function(models, facade) {
 			if(_self.closest_image_format != "undefined" && _self.closest_image_format != null) return_data = _self.imageFormat(return_data);
 			else{ return_data.imgData = ""; }
 			_self.parsedData = return_data;
-			console.log(return_data);
+//			console.log(return_data);
 
 		},
 
@@ -224,7 +224,9 @@ define([ 'models', 'facade' ], function(models, facade) {
 			}
 			//else
 
-			var uploader = (!_.isUndefined(mpay.media_obj.users_obj.label))?mpay.media_obj.users_obj.label:false;
+		//	console.log(mpay.media_obj);
+
+			var uploader = (!_.isUndefined(mpay.media_obj.users_obj) && !_.isUndefined(mpay.media_obj.users_obj.label))?mpay.media_obj.users_obj.label:false;
 			if(typeof(mpay.media_obj.sports_obj) == 'object')
 			{
 				var sport;
@@ -294,7 +296,7 @@ define([ 'models', 'facade' ], function(models, facade) {
 */
 			return_data._noicon_text = "vs";
 			return_data._color = "#e49f6f";
-			console.log(return_data);
+	//		console.log(return_data);
 			return return_data;
 		},
 

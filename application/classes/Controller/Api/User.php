@@ -1012,7 +1012,7 @@
 							}
 						}
 						else{
-							$user->registerFbInvite($retArr['id']);
+							$user->executeInvite($retArr['id']);
 							$retArr['identity_exists'] = true;
 						}
 					}
@@ -1339,10 +1339,17 @@
 			}
 
 			$remember = array_key_exists('remember',$this->request->post()) ? (bool) $this->request->post('remember') : FALSE;
-			$user = Auth::instance()->login($username,$password,$remember);
+			Auth::instance()->login($username,$password,$remember);
+			$user = Auth::instance()->get_user();
 
 			if($user)
 			{
+				if(trim($this->request->post('sechash')) != "")
+				{
+					$sechash = trim($this->request->post('sechash'));
+					if(get_class($user) == 'Model_User') $user = ORM::factory('User_Base',$user->id);
+					$user->executeInvite(array("sechash"=>$sechash));
+				}
 				return $user;
 			}
 			else
@@ -1620,9 +1627,9 @@
 				$arguments["firstname"] = trim($this->request->post('firstname'));
 			}
 
-			if(trim($this->request->post('fb_invite_id')) != "")
+			if(trim($this->request->post('invite_hash')) != "")
 			{
-				$arguments["fb_invite_id"] = trim($this->request->post('fb_invite_id'));
+				$arguments["invite_hash"] = trim($this->request->post('invite_hash'));
 			}
 
 			// lastname
@@ -2160,9 +2167,16 @@
 				$arguments["cities_id"] = (int)trim($this->put('cities_id'));
 			}
 
-			if((int)trim($this->put('height_in')) > 0)
+			if(trim($this->put('height_in'))!="")
 			{
-				$arguments["height_in"] = (int)trim($this->put('height_in'));
+
+				$arguments["height_in"] = trim($this->put('height_in'));
+
+				if(strpos($arguments['height_in'],"'")){
+					$height_arr = explode("'",$arguments['height_in']);
+					$height = $height_arr[0] * 12 + (int)$height_arr[1];
+					$arguments['height_in'] = $height;
+				}
 			}
 
 			if((int)trim($this->put('weight_lb')) > 0)

@@ -13,3 +13,117 @@
     padding: 0;
     overflow-y: scroll !important;
 }
+
+#fbInvite #search-area{
+    display: inline-block;
+}
+#fbInvite div.label{
+    display: block;
+    
+}
+
+#fbInvite div.label .main{
+    font-size:1.2em;
+    
+}
+
+#fbInvite div.label .sublabel{
+    font-size: .9em;
+}
+
+#fbInvite textarea.emaillist{
+    width:90%;
+    height: 50px;
+}
+
+#fbInvite ul.recipient_list{
+    border:5px solid #eaeaea;
+    padding:10px;
+    width: 90%;
+}
+#fbInvite ul.recipient_list li{
+
+}
+#fbInvite ul.recipient_list li.sent{
+    color: #cdcdcd;
+}
+#fbInvite ul.recipient_list li.sent:before{
+    content:"\2714 ";
+}
+#fbInvite .inviteTypes{
+    width:100%;
+}
+#fbInvite ul.large-menu{
+    width:100%;
+    margin: auto;
+}
+#fbInvite ul.large-menu li{
+    margin: 5px;
+    padding: 10px;
+    border: 7px solid #dbdbdb;
+    height: 90px;
+    float: left;
+    width:80%;
+    max-width:450px;
+}
+
+#fbInvite ul.large-menu li div.icon{
+    width: 64px;
+    height: 64px;
+    float: left;
+    margin-right:10px;
+}
+
+#fbInvite ul.large-menu li div.icon.email-invite{
+    background-image: url('http://cdn.athletez.com/resources/img/social/20_sparow.png');
+}
+
+#fbInvite ul.large-menu li div.icon.facebook-invite{
+    background-image: url('http://cdn.athletez.com/resources/img/social/02_facebook.png');
+}
+
+#fbInvite ul.large-menu li div.icon.social-post-invite{
+    background-image: url('http://cdn.athletez.com/resources/img/social/circle.png');
+}
+
+#fbInvite ul.large-menu li div.icon.social-twitter{
+    background-image: url('http://cdn.athletez.com/resources/img/social/01_twitter.png');
+}
+
+#fbInvite ul.large-menu li div.icon.facebook-invite{
+    background-image: url('http://cdn.athletez.com/resources/img/social/02_facebook.png');
+}
+
+#fbInvite ul.large-menu li div.icon.social-tumbler{
+    background-image: url('http://cdn.athletez.com/resources/img/social/15_tumblr.png');
+}
+
+#fbInvite ul.large-menu li div.icon.social-gplus{
+    background-image: url('http://cdn.athletez.com/resources/img/social/14_google.png');
+}
+
+#fbInvite ul.large-menu li span{
+    padding:0 5px 5px 5px;
+}
+#fbInvite ul.large-menu li span.option-title{
+    float: left;
+    font-weight: bold;
+    font-size:1.2em;
+    width:55%;
+}
+
+#fbInvite ul.large-menu li span.option-desc{
+    float: left;
+    display:block;
+    max-width: 80%;
+}
+
+
+#fbInvite #invite-types-menu{
+    display: inline-block;
+    margin: 15px;
+}
+#fbInvite #inviteTypesMenu{
+    display: inline-block;
+
+}

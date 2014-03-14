@@ -150,6 +150,16 @@
 		 */
 		public function action_post_add()
 		{
+
+			set_time_limit(0);
+
+			ini_set('upload_max_filesize', '10M');
+			ini_set('post_max_size', '11M');
+			ini_set('max_execution_time', 1800);
+
+			ini_set('max_input_time', 1800);
+			@ini_set('track_errors', 1);
+
 			//Must logged user can do action
 			if (!$this->is_logged_user()){
 				return $this->throw_authentication_error();

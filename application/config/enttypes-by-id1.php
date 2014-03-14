@@ -800,5 +800,15 @@ return array(
 		'id1' => 'invites_id',
 		'id2' => '',
 	),
+	'invites_id' => array(
+		'id' => '89',
+		'name' => 'Generic Invitation',
+		'api_name' => 'invite',
+		'class_name' => 'Site_Invite',
+		'db_table' => 'invites',
+		'description' => 'This is a generic inviatation that can be FB or Email or mass',
+		'id1' => 'invites_id',
+		'id2' => '',
+	),
 
 );

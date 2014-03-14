@@ -11,6 +11,7 @@ function(facade,  utils,   BaseImageListView) {
 	    imagetype: 'large_thumb',
 	    tagName: 'ul',
 	    currentSection: "rosters",
+	    extra_id:"test",
         setupAddView: function() {
             
         }

@@ -1,5 +1,10 @@
-div#dynamic_add_team_2{
-    width:90%;
+div#dynamic_add_team_2, div#dynamic_add_org{
+    width: 90%;
+    border: 2px solid #ff8986;
+    padding: 10px;
+    font-size: .7em;
+    background-color: rgb(255, 234, 234);
+    display: inline-block;
 }
 
 div#dynamic_add_team_2 a{
@@ -20,11 +25,11 @@ ul#choose-org li:hover{
 }
 
 ul#choose-org li span.org-name{
-    font-size: .8em;
+    font-size: 1em;
     font-weight: bold;
     display: block;
 }
 ul#choose-org li span.org-location{
-    font-size: .7em;
+    font-size: .9em;
     display: block;
 }

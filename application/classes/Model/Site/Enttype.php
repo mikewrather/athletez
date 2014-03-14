@@ -113,14 +113,16 @@ class Model_Site_Enttype extends ORM
 	{
 		$classname = is_object($class) ? get_class($class) : (string)$class;
 		$classname = str_replace('Model_','',$classname);
-
 		$config_array = self::getConfigByClassName($classname);
 		return is_array($config_array) ? $config_array['id'] : false;
 	}
 
 	static function eFact($enttypeID,$objID=NULL)
 	{
-		$classname = "Model_".self::getMyClass($enttypeID);
+		$class_suffix = self::getMyClass($enttypeID);
+		if($class_suffix == "") return false;
+
+		$classname = "Model_".$class_suffix;
 		return new $classname($objID);
 	}
 

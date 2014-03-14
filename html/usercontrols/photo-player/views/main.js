@@ -34,9 +34,10 @@ define(['require',
 	 UserModel = require('usercontrols/tag/models/basic_info'), 
 	 Mustache = vendor.Mustache, $ = facade.$, voteModel = require('votes/models/vote'), 
 	 TagMediaModel = require('media/models/tag'),
-	 TagMyselfModel = require('usercontrols/photo-player/models/tag-myself');
+	 TagMyselfModel = require('usercontrols/photo-player/models/tag-myself'),
 	 FbComponent = require('component/fb'),
-	 ShareComponent = require('component/share'),
+	 ShareComponent = require('component/share');
+
 	jwplayer.key = "yXOw2TpDcCoCnbWyVSCoEYA4tepkpjiVEtLEfSBIfZQ=";
 
 	//Models
@@ -77,7 +78,7 @@ define(['require',
 					break;
 				}
 			}
-			
+			if(!this.index) this.index = 0;
 			SectionView.prototype.initialize.call(this, options);
 
 	//		if(this.index === undefined) {
@@ -203,7 +204,7 @@ define(['require',
 			var gplusFn = function() { 
 				var options = {
 					//'link': "#"+this.pageName+data.userId+data.sportId+data.mediaId,
-					'link': "?enttypes_id="+data.record.enttypes_id+"&id="+data.record.id,				
+					'link': _self.getLink(data),
 					'name': data.User.name + " - " + data.Sport.sport_name,
 					'caption': "Athletez.com",
 					'image': data.record.image_path,
@@ -229,7 +230,7 @@ define(['require',
 			var tumbler = function() {
 			
 				var options = {
-					'link': "?enttypes_id="+data.record.enttypes_id+"&id="+data.record.id,
+					'link': _self.getLink(data),
 					'name': data.User.name + " - " + data.Sport.sport_name,
 					'caption': "Athletez.com",
 					'image': data.record.image_path,
@@ -814,7 +815,7 @@ define(['require',
 					is_owner : isOwner,
 					channel : 'tag-image-success-photo'
 				});
-				self.scheme.push(this.tagViewPhoto);
+				self.scheme.push(self.tagViewPhoto);
 				self.layout.render();
 			};
 			

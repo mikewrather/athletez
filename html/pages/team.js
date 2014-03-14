@@ -205,7 +205,10 @@ define([
 	        	controller.commentson.subject_entity_type = subject_type_id;
 	        	controller.commentson.savePath = "/team/addcomment/"+team_id;
 				controller.commentson.id = team_id;
-				controller.commentson.targetElement = "#comment_div";				
+				controller.commentson.targetElement = "#comment_div";
+
+				controller.setupRosterView();
+
 				controller.ajaxCalls.push(controller.commentson.fetch());
                 controller.handleDeferredsDynamic();
             }
@@ -370,7 +373,12 @@ define([
 				controllerObject: this,
 				collection: this.fans,
 				model: this.addmedia,
-				teamName: this.addmedia.teamName
+				teamName: this.addmedia.teamName,
+				inviteData: {
+					invite_type:"follow",
+					subject_id:this.basics.get("payload").id,
+					enttypes_id:this.basics.get("payload").enttypes_id
+				},
 			});
         	
 			this.fansListView = new FansImageListView({
@@ -607,7 +615,20 @@ define([
             this.layout.render();
             
         },
-        
+
+	    reloadImages: function() {
+		    var _self = this, position;
+		    if (this.imageListView) {
+			    $(this.imageListView.destination).html('');
+			    position = $.inArray(this.imageListView, this.scheme);
+			    if (~position) this.scheme.splice(position, 1);
+		    }
+
+		    _self.images.fetch();
+		    $.when(_self.images.request).done(function() {
+			    _self.setupImages();
+		    });
+	    },
         
         updateImages: function (data) {
 				//create new image model to hold newly uploaded image
@@ -623,6 +644,10 @@ define([
 				//add the model to the view's collection
 				this.imageListView.collection.add(newImageModel);
 				if(this.imageListView.allData) this.imageListView.allData.push(newImageModel.toJSON());
+
+		        if(this.imageListView.collection.length == 1){
+			        this.reloadImages();
+		        }
 			},
         
         setupComments: function() {

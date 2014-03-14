@@ -20,6 +20,8 @@ define(['require', 'text!registration/templates/register_facebook.html', 'backbo
 
 		initialize : function(options) {
 			this.callback = options.callback;
+			this.inviteModel = options.inviteModel;
+
 			var response = $.parseJSON(this.model.request.responseText);
 			if (response.exec_data.exec_error) {
 				var errorDisplay = true;
@@ -202,11 +204,16 @@ define(['require', 'text!registration/templates/register_facebook.html', 'backbo
 			}, {
 				success : function(msg) {
 					$('#RegModal').modal('hide');
+
+
 					if (_self.callback && _.isFunction(_self.callback)) {
-						routing.trigger('popup-close');
+						routing.trigger('common-popup-close');
+
 						_self.callback(function() {
 							window.location.reload();
 						});
+
+
 					} else {
 						window.location.href = "#usersettings";
 					}

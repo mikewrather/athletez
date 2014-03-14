@@ -96,7 +96,10 @@
 
 }
 
-#modal-popup-signup #firstregbase input[type="text"]{
+#modal-popup-signup #firstregbase input[type="text"],
+#modal-popup-signup #firstregbase input[type="email"],
+#modal-popup-signup #firstregbase input[type="phone"],
+#modal-popup-signup #firstregbase input[type="password"]{
     background-color: #E4E4E4;
 }
 

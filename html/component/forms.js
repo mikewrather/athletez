@@ -6,7 +6,15 @@
  *
  * */
 
-define(['require', 'facade', 'views', 'utils', 'vendor'], function(require) {
+define(['require',
+	'facade',
+	'views',
+	'utils',
+	'vendor',
+	"vendor/plugins/qtip/qtip",
+	"text!vendor/plugins/qtip/qtip.css",
+	"vendor/plugins/spin.min"],
+	function(require) {
 	return function(fields, $target) {
 		var formValues = {}, self, facade = require('facade'), views = require('views');
 		var FormModel = facade.Backbone.Model.extend({

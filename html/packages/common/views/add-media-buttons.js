@@ -13,6 +13,7 @@ define([
         'views',
         'votes/models/follow',
         'roster/models/roster',
+		'vendor',
         "vendor/plugins/qtip/qtip",
         "text!vendor/plugins/qtip/qtip.css"
         ], function(require, headingTemplate) {
@@ -22,7 +23,9 @@ define([
         views = require('views'),
         followModel = require( 'votes/models/follow'),
         model = require('roster/models/roster'),
-        BaseView = views.BaseView;
+        BaseView = views.BaseView,
+	    vendor = require('vendor'),
+	    Mustache = vendor.Mustache;
 
     AddImageView = BaseView.extend({
 
@@ -32,9 +35,11 @@ define([
         	"click .add-video-h": "addVideo",
         	'click .question'   : "addQuestion",
         	"click .add-to-list-h": "addToList",
-        	"click .invite-fans-from-fb-h": "InviteFansFromFB",
+        	"click .invite-fans-from-fb-h": "InviteFromFB",
+	        "click .invite-participant-from-fb-h": "InviteFromFB",
         	"click .add-to-roster-list-h": "addToRoster",
-        	"click .invite-roster-from-fb-h": "inviteRosterFromFB"
+	        "click .add-to-participants-list-h": "addParticipant",
+        	"click .invite-roster-from-fb-h": "InviteFromFB"
         },
         
         addImage: function(e) {
@@ -69,6 +74,9 @@ define([
 				return false;
 		},
 
+	    addParticipant: function(e){
+		    routing.trigger("add-to-event");
+	    },
         
         addToList: function(e) {
         	e.preventDefault();
@@ -96,9 +104,42 @@ define([
 	    		followFn();
 	    	}
         },
-        
+
+	    InviteFromFB: function(e){
+		    var _self = this,
+			    options = {};
+
+		    console.log(_self.controllerObject);
+
+		    if(_self.data.inviteData == undefined || !typeof(_self.data.inviteData) === 'object'){
+			    options.invite_type = 'follow';
+			    options.subject_id = _self.target_id ? _self.target_id : _self.controllerObject.basics.get("payload").id;
+			    options.enttype_id = _self.controllerObject.basics.get("payload").enttypes_id;
+		    }
+		    else{
+			    options = _self.data.inviteData;
+		    }
+
+		    console.log(options);
+
+		    var inviteFb = function() {
+			    routing.trigger('fbInvite', undefined, options);
+		    };
+
+		    if(!_self.checkForUser()) {
+			    routing.trigger('showSignup', function(callback) {
+				    inviteFb(function() {
+					    if(callback) callback();
+				    });
+			    });
+		    } else {
+			    inviteFb();
+		    }
+	    },
+        /*
         InviteFansFromFB: function(e) {
         	var _self = this, options = {};
+	        console.log(_self.controllerObject.basics.get("payload"));
 			var inviteFb = function() {
 				options.invite_type = 'follow';
 				options.subject_id = _self.target_id;
@@ -116,18 +157,18 @@ define([
 	    		inviteFb();
 	    	}
         },
-        
+        */
         addToRoster: function(e) {
         	if(this.addToRoster) this.addToRoster();
         },
-        
+        /*
         inviteRosterFromFB: function(e) {
         	var _self = this, options = {};
 			options.subject_id = this.team_id;
 			options.enttype_id = this.entityId;
 			routing.trigger('fbInvite', undefined, options);
         },
-        
+        */
         className: "pull-left",        
         initialize: function(options) {
 	        console.error(options);

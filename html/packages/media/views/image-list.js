@@ -127,6 +127,8 @@ function(facade,  views,   utils,   ImageItemView,            ImageBoardView,   
 	    },
 
         initialize: function(options) {
+
+	        console.log("IMAGE LIST",options);
         	for(var i in options) {
         		this[i] = options[i]; 
         	}
@@ -173,7 +175,8 @@ function(facade,  views,   utils,   ImageItemView,            ImageBoardView,   
 	        		target: this.$el,
 	        		model: new model,
 	        		teamName: this.teamName,
-	        		name: "view - " + Math.random()
+	        		name: "view - " + Math.random(),
+			        extra_id: this.extra_id || ""
 	        	});
 	        }
             
@@ -196,9 +199,9 @@ function(facade,  views,   utils,   ImageItemView,            ImageBoardView,   
         },
         
         initPhotoPlayer: function(e) {
-			var _self = this, limit = _self.collection.limit, index = ($(e.target).parents('li').index()); 
-			// array index start from 0. So substracting by 1
-			index -= 1;
+			var _self = this, limit = _self.collection.limit,
+				index = ($(e.target).parents('ul.image-list').find('li.image').index($(e.target).parents('li')));
+
 			if(index< 0) index = 0;
  	      	routing.trigger('photo-player-init', index, _self.collection, _self.user_id, true,  _self.pageName, _self.target_id);
        	},
@@ -236,7 +239,7 @@ function(facade,  views,   utils,   ImageItemView,            ImageBoardView,   
 		           
 		        if(e) {    
 					if(this.addSubscribers) this.addSubscribers();
-		            if(this.setupBoardView) this.setupBoardView();
+		         //   if(this.setupBoardView) this.setupBoardView();
 		            if(this.setupAddView) this.setupAddView();   
 	        	}
         	}
@@ -277,7 +280,7 @@ function(facade,  views,   utils,   ImageItemView,            ImageBoardView,   
 		},
 
         setupBoardView: function() {
-			this.addButtons();
+/*			this.addButtons();
             if (this.collection.size() == 0)
                 return;
                 
@@ -298,7 +301,7 @@ function(facade,  views,   utils,   ImageItemView,            ImageBoardView,   
             }
            // this.$el.append("this is for test");
             Channel('changeimage' + this.collection.id).subscribe(changeBoard);
-            
+            */
         }
     });
 

@@ -186,9 +186,11 @@ class Model_Sportorg_Team extends ORM
 		unset($team_array['org_sport_link']);
 		unset($team_array['org_sport_link_id']);
 
+		if(!isset($locations_id)) $locations_id = false;
+
 		//if there are no matches create a new one
 		if($num_results == 0){
-			$newOrg = $org->addOpponentOrg($name);
+			$newOrg = $org->addOpponentOrg($name,$locations_id);
 			$team_array['orgs_id'] = $newOrg->id;
 			$new_team = ORM::factory('Sportorg_Team');
 			$new_team = $new_team->addTeam($team_array);

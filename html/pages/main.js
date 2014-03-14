@@ -4,6 +4,7 @@ define(function (require) {
 		"game": require("pages/game"),
 		"home": require("pages/home"),
 		"imageup": require("pages/imageup"),
+		"login": require("pages/login"),
 		"profile": require("pages/profile"),
 		"profilesetting": require("pages/profilesetting"),
 		"registration": require("pages/registration"),

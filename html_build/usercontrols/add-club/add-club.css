@@ -14,7 +14,8 @@ float: right;
 .add-club-school-outer {
 	height: 95%;
 	overflow-y: auto;
-	overflow-x: hidden; 
+	overflow-x: hidden;
+    min-height: 95%;
 }
 .location-buttons {
 	margin-top: 30px;

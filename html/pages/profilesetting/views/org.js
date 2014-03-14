@@ -274,7 +274,7 @@ define(['require',
 							_self.states.push(models[key].payload);
 						}
 						_self.states.forEach(function(value, index) {
-							stateArr.push(value['name']);
+							stateArr.push(value['name'] + " (" + value['abbr'] +  ")");
 						});
 						// Destroy existing autocomplete from text box before attaching it again
 						// try catch as for the first time it gives error
@@ -305,7 +305,7 @@ define(['require',
 			
 			
 			_self.states.forEach(function(value, index) {
-				if (value['name'] == state_name) {
+				if (value['name']+ " (" + value['abbr'] +  ")" == state_name) {
 					isStateValid = true;
 					_self.states_id = value['id'];
 					_self.$(_self.controls.txtSchools).removeAttr('disabled');

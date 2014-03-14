@@ -223,10 +223,15 @@ define([
 				Channel('refresh-profilepage','unique').subscribe(callback);
 			},
 
+			setupOGTags:function(){
+
+			},
+
 			handleDeferreds: function () {
 				var controller = this;
 				$.when(this.basics.request).done(function () {
 					controller.setupHeaderView();
+					controller.setupOGTags();
 					controller.initVoteView();
 					//controller.setupAddMediaView();
 					var subject_type_id = controller.basics.get("payload").enttypes_id;
@@ -371,7 +376,7 @@ define([
 						controller: _self,
 						destination: "#games_div",
 						eventPage: $(".selected-sport-h").data("name"),
-						teamName: this.basics.get("payload").first_name
+						teamName: _self.basics.get("payload").first_name
 					});
 					_self.scheme.push(_self.orgListView);
 					_self.layout.render();
@@ -504,6 +509,11 @@ define([
 					template: AddFansViewTemplate,
 					controllerObject: this,
 					collection: this.fans,
+					inviteData: {
+						invite_type:"follow",
+						subject_id:this.basics.get("payload").id,
+						enttypes_id:this.basics.get("payload").enttypes_id
+					},
 					message: {addMe: "Keep me notified of "+this.basics.get("payload").first_name+"\'s activity", fb: "Invite a friend to receive notifications about  "+this.basics.get("payload").first_name+"\'s activity"}
 				});
 				
@@ -527,8 +537,21 @@ define([
 				this.scheme.push(this.fansListView);
 				this.layout.render();
 			},
-			
 
+			reloadImages: function() {
+				var _self = this, position;
+				if (this.imageListView) {
+					$(this.imageListView.destination).html('');
+					position = $.inArray(this.imageListView, this.scheme);
+					if (~position) this.scheme.splice(position, 1);
+				}
+
+				_self.images.fetch();
+				$.when(_self.images.request).done(function() {
+					_self.setupImageListView();
+				});
+			},
+			
 			updateImages: function (data) {
 				//create new image model to hold newly uploaded image
 				var newImageModel = new MediaImageModel();
@@ -540,6 +563,12 @@ define([
 				//add the model to the view's collection
 				this.imageListView.collection.add(newImageModel);
 				if(this.imageListView.allData) this.imageListView.allData.push(newImageModel.toJSON());
+
+				console.log(this.imageListView.collection);
+
+				if(this.imageListView.collection.length == 1){
+					this.reloadImages();
+				}
 			},
 
 			setupCommentOfListView: function () {

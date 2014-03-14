@@ -165,9 +165,10 @@ define([
 				if(!teamsCount) {
 					// get the participants
 					controller.participants = new ParticipantsList();
-					controller.participants.id = controller.id;
+
+				 	controller.participants.id = controller.id;
 					controller.participants.targetElement = "#roster-wrap";
-					controller.participants.fetch();
+				 	controller.participants.fetch();
 					$.when(controller.participants.request).done(function () {
 						controller.setupParticipantsListView();
 					});
@@ -256,15 +257,35 @@ define([
 				controller.setupParticipantsListView();
 			});
 		},
-				
+
+
+		reloadParticipants: function() {
+			var _self = this, position;
+			if (this.participantsView) {
+				$(this.participantsView.destination).html('');
+				position = $.inArray(this.participantsView, this.scheme);
+				if (~position) this.scheme.splice(position, 1);
+			}
+
+			_self.participants.fetch();
+			$.when(_self.participants.request).done(function() {
+				_self.setupParticipantsListView();
+			});
+		},
+		
 		setupParticipantsListView: function() {
-			
+
 			var self = this, addMedia = new AddMediaView({
 					target: ".participants-add-icons-h",
 					heading: "PARTICIPANTS",
 					template: AddParticipateViewTemplate,
 					controllerObject: self,
-					message: {"photo": "Got Pics From this Game?", "video": "Got Videos From this Game?"}
+					inviteData: {
+						invite_type:"join",
+						subject_id:self.basics.get("payload").id,
+						enttypes_id:self.basics.get("payload").enttypes_id
+					},
+					message: {event_name:self.basics.get("payload").game_name}
 				});
 			
 			
@@ -368,6 +389,20 @@ define([
 			this.layout.render();
 		},
 
+		reloadImages: function() {
+			var _self = this, position;
+			if (this.imageListView) {
+				$(this.imageListView.destination).html('');
+				position = $.inArray(this.imageListView, this.scheme);
+				if (~position) this.scheme.splice(position, 1);
+			}
+
+			_self.images.fetch();
+			$.when(_self.images.request).done(function() {
+				_self.setupImageListView();
+			});
+		},
+
 		updateImages: function (data) {
 			//create new image model to hold newly uploaded image
 			var newImageModel = new MediaImageModel();
@@ -382,6 +417,10 @@ define([
 			//add the model to the view's collection
 			this.imageListView.collection.add(newImageModel);
 			if(this.imageListView.allData) this.imageListView.allData.push(newImageModel.toJSON());
+
+			if(this.imageListView.collection.length == 1){
+				this.reloadImages();
+			}
 		},
 
 		setupCommentListView: function () {
