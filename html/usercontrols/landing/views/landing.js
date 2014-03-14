@@ -114,6 +114,11 @@ define(['require',
 					'background':'url('+ options.background_image + ') no-repeat',
 					'background-size':'cover'
 				});
+				
+				if(routing.mobile) {
+					this.$el.css({'background-position': '74% 0'});
+				}
+				
 			}
 
 		//	console.error(options);

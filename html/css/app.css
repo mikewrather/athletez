@@ -2995,5 +2995,19 @@ li.sport .teamlist-header, .stat-val-outer {
 		width: 100% !important;
 	}
 	
+	#landing-header {
+		font-size: 4em !important;
+	}
+	
+	#site-info {
+		font-size: 1.5em !important;
+	}
+	
+	.register-wrapper-h {
+		background-position: 74% 0;
+		min-height: 1024px !important;
+		background-size: cover !important;
+	}
+	
 }
 
