@@ -109,13 +109,14 @@ define(['vendor', 'views', 'utils', 'text!media/templates/image-item.html', 'vot
 				}
 			}
 
-			//set image positon
-			if(extra.imgData.maxwidth)
-				this.$el.find('img.list-thumbnail').css({
-					'max-width':extra.imgData.maxwidth,
-					'left':extra.imgData.left
-				});
-
+			if(!routing.mobile) {
+				//set image positon
+				if(extra.imgData.maxwidth)
+					this.$el.find('img.list-thumbnail').css({
+						'max-width':extra.imgData.maxwidth,
+						'left':extra.imgData.left
+					});
+			}
 			if(extra.imgData.maxheight)
 				this.$el.find('img.list-thumbnail').css({
 					'max-height':extra.imgData.maxheight,
