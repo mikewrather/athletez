@@ -19,7 +19,7 @@ function(require,  TeamAddImageModel,          BaseAddImageView) {
             if (!this.model) {
                 this.model = new TeamAddImageModel({id: this.collection.id, sport_id: this.collection.sport_id, complevel_id: this.collection.complevel_id, season_id: this.collection.season_id});                
                 this.model.fetch();
-            }            
+            }
         }
     });
 

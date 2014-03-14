@@ -92,7 +92,7 @@ define(['require',
 		setDefaults: function(){
 
 			this.data = {
-				headline:"Athletes Live Here",
+				headline:"",
 				text:"And we mean all athletes.  It's simple: create a profile, connect with your team, share your games, post your highlights, get discovered."
 			};
 		},
