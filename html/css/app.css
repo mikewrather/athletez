@@ -3033,4 +3033,8 @@ li.sport .teamlist-header, .stat-val-outer {
 		background-size: cover !important;
 	}
 	
+	.home-page-heading {
+		font-weight: normal;
+	}
+	
 }

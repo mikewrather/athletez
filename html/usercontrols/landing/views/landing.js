@@ -183,6 +183,10 @@ define(['require',
 					'background-size':'cover',
 					'background-position-y':'20%'
 				});
+				
+				if(routing.mobile) {
+					this.$el.css({'background-position': '74% 0'});
+				}
 
 
 				routing.off('center-landing-image');
@@ -195,7 +199,7 @@ define(['require',
 
 
 
-			}
+			};
 
 
 		//	console.error(options);
