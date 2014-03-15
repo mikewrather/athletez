@@ -2681,7 +2681,7 @@ li.sport .teamlist-header, .stat-val-outer {
 	}
 
 	.invite-from-fb {
-		background-position: -1px -55px;
+		background-position: -2px -58px;
 	}
 
 	.mobile-link {
@@ -2885,10 +2885,6 @@ li.sport .teamlist-header, .stat-val-outer {
 		margin: -132px 30px 30px 30px;
 	}
 	
-	.roster-heading-h .add-icon {
-		margin-left: 5px;
-		margin-top: 5px;
-	}
 	
 	.roster-heading-h .invite-from-fb {
 		margin-left: 5px;
@@ -3103,8 +3099,8 @@ li.sport .teamlist-header, .stat-val-outer {
 		margin: 5px 5px 0 0 !important;
 		min-height: 20px !important;
 	}
-	
-	.show-older-h, .see-more-h, .add-comment-h {
+
+	.show-older-h, .see-more-h, .add-comment-h, .add-image, .add-video, .add-to-list, .invite-from-fb, .add-to-roster-list {
 		width: 38%;
 		float: left;
 		font-size: 13px !important;
@@ -3114,8 +3110,13 @@ li.sport .teamlist-header, .stat-val-outer {
 		min-height: 20px;
 	}
 	
+	.add-image {
+		margin: 0 5px !important;
+	}
+
 	.see-more-h, .add-comment-h {
 		width: 100%;
+		background-image: none;
 	}
 	
 	#commenton-wrap .clear, #comment_div {
@@ -3132,11 +3133,65 @@ li.sport .teamlist-header, .stat-val-outer {
 		margin-top: -35px;
 	}
 	
-	 .see-more-h {
+	.buttons-h {
+		width: 100%;
+		margin: 10px 0;
+	}
+	
+	.see-more-h {
 	 	width: 98% !important;
 	 	color: #FFF !important;
 	 	margin: 0 1%;
 	 	background-image: none !important;
 	 }
+	 
+	 .add-to-list {
+	 	margin: 0 5px 0 5px !important;
+	 	background-position: 1px -4px;
+	 }
+	 
+	 .add-image {
+	 	background-position: -2px -214px;	 	
+	 }
+
+	 .add-video {
+	 	background-position: 2px -109px;	 	
+	 }
+	 
+	 .add-to-roster-list {
+	 	background-position: 22px -161px;	 	
+	 }
+
+	 .add-to-list, .invite-from-fb, .add-image, .add-video, .add-to-roster-list {
+	 	background-image: url(images/icons/sprite_icons_only_color_64px.png);
+		background-repeat: no-repeat;
+	 }
+	 
+	.roster-heading-h .add-icon {
+		margin-left: 5px !important;
+		margin-top: 5px !important;
+	}
 	
+	.photo-player-right-area, .slimScrollDiv, .tags-area-h, .comment-area, .image-tagging-photo, .image-actions {
+		display: none;
+	}
+	
+	.photo-player {
+		width: 100% !important;
+	} 
+	
+	.bottom-line-container {
+		bottom: 40px !important;
+	}
+	
+	button.close {
+		padding-right: 30px !important;
+	}
+	
+	.thumbs-outer a {
+		padding-right: 15px !important;
+	}
+
+	 
+	 
 }

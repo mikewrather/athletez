@@ -41,9 +41,12 @@ body { font-size:100%; font-family: "Raleway","Helvetica"; }
 
 
 
-.common-default-comment-red { background: #c6373b; }
-.common-default-comment-dark-grey { background: #1ba0af; }
-.common-default-game-orange { background: #dc6425; }
+.common-default-comment-red { background-color: #c6373b; }
+.common-default-comment-dark-grey { background-color: #1ba0af; }
+.common-default-game-orange { background-color: #dc6425; }
+.common-default-comment-yellow { background-color: #ddd43a; }
+.common-default-comment-blue { background-color: #6b74b7; }
+.common-default-comment-light-blue { background-color: #928add; }
 
 
 
