@@ -2309,7 +2309,7 @@ li.sport .teamlist-header, .stat-val-outer {
 }
 
 .mobile-link {
-	display: none !important;
+	display: none;
 }
 
 .desktop-link {
@@ -2689,7 +2689,7 @@ li.sport .teamlist-header, .stat-val-outer {
 	}
 
 	.mobile-link {
-		display: block !important;
+		display: block;
 	}
 
 	.desktop-link {
@@ -2811,7 +2811,7 @@ li.sport .teamlist-header, .stat-val-outer {
 
 	.add-big-list-container .right-secton {
 		float: left;
-		width: 270px;
+		width: 300px;
 	}
 
 	.add-big-list-container .border-wrapper {
@@ -3163,7 +3163,7 @@ li.sport .teamlist-header, .stat-val-outer {
 	 }
 	 
 	 .add-to-roster-list {
-	 	background-position: 22px -161px;	 	
+	 	background-position: 7px -163px;	 	
 	 }
 
 	 .add-to-list, .invite-from-fb, .add-image, .add-video, .add-to-roster-list {
