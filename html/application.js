@@ -197,7 +197,7 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
 
 					var showBrowserWindow = showMobileWindow = false;
 					if($.browser.iphone || $.browser.android){
-						showMobileWindow = true;
+				//		showMobileWindow = true;
 					}
 					if(!_.isUndefined($.browser.msie) && $.browser.msie){
 						if(parseInt($.browser.version) < 10){

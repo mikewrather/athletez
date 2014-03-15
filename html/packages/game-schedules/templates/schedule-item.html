@@ -10,7 +10,7 @@
 				<ul>
 				{{#schedules}}
 					<li data-game-id="{{id}}">
-						<a href="#game/{{id}}" data-team-id="{{team_id}}" class="{{#isWinner}}win{{/isWinner}}{{^isWinner}}background-blue{{/isWinner}} team-info-h">
+						<a href="#!game/{{id}}" data-team-id="{{team_id}}" class="{{#isWinner}}win{{/isWinner}}{{^isWinner}}background-blue{{/isWinner}} team-info-h">
 							<div class="game-info hide">
 								<span class="game-day">{{gameDay}}</span>{{#teams}}<span class="team-name" data-winner="{{isWinner}}" data-team-id="{{id}}">
 								&nbsp; vs. {{team_name}}</span>{{/teams}}
