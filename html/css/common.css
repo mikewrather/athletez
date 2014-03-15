@@ -38,6 +38,16 @@ body { font-size:100%; font-family: "Raleway","Helvetica"; }
 .common-default-green-inter { background:#9CCA3C; }
 .common-default-green-light { background: #c4df89; }
 
+
+
+
+.common-default-comment-red { background: #c6373b; }
+.common-default-comment-dark-grey { background: #1ba0af; }
+.common-default-game-orange { background: #dc6425; }
+
+
+
+
 .common-btn-small{
     font-size: 1em;
     height: auto;

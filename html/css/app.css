@@ -2514,7 +2514,7 @@ li.sport .teamlist-header, .stat-val-outer {
 	}
 
 	#image-wrap div.image-item-container {
-		width: 150px;
+		width: 100%;
 		height: 140px;
 	}
 
@@ -2616,7 +2616,7 @@ li.sport .teamlist-header, .stat-val-outer {
 	/* FANS CSS AREA  */
 
 	#fans-div div.image-item-container {
-		width: 150px;
+		width: 100%;
 		height: 140px;
 	}
 
@@ -2832,7 +2832,7 @@ li.sport .teamlist-header, .stat-val-outer {
 	
 	
 	#roster-wrap div.image-item-container {
-		width: 150px;
+		width: 100%;
 		height: 140px;
 	}
 
@@ -2849,7 +2849,7 @@ li.sport .teamlist-header, .stat-val-outer {
 	}
 
 	#roster-wrap div.image-item-container > img {
-		min-width: 146px;
+		min-width: 100%;
 		min-height: 220px;
 	}
 
@@ -2932,9 +2932,9 @@ li.sport .teamlist-header, .stat-val-outer {
 		display: none;
 	}
 	
-	.buttons-h {
+	/*.buttons-h {
 		display: none !important;
-	}
+	}*/
 	
 	.show-older {
 		float: left;
@@ -3066,5 +3066,51 @@ li.sport .teamlist-header, .stat-val-outer {
 		float: left;
 		width: 100%;
 	}
+	
+	a.add-game-h {
+		background-image: none !important;
+		width: 38% !important;
+		height: auto !important;
+		color: #FFF !important;
+		font-size: 13px !important;
+		padding: 3% 5% !important;
+		margin: 5px 5px 0 0 !important;
+		min-height: 20px !important;
+	}
+	
+	.show-older-h, .see-more-h, .add-comment-h {
+		width: 38%;
+		float: left;
+		font-size: 13px !important;
+		padding: 3% 5% !important;
+		margin: 0 !important;
+		height: auto !important;
+		min-height: 20px;
+	}
+	
+	.see-more-h, .add-comment-h {
+		width: 100%;
+	}
+	
+	#commenton-wrap .clear, #comment_div {
+		width: 47%;
+		margin-left: 5px;
+	}
+	
+	#commenton-wrap .clear {
+		margin-left: 5px;
+	}
+	
+	#comment_div {
+		margin-right: 0px;
+		margin-top: -35px;
+	}
+	
+	 .see-more-h {
+	 	width: 98% !important;
+	 	color: #FFF !important;
+	 	margin: 0 1%;
+	 	background-image: none !important;
+	 }
 	
 }
