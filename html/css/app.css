@@ -2309,7 +2309,11 @@ li.sport .teamlist-header, .stat-val-outer {
 }
 
 .mobile-link {
-	display: none;
+	display: none !important;
+}
+
+.desktop-link {
+	display: inline-block !important;
 }
 
 .team-template-outer #menu-container #sports-info {
@@ -2447,12 +2451,12 @@ li.sport .teamlist-header, .stat-val-outer {
 
 	.profile-heading {
 		position: relative;
-		min-height: 130px;
+		min-height: 175px;
 	}
 
 	.profile-heading .sports-h {
 		position: absolute;
-		bottom: 10px;
+		bottom: 3px;
 	}
 
 	.profile-heading h3 {
@@ -3147,15 +3151,15 @@ li.sport .teamlist-header, .stat-val-outer {
 	 
 	 .add-to-list {
 	 	margin: 0 5px 0 5px !important;
-	 	background-position: 1px -4px;
+	 	background-position: -7px -7px;
 	 }
 	 
 	 .add-image {
-	 	background-position: -2px -214px;	 	
+	 	background-position: -11px -216px;	 	
 	 }
 
 	 .add-video {
-	 	background-position: 2px -109px;	 	
+	 	background-position: -7px -111px;	 	
 	 }
 	 
 	 .add-to-roster-list {
