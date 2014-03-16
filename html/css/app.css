@@ -3195,6 +3195,34 @@ li.sport .teamlist-header, .stat-val-outer {
 	.thumbs-outer a {
 		padding-right: 15px !important;
 	}
+	
+	.modal-body #regcontainer #fbpane {
+		margin: 0;
+	}
+	
+	.modal-body #regpanemain {
+		float: left;
+		width: 100%;
+	}
+	
+	.modal-body #firstregbase {
+		float: left;
+		width: 100%;
+		padding-left: 0;
+	}
+	
+	.modal-body #firstregbase input {
+		width: 54%;
+	}
+	
+	.modal-body .addsub .btn {
+		padding: 4px 4px;
+	}
+	
+	#modal-popup-signup #mainreg #fbpane #label {
+		font-size: .9em;
+		width: 75%;
+	}
 
 	 
 	 
