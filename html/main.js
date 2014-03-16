@@ -74,6 +74,8 @@ require.config({
 		'collections'           : [cdn + 'collections', s3 + 'collections', '/collections'],
 		'controller'            : [cdn + 'controller', s3 + 'controller', '/controller'],
 
+		'jQueryHammer': '/vendor/jquery.hammer',
+
 		// Packages
 		'packages'          : [cdn + 'packages' , s3 + 'packages' , '/packages'],
 		'common'			: [cdn + 'packages/common', s3 + 'packages/common' , '/packages/common'],
@@ -158,7 +160,10 @@ require.config({
 		},
 		'facebook':{
 			exports: 'FB'
-		}
+		},
+		'jQueryHammer': {
+            deps: ['jquery']
+        }
 	},
 	priority: ['text', 'modernizr', 'json2', 'vendor', 'utils', 'facade', 'syncs', 'models', 'views', 'collections', 'controller'],
 	jquery: '1.10.2',
@@ -170,7 +175,6 @@ define([
 	'backbone',
 	'underscore',
 	'jquery',
-	//'jqueryui',
 	'application'
 ], function (Backbone, _, $, app) {
 		//Backbone.noConflict();

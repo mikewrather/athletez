@@ -21,6 +21,7 @@ define(['require',
 	'media/models/tag',
 	'usercontrols/photo-player/models/tag-myself',
 	'component/fb',
+	'jQueryHammer',
 	'component/share'
 ], function(
 	require,
@@ -31,6 +32,7 @@ define(['require',
 	var self, facade = require('facade'), views = require('views'), SectionView = views.SectionView, utils = require('utils'),
 	 Channel = utils.lib.Channel, vendor = require('vendor'), 
 	 TagView = require('usercontrols/tag/views/main'), 
+	 hammer = require('jQueryHammer'),
 	 UserModel = require('usercontrols/tag/models/basic_info'), 
 	 Mustache = vendor.Mustache, $ = facade.$, voteModel = require('votes/models/vote'), 
 	 TagMediaModel = require('media/models/tag'),
@@ -95,7 +97,27 @@ define(['require',
 	//		}
 			Channel('tag-image-success-photo').empty();
 			Channel('tag-image-success-photo').subscribe(this.tagFunction);
+			
+			
+			/*Zepto('#photoPlayerModal').swipeRight(function() {
+			    _self.click_left();
+			});
+			Zepto('#photoPlayerModal').swipeLeft(function() {
+			    _self.click_right();
+			});*/
+			
+			$(document).hammer().off("swiperight", '.image-bg, #video_container, .image-controls');
+			$(document).hammer().on("swiperight",'.image-bg, #video_container, .image-controls', function(e) {
+				_self.click_left(e);
+			});
+
+			$(document).hammer().off("swipeleft", '.image-bg, #video_container, .image-controls');
+			$(document).hammer().on("swipeleft",'.image-bg, #video_container, .image-controls', function(e) {
+				_self.click_right(e);
+			});
+
 		},
+		
 		
 		toggleThumbsSection: function(e) {
 			if(this.$el.find(".thumbs-outer").css("display") == "none") {
@@ -324,12 +346,18 @@ define(['require',
 		},
 
 		nextButton : function(e) {
-			console.log("next");
 			if (this.index < this.json.payload.length) {
 				this.index++;
 				this.loadImage();
-				//this.changeThumbPosition();
 			}
+		},
+		
+		click_left: function() {
+			this.backButton();
+		},
+		
+		click_right: function() {
+			this.nextButton();			
 		},
 
 		// change thumb position
