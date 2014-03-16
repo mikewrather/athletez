@@ -33,7 +33,7 @@
 //		'qtip': "vendor/plugiuns/qtip/qtip",
 		'facebook': 'vendor/all',
 
-		'jQueryHammer': '/vendor/jquery.hammer',
+		'jQueryHammer': 'vendor/jquery.hammer',
 
 		'custom': 'vendor/custom',
 
