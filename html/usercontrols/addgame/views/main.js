@@ -470,7 +470,7 @@ define(['require',
 							serverKey: 'teamTwoId',
 							showElements: ["team_2"],
 							serverDbField: 'teams_id',
-							field_width:'400px',
+							field_width:'80%',
 							request_fields : [{
 									key : 'states_id',
 									value : _self.states_id
