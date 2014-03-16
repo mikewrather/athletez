@@ -7,7 +7,7 @@
 	border-radius: 0;
 	-webkit-border-radius: 0;
 	-moz-border-radius: 0;
-	padding: 0;
+	padding: 0 !important;
 	border: none !important;
 }
 .photo-frame-model .modal-body {
@@ -191,7 +191,6 @@ div.right-arrow-container > img {
 	color: #CCC;
 }
 .photo-player-main-image {
-	min-height: 380px;
 	max-height: 100%;
 }
 .loading_image {
@@ -203,7 +202,6 @@ div.right-arrow-container > img {
 	top: 60px !important;
 }
 .loading_image img {
-	height: 100%;
 }
 .tags-name {
 	float: left;

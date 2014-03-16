@@ -1902,6 +1902,9 @@ li.sport .teamlist-header, .stat-val-outer {
 .mobile-link {
 	display: none;
 }
+.desktop-link {
+	display: inline-block !important;
+}
 .team-template-outer #menu-container #sports-info {
 	float: left;
 	width: 100%;
@@ -2007,11 +2010,11 @@ li.sport .teamlist-header, .stat-val-outer {
 	}
 	.profile-heading {
 		position: relative;
-		min-height: 200px;
+		min-height: 175px;
 	}
 	.profile-heading .sports-h {
 		position: absolute;
-		bottom: 10px;
+		bottom: 3px;
 	}
 	.profile-heading h3 {
 		position: absolute;
@@ -2021,6 +2024,10 @@ li.sport .teamlist-header, .stat-val-outer {
 	.profile-heading h4 {
 		position: absolute;
 		top: 35px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        width: 100%;
 	}
 	#main-header .profile-pic-outer ul.image-outer-h li.image {
 		margin: 0;
@@ -2060,7 +2067,7 @@ li.sport .teamlist-header, .stat-val-outer {
 		padding-left: 11px;
 	}
 	#image-wrap div.image-item-container {
-		width: 150px;
+		width: 100%;
 		height: 140px;
 	}
 	#image-wrap ul li.image {
@@ -2074,8 +2081,8 @@ li.sport .teamlist-header, .stat-val-outer {
 		margin-left: 5px;
 	}
 	#image-wrap div.image-item-container > img {
-		min-width: 146px;
-		min-height: 220px;
+		min-width: 100%;
+		min-height: 100%;
 	}
 	#image-wrap .circle {
 		width: 62px;
@@ -2094,12 +2101,19 @@ li.sport .teamlist-header, .stat-val-outer {
 	.add-video {
 		background-position: -1px -55px;
 	}
-	.team-label {
+	.team-label, .event-sport-label {
+        display: inline-block;
+        font-weight: bolder;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        width: 100%;
+        padding: 10px 5px;
 		margin: 0 !important;
 		background: #e0e0e0;
 	}
 	#schedule-list {
-		margin-left: 5px;
+		margin-left:0;
 	}
 	.select-team {
 		position: relative;
@@ -2117,9 +2131,10 @@ li.sport .teamlist-header, .stat-val-outer {
 		pointer-events: none;
 		height: auto;
 	}
-	.game-box-outer a {
+	.game-box-outer li a {
 		top: 40px;
-		left: -10px;
+        left:10px;
+		border:0;
 	}
 	.game-box-outer div.game-info {
 		display: block !important;
@@ -2127,20 +2142,34 @@ li.sport .teamlist-header, .stat-val-outer {
 		border: none;
 		float: right;
 		width: 84%;
+		max-width: 100% !important;
 	}
+    .game-box-outer div.game-info .game-header{
+        padding:0;
+        margin:0;
+        background-color: #ffffff;
+    }
 	
 	#schedule-list .select-team {
 		width: 100%;
 	}
-	.game-box-outer li {
-		float: left;
-		border-bottom: 1px solid #ccc;
-		
-	}
+    .game-box-outer li {
+        float: left;
+        border-bottom: 1px solid #ccc;
+        position: static;
+        display: inline-block;
+        margin:0;
+        top:0;
+        width:100%;
+        min-height:100px;
+    }
+    .game-box-outer ul li:nth-child(n+13){
+        display: none;
+    }
 	
 	
 	#fans-div div.image-item-container {
-		width: 150px;
+		width: 100%;
 		height: 140px;
 	}
 	#fans-div ul li.image {
@@ -2154,8 +2183,8 @@ li.sport .teamlist-header, .stat-val-outer {
 		margin-left: 5px;
 	}
 	#fans-div div.image-item-container > img {
-		min-width: 146px;
-		min-height: 220px;
+		min-width: 100%;
+		min-height: 100%;
 	}
 	#fans-div .circle {
 		width: 62px;
@@ -2172,10 +2201,10 @@ li.sport .teamlist-header, .stat-val-outer {
 		height: 45px;
 	}
 	.invite-from-fb {
-		background-position: -1px -55px;
+		background-position: -2px -58px;
 	}
 	.mobile-link {
-		display: block !important;
+		display: block;
 	}
 	.desktop-link {
 		display: none !important;
@@ -2276,7 +2305,7 @@ li.sport .teamlist-header, .stat-val-outer {
 	}
 	.add-big-list-container .right-secton {
 		float: left;
-		width: 270px;
+		width: 300px;
 	}
 	.add-big-list-container .border-wrapper {
 		min-height: 260px;
@@ -2322,7 +2351,7 @@ li.sport .teamlist-header, .stat-val-outer {
 	
 	
 	#roster-wrap div.image-item-container {
-		width: 150px;
+		width: 100%;
 		height: 140px;
 	}
 	#roster-wrap ul li.image {
@@ -2336,7 +2365,7 @@ li.sport .teamlist-header, .stat-val-outer {
 		margin-left: 5px;
 	}
 	#roster-wrap div.image-item-container > img {
-		min-width: 146px;
+		min-width: 100%;
 		min-height: 220px;
 	}
 	#roster-wrap .circle {
@@ -2345,10 +2374,6 @@ li.sport .teamlist-header, .stat-val-outer {
 		margin: -132px 30px 30px 30px;
 	}
 	
-	.roster-heading-h .add-icon {
-		margin-left: 5px;
-		margin-top: 5px;
-	}
 	
 	.roster-heading-h .invite-from-fb {
 		margin-left: 5px;
@@ -2418,9 +2443,7 @@ li.sport .teamlist-header, .stat-val-outer {
 		display: none;
 	}
 	
-	.buttons-h {
-		display: none !important;
-	}
+	
 	
 	.show-older {
 		float: left;
@@ -2506,4 +2529,140 @@ li.sport .teamlist-header, .stat-val-outer {
 		width: 100% !important;
 	}
 	
+	.home-page-heading {
+		font-weight: normal;
+	}
+	
+	#fans-div .add-icon-large {
+		background-image: url(images/icons/add-icons-large.png);
+		background-repeat: no-repeat;
+		display: inline-block;
+		width: 110px;
+		height: 61px;
+	}
+	
+	#fans-div .btn1, #fans-div .btn2 {
+		margin-top: 15px;
+	}
+	
+	#fans-div .btn1 {
+		background-position: -6px -231px;
+	}
+	
+	#fans-div .btn2 {
+		background-position: -137px 0;
+	}
+	
+	#fans-div .add-big-list-container .border-wrapper {
+		min-height: 306px;
+	}
+	
+	#games_div .game-box-outer {
+		float: left;
+		width: 100%;
+	}
+	
+	a.add-game-h {
+		background-image: none !important;
+		width: 38% !important;
+		height: auto !important;
+		color: #FFF !important;
+		font-size: 13px !important;
+		padding: 3% 5% !important;
+		margin: 5px 5px 0 0 !important;
+		min-height: 20px !important;
+	}
+	.show-older-h, .see-more-h, .add-comment-h, .add-image, .add-video, .add-to-list, .invite-from-fb, .add-to-roster-list {
+		width: 38%;
+		float: left;
+		font-size: 13px !important;
+		padding: 3% 5% !important;
+		margin: 0 !important;
+		height: auto !important;
+		min-height: 20px;
+	}
+	
+	.add-image {
+		margin: 0 5px !important;
+	}
+	.see-more-h, .add-comment-h {
+		width: 100%;
+		background-image: none;
+	}
+	
+	#commenton-wrap .clear, #comment_div {
+		width: 47%;
+		margin-left: 5px;
+	}
+	
+	#commenton-wrap .clear {
+		margin-left: 5px;
+	}
+	
+	#comment_div {
+		margin-right: 0px;
+		margin-top: -35px;
+	}
+	
+	.buttons-h {
+		width: 100%;
+		margin: 10px 0;
+	}
+	
+	.see-more-h {
+	 	width: 98% !important;
+	 	color: #FFF !important;
+	 	margin: 0 1%;
+	 	background-image: none !important;
+	 }
+	 
+	 .add-to-list {
+	 	margin: 0 5px 0 5px !important;
+	 	background-position: -7px -7px;
+	 }
+	 
+	 .add-image {
+	 	background-position: -11px -216px;	 	
+	 }
+	 .add-video {
+	 	background-position: -7px -111px;	 	
+	 }
+	 
+	 .add-to-roster-list {
+	 	background-position: 7px -163px;	 	
+	 }
+	 .add-to-list, .invite-from-fb, .add-image, .add-video, .add-to-roster-list {
+	 	background-image: url(images/icons/sprite_icons_only_color_64px.png);
+		background-repeat: no-repeat;
+	 }
+	 
+	.roster-heading-h .add-icon {
+		margin-left: 5px !important;
+		margin-top: 5px !important;
+	}
+	
+	.photo-player-right-area, .slimScrollDiv, .tags-area-h, .comment-area, .image-tagging-photo, .image-actions {
+		display: none;
+	}
+	
+	.photo-player {
+		width: 100% !important;
+	} 
+	
+	.bottom-line-container {
+		bottom: 40px !important;
+	}
+	
+	button.close {
+		padding-right: 30px !important;
+	}
+	
+	.thumbs-outer a {
+		padding-right: 15px !important;
+	}
+    form fieldset{
+        min-width: 300px;
+        max-width: 100%;
+    }
+	 
 }
