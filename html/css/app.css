@@ -3195,10 +3195,66 @@ li.sport .teamlist-header, .stat-val-outer {
 	.thumbs-outer a {
 		padding-right: 15px !important;
 	}
+	
+	.modal-body #regcontainer #fbpane {
+		margin: 0;
+		width: 98%;
+	}
+	
+	.modal-body #regpanemain {
+		float: left;
+		width: 100%;
+	}
+	
+	.modal-body #firstregbase {
+		float: left;
+		width: 100%;
+		padding-left: 0;
+	}
+	
+	.modal-body #firstregbase input {
+		width: 95%;
+	}
+	
+	.modal-body .addsub .btn {
+		padding: 4px 4px;
+	}
+	
+	#modal-popup-signup #mainreg #fbpane #label {
+		font-size: .9em;
+		width: 75%;
+	}
+	
+	.modal-body #mainreg {
+		width: 100%;
+	}
+	
+	.right-secton {
+		float: left !important;
+	}
+	
+	#roster-wrap .btn1, #roster-wrap .btn2 {
+		background-image: url(images/icons/add-icons-large.png);
+		background-repeat: no-repeat;
+		display: inline-block;
+		width: 110px;
+		height: 46px;
+	}
+	
+	#roster-wrap .btn1 {
+		margin-top: 5px;
+		background-position: -139px -85px;
+	}
 
     form fieldset{
         min-width: 300px;
         max-width: 100%;
     }
+
+	#roster-wrap .btn2 {
+		margin-top: 5px;
+		background-position: -139px -8px;
+	}
+
 	 
 }
