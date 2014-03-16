@@ -3198,6 +3198,7 @@ li.sport .teamlist-header, .stat-val-outer {
 	
 	.modal-body #regcontainer #fbpane {
 		margin: 0;
+		width: 98%;
 	}
 	
 	.modal-body #regpanemain {
@@ -3212,7 +3213,7 @@ li.sport .teamlist-header, .stat-val-outer {
 	}
 	
 	.modal-body #firstregbase input {
-		width: 54%;
+		width: 95%;
 	}
 	
 	.modal-body .addsub .btn {
@@ -3222,6 +3223,10 @@ li.sport .teamlist-header, .stat-val-outer {
 	#modal-popup-signup #mainreg #fbpane #label {
 		font-size: .9em;
 		width: 75%;
+	}
+	
+	.modal-body #mainreg {
+		width: 100%;
 	}
 
 	 
