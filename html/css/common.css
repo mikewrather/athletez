@@ -4,8 +4,7 @@ body { font-size:100%; font-family: "Raleway","Helvetica"; }
 
 
 .common-btn { text-decoration: none; padding:8px 50px; font-size: 1.5em; color: #FFFFFF; text-align:center;
-    border-style: none;
-    display:inline-block;}
+    border-style: none;}
 .common-btn:hover, .common-btn:active {  border-top:0; text-decoration: none;  color: #FFFFFF; }
 .common-btn-direction {background:#1AA0AE;}
 .common-btn-validation { background:#9CCA3C; }
@@ -37,6 +36,19 @@ body { font-size:100%; font-family: "Raleway","Helvetica"; }
 .common-default-green-dark { background:#7ca325; }
 .common-default-green-inter { background:#9CCA3C; }
 .common-default-green-light { background: #c4df89; }
+
+
+
+
+.common-default-comment-red { background-color: #c6373b; }
+.common-default-comment-dark-grey { background-color: #1ba0af; }
+.common-default-game-orange { background-color: #dc6425; }
+.common-default-comment-yellow { background-color: #ddd43a; }
+.common-default-comment-blue { background-color: #6b74b7; }
+.common-default-comment-light-blue { background-color: #928add; }
+
+
+
 
 .common-btn-small{
     font-size: 1em;

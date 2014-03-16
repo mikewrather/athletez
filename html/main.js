@@ -196,7 +196,7 @@ define([
 			routing.ajaxRequests = [];
 			routing.intializeImageAndVideo();
 			routing.initTriggers();
-
+			routing.mobile = (/iphone|ipod|android|ie|blackberry|fennec/).test(navigator.userAgent.toLowerCase());
 			// set to true on initial app render but set to false once the page shows
 			routing.showLandingPage = true;
 

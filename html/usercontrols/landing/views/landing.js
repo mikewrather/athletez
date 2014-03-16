@@ -91,7 +91,7 @@ define(['require',
 		setDefaults: function(){
 
 			this.data = {
-				headline:"Athletes Live Here",
+				headline:"",
 				text:"And we mean all athletes.  It's simple: create a profile, connect with your team, share your games, post your highlights, get discovered."
 			};
 		},
@@ -182,6 +182,10 @@ define(['require',
 					'background-size':'cover',
 					'background-position-y':'20%'
 				});
+				
+				if(routing.mobile) {
+					_self.$el.css({'background-position': '74% 0'});
+				}
 
 
 				routing.off('center-landing-image');
@@ -194,7 +198,7 @@ define(['require',
 
 
 
-			}
+			};
 
 
 		//	console.error(options);

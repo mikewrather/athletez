@@ -10,7 +10,8 @@ function(facade,  utils,   BaseImageListView,       AddImageView) {
     TeamImageListView = BaseImageListView.extend({
 
         setupAddView: function() {
-            var listView = this,
+            var listView = this;
+	        /*
                 addView = new AddImageView({collection: this.collection}),
                 renderAddView = this.addChildView(addView);
             
@@ -26,6 +27,7 @@ function(facade,  utils,   BaseImageListView,       AddImageView) {
             }
             
             Channel('teamaddimage:fetch').subscribe(callback);
+            */
         }
 
     });
