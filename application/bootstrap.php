@@ -95,7 +95,8 @@ elseif (
 	strpos($_SERVER['HTTP_HOST'], 'athletez') !== FALSE
 ){
 	Kohana::$environment = Kohana::PRODUCTION;
-	$base_url = $cdn_url;
+//	$base_url = $cdn_url;
+	$cdn_url = $base_url = "/";
 	$use_cdn = true;
 
 	// Turn off notices and strict errors
