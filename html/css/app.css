@@ -3228,7 +3228,27 @@ li.sport .teamlist-header, .stat-val-outer {
 	.modal-body #mainreg {
 		width: 100%;
 	}
+	
+	.right-secton {
+		float: left !important;
+	}
+	
+	#roster-wrap .btn1, #roster-wrap .btn2 {
+		background-image: url(images/icons/add-icons-large.png);
+		background-repeat: no-repeat;
+		display: inline-block;
+		width: 110px;
+		height: 46px;
+	}
+	
+	#roster-wrap .btn1 {
+		margin-top: 5px;
+		background-position: -139px -85px;
+	}
 
-	 
+	#roster-wrap .btn2 {
+		margin-top: 5px;
+		background-position: -139px -8px;
+	}
 	 
 }
