@@ -824,6 +824,7 @@ a.add-event-h.right-with-icon, a.add-game-h.right-with-icon {
 	background-repeat: no-repeat;
 	padding: 0 0 0 35px;
 	color: #333;
+	
 	min-height: 25px;
 	margin: 0px 75px 5px 15px;
 	float: right;
@@ -1923,9 +1924,7 @@ li.sport .teamlist-header, .stat-val-outer {
 	width: 50%;
 	height: 300px;
 }
-@media only screen and (min-width: 767px) {
-    .mobile-link{
-        display: none;}
+@media only screen and (max-width: 480px) {
 }
 @media only screen and (min-width: 320px) and (max-width: 767px) {
 	body {
@@ -1977,9 +1976,7 @@ li.sport .teamlist-header, .stat-val-outer {
 		width: 60%;
 		padding: 0;
 		padding-left: 11px;
-		white-space: nowrap;
-		text-overflow: ellipsis;
-		overflow: hidden;
+		
 	}
 	
 	#main {
@@ -2129,7 +2126,7 @@ li.sport .teamlist-header, .stat-val-outer {
 	.game-box-outer ul, .game-box-outer a {
 		background: #FFF;
 		border-radius: 0;
-		pointer-events: none;
+		
 		height: auto;
 	}
 	.game-box-outer li a {
@@ -2602,7 +2599,7 @@ li.sport .teamlist-header, .stat-val-outer {
 	
 	#comment_div {
 		margin-right: 0px;
-		margin-top: -35px;
+		margin-top: 0px;
 	}
 	
 	.buttons-h {
@@ -2711,13 +2708,36 @@ li.sport .teamlist-header, .stat-val-outer {
 		margin-top: 5px;
 		background-position: -139px -85px;
 	}
-    form fieldset{
-        min-width: 300px;
-        max-width: 100%;
-    }
 	#roster-wrap .btn2 {
 		margin-top: 5px;
 		background-position: -139px -8px;
+	}
+	
+	#commenton-wrap .see-more-h {
+		top: 29px !important;
+		position: relative;
+	}
+	
+	#image-wrap-h .image-list {
+		float: left;
+		width: 100%;
+	}
+	
+	#image-wrap-h li.image {
+		padding: 0;
+		margin: 0 5px 10px 5px;
+		width: 45%;
+		min-height: 150px;
+	}
+	
+	#image-wrap-h div.image-item-container {
+		width: 100%;
+		min-height: 150px;
+	}
+	
+	#image-wrap-h div.image-item-container > img {
+		width: 100%;
+		min-height: 150px;		
 	}
 	 
 }
