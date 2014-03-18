@@ -167,30 +167,32 @@ function(vendor, facade,  views,   utils,   ScheduleItemView, Store, ScheduleLis
 
 	    afterRender: function() {
 		    var _self = this;
-		    this.$el.find("a.team-info-h").each(function(){
-			    var $self = $(this);
-			    $(this).qtip({
-				    content: $self.find('div.game-info').html(),
-				    position: {
-					    my: "bottom center",
-					    at: "top center",
-					    viewport : $(window)
-				    },
-				    style: {
-					    classes: "tipsy game-info",
-					    width: '360px'
-				    },
-				    hide : {
-						fixed:true,
-					    delay:1000
-				    },
-				    events : {
-					    render: function(event,api) {
-						    $(api.elements.tooltip).find('.add-score').on('click',_self.addScore);
+		   	if(!routing.mobile) {
+			    this.$el.find("a.team-info-h").each(function(){
+				    var $self = $(this);
+				    $(this).qtip({
+					    content: $self.find('div.game-info').html(),
+					    position: {
+						    my: "bottom center",
+						    at: "top center",
+						    viewport : $(window)
+					    },
+					    style: {
+						    classes: "tipsy game-info",
+						    width: '360px'
+					    },
+					    hide : {
+							fixed:true,
+						    delay:1000
+					    },
+					    events : {
+						    render: function(event,api) {
+							    $(api.elements.tooltip).find('.add-score').on('click',_self.addScore);
+						    }
 					    }
-				    }
+				    });
 			    });
-		    });
+		    }
 	    },
 	    addScore: function(e){
 		    e.stopPropagation();
