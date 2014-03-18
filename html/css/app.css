@@ -2409,9 +2409,9 @@ li.sport .teamlist-header, .stat-val-outer {
 		width: 60%;
 		padding: 0;
 		padding-left: 11px;
-		white-space: nowrap;
+		/*white-space: nowrap;
 		text-overflow: ellipsis;
-		overflow: hidden;
+		overflow: hidden;*/
 	}
 
 	/*.template-container > div {
