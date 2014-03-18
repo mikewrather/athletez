@@ -61,7 +61,7 @@
     margin: 5px;
     padding: 10px;
     border: 7px solid #dbdbdb;
-    height: 90px;
+    height: auto;
     float: left;
     width:80%;
     max-width:450px;

@@ -125,7 +125,10 @@ function(require, commentFormTemplate,    ProfileCommentFormModel,        BaseCo
 		    BaseView.prototype.render.call(this);
 		    this.input = this.$("#new-comment");
 		    if(!this.collection.length) {
-		    	$(".add-comment-h").trigger("click");
+	    		if(routing.mobile)
+	    			$(".mobile-link.add-comment-h").trigger("click");
+	    		else
+	    			$(".desktop-link.add-comment-h").trigger("click");	
 		    }
 		    console.log("run here now", this.el);
 		    return this;
