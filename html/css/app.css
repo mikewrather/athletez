@@ -3134,7 +3134,7 @@ li.sport .teamlist-header, .stat-val-outer {
 	
 	#comment_div {
 		margin-right: 0px;
-		margin-top: -35px;
+		margin-top: 0px;
 	}
 	
 	.buttons-h {
@@ -3249,6 +3249,11 @@ li.sport .teamlist-header, .stat-val-outer {
 	#roster-wrap .btn2 {
 		margin-top: 5px;
 		background-position: -139px -8px;
+	}
+	
+	#commenton-wrap .see-more-h {
+		top: 29px !important;
+		position: relative;
 	}
 	 
 }
