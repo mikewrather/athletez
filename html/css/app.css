@@ -990,9 +990,9 @@ a.add-event-h.right-with-icon, a.add-game-h.right-with-icon {
 	background-repeat: no-repeat;
 	padding: 0 0 0 35px;
 	color: #333;
-	display: inline-block;
+	/*display: inline-block;*/
 	min-height: 25px;
-	margin: 0px 75px 5px 15px;
+	margin: 0px 30px 5px 15px;
 	float: right;
 	position: relative;
 	bottom: 5px;
