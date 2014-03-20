@@ -2161,14 +2161,16 @@ li.sport .teamlist-header, .stat-val-outer {
 /*  Participants icons  */
 
 .add-participants {
-	background: url(images/icons/add-icons.png) no-repeat;
+	background: url(images/icons/sprite_icons_only_color_64px.png) no-repeat;
 	display: inline-block;
 	width: 70px;
 	height: 36px;
 }
 
 .add-to-participants {
-	background-position: -162px -53px;
+	background-position: 0px -263px;
+    background-color: #d45c27;
+
 }
 
 .invite-participants {
@@ -2451,8 +2453,12 @@ li.sport .teamlist-header, .stat-val-outer {
 
 	.profile-heading {
 		position: relative;
-		min-height: 175px;
+		min-height: 115px;
 	}
+
+    .profile-heading div.sports-h img {
+        max-width: 40px;
+    }
 
 	.profile-heading .sports-h {
 		position: absolute;
@@ -2462,16 +2468,18 @@ li.sport .teamlist-header, .stat-val-outer {
 	.profile-heading h3 {
 		position: absolute;
 		top: 0;
-		font-size: 35px;
+		font-size: 30px;
 	}
 
 	.profile-heading h4 {
-		position: absolute;
-		top: 35px;
+        position: absolute;
+        top: 30px;
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
         width: 100%;
+        font-size: 23px;
+        line-height: 33px;
 	}
 
 	#main-header .profile-pic-outer ul.image-outer-h li.image {
@@ -2686,6 +2694,7 @@ li.sport .teamlist-header, .stat-val-outer {
 
 	.invite-from-fb {
 		background-position: -2px -54px;
+        background-color: #6b74b7;
 	}
 
 	.mobile-link {
@@ -3150,18 +3159,22 @@ li.sport .teamlist-header, .stat-val-outer {
 	 .add-to-list {
 	 	margin: 0 5px 0 5px !important;
 	 	background-position: -1px -1px;
+         background-color: #1ba0af;
 	 }
 	 
 	 .add-image {
 	 	background-position: -5px -210px;
+         background-color:#ddd43a;
 	 }
 
 	 .add-video {
 	 	background-position: -1px -105px;
+         background-color: #c6373b;
 	 }
 	 
 	 .add-to-roster-list {
 	 	background-position: 1px -157px;
+         background-color: #928add;
 	 }
 
 	 .add-to-list, .invite-from-fb, .add-image, .add-video, .add-to-roster-list {
