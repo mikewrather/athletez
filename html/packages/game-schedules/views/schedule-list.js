@@ -154,7 +154,6 @@ function(vendor, facade,  views,   utils,   ScheduleItemView, Store, ScheduleLis
 
 	    afterRender: function() {
 		    var _self = this;
-		   	if(!routing.mobile) {
 			    this.$el.find("a.team-info-h").each(function() {
 				    var $self = $(this);
 				    $(this).qtip2({
@@ -179,7 +178,6 @@ function(vendor, facade,  views,   utils,   ScheduleItemView, Store, ScheduleLis
 					    }
 				    });
 			    });
-		    }
 	    },
 	    addScore: function(e){
 		    e.stopPropagation();
