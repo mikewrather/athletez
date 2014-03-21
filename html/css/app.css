@@ -2973,6 +2973,8 @@ li.sport .teamlist-header, .stat-val-outer {
 	.home-template .fixed-icons {
 		position: static !important;
 		width: 100% !important;
+		margin-bottom: 20px;
+		float: left;
 	}
 	
 	.home-template #main-content {
@@ -2993,6 +2995,14 @@ li.sport .teamlist-header, .stat-val-outer {
 	.fixed-icons li {
 		float: left;
 		width: 55px;
+	}
+	
+	.home-template .fixed-icons a {
+		-webkit-box-shadow: none;
+		-moz-box-shadow: none;
+		-ms-box-shadow: none;
+		-o-box-shadow: none;
+		box-shadow: none;
 	}
 	
 	.home-template #sport {
@@ -3038,7 +3048,26 @@ li.sport .teamlist-header, .stat-val-outer {
 	}
 	
 	.search-box input {
-		margin: 0px 10px !important;
+		width: 90%;
+		padding: 4px 1% !important; 
+		margin: 0 4% !important;
+	}
+
+
+	.search-box a {
+		display: none;
+	}
+	
+	.under-text {
+		font-size: 1.2em;
+		text-align: center;
+		margin-top: 50px;
+	}
+	
+	.icon_selected .under-text {
+		text-decoration: underline;
+		font-weight: bold;
+		color: #000;
 	}
 	
 	.search-box {
@@ -3310,6 +3339,8 @@ li.sport .teamlist-header, .stat-val-outer {
 		margin-left: 5px !important;
 		margin-right: 5px !important;
 	}
+	
+	
 	
 	 
 }

@@ -10,6 +10,7 @@ define([
         'text!user/templates/fitnessbasic-item.html',
         'user/models/fitness',
 		"vendor/plugins/qtip/qtip",
+		"vendor/plugins/qtip/qtip-wrapper",
 		"text!vendor/plugins/qtip/qtip.css"
         ], 
 function (
@@ -78,11 +79,10 @@ function (
         },
 
 	      bindToolTips:function(){
-
 		      var self = this;
 		      $.each(this.$el.find('img'),function(){
 			      var $curr = $(this);
-			      $curr.qtip({
+			      $curr.qtip2({
 				      //	content: 'test of qtip',
 				      position: {
 					      my: "bottom center",
@@ -92,7 +92,7 @@ function (
 					      classes: 'header-dropdown'
 				      }
 			      });
-		      })
+		      });
 	      },
  
         render: function () {

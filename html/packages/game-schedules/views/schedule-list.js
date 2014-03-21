@@ -4,7 +4,8 @@
 define(['vendor','facade','views', 'utils', 'schedules/views/schedule-item','utils/storage',
 	'text!schedules/templates/schedule-list.html','chrome/views/header', 'common/models/add',
 	'sportorg/models/uslgamelink',
-	"vendor/plugins/qtip/qtip", 'common/views/add-description'],
+	"vendor/plugins/qtip/qtip",
+	"vendor/plugins/qtip/qtip-wrapper", 'common/views/add-description'],
 function(vendor, facade,  views,   utils,   ScheduleItemView, Store, ScheduleListTemplate,header, UserGames,UslGameLink) {
 
     var OrgListView, 
@@ -148,29 +149,16 @@ function(vendor, facade,  views,   utils,   ScheduleItemView, Store, ScheduleLis
                 throw new Error("Schedule expected options.collection.");
             }
             
-            
-//            var len = this.collection.length;
-             // show empty box
-//	        if(!len) {
-	        	
-//	        	new AddDescription({
-//	        		page: this.currentSection,
-//	        		target: this.$el
-//	        	});
-//	        }
-		            
             _.bindAll(_self);
             _self.addSubscribers();
-			
-
         },
 
 	    afterRender: function() {
 		    var _self = this;
 		   	if(!routing.mobile) {
-			    this.$el.find("a.team-info-h").each(function(){
+			    this.$el.find("a.team-info-h").each(function() {
 				    var $self = $(this);
-				    $(this).qtip({
+				    $(this).qtip2({
 					    content: $self.find('div.game-info').html(),
 					    position: {
 						    my: "bottom center",
