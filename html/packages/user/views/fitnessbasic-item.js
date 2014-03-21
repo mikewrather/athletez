@@ -9,7 +9,6 @@ define([
         'utils', 
         'text!user/templates/fitnessbasic-item.html',
         'user/models/fitness',
-		"vendor/plugins/qtip/qtip",
 		"vendor/plugins/qtip/qtip-wrapper",
 		"text!vendor/plugins/qtip/qtip.css"
         ], 

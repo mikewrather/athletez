@@ -4,7 +4,6 @@
 define(['vendor','facade','views', 'utils', 'schedules/views/schedule-item','utils/storage',
 	'text!schedules/templates/schedule-list.html','chrome/views/header', 'common/models/add',
 	'sportorg/models/uslgamelink',
-	"vendor/plugins/qtip/qtip",
 	"vendor/plugins/qtip/qtip-wrapper", 'common/views/add-description'],
 function(vendor, facade,  views,   utils,   ScheduleItemView, Store, ScheduleListTemplate,header, UserGames,UslGameLink) {
 

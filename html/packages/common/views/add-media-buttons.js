@@ -14,7 +14,6 @@ define([
         'votes/models/follow',
         'roster/models/roster',
 		'vendor',
-        "vendor/plugins/qtip/qtip",
         "vendor/plugins/qtip/qtip-wrapper",
         "text!vendor/plugins/qtip/qtip.css"
         ], function(require, headingTemplate) {
