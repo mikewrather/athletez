@@ -2408,17 +2408,10 @@ li.sport .teamlist-header, .stat-val-outer {
 
 	.bubble .content p {
 		float: left;
-		width: 60%;
+		width: 90%;
 		padding: 0;
 		padding-left: 11px;
-		/*white-space: nowrap;
-		text-overflow: ellipsis;
-		overflow: hidden;*/
 	}
-
-	/*.template-container > div {
-	 margin-bottom: 15px;
-	 }*/
 
 	#main {
 		overflow: hidden;
@@ -2521,12 +2514,14 @@ li.sport .teamlist-header, .stat-val-outer {
 	}
 
 	.bubble .content p.comment-text {
-		padding: 5px 10px 5px 54px;
+		padding: 33px 0px 0px 0px;
+		margin-left: -10px;
 	}
 
 	.poster-info {
 		float: left;
 		padding-left: 11px;
+		font-weight: normal !important;
 	}
 
 	#image-wrap div.image-item-container {
@@ -2600,11 +2595,15 @@ li.sport .teamlist-header, .stat-val-outer {
 		margin: 0;
 	}
 
-	.game-box-outer ul, .game-box-outer a {
+	.game-box-outer ul {
 		background: #FFF;
 		border-radius: 0;
 		/*pointer-events: none;*/
 		height: auto;
+	}
+	
+	.game-box-outer a {
+		
 	}
 
 	.game-box-outer li a {
@@ -2980,6 +2979,8 @@ li.sport .teamlist-header, .stat-val-outer {
 	.home-template .fixed-icons {
 		position: static !important;
 		width: 100% !important;
+		margin-bottom: 20px;
+		float: left;
 	}
 	
 	.home-template #main-content {
@@ -3000,6 +3001,14 @@ li.sport .teamlist-header, .stat-val-outer {
 	.fixed-icons li {
 		float: left;
 		width: 55px;
+	}
+	
+	.home-template .fixed-icons a {
+		-webkit-box-shadow: none;
+		-moz-box-shadow: none;
+		-ms-box-shadow: none;
+		-o-box-shadow: none;
+		box-shadow: none;
 	}
 	
 	.home-template #sport {
@@ -3045,7 +3054,26 @@ li.sport .teamlist-header, .stat-val-outer {
 	}
 	
 	.search-box input {
-		margin: 0px 10px !important;
+		width: 90%;
+		padding: 4px 1% !important; 
+		margin: 0 4% !important;
+	}
+
+
+	.search-box a {
+		display: none;
+	}
+	
+	.under-text {
+		font-size: 1.2em;
+		text-align: center;
+		margin-top: 50px;
+	}
+	
+	.icon_selected .under-text {
+		text-decoration: underline;
+		font-weight: bold;
+		color: #000;
 	}
 	
 	.search-box {
@@ -3263,7 +3291,7 @@ li.sport .teamlist-header, .stat-val-outer {
 	}
 	
 	#commenton-wrap .see-more-h {
-		top: 29px !important;
+		top: 35px !important;
 		position: relative;
 	}
 	
@@ -3321,6 +3349,22 @@ li.sport .teamlist-header, .stat-val-outer {
 		margin-left: 5px !important;
 		margin-right: 5px !important;
 	}
+	
+	.show-older-h {
+		padding: 3% 5% !important;
+	}
+	
+	.bubble .comment-date {
+		float: left;
+		width: 60%;
+		height: 36px;
+	}
+	
+	.profile-heading .grad-year {
+		display: none;
+	}
+	
+	
 	
 	 
 }

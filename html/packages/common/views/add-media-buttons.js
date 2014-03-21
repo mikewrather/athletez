@@ -14,7 +14,7 @@ define([
         'votes/models/follow',
         'roster/models/roster',
 		'vendor',
-        "vendor/plugins/qtip/qtip",
+        "vendor/plugins/qtip/qtip-wrapper",
         "text!vendor/plugins/qtip/qtip.css"
         ], function(require, headingTemplate) {
 
@@ -190,7 +190,7 @@ define([
         	this.$el.find(".buttons-h").html(markupButtons);
 
         	this.$el.find("a").each(function() {
-        	$(this).qtip({
+        	$(this).qtip2({
 				content: $(this).data("content"),
 				position: {
 				  my: "bottom center",

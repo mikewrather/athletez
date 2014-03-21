@@ -487,7 +487,6 @@ define(['require', 'text!usercontrol/addevent/templates/layout.html', 'facade', 
 
 							} else {
 
-								console.log
 								var payload = {
 									game_datetime : formData.game_datetime,
 									game_location : formData['locations_id'],
@@ -498,6 +497,7 @@ define(['require', 'text!usercontrol/addevent/templates/layout.html', 'facade', 
 								};
 
 								var gameSaveModel = new GameSaveModel(payload);
+								gameSaveModel.game_id =  formData.games_id;
 								gameSaveModel.save({});
 
 								//window.formValues1.showServersErrors([{ key: "gameDay", message: "error_message" }]);

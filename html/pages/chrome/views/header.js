@@ -16,7 +16,7 @@ define([
        
         'utils/storage',
         'signup/views/facebooksignup',
-		"vendor/plugins/qtip/qtip"
+		"vendor/plugins/qtip/qtip-wrapper"
         ], 
 function (
         vendor,
@@ -119,7 +119,7 @@ function (
 		    var _self = this;
 		    this.$el.find('a.nav_dropdown').each(function(){
 			    console.log(this);
-			    $(this).qtip({
+			    $(this).qtip2({
 				    content:$(this).next('ul.header_menu'),
 
 				    position: {
