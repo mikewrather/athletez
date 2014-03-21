@@ -2406,17 +2406,10 @@ li.sport .teamlist-header, .stat-val-outer {
 
 	.bubble .content p {
 		float: left;
-		width: 60%;
+		width: 85%;
 		padding: 0;
 		padding-left: 11px;
-		/*white-space: nowrap;
-		text-overflow: ellipsis;
-		overflow: hidden;*/
 	}
-
-	/*.template-container > div {
-	 margin-bottom: 15px;
-	 }*/
 
 	#main {
 		overflow: hidden;
@@ -2513,7 +2506,8 @@ li.sport .teamlist-header, .stat-val-outer {
 	}
 
 	.bubble .content p.comment-text {
-		padding: 5px 10px 5px 54px;
+		padding: 33px 0px 0px 0px;
+		margin-left: -10px;
 	}
 
 	.poster-info {
@@ -2592,11 +2586,15 @@ li.sport .teamlist-header, .stat-val-outer {
 		margin: 0;
 	}
 
-	.game-box-outer ul, .game-box-outer a {
+	.game-box-outer ul {
 		background: #FFF;
 		border-radius: 0;
 		/*pointer-events: none;*/
 		height: auto;
+	}
+	
+	.game-box-outer a {
+		
 	}
 
 	.game-box-outer li a {
@@ -3279,7 +3277,7 @@ li.sport .teamlist-header, .stat-val-outer {
 	}
 	
 	#commenton-wrap .see-more-h {
-		top: 29px !important;
+		top: 35px !important;
 		position: relative;
 	}
 	
@@ -3336,6 +3334,20 @@ li.sport .teamlist-header, .stat-val-outer {
 	.participants-heading-h .add-to-participants {
 		margin-left: 5px !important;
 		margin-right: 5px !important;
+	}
+	
+	.show-older-h {
+		padding: 3% 5% !important;
+	}
+	
+	.bubble .comment-date {
+		float: left;
+		width: 60%;
+		height: 36px;
+	}
+	
+	.profile-heading .grad-year {
+		display: none;
 	}
 	
 	

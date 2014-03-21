@@ -16,7 +16,6 @@ define([
        
         'utils/storage',
         'signup/views/facebooksignup',
-		"vendor/plugins/qtip/qtip",
 		"vendor/plugins/qtip/qtip-wrapper"
         ], 
 function (
