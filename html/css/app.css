@@ -2685,7 +2685,7 @@ li.sport .teamlist-header, .stat-val-outer {
 	}
 
 	.invite-from-fb {
-		background-position: -2px -58px;
+		background-position: -2px -54px;
 	}
 
 	.mobile-link {
@@ -2701,9 +2701,7 @@ li.sport .teamlist-header, .stat-val-outer {
 		background-repeat: no-repeat;
 		cursor: pointer;
 		margin: 2px 0 0 0;
-	}
-
-	.green-left-heading {
+        padding: 15px 25px;
 		background-position: 80% 60%;
 	}
 
@@ -3137,7 +3135,7 @@ li.sport .teamlist-header, .stat-val-outer {
 		width: 38%;
 		float: left;
 		font-size: 13px !important;
-		padding: 3% 5% !important;
+		padding: 5% 1% 4% 9% !important;
 		margin: 0 !important;
 		height: auto !important;
 		min-height: 20px;
@@ -3180,19 +3178,19 @@ li.sport .teamlist-header, .stat-val-outer {
 	 
 	 .add-to-list {
 	 	margin: 0 5px 0 5px !important;
-	 	background-position: -7px -7px;
+	 	background-position: -1px -1px;
 	 }
 	 
 	 .add-image {
-	 	background-position: -11px -216px;	 	
+	 	background-position: -5px -210px;
 	 }
 
 	 .add-video {
-	 	background-position: -7px -111px;	 	
+	 	background-position: -1px -105px;
 	 }
 	 
 	 .add-to-roster-list {
-	 	background-position: 7px -163px;	 	
+	 	background-position: 1px -157px;
 	 }
 
 	 .add-to-list, .invite-from-fb, .add-image, .add-video, .add-to-roster-list {
