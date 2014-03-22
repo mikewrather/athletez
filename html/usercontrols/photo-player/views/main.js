@@ -5,9 +5,9 @@
  // Returns {Photo Player View} constructor
  */
 define(['require',
-	'text!usercontrols/photo-player/templates/player.html',
-	'text!usercontrols/photo-player/templates/image-thumbs.html',
-	'text!usercontrols/tag/templates/layout.html',
+	'text!usercontrol/photo-player/templates/player.html',
+	'text!usercontrol/photo-player/templates/image-thumbs.html',
+	'text!usercontrol/tag/templates/layout.html',
 	'facade',
 	'views',
 	'utils',
@@ -16,10 +16,10 @@ define(['require',
 	'jwplayer',
 	'jqueryui',
 	'jquery.slimscroll.hor',
-	'usercontrols/tag/models/basic_info',
-	'usercontrols/tag/views/main',
+	'usercontrol/tag/models/basic_info',
+	'usercontrol/tag/views/main',
 	'media/models/tag',
-	'usercontrols/photo-player/models/tag-myself',
+	'usercontrol/photo-player/models/tag-myself',
 	'component/fb',
 	'jQueryHammer',
 	'component/share'
@@ -29,16 +29,22 @@ define(['require',
 	imageThumbsTemplate,
 	tagTemplate) {
 
-	var self, facade = require('facade'), views = require('views'), SectionView = views.SectionView, utils = require('utils'),
-	 Channel = utils.lib.Channel, vendor = require('vendor'), 
-	 TagView = require('usercontrols/tag/views/main'), 
-	 hammer = require('jQueryHammer'),
-	 UserModel = require('usercontrols/tag/models/basic_info'), 
-	 Mustache = vendor.Mustache, $ = facade.$, voteModel = require('votes/models/vote'), 
-	 TagMediaModel = require('media/models/tag'),
-	 TagMyselfModel = require('usercontrols/photo-player/models/tag-myself'),
-	 FbComponent = require('component/fb'),
-	 ShareComponent = require('component/share');
+	var self,
+		facade = require('facade'),
+		views = require('views'),
+		SectionView = views.SectionView,
+		utils = require('utils'),
+		Channel = utils.lib.Channel,
+		vendor = require('vendor'),
+		TagView = require('usercontrol/tag/views/main'),
+		UserModel = require('usercontrol/tag/models/basic_info'),
+		hammer = require('jQueryHammer'),
+		Mustache = vendor.Mustache, $ = facade.$, voteModel = require('votes/models/vote'),
+		TagMediaModel = require('media/models/tag'),
+		TagMyselfModel = require('usercontrol/photo-player/models/tag-myself'),
+
+		FbComponent = require('component/fb'),
+		ShareComponent = require('component/share');
 
 	jwplayer.key = "yXOw2TpDcCoCnbWyVSCoEYA4tepkpjiVEtLEfSBIfZQ=";
 

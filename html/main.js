@@ -6,6 +6,15 @@
 require.config({
 	baseUrl: './',
 	locale: 'en-us',
+	config: {
+		text: {
+			useXhr: function (url, protocol, hostname, port) {
+				// allow cross-domain requests
+				// remote server allows CORS
+				return true;
+			}
+		}
+	},
 	paths: {
 
 		// Libraries
@@ -19,6 +28,8 @@ require.config({
 		'underscore'    : [cdn + 'vendor/underscore', s3 + 'vendor/underscore', '/vendor/underscore'],
 		jquery        : '/vendor/jquery.1.10.2.min',
 		'facebook'      : [cdn + 'vendor/all', s3 + 'vendor/all', '/vendor/all'],
+
+		'jQueryHammer': [cdn + 'vendor/jquery.hammer', s3 + 'vendor/jquery.hammer','/vendor/jquery.hammer'],
 
 		// Plugins
 		'bootstrap'             : [cdn + 'vendor/plugins/bootstrap', s3 + 'vendor/plugins/bootstrap', '/vendor/plugins/bootstrap'],
@@ -74,7 +85,7 @@ require.config({
 		'collections'           : [cdn + 'collections', s3 + 'collections', '/collections'],
 		'controller'            : [cdn + 'controller', s3 + 'controller', '/controller'],
 
-		'jQueryHammer': '/vendor/jquery.hammer',
+
 
 		// Packages
 		'packages'          : [cdn + 'packages' , s3 + 'packages' , '/packages'],

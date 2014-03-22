@@ -6,8 +6,8 @@
  * To change this template use File | Settings | File Templates.
  */
 define(['require',
-	'text!usercontrols/addgame/templates/orgchoose.html',
-	'usercontrols/addgame/models/org_addteam',
+	'text!usercontrol/addgame/templates/orgchoose.html',
+	'usercontrol/addgame/models/org_addteam',
 	'facade',
 	'views',
 	'utils',
@@ -23,7 +23,7 @@ define(['require',
 		Channel = utils.lib.Channel,
 		vendor = require('vendor'),
 		Mustache = vendor.Mustache,
-		TeamModel = require('usercontrols/addgame/models/org_addteam'),
+		TeamModel = require('usercontrol/addgame/models/org_addteam'),
 		$ = facade.$;
 
 	var BaseView = views.BaseView,

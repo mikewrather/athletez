@@ -3,7 +3,7 @@
  // Pages
  // Requires `define`, `require`
  */
-define(['require', 'text!usercontrols/location/templates/view-location.html', 'facade', 'views', 'utils', 'vendor'], function(require, layoutTemplate) {
+define(['require', 'text!usercontrol/location/templates/view-location.html', 'facade', 'views', 'utils', 'vendor'], function(require, layoutTemplate) {
 
 	var self, facade = require('facade'), views = require('views'), 
 	SectionView = views.SectionView, utils = require('utils'), 

@@ -4,14 +4,14 @@
  // Requires `define`, `require`
  */
 define(['require',
-	'text!usercontrols/landing/templates/landing.html',
-	'text!usercontrols/landing/landing.css',
+	'text!usercontrol/landing/templates/landing.html',
+	'text!usercontrol/landing/landing.css',
 	"signup/models/registerbasic",
 	"signup/views/registerbasic",
 	'facade',
 	'views',
 	'utils',
-	'usercontrols/landing/models/fb-user',
+	'usercontrol/landing/models/fb-user',
 	'common/models/entparse',
 	'vendor',
 	'packages/invite/views/invite'], function(require) {
@@ -23,10 +23,9 @@ define(['require',
 
 		signupBaseModel = require("signup/models/registerbasic"),
 		signupBaseView=require("signup/views/registerbasic"),
-		UserModel = require('usercontrols/landing/models/fb-user'),
+		UserModel = require('usercontrol/landing/models/fb-user'),
 		entParser = require('common/models/entparse'),
 		InviteView = require('packages/invite/views/invite'),
-
 		Channel = utils.lib.Channel,
 		vendor = require('vendor'),
 		Mustache = vendor.Mustache,
@@ -34,7 +33,7 @@ define(['require',
 		_ = facade._;
 
 	var BaseView = views.BaseView, Backbone = facade.Backbone, _self,
-		layoutTemplate = require('text!usercontrols/landing/templates/landing.html');
+		layoutTemplate = require('text!usercontrol/landing/templates/landing.html');
 	//Models
 
 	return BaseView.extend({
@@ -48,7 +47,7 @@ define(['require',
 			"click #browse":"scrollToContent"
 		},
 		
-		cssArr : ["usercontrols/landing/landing.css"],
+		cssArr : [base_url + "usercontrols/landing/landing.css"],
 		/*initialize gets called by default when constructor is initialized*/
 		initialize : function(options) {
 

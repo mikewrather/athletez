@@ -3,12 +3,12 @@
  // Pages
  // Requires `define`, `require`
  */
-define(['require', 'text!usercontrols/location/templates/get-view-location.html', 'facade', 'views', 'utils', 'vendor', 'usercontrols/location/models/verify-adress'], function(require, layoutTemplate) {
+define(['require', 'text!usercontrol/location/templates/get-view-location.html', 'facade', 'views', 'utils', 'vendor', 'usercontrol/location/models/verify-adress'], function(require, layoutTemplate) {
 
 	var self, facade = require('facade'), views = require('views'), 
 	SectionView = views.SectionView, utils = require('utils'), 
 	Channel = utils.lib.Channel, vendor = require('vendor'), 
-	verifyAddress = require('usercontrols/location/models/verify-adress'),
+	verifyAddress = require('usercontrol/location/models/verify-adress'),
 	Mustache = vendor.Mustache, $ = facade.$;
 	var BaseView = views.BaseView, Backbone = facade.Backbone, _self;
 	//Models

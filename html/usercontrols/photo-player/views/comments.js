@@ -1,7 +1,7 @@
 // The CommentOn List
 // --------------
 
-define(['facade', 'utils', 'site/views/comment-list', 'usercontrols/photo-player/views/comment-form', 'site/collections/comments'],
+define(['facade', 'utils', 'site/views/comment-list', 'usercontrol/photo-player/views/comment-form', 'site/collections/comments'],
 function(facade,   utils,   BaseCommentListView,       CommentFormView, SiteCommentList) {
 
     var CommentOnListView, _ = facade._,

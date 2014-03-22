@@ -57,7 +57,7 @@ define(["require", "text!userresume/templates/layout.html",
 	ReferencesView = require("userresume/views/references"),
 	UserResumeController = Controller.extend({
 		/*CSS SECTION*/
-		cssArr : ["/pages/profilesetting/profilesettings.css"],
+		cssArr : [base_url + "pages/profilesetting/profilesettings.css"],
 
 		events : {
 		},

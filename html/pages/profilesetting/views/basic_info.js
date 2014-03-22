@@ -4,9 +4,9 @@
  // Requires `define`, `require`
  // Returns {basic_info} constructor
  */
-define(['require', 'text!profilesetting/templates/basic_info_header.html', 'text!profilesetting/templates/basic_info_header_edit.html', 'text!profilesetting/templates/basic_info_header_completed.html', 'profilesetting/models/basic_info', 'facade', 'views', 'utils', 'vendor', 'usercontrols/imagecropper/imagecropper', 'component/forms'], function(require, profileHeaderTemplate, profileHeaderEditTemplate, profileHeaderCompletedTemplate) {
+define(['require', 'text!profilesetting/templates/basic_info_header.html', 'text!profilesetting/templates/basic_info_header_edit.html', 'text!profilesetting/templates/basic_info_header_completed.html', 'profilesetting/models/basic_info', 'facade', 'views', 'utils', 'vendor', 'usercontrol/imagecropper/imagecropper', 'component/forms'], function(require, profileHeaderTemplate, profileHeaderEditTemplate, profileHeaderCompletedTemplate) {
 
-	var ProfileHeaderView, facade = require('facade'), views = require('views'), BasicsInfoModel = require('profilesetting/models/basic_info'), SectionView = views.SectionView, utils = require('utils'), Channel = utils.lib.Channel, vendor = require('vendor'), Mustache = vendor.Mustache, $ = facade.$, ImageCropperController = require('usercontrols/imagecropper/imagecropper'), FormComponent = require('component/forms');
+	var ProfileHeaderView, facade = require('facade'), views = require('views'), BasicsInfoModel = require('profilesetting/models/basic_info'), SectionView = views.SectionView, utils = require('utils'), Channel = utils.lib.Channel, vendor = require('vendor'), Mustache = vendor.Mustache, $ = facade.$, ImageCropperController = require('usercontrol/imagecropper/imagecropper'), FormComponent = require('component/forms');
 
 	ProfileHeaderView = SectionView.extend({
 		id : 'basic_info',

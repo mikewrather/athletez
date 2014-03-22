@@ -6,7 +6,7 @@
 // Requires define
 // Returns {CommentOnFormView} constructor
 
-define(['require', 'text!usercontrols/photo-player/templates/comment-form.html', 'usercontrols/photo-player/models/commentonform', 'site/views/comment-form', 'models/base', 'views', 'chrome/views/header'], function(require, commentFormTemplate, commentFormModel, BaseCommentFormView, BaseModel) {
+define(['require', 'text!usercontrol/photo-player/templates/comment-form.html', 'usercontrol/photo-player/models/commentonform', 'site/views/comment-form', 'models/base', 'views', 'chrome/views/header'], function(require, commentFormTemplate, commentFormModel, BaseCommentFormView, BaseModel) {
 
 	var CommentOnFormView;
 	var views = require('views'), header = require('chrome/views/header'), BaseView = views.BaseView;

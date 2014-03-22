@@ -31,7 +31,12 @@ define(["require",
 		_ = facade._,
 		debug = utils.debug,
 		Channel = utils.lib.Channel,
-		cssArr = ["/pages/registration/registration.css", "/pages/signup/css/signupstyle.css", "/css/style.jrac.css","pages/fbinvite/fbinvite.css"],
+		cssArr = [
+			base_url + "pages/registration/registration.css",
+			base_url + "pages/signup/css/signupstyle.css",
+			base_url + "css/style.jrac.css",
+			base_url + "pages/fbinvite/fbinvite.css"
+		],
 		ProfileImageListView = require("fbinvite/views/image-list"),
 		MediaImageModel = require("media/models/image"),
 		FBInviteList = require('fbinvite/collections/fbinvite'),

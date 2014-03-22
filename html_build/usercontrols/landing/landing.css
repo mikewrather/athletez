@@ -32,11 +32,11 @@
 }
 #landing-info{
     margin-top:50px;
-    width: 90%;
-    max-width: 800px;
+    width: 100%;
     margin: auto;
     padding:10px 40px;
     text-align: center;
+    background-color: rgba(0,0,0,.5);
 }
 #alternative-actions{
     text-align: center;
@@ -57,10 +57,16 @@ a#browse{
     width: 100%;
     font-size: 5em;
     font-weight: bold;
-    float: left;
     text-align: center;
     text-shadow: 4px 3px 3px rgba(0, 0, 0, 0.70);
     padding: 20px 0px 0px 0px;
+    margin:auto;
+}
+#landing-header:empty{
+    background-image:url('/css/images/logo_large.png');
+    background-repeat: no-repeat;
+    height: 150px;
+    max-width: 800px;
 }
 #landing-info #site-summary{
     list-style-type: circle;
@@ -158,4 +164,49 @@ a#browse{
 #reg-landing .signupsubmit input:last-child{
     float: right;
     background-color: #1AA0AE;
+}
+.landing-spacer{
+    margin: auto; text-align: center; height: 30px;
+}
+@media only screen and (min-width: 320px) and (max-width: 767px) {
+    #alternative-actions{
+        text-align: center;
+        margin: auto;
+        margin-top: 40px;
+        width: 50%;
+    }
+    #site-info {
+        font-size: 1.0em;
+        font-weight: bold;
+        line-height: 18px;
+        position: relative;
+        width: 90%;
+        margin: auto;
+        text-shadow: 2px 2px 2px rgba(255, 255, 255, 0.80);
+    }
+    #landing-header:empty{
+        background-image:url('/css/images/logo_small.png');
+        height: 80px;
+        max-width: 300px;
+    }
+    #landing-info #landing-header{
+        font-size:2em;
+        padding: 0;
+    }
+    #landing-info hr{
+        display: none;
+    }
+    #landing-info{
+        width:100%;
+        padding:10px 0 10px 0;
+        font-size:.8em;
+        background-color: rgba(0,0,0,.5);
+    }
+    
+    .landing-spacer{
+        height: 10px;
+    }
+    .register-wrapper-h {
+        min-height: 600px;
+    }
 }

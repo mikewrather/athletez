@@ -5,15 +5,15 @@
  // Returns {Photo Player View} constructor
  */
 define(['require',
-	'text!usercontrols/add-club/templates/layout.html',
+	'text!usercontrol/add-club/templates/layout.html',
 	'facade',
 	'views',
 	'utils',
 	'vendor',
 	"usercontrol/add-club/collections/complevel",
-	"usercontrols/add-club/collections/profile",
+	"usercontrol/add-club/collections/profile",
     'sportorg/models/org',
-	'usercontrols/add-club/collections/sports',
+	'usercontrol/add-club/collections/sports',
 	'sportorg/collections/seasons',
 	'component/forms' ], function(require, layoutTemplate) {
  	
@@ -23,9 +23,9 @@ define(['require',
 
 	//Models
 	OrgModel = require('sportorg/models/org'),
-	SportsCollection = require('usercontrols/add-club/collections/sports'),
+	SportsCollection = require('usercontrol/add-club/collections/sports'),
 	CompLevel = require('usercontrol/add-club/collections/complevel'),
-	ProfileCollection = require("usercontrols/add-club/collections/profile"),
+	ProfileCollection = require("usercontrol/add-club/collections/profile"),
 	FormComponent = require('component/forms');
 
 	var addOrgView = SectionView.extend({
