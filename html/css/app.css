@@ -2512,6 +2512,15 @@ li.sport .teamlist-header, .stat-val-outer {
 	.green-left-heading {
 		width: 100%;
 		text-align: left;
+
+	}
+	
+	.green-left-heading span {
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		float: left;
+		width: 75%;		
 	}
 
 	.profile-comment-list-box #comment-list {
