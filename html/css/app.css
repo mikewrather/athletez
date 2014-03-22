@@ -3017,11 +3017,21 @@ li.sport .teamlist-header, .stat-val-outer {
 	.home-template #sport {
 		margin-top: 10px;
 	}
+
+	.home-template #menu #menu1 .individual-reset-btn {
+		width: 20% !important;
+		float: right;
+	}
 	
 	.home-template #sport, .home-template .menu, .home-template #location, .home-template #views {
 		width: 60% !important;
 		padding-left: 10px;
 	}
+	
+	.home-template #sport, .home-template #location, .home-template #views {
+		float: left;
+	}
+	
 	
 	.home-template .search-box a {
 		margin-top: 10px;
