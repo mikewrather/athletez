@@ -2431,6 +2431,11 @@ li.sport .teamlist-header, .stat-val-outer {
 		left: 0 !important;
 		right: 0 !important;
 		border: none !important;
+		min-height: auto !important;
+	}
+	
+	.common-modal .modal-body {
+		bottom: 0;
 	}
 
 	#search-area input {
@@ -2508,6 +2513,15 @@ li.sport .teamlist-header, .stat-val-outer {
 	.green-left-heading {
 		width: 100%;
 		text-align: left;
+
+	}
+	
+	.green-left-heading span {
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		float: left;
+		width: 75%;		
 	}
 
 	.profile-comment-list-box #comment-list {
@@ -2774,8 +2788,9 @@ li.sport .teamlist-header, .stat-val-outer {
 	#schedule-list a.add-game-h {
 		background-position: 0 0;
 		padding: 0;
-		color: #dc6425;
+		background-color: #dc6425;
 		margin: 10px 8px 10px 0;
+		text-align: center;
 	}
 
 	#schedule-list a.add-game-h:hover, #schedule-list a.add-game-h:active {
@@ -2796,8 +2811,14 @@ li.sport .teamlist-header, .stat-val-outer {
 		margin: 0;
 		margin-left: 0px;
 		margin-top: 6px;
-		color: #1ba0af;
+		background-color: #1ba0af;
+		background-image: none !important;
+		color: #FFF;
 	}
+	
+	.show-older:hover, .show-older:hover {
+		color: #FFF;
+	} 
 
 	#main-content .see-more-h {
 		background-image: url(images/icons/mobile/media-show-more.png);
@@ -3015,11 +3036,21 @@ li.sport .teamlist-header, .stat-val-outer {
 	.home-template #sport {
 		margin-top: 10px;
 	}
+
+	.home-template #menu #menu1 .individual-reset-btn {
+		width: 20% !important;
+		float: right;
+	}
 	
 	.home-template #sport, .home-template .menu, .home-template #location, .home-template #views {
 		width: 60% !important;
 		padding-left: 10px;
 	}
+	
+	.home-template #sport, .home-template #location, .home-template #views {
+		float: left;
+	}
+	
 	
 	.home-template .search-box a {
 		margin-top: 10px;
@@ -3140,14 +3171,28 @@ li.sport .teamlist-header, .stat-val-outer {
 		min-height: 20px !important;
 	}
 
-	.show-older-h, .see-more-h, .add-to-participants, .add-comment-h, .add-image, .add-video, .add-to-list, .invite-from-fb, .add-to-roster-list {
+
+	.show-older-h, .add-event-h, .see-more-h, .add-to-participants, .add-comment-h, .add-image, .add-video, .add-to-list, .invite-from-fb, .add-to-roster-list {
 		width: 38%;
 		float: left;
 		font-size: 13px !important;
 		padding: 5% 1% 4% 9% !important;
 		margin: 0 !important;
 		height: auto !important;
-		min-height: 20px;
+		min-height: 20px !important;
+	}
+
+	.add-event-h {
+		color: #FFF !important;
+		width: 86% !important;
+		margin: 10px 2% !important;
+	}
+
+	
+	.show-older-h {
+		width: 38% !important;
+		margin-left: 4px !important;
+		text-align: center;
 	}
 	
 	.add-image {
@@ -3363,6 +3408,10 @@ li.sport .teamlist-header, .stat-val-outer {
 	
 	.profile-heading .grad-year {
 		display: none;
+	}
+	
+	.roster-heading-h .buttons-h {
+		margin: 5px 0;
 	}
 	
 	
