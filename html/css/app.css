@@ -2769,8 +2769,9 @@ li.sport .teamlist-header, .stat-val-outer {
 	#schedule-list a.add-game-h {
 		background-position: 0 0;
 		padding: 0;
-		color: #dc6425;
+		background-color: #dc6425;
 		margin: 10px 8px 10px 0;
+		text-align: center;
 	}
 
 	#schedule-list a.add-game-h:hover, #schedule-list a.add-game-h:active {
@@ -2791,8 +2792,14 @@ li.sport .teamlist-header, .stat-val-outer {
 		margin: 0;
 		margin-left: 0px;
 		margin-top: 6px;
-		color: #1ba0af;
+		background-color: #1ba0af;
+		background-image: none !important;
+		color: #FFF;
 	}
+	
+	.show-older:hover, .show-older:hover {
+		color: #FFF;
+	} 
 
 	#main-content .see-more-h {
 		background-image: url(images/icons/mobile/media-show-more.png);
@@ -3143,6 +3150,12 @@ li.sport .teamlist-header, .stat-val-outer {
 		margin: 0 !important;
 		height: auto !important;
 		min-height: 20px;
+	}
+	
+	.show-older-h {
+		width: 38% !important;
+		margin-left: 4px !important;
+		text-align: center;
 	}
 	
 	.add-image {
