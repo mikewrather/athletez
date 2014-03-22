@@ -2428,6 +2428,11 @@ li.sport .teamlist-header, .stat-val-outer {
 		left: 0 !important;
 		right: 0 !important;
 		border: none !important;
+		min-height: auto !important;
+	}
+	
+	.common-modal .modal-body {
+		bottom: 0;
 	}
 
 	#search-area input {
