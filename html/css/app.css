@@ -2398,6 +2398,7 @@ li.sport .teamlist-header, .stat-val-outer {
 	.bubble {
 		position: static;
 		background: #FFF;
+        width:95%
 	}
 
 	.bubble .content .comment-date a {
