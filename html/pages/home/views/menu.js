@@ -98,7 +98,7 @@ define(
 							style: {
 								classes: $self.data('tip-style')
 							}
-						});
+						}, true);
 					});
 
 					this.$el.find("a.menu-link-h").each(function(){

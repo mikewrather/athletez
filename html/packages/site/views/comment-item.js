@@ -36,10 +36,18 @@ function (
 		    else	    
 		    	this.template = options.template;
         },		
+        
+        dateFormat: function(date) {
+        	var months = ["January", "February", "March", "April", "May", "June", "july", "August", "September", "October", "November", "December"];
+        	date = new Date(date);
+        	var newDate = months[date.getMonth()] +" "+date.getDate()+", "+date.getFullYear();
+        	return newDate;
+        },
 
         render: function () {
 	        var payload = this.model.get('payload');
 	        payload['comment'] = payload['comment'].replace(/\n/g,"<br />");
+	        payload['comment_date'] = this.dateFormat(payload['timePosted']);
 	        this.model.set('payload',payload);
             var markup = Mustache.to_html(this.template, this.model.toJSON());
             this.$el.html(markup);
@@ -59,10 +67,8 @@ function (
         },
         
         deleteComments: function(e) {
-        	console.log(this.model);
         	e.stopPropagation();
 			e.preventDefault();
-			
 			var _self = this, deleteModel = new DeleteModel();
 	        console.log("payload",this.model.get('payload'));
 			deleteModel.subject_id = this.model.get("payload").id;
