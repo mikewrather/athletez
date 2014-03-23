@@ -352,6 +352,7 @@ text!schedules/templates/schedule-list.html
 packages/common/models/add.js
 packages/sportorg/models/uslgamelink.js
 vendor/plugins/qtip/qtip.js
+vendor/plugins/qtip/qtip-wrapper.js
 text!common/templates/add-description.html
 packages/common/views/add-description.js
 packages/game-schedules/views/schedule-list.js
@@ -908,6 +909,7 @@ pages/login/views/Loginview.js
 pages/login/models/Logoutmodel.js
 pages/login.js
 vendor/plugins/qtip/qtip.js
+vendor/plugins/qtip/qtip-wrapper.js
 pages/chrome/views/header.js
 text!chrome/templates/main.html
 pages/chrome/models/main.js
@@ -1491,6 +1493,7 @@ text!schedules/templates/schedule-list.html
 packages/common/models/add.js
 packages/sportorg/models/uslgamelink.js
 vendor/plugins/qtip/qtip.js
+vendor/plugins/qtip/qtip-wrapper.js
 text!common/templates/add-description.html
 packages/common/views/add-description.js
 packages/game-schedules/views/schedule-list.js
@@ -2067,6 +2070,7 @@ packages/game-schedules/views/schedule-item.js
 text!schedules/templates/schedule-list.html
 packages/common/models/add.js
 packages/sportorg/models/uslgamelink.js
+vendor/plugins/qtip/qtip-wrapper.js
 text!common/templates/add-description.html
 packages/common/views/add-description.js
 packages/game-schedules/views/schedule-list.js
@@ -2519,6 +2523,7 @@ vendor/all.js
 packages/invite/models/invite.js
 pages/signup/views/facebooksignup.js
 vendor/plugins/qtip/qtip.js
+vendor/plugins/qtip/qtip-wrapper.js
 pages/chrome/views/header.js
 text!chrome/templates/main.html
 pages/chrome/models/main.js
@@ -3002,6 +3007,7 @@ text!pages/home/templates/menu.html
 vendor/plugins/jquery.slimscroll.min.js
 packages/common/models/get-city.js
 vendor/plugins/qtip/qtip.js
+vendor/plugins/qtip/qtip-wrapper.js
 text!vendor/plugins/qtip/qtip.css
 pages/home/views/menu.js
 text!media/templates/image-item.html
@@ -3700,6 +3706,7 @@ text!signup/templates/imageupload.html
 pages/signup/views/image-upload.js
 pages/signup.js
 vendor/plugins/qtip/qtip.js
+vendor/plugins/qtip/qtip-wrapper.js
 pages/chrome/views/header.js
 text!chrome/templates/main.html
 pages/chrome/models/main.js
