@@ -140,7 +140,7 @@ function (
 						    $(api.elements.tooltip).find('.link-to-fb-h').on('click',_self.linkToFacebook);
 					    }
 				    }
-			    });
+			    }, true);
 		     });
 
 	    },
