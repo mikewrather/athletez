@@ -10,6 +10,7 @@ define([
 	'text!packages/common/templates/popup.html',
 	'facade',
 	'views',
+	'vendor/plugins/jquery.nicescroll.min',
 	'utils',
 	'vendor'], function(require) {
 
@@ -48,8 +49,6 @@ define([
 			this.options.title = options.title || "";
 			this.options.width = options.width || "50%";
 			this.options.height = options.height || "50%";
-
-			console.log("Options HTML:",options.html);
 
 			if(options.html && (options.html instanceof $)) this.options.popup_content = options.html.html();
 			else if(options.html) this.options.popup_content = options.html;
@@ -125,7 +124,6 @@ define([
 					parseInt($("#"+options.id).css('padding-left'),10) +
 					parseInt($("#"+options.id).css('padding-right'),10);
 
-				console.log(added_width);
 				var true_width;
 				if(options.width.indexOf('%') > 0)
 				{
@@ -166,7 +164,7 @@ define([
 				var windowHeight = $(window).height();
 				$("#"+options.id).css({
 					"top":t,
-					"margin-top":"0%"//true_height<$(window).height() ? -true_height/2 : -$(window).height()/2
+					"margin-top":"0%"
 				});
 			}
 		},
@@ -174,19 +172,20 @@ define([
 		render: function(){
 			var html = _.template(popupTemplate,{popup:this.options});
 			$("body").append(html);
+			setTimeout(function() {
+				$("#modalBody").niceScroll();
+			}, 1000);
 		},
 
-		processStyle : function(){
+		processStyle : function() {
 			var _self = this;
-
-			if(this.options.addClass != undefined && this.options.addClass.length){
+			if(this.options.addClass != undefined && this.options.addClass.length) {
 				_.each(this.options.addClass,function(cssclass){
-					console.log(cssclass);
 					$('#'+_self.options.id).addClass(cssclass);
 				});
 			}
 
-			if(this.options.background_image){
+			if(this.options.background_image) {
 				console.log(this.options.background_image);
 				$('#'+this.options.id).css({
 					'background': 'url(' + this.options.background_image + ') no-repeat center center fixed #FFF',
@@ -196,13 +195,10 @@ define([
 					'background-size': 'cover'
 				});
 			}
-
 			$('#'+this.options.id).css({"margin":"0px"});
-
 			$('#'+this.options.id+ ' .close').attr("data-id",this.options.id);
 			$("#"+this.options.id).find(".modal-header-h").html(this.options.title);
 			$("#"+this.options.id).find(".modal-header").show();
-
 			$("#"+this.options.id).modal('show');
 		}
 	});
