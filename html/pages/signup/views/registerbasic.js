@@ -63,9 +63,9 @@ define(['require', 'text!signup/templates/registration.html', 'text!signup/templ
 
 		next : function(event) {
 			event.preventDefault();
+			var $firstName = $("input[name=fullname]"), regex = /^[a-zA-Z  -_.]+$/;
 			
-			var $firstName = $("input[name=fullname]"), regex = /^[a-zA-Z ]+$/;
-		    if (!regex.test($firstName.val())) {
+		    if(!regex.test($firstName.val())) {
 				$firstName.addClass('field-failed');
 		        setTimeout(function() {
 					$firstName.removeClass('field-failed');
