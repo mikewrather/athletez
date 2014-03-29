@@ -75,8 +75,8 @@ define([
 					if(routing.popups === undefined) routing.popups = [];
 					// add this to the array
 					routing.popups.push($('#'+ self.options.id));
-
-					self.processDimensions();
+					
+					if(!routing.mobile) self.processDimensions();
 					self.processStyle();
 					self.bindClose();
 
