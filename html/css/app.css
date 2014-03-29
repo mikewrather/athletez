@@ -2457,9 +2457,13 @@ li.sport .teamlist-header, .stat-val-outer {
 	.profile-pic-outer {
 		margin: 0;
 	}
-
+	
 	.profile-heading {
 		position: relative;
+		min-height: 135px;
+	}
+
+	.profile-header .profile-heading {
 		min-height: 115px;
 	}
 
