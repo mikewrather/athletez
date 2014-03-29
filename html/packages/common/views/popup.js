@@ -93,11 +93,12 @@ define([
 
 			routing.off('common-popup-close');
 			routing.on('common-popup-close',function(e){
-
+				
 				if(routing.popups.length){
 					var $thisPopup = routing.popups.shift();
 					$thisPopup.modal("hide").remove();
 				}
+				$("body").removeClass("overflow-hidden");
 				if(!$(".common-modal").length) $(".modal-backdrop").fadeOut().remove();
 			});
 
@@ -174,6 +175,7 @@ define([
 			$("body").append(html);
 			setTimeout(function() {
 				$("#modalBody").niceScroll();
+				$("body").addClass("overflow-hidden");
 			}, 1000);
 		},
 

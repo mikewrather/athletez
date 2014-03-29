@@ -3433,6 +3433,13 @@ li.sport .teamlist-header, .stat-val-outer {
 		margin: 5px 0;
 	}
 	
+	.overflow-hidden {
+		overflow: hidden !important;
+	}
+	
+	.overflow-hidden #main {
+		display: none !important;
+	}
 	
 	
 	 
