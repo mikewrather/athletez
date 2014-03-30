@@ -133,12 +133,12 @@ define(['require', 'text!roster/templates/roster.html', 'views', 'vendor', 'faca
 
 		addToRoster : function(e) {
 
-			var _self = this, modal = new model();
-
+			var ob = routing.showSpinner(e.currentTarget), _self = this, modal = new model();
 			var addToList = function(callback) {
 				modal.url = "/api/team/player/" + _self.team_id;
 				modal.save();
 				$.when(modal.request).done(function() {
+					routing.hideSpinner(ob, e.currentTarget);
 					$(e.currentTarget).addClass("link-disabled");
 					_self.getTeams();
 					if (callback)
