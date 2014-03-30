@@ -88,7 +88,7 @@ ul.teams-list{
 }
 
 ul.teams-list li.team-item{
-    min-width:70%;
+    min-width:100%;
     vertical-align: middle;
     height: 80px;
     padding: 10px;

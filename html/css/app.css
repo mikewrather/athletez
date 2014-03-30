@@ -2371,7 +2371,7 @@ li.sport .teamlist-header, .stat-val-outer {
 
 	.game-heading .game-general, .game-heading p {
 		float: left;
-		width: 100%;
+		width: 95%;
 	}
 
 	/*.game-heading a {
@@ -3439,6 +3439,32 @@ li.sport .teamlist-header, .stat-val-outer {
 	
 	.overflow-hidden #main {
 		display: none !important;
+	}
+	
+	#left_upload {
+		width: 40%;
+	}
+	
+	#imgUploadModal .main-body {
+		width: 55% !important;
+	}
+	
+	.previewimg img.img-polaroid {
+		max-width: 92%;
+		padding: 2%;
+		height: 180px !important;
+	}
+	
+	.previewimg {
+		height: 188px !important;
+	}
+	
+	.previewimg .lnkFooter {
+		height: 55px !important;
+	}
+	
+	.previewimg .lnkFooter button {
+		width: 65px !important;
 	}
 	
 	
