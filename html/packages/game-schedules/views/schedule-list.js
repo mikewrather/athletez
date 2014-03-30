@@ -156,6 +156,8 @@ function(vendor, facade,  views,   utils,   ScheduleItemView, Store, ScheduleLis
 		    var _self = this;
 			    this.$el.find("a.team-info-h").each(function() {
 				    var $self = $(this);
+				    
+					
 				    $(this).qtip2({
 					    content: $self.find('div.game-info').html(),
 					    position: {
@@ -163,24 +165,35 @@ function(vendor, facade,  views,   utils,   ScheduleItemView, Store, ScheduleLis
 						    at: "top center",
 						    viewport : $(window)
 					    },
+					    
 					    style: {
 						    classes: "tipsy game-info",
 						    width: '360px'
 					    },
+					    
 					    hide : {
 							fixed:true,
 						    delay:1000
 					    },
+					    
 					    events : {
 						    render: function(event,api) {
+						    	console.error("here");
 							    $(api.elements.tooltip).find('.add-score').on('click',_self.addScore);
 						    }
 					    }
 				    });
+				    
+				  	 if(routing.mobile) {
+						$(document).off('click', '.add-score');
+						$(document).on('click', '.add-score', _self.addScore);					
+					}
 			    });
 	    },
+	    
 	    addScore: function(e){
 		    e.stopPropagation();
+		    e.preventDefault();
 		    var uslgamelink_id = $(e.target).data('uslgamelink');
 		    $(e.target)
 			    .off('click',this.addScore)

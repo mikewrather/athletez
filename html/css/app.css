@@ -2457,9 +2457,13 @@ li.sport .teamlist-header, .stat-val-outer {
 	.profile-pic-outer {
 		margin: 0;
 	}
-
+	
 	.profile-heading {
 		position: relative;
+		min-height: 135px;
+	}
+
+	.profile-header .profile-heading {
 		min-height: 115px;
 	}
 
@@ -3429,6 +3433,13 @@ li.sport .teamlist-header, .stat-val-outer {
 		margin: 5px 0;
 	}
 	
+	.overflow-hidden {
+		overflow: hidden !important;
+	}
+	
+	.overflow-hidden #main {
+		display: none !important;
+	}
 	
 	
 	 
