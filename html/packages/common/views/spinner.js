@@ -45,7 +45,7 @@ define([
 			routing.showSpinner = function(target) {
 				if(target) {
 					var spinner = new Spinner(opts).spin();
-					$(target).parent().append(spinner.el);
+					$(spinner.el).insertAfter(target);
 					$(target).addClass('link-disabled');
 					return spinner;
 				}

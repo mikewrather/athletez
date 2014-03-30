@@ -291,9 +291,9 @@ function(require, gameHeaderTemplate) {
 						},
 						showLable : false,
 						onSubmit : function(e) {
-							var ob = routing.showSpinner("input[name=submit]");
-							var errors = form.commit();
+							var ob = routing.showSpinner("input[name=submit]"), errors = form.commit();
 							if (errors) {
+								routing.hideSpinner(ob, "input[name=submit]");
 								// auto scroll to focus element which has error
 								for (var i in errors) {
 									var $ob = $("*[name=" + i + "]"), $pos = $ob.position();
@@ -335,6 +335,7 @@ function(require, gameHeaderTemplate) {
 								$.when(self.model.request).fail(function(res) {
 									var response = JSON.parse(res.responseText);
 									var errorArray = response.exec_data.error_array;
+									routing.hideSpinner(ob, "input[name=submit]");
 									_self.formValues.showServersErrors(errorArray);
 								});
 							}
