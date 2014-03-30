@@ -183,15 +183,17 @@ require.config({
 
 // initializing the router "application" on startup
 define([
+	'require',
 	'backbone',
 	'underscore',
 	'jquery',
-	'application'
-], function (Backbone, _, $, app) {
+	'application',
+	'packages/common/views/spinner'
+], function (require, Backbone, _, $, app) {
 		//Backbone.noConflict();
 		//apping = new app();
 		//Backbone.history.start();
-		
+		var Spinner = require('packages/common/views/spinner');
 
 		$(function () {
 		 // doc ready
@@ -205,7 +207,9 @@ define([
 			routing.mobile = (/iphone|ipod|android|ie|blackberry|fennec/).test(navigator.userAgent.toLowerCase());
 			// set to true on initial app render but set to false once the page shows
 			routing.showLandingPage = true;
-
+			
+			// creating spinner object
+			new Spinner();
 			// bind common triggers
 			Backbone.history.start({});
 

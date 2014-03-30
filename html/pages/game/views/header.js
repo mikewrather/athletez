@@ -291,6 +291,7 @@ function(require, gameHeaderTemplate) {
 						},
 						showLable : false,
 						onSubmit : function(e) {
+							var ob = routing.showSpinner("input[name=submit]");
 							var errors = form.commit();
 							if (errors) {
 								// auto scroll to focus element which has error
@@ -325,8 +326,9 @@ function(require, gameHeaderTemplate) {
 								self.model.save({});
 
 								//window.formValues1.showServersErrors([{ key: "gameDay", message: "error_message" }]);
-								$.when(self.model.request).done(function(res){
+								$.when(self.model.request).done(function(res) {
 									_self.updateHeaderData(self.model.id);
+									routing.hideSpinner(ob, "input[name=submit]");
 									routing.trigger('common-popup-close');
 								});
 
