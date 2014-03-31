@@ -3511,6 +3511,29 @@ li.sport .teamlist-header, .stat-val-outer {
 		margin-bottom: 10px;
 	}
 	
+/* Profile basic settings */
+
+	#user_profile_data {
+		width: 95%;
+		margin-left: 5%;
+		margin-bottom: 10px;
+		float: left;
+	}	
+	
+	#user_profile_data input[type="password"] {
+		background-color: #EAEAEA;
+		width: 90%;
+		padding: 6px;
+		margin: 10 10px 0 0;
+		display: inline-block;
+		-moz-box-shadow: inset 0 0 10px #000000;
+		-webkit-box-shadow: inset 0 0 1px #000000;
+		box-shadow: inset 0 0 10px #D8D8D8;
+		-webkit-border-radius: 3px;
+		-moz-border-radius: 3px;
+		border-radius: 3px;
+	}
+	
 	
 	 
 }
