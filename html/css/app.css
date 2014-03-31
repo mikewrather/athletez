@@ -2405,6 +2405,10 @@ li.sport .teamlist-header, .stat-val-outer {
 	#main-header ul.image-outer-h li.image {
 		margin-left: 35px;
 	}
+	
+	.loguser label {
+		display: inline-block;
+	}
 
 	.pointer {
 		display: none;
@@ -2800,7 +2804,7 @@ li.sport .teamlist-header, .stat-val-outer {
 
 	#comment_div {
 		margin-right: 5px;
-		float: right;
+		/*float: right;*/
 		margin-top: -44px;
 	}
 
@@ -2904,7 +2908,7 @@ li.sport .teamlist-header, .stat-val-outer {
 	#comment-list:empty {
 		float: left;
 		width: 100%;
-		height: 60px;
+		/*height: 60px;*/
 	}
 	
 	
@@ -3218,21 +3222,26 @@ li.sport .teamlist-header, .stat-val-outer {
 	}
 
 	.see-more-h, .add-comment-h {
-		width: 100%;
+		width: 90%;
 		background-image: none;
 	}
 
     textarea#new-comment{
-        width: 100%;
+        width: 96%;
         -webkit-border-radius: 0;
         border-radius: 0;
         height: 20px;
         margin-top: 5px;
+        padding: 2%;
+    }
+    
+    .add-comment-h {
+    	display: none !important;
     }
 	
 	#commenton-wrap .clear, #comment_div {
-		width: 100%;
-		margin-left: 5px;
+		width: 96%;
+		margin: 0 2%;
 	}
 	
 	#commenton-wrap .clear {
@@ -3250,7 +3259,7 @@ li.sport .teamlist-header, .stat-val-outer {
 	}
 	
 	.see-more-h {
-	 	width: 98% !important;
+	 	width: 91% !important;
 	 	color: #FFF !important;
 	 	margin: 0 1%;
 	 	background-image: none !important;
@@ -3260,6 +3269,10 @@ li.sport .teamlist-header, .stat-val-outer {
 	 	margin: 0 5px 0 5px !important;
 	 	background-position: -1px -1px;
          background-color: #1ba0af;
+	 }
+	 
+	 .add-comment-form-h {
+	 	display: block !important;
 	 }
 	 
 	 .add-image {
@@ -3371,7 +3384,7 @@ li.sport .teamlist-header, .stat-val-outer {
 	}
 	
 	#commenton-wrap .see-more-h {
-		top: 35px !important;
+		top: 0px !important;
 		position: relative;
 	}
 	
