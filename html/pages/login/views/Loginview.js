@@ -67,6 +67,7 @@ define([
                   "click .forgot-password-h": "forgotPassword",
                   "submit .forgot-password-form-h": "forgotPasswordForm",
                   "click .log-in-link-h": "loginPageView",
+                  "submit #login" : "userLogin",
                   "click #fbpane":"signupFacebook"
                 },
                 

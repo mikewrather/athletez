@@ -1134,7 +1134,7 @@ a.add-game-h {
 /** Popup CSS **/
 .modal-body {
 	position: absolute;
-	height: 90%;
+	height: 80%;
 	width: 96%;
 	padding: 0;
 }
@@ -2373,10 +2373,17 @@ li.sport .teamlist-header, .stat-val-outer {
 		float: left;
 		width: 95%;
 	}
-
-	/*.game-heading a {
-		float: left !important;
-	}*/
+	
+	.modal-header {
+		height: 19%;
+		display: table;
+		vertical-align: middle;
+		width: 94%;
+	}
+	
+	.modal-header h3 {
+		padding-top: 9%;
+	}
 	
 	.game-heading a {
 		background-color: #d36011 !important;
@@ -3312,12 +3319,20 @@ li.sport .teamlist-header, .stat-val-outer {
 	
 	.modal-body #firstregbase {
 		float: left;
-		width: 100%;
+		width: 96%;
 		padding-left: 0;
+		margin: 0 4% 0 0;
 	}
 	
 	.modal-body #firstregbase input {
-		width: 95%;
+		width: 96%;
+		float: left;
+		margin-left: 0 !important;
+	}
+	
+	.loginUser, .addsub {
+		margin-left: 0 !important;
+		text-align: center;
 	}
 	
 	.modal-body .addsub .btn {
