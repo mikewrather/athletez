@@ -3496,5 +3496,21 @@ li.sport .teamlist-header, .stat-val-outer {
 	}
 	
 	
+/* Resume page */
+	.rd-entry {
+		padding-left: 0 !important;
+		margin-bottom: 10px;
+	}
+	
+	.rd-entry > span {
+		width: 100% !important;
+	}
+	
+	.alert-danger, .alert-error, .alert-success {
+		margin-top: 5px;
+		margin-bottom: 10px;
+	}
+	
+	
 	 
 }
