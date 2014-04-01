@@ -1,52 +1,34 @@
-define([
-	'vendor',
-	'views',
-	'utils',
-	'text!videopreview/templates/preview.html'
-],
-	function (
-		vendor,
-		views,
-		utils
-		) {
+define(['vendor', 'views', 'utils', 'text!videopreview/templates/preview.html'], function(vendor, views, utils) {
 
-		var PreviewVideoTemplate = require("text!videopreview/templates/preview.html")
-			, VideoPreviewView
-			, $ = vendor.$
-			, SectionView = views.SectionView;
+	var PreviewVideoTemplate = require("text!videopreview/templates/preview.html"), VideoPreviewView, $ = vendor.$, SectionView = views.SectionView;
 
+	//console.log(SectionView);
+	VideoPreviewView = SectionView.extend({
 
-		//console.log(SectionView);
-		VideoPreviewView = SectionView.extend({
+		name : "Video Preview View",
 
-			name: "Video Preview View",
+		id : "videoPreviewWindow",
 
-			id: "videoPreviewWindow",
+		template : PreviewVideoTemplate,
+		data : PreviewVideoTemplate,
 
-			template: PreviewVideoTemplate,
-			data: PreviewVideoTemplate,
+		initialize : function(options) {
+			SectionView.prototype.initialize.call(this, options);
 
-			initialize: function (options) {
-				SectionView.prototype.initialize.call(this, options);
+			Channel('select-video-preview-change').subscribe(this.changeVideo);
+		},
 
-				Channel('select-video-preview-change').subscribe(this.changeVideo);
-			},
-
-			changeVideo: function(file)
-			{
-				
-				
+		changeVideo : function(file) {
+			if (this.$el.selector)
 				document.querySelector(this.$el.selector + ' video').src = file;
-				
-			},
+		},
 
-			displayMessage: function (message,isError)
-			{
-				var node = this.$el.find('.message');
-				node.html(message);
-				node.className = isError ? 'error' : 'info';
-			}
-		});
-		return VideoPreviewView;
-
+		displayMessage : function(message, isError) {
+			var node = this.$el.find('.message');
+			node.html(message);
+			node.className = isError ? 'error' : 'info';
+		}
 	});
+	return VideoPreviewView;
+
+}); 

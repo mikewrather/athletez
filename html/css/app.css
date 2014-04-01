@@ -3563,5 +3563,17 @@ li.sport .teamlist-header, .stat-val-outer {
 	}
 	
 	
+	.image_upload_loader_new {
+		width: 164px !important;
+		height: 188px !important;
+	}
+	
+	
+	#container_plupload .file-wrapper {
+		margin-bottom: 10px;
+		float: left;
+		width: 100%;
+	}
+	
 	 
 }

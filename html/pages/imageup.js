@@ -157,6 +157,7 @@ define(["require", "text!imageup/templates/basic.html", "text!imageup/templates/
 						$("#imageup").removeAttr("disabled");
 						$("#image_file").removeAttr("disabled");
 						$(".closepreview").removeAttr("disabled");
+						$("#imgUploadModal, .modal-backdrop").unbind().remove();							
 					}
 					$("#preview_" + id).unbind().removeClass("image_upload_loader_new").html("").attr("disabled", "disabled");
 				},
