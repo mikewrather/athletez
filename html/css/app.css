@@ -856,13 +856,14 @@ a.comment-delete {
 }
 
 .profile-heading h4 {
+	display: inline-block;
 	font-weight: bold;
 	font-size: 30px;
 	line-height: 38px;
 }
 
 .profile-heading div.sports-h {
-	display: block;
+	display: inline-block;
 	float: right;
 }
 
@@ -2486,18 +2487,21 @@ li.sport .teamlist-header, .stat-val-outer {
     }
 
 	.profile-heading .sports-h {
-		position: absolute;
+		/*position: absolute;*/
 		bottom: 3px;
+		float: none !important;
 	}
 
 	.profile-heading h3 {
-		position: absolute;
+		/*position: absolute;*/
 		top: 0;
 		font-size: 30px;
+		margin: 0;
 	}
 
 	.profile-heading h4 {
-        position: absolute;
+        /*position: absolute;*/
+        margin: 0;
         top: 30px;
         overflow: hidden;
         text-overflow: ellipsis;
