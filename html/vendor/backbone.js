@@ -2495,6 +2495,7 @@ Form.Field = Backbone.View.extend({
 	    if(schema.tooltip && schema.tooltip != ""){
 		    $container.find('input,label,textarea,.dropdown-wrapper').qtip({
 			    content: schema.tooltip,
+			    show: 'mousedown',
 			    position: {
 				    my: "bottom center",
 				    at: "top center"
