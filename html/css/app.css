@@ -2523,12 +2523,12 @@ li.sport .teamlist-header, .stat-val-outer {
 
 	.profile-pic-outer .image-item-container {
 		width: 100%; /*319px;*/
-		height: 270px;
+		height: 300px;
 	}
 
 	.profile-pic-outer div.image-item-container > img {
 		min-width: 100%; /*319px;*/
-		min-height: 270px;
+		min-height: 300px;
 		width: 100%;
 	}
 
@@ -3577,6 +3577,11 @@ li.sport .teamlist-header, .stat-val-outer {
 		margin-bottom: 10px;
 		float: left;
 		width: 100%;
+	}
+	
+	.action-block {
+		margin: 2px;
+		padding: 5px 3px;
 	}
 	
 	 
