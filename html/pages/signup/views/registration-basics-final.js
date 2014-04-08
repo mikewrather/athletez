@@ -20,7 +20,7 @@ define(['require', 'text!signup/templates/basciFinal.html', 'backbone', 'undersc
 
 			var self = this;
 			//listen for elements
-			var check = setTimeout(function(){
+			var check = setTimeout(function() {
 				if(self.$el.find('.regsubmitfinal').length) clearInterval(check);
 				else console.log("not found");
 			},100);
@@ -32,6 +32,7 @@ define(['require', 'text!signup/templates/basciFinal.html', 'backbone', 'undersc
 			"click .regsubmitfinal" : "next",
 			"click #editname" : "editName"
 		},
+		
 		editName : function(event) {
 			event.preventDefault();
 			$(".firstdiv").empty();
@@ -43,10 +44,9 @@ define(['require', 'text!signup/templates/basciFinal.html', 'backbone', 'undersc
 			$(".firstdiv").append(first_name);
 			$(".firstdiv").append(getLabelsecond);
 			$(".firstdiv").append(last_name);
-
 		},
+		
 		getLabel : function(Name) {
-
 			var eleDiv = $('<div/>').attr({
 				"class" : "label"
 			});
@@ -55,8 +55,8 @@ define(['require', 'text!signup/templates/basciFinal.html', 'backbone', 'undersc
 			}).html(Name);
 			eleDiv.append(labelFor);
 			return eleDiv;
-
 		},
+		
 		getnameElement : function(id, placeholder, name) {
 			var element = $('<input/>').attr({
 				"name" : name,
@@ -247,11 +247,11 @@ define(['require', 'text!signup/templates/basciFinal.html', 'backbone', 'undersc
 			this.payload.re_password = $("#finalreg input#re_password").val();
 			this.payload.dob = $(".borndate").val() + '-' + $(".born").val() + '-' + $(".borndyear").val();
 			this.payload.accept_terms = termsAndCondition;
-
+			var ob = routing.showSpinner("input[name=create]");
 			this.model.save(this.payload, {
 				success : function(msg) {
+					routing.hideSpinner(ob, "input[name=create]");
 					$('#RegModal').modal('hide');
-				//	alert(_self.callback);
 					if (_self.callback && _.isFunction(_self.callback)) {
 						routing.trigger('common-popup-close');
 						// reload header
@@ -265,6 +265,7 @@ define(['require', 'text!signup/templates/basciFinal.html', 'backbone', 'undersc
 					}
 				},
 				error : function(msg) {
+					routing.hideSpinner(ob, "input[name=create]");
 					$(".errormsg").remove();
 					var errors = jQuery.parseJSON(msg.request.responseText);
 					errorArray = errors.exec_data.error_array;

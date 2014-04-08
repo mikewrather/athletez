@@ -268,9 +268,6 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
 			    });
 
 
-
-
-
 	    	}
 	    	this.initialiRoutesInit(initFBAccept);   	
 		},
@@ -307,6 +304,15 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
             	for(var i in routing.ajaxRequests) {
             		routing.ajaxRequests[i].abort();
             	}
+            }
+            
+            // remove all qtip elements
+            $(".qtip").remove();
+            if(routing.mobile) {
+	            // bind event and check and remove if it's under qtip
+	            $("html").click(function(e) {
+	            	if($(e.currentTarget).parents(".qtip")) $(".qtip").remove();
+	            });
             }
         },
         

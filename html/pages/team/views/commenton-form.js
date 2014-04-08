@@ -70,6 +70,13 @@ function(require, commentFormTemplate,    ProfileCommentFormModel,        BaseCo
 		    //console.log("yyyy=", this.collection);
 		    this.$("#new-comment").val("");
 		},
+		
+		dateFormat: function(date) {
+        	var months = ["January", "February", "March", "April", "May", "June", "july", "August", "September", "October", "November", "December"];
+        	date = new Date(date);
+        	var newDate = months[date.getMonth()] +" "+date.getDate()+", "+date.getFullYear();
+        	return newDate;
+        },
         
         // If you hit return in the main input field, create new **CommentForm** model,
         // persisting it to *localStorage*.
@@ -82,7 +89,6 @@ function(require, commentFormTemplate,    ProfileCommentFormModel,        BaseCo
                 date = new Date();
                 var payload = new Array;
                 payload['comment'] = comment;
-                payload['comment_date'] = date.toDateString();
                 payload['subject_type_id'] = this.collection.subject_entity_type;
                 payload['subject_id'] = this.model.get("id"); 
                  
@@ -112,6 +118,10 @@ function(require, commentFormTemplate,    ProfileCommentFormModel,        BaseCo
 		            payload.poster = payload.name;
 		            payload.poster_picture = payload.user_picture;
 		            payload.poster_email = payload.email;
+		            var d = self.dateFormat(date);
+		            payload.comment_date = d;	
+		            payload.timePosted = d;
+
 	                console.log('thisresponse = ', response);
 	                //this.model = model;
 

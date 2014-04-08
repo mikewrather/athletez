@@ -90,10 +90,8 @@ define([
 
 		bindClose: function(){
 			var self = this;
-
 			routing.off('common-popup-close');
 			routing.on('common-popup-close',function(e){
-				
 				if(routing.popups.length){
 					var $thisPopup = routing.popups.shift();
 					$thisPopup.modal("hide").remove();
