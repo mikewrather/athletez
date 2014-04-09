@@ -709,12 +709,13 @@ a.comment-delete {
 	line-height: 30px;
 }
 .profile-heading h4 {
+	display: inline-block;
 	font-weight: bold;
 	font-size: 30px;
 	line-height: 38px;
 }
 .profile-heading div.sports-h {
-	display: block;
+	display: inline-block;
 	float: right;
 }
 .profile-heading div.sports-h img {
@@ -937,7 +938,7 @@ a.add-game-h {
 }
 .modal-body {
 	position: absolute;
-	height: 90%;
+	height: 80%;
 	width: 96%;
 	padding: 0;
 }
@@ -1797,15 +1798,8 @@ li.sport .teamlist-header, .stat-val-outer {
 .mt20 {
 	margin-top: 20px;
 }
-.add-participants {
-	background: url(images/icons/sprite_icons_only_color_64px.png) no-repeat;
-	display: inline-block;
-	width: 70px;
-	height: 36px;
-}
-.add-to-participants {
-	background-position: 0px -263px;
-    background-color: #d45c27;
+.add-participants{
+    background-position: -160px -54px !important;
 }
 .invite-participants {
 	background-position: 2px 2px;
@@ -1932,7 +1926,10 @@ li.sport .teamlist-header, .stat-val-outer {
 	width: 50%;
 	height: 300px;
 }
-@media only screen and (max-width: 480px) {
+#user_profile_data {
+	float: left;
+	width: 40%;
+	margin-left: 50px;
 }
 @media only screen and (min-width: 320px) and (max-width: 767px) {
 	body {
@@ -1946,9 +1943,19 @@ li.sport .teamlist-header, .stat-val-outer {
 	}
 	.game-heading .game-general, .game-heading p {
 		float: left;
-		width: 100%;
+		width: 95%;
 	}
 	
+	.modal-header {
+		height: 19%;
+		display: table;
+		vertical-align: middle;
+		width: 94%;
+	}
+	
+	.modal-header h3 {
+		padding-top: 9%;
+	}
 	
 	.game-heading a {
 		background-color: #d36011 !important;
@@ -1966,6 +1973,10 @@ li.sport .teamlist-header, .stat-val-outer {
 	}
 	#main-header ul.image-outer-h li.image {
 		margin-left: 35px;
+	}
+	
+	.loguser label {
+		display: inline-block;
 	}
 	.pointer {
 		display: none;
@@ -2018,24 +2029,31 @@ li.sport .teamlist-header, .stat-val-outer {
 	.profile-pic-outer {
 		margin: 0;
 	}
+	
 	.profile-heading {
 		position: relative;
+		min-height: 135px;
+	}
+	.profile-header .profile-heading {
 		min-height: 115px;
 	}
     .profile-heading div.sports-h img {
         max-width: 40px;
     }
 	.profile-heading .sports-h {
-		position: absolute;
+		
 		bottom: 3px;
+		float: none !important;
 	}
 	.profile-heading h3 {
-		position: absolute;
+		
 		top: 0;
 		font-size: 30px;
+		margin: 0;
 	}
 	.profile-heading h4 {
-        position: absolute;
+        
+        margin: 0;
         top: 30px;
         overflow: hidden;
         text-overflow: ellipsis;
@@ -2054,11 +2072,11 @@ li.sport .teamlist-header, .stat-val-outer {
 	}
 	.profile-pic-outer .image-item-container {
 		width: 100%; 
-		height: 270px;
+		height: 300px;
 	}
 	.profile-pic-outer div.image-item-container > img {
 		min-width: 100%; 
-		min-height: 270px;
+		min-height: 300px;
 		width: 100%;
 	}
 	.profile-pic-outer .teams, .profile-info, .profile-pic-outer .border-right div.span6, .question {
@@ -2290,7 +2308,7 @@ li.sport .teamlist-header, .stat-val-outer {
 	}
 	#comment_div {
 		margin-right: 5px;
-		float: right;
+		
 		margin-top: -44px;
 	}
 	#schedule-list a.add-game-h {
@@ -2382,7 +2400,7 @@ li.sport .teamlist-header, .stat-val-outer {
 	#comment-list:empty {
 		float: left;
 		width: 100%;
-		height: 60px;
+		
 	}
 	
 	
@@ -2653,6 +2671,14 @@ li.sport .teamlist-header, .stat-val-outer {
 		height: auto !important;
 		min-height: 20px !important;
 	}
+    .add-participants {
+        background: url(images/icons/sprite_icons_only_color_64px.png) no-repeat;
+        display: inline-block;
+    }
+    .add-to-participants {
+        background-position: 0px -263px !important;
+        background-color: #d45c27;
+    }
 	.add-event-h {
 		color: #FFF !important;
 		width: 86% !important;
@@ -2669,20 +2695,25 @@ li.sport .teamlist-header, .stat-val-outer {
 		margin: 0 5px !important;
 	}
 	.see-more-h, .add-comment-h {
-		width: 100%;
+		width: 90%;
 		background-image: none;
 	}
     textarea#new-comment{
-        width: 100%;
+        width: 96%;
         -webkit-border-radius: 0;
         border-radius: 0;
         height: 20px;
         margin-top: 5px;
+        padding: 2%;
+    }
+    
+    .add-comment-h {
+    	display: none !important;
     }
 	
 	#commenton-wrap .clear, #comment_div {
-		width: 100%;
-		margin-left: 5px;
+		width: 96%;
+		margin: 0 2%;
 	}
 	
 	#commenton-wrap .clear {
@@ -2700,7 +2731,7 @@ li.sport .teamlist-header, .stat-val-outer {
 	}
 	
 	.see-more-h {
-	 	width: 98% !important;
+	 	width: 91% !important;
 	 	color: #FFF !important;
 	 	margin: 0 1%;
 	 	background-image: none !important;
@@ -2710,6 +2741,10 @@ li.sport .teamlist-header, .stat-val-outer {
 	 	margin: 0 5px 0 5px !important;
 	 	background-position: -1px -1px;
          background-color: #1ba0af;
+	 }
+	 
+	 .add-comment-form-h {
+	 	display: block !important;
 	 }
 	 
 	 .add-image {
@@ -2767,12 +2802,20 @@ li.sport .teamlist-header, .stat-val-outer {
 	
 	.modal-body #firstregbase {
 		float: left;
-		width: 100%;
+		width: 96%;
 		padding-left: 0;
+		margin: 0 4% 0 0;
 	}
 	
 	.modal-body #firstregbase input {
-		width: 95%;
+		width: 96%;
+		float: left;
+		margin-left: 0 !important;
+	}
+	
+	.loginUser, .addsub {
+		margin-left: 0 !important;
+		text-align: center;
 	}
 	
 	.modal-body .addsub .btn {
@@ -2810,7 +2853,7 @@ li.sport .teamlist-header, .stat-val-outer {
 	}
 	
 	#commenton-wrap .see-more-h {
-		top: 35px !important;
+		top: 0px !important;
 		position: relative;
 	}
 	
@@ -2887,7 +2930,118 @@ li.sport .teamlist-header, .stat-val-outer {
 		margin: 5px 0;
 	}
 	
+	.overflow-hidden {
+		overflow: hidden !important;
+	}
 	
+	.overflow-hidden #main {
+		display: none !important;
+	}
+	
+	#left_upload {
+		width: 40%;
+	}
+	
+	#imgUploadModal .main-body {
+		width: 55% !important;
+	}
+	
+	.previewimg img.img-polaroid {
+		max-width: 92%;
+		padding: 2%;
+		height: 180px !important;
+	}
+	
+	.previewimg {
+		height: 188px !important;
+	}
+	
+	.previewimg .lnkFooter {
+		height: 55px !important;
+	}
+	
+	.previewimg .lnkFooter button {
+		width: 65px !important;
+	}
+	
+	
+	.rd-entry {
+		padding-left: 0 !important;
+		margin-bottom: 10px;
+	}
+	
+	.rd-entry > span {
+		width: 100% !important;
+	}
+	
+	.alert-danger, .alert-error, .alert-success {
+		margin-top: 5px;
+		margin-bottom: 10px;
+	}
+	
+	#user_profile_data {
+		width: 95%;
+		margin-left: 5%;
+		margin-bottom: 10px;
+		float: left;
+	}
+	
+	#user_profile_data input[type="password"] {
+		background-color: #EAEAEA;
+		width: 90%;
+		padding: 6px;
+		margin: 10 10px 0 0;
+		display: inline-block;
+		-moz-box-shadow: inset 0 0 10px #000000;
+		-webkit-box-shadow: inset 0 0 1px #000000;
+		box-shadow: inset 0 0 10px #D8D8D8;
+		-webkit-border-radius: 3px;
+		-moz-border-radius: 3px;
+		border-radius: 3px;
+	}
+	
+	
+	
+	.div-sports-wrapper {
+		padding-bottom: 20px;
+	}
+	
+	.btn-Finish-Sports {
+		margin-right: 5px;	
+	}
+	
+	.div-sports-level input[type="checkbox"] {
+		width: 20px;
+		height: 20px;
+	}
+	
+	.org-sport-list-header input[type="checkbox"] {
+		margin: 5px 0px 5px 20px;
+		width: 20px;
+		height: 20px;
+	}
+	
+	.alert-success, .alert-error {
+		display: block;
+	}
+	
+	
+	.image_upload_loader_new {
+		width: 164px !important;
+		height: 188px !important;
+	}
+	
+	
+	#container_plupload .file-wrapper {
+		margin-bottom: 10px;
+		float: left;
+		width: 100%;
+	}
+	
+	.action-block {
+		margin: 2px;
+		padding: 5px 3px;
+	}
 	
 	 
 }
