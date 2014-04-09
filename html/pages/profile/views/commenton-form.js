@@ -6,11 +6,12 @@
 // Requires define
 // Returns {CommentOnFormView} constructor
 
-define(['require',  'text!site/templates/comment-form.html', 'profile/models/commentonform', 'site/views/comment-form', 'models/base',  'views', ],
+define(['require',  'text!site/templates/comment-form.html', 'profile/models/commentonform', 'site/views/comment-form', 'models/base',  'views', 'vendor/plugins/dateformat'],
 function(require, commentFormTemplate,    ProfileCommentFormModel,        BaseCommentFormView,      BaseModel) {
 
     var CommentOnFormView;
 	var  views = require('views'),
+		dateFormat = require('vendor/plugins/dateformat'),
 		BaseView = views.BaseView;
 
     CommentOnFormView = BaseView.extend({
@@ -73,10 +74,8 @@ function(require, commentFormTemplate,    ProfileCommentFormModel,        BaseCo
 	    },
 	    
 	    dateFormat: function(date) {
-        	var months = ["January", "February", "March", "April", "May", "June", "july", "August", "September", "October", "November", "December"];
-        	date = new Date(date);
-        	var newDate = months[date.getMonth()] +" "+date.getDate()+", "+date.getFullYear();
-        	return newDate;
+		    date = new Date(date);
+		    return dateFormat(date,"mmm d, h:MM TT")
         },
 	    
         // If you hit return in the main input field, create new **CommentForm** model,
@@ -90,7 +89,6 @@ function(require, commentFormTemplate,    ProfileCommentFormModel,        BaseCo
                 date = new Date();
                 var payload = new Array;
                 payload['comment'] = comment;
-                alert(this.dateFormat(date));
                 payload['subject_type_id'] = this.collection.subject_entity_type;
                 payload['subject_id'] = this.model.get("id");
                 var saveInfo = new BaseModel(payload);
