@@ -14,11 +14,37 @@
 	-ms-behavior: url(unselectable.htc); /* change this path as needed */
 }
 
+
+
 /*::selection { color: currentColor; background: transparent }*/
 ::selection { background: transparent; }
 ::-moz-selection { background: transparent; }
 
 html,body{width: 100%; height: 100%;}
+
+
+@media (max-width: 766px) {
+	
+	#menu-frame .display-main, #menu-frame .sub {
+		position: static !important;
+		height: auto !important;
+		width: 100% !important;
+		float: left !important;
+	}
+	
+	#menu-frame > div.display-main .viewport.edit {
+		margin-top: 175px !important;
+	}
+	
+	#menu-frame > div.display-main div.menu {
+		width: 90% !important;
+	}
+	
+	#menu-frame div.extra-tools {
+		bottom: 215px !important;
+	}
+}
+
 
 #image-editor {  width: 100%; height: 100%; z-index: 8;  text-align:center; font-family:'Nunito','HelveticaNeue','Helvetica';}
 
@@ -186,4 +212,6 @@ border: 1px solid #ccc;border-radius: 6px;background: #f0f0f0;background-image: 
     font-size: 1.2em;
     box-shadow: 0 0 3px black; }
 #menu-frame > div.display-main  div.menu .submit-contain .button:hover,#menu-frame > div.display-main  div.menu .submit-contain .button:focus { border: 1px solid #cecece; }
+
+
 
