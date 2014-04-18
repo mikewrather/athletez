@@ -8,7 +8,8 @@ define([
         'views',
         'utils', 
         'text!site/templates/comment-item.html',
-        'common/models/delete'
+        'common/models/delete',
+		'vendor/plugins/dateformat'
         ], 
 function (
         vendor,
@@ -20,6 +21,7 @@ function (
     var CommentItemView,
         BaseView = views.BaseView, 
         DeleteModel = require('common/models/delete'),
+	    dateFormat = require('vendor/plugins/dateformat'),
         Mustache = vendor.Mustache;
 
       CommentItemView = BaseView.extend({
@@ -38,10 +40,8 @@ function (
         },		
         
         dateFormat: function(date) {
-        	var months = ["January", "February", "March", "April", "May", "June", "july", "August", "September", "October", "November", "December"];
         	date = new Date(date);
-        	var newDate = months[date.getMonth()] +" "+date.getDate()+", "+date.getFullYear();
-        	return newDate;
+	        return dateFormat(date,"mmm d, h:MM TT")
         },
 
         render: function () {

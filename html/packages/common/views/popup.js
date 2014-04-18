@@ -10,7 +10,7 @@ define([
 	'text!packages/common/templates/popup.html',
 	'facade',
 	'views',
-	'vendor/plugins/jquery.nicescroll.min',
+	'vendor/plugins/iscroll/iscroll',
 	'utils',
 	'vendor'], function(require) {
 
@@ -172,9 +172,13 @@ define([
 			var html = _.template(popupTemplate,{popup:this.options});
 			$("body").append(html);
 			setTimeout(function() {
-				$("#modalBody").niceScroll();
+				if(routing.mobile) {
+					var myScroll = new iScroll("#modalBody",{
+						scrollbars:true
+					});
+				}
 				$("body").addClass("overflow-hidden");
-			}, 1000);
+			}, 500);
 		},
 
 		processStyle : function() {

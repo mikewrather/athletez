@@ -2169,22 +2169,15 @@ li.sport .teamlist-header, .stat-val-outer {
 
 /*  Participants icons  */
 
-.add-participants {
-	background: url(images/icons/sprite_icons_only_color_64px.png) no-repeat;
-	display: inline-block;
-	width: 70px;
-	height: 36px;
-}
-
-.add-to-participants {
-	background-position: 0px -263px;
-    background-color: #d45c27;
-
+.add-participants{
+    background-position: -160px -54px !important;
 }
 
 .invite-participants {
 	background-position: 2px 2px;
 }
+
+
 
 /* Add icons css start */
 .add-icon {
@@ -3213,6 +3206,15 @@ li.sport .teamlist-header, .stat-val-outer {
 	
 	
 
+    .add-participants {
+        background: url(images/icons/sprite_icons_only_color_64px.png) no-repeat;
+        display: inline-block;
+    }
+
+    .add-to-participants {
+        background-position: 0px -263px !important;
+        background-color: #d45c27;
+    }
 	.add-event-h {
 		color: #FFF !important;
 		width: 86% !important;
