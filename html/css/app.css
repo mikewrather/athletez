@@ -3210,11 +3210,17 @@ li.sport .teamlist-header, .stat-val-outer {
 		height: auto !important;
 		min-height: 20px !important;
 	}
+	
+	
 
 	.add-event-h {
 		color: #FFF !important;
 		width: 86% !important;
 		margin: 10px 2% !important;
+	}
+	
+	.add-event-link {
+		color: #333 !important;
 	}
 
 	
