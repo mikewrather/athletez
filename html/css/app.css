@@ -3600,5 +3600,19 @@ li.sport .teamlist-header, .stat-val-outer {
 		padding: 5px 3px;
 	}
 	
+	#main-header .image-outer-h li.image {
+		width: 100%;
+		margin: 0 !important;
+		padding: 0 !important;
+	}
+	
+	#main-header .image-outer-h li.image div.image-item-container, #main-header .image-outer-h li.image div.image-item-container img {
+		width: 100%;
+	}
+	
+	#main-header .image-outer-h li.image div.game-tile {
+		left: 35% !important;
+	}
+	
 	 
 }
