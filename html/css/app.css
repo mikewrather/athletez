@@ -3229,10 +3229,6 @@ li.sport .teamlist-header, .stat-val-outer {
 		margin: 10px 2% !important;
 	}
 	
-	.add-event-link {
-		color: #333 !important;
-	}
-
 	
 	.show-older-h {
 		width: 38% !important;
@@ -3600,8 +3596,12 @@ li.sport .teamlist-header, .stat-val-outer {
 		padding: 5px 3px;
 	}
 	
+	#main-header .image-outer-h {
+		width: 100% !important;
+	}
+	
 	#main-header .image-outer-h li.image {
-		width: 100%;
+		width: 100% !important;
 		margin: 0 !important;
 		padding: 0 !important;
 	}
