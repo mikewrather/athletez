@@ -63,18 +63,16 @@ define(['require', 'text!signup/templates/registration.html', 'text!signup/templ
 
 		next : function(event) {
 			event.preventDefault();
-			var $firstName = $("input[name=fullname]"), regex = /^[a-zA-Z  -_.]+$/;
-
-			setTimeout(function() {
-				var v = $firstName.val();
-			    if(!regex.test(v)) {
-					$firstName.addClass('field-failed');
-			        setTimeout(function() {
-						$firstName.removeClass('field-failed');
-					}, 2000);
-			        return false;
-			    }
-			}, 0);
+			// -_. 
+			var $firstName = $(event.target).parents("form").find("input[name=fullname]"), v = $firstName.val(), regex = /[a-zA-Z\.\_\-]$/;
+			
+		    if(!regex.test(v)) {
+				$firstName.addClass('field-failed');
+		        setTimeout(function() {
+					$firstName.removeClass('field-failed');
+				}, 2000);
+		        return false;
+		    }
 						
 			var fields = this.$(":input").serializeArray(), flag = true;
 			$.each(this.$(":input"), function(key, value) {
