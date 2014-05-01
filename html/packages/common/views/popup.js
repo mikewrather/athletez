@@ -18,6 +18,7 @@ define([
 		views = require('views'),
 		SectionView = views.SectionView,
 		utils = require('utils'),
+		//iScroll = require('vendor/plugins/iscroll/iscroll'),
 		Channel = utils.lib.Channel,
 		vendor = require('vendor'),
 		_ = facade._,
@@ -36,7 +37,7 @@ define([
 			this.processOptions(options);
 		},
 
-		processOptions: function(options){
+		processOptions: function(options) {
 			if(!options.id)
 				this.options.id = "modal-popup-"+Math.floor(Math.random() * Math.random() * 50 * Math.random() * 50);
 			else
@@ -169,12 +170,14 @@ define([
 		},
 
 		render: function(){
-			var html = _.template(popupTemplate,{popup:this.options});
+			var _self = this, html = _.template(popupTemplate,{popup:this.options});
 			$("body").append(html);
 			setTimeout(function() {
 				if(routing.mobile) {
-					var myScroll = new iScroll("#modalBody",{
-						scrollbars:true
+					if(_self.scroll) _self.scroll.destroy();
+					$(".iScrollVerticalScrollbar, .iScrollLoneScrollbar").remove();
+					_self.scroll = new IScroll("#modalBody", {
+						scrollbars: true
 					});
 				}
 				$("body").addClass("overflow-hidden");
