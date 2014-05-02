@@ -1134,7 +1134,7 @@ a.add-game-h {
 
 /** Popup CSS **/
 .modal-body {
-	position: absolute;
+	/*position: absolute;*/
 	height: 80%;
 	width: 96%;
 	padding: 0;
@@ -2317,7 +2317,7 @@ li.sport .teamlist-header, .stat-val-outer {
 }
 
 .desktop-link {
-	display: inline-block !important;
+	/*display: inline-block !important;*/
 }
 
 .team-template-outer #menu-container #sports-info {

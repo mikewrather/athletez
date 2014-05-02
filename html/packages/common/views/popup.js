@@ -93,7 +93,7 @@ define([
 			var self = this;
 			routing.off('common-popup-close');
 			routing.on('common-popup-close',function(e){
-				if(routing.popups.length){
+				if(routing.popups.length) {
 					var $thisPopup = routing.popups.shift();
 					$thisPopup.modal("hide").remove();
 				}
@@ -111,7 +111,7 @@ define([
 			});
 		},
 
-		processDimensions: function(){
+		processDimensions: function() {
 			var options = this.options;
 			if(options.width){
 
@@ -179,6 +179,10 @@ define([
 					_self.scroll = new IScroll("#modalBody", {
 						scrollbars: true
 					});
+					
+					setInterval(function() {
+						if(_self.scroll) _self.scroll.refresh();						
+					}, 500);
 				}
 				$("body").addClass("overflow-hidden");
 			}, 500);
