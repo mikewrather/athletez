@@ -1134,7 +1134,7 @@ a.add-game-h {
 
 /** Popup CSS **/
 .modal-body {
-	position: absolute;
+	/*position: absolute;*/
 	height: 80%;
 	width: 96%;
 	padding: 0;
@@ -2317,7 +2317,7 @@ li.sport .teamlist-header, .stat-val-outer {
 }
 
 .desktop-link {
-	display: inline-block !important;
+	/*display: inline-block !important;*/
 }
 
 .team-template-outer #menu-container #sports-info {
@@ -2992,7 +2992,7 @@ li.sport .teamlist-header, .stat-val-outer {
 	
 	#team-image-container div.image-item-container {
 		width: 100%; /*320px;*/
-		height: 264px;
+		height: 257px;
 	}
 	
 	#team-image-container div.image-item-container > img {
@@ -3628,5 +3628,11 @@ li.sport .teamlist-header, .stat-val-outer {
 	
 	.loading_image {
 		top: 35px !important;
+	}
+}
+
+@media only screen and (min-width: 767px) {
+	.search-box {
+		margin-right: 50px;
 	}
 }
