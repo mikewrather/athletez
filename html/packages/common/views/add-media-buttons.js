@@ -14,7 +14,7 @@ define([
         'votes/models/follow',
         'roster/models/roster',
 		'vendor',
-        "vendor/plugins/qtip/qtip",
+        "vendor/plugins/qtip/qtip-wrapper",
         "text!vendor/plugins/qtip/qtip.css"
         ], function(require, headingTemplate) {
 
@@ -80,12 +80,13 @@ define([
         
         addToList: function(e) {
         	e.preventDefault();
-		    var _self = this, followFn = function(callback) {
+		    var ob = routing.showSpinner(e.currentTarget), _self = this, followFn = function(callback) {
 		    	var followModelOb = new followModel();
 				followModelOb.subject_id = _self.collection.id;
 				followModelOb.entity_id = _self.controllerObject.basics.get("payload").enttypes_id;
 				followModelOb.save();
 				$.when(followModelOb.request).done(function() {
+					routing.hideSpinner(ob, e.currentTarget);
 					if(typeof(followModelOb.get('payload').follower) =='object' && typeof(followModelOb.get('payload').subject) =='object' && followModelOb.get('payload').id > 0) {
 						$(e.target).addClass('link-disabled');
 						if(_self.controllerObject && _self.controllerObject.reloadFans) _self.controllerObject.reloadFans();
@@ -190,7 +191,7 @@ define([
         	this.$el.find(".buttons-h").html(markupButtons);
 
         	this.$el.find("a").each(function() {
-        	$(this).qtip({
+        	$(this).qtip2({
 				content: $(this).data("content"),
 				position: {
 				  my: "bottom center",

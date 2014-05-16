@@ -3,17 +3,21 @@
 // Requires define
 // Return {Object} App
 define( ["facade", "utils", "collections", "chrome", "controller", "profile", "imageup",'home','videopreview',
-	"game", "team", "registration","profilesetting","userresume","packages/site/collections/phrases","usercontrol/tag/tag",
+
+	"game", "team", "registration","profilesetting","userresume","usercontrol/tag/tag",
 	"usercontrol/addgame/addgame","signup","login", "usercontrol/photo-player/photo-player", "usercontrol/add-club/add-club",
 	"utils/storage", 'usercontrol/location/views/view-location','signup/views/facebooksignup',"usercontrol/addevent/addevent",'chrome/views/header',
 	'browserpop/views/browser','usercontrol/landing/views/landing', 'pages/fbinvite','packages/common/views/popup','packages/invite/models/invite'],
+
+
 function (facade, utils, collections, chromeBootstrap, Controller, ProfileController, ImageController, HomeController, VideoPreviewController,
-	GameController, TeamController, RegistrationController,ProfileSetting,UserResume, SitePhraseList , TagController,
+	GameController, TeamController, RegistrationController,ProfileSetting,UserResume , TagController,
 	AddGameController, SignupController,LoginController,PhotoPlayerController, AddClubController,
 	Store, googleMapLocationview,fbreg, AddEventController,header) {
 
     //App;
-        var App, ApplicationStates = collections.ApplicationStates,
+        var App,
+	        ApplicationStates = collections.ApplicationStates,
 	        $ = facade.$,
 	        _ = facade._,
 	        Backbone = facade.Backbone,
@@ -24,8 +28,10 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
 		    InviteModel = require('packages/invite/models/invite'),
 
 			landingView = require('usercontrol/landing/views/landing'),
-	        debug = utils.debug,
-	        App = Backbone.Router.extend({
+	        debug = utils.debug;
+
+   		App = Backbone.Router.extend({
+
         routes: {
             '': 'defaultRoute',
 	        
@@ -183,7 +189,7 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
             _.bindAll(this);
 	        this.addSubscribers();
 	        Controller.prototype.appStates = new ApplicationStates();
-	        this.getPhrases();
+	     //   this.getPhrases();
 	       // this.intializeImageAndVideo();
 	       // this.showLandingInfo();
         },
@@ -262,9 +268,6 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
 			    });
 
 
-
-
-
 	    	}
 	    	this.initialiRoutesInit(initFBAccept);   	
 		},
@@ -301,6 +304,15 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
             	for(var i in routing.ajaxRequests) {
             		routing.ajaxRequests[i].abort();
             	}
+            }
+            
+            // remove all qtip elements
+            $(".qtip").remove();
+            if(routing.mobile) {
+	            // bind event and check and remove if it's under qtip
+	            $("html").click(function(e) {
+	            	if($(e.currentTarget).parents(".qtip")) $(".qtip").remove();
+	            });
             }
         },
         
@@ -349,6 +361,8 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
         	var self = this, closeModelBox = function() {
         		//$("#modalPopup, #photoPlayerModal, .modal-backdrop").unbind().remove();
 		        $(".modal:not(#Browser-detect)").remove();
+		        // to remove modal backdrop
+		        $(".modal-backdrop").remove();
 		        routing.trigger('common-popup-close');
 		    };
 	//      this.hideSignup();
@@ -453,8 +467,8 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
         },
 
 	    getPhrases: function(){
-		    var phrases = new SitePhraseList();
-		    phrases.fetch();
+	//	    var phrases = new SitePhraseList();
+	//	    phrases.fetch();
 	    },
 	    
 	    showFbreg:function() {

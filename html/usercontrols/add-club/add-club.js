@@ -8,7 +8,7 @@ define(["require",
 		"models",
 		"views",
 		"user/models/basic_info",
-		"usercontrols/add-club/views/main"],
+		"usercontrol/add-club/views/main"],
 	function(require) {
 
 	var facade = require("facade"), Controller = require("controller"),
@@ -22,11 +22,11 @@ define(["require",
 	//collections
 
 	// views
-	MainView = require("usercontrols/add-club/views/main");
+	MainView = require("usercontrol/add-club/views/main");
 	
 	return Controller.extend({
 		// define css files to load
-		cssArr : ["/usercontrols/add-club/add-club.css"],
+		cssArr : [base_url + "usercontrols/add-club/add-club.css"],
 		events : {
 		},
 		

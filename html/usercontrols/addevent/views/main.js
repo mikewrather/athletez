@@ -4,29 +4,29 @@
  // Requires `define`, `require`
  // Returns {Add Game VIEW} constructor
  */
-define(['require', 'text!usercontrols/addevent/templates/layout.html', 'facade', 'views', 'utils', 'vendor',
-	'sportorg/collections/sports_listall', 'location/collections/states', 'usercontrols/addgame/collections/teams',
-	'location/collections/cities', 'usercontrols/addgame/collections/teams_user', 'usercontrols/addgame/collections/teams',
-	'usercontrols/addgame/collections/games_search', 'usercontrols/addgame/models/team', 'usercontrols/addgame/models/team_add',
-	'usercontrols/addgame/models/game', 'usercontrols/addgame/models/uslgamelink','sportorg/models/game',
+define(['require', 'text!usercontrol/addevent/templates/layout.html', 'facade', 'views', 'utils', 'vendor',
+	'sportorg/collections/sports_listall', 'location/collections/states', 'usercontrol/addgame/collections/teams',
+	'location/collections/cities', 'usercontrol/addgame/collections/teams_user', 'usercontrol/addgame/collections/teams',
+	'usercontrol/addgame/collections/games_search', 'usercontrol/addgame/models/team', 'usercontrol/addgame/models/team_add',
+	'usercontrol/addgame/models/game', 'usercontrol/addgame/models/uslgamelink','sportorg/models/game',
 'usercontrol/dropdown/view/dropdown', 'usercontrol/location/views/get-view-location', 'component/forms',
 	"vendor/plugins/dateformat"
 ], function(require, layoutTemplate) {
 
 	var self, facade = require('facade'), views = require('views'), SectionView = views.SectionView, utils = require('utils'),
 		Channel = utils.lib.Channel, vendor = require('vendor'), Mustache = vendor.Mustache, $ = facade.$,
-		BasicModel = require('usercontrols/tag/models/basic_info'), SportsCollection = require('sportorg/collections/sports_listall'),
+		BasicModel = require('usercontrol/tag/models/basic_info'), SportsCollection = require('sportorg/collections/sports_listall'),
 		StatesCollection = require('location/collections/states'), CityCollection = require('location/collections/cities'),
-		UserTeamsCollection = require('usercontrols/addgame/collections/teams_user'),
-		TeamsCollection = require('usercontrols/addgame/collections/teams'), TeamModel = require('usercontrols/addgame/models/team'),
-		TeamAddModel = require('usercontrols/addgame/models/team_add'), GameSaveModel = require('usercontrols/addgame/models/game'),
-		GamesSearchCollection = require('usercontrols/addgame/collections/games_search'),
+		UserTeamsCollection = require('usercontrol/addgame/collections/teams_user'),
+		TeamsCollection = require('usercontrol/addgame/collections/teams'), TeamModel = require('usercontrol/addgame/models/team'),
+		TeamAddModel = require('usercontrol/addgame/models/team_add'), GameSaveModel = require('usercontrol/addgame/models/game'),
+		GamesSearchCollection = require('usercontrol/addgame/collections/games_search'),
 		GameModel = require('sportorg/models/game'),
 		DropDownList = require('usercontrol/dropdown/view/dropdown'),
 		dateFormat = require('vendor/plugins/dateformat'),
 		FormComponent = require('component/forms'),
 	//Models
-	UserGameLinkModel = require('usercontrols/addgame/models/uslgamelink');
+	UserGameLinkModel = require('usercontrol/addgame/models/uslgamelink');
 	
 	return SectionView.extend({
 		template : '<div class="add-event-container-h"></div>',
@@ -487,7 +487,6 @@ define(['require', 'text!usercontrols/addevent/templates/layout.html', 'facade',
 
 							} else {
 
-								console.log
 								var payload = {
 									game_datetime : formData.game_datetime,
 									game_location : formData['locations_id'],
@@ -498,6 +497,7 @@ define(['require', 'text!usercontrols/addevent/templates/layout.html', 'facade',
 								};
 
 								var gameSaveModel = new GameSaveModel(payload);
+								gameSaveModel.game_id =  formData.games_id;
 								gameSaveModel.save({});
 
 								//window.formValues1.showServersErrors([{ key: "gameDay", message: "error_message" }]);

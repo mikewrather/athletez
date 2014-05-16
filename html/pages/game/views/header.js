@@ -13,9 +13,9 @@ define([
         'game/models/basics',
         'votes/models/vote',
         'votes/models/follow',
-        'usercontrols/location/views/location',
-        'usercontrols/location/models/verify-adress',
-        'usercontrols/location/models/save',
+        'usercontrol/location/views/location',
+        'usercontrol/location/models/verify-adress',
+        'usercontrol/location/models/save',
 		'chrome/views/header',
 		'usercontrol/dropdown/view/dropdown',
 		"media/views/image-item",
@@ -32,10 +32,10 @@ function(require, gameHeaderTemplate) {
         voteModel = require('votes/models/vote'),
         followModel = require('votes/models/follow'),
         ImageItem = require("media/views/image-item"),
-        LocationView = require('usercontrols/location/views/location'),
+        LocationView = require('usercontrol/location/views/location'),
 	    DropDownList = require('usercontrol/dropdown/view/dropdown'),
-        verifyAddress = require('usercontrols/location/models/verify-adress'),
-		saveLocation = require('usercontrols/location/models/save'),
+        verifyAddress = require('usercontrol/location/models/verify-adress'),
+		saveLocation = require('usercontrol/location/models/save'),
 	    FormComponent = require('component/forms'),
 	    dateFormat = require('vendor/plugins/dateformat'),
 		SectionView = views.SectionView;
@@ -291,8 +291,9 @@ function(require, gameHeaderTemplate) {
 						},
 						showLable : false,
 						onSubmit : function(e) {
-							var errors = form.commit();
+							var ob = routing.showSpinner("input[name=submit]"), errors = form.commit();
 							if (errors) {
+								routing.hideSpinner(ob, "input[name=submit]");
 								// auto scroll to focus element which has error
 								for (var i in errors) {
 									var $ob = $("*[name=" + i + "]"), $pos = $ob.position();
@@ -325,14 +326,16 @@ function(require, gameHeaderTemplate) {
 								self.model.save({});
 
 								//window.formValues1.showServersErrors([{ key: "gameDay", message: "error_message" }]);
-								$.when(self.model.request).done(function(res){
+								$.when(self.model.request).done(function(res) {
 									_self.updateHeaderData(self.model.id);
+									routing.hideSpinner(ob, "input[name=submit]");
 									routing.trigger('common-popup-close');
 								});
 
 								$.when(self.model.request).fail(function(res) {
 									var response = JSON.parse(res.responseText);
 									var errorArray = response.exec_data.error_array;
+									routing.hideSpinner(ob, "input[name=submit]");
 									_self.formValues.showServersErrors(errorArray);
 								});
 							}

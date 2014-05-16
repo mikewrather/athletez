@@ -8,7 +8,8 @@ define([
         'views',
         'utils', 
         'text!site/templates/comment-item.html',
-        'common/models/delete'
+        'common/models/delete',
+		'vendor/plugins/dateformat'
         ], 
 function (
         vendor,
@@ -20,6 +21,7 @@ function (
     var CommentItemView,
         BaseView = views.BaseView, 
         DeleteModel = require('common/models/delete'),
+	    dateFormat = require('vendor/plugins/dateformat'),
         Mustache = vendor.Mustache;
 
       CommentItemView = BaseView.extend({
@@ -36,10 +38,16 @@ function (
 		    else	    
 		    	this.template = options.template;
         },		
+        
+        dateFormat: function(date) {
+        	date = new Date(date);
+	        return dateFormat(date,"mmm d, h:MM TT")
+        },
 
         render: function () {
 	        var payload = this.model.get('payload');
 	        payload['comment'] = payload['comment'].replace(/\n/g,"<br />");
+	        payload['comment_date'] = this.dateFormat(payload['timePosted']);
 	        this.model.set('payload',payload);
             var markup = Mustache.to_html(this.template, this.model.toJSON());
             this.$el.html(markup);
@@ -59,10 +67,8 @@ function (
         },
         
         deleteComments: function(e) {
-        	console.log(this.model);
         	e.stopPropagation();
 			e.preventDefault();
-			
 			var _self = this, deleteModel = new DeleteModel();
 	        console.log("payload",this.model.get('payload'));
 			deleteModel.subject_id = this.model.get("payload").id;

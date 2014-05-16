@@ -5,7 +5,7 @@
  // Returns {UserResumeController} constructor
  */
 
-define(["require", "text!usercontrols/addgame/templates/layout.html", 
+define(["require", "text!usercontrol/addgame/templates/layout.html",
 	   "facade",
 	  
 	   "controller", "models", "views",
@@ -16,7 +16,7 @@ define(["require", "text!usercontrols/addgame/templates/layout.html",
 	   
 	    
 	    //Views
-	    "usercontrols/addgame/views/main",
+	    "usercontrol/addgame/views/main",
 		"jquery.slimscroll"
 	    ], function(require, pageLayoutTemplate) {
 
@@ -31,11 +31,11 @@ define(["require", "text!usercontrols/addgame/templates/layout.html",
 	/*COLLECTIONS SECTIONS*/
 
 	/*VIEW SECTION*/
-	AddGameView = require("usercontrols/addgame/views/main"),
+	AddGameView = require("usercontrol/addgame/views/main"),
 	
 	AddGameController = Controller.extend({
 		/*CSS SECTION*/
-		cssArr : ["/usercontrols/addgame/addgame.css"],
+		cssArr : [base_url + "usercontrols/addgame/addgame.css"],
 
 		events : {
 		},

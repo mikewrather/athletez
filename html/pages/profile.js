@@ -86,7 +86,7 @@ define([
 			debug = utils.debug,
 			Channel = utils.lib.Channel,
 			cssArr = [
-				"/pages/profile/profile.css"
+				base_url + "pages/profile/profile.css"
 			];
 
 		ProfileController = Controller.extend({
@@ -364,6 +364,7 @@ define([
             	this.orgs.userId = _self.id;
             	this.orgs.sports_id = $(".selected-sport-h").data("id");
             	this.orgs.fetch();
+
             	$.when(this.orgs.request).done(function() {
             		if (_self.orgListView) {
 						$(_self.orgListView.destination).html('');
@@ -381,6 +382,25 @@ define([
 					_self.scheme.push(_self.orgListView);
 					_self.layout.render();
             	});
+            	
+            	$.when(this.orgs.request).fail(function() {
+            		if (_self.orgListView) {
+						$(_self.orgListView.destination).html('');
+						position = $.inArray(_self.orgListView, _self.scheme);
+						if (~position) _self.scheme.splice(position, 1);
+					}
+					
+         	    	_self.orgListView = new ProfileOrgListView({
+						collection: _self.orgs,
+						controller: _self,
+						destination: "#games_div",
+						eventPage: $(".selected-sport-h").data("name"),
+						teamName: _self.basics.get("payload").first_name
+					});
+					_self.scheme.push(_self.orgListView);
+					_self.layout.render();
+            	});
+            	
 			},
 			
 			setUpOrgView: function() {
@@ -390,7 +410,7 @@ define([
 					position = $.inArray(this.orgListView, this.scheme);
 					if (~position) this.scheme.splice(position, 1);
 				}
-
+				
 				this.orgViewname = "org";
 				this.orgListView = new ProfileOrgListView({
 					collection: this.orgs,

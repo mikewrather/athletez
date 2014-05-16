@@ -230,8 +230,9 @@ function(require, headerTemplate, selectSportTemplate) {
 				    },
 				    showLable : false,
 				    onSubmit : function(e) {
-					    var errors = form.commit();
+				    	var ob = routing.showSpinner("input[name=submit]"), errors = form.commit();
 					    if (errors) {
+					    	routing.hideSpinner(ob, "input[name=submit]");
 						    // auto scroll to focus element which has error
 						    for (var i in errors) {
 							    var $ob = $("*[name=" + i + "]"), $pos = $ob.position();
@@ -266,12 +267,14 @@ function(require, headerTemplate, selectSportTemplate) {
 						    //window.formValues1.showServersErrors([{ key: "gameDay", message: "error_message" }]);
 						    $.when(orgBasic.request).done(function(res){
 							    _self.updateHeaderData(self.model.id);
+							    routing.hideSpinner(ob, "input[name=submit]");
 							    routing.trigger('common-popup-close');
 						    });
 
 						    $.when(orgBasic.request).fail(function(res) {
 							    var response = JSON.parse(res.responseText);
 							    var errorArray = response.exec_data.error_array;
+							    routing.hideSpinner(ob, "input[name=submit]");
 							    _self.formValues.showServersErrors(errorArray);
 						    });
 

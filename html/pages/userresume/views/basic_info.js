@@ -13,7 +13,7 @@ define([
 	'views',
 	'utils',
 	'vendor',
-	'usercontrols/imagecropper/imagecropper'
+	'usercontrol/imagecropper/imagecropper'
         ], 
 function(require, profileHeaderTemplate) {
 
@@ -27,7 +27,7 @@ function(require, profileHeaderTemplate) {
 		vendor = require('vendor'),
 		Mustache = vendor.Mustache,
 		$ = facade.$,
-		ImageCropperController = require('usercontrols/imagecropper/imagecropper');
+		ImageCropperController = require('usercontrol/imagecropper/imagecropper');
 
         
 

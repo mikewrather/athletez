@@ -5,7 +5,7 @@
  // Returns {UserResumeController} constructor
  */
 
-define(["require", "text!usercontrols/addevent/templates/layout.html", 
+define(["require", "text!usercontrol/addevent/templates/layout.html",
 	   "facade",
 	  
 	   "controller", "models", "views",
@@ -16,7 +16,7 @@ define(["require", "text!usercontrols/addevent/templates/layout.html",
 	   
 	    
 	    //Views
-	    "usercontrols/addevent/views/main"
+	    "usercontrol/addevent/views/main"
 	     
 	    ], function(require, pageLayoutTemplate) {
 
@@ -31,11 +31,11 @@ define(["require", "text!usercontrols/addevent/templates/layout.html",
 	/*COLLECTIONS SECTIONS*/
 
 	/*VIEW SECTION*/
-	AddGameView = require("usercontrols/addevent/views/main"),
+	AddGameView = require("usercontrol/addevent/views/main"),
 	
 	AddGameController = Controller.extend({
 		/*CSS SECTION*/
-		cssArr : ["/usercontrols/addevent/addevent.css"],
+		cssArr : [base_url + "usercontrols/addevent/addevent.css"],
 
 		events : {
 		},

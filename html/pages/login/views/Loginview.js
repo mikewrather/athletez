@@ -67,15 +67,17 @@ define([
                   "click .forgot-password-h": "forgotPassword",
                   "submit .forgot-password-form-h": "forgotPasswordForm",
                   "click .log-in-link-h": "loginPageView",
+                  "submit #login" : "userLogin",
                   "click #fbpane":"signupFacebook"
                 },
                 
                 forgotPasswordForm: function(e) {
                 	e.preventDefault();
-                	var _self = this, model = new ForgotPasswordModel();
+                	var ob = routing.showSpinner(".forgot-pasword-btn-h"), _self = this, model = new ForgotPasswordModel();
                 	model.email = $(e.target).find(".forgot-password-email-h").val();
                 	model.save({email: model.email});
                 	$.when(model.request).done(function() {
+                		routing.hideSpinner(ob, ".forgot-pasword-btn-h");
                 		_self.$el.find(".success-message").removeClass('hide');
                         _self.$el.find(".error-message").addClass('hide');
                 		setTimeout(function() {
@@ -83,6 +85,7 @@ define([
                 		}, 3000);
                 	});
                 	$.when(model.request).fail(function() {
+                		routing.hideSpinner(ob, ".forgot-pasword-btn-h");
                 		_self.$el.find(".error-message").removeClass('hide');
                         _self.$el.find(".success-message").addClass('hide');
                 	});
@@ -98,7 +101,8 @@ define([
                
                userLogin:function(event) {
 	                event.preventDefault();
-	                var fields = this.$(":input").serializeArray(), payload=[], _self = this;
+	                var ob = routing.showSpinner(".loginUser"),
+	                fields = this.$(":input").serializeArray(), payload=[], _self = this;
 	                
 	                $.each(fields, function( index, value ) {
 	                   payload[value.name] = value.value;
@@ -107,6 +111,7 @@ define([
 	                var obj = $.extend({}, payload);
 	                this.model.save(obj,{
 	                    success: function(msg) {
+	                    	routing.hideSpinner(ob, ".loginUser");
 	                        $('#Loginview').modal('hide');
 							if(_self.callback && _.isFunction(_self.callback)) {
 								routing.trigger('common-popup-close');
@@ -120,6 +125,7 @@ define([
 	                    },
 	                    error: function(msg) {
 	                        $( ".errormsg" ).empty();
+	                    	routing.hideSpinner(ob, ".loginUser");
 	                        var errors= jQuery.parseJSON( msg.request.responseText);
 	                        $( ".errormsg" ).html(errors.exec_data.error_array[0].error);            
 	                    }

@@ -184,7 +184,8 @@ function(require, profileHeaderTemplate, selectSportTemplate) {
 			} //else
 			//	this.loadFirstTime = true;
         	
-        	
+        	if(routing.mobile) $("#games_div, #fans-div, #commenton-wrap, #main-content, .buttons-h, #comment_div").hide();
+        	$(".green-left-heading").removeClass("down-arrow-heading");
         	document.title = title;
         }
         

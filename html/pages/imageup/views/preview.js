@@ -4,9 +4,9 @@
 // Requires `define`, `require`
 // Returns {ImageUploaderView} constructor
 
-define(['require', 'text!imageup/templates/preview_template.html', 'text!usercontrols/tag/templates/layout.html', 'text!imageup/templates/select_all.html', 'facade', 'views', 'utils', 'vendor', 'usercontrols/tag/views/main'], function(require, previewBasicTemplate, tagTemplate, selectAllTemplate) {
+define(['require', 'text!imageup/templates/preview_template.html', 'text!usercontrol/tag/templates/layout.html', 'text!imageup/templates/select_all.html', 'facade', 'views', 'utils', 'vendor', 'usercontrol/tag/views/main'], function(require, previewBasicTemplate, tagTemplate, selectAllTemplate) {
 
-	var PreviewBasicView, facade = require('facade'), views = require('views'), utils = require('utils'), Channel = utils.lib.Channel, vendor = require('vendor'), SectionView = views.SectionView, $ = facade.$, _ = facade._, TagView = require('usercontrols/tag/views/main'), debug = utils.debug;
+	var PreviewBasicView, facade = require('facade'), views = require('views'), utils = require('utils'), Channel = utils.lib.Channel, vendor = require('vendor'), SectionView = views.SectionView, $ = facade.$, _ = facade._, TagView = require('usercontrol/tag/views/main'), debug = utils.debug;
 
 	PreviewBasicView = SectionView.extend({
 

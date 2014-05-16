@@ -4,7 +4,7 @@
 define(['vendor','facade','views', 'utils', 'schedules/views/schedule-item','utils/storage',
 	'text!schedules/templates/schedule-list.html','chrome/views/header', 'common/models/add',
 	'sportorg/models/uslgamelink',
-	"vendor/plugins/qtip/qtip", 'common/views/add-description'],
+	"vendor/plugins/qtip/qtip-wrapper", 'common/views/add-description'],
 function(vendor, facade,  views,   utils,   ScheduleItemView, Store, ScheduleListTemplate,header, UserGames,UslGameLink) {
 
     var OrgListView, 
@@ -148,52 +148,52 @@ function(vendor, facade,  views,   utils,   ScheduleItemView, Store, ScheduleLis
                 throw new Error("Schedule expected options.collection.");
             }
             
-            
-//            var len = this.collection.length;
-             // show empty box
-//	        if(!len) {
-	        	
-//	        	new AddDescription({
-//	        		page: this.currentSection,
-//	        		target: this.$el
-//	        	});
-//	        }
-		            
             _.bindAll(_self);
             _self.addSubscribers();
-			
-
         },
 
 	    afterRender: function() {
 		    var _self = this;
-		    this.$el.find("a.team-info-h").each(function(){
-			    var $self = $(this);
-			    $(this).qtip({
-				    content: $self.find('div.game-info').html(),
-				    position: {
-					    my: "bottom center",
-					    at: "top center",
-					    viewport : $(window)
-				    },
-				    style: {
-					    classes: "tipsy game-info",
-					    width: '360px'
-				    },
-				    hide : {
-						fixed:true,
-					    delay:1000
-				    },
-				    events : {
-					    render: function(event,api) {
-						    $(api.elements.tooltip).find('.add-score').on('click',_self.addScore);
+			    this.$el.find("a.team-info-h").each(function() {
+				    var $self = $(this);
+				    
+					
+				    $(this).qtip2({
+					    content: $self.find('div.game-info').html(),
+					    position: {
+						    my: "bottom center",
+						    at: "top center",
+						    viewport : $(window)
+					    },
+					    
+					    style: {
+						    classes: "tipsy game-info",
+						    width: '360px'
+					    },
+					    
+					    hide : {
+							fixed:true,
+						    delay:1000
+					    },
+					    
+					    events : {
+						    render: function(event,api) {
+						    	console.error("here");
+							    $(api.elements.tooltip).find('.add-score').on('click',_self.addScore);
+						    }
 					    }
-				    }
+				    });
+				    
+				  	 if(routing.mobile) {
+						$(document).off('click', '.add-score');
+						$(document).on('click', '.add-score', _self.addScore);					
+					}
 			    });
-		    });
 	    },
+	    
 	    addScore: function(e){
 		    e.stopPropagation();
+		    e.preventDefault();
 		    var uslgamelink_id = $(e.target).data('uslgamelink');
 		    $(e.target)
 			    .off('click',this.addScore)

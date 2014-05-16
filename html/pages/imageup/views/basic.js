@@ -4,9 +4,9 @@
 // Requires `define`, `require`
 // Returns {ImageUploaderView} constructor
 
-define(['require', 'text!imageup/templates/uploader.html', 'text!imageup/templates/select_all.html', 'text!usercontrols/tag/templates/layout.html', 'facade', 'views', 'utils', 'vendor', "imageup/models/basic", "imageup/views/errors", 'usercontrols/tag/views/main'], function(require, imageBasicTemplate, selectAllTemplate, tagTemplate) {
+define(['require', 'text!imageup/templates/uploader.html', 'text!imageup/templates/select_all.html', 'text!usercontrol/tag/templates/layout.html', 'facade', 'views', 'utils', 'vendor', "imageup/models/basic", "imageup/views/errors", 'usercontrol/tag/views/main'], function(require, imageBasicTemplate, selectAllTemplate, tagTemplate) {
 
-	var ImageBasicView, facade = require('facade'), views = require('views'), utils = require('utils'), Channel = utils.lib.Channel, vendor = require('vendor'), SectionView = views.SectionView, ImageBasicModel = require("imageup/models/basic"), ErrorDispView = require("imageup/views/errors"), $ = facade.$, _ = facade._, debug = utils.debug, TagView = require('usercontrols/tag/views/main');
+	var ImageBasicView, facade = require('facade'), views = require('views'), utils = require('utils'), Channel = utils.lib.Channel, vendor = require('vendor'), SectionView = views.SectionView, ImageBasicModel = require("imageup/models/basic"), ErrorDispView = require("imageup/views/errors"), $ = facade.$, _ = facade._, debug = utils.debug, TagView = require('usercontrol/tag/views/main');
 
 	debug.log("SectionView: ", SectionView);
 

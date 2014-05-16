@@ -5,18 +5,18 @@
  // Returns {UserResumeController} constructor
  */
 
-define(["require", "text!usercontrols/tag/templates/layout.html", 
+define(["require", "text!usercontrol/tag/templates/layout.html",
 	   "facade",
 	  
 	   "controller", "models", "views",
-	   "usercontrols/tag/models/basic_info",
+	   "usercontrol/tag/models/basic_info",
 	    
 	    //Collections
-	    "usercontrols/tag/collections/sports",
+	    "usercontrol/tag/collections/sports",
 	   
 	    
 	    //Views
-	    "usercontrols/tag/views/main",
+	    "usercontrol/tag/views/main",
 	     
 	    ], function(require, pageLayoutTemplate) {
 
@@ -26,16 +26,16 @@ define(["require", "text!usercontrols/tag/templates/layout.html",
 	 Channel = utils.lib.Channel, LayoutView = views.LayoutView,
 
 	/*MODEL SECTION*/
-	BasicModel = require("usercontrols/tag/models/basic_info"),
+	BasicModel = require("usercontrol/tag/models/basic_info"),
 	
 	/*COLLECTIONS SECTIONS*/
 
 	/*VIEW SECTION*/
-	TagView = require("usercontrols/tag/views/main"),
+	TagView = require("usercontrol/tag/views/main"),
 	
 	TagController = Controller.extend({
 		/*CSS SECTION*/
-		cssArr : ["/usercontrols/tag/tag.css"],
+		cssArr : [base_url + "usercontrols/tag/tag.css"],
 
 		events : {
 		},

@@ -3,14 +3,14 @@
  // Pages
  // Requires `define`, `require`
  */
-define(['require', 'text!usercontrols/detection/templates/browser.html','text!usercontrols/detection/browser.css', 'facade', 'views', 'utils', 'vendor','browser'], function(require) {
+define(['require', 'text!usercontrol/detection/templates/browser.html','text!usercontrol/detection/browser.css', 'facade', 'views', 'utils', 'vendor','browser'], function(require) {
 
 	var self, facade = require('facade'), views = require('views'), 
 	SectionView = views.SectionView, utils = require('utils'), 
 	Channel = utils.lib.Channel, vendor = require('vendor'), 
 	Mustache = vendor.Mustache, $ = facade.$;
 	var BaseView = views.BaseView, Backbone = facade.Backbone, _self,
-		layoutTemplate = require('text!usercontrols/detection/templates/browser.html');
+		layoutTemplate = require('text!usercontrol/detection/templates/browser.html');
 	//Models
 
 	return Backbone.View.extend({
@@ -21,7 +21,7 @@ define(['require', 'text!usercontrols/detection/templates/browser.html','text!us
 		events : {
 			"click .close":"closePopup"
 		},
-		cssArr : ["usercontrols/detection/browser.css"],
+		cssArr : [base_url + "usercontrols/detection/browser.css"],
 		/*initialize gets called by default when constructor is initialized*/
 		initialize : function(options) {
 			Channel('load:css').publish(this.cssArr);

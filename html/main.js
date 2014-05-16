@@ -6,6 +6,15 @@
 require.config({
 	baseUrl: './',
 	locale: 'en-us',
+	config: {
+		text: {
+			useXhr: function (url, protocol, hostname, port) {
+				// allow cross-domain requests
+				// remote server allows CORS
+				return true;
+			}
+		}
+	},
 	paths: {
 
 		// Libraries
@@ -19,6 +28,8 @@ require.config({
 		'underscore'    : [cdn + 'vendor/underscore', s3 + 'vendor/underscore', '/vendor/underscore'],
 		jquery        : '/vendor/jquery.1.10.2.min',
 		'facebook'      : [cdn + 'vendor/all', s3 + 'vendor/all', '/vendor/all'],
+
+		'jQueryHammer': [cdn + 'vendor/jquery.hammer', s3 + 'vendor/jquery.hammer','/vendor/jquery.hammer'],
 
 		// Plugins
 		'bootstrap'             : [cdn + 'vendor/plugins/bootstrap', s3 + 'vendor/plugins/bootstrap', '/vendor/plugins/bootstrap'],
@@ -73,6 +84,8 @@ require.config({
 
 		'collections'           : [cdn + 'collections', s3 + 'collections', '/collections'],
 		'controller'            : [cdn + 'controller', s3 + 'controller', '/controller'],
+
+
 
 		// Packages
 		'packages'          : [cdn + 'packages' , s3 + 'packages' , '/packages'],
@@ -158,7 +171,10 @@ require.config({
 		},
 		'facebook':{
 			exports: 'FB'
-		}
+		},
+		'jQueryHammer': {
+            deps: ['jquery']
+        }
 	},
 	priority: ['text', 'modernizr', 'json2', 'vendor', 'utils', 'facade', 'syncs', 'models', 'views', 'collections', 'controller'],
 	jquery: '1.10.2',
@@ -167,16 +183,17 @@ require.config({
 
 // initializing the router "application" on startup
 define([
+	'require',
 	'backbone',
 	'underscore',
 	'jquery',
-	//'jqueryui',
-	'application'
-], function (Backbone, _, $, app) {
+	'application',
+	'packages/common/views/spinner'
+], function (require, Backbone, _, $, app) {
 		//Backbone.noConflict();
 		//apping = new app();
 		//Backbone.history.start();
-		
+		var Spinner = require('packages/common/views/spinner');
 
 		$(function () {
 		 // doc ready
@@ -190,7 +207,9 @@ define([
 			routing.mobile = (/iphone|ipod|android|ie|blackberry|fennec/).test(navigator.userAgent.toLowerCase());
 			// set to true on initial app render but set to false once the page shows
 			routing.showLandingPage = true;
-
+			
+			// creating spinner object
+			new Spinner();
 			// bind common triggers
 			Backbone.history.start({});
 

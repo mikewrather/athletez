@@ -6,11 +6,12 @@
 // Requires define
 // Returns {CommentOnFormView} constructor
 
-define(['require',  'text!site/templates/comment-form.html', 'profile/models/commentonform', 'site/views/comment-form', 'models/base',  'views', ],
+define(['require',  'text!site/templates/comment-form.html', 'profile/models/commentonform', 'site/views/comment-form', 'models/base',  'views', 'vendor/plugins/dateformat'],
 function(require, commentFormTemplate,    ProfileCommentFormModel,        BaseCommentFormView,      BaseModel) {
 
     var CommentOnFormView;
 	var  views = require('views'),
+		dateFormat = require('vendor/plugins/dateformat'),
 		BaseView = views.BaseView;
 
     CommentOnFormView = BaseView.extend({
@@ -71,6 +72,12 @@ function(require, commentFormTemplate,    ProfileCommentFormModel,        BaseCo
 		    else
 			    return false;
 	    },
+	    
+	    dateFormat: function(date) {
+		    date = new Date(date);
+		    return dateFormat(date,"mmm d, h:MM TT")
+        },
+	    
         // If you hit return in the main input field, create new **CommentForm** model,
         // persisting it to *localStorage*.
         createOnEnter: function(e) {
@@ -78,11 +85,10 @@ function(require, commentFormTemplate,    ProfileCommentFormModel,        BaseCo
             var self = this;
 
             self.$('.submit-result').stop().fadeOut();
-            if (comment != '') {                
+            if (comment != '') {
                 date = new Date();
                 var payload = new Array;
                 payload['comment'] = comment;
-                payload['comment_date'] = date.toDateString();
                 payload['subject_type_id'] = this.collection.subject_entity_type;
                 payload['subject_id'] = this.model.get("id");
                 var saveInfo = new BaseModel(payload);
@@ -106,14 +112,15 @@ function(require, commentFormTemplate,    ProfileCommentFormModel,        BaseCo
                         $('.global-alert').addClass('alert-error').html(desc).stop().fadeIn();
                     }
 	                //set the value to fit the page variable.
+	                console.error(payload);
 		            payload.poster = payload.name;
 		            payload.poster_picture = payload.user_picture;
+		            var d = self.dateFormat(date);
+		            payload.comment_date = d;	
+		            payload.timePosted = d;
 		            payload.poster_email = payload.email;
-	                console.log('thisresponse = ', response);
-	                //this.model = model;
-
+		            console.error(model);
 	                self.collection.push(model);
-	                console.log("latest collectionsx", self.collection);
 	                self.refreshComments();
 	                routing.on('profilecommentonlist:refresh', self.collection);
                 };
@@ -125,7 +132,10 @@ function(require, commentFormTemplate,    ProfileCommentFormModel,        BaseCo
 		    BaseView.prototype.render.call(this);
 		    this.input = this.$("#new-comment");
 		    if(!this.collection.length) {
-		    	$(".add-comment-h").trigger("click");
+	    		if(routing.mobile)
+	    			$(".mobile-link.add-comment-h").trigger("click");
+	    		else
+	    			$(".desktop-link.add-comment-h").trigger("click");	
 		    }
 		    console.log("run here now", this.el);
 		    return this;

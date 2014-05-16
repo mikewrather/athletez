@@ -5,7 +5,8 @@
 
 define(["require", "text!imageup/templates/basic.html", "text!imageup/templates/uploader.html", "facade", "controller", "models", "views", "utils", "imageup/models/basic", "imageup/models/imageupload", "imageup/models/errorshow", "imageup/collections/basics", "imageup/models/preview", "imageup/views/basic", "imageup/views/errors", "imageup/views/preview"], function(require, pageLayoutTemplate) {
 
-	var ImageController, facade = require("facade"), Controller = require("controller"), models = require("models"), views = require("views"), utils = require("utils"), ImageBasicModel = require("imageup/models/basic"), ImageUploadModel = require("imageup/models/imageupload"), ErrorShowModel = require("imageup/models/errorshow"), ImageBasicList = require("imageup/collections/basics"), PreviewShowList = require("imageup/models/preview"), ImageBasicView = require("imageup/views/basic"), ErrorShowView = require("imageup/views/errors"), PreviewShowView = require("imageup/views/preview"), LayoutView = views.LayoutView, $ = facade.$, _ = facade._, debug = utils.debug, Channel = utils.lib.Channel, cssArr = ["/pages/imageup/imageup.css"];
+	var ImageController, facade = require("facade"), Controller = require("controller"), models = require("models"), views = require("views"), utils = require("utils"), ImageBasicModel = require("imageup/models/basic"), ImageUploadModel = require("imageup/models/imageupload"), ErrorShowModel = require("imageup/models/errorshow"), ImageBasicList = require("imageup/collections/basics"), PreviewShowList = require("imageup/models/preview"), ImageBasicView = require("imageup/views/basic"), ErrorShowView = require("imageup/views/errors"), PreviewShowView = require("imageup/views/preview"), LayoutView = views.LayoutView, $ = facade.$, _ = facade._, debug = utils.debug, Channel = utils.lib.Channel,
+		cssArr = [base_url + "pages/imageup/imageup.css"];
 
 	ImageController = Controller.extend({
 
@@ -156,6 +157,7 @@ define(["require", "text!imageup/templates/basic.html", "text!imageup/templates/
 						$("#imageup").removeAttr("disabled");
 						$("#image_file").removeAttr("disabled");
 						$(".closepreview").removeAttr("disabled");
+						$("#imgUploadModal, .modal-backdrop").unbind().remove();							
 					}
 					$("#preview_" + id).unbind().removeClass("image_upload_loader_new").html("").attr("disabled", "disabled");
 				},

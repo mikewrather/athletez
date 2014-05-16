@@ -2495,6 +2495,7 @@ Form.Field = Backbone.View.extend({
 	    if(schema.tooltip && schema.tooltip != ""){
 		    $container.find('input,label,textarea,.dropdown-wrapper').qtip({
 			    content: schema.tooltip,
+			    show: 'mousedown',
 			    position: {
 				    my: "bottom center",
 				    at: "top center"
@@ -3024,7 +3025,7 @@ Form.editors.Location = Form.editors.Text.extend({
   verifyAddress: function() {
 		var _self = this, address = _self.$el.find('.address-h').val();
 		
-		var verifyAddress = require('usercontrols/location/models/verify-adress'); 
+		var verifyAddress = require('usercontrol/location/models/verify-adress');
 			_self.locationId = undefined;
 			
 			_self.adressModel = new verifyAddress();

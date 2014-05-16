@@ -4,7 +4,7 @@
 
 define([
 	"require",
-	'text!usercontrols/imagecropper/templates/layout.html',
+	'text!usercontrol/imagecropper/templates/layout.html',
 	"facade",
 	"controller",
 	"views"
@@ -22,7 +22,7 @@ define([
 
 		ImageCropperController = Controller.extend({
 			// define css files to load
-			cssArr: ["/usercontrols/imagecropper/imagecropper.css"],
+			cssArr: [base_url + "usercontrols/imagecropper/imagecropper.css"],
 			events: {
 					"click button.close":"alertsomething"
 			},
@@ -61,8 +61,14 @@ define([
 			setupLayout: function () {
 				var self = this;
 				this.scheme = [];
-
-				var url='/vendor/plugins/iedit2/index.html?vh=500&vw=500&sx=0&sy=0&sz=100&t=Profile%20Picture&edit=';
+				
+				if(routing.mobile) {
+					var vw = parseInt($(document).width()) - 30;
+				} else {
+					var vw = 500;
+				}
+				
+				var url='/vendor/plugins/iedit2/index.html?vh='+vw+'&vw=500&sx=0&sy=0&sz=100&t=Profile%20Picture&edit=';
 				if(this.image_e != "") url += '&edit='+this.image_e;
 				if(this.image_o != "") url += '&o='+this.image_o;
 

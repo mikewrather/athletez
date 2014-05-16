@@ -73,7 +73,7 @@ define([
 		debug = utils.debug,
 		Channel = utils.lib.Channel,
 		cssArr = [
-			"/pages/game/game.css"
+			base_url + "pages/game/game.css"
 		];
 
 	GameController = Controller.extend({
