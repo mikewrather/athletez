@@ -1,0 +1,68 @@
+
+<div class="row-fluid">
+    <div class="logo" itemscope itemtype="http://schema.org/Organization">
+    <% if(branding){ %>
+    <a class="brand" itemprop="url" title="Athletez Home Page"  href="http://www.athletez.com/#!home">
+	    <meta itemprop="name" content="Athletez.com - We're Athletez" />
+	    <meta itemprop="description" content="Athletez.com is an online community for athletes of all skill levels.  When you link up with your teams and sports organizations, upload and share photos and highlights, and follow the athletes you want to track, your athletic profile will automatically be created so others can see what's going on with you!" />
+		<meta itemprop="image" content="<%= branding.src %>"/>
+	    <div style="display:none;" itemprop="founder" itemscope itemtype="http://schema.org/Person">
+			<meta itemprop="name" content="Mike Wrather" />
+		    <meta itemprop="email" content="mike@athletez.com" />
+		    <meta itemprop="jobTitle" content="Co-Founder" />
+	    </div>
+	    <div style="display:none;" itemprop="founder" itemscope itemtype="http://schema.org/Person">
+		    <meta itemprop="name" content="Maxwell Doyle" />
+		    <meta itemprop="email" content="max@athletez.com" />
+		    <meta itemprop="jobTitle" content="Co-Founder" />
+	    </div>
+        <img itemprop="logo" src="<%= branding.src %>" id="header_logo" alt="<%= branding.alt %>" />
+    </a>
+	<% } %>
+    </div>
+
+    <div class="searchform">
+
+    </div>
+
+    <div class="account clearfix">
+        <% if(authorized){ %>
+            <div class="photo"><img src="" alt="<%= user_name %>"/></div>
+
+
+
+
+
+
+
+                    <% _.each(nav,function(element,index){
+
+	                console.log(element);
+	                console.log(element instanceof Array);
+
+	                if(element instanceof Array){
+	                  %>
+	                   <a class="nav nav_dropdown"><%= index %></a>
+	                    <ul class="header_menu hide" role="menu">
+	                         <% _.each(element,function(e2,index){ %>
+	                            <li><a <% if(e2.id){ %>id="<%= e2.id %>"<% } if(e2.className){ %>class="<%= e2.className %>" <% } %>href="<%= e2.link %>" ><%= e2.page %></a></li>
+	                        <% }); %>
+	                    </ul><%
+	                } else {
+	                    %><a class="nav"  href="<%= element.link %>" ><%= element.page %></a><%
+	                }
+	                %>
+
+                    <% }); %>
+
+
+
+
+
+
+	    <% }  else { %>
+            <a class="nav" href="<%=login_url %>" id="userlogin"><%=login_label %></a>
+	    <% } %>
+    </div>
+</div>
+

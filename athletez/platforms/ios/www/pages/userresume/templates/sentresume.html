@@ -1,0 +1,24 @@
+<div class="row-fluid sub-section-prof-setting well well-large">
+<div class="row-fluid">
+	<span class="spn-black-heading  well-small">Sent Resumes</span>
+</div>
+<div id="btn-Add-Resume" class="clearfix div-add-dotted well-small">
+	+ Send Resume
+</div>
+<table class="row-fluid">
+	<tr>
+		<th>Id</th>
+		<th>Sports Id</th>
+		<th>Users Id</th>
+		<th>College Coach Id</th>
+	</tr>
+	{{#resumes}}
+	<tr>
+		<td>{{id}}</td>
+		<td>{{sports_id}}</td>
+		<td>{{users_id}}</td>
+		<td>{{college_coach_id}}</td>
+	</tr>
+	{{/resumes}}
+</table>
+</div>

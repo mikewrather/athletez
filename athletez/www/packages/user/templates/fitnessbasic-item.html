@@ -1,0 +1,19 @@
+{{#payload}}
+	{{#data}}
+		<div class="fitness-overview-data-piece" style="">
+			<img title="{{name}}" src="{{icon}}" style=""/>
+			<span class="stat-val-outer">
+				<span class="stats-val-h">{{#val}}{{val}}{{/val}}{{^val}}--{{/val}}</span>
+				<input type="text" data-id="{{id}}" data-resume-data-id="{{resume_data_id}}" class="stats-input stats-input-h hide-force" value="{{#val}}{{val}}{{/val}}{{^val}}{{/val}}"/>
+			</span>
+		</div>
+	{{/data}}
+	{{^data}}
+		<div class="stats-empty-area">
+			Either no sport is selected,
+			or the selected sport has no 
+			atheletic metrices to fill out.
+		</div>
+	{{/data}}
+{{/payload}}
+

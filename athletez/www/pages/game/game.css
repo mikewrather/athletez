@@ -1,0 +1,173 @@
+.game-heading {
+	background: #d36011;
+	color: #000;
+	float: left;
+	width: 100%;
+	padding: 0;
+}
+
+.game-heading > * {
+margin:10px;
+}
+
+#main-header .span3.image-outer-h{
+    min-width: 255px;
+}
+
+.game-edit-btn-h{
+    background-color: #d7d7d7;
+    color: black;
+    padding:5px 10px;
+}
+.game-heading h3 {
+	font-weight: bold;
+	font-size: 50px;
+	line-height: 30px;
+    font-family: inherit;
+}
+
+.game-heading h4 {
+	font-weight: bold;
+	font-size: 30px;
+	line-height: 38px;
+    font-family: inherit;
+}
+
+.game-heading .game-general{
+    display: block;
+    width: 80%;
+}
+
+.game-heading .game-general span{
+    font-size: 1.7em;
+    font-weight: bold;
+    font-family: inherit;
+    margin-right:30px;
+    text-align: center;
+    text-transform: uppercase;
+}
+
+#modalPopupGameEdit{
+    width:550px;
+    margin-left:-275px;
+    left:50%;
+}
+#modalPopupGameEdit .modal-body{
+    width: 98%;
+    height: 87%;
+    min-height: 87%;
+}
+#modalPopupGameEdit .modal-footer{
+    padding: 0;
+}
+
+.game-heading .game-general span:after{
+    content: '  |';
+}
+
+.game-heading .game-general span:last-child:after{
+    content: '';
+}
+
+div.stretch{
+    content: '';
+    width: 100%;
+    display: inline-block;
+    font-size: 0;
+    line-height: 0
+}
+.game-heading .game-general span:last-child{
+    margin-right:0;
+}
+
+ul.teams-list{
+    display:inline-block;
+    padding:10px;
+    width: 60%;
+    float: left;
+}
+
+ul.teams-list li.team-item{
+    min-width:70%;
+    vertical-align: middle;
+    height: 80px;
+    padding: 10px;
+    margin-top:10px;
+    display:block;
+    border-bottom:1px solid #CCCCCC;
+    font-family:'Nunito','HelveticaNeue','Helvetica';
+}
+
+ul.teams-list li.team-item:last-child{
+    border:0;
+}
+
+li.team-item div.score-box{
+    display: inline-block;
+    float: left;
+    height:50px;
+    width: 50px;
+    background-color:#e49f6f;
+    text-align: center;
+    padding: 5px;
+
+}
+
+div.score-box a{
+    color:white;
+    text-decoration: none;
+}
+div.score-box input{
+    font-family: inherit;
+    font-size: 2em;
+    font-weight: bolder;
+    display: block;
+    color:white;
+    text-decoration: none;
+    height: 90%;
+    width: 80%;
+    background:none !important;
+    border:none;
+}
+div.score-box span{
+    font-family: inherit;
+    font-size: 2.2em;
+    font-weight: bolder;
+    display: block;
+    margin-top:15px;
+    color:white;
+    text-decoration: none;
+}
+
+li.team-item div.score-box.win{
+    background-color:#d36011;
+}
+
+li.team-item div.org-info{
+    display: block;
+}
+
+
+.org-info span{
+    display:block;
+    padding-left: 80px;
+    padding-bottom: 10px;
+    font-family: inherit;
+}
+
+.org-info span.org-name{
+    font-size: 1.3em;
+    font-weight: 400;
+
+}
+
+.org-info span.org-location{
+    font-size: 1.1em;
+    font-weight: 300;
+}
+
+.header-image-container{
+    display: inline-block;
+    float: left !important;
+    margin: 20px 0 0 10px;
+}

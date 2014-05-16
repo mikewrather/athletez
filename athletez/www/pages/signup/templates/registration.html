@@ -1,0 +1,46 @@
+<!--<h1>Auth module using the ORM driver for Kohana 3.1</h1>-->
+<style>
+
+</style>
+<div id="regcontainer">
+	<div id="mainreg">
+		<div id="header">
+			<span class="regheader"> Show us what you got</span>
+		</div>
+
+		<div id="fbpane">
+			<div id="label">
+				Connect with Facebook
+			</div>
+		</div>
+		<div class ="regor">
+			or
+		</div>
+		<div id="regpanemain">
+			<form action="#/user/create" method="post" class="signupform" accept-charset="utf-8">
+				<div id="firstregbase">
+					<input type="text" name="firstname" placeholder="First name" />
+					<div class="error">
+					</div>
+					<input type="text" name="lastname" placeholder="Last name" />
+					<input type="text" name="email" placeholder="Email" />
+					<div class="error">
+					</div>
+				</div><% if(fb_invite){ %><input type="hidden" name="fb_invite_id" value="<%= fb_invite %>" /><% } %>
+
+				<div class = "signupsubmit">
+					<input type="submit" name="create" value="Sign Up" class="regsubmit" />
+				</div>
+			</form>
+			<%  if(!onlyRegister) { %>
+
+				<div id="reglogin">
+				<span>Been here before <a href="javascript:void(0);">sign in</a></span>
+				</div>
+
+			<% } %>
+			
+		</div>
+	</div>
+</div>
+

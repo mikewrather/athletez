@@ -1,0 +1,339 @@
+2014-03-15 21:23:38.770 HelloWorld[19758:70b] Multi-tasking -> Device: YES, App: YES
+2014-03-15 21:23:39.826 HelloWorld[19758:70b] Resetting plugins due to page load.
+2014-03-15 21:23:40.047 HelloWorld[19758:70b] Finished load of: file:///Users/user/Library/Application%20Support/iPhone%20Simulator/7.1/Applications/B4EFB00D-F825-4E3F-AC45-CED651487F72/HelloWorld.app/www/index.html
+2014-03-15 21:30:21.157 HelloWorld[20736:70b] Multi-tasking -> Device: YES, App: YES
+2014-03-15 21:30:21.437 HelloWorld[20736:70b] Resetting plugins due to page load.
+2014-03-15 21:30:21.693 HelloWorld[20736:70b] Finished load of: file:///Users/user/Library/Application%20Support/iPhone%20Simulator/7.1/Applications/B4EFB00D-F825-4E3F-AC45-CED651487F72/HelloWorld.app/www/index.html
+2014-03-15 21:54:12.961 HelloWorld[33619:70b] Multi-tasking -> Device: YES, App: YES
+2014-03-15 21:54:13.235 HelloWorld[33619:70b] Resetting plugins due to page load.
+2014-03-15 21:54:13.413 HelloWorld[33619:3f03] ERROR whitelist rejection: url='http://fonts.googleapis.com/css?family=Lato:400,700,900%7CQuicksand:400,700%7CMontserrat:400,700%7CNunito:400,700,300'
+2014-03-15 21:54:13.414 HelloWorld[33619:3f03] ERROR whitelist rejection: url='http://fonts.googleapis.com/css?family=Lato:400,700,900%7CQuicksand:400,700%7CMontserrat:400,700%7CNunito:400,700,300'
+2014-03-15 21:54:13.430 HelloWorld[33619:3f03] ERROR whitelist rejection: url='http://fonts.googleapis.com/css?family=Lato:400,700,900%7CQuicksand:400,700%7CMontserrat:400,700%7CNunito:400,700,300'
+2014-03-15 21:54:13.432 HelloWorld[33619:3f03] ERROR whitelist rejection: url='http://fonts.googleapis.com/css?family=Raleway:400,700,800,300'
+2014-03-15 21:54:13.433 HelloWorld[33619:3f03] ERROR whitelist rejection: url='http://fonts.googleapis.com/css?family=Raleway:400,700,800,300'
+2014-03-15 21:54:13.434 HelloWorld[33619:3f03] ERROR whitelist rejection: url='http://fonts.googleapis.com/css?family=Raleway:400,700,800,300'
+2014-03-15 21:54:13.435 HelloWorld[33619:3f03] ERROR whitelist rejection: url='http://maps.googleapis.com/maps/api/js?sensor=false'
+2014-03-15 21:54:13.436 HelloWorld[33619:3f03] ERROR whitelist rejection: url='http://maps.googleapis.com/maps/api/js?sensor=false'
+2014-03-15 21:54:13.437 HelloWorld[33619:3f03] ERROR whitelist rejection: url='http://maps.googleapis.com/maps/api/js?sensor=false'
+2014-03-15 21:54:13.465 HelloWorld[33619:3f03] ERROR whitelist rejection: url='http://cdn.athletez.com/resources/img/main-loading.gif'
+2014-03-15 21:54:13.466 HelloWorld[33619:3f03] ERROR whitelist rejection: url='http://cdn.athletez.com/resources/img/main-loading.gif'
+2014-03-15 21:54:13.466 HelloWorld[33619:3f03] ERROR whitelist rejection: url='http://cdn.athletez.com/resources/img/main-loading.gif'
+2014-03-15 21:54:13.523 HelloWorld[33619:70b] Finished load of: file:///Users/user/Library/Application%20Support/iPhone%20Simulator/7.1/Applications/B4EFB00D-F825-4E3F-AC45-CED651487F72/HelloWorld.app/www/index.html
+2014-03-15 21:59:00.531 HelloWorld[42213:70b] Multi-tasking -> Device: YES, App: YES
+2014-03-15 21:59:00.813 HelloWorld[42213:70b] Resetting plugins due to page load.
+2014-03-15 21:59:00.869 HelloWorld[42213:3f03] ERROR whitelist rejection: url='http://fonts.googleapis.com/css?family=Lato:400,700,900%7CQuicksand:400,700%7CMontserrat:400,700%7CNunito:400,700,300'
+2014-03-15 21:59:00.870 HelloWorld[42213:3f03] ERROR whitelist rejection: url='http://fonts.googleapis.com/css?family=Lato:400,700,900%7CQuicksand:400,700%7CMontserrat:400,700%7CNunito:400,700,300'
+2014-03-15 21:59:00.871 HelloWorld[42213:3f03] ERROR whitelist rejection: url='http://fonts.googleapis.com/css?family=Lato:400,700,900%7CQuicksand:400,700%7CMontserrat:400,700%7CNunito:400,700,300'
+2014-03-15 21:59:00.872 HelloWorld[42213:3f03] ERROR whitelist rejection: url='http://fonts.googleapis.com/css?family=Raleway:400,700,800,300'
+2014-03-15 21:59:00.873 HelloWorld[42213:3f03] ERROR whitelist rejection: url='http://fonts.googleapis.com/css?family=Raleway:400,700,800,300'
+2014-03-15 21:59:00.873 HelloWorld[42213:3f03] ERROR whitelist rejection: url='http://fonts.googleapis.com/css?family=Raleway:400,700,800,300'
+2014-03-15 21:59:00.875 HelloWorld[42213:3f03] ERROR whitelist rejection: url='http://maps.googleapis.com/maps/api/js?sensor=false'
+2014-03-15 21:59:00.876 HelloWorld[42213:3f03] ERROR whitelist rejection: url='http://maps.googleapis.com/maps/api/js?sensor=false'
+2014-03-15 21:59:00.877 HelloWorld[42213:3f03] ERROR whitelist rejection: url='http://maps.googleapis.com/maps/api/js?sensor=false'
+2014-03-15 21:59:04.618 HelloWorld[42213:3f03] ERROR whitelist rejection: url='http://cdn.athletez.com/resources/img/main-loading.gif'
+2014-03-15 21:59:04.618 HelloWorld[42213:3f03] ERROR whitelist rejection: url='http://cdn.athletez.com/resources/img/main-loading.gif'
+2014-03-15 21:59:04.619 HelloWorld[42213:3f03] ERROR whitelist rejection: url='http://cdn.athletez.com/resources/img/main-loading.gif'
+2014-03-15 21:59:04.640 HelloWorld[42213:70b] Finished load of: file:///Users/user/Library/Application%20Support/iPhone%20Simulator/7.1/Applications/B4EFB00D-F825-4E3F-AC45-CED651487F72/HelloWorld.app/www/index.html
+2014-03-15 22:04:13.381 HelloWorld[50810:70b] Multi-tasking -> Device: YES, App: YES
+2014-03-15 22:04:13.705 HelloWorld[50810:70b] Resetting plugins due to page load.
+2014-03-15 22:04:13.755 HelloWorld[50810:4003] ERROR whitelist rejection: url='http://fonts.googleapis.com/css?family=Lato:400,700,900%7CQuicksand:400,700%7CMontserrat:400,700%7CNunito:400,700,300'
+2014-03-15 22:04:13.756 HelloWorld[50810:4003] ERROR whitelist rejection: url='http://fonts.googleapis.com/css?family=Lato:400,700,900%7CQuicksand:400,700%7CMontserrat:400,700%7CNunito:400,700,300'
+2014-03-15 22:04:13.757 HelloWorld[50810:4003] ERROR whitelist rejection: url='http://fonts.googleapis.com/css?family=Lato:400,700,900%7CQuicksand:400,700%7CMontserrat:400,700%7CNunito:400,700,300'
+2014-03-15 22:04:13.758 HelloWorld[50810:4003] ERROR whitelist rejection: url='http://fonts.googleapis.com/css?family=Raleway:400,700,800,300'
+2014-03-15 22:04:13.759 HelloWorld[50810:4003] ERROR whitelist rejection: url='http://fonts.googleapis.com/css?family=Raleway:400,700,800,300'
+2014-03-15 22:04:13.760 HelloWorld[50810:4003] ERROR whitelist rejection: url='http://fonts.googleapis.com/css?family=Raleway:400,700,800,300'
+2014-03-15 22:04:13.764 HelloWorld[50810:4003] ERROR whitelist rejection: url='http://maps.googleapis.com/maps/api/js?sensor=false'
+2014-03-15 22:04:13.768 HelloWorld[50810:4003] ERROR whitelist rejection: url='http://maps.googleapis.com/maps/api/js?sensor=false'
+2014-03-15 22:04:13.772 HelloWorld[50810:4003] ERROR whitelist rejection: url='http://maps.googleapis.com/maps/api/js?sensor=false'
+2014-03-15 22:04:17.380 HelloWorld[50810:4003] ERROR whitelist rejection: url='http://cdn.athletez.com/resources/img/main-loading.gif'
+2014-03-15 22:04:17.381 HelloWorld[50810:4003] ERROR whitelist rejection: url='http://cdn.athletez.com/resources/img/main-loading.gif'
+2014-03-15 22:04:17.382 HelloWorld[50810:4003] ERROR whitelist rejection: url='http://cdn.athletez.com/resources/img/main-loading.gif'
+2014-03-15 22:04:17.398 HelloWorld[50810:70b] Finished load of: file:///Users/user/Library/Application%20Support/iPhone%20Simulator/7.1/Applications/B4EFB00D-F825-4E3F-AC45-CED651487F72/HelloWorld.app/www/index.html
+2014-03-15 22:09:26.901 HelloWorld[59407:70b] Multi-tasking -> Device: YES, App: YES
+2014-03-15 22:09:27.165 HelloWorld[59407:70b] Resetting plugins due to page load.
+2014-03-15 22:09:27.202 HelloWorld[59407:3f03] ERROR whitelist rejection: url='http://fonts.googleapis.com/css?family=Lato:400,700,900%7CQuicksand:400,700%7CMontserrat:400,700%7CNunito:400,700,300'
+2014-03-15 22:09:27.203 HelloWorld[59407:3f03] ERROR whitelist rejection: url='http://fonts.googleapis.com/css?family=Lato:400,700,900%7CQuicksand:400,700%7CMontserrat:400,700%7CNunito:400,700,300'
+2014-03-15 22:09:27.206 HelloWorld[59407:3f03] ERROR whitelist rejection: url='http://fonts.googleapis.com/css?family=Lato:400,700,900%7CQuicksand:400,700%7CMontserrat:400,700%7CNunito:400,700,300'
+2014-03-15 22:09:27.212 HelloWorld[59407:3f03] ERROR whitelist rejection: url='http://fonts.googleapis.com/css?family=Raleway:400,700,800,300'
+2014-03-15 22:09:27.220 HelloWorld[59407:3f03] ERROR whitelist rejection: url='http://fonts.googleapis.com/css?family=Raleway:400,700,800,300'
+2014-03-15 22:09:27.221 HelloWorld[59407:3f03] ERROR whitelist rejection: url='http://fonts.googleapis.com/css?family=Raleway:400,700,800,300'
+2014-03-15 22:09:27.223 HelloWorld[59407:3f03] ERROR whitelist rejection: url='http://maps.googleapis.com/maps/api/js?sensor=false'
+2014-03-15 22:09:27.224 HelloWorld[59407:3f03] ERROR whitelist rejection: url='http://maps.googleapis.com/maps/api/js?sensor=false'
+2014-03-15 22:09:27.225 HelloWorld[59407:3f03] ERROR whitelist rejection: url='http://maps.googleapis.com/maps/api/js?sensor=false'
+2014-03-15 22:09:30.300 HelloWorld[59407:3f03] ERROR whitelist rejection: url='http://cdn.athletez.com/resources/img/main-loading.gif'
+2014-03-15 22:09:30.301 HelloWorld[59407:3f03] ERROR whitelist rejection: url='http://cdn.athletez.com/resources/img/main-loading.gif'
+2014-03-15 22:09:30.302 HelloWorld[59407:3f03] ERROR whitelist rejection: url='http://cdn.athletez.com/resources/img/main-loading.gif'
+2014-03-15 22:09:32.169 HelloWorld[59407:70b] Finished load of: file:///Users/user/Library/Application%20Support/iPhone%20Simulator/7.1/Applications/B4EFB00D-F825-4E3F-AC45-CED651487F72/HelloWorld.app/www/index.html
+2014-03-15 22:14:11.222 HelloWorld[68001:70b] Multi-tasking -> Device: YES, App: YES
+2014-03-15 22:14:11.504 HelloWorld[68001:70b] Resetting plugins due to page load.
+2014-03-15 22:14:11.555 HelloWorld[68001:3f03] ERROR whitelist rejection: url='http://fonts.googleapis.com/css?family=Lato:400,700,900%7CQuicksand:400,700%7CMontserrat:400,700%7CNunito:400,700,300'
+2014-03-15 22:14:11.557 HelloWorld[68001:3f03] ERROR whitelist rejection: url='http://fonts.googleapis.com/css?family=Lato:400,700,900%7CQuicksand:400,700%7CMontserrat:400,700%7CNunito:400,700,300'
+2014-03-15 22:14:11.559 HelloWorld[68001:3f03] ERROR whitelist rejection: url='http://fonts.googleapis.com/css?family=Lato:400,700,900%7CQuicksand:400,700%7CMontserrat:400,700%7CNunito:400,700,300'
+2014-03-15 22:14:11.561 HelloWorld[68001:3f03] ERROR whitelist rejection: url='http://fonts.googleapis.com/css?family=Raleway:400,700,800,300'
+2014-03-15 22:14:11.562 HelloWorld[68001:3f03] ERROR whitelist rejection: url='http://fonts.googleapis.com/css?family=Raleway:400,700,800,300'
+2014-03-15 22:14:11.562 HelloWorld[68001:3f03] ERROR whitelist rejection: url='http://fonts.googleapis.com/css?family=Raleway:400,700,800,300'
+2014-03-15 22:14:11.564 HelloWorld[68001:3f03] ERROR whitelist rejection: url='http://maps.googleapis.com/maps/api/js?sensor=false'
+2014-03-15 22:14:11.565 HelloWorld[68001:3f03] ERROR whitelist rejection: url='http://maps.googleapis.com/maps/api/js?sensor=false'
+2014-03-15 22:14:11.566 HelloWorld[68001:3f03] ERROR whitelist rejection: url='http://maps.googleapis.com/maps/api/js?sensor=false'
+2014-03-15 22:14:11.570 HelloWorld[68001:3f03] ERROR whitelist rejection: url='http://cdn.athletez.com/resources/img/main-loading.gif'
+2014-03-15 22:14:11.571 HelloWorld[68001:3f03] ERROR whitelist rejection: url='http://cdn.athletez.com/resources/img/main-loading.gif'
+2014-03-15 22:14:11.571 HelloWorld[68001:3f03] ERROR whitelist rejection: url='http://cdn.athletez.com/resources/img/main-loading.gif'
+2014-03-15 22:14:16.412 HelloWorld[68001:70b] Finished load of: file:///Users/user/Library/Application%20Support/iPhone%20Simulator/7.1/Applications/B4EFB00D-F825-4E3F-AC45-CED651487F72/HelloWorld.app/www/index.html
+2014-03-15 22:20:33.919 HelloWorld[76612:70b] Multi-tasking -> Device: YES, App: YES
+2014-03-15 22:20:34.191 HelloWorld[76612:70b] Resetting plugins due to page load.
+2014-03-15 22:20:34.241 HelloWorld[76612:3f03] ERROR whitelist rejection: url='http://fonts.googleapis.com/css?family=Lato:400,700,900%7CQuicksand:400,700%7CMontserrat:400,700%7CNunito:400,700,300'
+2014-03-15 22:20:34.241 HelloWorld[76612:3f03] ERROR whitelist rejection: url='http://fonts.googleapis.com/css?family=Lato:400,700,900%7CQuicksand:400,700%7CMontserrat:400,700%7CNunito:400,700,300'
+2014-03-15 22:20:34.242 HelloWorld[76612:3f03] ERROR whitelist rejection: url='http://fonts.googleapis.com/css?family=Lato:400,700,900%7CQuicksand:400,700%7CMontserrat:400,700%7CNunito:400,700,300'
+2014-03-15 22:20:34.243 HelloWorld[76612:3f03] ERROR whitelist rejection: url='http://fonts.googleapis.com/css?family=Raleway:400,700,800,300'
+2014-03-15 22:20:34.266 HelloWorld[76612:3f03] ERROR whitelist rejection: url='http://fonts.googleapis.com/css?family=Raleway:400,700,800,300'
+2014-03-15 22:20:34.269 HelloWorld[76612:3f03] ERROR whitelist rejection: url='http://fonts.googleapis.com/css?family=Raleway:400,700,800,300'
+2014-03-15 22:20:34.272 HelloWorld[76612:3f03] ERROR whitelist rejection: url='http://maps.googleapis.com/maps/api/js?sensor=false'
+2014-03-15 22:20:34.273 HelloWorld[76612:3f03] ERROR whitelist rejection: url='http://maps.googleapis.com/maps/api/js?sensor=false'
+2014-03-15 22:20:34.274 HelloWorld[76612:3f03] ERROR whitelist rejection: url='http://maps.googleapis.com/maps/api/js?sensor=false'
+2014-03-15 22:20:34.285 HelloWorld[76612:3f03] ERROR whitelist rejection: url='http://cdn.athletez.com/resources/img/main-loading.gif'
+2014-03-15 22:20:34.288 HelloWorld[76612:3f03] ERROR whitelist rejection: url='http://cdn.athletez.com/resources/img/main-loading.gif'
+2014-03-15 22:20:34.290 HelloWorld[76612:3f03] ERROR whitelist rejection: url='http://cdn.athletez.com/resources/img/main-loading.gif'
+2014-03-15 22:20:37.691 HelloWorld[76612:70b] Finished load of: file:///Users/user/Library/Application%20Support/iPhone%20Simulator/7.1/Applications/B4EFB00D-F825-4E3F-AC45-CED651487F72/HelloWorld.app/www/index.html
+2014-03-15 22:25:51.914 HelloWorld[85208:70b] Multi-tasking -> Device: YES, App: YES
+2014-03-15 22:25:52.186 HelloWorld[85208:70b] Resetting plugins due to page load.
+2014-03-15 22:25:52.240 HelloWorld[85208:4003] ERROR whitelist rejection: url='http://fonts.googleapis.com/css?family=Lato:400,700,900%7CQuicksand:400,700%7CMontserrat:400,700%7CNunito:400,700,300'
+2014-03-15 22:25:52.241 HelloWorld[85208:4003] ERROR whitelist rejection: url='http://fonts.googleapis.com/css?family=Lato:400,700,900%7CQuicksand:400,700%7CMontserrat:400,700%7CNunito:400,700,300'
+2014-03-15 22:25:52.242 HelloWorld[85208:4003] ERROR whitelist rejection: url='http://fonts.googleapis.com/css?family=Lato:400,700,900%7CQuicksand:400,700%7CMontserrat:400,700%7CNunito:400,700,300'
+2014-03-15 22:25:52.245 HelloWorld[85208:4003] ERROR whitelist rejection: url='http://fonts.googleapis.com/css?family=Raleway:400,700,800,300'
+2014-03-15 22:25:52.249 HelloWorld[85208:4003] ERROR whitelist rejection: url='http://fonts.googleapis.com/css?family=Raleway:400,700,800,300'
+2014-03-15 22:25:52.252 HelloWorld[85208:4003] ERROR whitelist rejection: url='http://fonts.googleapis.com/css?family=Raleway:400,700,800,300'
+2014-03-15 22:25:52.262 HelloWorld[85208:4003] ERROR whitelist rejection: url='http://maps.googleapis.com/maps/api/js?sensor=false'
+2014-03-15 22:25:52.263 HelloWorld[85208:4003] ERROR whitelist rejection: url='http://maps.googleapis.com/maps/api/js?sensor=false'
+2014-03-15 22:25:52.264 HelloWorld[85208:4003] ERROR whitelist rejection: url='http://maps.googleapis.com/maps/api/js?sensor=false'
+2014-03-15 22:25:52.270 HelloWorld[85208:4003] ERROR whitelist rejection: url='http://cdn.athletez.com/resources/img/main-loading.gif'
+2014-03-15 22:25:52.271 HelloWorld[85208:4003] ERROR whitelist rejection: url='http://cdn.athletez.com/resources/img/main-loading.gif'
+2014-03-15 22:25:52.271 HelloWorld[85208:4003] ERROR whitelist rejection: url='http://cdn.athletez.com/resources/img/main-loading.gif'
+2014-03-15 22:25:55.110 HelloWorld[85208:70b] Finished load of: file:///Users/user/Library/Application%20Support/iPhone%20Simulator/7.1/Applications/B4EFB00D-F825-4E3F-AC45-CED651487F72/HelloWorld.app/www/index.html
+2014-03-15 22:32:53.077 HelloWorld[93804:70b] Multi-tasking -> Device: YES, App: YES
+2014-03-15 22:32:53.367 HelloWorld[93804:70b] Resetting plugins due to page load.
+2014-03-15 22:32:53.419 HelloWorld[93804:3f03] ERROR whitelist rejection: url='http://fonts.googleapis.com/css?family=Lato:400,700,900%7CQuicksand:400,700%7CMontserrat:400,700%7CNunito:400,700,300'
+2014-03-15 22:32:53.420 HelloWorld[93804:3f03] ERROR whitelist rejection: url='http://fonts.googleapis.com/css?family=Lato:400,700,900%7CQuicksand:400,700%7CMontserrat:400,700%7CNunito:400,700,300'
+2014-03-15 22:32:53.421 HelloWorld[93804:3f03] ERROR whitelist rejection: url='http://fonts.googleapis.com/css?family=Lato:400,700,900%7CQuicksand:400,700%7CMontserrat:400,700%7CNunito:400,700,300'
+2014-03-15 22:32:53.423 HelloWorld[93804:3f03] ERROR whitelist rejection: url='http://fonts.googleapis.com/css?family=Raleway:400,700,800,300'
+2014-03-15 22:32:53.424 HelloWorld[93804:3f03] ERROR whitelist rejection: url='http://fonts.googleapis.com/css?family=Raleway:400,700,800,300'
+2014-03-15 22:32:53.425 HelloWorld[93804:3f03] ERROR whitelist rejection: url='http://fonts.googleapis.com/css?family=Raleway:400,700,800,300'
+2014-03-15 22:32:53.427 HelloWorld[93804:3f03] ERROR whitelist rejection: url='http://maps.googleapis.com/maps/api/js?sensor=false'
+2014-03-15 22:32:53.428 HelloWorld[93804:3f03] ERROR whitelist rejection: url='http://maps.googleapis.com/maps/api/js?sensor=false'
+2014-03-15 22:32:53.428 HelloWorld[93804:3f03] ERROR whitelist rejection: url='http://maps.googleapis.com/maps/api/js?sensor=false'
+2014-03-15 22:32:53.443 HelloWorld[93804:3f03] ERROR whitelist rejection: url='http://cdn.athletez.com/resources/img/main-loading.gif'
+2014-03-15 22:32:53.444 HelloWorld[93804:3f03] ERROR whitelist rejection: url='http://cdn.athletez.com/resources/img/main-loading.gif'
+2014-03-15 22:32:53.445 HelloWorld[93804:3f03] ERROR whitelist rejection: url='http://cdn.athletez.com/resources/img/main-loading.gif'
+2014-03-15 22:32:53.475 HelloWorld[93804:70b] Finished load of: file:///Users/user/Library/Application%20Support/iPhone%20Simulator/7.1/Applications/B4EFB00D-F825-4E3F-AC45-CED651487F72/HelloWorld.app/www/index.html
+2014-03-15 22:38:08.777 HelloWorld[2588:70b] Multi-tasking -> Device: YES, App: YES
+2014-03-15 22:38:09.077 HelloWorld[2588:70b] Resetting plugins due to page load.
+2014-03-15 22:38:09.148 HelloWorld[2588:3f03] ERROR whitelist rejection: url='http://fonts.googleapis.com/css?family=Lato:400,700,900%7CQuicksand:400,700%7CMontserrat:400,700%7CNunito:400,700,300'
+2014-03-15 22:38:09.149 HelloWorld[2588:3f03] ERROR whitelist rejection: url='http://fonts.googleapis.com/css?family=Lato:400,700,900%7CQuicksand:400,700%7CMontserrat:400,700%7CNunito:400,700,300'
+2014-03-15 22:38:09.150 HelloWorld[2588:3f03] ERROR whitelist rejection: url='http://fonts.googleapis.com/css?family=Lato:400,700,900%7CQuicksand:400,700%7CMontserrat:400,700%7CNunito:400,700,300'
+2014-03-15 22:38:09.151 HelloWorld[2588:3f03] ERROR whitelist rejection: url='http://fonts.googleapis.com/css?family=Raleway:400,700,800,300'
+2014-03-15 22:38:09.152 HelloWorld[2588:3f03] ERROR whitelist rejection: url='http://fonts.googleapis.com/css?family=Raleway:400,700,800,300'
+2014-03-15 22:38:09.153 HelloWorld[2588:3f03] ERROR whitelist rejection: url='http://fonts.googleapis.com/css?family=Raleway:400,700,800,300'
+2014-03-15 22:38:09.155 HelloWorld[2588:3f03] ERROR whitelist rejection: url='http://maps.googleapis.com/maps/api/js?sensor=false'
+2014-03-15 22:38:09.156 HelloWorld[2588:3f03] ERROR whitelist rejection: url='http://maps.googleapis.com/maps/api/js?sensor=false'
+2014-03-15 22:38:09.157 HelloWorld[2588:3f03] ERROR whitelist rejection: url='http://maps.googleapis.com/maps/api/js?sensor=false'
+2014-03-15 22:38:09.177 HelloWorld[2588:3f03] ERROR whitelist rejection: url='http://cdn.athletez.com/resources/img/main-loading.gif'
+2014-03-15 22:38:09.179 HelloWorld[2588:3f03] ERROR whitelist rejection: url='http://cdn.athletez.com/resources/img/main-loading.gif'
+2014-03-15 22:38:09.180 HelloWorld[2588:3f03] ERROR whitelist rejection: url='http://cdn.athletez.com/resources/img/main-loading.gif'
+2014-03-15 22:38:09.211 HelloWorld[2588:70b] Finished load of: file:///Users/user/Library/Application%20Support/iPhone%20Simulator/7.1/Applications/B4EFB00D-F825-4E3F-AC45-CED651487F72/HelloWorld.app/www/index.html
+2014-03-15 22:44:14.967 HelloWorld[11200:70b] Multi-tasking -> Device: YES, App: YES
+2014-03-15 22:44:15.343 HelloWorld[11200:70b] Resetting plugins due to page load.
+2014-03-15 22:44:15.411 HelloWorld[11200:3f03] ERROR whitelist rejection: url='http://fonts.googleapis.com/css?family=Lato:400,700,900%7CQuicksand:400,700%7CMontserrat:400,700%7CNunito:400,700,300'
+2014-03-15 22:44:15.412 HelloWorld[11200:3f03] ERROR whitelist rejection: url='http://fonts.googleapis.com/css?family=Lato:400,700,900%7CQuicksand:400,700%7CMontserrat:400,700%7CNunito:400,700,300'
+2014-03-15 22:44:15.413 HelloWorld[11200:3f03] ERROR whitelist rejection: url='http://fonts.googleapis.com/css?family=Lato:400,700,900%7CQuicksand:400,700%7CMontserrat:400,700%7CNunito:400,700,300'
+2014-03-15 22:44:15.415 HelloWorld[11200:3f03] ERROR whitelist rejection: url='http://fonts.googleapis.com/css?family=Raleway:400,700,800,300'
+2014-03-15 22:44:15.416 HelloWorld[11200:3f03] ERROR whitelist rejection: url='http://fonts.googleapis.com/css?family=Raleway:400,700,800,300'
+2014-03-15 22:44:15.417 HelloWorld[11200:3f03] ERROR whitelist rejection: url='http://fonts.googleapis.com/css?family=Raleway:400,700,800,300'
+2014-03-15 22:44:15.420 HelloWorld[11200:3f03] ERROR whitelist rejection: url='http://maps.googleapis.com/maps/api/js?sensor=false'
+2014-03-15 22:44:15.421 HelloWorld[11200:3f03] ERROR whitelist rejection: url='http://maps.googleapis.com/maps/api/js?sensor=false'
+2014-03-15 22:44:15.421 HelloWorld[11200:3f03] ERROR whitelist rejection: url='http://maps.googleapis.com/maps/api/js?sensor=false'
+2014-03-15 22:44:15.443 HelloWorld[11200:3f03] ERROR whitelist rejection: url='http://cdn.athletez.com/resources/img/main-loading.gif'
+2014-03-15 22:44:15.444 HelloWorld[11200:3f03] ERROR whitelist rejection: url='http://cdn.athletez.com/resources/img/main-loading.gif'
+2014-03-15 22:44:15.444 HelloWorld[11200:3f03] ERROR whitelist rejection: url='http://cdn.athletez.com/resources/img/main-loading.gif'
+2014-03-15 22:44:15.472 HelloWorld[11200:70b] Finished load of: file:///Users/user/Library/Application%20Support/iPhone%20Simulator/7.1/Applications/B4EFB00D-F825-4E3F-AC45-CED651487F72/HelloWorld.app/www/index.html
+2014-03-15 22:49:29.222 HelloWorld[19762:70b] Multi-tasking -> Device: YES, App: YES
+2014-03-15 22:49:29.435 HelloWorld[19762:70b] Resetting plugins due to page load.
+2014-03-15 22:49:29.464 HelloWorld[19762:3f03] ERROR whitelist rejection: url='http://fonts.googleapis.com/css?family=Lato:400,700,900%7CQuicksand:400,700%7CMontserrat:400,700%7CNunito:400,700,300'
+2014-03-15 22:49:29.465 HelloWorld[19762:3f03] ERROR whitelist rejection: url='http://fonts.googleapis.com/css?family=Lato:400,700,900%7CQuicksand:400,700%7CMontserrat:400,700%7CNunito:400,700,300'
+2014-03-15 22:49:29.466 HelloWorld[19762:3f03] ERROR whitelist rejection: url='http://fonts.googleapis.com/css?family=Lato:400,700,900%7CQuicksand:400,700%7CMontserrat:400,700%7CNunito:400,700,300'
+2014-03-15 22:49:29.467 HelloWorld[19762:3f03] ERROR whitelist rejection: url='http://fonts.googleapis.com/css?family=Raleway:400,700,800,300'
+2014-03-15 22:49:29.468 HelloWorld[19762:3f03] ERROR whitelist rejection: url='http://fonts.googleapis.com/css?family=Raleway:400,700,800,300'
+2014-03-15 22:49:29.469 HelloWorld[19762:3f03] ERROR whitelist rejection: url='http://fonts.googleapis.com/css?family=Raleway:400,700,800,300'
+2014-03-15 22:49:29.471 HelloWorld[19762:3f03] ERROR whitelist rejection: url='http://maps.googleapis.com/maps/api/js?sensor=false'
+2014-03-15 22:49:29.471 HelloWorld[19762:3f03] ERROR whitelist rejection: url='http://maps.googleapis.com/maps/api/js?sensor=false'
+2014-03-15 22:49:29.472 HelloWorld[19762:3f03] ERROR whitelist rejection: url='http://maps.googleapis.com/maps/api/js?sensor=false'
+2014-03-15 22:49:29.476 HelloWorld[19762:3f03] ERROR whitelist rejection: url='http://cdn.athletez.com/resources/img/main-loading.gif'
+2014-03-15 22:49:29.476 HelloWorld[19762:3f03] ERROR whitelist rejection: url='http://cdn.athletez.com/resources/img/main-loading.gif'
+2014-03-15 22:49:29.477 HelloWorld[19762:3f03] ERROR whitelist rejection: url='http://cdn.athletez.com/resources/img/main-loading.gif'
+2014-03-15 22:49:29.506 HelloWorld[19762:70b] Finished load of: file:///Users/user/Library/Application%20Support/iPhone%20Simulator/7.1/Applications/B4EFB00D-F825-4E3F-AC45-CED651487F72/HelloWorld.app/www/index.html
+2014-03-15 22:54:53.330 HelloWorld[28361:70b] Multi-tasking -> Device: YES, App: YES
+2014-03-15 22:54:53.637 HelloWorld[28361:70b] Resetting plugins due to page load.
+2014-03-15 22:54:53.683 HelloWorld[28361:3f03] ERROR whitelist rejection: url='http://fonts.googleapis.com/css?family=Lato:400,700,900%7CQuicksand:400,700%7CMontserrat:400,700%7CNunito:400,700,300'
+2014-03-15 22:54:53.685 HelloWorld[28361:3f03] ERROR whitelist rejection: url='http://fonts.googleapis.com/css?family=Lato:400,700,900%7CQuicksand:400,700%7CMontserrat:400,700%7CNunito:400,700,300'
+2014-03-15 22:54:53.687 HelloWorld[28361:3f03] ERROR whitelist rejection: url='http://fonts.googleapis.com/css?family=Lato:400,700,900%7CQuicksand:400,700%7CMontserrat:400,700%7CNunito:400,700,300'
+2014-03-15 22:54:53.718 HelloWorld[28361:3f03] ERROR whitelist rejection: url='http://fonts.googleapis.com/css?family=Raleway:400,700,800,300'
+2014-03-15 22:54:53.727 HelloWorld[28361:3f03] ERROR whitelist rejection: url='http://fonts.googleapis.com/css?family=Raleway:400,700,800,300'
+2014-03-15 22:54:53.728 HelloWorld[28361:3f03] ERROR whitelist rejection: url='http://fonts.googleapis.com/css?family=Raleway:400,700,800,300'
+2014-03-15 22:54:53.732 HelloWorld[28361:3f03] ERROR whitelist rejection: url='http://maps.googleapis.com/maps/api/js?sensor=false'
+2014-03-15 22:54:53.733 HelloWorld[28361:3f03] ERROR whitelist rejection: url='http://maps.googleapis.com/maps/api/js?sensor=false'
+2014-03-15 22:54:53.733 HelloWorld[28361:3f03] ERROR whitelist rejection: url='http://maps.googleapis.com/maps/api/js?sensor=false'
+2014-03-15 22:54:53.739 HelloWorld[28361:3f03] ERROR whitelist rejection: url='http://cdn.athletez.com/resources/img/main-loading.gif'
+2014-03-15 22:54:53.740 HelloWorld[28361:3f03] ERROR whitelist rejection: url='http://cdn.athletez.com/resources/img/main-loading.gif'
+2014-03-15 22:54:53.741 HelloWorld[28361:3f03] ERROR whitelist rejection: url='http://cdn.athletez.com/resources/img/main-loading.gif'
+2014-03-15 22:54:53.776 HelloWorld[28361:70b] Finished load of: file:///Users/user/Library/Application%20Support/iPhone%20Simulator/7.1/Applications/B4EFB00D-F825-4E3F-AC45-CED651487F72/HelloWorld.app/www/index.html
+2014-03-15 22:59:54.877 HelloWorld[36955:70b] Multi-tasking -> Device: YES, App: YES
+2014-03-15 22:59:55.212 HelloWorld[36955:70b] Resetting plugins due to page load.
+2014-03-15 22:59:55.274 HelloWorld[36955:3f03] ERROR whitelist rejection: url='http://fonts.googleapis.com/css?family=Lato:400,700,900%7CQuicksand:400,700%7CMontserrat:400,700%7CNunito:400,700,300'
+2014-03-15 22:59:55.275 HelloWorld[36955:3f03] ERROR whitelist rejection: url='http://fonts.googleapis.com/css?family=Lato:400,700,900%7CQuicksand:400,700%7CMontserrat:400,700%7CNunito:400,700,300'
+2014-03-15 22:59:55.275 HelloWorld[36955:3f03] ERROR whitelist rejection: url='http://fonts.googleapis.com/css?family=Lato:400,700,900%7CQuicksand:400,700%7CMontserrat:400,700%7CNunito:400,700,300'
+2014-03-15 22:59:55.277 HelloWorld[36955:3f03] ERROR whitelist rejection: url='http://fonts.googleapis.com/css?family=Raleway:400,700,800,300'
+2014-03-15 22:59:55.278 HelloWorld[36955:3f03] ERROR whitelist rejection: url='http://fonts.googleapis.com/css?family=Raleway:400,700,800,300'
+2014-03-15 22:59:55.278 HelloWorld[36955:3f03] ERROR whitelist rejection: url='http://fonts.googleapis.com/css?family=Raleway:400,700,800,300'
+2014-03-15 22:59:55.283 HelloWorld[36955:3f03] ERROR whitelist rejection: url='http://maps.googleapis.com/maps/api/js?sensor=false'
+2014-03-15 22:59:55.285 HelloWorld[36955:3f03] ERROR whitelist rejection: url='http://maps.googleapis.com/maps/api/js?sensor=false'
+2014-03-15 22:59:55.287 HelloWorld[36955:3f03] ERROR whitelist rejection: url='http://maps.googleapis.com/maps/api/js?sensor=false'
+2014-03-15 22:59:55.301 HelloWorld[36955:3f03] ERROR whitelist rejection: url='http://cdn.athletez.com/resources/img/main-loading.gif'
+2014-03-15 22:59:55.302 HelloWorld[36955:3f03] ERROR whitelist rejection: url='http://cdn.athletez.com/resources/img/main-loading.gif'
+2014-03-15 22:59:55.302 HelloWorld[36955:3f03] ERROR whitelist rejection: url='http://cdn.athletez.com/resources/img/main-loading.gif'
+2014-03-15 22:59:55.347 HelloWorld[36955:70b] Finished load of: file:///Users/user/Library/Application%20Support/iPhone%20Simulator/7.1/Applications/B4EFB00D-F825-4E3F-AC45-CED651487F72/HelloWorld.app/www/index.html
+2014-03-15 23:05:27.580 HelloWorld[45561:70b] Multi-tasking -> Device: YES, App: YES
+2014-03-15 23:05:27.876 HelloWorld[45561:70b] Resetting plugins due to page load.
+2014-03-15 23:05:27.915 HelloWorld[45561:3f03] ERROR whitelist rejection: url='http://fonts.googleapis.com/css?family=Lato:400,700,900%7CQuicksand:400,700%7CMontserrat:400,700%7CNunito:400,700,300'
+2014-03-15 23:05:27.915 HelloWorld[45561:3f03] ERROR whitelist rejection: url='http://fonts.googleapis.com/css?family=Lato:400,700,900%7CQuicksand:400,700%7CMontserrat:400,700%7CNunito:400,700,300'
+2014-03-15 23:05:27.918 HelloWorld[45561:3f03] ERROR whitelist rejection: url='http://fonts.googleapis.com/css?family=Lato:400,700,900%7CQuicksand:400,700%7CMontserrat:400,700%7CNunito:400,700,300'
+2014-03-15 23:05:27.924 HelloWorld[45561:3f03] ERROR whitelist rejection: url='http://fonts.googleapis.com/css?family=Raleway:400,700,800,300'
+2014-03-15 23:05:27.932 HelloWorld[45561:3f03] ERROR whitelist rejection: url='http://fonts.googleapis.com/css?family=Raleway:400,700,800,300'
+2014-03-15 23:05:27.933 HelloWorld[45561:3f03] ERROR whitelist rejection: url='http://fonts.googleapis.com/css?family=Raleway:400,700,800,300'
+2014-03-15 23:05:27.936 HelloWorld[45561:3f03] ERROR whitelist rejection: url='http://maps.googleapis.com/maps/api/js?sensor=false'
+2014-03-15 23:05:27.936 HelloWorld[45561:3f03] ERROR whitelist rejection: url='http://maps.googleapis.com/maps/api/js?sensor=false'
+2014-03-15 23:05:27.937 HelloWorld[45561:3f03] ERROR whitelist rejection: url='http://maps.googleapis.com/maps/api/js?sensor=false'
+2014-03-15 23:05:27.942 HelloWorld[45561:3f03] ERROR whitelist rejection: url='http://cdn.athletez.com/resources/img/main-loading.gif'
+2014-03-15 23:05:27.945 HelloWorld[45561:3f03] ERROR whitelist rejection: url='http://cdn.athletez.com/resources/img/main-loading.gif'
+2014-03-15 23:05:27.949 HelloWorld[45561:3f03] ERROR whitelist rejection: url='http://cdn.athletez.com/resources/img/main-loading.gif'
+2014-03-15 23:05:27.976 HelloWorld[45561:70b] Finished load of: file:///Users/user/Library/Application%20Support/iPhone%20Simulator/7.1/Applications/B4EFB00D-F825-4E3F-AC45-CED651487F72/HelloWorld.app/www/index.html
+2014-03-15 23:05:39.514 HelloWorld[45561:3f03] void SendDelegateMessage(NSInvocation *): delegate (webView:runJavaScriptAlertPanelWithMessage:initiatedByFrame:) failed to return after waiting 10 seconds. main run loop mode: kCFRunLoopDefaultMode
+2014-03-15 23:10:07.044 HelloWorld[54158:70b] Multi-tasking -> Device: YES, App: YES
+2014-03-15 23:10:07.410 HelloWorld[54158:70b] Resetting plugins due to page load.
+2014-03-15 23:10:07.471 HelloWorld[54158:3f03] ERROR whitelist rejection: url='http://fonts.googleapis.com/css?family=Lato:400,700,900%7CQuicksand:400,700%7CMontserrat:400,700%7CNunito:400,700,300'
+2014-03-15 23:10:07.472 HelloWorld[54158:3f03] ERROR whitelist rejection: url='http://fonts.googleapis.com/css?family=Lato:400,700,900%7CQuicksand:400,700%7CMontserrat:400,700%7CNunito:400,700,300'
+2014-03-15 23:10:07.473 HelloWorld[54158:3f03] ERROR whitelist rejection: url='http://fonts.googleapis.com/css?family=Lato:400,700,900%7CQuicksand:400,700%7CMontserrat:400,700%7CNunito:400,700,300'
+2014-03-15 23:10:07.474 HelloWorld[54158:3f03] ERROR whitelist rejection: url='http://fonts.googleapis.com/css?family=Raleway:400,700,800,300'
+2014-03-15 23:10:07.475 HelloWorld[54158:3f03] ERROR whitelist rejection: url='http://fonts.googleapis.com/css?family=Raleway:400,700,800,300'
+2014-03-15 23:10:07.476 HelloWorld[54158:3f03] ERROR whitelist rejection: url='http://fonts.googleapis.com/css?family=Raleway:400,700,800,300'
+2014-03-15 23:10:07.479 HelloWorld[54158:3f03] ERROR whitelist rejection: url='http://maps.googleapis.com/maps/api/js?sensor=false'
+2014-03-15 23:10:07.479 HelloWorld[54158:3f03] ERROR whitelist rejection: url='http://maps.googleapis.com/maps/api/js?sensor=false'
+2014-03-15 23:10:07.480 HelloWorld[54158:3f03] ERROR whitelist rejection: url='http://maps.googleapis.com/maps/api/js?sensor=false'
+2014-03-15 23:10:07.486 HelloWorld[54158:3f03] ERROR whitelist rejection: url='http://cdn.athletez.com/resources/img/main-loading.gif'
+2014-03-15 23:10:07.488 HelloWorld[54158:3f03] ERROR whitelist rejection: url='http://cdn.athletez.com/resources/img/main-loading.gif'
+2014-03-15 23:10:07.489 HelloWorld[54158:3f03] ERROR whitelist rejection: url='http://cdn.athletez.com/resources/img/main-loading.gif'
+2014-03-15 23:10:07.528 HelloWorld[54158:70b] Finished load of: file:///Users/user/Library/Application%20Support/iPhone%20Simulator/7.1/Applications/B4EFB00D-F825-4E3F-AC45-CED651487F72/HelloWorld.app/www/index.html
+2014-03-15 23:18:32.181 HelloWorld[67009:70b] Multi-tasking -> Device: YES, App: YES
+2014-03-15 23:18:32.517 HelloWorld[67009:70b] Resetting plugins due to page load.
+2014-03-15 23:18:32.654 HelloWorld[67009:3f03] ERROR whitelist rejection: url='http://fonts.googleapis.com/css?family=Lato:400,700,900%7CQuicksand:400,700%7CMontserrat:400,700%7CNunito:400,700,300'
+2014-03-15 23:18:32.657 HelloWorld[67009:3f03] ERROR whitelist rejection: url='http://fonts.googleapis.com/css?family=Lato:400,700,900%7CQuicksand:400,700%7CMontserrat:400,700%7CNunito:400,700,300'
+2014-03-15 23:18:32.660 HelloWorld[67009:3f03] ERROR whitelist rejection: url='http://fonts.googleapis.com/css?family=Lato:400,700,900%7CQuicksand:400,700%7CMontserrat:400,700%7CNunito:400,700,300'
+2014-03-15 23:18:32.666 HelloWorld[67009:3f03] ERROR whitelist rejection: url='http://fonts.googleapis.com/css?family=Raleway:400,700,800,300'
+2014-03-15 23:18:32.670 HelloWorld[67009:3f03] ERROR whitelist rejection: url='http://fonts.googleapis.com/css?family=Raleway:400,700,800,300'
+2014-03-15 23:18:32.672 HelloWorld[67009:3f03] ERROR whitelist rejection: url='http://fonts.googleapis.com/css?family=Raleway:400,700,800,300'
+2014-03-15 23:18:32.675 HelloWorld[67009:3f03] ERROR whitelist rejection: url='http://maps.googleapis.com/maps/api/js?sensor=false'
+2014-03-15 23:18:32.676 HelloWorld[67009:3f03] ERROR whitelist rejection: url='http://maps.googleapis.com/maps/api/js?sensor=false'
+2014-03-15 23:18:32.677 HelloWorld[67009:3f03] ERROR whitelist rejection: url='http://maps.googleapis.com/maps/api/js?sensor=false'
+2014-03-15 23:18:32.683 HelloWorld[67009:3f03] ERROR whitelist rejection: url='http://cdn.athletez.com/resources/img/main-loading.gif'
+2014-03-15 23:18:32.683 HelloWorld[67009:3f03] ERROR whitelist rejection: url='http://cdn.athletez.com/resources/img/main-loading.gif'
+2014-03-15 23:18:32.684 HelloWorld[67009:3f03] ERROR whitelist rejection: url='http://cdn.athletez.com/resources/img/main-loading.gif'
+2014-03-15 23:18:32.712 HelloWorld[67009:70b] Finished load of: file:///Users/user/Library/Application%20Support/iPhone%20Simulator/7.1/Applications/B4EFB00D-F825-4E3F-AC45-CED651487F72/HelloWorld.app/www/index.html
+2014-03-15 23:26:09.305 HelloWorld[75606:70b] Multi-tasking -> Device: YES, App: YES
+2014-03-15 23:26:09.577 HelloWorld[75606:70b] Resetting plugins due to page load.
+2014-03-15 23:26:09.631 HelloWorld[75606:3f03] ERROR whitelist rejection: url='http://fonts.googleapis.com/css?family=Lato:400,700,900%7CQuicksand:400,700%7CMontserrat:400,700%7CNunito:400,700,300'
+2014-03-15 23:26:09.651 HelloWorld[75606:3f03] ERROR whitelist rejection: url='http://fonts.googleapis.com/css?family=Lato:400,700,900%7CQuicksand:400,700%7CMontserrat:400,700%7CNunito:400,700,300'
+2014-03-15 23:26:09.652 HelloWorld[75606:3f03] ERROR whitelist rejection: url='http://fonts.googleapis.com/css?family=Lato:400,700,900%7CQuicksand:400,700%7CMontserrat:400,700%7CNunito:400,700,300'
+2014-03-15 23:26:09.654 HelloWorld[75606:3f03] ERROR whitelist rejection: url='http://fonts.googleapis.com/css?family=Raleway:400,700,800,300'
+2014-03-15 23:26:09.655 HelloWorld[75606:3f03] ERROR whitelist rejection: url='http://fonts.googleapis.com/css?family=Raleway:400,700,800,300'
+2014-03-15 23:26:09.656 HelloWorld[75606:3f03] ERROR whitelist rejection: url='http://fonts.googleapis.com/css?family=Raleway:400,700,800,300'
+2014-03-15 23:26:09.658 HelloWorld[75606:3f03] ERROR whitelist rejection: url='http://maps.googleapis.com/maps/api/js?sensor=false'
+2014-03-15 23:26:09.659 HelloWorld[75606:3f03] ERROR whitelist rejection: url='http://maps.googleapis.com/maps/api/js?sensor=false'
+2014-03-15 23:26:09.659 HelloWorld[75606:3f03] ERROR whitelist rejection: url='http://maps.googleapis.com/maps/api/js?sensor=false'
+2014-03-15 23:26:09.677 HelloWorld[75606:3f03] ERROR whitelist rejection: url='http://cdn.athletez.com/resources/img/main-loading.gif'
+2014-03-15 23:26:09.679 HelloWorld[75606:3f03] ERROR whitelist rejection: url='http://cdn.athletez.com/resources/img/main-loading.gif'
+2014-03-15 23:26:09.680 HelloWorld[75606:3f03] ERROR whitelist rejection: url='http://cdn.athletez.com/resources/img/main-loading.gif'
+2014-03-15 23:26:09.710 HelloWorld[75606:70b] Finished load of: file:///Users/user/Library/Application%20Support/iPhone%20Simulator/7.1/Applications/B4EFB00D-F825-4E3F-AC45-CED651487F72/HelloWorld.app/www/index.html
+2014-03-15 23:33:43.065 HelloWorld[84171:70b] Multi-tasking -> Device: YES, App: YES
+2014-03-15 23:33:43.224 HelloWorld[84171:70b] Resetting plugins due to page load.
+2014-03-15 23:33:43.254 HelloWorld[84171:4103] ERROR whitelist rejection: url='http://fonts.googleapis.com/css?family=Lato:400,700,900%7CQuicksand:400,700%7CMontserrat:400,700%7CNunito:400,700,300'
+2014-03-15 23:33:43.255 HelloWorld[84171:4103] ERROR whitelist rejection: url='http://fonts.googleapis.com/css?family=Lato:400,700,900%7CQuicksand:400,700%7CMontserrat:400,700%7CNunito:400,700,300'
+2014-03-15 23:33:43.256 HelloWorld[84171:4103] ERROR whitelist rejection: url='http://fonts.googleapis.com/css?family=Lato:400,700,900%7CQuicksand:400,700%7CMontserrat:400,700%7CNunito:400,700,300'
+2014-03-15 23:33:43.257 HelloWorld[84171:4103] ERROR whitelist rejection: url='http://fonts.googleapis.com/css?family=Raleway:400,700,800,300'
+2014-03-15 23:33:43.258 HelloWorld[84171:4103] ERROR whitelist rejection: url='http://fonts.googleapis.com/css?family=Raleway:400,700,800,300'
+2014-03-15 23:33:43.259 HelloWorld[84171:4103] ERROR whitelist rejection: url='http://fonts.googleapis.com/css?family=Raleway:400,700,800,300'
+2014-03-15 23:33:43.261 HelloWorld[84171:4103] ERROR whitelist rejection: url='http://maps.googleapis.com/maps/api/js?sensor=false'
+2014-03-15 23:33:43.261 HelloWorld[84171:4103] ERROR whitelist rejection: url='http://maps.googleapis.com/maps/api/js?sensor=false'
+2014-03-15 23:33:43.262 HelloWorld[84171:4103] ERROR whitelist rejection: url='http://maps.googleapis.com/maps/api/js?sensor=false'
+2014-03-15 23:33:43.266 HelloWorld[84171:4103] ERROR whitelist rejection: url='http://cdn.athletez.com/resources/img/main-loading.gif'
+2014-03-15 23:33:43.266 HelloWorld[84171:4103] ERROR whitelist rejection: url='http://cdn.athletez.com/resources/img/main-loading.gif'
+2014-03-15 23:33:43.267 HelloWorld[84171:4103] ERROR whitelist rejection: url='http://cdn.athletez.com/resources/img/main-loading.gif'
+2014-03-15 23:33:43.281 HelloWorld[84171:70b] Finished load of: file:///Users/user/Library/Application%20Support/iPhone%20Simulator/7.1/Applications/B4EFB00D-F825-4E3F-AC45-CED651487F72/HelloWorld.app/www/index.html
+2014-03-15 23:34:54.131 HelloWorld[84171:4103] void SendDelegateMessage(NSInvocation *): delegate (webView:runJavaScriptAlertPanelWithMessage:initiatedByFrame:) failed to return after waiting 10 seconds. main run loop mode: kCFRunLoopDefaultMode
+2014-03-15 23:38:54.311 HelloWorld[92736:70b] Multi-tasking -> Device: YES, App: YES
+2014-03-15 23:38:54.462 HelloWorld[92736:70b] Resetting plugins due to page load.
+2014-03-15 23:38:54.499 HelloWorld[92736:3f03] ERROR whitelist rejection: url='http://fonts.googleapis.com/css?family=Lato:400,700,900%7CQuicksand:400,700%7CMontserrat:400,700%7CNunito:400,700,300'
+2014-03-15 23:38:54.500 HelloWorld[92736:3f03] ERROR whitelist rejection: url='http://fonts.googleapis.com/css?family=Lato:400,700,900%7CQuicksand:400,700%7CMontserrat:400,700%7CNunito:400,700,300'
+2014-03-15 23:38:54.500 HelloWorld[92736:3f03] ERROR whitelist rejection: url='http://fonts.googleapis.com/css?family=Lato:400,700,900%7CQuicksand:400,700%7CMontserrat:400,700%7CNunito:400,700,300'
+2014-03-15 23:38:54.502 HelloWorld[92736:3f03] ERROR whitelist rejection: url='http://fonts.googleapis.com/css?family=Raleway:400,700,800,300'
+2014-03-15 23:38:54.503 HelloWorld[92736:3f03] ERROR whitelist rejection: url='http://fonts.googleapis.com/css?family=Raleway:400,700,800,300'
+2014-03-15 23:38:54.503 HelloWorld[92736:3f03] ERROR whitelist rejection: url='http://fonts.googleapis.com/css?family=Raleway:400,700,800,300'
+2014-03-15 23:38:54.505 HelloWorld[92736:3f03] ERROR whitelist rejection: url='http://maps.googleapis.com/maps/api/js?sensor=false'
+2014-03-15 23:38:54.506 HelloWorld[92736:3f03] ERROR whitelist rejection: url='http://maps.googleapis.com/maps/api/js?sensor=false'
+2014-03-15 23:38:54.507 HelloWorld[92736:3f03] ERROR whitelist rejection: url='http://maps.googleapis.com/maps/api/js?sensor=false'
+2014-03-15 23:38:54.511 HelloWorld[92736:3f03] ERROR whitelist rejection: url='http://cdn.athletez.com/resources/img/main-loading.gif'
+2014-03-15 23:38:54.511 HelloWorld[92736:3f03] ERROR whitelist rejection: url='http://cdn.athletez.com/resources/img/main-loading.gif'
+2014-03-15 23:38:54.512 HelloWorld[92736:3f03] ERROR whitelist rejection: url='http://cdn.athletez.com/resources/img/main-loading.gif'
+2014-03-15 23:38:54.525 HelloWorld[92736:70b] Finished load of: file:///Users/user/Library/Application%20Support/iPhone%20Simulator/7.1/Applications/B4EFB00D-F825-4E3F-AC45-CED651487F72/HelloWorld.app/www/index.html
+2014-03-15 23:50:25.406 HelloWorld[1491:70b] Multi-tasking -> Device: YES, App: YES
+2014-03-15 23:50:25.893 HelloWorld[1491:70b] Resetting plugins due to page load.
+2014-03-15 23:50:25.933 HelloWorld[1491:3f03] ERROR whitelist rejection: url='http://fonts.googleapis.com/css?family=Lato:400,700,900%7CQuicksand:400,700%7CMontserrat:400,700%7CNunito:400,700,300'
+2014-03-15 23:50:25.934 HelloWorld[1491:3f03] ERROR whitelist rejection: url='http://fonts.googleapis.com/css?family=Lato:400,700,900%7CQuicksand:400,700%7CMontserrat:400,700%7CNunito:400,700,300'
+2014-03-15 23:50:25.935 HelloWorld[1491:3f03] ERROR whitelist rejection: url='http://fonts.googleapis.com/css?family=Lato:400,700,900%7CQuicksand:400,700%7CMontserrat:400,700%7CNunito:400,700,300'
+2014-03-15 23:50:25.938 HelloWorld[1491:3f03] ERROR whitelist rejection: url='http://fonts.googleapis.com/css?family=Raleway:400,700,800,300'
+2014-03-15 23:50:25.944 HelloWorld[1491:3f03] ERROR whitelist rejection: url='http://fonts.googleapis.com/css?family=Raleway:400,700,800,300'
+2014-03-15 23:50:25.946 HelloWorld[1491:3f03] ERROR whitelist rejection: url='http://fonts.googleapis.com/css?family=Raleway:400,700,800,300'
+2014-03-15 23:50:25.951 HelloWorld[1491:3f03] ERROR whitelist rejection: url='http://maps.googleapis.com/maps/api/js?sensor=false'
+2014-03-15 23:50:25.953 HelloWorld[1491:3f03] ERROR whitelist rejection: url='http://maps.googleapis.com/maps/api/js?sensor=false'
+2014-03-15 23:50:25.954 HelloWorld[1491:3f03] ERROR whitelist rejection: url='http://maps.googleapis.com/maps/api/js?sensor=false'
+2014-03-15 23:50:25.960 HelloWorld[1491:3f03] ERROR whitelist rejection: url='http://cdn.athletez.com/resources/img/main-loading.gif'
+2014-03-15 23:50:25.960 HelloWorld[1491:3f03] ERROR whitelist rejection: url='http://cdn.athletez.com/resources/img/main-loading.gif'
+2014-03-15 23:50:25.961 HelloWorld[1491:3f03] ERROR whitelist rejection: url='http://cdn.athletez.com/resources/img/main-loading.gif'
+2014-03-15 23:50:26.023 HelloWorld[1491:70b] Finished load of: file:///Users/user/Library/Application%20Support/iPhone%20Simulator/7.1/Applications/B4EFB00D-F825-4E3F-AC45-CED651487F72/HelloWorld.app/www/index.html
+2014-03-16 00:04:46.222 HelloWorld[10229:70b] Multi-tasking -> Device: YES, App: YES
+2014-03-16 00:04:47.076 HelloWorld[10229:70b] Resetting plugins due to page load.
+2014-03-16 00:04:47.373 HelloWorld[10229:3f03] ERROR whitelist rejection: url='http://fonts.googleapis.com/css?family=Lato:400,700,900%7CQuicksand:400,700%7CMontserrat:400,700%7CNunito:400,700,300'
+2014-03-16 00:04:47.373 HelloWorld[10229:3f03] ERROR whitelist rejection: url='http://fonts.googleapis.com/css?family=Lato:400,700,900%7CQuicksand:400,700%7CMontserrat:400,700%7CNunito:400,700,300'
+2014-03-16 00:04:47.374 HelloWorld[10229:3f03] ERROR whitelist rejection: url='http://fonts.googleapis.com/css?family=Lato:400,700,900%7CQuicksand:400,700%7CMontserrat:400,700%7CNunito:400,700,300'
+2014-03-16 00:04:47.375 HelloWorld[10229:3f03] ERROR whitelist rejection: url='http://fonts.googleapis.com/css?family=Raleway:400,700,800,300'
+2014-03-16 00:04:47.376 HelloWorld[10229:3f03] ERROR whitelist rejection: url='http://fonts.googleapis.com/css?family=Raleway:400,700,800,300'
+2014-03-16 00:04:47.376 HelloWorld[10229:3f03] ERROR whitelist rejection: url='http://fonts.googleapis.com/css?family=Raleway:400,700,800,300'
+2014-03-16 00:04:47.379 HelloWorld[10229:3f03] ERROR whitelist rejection: url='http://maps.googleapis.com/maps/api/js?sensor=false'
+2014-03-16 00:04:47.379 HelloWorld[10229:3f03] ERROR whitelist rejection: url='http://maps.googleapis.com/maps/api/js?sensor=false'
+2014-03-16 00:04:47.380 HelloWorld[10229:3f03] ERROR whitelist rejection: url='http://maps.googleapis.com/maps/api/js?sensor=false'
+2014-03-16 00:04:47.420 HelloWorld[10229:3f03] ERROR whitelist rejection: url='http://cdn.athletez.com/resources/img/main-loading.gif'
+2014-03-16 00:04:47.421 HelloWorld[10229:3f03] ERROR whitelist rejection: url='http://cdn.athletez.com/resources/img/main-loading.gif'
+2014-03-16 00:04:47.421 HelloWorld[10229:3f03] ERROR whitelist rejection: url='http://cdn.athletez.com/resources/img/main-loading.gif'
+2014-03-16 00:04:47.716 HelloWorld[10229:70b] Finished load of: file:///Users/user/Library/Application%20Support/iPhone%20Simulator/7.1/Applications/B4EFB00D-F825-4E3F-AC45-CED651487F72/HelloWorld.app/www/index.html
+2014-03-16 15:59:22.398 HelloWorld[32354:70b] Multi-tasking -> Device: YES, App: YES
+2014-03-16 15:59:22.999 HelloWorld[32354:70b] Resetting plugins due to page load.
+2014-03-16 15:59:23.257 HelloWorld[32354:4003] ERROR whitelist rejection: url='http://fonts.googleapis.com/css?family=Lato:400,700,900%7CQuicksand:400,700%7CMontserrat:400,700%7CNunito:400,700,300'
+2014-03-16 15:59:23.259 HelloWorld[32354:4003] ERROR whitelist rejection: url='http://fonts.googleapis.com/css?family=Lato:400,700,900%7CQuicksand:400,700%7CMontserrat:400,700%7CNunito:400,700,300'
+2014-03-16 15:59:23.261 HelloWorld[32354:4003] ERROR whitelist rejection: url='http://fonts.googleapis.com/css?family=Lato:400,700,900%7CQuicksand:400,700%7CMontserrat:400,700%7CNunito:400,700,300'
+2014-03-16 15:59:23.263 HelloWorld[32354:4003] ERROR whitelist rejection: url='http://fonts.googleapis.com/css?family=Raleway:400,700,800,300'
+2014-03-16 15:59:23.263 HelloWorld[32354:4003] ERROR whitelist rejection: url='http://fonts.googleapis.com/css?family=Raleway:400,700,800,300'
+2014-03-16 15:59:23.264 HelloWorld[32354:4003] ERROR whitelist rejection: url='http://fonts.googleapis.com/css?family=Raleway:400,700,800,300'
+2014-03-16 15:59:23.266 HelloWorld[32354:4003] ERROR whitelist rejection: url='http://maps.googleapis.com/maps/api/js?sensor=false'
+2014-03-16 15:59:23.266 HelloWorld[32354:4003] ERROR whitelist rejection: url='http://maps.googleapis.com/maps/api/js?sensor=false'
+2014-03-16 15:59:23.267 HelloWorld[32354:4003] ERROR whitelist rejection: url='http://maps.googleapis.com/maps/api/js?sensor=false'
+2014-03-16 15:59:23.271 HelloWorld[32354:4003] ERROR whitelist rejection: url='http://cdn.athletez.com/resources/img/main-loading.gif'
+2014-03-16 15:59:23.272 HelloWorld[32354:4003] ERROR whitelist rejection: url='http://cdn.athletez.com/resources/img/main-loading.gif'
+2014-03-16 15:59:23.272 HelloWorld[32354:4003] ERROR whitelist rejection: url='http://cdn.athletez.com/resources/img/main-loading.gif'
+2014-03-16 15:59:23.440 HelloWorld[32354:70b] Finished load of: file:///Users/user/Library/Application%20Support/iPhone%20Simulator/7.1/Applications/B4EFB00D-F825-4E3F-AC45-CED651487F72/HelloWorld.app/www/index.html
+2014-03-16 16:07:01.028 HelloWorld[32354:4003] void SendDelegateMessage(NSInvocation *): delegate (webView:runJavaScriptAlertPanelWithMessage:initiatedByFrame:) failed to return after waiting 10 seconds. main run loop mode: kCFRunLoopDefaultMode

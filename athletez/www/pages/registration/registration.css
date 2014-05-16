@@ -1,0 +1,25 @@
+
+
+.password {
+    border : 1px solid #cc9933;
+    width : 200px;
+}
+.pstrength-minchar {
+    font-size : 10px;
+}
+
+.fbimage {
+    float:left;
+    margin-right: 4px;
+    /* width:150px; */
+}
+.picture-buttons {
+    clear:both;
+}
+/* .fbimagecontainer img { display:none; } */
+.fbimagecontainer jrac_viewport img {display:block}
+
+#main-content-reg #main-content{
+    width:90%;
+    margin-left: 5%;
+}

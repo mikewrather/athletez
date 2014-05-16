@@ -1,0 +1,496 @@
+.regheader{
+			font-size: 20px;
+			padding: 59px;
+		}
+#header{
+			padding-top: 16px;
+			padding-bottom: 20px;
+			font:  bold 12px/20px;
+		}
+ #fbpane {
+    color: white;
+     width: 64%;
+    margin: 0 auto;
+    padding: 0;
+    cursor: pointer;
+    border-style: none;
+    height: 45px;
+    position: relative;
+    background: #68659c url(http://cdn.athletez.com/resources/img/facebook-f.png) 94% no-repeat;
+}
+
+#fbpane #label{
+    text-align: center;
+    color: white;
+    font-weight: bold;
+    margin: 0;
+    position: absolute;
+    background-color: #6b74b7;
+    font-size: 1em;
+    padding: 12px;
+    width: 75%;
+    float: left;
+    height: 20px;
+}
+
+#fbpane #label.loading{
+    background: url('http://cdn.athletez.com/resources/img/blue_loading.gif') repeat;
+}
+
+/*******************************************************************************/
+
+#modal-popup-signup #mainreg{
+    background: none;
+}
+
+#modal-popup-signup #regcontainer{
+    width: 70%;
+    margin-top:20px;
+}
+#modal-popup-signup #mainreg{
+    width:100%;
+}
+
+#modal-popup-signup .regor {
+    color: grey;
+    margin: 15px 0 0 0;
+    font-size: 1.2em;
+    font-weight: bolder;
+}
+#modal-popup-signup #fbpane {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    cursor: pointer;
+    border-style: none;
+    height: 45px;
+    position: relative;
+    background: #68659c url(http://cdn.athletez.com/resources/img/facebook-f.png) 94% no-repeat;
+}
+
+#modal-popup-signup #fbpane #label{
+    margin: 0;
+    position: absolute;
+    background-color: #6b74b7;
+    font-size: 1em;
+    padding: 12px;
+    width: 79%;
+    float: left;
+    height: 20px;
+}
+
+#modal-popup-signup #regpanemain {
+    width: 100%;
+}
+
+#modal-popup-signup #firstregbase {
+    padding:0;
+    float: none;
+    width: 100%;
+}
+#modal-popup-signup #firstregbase input{
+    width: 90%;
+    margin: 20px 0 0 0;
+    padding: 8px 5%;
+    position: relative;
+
+}
+
+#modal-popup-signup #firstregbase input[type="text"],
+#modal-popup-signup #firstregbase input[type="email"],
+#modal-popup-signup #firstregbase input[type="phone"],
+#modal-popup-signup #firstregbase input[type="password"]{
+    background-color: #E4E4E4;
+}
+
+#modal-popup-signup .signupsubmit{
+    margin-top:0;
+    padding-top: 10px;
+}
+
+#modal-popup-signup .signupsubmit input{
+    width: 48% !important;
+    color: white;
+    font-size: 20px;
+    border-style: none;
+    height: 40px;
+}
+
+#modal-popup-signup .signupsubmit input:first-child{
+    float: left;
+    background-color: #9DCA3C;
+}
+#modal-popup-signup .signupsubmit input:last-child{
+    float: right;
+    background-color: #1AA0AE;
+}
+
+/*******************************************************************************/
+
+
+#regpanemain{
+		position: absolute;
+		width: 547PX;
+
+}	
+#firstregbase{
+	
+    padding-left: 75px;
+    width: 347px;
+	float: left;
+}	
+#firstregbase input{
+			background-color: #FFFFFF;
+			border-style: none;
+			color: #68686A;
+			font-size: 16px;
+			font-weight: bold;
+			height: 29px;
+			margin-left: 14px;
+			margin-top: 5px;
+			padding-left: 14px;
+			width: 297px;
+		}
+#mainreg{
+			width: 495px;
+			position: relative;
+			background-color: white;
+			margin: 0 auto;
+		}
+.regor{
+			color: #292929;
+			margin: auto;
+			position: relative;
+			text-align: center;
+    font-weight: bolder;
+}
+.regsubmit{
+			background-color: #9DCA3C;
+			width: 224px;
+			color: white;
+			font-size: 20px;
+			border-style: none;
+			padding: 0 10px;
+			height: 40px;
+}
+.signupsubmit{
+	
+			padding-top: 106px;
+		
+}
+.signupform{
+			width: 100%;
+			position: relative;
+			
+}
+#reglogin{
+			text-align: center;
+}
+#reglogin	a{
+		text-decoration: none;
+		color: #6C74B7;
+		border-bottom: 1px solid rgb(202, 196, 196);
+}
+#firstreg input{
+			background-color: #E4E3E9;
+    		border-style: none;
+    		color: #68686A;
+    		font-size: 16px;
+    		font-weight: bold;
+    		height: 38px;
+    		margin-left: 25px;
+    		margin-top: 25px;
+    		padding-left: 14px;
+    		width: 258px;
+		}
+		.error {
+			color: red;
+		}
+		.message {
+			padding: 10px;
+			background-color: yellow;
+		}
+		#regpane{
+			width: 327px;
+			overflow: hidden;
+			position: relative;
+			padding: 10px;
+			height: auto;
+			margin-left: 10%;
+			margin-bottom: 0%;
+
+		}
+		#regpanefinal{
+			width: 90%;
+			position: relative;
+			padding: 10px;
+			height: auto;
+			margin:0 auto;
+
+		}
+		
+		
+		#mainregfinal{
+			width: 100%;
+			position: relative;
+			background-color: white;
+			margin: 0 auto;
+		}
+
+		
+		#regcontainer{
+			margin: 0 auto;
+			width: 100%;
+			height: auto;
+		}
+		
+		
+		.regsubmitfinal{
+			background-color: #1BA0AF;
+			width: 224px;
+			height: 35px;
+			color: white;
+			font-size: 20px;
+			border-style: none;
+
+		}
+		#fblogo{
+		/*	background-image: url(new-facebook-logo.png);*/
+			background-size: 25px;
+			width: 50px;
+			background-color: wheat;
+
+		}
+		
+		#regor{
+			text-align: center;
+			padding-top: 14px;
+			font-size: 16px;
+			font-weight: bold;
+			color: #68686A;
+		}
+		
+		.label{
+			width: 100px;
+			position: relative;
+			float: left;
+			color:black;
+			background-color: white;
+		}
+
+
+		#radioinput input{
+			width: 21px;
+			height: 30px;
+			background-color: #E4E3E9;
+			border: 0;
+			border-radius: 4px;
+		}
+
+        #gender, #Role{
+            display: block;
+            width: 95%;
+        }
+
+        #gender > div, #Role > div{
+            text-align: center;
+            padding:15px;
+            height: 25px;
+        }
+
+		#gender input, #Role input{
+			width: 20px;
+		}
+
+        #gender label,#Role label{
+            font-size: 1.3em;
+        }
+
+        #dob select{
+            margin:10px 2%;
+        }
+		.born{
+			color: white;
+			background-color: #6B6F72;
+			height:30px;
+			width:36%;
+
+		}
+		.borndate{
+			color: white;
+			background-color: #6B6F72;
+			height:30px;
+			width:26%;
+		}
+		.borndyear{
+			color: white;
+			background-color: #6B6F72;
+			height:30px;
+			width:26%;
+		}
+		.radioinput{
+			width: 20px;
+			float: left;
+		}
+		.radio{
+			width: 84px;
+			float: left;
+			padding-left: 12px;
+			padding-top: 9px;
+		}
+		.submitbutton{
+
+		}
+		#imguploader{
+    		position: absolute;
+    		opacity: 0
+   		}
+   		#imgpreview{
+      		background-color: white;
+      		height: 330px;
+      		/*overflow: hidden;*/
+      		width: 330px;
+      		margin-left: 56px;
+   		}
+   		#previewimg{
+    		height: 330px;
+    		width: 330px;
+   		}
+   		#imgupload{
+    		padding-left: 218px;
+    		padding-top: 14px;
+    		position: relative;
+   		}
+   		.imgup{
+    		background-color: #1BA0AF;
+    		border-style: none;
+   			color: #FFFFFF;
+   			font-size: 14px;
+    		height: 31px;
+   		}
+   		#mainregimg{
+   			width: 450px;
+			position: relative;
+			background-color: white;
+			margin: 0 auto;
+   		}
+
+   		.fbimage {
+   			 float:left;
+    		 margin-right: 4px;
+   			 /* width:150px; */
+		}
+		.picture-buttons {
+    		clear:both;
+		}
+		/* .fbimagecontainer img { display:none; } */
+		.fbimagecontainer jrac_viewport img {display:block}
+
+		#skip{
+			width:82px;
+		}	
+		
+
+.terms-condition {
+	width: 30px !important;
+	margin-left: 107px !important;
+}
+#firstregbase input {
+    background-color: #f4f4f4;
+    transition: background-color 0.5s ease;
+}
+.loguser{
+
+}
+.loguser input{
+	float: left;
+    margin-left: 1px !important;
+    width: 46px !important;
+
+}
+.loguser label{
+	padding: 9px;
+
+}
+.loguser p {
+	 font-size: 13px;
+    font-weight: bold;
+    margin-left: 15px;
+    margin-top: -8px;
+}
+
+#regpanemain {
+   	position: relative!important;
+    width: 547px;
+}
+.subtweak{
+
+}
+.btn-common{
+	color:blue;
+}
+.addsub{
+	padding-top: 15px;
+}
+.loginUser ,.addsub{
+	margin-left: 15px;
+}
+.errormsg {
+    color: #FF0000;
+    font-size: 12px!important;
+    font-weight: bold!important;
+    padding-left: 17px!important;
+}
+
+input.field-failed{
+    background-color: #E27171 !important;
+}
+
+.fbreg-fields input{
+    margin:10px 3%;
+}
+
+.fbreg-fields input[type="text"], .fbreg-fields input[type="password"],#finalreg input[type="text"],#finalreg input[type="password"]{
+    padding:12px 5%;
+    width:84%;
+}
+
+.fbreg-fields input[type="checkbox"],#regpanefinal input[type="checkbox"]{
+    height: 27px;
+    width: 27px;
+    margin-right:10px;
+}
+
+#fb-reg-pop #fb-userpic-prev{
+    width: 100%;
+    height: 350px;
+    padding: 0;
+    margin: 0;
+}
+
+#fb-reg-pop #fb-userpic-prev li{
+    width: 100%;
+    height: 100%;
+}
+
+#fb-reg-pop .next, #regpanefinal .next{
+    width: 100%;
+    height: 20px;
+    text-align: center;
+    padding: 15px 0;
+    font-size: 1.7em;
+    color: white;
+}
+
+#regpanefinal input.next{
+    height: 50px;
+}
+#fb-reg-pop .field span.value{
+    position: relative;
+}
+
+#fb-reg-pop .field span.value .edit{
+    position: absolute;
+    top: 0;
+    right: 20px;
+}

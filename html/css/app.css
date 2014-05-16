@@ -3196,6 +3196,9 @@ li.sport .teamlist-header, .stat-val-outer {
 		padding-right: 15px !important;
 	}
 
-	 
+    form fieldset{
+        min-width: 300px;
+        max-width: 100%;
+    }
 	 
 }

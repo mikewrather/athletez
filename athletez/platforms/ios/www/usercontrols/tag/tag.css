@@ -1,0 +1,57 @@
+/*.floatLeft {
+	float: left;
+}
+.floatRight {
+	float: right;
+}
+.displayNone{display:none}
+.spn-black-heading {
+	background-color: #444;
+	color: #FFF;
+	width: 40px;
+}
+.div-add-dotted {
+	background: #F5F5F5;
+	color: #44F;
+	border: 1px #66F dashed;
+	text-align: center;
+	margin: 5px 0 10px;
+	cursor: pointer;
+}
+
+.section-teams-prof-setting .sub-section-prof-setting {
+	border: 4px solid #555;
+}
+
+input[type='text'], select {
+	width: 235px;
+	    font-size: 15px;
+    height: auto;
+}
+*/
+label{   display: inline;}
+
+.pointer {cursor: pointer;}
+.ui-autocomplete{max-height: 250px;overflow-y:auto;overflow-x:hidden;}
+select.displayNone, textarea.displayNone, input[type="text"].displayNone{display:none}
+
+.container_batch_tag .field-message{
+	background-color: rgba(0, 0, 0, 0);
+    border: medium none;
+    color: #77011C;
+    float: left;
+    font-size: 12px;
+    font-style: italic;
+    font-weight: normal;
+    margin-bottom: 4px;
+    margin-top: 4px;
+    width: 100%;
+}
+.container_batch_tag .margin{margin:4px 0;}
+.container_batch_tag input[type="text"]{margin:4px 0;border: 1px solid #777777;}
+.container_batch_tag .section_inner{margin:5px 0;}
+.container_batch_tag .section_outer{margin:5px 0;}
+
+.container_batch_tag{
+    display: none;
+}

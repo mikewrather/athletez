@@ -1,0 +1,43 @@
+{{#payload}}
+<div class="row-fluid">
+	<div class="profile-heading" itemscope itemtype="http://schema.org/Person">
+		<div class="sports-h"></div>
+		<h3 class="username" itemprop="name">{{name}}</h3><h3> {{#grad_year}}'{{grad_year}}{{/grad_year}}</h3>
+		<h4 class="sports-name-h"></h4>
+	</div>
+
+	<div class="row-fluid profile-pic-outer">
+		<div class="span7 border-right">
+			<ul class="span6 textcenter image-outer-h"></ul>
+			<div class="span6">
+				<div class="teams">
+					<h4 class="hide">Teams</h4>
+					<div id="sports-info"></div>
+					<a href="javascript: void(0);" class="see-more-teams-h hide">Show All</a>
+				</div>
+			</div>
+		</div>
+		
+		<div class="stats-panel span5" style="width:35%;">
+			<div class="stats-header">
+				<span id="profileName"></span>Stats{{#loggedInUser}}<span class="edit-message">Click an entry to edit</span>{{/loggedInUser}}
+			</div>
+			<div id="fitnessbasic-wrap"></div>
+		</div>
+	</div>
+			<div class="profile-info">
+			{{#height_ft}}
+				<div class="height">
+					Height: {{height_ft}}
+				</div>
+				{{/height_ft}}
+				{{#weight_lb}}
+				<div class="weight">
+					Weight: {{weight_lb}} lbs
+				</div>
+			{{/weight_lb}}
+		</div>
+
+</div>
+</div>
+{{/payload}}

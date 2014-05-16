@@ -1,0 +1,24 @@
+<div class="sub-section-prof-setting">
+<div class="row-fluid">
+	<span class="green-left-heading">Personal Bests</span>
+</div>
+<div id="container-rdtree" class="row-fluid inset-data-entry">
+	{{#rdtrees}}
+	<div class="section-rdtree-items_h">
+		<div><span class="standard-subsection-header" style="margin-top:15px;">{{title}}</span></div>
+		{{#data}}
+			<div class="rd-entry">
+				<span>{{#icon}}<img src="{{icon}}" />{{/icon}}{{name}}</span>
+				<span>
+					<input type="text" class="txtRdTrees_h" treeId="{{id}}" value="{{val}}" resumeDataId="{{resumeDataId}}"/>
+					<span class="alert alert-danger displayNone error_h"></span>
+					<span class="alert alert-success displayNone success_h"></span>
+					
+				</span>
+			</div>
+		{{/data}}
+		<!--<a href="javascript:void(0)" class="resume_button btn-Finish-RdTree_h displayNone">FINISH</a>-->
+	</div>
+	{{/rdtrees}}
+</div>
+</div>

@@ -1,0 +1,6 @@
+<% if(data.length){ %>
+<ul class="recipient_list">
+	<% for(var i=0;i < data.length;i++){ %><li data-address="<%=data[i] %>">
+		<%= data[i] %>
+	</li><% } %>
+</ul><% } %>

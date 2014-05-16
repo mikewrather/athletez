@@ -1,0 +1,102 @@
+// Base Collection
+// ---------------
+
+// Requires `define`  
+// Return {BaseCollection} object as constructor
+
+define(['facade', 'utils'], function (facade, utils) {
+
+    var BaseCollection,
+        Backbone = facade.Backbone,
+        $ = facade.$,
+        _ = facade._,
+        lib = utils.lib,
+        ajaxOptions = utils.ajaxOptions,
+        debug = utils.debug;
+
+    // Constructor `{BaseCollection}` extends Backbone.Collection.prototype
+    // object literal argument to extend is the prototype for the BaseCollection constructor
+    BaseCollection = Backbone.Collection.extend({
+
+        // **Method:** `initialize`  
+        // Param {Object} `models` - added during call to new BaseCollection([/*models*/])  
+        // Param {Object} `options` - add a comparator
+        initialize: function (models, options) {
+            debug.log("BaseCollection initialize...");
+            this.cid = this.cid || _.uniqueId('c');
+            _.bindAll(this);
+            this.deferred = new $.Deferred();
+            // When overriding use: `Backbone.Collection.prototype.initialize.call(this, arguments);`
+        },
+
+        // **Property:** `request` - assign fetch return value to this.request property, 
+        // fetch returns (jQuery) ajax promise object
+        request: null,
+
+        _idAttr: 'id',
+
+        // **Method:** `fetch`  
+        // Wrap Backbone.Collection.prototype.fetch with support for deferreds
+        fetch: function (options) {
+            options = options || {};
+			if(this.targetElement && this.targetElement != '') {
+				$(this.targetElement).addClass("region-loader");
+			}	
+
+	        if (!options.success) {
+                options.success = this.afterFetch;
+            }
+            
+            if (!options.error) {
+                options.error = this.fetchError;
+            }
+            
+       		_.extend(options, ajaxOptions);
+            this.request = Backbone.Collection.prototype.fetch.call(this, options);
+            if (!this.request) {
+                this.request = this.deferred.promise();
+            }
+            
+            if(typeof routing != "undefined" && typeof routing.ajaxRequests != "undefined") {
+	            routing.ajaxRequests.push(this.request);
+	        }
+            return this.request;
+        },
+        
+        afterFetch: function(collection, response) {
+			if(this.targetElement) $(this.targetElement).removeClass("region-loader");
+			if(this.fetchSuccess) this.fetchSuccess(collection, response);
+        },
+
+        // Primarily a tool for unit tests... Don't rely on calling this.isReady!!
+        isReady: function () {
+            if (this.request) {
+                return !!(this.request.state() === 'resolved');
+            } else {
+                return !!(this.deferred.state() === 'resolved');
+            }
+        },
+
+        // Default success and error handlers used with this.fetch() ...
+        // **Method:** `fetchSuccess` - resolve the deferred here in success
+        fetchSuccess: function (collection, response) {
+            collection.deferred.resolve(response);
+			if(this.targetElement) $(this.targetElement).removeClass("region-loader");           
+            debug.log("fetchSuccess resolved", response);
+        },
+
+        // **Method:** `fetchError` - log response on error
+        fetchError: function (collection, response) {
+            debug.log(response);
+        },
+        
+        /*Method to return if any error occured in data fetching*/
+       isError : function(){
+       	//TODO: implement function as we get errors
+       	return false;
+       }
+
+    });
+
+    return BaseCollection;
+});
