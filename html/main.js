@@ -26,7 +26,7 @@ require.config({
 		'mustache'      : [cdn + 'vendor/mustache', s3 + 'vendor/mustache', '/vendor/mustache'],
 		'backbone'      : [cdn + 'vendor/backbone', s3 + 'vendor/backbone', '/vendor/backbone'],
 		'underscore'    : [cdn + 'vendor/underscore', s3 + 'vendor/underscore', '/vendor/underscore'],
-		jquery        : '/vendor/jquery.1.10.2.min',
+		jquery        : 'vendor/jquery.1.10.2.min',
 		'facebook'      : [cdn + 'vendor/all', s3 + 'vendor/all', '/vendor/all'],
 
 		'jQueryHammer': [cdn + 'vendor/jquery.hammer', s3 + 'vendor/jquery.hammer','/vendor/jquery.hammer'],
@@ -106,7 +106,7 @@ require.config({
 		'imageup'           : [cdn + 'pages/imageup', s3 + 'pages/imageup', '/pages/imageup'],
 		'videopreview'      : [cdn + 'pages/videopreview', s3 + 'pages/videopreview', '/pages/videopreview'],
 		'profile'           : [cdn + 'pages/profile', s3 + 'pages/profile', '/pages/profile'],
-		'fbAccept'          : [cdn + 'pages/fbaccept', s3 + 'pages/fbaccept', '/pages/fbaccept'],		
+		'fbAccept'          : [cdn + 'pages/fbaccept', s3 + 'pages/fbaccept', '/pages/fbaccept'],
 		'game'              : [cdn + 'pages/game', s3 + 'pages/game', '/pages/game'],
 		'fbinvite'          : [cdn + 'pages/fbinvite', s3 + 'pages/fbinvite', '/pages/fbinvite'],
 		'team'              : [cdn + 'pages/team', s3 + 'pages/team', '/pages/team'],
@@ -173,32 +173,34 @@ require.config({
 			exports: 'FB'
 		},
 		'jQueryHammer': {
-            deps: ['jquery']
-        }
+			deps: ['jquery']
+		}
 	},
 	priority: ['text', 'modernizr', 'json2', 'vendor', 'utils', 'facade', 'syncs', 'models', 'views', 'collections', 'controller'],
 	jquery: '1.10.2',
 	waitSeconds: 60
 });
 
+var routing, App, $;
+
 // initializing the router "application" on startup
-define([
-	'require',
-	'backbone',
-	'underscore',
-	'jquery',
-	'application',
-	'packages/common/views/spinner'
-], function (require, Backbone, _, $, app) {
-		//Backbone.noConflict();
-		//apping = new app();
-		//Backbone.history.start();
-		var Spinner = require('packages/common/views/spinner');
+define(function (require) {
+
+		var Backbone = require('backbone'),
+			$ = require('jquery'),
+			app = require('application'),
+			Spinner = require('vendor/plugins/spin.min');
 
 		$(function () {
-		 // doc ready
+
+			$.ajaxPrefilter( function(options,originalOptions,jqXHR){
+				options.url = 'http://' + window.location.host + '/' + options.url;
+			});
+
+			// doc ready
 			Backbone.noConflict();
-	//		jQuery.noConflict();
+
+			//		jQuery.noConflict();
 			routing = new app();
 			App = {};
 			routing.ajaxRequests = [];
@@ -207,9 +209,10 @@ define([
 			routing.mobile = (/iphone|ipod|android|ie|blackberry|fennec/).test(navigator.userAgent.toLowerCase());
 			// set to true on initial app render but set to false once the page shows
 			routing.showLandingPage = true;
-			
+
 			// creating spinner object
 			new Spinner();
+
 			// bind common triggers
 			Backbone.history.start({});
 
@@ -224,14 +227,15 @@ define([
 						_self.appId = "219148511595084";
 					}
 				}();
-				
+
 				this.fbId = function() {
-					
+
 				};
-				
+
 				return this;
 			};
-			
+
 		});
+
 	}
 );
