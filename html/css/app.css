@@ -1134,7 +1134,7 @@ a.add-game-h {
 
 /** Popup CSS **/
 .modal-body {
-	position: absolute;
+	/*position: absolute;*/
 	height: 80%;
 	width: 96%;
 	padding: 0;
@@ -2317,7 +2317,7 @@ li.sport .teamlist-header, .stat-val-outer {
 }
 
 .desktop-link {
-	display: inline-block !important;
+	/*display: inline-block !important;*/
 }
 
 .team-template-outer #menu-container #sports-info {
@@ -2354,6 +2354,14 @@ li.sport .teamlist-header, .stat-val-outer {
 /*  Mobile css    */
 
 @media only screen and (min-width: 320px) and (max-width: 767px) {
+
+
+#menu-frame .display-main, #menu-frame .sub {
+		position: static !important;
+		height: auto !important;
+		width: 100% !important;
+		float: left !important;
+	}
 
 	body {
 		margin: 0 !important;
@@ -2984,7 +2992,7 @@ li.sport .teamlist-header, .stat-val-outer {
 	
 	#team-image-container div.image-item-container {
 		width: 100%; /*320px;*/
-		height: 264px;
+		height: 257px;
 	}
 	
 	#team-image-container div.image-item-container > img {
@@ -3203,6 +3211,8 @@ li.sport .teamlist-header, .stat-val-outer {
 		height: auto !important;
 		min-height: 20px !important;
 	}
+	
+	
 
     .add-participants {
         background: url(images/icons/sprite_icons_only_color_64px.png) no-repeat;
@@ -3218,7 +3228,7 @@ li.sport .teamlist-header, .stat-val-outer {
 		width: 86% !important;
 		margin: 10px 2% !important;
 	}
-
+	
 	
 	.show-older-h {
 		width: 38% !important;
@@ -3586,5 +3596,43 @@ li.sport .teamlist-header, .stat-val-outer {
 		padding: 5px 3px;
 	}
 	
-	 
+	#main-header .image-outer-h {
+		width: 100% !important;
+	}
+	
+	#main-header .image-outer-h li.image {
+		width: 100% !important;
+		margin: 0 !important;
+		padding: 0 !important;
+	}
+	
+	#main-header .image-outer-h li.image div.image-item-container, #main-header .image-outer-h li.image div.image-item-container img {
+		width: 100%;
+	}
+	
+	#main-header .image-outer-h li.image div.game-tile {
+		left: 35% !important;
+	}
+	
+	#change-userpic-modal .modal-header h3 {
+		padding-top: 15px !important;
+	}
+	
+}
+
+
+@media only screen and (min-width: 480px) and (max-width: 767px) {
+	.closer {
+		margin-top: 5px !important;
+	}
+	
+	.loading_image {
+		top: 35px !important;
+	}
+}
+
+@media only screen and (min-width: 767px) {
+	.search-box {
+		margin-right: 50px;
+	}
 }

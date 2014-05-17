@@ -361,6 +361,8 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
         	var self = this, closeModelBox = function() {
         		//$("#modalPopup, #photoPlayerModal, .modal-backdrop").unbind().remove();
 		        $(".modal:not(#Browser-detect)").remove();
+		        // to remove modal backdrop
+		        $(".modal-backdrop").remove();
 		        routing.trigger('common-popup-close');
 		    };
 	//      this.hideSignup();
