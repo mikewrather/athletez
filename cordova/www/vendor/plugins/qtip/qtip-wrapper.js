@@ -1,0 +1,1 @@
+define(["require","vendor/plugins/qtip/qtip"],function(){return jQuery.fn.qtip2=function(e,t){(!routing.mobile||t)&&$(this).each(function(){$(this).qtip(e)})},function(){}});

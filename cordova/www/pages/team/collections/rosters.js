@@ -1,0 +1,1 @@
+define(["facade","sportorg/collections/rosters","utils"],function(e,t,n){var r,i=e._,s=n.lib.Channel;return r=t.extend({url:function(){return testpath?testpath+"/team/rosters/"+this.id+"/"+this.sport_id+"/"+this.complevel_id+"/"+this.season_id:"/api/team/rosters/"+this.id+"?sport_id="+this.sport_id+"&complevel_id="+this.complevel_id+"&season_id="+this.season_id}}),r});

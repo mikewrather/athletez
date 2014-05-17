@@ -1,0 +1,1 @@
+define(["vendor","views","text!chrome/templates/main.html","chrome/models/main"],function(e,t,n,r){var i,s=t.BaseView,o=e.$,u=e._,a=e.Mustache;return i=s.extend({id:"main",className:"clear clearfix",initialize:function(e){this.template=n},model:new r,render:function(){var e=a.to_html(this.template,this.model.toJSON());return this.$el.html(e),this}}),i});

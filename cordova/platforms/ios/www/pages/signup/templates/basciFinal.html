@@ -1,0 +1,56 @@
+<!--<h1>Auth module using the ORM driver for Kohana 3.1</h1>-->
+
+
+
+<div id="regcontainer">
+	<div id="mainregfinal">
+		<div id="regpanefinal">
+			<form action="#/user/create" method="post" accept-charset="utf-8">
+				<div id="finalreg">
+					<div class="field" id="firstname">
+						<span>Name</span>
+						<input type="text" id="first_name" name="Name" placeholder="Name" />
+					</div>
+
+					<div class="field" id="email">
+						<div class="label">
+							<label for="Email">Email</label>
+						</div>
+						<input type="text" name="email" id="emailInput" placeholder="Email" />
+					</div>
+
+					<div class="field">
+						<span>Birthday</span>
+						<div style="width:94%;" id="dob"></div>
+					</div>
+
+					<div class="field">
+						<span>Password</span>
+						<input type="password" name="password" id="password" placeholder="Password" />
+						<input type="password" name="re_password" id="re_password" placeholder="Password Again" />
+					</div>
+
+					
+					<div style="height:40px; margin:10px 0 10px 0;">
+						<div class="row-fluid field">
+							<label for="re_terms_conditions">
+								<input type="checkbox" class="terms-condition-h" id="re_terms_conditions" name="re_terms_conditions"/>I have read and agree to the <a href="tos.html" target="_blank" style="text-decoration:underline;">Terms of Service</a>
+							</label>
+						</div>
+					</div>
+					<% if(invite_hash){ %>
+						<input type="hidden" name="invite_hash" value="<%= invite_hash %>" />
+					<% } %>
+					<input type="submit" name="create" value="Sign Up" class="next btn-common btn-green regsubmitfinal" />
+				</div>
+			</form>
+				
+			<%  if(!page) { %>	<br /><br/>
+				<div id="reglogin">
+					<span>Been here before <a href="#">sign in</a></span>
+				</div>
+			<% } %>
+		</div>
+	</div>
+</div>
+

@@ -1,0 +1,1 @@
+define(["facade","utils","packages/fbinvite/views/image-list"],function(e,t,n){var r;return r=n.extend({imagetype:"large_thumb",name:"Image List",setupAddView:function(){},afterRender:function(){}}),r});

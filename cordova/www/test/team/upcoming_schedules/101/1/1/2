@@ -1,0 +1,26 @@
+{            
+    "payload": [{
+        "game_day": "Dec 24",
+        "game_time": "",
+        "teams": [{
+            "team_name": "The Peddie School"
+        }]
+    }, {
+        "game_day": "Dec 9",
+        "game_time": "",
+        "teams": [{
+            "team_name": "Mercersberg Academy"
+        }]
+    }, {
+        "game_day": "Dec 29",
+        "game_time": "",
+        "teams": [{
+            "team_name": "The Hun School"
+        }]
+    }],
+    "desc": "List of upcoming schedules associated with team, sport and complevel, season.",
+    "exec_data": {
+        "exec_time": 0.024134,
+        "exec_error": false
+    }
+}

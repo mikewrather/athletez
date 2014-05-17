@@ -1,0 +1,1 @@
+define(["user/models/basics"],function(e){var t;return t=e.extend({url:function(){return testpath?testpath+"/user/basics":"/api/user/basics/"+this.id}}),t});

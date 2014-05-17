@@ -1,0 +1,1 @@
+define(["facade","sportorg/collections/orgs","utils"],function(e,t,n){var r;return r=t.extend({url:function(){return testpath?testpath+"/user/orgs/"+this.id+"/"+this.sport_id:"/api/user/orgs/"+this.id+"?sport_id="+this.sport_id+"&_="+(new Date).getTime()}}),r});

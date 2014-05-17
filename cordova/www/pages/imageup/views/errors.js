@@ -1,0 +1,1 @@
+define(["require","text!imageup/templates/error_template.html","facade","views","utils","vendor"],function(e,t){var n,r=e("facade"),i=e("views"),s=e("utils"),o=s.lib.Channel,u=e("vendor"),a=i.SectionView,f=r.$,l=r._,c=s.debug;return n=a.extend({id:"main-content",template:t,initialize:function(e){a.prototype.initialize.call(this,e),c.log("error view")}}),n});

@@ -186,7 +186,8 @@ var routing, App, $;
 // initializing the router "application" on startup
 define(function (require) {
 
-		var Backbone = require('backbone'),
+		var _ = require('underscore'),
+			Backbone = require('backbone'),
 			$ = require('jquery'),
 			app = require('application'),
 			Spinner = require('vendor/plugins/spin.min');
@@ -194,7 +195,7 @@ define(function (require) {
 		$(function () {
 
 			$.ajaxPrefilter( function(options,originalOptions,jqXHR){
-				options.url = 'http://' + window.location.host + '/' + options.url;
+				options.url = _.isUndefined(window.location.host) || window.location.host === "" ? 'http://www.athletez.com' + options.url : options.url;
 			});
 
 			// doc ready

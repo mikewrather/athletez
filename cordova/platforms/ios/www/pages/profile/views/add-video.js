@@ -1,0 +1,1 @@
+define(["require","profile/models/addvideo","media/views/add-video"],function(e,t,n){var r;return r=n.extend({setOptions:function(e){if(!this.collection)throw new Error("ProfileAddVideoView expected options.collection.");this.model||(this.model=new t({id:this.collection.id,sport_id:this.collection.sport_id}))}}),r});

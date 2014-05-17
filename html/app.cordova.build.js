@@ -4,7 +4,6 @@
 	baseUrl: './',
 //	mainConfigFile: './main.js',
 	dir: '../cordova/www',
-	optimize: 'uglify',
 	paths: {
 
 		jquery: 'vendor/jquery.1.10.2.min',
@@ -202,75 +201,8 @@
 		PAGES START
 
 	*/  {
-			name: 'chrome',
-			exclude: ['vendor', 'facade', 'utils', 'syncs', 'models', 'views', 'collections']
-		},
-		{
-			name: 'imageup',
-			exclude: ['vendor', 'facade', 'utils', 'syncs', 'models', 'views', 'collections']
-		},
-		{
-			name: 'videopreview',
-			exclude: ['vendor', 'facade', 'utils', 'syncs', 'models', 'views', 'collections']
-		},
-		{
-			name: 'profile',
-			exclude: ['vendor', 'facade', 'utils', 'syncs', 'models', 'views', 'collections']
-		},
-		{
-			name: 'game',
-			exclude: ['vendor', 'facade', 'utils', 'syncs', 'models', 'views', 'collections']
-		},
-		{
-			name: 'team',
-			exclude: ['vendor', 'facade', 'utils', 'syncs', 'models', 'views', 'collections']
-		},
-		{
-			name: 'registration',
-			exclude: ['vendor', 'facade', 'utils', 'syncs', 'models', 'views', 'collections']
-		},
-		{
-			name: 'signup',
-			exclude: ['vendor', 'facade', 'utils', 'syncs', 'models', 'views', 'collections']
-		},
-		{
-			name: 'home',
-			exclude: ['vendor', 'facade', 'utils', 'syncs', 'models', 'views', 'collections']
-		},
-		{
-			name: 'profilesetting',
-			exclude: ['vendor', 'facade', 'utils', 'syncs', 'models', 'views', 'collections']
-		},
-		{
-			name: 'userresume',
-			exclude: ['vendor', 'facade', 'utils', 'syncs', 'models', 'views', 'collections']
-		},
-		{
-			name: 'login',
-			exclude: ['vendor', 'facade', 'utils', 'syncs', 'models', 'views', 'collections']
-		}/*
-
-		END PAGES
-
-	  {
-			name: 'add-club',
-			exclude: ['vendor', 'facade', 'utils', 'syncs', 'models', 'views', 'collections']
-		},
-		{
-			name: 'addgame',
-			exclude: ['vendor', 'facade', 'utils', 'syncs', 'models', 'views', 'collections']
-		},
-		{
-			name: 'photo-player',
-			exclude: ['vendor', 'facade', 'utils', 'syncs', 'models', 'views', 'collections']
-		},
-		{
-			name: 'tag',
+			name: 'application',
 			exclude: ['vendor', 'facade', 'utils', 'syncs', 'models', 'views', 'collections']
 		}
-	/*	{
-			name: 'imagecropper',
-			exclude: ['vendor', 'facade', 'utils', 'syncs', 'models', 'views', 'collections']
-		}
-*/	]
+	]
 })

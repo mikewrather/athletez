@@ -1,0 +1,1 @@
+define(["models/base"],function(e){var t;return t=e.extend({defaults:{},validate:function(e,t){if(e.priority<0)return"Priority cannot be negative."},validation:{email:{required:!0,pattern:"email",msg:"Please enter a valid email"}}}),t});

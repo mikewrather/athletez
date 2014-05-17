@@ -1,0 +1,35 @@
+<div class="section-sportslevel">
+	<div class="select-sports-outer-h">
+		<span class="span2">What Sport?</span>
+		<!-- class="ddl-school-sports"-->
+		<select class="ddl-sports" orgsid="{{orgsId}}" tabindex="0">
+			<option value="">Select Sport</option>
+			{{#sports}}
+			<option value="{{sport_id}}">{{sport_name}}</option>
+			{{/sports}}
+		</select>
+
+		<p class="field-error"></p>
+
+		<p class="field-message"></p>
+
+		<span><a href="javascript:void(0)" class="btn-Remove-Sport" tabindex="0">Remove</a> </span>
+	</div>
+
+	<div class="clearfix inner-section">
+		<div class="sub-section-prof-setting">
+			<div>
+
+				<div class="spn-black-heading spn-sport-name">
+				</div>
+				<!--class="div-school-sports-level"-->
+				<div class="div-sports-level"></div>
+
+			</div>
+			<div class="">
+				<!--<span class="floatLeft"><a href="javascript:void(0)" class="btn-add-level" orgsid="{{orgsId}}" tabindex="0">Add Level</a> </span>-->
+				<span class="floatRight"><a href="javascript:void(0)" class="common-btn common-btn-direction btn-Finish-Sports" tabindex="0">Cancel</a> </span>
+			</div>
+		</div>
+	</div>
+</div>

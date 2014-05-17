@@ -1,0 +1,1 @@
+define(["models/base"],function(e){return e.extend({defaults:{},email:undefined,url:function(){return"api/user/pw_reset?email="+encodeURIComponent(this.email)},payload:{}})});

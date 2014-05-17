@@ -1,0 +1,1 @@
+define(["facade","sportorg/models/game"],function(e,t){var n,r=e._;return n=t.extend({idAttribute:"game_id",url:function(){return"/api/game/add/"+this.game_id}}),n});

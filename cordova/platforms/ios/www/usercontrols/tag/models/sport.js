@@ -1,0 +1,1 @@
+define(["facade","sportorg/models/sport"],function(e,t){var n,r=e._;return n=t.extend({url:function(){return"/api/sport/basics/"+this.id}}),n});
