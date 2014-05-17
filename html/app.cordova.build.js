@@ -3,7 +3,7 @@
 	appDir: './',
 	baseUrl: './',
 //	mainConfigFile: './main.js',
-	dir: '../cordova',
+	dir: '../cordova/www',
 	optimize: 'uglify',
 	paths: {
 
