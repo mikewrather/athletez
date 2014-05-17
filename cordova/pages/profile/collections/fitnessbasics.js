@@ -1,1 +1,0 @@
-define(["facade","user/collections/fitnessbasics","utils"],function(e,t,n){var r;return r=t.extend({url:function(){return testpath?testpath+"/user/rdtree/"+this.id+"/?overview=1&sports_id="+this.sport_id:"/api/user/rdtree/"+this.id+"?overview=1&sports_id="+this.sport_id}}),r});

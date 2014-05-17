@@ -1,1 +1,0 @@
-define(["models/base"],function(e){var t;return t=e.extend({defaults:{message:null,buttons:[{name:null,callback:Function.prototype}],state:"new"}}),t});

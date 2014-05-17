@@ -1,1 +1,0 @@
-define(["facade","media/collections/images","utils"],function(e,t,n){var r,i=e._,s=n.lib.Channel;return r=t.extend({url:function(){return testpath?testpath+"/user/fbpics":"/api/user/fbpics"}}),r});

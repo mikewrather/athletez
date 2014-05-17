@@ -1,1 +1,0 @@
-define(["facade","user/models/rdtree"],function(e,t){var n,r=e._;return n=t.extend({idAttribute:"id1",data:{user_id:this.user_id,resume_data_id:this.resume_data_id,user_value:this.user_value},processData:!0,url:function(){return"api/resumedataval/add/"}}),n});

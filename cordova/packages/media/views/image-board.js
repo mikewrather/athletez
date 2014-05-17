@@ -1,1 +1,0 @@
-define(["require","text!media/templates/image-board.html","facade","views"],function(e,t){var n,r=e("facade"),i=e("views"),s=i.BaseView,o=r._;return n=s.extend({tagName:"li",className:"image-board",template:t,setOptions:function(e){if(!this.model)throw new Error("ImageBoardView expected options.model.")},render:function(){s.prototype.render.call(this)}}),n});

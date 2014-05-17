@@ -1,1 +1,0 @@
-define(["facade","media/collections/images","utils"],function(e,t,n){var r;return r=t.extend({limit:8,offset:0,url:function(){if(testpath)return testpath+"/user/media/"+this.id+"/"+this.sport_id;var e=this.limit?"&limit="+this.limit:"";return"/api/user/media/"+this.id+"?offset="+this.offset+e+"&sport_id="+this.sport_id}}),r});

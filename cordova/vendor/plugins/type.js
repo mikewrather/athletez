@@ -1,1 +1,0 @@
-(function(e){var t;t={"[object Boolean]":"boolean","[object Number]":"number","[object String]":"string","[object Function]":"function","[object Array]":"array","[object Date]":"date","[object RegExp]":"regexp","[object Object]":"object"},e.type=e.fn.type=function(e){return e==null?String(e):t[toString.call(e)]||"object"}})(Zepto);

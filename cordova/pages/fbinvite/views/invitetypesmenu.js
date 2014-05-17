@@ -1,1 +1,0 @@
-define(["fbinvite/views/invitetypes","text!fbinvite/templates/invitetypesmenu.html"],function(e,t){return e.extend({template:t,events:{"click #inviteMainMenu":"showMainMenu"},showMainMenu:function(e){this.controller.setupInviteTypesView()}})});

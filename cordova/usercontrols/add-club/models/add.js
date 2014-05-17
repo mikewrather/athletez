@@ -1,1 +1,0 @@
-define(["facade","sportorg/models/org"],function(e,t){return t.extend({})});

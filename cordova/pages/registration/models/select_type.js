@@ -1,1 +1,0 @@
-define(["user/models/basics"],function(e){var t;return t=e.extend({url:function(){return"/api/user/basics/"+this.id},fetchSuccess:function(t,n){e.prototype.fetchSuccess.call(this,t,n)}}),t});

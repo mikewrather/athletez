@@ -1,1 +1,0 @@
-define(["facade","sportorg/models/complevel"],function(e,t){var n,r=e._;return n=t.extend({url:function(){return testpath?testpath+"/api/org/basics/":(this.orgs_id==undefined,"/api/org/basics/"+this.orgs_id+"?id1="+this.orgs_id)},fetchSuccess:function(e,t){}}),n});

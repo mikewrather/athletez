@@ -1,1 +1,0 @@
-define(["models/base"],function(e){var t;return t=e.extend({defaults:{}}),t});

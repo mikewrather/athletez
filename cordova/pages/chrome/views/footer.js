@@ -1,1 +1,0 @@
-define(["vendor","views","text!chrome/templates/footer.html","chrome/models/footer"],function(e,t,n,r){var i,s=t.BaseView,o=e.$,u=e._,a=e.Mustache;return i=s.extend({tagName:"footer",className:"container-fluid clearfix",initialize:function(e){this.template=n},model:new r,render:function(){var e=a.to_html(this.template,this.model.toJSON());return this.$el.html(e),this}}),i});

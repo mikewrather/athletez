@@ -1,1 +1,0 @@
-define(["facade","models/base"],function(e,t){var n,r=e._;return n=t.extend({defaults:r.extend({},(new t).attributes,{name:""}),url:function(){return"/api/team/addopponent/"+this.id}}),n});

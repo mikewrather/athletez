@@ -1,1 +1,0 @@
-define(["require","backbone","underscore","registration","views","facade","utils"],function(e,t,n,r){var i,s=t.View;return i=s.extend({initialize:function(e){$("#errormsg, #preview").html(""),$("#RegModal").modal("show"),console.log($("#RegModal .modal-body")),$("#RegModal").on("hide",function(){$("div#modalPopup").remove()})}}),i});

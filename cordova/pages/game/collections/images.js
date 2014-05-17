@@ -1,1 +1,0 @@
-define(["facade","media/collections/images","utils"],function(e,t,n){var r,i=e._,s=n.lib.Channel;return r=t.extend({limit:8,offset:0,url:function(){return testpath?testpath+"/game/media/"+this.id:"/api/game/media/"+this.id+"?limit="+this.limit+"&offset="+this.offset}}),r});

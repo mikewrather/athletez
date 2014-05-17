@@ -1,1 +1,0 @@
-define(["models/base"],function(e){return e.extend({url:function(){return testpath?testpath+"/game/score/":"/api/game/score/"+this.gameId+"/?games_teams_link_id="+this.teams_id+"&score="+this.score}})});

@@ -1,1 +1,0 @@
-define(["facade","models/base"],function(e,t){var n,r=e._;return n=t.extend({idAttribute:"team_id",url:function(){this.orgs_id==undefined;if(this.type=="add")return"/api/user/addteam/"+this.user_id;if(this.type=="delete")return"/api/user/team/"+this.user_id}}),n});

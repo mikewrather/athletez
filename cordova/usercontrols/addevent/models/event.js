@@ -1,1 +1,0 @@
-define(["facade","models/base"],function(e,t){var n=e._;return t.extend({sports_id:undefined,url:function(){return"/api/user/games?sports_id="+this.sports_id}})});

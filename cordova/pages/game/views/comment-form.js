@@ -1,1 +1,0 @@
-define(["require","game/models/commentform","site/views/comment-form"],function(e,t,n){var r;return r=n.extend({setOptions:function(e){if(!this.collection)throw new Error("GameCommentFormView expected options.collection.");this.model||(this.model=new t({id:this.collection.id}),this.model.fetch())}}),r});

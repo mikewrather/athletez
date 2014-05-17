@@ -1,1 +1,0 @@
-define(["facade","site/collections/comments","utils"],function(e,t,n){var r,i=e._,s=n.lib.Channel;return r=t.extend({url:function(){return testpath?testpath+"/game/comments/"+this.id:"/api/game/comments/"+this.id}}),r});

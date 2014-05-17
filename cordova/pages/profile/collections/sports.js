@@ -1,1 +1,0 @@
-define(["facade","sportorg/collections/sports","utils"],function(e,t,n){var r;return r=t.extend({url:function(){return testpath?testpath+"/user/sports/"+this.id:"/api/user/sports/"+this.id}}),r});

@@ -1,1 +1,0 @@
-define(["facade","site/collections/comments","utils"],function(e,t,n){var r;return r=t.extend({url:function(){return testpath?testpath+"/comment/getall/"+this.id:"/api/comment/getall/?subject_enttypes_id="+this.subject_entity_type+"&subject_id="+this.id}}),r});

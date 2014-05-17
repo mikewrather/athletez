@@ -1,1 +1,0 @@
-define([],function(){var e;return e={beforeSend:function(e){}},e});

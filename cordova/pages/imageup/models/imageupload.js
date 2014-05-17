@@ -1,1 +1,0 @@
-define(["facade","media/models/image"],function(e,t){var n,r=e._;return ImageUploadModel=t.extend({initialize:function(e,n){t.prototype.initialize.call(e,n)}}),n});

@@ -1,1 +1,0 @@
-define(["facade","collections","sportorg/collections/games","utils"],function(e,t,n,r){var i,s=t.BaseCollection,o=e._,u=r.lib.Channel;return i=n.extend({url:function(){var e="";return this.sports_id&&(e+="sports_id="+this.sports_id+"&"),this.teams_id&&(e+="teams_id="+this.teams_id+"&"),"/api/game/search/0?"+e}}),i});

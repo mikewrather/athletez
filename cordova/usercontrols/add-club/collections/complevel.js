@@ -1,1 +1,0 @@
-define(["facade","sportorg/collections/complevel_profiles","utils"],function(e,t){return t.extend({})});

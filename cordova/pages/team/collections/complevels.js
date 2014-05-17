@@ -1,1 +1,0 @@
-define(["facade","sportorg/collections/complevels","utils"],function(e,t,n){var r,i=n.lib.Channel;return r=t.extend({url:function(){return testpath?testpath+"/org/complevels/"+this.id+"/"+this.sport_id:"/api/org/complevels/"+this.id+"?sports_id="+this.sport_id}}),r});

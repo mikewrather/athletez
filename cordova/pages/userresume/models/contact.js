@@ -1,1 +1,0 @@
-define(["facade","user/models/common"],function(e,t){var n,r=e._;return n=t.extend({}),n});

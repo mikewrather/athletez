@@ -1,1 +1,0 @@
-define(["facade","models/base"],function(e,t){var n,r=e._;return n=t.extend({url:function(){return testpath?testpath+"/media/addvote/"+this.id:"/api/media/addvote/"+this.id}}),n});

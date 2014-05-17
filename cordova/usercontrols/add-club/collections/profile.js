@@ -1,1 +1,0 @@
-define(["facade","sportorg/collections/season_profiles","utils"],function(e,t,n,r){return t.extend({ParseForDropdown:function(){return this.toJSON()}})});

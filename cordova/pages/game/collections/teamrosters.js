@@ -1,1 +1,0 @@
-define(["facade","sportorg/collections/teamrosters","utils"],function(e,t,n){var r,i=e._,s=n.lib.Channel;return r=t.extend({url:function(){return testpath?testpath+"/team/roster/"+this.id:"/api/team/roster/"+this.id}}),r});

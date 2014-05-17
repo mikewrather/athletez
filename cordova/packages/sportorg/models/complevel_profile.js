@@ -1,1 +1,0 @@
-define(["facade","models/base"],function(e,t){var n,r=e._,i=t.extend({defaults:r.extend({},(new t).attributes,{payload:{id:0,name:null,min_age:0,max_age:0},desc:"Complevel Profile information",exec_data:{exec_time:0,exec_error:!1}}),url:function(){return"/api/complevelprofile/basics/"+this.id},fetchSuccess:function(e,t){}});return i});

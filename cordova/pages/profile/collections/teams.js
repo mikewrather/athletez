@@ -1,1 +1,0 @@
-define(["facade","sportorg/collections/teams","utils"],function(e,t,n){var r;return r=t.extend({url:function(){return"/api/user/teamlist/"+this.id+"?sports_id="+this.sports_id}}),r});
