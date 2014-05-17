@@ -1,0 +1,30 @@
+{{#payload}}
+	<div class="select-team">
+	{{#teams}}
+		<div class="org-name">
+			<a href="/#!team/{{team_id}}"><span class="team-label">{{org_name}} | {{complevel}} | {{season}} {{year}}</span></a>
+			<a href="javascript: void(0);" data-team-id="{{team_id}}" data-sport-id="0" title="add game" class="add-game-h desktop-link right-with-icon">ADD GAME</a>
+			<!--<a href="javascript: void(0);" data-sport-id="0" title="add team" class="add-event-h">Click here to Add Event.</a>-->
+		</div>
+			<div class="game-box-outer">
+				<ul>
+				{{#schedules}}
+					<li data-game-id="{{id}}">
+						<a href="#!game/{{id}}" data-team-id="{{team_id}}" class="{{#isWinner}}win{{/isWinner}}{{^isWinner}}background-blue{{/isWinner}} team-info-h">
+							<div class="game-info hide">
+								<span class="game-day">{{gameDay}}</span>{{#teams}}<span class="team-name" data-winner="{{isWinner}}" data-team-id="{{id}}">
+								&nbsp; vs. {{team_name}}</span>{{/teams}}
+								<span class="game-score">{{#teams}}{{#points_scored}}<span class="team-score {{#isWinner}}win{{/isWinner}}{{^isWinner}}loss{{/isWinner}}">{{points_scored}}</span>{{/points_scored}}{{/teams}}</span>
+							</div>
+						</a>
+					</li>
+				{{/schedules}}
+			</ul>
+		</div>
+		
+		<a href="javascript: void(0);" title="show older" class="common-btn common-default-comment-dark-grey mobile-link show-older-h">SHOW OLDER</a>
+		<a href="javascript: void(0);" data-team-id="{{team_id}}" data-sport-id="0" title="add game" class="add-game-h common-btn common-default-game-orange mobile-link right-with-icon">ADD GAME</a>
+		
+	{{/teams}}
+	</div>
+{{/payload}}

@@ -1,0 +1,1 @@
+define(["facade","collections","sportorg/collections/positions","utils"],function(e,t,n,r){var i,s=t.BaseCollection,o=e._,u=r.lib.Channel;return i=n.extend({url:function(){return testpath?testpath+"/api/org/basics/":(this.orgs_id==undefined,"/api/sport/positions/"+this.sport_id+"?id1="+this.sport_id)}}),i});

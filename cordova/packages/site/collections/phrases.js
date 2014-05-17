@@ -1,0 +1,1 @@
+define(["facade","collections","site/models/phrase","utils","controller"],function(e,t,n,r,i){var s,o=t.BaseCollection,u=t.ApplicationStates;return _=e._,Channel=r.lib.Channel,console.error(this),s=o.extend({}),s});

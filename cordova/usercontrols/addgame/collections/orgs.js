@@ -1,0 +1,1 @@
+define(["facade","collections","sportorg/collections/orgs","utils"],function(e,t,n){var r;return r=n.extend({}),r});

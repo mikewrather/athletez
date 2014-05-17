@@ -1,0 +1,50 @@
+{{#errorDisplay}}
+<div class="span8" style="color:red;"> Error: {{errorValue}}</div>
+{{/errorDisplay}}
+
+{{^errorDisplay}}
+{{#payload}}
+
+<div class="row-fluid">
+	<div class="span5">
+		<ul id="fb-userpic-prev">
+			<li><img style="width:100%;" class="picture" src="{{profile_picture}}" alt="{{name}} Facebook Avatar"/></li>
+		</ul>
+	</div>
+	<div class="span7 fbreg-fields">
+
+		<div class="field">
+			<div class="label">Birthday</div>
+			<span class="value" data-name="birthday" data-value="{{birthday}}">
+				<input type="text" name="birthday" value="{{birthday}}" disabled="disabled"/><div class="edit">&nbsp;</div>
+
+			</span>
+		</div>
+
+		<div class="field">
+			<div class="label">Email Address</div>
+			<span class="value" data-name="email" data-value="{{email}}">
+				<input type="text" name="email" value="{{email}}" disabled="disabled"/><div class="edit">&nbsp;</div>
+			</span>
+		</div>
+		<div class="field">
+			<div class="label">Password</div>
+			<input type="password" class="password" name="password" placeholder="Password"/>
+		</div>
+		<div class="field">
+			<div class="label">Again</div>
+			<input type="password" name="password-again" placeholder="Password Again"/>
+		</div>
+		<div class="password-error"></div>
+
+		<div class="row-fluid">
+			<label for="agree"><input type="checkbox" id="agree" name="agree"/>I have read and agree to the <a href="tos.html" target="_blank" style="text-decoration:underline;;">Terms of Service</a></label>
+		</div>
+
+	</div>
+	<div class="row-fluid"><a href="javascript:void(0);" class="next btn-common btn-green">What's Next</a></div>
+</div>
+
+{{/payload}}
+
+{{/errorDisplay}}

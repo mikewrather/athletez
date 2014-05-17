@@ -1,0 +1,1 @@
+define(["facade","collections","sportorg/collections/sports","utils"],function(e,t,n,r){var i,s=t.BaseCollection,o=e._,u=r.lib.Channel;return i=n.extend({sport_type:1,male:1,female:0,url:function(){if(testpath)return testpath+"/api/user/sports";if(this.type=="get")return"/api/user/sports/"+this.user_id+"?team_type=individual"},data:{sports_id:this.sports_id}}),i});

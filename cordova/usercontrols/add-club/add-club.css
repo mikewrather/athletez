@@ -1,0 +1,22 @@
+.club-season-profile, .comptetion-level-type {
+	height: 80px;
+}
+.address-verified {
+	border: 2px solid green;
+}
+.address-field-error {
+	border: 2px solid red;
+}
+.address-error{
+	color: red;
+float: right;
+}
+.add-club-school-outer {
+	height: 95%;
+	overflow-y: auto;
+	overflow-x: hidden;
+    min-height: 95%;
+}
+.location-buttons {
+	margin-top: 30px;
+}

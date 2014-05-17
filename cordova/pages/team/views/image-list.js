@@ -1,0 +1,1 @@
+define(["facade","utils","media/views/image-list","team/views/add-image"],function(e,t,n,r){var i,s=t.lib.Channel;return i=n.extend({setupAddView:function(){var e=this}}),i});

@@ -1,0 +1,1 @@
+define(["facade","site/collections/comments","utils"],function(e,t,n){var r;return r=t.extend({url:function(){return testpath?testpath+"/team/comments/"+this.id:"/api/team/comments/"+this.id}}),r});

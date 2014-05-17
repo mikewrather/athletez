@@ -1,0 +1,15 @@
+{            
+    "payload": [{
+        "season_id": "1",
+        "season_name": "Fall'17"
+    },{
+        "season_id": "2",
+        "season_name": "Fall'18"
+    }],
+    "desc": "List of seasons associated with the team, sport and complevel",
+    "exec_data": {
+        "exec_time": 0.024134,
+        "exec_error": false
+    }
+}
+
