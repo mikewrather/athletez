@@ -281,7 +281,8 @@ class Controller_Api_Base extends AuthController
 			$result = (is_object($retObj) && !is_subclass_of($retObj,'Exception')) || is_array($retObj) ?
 				$this->getDataFromView($retObj) : $this->getDataFromView();
 
-		$this->response->headers('Content-Type','application/json');
+        $this->response->headers('Access-Control-Allow-Origin: *');
+        $this->response->headers('Content-Type','application/json');
 
 		// Initial Request set-up
 		if($this->request->is_initial())

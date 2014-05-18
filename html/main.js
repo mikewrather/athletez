@@ -190,11 +190,12 @@ define(function (require) {
 			Backbone = require('backbone'),
 			$ = require('jquery'),
 			app = require('application'),
-			Spinner = require('vendor/plugins/spin.min');
+			Spinner = require('packages/common/views/spinner');
 
 		$(function () {
 
 			$.ajaxPrefilter( function(options,originalOptions,jqXHR){
+				options.url = options.url.charAt(0) === "/" ? options.url : "/" + options.url;
 				options.url = _.isUndefined(window.location.host) || window.location.host === "" ? 'http://www.athletez.com' + options.url : options.url;
 			});
 

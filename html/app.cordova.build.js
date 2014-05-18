@@ -201,7 +201,7 @@
 		PAGES START
 
 	*/  {
-			name: 'application',
+			name: 'main',
 			exclude: ['vendor', 'facade', 'utils', 'syncs', 'models', 'views', 'collections']
 		}
 	]

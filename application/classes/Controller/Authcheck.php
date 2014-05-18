@@ -66,15 +66,15 @@ class Controller_Authcheck extends AuthController
 		$retArr['nav'][$retArr['user_name']] = array(
 			array(
 				"page"=>"View My Profile",
-				"link"=>"/#!profile"
+				"link"=>"#!profile"
 			),
 			array(
 				"page"=>"Teams & Sports",
-				"link"=>"/#!usersettings"
+				"link"=>"#!usersettings"
 			),
 			array(
 				"page"=>"Athletic Resume",
-				"link"=>"/#resume"
+				"link"=>"#resume"
 
 			)
 		);
@@ -90,18 +90,18 @@ class Controller_Authcheck extends AuthController
 
 		if($retArr['facebook']['id']>0) $retArr['nav']["Social"][] = array(
 			"page" => "Invite From Facebook",
-			"link" => "/#fbinvite"
+			"link" => "#fbinvite"
 		);
 
 		$retArr['nav'][] = array(
 			"page" => "Log Out",
-			"link" => "/#logout",
+			"link" => "#logout",
 			"id" => "logoutId"
 		);
 
 		$retArr['nav'][] = array(
 			"page" => "Find Content",
-			"link" => "/#!home"
+			"link" => "#!home"
 		);
 
 		echo json_encode($retArr);

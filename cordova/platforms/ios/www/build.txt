@@ -246,7 +246,7 @@ collections/iterator.js
 collections/messaging.js
 collections.js
 
-application.js
+main.js
 ----------------
 vendor/plugins/text.js
 text!chrome/templates/header.html
@@ -772,3 +772,5 @@ text!packages/common/templates/popup.html
 vendor/plugins/iscroll/iscroll.js
 packages/common/views/popup.js
 application.js
+packages/common/views/spinner.js
+main.js
