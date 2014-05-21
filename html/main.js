@@ -117,6 +117,8 @@ require.config({
 		'profilesetting'    : [cdn + 'pages/profilesetting', s3 + 'pages/profilesetting', '/pages/profilesetting'],
 		'userresume'        : [cdn + 'pages/userresume', s3 + 'pages/userresume', '/pages/userresume'],
 
+		'compcss'        : [cdn + 'css/components', s3 + 'css/components', '/css/components'],
+
 		//user controls
 		'usercontrol'       : [cdn + 'usercontrols', s3 + 'usercontrols', '/usercontrols'],
 		'add-club'          : [cdn + 'usercontrols/add-club/add-club', s3 + 'usercontrols/add-club/add-club', '/usercontrols/add-club/add-club'],
@@ -208,7 +210,23 @@ define(function (require) {
 			routing.ajaxRequests = [];
 			routing.intializeImageAndVideo();
 			routing.initTriggers();
+
 			routing.mobile = (/iphone|ipod|android|ie|blackberry|fennec/).test(navigator.userAgent.toLowerCase());
+
+			routing.isNative = function(){
+				var page_url = window.location.href,
+					url_arr = page_url.split('://');
+				return url_arr[0]==="file" ? true : false;
+			}();
+
+			routing.isNative = function(){
+				var page_url = window.location.href,
+					url_arr = page_url.split('://');
+				return url_arr[0]==="file" ? true : false;
+			}();
+
+
+
 			// set to true on initial app render but set to false once the page shows
 			routing.showLandingPage = true;
 

@@ -2,15 +2,18 @@
     float:left;
     width: 15%;
 }
+
 .curr-browser img{
     width:100%;
 }
+
 .notify-text{
     float: right;
     width: 75%;
     height: 120px;
     padding: 10px;
 }
+
 #recommendations{
     text-align: center;
     display: block;
@@ -29,7 +32,9 @@
     margin:9px;
 }
 #recommendations div img{
+
 }
+
 #landing-info{
     margin-top:50px;
     width: 100%;
@@ -38,16 +43,20 @@
     text-align: center;
     background-color: rgba(0,0,0,.5);
 }
+
 #alternative-actions{
     text-align: center;
     margin: auto;
     margin-top: 40px;
     width: 700px;
 }
+
+
 a#browse{
     color: white;
     width: 350px;
 }
+
 #landing-info li, #landing-info div{
     color: #EFEFEF;
     text-shadow: 4px 1px 1px rgba(0, 0, 0, 0.70);
@@ -62,20 +71,24 @@ a#browse{
     padding: 20px 0px 0px 0px;
     margin:auto;
 }
+
 #landing-header:empty{
-    background-image:url('/css/images/logo_large.png');
+    background-image:url('../images/logo_large.png');
     background-repeat: no-repeat;
     height: 150px;
     max-width: 800px;
 }
+
 #landing-info #site-summary{
     list-style-type: circle;
     font-size: 1.6em;
 }
+
 #landing-info #site-summary li{
    line-height: 30px;
     margin-top:10px;
 }
+
 #site-info{
     font-size: 2.0em;
     font-weight: bold;
@@ -85,6 +98,7 @@ a#browse{
     margin: auto;
     text-shadow: 2px 2px 2px rgba(255, 255, 255, 0.80);
 }
+
 #landing-info hr{
     border:0;
     height: 1px;
@@ -93,19 +107,23 @@ a#browse{
     width: 75%;
     opacity: .5;
 }
+
 #reg-landing{
     width: 280px;
     margin:15px auto;
 }
+
 #reg-landing #mainreg{
     background: none;
 }
+
 #reg-landing #regcontainer{
     width: 100%;
 }
 #reg-landing #mainreg{
     width:100%;
 }
+
 #reg-landing .regor {
     color: white;
     margin: 15px 0 0 0;
@@ -120,8 +138,9 @@ a#browse{
     border-style: none;
     height: 45px;
     position: relative;
-    background: #68659c url(http://cdn.athletez.com/resources/img/facebook-f.png) 94% no-repeat;
+    background: #68659c url(../images/facebook-f.png) 94% no-repeat;
 }
+
 #reg-landing #fbpane #label{
     margin: 0;
     position: absolute;
@@ -132,9 +151,11 @@ a#browse{
     float: left;
     height: 20px;
 }
+
 #reg-landing #regpanemain {
     width: 100%;
 }
+
 #reg-landing #firstregbase {
     padding:0;
     float: none;
@@ -145,11 +166,14 @@ a#browse{
     margin: 20px 0 0 0;
     padding: 8px 5%;
     position: relative;
+
 }
+
 #reg-landing .signupsubmit{
     margin-top:0;
     padding-top: 10px;
 }
+
 #reg-landing .signupsubmit input{
     width: 48% !important;
     color: white;
@@ -157,6 +181,7 @@ a#browse{
     border-style: none;
     height: 40px;
 }
+
 #reg-landing .signupsubmit input:first-child{
     float: left;
     background-color: #9DCA3C;
@@ -165,9 +190,11 @@ a#browse{
     float: right;
     background-color: #1AA0AE;
 }
+
 .landing-spacer{
     margin: auto; text-align: center; height: 30px;
 }
+
 @media only screen and (min-width: 320px) and (max-width: 767px) {
     #alternative-actions{
         text-align: center;
@@ -175,6 +202,7 @@ a#browse{
         margin-top: 40px;
         width: 50%;
     }
+
     #site-info {
         font-size: 1.0em;
         font-weight: bold;
@@ -183,16 +211,19 @@ a#browse{
         width: 90%;
         margin: auto;
         text-shadow: 2px 2px 2px rgba(255, 255, 255, 0.80);
+
     }
     #landing-header:empty{
-        background-image:url('/css/images/logo_small.png');
+        background-image:url('../images/logo_small.png');
         height: 80px;
         max-width: 300px;
     }
+
     #landing-info #landing-header{
         font-size:2em;
         padding: 0;
     }
+
     #landing-info hr{
         display: none;
     }
@@ -206,6 +237,7 @@ a#browse{
     .landing-spacer{
         height: 10px;
     }
+
     .register-wrapper-h {
         min-height: 600px;
     }

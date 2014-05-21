@@ -5,7 +5,7 @@
  */
 define(['require',
 	'text!usercontrol/landing/templates/landing.html',
-	'text!usercontrol/landing/landing.css',
+	'text!compcss/landing.css',
 	"signup/models/registerbasic",
 	"signup/views/registerbasic",
 	'facade',
@@ -47,7 +47,7 @@ define(['require',
 			"click #browse":"scrollToContent"
 		},
 		
-		cssArr : [base_url + "usercontrols/landing/landing.css"],
+		cssArr : [base_url + "css/components/landing.css"],
 		/*initialize gets called by default when constructor is initialized*/
 		initialize : function(options) {
 
@@ -164,7 +164,11 @@ define(['require',
 			if(options.background_image == undefined){
 		//		var rand = Math.ceil(Math.random()*100);
 		//		var bgs = ['1.jpg','2.jpg','3.jpg','4.jpg','5.jpg','6.jpg','7.jpg','8.jpg'];
-				options.background_image = "http://athletez.s3.amazonaws.com/resources/img/landing/7.jpg";// + bgs[rand % bgs.length];
+
+
+				options.background_image = routing.isNative ?
+					base_url + "css/images/7.jpg" : // + bgs[rand % bgs.length];
+					"http://athletez.s3.amazonaws.com/resources/img/landing/7.jpg";// + bgs[rand % bgs.length];
 
 			}
 

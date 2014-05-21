@@ -63,7 +63,7 @@ a#browse{
     margin:auto;
 }
 #landing-header:empty{
-    background-image:url('/css/images/logo_large.png');
+    background-image:url('../images/logo_large.png');
     background-repeat: no-repeat;
     height: 150px;
     max-width: 800px;
@@ -120,7 +120,7 @@ a#browse{
     border-style: none;
     height: 45px;
     position: relative;
-    background: #68659c url(http://cdn.athletez.com/resources/img/facebook-f.png) 94% no-repeat;
+    background: #68659c url(../images/facebook-f.png) 94% no-repeat;
 }
 #reg-landing #fbpane #label{
     margin: 0;
@@ -185,7 +185,7 @@ a#browse{
         text-shadow: 2px 2px 2px rgba(255, 255, 255, 0.80);
     }
     #landing-header:empty{
-        background-image:url('/css/images/logo_small.png');
+        background-image:url('../images/logo_small.png');
         height: 80px;
         max-width: 300px;
     }

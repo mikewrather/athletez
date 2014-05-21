@@ -34,7 +34,7 @@ define(["require", 'text!usercontrol/photo-player/templates/comments.html',
 	UserModel = require('usercontrol/tag/models/basic_info'),
 	PhotoPlayerController = Controller.extend({
 		// define css files to load
-		cssArr : [base_url + "usercontrols/photo-player/photoPlayer.css"],
+		cssArr : [base_url + "css/components/photoPlayer.css"],
 		events : {
 		},
 		

@@ -23,6 +23,14 @@ css/common.css
 ----------------
 css/common.css
 
+css/components/landing.css
+----------------
+css/components/landing.css
+
+css/components/photoPlayer.css
+----------------
+css/components/photoPlayer.css
+
 css/docco.css
 ----------------
 css/docco.css
@@ -182,14 +190,6 @@ usercontrols/detection/browser.css
 usercontrols/imagecropper/imagecropper.css
 ----------------
 usercontrols/imagecropper/imagecropper.css
-
-usercontrols/landing/landing.css
-----------------
-usercontrols/landing/landing.css
-
-usercontrols/photo-player/photoPlayer.css
-----------------
-usercontrols/photo-player/photoPlayer.css
 
 usercontrols/tag/tag.css
 ----------------
@@ -741,7 +741,7 @@ text!usercontrol/detection/templates/browser.html
 text!usercontrol/detection/browser.css
 usercontrols/detection/views/browser.js
 text!usercontrol/landing/templates/landing.html
-text!usercontrol/landing/landing.css
+text!compcss/landing.css
 usercontrols//landing/models/fb-user.js
 text!packages/invite/templates/invite.html
 packages/invite/views/invite.js

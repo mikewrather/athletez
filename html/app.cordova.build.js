@@ -99,6 +99,8 @@
 		'profilesetting': 'pages/profilesetting',
 		'userresume': 'pages/userresume',
 
+		'compcss'        : 'css/components',
+
 		'usercontrol'       : 'usercontrols/',
 	//	'add-club'          : 'usercontrols/add-club/add-club',
 	//	'addgame'           : 'usercontrols/addgame/addgame',

@@ -503,10 +503,10 @@ ul#tags-list .tags-number {
 	opacity: 0.4;
 }
 .photo-player-icons {
-	background: url(/css/images/icons/photoplayer-sprite.png) no-repeat;
+	background: url(../images/icons/photoplayer-sprite.png) no-repeat;
 }
 .photo-player-detail-icons {
-	background: url(/css/images/icons/photoplayer-detail-sprite.png) no-repeat;
+	background: url(../images/icons/photoplayer-detail-sprite.png) no-repeat;
 }
 .photo-player-detail-arrow {
 	width: 20px;
