@@ -65,7 +65,7 @@ ini_set('unserialize_callback_func', 'spl_autoload_call');
 I18n::lang('en-us');
 
 Cookie::$salt = "nawson";
-$cdn_url = "http://athletez.s3.amazonaws.com/resources/html_build/"; //"http://cdn.athletez.com/resources/html_build/";
+$cdn_url ="http://cdn.athletez.com/resources/html_build/"; // "http://athletez.s3.amazonaws.com/resources/html_build/"; //
 $s3_url = "/"; //"http://athletez.s3.amazonaws.com/resources/html_build/";
 /**
  * Set Kohana::$environment if a 'KOHANA_ENV' environment variable has been supplied.
@@ -83,7 +83,7 @@ if (strpos($_SERVER['HTTP_HOST'], 'newsite') !== FALSE || strpos($_SERVER['HTTP_
 	// Localhost
 	Kohana::$environment = Kohana::DEVELOPMENT;
 
-	$cdn_url = $base_url = $cdn_url; //"/";
+	$cdn_url = $base_url = '/'; //"/";
 	$use_cdn = true;
 	// Turn off notices and strict errors
 	error_reporting(E_ALL ^ E_NOTICE);

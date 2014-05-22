@@ -179,12 +179,19 @@
 	priority: ['jquery','text', 'modernizr', 'json2', 'vendor', 'utils', 'facade', 'syncs', 'models', 'views', 'collections', 'controller'],
 	jquery: '1.10.2',
 	modules: [
+
+
+
 		// Common libraries, Utilities, Syncs, Models, Views, Collections
 		{
-			name: 'utils',
-			exclude: ['jquery', 'vendor', 'facade']
+			name: 'vendor',
+			exclude: ['jquery']
 		},
-		{
+		/*
+		 {
+		 name: 'utils',
+		 exclude: ['jquery', 'vendor', 'facade']
+		 },{
 			name: 'syncs',
 			exclude: ['jquery','vendor', 'facade', 'utils']
 		},
@@ -199,11 +206,18 @@
 		{
 			name: 'collections',
 			exclude: ['jquery','vendor', 'facade', 'utils', 'syncs', 'models', 'views']
-		}, /*
+		},
+		*/
 
+		{
+		 name: 'main',
+		 exclude: ['jquery','vendor'/*, 'facade', 'utils', 'syncs', 'models', 'views','collections'*/]
+		}
+
+		/*
 		PAGES START
 
-	*/  {
+	    {
 			name: 'chrome',
 			exclude: ['vendor', 'facade', 'utils', 'syncs', 'models', 'views', 'collections']
 		},

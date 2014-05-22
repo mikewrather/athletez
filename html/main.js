@@ -26,7 +26,7 @@ require.config({
 		'mustache'      : [cdn + 'vendor/mustache', s3 + 'vendor/mustache', '/vendor/mustache'],
 		'backbone'      : [cdn + 'vendor/backbone', s3 + 'vendor/backbone', '/vendor/backbone'],
 		'underscore'    : [cdn + 'vendor/underscore', s3 + 'vendor/underscore', '/vendor/underscore'],
-		jquery        : 'vendor/jquery.1.10.2.min',
+		jquery        : '//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min',
 		'facebook'      : [cdn + 'vendor/all', s3 + 'vendor/all', '/vendor/all'],
 
 		'jQueryHammer': [cdn + 'vendor/jquery.hammer', s3 + 'vendor/jquery.hammer','/vendor/jquery.hammer'],
@@ -179,7 +179,7 @@ require.config({
 		}
 	},
 	priority: ['text', 'modernizr', 'json2', 'vendor', 'utils', 'facade', 'syncs', 'models', 'views', 'collections', 'controller'],
-	jquery: '1.10.2',
+	jquery: '1.11.1',
 	waitSeconds: 60
 });
 
