@@ -11,15 +11,16 @@ define([
     'signup/views/facebooksignup'
 	],function(require,signInTemplate,backbone,_,signupController) {
 			
-		var SignupBasicView,
-        	facade = require('facade'),
-        	 views = require('views'),
+		var facade = require('facade'),
+        	views = require('views'),
         	
         	utils = require('utils'),
+			Store = utils.storage,
+			Cookie = utils.docCookies,
         	Channel = utils.lib.Channel,
         	ForgotPasswordModel = require('login/models/Forgotmodel'),
             FbHeader=require('signup/views/facebooksignup'),
-        	SectionView = backbone.View;
+        	SectionView = backbone.View,
 			SigninBasicView = SectionView.extend({
               
               initialize: function (options) {
@@ -107,12 +108,23 @@ define([
 	                $.each(fields, function( index, value ) {
 	                   payload[value.name] = value.value;
 	                });
+	               payload["isNative"] = routing.isNative;
 	                
 	                var obj = $.extend({}, payload);
 	                this.model.save(obj,{
-	                    success: function(msg) {
+	                    success: function(model,response) {
+
 	                    	routing.hideSpinner(ob, ".loginUser");
 	                        $('#Loginview').modal('hide');
+
+		                    model.id = response.payload.id;
+		                    var appStates = new Store("user","localStorage");
+		                    appStates.create(model);
+
+		                    var autologin = {id:"cookieValue","value":Cookie.getItem('authautologin')},
+		                        saveCookie = new Store("authautologin","localStorage");
+		                    saveCookie.create(autologin);
+
 							if(_self.callback && _.isFunction(_self.callback)) {
 								routing.trigger('common-popup-close');
 								// reload header

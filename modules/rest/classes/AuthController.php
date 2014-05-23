@@ -24,6 +24,7 @@ class AuthController extends Controller
 	 */
 	protected function populateAuthVars()
 	{
+		Auth::instance()->auto_login();
 		// Check for Logged in User
 		$user = Auth::instance()->get_user();
 
