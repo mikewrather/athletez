@@ -179,6 +179,7 @@
 	jquery: '1.10.2',
 	modules: [
 		// Common libraries, Utilities, Syncs, Models, Views, Collections
+		/*
 		{
 			name: 'utils',
 			exclude: ['jquery', 'vendor', 'facade']
@@ -204,7 +205,7 @@
 
 	*/  {
 			name: 'main',
-			exclude: ['vendor', 'facade', 'utils', 'syncs', 'models', 'views', 'collections']
+			exclude: [/*'vendor', 'facade', 'utils', 'syncs', 'models', 'views', 'collections'*/]
 		}
 	]
 })
