@@ -3,9 +3,12 @@
 // Requires define
 // Return {BaseModel} model constructor object
 
-define( ["models/base",'utils/storage'], function (BaseModel,Store) {
+define( ["models/base",'utils'], function (BaseModel,Utils) {
 
-    var HeaderModel;
+    var HeaderModel,
+	    Store = Utils.storage,
+	    Cookie = Utils.docCookies;
+
 
     HeaderModel = BaseModel.extend({
 
@@ -35,6 +38,16 @@ define( ["models/base",'utils/storage'], function (BaseModel,Store) {
             signup_email_link: '/'
             
         },
+
+	    initialize: function(){
+		    BaseModel.prototype.initialize.call(this);
+			var chkcookie = Cookie.getItem('authautologin');
+		    if(!chkcookie){
+			    var chkstore = new Store("authautologin","localStorage"),
+			        cookieValue = _.isObject(chkstore.find({id:"cookieValue"})) ? chkstore.find({id:"cookieValue"}).value : false;
+				if(cookieValue) Cookie.setItem("authautologin",cookieValue);
+		    }
+	    },
         
         url: function() {
             if (testpath)

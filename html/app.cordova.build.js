@@ -178,33 +178,9 @@
 	priority: ['jquery','text', 'modernizr', 'json2', 'vendor', 'utils', 'facade', 'syncs', 'models', 'views', 'collections', 'controller'],
 	jquery: '1.10.2',
 	modules: [
-		// Common libraries, Utilities, Syncs, Models, Views, Collections
 		{
-			name: 'utils',
-			exclude: ['jquery', 'vendor', 'facade']
-		},
-		{
-			name: 'syncs',
-			exclude: ['jquery','vendor', 'facade', 'utils']
-		},
-		{
-			name: 'models',
-			exclude: ['jquery','vendor', 'facade', 'utils', 'syncs']
-		},
-		{
-			name: 'views',
-			exclude: ['jquery','vendor', 'facade', 'utils', 'syncs', 'models']
-		},
-		{
-			name: 'collections',
-			exclude: ['jquery','vendor', 'facade', 'utils', 'syncs', 'models', 'views']
-		}, /*
-
-		PAGES START
-
-	*/  {
 			name: 'main',
-			exclude: ['vendor', 'facade', 'utils', 'syncs', 'models', 'views', 'collections']
+			exclude: []
 		}
 	]
 })
