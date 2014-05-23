@@ -31,6 +31,11 @@ define(['facade', 'collections', 'sportorg/models/sport', 'utils'], function(fac
 			for (var key in payload) {
 				var item = new SportorgSportModel();
 				item.id = Math.ceil(Math.random() * 100000);
+
+				if(payload[key]['icon'].indexOf("http://") < 0) payload[key]['icon'] = base_url + payload[key]['icon'];
+				if(payload[key]['large_icon'].indexOf("http://") < 0) payload[key]['large_icon'] = base_url + payload[key]['large_icon'];
+				if(payload[key]['small_icon'].indexOf("http://") < 0) payload[key]['small_icon'] = base_url + payload[key]['small_icon'];
+
 				item.set('payload', payload[key]);
 				item.set('desc', response.desc);
 				item.set('exec_data', response.exec_data);

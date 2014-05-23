@@ -3,11 +3,11 @@
 	appDir: './',
 	baseUrl: './',
 //	mainConfigFile: './main.js',
-	dir: '../html_build',
+	dir: '../build_v.0.0.3',
 	optimize: 'uglify',
 	paths: {
 
-		jquery: 'vendor/jquery.1.10.2.min',
+		'jquery': 'vendor/jquery.1.10.2.min',
 		'json2': 'vendor/json2',
 		'modernizr': 'vendor/modernizr-2.6.2.min',
 		'mustache': 'vendor/mustache',
@@ -180,15 +180,15 @@
 	jquery: '1.10.2',
 	modules: [
 
-
+		/*
 
 		// Common libraries, Utilities, Syncs, Models, Views, Collections
 		{
 			name: 'vendor',
-			exclude: ['jquery']
+			exclude: []
 		},
-		/*
-		 {
+
+ 		 {
 		 name: 'utils',
 		 exclude: ['jquery', 'vendor', 'facade']
 		 },{
@@ -207,11 +207,10 @@
 			name: 'collections',
 			exclude: ['jquery','vendor', 'facade', 'utils', 'syncs', 'models', 'views']
 		},
-		*/
-
+*/
 		{
 		 name: 'main',
-		 exclude: ['jquery','vendor'/*, 'facade', 'utils', 'syncs', 'models', 'views','collections'*/]
+		 exclude: [/*'vendor','facade','utils','syncs','models','views','collections'*/]
 		}
 
 		/*

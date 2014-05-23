@@ -7,12 +7,8 @@ define(["facade", "models/base"], function (facade, BaseModel) {
 
     var SportorgSportModel,
         _ = facade._;
+    SportorgSportModel = BaseModel.extend({
 
-    SportorgSportModel = BaseModel.extend({  
-
-              
-        
     });
-
     return SportorgSportModel;
 });

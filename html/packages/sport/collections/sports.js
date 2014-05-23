@@ -46,6 +46,11 @@ define(
 						for (i = 0; i < payload.length; i++) {
 							var item = new SportListModel();
 							item.id = Math.ceil(Math.random() * 100000);
+
+							if(payload[i]['icon'].indexOf("http://") < 0) payload[i]['icon'] = base_url + payload[i]['icon'];
+							if(payload[i]['large_icon'].indexOf("http://") < 0) payload[i]['large_icon'] = base_url + payload[i]['large_icon'];
+							if(payload[i]['small_icon'].indexOf("http://") < 0) payload[i]['small_icon'] = base_url + payload[i]['small_icon'];
+
 							item.set('payload', payload[i]);
 							item.set('desc', response.desc);
 							item.set('exec_data', response.exec_data);
