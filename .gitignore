@@ -4,8 +4,7 @@
 /files_temp
 files_temp/*
 application/config/database.php
-/cordova
-cordova/*
+cordova/
 build_v.0.0.1
 build_v.0.0.2
 build_v.0.0.3
