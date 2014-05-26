@@ -1342,6 +1342,19 @@
 			Auth::instance()->login($username,$password,$remember);
 			$user = Auth::instance()->get_user();
 
+			$data = array(
+				'user_id'    => $user->pk(),
+				'user_agent' => sha1(Request::$user_agent),
+			);
+
+			$token = ORM::factory('user_tokens')
+				->where('user_id','=',$user->pk())
+				->where('user_agent','=',sha1(Request::$user_agent))
+				->order_by('id','DESC')
+				->find();
+
+		//	print_r($token);
+
 			if($user)
 			{
 				if(trim($this->request->post('sechash')) != "")
@@ -1350,6 +1363,16 @@
 					if(get_class($user) == 'Model_User') $user = ORM::factory('User_Base',$user->id);
 					$user->executeInvite(array("sechash"=>$sechash));
 				}
+
+				if($token->loaded())
+				{
+					$token_string = Cookie::salt('authautologin',$token->token) . "~" . $token->token;
+					return array(
+						"user"=>$user,
+						"token"=>$token_string
+					);
+				}
+
 				return $user;
 			}
 			else

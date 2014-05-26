@@ -121,7 +121,7 @@ define([
 		                    var appStates = new Store("user","localStorage");
 		                    appStates.create(model);
 
-		                    var autologin = {id:"cookieValue","value":Cookie.getItem('authautologin')},
+		                    var autologin = {id:"cookieValue","value":response.payload.token},
 		                        saveCookie = new Store("authautologin","localStorage");
 		                    saveCookie.create(autologin);
 

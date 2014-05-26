@@ -34,7 +34,7 @@ class Controller_Authcheck extends AuthController
 		//	echo microtime();
 			$facebook = FacebookAuth::factory();
 			$retArr["facebook"] =  $facebook->get_user();
-			echo microtime();
+			//echo microtime();
 
 			if (isset($retArr['facebook']['id']))
 			{
