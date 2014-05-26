@@ -192,13 +192,30 @@ define(function (require) {
 			Backbone = require('backbone'),
 			$ = require('jquery'),
 			app = require('application'),
-			Spinner = require('packages/common/views/spinner');
+			Spinner = require('packages/common/views/spinner'),
+			Utils = requre('utils'),
+			Store = Utils.storage,
+			Cookie = Utils.docCookies,
+			localStorageToCookie = function(key){
+				if(_.isArray(key)){
+
+				}
+				else {
+					var chkstore = new Store(key,"localStorage"),
+						cookieValue = _.isObject(chkstore.find({id:"cookieValue"})) ? chkstore.find({id:"cookieValue"}).value : false;
+					if(cookieValue) {
+						return key + "=" + cookieValue;
+					}
+				}
+			}
 
 		$(function () {
 
 			$.ajaxPrefilter( function(options,originalOptions,jqXHR){
+			//	jqXHR.setRequestHeader('Cookie',localStorageToCookie('authautologin'));
+				console.log("XHR:",jqXHR,localStorageToCookie('authautologin'));
 				options.url = options.url.charAt(0) === "/" ? options.url : "/" + options.url;
-				options.url = _.isUndefined(window.location.host) || window.location.host === "" ? 'http://www.athletez.com' + options.url : options.url;
+				options.url = _.isUndefined(window.location.host) || window.location.host === "" ? 'http://www.aup.dev' + options.url : options.url;
 			});
 
 			// doc ready
