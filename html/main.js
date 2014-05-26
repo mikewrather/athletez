@@ -193,17 +193,20 @@ define(function (require) {
 			$ = require('jquery'),
 			app = require('application'),
 			Spinner = require('packages/common/views/spinner'),
-			Utils = requre('utils'),
+			Utils = require('utils'),
 			Store = Utils.storage,
 			Cookie = Utils.docCookies,
 			localStorageToCookie = function(key){
 				if(_.isArray(key)){
+					_.each(key,function(i){
 
+					})
 				}
 				else {
 					var chkstore = new Store(key,"localStorage"),
 						cookieValue = _.isObject(chkstore.find({id:"cookieValue"})) ? chkstore.find({id:"cookieValue"}).value : false;
 					if(cookieValue) {
+						Cookie.setItem(key,cookieValue);
 						return key + "=" + cookieValue;
 					}
 				}
@@ -211,18 +214,32 @@ define(function (require) {
 
 		$(function () {
 
-			$.ajaxPrefilter( function(options,originalOptions,jqXHR){
-			//	jqXHR.setRequestHeader('Cookie',localStorageToCookie('authautologin'));
-				console.log("XHR:",jqXHR,localStorageToCookie('authautologin'));
-				options.url = options.url.charAt(0) === "/" ? options.url : "/" + options.url;
-				options.url = _.isUndefined(window.location.host) || window.location.host === "" ? 'http://www.aup.dev' + options.url : options.url;
-			});
-
 			// doc ready
 			Backbone.noConflict();
 
 			//		jQuery.noConflict();
 			routing = new app();
+			routing.isNative = function(){
+				var page_url = window.location.href,
+					url_arr = page_url.split('://');
+				return url_arr[0]==="file" ? true : false;
+			}();
+
+			$.support.cors = true;
+
+			$.ajaxPrefilter( function(options,originalOptions,jqXHR){
+				options.crossDomain = true;
+
+				jqXHR.setRequestHeader('Cookie',localStorageToCookie('authautologin'));
+				console.log("XHR:",jqXHR,localStorageToCookie('authautologin'));
+				options.url = options.url.charAt(0) === "/" ? options.url : "/" + options.url;
+				options.url = _.isUndefined(window.location.host) || window.location.host === "" ? 'http://www.aup.dev' + options.url : options.url;
+			});
+
+			$(document).ajaxComplete(function(event,jqXHR){
+
+			});
+
 			App = {};
 			routing.ajaxRequests = [];
 			routing.intializeImageAndVideo();
@@ -236,11 +253,7 @@ define(function (require) {
 				return url_arr[0]==="file" ? true : false;
 			}();
 
-			routing.isNative = function(){
-				var page_url = window.location.href,
-					url_arr = page_url.split('://');
-				return url_arr[0]==="file" ? true : false;
-			}();
+
 
 
 

@@ -43,12 +43,12 @@ define( ["models/base",'utils'], function (BaseModel,Utils) {
 		    BaseModel.prototype.initialize.call(this);
 			var chkcookie = Cookie.getItem('authautologin');
 		    if(!chkcookie){
-			    var chkstore = new Store("authautologin","localStorage"),
-			        cookieValue = _.isObject(chkstore.find({id:"cookieValue"})) ? chkstore.find({id:"cookieValue"}).value : false;
-				if(cookieValue) {
-					Cookie.setItem("authautologin",cookieValue);
-					this.ls_auth = cookieValue;
-				}
+			//    var chkstore = new Store("authautologin","localStorage"),
+			 //       cookieValue = _.isObject(chkstore.find({id:"cookieValue"})) ? chkstore.find({id:"cookieValue"}).value : false;
+			//	if(cookieValue) {
+			//		Cookie.setItem("authautologin",cookieValue);
+			//		this.ls_auth = cookieValue;
+			//	}
 		    }
 	    },
         
