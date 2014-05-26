@@ -45,14 +45,17 @@ define( ["models/base",'utils'], function (BaseModel,Utils) {
 		    if(!chkcookie){
 			    var chkstore = new Store("authautologin","localStorage"),
 			        cookieValue = _.isObject(chkstore.find({id:"cookieValue"})) ? chkstore.find({id:"cookieValue"}).value : false;
-				if(cookieValue) Cookie.setItem("authautologin",cookieValue);
+				if(cookieValue) {
+					Cookie.setItem("authautologin",cookieValue);
+					this.ls_auth = cookieValue;
+				}
 		    }
 	    },
         
         url: function() {
-            if (testpath)
-                return testpath + '/authcheck?time='+new Date().getTime();
-            return '/authcheck?time='+new Date().getTime();
+            var baseurl = '/authcheck?time='+new Date().getTime();
+	        if(!_.isUndefined(this.ls_auth)) baseurl += "&ls_auth=" + this.ls_auth;
+	        return baseurl;
         },
 	    saveCookie: function () {
 		    var appStates = new Store("user","localStorage");
