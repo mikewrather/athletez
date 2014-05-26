@@ -1369,7 +1369,8 @@
 					$token_string = Cookie::salt('authautologin',$token->token) . "~" . $token->token;
 					return array(
 						"user"=>$user,
-						"token"=>$token_string
+						"token"=>$token_string,
+						"session" => session_id()
 					);
 				}
 

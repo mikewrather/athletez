@@ -797,6 +797,7 @@
 			if(is_array($this->obj) && array_key_exists("token",$this->obj)){
 				$user = $this->obj["user"]->getBasics();
 				$user["token"] = $this->obj["token"];
+				$user["session"] = $this->obj["session"];
 				return $user;
 			}
 			else if(is_object($this->obj) && (is_subclass_of($this->obj,'Model_Auth_User'))) return $this->obj->getBasics();

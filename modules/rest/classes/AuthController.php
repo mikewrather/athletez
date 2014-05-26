@@ -20,6 +20,8 @@ class AuthController extends Controller
 	protected $is_admin = false;
 
 	public function __construct(Request $request,Response $response){
+
+		//print_r($response->headers());
 		if($ls_auth = $request->query('ls_auth')) {
 			//echo $ls_auth;
 		}

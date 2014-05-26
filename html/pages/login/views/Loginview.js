@@ -125,6 +125,10 @@ define([
 		                        saveCookie = new Store("authautologin","localStorage");
 		                    saveCookie.create(autologin);
 
+		                    var session = {id:"cookieValue","value":response.payload.session},
+			                    saveSession = new Store("session","localStorage");
+		                    saveSession.create(session);
+
 							if(_self.callback && _.isFunction(_self.callback)) {
 								routing.trigger('common-popup-close');
 								// reload header

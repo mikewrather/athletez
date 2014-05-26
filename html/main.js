@@ -197,19 +197,24 @@ define(function (require) {
 			Store = Utils.storage,
 			Cookie = Utils.docCookies,
 			localStorageToCookie = function(key){
-				if(_.isArray(key)){
-					_.each(key,function(i){
 
-					})
-				}
-				else {
+				var getCookieFromStorage = function(key){
 					var chkstore = new Store(key,"localStorage"),
 						cookieValue = _.isObject(chkstore.find({id:"cookieValue"})) ? chkstore.find({id:"cookieValue"}).value : false;
 					if(cookieValue) {
 						Cookie.setItem(key,cookieValue);
 						return key + "=" + cookieValue;
 					}
+				};
+
+				if(_.isArray(key)){
+					var cookies = [];
+					_.each(key,function(el,index){
+						cookies.push(getCookieFromStorage(el))
+					});
+					return cookies.join(';');
 				}
+				else return getCookieFromStorage(key);
 			}
 
 		$(function () {
@@ -230,7 +235,10 @@ define(function (require) {
 			$.ajaxPrefilter( function(options,originalOptions,jqXHR){
 				options.crossDomain = true;
 
-				jqXHR.setRequestHeader('Cookie',localStorageToCookie('authautologin'));
+				jqXHR.setRequestHeader('Cookie',localStorageToCookie(['authautologin','session']));
+
+				if(routing.isNative === true || 1) jqXHR.setRequestHeader('isNative',"TRUE");
+
 				console.log("XHR:",jqXHR,localStorageToCookie('authautologin'));
 				options.url = options.url.charAt(0) === "/" ? options.url : "/" + options.url;
 				options.url = _.isUndefined(window.location.host) || window.location.host === "" ? 'http://www.aup.dev' + options.url : options.url;
