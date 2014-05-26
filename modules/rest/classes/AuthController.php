@@ -19,6 +19,13 @@ class AuthController extends Controller
 	protected $user_roles = array();
 	protected $is_admin = false;
 
+	public function __construct(Request $request,Response $response){
+		if($ls_auth = $request->query('ls_auth')) {
+			//echo $ls_auth;
+		}
+
+		parent::__construct($request,$response);
+	}
 	/**
 	 *  populateAuthVars() method will put data from the logged in user to this class's properties
 	 */
