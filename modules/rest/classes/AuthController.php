@@ -21,11 +21,10 @@ class AuthController extends Controller
 
 	public function __construct(Request $request,Response $response){
 
-		//print_r($response->headers());
-		if($ls_auth = $request->query('ls_auth')) {
-			//echo $ls_auth;
+		if($request->headers('isnative')) {
+			global $isNative;
+			$isNative = TRUE;
 		}
-
 		parent::__construct($request,$response);
 	}
 	/**

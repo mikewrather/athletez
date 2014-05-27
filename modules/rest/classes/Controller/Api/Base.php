@@ -38,9 +38,6 @@ class Controller_Api_Base extends AuthController
 
 	public function __construct(Request $request, Response $response)
 	{
-
-
-
 		// start the counter
 		$this->starttime = microtime();
 

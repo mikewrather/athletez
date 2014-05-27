@@ -209,9 +209,7 @@ define(function (require) {
 
 				if(_.isArray(key)){
 					var cookies = [];
-					_.each(key,function(el,index){
-						cookies.push(getCookieFromStorage(el))
-					});
+					_.each(key,function(el){ cookies.push(getCookieFromStorage(el)); });
 					return cookies.join(';');
 				}
 				else return getCookieFromStorage(key);
@@ -236,10 +234,9 @@ define(function (require) {
 				options.crossDomain = true;
 
 				jqXHR.setRequestHeader('Cookie',localStorageToCookie(['authautologin','session']));
+				if(routing.isNative === true) jqXHR.setRequestHeader('isNative',"TRUE");
 
-				if(routing.isNative === true || 1) jqXHR.setRequestHeader('isNative',"TRUE");
-
-				console.log("XHR:",jqXHR,localStorageToCookie('authautologin'));
+				console.log("XHR:",jqXHR,localStorageToCookie(['authautologin','session']));
 				options.url = options.url.charAt(0) === "/" ? options.url : "/" + options.url;
 				options.url = _.isUndefined(window.location.host) || window.location.host === "" ? 'http://www.aup.dev' + options.url : options.url;
 			});
