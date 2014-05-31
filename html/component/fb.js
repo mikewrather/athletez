@@ -8,6 +8,9 @@
 
 define(['require', 'facade', 'views', 'utils', 'vendor','facebook'], function(require) {
 	return function(options) {
+
+		var FB_obj = window.cordova && window.facebookConnectPlugin ? window.facebookConnectPlugin : FB;
+		console.log(FB_obj);
 		var _self = this, scriptId = 'facebook-jssdk-api',
 		
 		// set options
@@ -21,7 +24,7 @@ define(['require', 'facade', 'views', 'utils', 'vendor','facebook'], function(re
 		
 		// initialize function
 		init = function() {
-			FB.init({
+			FB_obj.init({
 			    appId   : App.Settings.appId,// App ID
 			    status  : true, // check login status
 				cookie  : true, // enable cookies to allow the server to access the session
@@ -63,7 +66,7 @@ define(['require', 'facade', 'views', 'utils', 'vendor','facebook'], function(re
 				else
 					var link = undefined;
 						 
-				  FB.ui({
+				  FB_obj.ui({
 				    method: options.method || '',
 				    name: options.name || 'Facebook Dialogs',
 				    link: link || 'http://localhost/',
@@ -97,7 +100,7 @@ define(['require', 'facade', 'views', 'utils', 'vendor','facebook'], function(re
 				else
 					var link = undefined;
 				
-				  FB.ui({
+				  FB_obj.ui({
 				    method: options.method || 'send',
 				    to: options.to || '',
 				    name: options.name || 'Come join Me on Atheletez',
@@ -123,7 +126,7 @@ define(['require', 'facade', 'views', 'utils', 'vendor','facebook'], function(re
 		// get friends from facebook
 		this.getFriends = function() {
 			if(FB && typeof(FB) != "undefined") {
-				FB.api('/me/friends?fields=id,first_name', function(response) {
+				FB_obj.api('/me/friends?fields=id,first_name', function(response) {
 
 				    //var randomFriend = Math.floor(getRandom(0, response.data.length));
 				    //gFriendID = response.data[randomFriend].id;

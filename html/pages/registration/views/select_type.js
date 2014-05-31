@@ -21,6 +21,7 @@ function(require, RegistrationSelectTypeModel, registrationSelectTypeTemplate) {
         Channel = utils.lib.Channel,
         SectionView = views.SectionView;
         
+	var FB_obj = window.cordova && window.facebookConnectPlugin ? window.facebookConnectPlugin : FB;
 
     RegistrationSelectTypeView = SectionView.extend({
 
@@ -44,7 +45,7 @@ function(require, RegistrationSelectTypeModel, registrationSelectTypeTemplate) {
             
             // Additional JS functions here
             window.fbAsyncInit = function() {
-                FB.init({
+                FB_obj.init({
                     appId      : App.Settings.appId,
                     status     : true, // check login status
                     cookie     : true, // enable cookies to allow the server to access the session
@@ -53,9 +54,9 @@ function(require, RegistrationSelectTypeModel, registrationSelectTypeTemplate) {
                 });
 
                 // Additional init code here
-                FB.getLoginStatus(function(response) {
+                FB_obj.getLoginStatus(function(response) {
                     if (response.status === 'connected') {
-                        FB.api('/me', function(response) {
+                        FB_obj.api('/me', function(response) {
                             Channel('registration-with-facebook').publish();
                         });
                     } else if (response.status === 'not_authorized') {
@@ -67,7 +68,7 @@ function(require, RegistrationSelectTypeModel, registrationSelectTypeTemplate) {
             };
 
             function login() {
-                FB.login(function(response) {
+                FB_obj.login(function(response) {
                     if (response.authResponse) {
                         Channel('registration-with-facebook').publish();
                     } else {

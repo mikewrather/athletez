@@ -60,7 +60,7 @@ define( ["models/base",'utils'], function (BaseModel,Utils) {
 	    saveCookie: function () {
 		    var appStates = new Store("user","localStorage");
 		    appStates.create(this);
-		},
+		}
 
     });
 

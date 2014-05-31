@@ -27,7 +27,7 @@ require.config({
 		'backbone'      : [cdn + 'vendor/backbone', s3 + 'vendor/backbone', '/vendor/backbone'],
 		'underscore'    : [cdn + 'vendor/underscore', s3 + 'vendor/underscore', '/vendor/underscore'],
 		jquery        : '//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min',
-		'facebook'      : [cdn + 'vendor/all', s3 + 'vendor/all', '/vendor/all'],
+		'facebook'      : window.cordova ? "js/facebookConnectPlugin" : [cdn + 'vendor/all', s3 + 'vendor/all', '/vendor/all'],
 
 		'jQueryHammer': [cdn + 'vendor/jquery.hammer', s3 + 'vendor/jquery.hammer','/vendor/jquery.hammer'],
 
@@ -196,11 +196,13 @@ define(function (require) {
 			Utils = require('utils'),
 			Store = Utils.storage,
 			Cookie = Utils.docCookies,
-			localStorageToCookie = function(key){
+			localStorageToCookie = function(key,id){
+
+				if(_.isUndefined(id)) var id = "cookieValue";
 
 				var getCookieFromStorage = function(key){
 					var chkstore = new Store(key,"localStorage"),
-						cookieValue = _.isObject(chkstore.find({id:"cookieValue"})) ? chkstore.find({id:"cookieValue"}).value : false;
+						cookieValue = _.isObject(chkstore.find({id:id})) ? chkstore.find({id:id}).value : false;
 					if(cookieValue) {
 						Cookie.setItem(key,cookieValue);
 						return key + "=" + cookieValue;
@@ -234,6 +236,18 @@ define(function (require) {
 				options.crossDomain = true;
 
 				jqXHR.setRequestHeader('Cookie',localStorageToCookie(['authautologin','session']));
+
+				var getLSValue = function(key,id){
+					var chkstore = new Store(key,"localStorage"),
+						value = _.isObject(chkstore.find({id:id})) ? chkstore.find({id:id}).value : false;
+					if(_.isObject(value)) return JSON.stringify(value);
+					//console.log(value);
+					return value;
+				};
+
+
+				jqXHR.setRequestHeader('fbaccesstoken',getLSValue('FBAuthToken','FBAuthToken'));
+
 				if(routing.isNative === true) jqXHR.setRequestHeader('isNative',"TRUE");
 
 				console.log("XHR:",jqXHR,localStorageToCookie(['authautologin','session']));
@@ -278,7 +292,8 @@ define(function (require) {
 						_self.appId = "675982322446833";
 					} else if(host.match("newsite") || host.match("aup.")) { // development environment
 						_self.appId = "239430712864961";
-					} else if(host.match("athletesup") || host.match("amazonaws") || host.match("50.19.123.141") || host.match("athletez")) { // production environment
+				//	} else if(host.match("athletesup") || host.match("amazonaws") || host.match("50.19.123.141") || host.match("athletez")) { // production environment
+					} else {
 						_self.appId = "219148511595084";
 					}
 				}();

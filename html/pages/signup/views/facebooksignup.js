@@ -3,10 +3,21 @@
 // Requires `define`
 // Return {HeaderView} object as constructor
 
-define(['vendor', 'views', 'registration', 'signup', 'signup/views/shopopup', 'utils/storage', 'facebook','packages/invite/models/invite'], function(vendor, views, RegistrationController, scontroller, popupview, Store) {
+define(['vendor',
+	'views',
+	'registration',
+	'signup',
+	'signup/views/shopopup',
+	'utils/storage',
+	'facebook',
+	'packages/invite/models/invite'],
+
+	function(vendor, views, RegistrationController, scontroller, popupview, Store) {
 
 	var HeaderView, BaseView = views.BaseView, $ = vendor.$, _ = vendor._, Mustache = vendor.Mustache, actionFunction,
 		InviteModel = require('packages/invite/models/invite');
+
+	var FB_obj = window.cordova && window.facebookConnectPlugin ? window.facebookConnectPlugin : FB;
 
 	HeaderView = BaseView.extend({
 
@@ -19,13 +30,16 @@ define(['vendor', 'views', 'registration', 'signup', 'signup/views/shopopup', 'u
 				this.invite_hash = options.invite_hash;
 			}
 			console.log(options);
-			FB.init({
-				appId : App.Settings.appId,
-				status : true, // check login status
-				cookie : true, // enable cookies to allow the server to access the session
-				xfbml : true, // parse XFBML
-				oauth : true
-			});
+
+			if(!window.cordova && !window.facebookConnectPlugin) {
+				FB_obj.init({
+					appId: App.Settings.appId,
+					status: true, // check login status
+					cookie: true, // enable cookies to allow the server to access the session
+					xfbml: true, // parse XFBML
+					oauth: true
+				});
+			}
 		},
 
 		signupFacebook : function(linkedToFB,successCallback) {
@@ -45,11 +59,11 @@ define(['vendor', 'views', 'registration', 'signup', 'signup/views/shopopup', 'u
 		getFBlogin : function() {
 			var _self = this;
 			alert("getFBlogin");
-			FB.getLoginStatus(function(response) {
+			FB_obj.getLoginStatus(function(response) {
 				console.log(response);
 				if (response.status === 'connected') {
 					this.actionFunction = function() {
-						FB.api('/me', function(response) {
+						FB_obj.api('/me', function(response) {
 							if (_self.linkWithFB) {
 								alert("Facebook Account linked Successfully.");
 							}
@@ -75,10 +89,17 @@ define(['vendor', 'views', 'registration', 'signup', 'signup/views/shopopup', 'u
 		},
 		loginfb : function(successCallback) {
 			var _self = this;
-			FB.login(function(response) {
+
+			console.log(FB_obj);
+			console.log(successCallback);
+
+			FB_obj.login(['email, user_birthday, user_photos'],function(response) {
 				console.log(response);
 
 				if (response.authResponse) {
+
+					console.log(response);
+					_self.saveAccessToken(response.authResponse);
 
 					// hides the landing section
 					routing.trigger('hide-landing');
@@ -86,6 +107,8 @@ define(['vendor', 'views', 'registration', 'signup', 'signup/views/shopopup', 'u
 					if(_self.invite_hash){
 						var inviteModel = new InviteModel({sechash:_self.invite_hash});
 					}
+
+
 
 					if(successCallback && _.isFunction(successCallback)) {
 						successCallback();
@@ -99,15 +122,20 @@ define(['vendor', 'views', 'registration', 'signup', 'signup/views/shopopup', 'u
 				} else {
 					alert('Facebook Login has been cancelled');
 				}
-			}, {
-				scope : 'email, user_birthday, user_photos'
-			});
+			},function(data){ console.log(data); });
+		},
+		saveAccessToken: function(token){
+
+			var session = {id:"FBAuthToken","value":token},
+				saveSession = new Store("FBAuthToken","localStorage");
+			saveSession.create(session);
+
 		},
 		checkFBlogin : function() {
 			var _self = this;
-			FB.getLoginStatus(function(response) {
+			FB_obj.getLoginStatus(function(response) {
 				if (response.status === 'connected') {
-					FB.api('/me', function(response) {
+					FB_obj.api('/me', function(response) {
 						routing.trigger('registration-with-facebook', _self.callback);
 					});
 				}
