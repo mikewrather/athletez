@@ -60,4 +60,11 @@ class FacebookAuth extends Kohana_FacebookAuth {
 			}
 		}
 	}
+
+
+	public function get_user_with_token($access_token,$user_id){
+		if($access_token) $this->fb->manual_access_token($access_token);
+		if($user_id) $this->fb->manual_user_id($user_id);
+		return $this->get_user();
+	}
 }

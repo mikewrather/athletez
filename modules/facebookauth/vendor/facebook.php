@@ -224,4 +224,13 @@ class Facebook extends BaseFacebook
 		}
 		return implode('_', $parts);
 	}
+
+	public function manual_access_token($token){
+		$this->setPersistentData('access_token',$token);
+		$this->setAccessToken($token);
+	}
+
+	public function manual_user_id($user_id){
+		$this->user = $user_id;
+	}
 }
