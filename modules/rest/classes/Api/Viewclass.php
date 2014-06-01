@@ -10,7 +10,7 @@
  *
  */
 
-class Api_Viewclass
+class Api_Viewclass extends Kohana_Api_Viewclass
 {
 
 	protected $obj;

@@ -31,18 +31,7 @@ class Controller_Authcheck extends AuthController
 		}
 		else
 		{
-		//	echo microtime();
-			$facebook = FacebookAuth::factory();
-
-			$fbAuthVars = $this->request->headers('fbaccesstoken') ? $this->request->headers('fbaccesstoken') : false;
-
-			$fbAuthObj = json_decode($fbAuthVars);
-			$access_token = $fbAuthObj->accessToken;
-			$fb_userid = $fbAuthObj->userID;
-
-	//		print_r($fbAuthObj);
-
-			$retArr["facebook"] =  $access_token ? $facebook->get_user_with_token($access_token,$fb_userid) : $facebook->get_user();
+			$retArr["facebook"] = $this->getFBUserFromHeaders();
 			//echo microtime();
 
 			if (isset($retArr['facebook']['id']))

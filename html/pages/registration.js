@@ -125,6 +125,8 @@ define(["require",
 			this.register_facebook.fetch();
 			$.when(this.register_facebook.request).done(function(msg){
 
+				console.log(msg);
+
 				if(!_.isUndefined(inviteModel) && _.isObject(inviteModel))inviteModel.save();
 
 				console.log(msg.payload.identity_exists,"payload");

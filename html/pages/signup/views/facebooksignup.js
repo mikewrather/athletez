@@ -93,7 +93,7 @@ define(['vendor',
 			console.log(FB_obj);
 			console.log(successCallback);
 
-			FB_obj.login(['email, user_birthday, user_photos'],function(response) {
+			var successFunction = function(response) {
 				console.log(response);
 
 				if (response.authResponse) {
@@ -122,7 +122,14 @@ define(['vendor',
 				} else {
 					alert('Facebook Login has been cancelled');
 				}
-			},function(data){ console.log(data); });
+			},
+				failFunction = function(data){ console.log(data);},
+				scope = window.cordova && window.facebookConnectPlugin ? ['email, user_birthday, user_photos'] : {scope: 'email,user_birthday,user_photos'}
+
+			var FacebookCall = window.cordova && window.facebookConnectPlugin ?
+				FB_obj.login(scope,successFunction,failFunction) :
+				FB_obj.login(successFunction,failFunction,scope);
+
 		},
 		saveAccessToken: function(token){
 
