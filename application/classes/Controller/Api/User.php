@@ -348,19 +348,13 @@
 		public function action_get_fbfriends()
 		{
 
-			$facebook = FacebookAuth::factory();
-
-			//	print_r($facebook);
-			$retArr =  $facebook->get_user();
-
-			//		print_r($retArr);
-
-			if(isset($retArr['message']))
+			$user = $this->getFBUserFromHeaders();
+			if(isset($user['message']))
 			{
 
 				//Error message array
 				$error_array = array(
-					"error" => $retArr['message']
+					"error" => $user['message']
 				);
 
 				// Set whether it is a fatal error
@@ -373,7 +367,7 @@
 			}
 			else
 			{
-				return $facebook->getFriends();
+				return $this->facebook->getFriends($user);
 			}
 		}
 

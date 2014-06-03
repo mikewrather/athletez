@@ -5,15 +5,14 @@ class FacebookAuth extends Kohana_FacebookAuth {
 		$this->fb->destroySession();
 	}
 
-	function getFriends()
+	public function getFriends($user)
 	{
-		$user = $this->fb->getUser();
 		$processed = array();
 		if ($user)
 		{
 			try
 			{
-				$friends = $this->fb->api('/me/friends?fields=name,id,location,picture,gender');
+				$friends = $this->fb->api('/me/friends?fields=name,id,location,gender');
 
 				foreach($friends["data"] as $friend)
 				{
@@ -29,8 +28,8 @@ class FacebookAuth extends Kohana_FacebookAuth {
 						"name" => $friend["name"],
 						"id" => $friend["id"],
 						"gender" => isset($friend["gender"]) ? $friend["gender"] : "",
-						"picture" => $friend["picture"]["data"]["url"],
-						"large" => str_replace("_q.jpg","_n.jpg",$friend["picture"]["data"]["url"]),
+						"picture" => "https://graph.facebook.com/".$friend["id"]."/picture?type=small",
+						"large" => "https://graph.facebook.com/".$friend["id"]."/picture?type=large",
 						"invited" => false
 					);
 				}
