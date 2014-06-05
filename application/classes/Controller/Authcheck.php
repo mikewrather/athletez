@@ -65,15 +65,18 @@ class Controller_Authcheck extends AuthController
 		$retArr['nav'][$retArr['user_name']] = array(
 			array(
 				"page"=>"View My Profile",
-				"link"=>"#!profile"
+				"link"=>"#!profile",
+				"icon"=>"uk-icon-user"
 			),
 			array(
 				"page"=>"Teams & Sports",
-				"link"=>"#!usersettings"
+				"link"=>"#!usersettings",
+				"icon"=>"uk-icon-cog"
 			),
 			array(
 				"page"=>"Athletic Resume",
-				"link"=>"#resume"
+				"link"=>"#resume",
+				"icon"=>"uk-icon-trophy"
 
 			)
 		);
@@ -82,25 +85,29 @@ class Controller_Authcheck extends AuthController
 			array(
 				"page" => $retArr['facebook']['id']>0 ? "FB Account Linked" : "Link to Facebook",
 				"link" => $retArr['facebook']['id']>0 ? "javascript:void(0);" : "javascript: void(0);",
-				"className" => $retArr['facebook']['id']>0 ? "" : "link-to-fb-h"
+				"className" => $retArr['facebook']['id']>0 ? "" : "link-to-fb-h",
+				"icon"=>"uk-icon-facebook"
 			)
 
 		);
 
 		if($retArr['facebook']['id']>0) $retArr['nav']["Social"][] = array(
 			"page" => "Invite From Facebook",
-			"link" => "#fbinvite"
+			"link" => "#fbinvite",
+			"icon"=>"uk-icon-group"
 		);
 
 		$retArr['nav'][] = array(
 			"page" => "Log Out",
 			"link" => "#logout",
-			"id" => "logoutId"
+			"id" => "logoutId",
+			"icon"=>"uk-icon-sign-out"
 		);
 
 		$retArr['nav'][] = array(
 			"page" => "Find Content",
-			"link" => "#!home"
+			"link" => "#!home",
+			"icon"=>"uk-icon-search"
 		);
 
 		echo json_encode($retArr);

@@ -16,7 +16,8 @@ define([
        
         'utils/storage',
         'signup/views/facebooksignup',
-		"vendor/plugins/qtip/qtip-wrapper"
+		"vendor/plugins/qtip/qtip-wrapper",
+		"vendor/plugins/uikit/uikit.min"
         ], 
 function (
         vendor,
@@ -47,7 +48,7 @@ function (
         initialize: function (options) {
             this.template = headerTemplate;
 	        console.error(this);
-	        Channel('load:css').publish(["vendor/plugins/qtip/qtip.css"]);
+	        Channel('load:css').publish(["vendor/plugins/qtip/qtip.css","vendor/plugins/uikit/uikit.almost-flat.css"]);
         },
 
         model: new HeaderModel(),
