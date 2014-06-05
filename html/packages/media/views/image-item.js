@@ -165,6 +165,30 @@ define(['vendor', 'views', 'utils', 'text!media/templates/image-item.html', 'vot
 	        this.$el.find('.delete-h').click(function(e) {
 	        	_self['delete'](e);
 	        });
+
+
+                setTimeout(function(){
+                    if(_self.$el.is(':visible')){
+                        console.log(_self.$el.width());
+                        _self.$el.css('height',_self.$el.width());
+                        _self.$el.find('div.image-item-container').css({
+                            'height' : _self.$el.width(),
+                            'min-height' : _self.$el.width()
+                        });
+                    } else {
+                       var width = $(window).width() * (_self.$el.width() / 100);
+                        console.log(width);
+                        _self.$el.css('height',width);
+                        _self.$el.find('div.image-item-container').css({
+                            'height' : width,
+                            'min-height' : width
+                        });
+
+                    }
+                },5);
+
+
+
 			return this;
 
 			//console.log("Called Image Render",this.model);
