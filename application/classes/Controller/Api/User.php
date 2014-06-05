@@ -629,7 +629,7 @@
 		 */
 		public function action_get_gpa()
 		{
-			$this->payloadDesc = "Get this user\'s GPA for all years there are values for.";
+			$this->payloadDesc = "Get this user's GPA for all years there are values for.";
 			$arguments = array();
 			if(!$this->mainModel->id)
 			{
@@ -1631,6 +1631,13 @@
 				$this->addError($error_array,$is_fatal);
 				return false;
 
+			}
+
+			if(trim($this->request->post('fullname')) != "")
+			{
+				$name_array = explode(" ",trim($this->request->post('fullname')));
+				$arguments["firstname"] = $name_array[0];
+				$arguments["lastname"] = $name_array[1];
 			}
 
 			// firstname
