@@ -2115,24 +2115,12 @@ li.sport .teamlist-header, .stat-val-outer {
 		padding-left: 11px;
 		font-weight: normal !important;
 	}
-	#image-wrap div.image-item-container {
-		width: 100%;
-		height: 140px;
-	}
-	#image-wrap ul li.image {
-		min-height: 142px;
-		padding: 0;
-		margin: 0;
-		padding-right: 5px;
-		width: 47%;
-	}
-	#image-wrap ul.image-list {
-		margin-left: 5px;
-	}
-	#image-wrap div.image-item-container > img {
-		min-width: 100%;
-		min-height: 100%;
-	}
+    .profile-pic-outer ul li.image img.list-thumbnail{
+        max-height: 800px !important;
+    }
+    ul.image-list{
+        margin:0 0 0 0;
+    }
 	#image-wrap .circle {
 		width: 62px;
 		height: 74px;
@@ -2571,28 +2559,32 @@ li.sport .teamlist-header, .stat-val-outer {
 		float: right;
 	}
 	
-	#search-result .image-item-container {
+	.image-item-container {
 		width: 157px;
-		height: 180px;
+	
 	}
 	
-	#search-result div.image-item-container > img {
+	div.image-item-container > img {
 		min-width: 157px;
 		min-height: 181px;
 	}
 	
-	#search-result ul li.image {
+	ul li.image {
 		padding: 0;
-		min-height: 184px;
-		width: 49%;
+	
+		width: 33%;
 	}
 	
-	#search-result ul#image-list {
+	ul#image-list {
 		padding-left: 0px !important;
 	}
-	
-	#search-result ul li.image:nth-child(2n+1) {
-		margin-right: 5px;		
+    ul li.image{
+        margin-right: .5%;
+        margin-bottom: 2px;
+        min-height:0;
+    }
+    ul li.image:nth-child(3n+3) {
+		margin-right: 0px;
 	}
 	
 	.search-result-outer .left-arrow-page, .search-result-outer .right-arrow-page {
