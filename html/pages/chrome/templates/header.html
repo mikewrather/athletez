@@ -1,3 +1,43 @@
+<div class="mobile-show">
+
+<div class="uk-navbar uk-navbar-attached header-nav">
+	<div class="uk-navbar-content"><a href="#" class="uk-navbar-toggle" data-uk-offcanvas="{target:'#oc_menu'}"></a></div>
+	<a href="" class="uk-navbar-brand">
+		<img itemprop="logo" src="<%= branding.src %>" id="header_logo" alt="<%= branding.alt %>" />
+	</a>
+</div>
+
+<div id="oc_menu" class="uk-offcanvas">
+	<div class="uk-offcanvas-bar uk-offcanvas-bar-show">
+        <ul class="uk-nav uk-nav-offcanvas uk-nav-parent-icon" data-uk-nav>
+
+            <% _.each(nav,function(element,index){
+
+            if(element instanceof Array){
+            %>
+            <li class="uk-nav-header"><%= index %></li>
+
+                <% _.each(element,function(e2,index){ %>
+                <li><a <% if(e2.id){ %>id="<%= e2.id %>"<% } if(e2.className){ %>class="<%= e2.className %>" <% } %>href="<%= e2.link %>" >
+	                <% if(e2.icon){ %><i class="<%= e2.icon %>"></i><% } %>
+	                <%= e2.page %>
+	            </a></li>
+                <% }); %>
+
+            <%
+            } else {
+            %><li><a href="<%= element.link %>" >
+	        <% if(element.icon){ %><i class="<%= element.icon %>"></i><% } %>
+	        <%= element.page %></a></li><%
+            }
+            %>
+
+            <% }); %>
+
+        </ul>
+	</div>
+</div>
+</div><div class="mobile-hide">
 
 <div class="row-fluid">
     <div class="logo" itemscope itemtype="http://schema.org/Organization">
@@ -66,3 +106,4 @@
     </div>
 </div>
 
+	</div>

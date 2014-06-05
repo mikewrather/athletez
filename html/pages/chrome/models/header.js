@@ -18,7 +18,7 @@ define( ["models/base",'utils'], function (BaseModel,Utils) {
             
             branding: {
                 alt: "Athletez Logo",
-                src: "http://cdn.athletez.com/resources/img/athletez_logo_small.png"
+                src: "../images/logo_small.png"
             },            
             
             search: {
