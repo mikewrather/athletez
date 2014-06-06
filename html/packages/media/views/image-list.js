@@ -38,17 +38,18 @@ function(facade,  views,   utils,   ImageItemView,            ImageBoardView,   
 		events: {
 			'click .see-more-h': 'seeMore',
 			"click .open-photo-player-h": "initPhotoPlayer",
+
 			"dragover #image-place-holder" : "drag",
 			"drop #image-place-holder":"drop",
 			"click .add-to-fans-h": "follow"
 		},
-		
+
 		renderTemplate: function () {
             var markup = Mustache.to_html(this.template, {target: this.target_id});
             this.$el.html(markup);
-            return this;
+			return this;
         },
-       
+
         drag: function(event) {
 			event.stopPropagation();
 		    event.preventDefault();
@@ -199,6 +200,7 @@ function(facade,  views,   utils,   ImageItemView,            ImageBoardView,   
         },
         
         initPhotoPlayer: function(e) {
+	        console.log(e);
 			var _self = this, limit = _self.collection.limit,
 				index = ($(e.target).parents('ul.image-list').find('li.image').index($(e.target).parents('li')));
 

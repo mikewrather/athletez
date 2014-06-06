@@ -2,14 +2,14 @@
 // --------------
 
 define(
-		[ 'facade', 'views', 'utils', 'media/views/image-item' ],
-		function(facade, views, utils, ImageItemView) {
+		[ 'facade', 'views', 'utils', 'media/views/image-item', 'media/views/image-list' ],
+		function(facade, views, utils, ImageItemView,ImageListView) {
 
-			var ImageListView, ImageListAbstract, $ = facade.$, _ = facade._, Channel = utils.lib.Channel, CollectionView = views.CollectionView, SectionView = views.SectionView;
+			var ImageListAbstract, $ = facade.$, _ = facade._, Channel = utils.lib.Channel, CollectionView = views.CollectionView, SectionView = views.SectionView;
 
 			ImageListAbstract = CollectionView.extend(SectionView.prototype);
 
-			ImageListView = ImageListAbstract.extend({
+			ImageListView = ImageListView.extend({
 
 				__super__ : CollectionView.prototype,
 

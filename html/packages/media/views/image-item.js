@@ -20,12 +20,13 @@ define(['vendor', 'views', 'utils', 'text!media/templates/image-item.html', 'vot
 		tagName : "li",
 		className : "image",
 		// Event handlers...
-		 events: {
+		events: {
 			"click .vote-h": "vote",
-	        "click .follow-h": "follow",
+			"click .follow-h": "follow",
 			"click .edit-h": "edit",
-			"click .delete-h": "delete"
-        },
+			"click .delete-h": "delete",
+			"click .image-outer-h":"stopIfMobile"
+		},
 
 		initialize : function(options) {
 			this.template = imageItemTemplate;
@@ -41,6 +42,10 @@ define(['vendor', 'views', 'utils', 'text!media/templates/image-item.html', 'vot
 				return true;
 			else	
         		return false;
+		},
+
+		stopIfMobile: function(e){
+			if(routing.mobile) e.preventDefault();
 		},
 		
 		render : function() {
@@ -71,9 +76,9 @@ define(['vendor', 'views', 'utils', 'text!media/templates/image-item.html', 'vot
 				});
 			});
 
-			$nopic_words_div = this.$el.find('.game-tile');
+			var $nopic_words_div = this.$el.find('.game-tile');
 			if($nopic_words_div.length){
-				$num_words = $nopic_words_div.text().length;
+				var $num_words = $nopic_words_div.text().length;
 				console.log($num_words);
 				if($num_words < 3){
 					$nopic_words_div.css({
@@ -131,24 +136,32 @@ define(['vendor', 'views', 'utils', 'text!media/templates/image-item.html', 'vot
 			function show_details(e)
 			{
 				console.log($(this),e);
-
 			}
-			this.$el.find('.image-item-container').mouseover(function(){
-				$(this).find('.detail-view').css({
-					'bottom' : '0px'
+
+
+
+			if(!routing.mobile){
+				this.$el.find('.image-item-container').mouseover(function(){
+					$(this).find('.detail-view').css({
+						'bottom' : '0px'
+					});
+					$(this).find('.action-block').css({
+						opacity : 90
+					});
 				});
-				$(this).find('.action-block').css({
-					opacity : 90
+
+				this.$el.find('.circle').mouseover(function(){
+					$(this).parent().find('.detail-view').css({
+						'bottom' : '0px'
+					});
+					$(this).parent().find('.action-block').css({
+						opacity : 90
+					});
 				});
-			});
-			this.$el.find('.circle').mouseover(function(){
-				$(this).parent().find('.detail-view').css({
-					'bottom' : '0px'
-				});
-				$(this).parent().find('.action-block').css({
-					opacity : 90
-				});
-			});
+			} else {
+				this.$el.on("touchstart",null,extra,this.insertDetailView);
+			}
+
 
 			 this.$el.find('.vote-h').click(function(e) {
 	        	_self.vote(e);
@@ -166,28 +179,26 @@ define(['vendor', 'views', 'utils', 'text!media/templates/image-item.html', 'vot
 	        	_self['delete'](e);
 	        });
 
+			this.$el.find('a.image-outer-h').on("click",this.stopIfMobile);
 
-                setTimeout(function(){
-                    if(_self.$el.is(':visible')){
-                        console.log(_self.$el.width());
-                        _self.$el.css('height',_self.$el.width());
-                        _self.$el.find('div.image-item-container').css({
-                            'height' : _self.$el.width(),
-                            'min-height' : _self.$el.width()
-                        });
-                    } else {
-                       var width = $(window).width() * (_self.$el.width() / 100);
-                        console.log(width);
-                        _self.$el.css('height',width);
-                        _self.$el.find('div.image-item-container').css({
-                            'height' : width,
-                            'min-height' : width
-                        });
-
-                    }
-                },5);
-
-
+            setTimeout(function(){
+                if(_self.$el.is(':visible')){
+                    console.log(_self.$el.width());
+                    _self.$el.css('height',_self.$el.width());
+                    _self.$el.find('div.image-item-container').css({
+                        'height' : _self.$el.width(),
+                        'min-height' : _self.$el.width()
+                    });
+                } else {
+                   var width = $(window).width() * (_self.$el.width() / 100);
+                    console.log(width);
+                    _self.$el.css('height',width);
+                    _self.$el.find('div.image-item-container').css({
+                        'height' : width,
+                        'min-height' : width
+                    });
+                }
+            },5);
 
 			return this;
 
@@ -195,6 +206,32 @@ define(['vendor', 'views', 'utils', 'text!media/templates/image-item.html', 'vot
 			//var markup = Mustache.to_html(this.template, this.model.toJSON());
 			//this.$el.html(markup);
 			//return this;
+		},
+
+		insertDetailView:function(e){
+			var mainli = $(e.target).closest('li');
+
+			mainli.parent().find('li.detail_row_mobile').remove();
+
+
+			var wheretoinsert = (Math.ceil((mainli.index() + 1)/3.0) * 3) - 1,
+				data_id = mainli.find('a.image-outer-h').data("id"),
+				liid = "detail_" + e.data._enttypes_id + "_" + e.data._id;
+
+			console.log(wheretoinsert);
+
+			console.log(e.data);
+
+
+			mainli.parent().find('li:eq('+ wheretoinsert +')').after('<li class="detail_row_mobile uk-width-1-1" id="' + liid +
+				data_id + '">' +
+				'<div class="uk-width-1-1 expander">' +
+					'<h4>' + e.data._label + '</h4> - <span>' + e.data._sublabel + '</span>' +
+				'</div>' +
+				'</li>');
+
+			$('li#' + liid + ' .expander').slideDown('fast');
+
 		},
 
 		/**
