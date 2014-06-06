@@ -18,6 +18,15 @@ class Controller_Authcheck extends AuthController
 		$this->populateAuthVars();
 		$retArr['authorized'] = $this->user ? true : false;
 
+		if(!$retArr['authorized']) {
+			$retArr['nav'][] = array(
+				"page" => "Sign In",
+				"link" => "#user/login",
+				"id" => "userlogin",
+				"icon"=>"uk-icon-sign-in"
+			);
+		}
+
 	//	print_r($this->user);
 		if($this->user)
 		{
