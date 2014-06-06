@@ -367,6 +367,8 @@ function (facade, utils, collections, chromeBootstrap, Controller, ProfileContro
 		    };
 	//      this.hideSignup();
         	$("body").removeClass("homePage");
+	        $.UIkit.offcanvas.offcanvas.hide();
+
         	routing.off('app-inited');
             routing.on('app-inited', function(id) {
             	closeModelBox();
