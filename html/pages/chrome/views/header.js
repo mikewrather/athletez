@@ -76,7 +76,10 @@ function (
 
 	            self.$el.html(markup);
 
-	            if(routing.isNative) $('header div.uk-navbar').css('padding-top','10px');
+	            if(routing.isNative) {
+		            $('header div.uk-navbar img#header_logo').attr('src','images/logo_small.png');
+		            $('header div.uk-navbar').css('padding-top','15px');
+	            }
 
                 if(typeof(model.get('user_photo'))=='object')
                     if(typeof(model.get('user_photo').types)=='object')
