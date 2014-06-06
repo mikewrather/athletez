@@ -26,7 +26,7 @@ function (
 
         tagName: 'footer',
 
-        className: 'container-fluid clearfix',
+        className: 'container-fluid clearfix mobile-hide',
         
         initialize: function (options) {
             this.template = FooterTemplate;

@@ -5,12 +5,15 @@
 	<a href="" class="uk-navbar-brand">
 		<img itemprop="logo" src="<%= branding.src %>" id="header_logo" alt="<%= branding.alt %>" />
 	</a>
+	<% if(authorized){ %>
+	<div class="uk-navbar-flip"><div class="photo"><img src="" alt="<%= user_name %>"/></div></div>
+	<% } %>
 </div>
 
 <div id="oc_menu" class="uk-offcanvas">
 	<div class="uk-offcanvas-bar uk-offcanvas-bar-show">
         <ul class="uk-nav uk-nav-offcanvas uk-nav-parent-icon" data-uk-nav>
-
+	        <li class="uk-nav-header">&nbsp;</li>
             <% _.each(nav,function(element,index){
 
             if(element instanceof Array){
@@ -26,7 +29,7 @@
 
             <%
             } else {
-            %><li><a href="<%= element.link %>" >
+            %><li><a <% if(element.id){ %>id="<%= element.id %>"<% } if(element.className){ %>class="<%= element.className %>" <% } %> href="<%= element.link %>">
 	        <% if(element.icon){ %><i class="<%= element.icon %>"></i><% } %>
 	        <%= element.page %></a></li><%
             }

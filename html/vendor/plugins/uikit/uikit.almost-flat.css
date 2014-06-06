@@ -196,12 +196,7 @@ textarea {
   color: inherit;
   /* 2 */
   font: inherit;
-  /* 3 */
-  margin: 0;
-  /* 4 */
-  -moz-box-sizing: border-box;
-  -webkit-box-sizing: border-box;
-  box-sizing: border-box;
+
 }
 /**
  * Don't inherit the `font-weight` (applied by a rule above).

@@ -2370,6 +2370,9 @@ li.sport .teamlist-header, .stat-val-outer {
         display:block !important;
     }
 
+    header .photo{
+        margin: 5px 10px 5px 5px;
+    }
 #menu-frame .display-main, #menu-frame .sub {
 		position: static !important;
 		height: auto !important;

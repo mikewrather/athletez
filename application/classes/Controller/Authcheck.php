@@ -19,7 +19,7 @@ class Controller_Authcheck extends AuthController
 		$retArr['authorized'] = $this->user ? true : false;
 
 		if(!$retArr['authorized']) {
-			$retArr['nav'][] = array(
+			$retArr['nav']["login"] = array(
 				"page" => "Sign In",
 				"link" => "#user/login",
 				"id" => "userlogin",
@@ -54,6 +54,7 @@ class Controller_Authcheck extends AuthController
 				}
 				$this->user = $user;
 				$retArr["authorized"] = true;
+				unset($retArr['nav']['login']);
 			}
 			else
 			{
@@ -62,6 +63,18 @@ class Controller_Authcheck extends AuthController
 			}
 		}
 
+		$retArr['nav'][] = array(
+			"page" => "Log Out",
+			"link" => "#logout",
+			"id" => "logoutId",
+			"icon"=>"uk-icon-sign-out"
+		);
+
+		$retArr['nav'][] = array(
+			"page" => "Find Content",
+			"link" => "#!home",
+			"icon"=>"uk-icon-search"
+		);
 
 		$retArr['id'] = $this->user->id;
 	//	$retArr['user_photo'] = $this->user->getAvatar();
@@ -106,18 +119,7 @@ class Controller_Authcheck extends AuthController
 			"icon"=>"uk-icon-group"
 		);
 
-		$retArr['nav'][] = array(
-			"page" => "Log Out",
-			"link" => "#logout",
-			"id" => "logoutId",
-			"icon"=>"uk-icon-sign-out"
-		);
 
-		$retArr['nav'][] = array(
-			"page" => "Find Content",
-			"link" => "#!home",
-			"icon"=>"uk-icon-search"
-		);
 
 		echo json_encode($retArr);
 	}

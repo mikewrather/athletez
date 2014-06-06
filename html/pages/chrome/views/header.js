@@ -76,6 +76,8 @@ function (
 
 	            self.$el.html(markup);
 
+	            if(routing.isNative) $('header div.uk-navbar').css('padding-top','10px');
+
                 if(typeof(model.get('user_photo'))=='object')
                     if(typeof(model.get('user_photo').types)=='object')
                         if(typeof(model.get('user_photo').types.small_thumb)=='object')
