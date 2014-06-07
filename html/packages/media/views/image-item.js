@@ -3,9 +3,18 @@
 // Requires `define`
 // Return {ImageItemView} object as constructor
 
-define(['vendor', 'views', 'utils', 'text!media/templates/image-item.html', 'votes/models/vote',
-
-        'votes/models/follow','utils/storage','chrome/views/header', 'common/models/delete','common/models/entparse'], function(vendor, views, utils, imageItemTemplate) {
+define(['vendor',
+	'views',
+	'utils',
+	'text!media/templates/image-item.html',
+	'text!media/templates/image-item-detail.html',
+	'votes/models/vote',
+	'votes/models/follow',
+	'utils/storage',
+	'chrome/views/header',
+	'common/models/delete',
+	'common/models/entparse'],
+	function(vendor, views, utils, imageItemTemplate,imageDetailTemplate) {
 
 	var ImageItemView, $ = vendor.$, BaseView = views.BaseView, Mustache = vendor.Mustache,
 	voteModel = require('votes/models/vote'),
@@ -51,9 +60,15 @@ define(['vendor', 'views', 'utils', 'text!media/templates/image-item.html', 'vot
 		render : function() {
 			var _self = this, payload = this.model.get('payload');
 			if(_.isArray(payload) || payload.image_id == 0) { return false; }
-			
+
+			var calc = routing.mobile ? $(window).width()/3 : 220;
 			//the extra object is created here using the entity parsing model
-			var parser = new entParser({mpay:payload});
+			var parser = new entParser({
+				mpay:payload,
+				display_height:calc,
+				display_width:calc
+			});
+
 			var extra = parser.parsedData;
 			extra._media_id = payload.media_id;
 			//console.log("Called Image Render", extra);
@@ -114,14 +129,14 @@ define(['vendor', 'views', 'utils', 'text!media/templates/image-item.html', 'vot
 				}
 			}
 
-			if(!routing.mobile) {
+		//	if(!routing.mobile) {
 				//set image positon
 				if(extra.imgData.maxwidth)
 					this.$el.find('img.list-thumbnail').css({
 						'max-width':extra.imgData.maxwidth,
 						'left':extra.imgData.left
 					});
-			}
+		//	}
 			if(extra.imgData.maxheight)
 				this.$el.find('img.list-thumbnail').css({
 					'max-height':extra.imgData.maxheight,
@@ -129,7 +144,7 @@ define(['vendor', 'views', 'utils', 'text!media/templates/image-item.html', 'vot
 				});
 
 
-			if(extra.show_play){
+			if(extra.show_play && !routing.mobile){
 				this.$el.append('<div class="circle open-photo-player-h"><div class="play"></div></div>');
 			}
 
@@ -159,7 +174,7 @@ define(['vendor', 'views', 'utils', 'text!media/templates/image-item.html', 'vot
 					});
 				});
 			} else {
-				this.$el.on("touchstart",null,extra,this.insertDetailView);
+				this.$el.on("click",null,extra,this.insertDetailView);
 			}
 
 
@@ -184,13 +199,13 @@ define(['vendor', 'views', 'utils', 'text!media/templates/image-item.html', 'vot
             setTimeout(function(){
                 if(_self.$el.is(':visible')){
                     console.log(_self.$el.width());
-                    _self.$el.css('height',_self.$el.width());
+                    _self.$el.css('height',Math.floor(_self.$el.width()));
                     _self.$el.find('div.image-item-container').css({
                         'height' : _self.$el.width(),
                         'min-height' : _self.$el.width()
                     });
                 } else {
-                   var width = $(window).width() * (_self.$el.width() / 100);
+                   var width = Math.floor($(window).width() * (_self.$el.width() / 100));
                     console.log(width);
                     _self.$el.css('height',width);
                     _self.$el.find('div.image-item-container').css({
@@ -210,27 +225,22 @@ define(['vendor', 'views', 'utils', 'text!media/templates/image-item.html', 'vot
 
 		insertDetailView:function(e){
 			var mainli = $(e.target).closest('li');
-
 			mainli.parent().find('li.detail_row_mobile').remove();
-
+			mainli.parent().find('li').removeClass('selected');
+			mainli.addClass('selected');
 
 			var wheretoinsert = (Math.ceil((mainli.index() + 1)/3.0) * 3) - 1,
-				data_id = mainli.find('a.image-outer-h').data("id"),
-				liid = "detail_" + e.data._enttypes_id + "_" + e.data._id;
+				data = _.extend({liid:"detail_" + e.data._enttypes_id + "_" + e.data._id}, e.data);
+
+
+			if(_.isUndefined(data._label)) data._label = data._sublabel[0].label;
+
+			var content = _.template(imageDetailTemplate,data);
 
 			console.log(wheretoinsert);
+			console.log(data);
+			mainli.parent().find('li:eq('+ wheretoinsert +')').after(content);
 
-			console.log(e.data);
-
-
-			mainli.parent().find('li:eq('+ wheretoinsert +')').after('<li class="detail_row_mobile uk-width-1-1" id="' + liid +
-				data_id + '">' +
-				'<div class="uk-width-1-1 expander">' +
-					'<h4>' + e.data._label + '</h4> - <span>' + e.data._sublabel + '</span>' +
-				'</div>' +
-				'</li>');
-
-			$('li#' + liid + ' .expander').slideDown('fast');
 
 		},
 

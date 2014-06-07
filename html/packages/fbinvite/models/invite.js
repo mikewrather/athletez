@@ -6,7 +6,7 @@ define([ 'models', 'facade' ], function(models, facade) {
 	return BaseModel.extend({
 		idAttribute: 'id',
 		url : function() {
-			return base_url + 'api/fbinvite/invite/';
+			return '/api/fbinvite/invite/';
 		}
 	});
 });

@@ -21,7 +21,7 @@ function(facade, collections, SiteViewModel, utils) {
         url: function() {
             if (testpath)
                 return testpath + '/site/views/' + this.id;
-            return base_url + '/api/site/views?user_id=' + this.id;
+            return '/api/site/views?user_id=' + this.id;
         },
         
         // **Method:** `fetchSuccess` - resolve the deferred here in success

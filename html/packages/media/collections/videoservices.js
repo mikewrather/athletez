@@ -21,7 +21,7 @@ function(facade, collections, MediaVideoServiceModel, utils) {
         url: function() {
             if (testpath)
                 return testpath + '/media/videos/' + this.id;
-            return base_url + '/api/media/videos?user_id=' + this.id;
+            return '/api/media/videos?user_id=' + this.id;
         },        
         
         // **Method:** `fetchSuccess` - resolve the deferred here in success

@@ -1036,7 +1036,7 @@ a.add-game-h {
 }
 
 .game-box-outer li a {
-	padding: 1px 10px 0px 10px;
+	padding: 1px 9px 0px 8px;
 	border-radius: 25px;
 	border: 5px solid #bbbbbc;
 	color: #FFF;
@@ -1143,7 +1143,7 @@ a.add-game-h {
 /** Popup CSS **/
 .modal-body {
 	/*position: absolute;*/
-	height: 80%;
+	height: 95%;
 	width: 96%;
 	padding: 0;
 }
@@ -1928,8 +1928,6 @@ html body .common-modal.normal-popup {
 }
 
 .modal-header .close {
-	color: #000;
-	font-size: 1.8em;
 }
 
 li#add-icons {
@@ -2361,7 +2359,7 @@ li.sport .teamlist-header, .stat-val-outer {
 
 /*  Mobile css    */
 
-@media only screen and (min-width: 320px) and (max-width: 767px) {
+@media only screen and (min-width: 320px) and (max-width: 769px) {
 
     .mobile-hide{
         display:none !important;
@@ -3130,11 +3128,12 @@ li.sport .teamlist-header, .stat-val-outer {
 	}
 	
 	div.image-item-container > img {
-		min-width: 157px;
-		min-height: 181px;
+		min-width: 100%;
+		min-height: 100%;
 	}
     #search-result {
         width:100%;
+        min-height:300px;
     }
 
     ul li.image {
@@ -3143,28 +3142,39 @@ li.sport .teamlist-header, .stat-val-outer {
 		width: 33%;
 	}
 	
-	ul#image-list {
+	ul#image-list, ul.image-list {
 		padding-left: 0px !important;
-        width: 100%;
+        width: 102%;
+        margin-left: -1%;
 	}
 
     ul li.image{
-        margin-right: .5%;
+        margin-left: .75%;
         margin-bottom: 2px;
         min-height:0;
-  /*      position: absolute;
-        top: 0px;
-        left:0px;
-        height:100px;*/
-        width:32%;
+        width:32.4%;
         box-sizing: border-box; -moz-box-sizing: border-box;
         -webkit-transition: all 0.2s ease-out; transition: all 0.2s ease-out;
     }
+    
+    ul li.image a.image-outer-h{
+        background-color: black;
+    }
+
+
+    ul li.image div.image-item-container{
+        opacity: .65;
+        width:100%;
+    }
+
+    ul li.image.selected div.image-item-container{
+        opacity: 1;
+        border-bottom: 3px solid rgb(41, 126, 218);
+    }
     .detail_row_mobile{
         float: left;
-        width:100%;
-        margin-bottom: 2px;
-        margin-right: .5%;
+        width:98%;
+        margin:2px 1% 4px 1%;
         min-height:0;
         box-sizing: border-box; -moz-box-sizing: border-box;
         -webkit-transition: all 0.2s ease-out; transition: all 0.2s ease-out;

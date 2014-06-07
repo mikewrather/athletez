@@ -21,7 +21,7 @@ function(facade, collections, SitePogModel, utils) {
         url: function() {
             if (testpath)
                 return testpath + '/site/pogs/' + this.id;
-            return base_url + '/api/site/pogs?user_id=' + this.id;
+            return '/api/site/pogs?user_id=' + this.id;
         },
         
         // **Method:** `fetchSuccess` - resolve the deferred here in success

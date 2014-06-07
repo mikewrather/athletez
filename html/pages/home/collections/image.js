@@ -1,15 +1,15 @@
 // Home Images Data
 
 define(
-		[ 'facade', 'collections', 'pages/home/models/image', 'utils' ],
-		function(facade, collections, HomeImageModel, utils) {
+		[ 'facade', 'collections', 'pages/home/models/image', 'utils', 'media/collections/images' ],
+		function(facade, collections, HomeImageModel, utils,BaseImageCollection) {
 
 			var HomeImageList, BaseCollection = collections.BaseCollection, _ = facade._, Channel = utils.lib.Channel;
 
-			HomeImageList = BaseCollection.extend({
+			HomeImageList = BaseImageCollection.extend({
 
 				// Reference to this collection's model.
-				model : HomeImageModel,
+							model : HomeImageModel,
 				//url : '/api/user/search',
 				initialize : function(models, options) {
 					debug.log("HomeImageList initialize...");

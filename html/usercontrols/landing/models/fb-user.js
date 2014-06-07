@@ -6,7 +6,7 @@ define([ 'models', 'facade' ], function(models, facade) {
 	return BaseModel.extend({
 		fbUserId: undefined,
 		url : function() {
-			return base_url + 'api/fbinvite/basics?fbid='+this.fbUserId;
+			return '/api/fbinvite/basics?fbid='+this.fbUserId;
 		}
 	});
 });

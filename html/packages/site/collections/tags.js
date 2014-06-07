@@ -21,7 +21,7 @@ function(facade, collections, SiteTagModel, utils) {
         url: function() {
             if (testpath)
                 return testpath + '/site/tags/' + this.id;
-            return base_url + '/api/site/tags?user_id=' + this.id;
+            return '/api/site/tags?user_id=' + this.id;
         },
         
         // **Method:** `fetchSuccess` - resolve the deferred here in success

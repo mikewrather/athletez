@@ -184,7 +184,7 @@ function(facade,  views,   utils,   ImageItemView,            ImageBoardView,   
             _.bindAll(this);
             this.addSubscribers();
             this.setupBoardView();
-        	this.setupAddView();
+        	if(!this.hideAddView) this.setupAddView();
 			if(_self.media_id) {
 				setTimeout(function() {
 					//if(_self.allData) {

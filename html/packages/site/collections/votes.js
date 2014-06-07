@@ -21,7 +21,7 @@ function(facade, collections, SiteVoteModel, utils) {
         url: function() {
             if (testpath)
                 return testpath + '/site/votes/' + this.id;
-            return base_url + '/api/site/votes?user_id=' + this.id;
+            return '/api/site/votes?user_id=' + this.id;
         },
         
         // **Method:** `fetchSuccess` - resolve the deferred here in success

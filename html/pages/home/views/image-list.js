@@ -2,14 +2,14 @@
 // --------------
 
 define(
-		[ 'facade', 'views', 'utils', 'media/views/image-item', 'media/views/image-list' ],
-		function(facade, views, utils, ImageItemView,ImageListView) {
+		[ 'facade', 'views', 'utils', 'media/views/image-item' ],
+		function(facade, views, utils, ImageItemView) {
 
-			var ImageListAbstract, $ = facade.$, _ = facade._, Channel = utils.lib.Channel, CollectionView = views.CollectionView, SectionView = views.SectionView;
+			var ImageListView, ImageListAbstract, $ = facade.$, _ = facade._, Channel = utils.lib.Channel, CollectionView = views.CollectionView, SectionView = views.SectionView;
 
 			ImageListAbstract = CollectionView.extend(SectionView.prototype);
 
-			ImageListView = ImageListView.extend({
+			ImageListView = ImageListAbstract.extend({
 
 				__super__ : CollectionView.prototype,
 
@@ -48,14 +48,14 @@ define(
 					//$(document).on('click','.image-outer-h', function(e) {
 					//	_self.initPhotoPlayer(e);
 					//});
-					
+
 					if(_self.media_id) {
 						setTimeout(function() {
-						//	var allData = _self.collection.toArray();	
+						//	var allData = _self.collection.toArray();
 						//	if(allData) {
 						//		for(var i in allData) {
 						//			if(_self.media_id == allData[i].get("payload").media_id) {
-						if(_self.viewName == "search-result") {	
+						if(_self.viewName == "search-result") {
 							routing.trigger('photo-player-init', undefined, _self.collection, _self.collection.id, undefined, _self.pageName, undefined, _self.media_id);
 						}
 						//				break;
@@ -65,7 +65,7 @@ define(
 						}, 500);
 					}
 				},
-				
+
 				initPhotoPlayer: function(e) {
 					e.preventDefault();
        				var index = ($(e.target).parents('li').index());     

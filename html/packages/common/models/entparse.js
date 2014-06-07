@@ -58,6 +58,7 @@ define([ 'models', 'facade' ], function(models, facade) {
 					_has_voted: mpay.has_voted,
 					_is_following: mpay.is_following,
 					_can_follow: mpay.can_follow,
+					votes: mpay.num_votes,
 					show_play:false,
 					show_delete:false,
 					show_edit : false
@@ -66,21 +67,27 @@ define([ 'models', 'facade' ], function(models, facade) {
 			{
 				case '23':
 					return_data = _self.parse_video(mpay,return_data);
+					return_data.ukicon = "uk-icon-video-camera";
 					break;
 				case '21':
 					return_data = _self.parse_image(mpay,return_data);
+					return_data.ukicon = "uk-icon-picture-o";
 					break;
 				case '1':
 					return_data = _self.parse_user(mpay,return_data);
+					return_data.ukicon = "uk-icon-user";
 					break;
 				case '8':
 					return_data = _self.parse_game(mpay,return_data);
+					return_data.ukicon = "uk-icon-trophy";
 					break;
 				case '2':
 					return_data = _self.parse_org(mpay,return_data);
+					return_data.ukicon = "uk-icon-users";
 					break;
 				case '5':
 					return_data = _self.parse_team(mpay,return_data);
+					return_data.ukicon = "uk-icon-users";
 					break;
 			}
 
@@ -237,7 +244,7 @@ define([ 'models', 'facade' ], function(models, facade) {
 			}
 			return_data._sublabel = [];
 
-			if(uploader) return_data._sublabel.push({label:"Uploaded by " + uploader});
+			if(uploader) return_data._sublabel.push({label:"up'd by " + uploader});
 			if(sport) return_data._sublabel.push({label:"Sport: " + sport});
 
 			return_data.itemtype = "http://schema.org/Person";

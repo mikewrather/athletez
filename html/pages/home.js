@@ -39,8 +39,8 @@ define(
 				//collections
 				SportList = require('packages/sport/collections/sports'), 
 				StateList = require('location/collections/states'),
-				ImageList = require('pages/home/collections/image'), 
-	
+				ImageList = require('pages/home/collections/image'),
+
 				//models
 				MenuModel = require("pages/home/models/menu"), 
 				CityModel = require('packages/location/models/city'), 
@@ -219,6 +219,13 @@ define(
 		        	
 		        	if(this.cityView) this.cityView.initPlugin();
 		        	if(this.userId) $(".register-wrapper, .register-wrapper-h").hide().html("");
+
+			        if(routing.mobile){
+				        $('[data-uk-scrollspy]').on('uk.scrollspy.inview', function(){
+					        console.log("Element is visible.");
+				        });
+			        }
+
 		        },
 		        
 		        updateBaseUrl : function(urlNumber) {
@@ -331,28 +338,30 @@ define(
 				},
 				
 				searchView: function(options) {
-					var _self = this, viewName = 'search-result',
-					    imageList = this.collections[viewName];
+					var _self = this,
+						viewName = 'search-result',
+						imageList = this.collections[viewName],
 					    controller = this;
 
 					this.manageHomePageUrl(options);
 					imageList.url = this.url(options);
 					//console.error(options);
 					imageList.targetElement = "#search-result";
-					imageList.fetch();
+					imageList.fetch({remove:false});
 					var media_id = media_id || null;
 					$.when(imageList.request).done(function() {
+
 						if(imageList.length < 12)
 							$(".right-arrow-page-h").addClass("disable-arrow-link");
 						else
-							$(".right-arrow-page-h").removeClass("disable-arrow-link");							
-							
+							$(".right-arrow-page-h").removeClass("disable-arrow-link");
+
 						if(_self.searchPage == 0 || controller.urlOptions.orderby=='random')
 							$(".left-arrow-page-h").addClass("disable-arrow-link");
 						else
-							$(".left-arrow-page-h").removeClass("disable-arrow-link");														
-							 
-						var view = new ImageListView({
+							$(".left-arrow-page-h").removeClass("disable-arrow-link");
+
+						_self.imageListView = new ImageListView({
 							collection : imageList,
 							name : viewName,
 							destination : '#'+viewName,
@@ -360,8 +369,8 @@ define(
 							media_id: media_id,
 							pageName: "home"
 						});
-						controller.layout.transition(viewName, view);
-						
+
+						controller.layout.transition(viewName, _self.imageListView);
 					});
 					for(var i in this.menuValues) {
 						if(this.menuValues[i].input) {
@@ -377,6 +386,14 @@ define(
 						}
 					}
 				},
+
+				bindLoadMoreContent:function(){
+					var _self = this;
+					console.log("Element is visible.",this.collections['search-result']);
+					_self.searchPage+=12;
+					_self.searchView();
+
+				},
 				
 				bindCickEvents: function() {
 					var _self = this;
@@ -389,8 +406,9 @@ define(
 						_self.searchPage+=12;
 						_self.searchView();
 					});
-					
-					
+
+					if(routing.mobile) $('[data-uk-scrollspy]').on('uk.scrollspy.inview',_self.bindLoadMoreContent);
+
 					if(_self.searchPage == 0)
 						$(".left-arrow-page-h").addClass("disable-arrow-link");
 					else

@@ -7,7 +7,7 @@ define([ 'models', 'facade' ], function(models, facade) {
 	var _ = facade._;
 	VoteModel = BaseModel.extend({
 		url : function() { 
-			return base_url + 'api/vote/add?subject_type_id='+this.entity_id+'&subject_id='+this.subject_id;
+			return '/api/vote/add?subject_type_id='+this.entity_id+'&subject_id='+this.subject_id;
 		},
 		
 		setData: function() {
