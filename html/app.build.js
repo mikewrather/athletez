@@ -3,7 +3,7 @@
 	appDir: './',
 	baseUrl: './',
 //	mainConfigFile: './main.js',
-	dir: '../build_v.0.0.3',
+	dir: '../html_build',
 	optimize: 'uglify',
 	paths: {
 

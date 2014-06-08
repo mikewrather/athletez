@@ -207,8 +207,21 @@ vendor/plugins/qtip/qtip.css
 ----------------
 vendor/plugins/qtip/qtip.css
 
-vendor.js
+vendor/plugins/uikit/uikit.almost-flat.addons.min.css
 ----------------
+vendor/plugins/uikit/uikit.almost-flat.addons.min.css
+
+vendor/plugins/uikit/uikit.almost-flat.css
+----------------
+vendor/plugins/uikit/uikit.almost-flat.css
+
+vendor/plugins/uikit/uikit.almost-flat.min.css
+----------------
+vendor/plugins/uikit/uikit.almost-flat.min.css
+
+main.js
+----------------
+vendor/jquery.1.10.2.min.js
 vendor/underscore.js
 vendor/json2.js
 vendor/html5.js
@@ -221,9 +234,6 @@ vendor/modernizr-2.6.2.min.js
 vendor/mustache.js
 vendor/plugins/bootstrap.js
 vendor.js
-
-main.js
-----------------
 facade.js
 utils/ajax-options.js
 utils/debug.js
@@ -321,6 +331,7 @@ pages/login/models/Logoutmodel.js
 pages/login.js
 vendor/plugins/qtip/qtip.js
 vendor/plugins/qtip/qtip-wrapper.js
+vendor/plugins/uikit/uikit.min.js
 pages/chrome/views/header.js
 text!chrome/templates/main.html
 pages/chrome/models/main.js
@@ -369,6 +380,7 @@ packages/sportorg/views/team-list.js
 pages/profile/views/sport-item.js
 pages/profile/views/sport-list.js
 text!media/templates/image-item.html
+text!media/templates/image-item-detail.html
 packages/common/models/delete.js
 packages/common/models/entparse.js
 packages/media/views/image-item.js

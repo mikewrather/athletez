@@ -1,1 +1,1 @@
-define(["models","facade"],function(e,t){var n=e.BaseModel,r=t.$,i=t._;return n.extend({fbUserId:undefined,url:function(){return base_url+"api/fbinvite/basics?fbid="+this.fbUserId}})});
+define(["models","facade"],function(e,t){var n=e.BaseModel,r=t.$,i=t._;return n.extend({fbUserId:undefined,url:function(){return"/api/fbinvite/basics?fbid="+this.fbUserId}})});

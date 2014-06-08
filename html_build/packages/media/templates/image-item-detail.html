@@ -1,0 +1,20 @@
+<li class="detail_row_mobile .uk-animation-slide-top" id="<%= liid %>">
+	<div class="uk-width-1-1 uk-panel">
+		<div class="uk-panel-box">
+			<div class="uk-panel-header">
+				<% if(false){ %>
+					<% if(_is_following){ %>
+					<div class="uk-panel-badge uk-badge " subject-type-id="<%= _enttypes_id %>" subject-id="<%= _id %>">Following</div>
+					<% } %>
+				<% } %>
+				<% if(!_.isUndefined(votes)){ %>
+					<div class="uk-panel-badge uk-badge uk-badge-success" subject-type-id="<%= _enttypes_id %>" subject-id="<%= _id %>"><%= votes %> Vote<% if(votes!=1){ %>s<% } %></div>
+				<% } %>
+				<h4 class="uk-panel-title">
+					<i class="<%= ukicon %>"></i>
+					<a href="<%= _link %>"><%= _label %></a>
+				</h4><span></span>
+			</div>
+		</div>
+	</div>
+</li>
