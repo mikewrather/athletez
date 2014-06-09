@@ -207,6 +207,18 @@ vendor/plugins/qtip/qtip.css
 ----------------
 vendor/plugins/qtip/qtip.css
 
+vendor/plugins/uikit/uikit.almost-flat.addons.min.css
+----------------
+vendor/plugins/uikit/uikit.almost-flat.addons.min.css
+
+vendor/plugins/uikit/uikit.almost-flat.css
+----------------
+vendor/plugins/uikit/uikit.almost-flat.css
+
+vendor/plugins/uikit/uikit.almost-flat.min.css
+----------------
+vendor/plugins/uikit/uikit.almost-flat.min.css
+
 main.js
 ----------------
 vendor/jquery.1.10.2.min.js
@@ -319,6 +331,7 @@ pages/login/models/Logoutmodel.js
 pages/login.js
 vendor/plugins/qtip/qtip.js
 vendor/plugins/qtip/qtip-wrapper.js
+vendor/plugins/uikit/uikit.min.js
 pages/chrome/views/header.js
 text!chrome/templates/main.html
 pages/chrome/models/main.js
@@ -367,7 +380,9 @@ packages/sportorg/views/team-list.js
 pages/profile/views/sport-item.js
 pages/profile/views/sport-list.js
 text!media/templates/image-item.html
+text!media/templates/image-item-detail.html
 packages/common/models/delete.js
+packages/sportorg/models/game.js
 packages/common/models/entparse.js
 packages/media/views/image-item.js
 pages/profile/views/header.js
@@ -448,7 +463,6 @@ models/common.js
 packages/location/collections/cities.js
 packages/user/models/common.js
 packages/user/collections/users.js
-packages/sportorg/models/game.js
 packages/sportorg/collections/games.js
 usercontrols//tag/collections/games.js
 packages/sportorg/models/complevel.js
