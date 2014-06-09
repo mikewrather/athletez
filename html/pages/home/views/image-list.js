@@ -2,14 +2,14 @@
 // --------------
 
 define(
-		[ 'facade', 'views', 'utils', 'media/views/image-item' ],
-		function(facade, views, utils, ImageItemView) {
+		[ 'facade', 'views', 'utils', 'media/views/image-item', 'media/views/image-list'],
+		function(facade, views, utils, ImageItemView, BaseImageListView) {
 
 			var ImageListView, ImageListAbstract, $ = facade.$, _ = facade._, Channel = utils.lib.Channel, CollectionView = views.CollectionView, SectionView = views.SectionView;
 
 			ImageListAbstract = CollectionView.extend(SectionView.prototype);
 
-			ImageListView = ImageListAbstract.extend({
+			ImageListView = BaseImageListView.extend({
 
 				__super__ : CollectionView.prototype,
 
@@ -20,14 +20,21 @@ define(
 				// Tag for the child views
 				_tagName : "li",
 				_className : "image",
-				events: {
-					'click .open-photo-player-h': 'initPhotoPlayer'
-				},
+				page: 0,
+				page_limit: 9999,
+				allItemsInCollection: false,
+			//	events: {
+			//		'click .open-photo-player-h': 'initPhotoPlayer'
+			//	},
 
 				// Store constructor for the child views
 				_view : ImageItemView,
+				hideAddView:true,
 
 				initialize : function(options) {
+					BaseImageListView.prototype.initialize.call(this,options);
+
+					/*
 					var _self = this;
 					//console.log(options);
 					//console.log(this);
@@ -63,14 +70,17 @@ define(
 						//		}
 						//	}
 						}, 500);
-					}
+					}*/
 				},
+
 
 				initPhotoPlayer: function(e) {
 					e.preventDefault();
        				var index = ($(e.target).parents('li').index());     
-       				routing.trigger('photo-player-init', index, this.collection, this.collection.id, undefined ,  this.pageName);
+       				routing.trigger('photo-player-init', index, this.allItemsInCollection, this.collection.id, undefined ,  this.pageName);
        			},
+
+
 
 				// Child views...
 				childViews : {}

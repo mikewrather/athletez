@@ -2,8 +2,9 @@
 
 define(
 		[ "require", 
-		  "text!pages/home/templates/layout.html", 
-		  
+		  "text!pages/home/templates/layout.html",
+
+		  "backbone",
 		  "facade",
 		  "controller", 
 		  "models", 
@@ -27,7 +28,7 @@ define(
 		  "packages/sport/views/sport-list",
 		  "signup/views/registerbasic",
 		  "packages/location/views/city"],
-		function(require, pageLayoutTemplate) {
+		function(require, pageLayoutTemplate,Backbone) {
 
 			var HomeController, 
 				facade = require("facade"), 
@@ -330,7 +331,12 @@ define(
 							}
 						}
 					}
+
 					routing.navigate(currentHashUrl, {trigger: false});
+					var hasChanged = !this.currentHashURL || this.currentHashURL == currentHashUrl ? false : true;
+					this.currentHashURL = currentHashUrl;
+					return hasChanged;
+
 				},
 				
 				removeParamsFromUrl: function() {
@@ -341,36 +347,45 @@ define(
 					var _self = this,
 						viewName = 'search-result',
 						imageList = this.collections[viewName],
-					    controller = this;
+					    controller = this,
+						existingList = imageList.toJSON();
 
-					this.manageHomePageUrl(options);
+					var baseChanged = this.manageHomePageUrl(options);
 					imageList.url = this.url(options);
-					//console.error(options);
 					imageList.targetElement = "#search-result";
 					imageList.fetch({remove:false});
+
 					var media_id = media_id || null;
 					$.when(imageList.request).done(function() {
 
-						if(imageList.length < 12)
-							$(".right-arrow-page-h").addClass("disable-arrow-link");
-						else
-							$(".right-arrow-page-h").removeClass("disable-arrow-link");
+						if(baseChanged){
+							_self.imageListView = new ImageListView({
+								collection : imageList,
+								name : viewName,
+								destination : '#'+viewName,
+								user_id : this.userId,
+								media_id: media_id,
+								pageName: "home"
+							});
 
-						if(_self.searchPage == 0 || controller.urlOptions.orderby=='random')
-							$(".left-arrow-page-h").addClass("disable-arrow-link");
-						else
-							$(".left-arrow-page-h").removeClass("disable-arrow-link");
+							controller.layout.transition(viewName, _self.imageListView);
 
-						_self.imageListView = new ImageListView({
-							collection : imageList,
-							name : viewName,
-							destination : '#'+viewName,
-							user_id : this.userId,
-							media_id: media_id,
-							pageName: "home"
-						});
+						}
+						else{
+							if(!_self.imageListView.allItemsInCollection){
+								_self.imageListView.allItemsInCollection = new Backbone.Collection();
+								_self.imageListView.allItemsInCollection.add(existingList,{at:0});
+							}
+							_self.imageListView.allItemsInCollection.add(imageList.toJSON());
 
-						controller.layout.transition(viewName, _self.imageListView);
+						}
+
+						if(imageList.length < 12){
+							$('[data-uk-scrollspy]').off('uk.scrollspy.inview');
+						}
+						$('[data-uk-scrollspy]').trigger('uk.scrollspy.outview');
+
+
 					});
 					for(var i in this.menuValues) {
 						if(this.menuValues[i].input) {
@@ -389,10 +404,16 @@ define(
 
 				bindLoadMoreContent:function(){
 					var _self = this;
-					console.log("Element is visible.",this.collections['search-result']);
-					_self.searchPage+=12;
-					_self.searchView();
+					if(routing.mobile || 1){
+						$('[data-uk-scrollspy]').on('uk.scrollspy.inview', function(e) {
+							_self.searchPage+=12;
+							_self.searchView();
+						});
 
+						$('[data-uk-scrollspy]').on('uk.scrollspy.outview',function(e){
+							console.log("OUTVIEW");
+						});
+					}
 				},
 				
 				bindCickEvents: function() {
@@ -401,13 +422,13 @@ define(
 						_self.searchPage-=12;
 						_self.searchView();
 					});
-					
+
 					$(document).on("click", ".right-arrow-page-h", function() {
 						_self.searchPage+=12;
 						_self.searchView();
 					});
 
-					if(routing.mobile) $('[data-uk-scrollspy]').on('uk.scrollspy.inview',_self.bindLoadMoreContent);
+					_self.bindLoadMoreContent();
 
 					if(_self.searchPage == 0)
 						$(".left-arrow-page-h").addClass("disable-arrow-link");
@@ -461,8 +482,7 @@ define(
 				},
 
 				setupImageListView : function(viewName) {
-					var imageListView;
-					imageListView = new ImageListView({
+					this.imageListView = new ImageListView({
 						collection : this.collections[viewName],
 						name : viewName,
 						destination : '#'+viewName,
@@ -471,10 +491,10 @@ define(
 						pageName: "home",
 						viewName: viewName
 					});
-					
-					imageListView.render();
-					this.sections[viewName] = imageListView;
-					this.meta.activeViews.push(viewName);					
+
+					this.imageListView.render();
+					this.sections[viewName] = this.imageListView;
+					this.meta.activeViews.push(viewName);
 				},
 				
 				setupSportListView : function(viewName) {

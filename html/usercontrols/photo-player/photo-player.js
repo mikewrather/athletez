@@ -174,8 +174,8 @@ define(["require", 'text!usercontrol/photo-player/templates/comments.html',
 		setupPhotoPlayerView: function(r) {
 			var self = this;
 			$("#photoPlayerModal").removeClass("region-loader");
-			if(self._collection && self._collection.limit) self._collection.limit = limit;
-			if(self._collection && self._collection.offset) self._collection.offset = offset;
+		//	if(self._collection && self._collection.limit) self._collection.limit = limit;
+		//	if(self._collection && self._collection.offset) self._collection.offset = offset;
 			var photoPlayerMain = new PhotoPlayerView({
 				model : r.models[0],
 				name : "photo player",

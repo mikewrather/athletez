@@ -45,6 +45,7 @@ function(facade,  views,   utils,   ImageItemView,            ImageBoardView,   
 		},
 
 		renderTemplate: function () {
+			console.log("rendering template",this.collection.toJSON());
             var markup = Mustache.to_html(this.template, {target: this.target_id});
             this.$el.html(markup);
 			return this;
@@ -204,17 +205,23 @@ function(facade,  views,   utils,   ImageItemView,            ImageBoardView,   
 			var _self = this, limit = _self.collection.limit,
 				index = ($(e.target).parents('ul.image-list').find('li.image').index($(e.target).parents('li')));
 
-			if(index< 0) index = 0;
+	        console.log(index);
+
+	        console.log($(e.target).parents('li').index());
+
+	        if(index< 0) index = 0;
  	      	routing.trigger('photo-player-init', index, _self.collection, _self.user_id, true,  _self.pageName, _self.target_id);
        	},
 
         seeMore: function(e) {
+	       console.log(e,this.collection.limit);
         	var _self = this;
         	if(e && this.collection.limit) {
 	        	this.collection.offset += this.collection.limit;
 	        	this.collection.fetch({remove: false});
 	        	$.when(_self.collection.request).done(function() {
 	        		// add records
+			        console.log(_self.collection.toJSON());
 	        		var len = _self.collection.toJSON().length;
 	        		if(len < _self.collection.limit) {
 	        			_self.$el.find('.see-more-h').hide();
