@@ -1,6 +1,6 @@
 //Delete Model
 
-define([ 'models', 'facade' ], function(models, facade) {
+define([ 'models', 'facade','media/models/image','media/models/video','sportorg/models/team','sportorg/models/game','user/models/basics' ], function(models, facade) {
 
 	var BaseModel = models.BaseModel, Backbone = facade.Backbone, $ = facade.$, _ = facade._;
 	return BaseModel.extend({
@@ -68,17 +68,21 @@ define([ 'models', 'facade' ], function(models, facade) {
 				case '23':
 					return_data = _self.parse_video(mpay,return_data);
 					return_data.ukicon = "uk-icon-video-camera";
+					return_data.modelToUse = require('media/models/video');
 					break;
 				case '21':
 					return_data = _self.parse_image(mpay,return_data);
+					return_data.modelToUse = require('media/models/image');
 					return_data.ukicon = "uk-icon-picture-o";
 					break;
 				case '1':
 					return_data = _self.parse_user(mpay,return_data);
+					return_data.modelToUse = require('user/models/basics');
 					return_data.ukicon = "uk-icon-user";
 					break;
 				case '8':
 					return_data = _self.parse_game(mpay,return_data);
+					return_data.modelToUse = require('sportorg/models/game');
 					return_data.ukicon = "uk-icon-trophy";
 					break;
 				case '2':
@@ -87,6 +91,7 @@ define([ 'models', 'facade' ], function(models, facade) {
 					break;
 				case '5':
 					return_data = _self.parse_team(mpay,return_data);
+					return_data.modelToUse = require('sportorg/models/team');
 					return_data.ukicon = "uk-icon-users";
 					break;
 			}

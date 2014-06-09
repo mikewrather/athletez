@@ -237,9 +237,14 @@ define(['vendor',
 
 			var content = _.template(imageDetailTemplate,data);
 
-			console.log(wheretoinsert);
-			console.log(data);
 			mainli.parent().find('li:eq('+ wheretoinsert +')').after(content);
+
+			if(_.isObject(data.modelToUse)){
+				var thisobj = new data.modelToUse({id:data._id});
+				thisobj.fetch({success:function(res){
+					console.log(res);
+				}});
+			}
 
 
 		},

@@ -1,4 +1,8 @@
-
+.spinimg{
+    background: url('images/1-0.gif') no-repeat;
+    height: 20px;
+    width:20px;
+}
 .mobile-hide{
     display:block !important;
 }
@@ -2471,7 +2475,7 @@ li.sport .teamlist-header, .stat-val-outer {
 	
 	#team-image-container, #menu-container {
 		width: 100% !important;
-		margin-top: -26px;
+        float: none;
 	}
 	
 	#team-image-container ul {
