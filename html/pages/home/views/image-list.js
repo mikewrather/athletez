@@ -31,49 +31,6 @@ define(
 				_view : ImageItemView,
 				hideAddView:true,
 
-				initialize : function(options) {
-					BaseImageListView.prototype.initialize.call(this,options);
-
-					/*
-					var _self = this;
-					//console.log(options);
-					//console.log(this);
-					this.name = options.name || this.name;
-					this.media_id = options.media_id;
-					this.pageName = options.pageName;
-					this.viewName = options.viewName;
-					this.userId = options.user_id;
-					CollectionView.prototype.initialize.call(this, options);
-					if (!this.collection) {
-						throw new Error(
-								"ImageListView expected options.collection.");
-					}
-					_.bindAll(this);
-					this.addSubscribers();
-					
-					//$(document).off('click','.image-outer-h');
-					//$(document).on('click','.image-outer-h', function(e) {
-					//	_self.initPhotoPlayer(e);
-					//});
-
-					if(_self.media_id) {
-						setTimeout(function() {
-						//	var allData = _self.collection.toArray();
-						//	if(allData) {
-						//		for(var i in allData) {
-						//			if(_self.media_id == allData[i].get("payload").media_id) {
-						if(_self.viewName == "search-result") {
-							routing.trigger('photo-player-init', undefined, _self.collection, _self.collection.id, undefined, _self.pageName, undefined, _self.media_id);
-						}
-						//				break;
-						//			}
-						//		}
-						//	}
-						}, 500);
-					}*/
-				},
-
-
 				initPhotoPlayer: function(e) {
 					e.preventDefault();
        				var index = ($(e.target).parents('li').index());     

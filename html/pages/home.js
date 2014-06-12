@@ -332,10 +332,8 @@ define(
 						}
 					}
 
-
-
 					routing.navigate(currentHashUrl, {trigger: false});
-					var hasChanged = !this.currentHashURL || this.currentHashURL == currentHashUrl || !(currentHashUrl.match("base"))? false : true;
+					var hasChanged = !this.currentHashURL || this.currentHashURL == currentHashUrl || (!currentHashUrl.match("base") && !currentHashUrl.match("searchtext"))? false : true;
 					console.log(currentHashUrl,hasChanged);
 					this.currentHashURL = currentHashUrl;
 					return hasChanged;

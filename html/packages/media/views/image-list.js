@@ -164,12 +164,14 @@ function(facade,  views,   utils,   ImageItemView,            ImageBoardView,   
             }
             
             var len = _self.collection.toJSON().length;
-	        	if(!len || len < _self.collection.limit) {
-	        		_self.$el.find('.see-more-h').hide();
+
+            if(!len || len < _self.collection.limit) {
+                _self.$el.find('.see-more-h').hide();
+		    //    $('#homepage-infinite-scroll').remove();
 	        }
 	        
 	        // show empty box
-	        if(!len) {
+	        if(!len && _.isUndefined(this.hideAddView)) {
 	        	
 	        	var model = facade.Backbone.Model.extend({});
 	        	new AddDescription({
