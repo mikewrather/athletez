@@ -36,6 +36,10 @@
     <author email="dev@cordova.apache.org" href="http://cordova.io">
         Apache Cordova Team
     </author>
+    <plugin name="org.apache.cordova.facebook.Connect" value="FacebookConnectPlugin" />
+    <feature name="org.apache.cordova.facebook.Connect">
+        <param name="ios-package" value="FacebookConnectPlugin" />
+    </feature>
     <content src="index.html" />
     <access origin="*" />
 </widget>

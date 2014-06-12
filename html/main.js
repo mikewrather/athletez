@@ -252,7 +252,7 @@ define(function (require) {
 
 				console.log("XHR:",jqXHR,localStorageToCookie(['authautologin','session']));
 				options.url = options.url.charAt(0) === "/" ? options.url : "/" + options.url;
-				options.url = _.isUndefined(window.location.host) || window.location.host === "" ? 'http://www.aup.dev' + options.url : options.url;
+				options.url = _.isUndefined(window.location.host) || window.location.host === "" ? 'http://www.athletez.com' + options.url : options.url;
 			});
 
 			$(document).ajaxComplete(function(event,jqXHR){
