@@ -382,6 +382,7 @@ pages/profile/views/sport-list.js
 text!media/templates/image-item.html
 text!media/templates/image-item-detail.html
 packages/common/models/delete.js
+packages/sportorg/models/game.js
 packages/common/models/entparse.js
 packages/media/views/image-item.js
 pages/profile/views/header.js
@@ -462,7 +463,6 @@ models/common.js
 packages/location/collections/cities.js
 packages/user/models/common.js
 packages/user/collections/users.js
-packages/sportorg/models/game.js
 packages/sportorg/collections/games.js
 usercontrols//tag/collections/games.js
 packages/sportorg/models/complevel.js
