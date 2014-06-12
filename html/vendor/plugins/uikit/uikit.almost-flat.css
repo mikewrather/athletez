@@ -346,7 +346,6 @@ html {
   font-size: 14px;
 }
 body {
-  background: #ffffff;
 }
 /* Phone landscape and smaller */
 @media (max-width: 767px) {

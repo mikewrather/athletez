@@ -332,8 +332,11 @@ define(
 						}
 					}
 
+
+
 					routing.navigate(currentHashUrl, {trigger: false});
-					var hasChanged = !this.currentHashURL || this.currentHashURL == currentHashUrl ? false : true;
+					var hasChanged = !this.currentHashURL || this.currentHashURL == currentHashUrl || !(currentHashUrl.match("base"))? false : true;
+					console.log(currentHashUrl,hasChanged);
 					this.currentHashURL = currentHashUrl;
 					return hasChanged;
 
@@ -359,15 +362,18 @@ define(
 					$.when(imageList.request).done(function() {
 
 						if(baseChanged){
+							var allItemsInCollection = new Backbone.Collection();
+							allItemsInCollection.add(imageList.toJSON());
 							_self.imageListView = new ImageListView({
 								collection : imageList,
 								name : viewName,
 								destination : '#'+viewName,
 								user_id : this.userId,
 								media_id: media_id,
-								pageName: "home"
+								pageName: "home",
+								allItemsInCollection : allItemsInCollection
 							});
-
+							console.log(_self.imageListView.allItemsInCollection);
 							controller.layout.transition(viewName, _self.imageListView);
 
 						}
@@ -482,6 +488,9 @@ define(
 				},
 
 				setupImageListView : function(viewName) {
+
+					var allItemsInCollection = new Backbone.Collection();
+					allItemsInCollection.add(this.collections[viewName].toJSON());
 					this.imageListView = new ImageListView({
 						collection : this.collections[viewName],
 						name : viewName,
@@ -489,7 +498,8 @@ define(
 						user_id : this.userId,
 						media_id: this.media_id,
 						pageName: "home",
-						viewName: viewName
+						viewName: viewName,
+						allItemsInCollection:allItemsInCollection
 					});
 
 					this.imageListView.render();
