@@ -132,7 +132,15 @@ define(["require", "text!imageup/templates/basic.html", "text!imageup/templates/
 		},
 
 		imageUpload : function(data) {
-			var id = data.id, length = data.len, dataum = [], msg = "", thiss = this, dataum = data.dataum;
+			var id = data.id,
+				length = data.len,
+				dataum = [],
+				msg = "",
+				thiss = this,
+				dataum = data.dataum;
+
+			console.log(data);
+
 			$("#preview_" + id).addClass("image_upload_loader_new");
 			$(".previewimgsrc").addClass('fade-out');
 			$.ajax({
