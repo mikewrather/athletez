@@ -227,7 +227,7 @@ define(function (require) {
 			routing.isNative = function(){
 				var page_url = window.location.href,
 					url_arr = page_url.split('://');
-				return url_arr[0]==="file" ? true : false;
+				return url_arr[0]==="file" && !_.isUndefined(window.cordova) ? true : false;
 			}();
 
 			$.support.cors = true;
