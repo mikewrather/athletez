@@ -37,6 +37,10 @@ define(["require", "text!imageup/templates/basic.html", "text!imageup/templates/
 				controller.imageUpload(dataum);
 			}
 
+			function imageuploaderNative(file) {
+				controller.imageUploadNative(file);
+			}
+
 			function msgShow(dataum) {
 				controller.msgShowup(dataum);
 			}
@@ -52,6 +56,11 @@ define(["require", "text!imageup/templates/basic.html", "text!imageup/templates/
 
 			routing.off('imageup-add-image');
 			routing.on('imageup-add-image', function(param) {
+				imageuploader(param);
+			});
+
+			routing.off('imageup-add-image-native');
+			routing.on('imageup-add-image-native', function(param) {
 				imageuploader(param);
 			});
 
@@ -131,6 +140,39 @@ define(["require", "text!imageup/templates/basic.html", "text!imageup/templates/
 				routing.trigger('imageup-preview', this.data);
 		},
 
+		imageUploadNative: function(file){
+			console.log(data);
+
+			function uploadPhoto(file) {
+				var options = new FileUploadOptions();
+				options.fileKey="file";
+				options.fileName="test"
+				options.mimeType="image/jpeg";
+
+				var params = {};
+				params.value1 = "test";
+				params.value2 = "param";
+
+				options.params = params;
+
+				var ft = new FileTransfer();
+				ft.upload(dataum.data, encodeURI(this.url), win, fail, options);
+			}
+
+			function win(r) {
+				console.log("Code = " + r.responseCode);
+				console.log("Response = " + r.response);
+				console.log("Sent = " + r.bytesSent);
+			}
+
+			function fail(error) {
+				alert("An error has occurred: Code = " + error.code);
+				console.log("upload error source " + error.source);
+				console.log("upload error target " + error.target);
+			}
+			uploadPhoto(file);
+		},
+
 		imageUpload : function(data) {
 			var id = data.id,
 				length = data.len,
@@ -139,52 +181,56 @@ define(["require", "text!imageup/templates/basic.html", "text!imageup/templates/
 				thiss = this,
 				dataum = data.dataum;
 
-			console.log(data);
-
 			$("#preview_" + id).addClass("image_upload_loader_new");
 			$(".previewimgsrc").addClass('fade-out');
-			$.ajax({
-				url : this.url,
-				data : dataum,
-				cache : false,
-				processData : false,
-				contentType : false,
-				type : 'POST',
-				success : function(data) {
-					$("#preview_" + id).fadeOut("slow");
-					$("#preview_" + id + "rot").fadeOut("slow");
-					routing.trigger("image-upload-success", data);
-					$("imageup").attr("disabled", "disabled");
-					thiss.count++;
-					if (thiss.count == length) {
+
+			if(routing.isNative && false){
+
+			} else {
+				console.log(this.url);
+				$.ajax({
+					url : this.url,
+					data : dataum,
+					cache : false,
+					processData : false,
+					contentType : false,
+					type : 'POST',
+					success : function(data) {
+						$("#preview_" + id).fadeOut("slow");
+						$("#preview_" + id + "rot").fadeOut("slow");
+						routing.trigger("image-upload-success", data);
+						$("imageup").attr("disabled", "disabled");
+						thiss.count++;
+						if (thiss.count == length) {
+							msg = {
+								"msg" : " File Uploaded Succesfully",
+								"color" : "alert-success"
+							};
+							routing.trigger("imageup-msg", msg);
+							$("#imageup").removeAttr("disabled");
+							$("#image_file").removeAttr("disabled");
+							$(".closepreview").removeAttr("disabled");
+							$("#imgUploadModal, .modal-backdrop").unbind().remove();
+						}
+						$("#preview_" + id).unbind().removeClass("image_upload_loader_new").html("").attr("disabled", "disabled");
+					},
+					error : function(data) {
+						$("#preview_" + id).fadeOut("slow");
+						$(".previewimgsrc").removeClass('fade-out');
+						$("#preview_" + id).fadeIn("slow").html("<b>Upload Error!</b>");
+						debug.log(data);
 						msg = {
-							"msg" : " File Uploaded Succesfully",
-							"color" : "alert-success"
+							"msg" : data.statusText,
+							"color" : "alert-error"
 						};
 						routing.trigger("imageup-msg", msg);
 						$("#imageup").removeAttr("disabled");
 						$("#image_file").removeAttr("disabled");
 						$(".closepreview").removeAttr("disabled");
-						$("#imgUploadModal, .modal-backdrop").unbind().remove();							
+						return;
 					}
-					$("#preview_" + id).unbind().removeClass("image_upload_loader_new").html("").attr("disabled", "disabled");
-				},
-				error : function(data) {
-					$("#preview_" + id).fadeOut("slow");
-					$(".previewimgsrc").removeClass('fade-out');
-					$("#preview_" + id).fadeIn("slow").html("<b>Upload Error!</b>");
-					debug.log(data);
-					msg = {
-						"msg" : data.statusText,
-						"color" : "alert-error"
-					};
-					routing.trigger("imageup-msg", msg);
-					$("#imageup").removeAttr("disabled");
-					$("#image_file").removeAttr("disabled");
-					$(".closepreview").removeAttr("disabled");
-					return;
-				}
-			});
+				});
+			}
 		},
 		msgShowup : function(dataum) {
 			for (var x in this.scheme) {

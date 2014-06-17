@@ -43,17 +43,22 @@ define([
         },
         
         addImage: function(e) {
-	        var page = $(e.currentTarget).data('page-base') || "user",
-		        ent_id = $(e.currentTarget).data('ent-id'),
-		        sports_id = $(e.currentTarget).data('sports-id');
 
-        	 ga('send', 'event', 'Open-Add-Popup', 'Image', 'User opened ' + page + ' image uploader', ent_id);
-             var id = $('.selected-sport-h').data('id') || $(".sports-h").val() || $(".sports-h").attr("data-id"),
-                url = "/api/" + page  + "/addimage/" + ent_id,
-			    attr = {
-				    "sports_id" : sports_id
-			    };
-			routing.trigger('add-image', url, attr);
+	        console.log(this);
+
+		        var page = $(e.currentTarget).data('page-base') || "user",
+			        ent_id = $(e.currentTarget).data('ent-id'),
+			        sports_id = $(e.currentTarget).data('sports-id');
+
+		        ga('send', 'event', 'Open-Add-Popup', 'Image', 'User opened ' + page + ' image uploader', ent_id);
+		        var id = $('.selected-sport-h').data('id') || $(".sports-h").val() || $(".sports-h").attr("data-id"),
+			        url = "/api/" + page  + "/addimage/" + ent_id,
+			        attr = {
+				        "sports_id" : sports_id
+			        };
+		        routing.trigger('add-image', url, attr);
+
+
         },
         
         addVideo: function(e) {

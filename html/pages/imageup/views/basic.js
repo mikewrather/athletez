@@ -254,7 +254,13 @@ define(['require', 'text!imageup/templates/uploader.html', 'text!imageup/templat
 							"id" : i,
 							"len" : thiss.files_byUploader.length
 						};
-						routing.trigger("imageup-add-image", dataum);
+						if(routing.isNative){
+							console.log("sending to image upload",file);
+							routing.trigger("imageup-add-image", dataum);
+						} else {
+							routing.trigger("imageup-add-image", dataum);
+						}
+
 					}
 				});
 				thiss.files_byUploader = [];
