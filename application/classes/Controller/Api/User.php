@@ -911,6 +911,7 @@
 		public function action_post_fbreg()
 		{
 
+//			echo "called1";
 			$retArr = $this->getFBUserFromHeaders();
 
 			if(isset($retArr['message']))
@@ -931,6 +932,7 @@
 			}
 			else
 			{
+		//		echo "called2";
 				if (isset($retArr['id']))
 				{
 					//Check if already logged in.  If so, we will link them up.
@@ -973,6 +975,7 @@
 					}
 					else
 					{
+				//		echo "called3";
 						$user_identity = ORM::factory('User_Identity');
 						// check for user for this facebook identity and force a login
 						if(!$user = $user_identity->find_by_identity($retArr['id']))
@@ -1005,6 +1008,9 @@
 							$user->executeInvite($retArr['id']);
 							$retArr['identity_exists'] = true;
 						}
+						$arrWithToken = self::getUserTokenData($user);
+						$retArr = array_merge($retArr,$arrWithToken);
+					//	print_r($arrWithToken);
 					}
 
 
@@ -1266,6 +1272,32 @@
 			}
 		}
 
+		public static function getUserTokenData($user){
+
+			// not sure if this is the only type of obj it could be
+			//if(get_class($user)!='Model_User_Base') return false;
+
+			$token = ORM::factory('User_Tokens')
+				->where('user_id','=',$user->pk())
+			//	->where('user_agent','=',sha1(Request::$user_agent))
+				->order_by('id','DESC')
+				->find();
+
+	//		print_r($token);
+
+			if($token->loaded())
+			{
+				$token_string = Cookie::salt('authautologin',$token->token) . "~" . $token->token;
+				return array(
+					"user"=>$user,
+					"token"=>$token_string,
+					"session" => session_id()
+				);
+			}
+
+			return false;
+		}
+
 		/**
 		 * action_post_login() Log in a user
 		 * via /api/user/login/{users_id}
@@ -1337,12 +1369,6 @@
 				'user_agent' => sha1(Request::$user_agent),
 			);
 
-			$token = ORM::factory('user_tokens')
-				->where('user_id','=',$user->pk())
-				->where('user_agent','=',sha1(Request::$user_agent))
-				->order_by('id','DESC')
-				->find();
-
 		//	print_r($token);
 
 			if($user)
@@ -1354,16 +1380,7 @@
 					$user->executeInvite(array("sechash"=>$sechash));
 				}
 
-				if($token->loaded())
-				{
-					$token_string = Cookie::salt('authautologin',$token->token) . "~" . $token->token;
-					return array(
-						"user"=>$user,
-						"token"=>$token_string,
-						"session" => session_id()
-					);
-				}
-
+				if($arrWithToken = self::getUserTokenData($user)) return $arrWithToken;
 				return $user;
 			}
 			else
@@ -1724,12 +1741,11 @@
 			//Check for success / error
 			if(get_class($result) == get_class($this->mainModel))
 			{
+				$retArr = $result->getBasics();
+				$arrWithToken = self::getUserTokenData($result);
+				$retArr = array_merge($retArr,$arrWithToken);
 
-				$email = $arguments['email'];
-				$password = $arguments['password'];
-				//Process user's info,set it to session
-
-				return $result;
+				return $retArr;
 			}
 			elseif(get_class($result) == 'ORM_Validation_Exception')
 			{
