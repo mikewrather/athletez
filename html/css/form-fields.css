@@ -22,10 +22,6 @@ form.autoform input[type="text"]{
 
 form.autoform a.verify-address-h{
     color: #529830;
-    text-decoration: underline;
-    font-weight: bold;
-    font-size:.9em;
-    display: block;
 }
 
 form.autoform .input-field input.submit-btn{

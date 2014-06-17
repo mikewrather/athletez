@@ -2380,7 +2380,18 @@ li.sport .teamlist-header, .stat-val-outer {
         display: none;
 
     }
+    .modal-header{
+	    max-height: 30px;
+	    height: 10%;
+    }
+    
+    .modal-header .close{
+	    margin-top:15px;
+    }
 
+    .modal-body{
+	    height: 85%;
+    }
 #menu-frame .display-main, #menu-frame .sub {
 		position: static !important;
 		height: auto !important;
@@ -2953,7 +2964,7 @@ li.sport .teamlist-header, .stat-val-outer {
 		/*height: 60px;*/
 	}
 	
-	
+	/*
 	#roster-wrap div.image-item-container {
 		width: 100%;
 		height: 140px;
@@ -2982,7 +2993,7 @@ li.sport .teamlist-header, .stat-val-outer {
 		margin: -132px 30px 30px 30px;
 	}
 	
-	
+	*/
 	.roster-heading-h .invite-from-fb {
 		margin-left: 5px;
 	}

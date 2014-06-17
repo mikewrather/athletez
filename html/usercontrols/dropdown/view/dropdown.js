@@ -3,7 +3,7 @@
  // Pages
  // Requires `define`, `require`
  */
-define(['require', 'text!usercontrol/dropdown/template/layout.html', 'facade', 'views', 'utils', 'vendor'], function(require, layoutTemplate) {
+define(['require', 'text!usercontrol/dropdown/template/layout.html','text!usercontrol/dropdown/template/layout-mobile.html', 'facade', 'views', 'utils', 'vendor'], function(require, layoutTemplate,layoutTemplateMobile) {
 
 	var self, facade = require('facade'), views = require('views'), SectionView = views.SectionView, utils = require('utils'), Channel = utils.lib.Channel, vendor = require('vendor'), Mustache = vendor.Mustache, $ = facade.$;
 	var BaseView = views.BaseView, Backbone = facade.Backbone, DropDownView, _self;
@@ -88,6 +88,8 @@ define(['require', 'text!usercontrol/dropdown/template/layout.html', 'facade', '
 		initialize : function(options) {
 			_self = this;
 			self = this;
+
+			this.template = routing.mobile ? layoutTemplateMobile : layoutTemplate;
 			this.selectedOptions = [];
 			self.setOptions(options);
 			this.render();
@@ -166,23 +168,27 @@ define(['require', 'text!usercontrol/dropdown/template/layout.html', 'facade', '
 //			debugger;
 			$(self.el).html(markup);
 			this.targetView.$el.find(this.destination).html(this.el);
-			this.$el.find(".hidden-input-dropdown-h").val(this.selectedValue);
-			this.selectedOptions.push(this.selectedValue);
-			this.showSelectedValue();
-			if ($("#" + this.elementId).length) {
-				if (self.callback)
-					self.callback(this.selectedOptions);
-			} else {
-				setTimeout(function() {
-					if(!self.$el.find('li.selected').length) {
-						var $li = self.$el.find('.common-dropdown li:first-child');
-						$li.addClass('selected');
-						self.$el.find("#" + self.elementId).val($li.find('a').data("id"));						
-						self.showSelectedValue();
-					}
-					if (self.callback) self.callback(self.selectedOptions);
-				}, 200);
+
+			if(!routing.mobile){
+				this.$el.find(".hidden-input-dropdown-h").val(this.selectedValue);
+				this.selectedOptions.push(this.selectedValue);
+				this.showSelectedValue();
+				if ($("#" + this.elementId).length) {
+					if (self.callback)
+						self.callback(this.selectedOptions);
+				} else {
+					setTimeout(function() {
+						if(!self.$el.find('li.selected').length) {
+							var $li = self.$el.find('.common-dropdown li:first-child');
+							$li.addClass('selected');
+							self.$el.find("#" + self.elementId).val($li.find('a').data("id"));
+							self.showSelectedValue();
+						}
+						if (self.callback) self.callback(self.selectedOptions);
+					}, 200);
+				}
 			}
+
 			return true;
 		},
 

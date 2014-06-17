@@ -2107,7 +2107,7 @@ return;
 
   //STATICS
   template: _.template('\
-    <form data-fieldsets class="autoform"></form>\
+    <form data-fieldsets class="autoform uk-form"></form>\
   ', null, this.templateSettings),
 
   templateSettings: {
@@ -2493,7 +2493,7 @@ Form.Field = Backbone.View.extend({
       $container.append(editor.render().el);
 
 	    if(schema.tooltip && schema.tooltip != ""){
-		    $container.find('input,label,textarea,.dropdown-wrapper').qtip({
+		    $container.find('input,label,textarea,.dropdown-wrapper').qtip2({
 			    content: schema.tooltip,
 			    show: 'mousedown',
 			    position: {
@@ -2505,6 +2505,7 @@ Form.Field = Backbone.View.extend({
 			    }
 		    });
 	    }
+
 
     });
     this.setElement($field);
@@ -3013,17 +3014,20 @@ Form.editors.Location = Form.editors.Text.extend({
 
   template: '<textarea placeholder="Address" class="location-h address-h" rows="3" cols="25"><%= address %></textarea>\
 			 <span class="address-error hide address-error-status-h"></span>\
-			 <a href="javascript: void(0);" class="verify-address-h">Verify Address</a>\
+			 <a href="javascript: void(0);" class="verify-address-h uk-button">Verify Address</a>\
 			 <div id="<%= map_id %>" style="width: 97%; height: 250px; margin-top: 20px; display:none;"></div>',
 
   events: {
 	'click .verify-address-h': 'verifyAddress',
+	'touchstart a.verify-address-h': 'verifyAddress',
 	'blur .verify-address-h': 'verifyAddress'
   },	
   
   // Verify Address
   verifyAddress: function() {
 		var _self = this, address = _self.$el.find('.address-h').val();
+
+	  console.log("ADDRESS",address);
 		
 		var verifyAddress = require('usercontrol/location/models/verify-adress');
 			_self.locationId = undefined;
@@ -3553,6 +3557,15 @@ Form.editors.DropDown = Form.editors.Text.extend({
 			</ul>\
 		</div>\
 	</div>',
+
+	templatemobile: '<div class="">\
+						<select type="hidden" class="hidden-input-dropdown-h">\
+							<% if(records) { var len = records.length; for(var i = 0; i < len; i++) { %>\
+								<option value="<%=records[i].payload[recordId]%>" <%=(records[i].payload[recordId] == selectedValue) ? "selected" : "" %>><%=records[i].payload[recordValue]%></option>\
+							<% } } %>\
+						</select>\
+						</div>\
+						',
   
     // for multiple values selection this should be true else false 
   	multiple : false,
@@ -3752,27 +3765,31 @@ Form.editors.DropDown = Form.editors.Text.extend({
 			}
 			
 		// compile temoplate
-		var self = this, markup = _.template(this.template, this.data);//Mustache.to_html(self.template, this.data);
+		var self = this, markup = routing.mobile ? _.template(this.templatemobile, this.data) : _.template(this.template, this.data);//Mustache.to_html(self.template, this.data);
 		this.$el.html(markup);
-		// set input value
-		this.setValue(this.data.selectedValue);
-		
-		// set selected option in selected array
-		this.selectedOptions.push(this.selectedValue);
-		
-		// show selected value
-		this.showSelectedValue();
-		
-		if ($("#" + this.elementId).length) {
-			// call callback if exists and pass the selected array Keys
-			if (self.callback) self.callback(this.selectedOptions);
-		} else {
-			// if there is no selected value passed then select the first record by default
-			setTimeout(function() {
-				self.showDefaultValueSelected();
-				if (self.callback) self.callback(self.selectedOptions);
-			}, 200);
+
+		if(!routing.mobile){
+			// set input value
+			this.setValue(this.data.selectedValue);
+
+			// set selected option in selected array
+			this.selectedOptions.push(this.selectedValue);
+
+			// show selected value
+			this.showSelectedValue();
+
+			if ($("#" + this.elementId).length) {
+				// call callback if exists and pass the selected array Keys
+				if (self.callback) self.callback(this.selectedOptions);
+			} else {
+				// if there is no selected value passed then select the first record by default
+				setTimeout(function() {
+					self.showDefaultValueSelected();
+					if (self.callback) self.callback(self.selectedOptions);
+				}, 200);
+			}
 		}
+
 		return this;
 	},
 	

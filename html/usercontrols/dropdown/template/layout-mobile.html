@@ -1,0 +1,9 @@
+<div class="dropdown-container">
+	<select type="hidden" class="hidden-input-dropdown-h">
+		{{#records}}
+			<option{{#dropView.defaultSelected}} selected="selected"{{/dropView.defaultSelected}} value="{{#dropView.getRecordId}}{{dropView.getRecordId}}{{/dropView.getRecordId}}">
+				{{#dropView.getRecordValue}}{{dropView.getRecordValue}}{{/dropView.getRecordValue}}
+			</option>
+		{{/records}}
+	</select>
+</div>

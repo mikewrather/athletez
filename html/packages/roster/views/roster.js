@@ -41,15 +41,17 @@ define(['require', 'text!roster/templates/roster.html', 'views', 'vendor', 'faca
 		},
 
 		afterRender : function() {
-			var _self = this, t = setInterval(function() {
-				$ele = _self.$el.find(".character-limit-h");
-				if ($ele.length) {
-					clearInterval(t);
-					$ele.each(function() {
-						_self.adJustFontDynamically($(this));
-					});
-				}
-			}, 100);
+			var _self = this,
+				t = setInterval(function() {
+					var $ele = _self.$el.find(".character-limit-h"),
+						count = 0;
+					if($ele.length || count++ >= 5){
+						clearInterval(t);
+						$ele.each(function() {
+							_self.adJustFontDynamically($(this));
+						});
+					}
+				}, 500);
 		},
 
 		inviteFBFriend : function(e) {
