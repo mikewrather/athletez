@@ -2232,29 +2232,6 @@ li.sport .teamlist-header, .stat-val-outer {
     }
 	
 	
-	#fans-div div.image-item-container {
-		width: 100%;
-		height: 140px;
-	}
-	#fans-div ul li.image {
-		min-height: 142px;
-		padding: 0;
-		margin: 0;
-		padding-right: 5px;
-		width: 47%;
-	}
-	#fans-div ul.image-list {
-		margin-left: 5px;
-	}
-	#fans-div div.image-item-container > img {
-		min-width: 100%;
-		min-height: 100%;
-	}
-	#fans-div .circle {
-		width: 62px;
-		height: 74px;
-		margin: -132px 30px 30px 30px;
-	}
 	.add-to-list {
 		background-position: 0 0;
 		margin-left: 5px;
@@ -2937,23 +2914,6 @@ li.sport .teamlist-header, .stat-val-outer {
 	#participants_div ul.image-list {
 		margin: 5px 0 10px 5px;
 	}
-	
-	#participants_div ul li.image {
-		min-height: 150px;
-		padding: 0;
-		width: 50%;
-	}
-	
-	#participants_div div.image-item-container {
-		width: 100%;
-		height: 150px;
-	}
-	
-	#participants_div div.image-item-container > img {
-		min-width: 100%;
-		min-height: 150px;
-	}
-	
 	#participants_div {
 		display: none;
 	}
