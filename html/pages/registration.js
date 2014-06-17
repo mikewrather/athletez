@@ -15,7 +15,8 @@ define(["require",
 		LayoutView = views.LayoutView,
 		$ = facade.$,
 		_ = facade._,
-		debug = utils.debug, 
+		debug = utils.debug,
+		Store = utils.storage,
 		Channel = utils.lib.Channel, 
 		cssArr = [base_url + "pages/registration/registration.css",
 			base_url + "pages/signup/css/signupstyle.css",
@@ -125,7 +126,16 @@ define(["require",
 			this.register_facebook.fetch();
 			$.when(this.register_facebook.request).done(function(msg){
 
-				console.log(msg);
+
+				var autologin = {id:"cookieValue","value":msg.payload.token},
+					saveCookie = new Store("authautologin","localStorage");
+				saveCookie.create(autologin);
+
+				var session = {id:"cookieValue","value":msg.payload.session},
+					saveSession = new Store("session","localStorage");
+				saveSession.create(session);
+
+				console.log(msg,controller.register_facebook.request);
 
 				if(!_.isUndefined(inviteModel) && _.isObject(inviteModel))inviteModel.save();
 

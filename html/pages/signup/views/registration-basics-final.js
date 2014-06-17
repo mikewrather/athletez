@@ -1,5 +1,5 @@
 define(['require', 'text!signup/templates/basciFinal.html', 'backbone', 'underscore', 'views', 'facade', 'utils'], function(require, signupBasicTemplate, backbone, _) {
-	var SignupBasicView, facade = require('facade'), views = require('views'), utils = require('utils'), Channel = utils.lib.Channel, SectionView = backbone.View;
+	var SignupBasicView, facade = require('facade'), views = require('views'), utils = require('utils'), Channel = utils.lib.Channel, Store = utils.storage, SectionView = backbone.View;
 	SignupBasicView = SectionView.extend({
 
 		initialize : function(options) {
@@ -249,9 +249,18 @@ define(['require', 'text!signup/templates/basciFinal.html', 'backbone', 'undersc
 			this.payload.accept_terms = termsAndCondition;
 			var ob = routing.showSpinner("input[name=create]");
 			this.model.save(this.payload, {
-				success : function(msg) {
+				success : function(model,msg) {
 					routing.hideSpinner(ob, "input[name=create]");
 					$('#RegModal').modal('hide');
+
+					var autologin = {id:"cookieValue","value":msg.payload.token},
+						saveCookie = new Store("authautologin","localStorage");
+					saveCookie.create(autologin);
+
+					var session = {id:"cookieValue","value":msg.payload.session},
+						saveSession = new Store("session","localStorage");
+					saveSession.create(session);
+
 					if (_self.callback && _.isFunction(_self.callback)) {
 						routing.trigger('common-popup-close');
 						// reload header
