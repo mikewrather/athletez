@@ -40,8 +40,14 @@ function (
         },		
         
         dateFormat: function(date) {
-        	date = new Date(date);
-	        return dateFormat(date,"mmm d, h:MM TT")
+	        console.log(date);
+        	if(date.search(",") > 0) {
+		        return date
+	        }
+	        date = date.split(" ");
+
+	        // Pacific Time Zone hard coded into this date translation
+	        return dateFormat(date[0]+"T"+date[1]+".000-07:00","mmm d, h:MM TT");
         },
 
         render: function () {
