@@ -1953,6 +1953,17 @@ li.sport .teamlist-header, .stat-val-outer {
     .expander{
         display: none;
     }
+    .modal-header{
+	    max-height: 30px;
+	    height: 10%;
+    }
+    
+    .modal-header .close{
+	    margin-top:15px;
+    }
+    .modal-body{
+	    height: 85%;
+    }
 #menu-frame .display-main, #menu-frame .sub {
 		position: static !important;
 		height: auto !important;
@@ -2395,31 +2406,6 @@ li.sport .teamlist-header, .stat-val-outer {
 		float: left;
 		width: 100%;
 		
-	}
-	
-	
-	#roster-wrap div.image-item-container {
-		width: 100%;
-		height: 140px;
-	}
-	#roster-wrap ul li.image {
-		min-height: 142px;
-		padding: 0;
-		margin: 0;
-		padding-right: 5px;
-		width: 47%;
-	}
-	#roster-wrap ul.image-list {
-		margin-left: 5px;
-	}
-	#roster-wrap div.image-item-container > img {
-		min-width: 100%;
-		min-height: 220px;
-	}
-	#roster-wrap .circle {
-		width: 62px;
-		height: 74px;
-		margin: -132px 30px 30px 30px;
 	}
 	
 	

@@ -231,7 +231,7 @@ define(['vendor',
 
 			var wheretoinsert = (Math.ceil((mainli.index() + 1)/3.0) * 3) - 1,
 				data = _.extend({liid:"detail_" + e.data._enttypes_id + "_" + e.data._id}, e.data);
-
+			wheretoinsert = mainli.parent().find('li').length > wheretoinsert ? wheretoinsert : mainli.parent().find('li').length - 1;
 
 			if(_.isUndefined(data._label)) data._label = data._sublabel[0].label;
 

@@ -468,6 +468,7 @@ usercontrols//tag/collections/games.js
 packages/sportorg/models/complevel.js
 usercontrols//tag/models/complevel.js
 text!usercontrol/dropdown/template/layout.html
+text!usercontrol/dropdown/template/layout-mobile.html
 usercontrols//dropdown/view/dropdown.js
 usercontrols//tag/models/sport.js
 usercontrols//tag/collections/events.js
