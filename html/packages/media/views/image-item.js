@@ -95,38 +95,60 @@ define(['vendor',
 			if($nopic_words_div.length){
 				var $num_words = $nopic_words_div.text().length;
 				console.log($num_words);
-				if($num_words < 3){
+
+				if(routing.mobile){
+
 					$nopic_words_div.css({
-						'font-size':'5em',
-						'top':'90px',
-						'left':'60px'
+						'font-size':'0.9em',
+						'top':'20px',
+						'left':'10px'
 					});
-				}
-				else if($num_words < 5){
-					$nopic_words_div.css({
-						'font-size':'4em',
-						'top':'90px',
-						'left':'40px'
-					});
-				}
-				else if($num_words < 25) {
-					$nopic_words_div.css('font-size','2em');
-				}
-				else if($num_words < 30) {
-					$nopic_words_div.css({
-						'font-size':'1.7em',
-						'top':'65px'
-					});
-				}
-				else if($num_words < 40){
-					$nopic_words_div.css({
-						'font-size':'1.5em',
-						'top':'50px'
-					});
+					if($num_words < 10){
+						$nopic_words_div.css({
+							'line-height':'1em'
+						});
+					}
+
+					setTimeout(function(){
+						console.log($nopic_words_div.height() / parseInt($nopic_words_div.css('line-height')));
+					},1);
+
 				}
 				else{
-					$nopic_words_div.css('font-size','1em');
+					if($num_words < 3){
+						$nopic_words_div.css({
+							'font-size':'5em',
+							'top':'90px',
+							'left':'60px'
+						});
+					}
+					else if($num_words < 5){
+						$nopic_words_div.css({
+							'font-size':'4em',
+							'top':'90px',
+							'left':'40px'
+						});
+					}
+					else if($num_words < 25) {
+						$nopic_words_div.css('font-size','2em');
+					}
+					else if($num_words < 30) {
+						$nopic_words_div.css({
+							'font-size':'1.7em',
+							'top':'65px'
+						});
+					}
+					else if($num_words < 40){
+						$nopic_words_div.css({
+							'font-size':'1.5em',
+							'top':'50px'
+						});
+					}
+					else{
+						$nopic_words_div.css('font-size','1em');
+					}
 				}
+
 			}
 
 		//	if(!routing.mobile) {
@@ -233,6 +255,7 @@ define(['vendor',
 				data = _.extend({liid:"detail_" + e.data._enttypes_id + "_" + e.data._id}, e.data);
 			wheretoinsert = mainli.parent().find('li').length > wheretoinsert ? wheretoinsert : mainli.parent().find('li').length - 1;
 
+			console.log(data);
 			if(_.isUndefined(data._label)) data._label = data._sublabel[0].label;
 
 			var content = _.template(imageDetailTemplate,data);

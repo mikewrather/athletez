@@ -47,7 +47,7 @@ define([
 						'<div class="modal-header"><span>Athletez Profile Pic Editor</span>' +
 							'<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>' +
 						'</div>' +
-						'<div class="modal-body page-content-h"></div>' +
+						'<div class="modal-body page-content-h" style="overflow:auto;-webkit-overflow-scrolling:touch"></div>' +
 					'</div>';
 
 				// set up main layout view
@@ -68,9 +68,11 @@ define([
 					var vw = 500;
 				}
 				
-				var url='/vendor/plugins/iedit2/index.html?vh='+vw+'&vw=500&sx=0&sy=0&sz=100&t=Profile%20Picture&edit=';
+				var url= base_url + '/vendor/plugins/iedit2/index.html?vh='+vw+'&vw=500&sx=0&sy=0&sz=100&t=Profile%20Picture&edit=';
 				if(this.image_e != "") url += '&edit='+this.image_e;
 				if(this.image_o != "") url += '&o='+this.image_o;
+
+				url += "&domainName=" + routing.baseDomain;
 
 				var options = {};
 				options.width = "100%";

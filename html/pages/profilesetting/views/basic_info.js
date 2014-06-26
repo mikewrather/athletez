@@ -140,8 +140,8 @@ define(['require', 'text!profilesetting/templates/basic_info_header.html', 'text
 		initBasicView : function() {
 			var self = this;
 			this.basicInfoModel = new BasicsInfoModel();
-			//TODO: Assign Users Id To Id
-			//this.basicInfoModel.id = this.id; //;
+			console.log("routing",routing);
+			if(routing.userLoggedIn) this.basicInfoModel.id = this.id ? this.id : routing.loggedInUserId; //;
 			this.basicInfoModel.fetch();
 			$.when(this.basicInfoModel.request).done(function() {
 				self.basicInfoModel.set('id', self.basicInfoModel.get('payload').id);

@@ -588,42 +588,42 @@
 	
     function save() {
 		// Variables to be sent to image mod script
-        var dim = $image.data('dim');
+	    var dim = $image.data('dim');
 	    console.log(dim);
-        var coords  = {
-            'image-width' : dim.width,
-            'image-height' : dim.height,
-            'crop-width' : dim.viewportWidth,
-            'crop-height' : dim.viewportHeight,
-            'crop-x' : Math.abs(dim.x),
-            'crop-y' : Math.abs(dim.y),
-            zoom:  dim.zoom.current,
-	        original : $image.attr('src'),
-            _ :  Math.random()
-        };
+	    var coords  = {
+		    'image-width' : dim.width,
+		    'image-height' : dim.height,
+		    'crop-width' : dim.viewportWidth,
+		    'crop-height' : dim.viewportHeight,
+		    'crop-x' : Math.abs(dim.x),
+		    'crop-y' : Math.abs(dim.y),
+		    zoom:  dim.zoom.current,
+		    original : $image.attr('src'),
+		    _ :  Math.random()
+	    };
 
-        $loader.addClass('show');
-		// Modify the image and save server side
-        $.ajax({
-	        type:'post',
-	        url:'/api/user/savecrop',
-	        data:{model:JSON.stringify(coords)},
-	        error:function(xhr,status,error)
-	        {
-		        console.log("There was an error.",xhr,status,error);
-	        },
-	        success:function(data)
-	        {
-		        console.log(data);
-		        $loader.removeClass('show');
-		        if (data.exec_data.exec_error == false) {
-			        displayImage(data.payload.image_path);
-		        } else {
-			        var save_error = '<div id="upload-error">There was an error during the process. Please try again.</div>';
-			        $('.panzone').append(save_error);
-		        }
-	        }
-        });
+	    $loader.addClass('show');
+	    // Modify the image and save server side
+	    $.ajax({
+		    type:'post',
+		    url:'/api/user/savecrop',
+		    data:{model:JSON.stringify(coords)},
+		    error:function(xhr,status,error)
+		    {
+			    console.log("There was an error.",xhr,status,error);
+		    },
+		    success:function(data)
+		    {
+			    console.log(data);
+			    $loader.removeClass('show');
+			    if (data.exec_data.exec_error == false) {
+				    displayImage(data.payload.image_path);
+			    } else {
+				    var save_error = '<div id="upload-error">There was an error during the process. Please try again.</div>';
+				    $('.panzone').append(save_error);
+			    }
+		    }
+	    });
     }
     
     function displayImage(image)

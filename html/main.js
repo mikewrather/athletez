@@ -252,7 +252,7 @@ define(function (require) {
 
 				console.log("XHR:",jqXHR,localStorageToCookie(['authautologin','session']));
 				options.url = options.url.charAt(0) === "/" ? options.url : "/" + options.url;
-				options.url = _.isUndefined(window.location.host) || window.location.host === "" ? 'http://www.athletez.com' + options.url : options.url;
+				options.url = _.isUndefined(window.location.host) || window.location.host === "" ? routing.baseDomain + options.url : options.url;
 			});
 
 			$(document).ajaxComplete(function(event,jqXHR){
@@ -272,9 +272,8 @@ define(function (require) {
 				return url_arr[0]==="file" ? true : false;
 			}();
 
-
-
-
+		//	routing.baseDomain = "http://www.aup.dev";
+			routing.baseDomain = "http://www.athletez.com";
 
 			// set to true on initial app render but set to false once the page shows
 			routing.showLandingPage = true;

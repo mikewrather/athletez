@@ -46,7 +46,9 @@ var iEdit = {
 			libraryID:data.libraryID,
 			imgTypeID:data.imgTypeID,
 	       std_id:data.std_id,
-	       st_id:data.st_id
+	       st_id:data.st_id,
+	       domainName:data.domainName,
+	       isMobile:(/iphone|ipod|android|ie|blackberry|fennec/).test(navigator.userAgent.toLowerCase())
        };
 
        //self.launch();
@@ -110,7 +112,8 @@ var iEdit = {
 
               //insert html
               $('.display-main').html(html);
-
+	          $('.display-main form#fileupload').attr('action',iEdit._settings.domainName + "/api/user/uploaduserpic/")
+	          if(iEdit._settings.isMobile) $('.display-main form#fileupload').append('<input type="hidden" name="autosave" value="true" />');
               // Initialize the jQuery File Upload widget:
               $('#fileupload').fileupload({
                   dataType: 'json',
@@ -152,7 +155,10 @@ var iEdit = {
                           var upload_error = '<div id="upload-error">There was an error during the upload. Please try again.</div>';
                           $('.panzone').append(upload_error);
                       } else {
-                          iEdit.nav.edit(jresp.url);
+	                      if(iEdit._settings.isMobile){
+	                         iEdit.nav.view(jresp.url);
+	                      }
+                          else iEdit.nav.edit(jresp.url);
                       }
                  }
               });

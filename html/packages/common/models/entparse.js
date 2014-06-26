@@ -61,8 +61,10 @@ define([ 'models', 'facade','media/models/image','media/models/video','sportorg/
 					votes: mpay.num_votes,
 					show_play:false,
 					show_delete:false,
-					show_edit : false
+					show_edit : false,
+					models:[]
 				};
+
 			switch(mpay.enttypes_id)
 			{
 				case '23':
@@ -79,6 +81,8 @@ define([ 'models', 'facade','media/models/image','media/models/video','sportorg/
 					return_data = _self.parse_user(mpay,return_data);
 					return_data.modelToUse = require('user/models/basics');
 					return_data.ukicon = "uk-icon-user";
+
+
 					break;
 				case '8':
 					return_data = _self.parse_game(mpay,return_data);
@@ -123,7 +127,7 @@ define([ 'models', 'facade','media/models/image','media/models/video','sportorg/
 					this.findCorrectType(mpay.picture_obj.types);
 				}
 			}
-			return_data._noicon_text = mpay.org_name;
+			return_data._noicon_text = this.ucwords(mpay.org_name);
 			return_data._color = '#928add';
 			return_data._sports_icon = this.get_selected_icon(mpay.org_sport_link_obj.sport);
 
@@ -132,6 +136,9 @@ define([ 'models', 'facade','media/models/image','media/models/video','sportorg/
 			return_data._sublabel = "Votes: " + mpay.num_votes + ", Followers: " + mpay.num_followers;
 			return_data._link = "#!team/" + mpay.id;
 			return_data._has_link = true;
+
+			return_data._address = mpay.team_location;
+
 			if(mpay.hasOwnProperty('is_owner')) return_data.show_delete = mpay.is_owner;
 			return_data.itemtype = "http://schema.org/Organization";
 			return_data.meta = [
@@ -297,6 +304,9 @@ define([ 'models', 'facade','media/models/image','media/models/video','sportorg/
 
 		//	var gameDate = new Date(mpay.gameDay + " " + mpay.gameTime);
 			return_data._sublabel = mpay.full_date;
+
+
+			return_data._address = mpay.game_location;
 
 			/*			return_data.itemtype = "http://schema.org/Event";
 			return_data.meta = [
