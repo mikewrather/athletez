@@ -67,9 +67,9 @@ define(['vendor',
 				});
 			});
 
-			$nopic_words_div = this.$el.find('.game-tile');
+			var $nopic_words_div = this.$el.find('.game-tile');
 			if($nopic_words_div.length){
-				$num_words = $nopic_words_div.text().length;
+				var $num_words = $nopic_words_div.text().length;
 				console.log($num_words);
 				if($num_words < 3) {
 					$nopic_words_div.css({

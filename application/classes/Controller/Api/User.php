@@ -1009,7 +1009,7 @@
 							$retArr['identity_exists'] = true;
 						}
 						$arrWithToken = self::getUserTokenData($user);
-						$retArr = array_merge($retArr,$arrWithToken);
+						if($arrWithToken) $retArr = array_merge($retArr,$arrWithToken);
 					//	print_r($arrWithToken);
 					}
 
@@ -1771,8 +1771,16 @@
 
 			$result = $this->action_post_addimage();
 
+			if($this->request->post('autosave') != "")
+			{
+				$this->mainModel->user_picture = $result->id;
+				$this->mainModel->save();
+			}
+			
 			$result = $result->getBasics();
 		//	print_r($result);
+
+
 
 			$return_obj = new stdClass();
 			$return_obj->delete_type = 'DELETE';
