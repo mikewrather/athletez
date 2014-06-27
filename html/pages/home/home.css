@@ -225,3 +225,11 @@ li.sport a:hover {
 }
 
 
+@media only screen and (min-width: 320px) and (max-width: 769px) {
+    .menu-detail-h.sports-option-h{
+        max-height: 200px;
+        max-width: 250px;
+        overflow: scroll;
+        -webkit-overflow-scrolling: touch;
+    }
+}

@@ -1776,7 +1776,7 @@
 				$this->mainModel->user_picture = $result->id;
 				$this->mainModel->save();
 			}
-			
+
 			$result = $result->getBasics();
 		//	print_r($result);
 

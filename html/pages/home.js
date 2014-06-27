@@ -546,7 +546,7 @@ define(
 					var menuModel = new MenuModel(),
 						menuView,
 						viewName = 'menu', options = this.urlOptions;
-						
+
 					options.base = this.base;	
 					menuView = new MenuView({
 						model : menuModel,

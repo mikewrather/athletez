@@ -205,14 +205,17 @@ define(
 				afterRender: function() {
 					this.hideAllDropdowns();
 					var self=this;
-					var trySlimscroll = setInterval(function(){
-						try {
-							$(self.el).find('.sport-list').slimScroll();
-							clearInterval(trySlimscroll);
-						} catch(ex) {}
-					},1000);
 
-					this.bindToolTips();
+					if(!routing.mobile){
+						var trySlimscroll = setInterval(function(){
+							try {
+								$(self.el).find('.sport-list').slimScroll();
+								clearInterval(trySlimscroll);
+							} catch(ex) {}
+						},1000);
+
+						this.bindToolTips();
+					}
 					
 					var data = this.model.toJSON();
 					// show option seleted
