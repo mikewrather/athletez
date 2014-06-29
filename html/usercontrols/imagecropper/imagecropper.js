@@ -91,6 +91,7 @@ define([
 			},
 
 			notifyUpdate:function(){
+				console.log("notifyupdate called");
 				Channel('userpic-changed').publish();
 			}
 		});

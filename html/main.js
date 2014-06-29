@@ -232,7 +232,7 @@ define(function (require) {
 
 			$.support.cors = true;
 
-			$.ajaxPrefilter( function(options,originalOptions,jqXHR){
+			routing.prefilter = function(options,originalOptions,jqXHR){
 				options.crossDomain = true;
 
 				jqXHR.setRequestHeader('Cookie',localStorageToCookie(['authautologin','session']));
@@ -251,9 +251,13 @@ define(function (require) {
 				if(routing.isNative === true) jqXHR.setRequestHeader('isNative',"TRUE");
 
 				console.log("XHR:",jqXHR,localStorageToCookie(['authautologin','session']));
-				options.url = options.url.charAt(0) === "/" ? options.url : "/" + options.url;
-				options.url = _.isUndefined(window.location.host) || window.location.host === "" ? routing.baseDomain + options.url : options.url;
-			});
+				if(options.url.indexOf('http://')==-1){
+					options.url = options.url.charAt(0) === "/" ? options.url : "/" + options.url;
+					options.url = (_.isUndefined(window.location.host) || window.location.host === "") ? routing.baseDomain + options.url : options.url;
+				}
+
+			}
+			$.ajaxPrefilter( routing.prefilter );
 
 			$(document).ajaxComplete(function(event,jqXHR){
 
@@ -264,6 +268,7 @@ define(function (require) {
 			routing.intializeImageAndVideo();
 			routing.initTriggers();
 
+
 			routing.mobile = (/iphone|ipod|android|ie|blackberry|fennec/).test(navigator.userAgent.toLowerCase());
 
 			routing.isNative = function(){
@@ -272,8 +277,8 @@ define(function (require) {
 				return url_arr[0]==="file" ? true : false;
 			}();
 
-		//	routing.baseDomain = "http://www.aup.dev";
-			routing.baseDomain = "http://www.athletez.com";
+			routing.baseDomain = "http://www.aup.dev";
+		//	routing.baseDomain = "http://www.athletez.com";
 
 			// set to true on initial app render but set to false once the page shows
 			routing.showLandingPage = true;

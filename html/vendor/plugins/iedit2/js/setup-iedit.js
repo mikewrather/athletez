@@ -1,245 +1,246 @@
 $.extend({
-    getUrlVars: function(){
-        var vars = {}, hash;
-        var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
-        for(var i = 0; i < hashes.length; i++)
-        {
-            hash = hashes[i].split('=');
-           // vars.push(hash[0]);
-            vars[hash[0]] = hash[1];
-        }
-        return vars;
-    },
-    getUrlVar: function(name){
-        return $.getUrlVars()[name];
-    }
+	getUrlVars: function(){
+		var vars = {}, hash;
+		var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+		for(var i = 0; i < hashes.length; i++)
+		{
+			hash = hashes[i].split('=');
+			// vars.push(hash[0]);
+			vars[hash[0]] = hash[1];
+		}
+		return vars;
+	},
+	getUrlVar: function(name){
+		return $.getUrlVars()[name];
+	}
 });
 
 var iEdit = {
 
-   _settings : {
-       viewportWidth: false,
-       viewportHeight: false,
-       startX: 0,
-       startY: 0,
-       startZoom: 100,
-       title: false,
-       original: false,
-       edited: false
-   },
+	_settings : {
+		viewportWidth: false,
+		viewportHeight: false,
+		startX: 0,
+		startY: 0,
+		startZoom: 100,
+		title: false,
+		original: false,
+		edited: false
+	},
 
-   setup : function(data)
-   {
-       var self = this;
+	setup : function(data)
+	{
+		var self = this;
 
-       //setup iedit settings
-       self._settings = {
-           viewportWidth: parseInt(data.vh),
-           viewportHeight: parseInt(data.vw),
-           startX: parseInt(data.sx),
-           startY: parseInt(data.sy),
-           startZoom: parseInt(data.sz),
-           title: data.t,
-           original: data.o,
-           edited: data.edit,
-	       imgID:data.imgID,
+		//setup iedit settings
+		self._settings = {
+			viewportWidth: parseInt(data.vh),
+			viewportHeight: parseInt(data.vw),
+			startX: parseInt(data.sx),
+			startY: parseInt(data.sy),
+			startZoom: parseInt(data.sz),
+			title: data.t,
+			original: data.o,
+			edited: data.edit,
+			imgID:data.imgID,
 			libraryID:data.libraryID,
 			imgTypeID:data.imgTypeID,
-	       std_id:data.std_id,
-	       st_id:data.st_id,
-	       domainName:data.domainName,
-	       isMobile:(/iphone|ipod|android|ie|blackberry|fennec/).test(navigator.userAgent.toLowerCase())
-       };
+			std_id:data.std_id,
+			st_id:data.st_id,
+			domainName:data.domainName,
+			isMobile:(/iphone|ipod|android|ie|blackberry|fennec/).test(navigator.userAgent.toLowerCase())
+		};
 
-       //self.launch();
-   },
+		//self.launch();
+	},
 
-   clean : function(title)
-   {
-       var self = this;
+	clean : function(title)
+	{
+		var self = this;
 
-       $('.display-main').empty();
-       $('.extra-tools').hide();
-       $('#page-title').empty();
-       $('#page-title').append(title);
-       //$('.nav').find('a').removeClass('selected');
-      // $(document).find('#'+linksel).addClass('selected');
-   },
+		$('.display-main').empty();
+		$('.extra-tools').hide();
+		$('#page-title').empty();
+		$('#page-title').append(title);
+		//$('.nav').find('a').removeClass('selected');
+		// $(document).find('#'+linksel).addClass('selected');
+	},
 
-   launch : function(image)
-   {
-       var self = this;
+	launch : function(image)
+	{
+		var self = this;
 
-       self.clean('Edit Image');
+		self.clean('Edit Image');
 
-       if(image)
-       {
-           self._settings.original = image;
-           self._settings.edited = image;
-       }
+		if(image)
+		{
+			self._settings.original = image;
+			self._settings.edited = image;
+		}
 
-       if(!self._settings.original)
-       {
-           alert('You must upload an image before you can edit.');
-           self.nav.upload();
-           return false;
-       }
+		if(!self._settings.original)
+		{
+			alert('You must upload an image before you can edit.');
+			self.nav.upload();
+			return false;
+		}
 
-       //launch it
-       $('#image-editor').iedit('start',self._settings);
+		//launch it
+		$('#image-editor').iedit('start',self._settings);
 
-       //show navigator
-       $('.extra-tools').show();
-   },
+		//show navigator
+		$('.extra-tools').show();
+	},
 
-   nav :
-   {
-       selected : function(id)
-       {
-           $('.nav').find('a').removeClass('selected');
-           $(document).find('#'+id).addClass('selected');
-       },
+	nav :
+	{
+		selected : function(id)
+		{
+			$('.nav').find('a').removeClass('selected');
+			$(document).find('#'+id).addClass('selected');
+		},
 
-       upload : function()
-       {
-           var self = this;
-               self.selected('upload-link');
+		upload : function()
+		{
+			var self = this;
+			self.selected('upload-link');
 
-           iEdit.clean('Upload New Image');
+			iEdit.clean('Upload New Image');
 
-           //load html
-          $.get('upload.html',function(html){
+			//load html
+			$.get('vendor/plugins/iedit2/upload.html',function(html){
 
-              //insert html
-              $('.display-main').html(html);
-	          $('.display-main form#fileupload').attr('action',iEdit._settings.domainName + "/api/user/uploaduserpic/")
-	          if(iEdit._settings.isMobile) $('.display-main form#fileupload').append('<input type="hidden" name="autosave" value="true" />');
-              // Initialize the jQuery File Upload widget:
-              $('#fileupload').fileupload({
-                  dataType: 'json',
-                  autoUpload: 'true',
-                  progressall: function (e, data) {
+				//insert html
+				$('.display-main').html(html);
+				$('.display-main form#fileupload').attr('action', iEdit._settings.domainName + '/api/user/uploaduserpic')
+				if(iEdit._settings.isMobile) $('.display-main form#fileupload').append('<input type="hidden" name="autosave" value="true" />');
+				// Initialize the jQuery File Upload widget:
+				$('#fileupload').fileupload({
+					dataType: 'json',
+					autoUpload: 'true',
+					progressall: function (e, data) {
 
-                      $('#upload-error').remove();
-                      $('.fileupload-buttonbar').hide();
-                      $('#dragtext').hide();
-                      $('#progress').show();
+						$('#upload-error').remove();
+						$('.fileupload-buttonbar').hide();
+						$('#dragtext').hide();
+						$('#progress').show();
 
-                      var progress = parseInt(data.loaded / data.total * 100, 10);
-                      $('#progress .bar').css(
-                          'width',
-                          progress + '%'
-                      )}
-              });
+						var progress = parseInt(data.loaded / data.total * 100, 10);
+						$('#progress .bar').css(
+							'width',
+								progress + '%'
+						)}
+				});
 
-              /* Enable iframe cross-domain access via redirect option:
-              $('#fileupload').fileupload(
-                  'option',
-                  'redirect',
-                  window.location.href.replace(
-                      /\/[^\/]*$/,
-                      '/server/result.html?%s'
-                  )
-              );*/
+				/* Enable iframe cross-domain access via redirect option:
+				 $('#fileupload').fileupload(
+				 'option',
+				 'redirect',
+				 window.location.href.replace(
+				 /\/[^\/]*$/,
+				 '/server/result.html?%s'
+				 )
+				 );*/
 
-              // Redirect to Edit Image tab after upload completes
-              $('#fileupload').bind('fileuploadalways', function (e, data) {
+				// Redirect to Edit Image tab after upload completes
+				$('#fileupload').bind('fileuploadalways', function (e, data) {
 
-                  var jresp = $.parseJSON(data.jqXHR.responseText.payload);
-                  if (jresp == null) var jresp = data.result.payload;
+					console.log(data.result);
+					var jresp = $.parseJSON(data.jqXHR.responseText.payload);
+					if (jresp == null) var jresp = data.result.payload;
 
-                  // Confirm success of the upload
-                  if (jresp != null) {
-                      if (typeof jresp.error !== "undefined") {
-                          $('#progress').hide();
-                          var upload_error = '<div id="upload-error">There was an error during the upload. Please try again.</div>';
-                          $('.panzone').append(upload_error);
-                      } else {
-	                      if(iEdit._settings.isMobile){
-	                         iEdit.nav.view(jresp.url);
-	                      }
-                          else iEdit.nav.edit(jresp.url);
-                      }
-                 }
-              });
+					console.log(jresp);
+					// Confirm success of the upload
+					if (jresp != null) {
+						if (typeof jresp.error !== "undefined") {
+							$('#progress').hide();
+							var upload_error = '<div id="upload-error">There was an error during the upload. Please try again.</div>';
+							$('.panzone').append(upload_error);
+						} else {
+							if(iEdit._settings.isMobile){
+								window.parent.$('#change-userpic-modal .close').trigger('click');
+							}
+							else iEdit.nav.edit(jresp.url);
+						}
+					}
+				});
 
-              /* Hover effects for drag and drop
-              $(document).bind('dragover', function (e) {
-                  var dropZone = $('.dropzone'),
-                      timeout = window.dropZoneTimeout;
-                  if (!timeout) {
-                      dropZone.addClass('in');
-                  } else {
-                      clearTimeout(timeout);
-                  }
-                  if (e.target === dropZone[0]) {
-                      dropZone.addClass('hover');
-                  } else {
-                      dropZone.removeClass('hover');
-                  }
-                  window.dropZoneTimeout = setTimeout(function () {
-                      window.dropZoneTimeout = null;
-                      dropZone.removeClass('in hover');
-                  }, 100);
-              });*/
+				/* Hover effects for drag and drop
+				 $(document).bind('dragover', function (e) {
+				 var dropZone = $('.dropzone'),
+				 timeout = window.dropZoneTimeout;
+				 if (!timeout) {
+				 dropZone.addClass('in');
+				 } else {
+				 clearTimeout(timeout);
+				 }
+				 if (e.target === dropZone[0]) {
+				 dropZone.addClass('hover');
+				 } else {
+				 dropZone.removeClass('hover');
+				 }
+				 window.dropZoneTimeout = setTimeout(function () {
+				 window.dropZoneTimeout = null;
+				 dropZone.removeClass('in hover');
+				 }, 100);
+				 });*/
 
 
-           });
+			});
 
-       },
+		},
 
-       edit : function(image)
-       {
-          var self = this;
-              self.selected('edit-link');
+		edit : function(image)
+		{
+			var self = this;
+			self.selected('edit-link');
 
-           iEdit.launch(image);
-       },
+			iEdit.launch(image);
+		},
 
-       view : function(image)
-       {
-           var self = this;
-           self.selected('view-link');
+		view : function(image)
+		{
+			var self = this;
+			self.selected('view-link');
 
-           iEdit.clean('View Image');
+			iEdit.clean('View Image');
 
-           if(image) iEdit._settings.edited = image;
+			if(image) iEdit._settings.edited = image;
 
-           if(!iEdit._settings.edited)
-           {
-               alert('You must upload an image and edit it before you can view.');
-               iEdit.nav.upload();
-               return false;
-           }
-           // Create the edit table
-           var html =  '<table cellspacing="0" cellpadding="0" class="image-display show">' +
-               '<tr><td class="displayzone">' +
-               '<div class="container">' +
-               //'<div class="head"><h1>'+values.title+'</h1></div>' +
-               '<img id="displayonly" src="'+iEdit._settings.edited+'">' +
-               '<div class="nav"><a onclick="iEdit.nav.edit();">Make a Tweak</a><br /><a onclick="closeWindow();" href="javascript:void(0);">I\'m Finished Here</a> </div>' +
-               '</div>' +
-               '</td></tr>' +
-               '</table>';
+			if(!iEdit._settings.edited)
+			{
+				alert('You must upload an image and edit it before you can view.');
+				iEdit.nav.upload();
+				return false;
+			}
+			// Create the edit table
+			var html =  '<table cellspacing="0" cellpadding="0" class="image-display show">' +
+				'<tr><td class="displayzone">' +
+				'<div class="container">' +
+				//'<div class="head"><h1>'+values.title+'</h1></div>' +
+				'<img id="displayonly" src="'+iEdit._settings.edited+'">' +
+				'<div class="nav"><a onclick="iEdit.nav.edit();">Make a Tweak</a><br /><a onclick="closeWindow();" href="javascript:void(0);">I\'m Finished Here</a> </div>' +
+				'</div>' +
+				'</td></tr>' +
+				'</table>';
 
-           //console.log($(document).find('div.display-main'),html);
-           $(document).find('div.display-main').html(html);
-       }
-   }
+			//console.log($(document).find('div.display-main'),html);
+			$(document).find('div.display-main').html(html);
+		}
+	}
 };
 
 var closeWindow = function(){
 //	console.log($(window.parent.document).find('.modal-backdrop'));
-	$(window.parent.document).find('.modal-backdrop').remove();
-	$(window.parent.document).find('#change-userpic-modal').unbind().remove();
+	window.parent.$('#change-userpic-modal .close').trigger('click');
 
 };
 
 //Size of JavaScript Object
 var size = function(obj) {
-    var size = 0, key;
-    for (key in obj) {
-        if (obj.hasOwnProperty(key)) size++;
-    }
-    return size;
+	var size = 0, key;
+	for (key in obj) {
+		if (obj.hasOwnProperty(key)) size++;
+	}
+	return size;
 };

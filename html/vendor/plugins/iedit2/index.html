@@ -1,72 +1,76 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>Athletez Userpic Editor</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>Athletez Userpic Editor</title>
 
-<link rel="stylesheet" href="/css/fonts.css">
-<script type="text/javascript" src="http://athletez.s3.amazonaws.com/resources/code/js/jquery-1.7.1-min.js"></script>
-<script type="text/javascript" src="http://athletez.s3.amazonaws.com/resources/code/js/jqui-1.8.16.min.js"></script>
-<link rel="stylesheet" type="text/css" href="http://cdn.athletez.com/resources/code/css/reset.css" media="all" />
-<link rel="stylesheet" type="text/css" href="http://code.jquery.com/ui/1.8.16/themes/smoothness/jquery-ui.css" media="all" />
-<link rel="stylesheet" type="text/css" href="css/iedit-style.css" media="all" />
-<link rel="stylesheet" type="text/css" href="css/uploader.css" media="all" />
+	<link rel="stylesheet" href="css/fonts.css">
+	<script type="text/javascript" src="http://athletez.s3.amazonaws.com/resources/code/js/jquery-1.7.1-min.js"></script>
+	<script type="text/javascript" src="http://athletez.s3.amazonaws.com/resources/code/js/jqui-1.8.16.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="http://cdn.athletez.com/resources/code/css/reset.css" media="all" />
+	<link rel="stylesheet" type="text/css" href="http://code.jquery.com/ui/1.8.16/themes/smoothness/jquery-ui.css" media="all" />
+	<link rel="stylesheet" type="text/css" href="css/iedit-style.css" media="all" />
+	<link rel="stylesheet" type="text/css" href="css/uploader.css" media="all" />
 
-<!-- File Upload Plugins -->
-<script type="text/javascript" src="js/jquery.fileupload.js"></script>
-<script type="text/javascript" src="js/jquery.fileupload-fp.js"></script>
-<script type="text/javascript" src="js/jquery.fileupload-ui.js"></script>
-<script type="text/javascript" src="js/jquery.fileupload-jui.js"></script>
-<script type="text/javascript" src="js/jquery.iframe-transport.js"></script>
-<!-- Image Edit Plugins -->
-<script type="text/javascript" src="js/jquery.zoompan.js"></script>
-<script type="text/javascript" src="js/iedit.js"></script>
-<!-- Initialization and management of iEdit display -->
-<script type="text/javascript" src="js/setup-iedit.js"></script>
+	<!-- File Upload Plugins -->
+	<script type="text/javascript" src="js/jquery.fileupload.js"></script>
+	<script type="text/javascript" src="js/jquery.fileupload-fp.js"></script>
+	<script type="text/javascript" src="js/jquery.fileupload-ui.js"></script>
+	<script type="text/javascript" src="js/jquery.fileupload-jui.js"></script>
+	<script type="text/javascript" src="js/jquery.iframe-transport.js"></script>
+	<!-- Image Edit Plugins -->
+	<script type="text/javascript" src="js/jquery.zoompan.js"></script>
+	<script type="text/javascript" src="js/iedit.js"></script>
+	<!-- Initialization and management of iEdit display -->
+	<script type="text/javascript" src="js/setup-iedit.js"></script>
 
-<script type="text/javascript">
-    $(function(){
+	<script type="text/javascript">
+		$(function(){
 
-       var settings = $.getUrlVars();
-        iEdit.setup(settings);
+			var pRoute = window.parent.routing;
+			console.log(pRoute,pRoute.prefilter);
+			$.ajaxPrefilter(pRoute.prefilter);
 
-        if(typeof settings.o !== 'undefined')
-        {
-            iEdit.nav.edit();
-        }
-        else
-        {
-            iEdit.nav.upload();
-        }
-    });
-</script>
+			var settings = $.getUrlVars();
+			iEdit.setup(settings);
+
+			if(typeof settings.o !== 'undefined')
+			{
+				iEdit.nav.edit();
+			}
+			else
+			{
+				iEdit.nav.upload();
+			}
+		});
+	</script>
 
 </head>
 
 <body>
 
 <div id="image-editor">
-    <div class="main">
+	<div class="main">
 
-                    <div class="content">
-                        <div id="menu-frame">
-                            <div class="sub">
-                                <div class="nav">
-                                    <a id="upload-link" onclick="iEdit.nav.upload();"><p>1. Upload a New User Pic</p></a>
-                                    <a id="edit-link" onclick="iEdit.nav.edit();"><p>2. Crop and Save</p></a>
-                                    <a id="view-link" onclick="iEdit.nav.view();"><p>3. Nod with Satisfaction</p></a>
-                                    <!--
-                                    <a id="library-link"><p>Choose From Library</p></a>-->
-                                </div>
-                                <div class="extra-tools" style="display: none; "></div>
-                            </div>
-                            <div class="display-main">
-                            </div>
-                        </div>
-                    </div>
+		<div class="content">
+			<div id="menu-frame">
+				<div class="sub">
+					<div class="nav">
+						<a id="upload-link" onclick="iEdit.nav.upload();"><p>1. Upload a New User Pic</p></a>
+						<a id="edit-link" onclick="iEdit.nav.edit();"><p>2. Crop and Save</p></a>
+						<a id="view-link" onclick="iEdit.nav.view();"><p>3. Nod with Satisfaction</p></a>
+						<!--
+						<a id="library-link"><p>Choose From Library</p></a>-->
+					</div>
+					<div class="extra-tools" style="display: none; "></div>
+				</div>
+				<div class="display-main">
+				</div>
+			</div>
+		</div>
 
-    </div>
-    <div class="mask"></div>
+	</div>
+	<div class="mask"></div>
 </div>
 
 </body>

@@ -19,7 +19,12 @@ define(['require', 'text!profilesetting/templates/basic_info_header.html', 'text
 		},
 
 		initialize : function(options) {
+			var self = this;
 			if(options.name) SectionView.prototype.initialize.call(this, options);
+			Channel('userpic-changed').subscribe(function() {
+				console.log("userpic channel called");
+				self.initBasicView();
+			});
 			this.initBasicView();			
 		},
 		
@@ -215,9 +220,7 @@ define(['require', 'text!profilesetting/templates/basic_info_header.html', 'text
 		changeUserpic : function() {
 			var mpay = this.basicInfoModel.get('payload');
 
-			Channel('userpic-changed').subscribe(function() {
-				self.initBasicView();
-			});
+
 
 			var self = this, imageCropperController = new ImageCropperController({
 				'image_o' : mpay.user_picture_obj.pre_crop_url,
